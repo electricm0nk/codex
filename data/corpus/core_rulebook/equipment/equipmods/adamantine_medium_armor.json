@@ -1,25 +1,98 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
-    "cost_gp": null,
-    "description": null,
+    "cost_gp": 10000.0,
+    "description": "adamantine",
     "key": "Adamantine (Medium Armor)",
     "name": "Adamantine (Medium Armor)",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "ArmorCheckPenalty",
+          "-1",
+          "TYPE=Enhancement"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "ACCHECK",
+          "1",
+          "TYPE=Enhancement"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "VISIBLE",
         "value": "NO"
       },
       {
+        "key": "KEY",
+        "value": "Material ~ Adamantine ~ Armor / Medium"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "FRONT"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NORMAL"
+      },
+      {
+        "key": "TYPE",
+        "value": "BaseMaterial.MasterworkQuality.Armor"
+      },
+      {
+        "key": "COST",
+        "value": "10000"
+      },
+      {
         "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Metal.Adamantine.Masterwork"
+      },
+      {
+        "key": "REPLACES",
+        "value": "Special Quality ~ Masterwork ~ Armor"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.154"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,Metal,Medium"
+      },
+      {
+        "key": "DR",
+        "value": "2/-"
+      },
+      {
+        "key": "SPROP",
+        "value": "adamantine"
+      },
+      {
+        "key": "ASSIGNTOALL",
         "value": "NO"
+      },
+      {
+        "key": "INFO",
+        "value": "hp|40 hp/inch"
+      },
+      {
+        "key": "INFO",
+        "value": "Hardness|hardness 20"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "acts as holy symbol; if wielder has blessings class feature, when channeling energy can choose one ally or ally's weapon within the area to get one of his minor blessings at a cost of one use of that blessing",
     "key": "Sacred",
     "name": "Sacred",
     "raw_bonus_chains": [],
@@ -39,7 +39,7 @@
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

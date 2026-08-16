@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": 2500.0,
-    "description": null,
+    "description": "as swift action, whip can be used as grappling hook; spend 1 panache to increase reach to 20 ft. for 1 attack, and can use the whip with precise strike",
     "key": "Prehensile",
     "name": "Prehensile",
     "raw_bonus_chains": [],
@@ -39,7 +39,7 @@
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

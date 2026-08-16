@@ -218,15 +218,30 @@ pub fn tab_tokens(line: &str) -> Vec<&str> {
     line.trim_end_matches(['\r']).split('\t').skip(1).filter(|f| !f.is_empty()).collect()
 }
 
-/// Every token in one record's closure: its base row plus each `.MOD` row
-/// targeting any of its identities.
+/// Every token in one record's closure: its base row, each `.MOD` row
+/// targeting any of its identities, and — when the base row is itself a
+/// `.COPY=` declaration — the base record's own row it copies from.
 ///
 /// `mod_index` is `wiring_class::build_mod_index`'s output narrowed to one
 /// book — this module does not fork the `.MOD` discovery rule.
+///
+/// `copy_base_row` (`SD31-E6-F6-001`, `OPEN-ISSUES.md` rows 70/103's
+/// `.COPY=` inheritance recovery, generalized): a `.COPY=<name>` row states
+/// only what it overrides; every OTHER field a record built from it ships
+/// (e.g. `equipment_gap_tables`'s `.COPY=` inheritance) comes from the row
+/// it copies, never from the `.COPY=` line itself. Without this, a
+/// genuinely inherited, corpus-real value (`BOWSTR`'s `cost_gp: 0`, real
+/// per `cr_equipmods.lst:34`'s `COST:0`) reads as unprovable — not because
+/// it is wrong, but because the closure this function built never looked at
+/// the row that actually states it. Caller resolves the base row (by the
+/// same `KEY:`-token-or-bare-name identity `.COPY=` itself resolves
+/// against) and passes it here; `None` when the base row is a plain
+/// declaration or its base could not be resolved (never fabricated).
 pub fn token_closure(
     base_row: &str,
     identities: &BTreeSet<String>,
     mod_index: &BTreeMap<String, Vec<String>>,
+    copy_base_row: Option<&str>,
 ) -> BTreeSet<String> {
     let mut closure: BTreeSet<String> =
         tab_tokens(base_row).into_iter().map(str::to_string).collect();
@@ -234,6 +249,9 @@ pub fn token_closure(
         for row in mod_index.get(identity).into_iter().flatten() {
             closure.extend(tab_tokens(row).into_iter().map(str::to_string));
         }
+    }
+    if let Some(row) = copy_base_row {
+        closure.extend(tab_tokens(row).into_iter().map(str::to_string));
     }
     closure
 }
@@ -553,7 +571,7 @@ mod tests {
                     .push((*row).to_string());
             }
         }
-        token_closure(rows[0], identities, &index)
+        token_closure(rows[0], identities, &index, None)
     }
 
     // ---- the detection cases: each of these MUST go red on a corrupted record
@@ -647,6 +665,70 @@ mod tests {
         );
         assert_eq!(findings.len(), 1, "{findings:?}");
         assert!(matches!(&findings[0], Finding::TokenNotInClosure { token, .. } if token == "SPELLFAILURE:35"));
+    }
+
+    // ---- SD31-E6-F6-001: `.COPY=` inheritance closure ----
+    //
+    // `gen_equipment_gap_tables.rs`'s `.COPY=` inheritance (rows 70/103's
+    // recovery, generalized to `cost_gp`/`weight_lbs`) ships a value that
+    // genuinely appears in the corpus, but on the BASE row, not the `.COPY=`
+    // row a record's citation names. Without `copy_base_row`, that value is
+    // real but the closure this function builds can never prove it — the
+    // exact "provable one record deep" bar this check exists to enforce.
+
+    /// The reproduction, from the real corpus (`BOWSTR`): the cited row is a
+    /// bare `.COPY=` declaration with no `COST:` token; the shipped
+    /// `cost_gp` (inherited from the base row) is only provable once the
+    /// base row's own tokens join the closure.
+    #[test]
+    fn a_copy_rows_closure_without_its_base_cannot_prove_an_inherited_cost() {
+        let mut rec = record(&[]);
+        rec.cost_gp = Some(0.0);
+        let rows = ["Special Quality ~ Composite Bow Strength Rating.COPY=BOWSTR\tVISIBLE:NO"];
+        let mut tally = SweepTally::default();
+        let closure = token_closure(rows[0], &rec.identities, &BTreeMap::new(), None);
+        let findings = compare_tokens(&rec, &closure, &BTreeSet::new(), &mut tally);
+        assert_eq!(
+            findings,
+            vec![Finding::TypedFieldNotInClosure {
+                record: rec.record_path.clone(),
+                field: "cost_gp",
+                shipped_value: "0".to_string(),
+                lst_key: "COST",
+            }],
+            "a .COPY= row's empty own line must not silently prove an inherited value"
+        );
+    }
+
+    /// The fix: passing the resolved base row lets the SAME inherited
+    /// `cost_gp` prove clean — the value is real, only the closure needed
+    /// widening to see where it is actually stated.
+    #[test]
+    fn a_copy_rows_closure_with_its_resolved_base_proves_the_inherited_cost() {
+        let mut rec = record(&[]);
+        rec.cost_gp = Some(0.0);
+        let copy_row = "Special Quality ~ Composite Bow Strength Rating.COPY=BOWSTR\tVISIBLE:NO";
+        let base_row = "Composite Bow Strength Rating\tKEY:Special Quality ~ Composite Bow Strength Rating\tCOST:0";
+        let mut tally = SweepTally::default();
+        let closure =
+            token_closure(copy_row, &rec.identities, &BTreeMap::new(), Some(base_row));
+        let findings = compare_tokens(&rec, &closure, &BTreeSet::new(), &mut tally);
+        assert_eq!(findings, Vec::new(), "the base row's real COST:0 must now be found");
+    }
+
+    /// A plain (non-`.COPY=`) row is unaffected by a `copy_base_row` that
+    /// happens to be passed anyway — the base's tokens still merge in
+    /// (defensive; in practice the caller only resolves a base for a
+    /// genuine `.COPY=` row), but a normal record's own closure is not
+    /// narrowed or otherwise changed by this parameter's mere presence.
+    #[test]
+    fn a_plain_rows_own_tokens_are_unaffected_by_an_absent_copy_base() {
+        let rec = record(&[("COST", "50")]);
+        let rows = ["Thing\tCOST:50"];
+        let mut tally = SweepTally::default();
+        let closure = token_closure(rows[0], &rec.identities, &BTreeMap::new(), None);
+        let findings = compare_tokens(&rec, &closure, &BTreeSet::new(), &mut tally);
+        assert_eq!(findings, Vec::new());
     }
 
     // ---- OPEN-ISSUES.md row 91: the typed-field cross-check ----

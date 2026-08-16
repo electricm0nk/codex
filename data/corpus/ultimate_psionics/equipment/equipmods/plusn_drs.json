@@ -1,21 +1,77 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "+% enhancement|DancingRobesArmorBonus",
     "key": "PLUSN_DRS",
     "name": "PLUSN_DRS",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "DancingRobesArmorBonus",
+          "TYPE=ARMORENHANCEMENT"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "DancingRobesArmorBonus",
+          "floor((TL-2)/6)",
+          "PREABILITY:1,CATEGORY=Special Ability,Dancing Robes of Sharatwan Attunement"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "DancingRobesArmorBonus",
+          "1"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Quality ~ Dancing Robes of Sharatwan / Armor Bonus"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "MIDDLE"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "ITYPE",
+        "value": "ArmorEnhancement.Psionic"
+      },
+      {
+        "key": "SPROP",
+        "value": "+% enhancement|DancingRobesArmorBonus"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DancingRobesArmorBonus|0"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

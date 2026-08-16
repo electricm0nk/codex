@@ -1,21 +1,58 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "Defeat/slay arcane spellcasters (including spellcasting monsters and those that use spell-like abilities)",
     "key": "Intelligent Item Purpose (Slay Arcane)",
     "name": "Intelligent Item Purpose (Slay Arcane)",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "IntelligentItemEgo",
+          "2",
+          "TYPE=Purpose"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Intelligent Item ~ Purpose / Slay Arcane Spellcaster"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Armor.Goods"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "DedicatedPurpose"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,EQMOD=Intelligent Item ~ Base,EQMOD=Intelligent Item ~ Purpose"
+      },
+      {
+        "key": "SPROP",
+        "value": "Defeat/slay arcane spellcasters (including spellcasting monsters and those that use spell-like abilities)"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

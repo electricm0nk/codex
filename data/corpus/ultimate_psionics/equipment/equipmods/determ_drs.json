@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "1/day automatic breath of life at 0 hp|PREMULT:2,[PREVARGTEQ:TL,14],[PREABILITY:1,CATEGORY=Special Ability,Dancing Robes of Sharatwan Attunement]",
     "key": "DETERM_DRS",
     "name": "DETERM_DRS",
     "raw_bonus_chains": [],
@@ -11,11 +11,31 @@
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Quality ~ Dancing Robes of Sharatwan / Determination"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "SPROP",
+        "value": "1/day automatic breath of life at 0 hp|PREMULT:2,[PREVARGTEQ:TL,14],[PREABILITY:1,CATEGORY=Special Ability,Dancing Robes of Sharatwan Attunement]"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

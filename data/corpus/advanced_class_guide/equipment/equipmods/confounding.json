@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "wielder can spend 1 panache point when confirming critical to attempt disarm, reposition, sunder, or trip, as an immediate action with no attack of opportunity provoked, with a enhancement bonus equal to the weapon's enhancement bonus",
     "key": "Confounding",
     "name": "Confounding",
     "raw_bonus_chains": [],
@@ -39,7 +39,7 @@
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

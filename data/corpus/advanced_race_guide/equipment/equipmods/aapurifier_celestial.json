@@ -1,21 +1,66 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
-    "cost_gp": null,
-    "description": null,
+    "cost_gp": 0.0,
+    "description": "No benefit.|!PREABILITY:1,CATEGORY=Special Ability,Celestial Armor ~ Purifier",
     "key": "AAPURIFIER_CELESTIAL",
     "name": "AAPURIFIER_CELESTIAL",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "EQM",
+          "WEIGHTDIV",
+          "2",
+          "PREABILITY:1,CATEGORY=Special Ability,Celestial Armor ~ Purifier"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Quality ~ Purifier Celestial Armor ~ Archetype"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Purifier Celestial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.86"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Archetype,Oracle Archetype ~ Purifier"
+      },
+      {
+        "key": "SPROP",
+        "value": "No benefit.|!PREABILITY:1,CATEGORY=Special Ability,Celestial Armor ~ Purifier"
+      },
+      {
+        "key": "SPROP",
+        "value": "The purifier's armor takes on a golden or silvery sheen and becomes light as a feather.|PREABILITY:1,CATEGORY=Special Ability,Celestial Armor ~ Purifier"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

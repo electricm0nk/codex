@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "paralyzed for 1 round on crit, DC 27",
     "key": "COUPGR_A",
     "name": "COUPGR_A",
     "raw_bonus_chains": [],
@@ -11,11 +11,39 @@
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Coup de Grace ~ Ammunition"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ammunition"
+      },
+      {
+        "key": "PLUS",
+        "value": "5"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.394"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,WeaponEnhancement,Ammunition"
+      },
+      {
+        "key": "SPROP",
+        "value": "paralyzed for 1 round on crit, DC 27"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

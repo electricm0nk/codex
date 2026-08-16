@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "target staggered or dazed if already staggered (Will DC 15); target must pay additional 4 power points to manifest a power in the next round|PREVARGTEQ:TL,18",
     "key": "WHSTL_DIS_A",
     "name": "WHSTL_DIS_A",
     "raw_bonus_chains": [],
@@ -11,11 +11,31 @@
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Quality ~ Dissonance / Whistling / Alt"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "SPROP",
+        "value": "target staggered or dazed if already staggered (Will DC 15); target must pay additional 4 power points to manifest a power in the next round|PREVARGTEQ:TL,18"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

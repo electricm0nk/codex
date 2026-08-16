@@ -1,21 +1,73 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "+% enhancement|DissonanceEnhancementBonusMain",
     "key": "PLUSN_DIS_M",
     "name": "PLUSN_DIS_M",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "DissonanceEnhancementBonusMain",
+          "1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "WEAPON",
+          "DAMAGE,TOHIT",
+          "DissonanceEnhancementBonusMain",
+          "TYPE=ENHANCEMENT"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Quality ~ Dissonance / Enhancement Bonus / Main"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "MIDDLE"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "ITYPE",
+        "value": "WeaponEnhancement.Psionic"
+      },
+      {
+        "key": "SPROP",
+        "value": "+% enhancement|DissonanceEnhancementBonusMain"
+      },
+      {
+        "key": "ASSIGNTOALL",
+        "value": "NO"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DissonanceEnhancementBonusMain|0"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

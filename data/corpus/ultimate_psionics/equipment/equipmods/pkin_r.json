@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "+1d4 ectoplasmic damage (ignores DR)",
     "key": "PKIN_R",
     "name": "PKIN_R",
     "raw_bonus_chains": [],
@@ -11,11 +11,43 @@
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Psychokinetic ~ Ranged"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Ranged"
+      },
+      {
+        "key": "PLUS",
+        "value": "1"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.396"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "3,WeaponEnhancement,Weapon,Ranged"
+      },
+      {
+        "key": "!PRETYPE",
+        "value": "1,Thrown"
+      },
+      {
+        "key": "SPROP",
+        "value": "+1d4 ectoplasmic damage (ignores DR)"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

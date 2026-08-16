@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
-    "cost_gp": null,
-    "description": null,
+    "cost_gp": 60.0,
+    "description": "adamantine, ignore hardness less than 20",
     "key": "Adamantine (Ammo)",
     "name": "Adamantine (Ammo)",
     "raw_bonus_chains": [],
@@ -13,13 +13,57 @@
         "value": "NO"
       },
       {
+        "key": "KEY",
+        "value": "Material ~ Adamantine ~ Ammunition"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "FRONT"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NORMAL"
+      },
+      {
+        "key": "TYPE",
+        "value": "BaseMaterial.MasterworkQuality.Ammunition"
+      },
+      {
+        "key": "COST",
+        "value": "60"
+      },
+      {
         "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Metal.Adamantine.Masterwork"
+      },
+      {
+        "key": "REPLACES",
+        "value": "Special Quality ~ Masterwork ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.154"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Metal"
+      },
+      {
+        "key": "SPROP",
+        "value": "adamantine, ignore hardness less than 20"
+      },
+      {
+        "key": "ASSIGNTOALL",
         "value": "NO"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

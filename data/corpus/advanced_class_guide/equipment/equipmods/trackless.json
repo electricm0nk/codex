@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": 7500.0,
-    "description": null,
+    "description": "+5 on Stealth; Survival checks to track wearer take -5 penalty",
     "key": "Trackless",
     "name": "Trackless",
     "raw_bonus_chains": [
@@ -52,7 +52,7 @@
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

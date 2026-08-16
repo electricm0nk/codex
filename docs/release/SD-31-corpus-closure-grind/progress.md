@@ -13531,6 +13531,39 @@ moved to done: 21   moved away from done: 6
 by kind: class_feature +13, feat +7, monster_ability +1, race_trait -6
 board: 9,780 -> 9,795 done (25.3887% -> 25.4277%), +15 net, zero denominator change
 ```
+## Cycle `SD31-E6-F6-001` (`RETRO_ACTOR=sd31-equipmod`) — 2026-08-16, `epic-6-ingest-lanes` F6 (`equipment_modifier`)
+
+**Card:** `equipment_modifier` ingest/instrument lane, THE RECOVERY (the description-completeness
+demotion's `.COPY=`-inheritable share), THE NAMED DEBT (rows 90/91/92, row 61), THE GRIND (book_routing
+extension). Files owned: `cache_gen/equipment_gap.rs`, `rules_tables/equipment_gap_tables.rs`,
+`src/pcgen_import/lst_parser/equipment.rs`, `corpus_literal_sweep.rs`, `tests/v06_corpus_trap_report.rs`,
+equipment ingest paths.
+
+### §0 — Branch state, oracle pin
+
+Own worktree (`wf_56ffbd55-d83-4`), reset to `origin/tranche/11` tip (`17ba8be53`) per the mandatory
+first actions (package dir absent, tree clean, so `git fetch && git reset --hard origin/tranche/11` was
+the sanctioned path). New branch `sd31/equipmod-e6f6-001` cut from that tip.
+`./scripts/verify.sh --only preflight-oracle` → `PASS (oracle at pin
+7f818006e371188e5717fd18d74d18a420747fc6)`. `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
+from `scripts/pcgen-oracle-pin.env`.
+
+### §1 — Re-derived, not trusted: the dispatch's own named debt was already discharged
+
+Before doing any new work, checked whether the dispatch's "THE NAMED DEBT" items (rows 90/92's `find_
+citation` mis-citation, row 91's `compare_tokens` typed-field gap, row 61's same-name-merge bug) were
+still open at this tip. All three were **already fully resolved and merged onto `tranche/11`** by prior
+cycles (`SD31-E6-F5-003` for row 61, `SD31-E6-F5-004` for rows 90/91/92 — `git merge-base --is-ancestor`
+confirmed both commits are ancestors of my starting HEAD). `tests/v06_corpus_trap_report.rs`'s
+`KNOWN_KEY_MISMATCH_DEBT` list is already at `&[]`. Verified rather than assumed: read `equipment_gap.
+rs`'s `find_citation` (equipment-shaped-file-first strategy already in place) and `parse_equipment_
+entries::open_record`'s `.COPY=`-never-merges-via-bare-name fix directly. **No rework attempted** — the
+dispatch brief was stale relative to the current tip, corrected here rather than silently re-doing
+already-landed work.
+
+### §2 — THE RECOVERY: root-caused, not the shape the dispatch assumed
+
+Re-derived board figures at this tip:
 
 ```
 python3 -c "
@@ -14294,3 +14327,388 @@ None that stopped the batch itself. Named, precise follow-ons (not blockers), bo
 ### Branch tip
 
 `sd31/racetrait/SD31-E6-F4-002`, pushed — see closing summary for the exact commit SHA.
+for kind in ('equipment','equipment_modifier'):
+    K = [u for u in U if u.get('kind')==kind]
+    ck = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in K)
+    print(kind, len(K), dict(ck), round(100*ck['done']/len(K),4))
+"
+# equipment 6208 {'in-progress': 192, 'done': 4513, 'unmeasurable': 131, 'held': 410, 'not-started': 962} 72.6965
+# equipment_modifier 1580 {'held': 17, 'unmeasurable': 690, 'done': 228, 'in-progress': 417, 'not-started': 228} 14.4304
+```
+
+Matches the dispatch's stated figures. Investigated a sample of `equipment_modifier` records still
+`description: null` — e.g. `data/corpus/advanced_class_guide/equipment/equipmods/answering.json`
+(key `Answering`, `raw_tokens` carrying a real `SPROP:Enhancement bonus increases by 4...` field, yet
+`data.description: null`). **This is NOT the `SD31-D7-PROSE-002` second-source-recovery shape** (a
+`.COPY=` description resolved by inheritance at ingest time but invisible to the raw-`.lst`-only
+`closure_has_real_description` check) — that recovery already ran and already lifted 149
+`equipment_modifier` + 112 `equipment` units. The remaining gap is upstream of it: **`gen_equipment_gap_
+tables.rs`'s parser never implemented `.COPY=` inheritance at all.** Every `.COPY=<name>` row (the
+corpus convention for "a masterwork/size/special-ability variant of a previously-declared base record")
+was parsed as if it stated only its own line's tokens — `Special Ability ~ Answering ~ Weapon.COPY=
+Answering\t\tVISIBLE:NO` carries no `DESC:`/`SPROP:`/`COST:`/`WT:` of its own, so the variant shipped
+`None` for all four even though its real base row (`acg_equipmods.lst:27`, `KEY:Special Ability ~
+Answering ~ Weapon`) states the real value two lines away in the same file.
+
+Confirmed corpus-wide before fixing: **648 `.COPY=` rows across the 9 gap-lane books' input files, ZERO
+of which carry their own `DESC:`/`SPROP:`**; 395 resolvable to a real base `description` by the base's
+own `KEY:`-or-bare-name identity, 209 to a real `cost_gp`, 3 to a real `weight_lbs` (re-derived by a
+Python cross-reference against the pinned oracle before writing any Rust).
+
+**Fix, TDD (RED confirmed before GREEN, mutation-proven after):** `gen_equipment_gap_tables.rs` gained
+`collect_base_fields` (builds a `HashMap<identity, BaseFields>` from every PLAIN, non-`.COPY=` row
+across a book's own input files, keyed by `KEY:` token when present else bare first-column name — the
+identical identity a `.COPY=<base>` reference resolves against) and `parse_lst` now inherits
+`description`/`cost_gp`/`weight_lbs` from the resolved base when the `.COPY=` row's own line states
+none of them, never overriding a field the row DOES state, never chaining through an already-inherited
+value (a `.COPY=` row is never itself registered as a base — proven by a dedicated test). 7 new tests
+(`copy_inheritance_tests`), including the exact `Answering`/`Amorphous`/`Hunter's Stand` real-corpus
+reproductions. Mutation-proved: temporarily disabling the inheritance merge made exactly the 3 tests
+that exercise real inheritance go RED (`left: None, right: Some(...)`), restored, re-confirmed GREEN.
+
+**A real regression risk found and avoided before it shipped:** the committed `equipment_gap_tables.rs`
+carried an 8-row ACG hand-patch (Amorphous/Burdenless/Exclusionary/Prehensile/Restful/Sneaky/Spiteful/
+Trackless `cost_gp`, applied by a prior cycle DIRECTLY to the generated `.rs` file, bypassing the
+generator) that a naive regen would have silently reverted to `None`. Confirmed by diffing a first
+regen attempt against the committed file. The inheritance fix reproduces all 8 values automatically
+from the real corpus (no longer a manual patch) — verified byte-identical to the prior hand-patched
+values before trusting the regen.
+
+Regenerated `equipment_gap_tables.rs` for real (`PCGEN_CORPUS_ROOT` against the pinned oracle): 769 rows
+unchanged (same keys/names, confirmed 0 additions/removals by an independent key/name diff), **392
+records recovered a real `description`, 209 a real `cost_gp`, 3 a real `weight_lbs`, zero regressions
+(0 `Some→None`, 0 `Some→different-Some`)**.
+
+### §3 — Re-shipping to `data/corpus/`, and the stamp-loss guard catching a real gap
+
+Re-ran `gen_cache_equipment_gap` against the regenerated table. `write_json`'s no-clobber guard means a
+description/cost/weight VALUE change to an already-shipped file requires deleting it first — deleted
+exactly the 459 changed `(book, key)` pairs' on-disk JSON files (matched by `source.kind=="lst_token"` +
+`data.key`, `ultimate_equipment` book excluded — `cache_gen::equipment_gap` deliberately does not route
+it, `cache_gen::ultimate_equipment` owns that book), then re-ran the generator: **455/459 re-written**
+(4 legitimate non-writes: 2 disabled-`#`-line exclusions never written in the first place, 2 pre-existing
+`write_json` slug-collision skips the module's own doc comment already names —
+`"Intelligent Item Purpose (Slay All)"`/`"(Slay Creature Type)"` collide on filename slug with a
+DIFFERENT, richer, already-shipped tilde-keyed record; correctly left untouched, not forced).
+
+**Caught by the guarded regen's own stamp-loss guard, traced one record deep before acting (per the
+standing rule):** the base `EquipmentData` schema this module writes carries no `raw_tokens`/`raw_
+bonus_chains` fields at all — those are added by a SEPARATE, book-agnostic post-processing binary
+(`enrich_equipment_raw_tokens.rs`) that a prior cycle had already run against the pre-existing files.
+Deleting-then-regenerating without re-running that enrichment pass silently reverted all 455 records to
+their thin pre-enrichment state — real content lost from THIS cycle's own output, not from the corpus.
+`v06_work_inventory`'s regen refused to write, naming 3 first offenders
+(`core_rulebook:equipment_modifier:material_dragonhide`,
+`ultimate_wilderness:equipment:hunter_s_stand_all_weather_cover`/`_camouflage_blind`). Fixed by re-
+running the correct existing tool (`enrich_equipment_raw_tokens`, book-agnostic, safe to re-run): 455
+enriched, 0 citation misses, 0 merged-entry mismatches. Re-verified with a schema-diff script (`git show
+HEAD:<file>` vs on-disk, checking `raw_tokens` presence and `source.kind`) across all 459 files: 0
+losses after the enrichment re-run.
+
+### §4 — `corpus_literal_sweep`'s own gap, exposed by real recovered data, fixed
+
+Running `corpus_literal_sweep` after the above surfaced **210 findings across 209 records**, all shaped
+`typed field cost_gp=<N> is not byte-derivable from any COST: entry in the corpus token closure` — e.g.
+`BOWSTR`'s now-real `cost_gp: 0.0` (genuinely stated, `cr_equipmods.lst:34`'s `COST:0`, on the BASE row
+`BOWSTR`'s own `.COPY=` line copies from) failed because `token_closure` only ever looked at the CITED
+line's own tokens (`Special Quality ~ Composite Bow Strength Rating.COPY=BOWSTR\tVISIBLE:NO`, no `COST:`
+token on that specific line) — never at the base row the value is actually stated on. **Not a wrong
+value; a closure that never looked at the row that proves it — exactly the "provable one record deep"
+bar this check exists to enforce, now genuinely met.**
+
+Fixed in `corpus_literal_sweep.rs` (my file): `token_closure` gained a `copy_base_row: Option<&str>`
+parameter (widened the SAME way `.MOD` rows already are), merged into the closure when present.
+`src/bin/corpus_literal_sweep.rs` gained `copy_base_identity` (splits a `.COPY=` row's own base
+identity string) and `Sweep::copy_base_row` (resolves that identity to its plain base row, scanning the
+whole book, via the IDENTICAL `KEY:`-or-bare-name rule `gen_equipment_gap_tables.rs`'s own inheritance
+uses — by construction, the two never disagree on what "the base" means). 3 new tests in the library
+(`a_copy_rows_closure_without_its_base_cannot_prove_an_inherited_cost` RED-proven,
+`a_copy_rows_closure_with_its_resolved_base_proves_the_inherited_cost`,
+`a_plain_rows_own_tokens_are_unaffected_by_an_absent_copy_base`). Mutation-proved: disabling the merge
+made exactly the "with resolved base" test fail, confirmed with a **guaranteed-fresh build** (`touch`ed
+the file immediately before the run, after an earlier same-session near-miss where a background `cargo
+run` may have raced the mutation edit and could have silently compiled the mutated code — re-verified
+clean once isolated).
+
+**Compile fallout, fixed:** `token_closure`'s new 4th parameter broke 6 OTHER pre-existing call sites
+(`enrich_spell_raw_tokens.rs` x2, `enrich_monster_raw_tokens.rs`, `repair_spell_citations.rs`,
+`enrich_companion_raw_tokens.rs`, `enrich_monster_ability_raw_tokens.rs`) — none of my file territory to
+extend, all fixed mechanically with a trailing `, None` (zero behavior change to any of them).
+`cargo build --locked --tests` clean (only pre-existing dead-code warnings) after.
+
+Re-ran `corpus_literal_sweep` with a guaranteed fresh build: **24,519 records examined, 0 findings,
+CLEAN.** `declared_pi_shipping_audit`: **CLEAN**.
+
+### §5 — A second real find while fixing §4: a pinned test whose EXPECTED list, not the CODE, was stale
+
+`cargo test --lib` (part of `root-lib`) failed on `equipment_resolver::tests::the_two_lookups_agree_
+on_every_catalog_key_but_the_one_pinned_collision`. **First read the `assert_eq!` panic backwards**
+(assumed `left` was the hardcoded expected list; it is actually `disagreements`, the ACTUAL computed
+value — `right` is the hardcoded `vec![]`) and nearly reported this as a regression. Re-derived with a
+debug print before concluding anything: `equipment_catalog_row_by_key` and `equipment_cost_gp_headless_
+resolve` now **AGREE** (both return the identical real price) for 14 of the previously-pinned 28
+entries (`Adamantine (Ammo)`, `Alchemical Silver`, `BRACE`, `CLOTH`, `Cold Iron`, `DISARM`, `LEATHER`,
+`MONK`, `Mithral (Light Armor)`, `Mithral (Shield)`, `NONLETHAL`, `STEEL`, `TRIP`, `WOOD`) — §2's
+inheritance fix gave these gap rows the SAME real price the free-form resolver already found via a
+hand-authored NAME match, so the coincidental KEY/NAME collision the test exists to catalog no longer
+hides a genuine ambiguity. **This is the identical shape the test's own history already established**
+(`SD31-W4-INTEGRATE-001`'s "Removed the 8 phantom entries" correction) — updated the pinned `vec![]`
+from 28 to 14 entries, with each of the 14 removed individually re-verified via a scratch debug print
+(`by_key.cost_gp == headless`, both `Some(<identical value>)`) before removal, not assumed from the
+count shrinking alone. Full explanatory comment added citing this cycle. `retro.py correction` emitted
+for the backwards-read near-miss.
+
+`cargo test --locked --lib rules_core::equipment_resolver::` → **14/14 passed.**
+
+### §5b — Two more findings, both on the FIRST real application of the inheritance fix
+
+**(1) `raw_tokens` needed the SAME inheritance `corpus_literal_sweep`'s closure got.**
+`tests/sd27_equipment_modifier_price_matches_corpus_cost_token.rs` derives its own independent
+"does `raw_tokens` actually state a COST?" check straight from the shipped JSON, and flagged
+`ACG:Exclusionary_AMF` (`cost_gp: Some(3750.0)`, correctly inherited) as apparent fabrication —
+`raw_tokens` (populated by the SEPARATE `enrich_equipment_raw_tokens.rs` binary) still carried only
+the `.COPY=` row's own thin `VISIBLE:NO` token. Fixed at that same layer: `enrich_equipment_raw_
+tokens.rs` gained the identical `copy_base_identity`/`find_copy_base` pair (3 new tests), folding the
+resolved base's own on-its-own-line tokens into `raw_tokens` too, with the SAME byte-present guard
+extended to the base line. Re-ran corpus-wide (stripped `raw_tokens`/`raw_bonus_chains` from the 455
+files first to force re-enrichment): 455 enriched, 0 citation misses, 0 merged-entry mismatches.
+
+**(2) One recovered description genuinely leaked raw PCGen syntax.** `CRB:equipment_modifier:
+IntItemBase`'s base row's `SPROP:` states 4 bare (unnumbered) `%` placeholders with a 4-argument `|`
+tail — a shape `pcgen_desc::max_arg_reference`'s numbered-reference detection does not recognize, so
+the tail survives rendering. Caught by `apps/desktop`'s own `no_catalog_serves_a_description_
+carrying_raw_pcgen_syntax` test. Fixed at the SOURCE (not the shared `pcgen_desc.rs` render path,
+out of this card's file territory and too high-blast-radius to touch under time pressure):
+`gen_equipment_gap_tables.rs` gained `safe_description()`, running every candidate description
+through `render_pcgen_desc`/`leaked_pcgen_syntax` before shipping and refusing (shipping `None`)
+rather than shipping broken syntax — the identical judgment call `v06_work_inventory.rs`'s own
+`corpus_json_description_leaks_pcgen_syntax` already makes. **Empirically verified this does NOT
+over-refuse**: a scratch test proved a bare `%CHOICE` (68 of the 69 `%`/`|`-carrying recovered
+descriptions) renders to clean text with `dropped_args` non-empty but `leaked_pcgen_syntax: None` —
+checking `dropped_args.is_empty()` too (as `v06_work_inventory.rs`'s sibling check does) would have
+wrongly discarded 68 real recoveries to refuse 1 real defect; corrected to match production's actual
+`leaked_pcgen_syntax`-only behavior before shipping. Exactly 1 record's description changed (verified
+by an independent before/after diff of the whole table): `IntItemBase` `Some(...)` -> `None`.
+
+**Downstream pinned counts this changed, all re-derived fresh, none adjusted by arithmetic:**
+`equipment_catalog.rs`'s `description_coverage_is_pinned_per_book` (CRB 2022->2219, APG 349->368,
+ACG 264->312, ARG 194->205, UI 41->48, UPSI 311->406, UC 88->102, total 3844->4235);
+`character_hub.rs`'s `every_offered_modifier_row_charges_the_price_the_picker_displayed`
+(`priced_non_crb` 137->181 — `cost_gp` inheritance, unrelated to the leak fix, re-derived to confirm
+it matches the earlier panic's own measured value exactly); `sd27_equipment_modifier_price_matches_
+corpus_cost_token.rs`'s `(checked_numeric, checked_formula, checked_absent)` tuple
+(433,1,140)->(447,1,126), total unchanged at 574. `apps/desktop` full suite: **455/455 passing**
+(was 451/455). Root `cargo test --locked --no-fail-fast`: **0 failures** (re-run in full after these
+fixes, not sampled).
+
+**Clippy fallout, fixed:** both new `if let ... { if let ... }` blocks (`gen_equipment_gap_tables.rs`,
+`enrich_equipment_raw_tokens.rs`) triggered `clippy::collapsible_if`, pushing root warnings 47->49.
+Collapsed both to `if let ... && let ... {`; re-measured **exactly 47** (root) and **7** (desktop),
+matching both ceilings precisely.
+
+### §6 — Guarded regen: the board delta, measured and restored per the wave rule
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-equipmod.json
+# corpus-literal-sweep: 24519 records examined of 25396 read, 241404 tokens compared (9 synthesized), 24971 digests checked, 0 findings. CLEAN.
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-equipmod.json
+# derived-evaluator-fixture-check: 100 of 101 covered units cleared; 1 failed (pre-existing, unrelated:
+# advanced_players_guide:equipment:spindle_of_perfect_knowledge). FIXTURE_EXIT reports the failure but the
+# board-relevant claim (equipment_modifier) is unaffected.
+CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep-sd31-equipmod.json \
+DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture-sd31-equipmod.json \
+  cargo run --locked --bin v06_work_inventory
+# REGEN_EXIT=0, zero stamp loss (guard did not refuse the write, after §3/§5b's enrichment re-runs)
+```
+
+Producer's own verdict function, BEFORE (copied pre-regen) vs. AFTER (measured at the FINAL tip, after
+§5b's two fixes — an earlier intermediate measurement of +334/26.2558% predates §5b and is superseded,
+not separately banked):
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('<path>'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+print(len(U), dict(c), round(100*c['done']/len(U),4))
+"
+# BEFORE: 38521 {'done': 9780, 'not-started': 19900, 'unmeasurable': 5127, 'deferred': 36, 'held': 2912, 'in-progress': 766} 25.3887
+# AFTER:  38521 {'done': 10119, 'not-started': 19900, 'unmeasurable': 4790, 'deferred': 36, 'held': 2914, 'in-progress': 762} 26.2688
+```
+
+**Board headline: done 9,780 -> 10,119 (+339), 25.3887% -> 26.2688%.** Per-unit diff (every id
+individually compared before/after, not just aggregate counts):
+
+```
+moved to done: 339   moved away from done: 0
+by kind: equipment_modifier 338, equipment 1
+```
+
+`equipment_modifier` own headline: **228 -> 566 done (+338), 14.4304% -> 35.8228%**.
+`equipment` own headline: **4,513 -> 4,514 done (+1), 72.6965% -> 72.7126%** — its own description-
+completeness gaps were mostly already recovered by `SD31-D7-PROSE-002`'s second-source rung; this
+fix's `.COPY=` inheritance recovers a DIFFERENT, narrower residual (the never-had-any-recovery-path
+population), and §5b's `safe_description` refusal (1 record) landed on `equipment_modifier`, not
+`equipment`.
+
+**The mandate denominator did not change: 38,521, unchanged.** No unit left the denominator; neither
+sanctioned register was touched this cycle.
+
+Per the wave rule, `docs/work-inventory.json` is NOT committed with this regen's content — `git checkout
+--` it before the final commit; the delta above is fully re-derivable from the two commands.
+
+### §7 — THE GRIND: not attempted, correctly scoped as out of this cycle's remaining budget
+
+The dispatch's "extend `book_routing` to books it has not reached" is, per `SD31-E6-F5-004`'s own
+already-recorded finding (`OPEN-ISSUES.md` row 103), **not a live lever**: `equipment_gap_tables.rs`
+(the Rust data source `book_routing` maps into) has rows for only the same 9 already-routed books;
+extending `book_routing`'s match arms alone adds routing for books with ZERO underlying rows, a no-op.
+The real remaining lever (a genuine new per-book hand-transcription ingest, e.g. `inner_sea_gods` at 150
+`equipment` not-started units) is correctly named there as a dedicated future cycle's own scope, not
+squeezed into this cycle under gate pressure spent recovering the description/cost/weight defect and its
+two downstream sweep/test fixes instead. Not re-attempted here — the finding stands, re-confirmed by this
+cycle's own read of `equipment_gap_tables.rs`'s book coverage.
+
+### §8 — PI screening: both contracts, on NAME, DESCRIPTION, and `raw_tokens`
+
+`gen_equipment_gap_tables.rs`'s own `screen_generated_table` (contract §52.3, blacklist sweep) ran
+before every write: **CLEAN, 0 hits** over the fully-regenerated table text (both runs). `cache_gen::
+equipment_gap::generate()`'s existing, untouched `pi_screening::classify_field("name", ...)` +
+`declared_pi_at`/`classify_optional_field_declared("description", ...)` (contract §53.5, declared-PI
+reader) ran on every one of the 455 re-shipped records: **0 `name_pi_excluded`, 0 description
+redactions triggered** (re-derived from `gen_cache_equipment_gap`'s own printed report, not assumed).
+`enrich_equipment_raw_tokens.rs` (the `raw_tokens` restoration pass, §3) operates on `serde_json::Value`
+only, inserting tokens already screened by the ORIGINAL enrichment run this cycle re-triggered — no new
+PI surface introduced. `declared_pi_shipping_audit`: **CLEAN** (both pre- and post-§4 runs).
+
+### §9 — DoD item 8: on-screen verification
+
+```
+export RUN_DESKTOP_AGENT=sd31-equipmod
+./.claude/skills/run-desktop/driver.sh launch   # apps/desktop, first launch needed `npm ci` (node_modules
+                                                 # was partially absent in this fresh worktree)
+./.claude/skills/run-desktop/verify-on-screen.sh --family equipment --record "Answering" \
+  --expect "Enhancement bonus increases by 4"
+# PASS -- docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F6-001/item8/
+#         equipment-answering.{png,verify.md}
+```
+
+Real corpus SPROP text ("Enhancement bonus increases by 4 (to a max of 5) for the purpose of the
+opportune parry and riposte deed") rendering live on the Equipment Modifier catalog screen for both
+`Answering` and `Answering_AMF` — directly proving §2's recovery reaches the player, not merely a green
+code gate.
+
+### §10 — Four-check wired-integration audit
+
+```
+git diff --unified=0 17ba8be53 -- 'src/**/*.rs' | grep -nE '\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b' || echo OK_NO_TOKENS
+# OK_NO_TOKENS
+git diff --unified=0 17ba8be53 -- 'apps/desktop/**/*.tsx' 'apps/desktop/**/*.jsx' | grep -nE 'onClick=\{\s*\(\)\s*=>\s*\{\s*\}\s*\}|onClick=\{undefined' || echo OK_NO_NOOP_HANDLERS
+# OK_NO_NOOP_HANDLERS
+git diff --unified=0 17ba8be53 -- 'apps/desktop/**/*.{ts,tsx,jsx,rs}' 'src/**/*.rs' ':!**/__tests__/**' ':!**/*.test.*' | grep -nE 'mockResolvedValue|mockReturnValue\(|vi\.mock\(|__mocks__' || echo OK_NO_MOCK_LEAKS
+# OK_NO_MOCK_LEAKS
+git diff --unified=0 17ba8be53 -- 'apps/desktop/**/*.{ts,tsx}' 'src/**/*.rs' | grep -nE '"Would [^"]*"' || echo OK_NO_WOULD_STRINGS
+# OK_NO_WOULD_STRINGS
+```
+
+No new production TS/TSX files this cycle (Rust only). Clean.
+
+### §11 — `v06_corpus_trap_report -- --audit`
+
+```
+cargo run --locked --bin v06_corpus_trap_report -- --audit
+# TRAP_EXIT=2 (pre-existing RED)
+grep -c '\[wiring-class-mismatch\]' <log>   # 1191, byte-identical to the wave-7 baseline
+grep -c '\[mod-record\]' <log>              # 0
+```
+
+1,191 — unchanged from the last-recorded baseline (`SD31-W7-INTEGRATE-001`'s own receipt: "1,191...
+not worsened"). Every finding shown is `companion`/`monster` wiring-class-mismatch, unrelated to this
+cycle's `equipment`/`equipment_modifier` diff. Confirmed not worsened by exact count, not by sign alone.
+
+### §12 — Full gate
+
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F6-001-verify.log
+export RETRO_ACTOR=sd31-equipmod
+export CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-equipmod
+./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+
+**Launched three times this cycle, honestly reported each time, not averaged or hidden:**
+
+1. First launch was PREMATURE — started before any code changes landed (dispatch's "launch it early"
+   instruction, read too literally). Killed mid-run (PID-checked against its own `CARGO_TARGET_DIR`
+   before killing, per the shared-tree discipline) once real code changes existed to test, rather than
+   trust a result computed against a stale tree — its `root-full FAIL (cargo exit 101)` was NOT
+   attributed to this cycle (the kill happened mid-`data/corpus` regen, an unsynchronized state, not a
+   real gate signal).
+2. Second launch (after §2/§3's fixes, before §4/§5's) surfaced the real `root-lib`/`root-full`/`clippy`
+   failures §4/§5 above fixed — the gate doing its job, not a defect in the gate.
+3. **Third launch, after §5b's fixes** — surfaced `root-full`'s `sd27_equipment_modifier_price_matches_
+   corpus_cost_token`'s SECOND pinned assertion (the `(checked_numeric, checked_formula, checked_
+   absent)` tuple, `desktop`'s 2 leak-detection tests already fixed by §5b but this was the first time
+   they ran against the FULL rebuilt binary) and `clippy`'s 2-warning overage (fixed, §5b). Also
+   observed: `corpus-sweep` took ~2m22s this run (vs. ~7s on every prior isolated invocation this same
+   cycle against the identical binary and data) — CPU-pegged the whole time (confirmed via `ps`, not a
+   deadlock), most likely cold OS page-cache after the long gap this run's own many stages took;
+   genuinely completed CLEAN, not a correctness concern, but named as a real, honestly-reported
+   performance observation for `Sweep::copy_base_row`'s per-`.COPY=`-record book-directory rescan (no
+   caching across records sharing the same book) — a future cycle touching this file could memoize it.
+4. **Fourth (final) launch, this cycle's landed result:**
+
+```
+VERIFY_EXIT=0
+RESULT: PASS
+passed: 25  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest
+  reachability-audit-selftest reachability-audit groundtruth-guard-selftest
+  supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest
+  driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep
+  supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump
+root-lib: 1912 passed. root-full: 6758 passed across 564 suites, all 529 tests/*.rs suites
+  executed. desktop: 455 passed. reach: 27 passed. corpus-sweep: 24519 records examined,
+  241404 tokens compared, 0 findings. clippy: root:47 desktop:7 warnings, 0 errors (exactly
+  both ceilings). class-dump: 31/31 computing.
+```
+
+Log: `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F6-001-verify.log`, captured directly
+(`echo "VERIFY_EXIT=$?"` appended to the same file, never through a pipe).
+
+**BASELINE NOTES emitted, deliberately NOT updated this cycle:** `BASELINE_ROOT_LIB_TESTS` (1909
+recorded, 1912 measured) and `BASELINE_ROOT_FULL_TESTS` (6741 recorded, 6758 measured). Both notes
+already existed, byte-identical, in the STALE gate run captured before this cycle's own first code
+change landed (i.e. this drift predates this cycle and is not attributable to it) — re-confirmed by
+comparing the two runs' own BASELINE NOTES text. `scripts/verify-baselines.env` intentionally left
+untouched: updating a baseline this cycle did not create risks miscrediting someone else's drift as
+this card's own DoD-7 "baseline move," which must be a separate, clearly-attributed commit.
+
+### §13 — Reclaim
+
+```
+scripts/reclaim.sh --apply
+# codex reclaim — mode: APPLY, older-than: 6h, categories: cargo-target verify-logs worktrees branches
+#   reclaimed: 0 item(s), 0.0B total
+```
+
+0 reclaimed — every candidate this cycle's own worktree/target-dir/verify-logs produced is within the
+6h freshness window (this cycle's own work) or actively checked out by another concurrent agent (the
+long list of `SKIPPED (not merged, upstream present)`/`SKIPPED (checked out in a worktree)` branches
+belong to sibling agents, correctly left alone). Disk: 968G total, 333G used (35%), 636G available —
+unchanged by this cycle (no reclaim needed, no leak left behind either).
+
+### Corrections and near-misses (retro events emitted for each)
+
+1. **The dispatch's "THE NAMED DEBT" was stale** (§1) — rows 90/91/92/61 were already fully discharged
+   by prior cycles; re-doing them would have been wasted, risky rework. Verified via `git merge-base
+   --is-ancestor` before trusting, not assumed from the dispatch text.
+2. **The `assert_eq!` panic's `left`/`right` fields read backwards** (§5) — nearly reported a genuine
+   improvement (14 fewer real pricing ambiguities) as a regression. Caught by re-deriving with a debug
+   print before writing anything down, per the standing "re-derive every figure" rule.
+3. **A build-cache race risked masking the `corpus_literal_sweep` mutation-proof result** (§4) — a
+   background `cargo run` may have compiled the source mid-edit during the RED probe; re-verified with a
+   guaranteed-fresh (`touch`ed) build before trusting CLEAN.
+4. **Regenerating `data/corpus/` without re-running the enrichment pass silently thinned 455 records**
+   (§3) — caught by the guarded regen's own stamp-loss guard exactly as designed, traced one record deep,
+   fixed by re-running the correct existing tool rather than hand-patching or loosening the guard.

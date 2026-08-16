@@ -1,21 +1,73 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
-    "cost_gp": null,
-    "description": null,
+    "cost_gp": 80000.0,
+    "description": "Dedicated Power - +2 luck attacks & saves",
     "key": "PurposePower_LuckBonus",
     "name": "PurposePower_LuckBonus",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "TOHIT",
+          "2+Global_LuckBonus",
+          "TYPE=Luck"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SAVE",
+          "ALL",
+          "2+Global_LuckBonus",
+          "TYPE=Luck"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "IntelligentItemEgo",
+          "2"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Intelligent Item ~ Purpose Power / Luck Bonus"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Armor.Goods"
+      },
+      {
+        "key": "COST",
+        "value": "80000"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "3,EQMOD=Intelligent Item ~ Base,EQMOD=Intelligent Item ~ Purpose,DedicatedPurpose"
+      },
+      {
+        "key": "SPROP",
+        "value": "Dedicated Power - +2 luck attacks & saves"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

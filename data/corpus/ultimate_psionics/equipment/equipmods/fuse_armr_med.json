@@ -1,21 +1,79 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "Armor Check reduced, Max Dex increased, one category lighter",
     "key": "FUSE_ARMR_MED",
     "name": "FUSE_ARMR_MED",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "ACCHECK",
+          "1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "MAXDEX",
+          "1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "SPELLFAILURE",
+          "-10"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Fusing ~ Armor / Medium"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor"
+      },
+      {
+        "key": "PLUS",
+        "value": "2"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.391"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "3,ArmorEnhancement,Armor,Medium"
+      },
+      {
+        "key": "SPROP",
+        "value": "Armor Check reduced, Max Dex increased, one category lighter"
+      },
+      {
+        "key": "ARMORTYPE",
+        "value": "Medium|Light"
+      },
+      {
+        "key": "ARMORTYPE",
+        "value": "Heavy|Medium"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

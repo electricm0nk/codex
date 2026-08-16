@@ -196,9 +196,19 @@ fn every_newly_reachable_record_is_priced_by_its_own_corpus_cost_token() {
     // Trackless rows already reconciled in equipment_resolver.rs and
     // character_hub.rs), checked_absent 85 -> 140 (+55, ACG/ARG records
     // with no COST: token, priced correctly as None).
+    // RAISED again `SD31-E6-F6-001`, 2026-08-16: `gen_equipment_gap_tables.
+    // rs` gained `.COPY=` inheritance -- 14 of the 140 previously-`checked_
+    // absent` ACG/ARG/PU records (a `.COPY=` row with no `COST:` of its own)
+    // now inherit a real, corpus-true `cost_gp` from their base record
+    // (resolved by the identical `KEY:`-or-bare-name identity a `.COPY=`
+    // reference itself resolves against, verified one record deep, never
+    // fabricated). checked_numeric 433 -> 447 (+14), checked_absent
+    // 140 -> 126 (-14), total unchanged (574 = 447+1+126) -- the SAME 574
+    // records, 14 reclassified from "no known price" to "a real price",
+    // never a population change.
     assert_eq!(
         (checked_numeric, checked_formula, checked_absent),
-        (433, 1, 140),
+        (447, 1, 126),
         "records priced by a numeric COST: token, by an unevaluated formula, and with no COST: \
          token at all"
     );

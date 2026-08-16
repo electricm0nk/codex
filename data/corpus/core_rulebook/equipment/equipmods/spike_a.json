@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
-    "cost_gp": null,
-    "description": null,
+    "cost_gp": 50.0,
+    "description": "Spiked",
     "key": "SPIKE_A",
     "name": "SPIKE_A",
     "raw_bonus_chains": [],
@@ -11,11 +11,47 @@
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Quality ~ Spikes ~ Armor"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor"
+      },
+      {
+        "key": "COST",
+        "value": "50"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Spiked.Piercing"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.150"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Shield,Armor"
+      },
+      {
+        "key": "SPROP",
+        "value": "Spiked"
+      },
+      {
+        "key": "AUTO",
+        "value": "EQUIP|Armor Spikes"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

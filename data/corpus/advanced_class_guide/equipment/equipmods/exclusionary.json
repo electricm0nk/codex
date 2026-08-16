@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": 3750.0,
-    "description": null,
+    "description": "can choose not to include target in channel ability for next minute; maximum of Wisdom bonus plus enhancement bonus exclusions",
     "key": "Exclusionary",
     "name": "Exclusionary",
     "raw_bonus_chains": [],
@@ -39,7 +39,7 @@
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

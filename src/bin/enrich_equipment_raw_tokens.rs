@@ -39,8 +39,38 @@ use std::env;
 use std::fs;
 use std::path::{Path, PathBuf};
 
-use codex::pcgen_import::lst_parser::equipment::parse_equipment_entries;
+use codex::pcgen_import::lst_parser::equipment::{parse_equipment_entries, BonusToken, EquipmentRecord, EquipmentToken};
 use serde_json::{json, Value};
+
+/// The identity a `.COPY=<name>` row's first column names as its base --
+/// the string before `.COPY=`. `None` for a plain row. Mirrors `gen_
+/// equipment_gap_tables.rs`'s own `.COPY=` split exactly (same literal
+/// PCGen syntax, one predicate, so the two tools agree on what a `.COPY=`
+/// row's base identity is).
+fn copy_base_identity(line: &str) -> Option<&str> {
+    let first = line.split('\t').next().unwrap_or("");
+    first.split_once(".COPY=").map(|(base, _)| base)
+}
+
+/// Resolves a `.COPY=` row's base identity to the PLAIN (non-`.COPY=`)
+/// `EquipmentRecord` that declares it -- the record whose own header line's
+/// `KEY:` token (or, absent one, whose bare first-column text) equals the
+/// identity. Never matches a `.COPY=`-declared record (at most one hop,
+/// mirrors `gen_equipment_gap_tables.rs`'s `collect_base_fields` and
+/// `corpus_literal_sweep`'s `Sweep::copy_base_row` exactly, so all three
+/// tools agree on "the base").
+fn find_copy_base<'a>(entries: &'a [EquipmentRecord], identity: &str) -> Option<&'a EquipmentRecord> {
+    entries.iter().find(|r| {
+        let first = r.header_raw_line.split('\t').next().unwrap_or("").trim();
+        if first.contains(".COPY=") {
+            return false;
+        }
+        match r.tokens_on_line(r.header_line_number).into_iter().find(|t| t.key == "KEY") {
+            Some(t) => t.value == identity,
+            None => first == identity,
+        }
+    })
+}
 
 fn pcgen_data_root() -> PathBuf {
     if let Ok(v) = env::var("PCGEN_DATA_ROOT") {
@@ -143,10 +173,43 @@ fn enrich_one(path: &Path, data_root: &Path) -> Outcome {
         }
     }
 
+    // `SD31-E6-F6-001`: when the cited line is ITSELF a `.COPY=` declaration,
+    // fold in the base record's own tokens too -- otherwise `raw_tokens`
+    // (this exact field) is the ONLY provenance surface
+    // `sd27_equipment_modifier_price_matches_corpus_cost_token.rs` and other
+    // callers check, and a genuinely inherited, corpus-real `cost_gp`/
+    // `weight_lbs`/`description` (`gen_equipment_gap_tables.rs`'s own `.COPY=`
+    // inheritance) would read as fabricated -- a real value with no token to
+    // justify it in the ONE field meant to justify it. Resolved by the
+    // IDENTICAL `KEY:`-or-bare-name rule the generator and `corpus_literal_
+    // sweep` already use, so all three tools agree on "the base". At most
+    // one hop: `find_copy_base` never matches another `.COPY=` row.
+    let mut all_tokens: Vec<&EquipmentToken> = line_tokens;
+    let mut all_bonus_chains: Vec<&BonusToken> = line_bonus_chains;
+    if let Some(base_identity) = copy_base_identity(cited_line_text)
+        && let Some(base_record) = find_copy_base(&parsed.entries, base_identity)
+    {
+        let base_line = base_record.header_line_number;
+        let base_line_text = lst_text.lines().nth(base_line.saturating_sub(1)).unwrap_or("");
+        let base_tokens = base_record.tokens_on_line(base_line);
+        for token in &base_tokens {
+            let rendered = format!("{}:{}", token.key, token.value);
+            if !base_line_text.contains(&rendered) {
+                return Outcome::MergedEntryMismatch(format!(
+                    "{lst_rel_path}:{line} (record_key={record_key:?}): inherited base token \
+                     {rendered:?} not byte-present on the base's own line {base_line} -- \
+                     refusing to ship an unprovable inheritance"
+                ));
+            }
+        }
+        all_tokens.extend(base_tokens);
+        all_bonus_chains.extend(base_record.bonus_chains_on_line(base_line));
+    }
+
     let raw_tokens: Vec<Value> =
-        line_tokens.iter().map(|t| json!({ "key": t.key, "value": t.value })).collect();
+        all_tokens.iter().map(|t| json!({ "key": t.key, "value": t.value })).collect();
     let raw_bonus_chains: Vec<Value> =
-        line_bonus_chains.iter().map(|b| json!({ "qualifiers": b.qualifiers })).collect();
+        all_bonus_chains.iter().map(|b| json!({ "qualifiers": b.qualifiers })).collect();
 
     let data_obj = root
         .get_mut("data")
@@ -251,5 +314,58 @@ fn main() {
         for mismatch in &merged_entry_mismatches {
             eprintln!("  {mismatch}");
         }
+    }
+}
+
+#[cfg(test)]
+mod copy_base_tests {
+    use super::*;
+
+    /// The real corpus shape (`Exclusionary_AMF`): the cited line is a bare
+    /// `.COPY=` declaration with no `COST:` of its own; the base row two
+    /// lines away states the real value. `find_copy_base` must resolve it
+    /// by the base's `KEY:` token, not by any bare-name coincidence.
+    #[test]
+    fn find_copy_base_resolves_by_key_token() {
+        let text = "Exclusionary\t\tKEY:Special Ability ~ Exclusionary ~ Amulet of Mighty Fists\t\tCOST:3750\n\
+                     Special Ability ~ Exclusionary ~ Amulet of Mighty Fists.COPY=Exclusionary_AMF\t\tVISIBLE:NO\n";
+        let parsed = parse_equipment_entries("test.lst", text);
+        let base = find_copy_base(
+            &parsed.entries,
+            "Special Ability ~ Exclusionary ~ Amulet of Mighty Fists",
+        )
+        .expect("base record must resolve");
+        let cost = base
+            .tokens_on_line(base.header_line_number)
+            .into_iter()
+            .find(|t| t.key == "COST")
+            .expect("base must carry its own COST: token");
+        assert_eq!(cost.value, "3750");
+    }
+
+    /// A `.COPY=` row is never itself matched as a base -- proves
+    /// inheritance is at most one hop, mirroring `gen_equipment_gap_
+    /// tables.rs`'s and `corpus_literal_sweep`'s identical restriction.
+    #[test]
+    fn find_copy_base_never_matches_another_copy_row() {
+        let text = "Base\t\tKEY:X\t\tCOST:1\n\
+                     X.COPY=Mid\t\tVISIBLE:NO\n\
+                     Mid.COPY=Leaf\t\tVISIBLE:NO\n";
+        let parsed = parse_equipment_entries("test.lst", text);
+        assert!(
+            find_copy_base(&parsed.entries, "Mid").is_none(),
+            "Mid is itself a .COPY= row (X.COPY=Mid) and must never serve as a base"
+        );
+    }
+
+    /// `copy_base_identity` mirrors the identical split every sibling tool
+    /// (`gen_equipment_gap_tables.rs`, `corpus_literal_sweep`) uses.
+    #[test]
+    fn copy_base_identity_splits_on_the_literal_marker() {
+        assert_eq!(
+            copy_base_identity("Special Ability ~ Answering ~ Weapon.COPY=Answering\t\tVISIBLE:NO"),
+            Some("Special Ability ~ Answering ~ Weapon")
+        );
+        assert_eq!(copy_base_identity("Plain Record\t\tCOST:5"), None);
     }
 }

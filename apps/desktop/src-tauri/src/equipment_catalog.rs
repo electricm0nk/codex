@@ -698,30 +698,47 @@ mod tests {
         // Real corpus coverage, not a target: CRB and ARG carry template and
         // bookkeeping rows with no `DESC:` token at all, and that gap is
         // documented on `crb::equipment_tables::EquipmentTableEntry`.
-        assert_eq!(with_description("CRB"), 2022);
-        assert_eq!(with_description("APG"), 349);
-        assert_eq!(with_description("ACG"), 264);
+        //
+        // RAISED `SD31-E6-F6-001`, 2026-08-16: `gen_equipment_gap_tables.rs`
+        // gained `.COPY=` inheritance (a `.COPY=` row with no `DESC:`/
+        // `SPROP:` of its own now inherits its base record's real one) --
+        // every book whose gap-lane rows include `.COPY=` variants gained
+        // real, corpus-true descriptions that were previously `None` purely
+        // because the parser never looked at the base row. One newly-
+        // recovered description (`CRB IntItemBase`) was refused rather than
+        // shipped: its base's `SPROP:` states 4 bare (unnumbered) `%`
+        // placeholders with a 4-argument `|` tail `render_pcgen_desc`'s
+        // numbered-reference detection does not resolve, so `gen_equipment_
+        // gap_tables.rs`'s own `safe_description` gate (reusing this exact
+        // module's `leaked_pcgen_syntax` check) ships `None` instead of
+        // broken syntax -- see `no_catalog_serves_a_description_carrying_
+        // raw_pcgen_syntax` immediately below, which is what caught it.
+        // Books untouched by the fix (`B1`, `PU`, `UE`, `UM`) are unpinned-
+        // changed; `UW`'s own 2 recovered fields were `weight_lbs`, not
+        // `description`, so its count is unchanged too. Every figure below
+        // re-derived fresh from the catalog itself, not adjusted by delta.
+        assert_eq!(with_description("CRB"), 2219);
+        assert_eq!(with_description("APG"), 368);
+        assert_eq!(with_description("ACG"), 312);
         assert_eq!(with_description("B1"), 4);
-        assert_eq!(with_description("ARG"), 194);
+        assert_eq!(with_description("ARG"), 205);
         assert_eq!(with_description("PU"), 42);
-        assert_eq!(with_description("UI"), 41);
+        assert_eq!(with_description("UI"), 48);
         assert_eq!(with_description("UE"), 448);
         // 24 of UM's 26 (both Scrollmaster Gear ArmsArmor rows carry no
         // `DESC:` token; all 24 General spellbooks do).
         assert_eq!(with_description("UM"), 24);
-        // 216 of UPsi's 326 equipment + 95 of its 113 equipmods = 311.
-        assert_eq!(with_description("UPSI"), 311);
-        // 88 of UC's 204 (149 ArmsArmor + 26 General + 19 Equipmods + 10
-        // MagicItems) -- most ArmsArmor rows (ammunition, armor, plain
-        // weapons) carry no `SPROP:` token at all, matching every other
-        // book's own weapon-heavy shortfall.
-        assert_eq!(with_description("UC"), 88);
+        assert_eq!(with_description("UPSI"), 406);
+        // Most ArmsArmor rows (ammunition, armor, plain weapons) carry no
+        // `SPROP:` token at all, matching every other book's own
+        // weapon-heavy shortfall.
+        assert_eq!(with_description("UC"), 102);
         // UW reaches this catalog only through the corpus gap lane; 57 of its
         // 127 rows carry a real `DESC:`/`SPROP:` token.
         assert_eq!(with_description("UW"), 57);
         assert_eq!(
             response.entries.iter().filter(|e| e.description.is_some()).count(),
-            3844
+            4235
         );
     }
 

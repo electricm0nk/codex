@@ -1,21 +1,62 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "+2 attack bonus and does +2d6 bonus damage vs. psionic creatures",
     "key": "PSIBANE_A",
     "name": "PSIBANE_A",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "NegLevels",
+          "1",
+          "PREVARGT:IsPsionic,0"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Psibane ~ Ammunition"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ammunition"
+      },
+      {
+        "key": "PLUS",
+        "value": "2"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.395"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,WeaponEnhancement,Ammunition"
+      },
+      {
+        "key": "SPROP",
+        "value": "+2 attack bonus and does +2d6 bonus damage vs. psionic creatures"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Negative Levels"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

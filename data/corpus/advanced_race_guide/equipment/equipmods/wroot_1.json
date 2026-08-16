@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
-    "cost_gp": null,
-    "description": null,
+    "cost_gp": 1000.0,
+    "description": "On confirmed critical, creature hit is unharmed and weapon gains 1 life point which can be absorbed by its wielder as 1 arcane or ki pool point with a swift action. This weapon can hold up to 1 life point.  Unspent life points dissipate at dusk.",
     "key": "WROOT_1",
     "name": "WROOT_1",
     "raw_bonus_chains": [],
@@ -11,11 +11,47 @@
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Material ~ Wyroot / 1 Life Point"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "TEXT=Wyroot"
+      },
+      {
+        "key": "TYPE",
+        "value": "BaseMaterial.Weapon"
+      },
+      {
+        "key": "COST",
+        "value": "1000"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Wyroot"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,Wooden,Melee"
+      },
+      {
+        "key": "SPROP",
+        "value": "On confirmed critical, creature hit is unharmed and weapon gains 1 life point which can be absorbed by its wielder as 1 arcane or ki pool point with a swift action. This weapon can hold up to 1 life point.  Unspent life points dissipate at dusk."
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

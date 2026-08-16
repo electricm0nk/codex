@@ -2,20 +2,65 @@
   "completeness": "chassis_only",
   "data": {
     "category": "Equipmods",
-    "cost_gp": null,
+    "cost_gp": 0.0,
     "description": null,
     "key": "Intelligent Item Alignment (LG)",
     "name": "Intelligent Item Alignment (LG)",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "NegLevels",
+          "1+var(\"IntItemNegativeLevel\")",
+          "!PREALIGN:LG"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Intelligent Item ~ Alignment / Lawful Good"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Armor.Goods"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "ItemAlign"
+      },
+      {
+        "key": "REPLACES",
+        "value": "Intelligent Item ~ Alignment / Chaotic Good,Intelligent Item ~ Alignment / Chaotic Neutral,Intelligent Item ~ Alignment / Chaotic Evil,Intelligent Item ~ Alignment / Neutral Evil,Intelligent Item ~ Alignment / Lawful Evil,Intelligent Item ~ Alignment / Lawful Neutral,Intelligent Item ~ Alignment / Neutral Good,Intelligent Item ~ Alignment / True Neutral"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,EQMOD=Intelligent Item ~ Base"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Intelligent Item|AUTOMATIC|Intelligent Item ~ Align (LG)"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

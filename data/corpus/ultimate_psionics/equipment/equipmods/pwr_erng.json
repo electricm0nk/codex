@@ -2,7 +2,7 @@
   "completeness": "chassis_only",
   "data": {
     "category": "Equipmods",
-    "cost_gp": null,
+    "cost_gp": 0.0,
     "description": null,
     "key": "PWR_ERNG",
     "name": "PWR_ERNG",
@@ -11,11 +11,47 @@
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Power Choice / Earring of Resistance"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "SPELL"
+      },
+      {
+        "key": "TYPE",
+        "value": "EarringOfResistance"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Psionic"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.413"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,EarringOfResistance"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "EQBUILDER.SPELL|Psionic|1|9"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
