@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "increase target's concentration DC by 10 for 1 minute; can't be affected again for 24 hours",
     "key": "Distracting_Greater",
     "name": "Distracting_Greater",
     "raw_bonus_chains": [],
@@ -11,11 +11,39 @@
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Distracting / Greater ~ Weapon"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon"
+      },
+      {
+        "key": "PLUS",
+        "value": "2"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.213"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,WeaponEnhancement,Weapon"
+      },
+      {
+        "key": "SPROP",
+        "value": "increase target's concentration DC by 10 for 1 minute; can't be affected again for 24 hours"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
-    "cost_gp": null,
-    "description": null,
+    "cost_gp": 0.0,
+    "description": "cold iron",
     "key": "Cold Iron",
     "name": "Cold Iron",
     "raw_bonus_chains": [
@@ -99,7 +99,7 @@
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

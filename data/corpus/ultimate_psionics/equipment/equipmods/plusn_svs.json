@@ -1,21 +1,77 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "+% enhancement|Severis",
     "key": "PLUSN_SVS",
     "name": "PLUSN_SVS",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "SeverisEnhancementBonus",
+          "max(0,floor((TL-6)/4))",
+          "PREABILITY:1,CATEGORY=Special Ability,Severis Attunement"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "SeverisEnhancementBonus",
+          "1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "WEAPON",
+          "DAMAGE,TOHIT",
+          "SeverisEnhancementBonus",
+          "TYPE=ENHANCEMENT"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Quality ~ Severis / Enhancement Bonus"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "MIDDLE"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "ITYPE",
+        "value": "WeaponEnhancement.Psionic"
+      },
+      {
+        "key": "SPROP",
+        "value": "+% enhancement|Severis"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SeverisEnhancementBonus|0"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

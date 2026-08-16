@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "grants spell resistance 15",
     "key": "SPELL_RES_15",
     "name": "SPELL_RES_15",
     "raw_bonus_chains": [],
@@ -11,11 +11,51 @@
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Spell Resistance / 15 ~ Armor"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "FRONT"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NORMAL"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Bracer.ArmorLike"
+      },
+      {
+        "key": "PLUS",
+        "value": "3"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.464"
+      },
+      {
+        "key": "PREMULT",
+        "value": "2,[PRETYPE:1,ArmorEnhancement],[PRETYPE:1,Armor,Bracer]"
+      },
+      {
+        "key": "SR",
+        "value": "15"
+      },
+      {
+        "key": "SPROP",
+        "value": "grants spell resistance 15"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

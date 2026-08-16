@@ -1,21 +1,53 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "Grants maximum skill ranks in %CHOICE",
     "key": "MAX_GNL",
     "name": "MAX_GNL",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILLRANK",
+          "%CHOICE",
+          "99"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Bonus Skill / Maximize Any Skill"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NONAME"
+      },
+      {
+        "key": "TYPE",
+        "value": "Intelligence"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SPROP",
+        "value": "Grants maximum skill ranks in %CHOICE"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "SKILL|TYPE=Strength|TYPE=Dexterity|TYPE=Intelligence|TYPE=Wisdom|TYPE=Charisma|TITLE=Maximized Any Skill"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

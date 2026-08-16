@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "+1d4 ectoplasmic damage (ignores DR); On a critical hit deals +%d6 additional ectoplasmic damage (ignores DR)|CRITMULT-1",
     "key": "PKIN_BR_A",
     "name": "PKIN_BR_A",
     "raw_bonus_chains": [],
@@ -11,11 +11,39 @@
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Psychokinetic Burst ~ Ammunition"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ammunition"
+      },
+      {
+        "key": "PLUS",
+        "value": "2"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.396"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,WeaponEnhancement,Ammunition"
+      },
+      {
+        "key": "SPROP",
+        "value": "+1d4 ectoplasmic damage (ignores DR); On a critical hit deals +%d6 additional ectoplasmic damage (ignores DR)|CRITMULT-1"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

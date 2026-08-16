@@ -206,7 +206,7 @@ fn repair_one(
         );
     }
 
-    let closure = token_closure(base_row, &identities, mod_index);
+    let closure = token_closure(base_row, &identities, mod_index, None);
     if closure.is_empty() {
         return Outcome::NoDeclarationFound(format!(
             "{lst_rel_path}:{new_line}: declaration row carries no tab-separated fields"

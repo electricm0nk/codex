@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "can use ki attacks through weapon",
     "key": "KI",
     "name": "KI",
     "raw_bonus_chains": [],
@@ -11,11 +11,47 @@
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Ki Focus ~ Melee"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "FRONT"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NORMAL"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Melee"
+      },
+      {
+        "key": "PLUS",
+        "value": "1"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.347"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "3,WeaponEnhancement,Weapon,Melee"
+      },
+      {
+        "key": "SPROP",
+        "value": "can use ki attacks through weapon"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

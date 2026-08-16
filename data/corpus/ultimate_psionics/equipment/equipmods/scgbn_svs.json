@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "extra +2 enhancement, +2d6 damage against phrenic scourge creatures|PREMULT:2,[PREVARGTEQ:TL,6],[PREABILITY:1,CATEGORY=Special Ability,Severis Attunement]",
     "key": "SCGBN_SVS",
     "name": "SCGBN_SVS",
     "raw_bonus_chains": [],
@@ -11,11 +11,31 @@
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Quality ~ Severis / Scourgebane"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "SPROP",
+        "value": "extra +2 enhancement, +2d6 damage against phrenic scourge creatures|PREMULT:2,[PREVARGTEQ:TL,6],[PREABILITY:1,CATEGORY=Special Ability,Severis Attunement]"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "ignores damage reduction and hardness of ectoplasm creatures and items and treats all successful hits as critical hits",
     "key": "DISSIP",
     "name": "DISSIP",
     "raw_bonus_chains": [],
@@ -11,11 +11,39 @@
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Dissipater ~ Melee"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Melee"
+      },
+      {
+        "key": "PLUS",
+        "value": "1"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.394"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "3,WeaponEnhancement,Weapon,Melee"
+      },
+      {
+        "key": "SPROP",
+        "value": "ignores damage reduction and hardness of ectoplasm creatures and items and treats all successful hits as critical hits"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

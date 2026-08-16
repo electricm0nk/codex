@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
-    "cost_gp": null,
-    "description": null,
+    "cost_gp": 0.0,
+    "description": "performance",
     "key": "PERFORMANCE",
     "name": "PERFORMANCE",
     "raw_bonus_chains": [],
@@ -11,11 +11,47 @@
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Quality ~ Performance"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialWeaponQualities"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Performance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.144"
+      },
+      {
+        "key": "SPROP",
+        "value": "performance"
+      },
+      {
+        "key": "INFO",
+        "value": "SPROP|When wielding this weapon, if an attack or combat maneuver made with this weapon prompts a combat performance check, you gain a +2 bonus on that check."
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

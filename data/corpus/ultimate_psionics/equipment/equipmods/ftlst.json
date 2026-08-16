@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "for 1 minute, target gets -2 to AC and Will saves; Intimidate checks against target get +3",
     "key": "FTLST",
     "name": "FTLST",
     "raw_bonus_chains": [],
@@ -11,11 +11,39 @@
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Fatalist ~ Weapon"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon"
+      },
+      {
+        "key": "PLUS",
+        "value": "2"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.395"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,WeaponEnhancement,Weapon"
+      },
+      {
+        "key": "SPROP",
+        "value": "for 1 minute, target gets -2 to AC and Will saves; Intimidate checks against target get +3"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "+1d6 cold damage, on a critical hit deals +%d10 additional cold damage|CRITMULT-1",
     "key": "ICY_BRST",
     "name": "ICY_BRST",
     "raw_bonus_chains": [],
@@ -11,11 +11,47 @@
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Icy Burst ~ Weapon"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "FRONT"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NORMAL"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ammunition.Weapon"
+      },
+      {
+        "key": "PLUS",
+        "value": "2"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.347"
+      },
+      {
+        "key": "PREMULT",
+        "value": "2,[PRETYPE:1,WeaponEnhancement],[PRETYPE:1,Weapon,Ammunition]"
+      },
+      {
+        "key": "SPROP",
+        "value": "+1d6 cold damage, on a critical hit deals +%d10 additional cold damage|CRITMULT-1"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

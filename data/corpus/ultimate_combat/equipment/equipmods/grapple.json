@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
-    "cost_gp": null,
-    "description": null,
+    "cost_gp": 0.0,
+    "description": "grapple",
     "key": "GRAPPLE",
     "name": "GRAPPLE",
     "raw_bonus_chains": [],
@@ -11,11 +11,47 @@
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Quality ~ Grapple"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialWeaponQualities"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Grapple"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.130"
+      },
+      {
+        "key": "SPROP",
+        "value": "grapple"
+      },
+      {
+        "key": "INFO",
+        "value": "SPROP|On a successful critical hit with a weapon of this type, you can grapple the target of the attack. The wielder can then attempt a combat maneuver check to grapple his opponent as a free action."
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

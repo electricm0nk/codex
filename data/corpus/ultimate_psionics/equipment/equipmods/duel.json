@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
-    "cost_gp": null,
-    "description": null,
+    "cost_gp": 14000.0,
+    "description": "Gain luck bonus to CMB and CMD double the enchantment bonus with maneuvers when using weapon",
     "key": "DUEL",
     "name": "DUEL",
     "raw_bonus_chains": [],
@@ -11,11 +11,39 @@
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Dueling / Luck Bonus ~ Melee"
+      },
+      {
+        "key": "TYPE",
+        "value": "Melee.Weapon"
+      },
+      {
+        "key": "COST",
+        "value": "14000"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.394"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "3,WeaponEnhancement,Weapon,Melee"
+      },
+      {
+        "key": "SPROP",
+        "value": "Gain luck bonus to CMB and CMD double the enchantment bonus with maneuvers when using weapon"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

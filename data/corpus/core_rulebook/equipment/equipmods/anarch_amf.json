@@ -1,21 +1,78 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "unarmed and natural attacks are chaotically aligned, +2d6 damage against lawful targets, 1 negative level bestowed on lawful wielder",
     "key": "ANARCH_AMF",
     "name": "ANARCH_AMF",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "NEGLEVELS",
+          "1",
+          "PREALIGN:LG,LN,LE"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "+2"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Anarchic ~ Amulet of Mighty Fists"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "FRONT"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NORMAL"
+      },
+      {
+        "key": "TYPE",
+        "value": "Amulet of Mighty Fists"
+      },
+      {
+        "key": "PLUS",
+        "value": "2"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.468"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,EQMOD=Special Ability ~ Amulet of Mighty Fists Base"
+      },
+      {
+        "key": "SPROP",
+        "value": "unarmed and natural attacks are chaotically aligned, +2d6 damage against lawful targets, 1 negative level bestowed on lawful wielder"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Negative Levels|PREALIGN:LG,LN,LE"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Unarmed Anarchic"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

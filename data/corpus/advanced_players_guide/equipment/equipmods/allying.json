@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "Allows transfer of some or all of its enhancement bonus to an ally's weapon.",
     "key": "ALLYING",
     "name": "ALLYING",
     "raw_bonus_chains": [],
@@ -11,11 +11,39 @@
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Allying ~ Weapon"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Ammunition"
+      },
+      {
+        "key": "PLUS",
+        "value": "1"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.286"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,WeaponEnhancement,Weapon"
+      },
+      {
+        "key": "SPROP",
+        "value": "Allows transfer of some or all of its enhancement bonus to an ally's weapon."
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

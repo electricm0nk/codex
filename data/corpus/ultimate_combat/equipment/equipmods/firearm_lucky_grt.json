@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "A greater lucky firearm has its own magical reservoir of grit (see page 9). Usually this grit is stored within the marks of an engraving or in a trinket that hangs from the firearm. Often these marks take the form of holy symbols or fetishes, but such a reservoir can take just about any form. This reservoir holds 3 grit points, which is refreshed at the start of each day. Whether or not the wielder of a lucky firearm has any deeds (see page 10), she can always spend 1 grit point from the lucky firearm to reroll an attack from it that would result in a misfire. When the wielder does so, she must take the second result, even if that attack roll also results in a misfire.",
     "key": "FIREARM_LUCKY_GRT",
     "name": "FIREARM_LUCKY_GRT",
     "raw_bonus_chains": [],
@@ -11,11 +11,35 @@
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Lucky / Greater ~ Firearm"
+      },
+      {
+        "key": "TYPE",
+        "value": "OneHandedFirearm.TwoHandedFirearm"
+      },
+      {
+        "key": "PLUS",
+        "value": "3"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.141"
+      },
+      {
+        "key": "SPROP",
+        "value": "A greater lucky firearm has its own magical reservoir of grit (see page 9). Usually this grit is stored within the marks of an engraving or in a trinket that hangs from the firearm. Often these marks take the form of holy symbols or fetishes, but such a reservoir can take just about any form. This reservoir holds 3 grit points, which is refreshed at the start of each day. Whether or not the wielder of a lucky firearm has any deeds (see page 10), she can always spend 1 grit point from the lucky firearm to reroll an attack from it that would result in a misfire. When the wielder does so, she must take the second result, even if that attack roll also results in a misfire."
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

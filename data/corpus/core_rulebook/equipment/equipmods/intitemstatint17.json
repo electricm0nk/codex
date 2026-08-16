@@ -2,20 +2,67 @@
   "completeness": "chassis_only",
   "data": {
     "category": "Equipmods",
-    "cost_gp": null,
+    "cost_gp": 2800.0,
     "description": null,
     "key": "IntItemStatINT17",
     "name": "IntItemStatINT17",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "IntelligentItemEgo",
+          "3"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "IntItemStatINT",
+          "7"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Intelligent Item ~ Ability Score / Intelligence 17"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Armor.Goods"
+      },
+      {
+        "key": "COST",
+        "value": "2800"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "REPLACES",
+        "value": "Intelligent Item ~ Ability Score / Intelligence 11,Intelligent Item ~ Ability Score / Intelligence 12,Intelligent Item ~ Ability Score / Intelligence 13,Intelligent Item ~ Ability Score / Intelligence 14,Intelligent Item ~ Ability Score / Intelligence 15,Intelligent Item ~ Ability Score / Intelligence 16,Intelligent Item ~ Ability Score / Intelligence 18,Intelligent Item ~ Ability Score / Intelligence 19,Intelligent Item ~ Ability Score / Intelligence 20"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,EQMOD=Intelligent Item ~ Base"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Intelligent Item|AUTOMATIC|Intelligent Item Stat INT ~ 17"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

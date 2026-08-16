@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": 7000.0,
-    "description": null,
+    "description": "If wearer has panache class feature, can spend 1 panache point to make melee attack aginst creature that reduced wearer to below 0 hp",
     "key": "Spiteful",
     "name": "Spiteful",
     "raw_bonus_chains": [],
@@ -39,7 +39,7 @@
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

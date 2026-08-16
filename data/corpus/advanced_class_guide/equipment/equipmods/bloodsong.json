@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "weapon gains keen ability when wielder benefits from raging song; gain 1d10 temporary hit points if wearer confirms critical while under raging song (2d10 if crit multiplier is x3, 3d10 if crit multiplier is x4)",
     "key": "Bloodsong",
     "name": "Bloodsong",
     "raw_bonus_chains": [],
@@ -39,7 +39,7 @@
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

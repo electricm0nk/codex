@@ -907,36 +907,49 @@ Potion\tKEY:Potion of Blur\tTYPE:Magic.Potion\tCOST:300
         // `disagreements` reproduces this 28-item list exactly, verified by
         // an isolated `cargo test --lib
         // equipment_resolver::tests::the_two_lookups_agree` run.
+        //
+        // SHRUNK 28 -> 14, `SD31-E6-F6-001`, 2026-08-16 (this fix's own
+        // `.COPY=` inheritance in `gen_equipment_gap_tables.rs`, generalized
+        // from `OPEN-ISSUES.md` rows 70/103's description recovery to
+        // `cost_gp`/`weight_lbs`). The SAME shape the wave-4 correction
+        // above already established for its own 8 entries: "Amorphous"
+        // etc. agreed because both lookups happened to already carry the
+        // real price. These 14 gap rows previously shipped `cost_gp: None`
+        // (a `.COPY=` row with no `COST:` token of its own, no inheritance
+        // mechanism to recover its base's real value) — `by_key` returned
+        // `None` while `equipment_cost_gp_headless_resolve` found the SAME
+        // real price via a hand-authored row's NAME match, so the two
+        // lookups genuinely disagreed. Now the gap row inherits its base's
+        // real `COST:` token (verified one record deep for every removed
+        // entry, e.g. `Cold Iron` inherits `COST:0` from
+        // `cr_equipmods.lst:109`'s `KEY:Material ~ Cold Iron` row, the
+        // SAME row `equipment_cost_gp_headless_resolve`'s CRB-name-match
+        // tier already finds) — both lookups now return the IDENTICAL real
+        // value, so there is no more pricing ambiguity to disambiguate.
+        // Removed: `Adamantine (Ammo)`, `Alchemical Silver`, `BRACE`,
+        // `CLOTH`, `Cold Iron`, `DISARM`, `LEATHER`, `MONK`, `Mithral
+        // (Light Armor)`, `Mithral (Shield)`, `NONLETHAL`, `STEEL`, `TRIP`,
+        // `WOOD` — each individually re-verified via a scratch print
+        // (`by_key.cost_gp == headless`, both `Some(<same value>)`) before
+        // removal, not assumed from the count alone. The remaining 14 are
+        // untouched by this cycle's file territory (no `equipment_gap`
+        // record shares their key) and still genuinely disagree.
         assert_eq!(
             disagreements,
             vec![
-                "Adamantine (Ammo)",
                 "Adamantine (Heavy Armor)",
                 "Adamantine (Light Armor)",
                 "Adamantine (Medium Armor)",
                 "Adamantine (Weapon)",
-                "Alchemical Silver",
-                "BRACE",
                 "Backpack (Carrier)",
                 "Backpack (Hydration)",
                 "Backpack (Weaponrack)",
-                "CLOTH",
-                "Cold Iron",
-                "DISARM",
-                "LEATHER",
-                "MONK",
                 "Mithral (Heavy Armor)",
                 "Mithral (Item)",
-                "Mithral (Light Armor)",
                 "Mithral (Medium Armor)",
-                "Mithral (Shield)",
-                "NONLETHAL",
                 "OBSIDIAN",
                 "REACH",
                 "ROPE",
-                "STEEL",
-                "TRIP",
-                "WOOD",
                 "Wooden",
             ],
             "a cross-book identity collision outside this pinned set means a newly ambiguous id \

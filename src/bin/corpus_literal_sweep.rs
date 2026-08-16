@@ -191,7 +191,19 @@ fn main() -> ExitCode {
                 .lines(&corpus_file)
                 .map(|lines| lines[record.source_line - 1].clone())
                 .unwrap_or_default();
-            let closure = token_closure(&base_row, &record.identities, &mod_index);
+            // SD31-E6-F6-001 (`OPEN-ISSUES.md` rows 70/103's `.COPY=`
+            // inheritance, generalized): when the cited row is itself a
+            // `.COPY=` declaration, resolve the base record it copies and
+            // fold its tokens into the closure too -- otherwise a genuinely
+            // inherited, corpus-real value (never fabricated, always
+            // resolved by the identical `KEY:`-or-bare-name rule
+            // `gen_equipment_gap_tables.rs`'s own inheritance uses) reads as
+            // unprovable, not because it is wrong but because the closure
+            // never looked at the row that states it.
+            let resolved_copy_base = copy_base_identity(&base_row)
+                .and_then(|identity| sweep.copy_base_row(book, identity));
+            let closure =
+                token_closure(&base_row, &record.identities, &mod_index, resolved_copy_base.as_deref());
             findings.extend(compare_tokens(record, &closure, &book_tokens, &mut sweep.tally));
         }
     }
@@ -571,6 +583,15 @@ const RACE_NEWEST_PRINTING: &[(&str, &str)] = &[
 /// publisher name is checked explicitly, not inferred from segment count
 /// alone, so an unrelated 4-segment path shape does not silently borrow
 /// this narrower rule.
+/// The identity a `.COPY=<name>` row's first column names as its base, when
+/// `row` is such a declaration — the string before `.COPY=`. `None` for a
+/// plain row. Mirrors `gen_equipment_gap_tables.rs`'s own `.COPY=` split
+/// exactly (same literal PCGen syntax, one predicate).
+fn copy_base_identity(row: &str) -> Option<&str> {
+    let first = row.split('\t').next().unwrap_or("");
+    first.split_once(".COPY=").map(|(base, _)| base)
+}
+
 fn book_dir_of(source_path: &str) -> Option<String> {
     let segments: Vec<&str> = source_path.split('/').filter(|s| !s.is_empty()).collect();
     if segments.len() >= 5 {
@@ -661,6 +682,39 @@ impl Sweep {
             .into_iter()
             .map(|((_, name), rows)| (name, rows))
             .collect()
+    }
+
+    /// Resolves a `.COPY=` row's base identity (the string before
+    /// `.COPY=`) to the PLAIN (non-`.COPY=`) row that declares it, scanning
+    /// every `.lst` file in the book — the identical `KEY:`-token-or-bare-
+    /// name resolution `gen_equipment_gap_tables.rs`'s own `collect_base_
+    /// fields` uses for the SAME relationship, so a `.COPY=` row's shipped
+    /// inherited fields and this check's own closure agree on what "the
+    /// base" means. `None` when no plain row states that identity — never
+    /// fabricated, and a `.COPY=` row is never itself matched (mirrors the
+    /// generator's own "at most one hop" rule).
+    fn copy_base_row(&mut self, book_dir: &str, base_identity: &str) -> Option<String> {
+        for path in lst_files(&self.corpus_root.join(book_dir)) {
+            let Some(lines) = self.lines(&path) else { continue };
+            for line in lines {
+                let fields: Vec<&str> = line.split('\t').collect();
+                let Some(first) = fields.first() else { continue };
+                let first = first.trim();
+                if first.is_empty() || first.contains(".COPY=") {
+                    continue;
+                }
+                let key_token =
+                    fields.iter().find_map(|f| f.trim().strip_prefix("KEY:"));
+                let matches = match key_token {
+                    Some(key) => key == base_identity,
+                    None => first == base_identity,
+                };
+                if matches {
+                    return Some(line.clone());
+                }
+            }
+        }
+        None
     }
 
     /// Every tab field of every `.lst` row in one book — the surface a

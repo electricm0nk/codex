@@ -6417,29 +6417,20 @@ mod tests {
             "the widening must not add a display-vs-charge divergence outside the two named books"
         );
         assert_eq!(
-            priced_non_crb, 137,
-            "CORRECTED SD31-W4-INTEGRATE-001, 2026-08-16 (found already red at this integration \
-             cycle's own inherited tip, 40771d3bf, predating every wave-4 branch): the prior 129 \
-             total undercounted by exactly 8 -- 8 real, non-zero-priced ACG equipmods (Amorphous, \
-             Burdenless, Exclusionary, Prehensile, Restful, Sneaky, Spiteful, Trackless, each \
-             4500 gp, from `equipment_gap_tables.rs`, which pre-dates this wave) were never \
-             included in this count even though `equipment_resolver.rs`'s own sibling test named \
-             them by mistake as a COST COLLISION (see that test's `SD31-W4-INTEGRATE-001` \
-             correction) -- both defects trace to the same 8 rows, one undercounting, one \
-             over-claiming an ambiguity. The 20 rows from the ACG/ARG widening (ACG 11 + ARG 9), \
-             plus 69 real non-zero-priced UE equipmods (75 UE equipmod rows carry a real cost, 6 \
-             of them Some(0.0) and so excluded here), plus 1 more: `Masterwork Tool`'s own \
-             resolved row is UE's 50 gp General item, not its free Equipmods row -- see this \
-             test's own doc comment -- plus 24 real non-zero-priced UPsi equipmods (of 113, the \
-             rest are `None` or `Some(0.0)`; UM contributes none, it has no equipment-modifier \
-             file), plus 2 real non-zero-priced UC equipmods (Dry Load COST:30, Throwing Shield \
-             COST:50; of 19, the rest are `None` or `Some(0.0)`), every one a row a \
-             recognition-only fix would have attached for free, plus 13 from SD-29's corpus gap \
-             lane -- of its 584 newly offered non-CRB Equipmods rows only 13 carry a real \
-             non-zero `COST:` token, the rest being `None` (no COST token, or a PCGen formula the \
-             table does not evaluate) or `Some(0.0)`, which is the ordinary shape of an equipment \
-             MODIFIER and not a gap in the ingest -- plus the 8 ACG rows this correction adds \
-             (20+69+1+24+2+13+8 = 137)"
+            priced_non_crb, 181,
+            "RAISED 137 -> 181, `SD31-E6-F6-001`, 2026-08-16: `gen_equipment_gap_tables.rs` \
+             gained `.COPY=` inheritance for `cost_gp` (a `.COPY=` row with no `COST:` of its own \
+             now inherits its base record's real one, resolved by the identical `KEY:`-or-bare- \
+             name identity a `.COPY=` reference itself resolves against) -- 209 corpus-wide gap \
+             rows recovered a real, non-fabricated `cost_gp` this cycle (verified one record deep \
+             against the pinned oracle, e.g. `BOWSTR` inherits `COST:0` from `cr_equipmods.lst:34`, \
+             `Amorphous` inherits `COST:4500` from `acg_equipmods.lst:10`, automating what a prior \
+             cycle's 8-row ACG hand-patch did manually). The +44 delta from 137 is the subset of \
+             those 209 that are (a) non-CRB, (b) genuinely non-zero-priced, and (c) reachable \
+             through `offered_modifier_rows()`'s own filtering -- re-derived fresh by running this \
+             test with `--nocapture`, not computed by arithmetic on the prior formula, since the \
+             prior formula's own additive shape (20+69+1+24+2+13+8) does not decompose cleanly \
+             against a corpus-wide mechanism change touching every book at once."
         );
     }
 

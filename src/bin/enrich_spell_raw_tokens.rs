@@ -217,7 +217,7 @@ fn enrich_one(
         identities.insert(record_key.to_string());
     }
 
-    let closure = token_closure(base_row, &identities, mod_index);
+    let closure = token_closure(base_row, &identities, mod_index, None);
     if closure.is_empty() {
         return Outcome::CitationMiss(format!(
             "{lst_rel_path}:{line}: base row carries no tab-separated fields at all -- \
@@ -470,6 +470,7 @@ mod tests {
             base_row.split('\n').next().unwrap(),
             &["Blade Lash".to_string()].into_iter().collect(),
             &mod_index,
+            None,
         );
         for field in &joined {
             assert!(closure.contains(field), "{field} must be a member of the independently-derived closure");

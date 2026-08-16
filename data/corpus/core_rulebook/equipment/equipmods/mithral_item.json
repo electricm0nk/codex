@@ -1,25 +1,104 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "mithral",
     "key": "Mithral (Item)",
     "name": "Mithral (Item)",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "EQM",
+          "WEIGHTDIV",
+          "2",
+          "TYPE=Enhancement.REPLACE"
+        ]
+      },
+      {
+        "qualifiers": [
+          "WEAPON",
+          "TOHIT",
+          "1",
+          "TYPE=Enhancement",
+          "PRETYPE:1,WEAPON"
+        ]
+      },
+      {
+        "qualifiers": [
+          "WEAPON",
+          "TOHIT",
+          "1",
+          "TYPE=Enhancement",
+          "PRETYPE:1,AMMUNITION"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "VISIBLE",
         "value": "NO"
       },
       {
+        "key": "KEY",
+        "value": "Material ~ Mithril ~ Weapon / Item"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "FRONT"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NORMAL"
+      },
+      {
+        "key": "TYPE",
+        "value": "BaseMaterial.MasterworkQuality.Ammunition.Weapon.Instruments.Tools.Goods"
+      },
+      {
+        "key": "COST",
+        "value": "WT*500"
+      },
+      {
         "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Metal.Mithral.Masterwork"
+      },
+      {
+        "key": "REPLACES",
+        "value": "Special Quality ~ Masterwork ~ Weapon,Special Quality ~ Masterwork ~ Item"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.154"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Metal"
+      },
+      {
+        "key": "SPROP",
+        "value": "mithral"
+      },
+      {
+        "key": "ASSIGNTOALL",
         "value": "NO"
+      },
+      {
+        "key": "INFO",
+        "value": "hp|30 hp/inch"
+      },
+      {
+        "key": "INFO",
+        "value": "Hardness|hardness 15"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

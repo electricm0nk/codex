@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "A reliable firearm is enchanted so that it is less likely to jam than other firearms. This enchantment reduces the misfire value of the affected firearm by 1 (minimum 0). This reduction occurs after any increases are calculated for firing with the broken condition, or for any other effect that might increase the misfire value of a firearm.",
     "key": "FIREARM_RELIABLE",
     "name": "FIREARM_RELIABLE",
     "raw_bonus_chains": [],
@@ -11,11 +11,35 @@
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Reliable ~ Firearm"
+      },
+      {
+        "key": "TYPE",
+        "value": "OneHandedFirearm.TwoHandedFirearm"
+      },
+      {
+        "key": "PLUS",
+        "value": "1"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.141"
+      },
+      {
+        "key": "SPROP",
+        "value": "A reliable firearm is enchanted so that it is less likely to jam than other firearms. This enchantment reduces the misfire value of the affected firearm by 1 (minimum 0). This reduction occurs after any increases are calculated for firing with the broken condition, or for any other effect that might increase the misfire value of a firearm."
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

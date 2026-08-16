@@ -1,21 +1,66 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "Profane bonus to all saving throws of %CHOICE",
     "key": "BNS_SAV_PRO",
     "name": "BNS_SAV_PRO",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SAVE",
+          "FORTITUDE,REFLEX,WILL",
+          "%CHOICE",
+          "TYPE=PROFANE"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Bonus Save / Profane"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Shield.Weapon.Belt.Body.Chest.Eyes.Feet.Hands.Head.Headband.Neck.Ring.Shoulders.Wrist.Instrument.Staff.Rod"
+      },
+      {
+        "key": "COST",
+        "value": "(2000*%CHOICE*%CHOICE)"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Enhancement.Magic"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.550"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREMULT:2,[PRETYPE:1,Enhancement,ArmorEnhancement,ShieldEnhancement,WeaponEnhancement],[PRETYPE:1,Armor,Shield,Weapon]],[PRETYPE:1,Belt,Body,Chest,Eyes,Feet,Hands,Head,Headband,Neck,Ring,Shoulders,Wrist,Instrument,Staff,Rod]"
+      },
+      {
+        "key": "SPROP",
+        "value": "Profane bonus to all saving throws of %CHOICE"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMBER|MIN=1|MAX=5|TITLE=Profane Bonus"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

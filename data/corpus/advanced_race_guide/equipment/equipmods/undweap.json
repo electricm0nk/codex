@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
-    "cost_gp": null,
-    "description": null,
+    "cost_gp": 300.0,
+    "description": "As a full-round action, an undine can make a single melee attack with the weapon and use her hydraulic push spell-like ability against the target of that melee attack.",
     "key": "UNDWEAP",
     "name": "UNDWEAP",
     "raw_bonus_chains": [],
@@ -11,11 +11,35 @@
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Quality ~ Undine Weaponshaft ~ Weapon"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon"
+      },
+      {
+        "key": "COST",
+        "value": "300"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.177"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Reach,Spear,Polearm"
+      },
+      {
+        "key": "SPROP",
+        "value": "As a full-round action, an undine can make a single melee attack with the weapon and use her hydraulic push spell-like ability against the target of that melee attack."
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

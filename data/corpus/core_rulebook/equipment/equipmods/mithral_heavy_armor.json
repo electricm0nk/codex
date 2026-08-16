@@ -1,25 +1,121 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
-    "cost_gp": null,
-    "description": null,
+    "cost_gp": 9000.0,
+    "description": "mithral",
     "key": "Mithral (Heavy Armor)",
     "name": "Mithral (Heavy Armor)",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "ArmorCheckPenalty",
+          "-3",
+          "TYPE=Enhancement"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQM",
+          "WEIGHTDIV",
+          "2",
+          "TYPE=Enhancement.REPLACE"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "ACCHECK",
+          "3",
+          "TYPE=Enhancement.REPLACE"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "MAXDEX",
+          "2"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "SPELLFAILURE",
+          "-10",
+          "TYPE=Enhancement"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "VISIBLE",
         "value": "NO"
       },
       {
+        "key": "KEY",
+        "value": "Material ~ Mithril ~ Armor / Heavy"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "FRONT"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NORMAL"
+      },
+      {
+        "key": "TYPE",
+        "value": "BaseMaterial.MasterworkQuality.Armor"
+      },
+      {
+        "key": "COST",
+        "value": "9000"
+      },
+      {
         "key": "VISIBLE",
-        "value": "NO"
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Metal.Mithral.Masterwork"
+      },
+      {
+        "key": "REPLACES",
+        "value": "Special Quality ~ Masterwork ~ Armor"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.154"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Heavy"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Metal"
+      },
+      {
+        "key": "SPROP",
+        "value": "mithral"
+      },
+      {
+        "key": "ARMORTYPE",
+        "value": "Heavy|Medium"
+      },
+      {
+        "key": "INFO",
+        "value": "hp|30 hp/inch"
+      },
+      {
+        "key": "INFO",
+        "value": "Hardness|hardness 15"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "A silencing weapon makes no noise when drawn or when used to attack. Targets struck can be muffled, somewhat. Critical hits silence target.",
     "key": "SILENCING",
     "name": "SILENCING",
     "raw_bonus_chains": [],
@@ -11,11 +11,39 @@
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Silencing ~ Weapon"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ammunition.Weapon.Melee.Ranged"
+      },
+      {
+        "key": "PLUS",
+        "value": "2"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.237"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,WeaponEnhancement"
+      },
+      {
+        "key": "SPROP",
+        "value": "A silencing weapon makes no noise when drawn or when used to attack. Targets struck can be muffled, somewhat. Critical hits silence target."
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

@@ -1,21 +1,65 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "bonus spell",
     "key": "BNS_SPELL",
     "name": "BNS_SPELL",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SPELLCAST",
+          "CLASS.ANY;LEVEL.%CHOICE",
+          "1"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Bonus Spell"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Shield.Weapon.Belt.Body.Chest.Eyes.Feet.Hands.Head.Headband.Neck.Ring.Shoulders.Wrist.Instrument.Staff.Rod"
+      },
+      {
+        "key": "COST",
+        "value": "(1000*(max(%CHOICE,1))*(max(%CHOICE,(1/2))))"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Enhancement.Magic"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.550"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREMULT:2,[PRETYPE:1,Enhancement,ArmorEnhancement,ShieldEnhancement,WeaponEnhancement],[PRETYPE:1,Armor,Shield,Weapon]],[PRETYPE:1,Belt,Body,Chest,Eyes,Feet,Hands,Head,Headband,Neck,Ring,Shoulders,Wrist,Instrument,Staff,Rod]"
+      },
+      {
+        "key": "SPROP",
+        "value": "bonus spell"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMBER|0|1|2|3|4|5|6|7|8|9|MULTIPLE|TITLE=Spell Level"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

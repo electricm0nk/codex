@@ -1,21 +1,76 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
-    "cost_gp": null,
-    "description": null,
+    "cost_gp": 0.0,
+    "description": "Uses twice the charges as normal.",
     "key": "BROKEM",
     "name": "BROKEM",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.WAND",
+          "-BASECOST*.25"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.STAFF",
+          "-BASECOST*.25"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Quality ~ Broken ~ Magic Item"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "FRONT"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NORMAL"
+      },
+      {
+        "key": "TYPE",
+        "value": "BrokenCondition.Wand.Staff"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Broken"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.566"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Wand,Staff"
+      },
+      {
+        "key": "SPROP",
+        "value": "Uses twice the charges as normal."
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

@@ -2,12 +2,96 @@
   "completeness": "chassis_only",
   "data": {
     "category": "Equipmods",
-    "cost_gp": null,
+    "cost_gp": 0.0,
     "description": null,
     "key": "THROWN_AMMO",
     "name": "THROWN_AMMO",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.MASTERWORK",
+          "-294"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.ADAMANTINE",
+          "-2646"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.SILVER",
+          "-18"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.MITHRAL",
+          "319"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.COLDIRON",
+          "-1960",
+          "PRETYPE:1,WeaponEnhancement"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.PLUS1",
+          "-1960"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.PLUS2",
+          "-7840"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.PLUS3",
+          "-17640"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.PLUS4",
+          "-31360"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.PLUS5",
+          "-49000"
+        ]
+      }
+    ],
     "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Quality ~ Thrown Ammunition"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
       {
         "key": "VISIBLE",
         "value": "NO"
@@ -15,7 +99,7 @@
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

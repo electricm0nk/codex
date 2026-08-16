@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "A greater reliable firearm is enchanted so as to be less likely to jam than other firearms. It reduces the misfire value of the affected firearm by 4 (minimum 0). This reduction occurs after any increases are calculated for firing with the broken condition, or for any other effect that might increase the misfire value of a firearm. A firearm with greater reliable cannot have the reliable special ability.",
     "key": "FIREARM_RELIABLE_GRT",
     "name": "FIREARM_RELIABLE_GRT",
     "raw_bonus_chains": [],
@@ -11,11 +11,35 @@
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Reliable / Greater ~ Firearm"
+      },
+      {
+        "key": "TYPE",
+        "value": "OneHandedFirearm.TwoHandedFirearm"
+      },
+      {
+        "key": "PLUS",
+        "value": "3"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.141"
+      },
+      {
+        "key": "SPROP",
+        "value": "A greater reliable firearm is enchanted so as to be less likely to jam than other firearms. It reduces the misfire value of the affected firearm by 4 (minimum 0). This reduction occurs after any increases are calculated for firing with the broken condition, or for any other effect that might increase the misfire value of a firearm. A firearm with greater reliable cannot have the reliable special ability."
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

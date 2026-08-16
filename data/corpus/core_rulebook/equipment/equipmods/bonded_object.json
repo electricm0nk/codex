@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "Can be used once per day to cast any one spell that the wizard has in his spellbook and is capable of casting, even if the spell is not prepared.",
     "key": "BONDED_OBJECT",
     "name": "BONDED_OBJECT",
     "raw_bonus_chains": [],
@@ -11,11 +11,47 @@
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Quality ~ Bonded Object"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "PARENS"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "Amulet.Ring.Staff.Wand.Weapon"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Bonded"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PRETYPE:1,Amulet,Ring,Staff,Wand],[PREMULT:2,[PRETYPE:1,Masterwork,Mithral,Adamantine,Darkwood],[PRETYPE:1,Weapon]]"
+      },
+      {
+        "key": "SPROP",
+        "value": "Can be used once per day to cast any one spell that the wizard has in his spellbook and is capable of casting, even if the spell is not prepared."
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

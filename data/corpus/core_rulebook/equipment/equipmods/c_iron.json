@@ -1,21 +1,109 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
-    "cost_gp": null,
-    "description": null,
+    "cost_gp": 0.0,
+    "description": "cold iron",
     "key": "C_IRON",
     "name": "C_IRON",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.WEAPON",
+          "(BASECOST)",
+          "!PRETYPE:1,Double"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.WEAPON",
+          "(BASECOST)/2",
+          "PRETYPE:1,Double"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.Enhancement.AMMUNITION",
+          "40"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.WEAPON",
+          "2000",
+          "PRETYPE:1,WeaponEnhancement"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Material ~ Cold Iron"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "FRONT"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NORMAL"
+      },
+      {
+        "key": "TYPE",
+        "value": "BaseMaterial.Ammunition.Weapon"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Metal.ColdIron"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.154"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Weapon,Ammunition"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Metal"
+      },
+      {
+        "key": "SPROP",
+        "value": "cold iron"
+      },
+      {
+        "key": "ASSIGNTOALL",
+        "value": "NO"
+      },
+      {
+        "key": "INFO",
+        "value": "hp|30 hp/inch"
+      },
+      {
+        "key": "INFO",
+        "value": "Hardness|hardness 10"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

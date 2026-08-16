@@ -1,21 +1,98 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
-    "cost_gp": null,
-    "description": null,
+    "cost_gp": 0.0,
+    "description": "Strength bonus to damage",
     "key": "BOWSTR",
     "name": "BOWSTR",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.SHORTBOW",
+          "75*%CHOICE",
+          "PREVARGT:%CHOICE,0"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.LONGBOW",
+          "100*%CHOICE",
+          "PREVARGT:%CHOICE,0"
+        ]
+      },
+      {
+        "qualifiers": [
+          "WEAPON",
+          "TOHIT",
+          "-2",
+          "PREVARGT:%CHOICE,STR"
+        ]
+      },
+      {
+        "qualifiers": [
+          "WEAPON",
+          "DAMAGE",
+          "MIN(%CHOICE,STR)",
+          "TYPE=Strength"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Quality ~ Composite Bow Strength Rating"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NONAME"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bow.Composite"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "StrengthRating"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.147"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,Composite,Bow"
+      },
+      {
+        "key": "SPROP",
+        "value": "Strength bonus to damage"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMBER|MIN=1|MAX=100|TITLE=Strength rating"
+      },
+      {
+        "key": "ASSIGNTOALL",
+        "value": "YES"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

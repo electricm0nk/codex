@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
-    "cost_gp": null,
-    "description": null,
+    "cost_gp": 0.0,
+    "description": "deadly",
     "key": "DEADLY",
     "name": "DEADLY",
     "raw_bonus_chains": [],
@@ -11,11 +11,47 @@
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Quality ~ Deadly"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialWeaponQualities"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Deadly"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.130"
+      },
+      {
+        "key": "SPROP",
+        "value": "deadly"
+      },
+      {
+        "key": "INFO",
+        "value": "SPROP|When this weapon delivers a coup de grace, it gains +4 to damage when calculating the DC of the Fortitude saving throw to see whether the target of the coup de grace dies from the attack. The bonus is not added to the actual damage of the coup de grace attack."
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

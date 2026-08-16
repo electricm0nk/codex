@@ -1,21 +1,134 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "darkwood",
     "key": "DARK",
     "name": "DARK",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "ArmorCheckPenalty",
+          "-2",
+          "TYPE=Enhancement"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQM",
+          "WEIGHTDIV",
+          "2"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "ACCHECK",
+          "2",
+          "TYPE=Enhancement",
+          "PRETYPE:1,SHIELD"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.AMMUNITION",
+          "6"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.WEAPON",
+          "300",
+          "!PRETYPE:1,Shield"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.SHIELD",
+          "150"
+        ]
+      },
+      {
+        "qualifiers": [
+          "WEAPON",
+          "TOHIT",
+          "1",
+          "TYPE=Enhancement",
+          "PRETYPE:1,WEAPON",
+          "!PRETYPE:1,Shield"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "KEY",
+        "value": "Material ~ Darkwood"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "FRONT"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NORMAL"
+      },
+      {
+        "key": "TYPE",
+        "value": "BaseMaterial.MasterworkQuality.Ammunition.Weapon.Shield"
+      },
+      {
+        "key": "COST",
+        "value": "WT*10"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Wooden.Darkwood.Masterwork"
+      },
+      {
+        "key": "REPLACES",
+        "value": "Special Quality ~ Masterwork ~ Armor,Special Quality ~ Masterwork ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.154"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Wooden"
+      },
+      {
+        "key": "SPROP",
+        "value": "darkwood"
+      },
+      {
+        "key": "ASSIGNTOALL",
+        "value": "YES"
+      },
+      {
+        "key": "INFO",
+        "value": "hp|10 hp/inch"
+      },
+      {
+        "key": "INFO",
+        "value": "Hardness|hardness 5"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

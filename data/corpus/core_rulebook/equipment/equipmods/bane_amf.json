@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "unarmed and natural attacks gain a +2 enhancement bonus and do +2d6 bonus damage against %CHOICE",
     "key": "BANE_AMF",
     "name": "BANE_AMF",
     "raw_bonus_chains": [],
@@ -11,11 +11,59 @@
       {
         "key": "VISIBLE",
         "value": "NO"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "+1"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Bane ~ Amulet of Mighty Fists"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "FRONT"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NORMAL"
+      },
+      {
+        "key": "TYPE",
+        "value": "Amulet of Mighty Fists"
+      },
+      {
+        "key": "PLUS",
+        "value": "1"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.469"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,EQMOD=Special Ability ~ Amulet of Mighty Fists Base"
+      },
+      {
+        "key": "SPROP",
+        "value": "unarmed and natural attacks gain a +2 enhancement bonus and do +2d6 bonus damage against %CHOICE"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Unarmed Bane"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "STRING|Aberrations|Animals|Constructs|Dragons|Fey|Humanoids (Aquatic)|Humanoids (Dwarf)|Humanoids (Elf)|Humanoids (Giant)|Humanoids (Gnoll)|Humanoids (Gnome)|Humanoids (Goblinoid)|Humanoids (Halfling)|Humanoids (Human)|Humanoids (Reptilian)|Humanoids (Orc)|Magical Beasts|Monstrous Humanoids|Oozes|Outsiders (Air)|Outsiders (Chaotic)|Outsiders (Earth)|Outsiders (Evil)|Outsiders (Fire)|Outsiders (Good)|Outsiders (Lawful)|Outsiders (Water)|Plants|Undead|Vermin|TITLE=Designated Foe"
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

@@ -1,9 +1,9 @@
 {
-  "completeness": "chassis_only",
+  "completeness": "full",
   "data": {
     "category": "Equipmods",
     "cost_gp": null,
-    "description": null,
+    "description": "Enhancement bonus increases by 4 (to a max of 5) for the purpose of the opportune parry and riposte deed",
     "key": "Answering",
     "name": "Answering",
     "raw_bonus_chains": [],
@@ -39,7 +39,7 @@
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T01:34:55Z",
+  "ingested_at": "2026-08-16T19:47:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
