@@ -4602,3 +4602,358 @@ Per the review's finding, this is a genuine wiring_class.rs change (feeds `v06_w
 ground-truth integration suite) whose 529 `tests/*.rs` suites have never been run against it. Integration
 re-runs `./scripts/verify.sh` to a captured exit code at the merged tip (this receipt's own §Full Gate
 of the integration cycle) before this card can close.
+
+---
+
+## 2026-08-15/16 — `SD31-W3-INTEGRATE-001`: wave-3 integration — 5-branch merge, 17 CONFIRMED findings fixed/logged, guarded regen, reachability audit, full gate
+
+`RETRO_ACTOR=sd31-w3-integrate CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-w3-integrate`. Sole
+writer this wave, primary checkout, branch `tranche/11`. Started from `HEAD=ca72aa6f1` (the
+`SD31-E3-F1-001` class_feature-measurement commit, landed direct to `tranche/11`) —
+`git rev-parse HEAD && git log --oneline -1 && git branch --show-current` confirmed a clean checkout
+descending from `tranche/11` before any write. `docs/release/SD-31-corpus-closure-grind/loop-instruction.md`
+present, tree clean apart from two other agents' untracked artifacts (left alone per protocol).
+
+### 0. Oracle pin
+
+`./scripts/verify.sh --only preflight-oracle` → PASS. `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
+(`scripts/pcgen-oracle-pin.env`), unchanged all wave.
+
+### 1. Merge — five worktree branches, verified by content
+
+Merged one at a time, `--no-edit`, resolving every conflict by hand:
+
+| Branch | Head | Merge commit |
+|---|---|---|
+| `sd31/race-lane-SD31-E6-F4-001` | `9c8cd3125` | `a917b889a` |
+| `sd31-e6-seam-SD31-E6-F11-002` | `6a3d6fee9` | `4c08dd2b3` |
+| `sd31-e6-equipment` | `72d0c6c9e` | `b0ec66d9b` |
+| `worktree-wf_e4e73f9a-9af-5` (spell/monster_ability) | `565b6df19` | `94f7ebe44` |
+| `worktree-wf_e4e73f9a-9af-6` (ambiguous) | `ec12c2824` | `ad4131dfd` |
+
+Each branch's HEAD confirmed via `git rev-parse` and `git log --oneline origin/tranche/11..<branch>`
+BEFORE merging, matching the dispatch's stated heads exactly (no drift). Content proven by grep after
+each merge, not by trusting a status:
+
+- race lane: `ls data/corpus/bestiary_5/race/skinwalker.json` → present; `IN_SCOPE_RACES` in
+  `ingest_races.rs` carries the Skinwalker entry.
+- seam lane: `grep -c spell_like_ability_caster_level src/rules_core/derived_evaluator_fixture_check.rs`
+  → 12.
+- equipment lane: `find data/corpus/ultimate_equipment -name '*.json' | wc -l` → 1,549.
+- spell lane: `ls src/bin/enrich_spell_raw_tokens.rs` → present.
+- ambiguous lane: `grep -c prose_scaling_phrase src/rules_core/wiring_class.rs` → 15.
+- class_feature measurement (already on `tranche/11`, verified not re-merged): `ls
+  artifacts/SD31-E3-F1-001-clearance-table.json` → present.
+
+`docs/work-inventory.json` was NOT touched by any of the five branches
+(`git diff --name-only <merge-base>..<branch> | grep -c work-inventory` → 0, all five) — the wave rule
+held throughout, no conflict on that file to resolve.
+
+**Merge conflicts, all resolved by hand, none by discarding a lane's content:**
+
+- `progress.md` conflicted on every merge (pure appends git's diff algorithm mis-anchored inside
+  similar python one-liners across receipts, in two cases splitting one lane's receipt in half around
+  the other's). Resolved by reconstructing from `git show <merge-base>:progress.md` +
+  `git show <branch>:progress.md`'s pure diff tail (verified via `diff` that the branch's own change
+  really was a pure append before splicing) rather than trusting the conflict markers' placement.
+- `kanban.md` conflicted four times — each time two lanes' landing notes on the SAME epic row (race+seam
+  on `epic-6`, equipment+spell on `epic-6` again, ambiguous on `epic-2`). Resolved by splicing both
+  notes into one row and combining the `Claimed-by`/`Cycle-id` tail columns, never dropping either
+  lane's text.
+- `OPEN-ISSUES.md` conflicted three times: **every one of the five branches independently appended new
+  rows numbered 22, 23, (24, 25...) at the same anchor** (row 21), because each was cut from the same
+  pre-wave base. Renumbered sequentially 22→45 across all five lanes' contributions (race 22-24, seam
+  25-28, equipment 29-31, spell 32-34, ambiguous 35-37), and hand-fixed every internal cross-reference
+  in `kanban.md`/`progress.md`/`scripts/verify-baselines.env` that cited a lane's own pre-renumbering
+  row number (18 individual fixes, each confirmed by grep before and after). This exact shape (multiple
+  lanes racing to append at the same anchor) is now a two-wave-running pattern — worth a standing
+  convention (e.g. reserve row-number blocks per lane at claim time) rather than resolving it by hand
+  every integration cycle.
+- `scripts/verify-baselines.env` conflicted twice (equipment lane's raised test/sweep-record floors).
+  Took the higher (equipment lane's) values as the floor per the file's own "never lowered" discipline;
+  corrected the accompanying comment's 37+2 accounting to the true 39+3=42 (Finding 7 below).
+
+No branch was missing, empty, or lacking what it claimed — no `BLOCKER` row needed for the merge step
+itself.
+
+### 2. Adversarial review findings — 17 CONFIRMED, 0 GAMED, all addressed
+
+Three Opus adversarial reviews attacked this wave (equipment+spell lanes; seam+ambiguous lanes;
+class_feature+race lanes). **Every gaming verdict came back CLEAN** for every target — no unit reached
+`done` this wave for a fabricated, widened, or reclassified-into-an-easier-bucket reason. 17 findings
+were CONFIRMED across the three reviews (evidence integrity, receipt overclaims, and one real shipped
+data defect). Per finding, fixed-or-logged:
+
+**Fixed in code/data, with tests, this integration cycle (7):**
+
+1. **`wiring_class.rs` D7 repair** — the ambiguous lane's `SPELLS:` field scan (D6) was treating a
+   spell NAME's own literal slash (`Open/Close`, `Blindness/Deafness`, `Clairaudience/Clairvoyance`) as
+   division, false-positiving otherwise-fully-literal records to `derived`. TDD: 3 new tests
+   (`d7_spells_field_slash_in_spell_name_is_not_arithmetic`,
+   `d7_spells_field_blindness_deafness_is_not_arithmetic`,
+   `d7_spells_field_slash_in_name_does_not_hide_a_real_dc_formula`), confirmed red, fixed by extracting
+   a new `has_arith_no_slash` helper (the slash-independent half of `has_arith_scoped`) so a
+   spell-name segment never checks `/` while the comma-delimited DC tail (if any) still does.
+   `cargo test --locked --lib wiring_class::` → 54/54; full `cargo test --locked --lib` → 1815/1815,
+   0 regressions.
+2. **`equipment_tables.rs` + `miser_s_mask.json`** — `ue_equip_magic_items.lst:714` is two items glued
+   by a missing newline (the second item's name is embedded mid-token inside the first's
+   `BONUS:SITUATION` value); the shipped `Miser's Mask` record carried the OTHER item's 18,000 gp/2 lb.
+   Corrected to Miser's Mask's own 3,000 gp/1 lb (p.246) with a new regression test
+   (`misers_mask_ships_its_own_item_s_cost_and_weight_not_the_glued_second_item_s`), confirmed red
+   then green; patched the shipped JSON's `cost_gp`/`weight_lbs` to match (`raw_tokens` honestly keeps
+   both items' tokens — that is genuinely what the cited line contains, not fixable without splitting
+   the physical `.lst` line). The second item ("Mitre of the Hierophant") remains unshipped, logged
+   (`OPEN-ISSUES.md` row 40).
+3. **`bestiary_5/LICENSE.json`** — corrected a false claim that Skinwalker race records were screened
+   by the declared-PI reader (`ingest_races.rs` never calls `pi_screening::declared_product_identity`;
+   only the unrelated `ingest_race_traits.rs` binary does).
+4. **`SD31-E3-F1-001-clearance-table.json`** — disclosed the 5 `Ex-*` fallen-class shadow records the
+   stated 24-class filter silently dropped (all 5 confirmed 0/0 archetype content by direct grep; the
+   24-class CLEARED set itself is unaffected, only the method's own reproducibility was at stake).
+5. **`kanban.md`** — folded a free-standing paragraph back into `epic-3-measurement`'s own table cell,
+   restoring one contiguous table (the paragraph had terminated the Markdown table between two epic
+   rows, orphaning epics 4 through 10 from their header).
+6. **`OPEN-ISSUES.md` row anchoring** — renumbered as described in §1, all cross-references fixed.
+7. **`scripts/verify-baselines.env`** — corrected the "37 un-enriched + 2 corrupted = 39" accounting to
+   the true "39 records ship no `raw_tokens` key + 3 ship an empty array = 42 outside the token
+   comparison"; the underlying `BASELINE_CORPUS_LITERAL_RECORDS=5148` VALUE was already right (the
+   review confirmed the endpoint independently), only the prose split was wrong.
+
+**Logged to `OPEN-ISSUES.md` with remedy + owning epic, not fixed this cycle (10):**
+
+Rows 38-45 (new) plus the `progress.md` corrections next to each: `NAMEISPI:YES` declared-PI gaps on 2
+equipment records (row 38, needs an operator ruling under `ogl-pi-blacklist.md` §3) and on the
+Skinwalker ingest path (row 39, blocking the deferred heritage batch); the missing "Mitre of the
+Hierophant" record and a corpus-shape guard for multi-`COST:` rows (row 40); the pre-existing 1,040-
+finding `v06_corpus_trap_report --audit` drift and its corpus-wide re-stamp remedy (row 41);
+`corpus_literal_sweep`'s content-blindness to a fabricated value, mutation-proved (row 42, M4 case);
+29 spell records' unsupported `level: 0` (row 43, dead data, low live severity); the F11-002 seam's
+bar-scope question — 7 units reaching `done` via an evaluator with zero production callers, needing an
+operator ruling before the credit is durable (row 44); the SPELLS: change's still-partially-unmeasured
+blast radius, addressed in practice by this cycle's own guarded regen re-deriving the classifier fresh
+rather than a hand-built transition matrix (row 45). Two receipt corrections for dead `verify.sh` gates
+presented as still-running (spell lane, ambiguous lane) and a corrected "17/17" → "16/16" ground-truth
+figure round out the 17.
+
+**Zero findings silently dropped.** 17 retro `correction`/`note` events emitted (`docs/retro/events/sd31-w3-integrate.jsonl`),
+each with `--verified-by` naming the reproduction command.
+
+### 3. Guarded regen — the one sanctioned run
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-w3-integrate.json
+  -> 6331 records examined of 11006 read, 51260 tokens compared (9 synthesized), 10581 digests
+     checked, 0 findings — CLEAN
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-w3-integrate.json
+  -> 100 of 101 covered units cleared; 1 failed; 0 not ingested
+     FAIL advanced_players_guide:equipment:spindle_of_perfect_knowledge
+CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... cargo run --locked --bin v06_work_inventory
+```
+
+**The one fixture FAIL is pre-existing, confirmed independent of this wave**: the fixture entry for
+`spindle_of_perfect_knowledge` already existed at the shared base `6f857525b`
+(`git show 6f857525b:tests/fixtures/rules_core/derived-evaluator-fixtures.json | grep -A3
+spindle_of_perfect_knowledge`), and neither `src/rules_core/equipment_resolver.rs` nor
+`src/rules_core/pilot_compute.rs` (the two files that could plausibly cause it) were touched by any of
+the five merged branches (`git diff 6f857525b ad4131dfd --stat -- <those two files>` → empty). Not this
+wave's defect; not investigated further this cycle (out of scope — logged as a pre-existing fact, not a
+new finding, since it is genuinely orthogonal to this wave's work).
+
+**The bare `v06_work_inventory` run refused with a stamp-loss guard**: "this run would drop 2 of the
+2374 verification stamp(s)... First offenders: core_rulebook:equipment:ring_of_elemental_command_air,
+core_rulebook:equipment:ring_of_elemental_command_fire". Traced one record deep before deciding whether
+to use `--allow-stamp-loss`: both rows carry a genuine CHA-scaling save-DC spell formula on their
+`SPELLS:` field (`SPELLS:Magic Item|TIMES=2|CASTERLEVEL=15|Gust of Wind,12+CHA` /
+`...|Chain Lightning,16+CHA` — verified against `cr_equip_magic_items.lst:368`/`370` directly) that the
+ambiguous lane's already-merged `SPELLS:` field addition (Finding D, landed in `worktree-wf_e4e73f9a-9af-6`
+before this integration cycle touched it) now correctly detects, moving both `static`→`derived`. That
+demotes them off the `static→literal-verified→done` path they were WRONGLY on (no fixture covers
+either, since the evaluator gap named in row 44 has no ability-score-scaling coverage) — a real,
+correct reclassification, not a report gap: confirmed the sibling `Ring of Elemental Command (Earth)`/
+`(Water)` rows (no comma-DC spells anywhere on their line) keep their `static`/`done` status unchanged.
+This is the SAME correction shape the ambiguous lane's own receipt already reported and accepted for
+its own 7-unit sample (board `done` moved "the unflattering way"); these 2 are simply more of that
+correction surfacing outside their sample, exactly the kind of movement `OPEN-ISSUES.md` row 45
+anticipated as likely. `--allow-stamp-loss` used only after this one-record-deep confirmation, not as a
+default. Re-ran a second time with identical env: `docs/work-inventory.json` diff limited to
+`generated_at` only (confirmed via a full-document key diff) — the regen is deterministic and complete.
+
+**Board headline, dashboard producer's own `doneness_verdict()`, re-derived at the fixed tip:**
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+print(len(U), dict(c), round(100*c['done']/len(U),4))
+"
+-> 38521 {'done': 7355, 'not-started': 20546, 'unmeasurable': 4223, 'deferred': 36, 'held': 5596,
+   'in-progress': 765} 19.0935
+```
+
+`done` **6,076 → 7,355 (+1,279)**, denominator held fixed at 38,521 (0 unit-id churn). `ambiguous`
+population **404** (excluding `EXCLUDED_BOOKS`), unchanged from the ambiguous lane's own measurement —
+the D7 fix removes a false positive from `SPELLS:`, it does not move any unit into or out of the
+`ambiguous` bucket. Per-kind done table:
+
+| kind | done | not-started | held | in-progress | unmeasurable | deferred |
+|---|---|---|---|---|---|---|
+| class | 27 | 158 | — | — | — | — |
+| class_feature | 25 | 11,476 | 88 | — | 3,849 | 34 |
+| companion | 416 | 774 | 506 | — | — | — |
+| equipment | 3,904 | 962 | 1,129 | 213 | — | — |
+| equipment_modifier | 917 | 228 | 16 | 419 | — | — |
+| feat | 1,176 | 973 | 84 | 1 | 374 | 2 |
+| monster | 14 | 28 | 1,228 | — | — | — |
+| monster_ability | 336 | 1,478 | 1,293 | — | — | — |
+| race | 0 | 96 | 7 | — | — | — |
+| race_trait | 484 | 2,812 | 151 | — | — | — |
+| spell | 56 | 1,561 | 1,094 | 132 | — | — |
+
+Committed: `docs/work-inventory.json` (`c9c85c181`), stamp guard reported exactly the 2 traced losses
+(no silent additional loss), second run byte-identical apart from `generated_at`.
+
+### 4. Reachability audit
+
+```
+python3 scripts/reachability_audit.py --inventory docs/work-inventory.json \
+  --json-out docs/release/SD-31-corpus-closure-grind/artifacts/SD31-W3-INTEGRATE-001-audit.json
+```
+
+**Reachable ceiling 98.95% (38,117/38,521)**, +0.01pp vs wave 2's 98.94% (38,112/38,521) — the D7 fix
+and this wave's other corrections moved a handful of units across the reachability boundary without
+materially changing the ceiling; the ceiling is capability-bound, not this wave's grind target. Per-kind
+ceiling: `class`/`equipment_modifier`/`monster`/`race` 100.00%, `companion` 99.65%, `equipment` 99.60%,
+`monster_ability` 99.48%, `race_trait` 99.56%, `class_feature` 98.71%, `spell` 97.82%, `feat` 96.90%.
+9 dead-end cells, all `ambiguous|*`, all owned by Epic 2 (0 `unmapped` cells — the audit's own
+docstring is accurate here per the D6-audit-scope correction already landed). `AUDIT_EXIT=0`. Committed
+`SD31-W3-INTEGRATE-001-audit.json`.
+
+### 5. Full gate
+
+Launched in the background BEFORE writing this receipt, per protocol (two prior attempts to launch it
+via a plain `&`/`nohup` backgrounding lost `VERIFY_EXIT` capture entirely — this program's own harness
+kills a foreground `Bash` call at its own timeout, which is a SIGTERM on the whole `./scripts/verify.sh
+...; echo VERIFY_EXIT=$? >> $LOG` chain and never runs the `echo`; the correct pattern uses the
+harness's own background-task mechanism so the `; echo` survives):
+
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-W3-INTEGRATE-001-verify.log
+RETRO_ACTOR=sd31-w3-integrate CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-w3-integrate \
+  ./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+
+`$LOG` is the authoritative source — check its tail directly for the terminal `VERIFY_EXIT` line.
+
+### 6. Definition of Done, ingest-cycle checklist
+
+1. `./scripts/verify.sh` — see the log; VERIFY_EXIT captured directly, no pipe (§5's exact command).
+2. `reach` stage — carried through by every merged lane's own reach_gate.rs additions (union-merged,
+   no lane's claim dropped, verified §1); this integration cycle adds none of its own.
+3. `cargo run --locked --bin v06_corpus_trap_report -- --audit` — re-run at this cycle's own fixed
+   tip: `TRAP DEFECT trap: 0 950 wiring-class-mismatch`, **exit 2**, DOWN from 1,040 at the pre-fix
+   merged tip (−90, plausibly this cycle's own D7 `SPELLS:` fix re-syncing some previously-stale
+   stamps, not chased further). NOT exit 0 — this is the pre-existing systemic gap named
+   `OPEN-ISSUES.md` row 41 (a corpus-wide stamp-refresh cycle, out of this integration cycle's bounded
+   scope); recorded honestly rather than claimed as a pass.
+4. Guarded regen — ZERO silent stamp loss: the guard reported exactly 2 losses, both traced one record
+   deep and confirmed a genuine correct reclassification (§3); `--allow-stamp-loss` used only after
+   that trace, not by default.
+5. Four-check wired-integration audit, this cycle's own `.rs` diff (`ad4131dfd..c9c85c181`,
+   `wiring_class.rs` + `equipment_tables.rs`): `grep -E '^\+' <diff> | grep -iE 'todo!|unimplemented!|
+   would have|success: true|allow\(dead_code\)|#\[ignore\]|\.skip\('` → 0 hits. Clean.
+6. No family this cycle could not surface — every fix this cycle made was to already-ingested,
+   already-reach-claimed families (`equipment`, `spell`, `race`/`race_trait`). N/A.
+7. Baseline movements — `scripts/verify-baselines.env`'s correction this cycle is a prose-accuracy fix
+   (37+2 → 39+3 accounting), not a numeric baseline movement; no new commit needed beyond the fix
+   commit itself, which already carries the `--show-actuals`-equivalent reproduction command inline.
+8. On-screen verification — this cycle's two player-visible fixes are `wiring_class.rs` (an internal
+   classifier, no direct render surface — the units it reclassifies are what the app renders, not the
+   classifier itself) and `equipment_tables.rs`'s Miser's Mask cost/weight correction, which DOES have
+   a live render surface (`apps/desktop/src-tauri/src/equipment_catalog.rs` imports
+   `rules_tables::ultimate_equipment` directly, confirmed by the equipment lane's own DoD-8 screenshot
+   methodology). **Not driven this cycle** — the desktop app build/drive step
+   (`apps/desktop/.claude/skills/run-desktop/driver.sh`) was not run; logged here as a shortfall per
+   protocol rather than silently skipped. Integration should drive the app and confirm Miser's Mask
+   renders 3,000 gp (not 18,000 gp) in the Equipment Catalog before this specific fix is treated as
+   fully verified end-to-end; the static-table-level fix and its unit test are the evidence available
+   today.
+
+### 7. Followups — ordered by units moved, with file territory
+
+1. **`corpus_literal_sweep --json-out`'s book-attribution bug** (the race lane's own root-cause find,
+   `OPEN-ISSUES.md` row 22) — `book_dir_of`'s `--json-out` sibling derives `"book"` as
+   `source_path.parent().file_name()` instead of the binary's own 4-segment `book_dir_of()` grouping,
+   so any nested `.lst` path (e.g. `core_essentials/races/<race>/...`) gets stamped with the wrong
+   book name and can never join to `apply_done_rung_stamps`. **~330 units, corpus-wide, across
+   multiple kinds** (mostly `race`/`race_trait`), unblockable with a one-line fix and zero new ingest.
+   File: `src/bin/corpus_literal_sweep.rs` (shared infrastructure — not any single kind lane's
+   territory; needs its own dedicated cycle).
+2. **Monster ingest widening — `BONUS:STAT` ability scores into `MonsterStatBlock`** (seam lane,
+   `OPEN-ISSUES.md` rows 26/27) — **266 units** (`derived|grounded|monster`, the
+   ability-score-scaling majority the seam's evaluator cannot cover without fabricating a value).
+   Real, multi-book ingest-widening work (~12 books' worth of already-registered monster tables), not
+   a fixture-file-only card. Files: `src/rules_core/monster_chassis.rs` (or wherever
+   `MonsterStatBlock` lives), the per-book monster ingest binaries, `data/corpus/**/monster/*.json`
+   regen.
+3. **Spell citation-repair — `.MOD`-row source.line pointing away from the base declaration** (spell
+   lane, `OPEN-ISSUES.md` row 33) — **101 units** (of the 120 `static`-held candidates the spell
+   lane's `enrich_spell_raw_tokens` found but could not promote). Needs the same base-row-vs-`.MOD`
+   resolution `wiring_class::resolve_corpus_file`/`token_closure` already implement, applied to
+   REWRITE `source.line`/`source.path` rather than only read them. File: the spell ingest binary that
+   originally wrote these records' `source` field (2026-08-03 vintage).
+4. **`ingest_races.rs` declared-PI wiring** (`OPEN-ISSUES.md` row 39) — **0 units, but BLOCKING** the
+   next dispatchable card: Skinwalker's deferred heritage batch
+   (`skinwalker_abilities_race_subrace.lst`, real `DESCISPI:YES` rows) cannot land safely until this
+   is wired. Small, mechanical — same shape as the already-wired `ingest_race_traits.rs`. File:
+   `src/bin/ingest_races.rs`.
+5. **`Mitre of the Hierophant` missing record + a corpus-shape guard for multi-`COST:` rows**
+   (`OPEN-ISSUES.md` row 40) — **1 unit** plus a guard that would catch this defect SHAPE (not just
+   this instance) at ingest time. Files: `equipment_tables.rs`, `corpus_literal_sweep.rs` or
+   `v06_corpus_trap_report.rs`.
+6. **Corpus `wiring_class` stamp refresh** (`OPEN-ISSUES.md` row 41) — **0 `done`-moving units**
+   (`v06_work_inventory` always re-derives fresh; this is pure gate hygiene) but clears 950 pre-existing
+   `v06_corpus_trap_report --audit` findings, needed before that audit can be wired into `verify.sh`
+   as a real stage. Needs its own PI-exposure review per the "generated artifacts mutated post-hoc"
+   precedent before landing — a corpus-wide regen, not a small fix.
+
+**Two operator rulings still block real board credit and should be resolved before the next wave:**
+`OPEN-ISSUES.md` row 36 (SER proposal or a new `ambiguous` done-bar for the 404-unit population) and
+row 44 (whether the F11-002 seam's 7-unit `done` credit stands on a proxy-field, non-shipping
+evaluator, or is held pending a real evaluator seam).
+
+**Gate status at commit time.** Confirmed live, not stalled, throughout this receipt's writing:
+`pgrep -fa 'cargo '`/`find <target-dir>/debug/deps -name '*.rmeta' -newer "$LOG"` both show steady
+forward progress (574+ freshly-compiled `.rmeta` files by the time this section was written, climbing
+continuously). Every stage through `frontend-typecheck` is green:
+
+```
+PASS  preflight-disk / preflight-oracle / oracle-pin-selftest / producer-selftest /
+      reachability-audit-selftest / reachability-audit / groundtruth-guard-selftest /
+      pi-sweep (10 hits / 10 baseline) / audit-selftest / reclaim-selftest / driver-selftest /
+      corpus-sweep-selftest
+PASS  root-lib          (1816 passed)
+PASS  root-full         (6465 passed across 552 suites, all 529 tests/*.rs suites executed)
+PASS  desktop           (445 passed)
+PASS  reach             (27 passed)
+PASS  corpus-sweep      (6331 examined, 0 findings)
+PASS  frontend-install / frontend-test (99/99 files) / frontend-typecheck (tsc --noEmit clean)
+==>   clippy — cargo clippy --locked --tests -j 2 (BOTH crates)   [IN PROGRESS at commit time]
+      class-dump                                                  [not yet reached]
+```
+
+No `VERIFY_EXIT` was obtained by commit time. Per `loop-instruction.md`'s stop-vs-press-on rule,
+"ran out of budget" is not "blocked" — this cycle lands its commit and receipt now rather than holding
+the whole cycle open for a stage two-thirds of this program's own prior receipts also could not wait
+out. `$LOG` (`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-W3-INTEGRATE-001-verify.log`,
+this same file, left running in the background) carries the authoritative terminal `VERIFY_EXIT`
+whenever `clippy`/`class-dump` complete — check its tail directly; do not infer a result from this
+receipt's absence of one. Every stage that exercises this cycle's own new code
+(`wiring_class.rs`'s D7 fix, `equipment_tables.rs`'s Miser's Mask fix) is confirmed green above:
+`root-lib` (1816, contains every `wiring_class.rs`/`equipment_tables.rs` unit test — the two new tests
+this cycle added are counted in that 1816), `desktop` (445, exercises `equipment_catalog.rs`'s
+consumption of the corrected table), and `reach` (27, the union of every merged lane's reach claim,
+none dropped).
