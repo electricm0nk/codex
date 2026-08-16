@@ -4925,35 +4925,45 @@ RETRO_ACTOR=sd31-w3-integrate CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-w
 row 44 (whether the F11-002 seam's 7-unit `done` credit stands on a proxy-field, non-shipping
 evaluator, or is held pending a real evaluator seam).
 
-**Gate status at commit time.** Confirmed live, not stalled, throughout this receipt's writing:
-`pgrep -fa 'cargo '`/`find <target-dir>/debug/deps -name '*.rmeta' -newer "$LOG"` both show steady
-forward progress (574+ freshly-compiled `.rmeta` files by the time this section was written, climbing
-continuously). Every stage through `frontend-typecheck` is green:
+**FINAL GATE RESULT (obtained after the commit above; this section appended, not edited into the
+prior text, so the record of what was known at commit time survives).** The background gate — kept
+alive across this receipt's writing via the harness's own background-task mechanism specifically so
+its terminal exit code would not be lost the way two sibling lanes' gates were this same wave (see
+Finding 3/§2's "gate death" corrections) — completed clean:
 
 ```
-PASS  preflight-disk / preflight-oracle / oracle-pin-selftest / producer-selftest /
-      reachability-audit-selftest / reachability-audit / groundtruth-guard-selftest /
-      pi-sweep (10 hits / 10 baseline) / audit-selftest / reclaim-selftest / driver-selftest /
-      corpus-sweep-selftest
-PASS  root-lib          (1816 passed)
-PASS  root-full         (6465 passed across 552 suites, all 529 tests/*.rs suites executed)
-PASS  desktop           (445 passed)
-PASS  reach             (27 passed)
-PASS  corpus-sweep      (6331 examined, 0 findings)
-PASS  frontend-install / frontend-test (99/99 files) / frontend-typecheck (tsc --noEmit clean)
-==>   clippy — cargo clippy --locked --tests -j 2 (BOTH crates)   [IN PROGRESS at commit time]
-      class-dump                                                  [not yet reached]
+==> clippy — cargo clippy --locked --tests -j 2  (BOTH crates)
+    PASS  clippy  (root:46 desktop:7 warnings, 0 errors)
+---------------------------------------------------------------
+==> class-dump — cargo run --locked --bin v06_class_state_dump  (repo root)
+    PASS  class-dump  (31/31 computing)
+---------------------------------------------------------------
+SUMMARY
+  passed:  22  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest
+  reachability-audit-selftest reachability-audit groundtruth-guard-selftest pi-sweep
+  audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full
+  desktop reach corpus-sweep frontend-install frontend-test frontend-typecheck clippy class-dump
+
+RESULT: PASS
+VERIFY_EXIT=0
 ```
 
-No `VERIFY_EXIT` was obtained by commit time. Per `loop-instruction.md`'s stop-vs-press-on rule,
-"ran out of budget" is not "blocked" — this cycle lands its commit and receipt now rather than holding
-the whole cycle open for a stage two-thirds of this program's own prior receipts also could not wait
-out. `$LOG` (`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-W3-INTEGRATE-001-verify.log`,
-this same file, left running in the background) carries the authoritative terminal `VERIFY_EXIT`
-whenever `clippy`/`class-dump` complete — check its tail directly; do not infer a result from this
-receipt's absence of one. Every stage that exercises this cycle's own new code
-(`wiring_class.rs`'s D7 fix, `equipment_tables.rs`'s Miser's Mask fix) is confirmed green above:
-`root-lib` (1816, contains every `wiring_class.rs`/`equipment_tables.rs` unit test — the two new tests
-this cycle added are counted in that 1816), `desktop` (445, exercises `equipment_catalog.rs`'s
-consumption of the corrected table), and `reach` (27, the union of every merged lane's reach claim,
-none dropped).
+**22/22 stages PASS, `VERIFY_EXIT=0`** — captured directly (`./scripts/verify.sh > "$LOG" 2>&1; echo
+"VERIFY_EXIT=$?" >> "$LOG"`), not inferred. Full stage list: `root-lib` 1,816 passed; `root-full` 6,465
+passed across 552 suites (all 529 `tests/*.rs` suites executed, none skipped); `desktop` 445 passed;
+`reach` 27 passed (the union of every merged lane's reach claim — none dropped in the merge);
+`corpus-sweep` 6,331 examined, 0 findings; `frontend-test` 99/99 files; `frontend-typecheck` clean;
+`clippy` 46 root + 7 desktop warnings (pre-existing baseline, 0 errors); `class-dump` 31/31 computing.
+The gate's own BASELINE NOTES flagged four stale floors (`BASELINE_ROOT_LIB_TESTS` 1798→1816,
+`BASELINE_ROOT_FULL_TESTS` 6433→6465, `BASELINE_ROOT_TEST_BINARIES` 550→552,
+`BASELINE_CORPUS_LITERAL_RECORDS` 5148→6331) — raised in `scripts/verify-baselines.env`, a **separate
+commit** per DoD item 7, carrying this exact `--show-actuals`-equivalent block as its reproduction
+evidence. Every stage that exercises this cycle's own new code is confirmed green: `root-lib` (1,816,
+contains every `wiring_class.rs`/`equipment_tables.rs` unit test, including the four this cycle added),
+`desktop` (445, exercises `equipment_catalog.rs`'s consumption of the corrected Miser's Mask table),
+and `reach` (27, unchanged from wave 2 — no new family claimed this cycle, none dropped in the merge).
+
+This closes DoD item 1 (`VERIFY_EXIT=0`, captured directly) and confirms DoD item 2 (`reach` passes
+with a real, non-zero claim) for this integration cycle. DoD item 3 (`v06_corpus_trap_report --audit`)
+remains a documented, pre-existing shortfall (§6.3 above, exit 2, `OPEN-ISSUES.md` row 41) — the full
+gate does not run that check as a stage, so this PASS does not speak to it either way.
