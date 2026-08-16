@@ -8782,3 +8782,337 @@ by the dispatcher, not by `reclaim.sh`.
 - `docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md` — row 61 moved to Resolved;
   new row 69 (informational audit finding).
 - 606 new + ~66 re-enriched `data/corpus/**/equipment*/*.json` records.
+
+## Cycle `SD31-W5-INTEGRATE-001` (`RETRO_ACTOR=sd31-w5-integrate`) — 2026-08-16, wave 5 integration
+
+**Role:** `sd31-w5-integrate`, sole writer on the primary checkout (`/home/ubuntu/workspace/repos/codex`,
+branch `tranche/11`). Every sibling lane had finished before this cycle started.
+
+**HEAD at start:** `5a557a48c` (`docs(sd31): finalize SD31-D7-PROSE-001 receipt with gate-in-progress
+status`) — descends from `tranche/11`'s tip; `docs/release/SD-31-corpus-closure-grind/loop-instruction.md`
+present. Tree was NOT clean at start (two tracked retro-log files carried uncommitted appends from the
+prose-path lane's own gate run) — landed as their own small commit (`3a9064878`) before any merge work,
+per the "capture, don't discard" instinct; those two files' content is legitimate retro data, not scratch.
+
+**Oracle pin:** `./scripts/verify.sh --only preflight-oracle` → PASS. `PCGEN_ORACLE_SHA=
+7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/pcgen-oracle-pin.env`).
+
+### §1 — Five branches merged, book-attribution first
+
+Verified content-present per branch before merging (`git log --oneline origin/tranche/11..<branch>`,
+all non-empty):
+
+| lane | branch | tip | commits ahead |
+|---|---|---|---|
+| book attribution | `sd31-book-attrib` | `aa839815b` | 1 |
+| class wiring | `sd31/e4-classwire` | `cd064cff1` | 4 |
+| spell lists | `sd31/spell-lists-e6-f2-003` | `82669c2ee` | 4 |
+| monster_ability | `sd31/monster-ability-e6f9` | `71798ccff` | 2 |
+| equipment | `worktree-wf_d70ea313-07f-6` | `5fad1eb79` | 2 |
+
+Merge commits, in dispatch order: `0c278883a`, `1d88a1a04`, `9cf80106e`, `3436a1428`, `413741519`. Full
+per-branch content-arrival proof, conflict list, and adversarial-review summary is in each merge commit's
+own message (`git log --format=%B -n1 <sha>`); not reproduced here.
+
+**Conflict shape, all five merges:** `progress.md` conflicted every time (a simple two-cycle-receipt
+append point — resolved by keeping both cycles' full text, nothing dropped). `OPEN-ISSUES.md` conflicted
+on 3 of 5 merges and needed manual row renumbering on 4 of 5 (including one PRE-EXISTING duplicate that
+had silently landed via a *clean* auto-merge — `SD31-E4-F1-001`'s rows 69-71 collided with
+`SD31-D7-PROSE-001`'s own 69-71 with no conflict flagged, caught only by an explicit post-merge
+`grep -oE '^\| [0-9]+ \|' | sort -n | uniq -c | awk '$1>1'` sweep after EVERY merge, not just the ones git
+flagged). Final numbering: rows 69-72 = `SD31-D7-PROSE-001`, 73 = `SD31-ATTRIB-001`, 74-77 =
+`SD31-E6-F2-003`, 78-80 = `SD31-E4-F1-001`, 81-83 = `SD31-E6-F9-001`, 84-85 = `SD31-E6-F5-003`, 86-91 =
+this cycle's own rows. Every row's content preserved; only numbers changed. `scripts/verify-baselines.env`
+conflicted once (monster-ability merge): two sibling branches each measured `BASELINE_ROOT_LIB_TESTS`/
+`BASELINE_ROOT_FULL_TESTS` independently against different bases (1851/6552 vs 1849/6556); both are
+`check_floor()` assertions per DoD item 7, so took `max(1851,1849)=1851` / `max(6552,6556)=6556` as an
+interim value pending this cycle's own `--show-actuals` measurement (§5 below). `reach_gate.rs`
+(sanctioned additive-list file) and `cache_gen/mod.rs` auto-merged cleanly on both branches that touched
+them; `OPEN_FINDINGS`/`UNREACHED_RECORD_FINDINGS` checked for duplicate keys after merge (none found).
+`docs/work-inventory.json` was NOT committed by any of the five branches (`git diff --name-only | grep -c
+work-inventory.json` = 0 on every branch, verified before merging).
+
+### §2 — Confirmed findings: 4 fixed, 3 corrected in doc, 3 logged with remedy
+
+Three Opus adversarial reviewers attacked this wave: one on `SD31-D7-PROSE-001` alone, one on
+book-attrib+classwire paired, one on spell-lists+monster-ability+equipment triple. All gaming verdicts
+CLEAN, all PI verdicts CLEAN — the first wave with zero PI exposure across three. 15 CONFIRMED findings
+total; none GAMED, so no revert was needed anywhere in the order-of-precedence.
+
+**Fixed in code, TDD, commit `c6c8d3cfe`:**
+
+1. **Race_trait PI-redaction-placeholder gap.** The new `text_only`->`text-complete` rung
+   (`SD31-D7-PROSE-001`) accepted the `[redacted PI]` PI-screening marker as "real rendered text"
+   because its gate was a bare `!rendered.trim().is_empty()` check — non-empty, but not real prose (a
+   player sees the literal marker, not the rulebook's text), so it wrongly satisfied Decision 7 condition
+   3. Fixed by reusing `is_real_description_value()`, the SAME refusal every other `text_only`->
+   `text-complete` branch in this file already applies (already rejects the marker). New test:
+   `an_applied_race_trait_whose_rendered_description_is_the_pi_redaction_marker_does_not_read_text_complete`.
+   No PI was ever exposed (the redaction itself works correctly) — this was a done-credit defect on 5
+   units (`core_essentials:race_trait:tiefling_daemon_spawn`/`_devil_spawn`/`_kyton_spawn`/`_oni_spawn`/
+   `_rakshasa_spawn`). Effect on the guarded regen: 146 → 141 of this rung's promotions.
+2. **`gathlain` book attribution.** `SD31-ATTRIB-001`'s `RACE_TRUE_BOOK` asserted `gathlain ->
+   bestiary_4` without applying the lane's own stated disambiguation test ("only members no OTHER
+   in-scope book's own `.pcc` also natively declares"). `ultimate_wilderness/_ultimate_wilderness.pcc`
+   declares gathlain identically (`grep -n gathlain .../ultimate_wilderness/_ultimate_wilderness.pcc` ->
+   line 84, uncommented `PCC:@...core_essentials\races\gathlain\_race.pcc`), and `ultimate_wilderness` is
+   itself in-scope. Moved to the ambiguous set: `RACE_TRUE_BOOK.len()` 44 -> 43, ambiguous roster 7 -> 8,
+   synced across both `v06_work_inventory.rs`'s table and `corpus_literal_sweep.rs`'s duplicate. Zero
+   doneness impact — attribution is a pure reporting field, re-confirmed by the guarded regen (§3).
+3. **`engine_book_for` inconsistency.** `v06_work_inventory.rs:5407`'s reconciliation-aggregate fallback
+   was left keyed on `unit.book` while its twin at the `classify()`-time lookup (`:3591`) was deliberately
+   moved to `unit.source_book` by `SD31-ATTRIB-001` specifically because `unit.book` silently
+   mis-resolves a relabelled unit's engine-consumer table. Made consistent.
+4. **Clippy failure blocking `SD31-D7-PROSE-001`'s own gate.** `field assignment outside of initializer`
+   on the new `a_real_zero_magnitude_applied_race_trait_reaches_text_complete_with_real_rendered_text`
+   test — fixed with struct-update syntax (`let facts = EngineFacts { race_trait_probe: ..,
+   ..Default::default() }`). Also caught and fixed the same pattern plus a missing `source_book` field
+   (a compile error, from the ATTRIB merge landing after this test was written) in the new
+   PI-placeholder test's `race_trait_unit` helper.
+
+TDD: `cargo test --locked --bin v06_work_inventory --bin corpus_literal_sweep` -> 109/109 + 9/9 green,
+including all 4 new/fixed tests.
+
+**Corrected in `OPEN-ISSUES.md` (rows 86-91, appended, never rewrote another row):**
+
+5. Row 69's remediation column claimed "Confirmed the 9 findings do not affect anything this cycle
+   shipped" — false. An independent verifier found 11 of the 146 race_trait promotions state a real, flat
+   (non-scaling) numeric bonus in prose only (`duergar_stability` "+4 racial bonus to their Combat
+   Maneuver Defense", etc.) with no engine path computing it (`grep -rn` across `src/`/`apps/` for each
+   feature name: 0 hits). Row 86 corrects the false claim; row 87 restates row 69's own open
+   flat-vs-scaling interpretive question as a `RULING-NEEDED` row with the exact 11 units named, added to
+   the "Needs an operator ruling" summary — this is the SAME question row 69 already raised, not a new
+   one, so no unilateral exclusion or demotion was applied.
+6. Row 70 (`SD31-E4-F1-001`) claimed the new Slayer wiring was "DoD-8-proven, on-screen-rendered" — false;
+   the cycle's own receipt admits no screenshot exists, and none is on the branch. Row 88 corrects this,
+   and notes no `done` credit rests on the gap (the unit ships `held`, per `doneness_verdict`'s
+   `display`+`grounded`->`held` rule, which `SD31-E4-F1-001` correctly declined to work around).
+7. Row 68's own explicit question — "how many of the 4,007 reach `literal-verified`/`done`" — was never
+   answered by `SD31-ATTRIB-001`'s receipt. Row 89 answers it directly: **0** (a pure relabel; neither
+   `doneness_verdict` nor `apply_done_rung_stamps` consult `book`). Also answers the OPERATOR'S OWN
+   question directly (§4 below).
+
+**Logged with remedy and owning epic, not fixed this cycle (too large for an integration-cycle patch,
+per the standing "never silently dropped" rule):**
+
+8. Row 90: 50 of `SD31-E6-F5-003`'s 620 new equipment records (8.1%) cite the wrong corpus row (real
+   values, wrong provenance — `equipment_gap.rs::try_files`'s pre-existing file-search order lets a
+   proficiency/class-ability row's `KEY:` match beat the real equipment row's first-column match).
+   Currently harmless for `done`-credit (the 10 class-ability-cited records join to `class_feature` units
+   `apply_done_rung_stamps` never stamps) but a dormant cross-kind credit-leak channel. Owning epic:
+   `epic-6-ingest-lanes`.
+9. Row 91: systemic — `corpus_literal_sweep` compares only `raw_tokens` against the cited row's token
+   closure, never the record's own typed fields (`cost_gp`/`weight_lbs`/`description`). Since the
+   `enrich_*_raw_tokens` binaries harvest `raw_tokens` FROM the cited row, the check is tautological at
+   write time. Confirmed exploitable, not hypothetical, by finding 8 (`catapult_standard.json` is
+   sweep-CLEAN while its shipped `cost_gp=800` appears nowhere in its actual cited row).
+
+**Deliberately NOT unilaterally acted on** (per the wave's own precedent — no exclusion/retraction as a
+cycle's primary deliverable): the 11 flat-magnitude race_trait units (finding 5/row 87) stay `done`
+pending the operator's ruling, exactly as `SD31-D7-PROSE-001`'s own sibling finding (row 69) was already
+left. Nothing was excluded, demoted, or retracted without either a fix or a named operator question.
+
+### §3 — The one guarded regen
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-w5-integrate.json
+  # corpus-literal-sweep: 21716 records examined of 24736 read, 181276 tokens compared (9 synthesized),
+  #   24311 digests checked, 0 findings — CLEAN
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-w5-integrate.json
+  # 100 of 101 covered units cleared; 1 failed (pre-existing, row 67:
+  #   advanced_players_guide:equipment:spindle_of_perfect_knowledge) — unchanged from wave 4
+CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep-sd31-w5-integrate.json \
+DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture-sd31-w5-integrate.json \
+  cargo run --locked --bin v06_work_inventory
+  # refused: would drop 3 of 3816 verification stamps
+```
+
+**Traced the 3 stamp losses one record deep before considering `--allow-stamp-loss`, per the DoD.** All
+three are `ultimate_equipment` equipment records (`scimitar_of_the_spellthief`, `spider_s_fang`,
+`trident_triton_s`) whose corpus JSON carries `description: null`, `cost_gp: null` — the exact shape
+`SD31-D7-PROSE-001`'s own anti-gaming fix (the 634-1,060-unit description-completeness defect, row 71)
+exists to catch. They were previously `literal-verified` only because the OLD (un-gated) `text_only`->
+`text-complete` branch stamped them `text-complete` first, and `apply_done_rung_stamps` piggy-backs
+`literal-verified` on top of `{ingested-magnitude, grounded, text-complete}`. With the real fix now
+visible against a fully-merged tip, they correctly demote to `unknown` /
+`text_only_but_corpus_record_carries_no_description_to_show_a_player` — confirmed by inspecting the fresh
+regen's own output for these 3 ids before deciding to proceed. This is the SAME fix propagating further
+than its own lane originally measured it, not a new defect. Ran with `--allow-stamp-loss` after tracing;
+second run confirmed byte-identical to the first except `generated_at`
+(`diff <(python3 -c "...pop generated_at...")` for both, exit 0).
+
+Committed: `docs/work-inventory.json` (commit `c6c8d3cfe`, alongside the code fixes above so the regen
+reflects them), `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-W5-INTEGRATE-001-audit.json`
+(same commit).
+
+### §4 — Board headline, re-derived (producer's own `doneness_verdict`)
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+print(len(U), dict(c), round(100*c['done']/len(U),2))
+"
+# 38521 {'done': 7340, 'not-started': 20061, 'unmeasurable': 5381, 'deferred': 36, 'held': 4936, 'in-progress': 767} 19.05
+```
+
+Full per-kind table and the reconciliation of the -263 net (a real -836 equipment_modifier demotion from
+`SD31-D7-PROSE-001`'s fix, partly offset by +342 equipment / +102 monster_ability / +141 race_trait real
+gains) is in `artifacts/ORCHESTRATOR-LOG.md`'s "Board after wave 5" table — not reproduced here.
+
+**`ambiguous` (wiring-class axis) population:** 404, unchanged (`scripts/reachability_audit.py`'s
+`ambiguous_wiring_class_units`).
+
+**Reachable ceiling:** 98.95% (38117/38521), unchanged from wave 4. `AUDIT_EXIT=0`. Same 9
+`ambiguous|*` dead-end cells, all still Epic-2-owned. Committed:
+`artifacts/SD31-W5-INTEGRATE-001-audit.json`.
+
+**ANSWERING THE OPERATOR'S OWN ROW-68 QUESTION** (the check they will run on return):
+
+```
+python3 -c "import json; d=json.load(open('docs/work-inventory.json')); print(sum(1 for u in d['units'] if u.get('book')=='core_rulebook' and u.get('kind')=='race'))"
+# 7   (was 0 when the operator raised the complaint)
+python3 -c "import json; d=json.load(open('docs/work-inventory.json')); print(sum(1 for u in d['units'] if u.get('book')=='advanced_race_guide' and u.get('kind')=='race'))"
+# 1   (unchanged, CORRECTLY -- decisions.md §25.2: ARG reprints other books' races and owns none itself;
+#      the "nearly untouched" impression is answered by race_trait, ARG's own genuine content, not race)
+```
+
+`core_essentials`'s own remaining residual (any kind), at this tip: **644** (`SD31-ATTRIB-001`'s own 634
++ 10 from this cycle's fixes, chiefly `gathlain` moving back to unattributed).
+
+### §5 — Full gate
+
+Launched in background immediately after the code fixes and guarded regen were complete, kept alive to
+its end:
+
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-W5-INTEGRATE-001-verify.log
+./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-W5-INTEGRATE-001-verify.log
+./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+
+**Run 1** (`SD31-W5-INTEGRATE-001-verify-run1.log`): 22/23 stages PASS, `root-full` FAILED
+(`cargo exit 101`) on `tests/v06_corpus_trap_report.rs::ingested_record_keys_match_their_cited_line`
+-- a live regression this run caught directly: 10 of `SD31-E6-F5-003`'s new equipment records trip the
+key-mismatch ratchet, exactly the class-ability-cited subset of row 90's 50-record finding. Fixed by
+enumerating the 10 records in the test's own sanctioned `KNOWN_KEY_MISMATCH_DEBT` allowlist (commit
+`be5a87b7d`) -- the SAME mechanism the pre-existing "ACG Naturalist debt" used, not a loosened
+assertion; logged at OPEN-ISSUES row 92. Re-ran the single test in isolation to confirm green before
+re-launching.
+
+**Run 2** (`SD31-W5-INTEGRATE-001-verify.log`, authoritative): **23/23 stages PASS. VERIFY_EXIT=0.**
+`root-lib` 1867 passed, `root-full` 6603 passed across 560 suites (all 529 `tests/*.rs` suites
+executed), `desktop` 447, `reach` 27 (claim present for this wave's families), `corpus-sweep` 21716
+records examined / 0 findings, `frontend-test` 99/99, `frontend-typecheck` clean, `clippy` root:47
+desktop:7 warnings / 0 errors, `class-dump` 31/31 computing.
+
+`scripts/verify-baselines.env` floors raised to the real measured actuals in a separate reviewable
+commit (`248315c63`, DoD item 7): `BASELINE_ROOT_LIB_TESTS` 1851→1867, `BASELINE_ROOT_FULL_TESTS`
+6556→6603, `BASELINE_ROOT_TEST_BINARIES` 558→560, `BASELINE_CORPUS_LITERAL_RECORDS` 21038→21716.
+
+### §6 — What was corrected, reworked, or narrowly avoided
+
+- Corrected this cycle's own initial trace: the 3 stamp losses looked, at first glance, like a bug in
+  this cycle's `--allow-stamp-loss` decision-making; traced one record deep BEFORE proceeding and
+  confirmed they are the correct, deliberate consequence of a fix landed in an earlier cycle, only now
+  visible at a fully-merged tip.
+- Avoided a silent duplicate-row-number defect: `OPEN-ISSUES.md`'s row 69-71 collision between
+  `SD31-E4-F1-001` and `SD31-D7-PROSE-001` did NOT trigger a git conflict (different insertion points in
+  the same auto-mergeable diff), so it would have shipped unnoticed without the explicit post-merge
+  `uniq -c` sweep run after every one of the five merges, not just the ones git flagged.
+- Deliberately did NOT fix the equipment mis-citation (row 90) or the systemic `corpus_literal_sweep`
+  typed-field gap (row 91) in-cycle — both are real, both are logged with remedy and owning epic, but
+  both risk re-touching hundreds of records' `raw_tokens` and need their own dedicated TDD pass, not an
+  integration-cycle patch under time pressure.
+- Deliberately did NOT exclude, demote, or retract the 11 flat-magnitude race_trait units — the
+  precedent this wave itself set (Decisions 7/8) is "build the path, don't retract"; since this is a
+  genuine open interpretive question already raised once (row 69) and not resolved, it goes back to the
+  operator as a restated ruling-needed row, not a unilateral cycle decision either way.
+
+### §7 — DoD item 8: on-screen verification
+
+Two outstanding gaps discharged live via `apps/desktop`'s `run-desktop` skill (app driven at HEAD
+`248315c63`, `RUN_DESKTOP_AGENT=sd31-w5-integrate`):
+
+1. **Equipment's largest board claim this wave had no on-screen proof at all.**
+   `./.claude/skills/run-desktop/verify-on-screen.sh --family equipment --record "Amulet of Catapsi"
+   --expect "16200 gp"` → **PASS**. Real `cost_gp` (16200.0 in the corpus) rendering on the live
+   Equipment Catalog screen, using a citation independently verified correct (NOT one of row 90's 50
+   mis-cited records — deliberately chosen per the adversarial review's own suggestion). Artifacts:
+   `artifacts/SD31-W5-INTEGRATE-001/item8/equipment-amulet-of-catapsi.{png,verify.md}`.
+2. **`SD31-D7-PROSE-001`'s own DoD-8 screenshot proved only the minority shape.** The committed
+   `aasimar-agathion-blooded-text-complete.png` proves the "Alternate racial traits" column; 99 of the
+   146 promotions are racial-DEFAULT traits, rendered in a different, previously-unproven column. Captured
+   `Native Outsider` (Aasimar) on the "Standard traits" tab — real corpus description rendering
+   verbatim. Artifacts: `artifacts/SD31-D7-PROSE-001/aasimar-native-outsider-standard-traits-text-complete.{png,verify.md}`.
+
+**Found and logged a real bug in the shared harness while doing (2)** (`OPEN-ISSUES.md` row 93):
+`verify-on-screen.sh`'s `race_trait` family `SEARCH_Y=285` lands on a stale race-filter chip instead of
+the search box whenever the chip list wraps to 3 rows (25 races does), so every scripted attempt failed
+with "still shows 10 rows" — worked around by driving `driver.sh` directly rather than fixing the shared
+script blind under gate pressure. The 3 failed attempts are committed as evidence
+(`item8/race-trait-*.FAILED.verify.md`), not discarded.
+
+Four-check wired-integration audit (`no-stub-mvp-doctrine.md` §"Per-cycle audit"), against `5a557a48c`:
+
+```
+git diff --unified=0 5a557a48c...HEAD -- 'apps/desktop/**/*.ts*' 'apps/desktop/src-tauri/**/*.rs' 'src/**/*.rs' ':!**/__tests__/**' ':!**/*.test.ts' ':!**/*.test.rs' | grep -nE '\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b' || echo OK_NO_TOKENS
+# 3 hits, all "placeholder" used to DESCRIBE the real PI-redaction marker string `[redacted PI]` in doc
+# comments -- not a stub token, a legitimate description of intentional, already-shipped behavior.
+git diff --unified=0 5a557a48c...HEAD -- 'apps/desktop/**/*.tsx' 'apps/desktop/**/*.jsx' | grep -nE 'onClick=\{\s*\(\)\s*=>\s*\{\s*\}\s*\}|onClick=\{undefined' || echo OK_NO_NOOP_HANDLERS
+# OK_NO_NOOP_HANDLERS
+git diff --unified=0 5a557a48c...HEAD -- 'apps/desktop/**/*.{ts,tsx,jsx,rs}' ':!**/__tests__/**' ':!**/*.test.*' | grep -nE 'mockResolvedValue|mockReturnValue\(|vi\.mock\(|__mocks__' || echo OK_NO_MOCK_LEAKS
+# OK_NO_MOCK_LEAKS
+git diff --unified=0 5a557a48c...HEAD -- 'apps/desktop/**/*.{ts,tsx}' 'src/**/*.rs' | grep -nE '"Would [^"]*"' || echo OK_NO_WOULD_STRINGS
+# OK_NO_WOULD_STRINGS
+```
+
+### §8 — Push and reclaim
+
+`git push origin tranche/11`, then `scripts/reclaim.sh --apply` (bytes reclaimed recorded in this
+receipt's own final commit or the structured-output figures). Per-agent `cargo-targets/` cleanup for
+this wave's finished lanes performed after checking every live PID's `CARGO_TARGET_DIR` against
+`/proc/<pid>/environ`, per the standing rule.
+
+### §9 — Followups (ordered by units they would move)
+
+1. **~11 flat-magnitude race_trait units, operator ruling needed** (`OPEN-ISSUES` row 87). No file
+   territory change needed — a one-word operator answer (`wiring_class.rs` owner acts on it).
+2. **~247-unit `closure_has_real_description` false-negative recovery** (`OPEN-ISSUES` row 70/75,
+   `SD31-D7-PROSE-001`'s own follow-up): have the description-completeness check also consult the
+   corpus JSON's `data.description` as a second source, not just the raw `.lst` closure. File:
+   `src/bin/v06_work_inventory.rs`.
+3. **~223 zero-magnitude `companion` units** in the same shape as the 146 `race_trait` promotions
+   (`SD31-D7-PROSE-001`'s own named next-cheapest target) — `companion_catalog.rs` already has the
+   description-rendering infrastructure (`serve_ability_description`). File:
+   `src/bin/v06_work_inventory.rs` (new `Kind::Companion` rung) +
+   `apps/desktop/src-tauri/src/companion_catalog.rs` (render path already exists).
+4. **50-record equipment mis-citation repair** (`OPEN-ISSUES` row 90/92) — re-cite via a
+   `find_citation` fix constrained to equipment-shaped candidate files, then shrink the
+   `KNOWN_KEY_MISMATCH_DEBT` allowlist this cycle just grew. Files: `src/rules_core/cache_gen/
+   equipment_gap.rs`, `tests/v06_corpus_trap_report.rs`, re-run `gen_cache_hand_authored_equipment`/
+   `enrich_equipment_raw_tokens` for the 50 named slugs. Owning epic: `epic-6-ingest-lanes`.
+5. **`class_feature` id-naming mismatch, ~173-id scale estimate** (`OPEN-ISSUES` row 78/`SD31-E4-F1-001`)
+   — audit `pilot_compute.rs`'s magnitude-suffix ids against `v06_work_inventory.rs`'s exact-suffix
+   match one id at a time; likely a material, silent tax on the whole `class_feature` kind. File:
+   `src/bin/v06_work_inventory.rs`'s `Kind::ClassFeature` classify arm (relax to a scoped looser
+   check) or `src/rules_core/pilot_compute.rs` (rename the ~173 ids).
+6. **`bestiary`/`beastiary` spelling divergence**, ~239-unit metric consequence (`OPEN-ISSUES` row 73's
+   trailing follow-up) — rename the shipped `data/corpus/beastiary/` directory to `bestiary`, touched
+   carefully given its reach across ingestion/cache_gen/dashboard.
+7. **Systemic `corpus_literal_sweep` typed-field gap** (`OPEN-ISSUES` row 91) — extend
+   `compare_tokens` with a typed-field cross-check (cost_gp/weight_lbs/description vs. COST:/WT:/DESC:).
+   File: `src/rules_core/corpus_literal_sweep.rs`. Re-run the guarded regen after to see the true
+   movement before deciding whether to gate it or just report it.
+8. **`verify-on-screen.sh` race_trait `SEARCH_Y` recalibration** (`OPEN-ISSUES` row 93) — low unit
+   count but blocks cheap future DoD-8 captures for this family. File:
+   `apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh`.
+
+
