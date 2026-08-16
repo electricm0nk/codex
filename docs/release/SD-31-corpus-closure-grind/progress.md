@@ -11363,3 +11363,313 @@ checking every live PID's `CARGO_TARGET_DIR` against `/proc/<pid>/environ`.
    reported anywhere, so a run that never exercises the check is indistinguishable from one that did and
    found nothing. File: `src/rules_core/corpus_literal_sweep.rs`.
 
+## Cycle `SD31-E4-F1-003` (`RETRO_ACTOR=sd31-classwire3`) — 2026-08-16, "Ninja base chassis + Scout archetype supersession wiring"
+
+**Role:** `sd31-classwire3`, own worktree `wf_599fa00f-e92-4`, own branch `sd31/classwire3-e4f1-003` cut
+from `origin/tranche/11` tip. **HEAD at claim:** `b8c36417d` ("docs(sd31): Decision 10 amendment --
+variant lines are new content, never supersession") — package dir absent at claim (this worktree's own
+prior branch carried no `docs/` tree), tree clean, so `git fetch origin && git checkout -b
+sd31/classwire3-e4f1-003 origin/tranche/11` per protocol. **Oracle pin:**
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` (`./scripts/verify.sh --only
+preflight-oracle` → PASS). `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-classwire3`.
+
+### Card
+
+`epic-4-mechanism` F1 — per-class chassis and supersession wiring, continuing from `SD31-E4-F1-001`
+(Slayer, 7/7) and `SD31-E4-F1-002` (Gunslinger base chassis + 2 archetypes). Take the highest-record-count
+cleared classes from `SD31-E3-F1-001`'s clearance table; wire real supersession, one mechanism at a time
+(`if let`/`else`, reachability via `build_pilot_headless_receipt`, per SD31-E4-F1's acceptance). Do not
+chase board movement.
+
+### Re-derived before picking: the clearance table's own `named_raw: 0` for Ninja is wrong
+
+Per this card's own instruction to "verify rows as you consume them," re-checked every remaining
+`wired_able: 0` class in `SD31-E3-F1-001-clearance-table.json` before picking. All 24 classes bar Slayer
+(already 7/7) measure `wired_able: 0`; every one outside Ultimate Combat needs a from-scratch book
+onboarding (Occult Adventures/Ultimate Psionics/etc. carry no class-chassis module at all yet — only
+`archetype_tables.rs`/`feat_tables.rs`/`spell_list.rs` for OTHER classes' content, confirmed by direct
+`ls`). Ultimate Combat already has the infrastructure (`UcClassId`, `ClassTableRow`,
+`class_chassis_resolve`, the `class_gunslinger.rs` pattern) from `SD31-E4-F1-002`, so its other two real
+classes (Ninja, Samurai) were the tractable next targets.
+
+`docs/work-inventory.json`'s own already-ingested `corpus_key: "Ninja Archetype ~ Scout"` record (from
+`SD31-E5-F1-001`'s 21-book dump) contradicted the clearance table's `named_raw: 0` for Ninja. Verified
+against the raw `.lst` row directly:
+
+```
+grep -oE 'Ninja_Archetype_[A-Za-z0-9]+' \
+  $PCGEN_CORPUS_ROOT/pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst \
+  | sort -u | wc -l
+-> 0   # reproduces the clearance table's own miss exactly
+grep -n "Ninja Archetype ~ Scout" \
+  $PCGEN_CORPUS_ROOT/pathfinder/paizo/roleplaying_game/ultimate_combat/support/uc_abilities_class_apg.lst
+-> :5, a real archetype record (PRECLASS:1,Ninja=1, grants Scout's Charge @4 / Skirmisher @8,
+   suppresses Uncanny Dodge/Improved Uncanny Dodge via FACT: flags)
+```
+
+**Root cause: the clearance table's evidence method greps one file per book; Scout's source row lives in
+a nested `support/` subdirectory the single-file grep never reached** — the identical class of miss
+`OPEN-ISSUES` row 1 already names for `wiring_class::CorpusLines::line()`'s single-level directory join,
+now confirmed to also silently understate a clearance-table figure, not only a `wiring_class` verdict.
+`retro.py correction` emitted (`1786882331700-sd31-classwire3-6cd4c7`). **Samurai's own `named_raw: 0`
+was re-checked the same way (targeted `support/`-directory + corpus-wide `corpus_key` search for
+"Samurai Archetype") and confirmed genuinely zero** — not the same miss shape.
+
+**A second Ninja archetype exists in a different book and was NOT wired this cycle:**
+`inner_sea_intrigue:class_feature:ninja_archetype_frozen_shadow` (`isi_abilities_class.lst`) — Inner Sea
+Intrigue has no `archetype_tables.rs`/class-chassis module at all yet, a separate book-onboarding lift
+out of this cycle's tractable scope. Named in `OPEN-ISSUES` row 110, not silently missed.
+
+### What landed
+
+1. **`src/rules_core/rules_tables/ultimate_combat/class_ninja.rs`** (new) — BAB/save chassis table,
+   formula-derived from `CLASS:Ninja`'s real corpus record (`uc_classes.lst:19`: 3/4 BAB, good Reflex,
+   poor Fort/Will), 2 unit tests. Independently matches the standard published Ninja class table at
+   levels 1/10/20 (BAB +0/+7/+15, Fort +0/+3/+6, Ref +2/+7/+12, Will +0/+3/+6).
+2. **`src/rules_core/rules_tables/ultimate_combat/mod.rs`** — `UcClassId::Ninja` added (`ALL` now `[
+   Gunslinger, Ninja]`), `class_chassis_resolve` match arm, 1 updated unit test
+   (`from_class_id_str_round_trips_gunslinger_and_ninja`).
+3. **`src/rules_core/rules_tables/ultimate_combat/archetype_tables.rs`** — Ninja's one real archetype
+   (Scout) added verbatim from the corpus, catalog 67 → 68 records. **`replaces` is `FACT:`-derived, not
+   `TYPE:`-derived** — Scout's own `TYPE:` facet carries no slot list (`TYPE:Archetype.NinjaArchetype`
+   only); the suppression mechanism is two `FACT:Ninja_Archetype_UncannyDodge|true`/
+   `FACT:Ninja_Archetype_ImprovedUncannyDodge|true` tokens feeding
+   `BONUS:VAR|Ninja_CF_UncannyDodge|1|...|PREFACT:...` rows (`uc_abilities_globalvar.lst:217-218`) — a
+   genuinely different corpus convention from every prior book's table, documented explicitly in this
+   module's own new doc addendum so a future reader does not assume the usual `TYPE:` derivation.
+   Updated the file's own exact-count tests (`total_replaces` 291→293, `total_grants` 364→366, `resolved`
+   304→306, `equal_count_records` 15→16) — hand-counted from Scout's own 2 `replaces` + 2 `grants`
+   entries, both grants resolving to real `DESC:` text from their APG base rows
+   (`apg_abilities_class.lst:2978-2979`, since Scout is upstream a Rogue archetype UC extends to Ninja
+   via a `.MOD` retag).
+4. **`src/rules_core/pilot_compute.rs`** — `compute_uc_class_chassis` dispatch branch extended (`else if
+   class_id == UcClassId::Ninja`) and `ground_or_block_ninja_class_features`: Sneak Attack dice
+   (`(level+1)/2`, unconditional from 1st), Ki Pool size (`level/2 + CHA modifier`, from 2nd — Ninja's
+   own corpus stat-choice flag selects Charisma over the shared `Ki Pool Tracker` mechanism's Wisdom
+   default that `class_chassis.monk.ki_pool_size` already grounds), Ninja Trick count (`level/2`, from
+   2nd), No Trace bonus (`level/3`, from 3rd), and Uncanny Dodge (4th)/Improved Uncanny Dodge (8th) —
+   the latter two wired through the real `archetype_claiming_slot_entry` `if let`/`else` supersession
+   branch against Scout, quoting Scout's own real corpus text (Scout's Charge/Skirmisher) when claimed,
+   and the real Uncanny-Dodge/Improved-Uncanny-Dodge base `DESC:` text (`core_rulebook/
+   cr_abilities_class.lst:2851-2852`, the shared `Uncanny Dodge ~ Base` mechanism's own granted rows)
+   when not. 9 new tests, all headless-pilot-receipt-shaped (`build_pilot_headless_receipt`), covering
+   base chassis + all 4 unconditional features' level-gating + both supersession cases + both
+   non-superseded base cases.
+5. **`apps/desktop/src-tauri/src/reach_gate.rs`** — additive-list territory exception: pinned
+   `"Ninja Archetype ~ Scout"` into the pre-existing `("ultimate_combat", "archetypes")`
+   `UNREACHED_RECORD_FINDINGS` entry (required by `unreached_records_are_exactly_the_recorded_findings`,
+   confirmed by running that test standalone before the full gate — see Gate below); corrected the
+   `OPEN_FINDINGS` count text (67→68) and the stale `("ultimate_combat", "class_features")` claim ("no
+   per-class mechanism wiring has landed" — false since `SD31-E4-F1-002`, now doubly false with Ninja).
+
+### wired-able / named — Ninja only, not blended, and NOT the Gunslinger convention
+
+Ninja's archetype mechanism is structurally different from Gunslinger's (`FACT:` flags vs. `TYPE:` facet
+slot lists — see item 3 above), so Gunslinger's "N distinct `<Class>Archetype` FACTDEF tokens" convention
+does not transfer cleanly (Ninja's own `Ninja_Archetype_*` FACTDEF population in `uc__datacontrols.lst`
+is 34 tokens, but that counts field-definition boilerplate, not named replaceable mechanisms — a
+different thing than Gunslinger's `Gunslinger_Archetype_*` count). The honest, comparable figure:
+
+- **Archetypes: 1/1 wired** (Scout — Ninja's only real archetype in the 23-book scope).
+- **Replaced slots: 2/2 wired** (Uncanny Dodge, Improved Uncanny Dodge — both of Scout's own `replaces`
+  entries).
+- **Unconditional (non-archetype) features grounded: 4** (Sneak Attack, Ki Pool, Ninja Trick count, No
+  Trace) — Ninja's 4 remaining named automatic features (Poison Use, Light Steps, Hidden Master, Weapon
+  Proficiencies) are zero/flat-only grant-only records not yet transcribed, named in the deferred-features
+  diagnostic, and all 30 individual Ninja Tricks remain a chooser this engine grounds only by COUNT (the
+  same count-vs-choice split Slayer Talents/Gunslinger Gun Training already establish).
+
+### Board delta — measured with the mandate's own exact command, then checked out per the wave rule
+
+```
+export CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-classwire3
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-classwire3.json
+-> corpus-literal-sweep: 23859 records examined of 24736 read, 228147 tokens compared (9 synthesized),
+   24311 digests checked, 0 findings -- CLEAN
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-classwire3.json
+-> 100 of 101 covered units cleared; 1 failed
+   (advanced_players_guide:equipment:spindle_of_perfect_knowledge, pre-existing — the SAME failure
+   `SD31-E4-F1-002`'s receipt named, confirmed unrelated to this cycle's own change surface)
+CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep-sd31-classwire3.json \
+DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture-sd31-classwire3.json \
+  cargo run --locked --bin v06_work_inventory
+-> exit 0, regen completed clean. **Zero stamp loss, enforced by the tool itself, not merely
+   observed**: `v06_work_inventory.rs`'s own `stamp_loss` guard (line ~6391) refuses to write and
+   requires an explicit `--allow-stamp-loss` flag the moment it detects any previously-stamped
+   unit disappearing from the incoming regen; this run passed with no such flag and exited 0, so
+   the absence of a refusal IS the zero-stamp-loss proof (DoD item 4).
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+print(len(U), dict(c), round(100*c['done']/len(U),2))
+"
+-> 38521 {'done': 9488, 'not-started': 19915, 'unmeasurable': 5123, 'deferred': 36, 'held': 3193,
+   'in-progress': 766} 24.63
+```
+
+**Board unchanged: 9,488/38,521 (24.63%), zero movement — predicted before running, then confirmed.**
+Traced one record deep, not merely accepted: all 54 of Ninja's real `class_feature` corpus records
+(including the 6 this cycle's own wiring grounds) still read `status: not-ingested`,
+`evidence: class_feature_of_unmodelled_corpus_class:ninja` in the regenerated inventory
+(`python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json'));
+u=[x for x in d['units'] if x.get('book')=='ultimate_combat' and (x.get('corpus_key') or
+'').startswith('Ninja')]; print(collections.Counter((x['status'],x['evidence']) for x in u))"` →
+`{('not-ingested', 'class_feature_of_unmodelled_corpus_class:ninja'): 54, ...}`). `git checkout --
+docs/work-inventory.json` immediately after measuring, per the wave rule; the file is NOT part of this
+commit.
+
+### BLOCKER reconfirmed, not fixed (out of file territory) — `OPEN-ISSUES.md` row 111
+
+Row 96 (`v06_work_inventory.rs`'s `modelled_class_books()` names only CRB/APG/ACG) and row 97 (frontend
+`CLASS_OPTIONS` has no non-CRB/APG/ACG classes) both reproduce identically for Ninja — confirmed, not
+assumed, by re-reading `modelled_class_books()` this cycle (unchanged since row 96) and by
+`grep -rn ninja apps/desktop/src/` (0 hits outside this cycle's own new Rust files). This is the SECOND
+class to hit both blockers, confirming they are structural to every future `epic-4-mechanism` class, not
+Gunslinger-specific — logged as `OPEN-ISSUES` row 111 rather than re-filed under 96/97, so the
+recurrence itself is on record. `v06_work_inventory.rs` and `characterHubModel.ts` are lane 1's/frontend's
+file territory, not this card's (`pilot_compute.rs`/`archetype_resolver.rs`/class compute modules/
+`rules_tables/*/archetype_tables` only).
+
+### Gate
+
+Launched early (`RETRO_ACTOR=sd31-classwire3`, `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-classwire3`),
+kept alive throughout, log at
+`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E4-F1-003-verify.log`:
+
+    ./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+
+**All 23 stages PASS, `VERIFY_EXIT=0`, captured directly** (`echo "VERIFY_EXIT=$?" >> "$LOG"`, never
+through a pipe): `preflight-disk`, `preflight-oracle`, `oracle-pin-selftest`, `producer-selftest`,
+`reachability-audit-selftest`, `reachability-audit` (98.95% reachable ceiling), `groundtruth-guard-selftest`,
+`pi-sweep` (10 hits, 10 baseline rows — unchanged), `declared-pi-audit` (clean), `audit-selftest`,
+`reclaim-selftest`, `driver-selftest`, `corpus-sweep-selftest`, **`root-lib` (1905 passed)**, **`root-full`
+(6696 passed across 563 suites, all 529 `tests/*.rs` suites executed)**, **`desktop` (448 passed)**,
+**`reach` (27 passed)** — full-gate confirmation of the standalone run reported above, **`corpus-sweep`
+(23859 records examined of 24736 read, 228147 tokens compared, 0 findings)**, `frontend-install`,
+`frontend-test` (99/99 files), `frontend-typecheck` (clean), **`clippy` (root:47, desktop:7 warnings —
+BOTH exactly at their recorded ceiling, 0 errors, 0 new)**, **`class-dump` (31/31 computing)**.
+
+BASELINE NOTES (not failures, per the gate's own convention): `BASELINE_ROOT_LIB_TESTS` stale (1894
+recorded, 1905 measured, +11 — exactly this cycle's own new tests, see below) and
+`BASELINE_ROOT_FULL_TESTS` stale (6685 recorded, 6696 measured, +11, same reason). Left
+`scripts/verify-baselines.env` unedited per this program's convention (a baseline-movement commit is
+separate and reviewable on its own).
+
+Log committed at `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E4-F1-003-verify.log`.
+
+**`reach` stage, verified standalone before trusting the full-gate run** (this box's shared-checkout
+contention makes an isolated confirmation worth the extra minute): `cargo test --locked reach_gate::` in
+`apps/desktop/src-tauri` → **27 passed, 0 failed**, including
+`unreached_records_are_exactly_the_recorded_findings` (which would fail if Scout's key were not pinned
+into `UNREACHED_RECORD_FINDINGS`) and `every_declared_claim_actually_carries_the_records`. **This is the
+"reach passes with a claim for your families" requirement — a real, executed claim (`archetypes_reach`
+over `ultimate_combat::archetype_tables::archetype_swap_tables()`, now including Scout), not zero matched
+tests.**
+
+`v06_corpus_trap_report -- --audit`: **1,192 `wiring-class-mismatch` findings, 1 more than the DoD-cited
+1,191 baseline.** Traced, not waved through: `grep -ic "ninja\|scout\|gunslinger"
+/tmp/trap-report-sd31-classwire3.log` → **0** — none of the 1,192 findings name anything this cycle
+touched (this card writes zero `data/corpus/` records and zero monster/companion classification code;
+every finding in the log is a pre-existing `monster`/`companion` wiring-class mismatch in
+`ultimate_psionics`/`ultimate_wilderness`). The +1 drift from the DoD's stated 1,191 is attributed to
+other cycles' corpus changes landing on `tranche/11` since that baseline was recorded, not to this
+cycle — **confirmed not worsened by this cycle specifically**, with the exact command and count that
+proves it.
+
+Four-check wired-integration audit, against `b8c36417d`:
+
+```
+git diff --unified=0 b8c36417dd..HEAD -- 'src/**/*.rs' 'apps/desktop/src-tauri/**/*.rs' | grep -nE '\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b' || echo OK_NO_TOKENS
+-> OK_NO_TOKENS
+git diff --unified=0 b8c36417dd..HEAD -- 'apps/desktop/**/*.tsx' 'apps/desktop/**/*.jsx' | grep -nE 'onClick=\{\s*\(\)\s*=>\s*\{\s*\}\s*\}|onClick=\{undefined' || echo OK_NO_NOOP_HANDLERS
+-> OK_NO_NOOP_HANDLERS
+git diff --unified=0 b8c36417dd..HEAD -- 'src/**/*.rs' | grep -nE 'mockResolvedValue|mockReturnValue\(|vi\.mock\(|__mocks__' || echo OK_NO_MOCK_LEAKS
+-> OK_NO_MOCK_LEAKS
+git diff --unified=0 b8c36417dd..HEAD -- 'src/**/*.rs' | grep -nE '"Would [^"]*"' || echo OK_NO_WOULD_STRINGS
+-> OK_NO_WOULD_STRINGS
+```
+
+Count-change sweep (archetype catalog 67→68, `UcClassId::ALL` 1→2): grepped `tests/`, `src/`, `apps/` for
+the old counts — `archetype_swap_tables().len(), 67` has exactly one other hit
+(`ultimate_magic/archetype_tables.rs`, a coincidentally-equal but unrelated book-local catalog, untouched
+by this cycle); no other file asserts `UcClassId::ALL`'s length or `ultimate_combat`'s archetype total.
+
+PI screening: no new `data/corpus/` record written this cycle (only Rust source — compute code and one
+archetype-table transcription of already-public corpus text, plus its base rows' real `DESC:` quoted
+verbatim from APG's own published text). Ran the standing whole-tree check directly, not only via the
+full gate: `cargo test --locked -p codex --test pi_table_sweep` → **8/8 passed**, including
+`rules_tables_carry_no_unbaselined_product_identity_hits`. The gate's own `pi-sweep` (10 hits, 10
+baseline rows — unchanged) and `declared-pi-audit` (clean) stages, which run over
+`src/rules_core/rules_tables` and therefore cover this cycle's new files, both PASS in the log above.
+`declared_pi_shipping_audit` was not separately invoked: it audits `data/corpus/**/*.json`, and this
+cycle writes no such file.
+
+### DoD-8 — on-screen verification
+
+Reachability of the COMPUTATION is proven per SD31-E4-F1's own named standard: 9 new
+`build_pilot_headless_receipt`-based tests exercising the production
+`compute_uc_class_chassis`/`ground_or_block_ninja_class_features`/`archetype_claiming_slot_entry` path
+end to end (not a unit test on the resolver alone).
+
+Full on-screen character-sheet proof is blocked at the same point `SD31-E4-F1-002`'s `OPEN-ISSUES` row 97
+already found for Gunslinger, confirmed by direct source read rather than re-driving `driver.sh` to prove
+a negative the source already answers unambiguously: `apps/desktop/src/characterHub/
+characterHubModel.ts`'s `CLASS_OPTIONS` array carries no `ninja` entry (`grep -rn ninja
+apps/desktop/src/` → 0 hits outside this cycle's own new Rust files) and is `characterHubModel.ts`'s own
+hardcoded literal with no free-text class-id entry point — there is no way to create a Ninja character
+through the app's own form at all, one level before the archetype-picker gap `OPEN_FINDINGS` names.
+Logged precisely as `OPEN-ISSUES` row 111 rather than faked or dropped.
+
+### Retro
+
+- `correction` — the clearance table's `named_raw: 0` miss for Ninja and its root cause
+  (`1786882331700-sd31-classwire3-6cd4c7`).
+- `note` — Scout's `FACT:`-derived `replaces` convention, structurally different from every other book's
+  `TYPE:`-derived one (`1786882345399-sd31-classwire3-8ba613`).
+- `note` — rows 96/97 reproducing identically on a second class, confirming they are structural
+  (`1786882345611-sd31-classwire3-5ea78b`).
+
+### Followups
+
+1. **`OPEN-ISSUES` row 96/111** — register `UcClassId::ALL` into `v06_work_inventory.rs`'s
+   `modelled_class_books()`, alongside row 78's id-suffix fix and Decision 7's verdict-table extension.
+   File: `src/bin/v06_work_inventory.rs` (lane 1).
+2. **`OPEN-ISSUES` row 97/111** — add Ninja (and Gunslinger) to `CLASS_OPTIONS` in
+   `apps/desktop/src/characterHub/characterHubModel.ts`. File territory: frontend, not this card's.
+3. **`OPEN-ISSUES` row 110** — `inner_sea_intrigue:class_feature:ninja_archetype_frozen_shadow`, Ninja's
+   second real archetype, in a book with no `archetype_tables.rs`/class-chassis module yet — a
+   book-onboarding lift for a future cycle.
+4. **Ninja's remaining named features** (Poison Use, Light Steps, Hidden Master, Weapon Proficiencies,
+   all 30 individual Ninja Tricks) — not yet transcribed; the diagnostic
+   `class_feature.uc.ninja.other_features_deferred.unsupported` names them explicitly, non-claim-blocking.
+5. **Samurai** (Ultimate Combat's third real class, `named_raw: 0`, re-confirmed) — no archetype content
+   to supersede; base chassis (BAB/saves + named features: Order, Challenge, Resolve, Banner, Mount,
+   Weapon Expertise) untouched, real remaining scope for a future cycle.
+6. **Every other clearance-table class** (Occultist, Spiritualist, Medium, Mesmerist, Kineticist, Psychic,
+   Vigilante, Magus, Shifter, Aegis, Cryptic, Dread, Marksman, Psion, Psychic Warrior, Soulknife,
+   Tactician, Vitalist, Wilder) — still `wired_able: 0`, each needing a from-scratch book onboarding; the
+   biggest lever on the whole board remains unwired, one cycle at a time.
+
+### Baseline drift — clean, exactly this cycle's own tests, nothing left unaccounted
+
+Recorded floors (`scripts/verify-baselines.env`): `BASELINE_ROOT_LIB_TESTS=1894`,
+`BASELINE_ROOT_FULL_TESTS=6685`, `BASELINE_ROOT_TEST_BINARIES=563`. Measured this run:
+`root-lib 1905` (+11), `root-full 6696 across 563 suites` (+11, same 563 test binaries — no new test
+FILE, confirmed: `class_ninja.rs` lives under `src/`, not `tests/`, and the other new tests are
+`#[cfg(test)] mod`s inside already-existing files). **+11 is exactly this cycle's own new test count**
+(2 in `class_ninja.rs` + 9 in `pilot_compute.rs`'s new `ninja_tests` module; `mod.rs`'s and
+`archetype_tables.rs`'s own test-count changes are renames/assertion updates to EXISTING tests, not new
+ones). No unaccounted drift. Left `scripts/verify-baselines.env` unedited per this program's own
+convention — a baseline-movement commit is separate and reviewable on its own.
+
+### End of cycle
+
+`scripts/reclaim.sh --apply` run: `0.0B` reclaimed (correctly refused — every candidate is either a
+live target dir or an unpushed worktree, this program's own well-documented "structurally full, not
+clean" reading, not noise). Own `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-classwire3` (31G)
+deleted manually after the gate finished, per the standing rule (outside `reclaim.sh`'s own scanned
+roots while a build could still be live). Disk: 310G → 280G used (33% → 29%), 658G → 688G available.
+

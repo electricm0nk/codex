@@ -24361,6 +24361,14 @@ fn compute_uc_class_chassis(
             explanations,
             diagnostics,
         );
+    } else if class_id == UcClassId::Ninja {
+        ground_or_block_ninja_class_features(
+            input,
+            level,
+            ability_modifiers,
+            explanations,
+            diagnostics,
+        );
     }
 
     Some((base_attack_bonus, base_saves))
@@ -24757,6 +24765,387 @@ mod gunslinger_tests {
         );
         let receipt2 = build_pilot_headless_receipt(&character(2));
         assert!(find(&receipt2, "class_feature.uc.gunslinger.gunslinger_initiative").is_none());
+    }
+}
+
+/// Ninja's Sneak Attack dice: `(NinjaLVL+1)/2`, from the real corpus row
+/// (`KEY:Ninja ~ Sneak Attack`, `BONUS:VAR|SneakAttackDice|
+/// (NinjaSneakAttackLVL+1)/2`, `NinjaSneakAttackLVL` fed by `NinjaLVL`)
+/// -- the identical formula and progression Rogue's own Sneak Attack
+/// uses, granted from 1st level.
+fn ninja_sneak_attack_dice(level: u8) -> i16 {
+    (i16::from(level) + 1) / 2
+}
+
+/// Ninja's Ki Pool size: `NinjaLVL/2 + Charisma modifier`, from the real
+/// corpus (`class:ninja`'s own `DEFINE:KiPoolCha|0`/`BONUS:VAR|
+/// KiPoolCha|1` flag selects the Charisma stat-choice branch of the
+/// shared `Ki Pool Tracker` internal ability, whose own `BONUS:VAR|
+/// KiPoints|KiPoolLVL/2` base formula is fed `KiPoolLVL` = `NinjaLVL`
+/// via `KEY:Ninja ~ Ki Pool`'s own `BONUS:VAR|KiPoolLVL|NinjaLVL`) --
+/// the same shared mechanism `class_chassis.monk.ki_pool_size` already
+/// grounds for Monk, substituting Charisma for Wisdom per Ninja's own
+/// corpus stat-choice flag. Granted from 2nd level
+/// (`PREVARGTEQ:Ninja_CFP_Level,2`).
+fn ninja_ki_pool_size(level: u8, charisma_modifier: i16) -> i16 {
+    i16::from(level) / 2 + charisma_modifier
+}
+
+/// Ninja Trick count: `NinjaLVL/2`, from the real corpus row (`KEY:Ninja
+/// ~ Ninja Trick`, `BONUS:ABILITYPOOL|Ninja Trick|NinjaTrickLVL/2`,
+/// `NinjaTrickLVL` fed by `NinjaLVL`). Grounds the COUNT only -- WHICH
+/// trick(s) were picked is a chooser (`BONUS:ABILITYPOOL`) this engine
+/// does not model, the same count-vs-choice split Slayer Talents and
+/// Gunslinger Gun Training already establish. Granted from 2nd level
+/// (`PREVARGTEQ:Ninja_CFP_Level,2`).
+fn ninja_trick_count(level: u8) -> i16 {
+    i16::from(level) / 2
+}
+
+/// Ninja's No Trace bonus: `NinjaLVL/3`, from the real corpus row
+/// (`KEY:Ninja ~ No Trace`, `BONUS:VAR|NoTraceBonus|NinjaNoTraceLVL/3`,
+/// `NinjaNoTraceLVL` fed by `NinjaLVL`) -- an insight bonus to the DC to
+/// track the ninja via Survival, and on Disguise/Stealth checks while
+/// stationary. Granted from 3rd level (`PREVARGTEQ:Ninja_CFP_Level,3`).
+fn ninja_no_trace_bonus(level: u8) -> i16 {
+    i16::from(level) / 3
+}
+
+/// Grounds Ninja's Sneak Attack, Ki Pool, Ninja Trick count and No Trace
+/// unconditionally, then Uncanny Dodge (4th level) and Improved Uncanny
+/// Dodge (8th level) with the real archetype-supersession `if let`/
+/// `else` shape SD31-E4-F1's acceptance names, using
+/// `archetype_resolver::archetype_claiming_slot_entry` against Ninja's
+/// one real archetype (Scout, which replaces both Uncanny Dodge slots
+/// with Scout's Charge/Skirmisher -- see `archetype_tables.rs`'s own doc
+/// comment for why `replaces` here is `FACT:`-derived rather than the
+/// usual `TYPE:`-derived convention). See this cycle's own
+/// `OPEN-ISSUES.md` entry for the honest remainder this function does
+/// not yet ground (Poison Use, Light Steps, Hidden Master, Weapon
+/// Proficiencies -- zero/flat-only grant-only records not yet
+/// transcribed) and the row-96-shaped structural blocker
+/// (`v06_work_inventory.rs`'s `modelled_class_books()` does not know
+/// Ultimate Combat's classes at all, out of this cycle's file territory)
+/// that caps every one of these at `held`/board-invisible regardless.
+fn ground_or_block_ninja_class_features(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    // Sneak Attack: no archetype in the 23-book scope claims this slot
+    // for Ninja (Scout's own `replaces` list names only the two Uncanny
+    // Dodge slots), so this grounds unconditionally.
+    let sneak_dice = ninja_sneak_attack_dice(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.uc.ninja.sneak_attack".to_owned(),
+        value: sneak_dice,
+        detail: format!(
+            "Ninja level {level} Sneak Attack: extra {sneak_dice}d6 precision damage \
+             ((level+1)/2) anytime the target would be denied a Dexterity bonus to AC, or when \
+             the ninja flanks her target. Ranged attacks count as sneak attacks only if the \
+             target is within 30 feet"
+        ),
+    });
+
+    // Ki Pool: granted from 2nd level, uses Charisma (Ninja's own
+    // corpus stat-choice flag, unlike Monk's Wisdom).
+    if level >= 2 {
+        let ki_pool = ninja_ki_pool_size(level, ability_modifiers.charisma);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.uc.ninja.ki_pool".to_owned(),
+            value: ki_pool,
+            detail: format!(
+                "Ninja level {level} Ki Pool: {ki_pool} ki points (level/2 + Charisma modifier \
+                 {}, per the shared Ki Pool Tracker mechanism's Charisma stat-choice branch). As \
+                 long as she has at least 1 point, she treats Acrobatics jump checks as if she \
+                 had a running start; she can spend points for a bonus attack, +20 feet of \
+                 speed, or a +4 insight bonus on Stealth checks",
+                ability_modifiers.charisma
+            ),
+        });
+
+        let trick_count = ninja_trick_count(level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.uc.ninja.ninja_trick_count".to_owned(),
+            value: trick_count,
+            detail: format!(
+                "Ninja level {level} Ninja Trick: {trick_count} trick(s) known (level/2, first \
+                 at 2nd level, one additional every 2 levels thereafter). Grounds the COUNT \
+                 only -- which trick(s) were picked is a chooser (BONUS:ABILITYPOOL) this \
+                 engine does not model, the same count-vs-choice split Slayer Talents and \
+                 Gunslinger Gun Training already establish"
+            ),
+        });
+    }
+
+    // No Trace: granted from 3rd level.
+    if level >= 3 {
+        let no_trace = ninja_no_trace_bonus(level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.uc.ninja.no_trace".to_owned(),
+            value: no_trace,
+            detail: format!(
+                "Ninja level {level} No Trace: +{no_trace} to the DC to track the ninja via \
+                 Survival (level/3), and a +{no_trace} insight bonus on Disguise checks and on \
+                 opposed Stealth checks while stationary and taking no action for at least 1 \
+                 round"
+            ),
+        });
+    }
+
+    // Uncanny Dodge (4th level): superseded by Scout's Scout's Charge.
+    if level >= 4 {
+        let claim =
+            archetype_resolver::archetype_claiming_slot_entry(input, "Ninja", "NinjaUncannyDodge");
+        let (value, detail) = match claim {
+            Some(entry) => {
+                let own_grant =
+                    entry.grants.iter().find(|g| g.grants_feature_key.ends_with("~ Scout's Charge"));
+                let detail = match own_grant.and_then(|g| g.description) {
+                    Some(text) => format!(
+                        "Ninja Uncanny Dodge: superseded by the selected {} archetype (corpus \
+                         KEY:{}) at 4th level, which replaces this base-class slot with Scout's \
+                         Charge. {}'s own text: \"{text}\"",
+                        entry.archetype_name, entry.key, entry.archetype_name
+                    ),
+                    None => format!(
+                        "Ninja Uncanny Dodge: superseded by the selected {} archetype (corpus \
+                         KEY:{}) at 4th level; its own replacement text is not resolved in this \
+                         catalog entry",
+                        entry.archetype_name, entry.key
+                    ),
+                };
+                (0, detail)
+            }
+            None => (
+                0,
+                "Ninja level 4 Uncanny Dodge: \"You can react to danger before your senses \
+                 would normally allow you to do so. You cannot be caught flat-footed, nor do \
+                 you lose your Dexterity bonus to AC if the attacker is invisible. You still \
+                 lose your Dexterity bonus to AC if immobilized. You can still lose your \
+                 Dexterity bonus to AC if an opponent successfully uses the feint action \
+                 against you.\" A bounded grant-only identity record (value 0, non-fabricated): \
+                 the base row carries no BONUS: magnitude of its own beyond the shared \
+                 UncannyDodgeFlankingLevel context-fact, which needs an opposing rogue's level \
+                 to matter and is out of this engine's per-character scope"
+                    .to_owned(),
+            ),
+        };
+        explanations.push(ComputationExplanation {
+            id: "class_feature.uc.ninja.uncanny_dodge".to_owned(),
+            value,
+            detail,
+        });
+    }
+
+    // Improved Uncanny Dodge (8th level): superseded by Scout's
+    // Skirmisher.
+    if level >= 8 {
+        let claim = archetype_resolver::archetype_claiming_slot_entry(
+            input,
+            "Ninja",
+            "NinjaImprovedUncannyDodge",
+        );
+        let (value, detail) = match claim {
+            Some(entry) => {
+                let own_grant =
+                    entry.grants.iter().find(|g| g.grants_feature_key.ends_with("~ Skirmisher"));
+                let detail = match own_grant.and_then(|g| g.description) {
+                    Some(text) => format!(
+                        "Ninja Improved Uncanny Dodge: superseded by the selected {} archetype \
+                         (corpus KEY:{}) at 8th level, which replaces this base-class slot with \
+                         Skirmisher. {}'s own text: \"{text}\"",
+                        entry.archetype_name, entry.key, entry.archetype_name
+                    ),
+                    None => format!(
+                        "Ninja Improved Uncanny Dodge: superseded by the selected {} archetype \
+                         (corpus KEY:{}) at 8th level; its own replacement text is not resolved \
+                         in this catalog entry",
+                        entry.archetype_name, entry.key
+                    ),
+                };
+                (0, detail)
+            }
+            None => (
+                0,
+                "Ninja level 8 Improved Uncanny Dodge: \"You can no longer be flanked. This \
+                 defense denies a rogue the ability to sneak attack you by flanking you, unless \
+                 the attacker is a rogue of at least level X.\" A bounded grant-only identity \
+                 record (value 0, non-fabricated): the flanking-rogue-level threshold is a \
+                 context fact about an opposing character, out of this engine's per-character \
+                 scope, the same unmodeled-precondition idiom Gunslinger Initiative's grit>=1 \
+                 precondition already establishes"
+                    .to_owned(),
+            ),
+        };
+        explanations.push(ComputationExplanation {
+            id: "class_feature.uc.ninja.improved_uncanny_dodge".to_owned(),
+            value,
+            detail,
+        });
+    }
+
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.uc.ninja.other_features_deferred.unsupported".to_owned(),
+        message: "Ninja now grounds Sneak Attack's dice, Ki Pool's size, Ninja Trick's count, \
+             No Trace's bonus, and Uncanny Dodge/Improved Uncanny Dodge -- SD31-E4-F1-003's own \
+             new wiring, with Uncanny Dodge/Improved Uncanny Dodge additionally wired through \
+             the real archetype_claiming_slot_entry supersession primitive against Ninja's one \
+             real archetype (Scout). What stays deferred, honestly: (1) Poison Use, Light \
+             Steps, Hidden Master and Weapon Proficiencies are zero/flat-only grant-only \
+             records not yet transcribed here; (2) all 30 named Ninja Tricks are not yet \
+             transcribed (only the trick COUNT is grounded); (3) this class is not registered \
+             in v06_work_inventory.rs's modelled_class_books() (out of this cycle's file \
+             territory -- reported to OPEN-ISSUES.md), so none of this wiring can reach `done` \
+             or even `held` on the board yet regardless of how complete it is, the same \
+             structural blocker SD31-E4-F1-002 found for Gunslinger. This diagnostic is not \
+             claim-blocking for the features that ARE grounded above; it carries the honest \
+             remainder"
+            .to_owned(),
+        claim_blocking: false,
+    });
+}
+
+#[cfg(test)]
+mod ninja_tests {
+    use super::{
+        build_pilot_headless_receipt, CharacterClassLevel, CharacterInput, ComputationExplanation,
+        PilotHeadlessReceipt,
+    };
+    use crate::rules_core::character_input::{load_character_input_fixture, SelectedChoice};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+    const NINJA_CLASS_ID: &str = "class:ninja";
+
+    /// CHA 8 (-1 mod) -- the fixture's own real ability scores, unmodified.
+    fn character(level: u8) -> CharacterInput {
+        let mut input = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE)
+            .character_input
+            .expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: NINJA_CLASS_ID.to_owned(), level }];
+        input
+    }
+
+    fn with_scout_archetype(level: u8) -> CharacterInput {
+        let mut input = character(level);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: crate::rules_core::archetype_resolver::ARCHETYPE_CHOICE_ID.to_owned(),
+            selection_id: "Ninja Archetype ~ Scout".to_owned(),
+        });
+        input
+    }
+
+    fn find<'a>(receipt: &'a PilotHeadlessReceipt, id: &str) -> Option<&'a ComputationExplanation> {
+        receipt.computation.explanations.iter().find(|e| e.id == id)
+    }
+
+    /// The base chassis pillar: 3/4 BAB, poor Fort, good Reflex, poor
+    /// Will, matching `class_ninja.rs`'s own formulas.
+    #[test]
+    fn ninja_base_chassis_grounds_bab_and_saves() {
+        let receipt = build_pilot_headless_receipt(&character(10));
+        assert_eq!(find(&receipt, "class_chassis.base_attack_bonus").unwrap().value, 7);
+        assert_eq!(find(&receipt, "class_chassis.base_save.fortitude").unwrap().value, 3);
+        assert_eq!(find(&receipt, "class_chassis.base_save.reflex").unwrap().value, 7);
+        assert_eq!(find(&receipt, "class_chassis.base_save.will").unwrap().value, 3);
+    }
+
+    /// Sneak Attack: (level+1)/2 dice, granted from 1st level, no
+    /// archetype in scope claims this slot.
+    #[test]
+    fn sneak_attack_grounds_from_first_level() {
+        let receipt1 = build_pilot_headless_receipt(&character(1));
+        assert_eq!(find(&receipt1, "class_feature.uc.ninja.sneak_attack").unwrap().value, 1);
+        let receipt5 = build_pilot_headless_receipt(&character(5));
+        assert_eq!(find(&receipt5, "class_feature.uc.ninja.sneak_attack").unwrap().value, 3);
+    }
+
+    /// Ki Pool: level/2 + CHA modifier, granted from 2nd level. Fixture
+    /// CHA modifier is -1, so at level 4: 4/2 + (-1) = 1.
+    #[test]
+    fn ki_pool_grounds_from_second_level_using_charisma() {
+        let receipt1 = build_pilot_headless_receipt(&character(1));
+        assert!(find(&receipt1, "class_feature.uc.ninja.ki_pool").is_none());
+        let receipt4 = build_pilot_headless_receipt(&character(4));
+        let ki = find(&receipt4, "class_feature.uc.ninja.ki_pool").expect("ki pool");
+        assert_eq!(ki.value, 1, "4/2 + (-1) = 1");
+        assert!(ki.detail.contains("Charisma"), "{ki:?}");
+    }
+
+    /// Ninja Trick count: level/2, granted from 2nd level alongside Ki
+    /// Pool.
+    #[test]
+    fn ninja_trick_count_grounds_from_second_level() {
+        let receipt2 = build_pilot_headless_receipt(&character(2));
+        assert_eq!(find(&receipt2, "class_feature.uc.ninja.ninja_trick_count").unwrap().value, 1);
+        let receipt8 = build_pilot_headless_receipt(&character(8));
+        assert_eq!(find(&receipt8, "class_feature.uc.ninja.ninja_trick_count").unwrap().value, 4);
+    }
+
+    /// No Trace: level/3, granted from 3rd level.
+    #[test]
+    fn no_trace_grounds_from_third_level() {
+        let receipt2 = build_pilot_headless_receipt(&character(2));
+        assert!(find(&receipt2, "class_feature.uc.ninja.no_trace").is_none());
+        let receipt6 = build_pilot_headless_receipt(&character(6));
+        assert_eq!(find(&receipt6, "class_feature.uc.ninja.no_trace").unwrap().value, 2);
+    }
+
+    /// Uncanny Dodge, base case, no archetype selected: grounds at 4th
+    /// level with the real base DESC text, not superseded.
+    #[test]
+    fn uncanny_dodge_grounds_the_base_grant_from_fourth_level_with_no_archetype() {
+        let receipt3 = build_pilot_headless_receipt(&character(3));
+        assert!(find(&receipt3, "class_feature.uc.ninja.uncanny_dodge").is_none());
+        let receipt4 = build_pilot_headless_receipt(&character(4));
+        let ud = find(&receipt4, "class_feature.uc.ninja.uncanny_dodge").expect("uncanny dodge");
+        assert_eq!(ud.value, 0);
+        assert!(ud.detail.contains("flat-footed"), "{ud:?}");
+        assert!(!ud.detail.to_lowercase().contains("superseded"), "{ud:?}");
+    }
+
+    /// Uncanny Dodge, superseded by Scout: replaced with Scout's Charge
+    /// at the same 4th-level gate, and the archetype's own real corpus
+    /// text is quoted, not the base grant's.
+    #[test]
+    fn uncanny_dodge_is_superseded_by_scout_with_scouts_charge() {
+        let receipt = build_pilot_headless_receipt(&with_scout_archetype(4));
+        let ud = find(&receipt, "class_feature.uc.ninja.uncanny_dodge").expect("uncanny dodge");
+        assert_eq!(ud.value, 0);
+        assert!(ud.detail.contains("Scout"), "{ud:?}");
+        assert!(ud.detail.contains("Scout's Charge"), "{ud:?}");
+        assert!(ud.detail.contains("charge"), "{ud:?}");
+    }
+
+    /// Improved Uncanny Dodge, base case: grounds at 8th level, not
+    /// superseded.
+    #[test]
+    fn improved_uncanny_dodge_grounds_the_base_grant_from_eighth_level_with_no_archetype() {
+        let receipt7 = build_pilot_headless_receipt(&character(7));
+        assert!(find(&receipt7, "class_feature.uc.ninja.improved_uncanny_dodge").is_none());
+        let receipt8 = build_pilot_headless_receipt(&character(8));
+        let iud = find(&receipt8, "class_feature.uc.ninja.improved_uncanny_dodge")
+            .expect("improved uncanny dodge");
+        assert_eq!(iud.value, 0);
+        assert!(iud.detail.contains("flanked"), "{iud:?}");
+        assert!(!iud.detail.to_lowercase().contains("superseded"), "{iud:?}");
+    }
+
+    /// Improved Uncanny Dodge, superseded by Scout: replaced with
+    /// Skirmisher at the same 8th-level gate.
+    #[test]
+    fn improved_uncanny_dodge_is_superseded_by_scout_with_skirmisher() {
+        let receipt = build_pilot_headless_receipt(&with_scout_archetype(8));
+        let iud = find(&receipt, "class_feature.uc.ninja.improved_uncanny_dodge")
+            .expect("improved uncanny dodge");
+        assert_eq!(iud.value, 0);
+        assert!(iud.detail.contains("Scout"), "{iud:?}");
+        assert!(iud.detail.contains("Skirmisher"), "{iud:?}");
     }
 }
 
