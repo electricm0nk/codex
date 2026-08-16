@@ -627,11 +627,23 @@ mod tests {
             (("CRB", "ArmsArmor".to_owned()), 6),
             (("ARG", "ArmsArmor".to_owned()), 1),
             (("ACG", "Equipmods".to_owned()), 4),
+            // SD31-W8-INTEGRATE-001: `leaked_pcgen_syntax` widened to catch
+            // a bare '%' hole neither a digit nor an uppercase keyword
+            // follows (wave-8 adversarial review). This surfaced ONE
+            // pre-existing, previously-invisible hand-authored leak:
+            // ACG's "Gloves of Marking" (`equipment_data/magic_items.rs`)
+            // reads "...must save (Will DC %) or be shaken..." -- a
+            // literal unfilled DC placeholder that predates every wave-8
+            // lane and is untouched by any of them. Pinned here, not
+            // fabricated a value for: this repo's own no-stub doctrine
+            // forbids inventing the missing DC, and the source book text
+            // is not available to re-derive it from.
+            (("ACG", "MagicItems".to_owned()), 1),
         ]
         .into_iter()
         .collect();
         assert_eq!(raw_leaks, expected, "the raw tables' own leak profile");
-        assert_eq!(raw_leaks.values().sum::<usize>(), 58);
+        assert_eq!(raw_leaks.values().sum::<usize>(), 59);
 
         let served_leaks: Vec<&str> = build_equipment_catalog()
             .entries
