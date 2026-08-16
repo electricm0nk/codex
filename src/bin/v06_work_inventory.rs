@@ -607,9 +607,18 @@ fn corpus_json_description_leaks_pcgen_syntax(
     line: usize,
     key: &str,
 ) -> bool {
-    descriptions
-        .get(&(file.to_string(), line, key.to_string()))
-        .is_some_and(|desc| leaked_pcgen_syntax(desc).is_some())
+    descriptions.get(&(file.to_string(), line, key.to_string())).is_some_and(|desc| {
+        // Checked against the RENDERED text, matching `monster_catalog::
+        // serve_ability_description`'s own established pattern -- NEVER the
+        // raw token. A raw `%%` (PCGen's escape for a literal percent sign)
+        // collapses to one `%` on render and is not a leak; checking the raw
+        // text directly (this function's own first-cut shape) false-
+        // positived on 3 real `core_rulebook:equipment:*` units whose only
+        // "leak" was an already-correctly-renderable `%%` (caught by this
+        // integration cycle's own guarded regen).
+        let rendered = codex::rules_core::pcgen_desc::render_pcgen_desc(desc);
+        leaked_pcgen_syntax(&rendered.text).is_some()
+    })
 }
 
 #[cfg(test)]
@@ -812,6 +821,41 @@ mod corpus_json_description_leaks_pcgen_syntax_tests {
             1541,
             "Special Ability ~ Defiant",
         ));
+    }
+
+    /// FALSE-POSITIVE REGRESSION (caught by this integration cycle's own
+    /// guarded regen: 3 real `core_rulebook:equipment:*` units --
+    /// `caster_s_shield`, `elven_chain`, `mithral_full_plate_of_speed` --
+    /// wrongly demoted off `done`). A raw `DESC:` token's `%%` (PCGen's
+    /// escape for a LITERAL percent sign) is not a leak once rendered --
+    /// `render_pcgen_desc` collapses it to one `%`, and the equipment
+    /// catalog's own `serve_description` always renders before showing a
+    /// player. Checking `leaked_pcgen_syntax` against the RAW description
+    /// (as this function originally did) flags it anyway, because
+    /// `leaked_pcgen_syntax`'s OWN first check is a bare `"%%"` substring
+    /// scan with no rendering step. The check must run on the RENDERED
+    /// text, matching `monster_catalog::serve_ability_description`'s own
+    /// established pattern (`leaked_pcgen_syntax(&rendered.text)`), never
+    /// the raw token.
+    #[test]
+    fn a_double_percent_escape_is_not_flagged_once_rendered() {
+        let mut descriptions = BTreeMap::new();
+        descriptions.insert(
+            ("cr_equip_arms_armor.lst".to_string(), 200, "Elven Chain".to_string()),
+            "The armor has an arcane spell failure chance of 20%%, a maximum Dexterity bonus \
+             of +4."
+                .to_string(),
+        );
+        assert!(
+            !corpus_json_description_leaks_pcgen_syntax(
+                &descriptions,
+                "cr_equip_arms_armor.lst",
+                200,
+                "Elven Chain",
+            ),
+            "a %% escape must not flag once rendered -- it collapses to one literal %, \
+             exactly what the player sees"
+        );
     }
 }
 
