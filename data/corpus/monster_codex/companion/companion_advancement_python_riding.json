@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T13:12:30Z",
   "data": {
     "corpus_key": "Companion Advancement ~ Python (Riding)",
     "delivery": null,
@@ -12,6 +10,36 @@
     "name": "Companion Advancement (Python (Riding))",
     "owners": [
       "monster_codex:companion:companion_python_riding"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Animal Training ~ Combat Training"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CON|2|TYPE=Racial"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Companion Advancement ~ Python (Riding)"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Companion (Python (Riding))"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionAdvancement"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      }
     ],
     "record_type": "ability",
     "source_page": null,
@@ -29,16 +57,18 @@
       "CompanionAdvancement"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_companion.lst",
-    "sha256": "7165ce2b4cbdeb72b094d9d1f3213616a89979351abe293544935d9dc15476ff",
-    "line": 7,
-    "record_key": "Companion Advancement ~ Python (Riding)"
-  },
+  "ingested_at": "2026-08-12T13:12:30Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 7,
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_companion.lst",
+    "record_key": "Companion Advancement ~ Python (Riding)",
+    "sha256": "7165ce2b4cbdeb72b094d9d1f3213616a89979351abe293544935d9dc15476ff"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

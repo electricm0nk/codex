@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Rash Creeper ~ Poison",
     "delivery": "Extraordinary",
@@ -33,6 +31,32 @@
     "owners": [
       "ultimate_wilderness:companion:companion_rash_creeper"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Frequency 1 round [4]; effect 1 Dex damage and sickened for 1 round; cure 1 save; Fort DC %1|10+HD/2+CON|PREVARLT:CompanionAdvancement,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Frequency 1 round [4]; effect 1d2 Dex damage and sickened for 1 round; cure 2 saves; Fort DC %1|10+HD/2+CON|PREVARGTEQ:CompanionAdvancement,1"
+      },
+      {
+        "key": "KEY",
+        "value": "Rash Creeper ~ Poison"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.183"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.RashCreeperRacialTrait"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.183",
     "stat_adjustments": [],
@@ -42,16 +66,18 @@
       "RashCreeperRacialTrait"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
-    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
-    "line": 318,
-    "record_key": "Rash Creeper ~ Poison"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 318,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Rash Creeper ~ Poison",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

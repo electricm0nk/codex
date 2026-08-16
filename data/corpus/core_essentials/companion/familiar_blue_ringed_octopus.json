@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "ability_keys": [
       "core_essentials:companion:blue_ringed_octopus_ink_cloud",
@@ -29,6 +27,120 @@
     ],
     "race_subtype": "Aquatic",
     "race_type": "Animal",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Multiattack"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Blue-Ringed Octopus ~ Ink Cloud|Blue-Ringed Octopus ~ Jet|Blue-Ringed Octopus ~ Poison|Can't Be Tripped|Grab"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Climb,Swim|DEX-STR"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Escape Artist|10|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Stealth|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RaceSizeIsLong|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tentacles|DAMAGE|-STR"
+      },
+      {
+        "key": "CR",
+        "value": "1/2"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|T"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Familiar ~ Blue-Ringed Octopus"
+      },
+      {
+        "key": "LEGS",
+        "value": "8"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Animal:1"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20,Swim,30,Jet,60"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Tentacles,Weapon.Natural.Melee.Finesseable.Bludgeoning.Grab,*1,0"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME]"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Aquatic"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Animal"
+      },
+      {
+        "key": "REACH",
+        "value": "0"
+      },
+      {
+        "key": "SIZE",
+        "value": "T"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.117"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "reach_feet": 0,
     "record_type": "creature",
     "size": "T",
@@ -75,16 +187,18 @@
     ],
     "type_segments": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_um.lst",
-    "sha256": "107c19938fca45aecbd6ce0d07fbd5a43feeed3feade64cb3212f78dc26af6a9",
-    "line": 6,
-    "record_key": "Familiar (Blue-Ringed Octopus)"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_um.lst",
+    "record_key": "Familiar (Blue-Ringed Octopus)",
+    "sha256": "107c19938fca45aecbd6ce0d07fbd5a43feeed3feade64cb3212f78dc26af6a9"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

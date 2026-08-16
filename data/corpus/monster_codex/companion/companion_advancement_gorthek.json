@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T13:12:30Z",
   "data": {
     "corpus_key": "Companion Advancement ~ Gorthek",
     "delivery": null,
@@ -13,6 +11,52 @@
     "owners": [
       "monster_codex:companion:companion_gorthek"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Powerful Charge"
+      },
+      {
+        "key": "BONUS",
+        "value": "SIZEMOD|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=Base.REPLACE"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PowerfulChargeBonusDamage|STR*2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PowerfulChargeDamageDice|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PowerfulChargeDamageDieSize|6"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Companion Advancement ~ Gorthek"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Companion (Gorthek)"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionAdvancement"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      }
+    ],
     "record_type": "ability",
     "source_page": null,
     "stat_adjustments": [],
@@ -20,16 +64,18 @@
       "CompanionAdvancement"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_companion.lst",
-    "sha256": "7165ce2b4cbdeb72b094d9d1f3213616a89979351abe293544935d9dc15476ff",
-    "line": 6,
-    "record_key": "Companion Advancement ~ Gorthek"
-  },
+  "ingested_at": "2026-08-12T13:12:30Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_companion.lst",
+    "record_key": "Companion Advancement ~ Gorthek",
+    "sha256": "7165ce2b4cbdeb72b094d9d1f3213616a89979351abe293544935d9dc15476ff"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

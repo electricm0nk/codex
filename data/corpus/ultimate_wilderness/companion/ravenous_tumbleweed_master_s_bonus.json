@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Ravenous Tumbleweed ~ Master's Bonus",
     "delivery": "Extraordinary",
@@ -15,6 +13,32 @@
       "ultimate_wilderness:companion:familiar_ravenous_tumbleweed",
       "ultimate_wilderness:companion:ravenous_tumbleweed"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+10 to speed when using the charge, run, or withdraw actions"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A ravenous tumbleweed's master gains a 10-foot bonus to speed when using the charge, run, or withdraw actions"
+      },
+      {
+        "key": "KEY",
+        "value": "Ravenous Tumbleweed ~ Master's Bonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.205"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.205",
     "stat_adjustments": [],
@@ -23,16 +47,18 @@
       "Extraordinary"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
-    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
-    "line": 323,
-    "record_key": "Ravenous Tumbleweed ~ Master's Bonus"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 323,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Ravenous Tumbleweed ~ Master's Bonus",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

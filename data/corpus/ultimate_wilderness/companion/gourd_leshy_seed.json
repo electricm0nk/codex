@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Gourd Leshy ~ Seed",
     "delivery": "Extraordinary",
@@ -14,6 +12,28 @@
     "owners": [
       "ultimate_wilderness:companion:familiar_gourd_leshy"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A gourd leshy can hurl its seeds as a ranged attack. If it hits, this attack deals 1 point of damage (this damage is not modified by Strength) and affects the target with the gourd leshy's ensnare ability. This attack has a 10-foot range increment."
+      },
+      {
+        "key": "KEY",
+        "value": "Gourd Leshy ~ Seed"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "B3 p.178"
+      },
+      {
+        "key": "TYPE",
+        "value": "GourdLeshyRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
     "record_type": "ability",
     "source_page": "B3 p.178",
     "stat_adjustments": [],
@@ -23,16 +43,18 @@
       "Extraordinary"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
-    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
-    "line": 730,
-    "record_key": "Gourd Leshy ~ Seed"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 730,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Gourd Leshy ~ Seed",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

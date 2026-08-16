@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-12T13:12:30Z",
   "data": {
     "ability_keys": [],
     "corpus_key": "Familiar (Seru)",
@@ -22,6 +20,120 @@
     ],
     "race_subtype": "Familiar|Augmented Magical Beast|FamiliarBase",
     "race_type": "Magical Beast",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Seru"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Aklo (cannot speak)|Common (cannot speak)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Stealth=In rocky areas|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff,Perception|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TelepathyRange|-40"
+      },
+      {
+        "key": "CR",
+        "value": "3"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|S"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Familiar ~ Seru"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Magical Beast:1"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20,Fly,40"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Natural.Melee.Finesseable.Weapon,*1,1d6,SPROP=plus poison"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Venom,Natural.Ranged.Touch.Weapon,*1,Poison"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Familiar [NAME]"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Familiar|Augmented Magical Beast|FamiliarBase"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Magical Beast"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "z_Companion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.208"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Companion.Familiar.Magical Beast"
+      }
+    ],
     "reach_feet": 5,
     "record_type": "creature",
     "size": "S",
@@ -60,16 +172,18 @@
       "Magical Beast"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_races_companion.lst",
-    "sha256": "544fc08dc13e63406123ca461fa6a68116f4fd58bb3f78647aa35a9019d6aaad",
-    "line": 11,
-    "record_key": "Familiar (Seru)"
-  },
+  "ingested_at": "2026-08-12T13:12:30Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 11,
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_races_companion.lst",
+    "record_key": "Familiar (Seru)",
+    "sha256": "544fc08dc13e63406123ca461fa6a68116f4fd58bb3f78647aa35a9019d6aaad"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

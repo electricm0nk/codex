@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Corpse-Eater Fungus ~ Natural Attacks",
     "delivery": "Extraordinary",
@@ -14,6 +12,36 @@
     "owners": [
       "ultimate_wilderness:companion:companion_corpse_eater_fungus"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Corpse-Eater Fungus ~ Natural Attacks"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Natural.Melee.Finesseable.Weapon.Bludgeoning.Piercing.Slashing,*1,1d6,SPROP=plus 1d2 acid"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Spit,Natural.Ranged.Weapon.Touch,*1,0,SPROP=1d6 acid 30-ft. range"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "CompanionAdvancement,1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.182"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.CorpseEaterFungusRacialTrait"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.182",
     "stat_adjustments": [],
@@ -23,16 +51,18 @@
       "CorpseEaterFungusRacialTrait"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
-    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
-    "line": 212,
-    "record_key": "Corpse-Eater Fungus ~ Natural Attacks"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 212,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Corpse-Eater Fungus ~ Natural Attacks",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Water Elemental ~ Drench",
     "delivery": "Extraordinary",
@@ -16,6 +14,28 @@
     "owners": [
       "core_essentials:companion:elemental_water_small"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The elemental's touch puts out nonmagical flames of Large size or smaller. The creature can dispel magical fire it touches as Dispel Magic (caster level %1).|TL"
+      },
+      {
+        "key": "KEY",
+        "value": "Water Elemental ~ Drench"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.126"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Special Attack.Special Ability.Extraordinary"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.126",
     "stat_adjustments": [],
@@ -26,16 +46,18 @@
       "Extraordinary"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_familiar_race_cr.lst",
-    "sha256": "c61a43a8081bb87f50c6ffb1c48855ba71bb0312907c0fedca151b5dc0fcfe60",
-    "line": 121,
-    "record_key": "Water Elemental ~ Drench"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 121,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_familiar_race_cr.lst",
+    "record_key": "Water Elemental ~ Drench",
+    "sha256": "c61a43a8081bb87f50c6ffb1c48855ba71bb0312907c0fedca151b5dc0fcfe60"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

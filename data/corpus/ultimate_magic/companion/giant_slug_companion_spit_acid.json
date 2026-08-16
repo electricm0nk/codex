@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Giant Slug Companion ~ Spit Acid",
     "delivery": "Extraordinary",
@@ -16,6 +14,36 @@
     "owners": [
       "ultimate_magic:companion:companion_slug_giant"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|SpitAcidDamageDieSize|6"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SpitAcidDamageDieSize|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A giant slug can spit acid at an opponent within 30 feet (no range increment). With a successful ranged touch attack, the target takes 1d%1 points of acid damage (no save).|SpitAcidDamageDieSize"
+      },
+      {
+        "key": "KEY",
+        "value": "Giant Slug Companion ~ Spit Acid"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.37",
     "stat_adjustments": [],
@@ -24,16 +52,18 @@
       "Extraordinary"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_companion.lst",
-    "sha256": "a151f524147c1bb94426c32bb6e353a7b2658a39a5bf82331e1e9bf4c549b7a3",
-    "line": 36,
-    "record_key": "Giant Slug Companion ~ Spit Acid"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 36,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_companion.lst",
+    "record_key": "Giant Slug Companion ~ Spit Acid",
+    "sha256": "a151f524147c1bb94426c32bb6e353a7b2658a39a5bf82331e1e9bf4c549b7a3"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

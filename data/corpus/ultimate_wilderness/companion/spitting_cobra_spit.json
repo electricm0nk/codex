@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Spitting Cobra ~ Spit",
     "delivery": "Extraordinary",
@@ -14,6 +12,28 @@
     "owners": [
       "ultimate_wilderness:companion:companion_spitting_cobra"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Ranged touch attack, 10-foot range, poison, usable every 2d4 rounds"
+      },
+      {
+        "key": "KEY",
+        "value": "Spitting Cobra ~ Spit"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.182"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.SpittingCobraRacialTrait"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.182",
     "stat_adjustments": [],
@@ -23,16 +43,18 @@
       "SpittingCobraRacialTrait"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
-    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
-    "line": 359,
-    "record_key": "Spitting Cobra ~ Spit"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 359,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Spitting Cobra ~ Spit",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

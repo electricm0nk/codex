@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "King Crab ~ Water Dependency",
     "delivery": "Extraordinary",
@@ -16,6 +14,28 @@
     "owners": [
       "core_essentials:companion:king_crab"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "This crab can survive out of the water for %1 hours.  Beyond this limit, a crab runs the risk of suffocation, as if it were drowning.|CONSCORE"
+      },
+      {
+        "key": "KEY",
+        "value": "King Crab ~ Water Dependency"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.119"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weakness.Extraordinary"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.119",
     "stat_adjustments": [],
@@ -24,16 +44,18 @@
       "Extraordinary"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_familiar_race_um.lst",
-    "sha256": "2e2684f82f63e6c6e025c74d820a2ce2bd121254e8394fc4563806852b8d4eaa",
-    "line": 28,
-    "record_key": "King Crab ~ Water Dependency"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 28,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_familiar_race_um.lst",
+    "record_key": "King Crab ~ Water Dependency",
+    "sha256": "2e2684f82f63e6c6e025c74d820a2ce2bd121254e8394fc4563806852b8d4eaa"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

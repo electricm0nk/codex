@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-13T09:20:33Z",
   "data": {
     "corpus_key": "Sapling Treant ~ Double Damage",
     "delivery": null,
@@ -14,6 +12,24 @@
     "owners": [
       "advanced_race_guide:companion:companion_sapling_treant"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Sapling treant attacks do double damage against objects"
+      },
+      {
+        "key": "KEY",
+        "value": "Sapling Treant ~ Double Damage"
+      },
+      {
+        "key": "TYPE",
+        "value": "RaceAbility.SpecialAbility"
+      }
+    ],
     "record_type": "ability",
     "source_page": null,
     "stat_adjustments": [],
@@ -22,16 +38,18 @@
       "SpecialAbility"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_companion.lst",
-    "sha256": "0970a14a15f2865ee6cc611109e45caf3cc3545d2f2ae717e7143de105b4ea83",
-    "line": 10,
-    "record_key": "Sapling Treant ~ Double Damage"
-  },
+  "ingested_at": "2026-08-13T09:20:33Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_companion.lst",
+    "record_key": "Sapling Treant ~ Double Damage",
+    "sha256": "0970a14a15f2865ee6cc611109e45caf3cc3545d2f2ae717e7143de105b4ea83"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

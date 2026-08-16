@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Giant Moray Eel ~ Gnaw",
     "delivery": "Extraordinary",
@@ -17,6 +15,28 @@
     "owners": [
       "beastiary:companion:companion_eel_giant_moray"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "If a giant moray begins a round with a grabbed foe, it inflicts automatic bite damage (2d6+%1 points of damage). A giant moray eel possesses a second set of jaws in its throat that aid in swallowing - it can make a second bite attack (same attack bonus, 1d6+%2 damage) against a foe it has already grabbed.|STR*3/2|STR/2"
+      },
+      {
+        "key": "KEY",
+        "value": "Giant Moray Eel ~ Gnaw"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.119"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.119",
     "stat_adjustments": [],
@@ -25,16 +45,18 @@
       "Extraordinary"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_companion.lst",
-    "sha256": "7c9627b88fbb96c3e12c1002985e0d5f71a2665ca6fa995f669f67744db9a9d8",
-    "line": 35,
-    "record_key": "Giant Moray Eel ~ Gnaw"
-  },
+  "ingested_at": "2026-08-15T01:24:10Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 35,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_companion.lst",
+    "record_key": "Giant Moray Eel ~ Gnaw",
+    "sha256": "7c9627b88fbb96c3e12c1002985e0d5f71a2665ca6fa995f669f67744db9a9d8"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

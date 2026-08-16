@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Goblin Dog ~ Allergic Reaction",
     "delivery": "Extraordinary",
@@ -16,6 +14,48 @@
     "owners": [
       "beastiary:companion:companion_goblin_dog"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Allergic Reaction"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|AllergicReactionDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AllergicReactionDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AllergicReactionDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Allergic Reaction)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AllergicReactionDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Your dander is highly irritating to all creatures save those with the goblinoid subtype. A non-goblinoid creature damaged by your bite, who deals damage to you with a natural weapon or unarmed attack, or who otherwise comes into contact with you (including attempts to grapple or ride you) must make a DC %1 Fortitude save or break out in an itching rash. A creature affected by this rash takes a -2 penalty to Dexterity and Charisma for 1 day (multiple allergic reactions do not stack). Remove disease or any magical healing removes the rash instantly. This is a disease effect.|AllergicReactionDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Goblin Dog ~ Allergic Reaction"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.157"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.157",
     "stat_adjustments": [],
@@ -24,16 +64,18 @@
       "Extraordinary"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_companion.lst",
-    "sha256": "7c9627b88fbb96c3e12c1002985e0d5f71a2665ca6fa995f669f67744db9a9d8",
-    "line": 36,
-    "record_key": "Goblin Dog ~ Allergic Reaction"
-  },
+  "ingested_at": "2026-08-15T01:24:10Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 36,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_companion.lst",
+    "record_key": "Goblin Dog ~ Allergic Reaction",
+    "sha256": "7c9627b88fbb96c3e12c1002985e0d5f71a2665ca6fa995f669f67744db9a9d8"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

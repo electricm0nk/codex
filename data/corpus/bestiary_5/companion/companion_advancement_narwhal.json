@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T14:58:45Z",
   "data": {
     "corpus_key": "Companion Advancement ~ Narwhal",
     "delivery": null,
@@ -13,6 +11,40 @@
     "owners": [
       "bestiary_5:companion:companion_narwhal"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Narwhal ~ Tusk"
+      },
+      {
+        "key": "BONUS",
+        "value": "SIZEMOD|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|120|TYPE=Base"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Companion Advancement ~ Narwhal"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Companion (Narwhal)"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionAdvancement"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      }
+    ],
     "record_type": "ability",
     "source_page": null,
     "stat_adjustments": [],
@@ -20,16 +52,18 @@
       "CompanionAdvancement"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_companion.lst",
-    "sha256": "2c75b3d5d10c80857b5bf94529f1c1c6f327bf63cb18ab901f824cee80f8b31e",
-    "line": 15,
-    "record_key": "Companion Advancement ~ Narwhal"
-  },
+  "ingested_at": "2026-08-12T14:58:45Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 15,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_companion.lst",
+    "record_key": "Companion Advancement ~ Narwhal",
+    "sha256": "2c75b3d5d10c80857b5bf94529f1c1c6f327bf63cb18ab901f824cee80f8b31e"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard"

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Locust (Sawleg) ~ Voracious",
     "delivery": "Extraordinary",
@@ -14,6 +12,28 @@
     "owners": [
       "ultimate_wilderness:companion:locust_sawleg"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A sawleg locust bite attack deals double damage to creatures with the plant subtype and to objects made of paper, wood, or other plant materials."
+      },
+      {
+        "key": "KEY",
+        "value": "Locust (Sawleg) ~ Voracious"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.205"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.SawlegLocustRacialTrait"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.205",
     "stat_adjustments": [],
@@ -23,16 +43,18 @@
       "SawlegLocustRacialTrait"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
-    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
-    "line": 272,
-    "record_key": "Locust (Sawleg) ~ Voracious"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 272,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Locust (Sawleg) ~ Voracious",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

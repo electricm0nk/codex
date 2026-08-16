@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-12T20:01:26Z",
   "data": {
     "ability_keys": [
       "bestiary_3:companion:zoog_otherworldly_touch",
@@ -26,6 +24,96 @@
     ],
     "race_subtype": null,
     "race_type": "Magical Beast",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Zoog"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Aklo"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Acrobatics,Climb|6|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "CR",
+        "value": "1"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|T"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CN"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Magical Beast:2"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Climb,30"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Melee.Weapon.Natural.Finesseable,*1,1d3"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw,Melee.Weapon.Natural.Finesseable,*2,1d2"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Magical Beast"
+      },
+      {
+        "key": "SIZE",
+        "value": "T"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.287"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magical Beast"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60')|Low-Light Vision"
+      }
+    ],
     "reach_feet": null,
     "record_type": "creature",
     "size": "T",
@@ -70,16 +158,18 @@
       "Magical Beast"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races_familiar.lst",
-    "sha256": "ec0c2451742db5e8a9bf20141ab644e07c58f05249150ba02bfbff0b5623ddbb",
-    "line": 22,
-    "record_key": "Zoog"
-  },
+  "ingested_at": "2026-08-12T20:01:26Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 22,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races_familiar.lst",
+    "record_key": "Zoog",
+    "sha256": "ec0c2451742db5e8a9bf20141ab644e07c58f05249150ba02bfbff0b5623ddbb"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

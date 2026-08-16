@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T14:58:50Z",
   "data": {
     "corpus_key": "Companion Advancement ~ Devil Monkey",
     "delivery": null,
@@ -13,6 +11,48 @@
     "owners": [
       "bestiary_6:companion:companion_devil_monkey"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Devil Monkey ~ Puncture Armor|Rock Throwing"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Walk|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "SIZEMOD|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BiteSize|-1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RockThrowingRange|30"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Companion Advancement ~ Devil Monkey"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Companion (Devil Monkey)"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionAdvancement"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      }
+    ],
     "record_type": "ability",
     "source_page": null,
     "stat_adjustments": [],
@@ -20,16 +60,18 @@
       "CompanionAdvancement"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_abilities_companion.lst",
-    "sha256": "a35382873f67665402e00c8af78f74feaf569a79ad4cb4acbcd006fe8c093014",
-    "line": 7,
-    "record_key": "Companion Advancement ~ Devil Monkey"
-  },
+  "ingested_at": "2026-08-12T14:58:50Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 7,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_abilities_companion.lst",
+    "record_key": "Companion Advancement ~ Devil Monkey",
+    "sha256": "a35382873f67665402e00c8af78f74feaf569a79ad4cb4acbcd006fe8c093014"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard"

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "ability_keys": [
       "core_essentials:companion:water_elemental_drench",
@@ -17,6 +15,100 @@
     "natural_attacks": [],
     "race_subtype": "Elemental|Extraplanar|Water",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Elemental (Water)|Racial Traits ~ Small Water Elemental"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Aquan"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|4"
+      },
+      {
+        "key": "CR",
+        "value": "1"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Acrobatics|Escape Artist|Swim"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|S"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KEY",
+        "value": "Elemental (Water/Small)"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Outsider ~ Elemental (Water/Small)"
+      },
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Fort/Ref):2"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20,Swim,90"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Small Water Elemental"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Elemental|Extraplanar|Water"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "S"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.126"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Elemental"
+      }
+    ],
     "reach_feet": 5,
     "record_type": "creature",
     "size": "S",
@@ -49,16 +141,18 @@
       "Elemental"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_cr.lst",
-    "sha256": "d702c902a162f7e319b0aff6bed67c2611c6790c629a8dc30de1e503e1fe0a87",
-    "line": 69,
-    "record_key": "Elemental (Water/Small)"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 69,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_cr.lst",
+    "record_key": "Elemental (Water/Small)",
+    "sha256": "d702c902a162f7e319b0aff6bed67c2611c6790c629a8dc30de1e503e1fe0a87"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Skunk (Giant) ~ Spray",
     "delivery": "Extraordinary",
@@ -33,6 +31,32 @@
     "owners": [
       "ultimate_wilderness:companion:companion_skunk_giant"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Ranged touch attack, 30-ft. range, usable 1/day; musk (Fort save or sickened for 1d6 rounds; Fort DC %1)|10+HD/2+CON|PREVARLT:CompanionAdvancement,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Ranged touch attack, 30-ft. range, usable 2/day; musk (Fort save or nauseated for 1d3 rounds; Fort DC %1)|10+HD/2+CON|PREVARGTEQ:CompanionAdvancement,1"
+      },
+      {
+        "key": "KEY",
+        "value": "Skunk (Giant) ~ Spray"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.181"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.GiantSkunkRacialTrait"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.181",
     "stat_adjustments": [],
@@ -42,16 +66,18 @@
       "GiantSkunkRacialTrait"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
-    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
-    "line": 344,
-    "record_key": "Skunk (Giant) ~ Spray"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 344,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Skunk (Giant) ~ Spray",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

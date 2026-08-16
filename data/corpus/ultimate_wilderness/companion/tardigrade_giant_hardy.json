@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Tardigrade (Giant) ~ Hardy",
     "delivery": "Extraordinary",
@@ -15,6 +13,28 @@
       "ultimate_wilderness:companion:familiar_tardigrade_giant",
       "ultimate_wilderness:companion:tardigrade_giant"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A giant tardigrade is able to endure extreme conditions for extended periods of time. It is unharmed by extreme cold, extreme heat, and less extreme temperatures. It takes no damage from decompression (such as in the vacuum of space) or high-pressure environments (such as in extremely deep water)."
+      },
+      {
+        "key": "KEY",
+        "value": "Tardigrade (Giant) ~ Hardy"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.207"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.GiantTardigradeRacialTrait"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.207",
     "stat_adjustments": [],
@@ -24,16 +44,18 @@
       "GiantTardigradeRacialTrait"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
-    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
-    "line": 367,
-    "record_key": "Tardigrade (Giant) ~ Hardy"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 367,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Tardigrade (Giant) ~ Hardy",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

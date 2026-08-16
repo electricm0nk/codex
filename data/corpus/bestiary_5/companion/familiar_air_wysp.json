@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-12T14:58:45Z",
   "data": {
     "ability_keys": [],
     "corpus_key": "Familiar (Air Wysp)",
@@ -18,6 +16,104 @@
     ],
     "race_subtype": "Air|Elemental",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Wysp (Air)"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Auran"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Climb,Swim|DEX-STR"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|5"
+      },
+      {
+        "key": "CR",
+        "value": "2"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|T"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Familiar ~ Air Wysp"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Knowledge (arcana)|Knowledge (religion)"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Fort/Ref):3"
+      },
+      {
+        "key": "MOVE",
+        "value": "Fly,100"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Tendrils,Natural.Melee.Finesseable.Weapon,*2,1d3"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Familiar [NAME]"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Air|Elemental"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "0"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "z_Companion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.282"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Companion.Familiar.Outsider"
+      }
+    ],
     "reach_feet": 0,
     "record_type": "creature",
     "size": "T",
@@ -52,16 +148,18 @@
       "Outsider"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_races_companion.lst",
-    "sha256": "abc345765b76b957e43dc473fba69c8774f2e1c85df56b2817bc866ca71e509d",
-    "line": 38,
-    "record_key": "Familiar (Air Wysp)"
-  },
+  "ingested_at": "2026-08-12T14:58:45Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 38,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_races_companion.lst",
+    "record_key": "Familiar (Air Wysp)",
+    "sha256": "abc345765b76b957e43dc473fba69c8774f2e1c85df56b2817bc866ca71e509d"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

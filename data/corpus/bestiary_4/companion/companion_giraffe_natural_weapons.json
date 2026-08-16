@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Companion (Giraffe) ~ Natural Weapons",
     "delivery": "Extraordinary",
@@ -14,6 +12,40 @@
     "owners": [
       "bestiary_4:companion:companion_giraffe"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Hoof|DAMAGE|STR/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Hoof|TOHIT|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Slam|DAMAGE|-(STR/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Slam|TOHIT|-5"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A giraffe's hoof attacks are primary attacks and its slam attack is a secondary attack."
+      },
+      {
+        "key": "KEY",
+        "value": "Companion (Giraffe) ~ Natural Weapons"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "record_type": "ability",
     "source_page": null,
     "stat_adjustments": [],
@@ -22,16 +54,18 @@
       "Extraordinary"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
-    "sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6",
-    "line": 25,
-    "record_key": "Companion (Giraffe) ~ Natural Weapons"
-  },
+  "ingested_at": "2026-08-15T01:24:10Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 25,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
+    "record_key": "Companion (Giraffe) ~ Natural Weapons",
+    "sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

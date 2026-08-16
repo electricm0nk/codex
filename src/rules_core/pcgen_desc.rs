@@ -638,6 +638,15 @@ pub fn leaked_pcgen_syntax(text: &str) -> Option<&'static str> {
         if *c == '%' && chars.get(i + 1).is_some_and(char::is_ascii_digit) {
             return Some("unsubstituted '%N' argument reference");
         }
+        // CONFIRMED finding (`SD31-W6-INTEGRATE-001`): PCGen also uses
+        // uppercase KEYWORD substitutions (`%CHOICE`, the only one this
+        // corpus's shipped `description:` text carries, re-derived
+        // corpus-wide) that carry no digit at all -- the digit-only check
+        // above never caught them, so `%CHOICE` shipped to the player
+        // verbatim on the equipment render path.
+        if *c == '%' && chars.get(i + 1).is_some_and(char::is_ascii_uppercase) {
+            return Some("unsubstituted '%<KEYWORD>' argument reference");
+        }
         if *c == '|' {
             let left_open = i == 0 || chars[i - 1].is_whitespace();
             let right_open = chars.get(i + 1).is_none_or(|next| next.is_whitespace());
@@ -765,6 +774,31 @@ mod tests {
         assert_eq!(leaked_pcgen_syntax("the cloud's effects|CASTERLEVEL"), Some("raw '|' argument tail"));
         assert_eq!(leaked_pcgen_syntax("Hardness and Rarity | Examples"), None);
         assert_eq!(leaked_pcgen_syntax("trailing pipe |"), None);
+    }
+
+    /// CONFIRMED finding (integration-cycle adversarial review, `SD31-W6-
+    /// INTEGRATE-001`): the equipment render path ships the raw PCGen
+    /// substitution token `%CHOICE` verbatim to the player
+    /// (`ultimate_equipment:equipment_modifier:special_ability_defiant_armor`'s
+    /// real shipped description, "+2 enhancement bonus and DR 2/- against
+    /// %CHOICE") because this guard only ever flagged `%` followed by an
+    /// ASCII DIGIT, never `%` followed by an uppercase PCGen keyword.
+    #[test]
+    fn leak_guard_catches_percent_choice_and_other_uppercase_pcgen_substitution_keywords() {
+        assert_eq!(
+            leaked_pcgen_syntax("+2 enhancement bonus and DR 2/- against %CHOICE"),
+            Some("unsubstituted '%<KEYWORD>' argument reference")
+        );
+        assert_eq!(
+            leaked_pcgen_syntax("+2d6 damage against foe with %CHOICE bloodline"),
+            Some("unsubstituted '%<KEYWORD>' argument reference")
+        );
+        // Digit case must still be caught by the SAME message it always was
+        // (no regression on the pre-existing shape).
+        assert_eq!(leaked_pcgen_syntax("A +%1 bonus."), Some("unsubstituted '%N' argument reference"));
+        // A literal percent followed by ordinary lowercase prose is not a
+        // PCGen keyword and must not false-positive.
+        assert_eq!(leaked_pcgen_syntax("Clean prose with 50% of something."), None);
     }
 
     /// The exact ACG `Twinned Feint` token that shipped to the Add Feat

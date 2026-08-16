@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Companion Advancement ~ Prionosuchus",
     "delivery": null,
@@ -13,6 +11,48 @@
     "name": "Companion Advancement (Prionosuchus)",
     "owners": [
       "ultimate_wilderness:companion:companion_prionosuchus"
+    ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "SIZEMOD|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstrictBonusDamage|1.5*STR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstrictDice|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstrictDieSize|6"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Companion Advancement ~ Prionosuchus"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Companion (Prionosuchus)"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionAdvancement"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      }
     ],
     "record_type": "ability",
     "source_page": null,
@@ -26,16 +66,18 @@
       "CompanionAdvancement"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
-    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
-    "line": 37,
-    "record_key": "Companion Advancement ~ Prionosuchus"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 37,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Companion Advancement ~ Prionosuchus",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

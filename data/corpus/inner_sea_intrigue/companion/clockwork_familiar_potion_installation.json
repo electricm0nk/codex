@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T13:12:30Z",
   "data": {
     "corpus_key": "Clockwork Familiar ~ Potion Installation",
     "delivery": null,
@@ -13,6 +11,24 @@
     "owners": [
       "inner_sea_intrigue:companion:familiar_clockwork_familiar"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The clockwork familiar gains a constant protection from good/evil/law/chaos effect (one type only, chosen each time a new potion is installed). In addition, a clockwork familiar can drain the magic from the potion in order to grant this ability to a creature sharing its space. This ability to include others in the protection effect lasts for 1 minute per spell level of the potion drained."
+      },
+      {
+        "key": "KEY",
+        "value": "Clockwork Familiar ~ Potion Installation"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClockworkFamiliarInstalledItem"
+      }
+    ],
     "record_type": "ability",
     "source_page": null,
     "stat_adjustments": [],
@@ -20,16 +36,18 @@
       "ClockworkFamiliarInstalledItem"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_race_companion.lst",
-    "sha256": "cc2db65754b883c24c83cdd077e7cb20965af4f6264b754c3f028de73d41896f",
-    "line": 30,
-    "record_key": "Clockwork Familiar ~ Potion Installation"
-  },
+  "ingested_at": "2026-08-12T13:12:30Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 30,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_race_companion.lst",
+    "record_key": "Clockwork Familiar ~ Potion Installation",
+    "sha256": "cc2db65754b883c24c83cdd077e7cb20965af4f6264b754c3f028de73d41896f"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

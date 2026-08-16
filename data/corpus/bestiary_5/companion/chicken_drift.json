@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T14:58:45Z",
   "data": {
     "corpus_key": "Chicken ~ Drift",
     "delivery": "Extraordinary",
@@ -13,6 +11,28 @@
     "owners": [
       "bestiary_5:companion:familiar_chicken"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A chicken flies in short bursts, and can't use its fly speed to hover. When it flies, it must end its move action by landing or perching on a solid surface."
+      },
+      {
+        "key": "KEY",
+        "value": "Chicken ~ Drift"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.112"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.ChickenRacialTrait"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.112",
     "stat_adjustments": [],
@@ -22,16 +42,18 @@
       "ChickenRacialTrait"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_companion.lst",
-    "sha256": "2c75b3d5d10c80857b5bf94529f1c1c6f327bf63cb18ab901f824cee80f8b31e",
-    "line": 43,
-    "record_key": "Chicken ~ Drift"
-  },
+  "ingested_at": "2026-08-12T14:58:45Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 43,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_companion.lst",
+    "record_key": "Chicken ~ Drift",
+    "sha256": "2c75b3d5d10c80857b5bf94529f1c1c6f327bf63cb18ab901f824cee80f8b31e"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Gourd Leshy ~ Ensnare",
     "delivery": "Extraordinary",
@@ -14,6 +12,28 @@
     "owners": [
       "ultimate_wilderness:companion:familiar_gourd_leshy"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The seeds and slam attack of a gourd leshy entangle the target in vines for 2d4 rounds unless the target makes a DC 12 Reflex save. The target can attempt to burst these entangling vines before the duration expires with a DC 12 Strength check as a full-round action. The save and burst DCs are Constitution-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Gourd Leshy ~ Ensnare"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "B3 p.178"
+      },
+      {
+        "key": "TYPE",
+        "value": "GourdLeshyRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
     "record_type": "ability",
     "source_page": "B3 p.178",
     "stat_adjustments": [],
@@ -23,16 +43,18 @@
       "Extraordinary"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
-    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
-    "line": 728,
-    "record_key": "Gourd Leshy ~ Ensnare"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 728,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Gourd Leshy ~ Ensnare",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

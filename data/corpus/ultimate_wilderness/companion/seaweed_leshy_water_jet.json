@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Seaweed Leshy ~ Water Jet",
     "delivery": "Extraordinary",
@@ -16,6 +14,44 @@
     "owners": [
       "ultimate_wilderness:companion:familiar_seaweed_leshy"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Water Jet"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WaterJetDC|10+(TL/2)+DEX"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WaterJetDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Water Jet)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WaterJetDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A seaweed leshy can expel a high-pressure jet of water from its mouth to a range of 30 feet. It must make a ranged touch attack to strike a target-if it hits, the blast deals 1 point of bludgeoning damage (this damage is not modified by Strength). In addition, the creature hit must make a DC %%1 Fortitude save or be blinded by the water for 1 round. The save DC is Dexterity-based.|WaterJetDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Seaweed Leshy ~ Water Jet"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "B3 p.180"
+      },
+      {
+        "key": "TYPE",
+        "value": "SeaweedLeshyRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
     "record_type": "ability",
     "source_page": "B3 p.180",
     "stat_adjustments": [],
@@ -25,16 +61,18 @@
       "Extraordinary"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
-    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
-    "line": 738,
-    "record_key": "Seaweed Leshy ~ Water Jet"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 738,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Seaweed Leshy ~ Water Jet",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-13T09:20:33Z",
   "data": {
     "corpus_key": "Companion Advancement ~ Puffball",
     "delivery": null,
@@ -13,6 +11,36 @@
     "name": "Companion Advancement (Puffball)",
     "owners": [
       "advanced_race_guide:companion:companion_puffball"
+    ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|2|PREVARGTEQ:MasterLevel,4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|2|PREVARGTEQ:MasterLevel,4"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Companion Advancement ~ Puffball"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Companion (Puffball)"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionAdvancement"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      }
     ],
     "record_type": "ability",
     "source_page": null,
@@ -30,16 +58,18 @@
       "CompanionAdvancement"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_companion.lst",
-    "sha256": "0970a14a15f2865ee6cc611109e45caf3cc3545d2f2ae717e7143de105b4ea83",
-    "line": 58,
-    "record_key": "Companion Advancement ~ Puffball"
-  },
+  "ingested_at": "2026-08-13T09:20:33Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 58,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_companion.lst",
+    "record_key": "Companion Advancement ~ Puffball",
+    "sha256": "0970a14a15f2865ee6cc611109e45caf3cc3545d2f2ae717e7143de105b4ea83"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

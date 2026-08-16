@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "ability_keys": [
       "core_essentials:companion:hedgehog_spiny_defense"
@@ -15,6 +13,92 @@
     "natural_attacks": [],
     "race_subtype": null,
     "race_type": "Animal",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Hedgehog ~ Spiny Defense"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Climb,Swim|DEX-STR"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-9"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RaceSizeIsLong|1|TYPE=Base"
+      },
+      {
+        "key": "CR",
+        "value": "1/8"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|D"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Familiar ~ Hedgehog"
+      },
+      {
+        "key": "LEGS",
+        "value": "4"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Animal:1"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Animal"
+      },
+      {
+        "key": "REACH",
+        "value": "0"
+      },
+      {
+        "key": "SIZE",
+        "value": "D"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.119"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "reach_feet": 0,
     "record_type": "creature",
     "size": "D",
@@ -53,16 +137,18 @@
     ],
     "type_segments": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_um.lst",
-    "sha256": "107c19938fca45aecbd6ce0d07fbd5a43feeed3feade64cb3212f78dc26af6a9",
-    "line": 25,
-    "record_key": "Hedgehog"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 25,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_um.lst",
+    "record_key": "Hedgehog",
+    "sha256": "107c19938fca45aecbd6ce0d07fbd5a43feeed3feade64cb3212f78dc26af6a9"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

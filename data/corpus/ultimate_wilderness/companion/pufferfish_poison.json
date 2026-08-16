@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Pufferfish ~ Poison",
     "delivery": "Extraordinary",
@@ -17,6 +15,28 @@
       "ultimate_wilderness:companion:familiar_pufferfish",
       "ultimate_wilderness:companion:pufferfish"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Spines-injury; save Fort DC %1; frequency once; initial effect staggered for 1 round; secondary effect 1 Str damage; cure 2 consecutive saves. If certain portions of the pufferfish's body are eaten, the poison's effect is instead 1d4 points of Constitution damage.|10+HD/2+CON"
+      },
+      {
+        "key": "KEY",
+        "value": "Pufferfish ~ Poison"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.204"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.PufferfishRacialTrait"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.204",
     "stat_adjustments": [],
@@ -26,16 +46,18 @@
       "PufferfishRacialTrait"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
-    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
-    "line": 314,
-    "record_key": "Pufferfish ~ Poison"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 314,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Pufferfish ~ Poison",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

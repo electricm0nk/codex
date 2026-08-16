@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-13T02:26:54Z",
   "data": {
     "corpus_key": "Crocodile ~ Hold Breath",
     "delivery": "Extraordinary",
@@ -17,6 +15,36 @@
       "core_rulebook:companion:companion_crocodile_alligator",
       "core_rulebook:companion:companion_turtle_giant_snapping"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|HoldBreathRounds|CONSCORE*4"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HoldBreathRounds|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A crocodile can hold its breath for %1 rounds before it risks drowning.|HoldBreathRounds"
+      },
+      {
+        "key": "KEY",
+        "value": "Crocodile ~ Hold Breath"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.51"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Special Quality.Special Ability.Extraordinary"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.51",
     "stat_adjustments": [],
@@ -27,16 +55,18 @@
       "Extraordinary"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_companion.lst",
-    "sha256": "87c87e87120de7a272cecce07a89c4d0d5ad1e43ecc8cd89d530640966b1d495",
-    "line": 189,
-    "record_key": "Crocodile ~ Hold Breath"
-  },
+  "ingested_at": "2026-08-13T02:26:54Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 189,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_companion.lst",
+    "record_key": "Crocodile ~ Hold Breath",
+    "sha256": "87c87e87120de7a272cecce07a89c4d0d5ad1e43ecc8cd89d530640966b1d495"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

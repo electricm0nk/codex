@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Dwarf Caiman ~ Hold Breath",
     "delivery": "Extraordinary",
@@ -17,6 +15,28 @@
       "ultimate_wilderness:companion:familiar_dwarf_caiman",
       "ultimate_wilderness:companion:dwarf_caiman"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A dwarf caiman can hold its breath for %1 rounds before it risks drowning.|4*CONSCORE"
+      },
+      {
+        "key": "KEY",
+        "value": "Dwarf Caiman ~ Hold Breath"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.195"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.DwarfCaimanRacialTrait"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.195",
     "stat_adjustments": [],
@@ -26,16 +46,18 @@
       "DwarfCaimanRacialTrait"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
-    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
-    "line": 222,
-    "record_key": "Dwarf Caiman ~ Hold Breath"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 222,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Dwarf Caiman ~ Hold Breath",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

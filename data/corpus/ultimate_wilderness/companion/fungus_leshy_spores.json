@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Fungus Leshy ~ Spores",
     "delivery": "Extraordinary",
@@ -14,6 +12,28 @@
     "owners": [
       "ultimate_wilderness:companion:familiar_fungus_leshy"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A fungus leshy is riddled with molds and spores. Anytime a fungus leshy takes damage, a cloud of spores bursts from its body, forcing all adjacent creatures to make a DC 14 Fortitude save or have their vision reduced to 10 feet for 1 minute. Spending a full-round action to wash one's eyes with water ends this effect. The save DC is Constitution-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Fungus Leshy ~ Spores"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "B3 p.177"
+      },
+      {
+        "key": "TYPE",
+        "value": "FungusLeshyRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
     "record_type": "ability",
     "source_page": "B3 p.177",
     "stat_adjustments": [],
@@ -23,16 +43,18 @@
       "Extraordinary"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
-    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
-    "line": 725,
-    "record_key": "Fungus Leshy ~ Spores"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 725,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Fungus Leshy ~ Spores",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-13T02:26:54Z",
   "data": {
     "corpus_key": "Companion Advancement ~ Herd Animal (Ram)",
     "delivery": null,
@@ -14,6 +12,56 @@
     "owners": [
       "core_rulebook:companion:companion_herd_animal_ram"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Improved Bull Rush"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Powerful Charge"
+      },
+      {
+        "key": "BONUS",
+        "value": "SIZEMOD|NUMBER|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|2|TYPE=Base.STACK"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PowerfulChargeBonusDamage|1.5*STR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PowerfulChargeDamageDice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|PowerfulChargeDamageDieSize|8"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Companion Advancement ~ Herd Animal (Ram)"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Companion (Herd Animal (Ram))"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionAdvancement"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      }
+    ],
     "record_type": "ability",
     "source_page": null,
     "stat_adjustments": [],
@@ -21,16 +69,18 @@
       "CompanionAdvancement"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_companion.lst",
-    "sha256": "87c87e87120de7a272cecce07a89c4d0d5ad1e43ecc8cd89d530640966b1d495",
-    "line": 207,
-    "record_key": "Companion Advancement ~ Herd Animal (Ram)"
-  },
+  "ingested_at": "2026-08-13T02:26:54Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 207,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_companion.lst",
+    "record_key": "Companion Advancement ~ Herd Animal (Ram)",
+    "sha256": "87c87e87120de7a272cecce07a89c4d0d5ad1e43ecc8cd89d530640966b1d495"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

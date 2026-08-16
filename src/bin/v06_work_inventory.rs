@@ -72,6 +72,7 @@ use codex::rules_core::rules_tables::crb::{
     spell_list as crb_spell_list, wizard_spell_list as crb_wizard_spell_list,
 };
 use codex::rules_core::rules_tables::feats_all::all_feat_tables;
+use codex::rules_core::pcgen_desc::leaked_pcgen_syntax;
 use codex::rules_core::pilot_view_model::{PilotSnapshot, PilotSpellbookViewModel, PilotViewModel};
 use codex::rules_core::spell_resolver::{self, spell_id_resolve};
 use codex::rules_core::spellbook::compute_spellbook_coverage;
@@ -587,6 +588,30 @@ fn corpus_json_has_real_description(
     descriptions.contains_key(&(file.to_string(), line, key.to_string()))
 }
 
+/// CONFIRMED finding (integration-cycle adversarial review, `SD31-W6-
+/// INTEGRATE-001`): 5 `equipment_modifier` units promoted by the
+/// `corpus_json_descriptions` recovery rung ship the raw PCGen token
+/// `%CHOICE` verbatim to the player -- the equipment render path
+/// (`equipment_catalog::serve_description`), unlike the monster and
+/// companion catalogs, carries no leak guard at all, and
+/// `leaked_pcgen_syntax` itself only flagged `%` followed by a DIGIT until
+/// this same finding's fix widened it to `%<UPPERCASE-KEYWORD>` too. Refuse
+/// the description-completeness promotion for any unit whose recovered
+/// `data.description` still carries an unresolved PCGen substitution --
+/// Decision 7 condition 3 ("the prose is available to print... on the
+/// character sheet") is not met by text a player would see with raw syntax
+/// in it.
+fn corpus_json_description_leaks_pcgen_syntax(
+    descriptions: &BTreeMap<(String, usize, String), String>,
+    file: &str,
+    line: usize,
+    key: &str,
+) -> bool {
+    descriptions
+        .get(&(file.to_string(), line, key.to_string()))
+        .is_some_and(|desc| leaked_pcgen_syntax(desc).is_some())
+}
+
 #[cfg(test)]
 mod closure_has_real_description_tests {
     use super::*;
@@ -735,6 +760,130 @@ mod corpus_json_has_real_description_tests {
             hit.is_some_and(|d| d.contains("dozens of small overlapping metal plates")),
             "expected scale_mail's real inherited description, got {hit:?}"
         );
+    }
+}
+
+#[cfg(test)]
+mod corpus_json_description_leaks_pcgen_syntax_tests {
+    use super::*;
+
+    /// The proof case (CONFIRMED finding, `SD31-W6-INTEGRATE-001`): the
+    /// real shipped shape of `ultimate_equipment:equipment_modifier:
+    /// special_ability_defiant_armor`'s recovered description.
+    #[test]
+    fn catches_the_real_percent_choice_shape() {
+        let mut descriptions = BTreeMap::new();
+        descriptions.insert(
+            ("ue_equipmods.lst".to_string(), 1541, "Special Ability ~ Defiant".to_string()),
+            "+2 enhancement bonus and DR 2/- against %CHOICE".to_string(),
+        );
+        assert!(corpus_json_description_leaks_pcgen_syntax(
+            &descriptions,
+            "ue_equipmods.lst",
+            1541,
+            "Special Ability ~ Defiant",
+        ));
+    }
+
+    /// A clean description (no leaked syntax) must not be flagged.
+    #[test]
+    fn does_not_flag_a_clean_description() {
+        let mut descriptions = BTreeMap::new();
+        descriptions.insert(
+            ("cr_equip_arms_armor.lst".to_string(), 55, "Scale Mail".to_string()),
+            "Scale mail is made up of dozens of small overlapping metal plates.".to_string(),
+        );
+        assert!(!corpus_json_description_leaks_pcgen_syntax(
+            &descriptions,
+            "cr_equip_arms_armor.lst",
+            55,
+            "Scale Mail",
+        ));
+    }
+
+    /// A coordinate with no entry at all must not be flagged (nothing to
+    /// leak if there is no recovered description).
+    #[test]
+    fn a_missing_coordinate_is_not_flagged() {
+        let descriptions = BTreeMap::new();
+        assert!(!corpus_json_description_leaks_pcgen_syntax(
+            &descriptions,
+            "ue_equipmods.lst",
+            1541,
+            "Special Ability ~ Defiant",
+        ));
+    }
+}
+
+#[cfg(test)]
+mod equipment_verdict_rung_tests {
+    use super::*;
+
+    fn equipment_modifier_unit(file: &str, line: usize, key: &str) -> CorpusUnit {
+        CorpusUnit {
+            book: "ultimate_equipment".to_string(),
+            source_book: "ultimate_equipment".to_string(),
+            kind: Kind::EquipmentModifier,
+            key: key.to_string(),
+            name: key.to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: file.to_string(), line },
+            magnitude_token_count: 0,
+            type_facet: None,
+            visible: true,
+        }
+    }
+
+    /// PROVE THE RUNG CAN FAIL (CONFIRMED finding, `SD31-W6-INTEGRATE-001`):
+    /// an `equipment_modifier` unit whose recovered corpus description
+    /// carries a raw, unresolved `%CHOICE` must NOT read `text-complete` --
+    /// the equipment render path has no leak guard of its own, so this
+    /// promotion is the last chance to catch it before it reaches a
+    /// player's screen verbatim.
+    #[test]
+    fn a_recovered_description_carrying_percent_choice_does_not_read_text_complete() {
+        let mut facts = EngineFacts::default();
+        facts
+            .equipment_keys
+            .entry("ultimate_equipment")
+            .or_default()
+            .insert("Special Ability ~ Defiant".to_string());
+        facts.corpus_json_descriptions.insert(
+            ("ue_equipmods.lst".to_string(), 1541, "Special Ability ~ Defiant".to_string()),
+            "+2 enhancement bonus and DR 2/- against %CHOICE".to_string(),
+        );
+        let unit =
+            equipment_modifier_unit("ue_equipmods.lst", 1541, "Special Ability ~ Defiant");
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true);
+        assert_ne!(verdict.status, "text-complete");
+        // Falls through to the same "nothing safe to show a player" verdict
+        // Decision 7's own condition-3 refusal uses for a genuinely
+        // description-less record -- `unknown`, not a fabricated `done` or
+        // `held` credit.
+        assert_eq!(
+            verdict.status, "unknown",
+            "expected the leak refusal to fall through to unknown, got status {:?}", verdict.status
+        );
+    }
+
+    /// The control case: a clean recovered description DOES read
+    /// `text-complete`, proving the refusal above is scoped to the leak,
+    /// not a blanket regression on the whole rung.
+    #[test]
+    fn a_clean_recovered_description_still_reads_text_complete() {
+        let mut facts = EngineFacts::default();
+        facts
+            .equipment_keys
+            .entry("ultimate_equipment")
+            .or_default()
+            .insert("Special Ability ~ Clean".to_string());
+        facts.corpus_json_descriptions.insert(
+            ("ue_equipmods.lst".to_string(), 1600, "Special Ability ~ Clean".to_string()),
+            "+2 enhancement bonus and fire resistance 5.".to_string(),
+        );
+        let unit = equipment_modifier_unit("ue_equipmods.lst", 1600, "Special Ability ~ Clean");
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true);
+        assert_eq!(verdict.status, "text-complete");
     }
 }
 
@@ -1843,6 +1992,16 @@ struct EngineFacts {
     /// key, never the display name: namespaced keys (`Seru ~ Poison`,
     /// `Caryatid Column ~ Immunity to Magic`) have leaves that are not unique.
     chassis_monster_ability_keys: BTreeMap<&'static str, BTreeSet<String>>,
+    /// CONFIRMED finding subset of `chassis_monster_ability_keys`: the keys
+    /// whose row declares a CHARACTER-SPECIFIC computed `DESC:` argument
+    /// (`description_variables` non-empty, e.g. `13+Con`/`CONSCORE`/
+    /// `BreathWeaponDC`) OR whose `description` text leaks a literal
+    /// unresolved `%<digit>` even with no declared argument list. Both
+    /// shapes render on the real player-facing screen with the number
+    /// silently deleted (`serve_ability_description` renders with an EMPTY
+    /// `PcgenDisplayValues`, and `render_pcgen_desc` drops any `%N` it
+    /// cannot resolve) -- see the `monster_ability` rung's own call site.
+    chassis_monster_ability_unresolved_desc_keys: BTreeMap<&'static str, BTreeSet<String>>,
     /// Every chassis-book `companion` record the engine holds, keyed by corpus
     /// book then by lowercase corpus key.
     ///
@@ -2023,6 +2182,16 @@ impl EngineFacts {
                 .unwrap_or(false),
             _ => false,
         }
+    }
+
+    /// Whether `book`/`key`/`name` names a `monster_ability` whose own row
+    /// leaks an unresolved character-specific description argument to the
+    /// player's screen -- see [`monster_ability_desc_leaks_unresolved_argument`].
+    fn monster_ability_desc_leaks_unresolved_argument(&self, book: &str, key: &str, name: &str) -> bool {
+        self.chassis_monster_ability_unresolved_desc_keys
+            .get(book)
+            .map(|s| s.contains(&key.to_lowercase()) || s.contains(&name.to_lowercase()))
+            .unwrap_or(false)
     }
 }
 
@@ -3410,6 +3579,8 @@ fn gather_engine_facts(
     let mut chassis_monster_keys: BTreeMap<&'static str, BTreeSet<String>> = BTreeMap::new();
     let mut chassis_monster_ability_keys: BTreeMap<&'static str, BTreeSet<String>> =
         BTreeMap::new();
+    let mut chassis_monster_ability_unresolved_desc_keys: BTreeMap<&'static str, BTreeSet<String>> =
+        BTreeMap::new();
     //
     // Keyed by the ENGINE book, translated from the registry's corpus
     // directory, exactly as `chassis_companion_keys` below is and for the same
@@ -3437,6 +3608,15 @@ fn gather_engine_facts(
         chassis_monster_ability_keys.insert(
             engine_book,
             book.monster_abilities.iter().map(|a| a.key.to_lowercase()).collect(),
+        );
+        chassis_monster_ability_unresolved_desc_keys.insert(
+            engine_book,
+            book
+                .monster_abilities
+                .iter()
+                .filter(|a| monster_ability_desc_leaks_unresolved_argument(a))
+                .map(|a| a.key.to_lowercase())
+                .collect(),
         );
     }
 
@@ -3528,6 +3708,7 @@ fn gather_engine_facts(
         monster_names,
         chassis_monster_keys,
         chassis_monster_ability_keys,
+        chassis_monster_ability_unresolved_desc_keys,
         chassis_companion_keys,
         class_books,
         class_effect_wired,
@@ -3793,6 +3974,39 @@ fn monster_ability_flat_magnitude_pending_ruling(engine_book: &str, key: &str) -
         .any(|&(book, k)| book == engine_book && k == key)
 }
 
+/// CONFIRMED finding (integration-cycle adversarial review, `SD31-W6-
+/// INTEGRATE-001`): 20 of the 947 `monster_ability` units the SD31-D7-
+/// PROSE-002 rung promoted sit on corpus rows that declare a CHARACTER-
+/// SPECIFIC computed `DESC:` argument -- `13+Con`, `CONSCORE`,
+/// `BreathWeaponDC`, `SR`, `Mythic_Rank`, etc, not flat constants -- and
+/// `monster_catalog::serve_ability_description` calls
+/// `render_pcgen_desc` with an EMPTY `PcgenDisplayValues`, which silently
+/// DROPS any `%N` it cannot resolve (popping the introducing `+`/`-` and
+/// collapsing whitespace). The player sees "The psicrystal has power
+/// resistance ." with the number deleted -- a Decision 7 condition-2 AND
+/// condition-3 failure, the exact "green code gate over a hole on the
+/// screen" shape the doctrine exists to prevent.
+///
+/// Two distinct shapes, both caught: (a) `description_variables` is
+/// non-empty (17 of the 20) -- the row itself declares an argument list;
+/// (b) `description_variables` is EMPTY but the raw `DESC:` text still
+/// contains a bare `%<digit>` (15 of the 20, union with (a) = 20) -- a
+/// malformed citation whose argument tail is missing entirely, so
+/// `render_pcgen_desc`'s `dropped_args` (which only records a NAMED
+/// argument) stays empty even though the digit is still silently dropped
+/// from the rendered text. Checking `description_variables` directly,
+/// rather than `render_pcgen_desc(desc).dropped_args`, is what catches
+/// shape (b): `dropped_args` alone would miss it.
+fn monster_ability_desc_leaks_unresolved_argument(record: &monster_chassis::MonsterAbilityRecord) -> bool {
+    if !record.description_variables.is_empty() {
+        return true;
+    }
+    match record.description {
+        Some(desc) => desc.as_bytes().windows(2).any(|w| w[0] == b'%' && w[1].is_ascii_digit()),
+        None => false,
+    }
+}
+
 fn classify(
     unit: &CorpusUnit,
     facts: &EngineFacts,
@@ -4043,7 +4257,22 @@ fn classify(
             if !known {
                 return not_ingested("equipment_key_absent_from_equipment_tables");
             }
-            if text_only && has_real_description {
+            // CONFIRMED finding (integration-cycle adversarial review,
+            // `SD31-W6-INTEGRATE-001`): refuse this promotion when the
+            // recovered corpus description still carries an unresolved
+            // PCGen substitution (e.g. `%CHOICE`) -- see
+            // `corpus_json_description_leaks_pcgen_syntax`'s own doc
+            // comment. The equipment render path has no leak guard of its
+            // own, so a promotion here is the last chance to catch it.
+            if text_only
+                && has_real_description
+                && !corpus_json_description_leaks_pcgen_syntax(
+                    &facts.corpus_json_descriptions,
+                    &unit.provenance.file,
+                    unit.provenance.line,
+                    &unit.key,
+                )
+            {
                 return Verdict {
                     status: "text-complete",
                     evidence: "in_equipment_tables_and_corpus_record_carries_no_magnitude_token"
@@ -4150,9 +4379,22 @@ fn classify(
                 // devilfish_water_dependency`, "1 hour"/"2 hours" printed in
                 // its `DESC:`) even though it is otherwise text_only with a
                 // real description.
+                // CONFIRMED finding (integration-cycle adversarial review,
+                // `SD31-W6-INTEGRATE-001`): refuse promotion when the
+                // record's own row would leak an unresolved
+                // character-specific description argument to the player's
+                // screen -- see `monster_ability_desc_leaks_unresolved_
+                // argument`'s own doc comment for the two shapes this
+                // catches and why "grounded"/`held` (never a fabricated
+                // number) is the correct fallback.
                 if text_only
                     && has_real_description
                     && !monster_ability_flat_magnitude_pending_ruling(&engine_book, &unit.key)
+                    && !facts.monster_ability_desc_leaks_unresolved_argument(
+                        &engine_book,
+                        &unit.key,
+                        &unit.name,
+                    )
                 {
                     return Verdict {
                         status: "text-complete",
@@ -4708,11 +4950,20 @@ fn apply_done_rung_stamps(
     for item in inventory.iter_mut() {
         match item.wiring_class {
             wiring_class::WiringClass::Static => {
+                // CONFIRMED cross-lane finding (`OPEN-ISSUES.md` row 104,
+                // `SD31-E6-F7-001`): join on `source_book` (the PHYSICAL
+                // book a `.lst` file lives under, matching
+                // `corpus_literal_sweep`'s own `short_book_of` output), not
+                // `book` (the re-attributed REPORTING field) -- the same
+                // fix `engine_book_for`'s two call sites already apply.
+                // Using `book` here silently strands every re-attributed
+                // Static unit at `held` even when the sweep genuinely
+                // verified its true citation.
                 if matches!(
                     item.verdict.status,
                     "ingested-magnitude" | "grounded" | "text-complete"
                 ) && sweep_verified.contains(&(
-                    item.unit.book.clone(),
+                    item.unit.source_book.clone(),
                     item.unit.provenance.file.clone(),
                     item.unit.provenance.line,
                 )) {
@@ -4804,6 +5055,43 @@ mod apply_done_rung_stamps_tests {
         assert_eq!(
             inventory[3].verdict.status, "literal-verified",
             "Static control must be stamped -- proves the verified sets are wired correctly"
+        );
+    }
+
+    /// CONFIRMED cross-lane finding (`OPEN-ISSUES.md` row 104,
+    /// `SD31-E6-F7-001`): `corpus_literal_sweep`'s own `short_book_of`
+    /// resolves a re-attributed record's `(book, file, line)` triple using
+    /// the PHYSICAL book a `.lst` file lives under (mirroring
+    /// `CorpusUnit::source_book`'s documented contract), never the
+    /// re-attributed REPORTING book (`CorpusUnit::book`) two sibling call
+    /// sites (`engine_book_for`) already correctly join on. A unit whose
+    /// `book` was re-attributed away from its `source_book` (the real
+    /// `core_essentials`-housed `ce_*.lst` shape `SD31-ATTRIB-001` produces
+    /// for `companion`/`monster_ability`/`race_trait`) must still stamp
+    /// `literal-verified` when the sweep verifies its TRUE physical
+    /// citation -- joining on the wrong field silently strands it at
+    /// `held` forever, exactly the shape that blocked 34 real `companion`
+    /// units this wave.
+    #[test]
+    fn static_stamp_joins_on_source_book_not_the_reattributed_reporting_book() {
+        let mut reattributed = unit("companion_one", wiring_class::WiringClass::Static, "grounded", 9);
+        reattributed.unit.book = "advanced_players_guide".to_string();
+        reattributed.unit.source_book = "core_essentials".to_string();
+        reattributed.unit.provenance.file = "ce_races_familiar_apg.lst".to_string();
+        let mut inventory = vec![reattributed];
+
+        // The sweep's own report keys on the PHYSICAL book, exactly as
+        // `short_book_of` really produces it -- `source_book`, not `book`.
+        let sweep_verified: BTreeSet<(String, String, usize)> =
+            [("core_essentials".to_string(), "ce_races_familiar_apg.lst".to_string(), 9)].into_iter().collect();
+        let derived_fixture_verified: BTreeSet<String> = BTreeSet::new();
+
+        apply_done_rung_stamps(&mut inventory, &sweep_verified, &derived_fixture_verified);
+
+        assert_eq!(
+            inventory[0].verdict.status, "literal-verified",
+            "a re-attributed Static unit must still stamp when the sweep verified its TRUE \
+             physical (source_book, file, line) citation, not its reporting book"
         );
     }
 }
@@ -7219,6 +7507,94 @@ mod monster_ability_text_complete_rung_tests {
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true);
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(verdict.status, "grounded");
+    }
+
+    /// PROVE THE RUNG CAN FAIL, case 5 (CONFIRMED integration-cycle
+    /// adversarial finding): a held, text_only ability whose OWN row
+    /// declares a character-specific `description_variables` argument
+    /// (e.g. `13+Con`, `CONSCORE`, `BreathWeaponDC`) must NOT read
+    /// `text-complete` -- `serve_ability_description` renders with an
+    /// EMPTY `PcgenDisplayValues`, so the argument is silently dropped and
+    /// the player sees a hole in the sentence
+    /// ("The psicrystal has power resistance ."). The real
+    /// `ultimate_psionics:monster_ability:psicrystal_power_resistance`
+    /// shape.
+    #[test]
+    fn a_held_monster_ability_whose_row_declares_a_description_variable_does_not_read_text_complete(
+    ) {
+        let mut facts = facts_holding("ultimate_psionics", "Psicrystal ~ Power Resistance");
+        facts
+            .chassis_monster_ability_unresolved_desc_keys
+            .entry("ultimate_psionics")
+            .or_default()
+            .insert("psicrystal ~ power resistance".to_string());
+        let unit = monster_ability_unit(
+            "ultimate_psionics",
+            "up_abilities_race.lst",
+            77,
+            "Psicrystal ~ Power Resistance",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true);
+        assert_ne!(verdict.status, "text-complete");
+        assert_eq!(verdict.status, "grounded");
+    }
+
+    /// PROVE THE RUNG CAN FAIL, case 6: the second shape of the same
+    /// finding -- a literal, unresolved `%N` in the raw `DESC:` text even
+    /// though `description_variables` is empty (a malformed citation whose
+    /// argument tail never reached the record). Must ALSO refuse, or the
+    /// player sees a raw `%1` on screen instead of a number.
+    #[test]
+    fn a_held_monster_ability_whose_description_leaks_a_literal_percent_digit_does_not_read_text_complete(
+    ) {
+        let mut facts = facts_holding("bestiary_1", "Pixie ~ Sleep");
+        facts
+            .chassis_monster_ability_unresolved_desc_keys
+            .entry("bestiary_1")
+            .or_default()
+            .insert("pixie ~ sleep".to_string());
+        let unit =
+            monster_ability_unit("bestiary", "b1_abilities_race.lst", 12, "Pixie ~ Sleep", 0);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true);
+        assert_ne!(verdict.status, "text-complete");
+        assert_eq!(verdict.status, "grounded");
+    }
+
+    /// Direct unit test of the pure predicate function backing both cases
+    /// above, against synthetic `MonsterAbilityRecord`s -- proves both
+    /// shapes (declared variable list, bare `%N` with no list) independently
+    /// and confirms a clean record (neither shape) is NOT flagged.
+    #[test]
+    fn monster_ability_desc_leaks_unresolved_argument_catches_both_shapes() {
+        let declared_var = monster_chassis::MonsterAbilityRecord {
+            key: "x",
+            name: "x",
+            facet: monster_chassis::MonsterAbilityFacet::SpecialQuality,
+            delivery: None,
+            traits: &[],
+            description: Some("The creature has power resistance %1."),
+            description_variables: &["13+Con"],
+            source_page: None,
+            owners: &[],
+            source_file: "x.lst",
+            source_line: 1,
+        };
+        assert!(monster_ability_desc_leaks_unresolved_argument(&declared_var));
+
+        let bare_percent = monster_chassis::MonsterAbilityRecord {
+            description: Some("Sleep; the target must succeed on a DC %1 Will save."),
+            description_variables: &[],
+            ..declared_var
+        };
+        assert!(monster_ability_desc_leaks_unresolved_argument(&bare_percent));
+
+        let clean = monster_chassis::MonsterAbilityRecord {
+            description: Some("A creature takes a -1 penalty on attack rolls."),
+            description_variables: &[],
+            ..declared_var
+        };
+        assert!(!monster_ability_desc_leaks_unresolved_argument(&clean));
     }
 }
 

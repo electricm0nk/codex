@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Flowering Lattice ~ Pollen",
     "delivery": "Extraordinary",
@@ -17,6 +15,28 @@
       "ultimate_wilderness:companion:familiar_flowering_lattice",
       "ultimate_wilderness:companion:flowering_lattice"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once every 1d4 rounds, a flowering lattice can expel a cloud of pollen in a 10-foot cone. Creatures in the area are dazzled for 2 rounds (Fortitude DC %1 negates). If a creature currently dazzled by the pollen is affected again, it is blinded for 1 round (Fortitude DC %1 negates).|12+HD/2+CON"
+      },
+      {
+        "key": "KEY",
+        "value": "Flowering Lattice ~ Pollen"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.196"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.FloweringLatticeRacialTrait"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.196",
     "stat_adjustments": [],
@@ -26,16 +46,18 @@
       "FloweringLatticeRacialTrait"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
-    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
-    "line": 238,
-    "record_key": "Flowering Lattice ~ Pollen"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 238,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Flowering Lattice ~ Pollen",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

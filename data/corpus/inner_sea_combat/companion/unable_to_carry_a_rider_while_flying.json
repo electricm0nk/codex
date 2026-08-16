@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T13:12:24Z",
   "data": {
     "corpus_key": "Unable to carry a rider while flying",
     "delivery": null,
@@ -14,6 +12,16 @@
       "inner_sea_combat:companion:companion_griffon",
       "inner_sea_combat:companion:companion_hippogriff"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality"
+      }
+    ],
     "record_type": "ability",
     "source_page": null,
     "stat_adjustments": [],
@@ -21,16 +29,18 @@
       "SpecialQuality"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_companion.lst",
-    "sha256": "d3006b9497dda79016c955c9d2e707c290603d8577975e32408fafaaadeba04c",
-    "line": 9,
-    "record_key": "Unable to carry a rider while flying"
-  },
+  "ingested_at": "2026-08-12T13:12:24Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 9,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_companion.lst",
+    "record_key": "Unable to carry a rider while flying",
+    "sha256": "d3006b9497dda79016c955c9d2e707c290603d8577975e32408fafaaadeba04c"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

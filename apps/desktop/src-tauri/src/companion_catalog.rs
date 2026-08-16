@@ -732,6 +732,42 @@ mod tests {
         assert!(described > 0, "no ability carried a description; the check proved nothing");
     }
 
+    /// Same certification as `no_served_description_leaks_pcgen_syntax`, for
+    /// the OTHER half of the render path: a row whose every `DESC:` token is
+    /// conditional has no `description` at all, so a description-only check
+    /// would silently pass it while showing a player nothing. Before this
+    /// test, only one record's variants (`spitting_cobra_poison`, the
+    /// `a_conditional_description_reaches_the_wire_once_per_condition` test
+    /// above) were pinned by name — this exercises EVERY variant this catalog
+    /// serves, corpus-wide, the same blanket-coverage shape the description
+    /// check already had. Written for `SD31-E6-F7-001`'s render-readiness
+    /// report to Epic 6/Epic 2's `Kind::Companion` done-bar rung: the
+    /// zero-magnitude `grounded` population that rung targets includes units
+    /// whose ONLY player-visible text lives here (9 of the 223 re-derived
+    /// this cycle carry `description: None` with real `description_variants`
+    /// instead), and this is the assertion that certifies the render side of
+    /// that population is sound before the rung ever reads it.
+    #[test]
+    fn no_served_description_variant_leaks_pcgen_syntax() {
+        let response = build_companion_catalog();
+        let mut variants_seen = 0;
+        for entry in &response.entries {
+            for ability in &entry.abilities {
+                for variant in &ability.description_variants {
+                    variants_seen += 1;
+                    assert!(!variant.text.is_empty(), "{}: a variant with empty text shows a player nothing", ability.key);
+                    assert!(
+                        codex::rules_core::pcgen_desc::leaked_pcgen_syntax(&variant.text).is_none(),
+                        "{}: {}",
+                        ability.key,
+                        variant.text
+                    );
+                }
+            }
+        }
+        assert!(variants_seen > 0, "no ability carried a description variant; the check proved nothing");
+    }
+
     /// `Some(0)` reach is a real corpus value on the two Tiny familiars, and it
     /// must not be flattened to `None` on the way to the wire — a screen that
     /// cannot tell "reach 0" from "no reach stated" is showing a different fact.

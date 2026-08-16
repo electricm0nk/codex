@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "ability_keys": [],
     "corpus_key": "Bat",
@@ -13,6 +11,84 @@
     "natural_attacks": [],
     "race_subtype": null,
     "race_type": "Animal",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Bat"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|4"
+      },
+      {
+        "key": "CR",
+        "value": "1/8"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|D"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Animal ~ Bat"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Animal:1"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,5,Fly,40"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Animal"
+      },
+      {
+        "key": "REACH",
+        "value": "0"
+      },
+      {
+        "key": "SIZE",
+        "value": "D"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.131"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Animal"
+      }
+    ],
     "reach_feet": 0,
     "record_type": "creature",
     "size": "D",
@@ -57,16 +133,18 @@
       "Animal"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_cr.lst",
-    "sha256": "d702c902a162f7e319b0aff6bed67c2611c6790c629a8dc30de1e503e1fe0a87",
-    "line": 14,
-    "record_key": "Bat"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 14,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_cr.lst",
+    "record_key": "Bat",
+    "sha256": "d702c902a162f7e319b0aff6bed67c2611c6790c629a8dc30de1e503e1fe0a87"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",
