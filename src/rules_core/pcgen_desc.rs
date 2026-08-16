@@ -564,6 +564,31 @@ pub fn render_pcgen_desc_with_values(raw: &str, values: &PcgenDisplayValues) -> 
             i += 2;
             continue;
         }
+        // CONFIRMED finding (`SD31-W6-INTEGRATE-001`): a `%<KEYWORD>`
+        // substitution (`%CHOICE`, the only shape any shipped `description:`
+        // text carries -- `%LIST` appears only in `qualifiers` fields today,
+        // covered here on the same general mechanism rather than a
+        // `%CHOICE`-specific special case). PCGen keyword substitutions name
+        // a chargen-time PLAYER SELECTION (e.g. a bloodline/mystery choice)
+        // this engine has no `PcgenDisplayValues` slot for at all -- there is
+        // no resolution path to attempt, unlike `%N`, so this is
+        // unconditionally dropped, never guessed at. Same no-fabrication
+        // treatment as an unresolved `%N`: takes its introducing `+`/`-` with
+        // it, collapses the surrounding whitespace.
+        if chars[i] == '%' && chars.get(i + 1).is_some_and(char::is_ascii_uppercase) {
+            let start = i + 1;
+            let mut end = start;
+            while chars.get(end).is_some_and(char::is_ascii_uppercase) {
+                end += 1;
+            }
+            dropped_args.push(chars[start..end].iter().collect());
+            while out.ends_with('+') || out.ends_with('-') {
+                out.pop();
+            }
+            dropped_any = true;
+            i = end;
+            continue;
+        }
         out.push(chars[i]);
         i += 1;
     }
@@ -864,6 +889,62 @@ mod tests {
     fn an_unmatched_percent_n_is_dropped_rather_than_rendered() {
         let rendered = render_pcgen_desc("a bonus of %3 with no tail");
         assert_eq!(rendered.text, "a bonus of with no tail");
+        assert_eq!(leaked_pcgen_syntax(&rendered.text), None);
+    }
+
+    /// CONFIRMED finding (integration-cycle full-gate run, `SD31-W6-
+    /// INTEGRATE-001`): PCGen also uses uppercase KEYWORD substitutions
+    /// (`%CHOICE`), not only `%N` numeric argument references. This renderer
+    /// previously copied `%CHOICE` through verbatim (its main loop only
+    /// recognized a digit or another `%` after `%`), which is exactly the
+    /// live shape `apps/desktop/src-tauri/src/equipment_catalog.rs`'s own
+    /// pre-existing `no_catalog_serves_a_description_carrying_raw_pcgen_
+    /// syntax` test caught the moment `leaked_pcgen_syntax` was widened to
+    /// detect it (6 real shipped equipment descriptions). There is no
+    /// `PcgenDisplayValues` support for a keyword argument -- an ACG
+    /// bloodline/mystery choice is a chargen-time PLAYER SELECTION this
+    /// engine does not model at all, so `%CHOICE` is unconditionally
+    /// dropped, the same no-fabrication treatment `%N` already gets when
+    /// unresolved: it takes its introducing `+`/`-` with it and the
+    /// surrounding whitespace collapses.
+    #[test]
+    fn a_percent_keyword_argument_is_dropped_the_same_way_an_unresolved_percent_n_is() {
+        let rendered = render_pcgen_desc(
+            "+2 enhancement, +2d6 damage against foe with %CHOICE bloodline",
+        );
+        assert_eq!(rendered.text, "+2 enhancement, +2d6 damage against foe with bloodline");
+        assert_eq!(leaked_pcgen_syntax(&rendered.text), None);
+        assert_eq!(rendered.dropped_args, vec!["CHOICE".to_string()]);
+    }
+
+    /// The trailing-sign-stripping shape (mirrors `an_unmatched_percent_n_
+    /// is_dropped_rather_than_rendered`): a `%CHOICE` at the very end of the
+    /// sentence, preceded by a bare `against`, must not leave a dangling
+    /// leak or a stray trailing space.
+    #[test]
+    fn a_percent_keyword_at_the_end_of_the_sentence_leaves_no_trailing_leak() {
+        let rendered = render_pcgen_desc("+2 enhancement bonus and DR 2/- against %CHOICE");
+        assert_eq!(rendered.text, "+2 enhancement bonus and DR 2/- against");
+        assert_eq!(leaked_pcgen_syntax(&rendered.text), None);
+    }
+
+    /// A `%CHOICE` at the START of the sentence (`Masterwork Tool`'s real
+    /// shipped shape) must not leave a leading leak either.
+    #[test]
+    fn a_percent_keyword_at_the_start_of_the_sentence_leaves_no_leading_leak() {
+        let rendered = render_pcgen_desc("%CHOICE circumstance Bonus");
+        assert_eq!(rendered.text, "circumstance Bonus");
+        assert_eq!(leaked_pcgen_syntax(&rendered.text), None);
+    }
+
+    /// A different keyword (`%LIST`, real PCGen syntax used elsewhere in
+    /// this corpus's `qualifiers` fields, though not currently in any
+    /// `description:`) must be caught by the SAME general mechanism, not a
+    /// `%CHOICE`-specific special case.
+    #[test]
+    fn a_different_percent_keyword_is_also_dropped() {
+        let rendered = render_pcgen_desc("a bonus to %LIST checks");
+        assert_eq!(rendered.text, "a bonus to checks");
         assert_eq!(leaked_pcgen_syntax(&rendered.text), None);
     }
 

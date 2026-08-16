@@ -617,7 +617,22 @@ fn corpus_json_description_leaks_pcgen_syntax(
         // "leak" was an already-correctly-renderable `%%` (caught by this
         // integration cycle's own guarded regen).
         let rendered = codex::rules_core::pcgen_desc::render_pcgen_desc(desc);
-        leaked_pcgen_syntax(&rendered.text).is_some()
+        // TWO refusal conditions, not one -- `render_pcgen_desc` was widened
+        // in this SAME cycle to drop an unresolved `%<KEYWORD>` (`%CHOICE`)
+        // the same no-fabrication way it already drops an unresolved `%N`
+        // (`apps/desktop/src-tauri/src/equipment_catalog.rs`'s own pinned
+        // `no_catalog_serves_a_description_carrying_raw_pcgen_syntax` test
+        // demanded it, catching a live shipped leak). That widening means
+        // `leaked_pcgen_syntax(&rendered.text)` alone no longer catches
+        // `%CHOICE` -- it renders CLEAN (no raw syntax) but INCOMPLETE (a
+        // hole in the sentence, "...against DR 2/- against" with the
+        // bloodline choice silently gone) -- the EXACT Decision-7
+        // condition-3 shape `monster_ability_desc_leaks_unresolved_argument`
+        // already refuses for its own kind. `dropped_args.is_empty()` check
+        // catches that; the `leaked_pcgen_syntax` check stays as a second,
+        // independent net for any OTHER leak shape (a raw `|` argument tail,
+        // an undecoded entity) that dropping does not resolve.
+        leaked_pcgen_syntax(&rendered.text).is_some() || !rendered.dropped_args.is_empty()
     })
 }
 

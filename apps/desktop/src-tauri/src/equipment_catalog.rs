@@ -558,8 +558,24 @@ mod tests {
         );
     }
 
-    /// The 54-record `%%` leak, pinned on both sides of the render so the
-    /// fix cannot be mistaken for the corpus having changed.
+    /// The 58-record raw-syntax leak (54 `%%` + 4 `%CHOICE`), pinned on both
+    /// sides of the render so the fix cannot be mistaken for the corpus
+    /// having changed.
+    ///
+    /// **Widened `SD31-W6-INTEGRATE-001`**: `leaked_pcgen_syntax` originally
+    /// only flagged `%%`/`%<digit>`; it was widened to also flag
+    /// `%<UPPERCASE-KEYWORD>` (`%CHOICE`) after this test's own sibling
+    /// (`no_catalog_serves_a_description_carrying_raw_pcgen_syntax`) caught
+    /// the equipment catalog serving `%CHOICE` verbatim to a player. That
+    /// widening makes THIS test's raw-side scan see 4 more real occurrences
+    /// it always contained but never counted (ACG's `Equipmods` category:
+    /// Blood-Hunting/Spirit-Hunting Weapon + Amulet of Mighty Fists, all
+    /// four `+2 enhancement... against %CHOICE bloodline/mystery` shaped) --
+    /// `render_pcgen_desc` was widened in the SAME cycle to drop an
+    /// unresolved `%<KEYWORD>` the same no-fabrication way it already drops
+    /// an unresolved `%N` (there is no `PcgenDisplayValues` slot for a
+    /// chargen-time player selection like a bloodline choice), so the
+    /// SERVED side stays 0 either way.
     ///
     /// The compiled tables still hold the raw escape — that is correct, they
     /// are a transcription of the corpus — and the catalog is what must not
@@ -572,7 +588,8 @@ mod tests {
     /// | CRB | General | 6 | 0 |
     /// | CRB | ArmsArmor | 6 | 0 |
     /// | ARG | ArmsArmor | 1 | 0 |
-    /// | APG / ACG / B1 / PU | all | 0 | 0 |
+    /// | ACG | Equipmods | 4 | 0 |
+    /// | APG / B1 / PU | all | 0 | 0 |
     #[test]
     fn the_raw_percent_escape_stops_at_the_catalog_boundary() {
         use codex::rules_core::pcgen_desc::leaked_pcgen_syntax;
@@ -609,11 +626,12 @@ mod tests {
             (("CRB", "General".to_owned()), 6),
             (("CRB", "ArmsArmor".to_owned()), 6),
             (("ARG", "ArmsArmor".to_owned()), 1),
+            (("ACG", "Equipmods".to_owned()), 4),
         ]
         .into_iter()
         .collect();
         assert_eq!(raw_leaks, expected, "the raw tables' own leak profile");
-        assert_eq!(raw_leaks.values().sum::<usize>(), 54);
+        assert_eq!(raw_leaks.values().sum::<usize>(), 58);
 
         let served_leaks: Vec<&str> = build_equipment_catalog()
             .entries
