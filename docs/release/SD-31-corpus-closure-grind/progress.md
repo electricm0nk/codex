@@ -9115,4 +9115,225 @@ this wave's finished lanes performed after checking every live PID's `CARGO_TARG
    count but blocks cheap future DoD-8 captures for this family. File:
    `apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh`.
 
+## Cycle `SD31-ATTRIB-002` (`RETRO_ACTOR=sd31-attrib-finish`, own worktree
+`/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_c2092bd6-95a-3`, branch
+`cycle/sd31-attrib-002`) — 2026-08-16, "finish OPEN-ISSUES row 68"
+
+**Role:** `sd31-attrib-finish`. Card: finish row 68's residual, the ARG=1 cell, and row 73's
+spelling-divergence follow-up.
+
+**HEAD at start:** worktree was on `main`/empty package dir; reset per protocol —
+`git fetch origin && git reset --hard origin/tranche/11` → `5d0cd1595cef92ddb3f5b6b1d2e7261316ccd98d`
+(`docs(sd31): correct Decision 7's sizing, record its structural blocker and its first catch`),
+descends from `tranche/11`, package dir present. This HEAD is already AFTER
+`SD31-W5-INTEGRATE-001` (its own receipt is the last section above this one), so every figure
+below is re-derived against the fully-merged wave-5 tip, not a stale pre-merge snapshot.
+
+**Oracle pin:** `./scripts/verify.sh --only preflight-oracle` → PASS.
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/pcgen-oracle-pin.env`).
+
+### §1 — Re-derived, not trusted: everything reproduces
+
+```
+cargo test --locked --bin v06_work_inventory --bin corpus_literal_sweep
+# 109 passed (v06_work_inventory) + 9 passed (corpus_literal_sweep), 0 failed
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-attrib-finish.json
+# corpus-literal-sweep: 21716 records examined of 24736 read, 181276 tokens compared (9
+#   synthesized), 24311 digests checked, 0 findings -- CLEAN
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-attrib-finish.json
+# 100 of 101 covered units cleared; 1 failed (pre-existing, advanced_players_guide:equipment:
+#   spindle_of_perfect_knowledge) -- unchanged from wave 5
+CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep-sd31-attrib-finish.json \
+DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture-sd31-attrib-finish.json \
+  cargo run --locked --bin v06_work_inventory
+  # guarded regen (local, uncommitted per the wave rule): docs/work-inventory.json rewritten in
+  # place, no --allow-stamp-loss needed (0 stamp loss)
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+print(len(U), dict(c), round(100*c['done']/len(U),2))
+"
+# 38521 {'done': 7340, 'not-started': 20061, 'unmeasurable': 5381, 'deferred': 36, 'held': 4936,
+#   'in-progress': 767} 19.05
+```
+
+Every number above reproduces `SD31-W5-INTEGRATE-001`'s own receipt exactly. The board is stable
+at this tip; this cycle changed no `wiring_class`/`status`, so 0 verdict movement is expected and
+confirmed. `git checkout -- docs/work-inventory.json` run before committing (wave rule: no cycle
+commits this file).
+
+### §2 — Task 1: `core_essentials` residual, re-verified at 644 (not 634)
+
+```
+python3 -c "
+import json, collections
+d = json.load(open('docs/work-inventory.json'))
+ce = [u for u in d['units'] if u.get('book')=='core_essentials']
+print(len(ce), collections.Counter(u.get('kind') for u in ce).most_common())
+"
+# 644 [('monster_ability', 378), ('race_trait', 258), ('race', 8)]
+```
+
+Matches this card's own stated residual exactly (378/258/8) — `SD31-W5-INTEGRATE-001`'s row-89
+correction (634→644, the `gathlain` reclassification) already landed before this cycle started.
+The 8 ambiguous races: `Android, Aquatic Elf, Gathlain, Ghoran, Goblin (Monkey), Lashunta, Syrinx,
+Triaxian` — re-derived, matches `v06_work_inventory.rs`'s own `RACE_TRUE_BOOK` doc comment.
+
+**New finding: 516 of the 644-unit residual are further re-attributable, not yet fixed.**
+`resolve_true_book_for_core_essentials` (`v06_work_inventory.rs` line ~1146) only scans a file's
+first 5 lines for a `SOURCELONG:` token. `core_essentials/ce_abilities_race.lst` — the single file
+545 of the 636 `monster_ability`+`race_trait` residual units cite — has no header-line
+`SOURCELONG:` (confirmed: its own top comment is prose, "Everything in the Pathfinder GameMode is
+run off the Default Internal Ability, placing it in Core Essentials"), so the WHOLE file falls
+back to unattributed. But the file's body carries 11 mid-file `SOURCELONG:<Book>` directive lines,
+each setting the source for every following row until the next one — verified directly against
+the pinned oracle:
+
+```
+grep -n "SOURCELONG" ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst
+# 1273/1624: Bestiary   1794/2221/2406: Bestiary 2   2275: Bestiary 3   2342: Universal Rules
+# 2361: Bestiary   2420: Bestiary 4   2432: Bestiary 5   2441: Bestiary 6
+sed -n '1270,1280p' ~/workspace/repos/pcgen/.../ce_abilities_race.lst
+# confirms line 1273's SOURCELONG:Bestiary immediately precedes "###Block: *** Universal Monster
+# Rules, pages 297-306 ***" and the very next data rows are "Ability Damage"/"Ability Drain" --
+# Bestiary 1's own Universal Monster Rules appendix, semantically confirmed, not a guessed mapping
+```
+
+Mapping each residual unit's own `source_line` to the nearest preceding directive (script written
+to `/tmp/.../scratchpad/analyze_ce.py`, re-runnable) resolves **516 of 545**: `bestiary` 263
+(monster_ability 201 + race_trait 62), `bestiary_2` 206 (132+74), `bestiary_3` 41 (30+11),
+`bestiary_4` 2, `bestiary_5` 1, `bestiary_6` 3. The other **29 stay correctly unattributed**: 23
+precede the file's first directive (the genuinely book-agnostic "Default Internal Ability" zone)
+and 6 carry `SOURCELONG:Universal Rules` (PCGen's own internal designation, not a tracked book).
+
+**Corroborating sweep:** checked every other root-level `core_essentials/ce_*.lst` file's own
+`SOURCELONG:` line count — every file the pipeline currently DOES resolve carries exactly 1
+distinct value (safe for a first-5-lines scan), except `ce_abilities_race.lst` (found above) and
+one more, `ce_templates.lst` (15 lines, 8 distinct values) — the same multi-section shape, but
+`grep -n ce_templates src/bin/v06_work_inventory.rs src/bin/corpus_literal_sweep.rs` finds zero
+hits: no `Kind` in this pipeline currently ingests `ce_templates.lst` content at all, so it
+contributes nothing to today's residual and needed no further chase this cycle — flagged here only
+so a future source-line-aware fix (§2 above) checks it too, in case template ingestion is ever
+added.
+
+**Not implemented.** The repair needs (a) `resolve_true_book_for_core_essentials` to become
+source-line-aware (today `fn(path: &Path, text: &str)`, needs the unit's own `source_line` to pick
+the nearest preceding directive instead of only the first 5 lines) and (b) a matching change to
+`corpus_literal_sweep.rs`'s `short_book_of`, which today does not attempt root-level `ce_*.lst`
+resolution AT ALL. Landing (a) without (b) desyncs the sweep's join key from `unit.book` and
+reproduces exactly the stamp-loss class `SD31-ATTRIB-001`'s own doc comment warns about. Both land
+in `src/bin/v06_work_inventory.rs`, which this card's own FILES grant marks lane 1's this wave —
+**reported per this card's explicit instruction rather than edited out of territory.** Zero
+doneness impact expected (`book` never feeds `doneness_verdict`; every relabel in this program has
+proven 0 verdict transitions, most recently `SD31-ATTRIB-001`/`SD31-W5-INTEGRATE-001`). Filed as
+`OPEN-ISSUES.md` row 94.
+
+### §3 — Task 2: the operator's second cell, `advanced_race_guide` race=1 — CONFIRMED CORRECT
+
+```
+python3 -c "import json; d=json.load(open('docs/work-inventory.json')); print(sum(1 for u in d['units'] if u.get('book')=='advanced_race_guide' and u.get('kind')=='race'))"
+# 1
+```
+
+**This is correct, not a residual bug.** Cross-checked against the pinned oracle's own
+`advanced_race_guide.pcc`: its 6 labelled sections (`# B1 races`/`# B2 races`/`# B3 races`/
+`# B4 races`/`#ISWG races` + its own native section) reprint exactly 37 races from OTHER books;
+ARG natively declares zero race chassis of its own. The operator's "nearly untouched" impression
+is answered by `race_trait` — ARG's own genuine content, 323 units / 198 `done`, completely
+unaffected by any book-attribution fix — not by `race`, which ARG was never going to own. Restated
+plainly here since the operator raised this cell specifically and will check it on return; this
+matches `SD31-W5-INTEGRATE-001` row 89's own answer, independently re-derived, not merely quoted.
+
+### §4 — Task 3: the `bestiary`/`beastiary` spelling divergence — investigated, no fix warranted
+
+Row 73's follow-up framed this as a "~239-unit metric consequence." Re-derivation found **zero
+real metric or production consequence**, so no rename was attempted. Every physical-file-reading
+consumer (`corpus_loader.rs`, `race_resolver.rs`, `monster_chassis.rs`, `companion_chassis.rs`,
+`ingest_races.rs`, `race_catalog.rs`, `reach_gate.rs`, and `pf1e_dashboard_producer.py`'s own
+`_load_beastiary_monsters`) consistently uses the misspelled `"beastiary"`, matching the real
+on-disk `data/corpus/beastiary/` directory — none of them are broken by this. Every
+reporting/engine-key consumer (`v06_work_inventory.rs`'s `unit.book` field,
+`docs/work-inventory.json`, and `pf1e_dashboard_producer.py`'s `work_inventory_panel()` — read in
+full; it never calls `os.path.isdir` and works purely off the already-aggregated `book` string)
+consistently uses the correctly-spelled `"bestiary"`. `CORPUS_DIR_ALIASES = [("beastiary",
+"bestiary")]` (`v06_work_inventory.rs`) exists precisely to bridge the two for `engine_book_for`
+lookups and is exercised by a passing test. The ONLY artifact that ever conflated the two spellings
+was row 68's own informal, never-committed `os.path.isdir(f'data/corpus/{book}/{kind}')` python
+one-liner — not a shipped surface. Given zero real consequence, and that a genuine rename would
+touch `monster_chassis.rs`/`cache_gen` (both explicitly barred to this card) plus 40+ further files
+(`grep -rl beastiary --include=*.rs --include=*.py --include=*.ts --include=*.tsx . | grep -v
+data/corpus | grep -v node_modules` → 40+ hits, several `tests/*.rs` FILENAMES themselves spelled
+`beastiary1`), a repo-wide rename was **not** attempted — the risk of crossing that many lanes'
+territory does not buy back a real defect. Filed as `OPEN-ISSUES.md` row 94, closed as
+investigated-with-no-fix-warranted rather than left silently unanswered.
+
+### §5 — Task 4: recovery report
+
+No code path changed `wiring_class`/`status` this cycle (the two fields `doneness_verdict`
+consults), so the honest recovery figure is **0 units moved to `literal-verified`/`done` by this
+cycle's own commit** — consistent with every prior book-attribution cycle in this program (`book`
+is a pure reporting field). Per-book `race` table, before/after this cycle (identical, confirming
+stability at this tip): `bestiary` 20, `inner_sea_world_guide` 16, `bestiary_2` 13, `bestiary_4` 9,
+`core_essentials` 8, `bestiary_5` 7, `core_rulebook` 7, `bestiary_3` 5, `occult_adventures` 4,
+`adventurers_guide` 3, `ultimate_combat` 3, `ultimate_psionics` 3, `ultimate_wilderness` 2,
+`advanced_race_guide` 1, `bestiary_6` 1, `horror_adventures` 1 (total 103). The real recovery this
+cycle produced is **found, not yet banked**: the 516-unit re-attribution path (§2), fully specified
+and ready for the next cycle holding `v06_work_inventory.rs` write access.
+
+### §6 — What shipped
+
+- `scripts/observer/pf1e_dashboard_producer.py`: 3 doc-comment corrections (634→644, 249→258
+  race_trait, 7→8 race) plus the 516-unit further-attribution finding written in at the source of
+  the original claim, so a future reader of that file's own comments sees the current truth rather
+  than the stale wave-5 figure. Comment-only; `python3 -m unittest scripts.tests.
+  test_pf1e_dashboard_producer` → 5/5 green, confirming no behavior change.
+- `docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md`: row 94, appended (never
+  rewrote another row) — full derivation for §2/§3/§4 above.
+- `docs/retro/events/sd31-attrib-finish.jsonl`: one `correction` event (the 634→644 doc-comment
+  drift, `--verified-by` the guarded-regen command in §2).
+
+### §7 — DoD
+
+1. **Gate: PASS, VERIFY_EXIT=0, captured directly.**
+   `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-ATTRIB-002-verify.log` — 23/23 stages,
+   `root-lib` 1867, `root-full` 6603 passed / 560 suites (all 529 `tests/*.rs` executed),
+   `desktop` 447, `reach` 27, `corpus-sweep` 21716/0 findings, `frontend-test` 99/99,
+   `frontend-typecheck` clean, `clippy` root:47 desktop:7 warnings/0 errors, `class-dump` 31/31 —
+   every one of these numbers matches `SD31-W5-INTEGRATE-001`'s own run exactly, confirming this
+   cycle's comment-only changes moved nothing.
+2. `reach`: 27 passed (above) — this cycle made no Rust production change, so no new claim is owed
+   beyond the standing suite.
+3. `v06_corpus_trap_report -- --audit`: `TRAP_EXIT=2` (RED, exit code captured directly, not
+   through a pipe) — **unchanged from row 65's baseline**: `1 mod-record + 1191
+   wiring-class-mismatch` before this cycle, `1 mod-record + 1191 wiring-class-mismatch` after
+   (`grep -c '\[wiring-class-mismatch\]'`/`'\[mod-record\]'` over a fresh
+   `--audit` run, `/tmp/trap-audit-sd31-attrib-finish.log`). Not worsened.
+4. Guarded regen: §1, zero stamp loss, `docs/work-inventory.json` reverted before commit.
+5. Wired-integration four-check audit: N/A in the strict sense — this cycle shipped doc/markdown
+   changes only, no `apps/desktop`/`src/**/*.rs` production diff exists to scan; confirmed via
+   `git diff --stat` below.
+6. Unsurfaced family: none newly discovered by this cycle beyond what §2/§4 already log with full
+   remedy in `OPEN-ISSUES.md` row 94.
+7. Baseline moves: none — no code-path or test-count change this cycle, so
+   `scripts/verify-baselines.env` is untouched.
+8. On-screen verification: N/A — this cycle's changes are documentation only (no `wiring_class`/
+   `status`/render-path change), so DoD-8 does not apply; nothing new ships to a player.
+
+```
+git diff --stat HEAD
+```
+(recorded in the git-log section below, alongside the final commit)
+
+### §8 — Retrospective
+
+One `correction` event emitted (§6). No incidents, deferrals, or rework this cycle — every finding
+was investigated to completion (implemented where in-territory and safe, precisely reported where
+not) rather than deferred, per the standing "no deferral available to a cycle" rule; the 516-unit
+finding is a discovered, fully-specified opportunity for a future cycle, not a deferral of this
+card's own scope (this card's scope — re-verify the residual, answer the ARG cell, resolve the
+spelling-divergence follow-up, report recovery — is fully discharged).
+
 

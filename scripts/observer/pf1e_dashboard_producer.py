@@ -222,7 +222,11 @@ FUTURE_STATE_BOOKS = [
     # is now stale -- most of what was unique to `core_essentials` was a
     # mislabelled true-book attribution, not genuinely core_essentials-only
     # content; see `work_inventory_panel()`'s own doc comment. The row stays
-    # here because a genuine 634-unit residual remains.)
+    # here because a genuine residual remains -- **644** as of
+    # `SD31-ATTRIB-002` (2026-08-16), corrected from this comment's earlier
+    # 634; see that doc comment for the further correction of 516 of these
+    # units to a re-attributable-but-not-yet-fixed population,
+    # `OPEN-ISSUES.md` row 94.)
     {"id": "core_essentials", "title": "Core Essentials", "channel": ""},
     {"id": "advanced_race_guide", "title": "Advanced Race Guide", "channel": "SD-27"},
     {"id": "pathfinder_unchained", "title": "Pathfinder Unchained", "channel": "SD-27"},
@@ -641,15 +645,54 @@ def work_inventory_panel(inventory: dict | None, wiring: dict | None = None) -> 
     # carries a `SOURCELONG:` header; every race_trait row nested under a
     # resolved race's own directory). `core_rulebook` now correctly reads 7
     # races (was 0); `core_essentials`'s own residual dropped from 1,610 to
-    # **634** (re-derived 2026-08-16, same `EXCLUDED_BOOKS`-scoped inventory
-    # count this file already computes below): 378 `monster_ability` + 249
-    # `race_trait` (both from PCGen's own book-agnostic Universal-Monster-
-    # Rule/default-ability reference tables, which carry no `SOURCELONG` and
-    # are not any one book's content) + 7 `race` (races two or more in-scope
-    # books natively declare, so no single true book is provable -- Android,
-    # Aquatic Elf, Ghoran, Goblin (Monkey), Lashunta, Syrinx, Triaxian; see
-    # `v06_work_inventory.rs`'s `RACE_TRUE_BOOK` doc comment for the full
-    # derivation). This panel keeps `core_essentials` UN-excluded rather than
+    # **644** (re-derived 2026-08-16 by `SD31-ATTRIB-002`, same
+    # `EXCLUDED_BOOKS`-scoped inventory count this file already computes
+    # below -- corrects this comment's own earlier 634, which predates
+    # `SD31-W5-INTEGRATE-001`'s `gathlain` reclassification): 378
+    # `monster_ability` + 258 `race_trait` (545 of the 636 sourced from the
+    # single file `core_essentials/ce_abilities_race.lst`; the rest from the
+    # 8 ambiguous races' own per-race trait files, see below) + 8 `race`
+    # (races two or more in-scope books natively declare, so no single true
+    # book is provable -- Android, Aquatic Elf, Gathlain, Ghoran, Goblin
+    # (Monkey), Lashunta, Syrinx, Triaxian; see `v06_work_inventory.rs`'s
+    # `RACE_TRUE_BOOK` doc comment for the full derivation).
+    #
+    # **`SD31-ATTRIB-002` (2026-08-16) found 516 of the 545
+    # `ce_abilities_race.lst`-sourced units are further re-attributable, not
+    # yet fixed.** `resolve_true_book_for_core_essentials`
+    # (`v06_work_inventory.rs`) only reads a `SOURCELONG:` token from a
+    # file's first 5 lines, so it correctly finds none for this file (its
+    # own header is a plain comment) and falls back to leaving the whole
+    # file unattributed. But the file's BODY carries 11 mid-file
+    # `SOURCELONG:<Book>` directive lines (verified against the pinned
+    # oracle, `ce_abilities_race.lst` lines 1273/1624/1794/2221/2275/2342/
+    # 2361/2406/2420/2432/2441), each setting the source for every following
+    # row until the next one -- a real, standard PCGen convention (confirmed
+    # semantically: e.g. line 1273's `SOURCELONG:Bestiary` precedes the file's
+    # own `###Block: *** Universal Monster Rules, pages 297-306 ***` header,
+    # and the "Ability Damage"/"Ability Drain" rows immediately under it are
+    # exactly Bestiary 1's own Universal Monster Rules appendix). Mapping
+    # each residual unit's own `source_line` to the nearest preceding
+    # directive resolves 516 of 545: `bestiary` 263, `bestiary_2` 206,
+    # `bestiary_3` 41, `bestiary_4` 2, `bestiary_5` 1, `bestiary_6` 3. The
+    # remaining 29 stay correctly unattributed: 23 precede the file's first
+    # `SOURCELONG:` line (line 1-1272, the file's own top-of-file comment
+    # confirms this stretch is genuinely PCGen's book-agnostic "Default
+    # Internal Ability" content) and 6 carry `SOURCELONG:Universal Rules`,
+    # PCGen's own internal designation, not a Paizo book this program tracks.
+    # **Not fixed here**: the repair needs `resolve_true_book_for_core_essentials`
+    # to become source-line-aware (it currently only sees `path`+`text`, not
+    # the unit's own line) and a matching change to `corpus_literal_sweep.rs`'s
+    # `short_book_of` (today it does not attempt root-level `ce_*.lst`
+    # resolution at all) so the sweep's join key does not diverge from
+    # `unit.book` -- both files are outside `SD31-ATTRIB-002`'s file
+    # territory this wave (`v06_work_inventory.rs` is lane 1's). Full
+    # derivation and the per-book table: `OPEN-ISSUES.md` row 94. Zero
+    # doneness impact either way -- `book` is a pure reporting field, per
+    # the same 0-transition proof `SD31-ATTRIB-001`/`SD31-W5-INTEGRATE-001`
+    # already established for every prior relabel in this program.
+    #
+    # This panel keeps `core_essentials` UN-excluded rather than
     # re-hiding it: that residual is real, genuinely un-attributable content,
     # and the 2026-08-10 directive's underlying worry -- a shrinking
     # denominator with nobody told -- applies exactly as much to it as it
@@ -950,9 +993,11 @@ def work_inventory_panel(inventory: dict | None, wiring: dict | None = None) -> 
                 "As of SD31-ATTRIB-001 (2026-08-16) core_essentials-sourced units "
                 "attribute to their TRUE book wherever provable one record deep; "
                 "its own residual -- content no single in-scope book can be shown "
-                "to own -- is the `core_essentials` row still shown below, now 634 "
-                "units, down from 1,610. See work_inventory_panel()'s own doc "
-                "comment for the full derivation.)"
+                "to own -- is the `core_essentials` row still shown below, now 644 "
+                "units, down from 1,610 (corrected from an earlier 634 by "
+                "SD31-ATTRIB-002, 2026-08-16). See work_inventory_panel()'s own doc "
+                "comment for the full derivation, including a further 516-unit "
+                "re-attributable population not yet fixed (OPEN-ISSUES.md row 94).)"
             ),
         },
         "full_document": "docs/work-inventory.json",
