@@ -260,6 +260,15 @@ pub struct GenerationReport {
     /// Record keys whose real LST citation could not be resolved (should
     /// be empty for a clean generation run against the real corpus).
     pub unresolved_citations: Vec<String>,
+    /// Records refused outright because the real corpus row declares
+    /// `NAMEISPI:YES` (`file:line record_key`). A NAME cannot be
+    /// redacted -- it is the record's identity on every screen and half
+    /// of its key -- so these rows are DROPPED, never screened, matching
+    /// `SD-29-corpus-wide-catch-up-lanes/decisions.md §50.3` and
+    /// `ingest_race_traits.rs`'s `pi_dropped` precedent. Reported, never
+    /// silent: a row that vanishes without a line here is
+    /// indistinguishable from a citation bug.
+    pub name_pi_dropped: Vec<String>,
 }
 
 #[derive(Debug)]
@@ -327,6 +336,17 @@ fn generate_equipment(
     }
     let mut used = BTreeSet::new();
     let equipment_dir = out_dir.join("equipment");
+    // Rebuilt every run, matching `ingest_races.rs`'s own precedent ("A
+    // stale record from a previous run ... would be indistinguishable from
+    // a fresh one, so the output tree is rebuilt"): a record dropped by the
+    // NAMEISPI:YES check below must actually disappear from disk on the
+    // next run, not merely stop being re-written. Fixes the shipped-but-
+    // stale `otyugh_hide.json` this cycle found (OPEN-ISSUES row 38) --
+    // clearing the whole directory is what makes "dropped" durable rather
+    // than a one-time hand delete.
+    if equipment_dir.exists() {
+        std::fs::remove_dir_all(&equipment_dir)?;
+    }
     // `Equipmods` records go in a nested `equipment/equipmods/` subdirectory,
     // matching `core_rulebook`'s own already-shipped layout
     // (`data/corpus/core_rulebook/equipment/equipmods/*.json`) rather than
@@ -381,6 +401,20 @@ fn generate_equipment(
         };
         let declared = declared_pi_at(&book_dir(corpus_root).join(category_file), line)
             .unwrap_or_default();
+        // A NAME cannot be redacted (`pi_screening.rs`'s own doc comment on
+        // `DeclaredProductIdentity::name`; `SD-29-corpus-wide-catch-up-lanes/
+        // decisions.md §50.3`): `[redacted PI]` as an equipment key is a
+        // record nobody can look up. So a `NAMEISPI:YES` row is DROPPED
+        // outright, before the description screen runs, never partially
+        // published under a redacted display name -- the same ruling
+        // `ingest_race_traits.rs` already applies to race traits. Found by
+        // adversarial review (OPEN-ISSUES row 38): this branch previously
+        // computed `declared.name` and never read it, so `Otyugh Hide`
+        // (`ue_equip_arms_armor.lst:66`) shipped its real name unredacted.
+        if declared.name {
+            report.name_pi_dropped.push(format!("{category_file}:{line} {}", entry.key));
+            continue;
+        }
         let (license, pi_field, pi_marker, stored_desc) = pi_screening::classify_optional_field_declared(
             "description",
             entry.description,
@@ -468,6 +502,139 @@ mod tests {
             EquipmentCategory::Equipmods,
         ] {
             assert!(!equipment_category_file(cat).is_empty());
+        }
+    }
+
+    // --- OPEN-ISSUES row 38: NAMEISPI:YES must drop the row, not ship it ---
+
+    /// A scratch corpus root carrying real `equipment_tables()` keys under
+    /// synthetic `.lst` rows, so `generate()` can run end to end without
+    /// touching `$PCGEN_CORPUS_ROOT`. Same pattern as
+    /// `wiring_class.rs::ScratchBook`.
+    struct ScratchCorpus {
+        root: PathBuf,
+    }
+
+    impl ScratchCorpus {
+        fn new(name: &str) -> Self {
+            let root = std::env::temp_dir()
+                .join(format!("codex_ue_pi_test_{name}_{}", std::process::id()));
+            let _ = std::fs::remove_dir_all(&root);
+            let ue_dir = root.join(UE_DIR);
+            std::fs::create_dir_all(&ue_dir).unwrap();
+            // Every category file must exist (generate_equipment sha256s
+            // all four up front) even when this test only populates one.
+            for file in ["ue_equip_general.lst", "ue_equip_arms_armor.lst", "ue_equip_magic_items.lst", "ue_equipmods.lst"]
+            {
+                std::fs::write(ue_dir.join(file), "").unwrap();
+            }
+            ScratchCorpus { root }
+        }
+
+        /// Overwrites `ue_equip_arms_armor.lst` with `rows`, one real
+        /// tab-delimited PCGen line per row (first column = record key).
+        fn write_arms_armor(&self, rows: &[&str]) {
+            let path = self.root.join(UE_DIR).join("ue_equip_arms_armor.lst");
+            std::fs::write(path, rows.join("\n")).unwrap();
+        }
+    }
+
+    impl Drop for ScratchCorpus {
+        fn drop(&mut self) {
+            let _ = std::fs::remove_dir_all(&self.root);
+        }
+    }
+
+    fn out_dir_json_files(out_dir: &Path) -> Vec<PathBuf> {
+        let mut files = Vec::new();
+        let equipment_dir = out_dir.join("equipment");
+        if !equipment_dir.is_dir() {
+            return files;
+        }
+        let mut stack = vec![equipment_dir];
+        while let Some(dir) = stack.pop() {
+            for entry in std::fs::read_dir(&dir).unwrap().flatten() {
+                let path = entry.path();
+                if path.is_dir() {
+                    stack.push(path);
+                } else if path.extension().and_then(|e| e.to_str()) == Some("json") {
+                    files.push(path);
+                }
+            }
+        }
+        files
+    }
+
+    /// `equipment_tables()`'s real `Otyugh Hide` row (key = `ue_equip_
+    /// arms_armor.lst:66` in the real corpus): the one entry this
+    /// generator knows how to resolve without a full 1,369-row fixture,
+    /// because the scratch corpus only needs to satisfy citation lookup
+    /// for the ONE key under test -- every other table entry is simply
+    /// left unresolved (`unresolved_citations`, not asserted empty here).
+    fn otyugh_hide_row(nameispi: bool) -> String {
+        if nameispi {
+            "Otyugh Hide\tNAMEISPI:YES\tPROFICIENCY:ARMOR|Hide\tCOST:1415\tWT:25".to_string()
+        } else {
+            "Otyugh Hide\tPROFICIENCY:ARMOR|Hide\tCOST:1415\tWT:25".to_string()
+        }
+    }
+
+    #[test]
+    fn nameispi_yes_drops_the_record_instead_of_publishing_the_real_name() {
+        let corpus = ScratchCorpus::new("drops");
+        corpus.write_arms_armor(&[&otyugh_hide_row(true)]);
+        let out_dir = corpus.root.join("out");
+
+        let report = generate(&corpus.root, &out_dir, "2026-01-01T00:00:00Z").unwrap();
+
+        assert_eq!(
+            report.name_pi_dropped,
+            vec!["ue_equip_arms_armor.lst:1 Otyugh Hide".to_string()],
+            "a NAMEISPI:YES row must be reported as dropped, never silently skipped"
+        );
+        for path in out_dir_json_files(&out_dir) {
+            let text = std::fs::read_to_string(&path).unwrap();
+            assert!(
+                !text.contains("Otyugh Hide"),
+                "{path:?} must not carry the real name of a NAMEISPI:YES record: {text}"
+            );
+        }
+    }
+
+    #[test]
+    fn without_the_declaration_the_same_row_ships_normally() {
+        let corpus = ScratchCorpus::new("ships");
+        corpus.write_arms_armor(&[&otyugh_hide_row(false)]);
+        let out_dir = corpus.root.join("out");
+
+        let report = generate(&corpus.root, &out_dir, "2026-01-01T00:00:00Z").unwrap();
+
+        assert!(report.name_pi_dropped.is_empty());
+        let files = out_dir_json_files(&out_dir);
+        let hit = files.iter().find(|p| {
+            std::fs::read_to_string(p).unwrap().contains("\"name\": \"Otyugh Hide\"")
+        });
+        assert!(hit.is_some(), "an undeclared row must still publish its real name");
+    }
+
+    #[test]
+    fn a_dropped_record_does_not_linger_from_a_prior_run() {
+        // Run 1: the row is clean and ships.
+        let corpus = ScratchCorpus::new("linger");
+        corpus.write_arms_armor(&[&otyugh_hide_row(false)]);
+        let out_dir = corpus.root.join("out");
+        generate(&corpus.root, &out_dir, "2026-01-01T00:00:00Z").unwrap();
+        assert!(out_dir_json_files(&out_dir).iter().any(|p| {
+            std::fs::read_to_string(p).unwrap().contains("Otyugh Hide")
+        }));
+
+        // Run 2: the corpus is corrected to declare NAMEISPI:YES (e.g. an
+        // oracle bump). The stale file from run 1 must not survive.
+        corpus.write_arms_armor(&[&otyugh_hide_row(true)]);
+        generate(&corpus.root, &out_dir, "2026-01-01T00:00:00Z").unwrap();
+        for path in out_dir_json_files(&out_dir) {
+            let text = std::fs::read_to_string(&path).unwrap();
+            assert!(!text.contains("Otyugh Hide"), "{path:?} is a stale pre-drop file: {text}");
         }
     }
 }

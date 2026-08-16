@@ -107,8 +107,8 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest reachability-audit-selftest reachability-audit groundtruth-guard-selftest pi-sweep audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest reachability-audit-selftest reachability-audit groundtruth-guard-selftest pi-sweep audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
+ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest reachability-audit-selftest reachability-audit groundtruth-guard-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep frontend-install frontend-test frontend-typecheck clippy class-dump)
+QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest reachability-audit-selftest reachability-audit groundtruth-guard-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -968,6 +968,39 @@ run_pi_sweep() {
     stage_pass pi-sweep "${summary:-clean}"
 }
 
+# Stage: declared-pi-audit
+#
+# SD31-PI-REPAIR-001 (OPEN-ISSUES rows 38/39). `pi-sweep` above is the
+# heuristic 55-term blacklist over `src/rules_core/rules_tables`; this stage
+# is the corpus's OWN per-record declaration (`NAMEISPI:`/`DESCISPI:`),
+# cross-checked against what actually shipped under `data/corpus/`. Two real
+# defects reached `tranche/11` past every other gate because nothing did
+# this cross-check: `cache_gen::ultimate_equipment.rs` shipped a
+# `NAMEISPI:YES` record's real name unredacted, and `ingest_races.rs`
+# hardcoded `pi_field: None` while a `LICENSE.json` claimed the declared-PI
+# reader ran. Both are now checked directly, and a `LICENSE.json` opting
+# into the structured `declared_pi_reader_verified` claim is verified
+# against its own named writer source, not trusted as prose.
+run_declared_pi_audit() {
+    stage_start "declared-pi-audit — corpus NAMEISPI:/DESCISPI: declarations vs. what shipped"
+    local log="$LOG_DIR/declared-pi-audit.log"
+
+    ( cd "$REPO_ROOT" && exec cargo run --locked --quiet -j "$JOBS" --bin declared_pi_shipping_audit ) >"$log" 2>&1
+    local status=$?
+
+    if (( status != 0 )); then
+        stage_fail declared-pi-audit "unredacted PI-declared record or unverified LICENSE.json claim (exit $status) — $log"
+        return
+    fi
+
+    if ! grep -q '^declared-pi-audit: CLEAN' "$log"; then
+        stage_fail declared-pi-audit "binary exited 0 without reporting CLEAN — $log"
+        return
+    fi
+
+    stage_pass declared-pi-audit "clean"
+}
+
 # Stage: driver-selftest
 #
 # Runs scripts/tests/test_run_desktop_driver.sh — the self-test for
@@ -1297,6 +1330,7 @@ for stage in "${SELECTED[@]}"; do
         reachability-audit)  run_reachability_audit ;;
         groundtruth-guard-selftest) run_groundtruth_guard_selftest ;;
         pi-sweep)            run_pi_sweep ;;
+        declared-pi-audit)   run_declared_pi_audit ;;
         audit-selftest)      run_audit_selftest ;;
         reclaim-selftest)    run_reclaim_selftest ;;
         driver-selftest)     run_driver_selftest ;;

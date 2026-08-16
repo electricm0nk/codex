@@ -47,6 +47,13 @@ fn main() {
                 "Ultimate Equipment cache generated: {} equipment, {} equipment_modifier records; ingested_at={ingested_at}",
                 report.equipment_written, report.equipment_modifier_written
             );
+            println!(
+                "  dropped, NAMEISPI:YES (name is Product Identity, row cannot be published): {}",
+                report.name_pi_dropped.len()
+            );
+            for line in &report.name_pi_dropped {
+                println!("    {line}");
+            }
             if !report.unresolved_citations.is_empty() {
                 eprintln!(
                     "WARNING: {} record(s) had no resolvable LST citation: {:?}",

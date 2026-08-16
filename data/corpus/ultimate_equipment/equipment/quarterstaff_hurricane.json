@@ -27,7 +27,7 @@
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-15T22:41:23Z",
+  "ingested_at": "2026-08-16T01:34:54Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
@@ -41,7 +41,6 @@
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
-    "derived:prose_formula_segment",
-    "display:no_magnitude_token"
+    "derived:prose_formula_segment"
   ]
 }
