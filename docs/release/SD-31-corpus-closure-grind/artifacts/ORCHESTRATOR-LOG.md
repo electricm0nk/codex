@@ -234,3 +234,71 @@ landed before this integration cycle merged it — this cycle's own D7 fix (the 
 false positive within `SPELLS:` scanning) is orthogonal to the `ambiguous` bucket and left it
 unchanged at 404, as expected (it corrects `static` vs `derived`, not `ambiguous` membership). Full per-kind table and every command: `progress.md` cycle
 `SD31-W3-INTEGRATE-001` §3.
+
+### Wave budget — `sd31-w4-cachegen` (dispatcher-computed, before fan-out)
+
+Computed at `tranche/11` tip `9e715b96e`. No live build on the box (`pgrep -fa 'verify.sh|cargo '`
+returned only a dead PID), so all three orphaned wave-2/3 target dirs were removed by hand.
+
+```
+pgrep -fa 'verify.sh|cargo '                 # no live gate
+rm -rf /home/ubuntu/cargo-targets/{sd31-w2-integrate,sd31-w2-integrate-desktop,sd31-w3-integrate}
+df -B1G /                                    # 968 total / 160 used / 809 avail / 17%   (freed 61 G)
+```
+
+| quantity | value | how |
+|---|---:|---|
+| filesystem / used | 968 G / **160 G (17 %)** | `df -B1G /`, post-reclaim |
+| headroom to the 90 %-used floor | **711.2 G** | `0.90 × 968 − 160` |
+| conservative full-gate footprint | 83 G | accumulated-primary `target/` |
+| cap — concurrent full-gate agents (disk) | **8** | `711.2 ÷ 83 = 8.6`, floored |
+| **this wave dispatches** | **6 build agents** (+3 read-only Opus verifiers) | `6 × 83 = 498 G` against 711 G |
+
+### The repeatable lever wave 3 proved — and the map of how much of it is left
+
+Wave 3's single largest result was not an ingest cycle. The equipment lane found that
+`ultimate_equipment` had **an already-shipped, already-catalog-wired `rules_tables` module (1,369
+equipment + 180 equipment_modifier records) and no `data/corpus/` directory at all**. It built
+`cache_gen::ultimate_equipment` to dump that table to real, PI-screened, citation-verified JSON,
+and **1,264 units reached `done`** — 99 % of the wave's entire board movement, with no new corpus
+ingest whatsoever. The records were always there; nothing was reading them.
+
+That is a *repeatable* shape, and this is how much of it remains, re-derived at this tip:
+
+```
+ls src/rules_core/rules_tables/ | wc -l        # 38 book modules shipped
+ls src/rules_core/cache_gen/                   # acg.rs apg.rs beastiary1.rs mod.rs ultimate_equipment.rs
+ls -d data/corpus/*/class_feature | wc -l      # 1
+for d in data/corpus/*/; do echo "$(basename $d) : $(ls $d | grep -v LICENSE | tr '\n' ',')"; done
+```
+
+- **38 shipped `rules_tables` book modules; 5 `cache_gen` modules.**
+- **Exactly ONE book (`pathfinder_unchained`) has a `class_feature` corpus directory** — out of the
+  23 in-scope `class_feature` books. `class_feature` is 15,472 units, **40 % of the whole board**,
+  and it sits at 25 done (0.2 %).
+- `OPEN-ISSUES.md` row 11 independently reached the same place from the other direction: of 2,481
+  `static`-held units, **2,367 have no `data/corpus/<book>/<kind>/` directory at all**, and zero
+  overlap `corpus_literal_sweep`'s verified set.
+
+Wave 4 is therefore built around that lever rather than around fresh ingest: two lanes doing
+cache-gen dumps (one dedicated to `class_feature` alone), plus the four highest-unit-count repairs
+wave 3's adversarial reviews left owned but unfixed.
+
+### Board after wave 3 (measured at `9e715b96e`, not carried)
+
+| figure | w1 baseline | after w2 | **after w3** | w3 delta |
+|---|---:|---:|---:|---:|
+| `done` / 38,521 | 5,837 (15.15 %) | 6,076 (15.77 %) | **7,355 (19.09 %)** | **+1,279** |
+| reachable ceiling | 94.53 % | 98.94 % | 98.95 % | +0.01 |
+| `ambiguous` | 2,109 | 409 | 404 | −5 |
+| `held` | 6,916 | 6,790 | **5,596** | −1,194 |
+| `equipment` done | 2,626 (42.3 %) | 2,650 (42.7 %) | **3,904 (62.9 %)** | +1,254 |
+| `class_feature` done | 25 (0.2 %) | 25 (0.2 %) | 25 (0.2 %) | 0 |
+
+Three Opus adversarial reviews returned **zero GAMED verdicts** across five deliverables and 17
+CONFIRMED findings; 7 were fixed in code before integration and 10 logged. Full gate at the
+integrated tip: `VERIFY_EXIT=0`, 22/22 stages.
+
+`class_feature` has not moved in three waves. It is now the entire remaining problem, and wave 4
+puts two lanes on it.
+
