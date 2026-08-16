@@ -1,0 +1,85 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T19:53:32Z",
+  "data": {
+    "key": "Strix ~ Ability Scores",
+    "name": "+2 Dexterity, -2 Charisma",
+    "race_key": "Strix",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Strix Racial Trait",
+      "Strix Racial Default",
+      "SpecialQuality",
+      "Racial Ability Scores"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Strix_ReplaceAbilityScores",
+    "sets_replace_flags": [],
+    "description": "Strix are swift and elusive, but tend to be stubborn and swift to anger.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Strix ~ Ability Scores"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Strix Racial Trait.Strix Racial Default.SpecialQuality.Racial Ability Scores"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Strix_ReplaceAbilityScores=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Strix are swift and elusive, but tend to be stubborn and swift to anger."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "STAT",
+          "DEX",
+          "2",
+          "TYPE=Racial"
+        ]
+      },
+      {
+        "qualifiers": [
+          "STAT",
+          "CHA",
+          "-2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/strix/strix_abilities_race.lst",
+    "sha256": "2e9ef82fa1a12beb6acdade3eb7a820b182a876ffd3d0624ffcea9216ccff54e",
+    "line": 14,
+    "record_key": "Strix ~ Ability Scores"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

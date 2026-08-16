@@ -145,6 +145,15 @@ const SIZE_TRUTH: &[(&str, &str, SizeCategory, SizeCategory)] = &[
     // chassis/trait disagreement shape as Aasimar/Tiefling: chassis
     // `FACT:BaseSize|S`, `~ Size` row `TEMPLATE:SIZE_M`.
     ("race:skinwalker", "Skinwalker", SizeCategory::Small, SizeCategory::Medium),
+    // Advanced Race Guide's 6, SD-31-E6-F4-002 (2026-08-16). Chassis and
+    // trait agree for every one of them (none carries an Aasimar/Tiefling/
+    // Skinwalker-shaped disagreement).
+    ("race:catfolk", "Catfolk", SizeCategory::Medium, SizeCategory::Medium),
+    ("race:kitsune", "Kitsune", SizeCategory::Medium, SizeCategory::Medium),
+    ("race:ratfolk", "Ratfolk", SizeCategory::Small, SizeCategory::Small),
+    ("race:strix", "Strix", SizeCategory::Medium, SizeCategory::Medium),
+    ("race:suli", "Suli", SizeCategory::Medium, SizeCategory::Medium),
+    ("race:wayang", "Wayang", SizeCategory::Small, SizeCategory::Small),
 ];
 
 fn all_books() -> RaceCorpus {
@@ -174,11 +183,12 @@ fn the_expected_table_covers_all_eighteen_races_and_matches_the_on_disk_chassis_
     let corpus = all_books();
     assert_eq!(
         SIZE_TRUTH.len(),
-        25,
-        "25 in-scope races: CRB 7 + Bestiary 1's 11 + Bestiary 2's 6 (SD-31 Epic 1-F2) + \
-         Bestiary 5's 1 (Skinwalker follow-on batch)"
+        31,
+        "31 in-scope races: CRB 7 + Bestiary 1's 11 + Bestiary 2's 6 (SD-31 Epic 1-F2) + \
+         Bestiary 5's 1 (Skinwalker follow-on batch) + Advanced Race Guide's 6 \
+         (SD-31-E6-F4-002, 2026-08-16)"
     );
-    assert_eq!(corpus.race_keys().len(), 25, "and the corpus must carry all 25");
+    assert_eq!(corpus.race_keys().len(), 31, "and the corpus must carry all 31");
 
     for (_, key, chassis_size, _) in SIZE_TRUTH {
         let chassis = corpus.chassis(key).unwrap_or_else(|| panic!("{key} must have a chassis"));
@@ -317,8 +327,9 @@ fn goblin_kobold_and_svirfneblin_are_small_not_a_defaulted_medium() {
         .collect();
     assert_eq!(
         small,
-        vec!["Gnome", "Halfling", "Goblin", "Kobold", "Svirfneblin", "Grippli"],
-        "Grippli added by SD-31 Epic 1-F2 (2026-08-15)"
+        vec!["Gnome", "Halfling", "Goblin", "Kobold", "Svirfneblin", "Grippli", "Ratfolk", "Wayang"],
+        "Grippli added by SD-31 Epic 1-F2 (2026-08-15); Ratfolk and Wayang added by \
+         SD-31-E6-F4-002's Advanced Race Guide batch (2026-08-16)"
     );
 }
 

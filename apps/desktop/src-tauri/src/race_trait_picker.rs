@@ -982,9 +982,11 @@ mod tests {
         let menu = menu();
         assert_eq!(
             menu.races.len(),
-            25,
-            "25 in-scope races: decisions.md §25.3's original 18 + SD-31 Epic 1-F2's \
-             Bestiary 2 batch of 6 (2026-08-15) + the Skinwalker follow-on batch's 1"
+            31,
+            "31 in-scope races: decisions.md §25.3's original 18 + SD-31 Epic 1-F2's \
+             Bestiary 2 batch of 6 (2026-08-15) + the Skinwalker follow-on batch's 1 + \
+             SD-31-E6-F4-002's Advanced Race Guide batch of 6 (2026-08-16: Catfolk, Kitsune, \
+             Ratfolk, Strix, Suli, Wayang)"
         );
         let total: usize = menu.races.iter().map(|race| race.alternates.len()).sum();
         assert_eq!(
@@ -1816,9 +1818,14 @@ mod tests {
         // chassis and 9 more standard rows (230 -> 239); `alternates` is
         // unchanged (330) -- this batch does not ingest Skinwalker's
         // heritage-shaped alternates.
-        assert_eq!((standard, alternates), (239, 330));
+        // SD-31-E6-F4-002 (2026-08-16) adds Advanced Race Guide's own
+        // 6-race batch (Catfolk, Kitsune, Ratfolk, Strix, Suli, Wayang): 6
+        // more race/ chassis and 58 more standard rows (239 -> 297).
+        // `alternates` is unchanged (330) -- this batch does not ingest any
+        // alternate-trait content for these 6 races (a named follow-on).
+        assert_eq!((standard, alternates), (297, 330));
         assert_eq!(checked, standard + alternates);
-        assert_eq!(checked, 569);
+        assert_eq!(checked, 627);
 
         // What rendering changed for a player *with no character*, measured
         // against the stored `data.description` this module used to transcribe.

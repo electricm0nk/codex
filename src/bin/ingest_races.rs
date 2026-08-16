@@ -181,6 +181,38 @@ const IN_SCOPE_RACES: &[RaceSpec] = &[
     // (not stubbed) to a follow-on batch; see `ingest_race_traits.rs`'s own
     // `BOOK_SOURCES` doc comment for the worked example.
     RaceSpec { dir: "skinwalker", book: "bestiary_5" },
+    // Advanced Race Guide's 6 "Featured"/"Uncommon" races, SD-31 Epic 1
+    // follow-on batch (2026-08-16). Each is confirmed a genuine chassis
+    // in `core_essentials/races/<dir>/` with the identical flat shape
+    // (`<dir>_races.lst` + `<dir>_abilities_race.lst` +
+    // `<dir>_abilities_globalvar.lst`, no `_subrace.lst` file anywhere) as
+    // the Bestiary 2/5 batches above -- no new mechanism needed. Attributed
+    // to `advanced_race_guide`, not `core_essentials` (Decision 9) and not
+    // Bestiary 3/4/an uningested tome: `advanced_race_guide/arg_races.lst`
+    // itself carries a `<Race>.MOD ... TYPE:Featured|Uncommon
+    // SOURCEPAGE:p.<n>` row for each of the 6 (`Catfolk.MOD p.91`,
+    // `Ratfolk.MOD p.151`, `Kitsune.MOD p.192`, `Strix.MOD p.200`,
+    // `Suli.MOD p.202`, `Wayang.MOD p.274`) -- the book's own real page
+    // citation for a race it presents as playable, exactly the signal
+    // Decision 9's `core_essentials` re-attribution used. PI-blacklist
+    // scan (`PI_BLACKLIST_TERMS`) and a `DESCISPI:`/`NAMEISPI:` grep across
+    // every file in all 6 directories: zero hits, re-derived fresh this
+    // cycle (`SD31-E6-F4-002`).
+    //
+    // `advanced_race_guide` is *also* `ingest_race_traits.rs`'s book for
+    // its 24-race alternate-trait content, so the two binaries now share
+    // one book's `race_trait/` directory for the first time. Each owns
+    // disjoint race-slug subdirectories (this batch's 6 races are not in
+    // `ingest_race_traits.rs`'s `IN_SCOPE_RACES`, and vice versa), and
+    // `main()`'s clearing step below is scoped per-race-slug rather than
+    // whole-directory for exactly this book, so neither binary's run can
+    // delete the other's files. See `main()`'s clearing comment.
+    RaceSpec { dir: "catfolk", book: "advanced_race_guide" },
+    RaceSpec { dir: "kitsune", book: "advanced_race_guide" },
+    RaceSpec { dir: "ratfolk", book: "advanced_race_guide" },
+    RaceSpec { dir: "strix", book: "advanced_race_guide" },
+    RaceSpec { dir: "suli", book: "advanced_race_guide" },
+    RaceSpec { dir: "wayang", book: "advanced_race_guide" },
 ];
 
 /// Heuristic OGL/PI screen (`docs/governance/ogl-pi-blacklist.md`) — the
@@ -955,9 +987,22 @@ fn main() {
 
     // Clear only the two content-kind directories this tool owns, so a
     // race removed from scope cannot linger as a stale record. This list
-    // must name every distinct `book` value `IN_SCOPE_RACES` uses -- missed
-    // once for `bestiary_5` when Skinwalker was added (caught by the pinned
-    // schema test below going 24 instead of 25, not by inspection).
+    // must name every distinct `book` value `IN_SCOPE_RACES` uses that this
+    // binary EXCLUSIVELY owns -- missed once for `bestiary_5` when
+    // Skinwalker was added (caught by the pinned schema test below going 24
+    // instead of 25, not by inspection).
+    //
+    // `advanced_race_guide` is deliberately NOT in this list. Unlike the 4
+    // books below, this binary does not exclusively own
+    // `advanced_race_guide/race_trait/` -- `ingest_race_traits.rs` also
+    // writes there (its 24-race alternate-trait content, disjoint race
+    // slugs from this batch's 6). A whole-directory `remove_dir_all` here
+    // would delete that sibling binary's already-committed files every time
+    // this one runs. Each race this binary owns under a shared book is
+    // cleared individually, by slug, in the main loop below instead (see
+    // the `trait_dir` clear right before it is written into) -- surgical
+    // enough to catch a stale trait removed from THIS batch's races without
+    // touching a race slug this binary has never written.
     for book in ["core_rulebook", "beastiary", "bestiary_2", "bestiary_5"] {
         for kind in ["race", "race_trait"] {
             let dir = out_root.join(book).join(kind);
@@ -1092,6 +1137,14 @@ fn main() {
             errors.push(format!("{globalvar_rel}: declares no PREVAREQ gate for any {race_key} trait"));
         }
         let trait_dir = out_root.join(spec.book).join("race_trait").join(&race_slug);
+        // For a book this binary does NOT whole-directory-clear above
+        // (currently only `advanced_race_guide`, shared with
+        // `ingest_race_traits.rs`), clear just this one race's own
+        // subdirectory -- catches a stale trait from a prior run of THIS
+        // batch without touching a sibling race slug the other binary owns.
+        if !matches!(spec.book, "core_rulebook" | "beastiary" | "bestiary_2" | "bestiary_5") && trait_dir.exists() {
+            fs::remove_dir_all(&trait_dir).unwrap_or_else(|e| panic!("failed to clear {trait_dir:?}: {e}"));
+        }
         let mut seen_slugs: BTreeMap<String, String> = BTreeMap::new();
         let mut trait_count = 0usize;
 
@@ -1718,65 +1771,66 @@ mod tests {
         let mut races = 0usize;
         let mut traits = 0usize;
 
-        for book in ["core_rulebook", "beastiary", "bestiary_2", "bestiary_5"] {
-            let race_dir = root.join(book).join("race");
-            let mut race_files: Vec<PathBuf> =
-                fs::read_dir(&race_dir).expect("race dir must exist").filter_map(Result::ok).map(|e| e.path()).collect();
-            race_files.sort();
-            for path in race_files {
-                let text = fs::read_to_string(&path).unwrap();
-                let record: CorpusRecordV1<RaceCacheData> =
-                    serde_json::from_str(&text).unwrap_or_else(|e| panic!("{path:?} is not a valid race record: {e}"));
-                validate_license(&record).unwrap_or_else(|e| panic!("{path:?}: {e}"));
-                assert!(!record.data.key.is_empty());
-                assert!(
-                    !serde_json::to_string(&record.data).unwrap().contains("\"source_page\""),
-                    "{path:?}: the chassis payload must carry no page field at all"
-                );
-                races += 1;
-            }
+        // Driven by `IN_SCOPE_RACES` itself (one entry per race, not one
+        // per book) rather than a hardcoded book list. This matters as of
+        // SD-31-E6-F4-002: `advanced_race_guide` is now a book this binary
+        // SHARES with `ingest_race_traits.rs` (disjoint race slugs), so a
+        // whole-directory `fs::read_dir` over `advanced_race_guide/
+        // race_trait/` would also walk into that sibling binary's ~24
+        // race subdirectories and assert this test's OWN pinned count
+        // against a mix of two binaries' output. Reading exactly the file
+        // (`race/<dir>.json`) and subdirectory (`race_trait/<dir>/`) each
+        // spec names keeps this test scoped to what THIS binary wrote,
+        // for every book including a shared one.
+        for spec in IN_SCOPE_RACES {
+            let path = root.join(spec.book).join("race").join(format!("{}.json", spec.dir));
+            let text = fs::read_to_string(&path).unwrap_or_else(|e| panic!("{path:?}: {e}"));
+            let record: CorpusRecordV1<RaceCacheData> =
+                serde_json::from_str(&text).unwrap_or_else(|e| panic!("{path:?} is not a valid race record: {e}"));
+            validate_license(&record).unwrap_or_else(|e| panic!("{path:?}: {e}"));
+            assert!(!record.data.key.is_empty());
+            assert!(
+                !serde_json::to_string(&record.data).unwrap().contains("\"source_page\""),
+                "{path:?}: the chassis payload must carry no page field at all"
+            );
+            races += 1;
 
-            let trait_root = root.join(book).join("race_trait");
-            let mut race_dirs: Vec<PathBuf> = fs::read_dir(&trait_root)
-                .expect("race_trait dir must exist")
+            let race_dir = root.join(spec.book).join("race_trait").join(spec.dir);
+            let mut files: Vec<PathBuf> = fs::read_dir(&race_dir)
+                .unwrap_or_else(|e| panic!("{race_dir:?} must exist: {e}"))
                 .filter_map(Result::ok)
                 .map(|e| e.path())
                 .collect();
-            race_dirs.sort();
-            for race_dir in race_dirs {
-                let mut files: Vec<PathBuf> =
-                    fs::read_dir(&race_dir).unwrap().filter_map(Result::ok).map(|e| e.path()).collect();
-                files.sort();
-                for path in files {
-                    let text = fs::read_to_string(&path).unwrap();
-                    let record: CorpusRecordV1<RaceTraitCacheData> = serde_json::from_str(&text)
-                        .unwrap_or_else(|e| panic!("{path:?} is not a valid race-trait record: {e}"));
-                    validate_license(&record).unwrap_or_else(|e| panic!("{path:?}: {e}"));
-                    assert!(
-                        record.data.sets_replace_flags.is_empty(),
-                        "{path:?}: a standard trait sets no replace flags"
-                    );
-                    assert_ne!(
-                        record.data.source_page.as_deref(),
-                        Some(PLACEHOLDER_SOURCE_PAGE),
-                        "{path:?}: the p.xx placeholder must never be stored as a citation"
-                    );
-                    assert!(record.data.key.starts_with(&record.data.race_key));
-                    traits += 1;
-                }
+            files.sort();
+            for path in files {
+                let text = fs::read_to_string(&path).unwrap();
+                let record: CorpusRecordV1<RaceTraitCacheData> = serde_json::from_str(&text)
+                    .unwrap_or_else(|e| panic!("{path:?} is not a valid race-trait record: {e}"));
+                validate_license(&record).unwrap_or_else(|e| panic!("{path:?}: {e}"));
+                assert!(record.data.sets_replace_flags.is_empty(), "{path:?}: a standard trait sets no replace flags");
+                assert_ne!(
+                    record.data.source_page.as_deref(),
+                    Some(PLACEHOLDER_SOURCE_PAGE),
+                    "{path:?}: the p.xx placeholder must never be stored as a citation"
+                );
+                assert!(record.data.key.starts_with(&record.data.race_key));
+                traits += 1;
             }
         }
 
         // Pinned counts, derived from the real corpus (`decisions.md
-        // §25.3`: Core Rulebook's 7 races + Bestiary 1's 11, plus SD-31
-        // Epic 1-F2's Bestiary 2 batch of 6, plus this follow-on batch's
-        // Skinwalker (Bestiary 5, chassis + 9 standard-tier traits only --
-        // heritage rows excluded, see `IN_SCOPE_RACES`'s doc comment): 25
-        // races / 241 standard racial trait records, re-measured
-        // 2026-08-15 by running this binary against the real corpus, not
-        // invented).
-        assert_eq!(races, 25, "25 in-scope race chassis records");
-        assert_eq!(traits, 241, "241 standard racial trait records");
+        // §25.3`: Core Rulebook's 7 races + Bestiary 1's 11, SD-31 Epic
+        // 1-F2's Bestiary 2 batch of 6, the Skinwalker follow-on
+        // (Bestiary 5, chassis + 9 standard-tier traits only), plus
+        // SD-31-E6-F4-002's Advanced Race Guide batch of 6 (Catfolk 9,
+        // Kitsune 10, Ratfolk 9, Strix 11, Suli 9, Wayang 10 = 58) -- 31
+        // races / 299 standard racial trait records, re-measured
+        // 2026-08-16 by running this binary against the real corpus, not
+        // invented (raw row counts per race ran 13-17; `is_standard_
+        // racial_trait` and the internal-flag filters bring the true count
+        // per race down to 9-11)).
+        assert_eq!(races, 31, "31 in-scope race chassis records");
+        assert_eq!(traits, 299, "299 standard racial trait records");
     }
 
     // -----------------------------------------------------------------

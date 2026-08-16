@@ -1177,9 +1177,34 @@ fn ingest_book(book: &BookSource) {
     }
 
     // A stale record from a previous run with different scope would be
-    // indistinguishable from a fresh one, so the output tree is rebuilt.
+    // indistinguishable from a fresh one, so this binary's own output is
+    // rebuilt -- scoped to exactly the race slugs in `IN_SCOPE_RACES`,
+    // not the whole `out_root` directory.
+    //
+    // **Why scoped, not whole-directory, as of SD-31-E6-F4-002 (2026-08-16):**
+    // `advanced_race_guide` is now ALSO written by `ingest_races.rs`, which
+    // filed 6 new races' (Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang)
+    // chassis + standard-tier traits into this same `out_root` for the
+    // first time. None of those 6 are in this binary's own
+    // `IN_SCOPE_RACES` (they carry no alternate-trait content this binary
+    // handles), so a whole-directory `remove_dir_all` here would silently
+    // delete that sibling binary's already-committed files every time this
+    // one runs -- the exact hazard `ingest_races.rs`'s own trait_dir clear
+    // comment names in reverse. Clearing by declared-in-scope race slug
+    // instead preserves the original safety property (a race REMOVED from
+    // `IN_SCOPE_RACES` between two runs cannot leave a stale file behind --
+    // its slug's own subdirectory is still removed) while never touching a
+    // slug this binary has never owned. For every book besides
+    // `advanced_race_guide` this is behaviourally identical to the old
+    // whole-directory clear: no other book currently holds a subdirectory
+    // outside `IN_SCOPE_RACES`.
     if out_root.exists() {
-        fs::remove_dir_all(&out_root).unwrap_or_else(|e| panic!("failed to clear {out_root:?}: {e}"));
+        for race_name in IN_SCOPE_RACES {
+            let race_dir = out_root.join(slugify(race_name));
+            if race_dir.exists() {
+                fs::remove_dir_all(&race_dir).unwrap_or_else(|e| panic!("failed to clear {race_dir:?}: {e}"));
+            }
+        }
     }
 
     let mut written = 0usize;
@@ -1336,7 +1361,25 @@ fn ingest_book(book: &BookSource) {
     }
 
     assert_eq!(written, rows.len(), "every in-scope row must produce exactly one record");
-    let on_disk = count_json(&out_root);
+    // Scoped to this binary's own `IN_SCOPE_RACES` race slugs, not a whole-
+    // directory walk -- for the same reason the clearing step above is
+    // scoped (SD-31-E6-F4-002, 2026-08-16). `advanced_race_guide/
+    // race_trait/` now also holds `ingest_races.rs`'s 6-race batch
+    // (Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang), which a whole-directory
+    // `count_json` would count as though this run had written them too,
+    // masking a real under-write with a false-positive match (or, as
+    // caught here, flagging a false mismatch against a correct run).
+    // A given book only ever touches a subset of the 24 in-scope races
+    // (e.g. `monster_codex` writes for a handful, not all 24), so a race
+    // this book's rows never mentioned has no subdirectory here at all --
+    // that is 0 records, not a missing-directory error.
+    let on_disk: usize = IN_SCOPE_RACES
+        .iter()
+        .map(|race_name| {
+            let race_dir = out_root.join(slugify(race_name));
+            if race_dir.exists() { count_json(&race_dir) } else { 0 }
+        })
+        .sum();
     assert_eq!(on_disk, written, "records written to disk must match records emitted");
 
     // Last, and fatal: nothing PCGen-shaped may survive into a served
@@ -1719,12 +1762,18 @@ mod tests {
         // (2026-08-15) widened `IN_SCOPE_RACES` from 18 to 24 (Bestiary 2's
         // 6 non-heritage races), so both books' alternate-trait rows for
         // those 6 races now pass the in-scope filter for the first time.
-        // Re-derived on disk, not transcribed: `find data/corpus/
-        // advanced_race_guide/race_trait -name '*.json' | wc -l` -> 201;
-        // same for `inner_sea_races` -> 82.
+        // ARG 201->259: SD-31-E6-F4-002 (2026-08-16) added `ingest_races.rs`'s
+        // own 6-race chassis batch (Catfolk, Kitsune, Ratfolk, Strix, Suli,
+        // Wayang) into this SAME book directory for the first time -- this
+        // test deliberately walks the whole `advanced_race_guide/race_trait/`
+        // tree (a real corpus-wide leak check, not an ownership-scoped
+        // count), so it is supposed to see both binaries' output. Re-derived
+        // on disk, not transcribed: `find data/corpus/advanced_race_guide/
+        // race_trait -name '*.json' | wc -l` -> 259; same for
+        // `inner_sea_races` -> 82.
         let expected: BTreeMap<&str, usize> =
             [
-                ("advanced_race_guide", 201usize),
+                ("advanced_race_guide", 259usize),
                 ("monster_codex", 5),
                 ("inner_sea_races", 82),
                 ("horror_adventures", 43),
@@ -1796,8 +1845,10 @@ mod tests {
         }
         assert_eq!(
             total,
-            395,
-            "201 ARG + 5 Monster Codex + 82 Inner Sea Races + 43 Horror Adventures + 64 Core \
+            453,
+            "259 ARG (of which 58 are `ingest_races.rs`'s own Catfolk/Kitsune/Ratfolk/Strix/Suli/\
+             Wayang batch, SD-31-E6-F4-002, 2026-08-16) + 5 Monster Codex + 82 Inner Sea Races + \
+             43 Horror Adventures + 64 Core \
              Essentials heritage records (ARG/ISR moved from 156/71 by SD-31 Epic 1-F2, \
              2026-08-15). Advanced Player's Guide was investigated (SD-31 Epic 6-F4,
              2026-08-15) and deliberately NOT added as a `BookSource` -- see this file's \

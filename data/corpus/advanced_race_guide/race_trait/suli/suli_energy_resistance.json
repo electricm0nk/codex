@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T19:53:32Z",
+  "data": {
+    "key": "Suli ~ Energy Resistance",
+    "name": "Energy Resistance",
+    "race_key": "Suli",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Suli Racial Trait",
+      "Suli Racial Default",
+      "SpecialQuality"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Suli_ReplaceEnergyResistance",
+    "sets_replace_flags": [],
+    "description": "Sulis have resistance to acid 5, cold 5, electricity 5, and fire 5.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Suli ~ Energy Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Suli Racial Trait.Suli Racial Default.SpecialQuality"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Suli_ReplaceEnergyResistance=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Sulis have resistance to acid 5, cold 5, electricity 5, and fire 5."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "AcidResistanceBonus,ColdResistanceBonus,ElectricityResistanceBonus,FireResistanceBonus",
+          "5",
+          "TYPE=Resistance"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/suli/suli_abilities_race.lst",
+    "sha256": "1317e47fdc666a257d8aae0d1a390b0eaab3fb63ecfa0e54ce7cccbf3dfcfdb6",
+    "line": 21,
+    "record_key": "Suli ~ Energy Resistance"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

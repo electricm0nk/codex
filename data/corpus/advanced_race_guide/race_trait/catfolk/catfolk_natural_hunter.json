@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T19:53:32Z",
+  "data": {
+    "key": "Catfolk ~ Natural Hunter",
+    "name": "Natural Hunter",
+    "race_key": "Catfolk",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Catfolk Racial Trait",
+      "Catfolk Racial Default",
+      "SpecialQuality"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Catfolk_ReplaceNaturalHunter",
+    "sets_replace_flags": [],
+    "description": "Catfolk receive a +2 racial bonus on Perception, Stealth, and Survival checks.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Catfolk ~ Natural Hunter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Catfolk Racial Trait.Catfolk Racial Default.SpecialQuality"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Catfolk_ReplaceNaturalHunter=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Catfolk receive a +2 racial bonus on Perception, Stealth, and Survival checks."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+2 Perception, +2 Stealth, +2 Survival"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Perception,Stealth,Survival",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/catfolk/catfolk_abilities_race.lst",
+    "sha256": "da1b87966e5404307d7f28d40f3aac9c8f9837de2151dfb307f446b0203d2d15",
+    "line": 20,
+    "record_key": "Catfolk ~ Natural Hunter"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

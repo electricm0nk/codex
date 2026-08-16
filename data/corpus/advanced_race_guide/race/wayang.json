@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T19:53:32Z",
+  "data": {
+    "key": "Wayang",
+    "name": "Wayang",
+    "base_size": "S",
+    "base_move_walk": 20,
+    "race_type": "Humanoid",
+    "type_tokens": [
+      "Base",
+      "PC",
+      "Uncommon"
+    ],
+    "legs": 2,
+    "hands": 2,
+    "raw_tokens": [
+      {
+        "key": "SORTKEY",
+        "value": "a_base_pc"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|S"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Wayang"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Humanoid"
+      },
+      {
+        "key": "TYPE",
+        "value": "Base.PC.Uncommon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "FACT",
+        "value": "IsPC|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/wayang/wayang_races.lst",
+    "sha256": "425e8b0996fa192a2dd8ef4376637e8179e42578e590aeb0e42b1ba091fc0a2c",
+    "line": 6,
+    "record_key": "Wayang"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

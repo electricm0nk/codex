@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T19:53:32Z",
+  "data": {
+    "key": "Catfolk ~ Speed",
+    "name": "Normal Speed",
+    "race_key": "Catfolk",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Catfolk Racial Trait",
+      "Catfolk Racial Default",
+      "SpecialQuality",
+      "Racial Speed"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Catfolk_ReplaceSpeed",
+    "sets_replace_flags": [],
+    "description": "Catfolk have a base speed of 30 feet.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Catfolk ~ Speed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Catfolk Racial Trait.Catfolk Racial Default.SpecialQuality.Racial Speed"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Catfolk_ReplaceSpeed=True"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MOVEBASE|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Catfolk have a base speed of 30 feet."
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "MOVEBASE",
+          "30"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/catfolk/catfolk_abilities_race.lst",
+    "sha256": "da1b87966e5404307d7f28d40f3aac9c8f9837de2151dfb307f446b0203d2d15",
+    "line": 17,
+    "record_key": "Catfolk ~ Speed"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

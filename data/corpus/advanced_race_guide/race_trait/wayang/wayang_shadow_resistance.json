@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T19:53:32Z",
+  "data": {
+    "key": "Wayang ~ Shadow Resistance",
+    "name": "Shadow Resistance",
+    "race_key": "Wayang",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Wayang Racial Trait",
+      "Wayang Racial Default",
+      "SpecialQuality"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Wayang_ReplaceShadowResistance",
+    "sets_replace_flags": [],
+    "description": "Wayangs get a +2 racial bonus on saving throws against spells of the shadow subschool.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wayang ~ Shadow Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Wayang Racial Trait.Wayang Racial Default.SpecialQuality"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Wayang_ReplaceShadowResistance=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Wayangs get a +2 racial bonus on saving throws against spells of the shadow subschool."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 racial bonus on saving throws against spells of the shadow subschool."
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "SaveBonus_vs_ShadowSpells",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/wayang/wayang_abilities_race.lst",
+    "sha256": "33833b276238c5e31406ea770c9134c3f519d96ef698baa0248514a46a77977a",
+    "line": 22,
+    "record_key": "Wayang ~ Shadow Resistance"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

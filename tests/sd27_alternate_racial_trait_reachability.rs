@@ -248,13 +248,20 @@ fn the_three_dependent_rows_are_not_offered_as_choices_and_the_menu_is_exactly_t
         .count();
     assert_eq!(
         all,
-        637,
+        695,
         "175 standard + 156 ARG + 5 Monster Codex + 1 APG + 71 Inner Sea Races \
          + 43 Horror Adventures + 64 Core Essentials heritage rows + SD-31 Epic 1-F2's \
          113 (57 standard + 42 ARG + 6 Inner Sea Races + 8 grant-linked, 2026-08-15) + the \
-         Skinwalker follow-on batch's 9 standard rows"
+         Skinwalker follow-on batch's 9 standard rows + SD-31-E6-F4-002's Advanced Race \
+         Guide batch of 58 standard rows (2026-08-16: Catfolk, Kitsune, Ratfolk, Strix, \
+         Suli, Wayang; 637 -> 695)"
     );
-    assert_eq!(arg, 201, "ARG's 201 ingested race-trait records (156 -> 201 by SD-31 Epic 1-F2)");
+    assert_eq!(
+        arg,
+        259,
+        "ARG's 259 ingested race-trait records (156 -> 201 by SD-31 Epic 1-F2; 201 -> 259 \
+         by SD-31-E6-F4-002's own 6-race chassis batch, 2026-08-16)"
+    );
 
     let selectable: BTreeSet<&str> = selectable_alternate_trait_keys().into_iter().collect();
     assert_eq!(selectable.len(), 330, "153 ARG + 4 Monster Codex + 1 APG + 67 Inner Sea Races + 41 Horror Adventures + 16 Core Essentials heritages (round 4; the book's other 48 records are the replacement rows those heritages grant and are never selectable). The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 47)");
@@ -306,8 +313,9 @@ fn no_ingested_race_trait_key_contains_a_colon_so_the_storage_namespace_is_lossl
     }
     assert_eq!(
         checked,
-        637,
-        "515 -> 628 by SD-31 Epic 1-F2 (2026-08-15); 628 -> 637 by the Skinwalker follow-on batch"
+        695,
+        "515 -> 628 by SD-31 Epic 1-F2 (2026-08-15); 628 -> 637 by the Skinwalker follow-on \
+         batch; 637 -> 695 by SD-31-E6-F4-002's Advanced Race Guide batch (2026-08-16)"
     );
 }
 

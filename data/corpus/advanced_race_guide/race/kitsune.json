@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-16T19:53:32Z",
+  "data": {
+    "key": "Kitsune",
+    "name": "Kitsune",
+    "base_size": "M",
+    "base_move_walk": 30,
+    "race_type": "Humanoid",
+    "type_tokens": [
+      "Base",
+      "PC",
+      "Uncommon"
+    ],
+    "legs": 2,
+    "hands": 2,
+    "raw_tokens": [
+      {
+        "key": "SORTKEY",
+        "value": "a_base_pc"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Kitsune"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Humanoid"
+      },
+      {
+        "key": "TYPE",
+        "value": "Base.PC.Uncommon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "FACT",
+        "value": "IsPC|True"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/kitsune/kitsune_races.lst",
+    "sha256": "6f81c8b3250338eaf7a31f6816372c43ee28b9db572e926874b6649f10c45887",
+    "line": 6,
+    "record_key": "Kitsune"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}
