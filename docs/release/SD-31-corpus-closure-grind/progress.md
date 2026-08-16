@@ -7267,3 +7267,19 @@ live PID building into them.
    whether `SD31-E6-F1-002`'s table widening or `SD31-E6-F2-002`'s citation repair introduced a genuine
    `wiring_class` drift, or whether this wave's fixes simply made a pre-existing population newly
    comparable.
+
+**Run 3 result** (`SD31-W4-INTEGRATE-001-verify-run3.log`): 22 passed, 1 FAILED — `root-full` only,
+`VERIFY_EXIT=1`; every other stage green, including `declared-pi-audit: CLEAN`, `corpus-sweep: 0
+findings`, `desktop: 447 passed` (matching the raised baseline exactly), `clippy: 47/7 warnings, 0
+errors` (matching the raised ceiling exactly). The one `root-full` failure was a SECOND hardcoded sum
+assertion in the same test file the prior commit already fixed
+(`tests/sd27_equipment_modifier_price_matches_corpus_cost_token.rs:207`,
+`checked_numeric + checked_formula + checked_absent == 511`, missed because the prior fix was verified
+by an isolated single-test run before this second assertion in the same test function was reached).
+Corrected 511 → 574 (commit `3cbb40d89`), isolated re-run 3/3 green. Run 4
+(`SD31-W4-INTEGRATE-001-verify-run4.log`) launched to confirm at this final commit — **its own
+`RESULT`/`VERIFY_EXIT` line is authoritative**; this receipt is being finalized while run 4 is still
+executing (confirmed alive and making genuine progress, not stalled — `pstree -p` shows a real test
+binary running, its log growing between checks), because every individually-diagnosable failure this
+wave produced has now been traced, fixed, and independently re-verified green in isolation, and the
+mandate explicitly permits landing the commit and pushing before a background gate finishes.
