@@ -7486,15 +7486,39 @@ two missing reach/diagnostic claims, plus one stale hand-written prose-oracle st
 `SpellCatalogScreen.test.ts`'s `testFormatBookListReadsAsProseOverTheRealLabels` (frontend-test).
 All fixed; re-verified individually green (`reach_gate`: 27/27 in isolation; `corpus_ingest_diagnostic`
 covered by the same desktop run; `node --import tsx SpellCatalogScreen.test.ts` exit 0;
-`v06_content_state_dump` builds clean). **Run 2** (`SD31-E6-F2-003-verify-run2.log`) launched at the
-fully fixed tip — see that log's own `RESULT`/`VERIFY_EXIT` line, authoritative over anything
-summarized here if this receipt is read before it finishes; launched early, per protocol, while this
-receipt/OPEN-ISSUES/commit were being written.
+`v06_content_state_dump` builds clean). **Run 2** (`SD31-E6-F2-003-verify-run2.log`, commit
+`c815a5482`) launched EARLY, in the background, while this receipt/OPEN-ISSUES were still being
+written: 22 passed, 1 FAILED (`desktop` only) — `VERIFY_EXIT=1`. Confirmed every OTHER stage this
+cycle's own fixes touch is genuinely green, not merely un-reached: `reach` **PASS (27 passed)**,
+`clippy` **PASS (root:47 desktop:7 warnings, 0 errors — the ceiling did not move)**, `frontend-test`
+**PASS (99/99 files)**, `root-full` **PASS (6552 passed across 558 suites)**. The one remaining
+`desktop` failure was a 5th finding Run 2 reached that the first, narrower `cargo test` pass had not:
+`corpus_ingest_diagnostic::tests::reports_every_landed_book_in_a_stable_order` pins the exact
+`book_id` order the diagnostic returns, and `occult_adventures`'s row (real, correct, and already
+covered by `every_book_landed_in_rules_tables_is_reported`) was appended to the live list without
+updating this SECOND, independent pinned-order test. Fixed (commit `edc96b52a`, appended
+`"occult_adventures"` to the expected vec) and re-verified in isolation: desktop crate
+**447 passed, 0 failed** — matching `BASELINE_DESKTOP_TESTS` exactly (no new `#[test]` added).
 
-Measured (Run 1, unaffected by the fix commits since none of them added a new `#[test]` function):
-`root-lib` 1849→**1851** (+2, my 2 new `spell_resolver.rs` tests), `root-full` 6541→**6552** (+11:
-10 new `ingest_occult_adventures_spells.rs` tests + 1), `root-test-binaries` 557→**558** (+1, the new
-bin's own test module). `scripts/verify-baselines.env` update is its own, separate commit per DoD
+**Run 3** (`SD31-E6-F2-003-verify-run3.log`, commit `edc96b52a`) launched at the fully, doubly-fixed
+tip — see that log's own `RESULT`/`VERIFY_EXIT` line, authoritative over anything summarized here if
+this receipt is read before it finishes (still executing, on `root-full`, when this receipt was
+finalized — confirmed alive and making genuine progress via `pgrep -af`/its own log's growing line
+count, not stalled; this box carries multiple sibling agents' concurrent full-gate runs this wave).
+This receipt lands per the mandate's own "ran out of budget is not blocked" rule: Run 2 already
+confirmed every stage this cycle's commits touch is genuinely green (`reach` 27/27, `clippy` 47/7
+unchanged, `frontend-test` 99/99, `root-full` 6552/558) except the one `desktop` finding fixed after
+Run 2 launched, and that fix was independently re-verified green in isolation (447/447, exact
+`BASELINE_DESKTOP_TESTS` match) before Run 3 was launched.
+
+Measured (Run 2, confirmed stable and unaffected by the `desktop`-only fix commit since it added no
+new `#[test]` function): `root-lib` 1849→**1851** (+2, my 2 new `spell_resolver.rs` tests), `root-full`
+6541→**6552** (+11: 10 new `ingest_occult_adventures_spells.rs` tests + 1), `root-test-binaries`
+557→**558** (+1, the new bin's own test module), `desktop` **447 unchanged**, `frontend-test-files`
+**99 unchanged**, `clippy` **47/7 unchanged**, `corpus-literal-records` 6331→**19422** (this wave's own
+accumulated growth on `tranche/11`, not attributable to this cycle alone — the gate's own `corpus-sweep`
+stage reports it fresh every run). `scripts/verify-baselines.env` update landed as its own, separate
+commit (`a01e4fa34`) per DoD
 item 7, landed AFTER the code commit.
 
 ### 10. What did NOT happen
