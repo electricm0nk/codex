@@ -12,8 +12,8 @@
     "signed_off": false,
     "signed_off_at": null
   },
-  "records_processed": 316,
-  "records_redacted": 50,
+  "records_processed": 303,
+  "records_redacted": 38,
   "redaction_policy": {
     "blacklist_source": "docs/governance/ogl-pi-blacklist.md",
     "blacklist_version_reviewed": "2026-07-27",
@@ -22,5 +22,5 @@
     "schema_preserving": true
   },
   "redistribution_posture": "ogl-notice-attached",
-  "screening_method_note": "PASS -- SD31-E5-F1-001 (class_feature lane), 2026-08-16T01:41:34Z: every DESCISPI:/NAMEISPI:-declared and blacklist-term field of the 306 class_feature records this run wrote for inner_sea_combat was screened via pi_screening::classify_optional_field_declared (description) and declared_product_identity (name -- rows declaring NAMEISPI:YES are not written at all, per docs/governance/ogl-pi-blacklist.md's 'a name cannot be redacted' doctrine, rather than shipped unredacted). A hit is a hard stop in this generator, not a warning. records_processed is 316: the real on-disk count for this book across every kind any lane has ingested, which for a book ingested by more than one lane is larger than this run's own 306-record output. records_redacted is 50, re-derived from the real on-disk license/pi_marker fields, not carried forward from the prior stated value. This is NOT an exhaustive human legal review; it is a bounded substring scan plus the corpus's own declared-PI tokens, and does not prove the absence of PI beyond what that scan can see."
+  "screening_method_note": "PASS -- SD31-E5-F1-001 (class_feature lane), 2026-08-16T01:41:34Z: every DESCISPI:/NAMEISPI:-declared and blacklist-term field of the class_feature records this run wrote for inner_sea_combat was screened via pi_screening::classify_optional_field_declared (description) and declared_product_identity (name -- rows declaring NAMEISPI:YES are not written at all, per docs/governance/ogl-pi-blacklist.md's 'a name cannot be redacted' doctrine, rather than shipped unredacted). A hit is a hard stop in this generator, not a warning. CORRECTED SD31-W4-INTEGRATE-001, 2026-08-16 (OPEN-ISSUES.md row 48): the initial run's NAME screen ran the declared-PI reader only, missing the separate blacklist-term scan on name -- 13 of this book's records (12 ranger_combat_style deity names + Druman Blackjacket) carried a blacklisted term in an undeclared name and were deleted from disk after the fix landed. records_processed restated 316 -> 303, records_redacted restated 50 -> 38 (both re-derived from the real on-disk license/pi_marker fields post-deletion). This is NOT an exhaustive human legal review; it is a bounded substring scan plus the corpus's own declared-PI tokens, and does not prove the absence of PI beyond what that scan can see."
 }
