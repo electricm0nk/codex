@@ -2368,12 +2368,14 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
     (
         "acg",
         "archetypes",
-        "Gap: 87 ACG archetype-swap records are ingested and the engine can already ground a \
-         selected one's slot-swap correctly, but zero reach a player -- no archetype-selection \
-         surface exists anywhere in the desktop app. Remedy: build an archetype picker \
-         (archetype_catalog.rs plus a choice-set surface on the character sheet, the same shape \
-         equipment/feat/spell catalogs already use) and wire the per-slot supersession for this \
-         book's classes; delete this entry once ACG's archetypes reach the picker.",
+        "Gap: 90 ACG archetype-swap records are ingested (87 + 3 Slayer archetypes -- Bounty \
+         Hunter, Deliverer, Stygian Slayer -- added by SD31-E4-F1-001, 2026-08-16) and the engine \
+         can already ground a selected one's slot-swap correctly, but zero reach a player -- no \
+         archetype-selection surface exists anywhere in the desktop app. Remedy: build an \
+         archetype picker (archetype_catalog.rs plus a choice-set surface on the character sheet, \
+         the same shape equipment/feat/spell catalogs already use) and wire the per-slot \
+         supersession for this book's classes; delete this entry once ACG's archetypes reach the \
+         picker.",
     ),
     (
         "advanced_race_guide",
