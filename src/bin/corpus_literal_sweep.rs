@@ -466,7 +466,10 @@ const RACE_TRUE_BOOK: &[(&str, &str)] = &[
     ("nagaji", "bestiary_4"),
     ("samsaran", "bestiary_4"),
     ("wayang", "bestiary_4"),
-    ("gathlain", "bestiary_4"),
+    // "gathlain" removed (SD31-W5-INTEGRATE-001): also natively declared by
+    // ultimate_wilderness's own .pcc, so it is genuinely ambiguous, not a
+    // single-book attribution -- see v06_work_inventory.rs's RACE_TRUE_BOOK
+    // doc comment, which this table must stay in sync with.
     ("kasatha", "bestiary_4"),
     ("trox", "bestiary_4"),
     ("wyrwood", "bestiary_4"),

@@ -1008,8 +1008,8 @@ fn has_classifying_token(kind: Kind, fields: &[&str]) -> bool {
 ///   `arg_races.lst`'s own 37 `.MOD` lines, decisions.md §25.2's table
 ///   verified unchanged).
 /// - `bestiary_4/_bestiary_4_for_players.pcc`'s own uncommented `# races`
-///   section additionally declares `gathlain`, `kasatha`, `trox`,
-///   `wyrwood`, `wyvaran` -- Bestiary 4 natives ARG does not reprint.
+///   section additionally declares `kasatha`, `trox`, `wyrwood`, `wyvaran`
+///   -- Bestiary 4 natives ARG does not reprint.
 /// - `bestiary_5/_bestiary_5_for_players.pcc` and
 ///   `bestiary_6/_bestiary_6 _for_players.pcc` each natively declare a
 ///   handful of their own races too, but most of those (`android`,
@@ -1023,7 +1023,16 @@ fn has_classifying_token(kind: Kind, fields: &[&str]) -> bool {
 /// Left OUT on purpose, still `core_essentials` after this fix, because a
 /// second candidate in-scope book exists or none does (verified by the same
 /// `.pcc` grep, not guessed): `android`, `aquatic_elf`, `ghoran`, `lashunta`,
-/// `monkey_goblin`, `syrinx`, `triaxian`. See
+/// `monkey_goblin`, `syrinx`, `triaxian`, and (SD31-W5-INTEGRATE-001,
+/// corrected per this wave's own adversarial review) `gathlain` --
+/// declared by an identical uncommented `PCC:@...core_essentials\races\
+/// gathlain\_race.pcc` line in BOTH `bestiary_4/_bestiary_4_for_players.pcc`
+/// AND `ultimate_wilderness/_ultimate_wilderness.pcc`, and
+/// `ultimate_wilderness` is itself an in-scope book (present in
+/// `SOURCELONG_TO_BOOK`) -- by this doc comment's OWN "no other in-scope
+/// book also natively declares it" test, gathlain does not qualify for
+/// single-book attribution and must join the ambiguous set rather than
+/// being asserted into `bestiary_4` alone. See
 /// `core_essentials_ambiguous_races_stay_unattributed` for the fixture that
 /// pins this list so a future book onboarding cannot silently narrow it.
 const RACE_TRUE_BOOK: &[(&str, &str)] = &[
@@ -1069,7 +1078,6 @@ const RACE_TRUE_BOOK: &[(&str, &str)] = &[
     ("nagaji", "bestiary_4"),
     ("samsaran", "bestiary_4"),
     ("wayang", "bestiary_4"),
-    ("gathlain", "bestiary_4"),
     ("kasatha", "bestiary_4"),
     ("trox", "bestiary_4"),
     ("wyrwood", "bestiary_4"),
@@ -3966,9 +3974,16 @@ fn classify(
                 // `race_trait_picker::build_menu` calls to serve the real
                 // Alternate Racial Traits screen, over the SAME loaded
                 // corpus -- never re-implemented, never asserted.
+                // SD31-W5-INTEGRATE-001: `!rendered.trim().is_empty()` alone
+                // accepted the PI-redaction placeholder `[redacted PI]` --
+                // non-empty, but not real prose (a player sees the literal
+                // marker string, not the rulebook's text). Reuse the SAME
+                // refusal `closure_has_real_description` already applies to
+                // every other text_only->text-complete branch in this file,
+                // rather than a second, looser bar just for race_trait.
                 if text_only
                     && let Some(rendered) = facts.race_trait_rendered_description(unit)
-                    && !rendered.trim().is_empty()
+                    && is_real_description_value(rendered)
                 {
                     return Verdict {
                         status: "text-complete",
@@ -5385,11 +5400,19 @@ fn main() {
             .or_default()
             .entry(item.verdict.status)
             .or_default() += 1;
+        // SD31-W5-INTEGRATE-001: this fallback used to key on `unit.book`
+        // (the reporting field, which SD31-ATTRIB-001 made book-attribution
+        // reflect the unit's TRUE source book, not the directory it was
+        // physically walked from). `classify()`'s own engine-consumer
+        // lookup already learned this the hard way (see its comment at
+        // this file's `own_engine_book` binding) -- `unit.source_book` is
+        // the one guaranteed to match the ENGINE's consumer table for a
+        // relabelled unit; `unit.book` is purely the reporting field now.
         if let Some(engine_book) = item
             .verdict
             .engine_book
             .clone()
-            .or_else(|| engine_book_for(&item.unit.book).map(|b| b.to_string()))
+            .or_else(|| engine_book_for(&item.unit.source_book).map(|b| b.to_string()))
         {
             *per_engine_kind_total
                 .entry((engine_book.clone(), item.unit.kind.id()))
@@ -6629,6 +6652,7 @@ mod race_trait_grounding_tests {
     fn race_trait_unit(file: &str, line: usize, key: &str, magnitude_token_count: usize) -> CorpusUnit {
         CorpusUnit {
             book: "advanced_race_guide".to_string(),
+            source_book: "advanced_race_guide".to_string(),
             kind: Kind::RaceTrait,
             key: key.to_string(),
             name: key.to_string(),
@@ -6649,8 +6673,10 @@ mod race_trait_grounding_tests {
     /// grounded`, which `doneness_verdict` caps at `held` for `display`.
     #[test]
     fn a_real_zero_magnitude_applied_race_trait_reaches_text_complete_with_real_rendered_text() {
-        let mut facts = EngineFacts::default();
-        facts.race_trait_probe = probe_race_trait_corpus(&probe_root());
+        let facts = EngineFacts {
+            race_trait_probe: probe_race_trait_corpus(&probe_root()),
+            ..Default::default()
+        };
         let unit = race_trait_unit("arg_abilities_race.lst", 606, "Feral ~ Languages", 0);
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true);
         assert_eq!(verdict.status, "text-complete");
@@ -6718,6 +6744,32 @@ mod race_trait_grounding_tests {
             .rendered
             .insert(coordinate, "You gain a +2 bonus to something real.".to_string());
         let unit = race_trait_unit("has_magnitude_race.lst", 1, "Has Magnitude ~ Trait", 1);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true);
+        assert_ne!(verdict.status, "text-complete");
+        assert_eq!(verdict.status, "grounded");
+    }
+
+    /// PROVE THE RUNG CAN FAIL, case 4 (SD31-W5-INTEGRATE-001, confirmed
+    /// adversarial finding): a record whose rendered description is the PI
+    /// redaction placeholder `[redacted PI]` must NOT read `text-complete`.
+    /// The string is non-empty, so the old `!rendered.trim().is_empty()`
+    /// gate wrongly accepted it -- a player sees the literal marker, never
+    /// the rulebook's prose, so Decision 7's condition 3 ("the prose is
+    /// available to print... on the character sheet") is not met. Reuses
+    /// the exact refusal `is_real_description_value` already applies to
+    /// every other text_only->text-complete branch.
+    #[test]
+    fn an_applied_race_trait_whose_rendered_description_is_the_pi_redaction_marker_does_not_read_text_complete(
+    ) {
+        let coordinate = ("pi_redacted_race.lst".to_string(), 1);
+        let mut facts = EngineFacts::default();
+        facts.race_trait_probe.loaded.insert(coordinate.clone());
+        facts.race_trait_probe.reachable.insert(coordinate.clone(), "core_essentials".to_string());
+        facts
+            .race_trait_probe
+            .rendered
+            .insert(coordinate, "[redacted PI]".to_string());
+        let unit = race_trait_unit("pi_redacted_race.lst", 1, "Tiefling ~ Daemon-Spawn", 0);
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true);
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(verdict.status, "grounded");
@@ -8205,8 +8257,16 @@ mod core_essentials_book_attribution_tests {
     /// matching doc-comment edit).
     #[test]
     fn core_essentials_ambiguous_races_stay_unattributed() {
-        let ambiguous =
-            ["android", "aquatic_elf", "ghoran", "lashunta", "monkey_goblin", "syrinx", "triaxian"];
+        let ambiguous = [
+            "android",
+            "aquatic_elf",
+            "gathlain",
+            "ghoran",
+            "lashunta",
+            "monkey_goblin",
+            "syrinx",
+            "triaxian",
+        ];
         for slug in ambiguous {
             assert!(
                 RACE_TRUE_BOOK.iter().all(|(s, _)| *s != slug),
@@ -8216,9 +8276,11 @@ mod core_essentials_book_attribution_tests {
         }
         assert_eq!(
             RACE_TRUE_BOOK.len(),
-            44,
-            "44 unambiguous + 7 ambiguous == the real corpus's 51 core_essentials races \
-             (OPEN-ISSUES.md row 68); a table-length change means the roster moved and both \
+            43,
+            "43 unambiguous + 8 ambiguous == the real corpus's 51 core_essentials races \
+             (OPEN-ISSUES.md row 68; gathlain moved from unambiguous to ambiguous by \
+             SD31-W5-INTEGRATE-001's adversarial-review fix -- ultimate_wilderness also \
+             natively declares it); a table-length change means the roster moved and both \
              this assertion and the doc comment above need re-deriving, not just bumping"
         );
     }
