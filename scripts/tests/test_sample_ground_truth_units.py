@@ -99,6 +99,46 @@ class SampleGroundTruthUnitsTest(unittest.TestCase):
             self.assertNotIn("confidence", rec)
             self.assertNotIn("agrees_with_engine", rec)
 
+    def test_output_carries_magnitude_token_count(self):
+        # SD31-D7-PROSE-001: the sample must carry the raw
+        # `magnitude_token_count` field alongside the wiring_class stub so a
+        # reader can see which proxy (magnitude_token_count==0 alone, vs.
+        # engine `wiring_class`) put each unit in the draw -- required to
+        # measure the two proxies' precision/recall separately.
+        units = make_units()
+        for u in units:
+            u["magnitude_token_count"] = 0
+        drawn = sampler.draw(units, {}, target_per_cell=1, excluded_ids=set(), seed=31)
+        self.assertTrue(drawn)
+        for rec in drawn:
+            self.assertIn("magnitude_token_count", rec)
+            self.assertEqual(rec["magnitude_token_count"], 0)
+
+    def test_zero_magnitude_only_excludes_nonzero_units(self):
+        # Decision 7's PROXY WARNING: the sample this card draws must come
+        # from the `magnitude_token_count == 0` population specifically, not
+        # the whole board -- a unit carrying real magnitude tokens has
+        # nothing to do with the proxy under test.
+        units = make_units()
+        for i, u in enumerate(units):
+            u["magnitude_token_count"] = 0 if i % 2 == 0 else 3
+        drawn = sampler.draw(
+            units, {}, target_per_cell=10, excluded_ids=set(), seed=31, zero_magnitude_only=True
+        )
+        self.assertTrue(drawn)
+        for rec in drawn:
+            self.assertEqual(rec["magnitude_token_count"], 0)
+
+    def test_zero_magnitude_only_false_is_unfiltered_default(self):
+        # Default behaviour is unchanged for every existing caller (Epic 2's
+        # own draws never passed the flag).
+        units = make_units()
+        for i, u in enumerate(units):
+            u["magnitude_token_count"] = 0 if i % 2 == 0 else 3
+        drawn_default = sampler.draw(units, {}, target_per_cell=10, excluded_ids=set(), seed=31)
+        counts = {r["magnitude_token_count"] for r in drawn_default}
+        self.assertIn(3, counts, "unfiltered draw must still be able to pick a nonzero unit")
+
 
 if __name__ == "__main__":
     unittest.main()

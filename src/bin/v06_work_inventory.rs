@@ -509,6 +509,100 @@ fn has_token(fields: &[&str], prefix: &str) -> bool {
     fields.iter().any(|f| f.starts_with(prefix))
 }
 
+/// One `DESC:` field's value, trimmed, is a REAL description iff it is
+/// non-empty and not one of the markers that mean "nothing here": `.CLEAR`/
+/// `.CLEARALL` remove a prior row's description rather than stating one, and
+/// `[redacted PI]` is the shipped PI-screen marker -- a player sees that
+/// literal string, not the rulebook's prose, so it does not satisfy
+/// Decision 7's condition 3 either.
+fn is_real_description_value(value: &str) -> bool {
+    let trimmed = value.trim();
+    if trimmed.is_empty() {
+        return false;
+    }
+    let lower = trimmed.to_ascii_lowercase();
+    !matches!(lower.as_str(), ".clear" | ".clearall" | "[redacted pi]")
+}
+
+/// Whether a unit's full token closure (its base corpus row plus every
+/// `.MOD` row targeting it — [`token_closure_rows`]'s own output, the SAME
+/// closure `carries_prose_magnitude`'s `wc_reason` is derived from) carries
+/// a real, non-empty `DESC:` value anywhere.
+///
+/// SD31-D7-PROSE-001 (Decision 7's condition 3): a record can be `known` to
+/// the engine and carry zero `MAGNITUDE_TOKENS` fields while still having
+/// nothing at all to show a player — no `DESC:` token anywhere, corpus
+/// `description: null`. `magnitude_token_count == 0` alone answers
+/// conditions 1/2 ("prose only", "nothing to compute"); this function is
+/// condition 3's own check, over the identical closure the rest of this
+/// file's classifier already builds.
+fn closure_has_real_description(row_refs: &[Option<&str>]) -> bool {
+    row_refs.iter().flatten().any(|line| {
+        tab_fields(line)
+            .iter()
+            .filter_map(|f| f.strip_prefix("DESC:"))
+            .any(is_real_description_value)
+    })
+}
+
+#[cfg(test)]
+mod closure_has_real_description_tests {
+    use super::*;
+
+    /// The proof case: a real DESC: value on the base row is found.
+    #[test]
+    fn finds_a_real_desc_on_the_base_row() {
+        let row = Some("Foo\tTYPE:General\tDESC:You do a thing.");
+        assert!(closure_has_real_description(&[row]));
+    }
+
+    /// A `.MOD` continuation row can be where the real DESC: lives — the
+    /// closure must be searched, not just the base row.
+    #[test]
+    fn finds_a_real_desc_on_a_mod_row_when_the_base_row_has_none() {
+        let base = Some("Foo\tTYPE:General");
+        let mod_row = Some("Foo.MOD\tDESC:You do a thing.");
+        assert!(closure_has_real_description(&[base, mod_row]));
+    }
+
+    /// SD31-D7-PROSE-001's own failure mode, proven refused: no DESC: token
+    /// anywhere in the closure.
+    #[test]
+    fn refuses_a_closure_with_no_desc_token_at_all() {
+        let row = Some("Foo\tTYPE:General\tSOURCEPAGE:p.1");
+        assert!(!closure_has_real_description(&[row]));
+    }
+
+    /// `DESC:.CLEAR` / `DESC:.CLEARALL` remove a prior description rather
+    /// than stating one; must not count as real text.
+    #[test]
+    fn refuses_a_desc_clear_marker() {
+        assert!(!closure_has_real_description(&[Some("Foo\tDESC:.CLEAR")]));
+        assert!(!closure_has_real_description(&[Some("Foo\tDESC:.CLEARALL")]));
+    }
+
+    /// The shipped PI-redaction marker is not the rulebook's prose reaching
+    /// the player — it must not satisfy condition 3 either.
+    #[test]
+    fn refuses_the_pi_redaction_marker() {
+        assert!(!closure_has_real_description(&[Some("Foo\tDESC:[redacted PI]")]));
+    }
+
+    /// A DESC: field that is present but blank (whitespace only) is not
+    /// real text.
+    #[test]
+    fn refuses_a_blank_desc_value() {
+        assert!(!closure_has_real_description(&[Some("Foo\tDESC:   ")]));
+    }
+
+    /// A `None` row (no corpus line resolved at all, D0) contributes
+    /// nothing and must not panic.
+    #[test]
+    fn a_missing_row_is_skipped_not_treated_as_a_hit() {
+        assert!(!closure_has_real_description(&[None, None]));
+    }
+}
+
 /// `"Fast Movement"` -> `"fast_movement"`. The engine's own explanation-id
 /// naming rule, applied to a corpus name so the two can be joined without a
 /// hand-maintained mapping table (the same discipline
@@ -1325,6 +1419,25 @@ impl EngineFacts {
             .contains(&(unit.provenance.file.clone(), unit.provenance.line))
     }
 
+    /// This unit's description, rendered by the EXACT function
+    /// `race_trait_picker::build_menu` calls to serve the real,
+    /// player-facing Alternate Racial Traits screen
+    /// (`list_alternate_racial_traits` Tauri command) — over the SAME
+    /// `RaceCorpus` load this probe already performs. `None` when the record
+    /// was not found by that load at all (see [`Self::race_trait_was_loaded`]
+    /// for that case); `Some("")` is possible and is NOT a real description
+    /// (the caller checks non-empty, same as everywhere else in this file).
+    ///
+    /// SD31-D7-PROSE-001 (Decision 7's condition 3): "the prose is available
+    /// to print in the description on the character sheet" is not proven by
+    /// a record merely being loaded -- it is proven by the SAME render path
+    /// the shipped screen actually calls producing real text, which is
+    /// exactly what this reuses rather than re-implementing.
+    fn race_trait_rendered_description(&self, unit: &CorpusUnit) -> Option<&str> {
+        let coordinate = (unit.provenance.file.clone(), unit.provenance.line);
+        self.race_trait_probe.rendered.get(&coordinate).map(String::as_str)
+    }
+
     /// Whether one book really holds this unit. Delegates to
     /// [`Self::holds_key`] for every kind whose identity is its name, and
     /// uses the source-coordinate join for race traits, which is the only
@@ -1737,6 +1850,14 @@ struct RaceTraitProbe {
     /// direction, and reporting them as grounded would be the lie this whole
     /// generator exists to prevent.
     loaded: BTreeSet<(String, usize)>,
+    /// Every loaded record's description, rendered by the exact function
+    /// `race_trait_picker::build_menu` calls (`record.render_description`
+    /// against `record.same_row_display_values()` -- the zero-feats,
+    /// catalog-level rendering the menu itself uses with an empty feat
+    /// list). SD31-D7-PROSE-001: the render path a real Tauri command
+    /// already serves to the player, reused rather than re-implemented, so
+    /// "renders on screen" is proven by construction, not asserted.
+    rendered: BTreeMap<(String, usize), String>,
 }
 
 fn probe_race_trait_corpus(repo_root: &Path) -> RaceTraitProbe {
@@ -1762,6 +1883,10 @@ fn probe_race_trait_corpus(repo_root: &Path) -> RaceTraitProbe {
             let Some(file) = Path::new(&record.source_path).file_name() else { continue };
             let coordinate = (file.to_string_lossy().into_owned(), record.source_line as usize);
             probe.loaded.insert(coordinate.clone());
+            probe.rendered.insert(
+                coordinate.clone(),
+                record.render_description(&record.same_row_display_values()).text,
+            );
             if record.role == TraitRole::Unclassified {
                 continue;
             }
@@ -2937,9 +3062,12 @@ const STATUS_VOCABULARY: &[(&str, &str)] = &[
     ),
     (
         "text-complete",
-        "The engine holds the record, and the corpus record carries NO magnitude token at all, so \
-         there is no number to compute. Per the operator's standing ruling the description \
-         reaching the player is the whole of the work.",
+        "The engine holds the record, the corpus record carries NO magnitude token at all (so \
+         there is no number to compute), AND its token closure carries a real, non-empty, \
+         non-.CLEAR/.CLEARALL, non-PI-redacted DESC: value (so there is real prose to show a \
+         player). Per Decision 7 (`docs/release/SD-31-corpus-closure-grind/decisions.md`) all \
+         three are required; the third was unchecked before SD31-D7-PROSE-001 and 634 units were \
+         found `done` on the live board with a null corpus description as a result.",
     ),
     (
         "deferred-with-reason",
@@ -3020,11 +3148,28 @@ fn class_feature_owner<'a, I: Iterator<Item = &'a String>>(key: &str, classes: I
 /// `10 + 1/2 your racial HD + your Charisma modifier`, Quarterstaff
 /// (Hurricane)'s `.MOD` row `DC %1.|12+WIS`) that proved the pattern
 /// genuine rather than a classifier false positive.
+///
+/// `has_real_description` (SD31-D7-PROSE-001, Decision 7's condition 3) is
+/// whether this unit's own token closure carries a real, non-empty, non-
+/// `.CLEAR`/`.CLEARALL`, non-PI-marker `DESC:` value anywhere -- computed by
+/// the caller from the SAME `row_refs` closure `carries_prose_magnitude`'s
+/// `wc_reason` is derived from, via [`closure_has_real_description`], so
+/// this function never re-reads the corpus itself. Before this parameter
+/// existed, `text_only` alone (zero `MAGNITUDE_TOKENS` fields and no prose
+/// formula) was sufficient to grant `text-complete` -- Decision 7 requires
+/// the description to be POPULATED from the real corpus row as a THIRD,
+/// separate condition, and a corpus-wide re-derivation the day this
+/// parameter was added found 634-1,060 units already `done` on the live
+/// board with a `null` corpus `description` (`OPEN-ISSUES.md` row 71,
+/// `progress.md`'s `SD31-D7-PROSE-001` receipt) -- a record merely existing
+/// in a catalog is not the same fact as its prose reaching a player, and
+/// Decision 7 says so explicitly.
 fn classify(
     unit: &CorpusUnit,
     facts: &EngineFacts,
     book_included_by: &BTreeSet<String>,
     carries_prose_magnitude: bool,
+    has_real_description: bool,
 ) -> Verdict {
     // A book with no compiled rule set has had nothing attempted -- unless it
     // is the shared library other books pull in, in which case the record's
@@ -3131,11 +3276,32 @@ fn classify(
                     engine_book: engine_book_field,
                 };
             }
-            if text_only {
+            if text_only && has_real_description {
                 return Verdict {
                     status: "text-complete",
                     evidence: "in_catalog_and_corpus_record_carries_no_magnitude_token".to_string(),
                     reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if text_only {
+                // Decision 7's condition 3: zero magnitude AND no real DESC:
+                // text anywhere in the token closure is nothing to compute
+                // AND nothing to show a player -- not the completion the
+                // ruling describes. `unknown` (not `not-ingested`, the
+                // record IS in the catalog) so `doneness_verdict` reads it
+                // `unmeasurable`, never `done` or `held`.
+                return Verdict {
+                    status: "unknown",
+                    evidence: "text_only_but_corpus_record_carries_no_description_to_show_a_player"
+                        .to_string(),
+                    reason: Some(
+                        "the feat is in the engine's catalog and its corpus record carries no \
+                         magnitude token, but its token closure also carries no real DESC: text \
+                         -- there is nothing to compute and nothing to show a player, so this is \
+                         not the zero-magnitude completion Decision 7 describes"
+                            .to_string(),
+                    ),
                     engine_book: engine_book_field,
                 };
             }
@@ -3202,10 +3368,25 @@ fn classify(
                         engine_book: engine_book_field,
                     }
                 }
-                Some(false) => Verdict {
+                // Decision 7's condition 3: the evidence token's own name
+                // ("...with_description...") used to ASSERT a description
+                // rather than checking one exists -- `has_real_description`
+                // makes that check real.
+                Some(false) if has_real_description => Verdict {
                     status: "text-complete",
                     evidence: "spell_list_entry_with_description_but_no_corpus_level".to_string(),
                     reason: None,
+                    engine_book: engine_book_field,
+                },
+                Some(false) => Verdict {
+                    status: "unknown",
+                    evidence: "spell_list_entry_with_no_corpus_level_and_no_description".to_string(),
+                    reason: Some(
+                        "the spell resolves in the engine's spell list but this book's corpus \
+                         record carries neither a resolved level nor any real DESC: text -- \
+                         nothing to compute and nothing to show a player"
+                            .to_string(),
+                    ),
                     engine_book: engine_book_field,
                 },
             }
@@ -3219,7 +3400,7 @@ fn classify(
             if !known {
                 return not_ingested("equipment_key_absent_from_equipment_tables");
             }
-            if text_only {
+            if text_only && has_real_description {
                 return Verdict {
                     status: "text-complete",
                     evidence: "in_equipment_tables_and_corpus_record_carries_no_magnitude_token"
@@ -3232,7 +3413,10 @@ fn classify(
             // delta on ONE book's corpus record, and only that book's unit may
             // claim it. See `probe_equipment_effect_wiring`'s doc comment for
             // the `Celestial Shield` case that proves a shared key is not a
-            // shared item.
+            // shared item. Consulted even for a text_only-but-undescribed
+            // record (below), so a text-and-magnitude-free item the engine
+            // somehow still observes a delta for is not demoted underneath
+            // its own real evidence.
             let observed = |candidate: &str| {
                 facts
                     .equipment_effect_wired
@@ -3243,6 +3427,26 @@ fn classify(
                     status: "grounded",
                     evidence: "equipment_effect_probe_observed_computed_delta".to_string(),
                     reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if text_only {
+                // Decision 7's condition 3, re-derived 2026-08-16: 634 units
+                // of this exact shape (magnitude_token_count==0, corpus
+                // `description: null`) were already `done` on the live board
+                // -- `chassis_only`/`.COPY` equipment rows with no cost, no
+                // weight and no DESC: token anywhere in their closure.
+                return Verdict {
+                    status: "unknown",
+                    evidence: "text_only_but_corpus_record_carries_no_description_to_show_a_player"
+                        .to_string(),
+                    reason: Some(
+                        "the item is in the engine's equipment tables and its corpus record \
+                         carries no magnitude token, but its token closure also carries no real \
+                         DESC: text -- there is nothing to compute and nothing to show a player, \
+                         so this is not the zero-magnitude completion Decision 7 describes"
+                            .to_string(),
+                    ),
                     engine_book: engine_book_field,
                 };
             }
@@ -3342,15 +3546,42 @@ fn classify(
             // credited to the observed one, exactly as a shared-library record
             // was before its host book was named. (`decisions.md §49.3`.)
             if let Some(observed) = facts.race_trait_engine_book(unit) {
+                let engine_book_for_verdict = if own_engine_book == Some(observed) {
+                    engine_book_field.clone()
+                } else {
+                    Some(observed.to_string())
+                };
+                // SD31-D7-PROSE-001 (Decision 7's done-bar, condition 3): a
+                // zero-magnitude record the race corpus applies is `grounded`
+                // -- true, but `grounded` is not a done-eligible status for
+                // `display` wiring class (`doneness_verdict` caps it at
+                // `held`, because for a MAGNITUDE-bearing record `grounded`
+                // can mean "the classifier missed a real formula" -- see
+                // that function's own doc comment). For a `text_only` record
+                // there is no formula to have missed, so the only remaining
+                // question is condition 3: does real prose reach the player?
+                // Answered by calling the EXACT function
+                // `race_trait_picker::build_menu` calls to serve the real
+                // Alternate Racial Traits screen, over the SAME loaded
+                // corpus -- never re-implemented, never asserted.
+                if text_only
+                    && let Some(rendered) = facts.race_trait_rendered_description(unit)
+                    && !rendered.trim().is_empty()
+                {
+                    return Verdict {
+                        status: "text-complete",
+                        evidence:
+                            "race_trait_applied_by_the_race_corpus_and_rendered_with_real_text"
+                                .to_string(),
+                        reason: None,
+                        engine_book: engine_book_for_verdict,
+                    };
+                }
                 return Verdict {
                     status: "grounded",
                     evidence: "race_trait_applied_by_the_race_corpus_the_app_loads".to_string(),
                     reason: None,
-                    engine_book: if own_engine_book == Some(observed) {
-                        engine_book_field
-                    } else {
-                        Some(observed.to_string())
-                    },
+                    engine_book: engine_book_for_verdict,
                 };
             }
             // FALLBACK: CRB's seven compiled races. Still consulted, because
@@ -4646,7 +4877,8 @@ fn main() {
             // signal `magnitude_token_count` already covers on its own.
             let carries_prose_magnitude =
                 matches!(wc_reason.as_str(), "prose_expr" | "prose_formula_segment");
-            let verdict = classify(unit, &facts, hosts, carries_prose_magnitude);
+            let has_real_description = closure_has_real_description(&row_refs);
+            let verdict = classify(unit, &facts, hosts, carries_prose_magnitude, has_real_description);
             let collides = slug_population
                 .get(&(book.id.clone(), unit.kind, slug(&unit.key)))
                 .is_some_and(|n| *n > 1);
@@ -5092,6 +5324,7 @@ mod prose_magnitude_status_tests {
             &facts,
             &BTreeSet::new(),
             true, // wiring_class resolved prose_formula_segment/prose_expr
+            true,
         );
         assert_ne!(verdict.status, "text-complete");
         // Honestly `unknown`/`held`, not silently promoted to `done`: the
@@ -5106,8 +5339,13 @@ mod prose_magnitude_status_tests {
     #[test]
     fn a_true_no_magnitude_feat_still_reads_text_complete() {
         let facts = facts_with_feat_catalog("core_rulebook", "Iron Will");
-        let verdict =
-            classify(&feat_unit("core_rulebook", "Iron Will", 0), &facts, &BTreeSet::new(), false);
+        let verdict = classify(
+            &feat_unit("core_rulebook", "Iron Will", 0),
+            &facts,
+            &BTreeSet::new(),
+            false,
+            true, // has a real corpus description
+        );
         assert_eq!(verdict.status, "text-complete");
     }
 
@@ -5122,8 +5360,33 @@ mod prose_magnitude_status_tests {
             &facts,
             &BTreeSet::new(),
             false,
+            true,
         );
         assert_ne!(verdict.status, "text-complete");
+    }
+
+    /// SD31-D7-PROSE-001 (Decision 7's condition 3, the PROXY WARNING): a
+    /// zero-magnitude feat with NO real corpus description anywhere in its
+    /// token closure must NOT read `text-complete` -- there is nothing to
+    /// show a player, so this is not the completion Decision 7 describes.
+    /// Corpus-wide re-derivation the day this test was written found 634
+    /// units already `done` on the live board in exactly this shape.
+    #[test]
+    fn a_zero_magnitude_feat_with_no_real_description_does_not_read_text_complete() {
+        let facts = facts_with_feat_catalog("core_rulebook", "Bare Chassis Feat");
+        let verdict = classify(
+            &feat_unit("core_rulebook", "Bare Chassis Feat", 0),
+            &facts,
+            &BTreeSet::new(),
+            false,
+            false, // no real DESC: text anywhere in the closure
+        );
+        assert_ne!(verdict.status, "text-complete");
+        assert_eq!(verdict.status, "unknown");
+        assert_eq!(
+            verdict.evidence,
+            "text_only_but_corpus_record_carries_no_description_to_show_a_player"
+        );
     }
 }
 
@@ -5922,6 +6185,114 @@ mod race_trait_grounding_tests {
             reachable.len()
         );
     }
+
+    // -----------------------------------------------------------------
+    // The text-complete rung (SD31-D7-PROSE-001, Decision 7's done-bar).
+    //
+    // A zero-magnitude race trait the race corpus applies is `grounded`
+    // above -- true, but not the strongest honest word for a record with
+    // NO magnitude to ground. These tests pin the promotion to
+    // `text-complete` (Decision 7's `done` bar) when, and ONLY when, the
+    // SAME render function `race_trait_picker::build_menu` calls to serve
+    // the real player-facing screen produces real, non-empty text.
+    // -----------------------------------------------------------------
+
+    fn race_trait_unit(file: &str, line: usize, key: &str, magnitude_token_count: usize) -> CorpusUnit {
+        CorpusUnit {
+            book: "advanced_race_guide".to_string(),
+            kind: Kind::RaceTrait,
+            key: key.to_string(),
+            name: key.to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: file.to_string(), line },
+            magnitude_token_count,
+            type_facet: None,
+            visible: true,
+        }
+    }
+
+    /// The proof case, against the REAL corpus and the REAL render path --
+    /// not a synthetic fixture. `Feral ~ Languages` (`arg_abilities_race.lst`
+    /// line 606) is one of the 146 zero-magnitude, race-corpus-applied
+    /// records this rung exists for (re-derived 2026-08-16,
+    /// `docs/work-inventory.json`): `magnitude_token_count == 0`,
+    /// `wiring_class: display`, and — before this change — `status:
+    /// grounded`, which `doneness_verdict` caps at `held` for `display`.
+    #[test]
+    fn a_real_zero_magnitude_applied_race_trait_reaches_text_complete_with_real_rendered_text() {
+        let mut facts = EngineFacts::default();
+        facts.race_trait_probe = probe_race_trait_corpus(&probe_root());
+        let unit = race_trait_unit("arg_abilities_race.lst", 606, "Feral ~ Languages", 0);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true);
+        assert_eq!(verdict.status, "text-complete");
+        assert_eq!(
+            verdict.evidence,
+            "race_trait_applied_by_the_race_corpus_and_rendered_with_real_text"
+        );
+        // The rendered text must be the REAL corpus prose, not invented
+        // here -- pinned against the row's own DESC: token.
+        let rendered = facts.race_trait_rendered_description(&unit).unwrap();
+        assert!(
+            rendered.contains("Feral orcs begin play speaking no languages"),
+            "expected the real DESC: text, got {rendered:?}"
+        );
+    }
+
+    /// PROVE THE RUNG CAN FAIL, case 1: a record the race corpus applies but
+    /// whose rendered description comes back empty must NOT read
+    /// `text-complete` -- Decision 7's condition 3 is "the prose is
+    /// available to print", and empty prose is not that. Falls back to the
+    /// pre-existing `grounded` verdict (still `held`, never `done`), not a
+    /// new failure mode.
+    #[test]
+    fn an_applied_race_trait_with_an_empty_rendered_description_does_not_read_text_complete() {
+        let coordinate = ("empty_desc_race.lst".to_string(), 1);
+        let mut facts = EngineFacts::default();
+        facts.race_trait_probe.loaded.insert(coordinate.clone());
+        facts.race_trait_probe.reachable.insert(coordinate.clone(), "advanced_race_guide".to_string());
+        facts.race_trait_probe.rendered.insert(coordinate, String::new());
+        let unit = race_trait_unit("empty_desc_race.lst", 1, "Empty ~ Trait", 0);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true);
+        assert_ne!(verdict.status, "text-complete");
+        assert_eq!(verdict.status, "grounded");
+    }
+
+    /// PROVE THE RUNG CAN FAIL, case 2: a record the race corpus applies but
+    /// whose rendered description was never populated at all (no entry in
+    /// `rendered`, distinct from an empty string -- the "we never resolved a
+    /// render for this coordinate" case) must also not read `text-complete`.
+    #[test]
+    fn an_applied_race_trait_with_no_rendered_entry_at_all_does_not_read_text_complete() {
+        let coordinate = ("no_render_race.lst".to_string(), 1);
+        let mut facts = EngineFacts::default();
+        facts.race_trait_probe.loaded.insert(coordinate.clone());
+        facts.race_trait_probe.reachable.insert(coordinate, "advanced_race_guide".to_string());
+        // deliberately no `rendered` entry
+        let unit = race_trait_unit("no_render_race.lst", 1, "No Render ~ Trait", 0);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true);
+        assert_ne!(verdict.status, "text-complete");
+        assert_eq!(verdict.status, "grounded");
+    }
+
+    /// PROVE THE RUNG CAN FAIL, case 3: a record that carries a real
+    /// magnitude token (`text_only` false) must never read `text-complete`
+    /// via this rung even with a perfectly real rendered description --
+    /// condition 2 ("nothing to compute") is not met.
+    #[test]
+    fn a_magnitude_bearing_applied_race_trait_never_reads_text_complete() {
+        let coordinate = ("has_magnitude_race.lst".to_string(), 1);
+        let mut facts = EngineFacts::default();
+        facts.race_trait_probe.loaded.insert(coordinate.clone());
+        facts.race_trait_probe.reachable.insert(coordinate.clone(), "advanced_race_guide".to_string());
+        facts
+            .race_trait_probe
+            .rendered
+            .insert(coordinate, "You gain a +2 bonus to something real.".to_string());
+        let unit = race_trait_unit("has_magnitude_race.lst", 1, "Has Magnitude ~ Trait", 1);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true);
+        assert_ne!(verdict.status, "text-complete");
+        assert_eq!(verdict.status, "grounded");
+    }
 }
 
 #[cfg(test)]
@@ -6548,7 +6919,7 @@ mod spell_grounding_tests {
     fn a_spell_the_probe_observed_reaches_grounded_on_the_probes_own_evidence() {
         let mut facts = facts_with_catalog_level("core_rulebook", "Shield");
         facts.spell_effect_wired.insert(("core_rulebook".to_string(), "Shield".to_string()));
-        let verdict = classify(&spell_unit("core_rulebook", "Shield"), &facts, &BTreeSet::new(), false);
+        let verdict = classify(&spell_unit("core_rulebook", "Shield"), &facts, &BTreeSet::new(), false, true);
         assert_eq!(verdict.status, "grounded");
         assert_eq!(verdict.evidence, "spell_effect_probe_observed_computed_delta");
     }
@@ -6562,7 +6933,7 @@ mod spell_grounding_tests {
     #[test]
     fn a_catalog_spell_the_probe_did_not_observe_stays_ingested_magnitude() {
         let facts = facts_with_catalog_level("core_rulebook", "Alarm");
-        let verdict = classify(&spell_unit("core_rulebook", "Alarm"), &facts, &BTreeSet::new(), false);
+        let verdict = classify(&spell_unit("core_rulebook", "Alarm"), &facts, &BTreeSet::new(), false, true);
         assert_eq!(verdict.status, "ingested-magnitude");
         assert_eq!(verdict.evidence, "spell_list_entry_with_resolved_level");
     }
@@ -6580,7 +6951,7 @@ mod spell_grounding_tests {
         let mut facts = facts_with_catalog_level("advanced_players_guide", "Shield");
         facts.spell_effect_wired.insert(("core_rulebook".to_string(), "Shield".to_string()));
         let verdict =
-            classify(&spell_unit("advanced_players_guide", "Shield"), &facts, &BTreeSet::new(), false);
+            classify(&spell_unit("advanced_players_guide", "Shield"), &facts, &BTreeSet::new(), false, true);
         assert_eq!(verdict.status, "ingested-magnitude");
     }
 
@@ -6599,7 +6970,7 @@ mod spell_grounding_tests {
             .spell_effect_wired
             .insert(("core_rulebook".to_string(), "Prestidigitation".to_string()));
         let verdict =
-            classify(&spell_unit("core_rulebook", "Prestidigitation"), &facts, &BTreeSet::new(), false);
+            classify(&spell_unit("core_rulebook", "Prestidigitation"), &facts, &BTreeSet::new(), false, true);
         assert_eq!(verdict.status, "text-complete");
     }
 
@@ -6613,7 +6984,7 @@ mod spell_grounding_tests {
             .spell_effect_wired
             .insert(("core_rulebook".to_string(), "Invented Spell".to_string()));
         let verdict =
-            classify(&spell_unit("core_rulebook", "Invented Spell"), &facts, &BTreeSet::new(), false);
+            classify(&spell_unit("core_rulebook", "Invented Spell"), &facts, &BTreeSet::new(), false, true);
         assert_eq!(verdict.status, "not-ingested");
     }
 
@@ -6858,7 +7229,7 @@ mod class_probe_tests {
         facts.class_books.insert("fighter".to_string(), "core_rulebook");
         facts.class_effect_wired.insert("fighter".to_string());
         let verdict =
-            classify(&class_unit("core_rulebook", "Fighter"), &facts, &BTreeSet::new(), false);
+            classify(&class_unit("core_rulebook", "Fighter"), &facts, &BTreeSet::new(), false, true);
         assert_eq!(verdict.status, "grounded");
         assert_eq!(
             verdict.evidence,
@@ -6876,7 +7247,7 @@ mod class_probe_tests {
         facts.class_books.insert("fighter".to_string(), "core_rulebook");
         // deliberately NOT inserted into `class_effect_wired`
         let verdict =
-            classify(&class_unit("core_rulebook", "Fighter"), &facts, &BTreeSet::new(), false);
+            classify(&class_unit("core_rulebook", "Fighter"), &facts, &BTreeSet::new(), false, true);
         assert_ne!(verdict.status, "grounded", "membership alone must not ground a class");
         assert_eq!(
             verdict.evidence,
@@ -6889,7 +7260,7 @@ mod class_probe_tests {
     fn an_observation_never_grounds_a_class_absent_from_every_class_enum() {
         let mut facts = EngineFacts::default();
         facts.class_effect_wired.insert("adept".to_string());
-        let verdict = classify(&class_unit("core_rulebook", "Adept"), &facts, &BTreeSet::new(), false);
+        let verdict = classify(&class_unit("core_rulebook", "Adept"), &facts, &BTreeSet::new(), false, true);
         assert_eq!(verdict.status, "not-ingested");
         assert_eq!(verdict.evidence, "class_absent_from_ClassId_ALL_and_book_class_id_enums");
     }

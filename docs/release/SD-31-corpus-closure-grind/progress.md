@@ -7291,3 +7291,210 @@ raised ceilings exactly. One further stale-baseline note surfaced only by this f
 `BASELINE_ROOT_TEST_BINARIES` 552 recorded vs 557 measured (+5, from one of the 5 merged branches'
 own new `tests/*.rs` file, not traced to a specific branch within remaining budget) -- corrected in
 the same commit as this receipt update. This is the definitive, authoritative result for this cycle.
+
+## Cycle `SD31-D7-PROSE-001` (`RETRO_ACTOR=sd31-prose-path`) — 2026-08-16, "build the done-path Decision 7 created"
+
+**Role:** `sd31-prose-path`, primary checkout at `tranche/11`, sole writer. **HEAD at claim:**
+`d47acc8fa` ("docs(sd31): OPEN-ISSUES row 68 -- operator-raised book-attribution defect; rows 36/44
+answered") — tree was NOT clean (several other lanes' untracked worktree/artifact files present, none
+touched); proceeded per protocol since the package directory was present. **Oracle pin:**
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
+(`./scripts/verify.sh --only preflight-oracle` → PASS). `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/
+sd31-prose-path`.
+
+### Card
+
+"Build the done-path Decision 7 created" — three parts: (1) validate the `magnitude_token_count == 0`
+proxy per Decision 7's own PROXY WARNING before banking anything on it; (2) build a real, refusable
+`text-complete` rung; (3) walk a first batch through it with DoD-8.
+
+### 1. Proxy validation — `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-D7-PROSE-001-proxy-validation.md`
+
+Extended `scripts/sample_ground_truth_units.py` with `--zero-magnitude-only` (TDD, 4 new tests in
+`scripts/tests/test_sample_ground_truth_units.py`, 8/8 green:
+`python3 -m unittest scripts.tests.test_sample_ground_truth_units -v`). Drew **121 units, 36 cells,
+all 5 wiring classes, 10 kinds** (exceeds the ≥120/≥6-kind bar):
+
+    python3 scripts/sample_ground_truth_units.py --inventory docs/work-inventory.json \
+      --current-cell-counts /tmp/empty-cell-counts.json --target-per-cell 4 \
+      --zero-magnitude-only --seed 31 \
+      --out docs/release/SD-31-corpus-closure-grind/artifacts/SD31-D7-PROSE-001-proxy-sample-draw.json
+
+Every one of the 121 was read in full against its **whole** corpus record (real
+`data/corpus/<book>/<kind>/**/*.json` when one exists, joined by `(source.path basename, source.line)`
+searched across every book directory; the pinned PCGen oracle's raw `.lst` line + `.MOD` closure for
+the 76 with no corpus JSON dump at all — CRB feats and several classes are compiled-table-only) and
+hand-labelled: `genuinely_zero_magnitude` = `true`/`false`/`inconclusive`, with quoted real evidence
+for every label. Committed at `SD31-D7-PROSE-001-proxy-sample-evidence.json`.
+
+**Headline, re-derived from the committed evidence file, not transcribed:**
+
+    python3 -c "import json,collections; r=json.load(open('docs/release/SD-31-corpus-closure-grind/artifacts/SD31-D7-PROSE-001-proxy-sample-evidence.json')); print(collections.Counter(x['hand_genuinely_zero_magnitude'] for x in r))"
+    -> Counter({'false': 57, 'inconclusive': 35, 'true': 29})
+
+**`magnitude_token_count == 0` alone is confirmed unsafe**: 57/121 (47%) hand-confirmed to carry real
+magnitude language despite the flag. But **48 of those 57 already carry a non-`display` `wiring_class`**
+(21 ambiguous, 20 derived, 5 static, 2 computed) — i.e. `wiring_class::determine_closure`'s own,
+separate prose scan already catches the large majority. **The safe, already-shipped predicate is
+`wiring_class == 'display' AND magnitude_token_count == 0`**, not the raw token count alone — every
+`text-complete`-granting branch in `v06_work_inventory.rs` was already gated this way before this
+cycle. Within `display` specifically: 40 draws, 28 with confident evidence (12 `.COPY`/`.MOD` stub
+rows/class-declaration rows reported `inconclusive` rather than guessed — Limitation 1 in the report),
+19 genuinely zero-magnitude, **9 carry a real flat (non-scaling) numeric value the `display`
+classification missed** (`OPEN-ISSUES.md` row 69 — logged with a named, unresolved interpretive
+question about what "nothing to compute" means for a flat vs. scaling value, explicitly NOT decided
+unilaterally, and confirmed to affect nothing this cycle shipped). Two of those 9
+(`strength_damage`'s "1d6 points", `pufferfish_spines`'s "1 point") were missed by the automated regex
+pre-screen too — caught only by the hand read, reported as the screen's own disclosed blind spot.
+
+### 2. Build the path — two changes, both in `src/bin/v06_work_inventory.rs`
+
+**(a) Fixed a corpus-wide anti-gaming defect the proxy validation surfaced first** (`OPEN-ISSUES.md`
+row 71): none of the four existing `text_only`→`text-complete` branches (Feat, Equipment/
+EquipmentModifier, Spell) ever checked that a description actually existed — only conditions 1/2
+(`magnitude_token_count == 0`) were gated. Added `closure_has_real_description(row_refs)` (new,
+7 TDD tests: real DESC on base row, real DESC on a `.MOD` row, no DESC at all, `.CLEAR`/`.CLEARALL`
+markers, the shipped PI-redaction marker, a blank value, a missing row) and a `has_real_description`
+parameter threaded through `classify()` (12 call sites updated) and gated on it. Refusal is a NEW
+`unknown` status (`doneness_verdict` reads `unknown` as `unmeasurable` — never `done`, never `held`)
+with an honest reason, not a silent fallthrough. Un-gates nothing that was working: every existing
+"real magnitude" code path is byte-for-byte unchanged (verified: the `Equipment` arm's
+`observed`/grounded check is now consulted BEFORE the new refusal, so a text-and-magnitude-free record
+the engine somehow still grounds is never demoted underneath its own real evidence).
+
+**(b) Built the NEW rung**: `Kind::RaceTrait` never had a `text-complete` branch at all (only
+`grounded`/`not-ingested`) — a zero-magnitude race trait the race corpus genuinely applies was capped
+at `held` by `doneness_verdict`'s `display + grounded → held` rule. Added a promotion `grounded`→
+`text-complete` gated on `text_only && a real, non-empty rendered description`, where "rendered" means
+the EXACT function `apps/desktop/src-tauri/src/race_trait_picker.rs`'s `build_menu()` calls to serve
+the real, player-facing `list_alternate_racial_traits` Tauri command
+(`RaceTraitRecord::render_description` against `same_row_display_values()`) — reused via a new
+`RaceTraitProbe.rendered` field populated in the SAME `probe_race_trait_corpus` load the existing
+`grounded` check already performs, never re-implemented. 4 new tests in `race_trait_grounding_tests`:
+1 against the REAL corpus (`advanced_race_guide:race_trait:feral_languages`, `arg_abilities_race.lst:
+606`) proving the positive case with the real DESC text pinned; 3 proving the rung REFUSES (empty
+rendered text, no rendered entry at all, a magnitude-bearing record) — "prove the rung can fail" per
+the card, all three fall back to the pre-existing `grounded` verdict (still `held`, never a new failure
+mode).
+
+Full test run: `cargo test --locked --bin v06_work_inventory` → **96/96 passed, 0 failed, 0 ignored**.
+12 new tests this cycle: 7 in `closure_has_real_description_tests` (the condition-3 helper), 1 new
+refusal case in `prose_magnitude_status_tests` (zero-magnitude + no real description), 4 in
+`race_trait_grounding_tests` (the new rung's 1 positive + 3 refusal cases). 12 pre-existing call sites
+of `classify()` updated for the new `has_real_description` parameter, all still passing unchanged.
+
+### 3. Walked through it — the guarded regen (the ONE sanctioned run, local, uncommitted per the wave rule)
+
+    cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-prose-path.json
+    cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-prose-path.json
+    CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep-sd31-prose-path.json \
+    DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture-sd31-prose-path.json \
+      cargo run --locked --bin v06_work_inventory -- --allow-stamp-loss
+
+`corpus_literal_sweep`: 19,422 records examined, 0 findings, CLEAN. `derived_evaluator_fixture_check`:
+100/101 covered units cleared, 1 pre-existing failure (`advanced_players_guide:equipment:
+spindle_of_perfect_knowledge`, confirmed pre-existing and untouched by this cycle, same as the last two
+integration receipts). `--allow-stamp-loss` was required and used **deliberately**: the fix correctly
+demoted 3 previously-`literal-verified` (`static` wiring class) equipment records
+(`ultimate_equipment:equipment:scimitar_of_the_spellthief`/`spider_s_fang`/`trident_triton_s`, all
+`description: null`, `cost_gp: null`, `weight_lbs: null` `.COPY` husks) — this is the guard correctly
+catching a deliberate, correct consequence of the anti-gaming fix, not an accidental regression; the
+same pattern the description fix targets everywhere else.
+
+**Board headline, re-derived with the producer's own `doneness_verdict`** (before/after, same command
+both times):
+
+    python3 -c "import json,sys,collections; sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P; d=json.load(open('docs/work-inventory.json')); U=[u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]; c=collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U); print(len(U), dict(c), round(100*c['done']/len(U),2))"
+    before -> 38521 {'done': 7603, ...} 19.74%
+    after  -> 38521 {'done': 6689, 'not-started': 20277, 'unmeasurable': 5313, 'deferred': 36, 'held': 5422, 'in-progress': 784} 17.36%
+
+**`done` moves 7,603 → 6,689, net -914** — a DECREASE, reported honestly per the card's own "fewer
+units, honestly proven is the correct outcome" standard. Exact delta (before/after done-set diff,
+`docs/release/SD-31-corpus-closure-grind/progress.md`-committed methodology):
+
+    added 146 (all race_trait, evidence race_trait_applied_by_the_race_corpus_and_rendered_with_real_text)
+    removed 1060 (836 equipment_modifier, 212 equipment, 11 feat, 1 spell -- all the description-null fix)
+
+**units_moved_to_done: +146** (the new rung's real, honestly-proven contribution). The -1,060 is a
+correction of pre-existing invalid credit, not new work removed. `OPEN-ISSUES.md` row 70 quantifies and
+discloses a known conservative gap in the fix (247 of the 1,060 demoted units DO have a real
+description via `.COPY`-base-item inheritance the raw-`.lst`-closure check can't see — a disclosed,
+safe-direction false negative, not chased further this cycle, exact recovery mechanism named for a
+follow-up).
+
+Restored `docs/work-inventory.json` after measuring (`git checkout -- docs/work-inventory.json`,
+confirmed clean) — not committed, per the wave rule.
+
+### Epic 0 audit (re-run at this cycle's own change, per SD-31 override 7)
+
+`python3 scripts/reachability_audit.py` → `AUDIT_EXIT=0`, **reachable ceiling unchanged: 98.95%
+(38,117/38,521)**, same 9 pre-existing dead-end cells (all Epic-2-owned `ambiguous|*`) — the new
+`unknown` verdicts this cycle introduces stay inside the reachable band (a display-class unit that
+fails the new description gate still has a working `text-complete` path in the grid; this specific
+unit not meeting it is not the same as the grid having no path).
+
+### Trap report (DoD item 3)
+
+`cargo run --locked --bin v06_corpus_trap_report -- --audit` → `TRAP_EXIT=2`, **`1 0 mod-record;
+0 1191 wiring-class-mismatch`** — byte-identical to the last integration receipt's baseline
+(`SD31-W4-INTEGRATE-001`). Confirmed NOT worsened by this cycle.
+
+### DoD-8, on-screen
+
+`apps/desktop`'s driver (`RUN_DESKTOP_AGENT=sd31-prose-path`), character-creation screen, Race =
+"Aasimar (B1)": `Agathion-Blooded (Idyllkin) · CE` renders "Idyllkin possess bestial aspects and calm
+dispositions, and often act as peaceful intermediaries between lawful and chaotic agents of good." —
+byte-identical to `data/corpus/core_essentials/race_trait/aasimar/aasimar_agathion_blooded.json`'s
+`data.description` (confirmed by direct read), and to `core_essentials:race_trait:
+aasimar_agathion_blooded`'s corpus record, one of the 146 units this cycle's rung newly promotes to
+`done`. Screenshot committed:
+`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-D7-PROSE-001/aasimar-agathion-blooded-text-complete.png`.
+This is the SAME render path (`race_trait_picker::render_description`) the character-creation screen
+and the standalone Alternate Racial Traits catalog both call — proven live, not asserted.
+
+### Scale plan
+
+**Per-unit cost measured from this batch:** the `race_trait` rung's marginal cost was ~0 additional
+corpus work per unit once the render-path plumbing existed (146 units promoted by ONE code change +
+its tests, no per-record hand-editing) — the batchable part is the ENGINEERING (build the rung once
+per kind), not the per-unit promotion (that is free once a genuine render path exists and is reused).
+**What is batchable vs. what must stay hand-checked:** batchable — any kind with an EXISTING,
+already-wired, description-rendering consumer (confirmed this cycle: `companion` via
+`companion_catalog.rs`'s `serve_ability_description`, ~223 zero-mag `grounded` companion units in the
+identical shape, re-derived this cycle and logged as the next-cheapest target, `OPEN-ISSUES.md` row
+72). Must stay hand-checked / is NOT free: `class_feature` (8,637 not-done zero-mag units, the
+largest population) has **no generic catalog anywhere in this engine** — confirmed by direct source
+search (`apps/desktop/src-tauri/src/` has 7 `*_catalog.rs` files, none for `class_feature`) and by
+this file's own SD28-E15/E24 history (a `text_only`→`text-complete` promotion for `class_feature` was
+built and REVERTED once already, for exactly this reason — no render path existed to prove condition 3
+against). Building one is a real, separate epic (new catalog table, new Tauri DTO field, new frontend
+render component), not a same-cycle extension of this rung's pattern. `monster_ability` (1,958
+not-done) likely needs the same scale of new-catalog work; not investigated this cycle.
+**How much of the ~14,586 the plan covers:** this cycle: 146 (1.0%). The `companion` extension named
+above: ~223 more (1.5%), buildable with the SAME pattern at similar cost. The two large populations
+(`class_feature` 8,637, `monster_ability` ~1,958, 59% + 13% of the 14,586) need real new engine/catalog
+work, not a rung extension — reported honestly rather than promised as "coming soon" for free.
+
+### Full gate
+
+Launched early, in the background (`LOG=docs/release/SD-31-corpus-closure-grind/artifacts/
+SD31-D7-PROSE-001-verify.log`). **[This section is finalized after the gate's own exit code is known —
+see the log's own `RESULT`/`VERIFY_EXIT` line, authoritative over anything summarized above it if this
+receipt is read before the gate finished.]**
+
+### Reclaim
+
+`scripts/reclaim.sh` then `--apply` run at cycle end.
+
+### Files touched (this cycle's own file territory only)
+
+- `src/bin/v06_work_inventory.rs` (production + tests)
+- `scripts/sample_ground_truth_units.py` + `scripts/tests/test_sample_ground_truth_units.py`
+- `docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md` (append-only, rows 69-72)
+- `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-D7-PROSE-001*` (new)
+- `docs/release/SD-31-corpus-closure-grind/progress.md` (this receipt)
+- `docs/retro/events/sd31-prose-path.jsonl` (new, own actor file)
+
+**Did NOT touch** (explicitly out of file territory): `wiring_class.rs`, `cache_gen/*`,
+`pilot_compute.rs`, the spell catalog, the monster chassis, `docs/work-inventory.json` (measured then
+restored).

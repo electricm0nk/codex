@@ -86,18 +86,31 @@ def draw(
     target_per_cell: int,
     excluded_ids: set,
     seed: int,
+    zero_magnitude_only: bool = False,
 ) -> list:
     """Deterministic given (units, current_cell_counts, target_per_cell,
-    excluded_ids, seed): groups eligible units by `(wiring_class, kind)`,
-    shuffles each cell's candidate pool with a seeded RNG, and takes enough
-    from the front of each shuffled pool to close the gap between the
-    caller's current count and `target_per_cell` -- never more than the
-    cell's real population supports."""
+    excluded_ids, seed, zero_magnitude_only): groups eligible units by
+    `(wiring_class, kind)`, shuffles each cell's candidate pool with a seeded
+    RNG, and takes enough from the front of each shuffled pool to close the
+    gap between the caller's current count and `target_per_cell` -- never
+    more than the cell's real population supports.
+
+    `zero_magnitude_only` (SD31-D7-PROSE-001, Decision 7's PROXY WARNING):
+    restricts the candidate pool to `magnitude_token_count == 0` units before
+    stratifying -- the exact population the `magnitude_token_count == 0`
+    proxy decides, and the only population a sample validating that proxy
+    may honestly draw from. `magnitude_token_count` is always carried on the
+    emitted record (regardless of this flag) so a reader can see the raw
+    proxy value that put a unit in the draw, independent of the engine's own
+    `wiring_class` verdict.
+    """
     rng = random.Random(seed)
 
     by_cell = collections.defaultdict(list)
     for u in units:
         if u.get("id") in excluded_ids:
+            continue
+        if zero_magnitude_only and u.get("magnitude_token_count") != 0:
             continue
         cell = f"{u.get('wiring_class')}:{u.get('kind')}"
         by_cell[cell].append(u)
@@ -121,6 +134,7 @@ def draw(
                     "engine_wiring_class": u.get("wiring_class"),
                     "engine_wiring_class_reason": u.get("wiring_class_reason"),
                     "engine_status": u.get("status"),
+                    "magnitude_token_count": u.get("magnitude_token_count"),
                     "corpus_key": u.get("corpus_key"),
                     "source_file": u.get("source_file"),
                     "source_line": u.get("source_line"),
@@ -152,6 +166,11 @@ def main(argv=None) -> int:
     )
     parser.add_argument("--target-per-cell", type=int, default=3)
     parser.add_argument("--seed", type=int, default=31)
+    parser.add_argument(
+        "--zero-magnitude-only",
+        action="store_true",
+        help="restrict the draw to magnitude_token_count==0 units (Decision 7 proxy validation)",
+    )
     parser.add_argument("--out", required=True)
     args = parser.parse_args(argv)
 
@@ -160,7 +179,14 @@ def main(argv=None) -> int:
     with open(args.current_cell_counts, "r", encoding="utf-8") as fh:
         current_cell_counts = json.load(fh)
 
-    result = draw(units, current_cell_counts, args.target_per_cell, excluded, args.seed)
+    result = draw(
+        units,
+        current_cell_counts,
+        args.target_per_cell,
+        excluded,
+        args.seed,
+        zero_magnitude_only=args.zero_magnitude_only,
+    )
 
     with open(args.out, "w", encoding="utf-8") as fh:
         json.dump(result, fh, indent=2)
