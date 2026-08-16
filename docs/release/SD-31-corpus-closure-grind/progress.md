@@ -5286,3 +5286,17 @@ on their own; the DoD-1 gap is reported plainly, not inferred as closed.
 Retro event: `docs/retro/events/sd31-cachegen-cf.jsonl` id `1786846072002-sd31-cachegen-cf-43ea04`
 (`type: rework`) — a real defect this cycle introduced was caught by its own gate before landing, fixed
 same-cycle, not deferred.
+
+**Gate 2's final word, at cycle close.** `SD31-E5-F1-001-verify-run2.log` (committed alongside this
+receipt update, whatever state it is in) had NOT reached `VERIFY_EXIT=` by the time this cycle's turn
+budget closed — it was past `root-lib` (PASS, 1821, matching Gate 1's own already-confirmed count) and
+into `root-full`'s ~490-binary build/run when last checked, the same stage that carried the 3 defects
+Gate 1 found and this cycle fixed. Per "gate finished or not, land the commit": the commits, the fix,
+and this receipt are landed regardless. `root-lib` passing a second time on the fixed tree, this cycle's
+own standalone `cargo build --locked --tests` for the desktop crate compiling clean with the fix
+(confirmed earlier in this receipt), and direct line-by-line re-reading of `tests/
+sd27_book_license_record_counts.rs`'s and `reach_gate.rs`'s own derivation/assertion logic against the
+hand-computed values the fix supplies are the evidence this fix is correct, in place of a second
+obtained `VERIFY_EXIT=0`. This is reported as exactly what it is — strong indirect evidence, not a
+second green gate — and integration (or a resumed cycle) should read `SD31-E5-F1-001-verify-run2.log`'s
+own final lines for the actual answer before treating DoD item 1 as closed.
