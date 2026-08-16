@@ -107,8 +107,8 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest reachability-audit-selftest reachability-audit groundtruth-guard-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest reachability-audit-selftest reachability-audit groundtruth-guard-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
+ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
+QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -529,6 +529,55 @@ run_groundtruth_guard_selftest() {
     fi
 
     stage_pass groundtruth-guard-selftest "$ran cases passed"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: supersession-gate-selftest
+#
+# Runs `python3 -m unittest scripts/tests/test_supersession_register_gate.py`
+# -- SD31-D10-REGISTER-001's own self-test. Decision 10 (`decisions.md`) is
+# the FIRST authorization in this package to shrink the mandate denominator,
+# and it is a standing rule a cycle may apply WITHOUT a per-entry operator
+# signature (unlike the Structural Exclusion Register, `decisions.md §3`) --
+# so this gate, not a signature, is the only thing protecting that number.
+# This self-test seeds a bad entry of BOTH refusal shapes the card demands
+# (two records that materially differ; a variant-line book with no
+# `reprint_proof`) plus two structural ones (core_essentials on either side;
+# backwards SOURCEDATE order) and confirms each is refused, then confirms a
+# genuinely clean entry — and a variant-line entry carrying real
+# `reprint_proof` — both pass. Hermetic (a tiny fake corpus tree under a
+# temp dir, same pattern as reachability-audit-selftest/
+# groundtruth-guard-selftest above), no oracle dependency. Cheap, in BOTH
+# stage sets.
+# ---------------------------------------------------------------------------
+
+run_supersession_gate_selftest() {
+    stage_start "supersession-gate-selftest — python3 -m unittest scripts/tests/test_supersession_register_gate.py"
+    local log="$LOG_DIR/supersession-gate-selftest.log"
+    local script="$REPO_ROOT/scripts/tests/test_supersession_register_gate.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail supersession-gate-selftest "self-test script missing at scripts/tests/test_supersession_register_gate.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 -m unittest -v "$script" ) >"$log" 2>&1
+    local status=$?
+
+    local ran
+    ran=$(sed -n 's/^Ran \([0-9]*\) tests\? in .*$/\1/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail supersession-gate-selftest "self-test exit $status${ran:+; ran $ran}  — $log"
+        return
+    fi
+
+    if [[ -z "$ran" || "$ran" -eq 0 ]]; then
+        stage_fail supersession-gate-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass supersession-gate-selftest "$ran cases passed"
 }
 
 # ---------------------------------------------------------------------------
@@ -1253,6 +1302,59 @@ run_corpus_sweep() {
     stage_pass corpus-sweep "${summary:-clean}"
 }
 
+# ---------------------------------------------------------------------------
+# Stage: supersession-gate
+#
+# Runs `scripts/supersession_register_gate.py` against the committed
+# `docs/release/SD-31-corpus-closure-grind/artifacts/SUPERSESSION-REGISTER.json`
+# (SD31-D10-REGISTER-001, `decisions.md` Decision 10 + its amendment). For
+# every `objects[]` entry it RE-DERIVES both sides' raw `.lst` row from the
+# pinned oracle (never trusts the register's own cached copy) and refuses
+# the entry if the two are not still field-identical after stripping
+# provenance/pricing tokens — a corpus drift or a hand-edited entry both
+# fail here. It also refuses any entry naming `pathfinder_unchained` or
+# `mythic_adventures` without a `reprint_proof` (default: variant, not a
+# reprint), any entry naming `core_essentials` (Decision 9: not a book),
+# and a backwards SOURCEDATE order. FULL only (needs the pinned oracle),
+# placed immediately after `corpus-sweep`, same dependency.
+# ---------------------------------------------------------------------------
+
+run_supersession_gate() {
+    stage_start "supersession-gate — python3 scripts/supersession_register_gate.py"
+    local log="$LOG_DIR/supersession-gate.log"
+    local script="$REPO_ROOT/scripts/supersession_register_gate.py"
+    local register="$REPO_ROOT/docs/release/SD-31-corpus-closure-grind/artifacts/SUPERSESSION-REGISTER.json"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail supersession-gate "script missing at scripts/supersession_register_gate.py"
+        return
+    fi
+    if [[ ! -f "$register" ]]; then
+        stage_fail supersession-gate "register missing at docs/release/SD-31-corpus-closure-grind/artifacts/SUPERSESSION-REGISTER.json"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 "$script" --register "$register" ) >"$log" 2>&1
+    local status=$?
+
+    local checked
+    checked=$(sed -n 's/^supersession_register_gate: \([0-9]*\) objects checked.*$/\1/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        printf '    FAIL: at least one register entry was refused. From the log:\n'
+        grep -A20 '  FAIL:' "$log" | sed 's/^/        /'
+        stage_fail supersession-gate "exit $status — $log"
+        return
+    fi
+
+    if ! grep -q '^  OK:' "$log"; then
+        stage_fail supersession-gate "binary exited 0 without reporting OK — $log"
+        return
+    fi
+
+    stage_pass supersession-gate "${checked:-0} objects, all clean"
+}
+
 run_class_dump() {
     stage_start "class-dump — cargo run --locked --bin v06_class_state_dump  (repo root)"
     local log="$LOG_DIR/class-dump.log"
@@ -1329,6 +1431,7 @@ for stage in "${SELECTED[@]}"; do
         reachability-audit-selftest) run_reachability_audit_selftest ;;
         reachability-audit)  run_reachability_audit ;;
         groundtruth-guard-selftest) run_groundtruth_guard_selftest ;;
+        supersession-gate-selftest) run_supersession_gate_selftest ;;
         pi-sweep)            run_pi_sweep ;;
         declared-pi-audit)   run_declared_pi_audit ;;
         audit-selftest)      run_audit_selftest ;;
@@ -1336,6 +1439,7 @@ for stage in "${SELECTED[@]}"; do
         driver-selftest)     run_driver_selftest ;;
         corpus-sweep-selftest) run_corpus_sweep_selftest ;;
         corpus-sweep)        run_corpus_sweep ;;
+        supersession-gate)   run_supersession_gate ;;
         root-lib)            run_root_lib ;;
         root-full)           run_root_full ;;
         desktop)             run_desktop ;;
