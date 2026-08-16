@@ -4951,22 +4951,64 @@ fn apply_done_rung_stamps(
         match item.wiring_class {
             wiring_class::WiringClass::Static => {
                 // CONFIRMED cross-lane finding (`OPEN-ISSUES.md` row 104,
-                // `SD31-E6-F7-001`): join on `source_book` (the PHYSICAL
-                // book a `.lst` file lives under, matching
-                // `corpus_literal_sweep`'s own `short_book_of` output), not
-                // `book` (the re-attributed REPORTING field) -- the same
-                // fix `engine_book_for`'s two call sites already apply.
-                // Using `book` here silently strands every re-attributed
-                // Static unit at `held` even when the sweep genuinely
-                // verified its true citation.
+                // `SD31-E6-F7-001`), corrected one record deep by THIS
+                // integration cycle after the finding's own suggested
+                // one-line fix ("join on `source_book`, never `book`")
+                // proved to REGRESS a different population when tried:
+                // `corpus_literal_sweep::short_book_of` does not resolve to
+                // one field consistently.
+                //
+                // For a `core_essentials`-housed race/race_trait row
+                // NESTED under `races/<slug>/` (e.g. `core_essentials:
+                // race:dwarf`, physically walked from `source_book ==
+                // "core_essentials"`), `short_book_of` applies the SAME
+                // `RACE_TRUE_BOOK` re-attribution `v06_work_inventory`'s
+                // own `resolve_true_book_for_core_essentials` already
+                // baked into `unit.book` (here, `"core_rulebook"`) --
+                // proven one record deep against the real sweep report:
+                // `sweep_verified` for `dwarf_races.lst:6` carries `book:
+                // "core_rulebook"`, NOT `"core_essentials"`. Joining on
+                // `source_book` alone (the finding's own literal
+                // suggestion) would have silently REGRESSED these 7 CRB
+                // races' -- and every other `RACE_TRUE_BOOK`-covered
+                // race/race_trait row's -- `literal-verified` stamp
+                // (confirmed: this exact change, tried first, produced a
+                // 12-stamp loss on the guarded regen, all `core_essentials:
+                // race(_trait):*` ids, `--allow-stamp-loss`'s own
+                // first-offenders list).
+                //
+                // For a ROOT-LEVEL `core_essentials/ce_*.lst` row (the
+                // `companion`/`monster_ability` shape the original finding
+                // named, e.g. `ce_races_familiar_apg.lst`),
+                // `short_book_of`'s own doc comment states plainly it does
+                // NOT replicate `resolve_true_book_for_core_essentials`'s
+                // OTHER (`SOURCELONG:`-header-scan) re-attribution branch --
+                // so it reports the RAW physical book (`source_book`, here
+                // `"core_essentials"`), while `unit.book` has already been
+                // re-attributed (here, `"advanced_players_guide"`). Joining
+                // on `book` alone (this file's PRE-fix behaviour) misses
+                // these entirely -- the original 34-unit finding.
+                //
+                // Trying BOTH fields is the safe union of both shapes: a
+                // `(book_or_source_book, file, line)` triple can only
+                // over-match if some UNRELATED unit's book coincides with
+                // this one's on the identical `(file, line)` coordinate,
+                // which the sweep's own per-record `record_key` disambiguates
+                // upstream (`SD31-D7-PROSE-002`'s own 24-collision finding);
+                // it can never under-match relative to either the pre-fix or
+                // the finding's own attempted fix alone.
                 if matches!(
                     item.verdict.status,
                     "ingested-magnitude" | "grounded" | "text-complete"
-                ) && sweep_verified.contains(&(
+                ) && (sweep_verified.contains(&(
+                    item.unit.book.clone(),
+                    item.unit.provenance.file.clone(),
+                    item.unit.provenance.line,
+                )) || sweep_verified.contains(&(
                     item.unit.source_book.clone(),
                     item.unit.provenance.file.clone(),
                     item.unit.provenance.line,
-                )) {
+                ))) {
                     item.verdict.status = "literal-verified";
                 }
             }
@@ -5059,29 +5101,25 @@ mod apply_done_rung_stamps_tests {
     }
 
     /// CONFIRMED cross-lane finding (`OPEN-ISSUES.md` row 104,
-    /// `SD31-E6-F7-001`): `corpus_literal_sweep`'s own `short_book_of`
-    /// resolves a re-attributed record's `(book, file, line)` triple using
-    /// the PHYSICAL book a `.lst` file lives under (mirroring
-    /// `CorpusUnit::source_book`'s documented contract), never the
-    /// re-attributed REPORTING book (`CorpusUnit::book`) two sibling call
-    /// sites (`engine_book_for`) already correctly join on. A unit whose
-    /// `book` was re-attributed away from its `source_book` (the real
-    /// `core_essentials`-housed `ce_*.lst` shape `SD31-ATTRIB-001` produces
-    /// for `companion`/`monster_ability`/`race_trait`) must still stamp
+    /// `SD31-E6-F7-001`), companion half: for a ROOT-LEVEL `core_essentials/
+    /// ce_*.lst` row (the real `ce_races_familiar_apg.lst` shape), `corpus_
+    /// literal_sweep::short_book_of` does NOT replicate `v06_work_inventory`'s
+    /// `SOURCELONG:`-header re-attribution -- it reports the raw PHYSICAL
+    /// book (`source_book`), while `unit.book` has already been
+    /// re-attributed. A unit in this shape must still stamp
     /// `literal-verified` when the sweep verifies its TRUE physical
-    /// citation -- joining on the wrong field silently strands it at
-    /// `held` forever, exactly the shape that blocked 34 real `companion`
-    /// units this wave.
+    /// citation -- joining on `book` alone silently stranded 34 real
+    /// `companion` units this wave.
     #[test]
-    fn static_stamp_joins_on_source_book_not_the_reattributed_reporting_book() {
+    fn static_stamp_joins_on_source_book_for_a_root_level_reattributed_companion_row() {
         let mut reattributed = unit("companion_one", wiring_class::WiringClass::Static, "grounded", 9);
         reattributed.unit.book = "advanced_players_guide".to_string();
         reattributed.unit.source_book = "core_essentials".to_string();
         reattributed.unit.provenance.file = "ce_races_familiar_apg.lst".to_string();
         let mut inventory = vec![reattributed];
 
-        // The sweep's own report keys on the PHYSICAL book, exactly as
-        // `short_book_of` really produces it -- `source_book`, not `book`.
+        // The sweep's own report, for a ROOT-LEVEL file, keys on the
+        // PHYSICAL book -- `source_book`, not `book`.
         let sweep_verified: BTreeSet<(String, String, usize)> =
             [("core_essentials".to_string(), "ce_races_familiar_apg.lst".to_string(), 9)].into_iter().collect();
         let derived_fixture_verified: BTreeSet<String> = BTreeSet::new();
@@ -5091,7 +5129,42 @@ mod apply_done_rung_stamps_tests {
         assert_eq!(
             inventory[0].verdict.status, "literal-verified",
             "a re-attributed Static unit must still stamp when the sweep verified its TRUE \
-             physical (source_book, file, line) citation, not its reporting book"
+             physical (source_book, file, line) citation for a root-level core_essentials row"
+        );
+    }
+
+    /// The OTHER half of the same finding, traced one record deep by THIS
+    /// integration cycle: for a NESTED `core_essentials/races/<slug>/` row
+    /// (the real `core_essentials:race:dwarf` shape, `dwarf_races.lst:6`),
+    /// `short_book_of` DOES apply the same `RACE_TRUE_BOOK` re-attribution
+    /// `v06_work_inventory` already baked into `unit.book` -- so the sweep's
+    /// own report keys on the RE-ATTRIBUTED book (`"core_rulebook"`), not
+    /// the physical `source_book` (`"core_essentials"`). Joining on
+    /// `source_book` alone -- the finding's own literal suggested fix,
+    /// tried first and reverted after this exact case regressed on the
+    /// guarded regen (7 CRB races' stamps lost, `--allow-stamp-loss`'s own
+    /// first-offenders list) -- must NOT be the only join key; `book` must
+    /// also be tried.
+    #[test]
+    fn static_stamp_joins_on_book_for_a_nested_race_true_book_reattributed_row() {
+        let mut reattributed = unit("race_one", wiring_class::WiringClass::Static, "grounded", 6);
+        reattributed.unit.book = "core_rulebook".to_string();
+        reattributed.unit.source_book = "core_essentials".to_string();
+        reattributed.unit.provenance.file = "dwarf_races.lst".to_string();
+        let mut inventory = vec![reattributed];
+
+        // The sweep's own report, for a RACE_TRUE_BOOK-nested file, keys on
+        // the RE-ATTRIBUTED book -- `book`, not the raw `source_book`.
+        let sweep_verified: BTreeSet<(String, String, usize)> =
+            [("core_rulebook".to_string(), "dwarf_races.lst".to_string(), 6)].into_iter().collect();
+        let derived_fixture_verified: BTreeSet<String> = BTreeSet::new();
+
+        apply_done_rung_stamps(&mut inventory, &sweep_verified, &derived_fixture_verified);
+
+        assert_eq!(
+            inventory[0].verdict.status, "literal-verified",
+            "a nested race_true_book-reattributed Static unit must still stamp when the sweep \
+             verified its TRUE re-attributed (book, file, line) citation"
         );
     }
 }
