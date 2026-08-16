@@ -367,7 +367,7 @@ const RECORD_TYPE_KINDS: &[(&str, &str)] = &[
     // record slice — the family is discovered anyway, three ways over.
     ("UnchainedBarbarianFeature", "class_features"),
     ("UnchainedMonkFeature", "class_features"),
-    // SD28-C4.8/§60/§63: the tier-1 archetype-swap catalog, 403 records
+    // SD28-C4.8/§60/§63: the tier-1 archetype-swap catalog, 406 records (403 + 3 Slayer archetypes, SD31-E4-F1-001)
     // across 7 books (acg, advanced_race_guide, apg, ultimate_combat,
     // ultimate_magic, ultimate_psionics, ultimate_wilderness). Its own
     // record family, not a facet of `class_feature` -- an archetype is
@@ -2352,7 +2352,7 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
          Do NOT close this by deleting the record: it is real corpus content for a modelled \
          race, and the same rule the `Oversized Goblin` entry above states applies here.",
     ),
-    // SD28-C4.8/§60/§63: the tier-1 archetype-swap catalog, 403 records
+    // SD28-C4.8/§60/§63: the tier-1 archetype-swap catalog, 406 records (403 + 3 Slayer archetypes, SD31-E4-F1-001)
     // across 7 books. `archetype_resolver::archetype_claiming_slot` grounds
     // the swap correctly in compute output for the wired slots (Alchemist's
     // Mutagen/Discovery/Poison Resistance, Fighter's Bravery -- proven via
@@ -2368,12 +2368,14 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
     (
         "acg",
         "archetypes",
-        "Gap: 87 ACG archetype-swap records are ingested and the engine can already ground a \
-         selected one's slot-swap correctly, but zero reach a player -- no archetype-selection \
-         surface exists anywhere in the desktop app. Remedy: build an archetype picker \
-         (archetype_catalog.rs plus a choice-set surface on the character sheet, the same shape \
-         equipment/feat/spell catalogs already use) and wire the per-slot supersession for this \
-         book's classes; delete this entry once ACG's archetypes reach the picker.",
+        "Gap: 90 ACG archetype-swap records are ingested (87 + 3 Slayer archetypes -- Bounty \
+         Hunter, Deliverer, Stygian Slayer -- added by SD31-E4-F1-001, 2026-08-16) and the engine \
+         can already ground a selected one's slot-swap correctly, but zero reach a player -- no \
+         archetype-selection surface exists anywhere in the desktop app. Remedy: build an \
+         archetype picker (archetype_catalog.rs plus a choice-set surface on the character sheet, \
+         the same shape equipment/feat/spell catalogs already use) and wire the per-slot \
+         supersession for this book's classes; delete this entry once ACG's archetypes reach the \
+         picker.",
     ),
     (
         "advanced_race_guide",
@@ -2605,7 +2607,7 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "Mostly Human ~ Undine ~ Languages",
         ],
     ),
-    // SD28-C4.8/§60/§63: all 403 archetype-swap records across 7 books --
+    // SD28-C4.8/§60/§63: all 406 archetype-swap records across 7 books (403 + 3 Slayer archetypes, SD31-E4-F1-001) --
     // every key, because none reaches a player through any surface today
     // (no picker exists at all, see OPEN_FINDINGS). This is the "whole
     // family unreached" shape, not a partial shortfall.
@@ -2682,6 +2684,14 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "Skald Archetype ~ Herald of the Horn",
             "Skald Archetype ~ Spell Warrior",
             "Skald Archetype ~ Totemic Skald",
+            // SD31-E4-F1-001 (2026-08-16): Slayer's own archetype block, added
+            // to acg::archetype_tables this same cycle -- same "whole family
+            // unreached" shape as every other entry here (no archetype picker
+            // exists anywhere in the desktop app yet, see OPEN_FINDINGS's
+            // "acg"/"archetypes" entry above).
+            "Slayer Archetype ~ Bounty Hunter",
+            "Slayer Archetype ~ Deliverer",
+            "Slayer Archetype ~ Stygian Slayer",
             "Sorcerer Archetype ~ Eldritch Scrapper",
             "Sorcerer Archetype ~ Mongrel Mage",
             "Summoner Archetype ~ Naturalist",

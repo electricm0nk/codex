@@ -37,8 +37,12 @@
 
 use super::super::archetype_swap::{ArchetypeGrant, ArchetypeSwapEntry};
 
-/// Full ACG archetype-swap catalog: 87 real, distinct master records, in
-/// source order. Built once and cached for the process lifetime.
+/// Full ACG archetype-swap catalog: 90 real, distinct master records
+/// (the original 87-record extraction pass below, plus 3 Slayer
+/// archetypes -- Bounty Hunter, Deliverer, Stygian Slayer -- added by
+/// `SD31-E4-F1-001`, 2026-08-16, once Slayer itself was found cleared for
+/// Epic 4 but entirely absent from this table), in source order. Built
+/// once and cached for the process lifetime.
 pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
     static TABLE: std::sync::OnceLock<Vec<ArchetypeSwapEntry>> = std::sync::OnceLock::new();
     TABLE.get_or_init(|| {
@@ -1119,6 +1123,77 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Totemic Skald ~ Wild Shape", at_level: 5, description: Some("A totemic skald gains the ability to wild shape into the form of a Small or Medium version of his totem animal, as the druid class feature. His effective druid level for this ability is equal to his skald level - 1. He can use this ability %1 times per day. This doesn't allow the skald to assume other forms, such as elementals, plants, or other kinds of animals. When in animal form, the skald is treated as able to speak normally for the purpose of using raging song, but not for using other abilities that require speech (such as spellcasting). The skald uses his class level as his druid level for the purpose of qualifying for feats that affect wild shape (such as Wild Speech).|min(3,floor((SkaldLVL+1)/6))"), benefit: None },
             ],
         },
+        // Slayer Archetype ~ Bounty Hunter -- acg_abilities_class.lst:3724.
+        // SD31-E4-F1-001 addition (2026-08-16): Slayer's own archetype block
+        // was absent from this table entirely -- Slayer post-dates Decision
+        // 64's original 25-class extraction pass (SD31-E3-F1-001 found it
+        // missing and cleared it for Epic 4). Verified against the same
+        // pinned oracle this file's header cites. `replaces` is derived from
+        // this master row's own `PREMULT:1,[...],[!PREFACT:1,ABILITIES,
+        // Slayer_Archetype_WeaponProficiencies=true,
+        // Slayer_Archetype_ArmorProficiencies=true,...]` clause -- the
+        // FACT-token convention this book's Slayer rows use, the same
+        // negative-clause-derivation this table's TYPE-token convention
+        // already applies elsewhere (see `every_grant_names_a_real_level_and_key`
+        // and this module's own doc comment on `replaces` vs `grants`
+        // disagreement). Note the FACT-set the row itself carries
+        // (`Slayer_Archetype_WeaponProficiencies|true
+        // Slayer_Archetype_ArmorProficiencies|true...`) also names both
+        // split slots, corroborating the PREMULT-derived list independently.
+        ArchetypeSwapEntry {
+            key: "Slayer Archetype ~ Bounty Hunter",
+            subject: "Slayer",
+            archetype_name: "Bounty Hunter",
+            description: Some("Whether tasked with bringing in wanted criminals or paid to drag debtors back to their loan sharks, bounty hunters are valued for their ability to capture targets alive."),
+            source_page: Some("p.118"),
+            prerequisites: Some(&["PRECLASS:1,Slayer=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Slayer Archetype ~ Bounty Hunter],[!PREFACT:1,ABILITIES,Slayer_Archetype_WeaponProficiencies=true,Slayer_Archetype_ArmorProficiencies=true,Slayer_Archetype_Talent2=true,Slayer_Archetype_Talent6=true,Slayer_Archetype_Talent10=true]"]),
+            replaces: Some(&["WeaponProficiencies", "ArmorProficiencies", "Talent2", "Talent6", "Talent10"]),
+            grants: &[
+                ArchetypeGrant { grants_feature_key: "Bounty Hunter ~ Weapon and Armor Proficiency", at_level: 1, description: Some("A bounty hunter is proficient with all simple and martial weapons plus the aklys, bolas, dan bong, lasso, and net. Bounty hunters are proficient with light armor, light shields, and bucklers, but not heavy shields or tower shields. This ability replaces the slayer's weapon and armor proficiencies."), benefit: None },
+                ArchetypeGrant { grants_feature_key: "Bounty Hunter ~ Dirty Trick", at_level: 2, description: Some("Anytime a bounty hunter is able to deal sneak attack damage to a studied target, he can instead attempt to hamper the target. The bounty hunter must declare that he's using this ability before the attack roll is made. If the attack hits, it deals damage normally, but instead of rolling sneak attack damage, the bounty hunter can attempt a dirty trick combat maneuver against the studied target as a free action, adding 1 to the combat maneuver check for each die of the bounty hunter's sneak attack damage. This combat maneuver does not provoke attacks of opportunity."), benefit: None },
+                ArchetypeGrant { grants_feature_key: "Bounty Hunter ~ Submission Hold", at_level: 6, description: Some("When a bounty hunter attempts a grapple combat maneuver check to deal damage, he can choose to add his sneak attack damage to the grapple damage for that attack. He takes a -5 penalty on the combat maneuver check if he does this. This sneak attack damage is nonlethal damage, unless the bounty hunter is able to deal normal damage with a grapple and chooses to do so."), benefit: None },
+                ArchetypeGrant { grants_feature_key: "Bounty Hunter ~ Incapacitate", at_level: 10, description: Some("A bounty hunter can incapacitate a studied target. This functions like the assassinate slayer talent, except instead of killing the target, the bounty hunter's successful attack knocks the target unconscious for 1d6 rounds unless it succeeds at its saving throw. If the target does succeed at its saving throw, it still takes the sneak attack damage as normal, but the damage is nonlethal, and the target is immune to that slayer's incapacitate ability for 24 hours."), benefit: None },
+            ],
+        },
+        // Slayer Archetype ~ Deliverer -- acg_abilities_class.lst:3727. Its
+        // own PREMULT clause tests the GENERIC `Slayer_Archetype_Proficiencies`
+        // fact (not the split Weapon/Armor pair Bounty Hunter's clause
+        // tests), even though this row's own FACT-set still declares both
+        // split facts -- a real, verified corpus inconsistency between the
+        // two Slayer archetypes, transcribed as found rather than smoothed
+        // into agreement with Bounty Hunter's shape.
+        ArchetypeSwapEntry {
+            key: "Slayer Archetype ~ Deliverer",
+            subject: "Slayer",
+            archetype_name: "Deliverer",
+            description: Some("Also known as a divine assassin, god's blade, or wrath-bringer, a deliverer is a weapon chosen by a god to punish those who have committed an affront to that deity. Evil deities are more likely to use assassins than deliverers, but some good deities use deliverers to deal with problems of a subtler nature than a cleric, inquisitor, paladin, or warpriest can typically handle."),
+            source_page: Some("p.119"),
+            prerequisites: Some(&["PRECLASS:1,Slayer=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Slayer Archetype ~ Deliverer],[!PREFACT:1,ABILITIES,Slayer_Archetype_Proficiencies=true,Slayer_Archetype_Talent2=true,Slayer_Archetype_Talent6=true,Slayer_Archetype_Talent10=true]"]),
+            replaces: Some(&["Proficiencies", "Talent2", "Talent6", "Talent10"]),
+            grants: &[
+                ArchetypeGrant { grants_feature_key: "Deliverer ~ Weapon and Armor Proficiency", at_level: 1, description: Some("A deliverer gains proficiency with his deity's favored weapon, in addition to the slayer's normal weapon proficiencies."), benefit: None },
+                ArchetypeGrant { grants_feature_key: "Deliverer ~ Determined Zeal", at_level: 2, description: Some("A deliverer shrugs off attempts by his moral opposite to control or kill him. On any round in which the deliverer attacks an opponent whose alignment is at least two steps away from his own (such as a lawful good deliverer fighting a chaotic good or lawful evil foe, or a neutral foe with no other alignment components), he gains a +2 bonus on Will saving throws against that opponent's abilities, as well as the benefit of the Diehard feat until the end of his next turn."), benefit: None },
+                ArchetypeGrant { grants_feature_key: "Deliverer ~ True Believer", at_level: 6, description: Some("Mortal wounds cannot stop a deliverer from performing his divine duty. On any round in which he attacks an opponent whose alignment is at least two steps away from his own (see Determined Zeal, above) while benefiting from the Diehard feat, he isn't staggered from having negative hit points, nor does he automatically lose 1 hit point per round."), benefit: None },
+                ArchetypeGrant { grants_feature_key: "Deliverer ~ Divine Anathema", at_level: 10, description: Some("As a free action a deliverer can declare a studied target to be his divine anathema. The studied target's alignment must be at least two steps away from that of the deliverer. Against this target, the deliverer's attacks deal an additional 2d6 points of damage; this damage is directly from divine power and does not stack with the bonus damage from a holy or unholy weapon, or a weapon with a similar weapon special ability or effect. A deliverer can have only one divine anathema at a time."), benefit: None },
+            ],
+        },
+        // Slayer Archetype ~ Stygian Slayer -- acg_abilities_class.lst:3730.
+        // Same generic-`Proficiencies`-fact PREMULT shape as Deliverer.
+        ArchetypeSwapEntry {
+            key: "Slayer Archetype ~ Stygian Slayer",
+            subject: "Slayer",
+            archetype_name: "Stygian Slayer",
+            description: Some("A stygian slayer crawls out of the darkest shadows to strike fear into the hearts of civilized folk. He's a merciless killer who can control a sliver of magic, allowing him to arrive unseen, commit murder, and depart without detection."),
+            source_page: Some("p.120"),
+            prerequisites: Some(&["PRECLASS:1,Slayer=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Slayer Archetype ~ Stygian Slayer],[!PREFACT:1,ABILITIES,Slayer_Archetype_Proficiencies=true,Slayer_Archetype_Talent4=true,Slayer_Archetype_Talent10=true,Slayer_Archetype_Stalker=true]"]),
+            replaces: Some(&["Proficiencies", "Talent4", "Talent10", "Stalker"]),
+            grants: &[
+                ArchetypeGrant { grants_feature_key: "Stygian Slayer ~ Weapon and Armor Proficiency", at_level: 1, description: Some("A stygian slayer is proficient with light armor, but not with medium armor, heavy armor, or any kind of shield (including tower shields). This replaces the slayer's armor proficiency."), benefit: None },
+                ArchetypeGrant { grants_feature_key: "Stygian Slayer ~ Invisibility", at_level: 4, description: Some("A stygian slayer can cast invisibility %1 times per day, using his slayer level as his caster level. The slayer uses his Intelligence modifier for concentration checks when using this ability.|floor(SlayerLVL/4)"), benefit: None },
+                ArchetypeGrant { grants_feature_key: "Stygian Slayer ~ Spell Use", at_level: 7, description: Some("A stygian slayer is able to use spell completion and spell trigger items as if he were an arcane caster with these spells on his spell list: darkness, forced quiet, modify memory, nondetection, obscuring mist, phantom steed, shadow walk, and wizard spells of the illusion school of spell level 0 through 4th. The slayer's uses his class level as his caster level for this ability."), benefit: None },
+                ArchetypeGrant { grants_feature_key: "Stygian Slayer ~ Shadowy Mist Form", at_level: 10, description: Some("A stygian slayer can transform into an inky black cloud of mist. This functions as gaseous form, except it also obscures vision as fog cloud. The slayer can use this ability for %1 minutes per day. These minutes need not be consecutive, but must be used in 1-minute increments.|SlayerLVL"), benefit: None },
+            ],
+        },
         // Sorcerer Archetype ~ Eldritch Scrapper -- acg_abilities_class.lst:3794
         ArchetypeSwapEntry {
             key: "Sorcerer Archetype ~ Eldritch Scrapper",
@@ -1430,7 +1505,11 @@ mod tests {
 
     #[test]
     fn catalog_has_87_records() {
-        assert_eq!(archetype_swap_tables().len(), 87);
+        // SD31-E4-F1-001 (2026-08-16): +3 Slayer archetypes (Bounty Hunter,
+        // Deliverer, Stygian Slayer) -- Slayer's own archetype block was
+        // entirely absent before this cycle (SD31-E3-F1-001 found the gap).
+        // 87 -> 90.
+        assert_eq!(archetype_swap_tables().len(), 90);
     }
 
     #[test]
@@ -1455,15 +1534,19 @@ mod tests {
         let total_replaces: usize =
             archetype_swap_tables().iter().map(|e| e.replaces.map_or(0, |r| r.len())).sum();
         let total_grants: usize = archetype_swap_tables().iter().map(|e| e.grants.len()).sum();
-        assert_eq!(total_replaces, 378, "total TYPE: replaced-slot count across all 87 records");
-        assert_eq!(total_grants, 336, "total ABILITY: granted-feature count across all 87 records, after the category ruling");
+        // SD31-E4-F1-001: +3 Slayer archetypes add 13 replaces (5+4+4) and
+        // 12 grants (4+4+4). 378->391, 336->348.
+        assert_eq!(total_replaces, 391, "total TYPE:/PREFACT: replaced-slot count across all 90 records");
+        assert_eq!(total_grants, 348, "total ABILITY: granted-feature count across all 90 records, after the category ruling");
         assert_ne!(total_replaces, total_grants);
 
         let equal_count_records = archetype_swap_tables()
             .iter()
             .filter(|e| e.replaces.map_or(0, |r| r.len()) == e.grants.len())
             .count();
-        assert_eq!(equal_count_records, 29, "of 87 (33%) -- twice-corrected figure, see this module's own doc comment");
+        // SD31-E4-F1-001: Deliverer (4 replaces/4 grants) and Stygian Slayer
+        // (4/4) are both equal-count; Bounty Hunter (5/4) is not. 29->31.
+        assert_eq!(equal_count_records, 31, "of 90 -- see this module's own doc comment for the base 87's 33% figure; +2 equal-count records added by SD31-E4-F1-001");
     }
 
     #[test]
@@ -1483,6 +1566,8 @@ mod tests {
             .flat_map(|e| e.grants.iter())
             .filter(|g| g.description.is_some() || g.benefit.is_some())
             .count();
-        assert_eq!(resolved, 333, "333 of 336 grants carry real DESC:/BENEFIT: text");
+        // SD31-E4-F1-001: all 12 of the 3 new Slayer archetypes' grants
+        // resolved a real DESC:. 333 -> 345, of the new 348 total.
+        assert_eq!(resolved, 345, "345 of 348 grants carry real DESC:/BENEFIT: text");
     }
 }
