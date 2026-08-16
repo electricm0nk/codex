@@ -672,6 +672,32 @@ pub fn leaked_pcgen_syntax(text: &str) -> Option<&'static str> {
         if *c == '%' && chars.get(i + 1).is_some_and(char::is_ascii_uppercase) {
             return Some("unsubstituted '%<KEYWORD>' argument reference");
         }
+        // CONFIRMED finding (`SD31-W8-INTEGRATE-001`, wave-8 adversarial
+        // review): the two checks above only catch a '%' immediately
+        // followed by a digit or an uppercase letter. 31 real corpus
+        // records ship a hole neither shape catches -- a `%` followed by
+        // a space, punctuation, or a lowercase letter ("Cast % 1/day",
+        // "Darkvision % ft.", "+%d6 additional ectoplasmic damage") --
+        // and read `text-complete`/`done` with the placeholder still
+        // visible. A literal percent SIGN is always immediately preceded
+        // by a digit ("50% chance", "20% of something"); a `%` that is
+        // NOT preceded by a digit has no other legitimate PCGen meaning
+        // in a `DESC:`/`SPROP:` field, so it is always a leak here --
+        // EXCEPT the one named real shape this repo already renders on
+        // purpose: "d%"/"D%" percentile-dice notation (= d100), which a
+        // `%%` escape collapse can legitimately leave behind (see
+        // `a_prose_table_beside_a_real_argument_keeps_the_table_and_loses_
+        // the_tail`'s "roll d% for..." fixture) -- recognized narrowly as
+        // the single letter d/D at a word boundary immediately before
+        // '%', not any word merely ending in 'd'.
+        if *c == '%' && !(i > 0 && chars[i - 1].is_ascii_digit()) {
+            let is_percentile_dice_notation = i >= 1
+                && matches!(chars[i - 1], 'd' | 'D')
+                && (i < 2 || !chars[i - 2].is_alphanumeric());
+            if !is_percentile_dice_notation {
+                return Some("unsubstituted bare '%' placeholder hole");
+            }
+        }
         if *c == '|' {
             let left_open = i == 0 || chars[i - 1].is_whitespace();
             let right_open = chars.get(i + 1).is_none_or(|next| next.is_whitespace());
@@ -799,6 +825,59 @@ mod tests {
         assert_eq!(leaked_pcgen_syntax("the cloud's effects|CASTERLEVEL"), Some("raw '|' argument tail"));
         assert_eq!(leaked_pcgen_syntax("Hardness and Rarity | Examples"), None);
         assert_eq!(leaked_pcgen_syntax("trailing pipe |"), None);
+    }
+
+    /// SD31-W8-INTEGRATE-001: wave-8 adversarial review CONFIRMED that a
+    /// `%` hole neither followed by a digit nor an uppercase letter slips
+    /// past both existing checks -- 31 real corpus records ship one of
+    /// exactly these shapes (`core_rulebook:equipmods:itempower_castone`
+    /// and siblings, `ultimate_psionics:equipmods:plusn_svs` and
+    /// siblings). A literal percent sign (`"50% of something"`, `"20%
+    /// chance"`) must still pass clean -- the discriminator is "preceded
+    /// by a digit", not "any bare %".
+    #[test]
+    fn a_percent_hole_not_followed_by_a_digit_or_keyword_still_leaks() {
+        assert_eq!(
+            leaked_pcgen_syntax("Cast % 1/day"),
+            Some("unsubstituted bare '%' placeholder hole")
+        );
+        assert_eq!(
+            leaked_pcgen_syntax("Cast % at will"),
+            Some("unsubstituted bare '%' placeholder hole")
+        );
+        assert_eq!(
+            leaked_pcgen_syntax("+% enhancement"),
+            Some("unsubstituted bare '%' placeholder hole")
+        );
+        assert_eq!(
+            leaked_pcgen_syntax("Darkvision % ft."),
+            Some("unsubstituted bare '%' placeholder hole")
+        );
+        assert_eq!(
+            leaked_pcgen_syntax("Item has 10 ranks in %"),
+            Some("unsubstituted bare '%' placeholder hole")
+        );
+        assert_eq!(
+            leaked_pcgen_syntax("+%d6 additional ectoplasmic damage"),
+            Some("unsubstituted bare '%' placeholder hole")
+        );
+        // Literal percent signs (digit immediately before '%') must never
+        // be flagged by this new arm.
+        assert_eq!(leaked_pcgen_syntax("a 20% chance of failure"), None);
+        assert_eq!(leaked_pcgen_syntax("50%"), None);
+        // Percentile-dice notation ("d%" = d100) is a real, resolved
+        // shape, not a leak -- the named exception this arm must not
+        // regress (`a_prose_table_beside_a_real_argument_keeps_the_table_
+        // and_loses_the_tail` exercises the actual render path that
+        // produces it).
+        assert_eq!(leaked_pcgen_syntax("roll d% for damage"), None);
+        assert_eq!(leaked_pcgen_syntax("roll a D% to determine"), None);
+        // But a lowercase 'd' is not a blanket exception -- only the
+        // named "d%" dice-notation shape at a word boundary.
+        assert_eq!(
+            leaked_pcgen_syntax("gold%"),
+            Some("unsubstituted bare '%' placeholder hole")
+        );
     }
 
     /// CONFIRMED finding (integration-cycle adversarial review, `SD31-W6-
