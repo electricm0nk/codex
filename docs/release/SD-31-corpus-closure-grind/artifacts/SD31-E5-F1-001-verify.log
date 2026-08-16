@@ -66,3 +66,18 @@ logs:  /tmp/codex-verify-4Omfbo
     PASS  frontend-typecheck  (tsc --noEmit clean)
 ---------------------------------------------------------------
 ==> clippy — cargo clippy --locked --tests -j 2  (BOTH crates)
+    PASS  clippy  (root:46 desktop:7 warnings, 0 errors)
+---------------------------------------------------------------
+==> class-dump — cargo run --locked --bin v06_class_state_dump  (repo root)
+    PASS  class-dump  (31/31 computing)
+---------------------------------------------------------------
+SUMMARY
+  passed:  19  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest reachability-audit-selftest reachability-audit groundtruth-guard-selftest pi-sweep audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib corpus-sweep frontend-install frontend-test frontend-typecheck clippy class-dump
+  FAILED:  3  root-full desktop reach
+
+BASELINE NOTES (not failures — update deliberately):
+  - BASELINE_ROOT_LIB_TESTS baseline is stale: 1816 recorded, 1821 measured. Update /home/ubuntu/workspace/repos/codex/scripts/verify-baselines.env.
+  - BASELINE_CORPUS_LITERAL_RECORDS=18762 (was 6331)
+
+RESULT: FAIL — logs in /tmp/codex-verify-4Omfbo
+VERIFY_EXIT=1

@@ -5255,13 +5255,33 @@ unrelated to `class_feature`). This cycle's fix corrects the field to the TRUE c
 regardless of which lane's records caused which portion of the count — the field's contract is "matches
 the corpus," not "matches only this cycle's contribution."
 
-A second, full `./scripts/verify.sh` run was launched after this fix to confirm `root-full` (and
-everything downstream of it in the first run) goes green; its own `VERIFY_EXIT=` line, if obtained before
-this cycle's turn budget closes, is appended below this section rather than silently substituted for
-Section 5's honest first-run result. If no second exit code was obtained, the fix and its correctness
-(independently verified by directly re-reading `tests/sd27_book_license_record_counts.rs`'s derivation
-logic and hand-computing the same values it would compute) stand on their own; the DoD-1 gap is reported
-plainly, not inferred as closed.
+**Gate 1's own final result, confirmed** (it DID complete before this section was first drafted, the
+`FAIL` above is Gate 1's actual outcome, not a mid-run snapshot):
+```
+SUMMARY
+  passed:  19  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest
+  reachability-audit-selftest reachability-audit groundtruth-guard-selftest pi-sweep audit-selftest
+  reclaim-selftest driver-selftest corpus-sweep-selftest root-lib corpus-sweep frontend-install
+  frontend-test frontend-typecheck clippy class-dump
+  FAILED:  3  root-full desktop reach
+RESULT: FAIL — logs in /tmp/codex-verify-4Omfbo
+VERIFY_EXIT=1
+```
+Exactly the 3 stages containing the defects diagnosed above, nothing else — `clippy` and `class-dump`
+both PASS, confirming this cycle's new Rust code itself is clean; the failures are purely the 3
+count-reconciliation/reach-registration gaps, all fixed in the follow-up commit.
+
+A second, full `./scripts/verify.sh` run (`SD31-E5-F1-001-verify-run2.log`) was launched immediately
+after the fix commit to confirm `root-full`/`desktop`/`reach` go green. Freed of Gate 1's lock
+contention (this box ran 6+ concurrent `verify.sh` invocations from sibling lanes this cycle, all
+sharing this checkout's git object store and, transiently, this agent's own `CARGO_TARGET_DIR` across
+its two sequential gate launches), Gate 2 progresses substantially faster once Gate 1 released the
+build-directory lock. Its own `VERIFY_EXIT=` line, if obtained before this cycle's turn budget closes,
+is appended below this section. If no second exit code was obtained, the fix and its correctness
+(independently verified by directly re-reading `tests/sd27_book_license_record_counts.rs`'s and
+`reach_gate.rs`'s own derivation/assertion logic and hand-computing the same values they would compute,
+plus a standalone `cargo build --tests` confirming the desktop crate compiles clean with the fix) stand
+on their own; the DoD-1 gap is reported plainly, not inferred as closed.
 
 Retro event: `docs/retro/events/sd31-cachegen-cf.jsonl` id `1786846072002-sd31-cachegen-cf-43ea04`
 (`type: rework`) — a real defect this cycle introduced was caught by its own gate before landing, fixed
