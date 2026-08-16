@@ -11602,16 +11602,30 @@ screenshot proves that claim empirically rather than asserting it. Committed:
   attribution-gate/dashboard-panel territory throughout, confirmed by `git status --porcelain` /
   `git diff --stat` before every commit.
 
-### Gate
+### Gate — run twice, the first run caught a real, then-uncommitted defect
 
-`LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-D9-DISSOLVE-001-verify.log`, launched EARLY
-(before this receipt was written) and kept alive in the background. **VERIFY_EXIT: see log tail — full
-gate was still running `root-full` (building ~490 test binaries under 6-agent concurrency) at receipt
-time; `root-lib` (1,894 tests) already PASSED, every stage before it PASSED.** This receipt reports
-the honest state at time of return rather than blocking indefinitely on a shared box's slowest stage; the
-exit code, once obtained, will be appended to this same log file at `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-D9-DISSOLVE-001-verify.log`'s
-own tail (`VERIFY_EXIT=<n>` line) for the integration cycle to read directly rather than trust a
-transcribed number.
+**Round 1** (`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-D9-DISSOLVE-001-verify.log`, launched
+EARLY, before this receipt was drafted, and kept alive in the background while the rest of this cycle's
+work continued): **VERIFY_EXIT=1**, `FAILED: 1 clippy` (`root:48 desktop:7` against the recorded ceiling
+`root:47 desktop:7`). Every OTHER stage passed, including the ones this card's own DoD names by number:
+`root-lib` 1,894, `root-full` 6,699 across 563 suites, `desktop` 448, **`reach` 27 passed (a real claim,
+not zero)**, `corpus-sweep` 23,859 examined / 0 findings / CLEAN. Traced the +1 warning to this cycle's OWN
+`is_race_chassis_file` nested-`if` in `corpus_literal_sweep.rs` (`clippy::collapsible_if`) — genuinely new
+lint debt this cycle introduced, not baseline noise (confirmed: the OTHER 47 root warnings are all
+elsewhere in the tree, none touched by this cycle). Fixed with `Option::then().flatten()` instead of a
+nested `if let` (avoids relying on let-chains being stabilized on this toolchain); re-ran the two affected
+binaries' own test suites green (141/11), re-ran `cargo clippy` standalone for both crates and confirmed
+`root:47 desktop:7, 0 errors` — back at the exact recorded ceiling, never raised.
+
+**Round 2** (`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-D9-DISSOLVE-001-verify-round2.log`,
+full re-run after the fix): **VERIFY_EXIT=0.** All 23 stages PASS:
+`preflight-disk preflight-oracle oracle-pin-selftest producer-selftest reachability-audit-selftest
+reachability-audit groundtruth-guard-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest
+driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep frontend-install
+frontend-test frontend-typecheck clippy class-dump`. One BASELINE NOTE, not a failure: `BASELINE_ROOT_FULL_TESTS`
+recorded 6,685, measured 6,699 (14 more tests than recorded — this cycle's own 14 new/renamed scratch tests
+across the two binaries, +12 in `v06_work_inventory.rs` net +7 after renames, +3 in `corpus_literal_sweep.rs`;
+left untouched per the ceiling-not-floor convention, an integration cycle can tighten it).
 
 ### Retro
 

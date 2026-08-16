@@ -431,12 +431,11 @@ fn short_book_of(source_path: &str) -> Option<String> {
         let is_race_chassis_file = source_file.contains("_races")
             && !source_file.contains("_races_companion")
             && !source_file.contains("_races_familiar");
-        if is_race_chassis_file {
-            if let Some(newest) =
-                race_slug.and_then(|slug| RACE_NEWEST_PRINTING.iter().find(|(s, _)| *s == slug))
-            {
-                return Some(newest.1.to_string());
-            }
+        if let Some(newest) = is_race_chassis_file
+            .then(|| race_slug.and_then(|slug| RACE_NEWEST_PRINTING.iter().find(|(s, _)| *s == slug)))
+            .flatten()
+        {
+            return Some(newest.1.to_string());
         }
         let race_slug_book = race_slug
             .and_then(|slug| RACE_TRUE_BOOK.iter().find(|(s, _)| *s == slug))

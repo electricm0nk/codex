@@ -1,10 +1,10 @@
 codex verify — mode: full, jobs: 2
 repo:  /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_599fa00f-e92-1
-logs:  /tmp/codex-verify-JUxaLs
+logs:  /tmp/codex-verify-RXOivv
 ---------------------------------------------------------------
 ==> preflight-disk — disk budget check before any build starts
-    repo filesystem (/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_599fa00f-e92-1, mounted at /): 30% used, 686G available
-    scratch-log filesystem (/tmp/codex-verify-JUxaLs, mounted at /): 30% used, 686G available
+    repo filesystem (/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_599fa00f-e92-1, mounted at /): 30% used, 682G available
+    scratch-log filesystem (/tmp/codex-verify-RXOivv, mounted at /): 30% used, 682G available
     PASS  preflight-disk  (disk budget OK)
 ---------------------------------------------------------------
 ==> preflight-oracle — scripts/fetch-pcgen-oracle.sh --check
@@ -69,18 +69,17 @@ logs:  /tmp/codex-verify-JUxaLs
     PASS  frontend-typecheck  (tsc --noEmit clean)
 ---------------------------------------------------------------
 ==> clippy — cargo clippy --locked --tests -j 2  (BOTH crates)
-    root: 48 warnings exceeds recorded ceiling 47 — /tmp/codex-verify-JUxaLs/clippy-root.log
-    FAIL  clippy  (root:48 desktop:7 — logs in /tmp/codex-verify-JUxaLs)
+    PASS  clippy  (root:47 desktop:7 warnings, 0 errors)
 ---------------------------------------------------------------
 ==> class-dump — cargo run --locked --bin v06_class_state_dump  (repo root)
     PASS  class-dump  (31/31 computing)
 ---------------------------------------------------------------
 SUMMARY
-  passed:  22  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest reachability-audit-selftest reachability-audit groundtruth-guard-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep frontend-install frontend-test frontend-typecheck class-dump
-  FAILED:  1  clippy
+  passed:  23  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest reachability-audit-selftest reachability-audit groundtruth-guard-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep frontend-install frontend-test frontend-typecheck clippy class-dump
 
 BASELINE NOTES (not failures — update deliberately):
   - BASELINE_ROOT_FULL_TESTS baseline is stale: 6685 recorded, 6699 measured. Update /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_599fa00f-e92-1/scripts/verify-baselines.env.
 
-RESULT: FAIL — logs in /tmp/codex-verify-JUxaLs
-VERIFY_EXIT=1
+RESULT: PASS
+logs in /tmp/codex-verify-RXOivv
+VERIFY_EXIT=0
