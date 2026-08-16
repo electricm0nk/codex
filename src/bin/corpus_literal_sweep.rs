@@ -410,10 +410,34 @@ fn short_book_of(source_path: &str) -> Option<String> {
         // back to `core_essentials` rather than guess -- exactly this
         // fix's own "leave it, do not guess" rule -- and the join will need
         // widening then, with real content to test against.
-        let race_slug_book = source_path
+        let race_slug = source_path
             .split('/')
             .position(|s| s == "races")
-            .and_then(|races_at| source_path.split('/').nth(races_at + 1))
+            .and_then(|races_at| source_path.split('/').nth(races_at + 1));
+        // `decisions.md §10`'s "newest publish wins" layer, kept in sync
+        // with `v06_work_inventory.rs`'s own `RACE_NEWEST_PRINTING`
+        // (`OPEN-ISSUES.md`, `SD31-D9-DISSOLVE-001`): scoped to the `race`
+        // KIND's own chassis file ONLY -- a race_trait row from the
+        // identical `races/<slug>/` directory must NOT move, or this
+        // join desyncs from `v06_work_inventory`'s own kind-scoped
+        // override and every race_trait `literal-verified` stamp under
+        // that slug silently breaks. `short_book_of` has no `Kind` to
+        // consult (unlike `v06_work_inventory`'s per-row `record_kind`),
+        // so the SAME filename convention `file_kind()` uses there
+        // (`_races` substring, minus the two companion/familiar
+        // exceptions, neither of which a per-race directory carries)
+        // stands in for it here.
+        let source_file = source_path.rsplit('/').next().unwrap_or("");
+        let is_race_chassis_file = source_file.contains("_races")
+            && !source_file.contains("_races_companion")
+            && !source_file.contains("_races_familiar");
+        if let Some(newest) = is_race_chassis_file
+            .then(|| race_slug.and_then(|slug| RACE_NEWEST_PRINTING.iter().find(|(s, _)| *s == slug)))
+            .flatten()
+        {
+            return Some(newest.1.to_string());
+        }
+        let race_slug_book = race_slug
             .and_then(|slug| RACE_TRUE_BOOK.iter().find(|(s, _)| *s == slug))
             .map(|(_, book)| (*book).to_string());
         if let Some(book) = race_slug_book {
@@ -478,6 +502,47 @@ const RACE_TRUE_BOOK: &[(&str, &str)] = &[
     ("strix", "inner_sea_world_guide"),
     ("skinwalker", "bestiary_5"),
     ("rougarou", "bestiary_6"),
+];
+
+/// `decisions.md §10`'s "newest publish wins" table, byte-identical to
+/// `v06_work_inventory.rs`'s own `RACE_NEWEST_PRINTING` -- see that table's
+/// doc comment for the full derivation (32 races currently attributed to a
+/// book strictly older than Advanced Race Guide's own `SOURCEDATE:2012-06`,
+/// re-derived 2026-08-16). Duplicated rather than shared, this repo's
+/// established convention for `book_dir_of`-shaped logic across bins.
+const RACE_NEWEST_PRINTING: &[(&str, &str)] = &[
+    ("dwarf", "advanced_race_guide"),
+    ("elf", "advanced_race_guide"),
+    ("gnome", "advanced_race_guide"),
+    ("half_elf", "advanced_race_guide"),
+    ("half_orc", "advanced_race_guide"),
+    ("halfling", "advanced_race_guide"),
+    ("human", "advanced_race_guide"),
+    ("aasimar", "advanced_race_guide"),
+    ("drow", "advanced_race_guide"),
+    ("duergar", "advanced_race_guide"),
+    ("goblin", "advanced_race_guide"),
+    ("hobgoblin", "advanced_race_guide"),
+    ("kobold", "advanced_race_guide"),
+    ("merfolk", "advanced_race_guide"),
+    ("orc", "advanced_race_guide"),
+    ("svirfneblin", "advanced_race_guide"),
+    ("tengu", "advanced_race_guide"),
+    ("tiefling", "advanced_race_guide"),
+    ("dhampir", "advanced_race_guide"),
+    ("fetchling", "advanced_race_guide"),
+    ("grippli", "advanced_race_guide"),
+    ("ifrit", "advanced_race_guide"),
+    ("oread", "advanced_race_guide"),
+    ("sylph", "advanced_race_guide"),
+    ("undine", "advanced_race_guide"),
+    ("catfolk", "advanced_race_guide"),
+    ("ratfolk", "advanced_race_guide"),
+    ("suli", "advanced_race_guide"),
+    ("vanara", "advanced_race_guide"),
+    ("vishkanya", "advanced_race_guide"),
+    ("gillman", "advanced_race_guide"),
+    ("strix", "advanced_race_guide"),
 ];
 
 /// The corpus-relative directory of the book a `source.path` belongs to.
@@ -637,7 +702,7 @@ fn lst_files(dir: &Path) -> Vec<PathBuf> {
 
 #[cfg(test)]
 mod short_book_of_tests {
-    use super::{short_book_of, RACE_TRUE_BOOK};
+    use super::{short_book_of, RACE_NEWEST_PRINTING, RACE_TRUE_BOOK};
 
     /// The defect `OPEN-ISSUES.md` row 22 traced one unit deep: the CRB
     /// dwarf race's PCGen source is
@@ -650,14 +715,50 @@ mod short_book_of_tests {
     /// 4-segment `book_dir_of` grouping, landing on `"core_essentials"` --
     /// correct relative to the OLD bug, but itself `OPEN-ISSUES.md` row 68's
     /// defect: `core_essentials` is a PCGen packaging directory, not a book.
-    /// `SD31-ATTRIB-001` closes that second layer: Dwarf's true book is
-    /// Core Rulebook (`core_rulebook.pcc`'s own 7), read off
-    /// `RACE_TRUE_BOOK`.
+    /// `SD31-ATTRIB-001` closes that second layer: Dwarf's true FIRST
+    /// printing is Core Rulebook (`core_rulebook.pcc`'s own 7), read off
+    /// `RACE_TRUE_BOOK` -- and `decisions.md §10`'s later "newest publish
+    /// wins" layer (`RACE_NEWEST_PRINTING`) moves it once more, to
+    /// Advanced Race Guide, the newer of Dwarf's two printings.
     #[test]
-    fn crb_race_chassis_resolves_to_its_true_book_not_core_essentials_or_the_race_name() {
+    fn crb_race_chassis_resolves_to_its_newest_printing_not_core_essentials_or_the_race_name() {
         assert_eq!(
             short_book_of(
                 "pathfinder/paizo/roleplaying_game/core_essentials/races/dwarf/dwarf_races.lst"
+            ),
+            Some("advanced_race_guide".to_string())
+        );
+    }
+
+    /// A race NOT on `RACE_NEWEST_PRINTING` (Bestiary-4-native, no older
+    /// printing to supersede) still resolves to its true FIRST book, same
+    /// as before `decisions.md §10`'s layer existed -- the override is
+    /// opt-in per race, never blanket.
+    #[test]
+    fn a_race_absent_from_newest_printing_keeps_resolving_to_its_true_book() {
+        assert_eq!(
+            short_book_of(
+                "pathfinder/paizo/roleplaying_game/core_essentials/races/kasatha/kasatha_races.lst"
+            ),
+            Some("bestiary_4".to_string())
+        );
+    }
+
+    /// **The join-desync `decisions.md §10`'s layer would create if this
+    /// file's own copy were kind-blind.** A race_trait row from the
+    /// IDENTICAL `races/dwarf/` directory (a `_abilities_race` file, not a
+    /// `_races` chassis file) must stay on Dwarf's true FIRST book --
+    /// `v06_work_inventory.rs`'s own `record_kind == Kind::Race` guard
+    /// scopes the override to the chassis kind only, and this file's
+    /// filename-based stand-in (`is_race_chassis_file`) must agree, or
+    /// every Dwarf `race_trait` unit's `literal-verified` stamp silently
+    /// breaks the moment `v06_work_inventory` re-attributes `race` but not
+    /// `race_trait`.
+    #[test]
+    fn a_race_trait_file_from_the_same_race_directory_is_not_moved_by_the_newest_printing_layer() {
+        assert_eq!(
+            short_book_of(
+                "pathfinder/paizo/roleplaying_game/core_essentials/races/dwarf/dwarf_abilities_race.lst"
             ),
             Some("core_rulebook".to_string())
         );
@@ -787,9 +888,13 @@ mod short_book_of_tests {
     /// table's entry instead (`SD31-ATTRIB-001`, `OPEN-ISSUES.md` row 68 --
     /// this is the fix, not a regression: before it, EVERY one of these
     /// disagreed silently with the true book and this test's own prior
-    /// unconditional-agreement assertion was pinning that defect in place).
-    /// Every record OUTSIDE that resolved set still can never disagree with
-    /// the grouping the rest of this binary already relies on.
+    /// unconditional-agreement assertion was pinning that defect in place)
+    /// -- and, for `race`-kind records ONLY, `decisions.md §10`'s later
+    /// `RACE_NEWEST_PRINTING` layer wins over `RACE_TRUE_BOOK` when the
+    /// slug is on that table too (never for `race_trait`, which stays on
+    /// its true FIRST book). Every record outside both resolved sets still
+    /// can never disagree with the grouping the rest of this binary already
+    /// relies on.
     #[test]
     fn every_shipped_race_source_path_agrees_with_book_dir_of_or_the_resolved_true_book() {
         let repo_root = std::path::Path::new(env!("CARGO_MANIFEST_DIR"));
@@ -823,14 +928,25 @@ mod short_book_of_tests {
                     let Some(record) = parsed.record else { continue };
                     let raw_expected = super::book_dir_of(&record.source_path)
                         .and_then(|dir| std::path::Path::new(&dir).file_name().map(|f| f.to_string_lossy().into_owned()));
+                    let race_slug = record
+                        .source_path
+                        .split('/')
+                        .position(|s| s == "races")
+                        .and_then(|i| record.source_path.split('/').nth(i + 1));
                     let resolved_expected = if raw_expected.as_deref() == Some("core_essentials") {
-                        record
-                            .source_path
-                            .split('/')
-                            .position(|s| s == "races")
-                            .and_then(|i| record.source_path.split('/').nth(i + 1))
-                            .and_then(|slug| RACE_TRUE_BOOK.iter().find(|(s, _)| *s == slug))
-                            .map(|(_, book)| book.to_string())
+                        let newest = if kind_dir == "race" {
+                            race_slug
+                                .and_then(|slug| RACE_NEWEST_PRINTING.iter().find(|(s, _)| *s == slug))
+                                .map(|(_, book)| book.to_string())
+                        } else {
+                            None
+                        };
+                        newest
+                            .or_else(|| {
+                                race_slug
+                                    .and_then(|slug| RACE_TRUE_BOOK.iter().find(|(s, _)| *s == slug))
+                                    .map(|(_, book)| book.to_string())
+                            })
                             .or(raw_expected)
                     } else {
                         raw_expected

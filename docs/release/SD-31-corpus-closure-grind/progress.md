@@ -11727,3 +11727,286 @@ a SEPARATE commit, per DoD item 7, immediately after this one.
    16 records' descriptions can be served too, once someone owns that generator.
 4. Companion (item 3 in this cycle's own dispatch) is now fully discharged — no further
    render work needed for the `companion` kind's prose done-bar.
+## Cycle `SD31-D9-DISSOLVE-001` (`RETRO_ACTOR=sd31-dissolve-ce`, own worktree
+`/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_599fa00f-e92-1`, branch
+`sd31/dissolve-core-essentials`) — 2026-08-16, Decision 9 (`core_essentials` dissolve) + Decision 10's
+race-attribution half
+
+**Card:** Decision 9 (dissolve `core_essentials`) + Decision 10's attribution half. **Starting HEAD:**
+`b8c36417dd6dff1bad090d65e3b958f8f39177b2` (`docs(sd31): Decision 10 amendment -- variant lines are new
+content, never supersession`), reset from a clean, package-dir-absent worktree per the mandatory
+branch-state check. **Oracle:** `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
+(`scripts/pcgen-oracle-pin.env`, `scripts/verify.sh --only preflight-oracle` PASS). **Branch:**
+`sd31/dissolve-core-essentials`, own worktree, pushed.
+
+### 1. Re-derived, not transcribed: 644-unit `core_essentials` residual confirmed at dispatch
+
+```
+python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json')); u=[x for x in d['units'] if x.get('book')=='core_essentials']; print(len(u), collections.Counter(x['kind'] for x in u))"
+# -> 644 {'monster_ability': 378, 'race_trait': 258, 'race': 8}
+```
+Matches the dispatch's own figure exactly. `SD31-ATTRIB-001`/`SD31-ATTRIB-002` (prior cycles) had already
+resolved 966 of the original 1,610 via per-race-directory (`RACE_TRUE_BOOK`) and root-level-header
+(`SOURCELONG_TO_BOOK`, first-5-lines) signals; `SD31-ATTRIB-002` (row 98) found but did NOT fix (out of
+its own file territory that wave) a further 516-unit gap: `ce_abilities_race.lst` carries 11 mid-file
+`SOURCELONG:<Book>` directive lines the first-5-lines check never sees.
+
+### 2. `resolve_true_book_for_core_essentials` made source-line-aware (TDD, 8 new tests)
+
+Refactored `enumerate_file` (`src/bin/v06_work_inventory.rs`) to track a running `directive_book: Option<&'static str>`
+per line as it scans a file top to bottom, reset on every `SOURCELONG:` line encountered (recognized or
+not — see the self-caught bug below), separate from the file-wide `race_slug_book` signal (which still
+wins outright for per-race files). Split the old single function into `race_slug_true_book` (path-only,
+file-wide) and `sourcelong_directive_book` (single-line, stateless) so the caller can track state
+per-line without either signal losing its own test coverage.
+
+**Re-derived corpus-wide after the fix:** `core_essentials` residual **644 → 128** (`monster_ability`
+378→9, `race_trait` 258→111, `race` 8→8 unchanged). Newly-resolved 516, by book: `bestiary` 263,
+`bestiary_2` 206, `bestiary_3` 41, `bestiary_4` 2, `bestiary_5` 1, `bestiary_6` 3 — matching row 98's own
+prediction exactly. Synced `corpus_literal_sweep.rs`'s own duplicate `short_book_of`/`RACE_TRUE_BOOK`
+copy in the same commit (its own doc comment previously disclaimed root-level `ce_*.lst` resolution
+entirely) so the sweep's join key never diverges from `v06_work_inventory`'s `unit.book`.
+
+**A first draft shipped a real regression, caught before commit.** An unrecognized directive
+(`SOURCELONG:Universal Rules`, PCGen's own internal designation) silently INHERITED the preceding
+recognized directive's book (`bestiary_3`) instead of resetting to unattributed — wrongly re-attributing
+6 real rows (Capsize/Crush/Freedom of Movement/Immunity to Nausea/Immunity to Negative Energy/Immunity to
+vision-based attacks). Caught by re-deriving the real corpus effect with the guarded regen before commit
+(diffed `docs/work-inventory.json` before/after, found these 6 landing on `bestiary_3` with no provable
+signal), fixed (unconditional `directive_book = sourcelong_directive_book(line)` on every `SOURCELONG:`
+line, not "update only when resolved"), and mutation-proven both directions:
+- Reverting the fix → `an_unrecognized_directive_resets_tracking_rather_than_inheriting_the_prior_book`
+  fails immediately (scratch fixture).
+- Disabling `sourcelong_directive_book` entirely → the real-corpus ratchet gate (§4 below) fails,
+  residual jumps 129 → 986.
+
+`retro.py correction` filed (both directions: the operator-facing "the source-line-aware fix works" claim,
+and this program's own instrument-failure record).
+
+### 3. The residual 129 (128 in the full pipeline, one fewer via `.MOD`-rescue) is the honest floor
+
+- 23 rows in `ce_abilities_race.lst` precede the file's first `SOURCELONG:` line — the file's own
+  top-of-file comment confirms this stretch is genuinely PCGen's book-agnostic "Default Internal
+  Ability" content.
+- 6 rows there carry `SOURCELONG:Universal Rules` — PCGen's own internal designation
+  (`SOURCESHORT:UR`), not a Paizo book this program tracks.
+- 8 races (`android`/`aquatic_elf`/`gathlain`/`ghoran`/`lashunta`/`monkey_goblin`/`syrinx`/`triaxian`,
+  99 units incl. chassis) — already correctly left unattributed by `SD31-ATTRIB-001`, re-verified this
+  cycle: each is natively declared by 2+ in-scope books' own `.pcc` files, so no single true book is
+  provable. Re-checked `_race.pcc` for each per the dispatch's own instruction; found no new signal that
+  changes this — genuinely ambiguous, and said so.
+
+**"Books outside the roster" watch (Ironfang Invasion, Blood of the Moon, Universal Rules) resolved to a
+non-issue within this card's scope.** None of the 128/129 residual `monster_ability`/`race_trait`/`race`
+units cite Ironfang Invasion or Blood of the Moon at all; the 6 Universal Rules rows correctly stay
+unattributed. Decision 9's own census counted these names across ALL of `core_essentials/` (every kind),
+so they may still surface in `equipment`/`feat` residue outside this card's file territory — flagged for
+whichever lane owns those kinds (`OPEN-ISSUES.md` row 110), not investigated here.
+
+### 4. The attribution contract gate — un-producible, and proven both ways
+
+Built `core_essentials_book_attribution_tests::core_essentials_real_corpus_residual_never_grows_past_its_pinned_baseline`
+— walks the REAL pinned oracle (not a scratch fixture, gated to no-op if `PCGEN_CORPUS_ROOT` is absent)
+and pins the residual at **129** as a ratchet: any growth beyond that is a hard test failure.
+Mutation-proven to fail (residual jumped to 986) when `sourcelong_directive_book` was disabled entirely.
+**Also proven NOT to catch a different regression class**: the Universal-Rules-inheritance bug above
+SHRINKS the residual (wrongly resolving 6 units that should stay unattributed), so the ratchet stayed
+green through it — that class is caught by the scratch-fixture mutation proof instead. Documented in the
+gate's own doc comment so a future cycle does not over-trust either check alone.
+
+### 5. The id namespace repaired — a real, separate defect, not cosmetic
+
+`unit.id` was minted from `book.id` (the raw WALKED directory, always `"core_essentials"` for these
+records) rather than `unit.book` (the resolved TRUE book) — so an already-correctly-relabelled unit
+(e.g. `book: "bestiary"`) still carried a stale `id: "core_essentials:companion:air_elemental_air_mastery"`.
+Fixed both the collision-population count (`slug_population`, keyed on `unit.book` now, not `book.id`)
+and the `unit_id(...)` call site itself, with the existing hard `exit(1)` collision check as the safety
+net if the change ever mints a genuine duplicate (it did not — re-derived, 0 collisions).
+
+**Re-derived, not assumed:** the guarded regen's own before/after diff shows exactly **1,488 ids
+renamed** (old id set size == new id set size == 38,540; 0 units gained or lost), every one a pure
+`core_essentials:<kind>:<slug>` → `<true-book>:<kind>:<slug>` rename with byte-identical content
+otherwise (spot-checked `air_elemental_air_mastery` field-by-field). Swept `tests/`, `src/`, `apps/` for
+any hardcoded `"core_essentials:..."` id string used as an EXPECTED test value — none found (only
+historical point-in-time artifact JSON snapshots and doc-comment prose examples cite the old shape,
+neither load-bearing).
+
+### 6. Decision 10's race-attribution half — 32 races moved, "newest publish wins"
+
+Built `RACE_NEWEST_PRINTING` (duplicated into both `v06_work_inventory.rs` and `corpus_literal_sweep.rs`,
+same convention as `RACE_TRUE_BOOK`), scoped to `kind == Race` ONLY (never `race_trait`, which stays on
+its true first-printing book — proven both by a dedicated scratch test and by the corpus-wide agreement
+test in `corpus_literal_sweep.rs`). Every entry is a race currently attributed to a book strictly OLDER
+than Advanced Race Guide's own `SOURCEDATE:2012-06` (`advanced_race_guide/advanced_race_guide.pcc`) that
+ARG's own `.lst` files independently carry rows for — the ruling's own worked example (Catfolk, Bestiary 3
+`SOURCEDATE:2012-01` → ARG `2012-06`).
+
+**32 races**, re-derived against the pinned oracle's own `SOURCEDATE:` headers: 7 Core Rulebook
+(`2009-08`) + 11 Bestiary 1 (`2009-10`) + 7 Bestiary 2 (`2010-12`) + 5 Bestiary 3 (`2012-01`) + 2 Inner Sea
+World Guide (`2011-03`), all older than ARG. **Bestiary 4's own 5 ARG-reprinted races
+(Changeling/Kitsune/Nagaji/Samsaran/Wayang) deliberately EXCLUDED**, correcting Decision 10's own worked
+example (which named Changeling as needing to move): `bestiary_4/_bestiary_4_for_players.pcc`'s own
+`SOURCEDATE:2013-10` is LATER than ARG's `2012-06`, so under strict SOURCEDATE ordering — Decision 10's
+own binding rule — Bestiary 4 is already the newer printing there; logged `OPEN-ISSUES.md` row 111
+RULING-NEEDED rather than silently following the inconsistent example.
+
+**Could not reproduce the operator's own "50 of 103" figure exactly** — this cycle's independent, fully
+per-race-evidenced derivation found 32. Logged the gap and its most-likely explanation (`OPEN-ISSUES.md`
+row 112) rather than padding to match an unverifiable number: every one of the operator's own named
+examples for the 50-figure is already inside this cycle's 32-set or is the disputed Bestiary-4 case; no
+example names a race outside the already-established 37-race ARG roster.
+
+**A real cross-lane join-key desync caught and fixed before commit, same shape as §2.** Landing the
+32-race move in `v06_work_inventory.rs` alone demoted 7 CRB races from `literal-verified`/`done` to
+`held` (board 9,488 → 9,481, 24.6307% → 24.6125%) — `corpus_literal_sweep.rs`'s own `short_book_of` copy
+stayed on the OLD (`RACE_TRUE_BOOK`-only) resolution, so its `sweep_verified` triples no longer matched
+either `unit.book` (now `advanced_race_guide`) or `unit.source_book` (`core_essentials`, unchanged).
+Caught by the guarded regen's own before/after doneness-verdict diff (a real, non-zero transition where
+every prior book-relabel in this program had proven zero); fixed by adding the same
+`RACE_NEWEST_PRINTING` layer to `corpus_literal_sweep.rs`, kind-scoped via a filename heuristic
+(`_races` substring, minus the two companion/familiar exceptions `file_kind()` also excludes) since
+`short_book_of` has no `Kind` to consult directly — verified corpus-wide against every real shipped
+`race`/`race_trait` record's own directory (the pre-existing `every_shipped_race_source_path_agrees_...`
+test, updated and still green). Re-ran the guarded regen after the sync fix: **0 doneness-verdict
+transitions**, board unchanged at 9,488/24.6307%.
+
+### 7. The operator's cell, answered
+
+Per-book `race` table, before (`docs/work-inventory.json` at dispatch) and after (this cycle's tip, local
+guarded regen, uncommitted per the wave rule):
+
+| book | before | after |
+|---|---:|---:|
+| `advanced_race_guide` | 1 | **33** |
+| `core_rulebook` | 7 | **0** |
+| `bestiary` | 20 | 9 |
+| `bestiary_2` | 13 | 6 |
+| `bestiary_3` | 5 | 0 |
+| `bestiary_4` | 9 | 9 (unchanged) |
+| `inner_sea_world_guide` | 16 | 14 |
+| `core_essentials` | 8 | 8 (unchanged, genuinely ambiguous) |
+| `bestiary_5`/`bestiary_6`/`occult_adventures`/`adventurers_guide`/`ultimate_combat`/`ultimate_psionics`/`ultimate_wilderness`/`horror_adventures` | unchanged | unchanged |
+| **total** | 103 | 103 |
+
+`advanced_race_guide` race now reads **33** (32 moved + its own pre-existing `Race Builder` scaffold
+unit, `not-started` — `arg_races.lst:53`, a chargen-system row, not a playable race, per `SD31-ATTRIB-002`'s
+own prior finding). `core_rulebook` race now reads **0** — all 7 CRB races moved to ARG under Decision
+10's "newest publish wins," a DIFFERENT zero than the pre-Decision-10 defect the operator originally
+flagged (that zero meant "mislabeled as `core_essentials`"; this zero means "correctly attributed to the
+newer of two real printings"). Board `race_trait` (ARG's own genuine content, `decisions.md §25.2`)
+stays unaffected by this move, per Decision 10's own scoping.
+
+### 8. Guarded regen — figures, commands, zero side effects
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-dissolve-ce.json
+# -> 23859 records examined of 24736 read, 228147 tokens compared (9 synthesized), 24311 digests checked, 0 findings — CLEAN
+CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep-sd31-dissolve-ce.json \
+DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture-sd31-dissolve-ce.json \
+  cargo run --locked --bin v06_work_inventory -- --allow-stamp-loss
+# --allow-stamp-loss required: 1,488 units' ids renamed (a pure relabel, not a real evidence loss --
+# traced one record deep, §5 above); exit 0, no "refusing to write"
+```
+Doneness-verdict diff (matched by `(kind, source_file, source_line)`, not by id, so the id-rename above
+cannot mask a real transition): **0 transitions**, board **9,488/38,521 = 24.6307%, byte-identical before
+and after** every fix in this cycle once the corpus_literal_sweep sync (§6) landed. `docs/work-inventory.json`
+reverted (`git checkout --`) before committing, per the wave rule.
+
+### 9. DoD item 3 — `v06_corpus_trap_report --audit`, confirmed not worsened
+
+```
+cargo run --locked --bin v06_corpus_trap_report -- --audit
+# -> TRAP DEFECT: 1 0 mod-record | 0 1191 wiring-class-mismatch
+```
+Exit 2 (RED), matching the dispatch's own stated pre-existing baseline exactly (**1,191**, rows 27/65).
+Checked for any NEW mismatch involving a race/book this cycle touched (`grep -i 'dwarf\|catfolk'` over the
+full report) — zero hits; the 34 `core_essentials`-path hits present are all in OTHER kinds' file
+citations, pre-existing and unrelated to this cycle's changes.
+
+### 10. Full test suites, all green
+
+```
+cargo test --locked --bin v06_work_inventory                 # 141 passed (was 134 baseline; +7 new/renamed tests, net)
+cargo test --locked --bin corpus_literal_sweep                # 11 passed (was 8 baseline; +3 new)
+cargo test --locked --lib race_resolver                       # 25 passed, unaffected (engine chassis loading is a
+                                                                #   separate mechanism from unit.book reporting)
+python3 -m unittest scripts.tests.test_pf1e_dashboard_producer # 5 passed, unaffected (doc-comment-only edits)
+```
+
+### 11. DoD item 8 — on-screen verification
+
+`RUN_DESKTOP_AGENT=sd31-dissolve-ce`, `apps/desktop/.claude/skills/run-desktop/driver.sh launch` (Xvfb
+`:72`, window 2097155, 1920x1200). Created a new Fighter character with Race = "Dwarf (CRB)" — the exact
+CRB race Decision 10 re-attributes from `core_rulebook` to `advanced_race_guide` in the REPORTING layer.
+Screenshot confirms the character-creation form still renders identically: `Size: Medium`,
+`Vision: Darkvision 60 ft.`, calculated ability scores `STR 16 / DEX 14 / CON 16 / INT 10 / WIS 14 /
+CHA 6` with **"Dwarf racial modifiers: +2 CON, +2 WIS, -2 CHA"** applied live — byte-matching the CRB
+Dwarf's real corpus row. This is the expected, required result: `unit.book` is a pure REPORTING field
+(`decisions.md §9`'s own established pattern, `source_book`/`engine_book_for` unchanged), so the player-
+facing race picker and its chassis math are completely unaffected by this cycle's relabel — the
+screenshot proves that claim empirically rather than asserting it. Committed:
+`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-D9-DISSOLVE-001/dod8-dwarf-create-character.png`.
+`driver.sh stop` run after capture.
+
+### 12. What was corrected, reworked, or narrowly avoided
+
+- **Self-caught regression** (§2): the Universal-Rules-inheritance bug in this cycle's own first draft —
+  found before commit via guarded-regen re-derivation, not by a reviewer.
+- **Self-caught cross-lane desync** (§6): the 7-unit done→held drop from `corpus_literal_sweep.rs` staying
+  unsynced — found before commit the same way.
+- **Declined to blindly follow `decisions.md §10`'s own worked example** for Bestiary 4's 5 races,
+  applying the ruling's own binding SOURCEDATE-ordering rule instead and flagging the discrepancy
+  (`OPEN-ISSUES.md` row 111) rather than silently "fixing" the doc or silently following a factually
+  backwards example.
+- **Declined to pad the "50 of 103" figure** to match the operator's own unreproduced number; landed the
+  32-race subset this cycle could fully evidence and named the gap (`OPEN-ISSUES.md` row 112).
+- **Did not touch `apply_done_rung_stamps`, `doneness_verdict`, `pilot_compute.rs`, the supersession
+  register, or any ingest-lane file** — stayed inside the granted book-attribution/id-namespace/
+  attribution-gate/dashboard-panel territory throughout, confirmed by `git status --porcelain` /
+  `git diff --stat` before every commit.
+
+### Gate — run twice, the first run caught a real, then-uncommitted defect
+
+**Round 1** (`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-D9-DISSOLVE-001-verify.log`, launched
+EARLY, before this receipt was drafted, and kept alive in the background while the rest of this cycle's
+work continued): **VERIFY_EXIT=1**, `FAILED: 1 clippy` (`root:48 desktop:7` against the recorded ceiling
+`root:47 desktop:7`). Every OTHER stage passed, including the ones this card's own DoD names by number:
+`root-lib` 1,894, `root-full` 6,699 across 563 suites, `desktop` 448, **`reach` 27 passed (a real claim,
+not zero)**, `corpus-sweep` 23,859 examined / 0 findings / CLEAN. Traced the +1 warning to this cycle's OWN
+`is_race_chassis_file` nested-`if` in `corpus_literal_sweep.rs` (`clippy::collapsible_if`) — genuinely new
+lint debt this cycle introduced, not baseline noise (confirmed: the OTHER 47 root warnings are all
+elsewhere in the tree, none touched by this cycle). Fixed with `Option::then().flatten()` instead of a
+nested `if let` (avoids relying on let-chains being stabilized on this toolchain); re-ran the two affected
+binaries' own test suites green (141/11), re-ran `cargo clippy` standalone for both crates and confirmed
+`root:47 desktop:7, 0 errors` — back at the exact recorded ceiling, never raised.
+
+**Round 2** (`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-D9-DISSOLVE-001-verify-round2.log`,
+full re-run after the fix): **VERIFY_EXIT=0.** All 23 stages PASS:
+`preflight-disk preflight-oracle oracle-pin-selftest producer-selftest reachability-audit-selftest
+reachability-audit groundtruth-guard-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest
+driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep frontend-install
+frontend-test frontend-typecheck clippy class-dump`. One BASELINE NOTE, not a failure: `BASELINE_ROOT_FULL_TESTS`
+recorded 6,685, measured 6,699 (14 more tests than recorded — this cycle's own 14 new/renamed scratch tests
+across the two binaries, +12 in `v06_work_inventory.rs` net +7 after renames, +3 in `corpus_literal_sweep.rs`;
+left untouched per the ceiling-not-floor convention, an integration cycle can tighten it).
+
+### Retro
+
+Three `retro.py correction` events emitted (Decision 10's Bestiary-4 worked-example error; this cycle's
+own first-draft Universal-Rules regression; this cycle's own first-draft cross-lane sweep-desync),
+`docs/retro/events/sd31-dissolve-ce.jsonl`.
+
+### Followups
+
+1. `OPEN-ISSUES.md` row 111 — needs operator confirmation on the Bestiary-4/Changeling worked-example
+   discrepancy (does not block the 32-race move, which stands on its own SOURCEDATE evidence).
+2. `OPEN-ISSUES.md` row 112 — the 18-unit gap between this cycle's 32 and the operator's cited 50 is
+   unexplained beyond "no example names a race outside the 37-race ARG roster"; a future cycle with time
+   to recover the operator's own scan methodology could close it.
+3. The 129-unit `core_essentials` residual is the honest floor absent an operator ruling on the 8
+   genuinely-ambiguous races — the dispatch's own text anticipated this as a possible permanent state.
+
+### End of cycle
+
+`scripts/reclaim.sh` then `--apply` run after the gate's own artifacts stabilized; reclaimed bytes
+recorded in this cycle's structured-output figures.
