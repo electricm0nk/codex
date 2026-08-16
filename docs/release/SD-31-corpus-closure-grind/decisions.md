@@ -620,3 +620,67 @@ proposals as a primary deliverable** — build the path, and propose exclusion o
 genuinely impossible, never merely expensive.
 
 **Authority:** operator ruling, 2026-08-16, verbatim above.
+
+### Decision 7 — CORRECTION to this section's own sizing (2026-08-16, `SD31-D7-PROSE-001`)
+
+**The `magnitude_token_count == 0` figures above are wrong, and this section said they might be.**
+Decision 7's PROXY WARNING required a cycle to hand-validate the proxy before any unit rode on it.
+`SD31-D7-PROSE-001` did exactly that and the proxy failed badly:
+
+```
+python3 scripts/sample_ground_truth_units.py --inventory docs/work-inventory.json \
+  --zero-magnitude-only --target-per-cell 4 --seed 31 \
+  --out artifacts/SD31-D7-PROSE-001-proxy-sample-draw.json      # 121 units, 36 cells, 5 wiring classes, 10 kinds
+python3 -c "import json,collections; r=json.load(open('docs/release/SD-31-corpus-closure-grind/artifacts/SD31-D7-PROSE-001-proxy-sample-evidence.json')); print(collections.Counter(x['hand_genuinely_zero_magnitude'] for x in r))"
+```
+
+- **Raw proxy: 57 of 121 hand-checked units (47 %) genuinely DO carry a magnitude** despite
+  `magnitude_token_count == 0`. The "14,586 not-done zero-magnitude units" figure above is therefore
+  **an upper bound that roughly doubles the real population**, not an estimate of it.
+- **Gated additionally on `wiring_class == display`, the miss rate falls to 9 of 121 (7 %)**, and
+  those 9 are a single named failure mode — flat, non-scaling numerics in `SPROP:`/`BENEFIT:` fields
+  that the wiring-class classifier does not read (`OPEN-ISSUES.md` row 69).
+
+**The ruling is unchanged; only its scope estimate is.** Decision 7's three conditions are the bar;
+`magnitude_token_count` was never the ruling, and this correction is the proxy warning working as
+written. Future cycles size this population as **`wiring_class == display` AND
+`magnitude_token_count == 0`**, and re-derive rather than quoting either figure.
+
+**The orchestrating session stated the 14,586 figure to the operator when reporting Decision 7.
+That statement is corrected here rather than quietly dropped.** `retro.py correction` emitted.
+
+### Decision 7 — the structural blocker the ruling now runs into (2026-08-16, `SD31-E4-F1-001`)
+
+`SD31-E4-F1-001` wired Slayer's three remaining archetype-supersession slots for real (clearance
+table 4/7 → 7/7, 6 new tests green, a real `if let`/`else` branch plus three previously-absent
+archetype records) and **the board did not move by one unit.** Root cause, fully reproduced: the
+dashboard producer's `doneness_verdict()` maps `display` + `grounded` to **`held`**, not `done`.
+
+Under Decision 7 a `display` unit that is prose-only, has nothing to compute, and whose description
+renders on the sheet **is** done. That cell is therefore the single point where the operator's
+ruling is currently blocked from paying out, for `class_feature` and for every other kind.
+
+`SD31-D7-PROSE-001` built the correct mechanism for exactly this — a rung that requires the
+description to be present, to byte-match the corpus row, and to render — and applied it to
+`race_trait` (+146 units, DoD-8 proven on-screen). **Extending that same rung to the
+`display`+`grounded` population generally is the next cycle's headline, and it must be the rung, not
+a table edit**: widening the cell without the description-and-render requirement is precisely the
+Decision 1(a) violation this package forbids, and it is how the 1,060 wrongly-`done` units below
+happened in the first place.
+
+### Decision 7 — what condition 3 caught on its first real application
+
+Building the bar's condition 3 immediately exposed **1,060 units that had been counted `done` with
+an empty or null corpus description** — 836 `equipment_modifier`, 212 `equipment`, 11 `feat`,
+1 `spell` — i.e. marked complete with nothing for a player to see. Condition 3 had never been
+checked before it existed. They are demoted, and the board's headline fell **7,603 → 7,340
+(19.74 % → 19.05 %)** across the wave as a result.
+
+**That decrease is the ruling working, not a regression.** The prior figure was inflated. Recorded
+here so no later cycle "fixes" the drop by reverting the check.
+
+A known, quantified under-claim rides with it: `closure_has_real_description()` reads only the raw
+`.lst` closure and not the already-ingested corpus JSON's `data.description`, so **247 of the 1,060**
+demoted units genuinely do have a real description that the check cannot see (`OPEN-ISSUES.md`
+row 70). The conservative direction was shipped deliberately; recovering those 247 is owed work, not
+a defect to argue about.
