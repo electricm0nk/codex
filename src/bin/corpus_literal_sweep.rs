@@ -258,25 +258,43 @@ fn main() -> ExitCode {
                     if record.tokens.is_empty() {
                         continue;
                     }
-                    // `v06_work_inventory`'s units carry the SHORT book name
-                    // (e.g. `advanced_class_guide`), not the 4-segment
-                    // `book_dir_of()` grouping key this binary uses
-                    // internally (e.g. `pathfinder/paizo/roleplaying_game/
-                    // advanced_class_guide`) -- that key is the immediate
-                    // parent directory of `source_file`.
+                    // `v06_work_inventory`'s units carry the SHORT book
+                    // name -- `book_paths`'s key, which is the PCGen ORACLE
+                    // directory basename under `$PCGEN_CORPUS_ROOT/pathfinder/
+                    // paizo/roleplaying_game/` that `enumerate_book` walked
+                    // to raw-enumerate this unit (`v06_work_inventory.rs`
+                    // `books_dir = corpus_root.join(BOOKS_RELATIVE)`, where
+                    // `corpus_root` there is `PCGEN_CORPUS_ROOT`, NOT this
+                    // repo's `data/corpus/`). That is the LAST segment of
+                    // `book_dir_of(&record.source_path)`, not the immediate
+                    // parent directory of `source_file` (the previous, buggy
+                    // shape): for a record filed more than one directory
+                    // level under its book, the parent directory names a
+                    // sub-directory (a race name, for `race`/`race_trait`),
+                    // not any book at all. `OPEN-ISSUES.md` row 22, verified
+                    // one unit deep against the committed inventory: the CRB
+                    // dwarf race chassis is `core_essentials/races/dwarf/
+                    // dwarf_races.lst` in the oracle (`core_essentials` is a
+                    // real, separate oracle book directory from
+                    // `core_rulebook` -- confirmed present under
+                    // `$PCGEN_CORPUS_ROOT/pathfinder/paizo/roleplaying_game/`)
+                    // and its `docs/work-inventory.json` unit id is literally
+                    // `core_essentials:race:dwarf`, `book: "core_essentials"`
+                    // -- not `core_rulebook`, despite the shipped JSON being
+                    // filed at `data/corpus/core_rulebook/race/dwarf.json`.
+                    // The shipped-record directory and the oracle-derived
+                    // `unit.book` are two different namespaces; this join
+                    // needs the second one.
                     let source_path = Path::new(&record.source_path);
                     let (Some(source_file), Some(short_book)) = (
                         source_path.file_name().and_then(|f| f.to_str()),
-                        source_path
-                            .parent()
-                            .and_then(|p| p.file_name())
-                            .and_then(|f| f.to_str()),
+                        short_book_of(&record.source_path),
                     ) else {
                         continue;
                     };
                     entries.push(format!(
                         "{{\"book\":{},\"source_file\":{},\"source_line\":{}}}",
-                        json_string(short_book),
+                        json_string(&short_book),
                         json_string(source_file),
                         record.source_line
                     ));
@@ -331,6 +349,39 @@ fn json_string(s: &str) -> String {
 fn fatal(message: &str) -> ExitCode {
     eprintln!("{LABEL}: {message}");
     ExitCode::from(2)
+}
+
+/// The `v06_work_inventory`-facing "book" for a shipped record: the SAME
+/// PCGen oracle book directory `book_dir_of` resolves for `by_book`
+/// grouping above, reduced to its short (last-segment) form --
+/// `book_dir_of`'s four segments are always
+/// `<system>/<publisher>/<line>/<book>`, so the book is always the last
+/// one.
+///
+/// This is deliberately NOT derived from where the record's own JSON file
+/// happens to be shipped under `data/corpus/`. `v06_work_inventory` raw-
+/// enumerates the `race`/`race_trait` (and every other) population by
+/// walking `$PCGEN_CORPUS_ROOT/pathfinder/paizo/roleplaying_game/<book>`
+/// book by book (`books_dir = corpus_root.join(BOOKS_RELATIVE)`, where that
+/// `corpus_root` is `PCGEN_CORPUS_ROOT`, not this repo's `data/corpus/`),
+/// and every unit it mints carries the ORACLE book id it was walked under
+/// as `unit.book` -- that is the id this file's `--json-out` join key must
+/// match, not this repo's own (unrelated) choice of shipped-record
+/// directory. Verified one unit deep against the committed inventory
+/// (`OPEN-ISSUES.md` row 22): the CRB dwarf race's PCGen source is
+/// `core_essentials/races/dwarf/dwarf_races.lst` -- `core_essentials` is a
+/// real, separate oracle book directory, distinct from `core_rulebook` --
+/// and `docs/work-inventory.json` carries it as unit id
+/// `core_essentials:race:dwarf`, `"book": "core_essentials"`, even though
+/// this repo ships the record at `data/corpus/core_rulebook/race/
+/// dwarf.json`. Reading the book off `record.source_path`'s parent
+/// directory (the previous, buggy shape) instead reads the deepest PCGen
+/// nesting level, which for a record filed more than one directory level
+/// under its book (every `race`/`race_trait` row under a per-race
+/// subdirectory) is a race name, not a book at all.
+fn short_book_of(source_path: &str) -> Option<String> {
+    let dir = book_dir_of(source_path)?;
+    Path::new(&dir).file_name().and_then(|f| f.to_str()).map(str::to_string)
 }
 
 /// The corpus-relative directory of the book a `source.path` belongs to.
@@ -466,4 +517,154 @@ fn lst_files(dir: &Path) -> Vec<PathBuf> {
         }
     }
     out
+}
+
+#[cfg(test)]
+mod short_book_of_tests {
+    use super::short_book_of;
+
+    /// The exact defect `OPEN-ISSUES.md` row 22 traced one unit deep,
+    /// verified against the committed `docs/work-inventory.json`: the CRB
+    /// dwarf race's PCGen source is
+    /// `pathfinder/paizo/roleplaying_game/core_essentials/races/dwarf/
+    /// dwarf_races.lst` -- one directory level deeper than a flat book
+    /// layout -- and its inventory unit id is `core_essentials:race:dwarf`,
+    /// `"book": "core_essentials"`. The OLD code read
+    /// `source_path.parent().file_name()`, which for this row is `"dwarf"`
+    /// — a race name, not a book, so the `(book, file, line)` join in
+    /// `v06_work_inventory::apply_done_rung_stamps` could never match and
+    /// `race` sat at 0.0 % `done`. `short_book_of` reads the book off the
+    /// same 4-segment `book_dir_of` grouping the binary's own `by_book` pass
+    /// already uses, so it is correct regardless of PCGen nesting depth.
+    #[test]
+    fn crb_race_chassis_resolves_to_core_essentials_the_oracle_book_not_the_race_name() {
+        assert_eq!(
+            short_book_of(
+                "pathfinder/paizo/roleplaying_game/core_essentials/races/dwarf/dwarf_races.lst"
+            ),
+            Some("core_essentials".to_string())
+        );
+    }
+
+    /// A flat-filed record (the shape the old code happened to get right,
+    /// because for a flat book layout `source_path.parent().file_name()`
+    /// and `book_dir_of`'s last segment agree) must keep resolving the same
+    /// way — no regression on the population the bug never touched.
+    #[test]
+    fn flat_filed_record_resolves_to_its_own_book_same_as_before() {
+        assert_eq!(
+            short_book_of(
+                "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst"
+            ),
+            Some("advanced_race_guide".to_string())
+        );
+        assert_eq!(
+            short_book_of(
+                "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst"
+            ),
+            Some("ultimate_equipment".to_string())
+        );
+    }
+
+    /// A per-race-nested `race_trait` record resolves to its own real
+    /// oracle book, not the intermediate race-name directory PCGen's source
+    /// nests through.
+    #[test]
+    fn nested_race_trait_resolves_to_the_oracle_book_not_the_race_name_directory() {
+        assert_eq!(
+            short_book_of(
+                "pathfinder/paizo/roleplaying_game/core_essentials/races/tiefling/tiefling_abilities_race_subrace.lst"
+            ),
+            Some("core_essentials".to_string())
+        );
+    }
+
+    /// **Enumerated, not assumed:** no two real, currently-shipped records
+    /// carry the same `.lst` basename under two DIFFERENT real oracle
+    /// books (`find_basename_collisions.py`-equivalent one-liner over every
+    /// `data/corpus/**/*.json`'s `source.path`, grouped by
+    /// `book_dir_of`'s last segment: 0 basenames shared across >1 book).
+    /// Nor does any race name appear as a `races/<name>/` subdirectory
+    /// under more than one top-level oracle book (`core_essentials` is
+    /// currently the ONLY oracle book with this nesting shape at all —
+    /// enumerated over `$PCGEN_CORPUS_ROOT/pathfinder/paizo/
+    /// roleplaying_game/*/races/`). So this repo's real corpus has no case
+    /// today where `short_book_of` must disambiguate a genuine same-name
+    /// collision between two books. The synthetic test below proves the
+    /// function is correct anyway, for the day one exists.
+    #[test]
+    fn synthetic_collision_two_different_books_sharing_a_nested_directory_name_resolve_correctly()
+    {
+        // Both records nest through a subdirectory literally named
+        // `shared_name` -- the OLD `source_path.parent().file_name()` code
+        // would read `"shared_name"` for BOTH, collapsing two different
+        // real books into one indistinguishable (and wrong) string.
+        let a = short_book_of(
+            "pathfinder/paizo/roleplaying_game/book_alpha/sub/shared_name/x.lst",
+        );
+        let b = short_book_of(
+            "pathfinder/paizo/roleplaying_game/book_beta/sub/shared_name/x.lst",
+        );
+        assert_eq!(a, Some("book_alpha".to_string()));
+        assert_eq!(b, Some("book_beta".to_string()));
+        assert_ne!(a, b, "two different books must never resolve to the same book id");
+    }
+
+    #[test]
+    fn rejects_a_source_path_not_shaped_system_publisher_line_book_file() {
+        assert_eq!(short_book_of("too/short.lst"), None);
+        assert_eq!(short_book_of(""), None);
+    }
+
+    /// Regression, corpus-wide: for every shipped `race`/`race_trait`
+    /// record's real `source.path` today, `short_book_of` must resolve to
+    /// EXACTLY the same book `book_dir_of` (the binary's own pre-existing,
+    /// trusted `by_book` grouping function) resolves — i.e. the fix can
+    /// never disagree with the grouping the rest of this binary already
+    /// relies on, for the entire population `OPEN-ISSUES.md` row 22 named.
+    #[test]
+    fn every_shipped_race_source_path_agrees_with_book_dir_of() {
+        let repo_root = std::path::Path::new(env!("CARGO_MANIFEST_DIR"));
+        let corpus_root = repo_root.join("data/corpus");
+        let mut checked = 0usize;
+        for kind_dir in ["race", "race_trait"] {
+            let mut stack = vec![corpus_root.clone()];
+            while let Some(dir) = stack.pop() {
+                let Ok(entries) = std::fs::read_dir(&dir) else { continue };
+                for entry in entries.flatten() {
+                    let path = entry.path();
+                    if path.is_dir() {
+                        stack.push(path);
+                        continue;
+                    }
+                    if path.extension().and_then(|e| e.to_str()) != Some("json") {
+                        continue;
+                    }
+                    if path.file_name().and_then(|f| f.to_str()) == Some("LICENSE.json") {
+                        continue;
+                    }
+                    let rel =
+                        path.strip_prefix(repo_root).unwrap().to_string_lossy().replace('\\', "/");
+                    let segs: Vec<&str> = rel.split('/').collect();
+                    if segs.len() < 4 || segs[0] != "data" || segs[1] != "corpus" || segs[3] != kind_dir
+                    {
+                        continue;
+                    }
+                    let Ok(text) = std::fs::read_to_string(&path) else { continue };
+                    let Ok(parsed) = super::parse_document(&rel, &text) else { continue };
+                    let Some(record) = parsed.record else { continue };
+                    let expected = super::book_dir_of(&record.source_path)
+                        .and_then(|dir| std::path::Path::new(&dir).file_name().map(|f| f.to_string_lossy().into_owned()));
+                    assert_eq!(
+                        short_book_of(&record.source_path),
+                        expected,
+                        "record {rel} (source.path {}) disagreed with book_dir_of",
+                        record.source_path
+                    );
+                    checked += 1;
+                }
+            }
+        }
+        assert!(checked > 0, "no race/race_trait records found under {}", corpus_root.display());
+    }
 }
