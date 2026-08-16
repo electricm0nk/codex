@@ -42,6 +42,7 @@ pub mod inner_sea_intrigue;
 pub mod inner_sea_world_guide;
 pub mod monster_chassis;
 pub mod monster_codex;
+pub mod occult_adventures;
 pub mod pathfinder_unchained;
 pub mod ultimate_campaign;
 pub mod ultimate_equipment;
@@ -252,4 +253,22 @@ pub enum RuleSetId {
     /// root; see `rules_tables::inner_sea_gods`'s header for the derivation and
     /// for the 16-row `Race Traits ~` bundle finding it records.
     Isg,
+    /// Occult Adventures. SD31-E6-F2-003 -- the book's FIRST compiled rule
+    /// set of any kind (no prior lane has ingested any of its content), first
+    /// record family: 144 base spells (`rules_tables::occult_adventures::
+    /// spell_list`).
+    ///
+    /// **Without this variant, `v06_work_inventory::classify`'s book-level
+    /// gate (`engine_book_for` -> `rule_set_for` -> `None`) short-circuits
+    /// every one of this book's units to `not-started`/
+    /// `no_compiled_rule_set_for_book` before the per-kind `Kind::Spell` arm
+    /// ever runs its own `spell_levels` lookup** -- discovered via this
+    /// cycle's own guarded regen (a real before/after measurement, not
+    /// assumed): shipping `spell_resolver::spell_catalog_rows()` alone left
+    /// every OA spell unit reading `not-started` unchanged. This is the
+    /// SAME book-level gate `RuleSetId::Um` already crossed for Ultimate
+    /// Magic's spells -- UM's variant just happened to exist already, from
+    /// an EARLIER, unrelated feat-catalog cycle (SD-28 Epic 28), which is
+    /// why this gate's existence was easy to miss until traced.
+    Oa,
 }

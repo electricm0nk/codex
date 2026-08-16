@@ -1,9 +1,10 @@
 //! Spell catalog browser — Tauri command adapter over every ingested PF1
 //! spell table: `crb::spell_list` (652 records), `apg::spell_list` (297),
 //! `acg::spell_list` (144), `advanced_race_guide::spell_list` (92),
-//! `ultimate_intrigue::spell_list` (101) and, since SD31-E6-F2-002,
-//! `ultimate_magic::spell_list` (269) — 1555 in total. This adapter never
-//! chains a book by hand; it reads `spell_resolver::spell_catalog_rows()`
+//! `ultimate_intrigue::spell_list` (101), `ultimate_magic::spell_list`
+//! (269, since SD31-E6-F2-002) and, since SD31-E6-F2-003,
+//! `occult_adventures::spell_list` (144) — 1699 in total. This adapter
+//! never chains a book by hand; it reads `spell_resolver::spell_catalog_rows()`
 //! (see `build_spell_catalog` below), so a book widening that registry
 //! reaches this DTO automatically. The per-book count is still worth
 //! stating here because it is the sweep target: `SpellCatalogScreen.tsx`'s
@@ -60,7 +61,7 @@ use serde::{Deserialize, Serialize};
 
 use codex::rules_core::pcgen_desc::render_pcgen_desc;
 use codex::rules_core::rules_tables::{
-    acg, advanced_race_guide, apg, crb, ultimate_intrigue, ultimate_magic,
+    acg, advanced_race_guide, apg, crb, occult_adventures, ultimate_intrigue, ultimate_magic,
 };
 use codex::rules_core::spell_resolver;
 
@@ -72,6 +73,7 @@ const BOOK_ACG: &str = "ACG";
 const BOOK_ARG: &str = "ARG";
 const BOOK_UI: &str = "UI";
 const BOOK_UM: &str = "UM";
+const BOOK_OA: &str = "OA";
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -187,6 +189,21 @@ fn map_ui_entry(entry: &ultimate_intrigue::spell_list::SpellListEntry) -> SpellC
         school: Some(format!("{:?}", entry.school)),
         level: Some(entry.level),
         description: Some(serve_description(entry.description)),
+    }
+}
+
+/// OA's table types `school`, `level` and `description` optionally, like
+/// UM's -- the real corpus gaps this cycle's own ingest found and named
+/// (`Talismanic Implement` carries no `CLASSES:` token; `Share Language
+/// (Communal)` carries neither `SCHOOL:` nor `DESC:` of its own), never
+/// fabricated.
+fn map_oa_entry(entry: &occult_adventures::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_OA.to_string(),
+        school: entry.school.map(|school| format!("{school:?}")),
+        level: entry.level,
+        description: entry.description.map(serve_description),
     }
 }
 
@@ -313,6 +330,7 @@ mod tests {
             .chain(advanced_race_guide::spell_list::SPELL_LIST.iter().map(map_arg_entry))
             .chain(ultimate_intrigue::spell_list::SPELL_LIST.iter().map(map_ui_entry))
             .chain(ultimate_magic::spell_list::SPELL_LIST.iter().map(map_um_entry))
+            .chain(occult_adventures::spell_list::SPELL_LIST.iter().map(map_oa_entry))
             .collect();
         let actual = build_spell_catalog().entries;
         assert_eq!(actual.len(), expected.len());
@@ -328,13 +346,14 @@ mod tests {
     #[test]
     fn the_catalog_serves_every_ingested_book_not_only_crb() {
         let response = build_spell_catalog();
-        assert_eq!(response.entries.len(), 1555);
+        assert_eq!(response.entries.len(), 1699);
         assert_eq!(book_entries(BOOK_CRB).len(), 652);
         assert_eq!(book_entries(BOOK_APG).len(), 297);
         assert_eq!(book_entries(BOOK_ACG).len(), 144);
         assert_eq!(book_entries(BOOK_ARG).len(), 92);
         assert_eq!(book_entries(BOOK_UI).len(), 101);
         assert_eq!(book_entries(BOOK_UM).len(), 269);
+        assert_eq!(book_entries(BOOK_OA).len(), 144);
     }
 
     #[test]
@@ -361,7 +380,7 @@ mod tests {
         for entry in &build_spell_catalog().entries {
             assert!(!entry.key.is_empty());
             assert!(
-                [BOOK_CRB, BOOK_APG, BOOK_ACG, BOOK_ARG, BOOK_UI, BOOK_UM]
+                [BOOK_CRB, BOOK_APG, BOOK_ACG, BOOK_ARG, BOOK_UI, BOOK_UM, BOOK_OA]
                     .contains(&entry.book.as_str())
             );
         }
