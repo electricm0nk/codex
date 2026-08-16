@@ -9116,3 +9116,307 @@ this wave's finished lanes performed after checking every live PID's `CARGO_TARG
    `apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh`.
 
 
+
+## Cycle `SD31-E6-F7-001` (`RETRO_ACTOR=sd31-companion-feat`) — 2026-08-16, `epic-6-ingest-lanes` F7/F8/F9 (`companion`/`feat`/`monster_ability`)
+
+**Role:** own worktree (`/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_c2092bd6-95a-6`), own
+branch `sd31/companion-feat-monster-ability-e6f7f8f9`, pushed to origin.
+
+**HEAD at start:** `5d0cd1595` (`docs(sd31): correct Decision 7's sizing, record its structural blocker
+and its first catch`) — the `tranche/11` tip, wave-5 fully integrated (`SD31-W5-INTEGRATE-001`).
+`docs/release/SD-31-corpus-closure-grind/loop-instruction.md` present. The worktree's own checkout was
+off-branch at start (HEAD `061b623ee`, `worktree-wf_c2092bd6-95a-6`, tree clean, package dir absent) —
+per the mandatory branch-state check, `git reset --hard origin/tranche/11` recovered it before any read,
+then checked out this cycle's own branch.
+
+**Oracle pin:** `./scripts/verify.sh --only preflight-oracle` → PASS. `PCGEN_ORACLE_SHA=
+7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/pcgen-oracle-pin.env`).
+
+### 1. Board re-derivation, not transcribed
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+print(len(U), dict(c), round(100*c['done']/len(U),4))
+"
+# 38521 {'done': 7340, 'not-started': 20061, 'unmeasurable': 5381, 'deferred': 36, 'held': 4936, 'in-progress': 767} 19.0545
+```
+
+Matches the dispatch's stated 7,340/19.05% exactly — no drift at this tip. Per-kind:
+`companion` 1,696 total, `done` 416 (24.53%), `not-started` 774, `held` 506. `feat` 2,610 total, `done`
+1,165 (44.64%), `unmeasurable` 385, `held` 84, `not-started` 973. `monster_ability` 2,951 total, `done`
+438 (14.84%), `not-started` 1,322, `held` 1,191. All three match the dispatch's figures.
+
+### 2. The named lever: `enrich_companion_raw_tokens.rs` — the `companion` counterpart to `SD31-E6-F9-001`'s `enrich_monster_ability_raw_tokens.rs`
+
+Held-mass shape for `companion` (99 not-done cells, wiring_class × status):
+`computed|not-ingested` 401, `display|not-ingested` 284, `derived|grounded` 227, `display|grounded`
+178, `static|grounded` 99, `derived|not-ingested` 51, `static|not-ingested` 34, `ambiguous|not-ingested`
+4, `ambiguous|grounded` 2.
+
+Traced `static|grounded` (99 units, e.g. `advanced_players_guide:companion:eidolon`,
+`core_essentials:companion:familiar_octopus`) one record deep: every one of the 99 corpus JSON records
+carries a valid `source.kind:"lst_token"` citation but **no `data.raw_tokens` array**
+(`python3` scan, 0/99). `corpus_literal_sweep`'s own population rule (`source.kind=="lst_token"` AND
+`data.raw_tokens` present) requires that field to promote a `static` unit's status to
+`literal-verified` — the ONLY status that reaches `done` for `static`
+(`pf1e_dashboard_producer.doneness_verdict`) — so this silently caps the whole population at `held`,
+the exact shape `SD31-E6-F9-001` found and fixed for `monster_ability`.
+
+**Built `src/bin/enrich_companion_raw_tokens.rs`**, modeled directly on
+`enrich_monster_ability_raw_tokens.rs` (byte-for-byte reuse of `corpus_literal_sweep::token_closure`,
+same `Outcome` enum, same `Scratch` test fixture shape, same book-agnostic `data/corpus/*/companion/`
+walk). TDD: 9 tests (split_token_field round-trip ×3, enrich_one closure/`.MOD`-row/already-
+enriched/citation-miss/non-lst-token ×5, `find_companion_json_files` ×1), all green before the real run.
+
+**PI-safety checked before writing a single byte, per the standing mandate — independently
+re-verified, not trusted from the epic-breakdown's "17 registered companion books carry zero
+declared-PI source tokens" claim** (`SD31-E6-F9-001` found that exact claim's `monster_ability`
+counterpart was wrong for `bestiary_4`). `grep -rl "DESCISPI:YES\|NAMEISPI:YES"` over every
+`*_races_companion.lst`/`*_abilities_companion.lst` file for all 17 registered `COMPANION_BOOKS`
+entries, plus every `core_essentials/ce_*familiar*.lst`/`ce_*companion*.lst` file (the module the
+compiled table maps `core_essentials` companions through) → **0 hits** (2 hits found in
+`core_essentials/` are unrelated `skinwalker`/`tiefling` RACE-ability files, not companion/familiar
+ones). Confirmed clean before the run.
+
+**Ran for real** against the pinned oracle: **922 enriched, 0 no-LST-citation, 0 already-enriched, 0
+citation misses** (every registered book, `advanced_players_guide` 4 → `ultimate_wilderness` 327).
+`corpus_literal_sweep` after: **CLEAN**, 21716 → 22638 records examined (+922, exact match).
+`declared_pi_shipping_audit`: **CLEAN**. Sampled `git diff` on `eidolon.json` confirms only the new
+`raw_tokens` key and harmless key-reordering (identical to the precedent tools' own effect) —
+`license`/`pi_field`/`pi_marker`/`wiring_class` byte-identical in value.
+
+**Guarded regen, measured:**
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-companion-feat-after-enrich.json
+  # 22638 records examined of 24736 read, 195376 tokens compared (9 synthesized), 0 findings — CLEAN
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-companion-feat.json
+  # 100 of 101 covered units cleared; 1 failed (pre-existing: advanced_players_guide:equipment:
+  #   spindle_of_perfect_knowledge, unchanged from the wave-5 baseline)
+CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep-sd31-companion-feat-after-enrich.json \
+DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture-sd31-companion-feat.json \
+  cargo run --locked --bin v06_work_inventory
+```
+`companion` `held` **506 → 441 (-65)**, `done` **416 → 481 (+65)**; board-wide `done` **7,340 → 7,405
+(+65)**, **19.0545% → 19.2233%**. `docs/work-inventory.json` restored via `git checkout --` after
+measuring, not committed, per the wave rule.
+
+### 3. Traced why only 65 of the 99 promoted — a real cross-lane join bug, found and reported (not fixed — out of file territory)
+
+34 of the 99 remain `held` (all `core_essentials`-housed `companion` records whose file is under a
+`ce_*.lst` root file re-attributed by `SD31-ATTRIB-001`'s `resolve_true_book_for_core_essentials` to a
+different `book` for reporting). Traced one record deep:
+`core_essentials:companion:familiar_octopus` physically lives at
+`.../core_essentials/ce_races_familiar_apg.lst:9`; `corpus_literal_sweep`'s `sweep_verified` set
+correctly records that triple under `book: "core_essentials"` (confirmed present in the sweep's own
+`--json-out`). The unit's `docs/work-inventory.json` `book` field, however, is `"advanced_players_guide"`
+— a genuinely correct re-attribution (the file's own header states
+`SOURCELONG:Advanced Player's Guide`). `v06_work_inventory::apply_done_rung_stamps`'s `Static` arm
+(`:4433-4444`) joins `sweep_verified` on `item.unit.book` — the re-attributed reporting field — instead
+of `item.unit.source_book`, which the SAME file's `CorpusUnit::source_book` doc comment (`:469-475`)
+explicitly names as the only field safe for a physical-file join, and which two OTHER call sites in the
+same file (`engine_book_for`, `:3591`/`:5415`) already correctly use for exactly this reason. Re-derived
+corpus-wide, book-agnostic to kind: **34** `static`+not-yet-`literal-verified` units source from a
+`ce_*.lst` root file — all 34 are `companion` (the only kind currently sourcing this population shape).
+Reported in full, with the exact fix (`item.unit.book.clone()` → `item.unit.source_book.clone()` in both
+the `Static` and `Derived` arms) at `OPEN-ISSUES.md` row 94 — `v06_work_inventory.rs` is lane 1's file,
+out of this card's territory, so this cycle reported rather than fixed. A one-line-per-branch change
+would move all 34 to `done` immediately with no further ingest.
+
+### 4. Render-readiness report for lane 1's `Kind::Companion` prose done-bar rung
+
+Per the dispatch's own instruction (this card's job is "the render side and the corpus side" of
+`SD31-D7-PROSE-001`'s named ~223-unit companion lever; the rung itself is Epic 2/lane 1's file). Full
+detail and the exact commands are in `OPEN-ISSUES.md` row 95; summary:
+
+- Re-derived the 223-unit population fresh at this tip (unaffected by this cycle's `static`-only raw_tokens
+  work): `kind=='companion' AND magnitude_token_count==0 AND status=='grounded'` → 223 (178 `display`, 43
+  `derived`, 2 `ambiguous`). All 223 are `record_type: "ability"` corpus rows (never the owning
+  `"creature"` record, which has no rendered `description` field at all).
+- **201 of 223 carry a real, non-null `data.description`; 9 carry ONLY real, non-empty
+  `data.description_variants` (every `DESC:` token conditional — Ultimate Wilderness's shape); 13 carry
+  neither** (genuinely nothing for a player to see, e.g. `advanced_players_guide:companion:eidolon_skills`,
+  a bare `TYPE:SkillChoice` reference with no `DESC:` token anywhere) — these 13 are correctly `held`,
+  not a rung gap.
+- **Render path certified sound for all 210 ready units, corpus-wide** — `companion_catalog.rs`'s
+  `serve_ability_description`/`serve_desc_variant` both panic on any leaked PCGen syntax, and every test
+  that calls `build_companion_catalog()` walks every registered book's every ability, so a leak anywhere
+  would already be red. The pre-existing `no_served_description_leaks_pcgen_syntax` test already certified
+  the 201-`description` half; this cycle added `no_served_description_variant_leaks_pcgen_syntax`
+  (TDD, `companion_catalog.rs`) to close the previously-only-spot-checked `description_variants` half the
+  same way. Both green: `cargo test --locked companion_catalog::` → 11/11 passed.
+- **The one nuance a rung built on `description` alone would miss**: 9 of the 223 (4%) would be silently
+  under-claimed — the same shape as the equipment/spell 247-unit gap `OPEN-ISSUES.md` row 70 already
+  named. A `Kind::Companion` rung must check `description.is_some() OR !description_variants.is_empty()`,
+  mirroring `serve_desc_variants`' own promotion logic in `companion_catalog.rs`.
+
+**Handoff to lane 1:** 210 of the 223 units are ready to promote via the same rung shape
+`SD31-D7-PROSE-001` built for `race_trait`; the exact id lists (`description`-carrying 201,
+`description_variants`-only 9, genuinely-nothing 13) are reproducible via the commands in
+`OPEN-ISSUES.md` row 95.
+
+### 5. Three held units traced end to end, one per kind, per the dispatch's own instruction
+
+- **`companion` `derived|grounded`** (227 units, e.g. `core_essentials:companion:familiar_centipede_house`):
+  short of `fixture-verified` — `derived_evaluator_fixture_check`'s fixture file
+  (`tests/fixtures/rules_core/derived-evaluator-fixtures.json`) has NO `companion_entries` array at all
+  (checked: only `entries`/`monster_entries` keys exist). This is Epic 6-F11's lever, structurally the
+  same shape `SD31-E6-F1-002` hit and correctly refused for `monster`'s own ability-score-scaling family:
+  most `companion` `BONUS:STAT` tokens are DELTAS against a base ability score no corpus row states for
+  this creature, so a fixture cannot be built here without fabricating a base score. Not this card's file
+  (`derived_evaluator_fixture_check.rs` is a cross-kind shared harness Epic 6-F11 owns this wave, per
+  `epic-breakdown.md`'s own explicit lever assignment for both `companion` and `monster_ability`'s
+  identical cell) — traced and reported, not attempted.
+- **`feat` `static|grounded`** (15 units, e.g. `core_rulebook:feat:acrobatic`): structurally different
+  from `companion`/`monster_ability`'s shape — `data/corpus/core_rulebook/feat/` **does not exist**;
+  most feat books' records are served straight from a hand-authored `rules_tables` table with no
+  corresponding `data/corpus/**/feat/*.json` for `corpus_literal_sweep` to examine at all (no file to add
+  `raw_tokens` to). Full detail, the two already-wired `feat_gap_tables`-derived exceptions
+  (`advanced_race_guide`/`pathfinder_unchained`, confirmed already live in `feats_all.rs`/
+  `feat_catalog.rs`, NOT a stale lead), and the correctly-scoped remedy (a new `cache_gen::feat` module
+  on the `cache_gen::ultimate_equipment` precedent) are in `OPEN-ISSUES.md` row 96. Not attempted — the
+  real scope (corpus-wide across every hand-authored feat book) is materially larger than the 15 units
+  that motivated the trace, and a rushed partial dump risks a half-ingested state.
+- **`monster_ability` `display|grounded`** (958 units, the dominant `held` cell): the mandate's own
+  named blocker — `display`+`grounded` maps to `held`, not `done`, in `doneness_verdict()`, and Decision
+  7's prose done-bar has no `Kind::MonsterAbility` rung yet (only `race_trait` does, per
+  `SD31-D7-PROSE-001`). Lane 1's territory exactly as the dispatch states; not duplicated here.
+  `monster_ability`'s `derived|grounded` (223 units) is the same Epic-6-F11 fixture-coverage lever as
+  `companion`'s — `derived_evaluator_fixture_check.rs` has no `monster_entries` coverage for this
+  sub-population either (the 7 landed by `SD31-E6-F11-002` cover a different, narrower SLA-caster-level
+  family). `feat`'s own dominant held cell (`ambiguous|text-complete`, 64 units) is the SAME 404-unit
+  `ambiguous:prose_scaling_phrase` population `decisions.md §7`/row 36 already documents — Epic 2's
+  classifier territory (`wiring_class.rs`), not this card's.
+
+### 6. `feat`/`monster_ability`: no code changes this cycle
+
+Traced as above; both kinds' real remaining levers (Epic 2's verdict-path rung, Epic 6-F11's fixture
+coverage, and `feat`'s own book-wide ingest gap) are out of this card's file territory or a materially
+larger, separately-scoped project than this cycle's remaining budget supports honestly. Reported
+precisely rather than attempting a partial, unverifiable fix in either.
+
+### 7. `refine_kind()`/`MONSTER_ABILITY_TYPE_FACETS`: not touched this cycle
+
+No new misclassification found this cycle — `SD31-E6-F9-001` (wave 5) already fixed the ACG/UW
+Favored-Class-Bonus-Output shape. No reclassification made; nothing to report in both directions.
+
+### 8. `v06_corpus_trap_report --audit`: before/after
+
+Baseline at this tip (unchanged from wave 5, `row 65`): `TRAP_EXIT=2`, `1 0 mod-record; 0 1191
+wiring-class-mismatch`, `companion` sub-share 84. Re-ran after this cycle's own diff (raw_tokens-only,
+never touches a corpus JSON's `wiring_class` field, never touches any `.lst`): confirmed byte-identical —
+same 1191 total, same 84 `companion` share (the specific mismatched records, e.g. `familiar_peafowl`,
+`koala`, `seaweed_leshy_spell_like_abilities`, are the SAME ones the pre-existing baseline already
+carried; this cycle's own 922-record diff introduces zero new mismatches, confirmed by the `raw_tokens`
+field playing no role in the trap report's comparison). **Not worsened.**
+
+### 9. Four-check wired-integration audit
+
+```
+git diff --unified=0 5d0cd1595 -- 'apps/desktop/**/*.ts*' 'apps/desktop/src-tauri/**/*.rs' 'src/**/*.rs' \
+  ':!**/__tests__/**' ':!**/*.test.ts' ':!**/*.test.rs' \
+  | grep -nE '\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b' || echo OK_NO_TOKENS
+# OK_NO_TOKENS
+git diff --unified=0 5d0cd1595 -- 'apps/desktop/**/*.tsx' 'apps/desktop/**/*.jsx' \
+  | grep -nE 'onClick=\{\s*\(\)\s*=>\s*\{\s*\}\s*\}|onClick=\{undefined' || echo OK_NO_NOOP_HANDLERS
+# OK_NO_NOOP_HANDLERS
+git diff --unified=0 5d0cd1595 -- 'apps/desktop/**/*.{ts,tsx,jsx,rs}' 'src/**/*.rs' \
+  ':!**/__tests__/**' ':!**/*.test.*' \
+  | grep -nE 'mockResolvedValue|mockReturnValue\(|vi\.mock\(|__mocks__' || echo OK_NO_MOCK_LEAKS
+# OK_NO_MOCK_LEAKS
+git diff --unified=0 5d0cd1595 -- 'apps/desktop/**/*.{ts,tsx}' 'src/**/*.rs' \
+  | grep -nE '"Would [^"]*"' || echo OK_NO_WOULD_STRINGS
+# OK_NO_WOULD_STRINGS
+```
+All four clean.
+
+### 10. Gate
+
+Launched EARLY, background, immediately after code changes were tested and `docs/work-inventory.json`
+was reverted:
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F7-001-verify.log
+./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+**This receipt is being written while the gate is still executing** (same shape as
+`SD31-E6-F9-001`'s own precedent — the log's own `RESULT:`/`VERIFY_EXIT=` line, appended once
+obtained, is authoritative over this paragraph). Confirmed genuinely progressing throughout, not
+stalled, via `pgrep -fa rustc`/`cargo-clippy` matching a live PID at every check and the log's own
+stage transitions advancing. **19 of 23 stages PASS as of this receipt**: `preflight-disk`,
+`preflight-oracle`, `oracle-pin-selftest`, `producer-selftest`, `reachability-audit-selftest`,
+`reachability-audit` (98.95%, unchanged), `groundtruth-guard-selftest`, `pi-sweep`,
+`declared-pi-audit` (CLEAN), `audit-selftest`, `reclaim-selftest`, `driver-selftest`,
+`corpus-sweep-selftest`, `root-lib` (1867 passed), `root-full` (6612 passed across 561 suites, all
+529 `tests/*.rs` suites executed), `desktop` (**448 passed**, +1 over the wave-5 baseline of 447 —
+exactly this cycle's own new `no_served_description_variant_leaks_pcgen_syntax` test), `reach` (27
+passed, claim present), `corpus-sweep` (22638 records examined, 0 findings — matches this cycle's
+own manual sweep run exactly), `frontend-install`, `frontend-test` (99/99 files),
+`frontend-typecheck` (clean). **`clippy` is in progress as of this receipt**; `class-dump` has not
+yet started. Shared box carried 13-26 concurrent `rustc` processes across 20+ other active
+worktrees throughout this run (`scripts/reclaim.sh`'s own branch listing confirms 20+ worktrees),
+which is why this run took materially longer than the wave-5 precedent's own gate.
+
+### 11. DoD-8: on-screen verification
+
+**Not captured this cycle — logged as a BLOCKER, not faked, not dropped.**
+`apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh`'s own header states, verbatim:
+"Memory: never run this concurrently with `scripts/verify.sh` on this box (22 GiB RAM, no swap —
+vite gets OOM-killed)." This cycle's own full gate (§10) was still executing (`clippy` stage) as
+this receipt was finalized, and had already been running for over 19 minutes under heavy shared-box
+contention. Driving `RUN_DESKTOP_AGENT=sd31-companion-feat
+./.claude/skills/run-desktop/verify-on-screen.sh --family companion --record "Eidolon" --expect
+"mental link" --out docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F7-001/item8` while
+the gate's own `frontend-*`/`clippy`/`class-dump` stages were still ahead of it in the pipeline
+risked exactly the OOM failure the harness's own doc comment names, on a box already carrying 13-26
+concurrent `rustc` processes from 20+ sibling worktrees. **Render-path soundness for the exact
+screenshot this would have captured is independently proven without the app**, by the strongest
+evidence this codebase's own test suite carries for the same claim: `companion_catalog.rs`'s
+`serve_ability_description`/`render_desc_token` PANICS on any leaked PCGen syntax, and every test
+that calls `build_companion_catalog()` (11 tests, all green — `desktop` stage, §10) walks the FULL
+compiled catalog including `advanced_players_guide:companion:eidolon_link`'s real, byte-transcribed
+description — a leak or empty-render anywhere in that path would already be a red test, not merely
+an unproven one. The one thing a live screenshot proves beyond this is that the SAME rendered
+string reaches the actual webview pixel buffer through Tauri's IPC bridge, which this cycle could
+not safely exercise. **Follow-up command, to run once the gate frees the box**:
+```
+export RUN_DESKTOP_AGENT=sd31-companion-feat
+./.claude/skills/run-desktop/verify-on-screen.sh --family companion --record "Eidolon" \
+  --expect "mental link" --expect "share magic item slots" \
+  --out docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F7-001/item8 \
+  --slug companion-eidolon-link
+```
+
+### 12. What was corrected, reworked, or narrowly avoided
+
+- Independently re-verified the epic-breakdown's "17 registered companion books carry zero declared-PI
+  source tokens" claim rather than trusting it (the same claim's `monster_ability` counterpart was wrong
+  for `bestiary_4`, per `SD31-E6-F9-001`) — confirmed genuinely zero for `companion`'s currently-registered
+  books, but by checking, not by citation.
+- Found the `book`-vs-`source_book` join bug (§3) by NOT accepting "only 65 of 99 promoted" at face value
+  — traced the 34 stragglers one record deep instead of reporting a smaller, rounded-down win.
+- Did not attempt `derived_evaluator_fixture_check.rs`'s `companion`/`monster_ability` `derived|grounded`
+  populations (450 units combined) despite being tempting scope-adjacent wins — both would require
+  fabricating a base ability score no corpus row states, which the standing "no stubs, never invent a
+  value" rule forbids; `SD31-E6-F1-002`'s own precedent already established this exact refusal for
+  `monster`.
+- Did not attempt `feat`'s book-wide corpus-JSON-dump gap (§5) despite tracing straight to a well-named,
+  well-precedented remedy — the real scope (corpus-wide, potentially most of `feat`'s ~2,600 units) is
+  materially larger than a same-cycle extension of the 15-unit population that motivated the trace.
+
+### 13. Retro events
+
+`retro.py`: one `verification` event auto-emitted by `--only preflight-oracle`
+(`docs/retro/events/sd31-companion-feat.jsonl`) plus one `deferral`-shaped correction-style event for
+the book/source_book join-bug finding (§3), recorded via `scripts/retro.py correction` (verified-by the
+exact `sweep_verified` membership check quoted above).
+
+### 14. Push and reclaim
+
+`git push -u origin sd31/companion-feat-monster-ability-e6f7f8f9`. `scripts/reclaim.sh` then `--apply`
+— bytes reclaimed recorded in this cycle's structured-output figures. Per-agent `CARGO_TARGET_DIR`
+(`/home/ubuntu/cargo-targets/sd31-companion-feat`) left for the dispatcher's between-wave clear, per the
+standing rule (not scanned by `reclaim.sh`).
