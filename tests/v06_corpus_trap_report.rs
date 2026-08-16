@@ -519,40 +519,26 @@ fn ingested_record_keys_match_their_cited_line() {
     // next mis-keyed ingest, in ACG or any other book, must be added here
     // deliberately, not silently absorbed.
     //
-    // SD31-W5-INTEGRATE-001 (2026-08-16), 10 NEW rows, enumerated
-    // deliberately rather than fixed blind under integration-cycle time
-    // pressure: `SD31-E6-F5-003`'s equipment residual lane (own worktree,
-    // merged this wave) shipped 620 new equipment records via the shared
-    // `equipment_gap::find_citation` helper, and an independent Opus
-    // adversarial review confirmed 50 of them cite the wrong corpus row
-    // (real values, wrong provenance — `find_citation` tries a KEY:-field
-    // match across EVERY .lst in the book before a first-column match in
-    // ANY file, so a class-ability row's KEY: can beat the real equipment
-    // row). These 10 are the subset that also trips THIS trap (an
-    // archetype-qualified class-feature KEY: filed under the bare item
-    // name) — the other 40 (citing a weapon-proficiency row instead of
-    // the real weapon row) do not carry a KEY: token at all, so they do
-    // not register here, but are the SAME defect (see `OPEN-ISSUES.md`
-    // row 90 for the full 50-record finding and the named remedy:
-    // constrain `find_citation`'s candidate files to equipment-shaped
-    // ones first, then re-cite these exact records and re-run
-    // `enrich_equipment_raw_tokens`). NOT gaming: the values these 10
-    // records ship are real, unfabricated corpus data (confirmed by the
-    // adversarial review) — only the citation is wrong, and pinning the
-    // debt visibly here is the SAME sanctioned pattern the ACG Naturalist
-    // debt used, not a loosened comparison or a deleted assertion.
-    const KNOWN_KEY_MISMATCH_DEBT: &[(&str, &str)] = &[
-        ("ultimate_intrigue", "Mystic Bolts"),
-        ("ultimate_magic", "Scroll Blade"),
-        ("ultimate_magic", "Scroll Shield"),
-        ("ultimate_psionics", "Astral Armor"),
-        ("ultimate_psionics", "Astral Juggernaut"),
-        ("ultimate_psionics", "Astral Skin"),
-        ("ultimate_psionics", "Deadly Fist"),
-        ("ultimate_psionics", "Flurry of Fists"),
-        ("ultimate_psionics", "Flurry of Strikes"),
-        ("ultimate_psionics", "Mind Shield"),
-    ];
+    // SD31-W5-INTEGRATE-001 (2026-08-16) landed 10 rows here (the
+    // `OPEN-ISSUES.md` row 90/92 class-ability-cited subset of a 50-record
+    // `find_citation` mis-citation finding — re-derived to 39 records at
+    // the time of the fix below, not 50; the other 40 was itself an
+    // over-count carried in the original finding's own prose). `find_citation`
+    // tried a `KEY:`-field match across EVERY `.lst` in the book before a
+    // first-column match in ANY file, so a proficiency/class-ability row's
+    // `KEY:` could beat the real equipment row.
+    //
+    // `SD31-E6-F5-004` fixed the root cause (`equipment_gap.rs`'s
+    // `find_citation` now tries every strategy against equipment-shaped
+    // files — basename containing `"equip"` — before ever falling back to
+    // a non-equipment-shaped file) and re-cited all 39 affected records
+    // (`gen_cache_hand_authored_equipment` re-run after deleting the 39
+    // wrong-citation files so the no-clobber write guard could not block
+    // the correction). All 10 of these rows now cite their real equipment
+    // row and no longer trip this trap — debt paid to zero, matching the
+    // ACG Naturalist precedent. Left empty, not deleted, so the next
+    // mis-keyed ingest is still caught and must be enumerated deliberately.
+    const KNOWN_KEY_MISMATCH_DEBT: &[(&str, &str)] = &[];
 
     let findings = audit_ingested_cache(&cache_dir(), &root).expect("cache audit runs");
     let mismatches: Vec<_> = findings

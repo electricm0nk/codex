@@ -77,7 +77,10 @@ impl ShippedToken {
 }
 
 /// One shipped JSON corpus record, reduced to what the sweep compares.
-#[derive(Debug, Clone, PartialEq, Eq)]
+///
+/// `PartialEq` only, not `Eq`: `cost_gp`/`weight_lbs` are `Option<f64>`,
+/// which has no total `Eq` impl.
+#[derive(Debug, Clone, PartialEq)]
 pub struct ShippedRecord {
     /// Repo-relative path of the JSON file, for the report.
     pub record_path: String,
@@ -102,6 +105,13 @@ pub struct ShippedRecord {
     /// doc comment for why this is a narrow, declared exemption and not a
     /// loosened rule.
     pub pi_redacted_description: bool,
+    /// `data.cost_gp`, when the record's typed schema carries one. Read
+    /// independently of `raw_tokens` -- see [`compare_tokens`]'s doc
+    /// comment for why this field is checked against the corpus closure
+    /// at all (`OPEN-ISSUES.md` row 91).
+    pub cost_gp: Option<f64>,
+    /// `data.weight_lbs`, the `WT:` sibling of [`Self::cost_gp`].
+    pub weight_lbs: Option<f64>,
 }
 
 /// One way a shipped record failed to byte-match its corpus literal.
@@ -125,6 +135,12 @@ pub enum Finding {
     SynthesizedTokenNotInCorpus { record: String, token: String },
     /// A token key carries a `:` but is not on [`SYNTHESIZED_TOKEN_KEYS`].
     UnknownSynthesizedKey { record: String, key: String },
+    /// A record's own typed field (`data.cost_gp`/`data.weight_lbs`) is not
+    /// byte-derivable from any `<lst_key>:<value>` entry in its token
+    /// closure -- the systemic gap `raw_tokens`-only comparison could never
+    /// catch, since a typed field can be populated from a wholly different
+    /// source than `raw_tokens` (`OPEN-ISSUES.md` row 91).
+    TypedFieldNotInClosure { record: String, field: &'static str, shipped_value: String, lst_key: &'static str },
 }
 
 impl Finding {
@@ -136,7 +152,8 @@ impl Finding {
             | Finding::DigestDrift { record, .. }
             | Finding::TokenNotInClosure { record, .. }
             | Finding::SynthesizedTokenNotInCorpus { record, .. }
-            | Finding::UnknownSynthesizedKey { record, .. } => record,
+            | Finding::UnknownSynthesizedKey { record, .. }
+            | Finding::TypedFieldNotInClosure { record, .. } => record,
         }
     }
 
@@ -161,6 +178,11 @@ impl Finding {
             Finding::UnknownSynthesizedKey { record, key } => {
                 format!("{record}: token key is not an LST token name and is not a declared synthesized key: {key}")
             }
+            Finding::TypedFieldNotInClosure { record, field, shipped_value, lst_key } => {
+                format!(
+                    "{record}: typed field {field}={shipped_value} is not byte-derivable from any {lst_key}: entry in the corpus token closure"
+                )
+            }
         }
     }
 }
@@ -182,6 +204,11 @@ pub struct SweepTally {
     pub synthesized_tokens_compared: usize,
     /// Records whose `source.sha256` claim was checked against the real file.
     pub digests_checked: usize,
+    /// Typed fields (`cost_gp`/`weight_lbs`) checked against the token
+    /// closure -- reported so a run that never exercised the typed-field
+    /// check cannot be misread as one that exercised it and found nothing
+    /// (`OPEN-ISSUES.md` row 91's own fix).
+    pub typed_fields_compared: usize,
 }
 
 /// The tab-separated fields of a `.lst` row that can carry tokens: field 0 is
@@ -211,7 +238,63 @@ pub fn token_closure(
     closure
 }
 
-/// Compare one record's transcribed tokens against its corpus closure.
+/// Formats an `f64` the way it must appear in an `<LST_KEY>:<value>` token:
+/// an integral value with no trailing `.0` (PCGen corpus rows write bare
+/// integers, e.g. `COST:800`, not `COST:800.0`), a fractional value with its
+/// significant digits and nothing else. Used only to build the finding's own
+/// human-readable `shipped_value` string -- the actual comparison in
+/// [`compare_tokens`] parses the closure's own token text back to `f64` and
+/// compares numerically, so this formatting never drives a pass/fail
+/// decision, only what a failure reads as.
+fn format_lst_number(value: f64) -> String {
+    if value.fract() == 0.0 && value.abs() < 1e15 {
+        format!("{value:.0}")
+    } else {
+        value.to_string()
+    }
+}
+
+/// Every value of `closure` entries shaped `<lst_key>:<value>`, parsed as
+/// `f64` -- multiple entries under the same key are all returned, since a
+/// record whose closure includes a `.MOD` override can legitimately carry
+/// more than one.
+fn closure_numeric_values(closure: &BTreeSet<String>, lst_key: &str) -> Vec<f64> {
+    let prefix = format!("{lst_key}:");
+    closure.iter().filter_map(|t| t.strip_prefix(prefix.as_str())).filter_map(|v| v.parse::<f64>().ok()).collect()
+}
+
+/// Compares one typed numeric field (`cost_gp`/`weight_lbs`) against the
+/// closure's own `lst_key:` entries. `None` on the record side is always
+/// accepted without comparison (a corpus row that states no cost/weight is
+/// not this check's population -- the population is scoped to fields the
+/// record itself claims a value for). `Some` on the record side with NO
+/// matching numeric token anywhere in the closure is the finding this
+/// function exists to raise; a record whose closure carries the key under a
+/// DIFFERENT numeric value is caught the same way (no candidate matches).
+fn compare_typed_numeric_field(
+    record_path: &str,
+    field: &'static str,
+    lst_key: &'static str,
+    shipped: Option<f64>,
+    closure: &BTreeSet<String>,
+    tally: &mut SweepTally,
+) -> Option<Finding> {
+    let shipped = shipped?;
+    tally.typed_fields_compared += 1;
+    let candidates = closure_numeric_values(closure, lst_key);
+    if candidates.iter().any(|c| (*c - shipped).abs() < f64::EPSILON) {
+        return None;
+    }
+    Some(Finding::TypedFieldNotInClosure {
+        record: record_path.to_string(),
+        field,
+        shipped_value: format_lst_number(shipped),
+        lst_key,
+    })
+}
+
+/// Compare one record's transcribed tokens, and its typed `cost_gp`/
+/// `weight_lbs` fields, against its corpus closure.
 ///
 /// `book_corpus_tokens` is every tab field of every `.lst` row in the record's
 /// book — the wider surface a synthesized token is checked against, since by
@@ -228,6 +311,21 @@ pub fn token_closure(
 /// record that merely happens to carry that string coincidentally (and is
 /// NOT `license: "PI-REDACTED"`) is still checked normally, and every OTHER
 /// token on a redacted record still must byte-match.
+///
+/// **The typed-field cross-check (`OPEN-ISSUES.md` row 91).** Before this,
+/// the sweep compared ONLY `data.raw_tokens` against the closure — and
+/// because the `enrich_*_raw_tokens` binaries harvest `raw_tokens` FROM the
+/// cited row, that comparison is tautological at write time whenever
+/// `raw_tokens` and a record's OTHER typed fields (`cost_gp`/`weight_lbs`)
+/// come from independent sources, exactly as `cache_gen::equipment_gap` and
+/// `cache_gen::hand_authored_equipment` are shaped: `cost_gp`/`weight_lbs`
+/// are read from a hand-transcribed Rust table, `raw_tokens` from whatever
+/// row `find_citation` resolves — so a wrong citation could leave
+/// `raw_tokens` sweep-CLEAN while `cost_gp` silently disagreed with the real
+/// corpus. `cost_gp`/`weight_lbs`, when the record states one, must now be
+/// byte-derivable from a `COST:`/`WT:` entry in the SAME closure `raw_tokens`
+/// is checked against — closing the gap without touching the `raw_tokens`
+/// check itself.
 pub fn compare_tokens(
     record: &ShippedRecord,
     closure: &BTreeSet<String>,
@@ -268,6 +366,22 @@ pub fn compare_tokens(
             });
         }
     }
+    findings.extend(compare_typed_numeric_field(
+        &record.record_path,
+        "cost_gp",
+        "COST",
+        record.cost_gp,
+        closure,
+        tally,
+    ));
+    findings.extend(compare_typed_numeric_field(
+        &record.record_path,
+        "weight_lbs",
+        "WT",
+        record.weight_lbs,
+        closure,
+        tally,
+    ));
     findings
 }
 
@@ -312,7 +426,9 @@ pub fn parse_record(record_path: &str, text: &str) -> Result<Option<ShippedRecor
 }
 
 /// Both populations one shipped JSON file can belong to, from a single parse.
-#[derive(Debug, Clone, Default, PartialEq, Eq)]
+///
+/// `PartialEq` only, not `Eq`: `ShippedRecord` carries `Option<f64>` fields.
+#[derive(Debug, Clone, Default, PartialEq)]
 pub struct ParsedDocument {
     /// The provenance claim, when the record cites a file and a digest —
     /// checked for every record regardless of `source.kind`.
@@ -387,6 +503,8 @@ fn parse_transcription(
     }
     let pi_redacted_description = value.get("license").and_then(serde_json::Value::as_str) == Some("PI-REDACTED")
         && value.get("pi_field").and_then(serde_json::Value::as_str) == Some("description");
+    let cost_gp = data.get("cost_gp").and_then(serde_json::Value::as_f64);
+    let weight_lbs = data.get("weight_lbs").and_then(serde_json::Value::as_f64);
     Ok(Some(ShippedRecord {
         record_path: record_path.to_string(),
         source_path,
@@ -398,6 +516,8 @@ fn parse_transcription(
         identities,
         tokens,
         pi_redacted_description,
+        cost_gp,
+        weight_lbs,
     }))
 }
 
@@ -417,6 +537,8 @@ mod tests {
                 .map(|(k, v)| ShippedToken { key: k.to_string(), value: v.to_string() })
                 .collect(),
             pi_redacted_description: false,
+            cost_gp: None,
+            weight_lbs: None,
         }
     }
 
@@ -525,6 +647,114 @@ mod tests {
         );
         assert_eq!(findings.len(), 1, "{findings:?}");
         assert!(matches!(&findings[0], Finding::TokenNotInClosure { token, .. } if token == "SPELLFAILURE:35"));
+    }
+
+    // ---- OPEN-ISSUES.md row 91: the typed-field cross-check ----
+    //
+    // `raw_tokens` and `cost_gp`/`weight_lbs` are, for the modules this
+    // reproduces the real defect from (`cache_gen::equipment_gap`/
+    // `cache_gen::hand_authored_equipment`), populated from INDEPENDENT
+    // sources: `cost_gp` from a hand-transcribed Rust table, `raw_tokens`
+    // from whatever row `find_citation` resolves. Before this fix,
+    // `compare_tokens` never read `cost_gp` at all, so a wrong citation
+    // could leave `raw_tokens` sweep-CLEAN (it was harvested from the same
+    // wrong row it is compared against) while `cost_gp` silently disagreed
+    // with the real corpus -- exactly `OPEN-ISSUES.md` row 90's confirmed,
+    // shipped defect (`catapult_standard.json`'s `cost_gp=800` citing
+    // `uc_profs_weapon.lst`, which never states 800 anywhere).
+
+    /// The reproduction: a record's `cost_gp` is real (800) but its
+    /// `raw_tokens` are empty (so the OLD, `raw_tokens`-only comparison
+    /// finds nothing to check) and its closure states a DIFFERENT cost.
+    /// Byte-equality on `raw_tokens` alone is vacuously satisfied; the
+    /// typed-field check must still catch the drift.
+    #[test]
+    fn a_cost_gp_the_closure_never_states_is_a_finding_even_with_empty_raw_tokens() {
+        let mut rec = record(&[]);
+        rec.cost_gp = Some(800.0);
+        let rows = ["Thing\tKEY:Thing"]; // no COST: token anywhere
+        let mut tally = SweepTally::default();
+        let findings =
+            compare_tokens(&rec, &closure_of(&rows, &rec.identities), &BTreeSet::new(), &mut tally);
+        assert_eq!(
+            findings,
+            vec![Finding::TypedFieldNotInClosure {
+                record: rec.record_path.clone(),
+                field: "cost_gp",
+                shipped_value: "800".to_string(),
+                lst_key: "COST",
+            }]
+        );
+        assert_eq!(tally.typed_fields_compared, 1, "weight_lbs is None and must not count");
+    }
+
+    /// The real row 90 shape, precisely: `cost_gp` is real (800) but the
+    /// closure (built from the WRONG cited row, a proficiency listing with
+    /// no `COST:` field at all) cannot derive it.
+    #[test]
+    fn the_real_catapult_standard_shape_trips_the_typed_field_check_pre_fix() {
+        let mut rec = record(&[]);
+        rec.identities = ["Catapult (Standard)".to_string()].into_iter().collect();
+        rec.cost_gp = Some(800.0);
+        // the WRONG cited row (a proficiency listing, no COST:)
+        let rows = ["Catapult\tKEY:Catapult (Standard)\tTYPE:Exotic.Ranged.SiegeEngine"];
+        let mut tally = SweepTally::default();
+        let findings =
+            compare_tokens(&rec, &closure_of(&rows, &rec.identities), &BTreeSet::new(), &mut tally);
+        assert!(
+            findings.iter().any(|f| matches!(
+                f,
+                Finding::TypedFieldNotInClosure { field, lst_key, .. } if *field == "cost_gp" && *lst_key == "COST"
+            )),
+            "{findings:?}"
+        );
+    }
+
+    /// A `cost_gp` that DOES match a `COST:` entry in the closure is not a
+    /// finding -- the check is real, not a blanket new failure mode.
+    #[test]
+    fn a_cost_gp_present_in_the_closure_is_not_a_finding() {
+        let mut rec = record(&[]);
+        rec.identities = ["Catapult (Standard)".to_string()].into_iter().collect();
+        rec.cost_gp = Some(800.0);
+        rec.weight_lbs = Some(12.0);
+        let rows = ["Catapult (Standard)\tPROFICIENCY:WEAPON|Catapult (Standard)\tCOST:800\tWT:12"];
+        let mut tally = SweepTally::default();
+        let findings =
+            compare_tokens(&rec, &closure_of(&rows, &rec.identities), &BTreeSet::new(), &mut tally);
+        assert_eq!(findings, vec![], "{findings:?}");
+        assert_eq!(tally.typed_fields_compared, 2);
+    }
+
+    /// A record whose typed schema states no `cost_gp`/`weight_lbs` at all
+    /// (`None`) is not in this check's population -- absence on the record
+    /// side is not compared, only a stated value that cannot be derived.
+    #[test]
+    fn a_record_with_no_typed_fields_is_unaffected() {
+        let rec = record(&[("SOURCEPAGE", "p.1")]);
+        assert!(rec.cost_gp.is_none() && rec.weight_lbs.is_none());
+        let rows = ["Thing\tSOURCEPAGE:p.1"];
+        let mut tally = SweepTally::default();
+        let findings =
+            compare_tokens(&rec, &closure_of(&rows, &rec.identities), &BTreeSet::new(), &mut tally);
+        assert_eq!(findings, vec![]);
+        assert_eq!(tally.typed_fields_compared, 0);
+    }
+
+    /// Fractional and negative values round-trip through the finding's own
+    /// display string without a spurious mismatch (a formatting bug here
+    /// would silently widen the check's blast radius past what row 91
+    /// scoped).
+    #[test]
+    fn negative_and_fractional_typed_values_compare_correctly() {
+        let mut rec = record(&[]);
+        rec.cost_gp = Some(-150.0);
+        rec.weight_lbs = Some(0.5);
+        let rows = ["Thing\tCOST:-150\tWT:.5"];
+        let mut tally = SweepTally::default();
+        let findings =
+            compare_tokens(&rec, &closure_of(&rows, &rec.identities), &BTreeSet::new(), &mut tally);
+        assert_eq!(findings, vec![], "{findings:?}");
     }
 
     #[test]

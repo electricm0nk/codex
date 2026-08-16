@@ -6,61 +6,106 @@
     "description": null,
     "key": "Astral Juggernaut",
     "name": "Astral Juggernaut",
-    "raw_bonus_chains": [],
-    "raw_tokens": [
+    "raw_bonus_chains": [
       {
-        "key": "KEY",
-        "value": "Aegis ~ Astral Juggernaut"
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "8+if(AstralSuitLVL>=6,1,0)",
+          "TYPE=Armor"
+        ]
       },
       {
-        "key": "CATEGORY",
-        "value": "Special Ability"
+        "qualifiers": [
+          "EQMARMOR",
+          "ACCHECK",
+          "1",
+          "PREVARGT:AstralSuitLVL,6"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "ACCHECK",
+          "1",
+          "PREABILITY:1,CATEGORY=Special Ability,Aegis ~ Flexible Suit"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "MAXDEX",
+          "1",
+          "PREVARGT:AstralSuitLVL,6"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "SPELLFAILURE",
+          "-5",
+          "PREVARGT:AstralSuitLVL,6"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Astral Suit"
       },
       {
         "key": "TYPE",
-        "value": "AegisClassFeatures.SpecialQuality.AstralSuitType"
+        "value": "Armor.Heavy.ArmorProfHeavy.Suit.AstralSuit"
       },
       {
-        "key": "DESC",
-        "value": "Treat like masterwork half-plate.  Gain the following customizations for free: fortification, hardy|PREVARLT:AstralSuitLVL,7"
+        "key": "COST",
+        "value": "-150"
       },
       {
-        "key": "DESC",
-        "value": "Treat like masterwork full plate.  Gain the following customizations for free: fortification, hardy|PREVARGT:AstralSuitLVL,6"
+        "key": "WT",
+        "value": "50"
       },
       {
-        "key": "DESC",
-        "value": "stalwart|PREVARGT:AstralSuitLVL,1"
+        "key": "ACCHECK",
+        "value": "-7"
       },
       {
-        "key": "ABILITY",
-        "value": "Astral Suit Customization|VIRTUAL|Aegis ~ Fortification|Aegis ~ Hardy"
+        "key": "EQMOD",
+        "value": "Special Quality ~ Masterwork ~ Armor"
       },
       {
-        "key": "ABILITY",
-        "value": "Astral Suit Customization|VIRTUAL|Aegis ~ Stalwart|PREVARGT:AstralSuitLVL,1"
+        "key": "MAXDEX",
+        "value": "0"
       },
       {
         "key": "SOURCEPAGE",
         "value": "p.29"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "40"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Aegis ~ Astral Juggernaut|PREABILITY:1,CATEGORY=Special Ability,Aegis ~ Form Astral Suit"
       }
     ],
     "weight_lbs": 50.0
   },
-  "ingested_at": "2026-08-16T05:06:54Z",
+  "ingested_at": "2026-08-16T07:49:31Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 45,
-    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "line": 13,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
     "record_key": "Astral Juggernaut",
-    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d"
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371"
   },
-  "wiring_class": "display",
+  "wiring_class": "computed",
   "wiring_class_signals": [
-    "display:no_magnitude_token"
+    "computed:pre_guard"
   ]
 }

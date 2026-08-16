@@ -9,30 +9,54 @@
     "raw_bonus_chains": [],
     "raw_tokens": [
       {
-        "key": "KEY",
-        "value": "Catapult (Light)"
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Catapult (Light)"
       },
       {
         "key": "TYPE",
-        "value": "Exotic.Ranged.SiegeEngine.Siege.SiegeWeapon.Bludgeoning"
+        "value": "Weapon.Ranged.SiegeWeapon.Exotic.Bludgeoning"
+      },
+      {
+        "key": "COST",
+        "value": "550"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "4d6"
+      },
+      {
+        "key": "RANGE",
+        "value": "150"
+      },
+      {
+        "key": "SPROP",
+        "value": " Range (50 ft. min.)"
+      },
+      {
+        "key": "SPROP",
+        "value": "Crew 2, Aim 2, Load 3, Speed 10 ft."
       }
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-08-16T05:06:54Z",
+  "ingested_at": "2026-08-16T07:49:31Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 183,
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_profs_weapon.lst",
+    "line": 167,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_equip_arms_armor.lst",
     "record_key": "Catapult (Light)",
-    "sha256": "7b6c476a643e80578b0e493fbfcc7928619628bbb57ad56be0e6d3e3fc50493c"
+    "sha256": "adc5e058994bfae7f14ff0a41a408e0e6bf74ed0f4e656d50533bc66874b67fc"
   },
-  "wiring_class": "display",
+  "wiring_class": "static",
   "wiring_class_signals": [
-    "display:no_magnitude_token"
+    "static:literal_magnitudes_only"
   ]
 }

@@ -9,58 +9,82 @@
     "raw_bonus_chains": [
       {
         "qualifiers": [
-          "VAR",
-          "VigilanteIsWarlock",
-          "1"
+          "WEAPON",
+          "DAMAGE",
+          "min(-STR,0)"
         ]
       }
     ],
     "raw_tokens": [
       {
-        "key": "KEY",
-        "value": "Warlock ~ Mystic Bolts"
-      },
-      {
-        "key": "CATEGORY",
-        "value": "Special Ability"
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Mystic Bolts"
       },
       {
         "key": "TYPE",
-        "value": "Vigilante Class Features.WarlockClassFeatures.SpecialQuality.Supernatural"
+        "value": "Weapon.Resizable.Melee.Light.Ranged.Thrown.OneHanded"
       },
       {
-        "key": "DEFINE",
-        "value": "VigilanteIsWarlock|0"
+        "key": "COST",
+        "value": "0"
       },
       {
-        "key": "DESC",
-        "value": "A warlock can sling projectiles of magical energy at will by shooting a bolt or touching her foe. A melee mystic bolt requires the target to be within reach, and a ranged mystic bolt is a ranged attack with a range of 30 feet. A mystic bolt deals %1d6 points of damage. The warlock must choose one type of damage for her mystic bolt: acid, cold, electricity, or fire. Attacking with a mystic bolt takes the place of one of the warlock's normal attacks, and she can make a full attack using mystic bolts. The warlock vigilante attacks with mystic bolts as though they were light one-handed weapons, and the bolts can be used for two-weapon fighting (with each hand creating one mystic bolt) and feats and abilities that apply to weapon attacks (unless they're excluded from that feat, such as with Power Attack). Weapon Focus (ray) doesn't apply to mystic bolts, but a warlock can take Weapon Focus (mystic bolt) and apply it to both melee and ranged mystic bolts. Creating a mystic bolt requires the hand to be free, but the bolt appears only briefly, so a warlock using mystic bolts has a free hand any time she isn't attacking with a mystic bolt. The warlock threatens with a mystic bolt, but only if she has a hand free. Because mystic bolts are impermanent, a spell that targets a single weapon (like magic weapon) can't affect it, nor can a mystic bolt be made with magic weapon special abilities. Abilities that affect all weapon attacks the warlock makes, such as the arcane striker warlock talent, function with mystic bolts. At 7th level and every 6 vigilante levels thereafter, the warlock chooses another damage type from the list above. Each time she creates a mystic bolt, she can have it use any one of the damage types she has selected.|1+VigilanteLVL/4"
+        "key": "WT",
+        "value": "0"
       },
       {
-        "key": "AUTO",
-        "value": "WEAPONPROF|Mystic Bolts"
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "0"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "MODS",
+        "value": "NO"
+      },
+      {
+        "key": "RANGE",
+        "value": "30"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
       },
       {
         "key": "SOURCEPAGE",
         "value": "p.60"
+      },
+      {
+        "key": "SPROP",
+        "value": "Damage by level"
       }
     ],
     "weight_lbs": 0.0
   },
-  "ingested_at": "2026-08-16T05:06:54Z",
+  "ingested_at": "2026-08-16T07:49:31Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 1040,
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+    "line": 47,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_equip_arms_armor.lst",
     "record_key": "Mystic Bolts",
-    "sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e"
+    "sha256": "e26d0cc65210cee59a2976677c7385a467248278cd2c1951351f9b0a0941f74b"
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
-    "derived:prose_formula_segment"
+    "derived:bonus"
   ]
 }

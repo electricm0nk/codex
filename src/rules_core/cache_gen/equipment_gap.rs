@@ -280,20 +280,63 @@ fn try_files(files: &[PathBuf], book_dir: &Path, key: &str, name: &str) -> Optio
     None
 }
 
-/// Resolves `(path relative to `book_dir`, line)` for `key`/`name`, per the
-/// module doc comment's search order: every strategy [`try_files`] tries,
-/// first over the book directory's own flat `.lst` files, then (only if
-/// nothing flat matches) over every `.lst` file in its subdirectories.
+/// `true` when `path`'s own file name contains the substring `"equip"` --
+/// the naming convention every real equipment/equipment-modifier source
+/// file in this corpus follows across all 9 books this module and its
+/// sibling `cache_gen::hand_authored_equipment` route citations into
+/// (`*_equip_arms_armor.lst`, `*_equip_general.lst`,
+/// `*_equip_magic_items.lst`, `*_equipmods.lst`, `up_equipment.lst`) --
+/// verified corpus-wide before relying on it: every one of the ~1,900
+/// already-correctly-resolved citations in the shipped corpus already
+/// lands in a file this predicate accepts (`OPEN-ISSUES.md` row 90's own
+/// re-derivation).
+///
+/// A weapon/armor proficiency file (`*_profs_weapon.lst`) or a class-
+/// ability file (`*_abilities_class.lst`) can carry a `KEY:`-tagged row
+/// that coincidentally matches an equipment record's own identity string
+/// without being the equipment row at all -- `find_citation` uses this
+/// predicate to try every strategy against equipment-shaped files FIRST,
+/// so a coincidental match there can never beat the real row.
+fn is_equipment_shaped_file(path: &Path) -> bool {
+    path.file_name().and_then(|n| n.to_str()).is_some_and(|name| name.contains("equip"))
+}
+
+/// Resolves `(path relative to `book_dir`, line)` for `key`/`name`.
+///
+/// Search order (`OPEN-ISSUES.md` row 90 fix): every strategy
+/// [`try_files`] tries is run FIRST against only the book directory's
+/// equipment-shaped flat `.lst` files ([`is_equipment_shaped_file`]),
+/// then against its equipment-shaped nested files, and only if NEITHER
+/// tier resolves anything does the search widen to every remaining
+/// (non-equipment-shaped) flat file and then every remaining nested file.
+/// This is narrower than the pre-fix order (which tried `KEY:` matches
+/// across every file, equipment-shaped or not, before ever trying a
+/// first-column match anywhere) but strictly more permissive than
+/// requiring an equipment-shaped file outright -- a book whose real
+/// content genuinely lives outside an "equip"-named file (none observed
+/// in this corpus today, per the doc comment above) still resolves via
+/// the fallback tier rather than reporting unresolved.
+///
 /// `book_dir` is the absolute directory; the returned path is relative to
 /// it (POSIX-separated) so the caller can build both the citation
 /// `source.path` and re-open the file.
 pub(crate) fn find_citation(book_dir: &Path, key: &str, name: &str) -> Option<(PathBuf, u32)> {
     let flat = list_lst_files_flat(book_dir);
-    if let Some(hit) = try_files(&flat, book_dir, key, name) {
+    let (flat_equip, flat_other): (Vec<PathBuf>, Vec<PathBuf>) =
+        flat.into_iter().partition(|p| is_equipment_shaped_file(p));
+    if let Some(hit) = try_files(&flat_equip, book_dir, key, name) {
         return Some(hit);
     }
     let nested = list_lst_files_recursive_excluding_flat(book_dir);
-    try_files(&nested, book_dir, key, name)
+    let (nested_equip, nested_other): (Vec<PathBuf>, Vec<PathBuf>) =
+        nested.into_iter().partition(|p| is_equipment_shaped_file(p));
+    if let Some(hit) = try_files(&nested_equip, book_dir, key, name) {
+        return Some(hit);
+    }
+    if let Some(hit) = try_files(&flat_other, book_dir, key, name) {
+        return Some(hit);
+    }
+    try_files(&nested_other, book_dir, key, name)
 }
 
 /// `true` when the real corpus row at `lst_path:line` (1-indexed) opens
@@ -729,6 +772,58 @@ mod tests {
         let file = dir.join("book_equipmods.lst");
         std::fs::write(&file, "SomethingElse\tCOST:0\n").unwrap();
         assert_eq!(find_citation(&dir, "NoSuchKey", "NoSuchName"), None);
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// `OPEN-ISSUES.md` row 90's confirmed defect, reproduced from the real
+    /// oracle bytes: `uc_profs_weapon.lst:188` carries a bare weapon-
+    /// proficiency listing row whose `KEY:` field happens to equal the
+    /// equipment record's own identity string (`"Catapult (Standard)"`),
+    /// with no `COST:`/`WT:`/`SPROP:` payload at all -- the real item row,
+    /// with the real `COST:800`, lives at `uc_equip_arms_armor.lst:168`
+    /// as a first-column (not `KEY:`-field) match. The OLD search order
+    /// (`find_by_key_field` across every file, THEN `find_exact_first_
+    /// column` across every file) matched the proficiency file's `KEY:`
+    /// field before ever trying the real equipment file, giving 39 shipped
+    /// records a real, correctly-valued payload under a wrong citation and
+    /// wrong `raw_tokens`. The fix must try every strategy against
+    /// equipment-shaped files (`is_equipment_shaped_file`) FIRST, only
+    /// falling back to non-equipment-shaped files if nothing there
+    /// resolves -- proven here by naming the file that must win.
+    #[test]
+    fn find_citation_prefers_an_equipment_shaped_file_over_a_proficiency_file_with_a_coincidental_key_match() {
+        let dir = std::env::temp_dir().join(format!("cgeq_test_row90_{}", std::process::id()));
+        std::fs::create_dir_all(&dir).unwrap();
+        // Sorted before the equip file (`p` < `u`... no: alphabetically
+        // "uc_equip_arms_armor.lst" < "uc_profs_weapon.lst" already, so this
+        // reproduces the defect purely via the OLD strategy-major loop
+        // order, not file sort order -- the fix must not depend on sort
+        // order happening to favor the right file.
+        std::fs::write(
+            dir.join("uc_profs_weapon.lst"),
+            "Catapult\tKEY:Catapult (Standard)\tTYPE:Exotic.Ranged.SiegeEngine.Siege.SiegeWeapon.Bludgeoning\n",
+        )
+        .unwrap();
+        std::fs::write(
+            dir.join("uc_equip_arms_armor.lst"),
+            "Catapult (Standard)\tPROFICIENCY:WEAPON|Catapult (Standard)\tTYPE:Weapon.Ranged.SiegeWeapon.Exotic.Bludgeoning\tCOST:800\tCRITMULT:x2\tDAMAGE:6d6\tRANGE:200\n",
+        )
+        .unwrap();
+        let found = find_citation(&dir, "Catapult (Standard)", "Catapult (Standard)");
+        assert_eq!(found, Some((PathBuf::from("uc_equip_arms_armor.lst"), 1)));
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// A book whose real content genuinely has no equipment-shaped file at
+    /// all must still resolve via the non-equipment-shaped fallback tier --
+    /// the fix narrows the search ORDER, it does not remove the fallback.
+    #[test]
+    fn find_citation_falls_back_to_a_non_equipment_shaped_file_when_no_equipment_shaped_file_resolves() {
+        let dir = std::env::temp_dir().join(format!("cgeq_test_fallback_{}", std::process::id()));
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(dir.join("book_profs_weapon.lst"), "Widget\tKEY:Widget\tCOST:5\n").unwrap();
+        let found = find_citation(&dir, "Widget", "Widget");
+        assert_eq!(found, Some((PathBuf::from("book_profs_weapon.lst"), 1)));
         std::fs::remove_dir_all(&dir).ok();
     }
 }

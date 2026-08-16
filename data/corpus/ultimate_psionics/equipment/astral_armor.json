@@ -6,61 +6,114 @@
     "description": null,
     "key": "Astral Armor",
     "name": "Astral Armor",
-    "raw_bonus_chains": [],
-    "raw_tokens": [
+    "raw_bonus_chains": [
       {
-        "key": "KEY",
-        "value": "Aegis ~ Astral Armor"
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "6",
+          "TYPE=Armor"
+        ]
       },
       {
-        "key": "CATEGORY",
-        "value": "Special Ability"
+        "qualifiers": [
+          "EQM",
+          "WEIGHTADD",
+          "-10",
+          "PREVARGT:AstralSuitLVL,7"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "ACCHECK",
+          "1",
+          "PREVARGT:AstralSuitLVL,7"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "ACCHECK",
+          "1",
+          "PREABILITY:1,CATEGORY=Special Ability,Aegis ~ Flexible Suit"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "MAXDEX",
+          "1",
+          "PREVARGT:AstralSuitLVL,7"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "SPELLFAILURE",
+          "-5",
+          "PREVARGT:AstralSuitLVL,7"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Astral Suit"
       },
       {
         "key": "TYPE",
-        "value": "AegisClassFeatures.SpecialQuality.AstralSuitType"
+        "value": "Armor.Medium.ArmorProfMedium.Suit.AstralSuit"
       },
       {
-        "key": "DESC",
-        "value": "Treat like masterwork chainmail.  Gain the following customizations for free: brawn, improved damage|PREVARLT:AstralSuitLVL,8"
+        "key": "COST",
+        "value": "-150"
       },
       {
-        "key": "DESC",
-        "value": "Treat like masterwork breastplate.  Gain the following customizations for free: brawn, improved damage|PREVARGT:AstralSuitLVL,7"
+        "key": "WT",
+        "value": "40"
       },
       {
-        "key": "DESC",
-        "value": "flexible suit|PREVARGT:AstralSuitLVL,1"
+        "key": "ACCHECK",
+        "value": "-5"
       },
       {
-        "key": "ABILITY",
-        "value": "Astral Suit Customization|VIRTUAL|Aegis ~ Brawn|Aegis ~ Improved Damage"
+        "key": "EQMOD",
+        "value": "Special Quality ~ Masterwork ~ Armor"
       },
       {
-        "key": "ABILITY",
-        "value": "Astral Suit Customization|VIRTUAL|Aegis ~ Flexible Suit|PREVARGT:AstralSuitLVL,1"
+        "key": "MAXDEX",
+        "value": "2"
       },
       {
         "key": "SOURCEPAGE",
         "value": "p.29"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "30"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Aegis ~ Astral Armor|PREABILITY:1,CATEGORY=Special Ability,Aegis ~ Form Astral Suit"
       }
     ],
     "weight_lbs": 40.0
   },
-  "ingested_at": "2026-08-16T05:06:54Z",
+  "ingested_at": "2026-08-16T07:49:31Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 44,
-    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "line": 12,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
     "record_key": "Astral Armor",
-    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d"
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371"
   },
-  "wiring_class": "display",
+  "wiring_class": "computed",
   "wiring_class_signals": [
-    "display:no_magnitude_token"
+    "computed:pre_guard"
   ]
 }

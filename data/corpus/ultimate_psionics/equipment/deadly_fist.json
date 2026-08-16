@@ -9,52 +9,40 @@
     "raw_bonus_chains": [],
     "raw_tokens": [
       {
-        "key": "KEY",
-        "value": "Soulknife Archetype ~ Deadly Fist"
-      },
-      {
-        "key": "CATEGORY",
-        "value": "Archetype"
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Deadly Fist"
       },
       {
         "key": "TYPE",
-        "value": "Archetype.SoulknifeArchetype.SoulknifeFormMindBlade.SoulknifeEnhancedMindBlade.SoulknifeBonusFeat.SoulknifeThrowMindBlade.SoulkifeQuickDraw"
-      },
-      {
-        "key": "PRECLASS",
-        "value": "1,Soulknife=1"
-      },
-      {
-        "key": "PREMULT",
-        "value": "1,[PREABILITY:1,CATEGORY=Archetype,Soulknife Archetype ~ Deadly Fist],[!PREABILITY:1,CATEGORY=Archetype,TYPE.SoulknifeFormMindBlade,TYPE.SoulknifeEnhancedMindBlade,TYPE.SoulknifeBonusFeat,TYPE.SoulknifeThrowMindBlade,TYPE.SoulknifeQuickDraw]"
-      },
-      {
-        "key": "DESC",
-        "value": "Some soulknives learn to channel the psionic energy of a mind blade into their unarmed strikes, making them lethal without the need for a weapon."
-      },
-      {
-        "key": "ABILITY",
-        "value": "Soulknife Class Feature|AUTOMATIC|Deadly Fist ~ Empowered Strikes|PRECLASS:1,Soulknife=1"
-      },
-      {
-        "key": "ABILITY",
-        "value": "Soulknife Class Feature|AUTOMATIC|Deadly Fist ~ Enhanced Strikes|PREVARGTEQ:MndBladeLVL,3"
-      },
-      {
-        "key": "ABILITY",
-        "value": "Soulknife Class Feature|AUTOMATIC|Deadly Fist ~ Unarmed Assault|PRECLASS:1,Soulknife=1"
-      },
-      {
-        "key": "ABILITY",
-        "value": "Soulknife Class Feature|AUTOMATIC|Deadly Fist ~ Psychokinetic Discharge|PRECLASS:1,Soulknife=1"
-      },
-      {
-        "key": "ABILITY",
-        "value": "Soulknife Class Feature|AUTOMATIC|Deadly Fist ~ Quick Empower|PRECLASS:1,Soulknife=5"
+        "value": "Weapon.Melee.Special.Unarmed.Monk.Bludgeoning.Piercing.Slashing.Finesseable.Close"
       },
       {
         "key": "COST",
         "value": "0"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
       },
       {
         "key": "SOURCEPAGE",
@@ -63,20 +51,20 @@
     ],
     "weight_lbs": 0.0
   },
-  "ingested_at": "2026-08-16T05:06:54Z",
+  "ingested_at": "2026-08-16T07:49:31Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 2135,
-    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "line": 38,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
     "record_key": "Deadly Fist",
-    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d"
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371"
   },
-  "wiring_class": "computed",
+  "wiring_class": "static",
   "wiring_class_signals": [
-    "computed:pre_guard"
+    "static:literal_magnitudes_only"
   ]
 }

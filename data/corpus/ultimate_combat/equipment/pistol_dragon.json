@@ -9,30 +9,82 @@
     "raw_bonus_chains": [],
     "raw_tokens": [
       {
-        "key": "KEY",
-        "value": "Pistol (Dragon)"
+        "key": "OUTPUTNAME",
+        "value": "Dragon Pistol"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Pistol (Dragon)"
       },
       {
         "key": "TYPE",
-        "value": "Ranged.Piercing.Bludgeoning.Proficiency_Group_Firearm.Firearm.Weapon Group Firearms.OneHandedFireArm.Pistol"
+        "value": "Weapon.Resizable.Exotic.Ranged.Standard.Piercing.Bludgeoning.Container.Projectile.Firearm.Weapon Group Firearms.Pistol.Scatter"
+      },
+      {
+        "key": "CONTAINS",
+        "value": "1|FirearmBullet=1|FirearmPellet=1"
+      },
+      {
+        "key": "COST",
+        "value": "1000"
+      },
+      {
+        "key": "WT",
+        "value": "3"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x4"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Quality ~ Scatter ~ Firearm.Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "OneHandOnly"
+      },
+      {
+        "key": "RANGE",
+        "value": "20"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.139"
+      },
+      {
+        "key": "SPROP",
+        "value": "Misfire 1-2 (5 ft.); Scatter 15' cone"
       }
     ],
     "weight_lbs": 3.0
   },
-  "ingested_at": "2026-08-16T05:06:54Z",
+  "ingested_at": "2026-08-16T07:49:31Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 18,
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_profs_weapon.lst",
+    "line": 142,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_equip_arms_armor.lst",
     "record_key": "Pistol (Dragon)",
-    "sha256": "7b6c476a643e80578b0e493fbfcc7928619628bbb57ad56be0e6d3e3fc50493c"
+    "sha256": "adc5e058994bfae7f14ff0a41a408e0e6bf74ed0f4e656d50533bc66874b67fc"
   },
-  "wiring_class": "display",
+  "wiring_class": "static",
   "wiring_class_signals": [
-    "display:no_magnitude_token"
+    "static:literal_magnitudes_only"
   ]
 }

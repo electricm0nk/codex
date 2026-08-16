@@ -6,23 +6,40 @@
     "description": null,
     "key": "Mind Shield",
     "name": "Mind Shield",
-    "raw_bonus_chains": [],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "2",
+          "TYPE=Shield"
+        ]
+      }
+    ],
     "raw_tokens": [
       {
-        "key": "KEY",
-        "value": "Blade Skill ~ Mind Shield"
-      },
-      {
-        "key": "CATEGORY",
-        "value": "Special Ability"
+        "key": "PROFICIENCY",
+        "value": "SHIELD|Shield (Light)"
       },
       {
         "key": "TYPE",
-        "value": "BladeSkill.SpecialQuality"
+        "value": "Shield.Standard"
       },
       {
-        "key": "DESC",
-        "value": "Gain +2 shield bonus to AC with free hand and formed mind blade."
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SLOTS",
+        "value": "1"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "0"
       },
       {
         "key": "SOURCEPAGE",
@@ -31,20 +48,20 @@
     ],
     "weight_lbs": 0.0
   },
-  "ingested_at": "2026-08-16T05:06:54Z",
+  "ingested_at": "2026-08-16T07:49:31Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "line": 790,
-    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_abilities_class.lst",
+    "line": 67,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
     "record_key": "Mind Shield",
-    "sha256": "754ef2c6b72d3b5d4fa3b5b0e3b4a266b6232856658a1b70cc976c3aaef53f5d"
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371"
   },
-  "wiring_class": "display",
+  "wiring_class": "static",
   "wiring_class_signals": [
-    "display:no_magnitude_token"
+    "static:literal_magnitudes_only"
   ]
 }
