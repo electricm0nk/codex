@@ -182,12 +182,23 @@ fn every_newly_reachable_record_is_priced_by_its_own_corpus_cost_token() {
     //
     // The single formula record is ARG's `Material ~ Darkleaf Cloth ~ Item`
     // (`COST:WT*375`, a weight-dependent price this engine does not
-    // evaluate). The 85 with no `COST:` token at all are PU's 42 ABP rows
-    // plus 43 ACG/ARG rows whose real PF1 price is the bonus-squared
-    // enhancement formula rather than a flat catalog number.
+    // evaluate).
+    //
+    // RAISED `SD31-W4-INTEGRATE-001`, 2026-08-16 (found already red at the
+    // merged wave-4 tip, before ANY of this cycle's own edits touched
+    // ACG/ARG/PU): `SD31-E6-F5-002`'s `equipment_gap` cache-gen added real,
+    // oracle-cited ACG/ARG equipmod records this test's book-directory walk
+    // now also covers -- every added record's own per-record assertion in
+    // the loop above already passed (a numeric COST: token prices exactly,
+    // an absent COST: token prices as None), so this is real coverage
+    // growth, not a defect: checked_numeric 425 -> 433 (+8, the same ACG
+    // Amorphous/Burdenless/Exclusionary/Prehensile/Restful/Sneaky/Spiteful/
+    // Trackless rows already reconciled in equipment_resolver.rs and
+    // character_hub.rs), checked_absent 85 -> 140 (+55, ACG/ARG records
+    // with no COST: token, priced correctly as None).
     assert_eq!(
         (checked_numeric, checked_formula, checked_absent),
-        (425, 1, 85),
+        (433, 1, 140),
         "records priced by a numeric COST: token, by an unevaluated formula, and with no COST: \
          token at all"
     );
