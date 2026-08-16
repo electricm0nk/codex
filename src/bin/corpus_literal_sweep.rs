@@ -381,8 +381,101 @@ fn fatal(message: &str) -> ExitCode {
 /// subdirectory) is a race name, not a book at all.
 fn short_book_of(source_path: &str) -> Option<String> {
     let dir = book_dir_of(source_path)?;
-    Path::new(&dir).file_name().and_then(|f| f.to_str()).map(str::to_string)
+    let last = Path::new(&dir).file_name().and_then(|f| f.to_str())?;
+    if last == "core_essentials" {
+        // `SD31-ATTRIB-001` (`OPEN-ISSUES.md` row 68): `v06_work_inventory`
+        // no longer mints `unit.book == "core_essentials"` for a race whose
+        // TRUE source book is provable one record deep -- see that binary's
+        // `RACE_TRUE_BOOK`/`resolve_true_book_for_core_essentials` (this
+        // table is that one, duplicated, matching this repo's own
+        // established convention for `book_dir_of`-shaped logic, per
+        // `repair_spell_citations.rs`'s own doc comment on the same
+        // duplication). This join key must track that relabelling exactly,
+        // or the sweep's `--json-out` reverts to the pre-fix join and every
+        // one of these units silently loses its `literal-verified` stamp
+        // (reproduced once, `--allow-stamp-loss`'s own first-offenders list,
+        // before this fix landed).
+        //
+        // Root-level `core_essentials/ce_*.lst` files (the `SOURCELONG:`
+        // header signal `resolve_true_book_for_core_essentials`'s OTHER arm
+        // resolves) are deliberately NOT handled here: `short_book_of` is a
+        // pure function of `source_path` with no oracle-file-content access,
+        // and as of this fix zero of the sweep's own verified population
+        // cites a root-level `core_essentials` file (all 330 are per-race
+        // `races/<slug>/*.lst` rows -- re-derived 2026-08-16,
+        // `python3 -c "...Counter(x['source_file'] for x in verified if
+        // x['book']=='core_essentials')..."`, every hit a `*_race*.lst`
+        // basename). If a future cycle ships a root-level-sourced record
+        // through this sweep, this function will silently under-resolve it
+        // back to `core_essentials` rather than guess -- exactly this
+        // fix's own "leave it, do not guess" rule -- and the join will need
+        // widening then, with real content to test against.
+        let race_slug_book = source_path
+            .split('/')
+            .position(|s| s == "races")
+            .and_then(|races_at| source_path.split('/').nth(races_at + 1))
+            .and_then(|slug| RACE_TRUE_BOOK.iter().find(|(s, _)| *s == slug))
+            .map(|(_, book)| (*book).to_string());
+        if let Some(book) = race_slug_book {
+            return Some(book);
+        }
+    }
+    Some(last.to_string())
 }
+
+/// `core_essentials/races/<slug>/` -> the true book. Byte-identical to
+/// `v06_work_inventory.rs`'s own `RACE_TRUE_BOOK` -- see that table's doc
+/// comment for the full derivation (each entry re-checked one record deep
+/// against an in-scope book's own `.pcc`, 2026-08-16). Duplicated rather
+/// than shared: this repo's established convention for `book_dir_of`-shaped
+/// logic across bins (`repair_spell_citations.rs`'s own doc comment on its
+/// copy of `book_dir_of` itself makes the same call).
+const RACE_TRUE_BOOK: &[(&str, &str)] = &[
+    ("dwarf", "core_rulebook"),
+    ("elf", "core_rulebook"),
+    ("gnome", "core_rulebook"),
+    ("half_elf", "core_rulebook"),
+    ("half_orc", "core_rulebook"),
+    ("halfling", "core_rulebook"),
+    ("human", "core_rulebook"),
+    ("aasimar", "bestiary"),
+    ("drow", "bestiary"),
+    ("duergar", "bestiary"),
+    ("goblin", "bestiary"),
+    ("hobgoblin", "bestiary"),
+    ("kobold", "bestiary"),
+    ("merfolk", "bestiary"),
+    ("orc", "bestiary"),
+    ("svirfneblin", "bestiary"),
+    ("tengu", "bestiary"),
+    ("tiefling", "bestiary"),
+    ("dhampir", "bestiary_2"),
+    ("fetchling", "bestiary_2"),
+    ("grippli", "bestiary_2"),
+    ("ifrit", "bestiary_2"),
+    ("oread", "bestiary_2"),
+    ("sylph", "bestiary_2"),
+    ("undine", "bestiary_2"),
+    ("catfolk", "bestiary_3"),
+    ("ratfolk", "bestiary_3"),
+    ("suli", "bestiary_3"),
+    ("vanara", "bestiary_3"),
+    ("vishkanya", "bestiary_3"),
+    ("changeling", "bestiary_4"),
+    ("kitsune", "bestiary_4"),
+    ("nagaji", "bestiary_4"),
+    ("samsaran", "bestiary_4"),
+    ("wayang", "bestiary_4"),
+    ("gathlain", "bestiary_4"),
+    ("kasatha", "bestiary_4"),
+    ("trox", "bestiary_4"),
+    ("wyrwood", "bestiary_4"),
+    ("wyvaran", "bestiary_4"),
+    ("gillman", "inner_sea_world_guide"),
+    ("strix", "inner_sea_world_guide"),
+    ("skinwalker", "bestiary_5"),
+    ("rougarou", "bestiary_6"),
+];
 
 /// The corpus-relative directory of the book a `source.path` belongs to.
 ///
@@ -541,28 +634,29 @@ fn lst_files(dir: &Path) -> Vec<PathBuf> {
 
 #[cfg(test)]
 mod short_book_of_tests {
-    use super::short_book_of;
+    use super::{short_book_of, RACE_TRUE_BOOK};
 
-    /// The exact defect `OPEN-ISSUES.md` row 22 traced one unit deep,
-    /// verified against the committed `docs/work-inventory.json`: the CRB
+    /// The defect `OPEN-ISSUES.md` row 22 traced one unit deep: the CRB
     /// dwarf race's PCGen source is
     /// `pathfinder/paizo/roleplaying_game/core_essentials/races/dwarf/
     /// dwarf_races.lst` -- one directory level deeper than a flat book
-    /// layout -- and its inventory unit id is `core_essentials:race:dwarf`,
-    /// `"book": "core_essentials"`. The OLD code read
+    /// layout. The OLD (pre-row-22) code read
     /// `source_path.parent().file_name()`, which for this row is `"dwarf"`
-    /// — a race name, not a book, so the `(book, file, line)` join in
-    /// `v06_work_inventory::apply_done_rung_stamps` could never match and
-    /// `race` sat at 0.0 % `done`. `short_book_of` reads the book off the
-    /// same 4-segment `book_dir_of` grouping the binary's own `by_book` pass
-    /// already uses, so it is correct regardless of PCGen nesting depth.
+    /// — a race name, not a book, so no join could ever match. Row 22's own
+    /// fix (this function's original shape) read the book off the same
+    /// 4-segment `book_dir_of` grouping, landing on `"core_essentials"` --
+    /// correct relative to the OLD bug, but itself `OPEN-ISSUES.md` row 68's
+    /// defect: `core_essentials` is a PCGen packaging directory, not a book.
+    /// `SD31-ATTRIB-001` closes that second layer: Dwarf's true book is
+    /// Core Rulebook (`core_rulebook.pcc`'s own 7), read off
+    /// `RACE_TRUE_BOOK`.
     #[test]
-    fn crb_race_chassis_resolves_to_core_essentials_the_oracle_book_not_the_race_name() {
+    fn crb_race_chassis_resolves_to_its_true_book_not_core_essentials_or_the_race_name() {
         assert_eq!(
             short_book_of(
                 "pathfinder/paizo/roleplaying_game/core_essentials/races/dwarf/dwarf_races.lst"
             ),
-            Some("core_essentials".to_string())
+            Some("core_rulebook".to_string())
         );
     }
 
@@ -587,13 +681,33 @@ mod short_book_of_tests {
     }
 
     /// A per-race-nested `race_trait` record resolves to its own real
-    /// oracle book, not the intermediate race-name directory PCGen's source
-    /// nests through.
+    /// SOURCE book, not the intermediate race-name directory PCGen's source
+    /// nests through, and (`SD31-ATTRIB-001`, `OPEN-ISSUES.md` row 68) not
+    /// to `core_essentials` either -- Tiefling's true book is Bestiary 1
+    /// (`advanced_race_guide.pcc`'s own `# B1 races` section), and this is
+    /// exactly the shape row 68 named: before this fix every one of these
+    /// resolved to `core_essentials` and silently hid which book they
+    /// belonged to.
     #[test]
-    fn nested_race_trait_resolves_to_the_oracle_book_not_the_race_name_directory() {
+    fn nested_race_trait_resolves_to_its_true_book_not_core_essentials() {
         assert_eq!(
             short_book_of(
                 "pathfinder/paizo/roleplaying_game/core_essentials/races/tiefling/tiefling_abilities_race_subrace.lst"
+            ),
+            Some("bestiary".to_string())
+        );
+    }
+
+    /// The race-name-directory is still not swallowed as a book id for a
+    /// race this fix cannot yet attribute (`monkey_goblin`: two in-scope
+    /// books, `bestiary_6` and `inner_sea_bestiary`, natively declare it --
+    /// see `RACE_TRUE_BOOK`'s own doc comment) -- it stays `core_essentials`,
+    /// never the directory name `monkey_goblin` itself.
+    #[test]
+    fn an_ambiguous_race_still_resolves_to_core_essentials_not_its_own_directory_name() {
+        assert_eq!(
+            short_book_of(
+                "pathfinder/paizo/roleplaying_game/core_essentials/races/monkey_goblin/monkey_goblin_abilities_race.lst"
             ),
             Some("core_essentials".to_string())
         );
@@ -664,11 +778,17 @@ mod short_book_of_tests {
     /// Regression, corpus-wide: for every shipped `race`/`race_trait`
     /// record's real `source.path` today, `short_book_of` must resolve to
     /// EXACTLY the same book `book_dir_of` (the binary's own pre-existing,
-    /// trusted `by_book` grouping function) resolves — i.e. the fix can
-    /// never disagree with the grouping the rest of this binary already
-    /// relies on, for the entire population `OPEN-ISSUES.md` row 22 named.
+    /// trusted `by_book` grouping function) resolves -- UNLESS the record's
+    /// oracle book is `core_essentials` and its race slug is in
+    /// `RACE_TRUE_BOOK`, in which case `short_book_of` must resolve to that
+    /// table's entry instead (`SD31-ATTRIB-001`, `OPEN-ISSUES.md` row 68 --
+    /// this is the fix, not a regression: before it, EVERY one of these
+    /// disagreed silently with the true book and this test's own prior
+    /// unconditional-agreement assertion was pinning that defect in place).
+    /// Every record OUTSIDE that resolved set still can never disagree with
+    /// the grouping the rest of this binary already relies on.
     #[test]
-    fn every_shipped_race_source_path_agrees_with_book_dir_of() {
+    fn every_shipped_race_source_path_agrees_with_book_dir_of_or_the_resolved_true_book() {
         let repo_root = std::path::Path::new(env!("CARGO_MANIFEST_DIR"));
         let corpus_root = repo_root.join("data/corpus");
         let mut checked = 0usize;
@@ -698,12 +818,24 @@ mod short_book_of_tests {
                     let Ok(text) = std::fs::read_to_string(&path) else { continue };
                     let Ok(parsed) = super::parse_document(&rel, &text) else { continue };
                     let Some(record) = parsed.record else { continue };
-                    let expected = super::book_dir_of(&record.source_path)
+                    let raw_expected = super::book_dir_of(&record.source_path)
                         .and_then(|dir| std::path::Path::new(&dir).file_name().map(|f| f.to_string_lossy().into_owned()));
+                    let resolved_expected = if raw_expected.as_deref() == Some("core_essentials") {
+                        record
+                            .source_path
+                            .split('/')
+                            .position(|s| s == "races")
+                            .and_then(|i| record.source_path.split('/').nth(i + 1))
+                            .and_then(|slug| RACE_TRUE_BOOK.iter().find(|(s, _)| *s == slug))
+                            .map(|(_, book)| book.to_string())
+                            .or(raw_expected)
+                    } else {
+                        raw_expected
+                    };
                     assert_eq!(
                         short_book_of(&record.source_path),
-                        expected,
-                        "record {rel} (source.path {}) disagreed with book_dir_of",
+                        resolved_expected,
+                        "record {rel} (source.path {}) disagreed with book_dir_of/RACE_TRUE_BOOK",
                         record.source_path
                     );
                     checked += 1;

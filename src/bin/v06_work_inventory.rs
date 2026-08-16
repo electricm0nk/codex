@@ -453,7 +453,20 @@ impl Origin {
 /// One enumerated corpus record, before the engine has been asked about it.
 #[derive(Debug, Clone)]
 struct CorpusUnit {
+    /// The unit's TRUE book for reporting/attribution -- resolved off
+    /// `core_essentials` to the real source book where provable
+    /// (`resolve_true_book_for_core_essentials`, `SD31-ATTRIB-001`), never
+    /// used for a physical file lookup: it may name a book whose own
+    /// `book_paths` directory does not physically contain this row.
     book: String,
+    /// The book directory `enumerate_book` actually WALKED to find this
+    /// row -- i.e. what `book` always equaled before the `SD31-ATTRIB-001`
+    /// re-attribution fix. This is the only field safe to pass to
+    /// `token_closure_rows`/`CorpusLines::line`, which resolve a physical
+    /// path via `book_paths[book_id]` and would silently fail to find the
+    /// row (falling back to a weaker `wiring_class` verdict) if handed the
+    /// re-attributed `book` instead.
+    source_book: String,
     kind: Kind,
     /// The record's corpus identity: its `KEY:` token when present, else its
     /// display name.
@@ -471,6 +484,16 @@ struct CorpusUnit {
     visible: bool,
 }
 
+/// One `.MOD` target `enumerate_file` stashed for `mod_only_rescue`:
+/// `(kind, key, name, provenance, magnitude_token_count, resolved_book)`.
+/// `resolved_book` is the true book when the row was found inside
+/// `core_essentials/` and [`resolve_true_book_for_core_essentials`] resolved
+/// it (`None` otherwise, including for every non-`core_essentials` book) --
+/// carried through so `mod_only_rescue`'s own re-attribution stamps the same
+/// book [`enumerate_file`] would have, rather than falling back to the
+/// enumerating `BookMeta`'s id.
+type ModTarget = (Kind, String, String, Provenance, usize, Option<&'static str>);
+
 /// Per-book enumeration bookkeeping the JSON reports verbatim.
 #[derive(Debug, Default)]
 struct BookEnumeration {
@@ -479,8 +502,8 @@ struct BookEnumeration {
     files_enumerated: usize,
     files_not_enumerated: BTreeSet<String>,
     /// `.MOD` target names seen in this book, kept so `mod_only_rescue` can
-    /// run after the whole corpus is known.
-    mod_targets: Vec<(Kind, String, String, Provenance, usize)>,
+    /// run after the whole corpus is known. See [`ModTarget`].
+    mod_targets: Vec<ModTarget>,
 }
 
 /// Tokenise one `.lst` line into its tab fields with surrounding whitespace
@@ -698,8 +721,178 @@ fn has_classifying_token(kind: Kind, fields: &[&str]) -> bool {
     }
 }
 
+/// `core_essentials/races/<slug>/` -> the true book, for the races whose
+/// attribution is provable one record deep against an in-scope book's own
+/// `.pcc` file (`OPEN-ISSUES.md` row 68; `decisions.md §25.2`).
+///
+/// Neither `core_essentials`'s own files carries a usable signal for this --
+/// verified against `dwarf_races.lst` and every `_race.pcc`: no
+/// `SOURCELONG`/`SOURCESHORT` token anywhere, only the placeholder
+/// `SOURCEPAGE:p.xx` `decisions.md §26`/`§27` already found untrustworthy.
+/// The provable signal lives in the INCLUDING book's own `.pcc`:
+///
+/// - `core_rulebook.pcc` and `advanced_race_guide.pcc`'s own `# Core
+///   Races`/`# B1 races`/`# B2 races`/`# B3 races`/`# B4 races`/`#ISWG
+///   races` comment sections (re-derived directly against the oracle,
+///   2026-08-16: `grep -A40 'RACE:arg_races.lst' .../advanced_race_guide.pcc`
+///   -- ARG reprints exactly 37 races across those six sections, matching
+///   `arg_races.lst`'s own 37 `.MOD` lines, decisions.md §25.2's table
+///   verified unchanged).
+/// - `bestiary_4/_bestiary_4_for_players.pcc`'s own uncommented `# races`
+///   section additionally declares `gathlain`, `kasatha`, `trox`,
+///   `wyrwood`, `wyvaran` -- Bestiary 4 natives ARG does not reprint.
+/// - `bestiary_5/_bestiary_5_for_players.pcc` and
+///   `bestiary_6/_bestiary_6 _for_players.pcc` each natively declare a
+///   handful of their own races too, but most of those (`android`,
+///   `ghoran`, `monkey_goblin`) are ALSO natively declared by
+///   `inner_sea_bestiary`'s own `.pcc` -- two equally-real in-scope
+///   candidates, which is not a resolved attribution. Only the members of
+///   each book's own native set that no OTHER in-scope book's own `.pcc`
+///   also natively declares are listed here: `skinwalker` (Bestiary 5) and
+///   `rougarou` (Bestiary 6).
+///
+/// Left OUT on purpose, still `core_essentials` after this fix, because a
+/// second candidate in-scope book exists or none does (verified by the same
+/// `.pcc` grep, not guessed): `android`, `aquatic_elf`, `ghoran`, `lashunta`,
+/// `monkey_goblin`, `syrinx`, `triaxian`. See
+/// `core_essentials_ambiguous_races_stay_unattributed` for the fixture that
+/// pins this list so a future book onboarding cannot silently narrow it.
+const RACE_TRUE_BOOK: &[(&str, &str)] = &[
+    // Core Rulebook -- `core_rulebook.pcc`'s own 7.
+    ("dwarf", "core_rulebook"),
+    ("elf", "core_rulebook"),
+    ("gnome", "core_rulebook"),
+    ("half_elf", "core_rulebook"),
+    ("half_orc", "core_rulebook"),
+    ("halfling", "core_rulebook"),
+    ("human", "core_rulebook"),
+    // Bestiary 1 -- ARG's `# B1 races` section, 11.
+    ("aasimar", "bestiary"),
+    ("drow", "bestiary"),
+    ("duergar", "bestiary"),
+    ("goblin", "bestiary"),
+    ("hobgoblin", "bestiary"),
+    ("kobold", "bestiary"),
+    ("merfolk", "bestiary"),
+    ("orc", "bestiary"),
+    ("svirfneblin", "bestiary"),
+    ("tengu", "bestiary"),
+    ("tiefling", "bestiary"),
+    // Bestiary 2 -- ARG's `# B2 races` section, 7.
+    ("dhampir", "bestiary_2"),
+    ("fetchling", "bestiary_2"),
+    ("grippli", "bestiary_2"),
+    ("ifrit", "bestiary_2"),
+    ("oread", "bestiary_2"),
+    ("sylph", "bestiary_2"),
+    ("undine", "bestiary_2"),
+    // Bestiary 3 -- ARG's `# B3 races` section, 5.
+    ("catfolk", "bestiary_3"),
+    ("ratfolk", "bestiary_3"),
+    ("suli", "bestiary_3"),
+    ("vanara", "bestiary_3"),
+    ("vishkanya", "bestiary_3"),
+    // Bestiary 4 -- ARG's `# B4 races` section (5) plus its own 5 more that
+    // ARG does not reprint (`_bestiary_4_for_players.pcc`'s own uncommented
+    // races section, 10 total).
+    ("changeling", "bestiary_4"),
+    ("kitsune", "bestiary_4"),
+    ("nagaji", "bestiary_4"),
+    ("samsaran", "bestiary_4"),
+    ("wayang", "bestiary_4"),
+    ("gathlain", "bestiary_4"),
+    ("kasatha", "bestiary_4"),
+    ("trox", "bestiary_4"),
+    ("wyrwood", "bestiary_4"),
+    ("wyvaran", "bestiary_4"),
+    // Inner Sea World Guide -- ARG's `#ISWG races` section, 2.
+    ("gillman", "inner_sea_world_guide"),
+    ("strix", "inner_sea_world_guide"),
+    // Bestiary 5 / Bestiary 6's own uniquely-native races (see doc comment).
+    ("skinwalker", "bestiary_5"),
+    ("rougarou", "bestiary_6"),
+];
+
+/// `SOURCELONG:<value>` (PCGen's own file-header source citation) -> the
+/// corpus book directory whose own top-level files independently declare
+/// the identical string. Cross-checked against every in-scope book's own
+/// files (2026-08-16, `find_sourcelong` sweep over the pinned oracle), not
+/// assumed from a book's name -- `ce_races_familiar_cr.lst` carries
+/// `SOURCELONG:Bestiary` despite its own `_cr` filename suffix, which is
+/// exactly why the filename is never trusted over the header.
+const SOURCELONG_TO_BOOK: &[(&str, &str)] = &[
+    ("Core Rulebook", "core_rulebook"),
+    ("Bestiary", "bestiary"),
+    ("Bestiary 2", "bestiary_2"),
+    ("Bestiary 3", "bestiary_3"),
+    ("Bestiary 4", "bestiary_4"),
+    ("Bestiary 5", "bestiary_5"),
+    ("Bestiary 6", "bestiary_6"),
+    ("Advanced Player's Guide", "advanced_players_guide"),
+    ("Advanced Race Guide", "advanced_race_guide"),
+    ("Advanced Class Guide", "advanced_class_guide"),
+    ("Ultimate Magic", "ultimate_magic"),
+    ("Ultimate Combat", "ultimate_combat"),
+    ("Ultimate Equipment", "ultimate_equipment"),
+    ("Ultimate Intrigue", "ultimate_intrigue"),
+    ("Ultimate Wilderness", "ultimate_wilderness"),
+    ("Pathfinder Unchained", "pathfinder_unchained"),
+    ("Monster Codex", "monster_codex"),
+    ("Bonus Bestiary", "bonus_bestiary"),
+    ("Inner Sea Races", "inner_sea_races"),
+    ("Horror Adventures", "horror_adventures"),
+    ("Inner Sea World Guide", "inner_sea_world_guide"),
+    ("Inner Sea Combat", "inner_sea_combat"),
+    ("Occult Adventures", "occult_adventures"),
+    ("Inner Sea Bestiary", "inner_sea_bestiary"),
+    ("Inner Sea Gods", "inner_sea_gods"),
+];
+
+/// The true book for a unit `enumerate_file` found inside `core_essentials/`,
+/// or `None` when neither signal below resolves -- the honest "not yet
+/// attributable" state, never a silent default back to `core_essentials`
+/// (`decisions.md §25.2`/§25.3`, `race_resolver.rs`'s module doc,
+/// `OPEN-ISSUES.md` row 68).
+///
+/// Two independent, per-record-provable signals, checked in order:
+///
+/// 1. **Per-race files** (`core_essentials/races/<slug>/...`): `slug` is the
+///    directory component right after `races` in `path`, looked up in
+///    [`RACE_TRUE_BOOK`].
+/// 2. **Root-level shared files** (`core_essentials/ce_*.lst`): the file's
+///    own header `SOURCELONG:` token (checked over the first 5 lines, where
+///    every file that carries one in this corpus places it), looked up in
+///    [`SOURCELONG_TO_BOOK`].
+///
+/// Callers only invoke this for `book == "core_essentials"`; every other
+/// book's units are unaffected.
+fn resolve_true_book_for_core_essentials(path: &Path, text: &str) -> Option<&'static str> {
+    let components: Vec<String> =
+        path.components().map(|c| c.as_os_str().to_string_lossy().into_owned()).collect();
+    let race_slug_book = components
+        .iter()
+        .position(|c| c == "races")
+        .and_then(|races_at| components.get(races_at + 1))
+        .and_then(|slug| RACE_TRUE_BOOK.iter().find(|(s, _)| s == slug))
+        .map(|(_, book)| *book);
+    if let Some(book) = race_slug_book {
+        return Some(book);
+    }
+    text.lines().take(5).find_map(|line| {
+        let value = line.split("SOURCELONG:").nth(1)?.split('\t').next().unwrap_or("").trim();
+        SOURCELONG_TO_BOOK.iter().find(|(s, _)| *s == value).map(|(_, book)| *book)
+    })
+}
+
 /// Enumerate one `.lst` file into `out`, recording every trap hit.
 fn enumerate_file(path: &Path, book: &str, kind: Kind, text: &str, out: &mut BookEnumeration) {
+    // `'static`, deliberately: only ever `Some` from `RACE_TRUE_BOOK` /
+    // `SOURCELONG_TO_BOOK`, both `&'static str` tables, never derived from
+    // `book`'s own shorter-lived reference -- so it can be stashed in
+    // `mod_targets` (which outlives this call) without a lifetime escape.
+    let resolved_book: Option<&'static str> =
+        if book == "core_essentials" { resolve_true_book_for_core_essentials(path, text) } else { None };
+    let effective_book: &str = resolved_book.unwrap_or(book);
     let rel = path
         .file_name()
         .map(|n| n.to_string_lossy().into_owned())
@@ -768,6 +961,7 @@ fn enumerate_file(path: &Path, book: &str, kind: Kind, text: &str, out: &mut Boo
                 base,
                 Provenance { file: rel.clone(), line: line_number },
                 magnitudes,
+                resolved_book,
             ));
             continue;
         }
@@ -855,7 +1049,8 @@ fn enumerate_file(path: &Path, book: &str, kind: Kind, text: &str, out: &mut Boo
             .unwrap_or_else(|| display_name.clone());
 
         out.units.push(CorpusUnit {
-            book: book.to_string(),
+            book: effective_book.to_string(),
+            source_book: book.to_string(),
             kind: record_kind,
             key,
             name: display_name,
@@ -3033,7 +3228,21 @@ fn classify(
     // attribution is OBSERVED rather than picked arbitrarily; when no candidate
     // holds it the record is left unattributed rather than assigned to a host
     // at random.
-    let own_engine_book = engine_book_for(&unit.book);
+    // `unit.source_book`, deliberately, not `unit.book`: this resolves
+    // which REAL engine consumer table serves this content (e.g.
+    // `RuleSetId::Ce`'s `companion_chassis::COMPANION_BOOKS["core_essentials"]`
+    // for companion/familiar content this engine has always served under
+    // that id, regardless of which real-world book a given row's text
+    // originates from). `unit.book` is the TRUE reporting attribution
+    // (`SD31-ATTRIB-001`) and may now name a book with no such table at all
+    // -- using it here silently downgraded 16 already-`grounded` companion
+    // units to `not-ingested` (`companion_absent_from_bestiary_1_companion_tables`)
+    // the first time this fix was measured, because Bestiary 1 genuinely
+    // has no companion table of its own; the content was never anything but
+    // `core_essentials`-served. `source_book` is always the book
+    // `enumerate_book` actually walked, so this lookup is byte-identical to
+    // this function's own pre-fix behaviour.
+    let own_engine_book = engine_book_for(&unit.source_book);
     let engine_book = match own_engine_book {
         Some(b) => b.to_string(),
         None => {
@@ -3824,6 +4033,7 @@ mod apply_done_rung_stamps_tests {
             id: id.to_string(),
             unit: CorpusUnit {
                 book: "core_rulebook".to_string(),
+                source_book: "core_rulebook".to_string(),
                 kind: Kind::Feat,
                 key: id.to_string(),
                 name: id.to_string(),
@@ -4475,10 +4685,22 @@ fn main() {
         // A directory that no book's `.pcc` stands alone for and that other
         // books pull in is a shared library, not a book. Derived from the real
         // include graph, never assumed.
-        let scope = if rule_set.is_some() {
-            "in_scope"
-        } else if id == "core_essentials" {
+        //
+        // `id == "core_essentials"` is checked BEFORE `rule_set.is_some()`
+        // on purpose: `RuleSetId::Ce` exists for real companion/familiar
+        // engine consumers (`rules_tables::companion_chassis`), so
+        // `rule_set_for("core_essentials")` legitimately resolves to
+        // `Some(RuleSetId::Ce)` -- which made this branch dead code before
+        // this fix, silently reporting `core_essentials` as `"in_scope"`
+        // (a real book) rather than the shared-library classification this
+        // module's own contract requires (`decisions.md §25.2`/`§25.3`,
+        // `race_resolver.rs`'s module doc, `OPEN-ISSUES.md` row 68). This
+        // reorder changes only the REPORTED `scope` field; `RuleSetId::Ce`
+        // itself, and every engine consumer that reads it, is untouched.
+        let scope = if id == "core_essentials" {
             "shared_library"
+        } else if rule_set.is_some() {
+            "in_scope"
         } else if out_of_scope.contains(id.as_str()) {
             "out_of_scope"
         } else if registered_stubs.contains(id) || registered_stubs.contains(&format!("{id}_1")) {
@@ -4518,7 +4740,7 @@ fn main() {
         let Some(enumeration) = enumerations.get_mut(&book.id) else { continue };
         let targets = std::mem::take(&mut enumeration.mod_targets);
         let mut rescued: BTreeSet<(Kind, String)> = BTreeSet::new();
-        for (kind, key, name, provenance, magnitudes) in targets {
+        for (kind, key, name, provenance, magnitudes, resolved_book) in targets {
             if declared.contains(&(kind, name.to_lowercase())) {
                 continue;
             }
@@ -4528,7 +4750,8 @@ fn main() {
             }
             *enumeration.trap_hits.entry("mod_only_rescue").or_default() += 1;
             enumeration.units.push(CorpusUnit {
-                book: book.id.clone(),
+                book: resolved_book.map(str::to_string).unwrap_or_else(|| book.id.clone()),
+                source_book: book.id.clone(),
                 kind,
                 key,
                 name,
@@ -4629,10 +4852,15 @@ fn main() {
         let Some(enumeration) = enumerations.get(&book.id) else { continue };
         let hosts = included_by.get(&book.id).unwrap_or(&empty);
         for unit in &enumeration.units {
+            // `source_book`, deliberately, not `unit.book`: this resolves a
+            // PHYSICAL file path (`book_paths[book_id]`), and `unit.book`
+            // may now name a book that does not physically contain this row
+            // (`SD31-ATTRIB-001`'s re-attribution). `source_book` is always
+            // the directory `enumerate_book` actually walked to find it.
             let rows = token_closure_rows(
                 &mut corpus_lines,
                 &mod_index,
-                &unit.book,
+                &unit.source_book,
                 &unit.provenance.file,
                 unit.provenance.line,
                 &unit.name,
@@ -5059,6 +5287,7 @@ mod prose_magnitude_status_tests {
     fn feat_unit(book: &str, key: &str, magnitude_token_count: usize) -> CorpusUnit {
         CorpusUnit {
             book: book.to_string(),
+            source_book: book.to_string(),
             kind: Kind::Feat,
             key: key.to_string(),
             name: key.to_string(),
@@ -5197,6 +5426,7 @@ mod wiring_class_wiring_tests {
         let mut lines = CorpusLines::new(&book_paths);
         let unit = CorpusUnit {
             book: "test_book".to_string(),
+            source_book: "test_book".to_string(),
             kind: Kind::Feat,
             key: "Accursed".to_string(),
             name: "Accursed".to_string(),
@@ -5236,6 +5466,7 @@ mod wiring_class_wiring_tests {
         let mut lines = CorpusLines::new(&book_paths);
         let unit = CorpusUnit {
             book: "test_book".to_string(),
+            source_book: "test_book".to_string(),
             kind: Kind::Feat,
             key: "Ghost".to_string(),
             name: "Ghost".to_string(),
@@ -6518,6 +6749,7 @@ mod spell_grounding_tests {
     fn spell_unit(book: &str, key: &str) -> CorpusUnit {
         CorpusUnit {
             book: book.to_string(),
+            source_book: book.to_string(),
             kind: Kind::Spell,
             key: key.to_string(),
             name: key.to_string(),
@@ -6839,6 +7071,7 @@ mod class_probe_tests {
     fn class_unit(book: &str, name: &str) -> CorpusUnit {
         CorpusUnit {
             book: book.to_string(),
+            source_book: book.to_string(),
             kind: Kind::Class,
             key: name.to_string(),
             name: name.to_string(),
@@ -7193,5 +7426,231 @@ mod stamp_loss_guard_tests {
         let incoming_stamped: BTreeSet<String> = BTreeSet::new();
         assert!(stamp_loss("not json at all", &incoming_stamped).is_empty());
         assert!(stamp_loss("", &incoming_stamped).is_empty());
+    }
+}
+
+/// `OPEN-ISSUES.md` row 68 -- the book-attribution defect (SD31-ATTRIB-001).
+/// `race_resolver.rs`'s module doc, citing `decisions.md §25.2`, states the
+/// contract: a record's `book` is the corpus directory it was loaded from,
+/// and `core_essentials` -- PCGen's own shared packaging directory, not a
+/// book -- must never appear as attribution. Before this cycle's fix it did,
+/// for ~1,610 units across 8 kinds: Core Rulebook reported ZERO races,
+/// Advanced Race Guide reported ONE.
+///
+/// This is the mechanical gate proving the contract, and the first test
+/// below is the "prove it fails" seed the card requires: it exercises
+/// `enumerate_book` against a synthetic `core_essentials`-shaped scratch
+/// directory carrying a Dwarf race row -- the exact CRB-race shape row 68
+/// names -- and asserts the resulting unit's `book` is `"core_rulebook"`,
+/// never `"core_essentials"`. Reverting `enumerate_file`'s `effective_book`
+/// substitution (this module's own fix) makes this test fail immediately:
+/// the unit would carry `book: "core_essentials"` instead, reproducing row
+/// 68's defect exactly. `cargo test --locked --bin v06_work_inventory
+/// core_essentials_book_attribution_tests` is this gate's own invocation,
+/// picked up by `./scripts/verify.sh`'s `root-full`/`root-lib` stages via
+/// `cargo test --workspace` with no separate wiring needed.
+#[cfg(test)]
+mod core_essentials_book_attribution_tests {
+    use super::*;
+
+    /// A scratch `core_essentials/`-shaped tree, cleaned up on drop, so
+    /// these tests never touch the real PCGen checkout `PCGEN_CORPUS_ROOT`
+    /// would point at (same pattern as `wiring_class_wiring_tests::ScratchBook`).
+    struct ScratchCoreEssentials {
+        root: PathBuf,
+    }
+
+    impl ScratchCoreEssentials {
+        fn new(name: &str) -> Self {
+            let root = std::env::temp_dir().join(format!(
+                "codex_book_attrib_test_{name}_{}",
+                std::process::id()
+            ));
+            let _ = std::fs::remove_dir_all(&root);
+            std::fs::create_dir_all(&root).unwrap();
+            ScratchCoreEssentials { root }
+        }
+
+        fn write(&self, rel_path: &str, contents: &str) {
+            let path = self.root.join(rel_path);
+            std::fs::create_dir_all(path.parent().unwrap()).unwrap();
+            std::fs::write(path, contents).unwrap();
+        }
+    }
+
+    impl Drop for ScratchCoreEssentials {
+        fn drop(&mut self) {
+            let _ = std::fs::remove_dir_all(&self.root);
+        }
+    }
+
+    /// **The seeded-mislabel proof.** A per-race row under
+    /// `core_essentials/races/dwarf/` -- the real, in-scope CRB race row 68
+    /// names by example -- must attribute to `core_rulebook`, not
+    /// `core_essentials`. Before the fix this unit's `book` was
+    /// unconditionally `"core_essentials"` (`enumerate_file` stamped
+    /// `book.to_string()` verbatim); this test fails against that code.
+    #[test]
+    fn a_dwarf_race_row_attributes_to_core_rulebook_not_core_essentials() {
+        let book = ScratchCoreEssentials::new("dwarf_race");
+        book.write(
+            "races/dwarf/dwarf_races.lst",
+            "Dwarf\t\tSORTKEY:a_base_pc\tSTARTFEATS:1\tSOURCEPAGE:p.xx\tFACT:IsPC|true\n",
+        );
+        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let unit = enumeration
+            .units
+            .iter()
+            .find(|u| u.name == "Dwarf")
+            .expect("the Dwarf race row was enumerated");
+        assert_eq!(
+            unit.book, "core_rulebook",
+            "a per-race row under core_essentials/races/dwarf/ must attribute to its true \
+             source book (decisions.md §25.2), never stay core_essentials"
+        );
+    }
+
+    /// A root-level shared `ce_*.lst` file carrying a `SOURCELONG:` header
+    /// must attribute to the book that header names, cross-checked against
+    /// that book's own real files -- not inferred from the filename (the
+    /// `ce_races_familiar_cr.lst` -> `SOURCELONG:Bestiary` case this repo
+    /// actually has, where the `_cr` suffix would mislead a name-based guess).
+    #[test]
+    fn a_root_level_file_attributes_via_its_own_sourcelong_header_not_its_filename() {
+        let book = ScratchCoreEssentials::new("sourcelong_spell");
+        book.write(
+            "ce_spells.lst",
+            "SOURCELONG:Bestiary\tSOURCESHORT:B1\n\nMage Hand\tSCHOOL:Transmutation\tCLASSES:Wizard\n",
+        );
+        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let unit = enumeration
+            .units
+            .iter()
+            .find(|u| u.name == "Mage Hand")
+            .expect("the spell row was enumerated");
+        assert_eq!(unit.book, "bestiary");
+    }
+
+    /// A race this repo cannot attribute to exactly one in-scope book
+    /// (`monkey_goblin`: natively declared by both `bestiary_6` and
+    /// `inner_sea_bestiary`'s own `.pcc`, per this fix's own doc comment)
+    /// must stay `core_essentials` -- the honest "not yet attributable"
+    /// state -- rather than guess. Proves the resolver discriminates instead
+    /// of re-attributing everything under `races/`.
+    #[test]
+    fn an_ambiguous_race_stays_unattributed_rather_than_guessed() {
+        let book = ScratchCoreEssentials::new("ambiguous_race");
+        book.write(
+            "races/monkey_goblin/monkey_goblin_races.lst",
+            "Goblin (Monkey)\t\tSOURCEPAGE:p.xx\tFACT:IsPC|true\n",
+        );
+        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let unit = enumeration
+            .units
+            .iter()
+            .find(|u| u.name == "Goblin (Monkey)")
+            .expect("the row was enumerated");
+        assert_eq!(unit.book, "core_essentials");
+    }
+
+    /// A root-level file with no `SOURCELONG` header at all (the
+    /// `ce_abilities_race.lst` shape -- PCGen's own consolidated
+    /// Size/Vision/Universal-Monster-Rule reference table, confirmed by its
+    /// own in-file comment to be book-agnostic engine bookkeeping) must also
+    /// stay `core_essentials`, not be assigned an arbitrary default.
+    #[test]
+    fn a_file_with_no_sourcelong_header_stays_unattributed() {
+        let book = ScratchCoreEssentials::new("no_header");
+        book.write(
+            "ce_abilities_race.lst",
+            "Darkvision\t\tKEY:Darkvision\tCATEGORY:Special Ability\tTYPE:SpecialQuality\n",
+        );
+        let enumeration = enumerate_book(&book.root, "core_essentials");
+        let unit = enumeration
+            .units
+            .iter()
+            .find(|u| u.key == "Darkvision")
+            .expect("the row was enumerated");
+        assert_eq!(unit.book, "core_essentials");
+    }
+
+    /// A `.MOD` row inside a per-race `core_essentials` file that is rescued
+    /// (`mod_only_rescue`, because its base is declared nowhere else in the
+    /// synthetic corpus) must carry the SAME resolved true book as an
+    /// ordinary declared row would -- the rescue path used to stamp
+    /// `book.id.clone()` (always `"core_essentials"` for this enumeration)
+    /// unconditionally, bypassing the fix for `origin: ModOnly` units
+    /// (8 of the 1,610 in the real corpus, `OPEN-ISSUES.md` row 68's own
+    /// re-derivation).
+    #[test]
+    fn a_mod_only_rescued_row_from_a_per_race_file_also_attributes_correctly() {
+        let book = ScratchCoreEssentials::new("mod_rescue");
+        book.write(
+            "races/drow/drow_abilities_race.lst",
+            "Universal Monster Rule ~ Light Blindness.MOD\tKEY:Universal Monster Rule ~ Light \
+             Blindness\tCATEGORY:Special Ability\tTYPE:SpecialQuality\n",
+        );
+        let mut enumerations: BTreeMap<String, BookEnumeration> = BTreeMap::new();
+        enumerations.insert(
+            "core_essentials".to_string(),
+            enumerate_book(&book.root, "core_essentials"),
+        );
+        let declared: BTreeSet<(Kind, String)> = BTreeSet::new();
+        let mut rescued: BTreeSet<(Kind, String)> = BTreeSet::new();
+        let targets = std::mem::take(&mut enumerations.get_mut("core_essentials").unwrap().mod_targets);
+        for (kind, key, name, provenance, magnitudes, resolved_book) in targets {
+            if declared.contains(&(kind, name.to_lowercase())) {
+                continue;
+            }
+            if !rescued.insert((kind, name.to_lowercase())) {
+                continue;
+            }
+            enumerations.get_mut("core_essentials").unwrap().units.push(CorpusUnit {
+                book: resolved_book.map(str::to_string).unwrap_or_else(|| "core_essentials".to_string()),
+                source_book: "core_essentials".to_string(),
+                kind,
+                key,
+                name,
+                origin: Origin::ModOnly,
+                provenance,
+                magnitude_token_count: magnitudes,
+                type_facet: None,
+                visible: true,
+            });
+        }
+        let unit = enumerations["core_essentials"]
+            .units
+            .iter()
+            .find(|u| u.origin == Origin::ModOnly)
+            .expect("the .MOD row was rescued");
+        assert_eq!(
+            unit.book, "bestiary",
+            "a rescued .MOD row from a per-race file must resolve the same true book an \
+             ordinary declared row from the same file would"
+        );
+    }
+
+    /// Pins the exact ambiguous-race list this fix's own doc comment claims,
+    /// so a future book onboarding that resolves one of these cannot
+    /// silently narrow the set without this test forcing an update (and a
+    /// matching doc-comment edit).
+    #[test]
+    fn core_essentials_ambiguous_races_stay_unattributed() {
+        let ambiguous =
+            ["android", "aquatic_elf", "ghoran", "lashunta", "monkey_goblin", "syrinx", "triaxian"];
+        for slug in ambiguous {
+            assert!(
+                RACE_TRUE_BOOK.iter().all(|(s, _)| *s != slug),
+                "{slug} is documented as genuinely ambiguous and must not appear in \
+                 RACE_TRUE_BOOK without a corresponding doc-comment update"
+            );
+        }
+        assert_eq!(
+            RACE_TRUE_BOOK.len(),
+            44,
+            "44 unambiguous + 7 ambiguous == the real corpus's 51 core_essentials races \
+             (OPEN-ISSUES.md row 68); a table-length change means the roster moved and both \
+             this assertion and the doc comment above need re-deriving, not just bumping"
+        );
     }
 }
