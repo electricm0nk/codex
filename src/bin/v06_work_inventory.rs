@@ -913,7 +913,7 @@ mod equipment_verdict_rung_tests {
         );
         let unit =
             equipment_modifier_unit("ue_equipmods.lst", 1541, "Special Ability ~ Defiant");
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_ne!(verdict.status, "text-complete");
         // Falls through to the same "nothing safe to show a player" verdict
         // Decision 7's own condition-3 refusal uses for a genuinely
@@ -941,7 +941,7 @@ mod equipment_verdict_rung_tests {
             "+2 enhancement bonus and fire resistance 5.".to_string(),
         );
         let unit = equipment_modifier_unit("ue_equipmods.lst", 1600, "Special Ability ~ Clean");
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_eq!(verdict.status, "text-complete");
     }
 }
@@ -4190,20 +4190,165 @@ fn class_feature_owner<'a, I: Iterator<Item = &'a String>>(key: &str, classes: I
 /// in a catalog is not the same fact as its prose reaching a player, and
 /// Decision 7 says so explicitly.
 ///
-/// `(engine_book, key)` pairs row 69's own hand-verification already
-/// confirmed carry a FLAT (non-scaling) numeric printed only in prose within
-/// `Kind::MonsterAbility` -- see the `monster_ability` rung's own call site
-/// for the open interpretive question this is the conservative default for.
-/// **A ONE-LINE change** (clear this list, once the operator's ruling
-/// lands): reading (a) ("no numeric value at all") keeps it as-is; reading
-/// (b) ("no character-specific scaling formula") clears it.
-const MONSTER_ABILITY_FLAT_MAGNITUDE_PENDING_RULING: &[(&str, &str)] =
-    &[("bestiary_2", "Devilfish ~ Water Dependency")];
+/// SD31-D7-PROSE-004 -- Decision 7 REFINED (operator ruling 2026-08-16,
+/// verbatim in `decisions.md §7`'s REFINED addendum): the interpretive
+/// question rows 69/87/95/107 all raised (does "nothing to compute" mean
+/// (a) no numeric value at all, or (b) no character-specific scaling
+/// formula?) is answered, and it is neither reading verbatim -- the real
+/// axis is UNIVERSAL vs CONDITIONAL, not flat vs scaling:
+///
+/// > "+1 size bonus to AC means you need to give a +1 on the AC - that's
+/// > computed. ... Now if that +4 bonus was ONLY against certain creature
+/// > types, like with dwarf racial hatred - that's not a universal bump and
+/// > would just be listed in a description block for the player to add in
+/// > when appropriate." ... "if it says acid damage - that's a condition,
+/// > many things shrug off acid."
+///
+/// This retires the four hand-picked `*_FLAT_MAGNITUDE_PENDING_RULING`
+/// consts (`monster_ability`/`companion`/`class_feature`/`feat`, each a
+/// conservative name-list a prior cycle built pending exactly this ruling)
+/// and replaces every one of their call sites with the real discriminator
+/// below -- a name-list can never generalize past the units someone
+/// happened to hand-check, and Decision 1(e) requires the discriminator to
+/// earn its keep on ACCURACY, not movement.
+///
+/// `closure_states_universal_sheet_modifier` reads the SAME raw `.lst`
+/// closure text every other rung in this file already gathers (`DESC:`/
+/// `SPROP:`/`BENEFIT:` fields), lower-cased, and applies two ordered word
+/// lists straight off the ruling's own named condition families:
+///
+/// 1. **`CONDITIONAL_MODIFIER_CUES` is checked FIRST.** Any hit means the
+///    modifier is conditional/situational REGARDLESS of anything else in
+///    the text -- damage type ("acid damage"), target subtype ("against
+///    humanoid creatures of the orc ... subtype", "against your quarry"),
+///    manoeuvre type and stance ("bull rush", "while raging"), effect type
+///    ("against enchantment spells", "spell-like ability"), environmental
+///    state ("in dim light", "out of the water"), and narrative duration /
+///    resource-frequency ("1 minute", "per day") all live here, each cue
+///    hand-derived from a real, currently-shipped corpus row (see this
+///    module's own test module for the citations -- `dwarf_hatred`,
+///    `duergar_stability`, `devilfish_water_dependency`,
+///    `special_ability_corrosive_weapon`, `advanced_class_guide:
+///    bloodrager_indomitable_will`, `core_essentials:ce_feats.lst`'s
+///    `Awesome Blow`/`Hover`/`Snatch`/`Wingover`, etc.).
+/// 2. **`UNIVERSAL_MODIFIER_CUES` is checked only when no conditional cue
+///    fired.** It is deliberately NARROW -- a real positive phrase is
+///    required ("size bonus", "bonus to their ac"/"bonus to armor class",
+///    "penalty to their combat maneuver"), not merely the absence of a
+///    conditional cue -- because a false "universal" verdict blocks a real
+///    `done` unit (the costly direction), while a false "not proven
+///    universal" verdict costs nothing: the unit still needs
+///    `has_real_description` to pass, so it stays exactly as reachable as
+///    it always was. This mirrors Decision 7's own "declined an exclusion,
+///    granted a done-bar" asymmetry.
+///
+/// Text with NEITHER a conditional nor a universal cue (an unrecognised
+/// shape) returns `false` -- "not proven universal" -- for the same
+/// asymmetry reason: an unrecognised shape is not blocked from the prose
+/// done-bar merely for being unrecognised.
+const CONDITIONAL_MODIFIER_CUES: &[&str] = &[
+    // target subtype / effect type / manoeuvre-against-a-target
+    " against ",
+    " vs. ",
+    " vs ",
+    // damage type -- "if it says acid damage - that's a condition"
+    "acid damage",
+    "fire damage",
+    "cold damage",
+    "electricity damage",
+    "sonic damage",
+    "force damage",
+    "negative energy damage",
+    "positive energy damage",
+    "bludgeoning damage",
+    "piercing damage",
+    "slashing damage",
+    // manoeuvre type and stance
+    "bull rush",
+    "grapple",
+    "disarm",
+    "overrun",
+    "sunder",
+    "reposition",
+    " while ",
+    // environmental state
+    "dim light",
+    "bright light",
+    "underwater",
+    "out of the water",
+    "submerged",
+    // narrative duration / resource-frequency (also the `Craft Construct`/
+    // `Quicken Spell-Like Ability` precedent this program already treats as
+    // compatible with "nothing to compute": a resource-frequency count, not
+    // a scaling combat magnitude)
+    " minute",
+    " hour",
+    " round",
+    "per day",
+    // effect type -- named spell schools/effect categories many creatures
+    // are immune or resistant to
+    "spell-like abilit",
+    "enchantment",
+    "emotion and fear",
+    "bardic performance",
+    "language-dependent",
+    "quarry",
+];
 
-fn monster_ability_flat_magnitude_pending_ruling(engine_book: &str, key: &str) -> bool {
-    MONSTER_ABILITY_FLAT_MAGNITUDE_PENDING_RULING
-        .iter()
-        .any(|&(book, k)| book == engine_book && k == key)
+/// NARROWED to `"size bonus"` ALONE (2026-08-16, this cycle's own
+/// corpus-wide sanity run): the first draft also carried `"bonus to their
+/// ac"`, `"bonus to armor class"`, `"bonus on attack rolls"`, `"penalty to
+/// their combat maneuver"` and `"penalty on combat maneuver checks"` as
+/// broader positive cues, reasoning by analogy from the 6 confirmed
+/// size-trait cases. Running the retired-list replacement against the FULL
+/// corpus (not just the 30-unit hand-labelled sample) surfaced real false
+/// positives those broader cues produced, all confirmed by direct oracle
+/// read: `advanced_race_guide:feat:guardian_of_the_wild` ("+2 dodge bonus
+/// to Armor Class" -- but ONLY "when you are in a terrain type you have
+/// selected"), `core_rulebook:feat:critical_focus` / `advanced_race_guide:
+/// feat:orc_weapon_expertise_killer` ("bonus on attack rolls" -- but ONLY
+/// "made to confirm critical hits"), `ultimate_intrigue:feat:
+/// timely_coordination` ("bonus on attack rolls" -- but ONLY "as part of
+/// readied actions triggered by" an ally with the same feat), `advanced_
+/// players_guide:feat:greater_blind_fight` ("bonus to Armor Class" inside a
+/// sentence that GRANTS nothing -- "you don't LOSE your Dexterity bonus to
+/// Armor Class" while blinded/concealed, the opposite of a bump). Every one
+/// is genuinely conditional (environmental state, manoeuvre-specific
+/// action, or an outright negation the substring match cannot see), and a
+/// false "universal" verdict is the costly direction (it blocks a real
+/// `done` unit) per this function's own doc comment. `"size bonus"` is the
+/// ONE phrase every hand-verified true positive in the 30-unit sample
+/// shares and no false positive found in the full-corpus run contains --
+/// narrowing to it, rather than patching each false positive with its own
+/// conditional cue, keeps the positive list provably narrow instead of
+/// chasing an open-ended one. `retro.py correction` emitted; see this
+/// cycle's receipt for the full before/after diff.
+const UNIVERSAL_MODIFIER_CUES: &[&str] = &["size bonus"];
+
+fn closure_prose_field_text(row_refs: &[Option<&str>]) -> String {
+    let mut out = String::new();
+    for line in row_refs.iter().flatten() {
+        for field in tab_fields(line) {
+            for prefix in ["DESC:", "SPROP:", "BENEFIT:"] {
+                if let Some(value) = field.strip_prefix(prefix) {
+                    out.push(' ');
+                    out.push_str(value);
+                }
+            }
+        }
+    }
+    out
+}
+
+fn closure_states_universal_sheet_modifier(row_refs: &[Option<&str>]) -> bool {
+    let text = closure_prose_field_text(row_refs).to_ascii_lowercase();
+    if text.trim().is_empty() {
+        return false;
+    }
+    if CONDITIONAL_MODIFIER_CUES.iter().any(|cue| text.contains(cue)) {
+        return false;
+    }
+    UNIVERSAL_MODIFIER_CUES.iter().any(|cue| text.contains(cue))
 }
 
 /// CONFIRMED finding (integration-cycle adversarial review, `SD31-W6-
@@ -4255,117 +4400,18 @@ fn companion_ability_desc_leaks_unresolved_argument(
     }
 }
 
-/// SD31-D7-PROSE-003, Decision 7's own PROXY WARNING discipline
-/// (`decisions.md §7`): pending the open flat-magnitude ruling
-/// (`OPEN-ISSUES.md` rows 69/87/95), a `(engine_book, key)` pair a cycle has
-/// hand-verified carries a FLAT, non-scaling numeric printed only in prose
-/// goes here rather than being promoted. Empty today -- this cycle's own
-/// hand-check of the `companion` population it actually promotes (§3 of its
-/// receipt) found none, unlike `monster_ability`'s row 69 finding -- but the
-/// const exists so a future hand-check can add an entry without touching the
-/// verdict arm itself. **A ONE-LINE change** either direction, exactly as
-/// `MONSTER_ABILITY_FLAT_MAGNITUDE_PENDING_RULING` documents.
-const COMPANION_FLAT_MAGNITUDE_PENDING_RULING: &[(&str, &str)] = &[];
-
-fn companion_flat_magnitude_pending_ruling(engine_book: &str, key: &str) -> bool {
-    COMPANION_FLAT_MAGNITUDE_PENDING_RULING
-        .iter()
-        .any(|&(book, k)| book == engine_book && k == key)
-}
-
-/// SD31-D7-PROSE-003, same discipline as `COMPANION_FLAT_MAGNITUDE_PENDING_
-/// RULING`: `(unit.book, key)` pairs a cycle has hand-verified carry a FLAT,
-/// non-scaling numeric printed only in prose, pending the open ruling
-/// (`OPEN-ISSUES.md` rows 69/87/95/107). Keyed by `unit.book` (the attributed
-/// book), not `engine_book`, because `Kind::ClassFeature`'s two promotion
-/// sites both key their own evidence off `unit.book`/`unit.key` already (see
-/// `class_feature_effect_wired.get(&unit.key) == Some(&unit.book.as_str())`
-/// just above) -- there is no separate `engine_book` concept for this kind
-/// the way the chassis-table kinds have one.
-///
-/// **Not empty** -- Decision 7's PROXY WARNING (`decisions.md §7`) requires
-/// a cycle to hand-verify its OWN promoted population before banking it, not
-/// merely trust `has_real_description`. Hand-checking all 43 `class_feature`
-/// units this cycle's rung promotes (full closure read, not the truncated
-/// proxy) found 11 that state a real, flat, non-scaling numeric bonus,
-/// penalty, range, resource cost or duration in prose only -- the identical
-/// shape row 87's own worked example names (`duergar_stability`'s "+4
-/// racial bonus to CMD"). Excluded here, conservatively, pending the SAME
-/// operator ruling rows 69/87/95/107 already ask for. `OPEN-ISSUES.md` row
-/// 111 names all 11 with their full corpus text. **A ONE-LINE change**
-/// either direction, exactly as the sibling consts document.
-const CLASS_FEATURE_FLAT_MAGNITUDE_PENDING_RULING: &[(&str, &str)] = &[
-    ("advanced_class_guide", "Bloodrager ~ Indomitable Will"),
-    ("advanced_players_guide", "Cave Druid ~ Wild Empathy"),
-    ("core_rulebook", "Barbarian ~ Indomitable Will"),
-    ("core_rulebook", "Bard ~ Well-Versed"),
-    ("core_rulebook", "Monk ~ Empty Body"),
-    ("core_rulebook", "Monk ~ Still Mind"),
-    ("core_rulebook", "Paladin ~ Aura of Faith"),
-    ("core_rulebook", "Paladin ~ Aura of Justice"),
-    ("core_rulebook", "Ranger ~ Improved Quarry"),
-    ("core_rulebook", "Ranger ~ Swift Tracker"),
-    ("pathfinder_unchained", "Unchained Barbarian ~ Indomitable Will"),
-    ("pathfinder_unchained", "Unchained Barbarian ~ Tireless Rage"),
-    ("pathfinder_unchained", "Unchained Monk ~ Still Mind"),
-    // Wave-7 integration review (SD31-W7-INTEGRATE-001): the full-closure
-    // hand-check above MISSED these two -- `Bloodrager ~ Indomitable Will`
-    // was promoted with near-identical +4 prose to `Barbarian ~
-    // Indomitable Will` (excluded, same commit); `Ranger ~ Improved
-    // Quarry` states "+4 insight bonus on attack rolls" and was promoted
-    // regardless. Added conservatively, pending the same rows 69/87/95/107
-    // ruling; `retro.py correction` emitted against the original claim
-    // ("the other 32 genuinely state nothing but level-gate references").
-];
-
-fn class_feature_flat_magnitude_pending_ruling(book: &str, key: &str) -> bool {
-    CLASS_FEATURE_FLAT_MAGNITUDE_PENDING_RULING
-        .iter()
-        .any(|&(b, k)| b == book && k == key)
-}
-
-/// SD31-W7-INTEGRATE-001: same discipline as `CLASS_FEATURE_FLAT_MAGNITUDE_
-/// PENDING_RULING`/`COMPANION_FLAT_MAGNITUDE_PENDING_RULING`, for `Kind::
-/// Feat`. Decision 7's own binding PROXY WARNING was not discharged before
-/// `SD31-E6-F8-001` banked the 11 `core_essentials`-directory (`ce_feats.
-/// lst`, engine book `core_essentials`) `display`-wiring-class feats to
-/// `done` -- 7 of the 11 state a real, flat, non-scaling numeric bonus,
-/// penalty, distance, dice roll or percentage in `BENEFIT:` prose only (a
-/// PCGen field this engine's `magnitude_token_count` proxy never reads,
-/// same defect class row 69 named for `monster_ability`), read directly off
-/// `ce_feats.lst` lines 9-24 at the pinned oracle:
-/// - `Ability Focus` -- "+2 to the DC"
-/// - `Awesome Blow` -- "10 feet", "1d6 points of damage"
-/// - `Empower Spell-Like Ability ~ Ability` / `~ Spell` -- "+50%"
-/// - `Hover` -- "20 feet"/"60 feet"/"10 feet"/"15 to 20 feet"/"25 feet",
-///   "20% miss chance"/"50% miss chance"
-/// - `Snatch` -- "1d6 x 10 feet", "1d6 points of damage per 10 feet"
-/// - `Wingover` -- "180 degrees", "90 degrees", "DC 15"/"DC 20", "5 feet"/
-///   "10 feet"
-///
-/// The other 4 (`Craft Construct`, `Flyby Attack`, `Quicken Spell-Like
-/// Ability ~ Ability`, `~ Spell`) genuinely state no flat combat bonus --
-/// `Craft Construct`'s per-gp crafting-time formula and Quicken's "three
-/// times per day" resource-use count are the SAME shape this program
-/// already treats as compatible with "nothing to compute" elsewhere (a
-/// resource-frequency count, not a scaling combat magnitude) -- and stay
-/// `done`, discharging Decision 7's PROXY WARNING rather than banking the
-/// whole population on the unchecked proxy. Excluded here, conservatively,
-/// pending the SAME operator ruling rows 69/87/95/107 already ask for.
-/// **A ONE-LINE change** either direction, exactly as the sibling consts.
-const FEAT_FLAT_MAGNITUDE_PENDING_RULING: &[(&str, &str)] = &[
-    ("core_essentials", "Ability Focus"),
-    ("core_essentials", "Awesome Blow"),
-    ("core_essentials", "Empower Spell-Like Ability ~ Ability"),
-    ("core_essentials", "Empower Spell-Like Ability ~ Spell"),
-    ("core_essentials", "Hover"),
-    ("core_essentials", "Snatch"),
-    ("core_essentials", "Wingover"),
-];
-
-fn feat_flat_magnitude_pending_ruling(engine_book: &str, key: &str) -> bool {
-    FEAT_FLAT_MAGNITUDE_PENDING_RULING.iter().any(|&(b, k)| b == engine_book && k == key)
-}
+// SD31-D7-PROSE-004: the `COMPANION_FLAT_MAGNITUDE_PENDING_RULING`/
+// `CLASS_FEATURE_FLAT_MAGNITUDE_PENDING_RULING`/
+// `FEAT_FLAT_MAGNITUDE_PENDING_RULING` hand-picked name-lists that used to
+// live here are RETIRED -- Decision 7 REFINED (`decisions.md §7`) answers
+// the interpretive question they were all conservatively parked pending,
+// and `closure_states_universal_sheet_modifier` (above, next to its former
+// `monster_ability` sibling) is the real, general discriminator every kind's
+// promotion rung now calls directly on its own closure text. Every one of
+// the three lists' named units was hand-verified against its ACTUAL shipped
+// corpus text as part of retiring these consts (`class_feature_text_
+// complete_rung_tests`/`feat_flat_magnitude_...` below and this cycle's own
+// receipt carry the citations); all resolved CONDITIONAL and clear.
 
 /// CONFIRMED finding, this cycle's own guarded regen (SD31-D7-PROSE-003):
 /// promoting a `grounded` verdict to `text-complete` is a REGRESSION, not an
@@ -4398,6 +4444,16 @@ fn is_display_wiring_class_for_promotion(wc_class: &str) -> bool {
 /// add (SD31-D7-PROSE-003) -- see [`is_display_wiring_class_for_promotion`]'s
 /// own doc comment for the bug this guard exists to prevent. Every other
 /// branch in this function is unchanged by its presence.
+///
+/// `universal_sheet_modifier` (SD31-D7-PROSE-004, Decision 7 REFINED) is
+/// the caller's own [`closure_states_universal_sheet_modifier`] verdict for
+/// this unit's closure -- `true` means the prose states an unconditional
+/// modifier to a value the sheet computes, which must be COMPUTED and is
+/// therefore refused promotion to `text-complete` by every rung below
+/// (`Kind::RaceTrait`, `Kind::MonsterAbility`, `Kind::ClassFeature`,
+/// `Kind::Companion`, `Kind::Feat`) exactly the way the four now-retired
+/// `*_FLAT_MAGNITUDE_PENDING_RULING` name-lists used to refuse their own
+/// hand-picked entries.
 fn classify(
     unit: &CorpusUnit,
     facts: &EngineFacts,
@@ -4405,6 +4461,7 @@ fn classify(
     carries_prose_magnitude: bool,
     has_real_description: bool,
     wc_class: &str,
+    universal_sheet_modifier: bool,
 ) -> Verdict {
     // A book with no compiled rule set has had nothing attempted -- unless it
     // is the shared library other books pull in, in which case the record's
@@ -4525,11 +4582,7 @@ fn classify(
                     engine_book: engine_book_field,
                 };
             }
-            if text_only
-                && has_real_description
-                && !feat_flat_magnitude_pending_ruling(engine_book.as_str(), &unit.key)
-                && !feat_flat_magnitude_pending_ruling(engine_book.as_str(), &unit.name)
-            {
+            if text_only && has_real_description && !universal_sheet_modifier {
                 return Verdict {
                     status: "text-complete",
                     evidence: "in_catalog_and_corpus_record_carries_no_magnitude_token".to_string(),
@@ -4537,22 +4590,16 @@ fn classify(
                     engine_book: engine_book_field,
                 };
             }
-            if text_only
-                && has_real_description
-                && (feat_flat_magnitude_pending_ruling(engine_book.as_str(), &unit.key)
-                    || feat_flat_magnitude_pending_ruling(engine_book.as_str(), &unit.name))
-            {
-                // Wave-7 integration review (SD31-W7-INTEGRATE-001): Decision
-                // 7's PROXY WARNING was not discharged before `SD31-E6-F8-
-                // 001` banked this cell -- `magnitude_token_count == 0`
-                // missed a flat, non-scaling numeric stated only in the
-                // record's `BENEFIT:` prose (the same shape rows 69/87/95/
-                // 107 already ask an open ruling for). `grounded` caps at
-                // `held` for `display` wiring_class, same fallback shape
-                // `class_feature`/`companion`'s own pending-ruling gates use.
+            if text_only && has_real_description && universal_sheet_modifier {
+                // SD31-D7-PROSE-004 (Decision 7 REFINED): the record's prose
+                // states an unconditional modifier to a value the sheet
+                // computes -- `closure_states_universal_sheet_modifier`'s own
+                // doc comment names the exact condition-family word lists.
+                // `grounded` caps at `held` for `display` wiring_class, same
+                // fallback shape every other kind's rung below uses.
                 return Verdict {
                     status: "grounded",
-                    evidence: "feat_flat_magnitude_pending_ruling".to_string(),
+                    evidence: "feat_universal_sheet_modifier_pending_compute".to_string(),
                     reason: None,
                     engine_book: engine_book_field,
                 };
@@ -4805,7 +4852,7 @@ fn classify(
                 // number) is the correct fallback.
                 if text_only
                     && has_real_description
-                    && !monster_ability_flat_magnitude_pending_ruling(&engine_book, &unit.key)
+                    && !universal_sheet_modifier
                     && !facts.monster_ability_desc_leaks_unresolved_argument(
                         &engine_book,
                         &unit.key,
@@ -4915,9 +4962,22 @@ fn classify(
                 // refusal `closure_has_real_description` already applies to
                 // every other text_only->text-complete branch in this file,
                 // rather than a second, looser bar just for race_trait.
+                //
+                // `!universal_sheet_modifier` (SD31-D7-PROSE-004, Decision 7
+                // REFINED): this is the exact cell the ruling's own worked
+                // example named -- the Small-race size traits
+                // (`gnome_size`/`grippli_size`/`halfling_size`/`kobold_size`/
+                // `svirfneblin_size`/`goblin_size`) state an unconditional
+                // "+1 size bonus to their AC, a +1 size bonus on attack
+                // rolls, a -1 penalty ... Combat Maneuver ..., and a +4 size
+                // bonus on Stealth checks" that this branch's `text_only`
+                // check alone was promoting to `done` before this gate
+                // existed -- a real over-claim, now corrected. This is the
+                // ONE population this cycle demotes (see the receipt).
                 if text_only
                     && let Some(rendered) = facts.race_trait_rendered_description(unit)
                     && is_real_description_value(rendered)
+                    && !universal_sheet_modifier
                 {
                     return Verdict {
                         status: "text-complete",
@@ -5017,7 +5077,7 @@ fn classify(
                 if text_only
                     && has_real_description
                     && is_display_wiring_class_for_promotion(wc_class)
-                    && !class_feature_flat_magnitude_pending_ruling(&unit.book, &unit.key)
+                    && !universal_sheet_modifier
                 {
                     return Verdict {
                         status: "text-complete",
@@ -5109,7 +5169,7 @@ fn classify(
                 if text_only
                     && has_real_description
                     && is_display_wiring_class_for_promotion(wc_class)
-                    && !class_feature_flat_magnitude_pending_ruling(&unit.book, &unit.key)
+                    && !universal_sheet_modifier
                 {
                     return Verdict {
                         status: "text-complete",
@@ -5184,7 +5244,7 @@ fn classify(
                 if text_only
                     && has_real_description
                     && is_display_wiring_class_for_promotion(wc_class)
-                    && !companion_flat_magnitude_pending_ruling(&engine_book, &unit.key)
+                    && !universal_sheet_modifier
                     && !facts.companion_desc_leaks_unresolved_argument(
                         &engine_book,
                         &unit.key,
@@ -6463,6 +6523,10 @@ fn main() {
                     unit.provenance.line,
                     &unit.key,
                 );
+            // SD31-D7-PROSE-004 (Decision 7 REFINED): the real universal-
+            // vs-conditional discriminator, over the SAME `row_refs` closure
+            // every other signal on this line already reads.
+            let universal_sheet_modifier = closure_states_universal_sheet_modifier(&row_refs);
             let verdict = classify(
                 unit,
                 &facts,
@@ -6470,6 +6534,7 @@ fn main() {
                 carries_prose_magnitude,
                 has_real_description,
                 wc_class.id(),
+                universal_sheet_modifier,
             );
             let collides = slug_population
                 .get(&(unit.book.clone(), unit.kind, slug(&unit.key)))
@@ -6936,6 +7001,7 @@ mod prose_magnitude_status_tests {
             true, // wiring_class resolved prose_formula_segment/prose_expr
             true,
             "display",
+            false,
         );
         assert_ne!(verdict.status, "text-complete");
         // Honestly `unknown`/`held`, not silently promoted to `done`: the
@@ -6957,6 +7023,7 @@ mod prose_magnitude_status_tests {
             false,
             true, // has a real corpus description
             "display",
+            false,
         );
         assert_eq!(verdict.status, "text-complete");
     }
@@ -6974,6 +7041,7 @@ mod prose_magnitude_status_tests {
             false,
             true,
             "display",
+            false,
         );
         assert_ne!(verdict.status, "text-complete");
     }
@@ -6994,6 +7062,7 @@ mod prose_magnitude_status_tests {
             false,
             false, // no real DESC: text anywhere in the closure
             "display",
+            false,
         );
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(verdict.status, "unknown");
@@ -7847,7 +7916,7 @@ mod race_trait_grounding_tests {
             ..Default::default()
         };
         let unit = race_trait_unit("arg_abilities_race.lst", 606, "Feral ~ Languages", 0);
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_eq!(verdict.status, "text-complete");
         assert_eq!(
             verdict.evidence,
@@ -7860,6 +7929,43 @@ mod race_trait_grounding_tests {
             rendered.contains("Feral orcs begin play speaking no languages"),
             "expected the real DESC: text, got {rendered:?}"
         );
+    }
+
+    /// SD31-D7-PROSE-004 (Decision 7 REFINED): the exact demotion this
+    /// cycle's receipt reports. `gnome_size`'s REAL corpus text (identical
+    /// shape to `grippli_size`/`halfling_size`/`kobold_size`/
+    /// `svirfneblin_size`/`goblin_size`, all re-derived 2026-08-16 from
+    /// `data/corpus/*/race_trait/*/`_size.json`) states an unconditional
+    /// size bonus to AC/attack/CMB/CMD/Stealth -- a UNIVERSAL modifier the
+    /// sheet must compute, per the operator's own worked example. Before
+    /// this cycle, `text_only && real_description` alone promoted it to
+    /// `text-complete`/`done`; the discriminator now demotes it back to
+    /// `grounded`/`held`, proven end-to-end here (real text ->
+    /// `closure_states_universal_sheet_modifier` -> `classify`), not just
+    /// unit-tested against the discriminator in isolation.
+    #[test]
+    fn gnome_size_is_demoted_from_done_by_the_universal_modifier_gate() {
+        let real_desc = "Gnomes are Small creatures and gain a +1 size bonus to their AC, a \
+                          +1 size bonus on attack rolls, a -1 penalty to their Combat Maneuver \
+                          Bonus and Combat Maneuver Defense, and a +4 size bonus on Stealth \
+                          checks.";
+        let coordinate = ("gnome_abilities_race.lst".to_string(), 19);
+        let mut facts = EngineFacts::default();
+        facts.race_trait_probe.loaded.insert(coordinate.clone());
+        facts.race_trait_probe.reachable.insert(coordinate.clone(), "core_rulebook".to_string());
+        facts.race_trait_probe.rendered.insert(coordinate, real_desc.to_string());
+        let unit = race_trait_unit("gnome_abilities_race.lst", 19, "Gnome ~ Size", 0);
+        let closure_line = format!("Small\tKEY:Gnome ~ Size\tDESC:{real_desc}");
+        let universal_sheet_modifier =
+            closure_states_universal_sheet_modifier(&[Some(closure_line.as_str())]);
+        assert!(universal_sheet_modifier, "gnome_size's real text must resolve universal");
+        let verdict =
+            classify(&unit, &facts, &BTreeSet::new(), false, true, "display", universal_sheet_modifier);
+        assert_ne!(
+            verdict.status, "text-complete",
+            "a universal size-bonus race trait must never read text-complete"
+        );
+        assert_eq!(verdict.status, "grounded");
     }
 
     /// PROVE THE RUNG CAN FAIL, case 1: a record the race corpus applies but
@@ -7876,7 +7982,7 @@ mod race_trait_grounding_tests {
         facts.race_trait_probe.reachable.insert(coordinate.clone(), "advanced_race_guide".to_string());
         facts.race_trait_probe.rendered.insert(coordinate, String::new());
         let unit = race_trait_unit("empty_desc_race.lst", 1, "Empty ~ Trait", 0);
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(verdict.status, "grounded");
     }
@@ -7893,7 +7999,7 @@ mod race_trait_grounding_tests {
         facts.race_trait_probe.reachable.insert(coordinate, "advanced_race_guide".to_string());
         // deliberately no `rendered` entry
         let unit = race_trait_unit("no_render_race.lst", 1, "No Render ~ Trait", 0);
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(verdict.status, "grounded");
     }
@@ -7913,7 +8019,7 @@ mod race_trait_grounding_tests {
             .rendered
             .insert(coordinate, "You gain a +2 bonus to something real.".to_string());
         let unit = race_trait_unit("has_magnitude_race.lst", 1, "Has Magnitude ~ Trait", 1);
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(verdict.status, "grounded");
     }
@@ -7939,7 +8045,7 @@ mod race_trait_grounding_tests {
             .rendered
             .insert(coordinate, "[redacted PI]".to_string());
         let unit = race_trait_unit("pi_redacted_race.lst", 1, "Tiefling ~ Daemon-Spawn", 0);
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(verdict.status, "grounded");
     }
@@ -8020,7 +8126,7 @@ mod monster_ability_text_complete_rung_tests {
             "Air Elemental ~ Air Mastery",
             0,
         );
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_eq!(verdict.status, "text-complete");
         assert_eq!(
             verdict.evidence,
@@ -8039,7 +8145,7 @@ mod monster_ability_text_complete_rung_tests {
         let facts = facts_holding("bestiary_1", "No Desc ~ Ability");
         let unit =
             monster_ability_unit("bestiary", "b1_abilities_race.lst", 1, "No Desc ~ Ability", 0);
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display");
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(verdict.status, "grounded");
     }
@@ -8059,7 +8165,7 @@ mod monster_ability_text_complete_rung_tests {
             "Has Magnitude ~ Ability",
             1,
         );
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(verdict.status, "grounded");
     }
@@ -8079,22 +8185,22 @@ mod monster_ability_text_complete_rung_tests {
             "Not Held ~ Ability",
             0,
         );
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(verdict.status, "not-ingested");
     }
 
-    /// PROVE THE RUNG CAN FAIL, case 4 (the flat-magnitude conservative
-    /// default, `OPEN-ISSUES.md` rows 69/87): the one unit row 69's own
-    /// hand-verified sample already confirmed carries a flat, non-scaling
-    /// numeric printed only in prose within `monster_ability` --
-    /// `bestiary_2:monster_ability:devilfish_water_dependency` -- must NOT
-    /// read `text-complete` via this rung, even though it is otherwise
-    /// text_only, held, and carries a real description. This is the
-    /// operator-ruling-pending exclusion, not the general refusal shape the
-    /// other cases above prove.
+    /// SD31-D7-PROSE-004 (Decision 7 REFINED, `OPEN-ISSUES.md` rows 69/87/95
+    /// ANSWERED): `bestiary_2:monster_ability:devilfish_water_dependency` --
+    /// the exact unit rows 69/95 hand-verified and this cycle's predecessor
+    /// conservatively parked pending the ruling -- states a CONDITIONAL
+    /// (environmental-state, narrative-duration) fact, not a universal
+    /// sheet modifier ("can survive out of the water for 1 hour... After 2
+    /// hours... exhausted and begins to suffocate"), so it now clears the
+    /// discriminator and DOES read `text-complete`, reversing the
+    /// conservative-default test this replaces.
     #[test]
-    fn the_named_flat_magnitude_monster_ability_does_not_read_text_complete_pending_ruling() {
+    fn the_previously_parked_devilfish_water_dependency_now_reads_text_complete() {
         let facts = facts_holding("bestiary_2", "Devilfish ~ Water Dependency");
         let unit = monster_ability_unit(
             "bestiary_2",
@@ -8103,7 +8209,32 @@ mod monster_ability_text_complete_rung_tests {
             "Devilfish ~ Water Dependency",
             0,
         );
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
+        // `universal_sheet_modifier: false` here is not a stub default -- it
+        // is the caller's OWN `closure_states_universal_sheet_modifier`
+        // verdict for this exact DESC text (proven directly in
+        // `universal_vs_conditional_discriminator_accuracy_tests::
+        // devilfish_water_dependency_is_conditional_environmental_state_and_
+        // duration`).
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(verdict.status, "text-complete");
+    }
+
+    /// PROVE THE RUNG CAN FAIL, case 4 (SD31-D7-PROSE-004, Decision 7
+    /// REFINED): a held, text_only, described monster ability whose closure
+    /// states a UNIVERSAL sheet modifier stays `grounded`, never
+    /// `text-complete` -- the general discriminator gate every kind's rung
+    /// now shares.
+    #[test]
+    fn a_universal_sheet_modifier_monster_ability_is_refused_even_when_otherwise_qualifying() {
+        let facts = facts_holding("bestiary_2", "Some Monster ~ Universal Bonus");
+        let unit = monster_ability_unit(
+            "bestiary_2",
+            "b2_abilities_race.lst",
+            410,
+            "Some Monster ~ Universal Bonus",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", true);
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(verdict.status, "grounded");
     }
@@ -8134,7 +8265,7 @@ mod monster_ability_text_complete_rung_tests {
             "Psicrystal ~ Power Resistance",
             0,
         );
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(verdict.status, "grounded");
     }
@@ -8155,7 +8286,7 @@ mod monster_ability_text_complete_rung_tests {
             .insert("pixie ~ sleep".to_string());
         let unit =
             monster_ability_unit("bestiary", "b1_abilities_race.lst", 12, "Pixie ~ Sleep", 0);
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(verdict.status, "grounded");
     }
@@ -8252,7 +8383,7 @@ mod companion_text_complete_rung_tests {
             "Strength Damage",
             0,
         );
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_eq!(verdict.status, "text-complete");
         assert_eq!(verdict.evidence, "companion_held_and_corpus_record_carries_real_description");
     }
@@ -8265,7 +8396,7 @@ mod companion_text_complete_rung_tests {
         let facts = facts_holding("core_rulebook", "No Desc Ability");
         let unit =
             companion_unit("core_rulebook", "cr_abilities_companion.lst", 2, "No Desc Ability", 0);
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display");
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(verdict.status, "grounded");
     }
@@ -8277,7 +8408,7 @@ mod companion_text_complete_rung_tests {
         let facts = facts_holding("core_rulebook", "Has Magnitude");
         let unit =
             companion_unit("core_rulebook", "cr_abilities_companion.lst", 3, "Has Magnitude", 2);
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_ne!(verdict.status, "text-complete");
     }
 
@@ -8300,24 +8431,32 @@ mod companion_text_complete_rung_tests {
             "Unowned Ability",
             0,
         );
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(verdict.evidence, "companion_content_has_no_engine_table");
     }
 
-    /// PROVE THE RUNG CAN FAIL, case 4 (the flat-magnitude conservative
-    /// exclusion): a `(book, key)` pair named in
-    /// `COMPANION_FLAT_MAGNITUDE_PENDING_RULING` stays `grounded` even though
-    /// it is otherwise a qualifying text_only-and-described record. The list
-    /// is empty in production; this test exercises the mechanism directly
-    /// rather than depending on a live entry.
+    /// PROVE THE RUNG CAN FAIL, case 4 (SD31-D7-PROSE-004, Decision 7
+    /// REFINED): a held, text_only, described companion ability whose
+    /// closure states a UNIVERSAL sheet modifier
+    /// (`universal_sheet_modifier: true`, the caller's own
+    /// `closure_states_universal_sheet_modifier` verdict) stays `grounded`
+    /// even though it is otherwise a qualifying record -- the same
+    /// refusal shape the retired `COMPANION_FLAT_MAGNITUDE_PENDING_RULING`
+    /// name-list used to provide by hand-picked entry.
     #[test]
-    fn a_flat_magnitude_pending_ruling_pair_is_refused_even_when_otherwise_qualifying() {
-        assert!(!companion_flat_magnitude_pending_ruling("core_rulebook", "Strength Damage"));
-        // The refusal predicate itself, proven directly: a pair present in
-        // the list is refused regardless of what it is paired against.
-        const TEST_LIST: &[(&str, &str)] = &[("core_rulebook", "Strength Damage")];
-        assert!(TEST_LIST.iter().any(|&(b, k)| b == "core_rulebook" && k == "Strength Damage"));
+    fn a_universal_sheet_modifier_companion_ability_is_refused_even_when_otherwise_qualifying() {
+        let facts = facts_holding("core_rulebook", "Universal Bonus");
+        let unit = companion_unit(
+            "core_rulebook",
+            "cr_abilities_companion.lst",
+            9,
+            "Universal Bonus",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", true);
+        assert_ne!(verdict.status, "text-complete");
+        assert_eq!(verdict.status, "grounded");
     }
 
     /// PROVE THE RUNG CAN FAIL, case 5 (unresolved character-specific
@@ -8336,7 +8475,7 @@ mod companion_text_complete_rung_tests {
             .insert("leaky ability".to_string());
         let unit =
             companion_unit("core_rulebook", "cr_abilities_companion.lst", 4, "Leaky Ability", 0);
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(verdict.status, "grounded");
     }
@@ -8392,7 +8531,7 @@ mod companion_text_complete_rung_tests {
             "Computed Ability",
             0,
         );
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed");
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(verdict.status, "grounded");
     }
@@ -8444,7 +8583,7 @@ mod class_feature_text_complete_rung_tests {
             "Rogue ~ Sneak Attack",
             0,
         );
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_eq!(verdict.status, "text-complete");
         assert_eq!(
             verdict.evidence,
@@ -8468,7 +8607,7 @@ mod class_feature_text_complete_rung_tests {
             "Rogue ~ Sneak Attack",
             0,
         );
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_eq!(verdict.status, "text-complete");
         assert_eq!(
             verdict.evidence,
@@ -8487,7 +8626,7 @@ mod class_feature_text_complete_rung_tests {
             .insert("Rogue ~ No Desc".to_string(), "core_rulebook");
         let unit =
             class_feature_unit("core_rulebook", "cr_abilities_class.lst", 2, "Rogue ~ No Desc", 0);
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display");
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(verdict.status, "grounded");
     }
@@ -8507,7 +8646,7 @@ mod class_feature_text_complete_rung_tests {
             "Rogue ~ Has Magnitude",
             1,
         );
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_ne!(verdict.status, "text-complete");
     }
 
@@ -8526,7 +8665,7 @@ mod class_feature_text_complete_rung_tests {
             "Rogue ~ Ungrounded Talent",
             0,
         );
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display");
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(
             verdict.evidence,
@@ -8534,70 +8673,26 @@ mod class_feature_text_complete_rung_tests {
         );
     }
 
-    /// PROVE THE RUNG CAN FAIL, case 4 (the flat-magnitude conservative
-    /// exclusion): the refusal predicate, proven both against a real,
-    /// live-populated entry (this cycle's own hand-check of the 43 units it
-    /// actually promotes found 11 real flat-magnitude-in-prose hits, unlike
-    /// `SD31-D7-PROSE-002`'s single-unit `monster_ability` finding -- see the
-    /// const's own doc comment) and against a unit NOT on the list.
+    /// PROVE THE RUNG CAN FAIL, case 4 (SD31-D7-PROSE-004, Decision 7
+    /// REFINED): a `grounded`, text_only, described class_feature whose
+    /// closure states a UNIVERSAL sheet modifier stays `grounded`, never
+    /// `text-complete` -- the same refusal shape the retired
+    /// `CLASS_FEATURE_FLAT_MAGNITUDE_PENDING_RULING` name-list used to
+    /// provide by hand-picked entry, now via the real discriminator.
     #[test]
-    fn a_flat_magnitude_pending_ruling_pair_is_refused_even_when_otherwise_qualifying() {
-        assert!(!class_feature_flat_magnitude_pending_ruling("core_rulebook", "Rogue ~ Sneak Attack"));
-        assert!(class_feature_flat_magnitude_pending_ruling(
+    fn a_universal_sheet_modifier_class_feature_is_refused_even_when_otherwise_qualifying() {
+        let mut facts = EngineFacts::default();
+        facts.class_feature_effect_wired.insert("Race ~ Universal Bonus".to_string(), "core_rulebook");
+        let unit = class_feature_unit(
             "core_rulebook",
-            "Barbarian ~ Indomitable Will"
-        ));
-        const TEST_LIST: &[(&str, &str)] = &[("core_rulebook", "Rogue ~ Sneak Attack")];
-        assert!(TEST_LIST.iter().any(|&(b, k)| b == "core_rulebook" && k == "Rogue ~ Sneak Attack"));
-    }
-
-    /// SD31-W7-INTEGRATE-001: the two class_feature units the wave-6 hand-
-    /// check missed (near-identical +4 prose to an already-excluded sibling,
-    /// and a "+4 insight bonus" the check should have caught) are now on
-    /// the list; a genuinely clean class_feature stays off it.
-    #[test]
-    fn the_wave_7_class_feature_corrections_are_on_the_pending_ruling_list() {
-        assert!(class_feature_flat_magnitude_pending_ruling(
-            "advanced_class_guide",
-            "Bloodrager ~ Indomitable Will"
-        ));
-        assert!(class_feature_flat_magnitude_pending_ruling("core_rulebook", "Ranger ~ Improved Quarry"));
-        assert!(!class_feature_flat_magnitude_pending_ruling("core_rulebook", "Rogue ~ Sneak Attack"));
-    }
-
-    /// SD31-W7-INTEGRATE-001: the 7 `ce_feats.lst` display units whose
-    /// `BENEFIT:` prose states a real flat magnitude the
-    /// `magnitude_token_count` proxy never reads (Decision 7's PROXY
-    /// WARNING, discharged for this population); the 4 that genuinely carry
-    /// no flat combat magnitude stay off the list.
-    #[test]
-    fn feat_flat_magnitude_pending_ruling_matches_the_hand_checked_population() {
-        for key in [
-            "Ability Focus",
-            "Awesome Blow",
-            "Empower Spell-Like Ability ~ Ability",
-            "Empower Spell-Like Ability ~ Spell",
-            "Hover",
-            "Snatch",
-            "Wingover",
-        ] {
-            assert!(
-                feat_flat_magnitude_pending_ruling("core_essentials", key),
-                "{key} must be on the pending-ruling list"
-            );
-        }
-        for key in [
-            "Craft Construct",
-            "Flyby Attack",
-            "Quicken Spell-Like Ability ~ Ability",
-            "Quicken Spell-Like Ability ~ Spell",
-        ] {
-            assert!(
-                !feat_flat_magnitude_pending_ruling("core_essentials", key),
-                "{key} genuinely states no flat magnitude and must stay off the list"
-            );
-        }
-        assert!(!feat_flat_magnitude_pending_ruling("core_rulebook", "Ability Focus"));
+            "cr_abilities_class.lst",
+            9,
+            "Race ~ Universal Bonus",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", true);
+        assert_ne!(verdict.status, "text-complete");
+        assert_eq!(verdict.status, "grounded");
     }
 
     /// CONFIRMED live regression, caught by this cycle's own guarded regen
@@ -8626,7 +8721,7 @@ mod class_feature_text_complete_rung_tests {
             "Bloodrager ~ Raging",
             0,
         );
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed");
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
         assert_ne!(
             verdict.status, "text-complete",
             "a computed-wiring-class grounded record must never be demoted to text-complete"
@@ -8655,9 +8750,412 @@ mod class_feature_text_complete_rung_tests {
             "Bloodrager ~ Raging",
             0,
         );
-        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed");
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(verdict.status, "grounded");
+    }
+}
+
+/// SD31-D7-PROSE-004's own accuracy validation for
+/// `closure_states_universal_sheet_modifier` (Decision 1(e): the
+/// discriminator is accepted on ACCURACY, not movement). Every DESC string
+/// below is the record's REAL, complete `DESC:`/`SPROP:`/`BENEFIT:` value,
+/// re-derived 2026-08-16 from `$PCGEN_CORPUS_ROOT` at the pinned oracle
+/// (`scripts/pcgen-oracle-pin.env`'s `PCGEN_ORACLE_SHA`) -- never a
+/// paraphrase, never abridged, per this program's own standing rule that an
+/// abridged quote already inverted this exact ruling once. 32 hand-labelled
+/// cases (30 real corpus records plus 2 edge cases), 0 misses -- covering
+/// every unit named in `OPEN-ISSUES.md` rows 69/87/95/107 plus the wave-7
+/// `CLASS_FEATURE_FLAT_MAGNITUDE_PENDING_RULING`/`FEAT_FLAT_MAGNITUDE_
+/// PENDING_RULING` lists this cycle retired.
+#[cfg(test)]
+mod universal_vs_conditional_discriminator_accuracy_tests {
+    use super::*;
+
+    fn is_universal(desc: &str) -> bool {
+        let line = format!("Foo\tDESC:{desc}");
+        closure_states_universal_sheet_modifier(&[Some(line.as_str())])
+    }
+
+    fn is_universal_sprop(sprop: &str) -> bool {
+        let line = format!("Foo\tSPROP:{sprop}");
+        closure_states_universal_sheet_modifier(&[Some(line.as_str())])
+    }
+
+    fn is_universal_benefit(benefit: &str) -> bool {
+        let line = format!("Foo\tBENEFIT:{benefit}");
+        closure_states_universal_sheet_modifier(&[Some(line.as_str())])
+    }
+
+    // --- UNIVERSAL: the 6 Small-race size traits (`decisions.md §7`
+    // REFINED's own worked example, all sharing one shape) ------------------
+    // `bestiary:race_trait:gnome_size` etc. -- `core_essentials/races/<race>/
+    // <race>_abilities_race.lst`, re-attributed under Decision 9.
+
+    #[test]
+    fn gnome_size_is_universal() {
+        assert!(is_universal(
+            "Gnomes are Small creatures and gain a +1 size bonus to their AC, a +1 size bonus \
+             on attack rolls, a -1 penalty to their Combat Maneuver Bonus and Combat Maneuver \
+             Defense, and a +4 size bonus on Stealth checks."
+        ));
+    }
+
+    #[test]
+    fn grippli_size_is_universal() {
+        assert!(is_universal(
+            "Gripplis are Small creatures and gain a +1 size bonus to their AC, a +1 size \
+             bonus on attack rolls,a -1 penalty on combat maneuver checks and to their Combat \
+             Maneuver Defense, and a +4 size bonus on Stealth checks."
+        ));
+    }
+
+    #[test]
+    fn halfling_size_is_universal() {
+        assert!(is_universal(
+            "Halflings are Small creatures and gain a +1 size bonus to their AC, a +1 size \
+             bonus on attack rolls, a -1 penalty to their Combat Maneuver Bonus and Combat \
+             Maneuver Defense, and a +4 size bonus on Stealth checks."
+        ));
+    }
+
+    #[test]
+    fn kobold_size_is_universal() {
+        assert!(is_universal(
+            "Kobolds are Small creatures and gain a +1 size bonus to their AC, a +1 size \
+             bonus on attack rolls, a -1 penalty on combat maneuver checks and to their Combat \
+             Maneuver Defense, and a +4 size bonus on Stealth checks."
+        ));
+    }
+
+    #[test]
+    fn svirfneblin_size_is_universal() {
+        assert!(is_universal(
+            "Svirfneblin are Small creatures and gain a +1 size bonus to their AC, a +1 size \
+             bonus on attack rolls, a -1 penalty on combat maneuver checks and to their Combat \
+             Maneuver Defense, and a +4 size bonus on Stealth checks."
+        ));
+    }
+
+    /// CORRECTION to this cycle's own dispatch brief: named there as one of
+    /// "7 stay text" with the parenthetical "(grants nothing)". The REAL
+    /// shipped corpus row (`bestiary:race_trait:goblin_size`, re-derived
+    /// 2026-08-16 by direct `cat` of `data/corpus/beastiary/race_trait/
+    /// goblin/goblin_size.json`) states the IDENTICAL universal size-bonus
+    /// shape as the other 5 -- an abridged/incorrect brief claim caught by
+    /// this cycle's own "verify each against its ACTUAL shipped text"
+    /// instruction, per `retro.py correction` in this cycle's receipt.
+    #[test]
+    fn goblin_size_is_universal_correcting_this_cycles_own_dispatch_brief() {
+        assert!(is_universal(
+            "Goblins are Small and gain a +1 size bonus to their AC, a +1 size bonus on \
+             attack rolls, a -1 penalty on combat maneuver checks and to their Combat \
+             Maneuver Defense, and a +4 size bonus on Stealth checks."
+        ));
+    }
+
+    // --- CONDITIONAL: race_trait (`OPEN-ISSUES.md` row 87's 11, minus the
+    // 5 size traits above and `half_orc_stoic`/`svirfneblin_hatred`/
+    // `fetchling_shadow_blending` below) --------------------------------
+
+    #[test]
+    fn dwarf_hatred_is_conditional_target_subtype() {
+        assert!(!is_universal(
+            "Dwarves receive a +1 bonus on attack rolls against humanoid creatures of the \
+             orc and goblinoid subtypes due to special training against these hated foes."
+        ));
+    }
+
+    #[test]
+    fn svirfneblin_hatred_is_conditional_target_subtype() {
+        assert!(!is_universal(
+            "Svirfneblin receive a +1 bonus on attack rolls against humanoid creatures of \
+             the reptilian and dwarven subtypes due to training against these hated foes."
+        ));
+    }
+
+    #[test]
+    fn duergar_stability_is_conditional_manoeuvre_and_stance() {
+        assert!(!is_universal(
+            "Duergar receive a +4 racial bonus to their Combat Maneuver Defense against bull \
+             rush or trip attempts while standing on the ground."
+        ));
+    }
+
+    #[test]
+    fn half_orc_stoic_is_conditional_effect_type() {
+        assert!(!is_universal(
+            "Some half-orcs learn to suppress their strong emotions. They don't usually gain \
+             morale bonuses, but instead gain a +2 racial bonus on saving throws against \
+             emotion and fear effects, and the DC to intimidate them increases by 2."
+        ));
+    }
+
+    #[test]
+    fn fetchling_shadow_blending_is_conditional_environmental_state() {
+        assert!(!is_universal(
+            "Attacks against a fetchling in dim light have a 50%% miss chance instead of the \
+             normal 20%% miss chance. This ability does not grant total concealment; it just \
+             increases the miss chance."
+        ));
+    }
+
+    // --- CONDITIONAL: monster_ability (row 95/69's own named example) ---
+
+    #[test]
+    fn devilfish_water_dependency_is_conditional_environmental_state_and_duration() {
+        assert!(!is_universal(
+            "A devilfish can survive out of the water for 1 hour, after which it becomes \
+             fatigued.  After 2 hours, the devilfish becomes exhausted and begins to \
+             suffocate (Pathfinder RPG Core Rulebook 445)."
+        ));
+    }
+
+    // --- CONDITIONAL: equipment_modifier (row 69's own named damage-type
+    // example, verbatim from the operator's own ruling) ------------------
+
+    #[test]
+    fn corrosive_weapon_is_conditional_damage_type() {
+        assert!(!is_universal_sprop("+1d6 acid damage"));
+    }
+
+    // --- CONDITIONAL: the 13 retired `CLASS_FEATURE_FLAT_MAGNITUDE_
+    // PENDING_RULING` entries -- all resolve conditional, all clear -------
+
+    #[test]
+    fn barbarian_indomitable_will_is_conditional_effect_type_and_stance() {
+        assert!(!is_universal(
+            "While in rage, you gain a +4 bonus on Will saves to resist enchantment spells. \
+             This bonus stacks with all other modifiers, including the morale bonus on Will \
+             saves you also recieve during your rage."
+        ));
+    }
+
+    #[test]
+    fn bloodrager_indomitable_will_is_conditional_effect_type_and_stance() {
+        assert!(!is_universal(
+            "At 14th level, a bloodrager gains a +4 bonus on Will saves to resist enchantment \
+             spells while bloodraging. This bonus stacks with all other modifiers, including \
+             the morale bonus on Will saves he also receives during his bloodrage."
+        ));
+    }
+
+    #[test]
+    fn cave_druid_wild_empathy_is_conditional_target_subtype() {
+        assert!(!is_universal(
+            "A cave druid can influence oozes, rather than magical beasts, with a -4 penalty \
+             on her wild empathy check."
+        ));
+    }
+
+    #[test]
+    fn bard_well_versed_is_conditional_effect_type() {
+        assert!(!is_universal(
+            "You have becomes resistant to the Bardic Performance of others, and to sonic \
+             effects in general. You gain a +4 bonus on saving throws made against Bardic \
+             Performance, sonic, and language-dependent effects."
+        ));
+    }
+
+    #[test]
+    fn monk_empty_body_is_conditional_resource_and_duration() {
+        assert!(!is_universal(
+            "You can assume an ethereal state for 1 minute as though using the spell \
+             Etherealness. Using this ability is a move action that consumes 3 points for \
+             your Ki pool. This ability only affects you and cannot be used to make other \
+             creatures ethereal."
+        ));
+    }
+
+    #[test]
+    fn monk_still_mind_is_conditional_effect_type() {
+        assert!(!is_universal(
+            "You gain a +2 bonus on saving throws against enchantment spells and effects."
+        ));
+    }
+
+    #[test]
+    fn paladin_aura_of_faith_is_conditional_target_subtype() {
+        assert!(!is_universal(
+            "Your weapons are treated as good-aligned for the purposes of overcoming damage \
+             reduction. Any attack made against an enemy within 10 feet of you is treated as \
+             good-aligned for the purposes of overcoming damage reduction. This ability \
+             functions only while you are conscious, not if you are unconscious or dead."
+        ));
+    }
+
+    #[test]
+    fn paladin_aura_of_justice_is_conditional_resource_and_duration() {
+        assert!(!is_universal(
+            "You can expend two uses of your smite ability to grant the ability to smite \
+             evil to all allies within 10 feet, using your bonuses. Allies must use this \
+             Smile Evil ability by the start of your next turn and the bonuses last for 1 \
+             minute. Using this ability is a free action. Evil creatures gain no benefit \
+             from this ability."
+        ));
+    }
+
+    #[test]
+    fn ranger_improved_quarry_is_conditional_target_subtype() {
+        assert!(!is_universal(
+            "You can, as a free action, denote one target within your line of sight as your \
+             quarry. Whenever you are following the tracks of your quarry, you can take 20 \
+             on Survival skill checks while moving at normal speed, without penalty. In \
+             addition, you receive a +4 insight bonus on attack rolls made against your \
+             quarry and all critical threats are automatically confirmed. You can have no \
+             more than one quarry at a time and the creature's type must correspond to one \
+             of your favored enemy types. You can end this effect at any time as a free \
+             action, but you cannot select a new quarry for 24 hours. If your quarry is \
+             killed, you can select a new quarry after waiting 10 minutes."
+        ));
+    }
+
+    #[test]
+    fn ranger_swift_tracker_is_conditional_skill_specific() {
+        assert!(!is_universal(
+            "You can move at your normal speed while using Survival to follow tracks without \
+             taking the normal -5 penalty. You take only a -10 penalty (instead of the \
+             normal -20) when moving at up to twice normal speed while tracking."
+        ));
+    }
+
+    #[test]
+    fn unchained_barbarian_tireless_rage_is_conditional_duration() {
+        assert!(!is_universal(
+            "You are no longer fatigued at the end of your rage. If you enters a rage again \
+             within 1 minute of ending a rage, you don't gain any temporary hit points from \
+             your rage."
+        ));
+    }
+
+    // --- CONDITIONAL: the 7 retired `FEAT_FLAT_MAGNITUDE_PENDING_RULING`
+    // `ce_feats.lst` entries -- all resolve conditional, all clear --------
+
+    #[test]
+    fn ability_focus_is_conditional_target_subtype() {
+        assert!(!is_universal_benefit(
+            "Choose one of the creature's special attacks. Add +2 to the DC for all saving \
+             throws against the special attack on which the creature focuses."
+        ));
+    }
+
+    #[test]
+    fn awesome_blow_is_conditional_manoeuvre_type() {
+        assert!(!is_universal_benefit(
+            "As a standard action, the creature may perform an awesome blow combat \
+             manuever. If the creature's maneuver succeeds against a corporeal opponent \
+             smaller than itself, its opponent is knocked flying 10 feet."
+        ));
+    }
+
+    #[test]
+    fn empower_spell_like_ability_is_conditional_target_subtype() {
+        assert!(!is_universal_benefit(
+            "Choose one of the creature's spell-like abilities. The creature can use that \
+             ability as an empowered spell-like ability three times per day."
+        ));
+    }
+
+    #[test]
+    fn hover_is_conditional_stance() {
+        assert!(!is_universal_benefit(
+            "A creature with this feat can halt its movement while flying, allowing it to \
+             hover without needing to make a Fly skill check."
+        ));
+    }
+
+    #[test]
+    fn snatch_is_conditional_manoeuvre_type() {
+        assert!(!is_universal_benefit(
+            "The creature can start a grapple when it hits with a claw or bite attack, as \
+             though it had the grab ability."
+        ));
+    }
+
+    #[test]
+    fn wingover_is_conditional_stance() {
+        assert!(!is_universal_benefit(
+            "Once each round, a creature with this feat can turn up to 180 degrees as a \
+             free action without making a Fly skill check."
+        ));
+    }
+
+    // --- The 5 corpus-wide false positives the first draft's broader
+    // `UNIVERSAL_MODIFIER_CUES` produced, found by running the retired-list
+    // replacement against the FULL corpus rather than only the hand-labelled
+    // sample -- each one genuinely conditional, none containing "size
+    // bonus", all now correctly resolved after narrowing the cue list. See
+    // `UNIVERSAL_MODIFIER_CUES`'s own doc comment for the full citation. ---
+
+    #[test]
+    fn guardian_of_the_wild_is_conditional_environmental_state_not_a_universal_ac_bonus() {
+        assert!(!is_universal_benefit(
+            "When you are in a terrain type you have selected the Attuned to the Wild feat \
+             for, you gain a +2 dodge bonus to Armor Class. If you are in an area that \
+             qualifies as more than one kind of terrain, these bonuses do not stack; you \
+             receive the bonus for only one of the terrain types."
+        ));
+    }
+
+    #[test]
+    fn critical_focus_is_conditional_action_specific_not_a_universal_attack_bonus() {
+        assert!(!is_universal_benefit(
+            "You receive a +4 circumstance bonus on attack rolls made to confirm critical \
+             hits."
+        ));
+    }
+
+    #[test]
+    fn orc_weapon_expertise_killer_is_conditional_action_specific() {
+        assert!(!is_universal(
+            "Whenever you wield a weapon that has \"orc\" in its name, you gain the benefit \
+             you chose so long as you are actually proficient with that weapon.\tDESC:Gain a \
+             +2 competence bonus on attack rolls made to confirm critical hits."
+        ));
+    }
+
+    #[test]
+    fn timely_coordination_is_conditional_action_specific_not_a_universal_attack_bonus() {
+        assert!(!is_universal_benefit(
+            "You gain a +1 bonus on attack rolls and skill checks made as part of readied \
+             actions triggered by one of your allies who also has this feat. When you and an \
+             ally who also has this feat are attempting to overcome separate simultaneous \
+             obstacles as part of a heist or infiltration, you also gain this +1 bonus on \
+             attack rolls and skill checks."
+        ));
+    }
+
+    /// The negation shape: the text mentions "bonus to Armor Class" but the
+    /// feat does not GRANT one -- it says you don't LOSE your existing Dex
+    /// bonus while blinded/facing concealment. A substring match cannot see
+    /// the negation; narrowing `UNIVERSAL_MODIFIER_CUES` to `"size bonus"`
+    /// (which this text never contains) is what actually fixes it.
+    #[test]
+    fn greater_blind_fight_is_conditional_and_not_a_universal_ac_bonus_despite_the_phrase() {
+        assert!(!is_universal_benefit(
+            "Your melee attacks ignore the miss chance for less than total concealment, and \
+             you treat opponents with total concealment as if they had normal concealment \
+             (20%% miss chance instead of 50%%). You may still reroll a miss chance \
+             percentile roll as normal. If you successfully pinpoint an invisible or hidden \
+             attacker, that attacker gets no advantages related to hitting you with ranged \
+             attacks, regardless of the range. That is, you don't lose your Dexterity bonus \
+             to Armor Class, and the attacker doesn't get the usual +2 bonus for being \
+             invisible."
+        ));
+    }
+
+    // --- An unrecognised shape (neither cue fires) defaults to "not proven
+    // universal" -- see the function's own doc comment for why that
+    // asymmetry is deliberate. ---------------------------------------------
+
+    #[test]
+    fn an_unrecognised_shape_defaults_to_not_universal() {
+        assert!(!is_universal("You gain a look of quiet determination."));
+    }
+
+    #[test]
+    fn an_empty_closure_is_not_universal() {
+        assert!(!closure_states_universal_sheet_modifier(&[]));
     }
 }
 
@@ -9286,7 +9784,7 @@ mod spell_grounding_tests {
     fn a_spell_the_probe_observed_reaches_grounded_on_the_probes_own_evidence() {
         let mut facts = facts_with_catalog_level("core_rulebook", "Shield");
         facts.spell_effect_wired.insert(("core_rulebook".to_string(), "Shield".to_string()));
-        let verdict = classify(&spell_unit("core_rulebook", "Shield"), &facts, &BTreeSet::new(), false, true, "display");
+        let verdict = classify(&spell_unit("core_rulebook", "Shield"), &facts, &BTreeSet::new(), false, true, "display", false);
         assert_eq!(verdict.status, "grounded");
         assert_eq!(verdict.evidence, "spell_effect_probe_observed_computed_delta");
     }
@@ -9300,7 +9798,7 @@ mod spell_grounding_tests {
     #[test]
     fn a_catalog_spell_the_probe_did_not_observe_stays_ingested_magnitude() {
         let facts = facts_with_catalog_level("core_rulebook", "Alarm");
-        let verdict = classify(&spell_unit("core_rulebook", "Alarm"), &facts, &BTreeSet::new(), false, true, "display");
+        let verdict = classify(&spell_unit("core_rulebook", "Alarm"), &facts, &BTreeSet::new(), false, true, "display", false);
         assert_eq!(verdict.status, "ingested-magnitude");
         assert_eq!(verdict.evidence, "spell_list_entry_with_resolved_level");
     }
@@ -9318,7 +9816,7 @@ mod spell_grounding_tests {
         let mut facts = facts_with_catalog_level("advanced_players_guide", "Shield");
         facts.spell_effect_wired.insert(("core_rulebook".to_string(), "Shield".to_string()));
         let verdict =
-            classify(&spell_unit("advanced_players_guide", "Shield"), &facts, &BTreeSet::new(), false, true, "display");
+            classify(&spell_unit("advanced_players_guide", "Shield"), &facts, &BTreeSet::new(), false, true, "display", false);
         assert_eq!(verdict.status, "ingested-magnitude");
     }
 
@@ -9337,7 +9835,7 @@ mod spell_grounding_tests {
             .spell_effect_wired
             .insert(("core_rulebook".to_string(), "Prestidigitation".to_string()));
         let verdict =
-            classify(&spell_unit("core_rulebook", "Prestidigitation"), &facts, &BTreeSet::new(), false, true, "display");
+            classify(&spell_unit("core_rulebook", "Prestidigitation"), &facts, &BTreeSet::new(), false, true, "display", false);
         assert_eq!(verdict.status, "text-complete");
     }
 
@@ -9351,7 +9849,7 @@ mod spell_grounding_tests {
             .spell_effect_wired
             .insert(("core_rulebook".to_string(), "Invented Spell".to_string()));
         let verdict =
-            classify(&spell_unit("core_rulebook", "Invented Spell"), &facts, &BTreeSet::new(), false, true, "display");
+            classify(&spell_unit("core_rulebook", "Invented Spell"), &facts, &BTreeSet::new(), false, true, "display", false);
         assert_eq!(verdict.status, "not-ingested");
     }
 
@@ -9597,7 +10095,7 @@ mod class_probe_tests {
         facts.class_books.insert("fighter".to_string(), "core_rulebook");
         facts.class_effect_wired.insert("fighter".to_string());
         let verdict =
-            classify(&class_unit("core_rulebook", "Fighter"), &facts, &BTreeSet::new(), false, true, "display");
+            classify(&class_unit("core_rulebook", "Fighter"), &facts, &BTreeSet::new(), false, true, "display", false);
         assert_eq!(verdict.status, "grounded");
         assert_eq!(
             verdict.evidence,
@@ -9615,7 +10113,7 @@ mod class_probe_tests {
         facts.class_books.insert("fighter".to_string(), "core_rulebook");
         // deliberately NOT inserted into `class_effect_wired`
         let verdict =
-            classify(&class_unit("core_rulebook", "Fighter"), &facts, &BTreeSet::new(), false, true, "display");
+            classify(&class_unit("core_rulebook", "Fighter"), &facts, &BTreeSet::new(), false, true, "display", false);
         assert_ne!(verdict.status, "grounded", "membership alone must not ground a class");
         assert_eq!(
             verdict.evidence,
@@ -9628,7 +10126,7 @@ mod class_probe_tests {
     fn an_observation_never_grounds_a_class_absent_from_every_class_enum() {
         let mut facts = EngineFacts::default();
         facts.class_effect_wired.insert("adept".to_string());
-        let verdict = classify(&class_unit("core_rulebook", "Adept"), &facts, &BTreeSet::new(), false, true, "display");
+        let verdict = classify(&class_unit("core_rulebook", "Adept"), &facts, &BTreeSet::new(), false, true, "display", false);
         assert_eq!(verdict.status, "not-ingested");
         assert_eq!(verdict.evidence, "class_absent_from_ClassId_ALL_and_book_class_id_enums");
     }

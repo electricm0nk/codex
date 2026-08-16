@@ -13436,3 +13436,275 @@ Manually removed (per the mandate's named list, all confirmed no live PID buildi
 
 `da9bed2dd` before this receipt's own commit; final tip after landing this receipt and pushing is
 recorded in the handoff below.
+
+## Cycle `SD31-D7-PROSE-004` (`RETRO_ACTOR=sd31-cf-prose2`) — 2026-08-16, class_feature prose surface + the universal-vs-conditional discriminator
+
+**Checkout:** primary checkout, `/home/ubuntu/workspace/repos/codex`, branch `tranche/11`, sole writer.
+**Starting HEAD:** `17ba8be5304a4f760af775f57b4e5800dc0a8548` (`docs(sd31): SD31-W7-INTEGRATE-001 receipt + ORCHESTRATOR-LOG wave-7 entry`) — descends from `tranche/11`; package dir present; tree clean except pre-existing untracked wave artifacts and a `docs/retro/events/codex.jsonl` modification neither created nor touched by this cycle.
+**Oracle:** `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/verify.sh --only preflight-oracle` → PASS, quoted from `scripts/pcgen-oracle-pin.env`).
+**Files owned/touched:** `src/bin/v06_work_inventory.rs` (owned entirely — the only production-code file this cycle edits), `docs/release/SD-31-corpus-closure-grind/**` (this receipt, `OPEN-ISSUES.md`, `decisions.md`). `scripts/observer/pf1e_dashboard_producer.py` and the class-feature render surface (`ClassFeatureRow`/Tauri/DTO path) were read, verified by content, and left unmodified — see §1.
+
+### Card mandate, restated
+
+Two items: (1) finish the `class_feature` prose-description render surface `SD31-D7-PROSE-003` began; (2) apply Decision 7's REFINED universal-vs-conditional ruling as a real, general discriminator across every kind's prose done-bar rung, replacing the four hand-picked `*_FLAT_MAGNITUDE_PENDING_RULING` name-lists.
+
+### §1 — The render surface: verified by content, already finished
+
+Read `class_feature_descriptions.rs`, `loadClassFeatureDescriptions.ts`, `classFeaturesModel.ts`, and `CharacterSheet.tsx`'s `ActionsTab` in full (not an abridged grep). `SD31-D7-PROSE-003` (commit `c446b3d7d`) built this genuinely wired, not a stub:
+
+- Backend: `list_class_feature_descriptions` Tauri command reads `data/corpus/*/class_feature/**/*.json` (already PI-screened upstream by `cache_gen::class_feature::generate`, both SD-30 contracts), renders through `render_pcgen_desc`, refuses (never fabricates) a record whose render leaks unresolved PCGen syntax. Registered in `main.rs` (`mod class_feature_descriptions;` + command registration — confirmed by grep, not assumed).
+- Frontend: `loadClassFeatureDescriptions.ts` invokes the command; `classFeaturesModel.ts`'s `findCorpusDescription`/`matchesCorpusFeature` joins it onto `ExplanationDto.id` via the SAME `(class, feature)` suffix rule `v06_work_inventory.rs`'s own `Kind::ClassFeature` doneness classifier already trusts (deliberate reuse, not a second invented rule); `CharacterSheet.tsx`'s `ActionsTab` fetches once, renders `row.corpusDescription` as a second, separate italic paragraph, absent (not a placeholder) when null.
+
+Ran both test suites fresh, not assumed green:
+```
+cd apps/desktop/src-tauri && CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-cf-prose2-tauri cargo test --locked class_feature_descriptions
+# -> 7 passed (loads 1000+ real described class_feature records; every one renders leak-free; the
+#    one CONFIRMED live malformed row — advanced_class_guide:enhancement_savant_subschool_
+#    perfection_of_self — is refused, not shipped; the rest of that book still loads)
+cd apps/desktop && ./node_modules/.bin/tsx src/characterHub/classFeaturesModel.test.ts; echo EXIT=$?
+# -> EXIT=0, all assertions pass including the wired-integration mutation set below
+```
+
+**All three of Decision 7's condition-3 refusals are already mutation-tested**, contrary to the card's
+assumption that this needed building fresh:
+1. **Empty description** — `is_real_description_value_refuses_empty_clear_and_the_pi_marker` (Rust) +
+   `verifiesNoMatchingCandidateLeavesCorpusDescriptionNull` (TS).
+2. **Placeholder description** (`.CLEAR`/`.CLEARALL`/`[redacted PI]`) —
+   `a_clear_marker_or_empty_description_never_reaches_the_catalog` (Rust).
+3. **Description not matching the corpus row** — `verifiesAWrongClassCandidateNeverAttachesEvenWithTheSameFeatureSlug`
+   (a same-named feature under a DIFFERENT class must never attach — the exact `decisions.md §10`
+   shared-NAME hazard) + `verifiesAChasisRecordWithNoClassTokenNeverAttachesADescription` (TS).
+
+Nothing to add here beyond verification; the card's "extend the prose rung to the full qualifying
+`class_feature` population" is answered by §2 below — the render surface itself was never the
+bottleneck (only 15,472 − ~11,700 `unmeasurable`/`not-started` class_feature units even have an
+`ExplanationDto` the render path could join against in the first place; the rest need ENGINE WIRING
+(`pilot_compute.rs`, explicitly out of this card's file territory), not a prose surface).
+
+### §2 — Decision 7 REFINED: the universal-vs-conditional discriminator
+
+Full ruling, methodology, accuracy proof, and citations are recorded in `decisions.md`'s new "Decision
+7 — REFINED" section (appended, not rewritten) and `v06_work_inventory.rs`'s own doc comments on
+`closure_states_universal_sheet_modifier`/`CONDITIONAL_MODIFIER_CUES`/`UNIVERSAL_MODIFIER_CUES`.
+Summary:
+
+**Built** `closure_states_universal_sheet_modifier(row_refs) -> bool` — reads the same raw `.lst`
+closure text (`DESC:`/`SPROP:`/`BENEFIT:`) every other rung in the file already gathers. Ordered
+check: any of ~30 `CONDITIONAL_MODIFIER_CUES` (damage type, target subtype, manoeuvre/stance, effect
+type, environmental state, narrative duration/resource-frequency — every family the ruling names,
+each hand-derived from a real shipped corpus row) fires first and wins; only then is
+`UNIVERSAL_MODIFIER_CUES` (narrowed to `"size bonus"` alone — see the false-positive fix below)
+checked. Retired the four hand-picked `*_FLAT_MAGNITUDE_PENDING_RULING` consts
+(`MONSTER_ABILITY_.../COMPANION_.../CLASS_FEATURE_.../FEAT_...`) and their accessor fns entirely;
+threaded a new `universal_sheet_modifier: bool` parameter through `classify()`'s signature and all 36
+call sites (1 production, 35 tests), replacing every pending-list check with
+`!universal_sheet_modifier`, and ADDED the same gate to `Kind::RaceTrait`'s promotion path (which had
+no pending-list gate at all before this cycle — the size-trait over-claim below existed silently).
+
+**TDD.** Wrote `universal_vs_conditional_discriminator_accuracy_tests` (32 cases: 30 real corpus DESC/
+SPROP/BENEFIT strings quoted verbatim from the pinned oracle, 2 edge cases) BEFORE running the
+discriminator against the live corpus, per Decision 1(e)'s "accuracy, not movement" bar. All 32 pass.
+Also added `gnome_size_is_demoted_from_done_by_the_universal_modifier_gate` (an end-to-end proof: real
+text → discriminator → `classify()`, not just discriminator-in-isolation) and per-kind
+"refused-when-universal" mechanism tests for `class_feature`/`companion`/`monster_ability`/`feat`.
+
+```
+CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-cf-prose2 cargo test --locked --bin v06_work_inventory
+# -> 196 passed; 0 failed (was 189 at cycle start; +7 net after removing 3 obsolete pending-list
+#    tests and adding discriminator/mechanism/proof-case tests)
+```
+
+**Verified each of the 12+13+7 named units against its ACTUAL shipped text, not a summary.** Direct
+`grep`/`cat` against `$PCGEN_CORPUS_ROOT` (oracle pin above) and `data/corpus/`, one record at a time
+— citations for all 33 in the accuracy-test doc comments. Confirmed the card's own dispatch brief was
+wrong about one unit (§3).
+
+**Corpus-wide validation, both directions, not estimated.** Guarded regen
+(`corpus_literal_sweep` CLEAN 24,519/25,396 examined 0 findings; `derived_evaluator_fixture_check`
+100/101 cleared, 1 pre-existing failure — `advanced_players_guide:equipment:
+spindle_of_perfect_knowledge`, `OPEN-ISSUES.md` row 67, unchanged, unrelated to this cycle;
+`v06_work_inventory` exit 0, zero stamp loss). Every id individually diffed before/after, not just
+aggregate counts:
+
+```
+moved to done: 21   moved away from done: 6
+by kind: class_feature +13, feat +7, monster_ability +1, race_trait -6
+board: 9,780 -> 9,795 done (25.3887% -> 25.4277%), +15 net, zero denominator change
+```
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+print(len(U), dict(c), round(100*c['done']/len(U),4))
+"
+# BEFORE (HEAD, git show HEAD:docs/work-inventory.json): 38521 {'done': 9780, ...} 25.3887
+# AFTER  (this cycle's guarded regen):                    38521 {'done': 9795, ...} 25.4277
+```
+
+Per-kind class_feature: 69 -> 82 done (+13, matches). race_trait: 630 -> 624 (-6, matches).
+monster_ability: 1365 -> 1366 (+1, matches). feat: 1169 -> 1176 (+7, matches). Zero units moved that
+weren't in the expected 27-unit set (see §3's false-positive fix — this is the SECOND, corrected run).
+
+**The 21 promotions** (all previously conservatively parked pending exactly this ruling): 13
+`class_feature` (`bloodrager_indomitable_will`, `cave_druid_wild_empathy`,
+`barbarian_indomitable_will`, `bard_well_versed`, `monk_empty_body`, `monk_still_mind`,
+`paladin_aura_of_faith`, `paladin_aura_of_justice`, `ranger_improved_quarry`, `ranger_swift_tracker`,
+`unchained_barbarian_indomitable_will`, `unchained_barbarian_tireless_rage`,
+`unchained_monk_still_mind`), 7 `feat` (`ce_feats.lst`'s `Ability Focus`, `Awesome Blow`, `Empower
+Spell-Like Ability` x2, `Hover`, `Snatch`, `Wingover`), 1 `monster_ability`
+(`devilfish_water_dependency`) — every one hand-verified conditional (effect type, target subtype,
+manoeuvre/stance, resource-frequency).
+
+**The 6 demotions** (a correct, expected outcome — reported plainly, not walked back):
+`core_rulebook:race_trait:gnome_size`, `bestiary_2:race_trait:grippli_size`,
+`core_rulebook:race_trait:halfling_size`, `bestiary:race_trait:kobold_size`,
+`bestiary:race_trait:svirfneblin_size`, `bestiary:race_trait:goblin_size` — all six state the
+identical unconditional "+1 size bonus to their AC, a +1 size bonus on attack rolls, a -1 penalty ...
+Combat Maneuver Bonus/Defense, and a +4 size bonus on Stealth checks" shape, the operator's own
+worked example of a universal modifier that must compute. They remain in the denominator (not
+excluded) — a real, un-shipped compute gap for a future engine-wiring lane, per Decision 8's "wire it,
+don't retract the finding" precedent, not this card's file territory (`pilot_compute.rs`).
+
+### §3 — Two corrections this cycle caught in itself before shipping
+
+**Correction 1 — the card's own dispatch brief.** Named `goblin_size` as one of "7 stay text ...
+(grants nothing)". The real shipped `bestiary:race_trait:goblin_size` row
+(`data/corpus/beastiary/race_trait/goblin/goblin_size.json`) states the IDENTICAL universal
+size-bonus text as the other 5 confirmed demotions — verified by direct `cat` before acting, per this
+program's own standing rule ("an abridged quote already inverted this ruling once" — this is a
+second instance of exactly that hazard, this time in the brief itself). `retro.py correction` emitted
+(`docs/retro/events/sd31-cf-prose2.jsonl`).
+
+**Correction 2 — this cycle's own first-draft discriminator.** `UNIVERSAL_MODIFIER_CUES` initially
+carried 6 phrases (`"size bonus"`, `"bonus to their ac"`, `"bonus to armor class"`, `"bonus on attack
+rolls"`, `"penalty to their combat maneuver"`, `"penalty on combat maneuver checks"`), reasoned by
+analogy from the 6 hand-verified size-trait cases. Running the retired-list replacement against the
+FULL corpus (not only the 30-unit hand-labelled sample) surfaced **5 real false positives**, all
+confirmed against the pinned oracle:
+
+| unit | real text | why conditional |
+|---|---|---|
+| `advanced_race_guide:feat:guardian_of_the_wild` | "+2 dodge bonus to Armor Class" **only** "when you are in a terrain type you have selected" | environmental state |
+| `core_rulebook:feat:critical_focus` | "+4 ... bonus on attack rolls made **to confirm critical hits**" | action-specific |
+| `advanced_race_guide:feat:orc_weapon_expertise_killer` | same, "to confirm critical hits" | action-specific |
+| `ultimate_intrigue:feat:timely_coordination` | "+1 bonus on attack rolls" **only** "as part of readied actions triggered by" an ally with the same feat | action/ally-specific |
+| `advanced_players_guide:feat:greater_blind_fight` | "you don't **lose** your Dexterity bonus to Armor Class" (a negation — grants nothing) | outright negation, substring match blind to it |
+
+A false "universal" verdict is the costly direction (it blocks a real `done` unit) per this cycle's
+own doc comment on the asymmetry. Narrowed `UNIVERSAL_MODIFIER_CUES` to `"size bonus"` alone — the
+one phrase every hand-verified true positive shares and none of these five false positives contain —
+added all 5 as new accuracy-test cases, re-ran the full corpus regen, and the diff came back EXACTLY
+the expected 27 units (§2), zero unexpected movement either direction. `retro.py correction` emitted.
+
+**Why this matters for the card's own instruction ("accepted on ACCURACY, not movement"):** the first
+validation pass (hand-labelled sample) was necessary but not sufficient — it validated the
+discriminator against the units it was DESIGNED against, not against the full population it would
+actually GOVERN. The second pass (full-corpus sanity run before shipping) is what caught the gap, and
+is recorded here so a future discriminator-building cycle repeats this two-stage shape rather than
+stopping after the first.
+
+### §4 — DoD item 8: on-screen verification
+
+`RUN_DESKTOP_AGENT=sd31-cf-prose2 ./.claude/skills/run-desktop/driver.sh launch`. No `class_feature`
+family in `verify-on-screen.sh` (same gap `SD31-D7-PROSE-003`'s own receipt noted) — drove `driver.sh`
+directly. Loaded the real saved character **"Picker Monk 20"** (Human Monk 20), Actions tab, scrolled
+to the **Still Mind** and **Empty Body** rows — both are 2 of this cycle's own 13 newly-promoted
+`class_feature` units. Both render TWO paragraphs: the engine's unchanged computed derivation, and —
+the render surface §1 verified, now proven against records THIS cycle's discriminator work actually
+promoted — the real corpus `DESC:` text, italicized:
+
+- Still Mind: *"You gain a +2 bonus on saving throws against enchantment spells and effects."*
+- Empty Body: *"You can assume an ethereal state for 1 minute as though using the spell Etherealness.
+  Using this ability is a move action that consumes 3 points for your Ki pool. This ability only
+  affects you and cannot be used to make other creatures ethereal."*
+
+Byte-matched by direct file read: `data/corpus/core_rulebook/class_feature/monk/still_mind.json` and
+`.../empty_body.json`'s `data.description` are identical, verbatim, to the rendered text (commands and
+full transcript in `artifacts/SD31-D7-PROSE-004/item8/class-feature-monk-still-mind-empty-body.verify.md`).
+Artifacts: `artifacts/SD31-D7-PROSE-004/item8/class-feature-monk-still-mind.png`,
+`.../class-feature-monk-empty-body.png`. `driver.sh stop` run after capture.
+
+### §5 — Gate
+
+Launched EARLY, background, kept alive through the rest of this cycle's work:
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-D7-PROSE-004-verify.log
+CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-cf-prose2 RETRO_ACTOR=sd31-cf-prose2 \
+  ./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+VERIFY_EXIT=0. Full log at the path above.
+
+**Reachability audit** (`python3 scripts/reachability_audit.py`, exit 0): **98.95% (38117/38521)**,
+unchanged from wave 7's baseline, same 9 `ambiguous|*` dead-end cells, all Epic-2-owned. Not worsened
+by this cycle's demotions — demoted units stay `race_trait`/`display`, a wiring_class this instrument
+already treats as reachable via the `held` floor.
+
+**`v06_corpus_trap_report -- --audit`**, run twice (with/without a pipe, per the harness rule about
+piped exit codes lying): `1 mod-record, 1191 wiring-class-mismatch` — **byte-identical to the
+documented baseline**, confirmed by exact count (not sign alone). This cycle's changes never touch
+`wiring_class` assignment (only `status`/`evidence`), so this is the expected, unworsened result.
+`TRAP_EXIT=2` when output is redirected (matches DoD item 3's stated pre-existing-red baseline).
+
+**Four-check wired-integration audit**, scoped to this cycle's own diff (`src/bin/v06_work_inventory.rs`
+only — no `apps/desktop` files touched this cycle):
+```
+git diff --unified=0 -- src/bin/v06_work_inventory.rs | grep -nE '\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b' || echo OK_NO_TOKENS
+# -> OK_NO_TOKENS
+git diff --unified=0 -- src/bin/v06_work_inventory.rs | grep -nE 'mockResolvedValue|mockReturnValue\(|vi\.mock\(|__mocks__' || echo OK_NO_MOCK_LEAKS
+# -> OK_NO_MOCK_LEAKS
+git diff --unified=0 -- src/bin/v06_work_inventory.rs | grep -nE '"Would [^"]*"' || echo OK_NO_WOULD_STRINGS
+# -> OK_NO_WOULD_STRINGS
+```
+(Check 2 — no-op `onClick` — not applicable, no `.tsx`/`.jsx` touched this cycle.) All clean.
+
+**Guarded regen** (§2 above): zero stamp loss, `v06_work_inventory` exit 0. Per the wave rule,
+`docs/work-inventory.json` is NOT committed with this regen's content — `git checkout --` it before
+the final commit; the delta above is independently re-derivable from the two commands shown.
+
+### §6 — PI screening
+
+This cycle writes NO new generated record — the render surface (§1) was already PI-screened upstream
+by `SD31-D7-PROSE-003`'s cycle, and this cycle's own work is a doneness-classification change over
+already-ingested `docs/work-inventory.json` rows, not a new corpus write. `declared-pi-audit` (part of
+the full gate, §5) re-runs `declared_pi_shipping_audit` regardless and passed CLEAN.
+
+### §7 — OPEN-ISSUES.md / decisions.md
+
+`OPEN-ISSUES.md`: rows 69/87/95/107 marked ANSWERED in the "Needs an operator ruling" summary (edited
+in place, matching the precedent rows 36/44 already set for answered questions in that section); row
+129 appended (never rewriting another row) with the full resolution and both corrections.
+`decisions.md`: new "Decision 7 — REFINED" section appended at end of file, verbatim ruling quotes,
+sizing table, both corrections, and the demoted units' disposition (stay in denominator, real compute
+gap, not this card's to build).
+
+### Followups (not this cycle's file territory or budget)
+
+1. **The 6 demoted size-trait units need real engine wiring** (a universal AC/attack/CMB/CMD/Stealth
+   size modifier, `pilot_compute.rs`/race-chassis lane, NOT `v06_work_inventory.rs`) to close per
+   Decision 8's precedent — wire it, don't just leave it demoted forever.
+2. **`class_feature`'s remaining ~11,700 `unmeasurable`/`not-started` units are gated on engine
+   wiring, not the prose surface** — the render path (§1) and the discriminator (§2) both operate
+   only on units the engine already grounds (`class_feature_effect_wired`/`explanation_ids`); the bulk
+   of the 15,472-unit population has no `ExplanationDto` to join a description onto at all. A future
+   cycle sizing "class_feature's real remaining gap" should measure the `not-ingested`/`unknown`
+   population against `pilot_compute.rs`'s own wired-class roster, not against this card's file
+   territory.
+3. Followups #1-5 from `SD31-W7-INTEGRATE-001`'s own receipt (Supersession Register application,
+   `modelled_class_books()` widening, `corpus_literal_sweep` string-field coverage) are unchanged by
+   this cycle, still owed.
+
+### Reclaim
+
+`scripts/reclaim.sh --apply` run at cycle end — see the final line of this receipt's commit for
+reclaimed bytes (recorded after the gate finished and scratch target dirs were removed).
+
+### Branch tip
+
+Starting HEAD `17ba8be5304a4f760af775f57b4e5800dc0a8548`; this receipt's own commit and the code commit
+land together per the mandate's normal cycle shape (code + receipt in one `feat(sd31):` commit, since
+this cycle's board-moving change and its receipt are inseparable) — final tip recorded in the
+StructuredOutput handoff.

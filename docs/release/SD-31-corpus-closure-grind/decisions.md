@@ -918,3 +918,94 @@ Decision 10 *does* govern.
 
 **Authority:** operator ruling 2026-08-16, verbatim above, restating and generalizing the operator's
 earlier Unchained-variants ruling recorded at `SD-28 decisions.md:1855-1858`.
+
+## Decision 7 — REFINED: the real axis is universal vs conditional, not flat vs scaling (operator ruling 2026-08-16, `SD31-D7-PROSE-004`)
+
+**Asked:** `OPEN-ISSUES.md` rows 69/87/95/107 all raised the same open interpretive question about
+Decision 7's condition 2 ("nothing to compute") — does it mean (a) no numeric value appears anywhere
+in the prose at all, or (b) no *character-specific SCALING* formula (the bar `wiring_class.rs`'s
+`prose_scaling_phrases` detector already enforces)? At least 856 units rode on the answer across
+`monster_ability`, `equipment`/`equipment_modifier`, `race_trait`, `class_feature` and `feat`.
+
+**Ruled, verbatim:**
+
+> "+1 size bonus to AC means you need to give a +1 on the AC - that's computed. … Now if that +4
+> bonus was ONLY against certain creature types, like with dwarf racial hatred - that's not a
+> universal bump and would just be listed in a description block for the player to add in when
+> appropriate."
+
+and, on damage:
+
+> "if it says acid damage - that's a condition, many things shrug off acid."
+
+**Neither reading (a) nor reading (b) was correct.** The operator's own framing is a THIRD axis,
+orthogonal to "does a number appear" and to "does the number scale": **UNIVERSAL vs CONDITIONAL.**
+
+- **Universal** — a modifier to a value the character sheet computes, that applies UNCONDITIONALLY
+  whenever that value is read (a flat `+1` to AC is exactly as universal as a scaling one). **Must be
+  COMPUTED.** Text alone does not satisfy Decision 7's condition 2 for a universal modifier.
+- **Conditional / situational** — the modifier applies only against a named subset of targets,
+  effects, actions, or circumstances (a creature subtype, a damage type, a specific maneuver, a
+  specific stance, an environmental state, a narrative duration/resource cost). **DESCRIBE it; text
+  is complete.** Flatness is irrelevant — a flat conditional bonus is exactly as done-as-text as a
+  scaling one.
+
+Condition families named by the ruling and confirmed against the corpus this cycle: **damage type**
+(`special_ability_corrosive_weapon`'s `SPROP:+1d6 acid damage`) · **target subtype**
+(`dwarf_hatred`'s "against humanoid creatures of the orc and goblinoid subtypes") · **manoeuvre type
+and stance** (`duergar_stability`'s "against bull rush or trip attempts while standing on the
+ground") · **effect type** (`half_orc_stoic`'s "against emotion and fear effects") · **environmental
+state** (`fetchling_shadow_blending`'s "in dim light"; `devilfish_water_dependency`'s "out of the
+water") · **zero magnitude outright** · **narrative duration** (`monk_empty_body`'s "for 1 minute").
+
+### Sizing and outcome — `SD31-D7-PROSE-004`
+
+Built the real discriminator, `closure_states_universal_sheet_modifier`
+(`src/bin/v06_work_inventory.rs`), over the same raw `.lst` closure text every other rung in that
+file already reads (`DESC:`/`SPROP:`/`BENEFIT:`), and retired the four hand-picked
+`*_FLAT_MAGNITUDE_PENDING_RULING` name-lists (`monster_ability`/`companion`/`class_feature`/`feat`)
+that rows 69/95/107 and wave 7 had built as conservative placeholders pending exactly this ruling.
+
+**Validated on ACCURACY before it moved any count**, per Decision 1(e): a 32-case hand-labelled test
+(30 real corpus records quoted verbatim from the pinned oracle, plus 2 edge cases; 0 misses) proved
+the discriminator against the SAME units rows 69/87/95/107 and the retired lists already named.
+Running the retired-list replacement against the FULL corpus (not only the hand-labelled sample)
+then surfaced **5 false positives** the first draft's broader positive-cue list produced
+(`advanced_race_guide:feat:guardian_of_the_wild`, `core_rulebook:feat:critical_focus`,
+`advanced_race_guide:feat:orc_weapon_expertise_killer`, `ultimate_intrigue:feat:timely_coordination`,
+`advanced_players_guide:feat:greater_blind_fight`) — each genuinely conditional (action-specific,
+terrain-specific, or a phrase appearing inside an outright negation a substring match cannot see).
+Narrowed the universal cue list to `"size bonus"` alone — the one phrase every hand-verified true
+positive shares and no false positive contains — and the corpus-wide re-run came back exactly the
+expected 27-unit diff, zero unexpected movement in either direction.
+
+**Movement, both directions, every unit individually re-derived:**
+
+| direction | count | kinds |
+|---|---:|---|
+| promoted (`held`/`grounded` → `done`) | **21** | `class_feature` 13, `feat` 7, `monster_ability` 1 — every unit the four retired lists had parked, all confirmed conditional |
+| demoted (`done` → `held`/`grounded`) | **6** | `race_trait` 6 — `gnome_size`, `grippli_size`, `halfling_size`, `kobold_size`, `svirfneblin_size`, `goblin_size` |
+
+Board: **9,780 → 9,795 done (25.3887% → 25.4277%)**, net **+15**. Zero denominator change.
+
+**The 6 demotions are a correct, expected outcome of the ruling, not a regression** — the Small-race
+size traits state exactly the "+1 size bonus to AC... +1 size bonus on attack rolls... penalty to
+Combat Maneuver Bonus/Defense... +4 size bonus on Stealth" shape the ruling's own worked example
+names as the paradigm universal case. They remain in the denominator (`race_trait`, not excluded)
+and are a real, un-shipped compute gap for a future cycle's engine-wiring lane, not this cycle's to
+build — Decision 1(a)'s anti-gaming bar forbids counting them `done` on text alone once identified as
+universal, and Decision 8's precedent ("wire it, don't retract the finding") is what governs their
+eventual close, not this decision.
+
+### Correction to this cycle's own dispatch brief
+
+The brief that carried this ruling to the executing cycle mis-classified `goblin_size` as one of "7
+stay text" units, annotated "(grants nothing)". **That annotation is wrong.** The real shipped
+`bestiary:race_trait:goblin_size` row (`data/corpus/beastiary/race_trait/goblin/goblin_size.json`,
+re-attributed from `core_essentials` per Decision 9) states the IDENTICAL universal size-bonus text
+as `gnome_size`/`grippli_size`/`halfling_size`/`kobold_size`/`svirfneblin_size` — verified by direct
+file read before acting, per this program's own standing "verify each against its ACTUAL shipped
+text" rule (the same rule this exact ruling's own history had already violated once). `goblin_size`
+is therefore the 6th demotion, not a 7th text-complete unit; `retro.py correction` emitted.
+
+**Authority:** operator ruling, 2026-08-16, verbatim above.
