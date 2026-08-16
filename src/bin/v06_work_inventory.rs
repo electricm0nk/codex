@@ -568,6 +568,25 @@ fn closure_has_real_description(row_refs: &[Option<&str>]) -> bool {
     })
 }
 
+/// SD31-D7-PROSE-002 (Decision 7's condition 3, `OPEN-ISSUES.md` row 70):
+/// the SECOND source for "this unit's corpus record carries a real
+/// description", alongside [`closure_has_real_description`]'s raw `.lst`
+/// closure -- consults [`EngineFacts::corpus_json_descriptions`], joined on
+/// the identical `(source_file, source_line)` coordinate every other rung in
+/// this file already uses, plus the record's own key (see that field's doc
+/// comment for why the coordinate alone is ambiguous). Recovers a `.COPY=`
+/// record's description that was resolved by INHERITANCE at ingest time --
+/// a fact the raw `.lst` text can never carry on its own, since the
+/// inheritance resolution never touches the `.lst` file.
+fn corpus_json_has_real_description(
+    descriptions: &BTreeMap<(String, usize, String), String>,
+    file: &str,
+    line: usize,
+    key: &str,
+) -> bool {
+    descriptions.contains_key(&(file.to_string(), line, key.to_string()))
+}
+
 #[cfg(test)]
 mod closure_has_real_description_tests {
     use super::*;
@@ -623,6 +642,99 @@ mod closure_has_real_description_tests {
     #[test]
     fn a_missing_row_is_skipped_not_treated_as_a_hit() {
         assert!(!closure_has_real_description(&[None, None]));
+    }
+}
+
+#[cfg(test)]
+mod corpus_json_has_real_description_tests {
+    use super::*;
+
+    /// The proof case (OPEN-ISSUES row 70's own example): `core_rulebook:
+    /// equipment:scale_mail`'s corpus JSON carries a real, ingest-time
+    /// INHERITED description ("Scale mail is made up of dozens of small
+    /// overlapping metal plates...") even though its own `.COPY=` `.lst`
+    /// row carries no `DESC:` token at all -- `closure_has_real_description`
+    /// alone would refuse this unit; this second source recovers it.
+    #[test]
+    fn finds_a_real_description_by_the_coordinate_and_key_join() {
+        let mut descriptions = BTreeMap::new();
+        descriptions.insert(
+            ("cr_equip_arms_armor.lst".to_string(), 55, "Scale Mail".to_string()),
+            "Scale mail is made up of dozens of small overlapping metal plates.".to_string(),
+        );
+        assert!(corpus_json_has_real_description(
+            &descriptions,
+            "cr_equip_arms_armor.lst",
+            55,
+            "Scale Mail",
+        ));
+    }
+
+    /// A coordinate the map has nothing for (no `.lst`-sourced JSON record,
+    /// or a `source.kind: "web_second_source"` record with no `path`/`line`
+    /// at all, so nothing was ever inserted for it) is refused, not treated
+    /// as a hit -- the honest "we found no second source" result.
+    #[test]
+    fn refuses_a_coordinate_the_map_has_no_entry_for() {
+        let descriptions = BTreeMap::new();
+        assert!(!corpus_json_has_real_description(
+            &descriptions,
+            "cr_equip_arms_armor.lst",
+            55,
+            "Scale Mail",
+        ));
+    }
+
+    /// PROVE THE JOIN CAN FAIL, the ambiguous-coordinate case: two distinct
+    /// records sharing one `.lst` line (`acg_equipmods.lst:41` is both
+    /// `Flying` and `Special Ability ~ Flying ~ Melee`, a real corpus
+    /// coordinate) must each be reachable ONLY by their own key -- the
+    /// coordinate alone is not a safe join, which is exactly why `key` is a
+    /// THIRD component of the tuple, not an afterthought.
+    #[test]
+    fn a_shared_lst_line_resolves_each_record_by_its_own_key_only() {
+        let mut descriptions = BTreeMap::new();
+        descriptions.insert(
+            ("acg_equipmods.lst".to_string(), 41, "Flying".to_string()),
+            "A flying special ability description.".to_string(),
+        );
+        assert!(corpus_json_has_real_description(
+            &descriptions,
+            "acg_equipmods.lst",
+            41,
+            "Flying",
+        ));
+        assert!(!corpus_json_has_real_description(
+            &descriptions,
+            "acg_equipmods.lst",
+            41,
+            "Special Ability ~ Flying ~ Melee",
+        ));
+    }
+
+    fn repo_root() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    /// The end-to-end proof, against the REAL on-disk corpus, not a
+    /// synthetic fixture: `data/corpus/core_rulebook/equipment/scale_mail.json`
+    /// (`OPEN-ISSUES.md` row 70's own named example) is a `source.kind:
+    /// "lst_inherited_copy"` record whose `data.description` is real and
+    /// whose own `.lst` row (`cr_equip_arms_armor.lst:55`, a `.COPY=`
+    /// variant) carries no `DESC:` token at all. `load_corpus_json_descriptions`
+    /// must recover it.
+    #[test]
+    fn the_real_corpus_loader_recovers_scale_mails_inherited_description() {
+        let descriptions = load_corpus_json_descriptions(&repo_root());
+        let hit = descriptions.get(&(
+            "cr_equip_arms_armor.lst".to_string(),
+            55,
+            "Scale Mail".to_string(),
+        ));
+        assert!(
+            hit.is_some_and(|d| d.contains("dozens of small overlapping metal plates")),
+            "expected scale_mail's real inherited description, got {hit:?}"
+        );
     }
 }
 
@@ -1777,6 +1889,20 @@ struct EngineFacts {
     /// "this feature belongs to a class the engine has not modelled yet" from
     /// "this feature belongs to no class at all".
     corpus_class_names: BTreeSet<String>,
+    /// SD31-D7-PROSE-002 (Decision 7's condition 3, `OPEN-ISSUES.md` row 70):
+    /// a second source for "this unit's corpus record carries a real
+    /// description", alongside [`closure_has_real_description`]'s raw `.lst`
+    /// closure. Keyed `(<lst basename>, <line>, <record key>)` -> the
+    /// already-ingested `data/corpus/<book>/**/*.json`'s own `data.description`
+    /// value. A `.COPY=` record's description is often resolved by
+    /// INHERITANCE at ingest time -- a fact the raw `.lst` text alone can
+    /// never carry, because the inheritance resolution never touches the
+    /// `.lst` file. The record key joins alongside the coordinate because
+    /// `(basename, line)` alone is ambiguous for 24 real corpus coordinates
+    /// where two distinct records share one `.lst` line (e.g.
+    /// `acg_equipmods.lst:41` is both `Flying` and `Special Ability ~ Flying
+    /// ~ Melee`). Populated by [`load_corpus_json_descriptions`].
+    corpus_json_descriptions: BTreeMap<(String, usize, String), String>,
 }
 
 impl EngineFacts {
@@ -3406,7 +3532,89 @@ fn gather_engine_facts(
         explanation_ids,
         diagnostics,
         corpus_class_names,
+        corpus_json_descriptions: load_corpus_json_descriptions(repo_root),
     }
+}
+
+/// Populates [`EngineFacts::corpus_json_descriptions`] -- see that field's
+/// doc comment for the join key and why it exists.
+///
+/// Walks `data/corpus/<book>/equipment/**/*.json` and
+/// `data/corpus/<book>/spell/**/*.json` for every book in
+/// [`OBSERVABLE_BOOK_DIRS`] (the set `OPEN-ISSUES.md` row 70 quantified: 134
+/// `equipment_modifier` + 112 `equipment` + 1 `spell` recoverable units, all
+/// under those two content kinds). A record whose `source` carries no
+/// `path`/`line` (e.g. `source.kind: "web_second_source"`, sourced from a
+/// URL rather than a `.lst` row) contributes nothing here -- there is no
+/// `.lst` coordinate to join a `CorpusUnit` against, so admitting it by name
+/// alone would risk crediting the wrong record, exactly the `Celestial
+/// Shield` hazard this file's book-scoping discipline already guards
+/// against elsewhere.
+fn load_corpus_json_descriptions(repo_root: &Path) -> BTreeMap<(String, usize, String), String> {
+    let mut out: BTreeMap<(String, usize, String), String> = BTreeMap::new();
+    for book_dir in OBSERVABLE_BOOK_DIRS {
+        for content_kind in ["equipment", "spell"] {
+            let root = repo_root.join("data/corpus").join(book_dir).join(content_kind);
+            if !root.is_dir() {
+                continue;
+            }
+            let mut stack = vec![root];
+            while let Some(dir) = stack.pop() {
+                let Ok(entries) = std::fs::read_dir(&dir) else { continue };
+                for entry in entries.flatten() {
+                    let path = entry.path();
+                    if path.is_dir() {
+                        stack.push(path);
+                        continue;
+                    }
+                    if path.extension().and_then(|e| e.to_str()) != Some("json") {
+                        continue;
+                    }
+                    let Ok(text) = std::fs::read_to_string(&path) else { continue };
+                    let Ok(value) = serde_json::from_str::<serde_json::Value>(&text) else {
+                        continue;
+                    };
+                    let Some(description) =
+                        value.pointer("/data/description").and_then(|v| v.as_str())
+                    else {
+                        continue;
+                    };
+                    if !is_real_description_value(description) {
+                        continue;
+                    }
+                    let Some(src_path) = value.pointer("/source/path").and_then(|v| v.as_str())
+                    else {
+                        continue;
+                    };
+                    let Some(line) = value.pointer("/source/line").and_then(|v| v.as_u64())
+                    else {
+                        continue;
+                    };
+                    // `record_key` (the SOURCE's own identity token) over
+                    // `data.key` (the wire-facing key, sometimes cleaned up):
+                    // `token_closure_rows`/`unit.key` both resolve against the
+                    // corpus row's raw `KEY:`, and `record_key` is the JSON's
+                    // own copy of exactly that token.
+                    let Some(key) = value
+                        .pointer("/source/record_key")
+                        .and_then(|v| v.as_str())
+                        .or_else(|| value.pointer("/data/key").and_then(|v| v.as_str()))
+                    else {
+                        continue;
+                    };
+                    let basename = Path::new(src_path)
+                        .file_name()
+                        .map(|n| n.to_string_lossy().into_owned())
+                        .unwrap_or_default();
+                    out.insert(
+                        (basename, line as usize, key.to_string()),
+                        description.trim().to_string(),
+                    );
+                }
+            }
+        }
+    }
+    out
 }
 
 // ---------------------------------------------------------------------------
@@ -3560,6 +3768,23 @@ fn class_feature_owner<'a, I: Iterator<Item = &'a String>>(key: &str, classes: I
 /// `progress.md`'s `SD31-D7-PROSE-001` receipt) -- a record merely existing
 /// in a catalog is not the same fact as its prose reaching a player, and
 /// Decision 7 says so explicitly.
+///
+/// `(engine_book, key)` pairs row 69's own hand-verification already
+/// confirmed carry a FLAT (non-scaling) numeric printed only in prose within
+/// `Kind::MonsterAbility` -- see the `monster_ability` rung's own call site
+/// for the open interpretive question this is the conservative default for.
+/// **A ONE-LINE change** (clear this list, once the operator's ruling
+/// lands): reading (a) ("no numeric value at all") keeps it as-is; reading
+/// (b) ("no character-specific scaling formula") clears it.
+const MONSTER_ABILITY_FLAT_MAGNITUDE_PENDING_RULING: &[(&str, &str)] =
+    &[("bestiary_2", "Devilfish ~ Water Dependency")];
+
+fn monster_ability_flat_magnitude_pending_ruling(engine_book: &str, key: &str) -> bool {
+    MONSTER_ABILITY_FLAT_MAGNITUDE_PENDING_RULING
+        .iter()
+        .any(|&(book, k)| book == engine_book && k == key)
+}
+
 fn classify(
     unit: &CorpusUnit,
     facts: &EngineFacts,
@@ -3887,6 +4112,49 @@ fn classify(
             if facts.chassis_monster_ability_keys.contains_key(engine_book.as_str()) =>
         {
             if facts.holds_key(&engine_book, &unit.kind, &unit.key, &unit.name) {
+                // SD31-D7-PROSE-002 (Decision 7's done-bar, extending
+                // SD31-D7-PROSE-001's `race_trait` rung): a text_only
+                // ability the chassis table holds is `grounded` -- true,
+                // but `grounded` is capped at `held` for `display`
+                // wiring_class (`doneness_verdict`'s documented disagreement
+                // signal), and for a record with no magnitude to disagree
+                // about, that cap is wrong. `monster_chassis.rs`'s own
+                // module doc: "Only ability rows WITH an owner are
+                // registered" -- so any key this table holds is already
+                // shown under some monster's catalog entry
+                // (`monster_catalog::serve_ability_description` ->
+                // `MonsterAbilityDto.description` ->
+                // `MonsterCatalogScreen.tsx`'s `ability.description`
+                // paragraph, unconditionally, for every registered ability).
+                // No new render path; only the promotion, gated on the SAME
+                // `has_real_description` closure check (over the SAME
+                // `DESC:` token `MonsterAbilityRecord::description` is
+                // itself parsed from) every other kind's rung already uses.
+                //
+                // `!flat_magnitude_pending_ruling`: Decision 7's own open
+                // interpretive question (`OPEN-ISSUES.md` rows 69/87,
+                // unresolved -- does a FLAT, non-scaling numeric printed
+                // only in prose satisfy condition 2's "nothing to compute"?
+                // Not this cycle's call). Conservative default while it is
+                // open: refuse the one unit row 69's own hand-verified
+                // sample already confirmed carries exactly that shape within
+                // THIS kind (`bestiary_2:monster_ability:
+                // devilfish_water_dependency`, "1 hour"/"2 hours" printed in
+                // its `DESC:`) even though it is otherwise text_only with a
+                // real description.
+                if text_only
+                    && has_real_description
+                    && !monster_ability_flat_magnitude_pending_ruling(&engine_book, &unit.key)
+                {
+                    return Verdict {
+                        status: "text-complete",
+                        evidence:
+                            "monster_ability_held_and_corpus_record_carries_real_description"
+                                .to_string(),
+                        reason: None,
+                        engine_book: engine_book_field,
+                    };
+                }
                 return Verdict {
                     status: "grounded",
                     evidence: format!(
@@ -5313,7 +5581,13 @@ fn main() {
             // signal `magnitude_token_count` already covers on its own.
             let carries_prose_magnitude =
                 matches!(wc_reason.as_str(), "prose_expr" | "prose_formula_segment");
-            let has_real_description = closure_has_real_description(&row_refs);
+            let has_real_description = closure_has_real_description(&row_refs)
+                || corpus_json_has_real_description(
+                    &facts.corpus_json_descriptions,
+                    &unit.provenance.file,
+                    unit.provenance.line,
+                    &unit.key,
+                );
             let verdict = classify(unit, &facts, hosts, carries_prose_magnitude, has_real_description);
             let collides = slug_population
                 .get(&(book.id.clone(), unit.kind, slug(&unit.key)))
@@ -6770,6 +7044,170 @@ mod race_trait_grounding_tests {
             .rendered
             .insert(coordinate, "[redacted PI]".to_string());
         let unit = race_trait_unit("pi_redacted_race.lst", 1, "Tiefling ~ Daemon-Spawn", 0);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true);
+        assert_ne!(verdict.status, "text-complete");
+        assert_eq!(verdict.status, "grounded");
+    }
+}
+
+// ---------------------------------------------------------------------------
+// SD31-D7-PROSE-002: extend Decision 7's done-bar to `monster_ability`.
+//
+// Exactly the shape `race_trait_grounding_tests` above proves for
+// `Kind::RaceTrait`, transplanted to `Kind::MonsterAbility`: a text_only
+// (zero-magnitude) ability the engine's own chassis table holds is
+// `grounded` today, which `doneness_verdict` caps at `held` for `display`
+// wiring_class -- the exact structural blocker `decisions.md §7`'s
+// "structural blocker" correction names. `MonsterAbilityRecord::description`
+// (`monster_chassis.rs`) is parsed from the SAME `DESC:` token
+// `closure_has_real_description` already checks, and reaches a real,
+// player-facing screen unconditionally for every registered ability:
+// `monster_catalog::serve_ability_description` -> `MonsterAbilityDto.
+// description` -> `MonsterCatalogScreen.tsx`'s `ability.description`
+// paragraph ("Only ability rows WITH an owner are registered" --
+// `monster_chassis.rs`'s own module doc -- so a held ability is *always*
+// shown under some monster's catalog entry; there is no held-but-unshown
+// case). No new render path is built here; this only asks the SAME
+// `has_real_description` closure check every other kind's rung already
+// uses to gate the SAME promotion.
+// ---------------------------------------------------------------------------
+#[cfg(test)]
+mod monster_ability_text_complete_rung_tests {
+    use super::*;
+
+    fn monster_ability_unit(
+        source_book: &str,
+        file: &str,
+        line: usize,
+        key: &str,
+        magnitude_token_count: usize,
+    ) -> CorpusUnit {
+        CorpusUnit {
+            book: source_book.to_string(),
+            source_book: source_book.to_string(),
+            kind: Kind::MonsterAbility,
+            key: key.to_string(),
+            name: key.to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: file.to_string(), line },
+            magnitude_token_count,
+            type_facet: None,
+            visible: true,
+        }
+    }
+
+    fn facts_holding(engine_book: &'static str, key: &str) -> EngineFacts {
+        let mut facts = EngineFacts::default();
+        facts
+            .chassis_monster_ability_keys
+            .entry(engine_book)
+            .or_default()
+            .insert(key.to_lowercase());
+        facts
+    }
+
+    /// The proof case, against the REAL corpus, not a synthetic fixture:
+    /// `Air Elemental ~ Air Mastery` (`b1_abilities_race.lst` line 585,
+    /// `docs/work-inventory.json` id
+    /// `bestiary:monster_ability:air_elemental_air_mastery`) is
+    /// `magnitude_token_count == 0`, `wiring_class: display`, and — before
+    /// this change — `status: grounded`, capped at `held`. Its corpus row
+    /// carries a real `DESC:` value ("Airborne creatures take a -1 penalty
+    /// on attack and damage rolls against an air elemental."), which is the
+    /// same text `MonsterAbilityRecord::description` serves onto the wire.
+    #[test]
+    fn a_real_zero_magnitude_held_monster_ability_reaches_text_complete_with_real_description() {
+        let facts = facts_holding("bestiary_1", "Air Elemental ~ Air Mastery");
+        let unit = monster_ability_unit(
+            "bestiary",
+            "b1_abilities_race.lst",
+            585,
+            "Air Elemental ~ Air Mastery",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true);
+        assert_eq!(verdict.status, "text-complete");
+        assert_eq!(
+            verdict.evidence,
+            "monster_ability_held_and_corpus_record_carries_real_description"
+        );
+    }
+
+    /// PROVE THE RUNG CAN FAIL, case 1 (empty/absent description): a held,
+    /// text_only ability whose closure carries no real `DESC:` value must
+    /// stay `grounded`, never `text-complete` -- there is nothing for
+    /// `MonsterCatalogScreen` to show, and the screen's own fallback
+    /// paragraph ("...carries no rules text") says so honestly. This is the
+    /// pre-existing behaviour, not a new failure mode.
+    #[test]
+    fn a_held_monster_ability_with_no_real_description_does_not_read_text_complete() {
+        let facts = facts_holding("bestiary_1", "No Desc ~ Ability");
+        let unit =
+            monster_ability_unit("bestiary", "b1_abilities_race.lst", 1, "No Desc ~ Ability", 0);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false);
+        assert_ne!(verdict.status, "text-complete");
+        assert_eq!(verdict.status, "grounded");
+    }
+
+    /// PROVE THE RUNG CAN FAIL, case 2 (magnitude-bearing): an ability that
+    /// carries a real magnitude token (`text_only` false) must never read
+    /// `text-complete` via this rung even with a real description --
+    /// condition 2 ("nothing to compute") is not met, and the unit's own
+    /// magnitude is the thing owed a wiring path, not a description credit.
+    #[test]
+    fn a_magnitude_bearing_held_monster_ability_never_reads_text_complete() {
+        let facts = facts_holding("bestiary_1", "Has Magnitude ~ Ability");
+        let unit = monster_ability_unit(
+            "bestiary",
+            "b1_abilities_race.lst",
+            2,
+            "Has Magnitude ~ Ability",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true);
+        assert_ne!(verdict.status, "text-complete");
+        assert_eq!(verdict.status, "grounded");
+    }
+
+    /// PROVE THE RUNG CAN FAIL, case 3 (not held at all): an ability the
+    /// engine's chassis table does not hold must stay `not-ingested`
+    /// regardless of `has_real_description` -- a real description on a
+    /// record nothing loads is not condition 3 ("the sheet must render
+    /// it"), it is an unreachable string.
+    #[test]
+    fn an_unheld_monster_ability_does_not_read_text_complete_even_with_a_real_description() {
+        let facts = facts_holding("bestiary_1", "Some Other ~ Ability");
+        let unit = monster_ability_unit(
+            "bestiary",
+            "b1_abilities_race.lst",
+            3,
+            "Not Held ~ Ability",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true);
+        assert_ne!(verdict.status, "text-complete");
+        assert_eq!(verdict.status, "not-ingested");
+    }
+
+    /// PROVE THE RUNG CAN FAIL, case 4 (the flat-magnitude conservative
+    /// default, `OPEN-ISSUES.md` rows 69/87): the one unit row 69's own
+    /// hand-verified sample already confirmed carries a flat, non-scaling
+    /// numeric printed only in prose within `monster_ability` --
+    /// `bestiary_2:monster_ability:devilfish_water_dependency` -- must NOT
+    /// read `text-complete` via this rung, even though it is otherwise
+    /// text_only, held, and carries a real description. This is the
+    /// operator-ruling-pending exclusion, not the general refusal shape the
+    /// other cases above prove.
+    #[test]
+    fn the_named_flat_magnitude_monster_ability_does_not_read_text_complete_pending_ruling() {
+        let facts = facts_holding("bestiary_2", "Devilfish ~ Water Dependency");
+        let unit = monster_ability_unit(
+            "bestiary_2",
+            "b2_abilities_race.lst",
+            409,
+            "Devilfish ~ Water Dependency",
+            0,
+        );
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true);
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(verdict.status, "grounded");

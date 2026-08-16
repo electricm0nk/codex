@@ -9116,3 +9116,265 @@ this wave's finished lanes performed after checking every live PID's `CARGO_TARG
    `apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh`.
 
 
+## Cycle `SD31-D7-PROSE-002` (`RETRO_ACTOR=sd31-prose-payout`) — 2026-08-16
+
+**Card:** extend Decision 7's prose done-bar rung (`SD31-D7-PROSE-001`'s own precedent) past the
+structural blocker `decisions.md §7` names, recover the quantified `closure_has_real_description`
+under-claim, and take the conservative default on the flat-magnitude open question. Files owned this
+wave: `src/bin/v06_work_inventory.rs`, `scripts/observer/pf1e_dashboard_producer.py` (read, not
+touched — no producer-side change was needed), `docs/release/SD-31-corpus-closure-grind/**`.
+
+### §0 — Branch state, oracle pin
+
+Starting HEAD `5d0cd1595cef92ddb3f5b6b1d2e7261316ccd98d` on `tranche/11` (descends from it directly —
+this cycle's own tip is one commit past `SD31-W5-INTEGRATE-001`'s integration). Package dir present,
+tree had untracked sibling-cycle artifacts only (left alone, not mine). `./scripts/verify.sh --only
+preflight-oracle` — `PASS (oracle at pin 7f818006e371188e5717fd18d74d18a420747fc6)`,
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` from `scripts/pcgen-oracle-pin.env`.
+
+### §1 — The headline: extended the rung to `monster_ability` (Decision 7's structural blocker)
+
+`decisions.md §7`'s "structural blocker" correction names the exact cell: `doneness_verdict` maps
+`display`+`grounded` to `held`, so a text_only unit that reaches `grounded` (real evidence, just no
+magnitude to disagree about) never reaches `done` no matter how real its description is.
+`SD31-D7-PROSE-001` built the correct rung for `race_trait` — description present, byte-matches the
+corpus row, renders on-screen — and this cycle extended it to `Kind::MonsterAbility`.
+
+**Why this is a NEW REQUIREMENT, not a relaxation** (per the card's own instruction to state this
+plainly): the `Kind::MonsterAbility` verdict arm previously returned `grounded` unconditionally the
+moment `facts.holds_key` was true — no description check existed on this path at all. The change adds
+a THIRD, strictly additional condition (`text_only && has_real_description`) that must ALSO hold before
+the status can improve from `grounded` to `text-complete`; a unit that fails it is completely
+unaffected (still `grounded`, still `held`). This is the identical shape `SD31-D7-PROSE-001`'s
+`race_trait` rung already shipped and the wave's adversarial review already accepted.
+
+**Render path is pre-existing, not new** — verified by reading the code, not assumed:
+`monster_chassis::MonsterAbilityRecord::description` is parsed from the SAME `DESC:` token
+`closure_has_real_description` already reads (`monster_chassis.rs`'s own doc comment: "The row's
+`DESC:` text"), and `monster_catalog::serve_ability_description` already serves it (with a leak-panic
+guard against unsubstituted `%N` PCGen syntax, pre-existing production code, untouched this cycle) onto
+`MonsterAbilityDto.description`, which `MonsterCatalogScreen.tsx` renders directly
+(`{ability.description}` at line 442) for every ability in `entry.abilities`. `monster_chassis.rs`'s
+own module doc: "Only ability rows WITH an owner are registered" — so any key `chassis_monster_ability_
+keys` holds is *already* shown under some monster's catalog entry today; there is no held-but-unshown
+case to worry about. No new render surface was built; only the doneness promotion.
+
+**Mutation-tested all three refusals plus one already-known false-positive shape** (5 new tests,
+`monster_ability_text_complete_rung_tests`, `src/bin/v06_work_inventory.rs`):
+1. No real description (`has_real_description: false`) — stays `grounded`.
+2. Carries a real magnitude (`text_only: false`) — stays `grounded` even with a real description.
+3. Not held by any chassis table at all — stays `not-ingested` even with a real description.
+4. The flat-magnitude conservative exclusion (§3 below) — stays `grounded` even though otherwise
+   qualifying.
+5. The proof case, against the REAL corpus, not a fixture: `bestiary:monster_ability:
+   air_elemental_air_mastery` (`b1_abilities_race.lst:585`, `Air Elemental ~ Air Mastery`, DESC:
+   "Airborne creatures take a -1 penalty on attack and damage rolls against an air elemental.") reaches
+   `text-complete`.
+
+All 118 tests in the binary pass (`cargo test --locked --bin v06_work_inventory`); TDD order followed
+throughout (failing test confirmed red for the right reason — `left: "grounded", right: "text-complete"`
+— before the production change landed).
+
+### §2 — Recovered the ~247-unit `closure_has_real_description` under-claim (`OPEN-ISSUES` row 70)
+
+Row 70's own diagnosis: `closure_has_real_description()` reads only the raw `.lst` closure, never the
+already-ingested corpus JSON's `data.description` — invisible to a `.COPY=` record whose description
+was resolved by INHERITANCE at ingest time (the inheritance resolution never touches the `.lst` text
+at all). Built the second source row 70 named as the remedy: `EngineFacts::corpus_json_descriptions`,
+populated by `load_corpus_json_descriptions()`, walking `data/corpus/<book>/{equipment,spell}/**/*.json`
+for every book in `OBSERVABLE_BOOK_DIRS` and extracting `data.description` (gated through the SAME
+`is_real_description_value` refusal every other rung uses — empty/`.CLEAR`/`.CLEARALL`/PI-marker all
+refused identically).
+
+**Joined on `(basename, line, record_key)`, not `(basename, line)` alone** — re-derived, not assumed:
+
+```
+python3 -c "
+import json, glob, os, collections
+idx = collections.defaultdict(set)
+files = glob.glob('data/corpus/*/equipment/**/*.json', recursive=True) + \
+        glob.glob('data/corpus/*/spell/**/*.json', recursive=True) + \
+        glob.glob('data/corpus/ultimate_equipment/equipment/**/*.json', recursive=True)
+for f in files:
+    d=json.load(open(f)); src=d.get('source',{})
+    if src.get('path') and src.get('line'):
+        idx[(os.path.basename(src['path']), src['line'])].add(f)
+print('collisions:', len([k for k,v in idx.items() if len(v)>1]))
+"
+# collisions: 24 -- e.g. acg_equipmods.lst:41 is BOTH "Flying" and "Special Ability ~ Flying ~ Melee"
+```
+
+24 real corpus coordinates hold two distinct records at the same `(file, line)`; the record's own
+`source.record_key` (falling back to `data.key`) is the third join component that disambiguates them.
+A `source.kind: "web_second_source"` record (sourced from a URL, no `.lst` path/line at all) is
+correctly excluded — there is no coordinate to join against, and admitting it by name alone would risk
+the `Celestial Shield` hazard this file's book-scoping discipline already guards against elsewhere.
+
+4 new tests (`corpus_json_has_real_description_tests`), including one against the REAL on-disk corpus:
+`data/corpus/core_rulebook/equipment/scale_mail.json` (row 70's own named example, `source.kind:
+"lst_inherited_copy"`) is recovered, and the shared-coordinate ambiguity case is proven to resolve each
+record by its own key only, never the other's.
+
+### §3 — The flat-magnitude question: conservative default taken, NOT decided unilaterally
+
+`OPEN-ISSUES` rows 69/87 (still open): does Decision 7's "nothing to compute" mean no numeric value at
+all, or no character-specific SCALING formula? Row 69's own hand-verified sample already named
+`bestiary_2:monster_ability:devilfish_water_dependency` ("1 hour"/"2 hours" printed in its `DESC:`, no
+engine computation) as this exact shape — and it would have been newly promoted to `done` by §1's new
+rung. Took the conservative default per the card's explicit instruction: added
+`MONSTER_ABILITY_FLAT_MAGNITUDE_PENDING_RULING`, a `const &[(&str, &str)]` of one `(engine_book, key)`
+pair, and refused promotion for exactly that unit — it stays `grounded`/`held`. **The predicate is a
+one-line change**: clearing the list applies the operator's answer the moment it lands, in either
+direction. Did not touch `wiring_class.rs` (a sibling's file this wave, and the actual general fix rows
+69/87 are waiting on) and did not generalize to the unknown-sized wider population — this is a named
+point exclusion for the one unit this cycle's own new rung would have newly touched, nothing broader.
+Logged as `OPEN-ISSUES` row 95, and the "Needs an operator ruling" summary updated with a new bullet
+(row 36/44/55/63/87's existing bullets left untouched).
+
+### §4 — Guarded regen: the board delta, measured and restored per the wave rule
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-prose-payout.json
+# corpus-literal-sweep: 21716 records examined of 24736 read, 181276 tokens compared (9 synthesized),
+# 24311 digests checked, 0 findings. CLEAN.
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-prose-payout.json
+# derived-evaluator-fixture-check: 100 of 101 covered units cleared; 1 failed (pre-existing, unrelated:
+# advanced_players_guide:equipment:spindle_of_perfect_knowledge). FIXTURE_EXIT=0.
+CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep-sd31-prose-payout.json \
+DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture-sd31-prose-payout.json \
+  cargo run --locked --bin v06_work_inventory
+# REGEN_EXIT=0, zero stamp loss (the guard did not refuse the write)
+```
+
+Producer's own verdict function, BEFORE (copied pre-regen) vs. AFTER:
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('<path>'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+print(len(U), dict(c), round(100*c['done']/len(U),2))
+"
+# BEFORE: 38521 {'done': 7340, ..., 'held': 4936, 'unmeasurable': 5381, ...} 19.05
+# AFTER:  38521 {'done': 8549, ..., 'held': 3990, 'unmeasurable': 5118, ...} 22.19
+```
+
+**Board headline: done 7,340 -> 8,549 (+1,209), 19.05% -> 22.19%.** Per-unit diff (not just aggregate
+counts — every id individually compared before/after):
+
+```
+moved to done: 1209   moved away from done: 0
+by kind: monster_ability 947, equipment_modifier 149, equipment 112, spell 1
+```
+
+947 `monster_ability` (§1's rung, close to the corrected sizing predicate's population), 149
+`equipment_modifier` + 112 `equipment` + 1 `spell` (§2's recovery — the 112 `equipment` and 1 `spell`
+land EXACTLY on row 70's own 112/1 predictions; `equipment_modifier`'s 149 slightly exceeds row 70's
+134 because the recovery is not limited to the specific 1,060-unit demoted set row 70 sampled from — it
+recovers every unit the join key reaches, which is the honest, non-cherry-picked result). **Zero units
+regressed off `done`** — the held/unmeasurable buckets absorbed the full movement (held -946,
+unmeasurable -263, summing to the +1,209 gain), no side-channel movement in any other cell.
+
+Per the wave rule, `docs/work-inventory.json` is NOT committed with this regen's content — `git
+checkout --` it before the final commit; the delta above is the full evidence trail, independently
+re-derivable from the two commands.
+
+### §5 — DoD item 3: `v06_corpus_trap_report --audit`, confirmed not worsened
+
+```
+cargo run --locked --bin v06_corpus_trap_report -- --audit
+# TRAP_EXIT=2 (pre-existing RED, rows 27/65 — unrelated to this card)
+grep -c '\[wiring-class-mismatch\]' <log>   # 1191
+```
+
+1,191 — byte-identical to the wave's own recorded baseline (`kanban.md`'s `epic-0-reachability-audit`
+row: "Trap report unchanged at 1,191 wiring-class-mismatch, row 65's baseline exactly"). Confirmed, not
+assumed: before this cycle's changes and after are the same number.
+
+### §6 — DoD item 8: on-screen verification, two families proven
+
+```
+export RUN_DESKTOP_AGENT=sd31-prose-payout
+./.claude/skills/run-desktop/verify-on-screen.sh --family monster --record "Demon (Balor)" \
+  --expect "Vorpal Strike" --expect "gains the vorpal weapon quality"
+# PASS -- artifacts/SD31-D7-PROSE-002/item8/monster-demon-balor.{png,verify.md}
+./.claude/skills/run-desktop/verify-on-screen.sh --family equipment --record "Scale Mail" \
+  --expect "dozens of small overlapping metal plates"
+# PASS -- artifacts/SD31-D7-PROSE-002/item8/equipment-scale-mail.{png,verify.md}
+```
+
+Two failed attempts kept as evidence, not discarded, per the standing rule (`artifacts/SD31-D7-PROSE-
+002/item8/monster-air-elemental.FAILED.verify.md`, `monster-elemental-air-medium.FAILED.verify.md`):
+searched the corpus `KEY:` prefix "Air Elemental" (not a real display name — PCGen's own `name` field
+for this monster is `"Elemental (Air/Medium)"`), then that exact name matched 44 rows (parens/slash in
+the query), broader than the search's own record-scoping guard tolerates. Worked around by switching to
+`Demon (Balor)` — the same record `SD31-E6-F1-002`'s own DoD-8 already proved reachable — rather than
+debugging the search box's handling of punctuation under gate-running load.
+
+### §7 — Four-check wired-integration audit, all clean
+
+```
+git diff --unified=0 5d0cd1595 -- 'src/**/*.rs' | grep -nE '\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b' || echo OK_NO_TOKENS
+# OK_NO_TOKENS
+git diff --unified=0 5d0cd1595 -- 'apps/desktop/**/*.tsx' 'apps/desktop/**/*.jsx' | grep -nE 'onClick=\{\s*\(\)\s*=>\s*\{\s*\}\s*\}|onClick=\{undefined' || echo OK_NO_NOOP_HANDLERS
+# OK_NO_NOOP_HANDLERS
+git diff --unified=0 5d0cd1595 -- 'apps/desktop/**/*.{ts,tsx,jsx,rs}' 'src/**/*.rs' ':!**/__tests__/**' ':!**/*.test.*' | grep -nE 'mockResolvedValue|mockReturnValue\(|vi\.mock\(|__mocks__' || echo OK_NO_MOCK_LEAKS
+# OK_NO_MOCK_LEAKS
+git diff --unified=0 5d0cd1595 -- 'apps/desktop/**/*.{ts,tsx}' 'src/**/*.rs' | grep -nE '"Would [^"]*"' || echo OK_NO_WOULD_STRINGS
+# OK_NO_WOULD_STRINGS
+```
+
+No new production Rust/TS files were written (the change is entirely within `v06_work_inventory.rs`);
+no generated corpus record was produced this cycle (only READ from `data/corpus/`, and
+`docs/work-inventory.json` is not committed), so the PI-screening contracts (§52.3/§53.5) were not
+independently re-run beyond what the standard gate's own `pi-sweep`/`declared-pi-audit` stages already
+cover (both PASS in this cycle's own gate run, §8).
+
+### §8 — Full gate
+
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-D7-PROSE-002-verify.log
+./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+
+Launched early, in the background, kept alive while §1-§7 were written. `preflight-oracle`,
+`reachability-audit` (98.95%, unchanged), `pi-sweep`, `declared-pi-audit`, `root-lib` (1867 passed) all
+PASS as of this receipt; `root-full` (the ~490-binary full-workspace stage) was still running when this
+receipt was finalized — final `VERIFY_EXIT` recorded in the commit that lands this receipt, or in a
+follow-up commit if the gate had not finished by the time this cycle needed to return.
+
+### §9 — Reclaim
+
+`scripts/reclaim.sh` then `--apply` run at cycle end; `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/
+sd31-prose-payout` removed after the gate's own build artifacts were no longer needed (reclaim output
+recorded in the structured-output figures for this cycle).
+
+### Files changed
+
+- `src/bin/v06_work_inventory.rs` — `Kind::MonsterAbility` verdict arm (§1), `EngineFacts::
+  corpus_json_descriptions` + `load_corpus_json_descriptions` + `corpus_json_has_real_description` (§2),
+  `MONSTER_ABILITY_FLAT_MAGNITUDE_PENDING_RULING` (§3), 12 new tests total.
+- `docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md` — rows 94, 95 appended; "Needs an
+  operator ruling" summary gained one new bullet.
+- `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-D7-PROSE-002/item8/*` — DoD-8 evidence (2 PASS,
+  2 FAILED-kept-as-evidence).
+- `docs/release/SD-31-corpus-closure-grind/progress.md` — this receipt.
+- `docs/work-inventory.json` — regenerated for measurement, then `git checkout --`'d before commit per
+  the wave rule (NOT part of this cycle's commit).
+
+### Followups (unchanged from `SD31-D7-PROSE-001` §9, minus items this cycle discharged)
+
+Items 1 (flat-magnitude `race_trait` ruling) and 2 (the 247-unit recovery) from `SD31-D7-PROSE-001`'s
+own followups are now DISCHARGED by §2/§3 above (item 2 fully; item 1 gained one more named unit under
+the same open ruling, row 95). Items 3 (`companion` rung, `companion_catalog.rs` already has the render
+infrastructure), 4 (equipment mis-citation repair), 5 (`class_feature` id-naming mismatch), 6
+(`bestiary`/`beastiary` spelling), 7 (`corpus_literal_sweep` typed-field gap), 8 (`verify-on-screen.sh`
+`SEARCH_Y` recalibration) all remain open, unchanged, and are the natural next targets for a future
+`D7-PROSE-003`-shaped cycle — `companion` (item 3) is the cheapest of these: the render infrastructure
+(`companion_catalog.rs`'s own `serve_ability_description`, byte-identical to the monster one this cycle
+reused) already exists, unlike `class_feature`, which this cycle investigated and found has no raw-
+prose render path today (`ClassFeatureRow.detail` renders a COMPUTED derivation, not corpus `DESC:`
+text) — building one is real new-surface work, not a rung extension, and was deliberately left for a
+dedicated cycle rather than rushed here.
