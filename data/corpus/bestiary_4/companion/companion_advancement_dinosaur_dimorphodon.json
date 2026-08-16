@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Companion Advancement ~ Dinosaur (Dimorphodon)",
     "delivery": null,
@@ -13,6 +11,40 @@
     "name": "Companion Advancement (Dinosaur (Dimorphodon))",
     "owners": [
       "bestiary_4:companion:companion_dinosaur_dimorphodon"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Companion (Dinosaur (Dimorphodon)) ~ Poison"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CON|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BiteSize|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Companion Advancement ~ Dinosaur (Dimorphodon)"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Companion (Dinosaur (Dimorphodon))"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionAdvancement"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      }
     ],
     "record_type": "ability",
     "source_page": null,
@@ -30,16 +62,18 @@
       "CompanionAdvancement"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
-    "sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6",
-    "line": 7,
-    "record_key": "Companion Advancement ~ Dinosaur (Dimorphodon)"
-  },
+  "ingested_at": "2026-08-15T01:24:10Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 7,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
+    "record_key": "Companion Advancement ~ Dinosaur (Dimorphodon)",
+    "sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

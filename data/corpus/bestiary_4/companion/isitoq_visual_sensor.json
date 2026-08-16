@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Isitoq ~ Visual Sensor",
     "delivery": "Supernatural",
@@ -15,6 +13,24 @@
       "bestiary_4:companion:familiar_isitoq",
       "bestiary_4:companion:isitoq"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "An isitoq's creator or master can see through its eye at a range of 60 feet, using the eye's normal vision and darkvision. The following spells have a 5%% chance per caster level of the isitoq's creator of operating through the isitoq: detect chaos, detect evil, detect good, detect law, detect magic, and message. If the creator is 15th level or higher, the following spells have the same chance of functioning through the isitoq: read magic and tongues."
+      },
+      {
+        "key": "KEY",
+        "value": "Isitoq ~ Visual Sensor"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "record_type": "ability",
     "source_page": null,
     "stat_adjustments": [],
@@ -23,16 +39,18 @@
       "Supernatural"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
-    "sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6",
-    "line": 90,
-    "record_key": "Isitoq ~ Visual Sensor"
-  },
+  "ingested_at": "2026-08-15T01:24:10Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 90,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
+    "record_key": "Isitoq ~ Visual Sensor",
+    "sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6"
+  },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",

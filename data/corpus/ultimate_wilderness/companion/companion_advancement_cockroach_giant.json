@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Companion Advancement ~ Cockroach (Giant)",
     "delivery": null,
@@ -13,6 +11,48 @@
     "name": "Companion Advancement (Cockroach (Giant))",
     "owners": [
       "ultimate_wilderness:companion:companion_cockroach_giant"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Diehard"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Climb|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Fly|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,DEX,CON|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|2|TYPE=Base.REPLACE"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Companion Advancement ~ Cockroach (Giant)"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Companion (Cockroach (Giant))"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionAdvancement"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      }
     ],
     "record_type": "ability",
     "source_page": null,
@@ -34,16 +74,18 @@
       "CompanionAdvancement"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
-    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
-    "line": 66,
-    "record_key": "Companion Advancement ~ Cockroach (Giant)"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 66,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Companion Advancement ~ Cockroach (Giant)",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

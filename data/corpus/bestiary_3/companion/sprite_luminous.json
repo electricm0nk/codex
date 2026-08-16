@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T20:01:26Z",
   "data": {
     "corpus_key": "Sprite ~ Luminous",
     "delivery": "Supernatural",
@@ -13,6 +11,28 @@
     "owners": [
       "bestiary_3:companion:sprite"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A sprite naturally sheds light equal to that provided by a torch. A sprite can control the color and intensity of the light as a swift action, reducing it to the dimness of a candle or even extinguishing its luminosity entirely if it wishes."
+      },
+      {
+        "key": "KEY",
+        "value": "Sprite ~ Luminous"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.256"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpriteRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.256",
     "stat_adjustments": [],
@@ -22,16 +42,18 @@
       "Supernatural"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_familiar.lst",
-    "sha256": "175d62aece1cac131ef71641c57c0118a41340fe0a96e8e3b26e20e5508724ac",
-    "line": 79,
-    "record_key": "Sprite ~ Luminous"
-  },
+  "ingested_at": "2026-08-12T20:01:26Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 79,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_familiar.lst",
+    "record_key": "Sprite ~ Luminous",
+    "sha256": "175d62aece1cac131ef71641c57c0118a41340fe0a96e8e3b26e20e5508724ac"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

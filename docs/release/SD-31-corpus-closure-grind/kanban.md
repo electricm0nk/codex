@@ -65,6 +65,31 @@ to avoid drift between two copies of the same legend text.
   own TDD pass on the shared `equipment_gap::find_citation` helper). DoD-8 not captured at the
   branch tip; the integration cycle attempted to discharge it directly (see this row's own receipt
   in `progress.md` for the outcome).
+
+**Wave 6 (in flight):**
+- `SD31-E6-F7-001` (`companion`/`feat`/`monster_ability`, own worktree, branch
+  `sd31/companion-feat-monster-ability-e6f7f8f9`, pushed, not yet merged): built
+  `enrich_companion_raw_tokens.rs` (`companion`'s counterpart to `SD31-E6-F9-001`'s
+  `enrich_monster_ability_raw_tokens.rs`) — 922 `companion` records enriched with real `raw_tokens`
+  corpus-wide, `corpus_literal_sweep` CLEAN (22638 examined, +922 exact match), `declared_pi_shipping_audit`
+  CLEAN. Guarded regen, measured: `companion` `held` 506 → 441 (-65), `done` 416 → 481 (+65); board-wide
+  `done` **7,340 → 7,405 (+65)**. **Found, traced one record deep, and reported (not fixed — lane 1's
+  file) a real cross-lane join-key bug** blocking the other 34 of the 99 targeted `static`+`grounded`
+  units: `apply_done_rung_stamps`'s `Static` arm joins `sweep_verified` on the re-attributed reporting
+  `book` field instead of `source_book` (`OPEN-ISSUES.md` row 94) — a one-line-per-branch fix that would
+  move all 34 to `done` with no further ingest. **Render-readiness report for lane 1's `Kind::Companion`
+  prose done-bar rung** (`OPEN-ISSUES.md` row 95): of the 223 zero-magnitude `grounded` `companion`
+  units `SD31-D7-PROSE-001` named, 210 have real, corpus-sourced, render-certified text (201 via
+  `description`, 9 via `description_variants` only — a rung checking `description` alone would
+  under-claim those 9), 13 genuinely carry nothing to show a player. Added
+  `no_served_description_variant_leaks_pcgen_syntax` (`companion_catalog.rs`, TDD) to close the one gap
+  in the render certification the readiness report needed (the `description_variants` half was
+  previously pinned on one record only). Traced one `held` unit per kind end to end (`feat`'s
+  `static`+`grounded` 15-unit population has no `data/corpus/**/feat/*.json` at all for most books,
+  `monster_ability`'s dominant `held` cell is Epic 2's `display`+`grounded` verdict-path blocker, same
+  as `companion`'s own 182/958 share of it — neither is this card's file territory). DoD-8: real
+  companion ability description on the live Companion Catalog screen. Full receipt: `progress.md`
+  `SD31-E6-F7-001`.**
 | `epic-7-book-onboarding` | READY | Book Onboarding, 100 % mandate | onboard the 7 `future_state` books — PI screen cited clean per book before any record is written | — | — | — |
 | `epic-8-cloud-fanout` | READY (per lane shape, after one local proof cycle) | Cloud Fan-Out Protocol (grind **and** capability lanes) | local-proof-then-cloud-scale protocol; local orchestrator owns all `tranche/11` merges (updated from `tranche/10`, `decisions.md §6`); DoD-8 and dashboard-producer work stay local | — | — | — |
 | `epic-10-version-numbering` | COMPLETE | Build Version Numbering | version-bump 0.11.0 for the `tranche/11` cut (`decisions.md §6`) — package.json/tauri.conf.json/Cargo.toml/Cargo.lock, the publish-workflow VERSION stamp, and the full test-fixture literal surface (8 files); full gate green (`VERIFY_EXIT=0`, 19/19 stages, `artifacts/sd31-s7-version-verify.log`) | sd31-ready-s7-version | 2026-08-15 | `SD31-S7-VERSION-001` |

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T14:58:45Z",
   "data": {
     "corpus_key": "Companion Advancement ~ Frog Father",
     "delivery": null,
@@ -12,6 +10,44 @@
     "name": "Companion Advancement (Frog Father)",
     "owners": [
       "bestiary_5:companion:companion_frog_father"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Swallow Whole"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,DEX|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SwallowWholeDamageDie|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SwallowWholeDice|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Companion Advancement ~ Frog Father"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Companion (Frog Father)"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionAdvancement"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      }
     ],
     "record_type": "ability",
     "source_page": null,
@@ -29,16 +65,18 @@
       "CompanionAdvancement"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_companion.lst",
-    "sha256": "2c75b3d5d10c80857b5bf94529f1c1c6f327bf63cb18ab901f824cee80f8b31e",
-    "line": 10,
-    "record_key": "Companion Advancement ~ Frog Father"
-  },
+  "ingested_at": "2026-08-12T14:58:45Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_companion.lst",
+    "record_key": "Companion Advancement ~ Frog Father",
+    "sha256": "2c75b3d5d10c80857b5bf94529f1c1c6f327bf63cb18ab901f824cee80f8b31e"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

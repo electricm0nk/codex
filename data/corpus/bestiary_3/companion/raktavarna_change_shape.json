@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T20:01:26Z",
   "data": {
     "corpus_key": "Raktavarna ~ Change Shape",
     "delivery": "Supernatural",
@@ -13,6 +11,28 @@
     "owners": [
       "bestiary_3:companion:rakshasa_raktavarna"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a full-round action, a raktavarna can take the shape of a handheld object, most often an ornamental light, a one-handed weapon, or a piece of treasure. If the rakshasa remains stationary in such a form, it can attempt Stealth checks even while being observed. It can remain motionless in object form indefinitely, but reverts to its true form as soon as it takes any action."
+      },
+      {
+        "key": "KEY",
+        "value": "Raktavarna ~ Change Shape"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.229"
+      },
+      {
+        "key": "TYPE",
+        "value": "RaktavarnaRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.229",
     "stat_adjustments": [],
@@ -22,16 +42,18 @@
       "Supernatural"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_familiar.lst",
-    "sha256": "175d62aece1cac131ef71641c57c0118a41340fe0a96e8e3b26e20e5508724ac",
-    "line": 73,
-    "record_key": "Raktavarna ~ Change Shape"
-  },
+  "ingested_at": "2026-08-12T20:01:26Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 73,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_familiar.lst",
+    "record_key": "Raktavarna ~ Change Shape",
+    "sha256": "175d62aece1cac131ef71641c57c0118a41340fe0a96e8e3b26e20e5508724ac"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

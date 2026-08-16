@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Caterpillar (Giant) ~ Bristles",
     "delivery": "Extraordinary",
@@ -16,6 +14,28 @@
     "owners": [
       "ultimate_wilderness:companion:companion_caterpillar_giant"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature attacking the giant caterpillar with a natural attack or non-reach melee weapon must succeed at a Reflex save or take damage as if the caterpillar had struck the creature with its bristles attack; Reflex DC %1|12+HD/2+DEX"
+      },
+      {
+        "key": "KEY",
+        "value": "Caterpillar (Giant) ~ Bristles"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.184"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.GiantCaterpillarRacialTrait"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.184",
     "stat_adjustments": [],
@@ -25,16 +45,18 @@
       "GiantCaterpillarRacialTrait"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
-    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
-    "line": 205,
-    "record_key": "Caterpillar (Giant) ~ Bristles"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 205,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Caterpillar (Giant) ~ Bristles",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

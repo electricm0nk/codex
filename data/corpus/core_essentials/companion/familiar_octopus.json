@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "ability_keys": [],
     "corpus_key": "Familiar (Octopus)",
@@ -28,6 +26,120 @@
     ],
     "race_subtype": null,
     "race_type": "Animal",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Multiattack"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite|Tentacle"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Can't Be Tripped|Grab|Octopus Companion ~ Ink Cloud|Octopus Companion ~ Jet|Octopus Companion ~ Poison"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Escape Artist|10|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Stealth|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT,CHA|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TentacleAttacks|-1"
+      },
+      {
+        "key": "CR",
+        "value": "1"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|S"
+      },
+      {
+        "key": "HANDS",
+        "value": "8"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Familiar ~ Octopus"
+      },
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Animal:2"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20,Swim,30"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Familiar [NAME]"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Animal"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "S"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "z_Companion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.219"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Aquatic"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Young Creature"
+      },
+      {
+        "key": "TYPE",
+        "value": "Companion.Familiar"
+      }
+    ],
     "reach_feet": 5,
     "record_type": "creature",
     "size": "S",
@@ -73,16 +185,18 @@
       "Familiar"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_apg.lst",
-    "sha256": "2503bc54689a1f20beedf12c51d9563f24e91b74788d24bc73567c483fa004ec",
-    "line": 9,
-    "record_key": "Familiar (Octopus)"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 9,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_apg.lst",
+    "record_key": "Familiar (Octopus)",
+    "sha256": "2503bc54689a1f20beedf12c51d9563f24e91b74788d24bc73567c483fa004ec"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

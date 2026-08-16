@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Ioun Wyrd ~ Ioun Affinity",
     "delivery": "Supernatural",
@@ -17,6 +15,28 @@
       "ultimate_wilderness:companion:familiar_ioun_wyrd",
       "ultimate_wilderness:companion:ioun_wyrd"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "An ioun wyrd may integrate %1 ioun stones into its body. Because an ioun wyrd sees all ioun stones as equal and gains no benefits from them, the wyrd's ioun stones can be swapped out by any creature the wyrd trusts.|1+HD/2"
+      },
+      {
+        "key": "KEY",
+        "value": "Ioun Wyrd ~ Ioun Affinity"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.197"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.IounWyrdRacialTrait"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.197",
     "stat_adjustments": [],
@@ -26,16 +46,18 @@
       "IounWyrdRacialTrait"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
-    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
-    "line": 249,
-    "record_key": "Ioun Wyrd ~ Ioun Affinity"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 249,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Ioun Wyrd ~ Ioun Affinity",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T20:01:26Z",
   "data": {
     "corpus_key": "Pachycephalosaurus ~ Clobbering Charge",
     "delivery": "Extraordinary",
@@ -13,6 +11,28 @@
     "owners": [
       "bestiary_3:companion:companion_pachycephalosaurus"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When a pachycephalosaurus hits a target with its slam attack at the end of a charge, it can initiate a bull rush as a free action to move the struck target back in the same direction as the dinosaur's charge. The pachycephalosaurus cannot move with the target of the bull rush. If a pachycephalosaurus scores a critical hit against a creature with its slam attack at the end of a charge, it also staggers the target for 1 round. If the victim succeeds at a DC 18 Fortitude save, the stagger effect is negated, but the victim still suffers the effects of the dinosaur's bull rush attempt. The save DC is Strength-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Pachycephalosaurus ~ Clobbering Charge"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.79"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.79",
     "stat_adjustments": [],
@@ -22,16 +42,18 @@
       "Extraordinary"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_companion.lst",
-    "sha256": "127e931f9e9ccc8d0d0acf688627f76fb4145f18c94255db994a5c902456dc15",
-    "line": 38,
-    "record_key": "Pachycephalosaurus ~ Clobbering Charge"
-  },
+  "ingested_at": "2026-08-12T20:01:26Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 38,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_companion.lst",
+    "record_key": "Pachycephalosaurus ~ Clobbering Charge",
+    "sha256": "127e931f9e9ccc8d0d0acf688627f76fb4145f18c94255db994a5c902456dc15"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

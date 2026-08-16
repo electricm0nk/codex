@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T14:58:57Z",
   "data": {
     "corpus_key": "Snapping Turtle ~ Shell",
     "delivery": "Extraordinary",
@@ -13,6 +11,32 @@
     "owners": [
       "bestiary_2:companion:familiar_snapping_turtle"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a move action, a snapping turtle can pull its extremities and head into its shell.  It cannot move or attack as long as it remains in this state, but its armor bonus from natural armor increases by +4 as long as it does."
+      },
+      {
+        "key": "KEY",
+        "value": "Snapping Turtle ~ Shell"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.273"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|4|TYPE=NaturalArmor.STACK"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.273",
     "stat_adjustments": [],
@@ -21,16 +45,18 @@
       "Extraordinary"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_familiar_race.lst",
-    "sha256": "ab61adb708aab8598e3d99a8ad3c8167be3a538d4e4b8b82ae8db9358d837d2d",
-    "line": 6,
-    "record_key": "Snapping Turtle ~ Shell"
-  },
+  "ingested_at": "2026-08-12T14:58:57Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_familiar_race.lst",
+    "record_key": "Snapping Turtle ~ Shell",
+    "sha256": "ab61adb708aab8598e3d99a8ad3c8167be3a538d4e4b8b82ae8db9358d837d2d"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:tempbonus"

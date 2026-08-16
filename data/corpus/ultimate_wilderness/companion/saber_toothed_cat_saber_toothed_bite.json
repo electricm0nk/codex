@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Saber-Toothed Cat ~ Saber-Toothed Bite",
     "delivery": "Extraordinary",
@@ -29,6 +27,32 @@
     "owners": [
       "ultimate_wilderness:companion:companion_saber_toothed_cat"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "1d10 bite attack, only on a grapple check to deal damage.|PREVARLT:CompanionAdvancement,1"
+      },
+      {
+        "key": "DESC",
+        "value": "2d8 bite attack, only on a grapple check to deal damage.|PREVARGTEQ:CompanionAdvancement,1"
+      },
+      {
+        "key": "KEY",
+        "value": "Saber-Toothed Cat ~ Saber-Toothed Bite"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.181"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.SaberToothedCatRacialTrait"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.181",
     "stat_adjustments": [],
@@ -38,16 +62,18 @@
       "SaberToothedCatRacialTrait"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
-    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
-    "line": 338,
-    "record_key": "Saber-Toothed Cat ~ Saber-Toothed Bite"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 338,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Saber-Toothed Cat ~ Saber-Toothed Bite",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

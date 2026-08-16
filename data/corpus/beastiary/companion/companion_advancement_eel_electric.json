@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Companion Advancement ~ Eel (Electric)",
     "delivery": null,
@@ -13,6 +11,52 @@
     "name": "Companion Advancement (Eel (Electric))",
     "owners": [
       "beastiary:companion:companion_eel_electric"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Electric Eel ~ Electricity"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX,CON|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|2|TYPE=Base.REPLACE"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tail|DAMAGE|-ceil(STR/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tail|TOHIT|-5"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Companion Advancement ~ Eel (Electric)"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Tail,Weapon.Natural.Melee.Touch.Finesseable.Electricity,*1,1d6"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Companion (Eel (Electric))"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionAdvancement"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      }
     ],
     "record_type": "ability",
     "source_page": null,
@@ -30,16 +74,18 @@
       "CompanionAdvancement"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_companion.lst",
-    "sha256": "7c9627b88fbb96c3e12c1002985e0d5f71a2665ca6fa995f669f67744db9a9d8",
-    "line": 17,
-    "record_key": "Companion Advancement ~ Eel (Electric)"
-  },
+  "ingested_at": "2026-08-15T01:24:10Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 17,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_companion.lst",
+    "record_key": "Companion Advancement ~ Eel (Electric)",
+    "sha256": "7c9627b88fbb96c3e12c1002985e0d5f71a2665ca6fa995f669f67744db9a9d8"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

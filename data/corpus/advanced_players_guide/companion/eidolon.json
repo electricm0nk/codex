@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-13T09:20:39Z",
   "data": {
     "ability_keys": [
       "advanced_players_guide:companion:eidolon_link",
@@ -17,6 +15,72 @@
     "natural_attacks": [],
     "race_subtype": "Eidolon",
     "race_type": null,
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Eidolon"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|2|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DisableRaceTypeGrantedProfs|1"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "7"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Eidolon"
+      },
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Eidolon:1"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Eidolon"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "reach_feet": 5,
     "record_type": "creature",
     "size": "M",
@@ -39,16 +103,18 @@
     ],
     "type_segments": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_races_companion.lst",
-    "sha256": "7dd281344db05468229b28af3273f65d51fba31e5c954d63b8805e5866f11473",
-    "line": 7,
-    "record_key": "Eidolon"
-  },
+  "ingested_at": "2026-08-13T09:20:39Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 7,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_races_companion.lst",
+    "record_key": "Eidolon",
+    "sha256": "7dd281344db05468229b28af3273f65d51fba31e5c954d63b8805e5866f11473"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

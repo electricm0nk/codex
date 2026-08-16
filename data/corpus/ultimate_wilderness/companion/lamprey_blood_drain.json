@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Lamprey ~ Blood Drain",
     "delivery": "Extraordinary",
@@ -15,6 +13,28 @@
       "ultimate_wilderness:companion:familiar_lamprey",
       "ultimate_wilderness:companion:lamprey"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A Lamprey drains blood at the end of its turn if it is attached to a foe, inflicting 1 point of Strength damage."
+      },
+      {
+        "key": "KEY",
+        "value": "Lamprey ~ Blood Drain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.199"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.LampreyRacialTrait"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.199",
     "stat_adjustments": [],
@@ -24,16 +44,18 @@
       "LampreyRacialTrait"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
-    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
-    "line": 259,
-    "record_key": "Lamprey ~ Blood Drain"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 259,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "record_key": "Lamprey ~ Blood Drain",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

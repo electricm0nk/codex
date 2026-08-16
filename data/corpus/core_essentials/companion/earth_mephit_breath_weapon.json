@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:11Z",
   "data": {
     "corpus_key": "Earth Mephit ~ Breath Weapon",
     "delivery": "Supernatural",
@@ -14,6 +12,84 @@
     "owners": [
       "core_essentials:companion:mephit_earth"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Breath Weapon"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1-ft. cone, %2d%3 bludgeoning damage, Reflex DC %4 for half, usable every %5 rounds)|BreathWeaponCone|BreathWeaponDice|BreathWeaponDamageDie|BreathWeaponDC|BreathWeaponRechargeRounds"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponCone|15"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDC|10+(max(HD,CompanionHD)/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDC|1|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Breath Weapon)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDamageDie|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponRechargeRounds|4"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponCone|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponDamageDie|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BreathWeaponRechargeRounds|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Earth mephits can unleash a cone of rocks that deals 1d8 bludgeoning damage as a breath weapon every 4 rounds as a standard action. The DC is Constitution-based and includes a +1 racial bonus."
+      },
+      {
+        "key": "KEY",
+        "value": "Earth Mephit ~ Breath Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.202"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Special Attack.Special Ability.Supernatural.BreathWeapon"
+      }
+    ],
     "record_type": "ability",
     "source_page": "p.202",
     "stat_adjustments": [],
@@ -25,16 +101,18 @@
       "BreathWeapon"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_familiar_race_cr.lst",
-    "sha256": "c61a43a8081bb87f50c6ffb1c48855ba71bb0312907c0fedca151b5dc0fcfe60",
-    "line": 180,
-    "record_key": "Earth Mephit ~ Breath Weapon"
-  },
+  "ingested_at": "2026-08-15T01:24:11Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 180,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_familiar_race_cr.lst",
+    "record_key": "Earth Mephit ~ Breath Weapon",
+    "sha256": "c61a43a8081bb87f50c6ffb1c48855ba71bb0312907c0fedca151b5dc0fcfe60"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

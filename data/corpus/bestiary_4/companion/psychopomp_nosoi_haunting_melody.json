@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Psychopomp (Nosoi) ~ Haunting Melody",
     "delivery": "Supernatural",
@@ -17,6 +15,24 @@
       "bestiary_4:companion:psychopomp_nosoi",
       "bestiary_4:companion:familiar_nosoi"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A nosoi's song has the power to grip the spirits of those that hear it. All living and undead creatures within a 60-foot spread must succeed at a DC %1 Will saving throw or be fascinated. A creature that successfully saves is not subject to that nosoi's song for 24 hours. This effect continues for as long as the nosoi sings and for 1 round thereafter. A nosoi can sing for a number or rounds per day equal to twice its Hit Dice. This is a sonic mind-affecting charm effect. This ability can affect undead creatures, even though the undead subtype makes such creatures immune to mind-affecting effects (though undead creatures with immunity to mind-affecting effects from a source other than their creature type are still immune).|11+CHA"
+      },
+      {
+        "key": "KEY",
+        "value": "Psychopomp (Nosoi) ~ Haunting Melody"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "record_type": "ability",
     "source_page": null,
     "stat_adjustments": [],
@@ -25,16 +41,18 @@
       "Supernatural"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
-    "sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6",
-    "line": 104,
-    "record_key": "Psychopomp (Nosoi) ~ Haunting Melody"
-  },
+  "ingested_at": "2026-08-15T01:24:10Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 104,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
+    "record_key": "Psychopomp (Nosoi) ~ Haunting Melody",
+    "sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Drake (Shadow) ~ Speed Surge",
     "delivery": "Extraordinary",
@@ -15,6 +13,24 @@
       "bestiary_4:companion:drake_shadow",
       "bestiary_4:companion:familiar_shadow_drake"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Three times per day as a swift action, a shadow drake may draw on its draconic heritage for a boost of strength and speed to take an additional move action in that round."
+      },
+      {
+        "key": "KEY",
+        "value": "Drake (Shadow) ~ Speed Surge"
+      },
+      {
+        "key": "TYPE",
+        "value": "Extraordinary.SpecialAttack"
+      }
+    ],
     "record_type": "ability",
     "source_page": null,
     "stat_adjustments": [],
@@ -23,16 +39,18 @@
       "SpecialAttack"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
-    "sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6",
-    "line": 80,
-    "record_key": "Drake (Shadow) ~ Speed Surge"
-  },
+  "ingested_at": "2026-08-15T01:24:10Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 80,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
+    "record_key": "Drake (Shadow) ~ Speed Surge",
+    "sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

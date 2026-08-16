@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T13:12:24Z",
   "data": {
     "corpus_key": "Companion Advancement ~ Worg",
     "delivery": null,
@@ -12,6 +10,48 @@
     "name": "Companion Advancement (Worg)",
     "owners": [
       "inner_sea_combat:companion:companion_worg"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Trip"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|2|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|2|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|2|TYPE=Base.STACK"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bite|DAMAGESIZE|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Companion Advancement ~ Worg"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Companion (Worg)"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionAdvancement"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      }
     ],
     "record_type": "ability",
     "source_page": null,
@@ -29,16 +69,18 @@
       "CompanionAdvancement"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_companion.lst",
-    "sha256": "d3006b9497dda79016c955c9d2e707c290603d8577975e32408fafaaadeba04c",
-    "line": 8,
-    "record_key": "Companion Advancement ~ Worg"
-  },
+  "ingested_at": "2026-08-12T13:12:24Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 8,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_companion.lst",
+    "record_key": "Companion Advancement ~ Worg",
+    "sha256": "d3006b9497dda79016c955c9d2e707c290603d8577975e32408fafaaadeba04c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T13:12:24Z",
   "data": {
     "corpus_key": "Companion Advancement ~ Griffon",
     "delivery": null,
@@ -12,6 +10,56 @@
     "name": "Companion Advancement (Griffon)",
     "owners": [
       "inner_sea_combat:companion:companion_griffon"
+    ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Talons"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Pounce|Rake"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Fly|40"
+      },
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Walk|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|2|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|2|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|2|TYPE=Base.STACK"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Companion Advancement ~ Griffon"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Companion (Griffon)"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionAdvancement"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      }
     ],
     "record_type": "ability",
     "source_page": null,
@@ -29,16 +77,18 @@
       "CompanionAdvancement"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_companion.lst",
-    "sha256": "d3006b9497dda79016c955c9d2e707c290603d8577975e32408fafaaadeba04c",
-    "line": 5,
-    "record_key": "Companion Advancement ~ Griffon"
-  },
+  "ingested_at": "2026-08-12T13:12:24Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 5,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_companion.lst",
+    "record_key": "Companion Advancement ~ Griffon",
+    "sha256": "d3006b9497dda79016c955c9d2e707c290603d8577975e32408fafaaadeba04c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T13:12:24Z",
   "data": {
     "corpus_key": "Companion Advancement ~ Hippocampus",
     "delivery": null,
@@ -12,6 +10,44 @@
     "name": "Companion Advancement (Hippocampus)",
     "owners": [
       "inner_sea_combat:companion:companion_hippocampus"
+    ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "MOVEADD|TYPE.Walk|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|2|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bite|DAMAGESIZE|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Companion Advancement ~ Hippocampus"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Companion (Hippocampus)"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionAdvancement"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      }
     ],
     "record_type": "ability",
     "source_page": null,
@@ -29,16 +65,18 @@
       "CompanionAdvancement"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_companion.lst",
-    "sha256": "d3006b9497dda79016c955c9d2e707c290603d8577975e32408fafaaadeba04c",
-    "line": 6,
-    "record_key": "Companion Advancement ~ Hippocampus"
-  },
+  "ingested_at": "2026-08-12T13:12:24Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_companion.lst",
+    "record_key": "Companion Advancement ~ Hippocampus",
+    "sha256": "d3006b9497dda79016c955c9d2e707c290603d8577975e32408fafaaadeba04c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

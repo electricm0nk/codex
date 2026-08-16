@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:10Z",
   "data": {
     "corpus_key": "Speak with Animals (Rodents only) ~ Constant",
     "delivery": "SpellLike",
@@ -15,6 +13,32 @@
       "bestiary_4:companion:familiar_ratling",
       "bestiary_4:companion:ratling"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use speak with animals, as per the spell, as a constant ability, but only to speak with rodents. Constant spell-like abilities function at all times but can be dispelled. Constant spell-like abilities can be reactivated as a swift action.|PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "DESC",
+        "value": "You can use speak with animals, as per the spell, as a constant ability, but only to speak with rodents.|!PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "KEY",
+        "value": "Speak with Animals (Rodents only) ~ Constant"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=SLA_CL|Speak with Animals"
+      },
+      {
+        "key": "TYPE",
+        "value": "Communicate.SpellLike"
+      }
+    ],
     "record_type": "ability",
     "source_page": null,
     "stat_adjustments": [],
@@ -23,16 +47,18 @@
       "SpellLike"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race_ce_companion.lst",
-    "sha256": "818d474333f914f8a18e72ce4f6f1f5a34078d1aa0a7e895300210a21afa2100",
-    "line": 9,
-    "record_key": "Speak with Animals (Rodents only) ~ Constant"
-  },
+  "ingested_at": "2026-08-15T01:24:10Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 9,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race_ce_companion.lst",
+    "record_key": "Speak with Animals (Rodents only) ~ Constant",
+    "sha256": "818d474333f914f8a18e72ce4f6f1f5a34078d1aa0a7e895300210a21afa2100"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

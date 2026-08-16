@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T13:12:30Z",
   "data": {
     "corpus_key": "Clockwork Spy ~ Tinkering",
     "delivery": "Extraordinary",
@@ -13,6 +11,28 @@
     "owners": [
       "inner_sea_intrigue:companion:familiar_clockwork_spy"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "ABILITYPOOL|Clockwork Spy Tinkering Choice|mastervar(\"ClockworkSpyTinkering\")"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Clockwork Spy ~ Tinkering"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "mastervar(\"ClockworkSpyTinkering\"),1"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClockworkSpyRacialAbility.SpecialQuality.Extraordinary"
+      }
+    ],
     "record_type": "ability",
     "source_page": null,
     "stat_adjustments": [],
@@ -22,16 +42,18 @@
       "Extraordinary"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_race_companion.lst",
-    "sha256": "cc2db65754b883c24c83cdd077e7cb20965af4f6264b754c3f028de73d41896f",
-    "line": 13,
-    "record_key": "Clockwork Spy ~ Tinkering"
-  },
+  "ingested_at": "2026-08-12T13:12:30Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 13,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_race_companion.lst",
+    "record_key": "Clockwork Spy ~ Tinkering",
+    "sha256": "cc2db65754b883c24c83cdd077e7cb20965af4f6264b754c3f028de73d41896f"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard"

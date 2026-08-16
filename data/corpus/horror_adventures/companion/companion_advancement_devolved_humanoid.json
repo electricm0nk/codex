@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T13:12:30Z",
   "data": {
     "corpus_key": "Companion Advancement ~ Devolved Humanoid",
     "delivery": null,
@@ -12,6 +10,52 @@
     "name": "Companion Advancement (Devolved Humanoid)",
     "owners": [
       "horror_adventures:companion:companion_devolved_humanoid"
+    ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|2|TYPE=Base.STACK"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BiteSize|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClawSize|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "KEY",
+        "value": "Companion Advancement ~ Devolved Humanoid"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Companion (Devolved Humanoid)"
+      },
+      {
+        "key": "TYPE",
+        "value": "CompanionAdvancement"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      }
     ],
     "record_type": "ability",
     "source_page": null,
@@ -33,16 +77,18 @@
       "CompanionAdvancement"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_companion.lst",
-    "sha256": "99e5710e0999915d1c13a7e360da1b6ba1e1745eeff8c822f513110693627717",
-    "line": 3,
-    "record_key": "Companion Advancement ~ Devolved Humanoid"
-  },
+  "ingested_at": "2026-08-12T13:12:30Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 3,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_companion.lst",
+    "record_key": "Companion Advancement ~ Devolved Humanoid",
+    "sha256": "99e5710e0999915d1c13a7e360da1b6ba1e1745eeff8c822f513110693627717"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

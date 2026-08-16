@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T13:12:30Z",
   "data": {
     "corpus_key": "Clockwork Spy ~ Self-Destruct",
     "delivery": "Supernatural",
@@ -13,6 +11,24 @@
     "owners": [
       "inner_sea_intrigue:companion:familiar_clockwork_spy"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Unless specifically programmed otherwise by its creator, a clockwork spy explodes 1 round after it is destroyed. During this round, the thing shrieks and thrashes about as if undergoing convulsions. On what would normally have been the clockwork spy's next action, it explodes, dealing 1d6 points of fire damage in a 5-foot radius (Reflex DC 10 for half damage). A DC 20 Disable Device check made as a standard action can halt the spy's self-destruct sequence, but does not prevent it from dying. A clockwork spy that self-destructs automatically destroys its gemstone, along with any information contained inside it. The save DC is Constitution-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Clockwork Spy ~ Self-Destruct"
+      },
+      {
+        "key": "TYPE",
+        "value": "ClockworkSpyRacialAbility.SpecialQuality.Supernatural"
+      }
+    ],
     "record_type": "ability",
     "source_page": null,
     "stat_adjustments": [],
@@ -22,16 +38,18 @@
       "Supernatural"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_race_companion.lst",
-    "sha256": "cc2db65754b883c24c83cdd077e7cb20965af4f6264b754c3f028de73d41896f",
-    "line": 12,
-    "record_key": "Clockwork Spy ~ Self-Destruct"
-  },
+  "ingested_at": "2026-08-12T13:12:30Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 12,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_race_companion.lst",
+    "record_key": "Clockwork Spy ~ Self-Destruct",
+    "sha256": "cc2db65754b883c24c83cdd077e7cb20965af4f6264b754c3f028de73d41896f"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
