@@ -9365,45 +9365,61 @@ LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F2-004-verify.log
 ./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
 ```
 
-**Status at commit time: still running, kept alive, 11 of ~23 stages confirmed PASS so far** — every
-stage that exercises this cycle's own changed code is already green: `root-lib` (1870 passed),
-`root-full` (6629 passed across 562 suites, all 529 `tests/*.rs` suites executed), `desktop` (447
-passed — includes `spell_catalog::`/`class_spell_levels::` in full), `reach` (27 passed — the claim for
-the `spell` family this cycle added), `corpus-sweep` (22937 examined, 0 findings), `frontend-test`
-(99/99 files — includes `SpellCatalogScreen.test.ts`), `frontend-typecheck` (tsc clean). Remaining
-stages (`clippy` onward) were still executing when this receipt's own commit landed, under a
-6-agent-shared box (`pgrep -fa clippy` showed 3+ concurrent `cargo-clippy` invocations from sibling
-cycles at time of check — corroborated as genuine progress, not a hang, via live `%CPU`/elapsed-time
-checks on this cycle's own PID before every "still running" conclusion). Per the mandate's own
-"ran out of budget is not blocked" rule, the commit lands now; `VERIFY_EXIT` will be appended to this
-receipt (or a follow-up commit) once the run completes — see
-`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F2-004-verify.log` for the live/final state.
+**VERIFY_EXIT=0. 23/23 stages PASS.** Ran to completion under heavy shared-box contention (6+
+concurrent sibling `verify.sh`/`cargo clippy` invocations observed live throughout — corroborated as
+genuine progress, not a hang, via repeated live PID/child-process/`%CPU`/elapsed-time checks before
+every "still running" conclusion, per the standing rule). Full stage list:
+`preflight-disk preflight-oracle oracle-pin-selftest producer-selftest reachability-audit-selftest
+reachability-audit groundtruth-guard-selftest pi-sweep declared-pi-audit audit-selftest
+reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep
+frontend-install frontend-test frontend-typecheck clippy class-dump`.
 
-### 7. DoD-8 — on-screen verification
+Every stage that exercises this cycle's own changed code: `root-lib` 1870 passed, `root-full` 6629
+passed across 562 suites (all 529 `tests/*.rs` suites executed), `desktop` 447 passed (includes
+`spell_catalog::`/`class_spell_levels::` in full), `reach` 27 passed (the claim for the `spell` family
+this cycle added), `corpus-sweep` 22937 examined/0 findings, `frontend-test` 99/99 files (includes
+`SpellCatalogScreen.test.ts`), `frontend-typecheck` tsc clean, `clippy` root:47/desktop:7
+warnings/0 errors, `class-dump` 31/31 computing.
 
-`run-desktop/SKILL.md` states explicitly: "Do not run concurrently with `scripts/verify.sh`." The
-full gate was launched early and kept alive through this whole cycle (§6) specifically so it would
-finish before this cycle's end, but it outran the code-writing work under the box's own concurrent
-load; DoD-8 capture is queued to run the moment the gate exits, not skipped. Planned commands, ready to
-execute:
+**Baseline drift, flagged by the gate itself as "not a failure — update deliberately"**: raised in a
+SEPARATE commit (DoD item 7), not folded into the feature commit —
+`BASELINE_ROOT_LIB_TESTS` 1867→1870, `BASELINE_ROOT_FULL_TESTS` 6603→6629,
+`BASELINE_ROOT_TEST_BINARIES` 560→562, `BASELINE_CORPUS_LITERAL_RECORDS` 21716→22937
+(`scripts/verify-baselines.env`).
+
+### 7. DoD-8 — on-screen verification — BOTH PASS
+
+Ran the moment `VERIFY_EXIT=0` freed `driver.sh` (`run-desktop/SKILL.md`: "Do not run concurrently
+with `scripts/verify.sh`" — honored, not worked around):
 
 ```
 export RUN_DESKTOP_AGENT=sd31-spell-monster
 ./.claude/skills/run-desktop/verify-on-screen.sh --family monster --record "Ankheg" \
   --expect "Magical Beast" --expect "CR 3" \
   --out docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F2-004/item8
+# PASS: monster / Ankheg
 ./.claude/skills/run-desktop/verify-on-screen.sh --family spell --record "Ablative Barrier" \
   --expect "+2 armor bonus" --expect "nonlethal damage" \
   --out docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F2-004/item8
+# PASS: spell / Ablative Barrier -- reused the already-running app (fast, no rebuild)
 ./.claude/skills/run-desktop/driver.sh stop
 ```
 
-Ankheg (`bestiary:monster:ankheg`) is this cycle's own worked example (§1) — a `static` monster newly
-`literal-verified`/`done` via `enrich_monster_raw_tokens.rs`. Ablative Barrier is Ultimate Combat's own
-first-listed base spell, newly served via `spell_catalog_rows()`'s 8th book. If the gate finishes
-before this cycle ends, these run and their real PASS/FAIL output (with artifact paths) replaces this
-paragraph in a follow-up commit; if it does not, this is logged honestly as the DoD-8 gap rather than
-faked, per the mandate's own explicit instruction on that exact failure mode.
+**Ankheg** (`bestiary:monster:ankheg`, this cycle's own §1 worked example — a `static` monster newly
+`literal-verified`/`done` via `enrich_monster_raw_tokens.rs`): rendered text extracted from the live
+app includes `"Magical Beast (114)"` (the school/type filter chip), `"AnkhegLarge Magical Beast"`,
+`"CR 3"` — every `--expect` string present. Artifacts:
+`artifacts/SD31-E6-F2-004/item8/monster-ankheg.{png,verify.md}`.
+
+**Ablative Barrier** (Ultimate Combat's first-listed base spell, newly served via
+`spell_catalog_rows()`'s 8th book): rendered text includes `"Ablative BarrierUCConjuration"` — **the
+"UC" book code itself renders on screen**, proof the 8th-book chain reaches the player, not only the
+test suite — plus the full corpus `DESC:` text containing both `--expect` strings verbatim ("+2 armor
+bonus", "nonlethal damage"). Artifacts:
+`artifacts/SD31-E6-F2-004/item8/spell-ablative-barrier.{png,verify.md}`.
+
+Both real `PASS` verdicts (not `.FAILED.*`), both citing HEAD `eac9df2d6`, agent `sd31-spell-monster`.
+`driver.sh stop` run at cycle end per the skill's own convention.
 
 ### 8. What was corrected, reworked, or narrowly avoided
 
@@ -9435,9 +9451,10 @@ before ingest (§3); 0 PI drops/redactions on the real run, consistent.
 
 ### 10. Reclaim
 
-Deferred to cycle end (after the gate exits and this `CARGO_TARGET_DIR` is no longer in use):
-`scripts/reclaim.sh` then `--apply`, bytes reclaimed to be recorded in the structured-output figures /
-a follow-up commit note.
+`scripts/reclaim.sh` (dry run) then `--apply`: **2 items, 936.9KB reclaimed**; 107 items correctly
+skipped (checked out in a live worktree or not-yet-merged with an upstream present — this cycle's own
+`CARGO_TARGET_DIR` (`/home/ubuntu/cargo-targets/sd31-spell-monster`) is not scanned by this script per
+its own documented scope; the dispatcher clears the `cargo-targets/` root between waves).
 
 ### 11. Followups (ordered by units they would move)
 
