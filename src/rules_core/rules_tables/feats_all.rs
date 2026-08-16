@@ -939,6 +939,19 @@ pub fn hand_authored_feat_tables() -> &'static [BookFeatTable] {
             BookFeatTable { rule_set: RuleSetId::Uc, entries: uc_records() },
             BookFeatTable { rule_set: RuleSetId::Um, entries: um_records() },
             BookFeatTable { rule_set: RuleSetId::Upsi, entries: upsi_records() },
+            // `core_essentials` has no hand-authored feat table of its own --
+            // it is a PCGen packaging bundle, not a book with its own written
+            // feats (`decisions.md` Decision 9) -- but `RuleSetId::Ce` IS a
+            // real, compiled rule set (`COMPILED_RULE_SETS`, added for
+            // companion/familiar content) and `classify()`'s feat arm
+            // resolves a `core_essentials`-directory record's `engine_book`
+            // straight to it via `source_book`, never through CRB's
+            // shared-library-host fallback. An empty hand-authored slice here
+            // is what lets `feat_gap_rows_for(RuleSetId::Ce)`'s rows (all of
+            // `ce_feats.lst`) actually get joined on by `all_feat_tables()`
+            // below, which only appends gap rows to a `RuleSetId` already
+            // present in this list (`SD31-E6-F8-001`).
+            BookFeatTable { rule_set: RuleSetId::Ce, entries: &[] },
         ]
     })
 }
@@ -992,7 +1005,7 @@ mod tests {
     #[test]
     fn spans_every_ingested_book_with_their_real_counts() {
         let books = hand_authored_feat_tables();
-        assert_eq!(books.len(), 11);
+        assert_eq!(books.len(), 12);
         assert_eq!(books[0].rule_set, RuleSetId::Crb);
         assert_eq!(books[0].entries.len(), 185);
         assert_eq!(books[1].rule_set, RuleSetId::Apg);
@@ -1015,12 +1028,17 @@ mod tests {
         assert_eq!(books[9].entries.len(), 144);
         assert_eq!(books[10].rule_set, RuleSetId::Upsi);
         assert_eq!(books[10].entries.len(), 221);
+        // `core_essentials` has no hand-authored feat table of its own
+        // (`SD31-E6-F8-001`) -- see `hand_authored_feat_tables`'s own doc
+        // comment on why an empty entry is still filed here.
+        assert_eq!(books[11].rule_set, RuleSetId::Ce);
+        assert_eq!(books[11].entries.len(), 0);
 
         let total: usize = books.iter().map(|book| book.entries.len()).sum();
         assert_eq!(
             total,
             1578,
-            "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA + 104 UI + 135 UW + 261 UC + 144 UM + 221 UPsi"
+            "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA + 104 UI + 135 UW + 261 UC + 144 UM + 221 UPsi + 0 Ce"
         );
     }
 
@@ -1045,8 +1063,9 @@ mod tests {
         let total: usize = joined.iter().map(|book| book.entries.len()).sum();
         assert_eq!(
             total, 1661,
-            "1578 hand-authored + 83 corpus gap rows (16 CRB incl. core_essentials, \
-             48 ARG, 12 UM, 3 UI, 2 UC, 1 UPsi, 1 UW)"
+            "1578 hand-authored + 83 corpus gap rows (1 CRB, 15 core_essentials \
+             (SD31-E6-F8-001, re-bucketed off Crb), 48 ARG, 12 UM, 3 UI, 2 UC, \
+             1 UPsi, 1 UW)"
         );
     }
 

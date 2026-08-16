@@ -418,7 +418,8 @@ mod tests {
                 "Earth Child Topple",
                 "Eidolon Mount",
                 "Empower Power",
-                // corpus gap rows (core_essentials, via CRB):
+                // corpus gap rows (core_essentials, via Ce -- SD31-E6-F8-001,
+                // re-bucketed off Crb):
                 "Empower Spell-Like Ability ~ Ability",
                 "Empower Spell-Like Ability ~ Spell",
                 "Energized Wild Shape",
@@ -606,7 +607,7 @@ mod tests {
             response.entries.len(),
             1661,
             "1578 hand-authored (185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA \
-             + 104 UI + 135 UW + 261 UC + 144 UM + 221 UPsi) + 83 corpus gap rows. \
+             + 104 UI + 135 UW + 261 UC + 144 UM + 221 UPsi + 0 Ce) + 83 corpus gap rows. \
              Each per-source count below is that book's hand-authored figure \
              plus its gap rows; the rows themselves are asserted by key in \
              `catalog_serves_every_corpus_gap_row`."
@@ -614,11 +615,14 @@ mod tests {
 
         let by_source =
             |source: &str| response.entries.iter().filter(|e| e.source == source).count();
-        // `<hand-authored> + <corpus gap rows>` per book. CRB's 16 include
-        // the 15 `core_essentials` records: that shared library has no rule
-        // set of its own and `core_rulebook.pcc` includes it unconditionally,
-        // so CRB is the observed host.
-        assert_eq!(by_source("Crb"), 201, "185 + 16");
+        // `<hand-authored> + <corpus gap rows>` per book. `core_essentials`
+        // (`Ce`) is its own real rule set (`SD31-E6-F8-001`): the shared
+        // library has no hand-authored feat table of its own, but its 15
+        // `ce_feats.lst` records are served as their own `source: "Ce"`
+        // entries, not folded into CRB's `Crb` source -- `classify()`'s feat
+        // arm resolves a `core_essentials`-directory record's engine book
+        // straight to `Ce` via `source_book`, never through CRB.
+        assert_eq!(by_source("Crb"), 186, "185 + 1");
         assert_eq!(by_source("Apg"), 172, "172 + 0");
         assert_eq!(by_source("Acg"), 129, "129 + 0");
         assert_eq!(by_source("Arg"), 235, "187 + 48");
@@ -628,6 +632,7 @@ mod tests {
         assert_eq!(by_source("Uw"), 136, "135 + 1");
         assert_eq!(by_source("Uc"), 263, "261 + 2");
         assert_eq!(by_source("Um"), 156, "144 + 12");
+        assert_eq!(by_source("Ce"), 15, "0 + 15");
         assert_eq!(by_source("Upsi"), 222, "221 + 1");
 
         let counts = |category: &str| {

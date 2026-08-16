@@ -52,14 +52,20 @@ fn holds(rule_set: RuleSetId, corpus_key: &str) -> bool {
 /// (`corpus_key` field) before this lane landed. Pinned by name rather than
 /// by count so a regeneration that silently drops a book fails loudly.
 ///
-/// `core_essentials` is a shared library with no rule set of its own;
-/// `core_rulebook.pcc` includes it unconditionally, so CRB is the observed
-/// host and its records are filed under `RuleSetId::Crb` — exactly the
-/// attribution `classify()` makes once CRB's table is observed to hold them.
+/// `core_essentials` DOES have its own rule set (`RuleSetId::Ce`, added for
+/// companion/familiar content and now compiled into `COMPILED_RULE_SETS`),
+/// and `classify()`'s feat arm resolves a unit's `engine_book` from its
+/// `source_book`, not its reporting `book` — so a `ce_feats.lst` record
+/// files under `RuleSetId::Ce`, never `RuleSetId::Crb`, regardless of which
+/// real-world book Decision 9's re-attribution says the record's *content*
+/// belongs to (`bestiary`, in this case — see `CORE_ESSENTIALS_FEAT_GAP_ROWS`'s
+/// own doc comment). `cr_feats.lst` is CRB's own file and stays filed under
+/// `RuleSetId::Crb` — "Leadership Score" is genuinely from there, not from
+/// `ce_feats.lst`.
 const REPRESENTATIVES: &[(RuleSetId, &str)] = &[
     (RuleSetId::Crb, "Leadership Score"),
-    (RuleSetId::Crb, "Craft Construct"),
-    (RuleSetId::Crb, "Empower Spell-Like Ability ~ Ability"),
+    (RuleSetId::Ce, "Craft Construct"),
+    (RuleSetId::Ce, "Empower Spell-Like Ability ~ Ability"),
     (RuleSetId::Arg, "Angelic Flesh ~ Brazen"),
     (RuleSetId::Uc, "Gundarme Bonus Feat"),
     (RuleSetId::Ui, "Legendary Influence"),
@@ -77,6 +83,62 @@ fn every_gap_lane_representative_is_now_in_the_joined_catalog() {
         missing.is_empty(),
         "these previously `not-ingested` corpus feat records are still absent \
          from `all_feat_tables()`: {missing:?}"
+    );
+}
+
+/// The full `ce_feats.lst` population (`SD31-E6-F8-001`) — 15 records,
+/// verbatim from `docs/work-inventory.json`'s `feat` units whose
+/// `source_file == "ce_feats.lst"`. All 15 were `not-ingested`
+/// (`feat_key_absent_from_catalog`) despite `feat_gap_tables.rs` shipping
+/// hand-authored rows for every one of them, because the shipped rows were
+/// filed under `RuleSetId::Crb` — the wrong host. `classify()`'s feat arm
+/// resolves `engine_book_for(&unit.source_book)`, and `source_book` for a
+/// `core_essentials`-directory record is `"core_essentials"`, which resolves
+/// directly to `RuleSetId::Ce` (own_engine_book, never the CRB
+/// shared-library-host fallback) — so these records were never reachable
+/// through `RuleSetId::Crb`'s catalog at all, regardless of Decision 9's
+/// separate re-attribution of the reporting `book` field to `bestiary`.
+const CE_FEATS_LST_POPULATION: &[&str] = &[
+    "Ability Focus",
+    "Awesome Blow",
+    "Craft Construct",
+    "Empower Spell-Like Ability ~ Ability",
+    "Empower Spell-Like Ability ~ Spell",
+    "Flyby Attack",
+    "Hover",
+    "Improved Natural Armor",
+    "Improved Natural Attack",
+    "Multiattack",
+    "Multiweapon Fighting",
+    "Quicken Spell-Like Ability ~ Ability",
+    "Quicken Spell-Like Ability ~ Spell",
+    "Snatch",
+    "Wingover",
+];
+
+#[test]
+fn every_ce_feats_lst_record_resolves_under_rule_set_ce() {
+    let missing: Vec<&&str> =
+        CE_FEATS_LST_POPULATION.iter().filter(|key| !holds(RuleSetId::Ce, key)).collect();
+    assert!(
+        missing.is_empty(),
+        "these ce_feats.lst records are still absent from RuleSetId::Ce's \
+         joined catalog: {missing:?}"
+    );
+}
+
+/// The same 15 records must NOT resolve under `RuleSetId::Crb` — a
+/// record filed under the wrong host is exactly the defect this lane fixed,
+/// and re-filing it under Crb would silently reopen it (Crb's catalog would
+/// "hold" a key no `core_rulebook`-book unit ever carries).
+#[test]
+fn no_ce_feats_lst_record_is_filed_under_crb() {
+    let wrongly_filed: Vec<&&str> =
+        CE_FEATS_LST_POPULATION.iter().filter(|key| holds(RuleSetId::Crb, key)).collect();
+    assert!(
+        wrongly_filed.is_empty(),
+        "these ce_feats.lst records are filed under RuleSetId::Crb, the wrong \
+         host: {wrongly_filed:?}"
     );
 }
 
