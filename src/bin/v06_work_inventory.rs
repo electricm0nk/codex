@@ -1613,6 +1613,14 @@ fn spell_book_slug_for(short_code: &str) -> &'static str {
         "UI" => "ultimate_intrigue",
         "UM" => "ultimate_magic",
         "OA" => "occult_adventures",
+        // SD31-E6-F2-004: UC joins `spell_resolver::spell_catalog_rows()` as
+        // the catalog's 8th book. Same additive, single-line registration
+        // the UM (SD31-E6-F2-002) and OA (SD31-E6-F2-003) spell-lane cycles
+        // both made here before it -- this function is a closed-set lookup
+        // table with its own dedicated test
+        // (`spell_book_slug_for_covers_every_catalog_book`), not
+        // attribution or measurement logic.
+        "UC" => "ultimate_combat",
         other => panic!(
             "spell_resolver::spell_catalog_rows() now carries an unmapped book code {other:?} \
              -- add it to spell_book_slug_for so the spell classifier does not silently drop \

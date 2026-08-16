@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:21Z",
   "data": {
     "ability_keys": [
       "inner_sea_bestiary:monster_ability:marrowstone_golem_create_spawn",
@@ -23,6 +21,96 @@
     ],
     "race_subtype": null,
     "race_type": "Construct",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC| Marrowstone Golem ~ Create Spawn|Marrowstone Golem ~ Immunity to Magic|Marrowstone Golem ~ Necrotic Field|Marrowstone Golem ~ Negative Energy"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|12|TYPE=Base"
+      },
+      {
+        "key": "CR",
+        "value": "8"
+      },
+      {
+        "key": "DR",
+        "value": "10/Adamantine"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "HITDIE",
+        "value": "10"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Construct:10"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Slam,Weapon.Natural.Weapon Group Natural.Melee.Bludgeoning,*2,2d6"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Construct"
+      },
+      {
+        "key": "REACH",
+        "value": "10"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.17"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60')|Low-Light Vision"
+      }
+    ],
     "size": "L",
     "source_page": "p.17",
     "speeds": [
@@ -32,16 +120,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
-    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
-    "line": 32,
-    "record_key": "Golem (Marrowstone)"
-  },
+  "ingested_at": "2026-08-15T01:24:21Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 32,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "record_key": "Golem (Marrowstone)",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "ability_keys": [
       "bestiary_2:monster_ability:keketar_change_shape",
@@ -38,6 +36,144 @@
     ],
     "race_subtype": "Chaotic|Extraplanar|Protean|Shapechanger",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Can't Be Tripped|Detect Law ~ Constant|Fast Healing|Flight Maneuverability|Keketar ~ Change Shape|Keketar ~ Reshape Reality|Keketar ~ Spatial Riptide|Keketar ~ Warpwave|Telepathy|Tongues ~ Constant"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Abyssal|Protean"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON,WIS,CHA|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX,INT|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|18"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|18|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlindsenseRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstrictBonusDamage|STR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstrictDieSize|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FastHealingRate|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CL|17"
+      },
+      {
+        "key": "CR",
+        "value": "17"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CN"
+      },
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Acrobatics|Diplomacy|Intimidate|Knowledge (Arcana)"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Fort/Will):23"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,40,Fly,40,Swim,40"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Melee.Natural.Finesseable.Bludgeoning.Piercing.Slashing,*1,4d8"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw,Weapon.Melee.Natural.Finesseable.Slashing,*2,2d6|Tail Slap,Weapon.Melee.Natural.Finesseable.Bludgeoning,*1,2d8"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME]"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Chaotic|Extraplanar|Protean|Shapechanger"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "10"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.215"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=17|Disintegrate,16+CHA|Keketar Spell ~ Reshape Reality|Prismatic Sphere,19+CHA|Prismatic Spray,17+CHA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=17|Dispel Law,15+CHA|Empowered Chaos Hammer,14+CHA|Polymorph Any Object,18+CHA|Quickened Confusion,14+CHA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=17|Chaos Hammer,14+CHA|Dispel Magic (Greater)|Major Creation|Move Earth|Shatter,12+CHA|Teleport (Greater/self plus objects)"
+      },
+      {
+        "key": "SR",
+        "value": "28"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "L",
     "source_page": "p.215",
     "speeds": [
@@ -55,16 +191,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
-    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
-    "line": 699,
-    "record_key": "Protean (Keketar)"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 699,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Protean (Keketar)",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

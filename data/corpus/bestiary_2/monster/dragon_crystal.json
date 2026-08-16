@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "ability_keys": [],
     "challenge_rating": "2",
@@ -13,6 +11,104 @@
     "natural_attacks": [],
     "race_subtype": "Extraplanar|Earth",
     "race_type": "Dragon",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Crystal Dragon"
+      },
+      {
+        "key": "ADD",
+        "value": "SPELLCASTER|Sorcerer"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Draconic"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|0"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDamageDie|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDuration|DragonAgeCategory"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RaceSizeIsLong|1|TYPE=Base"
+      },
+      {
+        "key": "CR",
+        "value": "2"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|T"
+      },
+      {
+        "key": "LANGBONUS",
+        "value": "ALL"
+      },
+      {
+        "key": "LEGS",
+        "value": "4"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Dragon:3"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,60,Burrow,30,Climb,30"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Extraplanar|Earth"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Dragon"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat.Sorcerer"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Dragon_Primal"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.98"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "T",
     "source_page": "p.98",
     "speeds": [
@@ -30,16 +126,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
-    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
-    "line": 310,
-    "record_key": "Dragon (Crystal)"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 310,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Dragon (Crystal)",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

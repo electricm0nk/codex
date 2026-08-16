@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "ability_keys": [
       "bestiary_2:monster_ability:star_archon_smite_evil"
@@ -27,6 +25,140 @@
     "natural_attacks": [],
     "race_subtype": "Archon|Extraplanar|Good|Lawful",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|TYPE=ArmorProfHeavy"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|TYPE=ShieldProf"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Detect Evil ~ Constant|Flight Maneuverability|Immunity to Charm|Immunity to Compulsion|Immunity to Fear|Immunity to Fire|Magic Circle against Evil ~ Constant|Paladin ~ Aura of Courage|Regeneration ~ Evil|Star Archon ~ Explosive Rebirth|Star Archon ~ Smite Evil|True Seeing ~ Constant"
+      },
+      {
+        "key": "ADD",
+        "value": "SPELLCASTER|Cleric"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Celestial|Draconic|Infernal"
+      },
+      {
+        "key": "BONUS",
+        "value": "PCLEVEL|Cleric|18"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,WIS|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|12|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RegenerationRate|10"
+      },
+      {
+        "key": "CR",
+        "value": "19"
+      },
+      {
+        "key": "DR",
+        "value": "10/evil"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|LG"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Fort/Ref):19"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,40,Fly,120"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME] Archon"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Archon|Extraplanar|Good|Lawful"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "10"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat.Cleric"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=19|Meteor Swarm,19+CHA|Polar Ray,18+CHA|Prismatic Spray,17+CHA|Sunburst,18+CHA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=19|Aid|Continual Flame|Message|Sunbeam,17+CHA|Teleport (Greater/self plus objects)"
+      },
+      {
+        "key": "SR",
+        "value": "30"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "L",
     "source_page": "p.32",
     "speeds": [
@@ -40,16 +172,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
-    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
-    "line": 102,
-    "record_key": "Archon (Star)"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 102,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Archon (Star)",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

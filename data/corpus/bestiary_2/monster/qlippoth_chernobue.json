@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "ability_keys": [
       "bestiary_2:monster_ability:chernobue_con_damage",
@@ -36,6 +34,140 @@
     ],
     "race_subtype": "Chaotic|Evil|Extraplanar|Qlippoth",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Air Walk ~ Constant|Arcane Sight ~ Constant|Chernobue ~ Aura of Misfortune|Chernobue ~ Con Damage|Chernobue ~ Horrific Appearance|Chernobue ~ Light Vulnerability|Chernobue ~ Poison|Scent"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Abyssal"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX,CHA|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|16"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|14|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RaceSizeIsLong|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CL|12"
+      },
+      {
+        "key": "CR",
+        "value": "12"
+      },
+      {
+        "key": "DR",
+        "value": "10/lawful"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CE"
+      },
+      {
+        "key": "LEGS",
+        "value": "4"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Acrobatics|Escape Artist|Intimidate"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Fort/Will):12"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,40"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Melee.Natural.Finesseable.Bludgeoning.Piercing.Slashing,*1,2d6|Tentacle,Weapon.Melee.Natural.Finesseable.Bludgeoning,*2,1d6"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Slam,Weapon.Melee.Natural.Finesseable.Bludgeoning,*2,1d6"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME]"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Chaotic|Evil|Extraplanar|Qlippoth"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.220"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=12|Plane Shift,17+CHA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=12|Confusion,14+CHA|Dispel Magic|Protection from Law|Quickened Darkness"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=12|Chaos Hammer,14+CHA|Darkness"
+      },
+      {
+        "key": "SR",
+        "value": "23"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "L",
     "source_page": "p.220",
     "speeds": [
@@ -45,16 +177,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
-    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
-    "line": 711,
-    "record_key": "Qlippoth (Chernobue)"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 711,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Qlippoth (Chernobue)",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

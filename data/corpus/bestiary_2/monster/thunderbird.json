@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "ability_keys": [
       "bestiary_2:monster_ability:thunderbird_thunderbolt"
@@ -35,6 +33,108 @@
     ],
     "race_subtype": null,
     "race_type": "Magical Beast",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Flight Maneuverability|Grab ~ Claw|Immunity to Electricity|Immunity to Sonic|Thunderbird ~ Storm Aura|Thunderbird ~ Stormsight|Thunderbird ~ Thunderbolt"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Auran"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX,WIS|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT,CHA|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|16"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|15|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|4"
+      },
+      {
+        "key": "CR",
+        "value": "11"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|G"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Magical Beast:14"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Fly,120"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Melee.Natural.Finesseable.Bludgeoning.Piercing.Slashing,*1,2d8"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw,Weapon.Melee.Natural.Finesseable.Slashing.Grab,*2,2d6"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Thunderbolt,Weapon.Ranged.Natural.Finesseable.Electricity.Sonic.Touch,*1,12d6"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Magical Beast"
+      },
+      {
+        "key": "REACH",
+        "value": "20"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "G"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.264"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=11|Control Weather"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "G",
     "source_page": "p.264",
     "speeds": [
@@ -48,16 +148,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
-    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
-    "line": 840,
-    "record_key": "Thunderbird"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 840,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Thunderbird",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

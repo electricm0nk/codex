@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-11T19:42:15Z",
   "data": {
     "ability_keys": [
       "monster_codex:monster_ability:bat_sootwing_disease"
@@ -20,6 +18,116 @@
     ],
     "race_subtype": null,
     "race_type": "Undead",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Bat (Sootwing)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Perception=Blindsense|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Climb,Swim|DEX-STR"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlindsenseRange|20|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChannelResistance|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|4"
+      },
+      {
+        "key": "CR",
+        "value": "1/2"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|T"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "KEY",
+        "value": "Bat (Sootwing)"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CE"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Undead:2"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,5,Fly,40"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Natural.Melee.Finesseable.Weapon,*1,1d3,SPROP=plus disease and paralysis"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Undead"
+      },
+      {
+        "key": "REACH",
+        "value": "0"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Bat"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.88"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Undead"
+      }
+    ],
     "size": "T",
     "source_page": "p.88",
     "speeds": [
@@ -33,16 +141,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_races.lst",
-    "sha256": "80f24ceace9f3ad0ac120a959781688b5e9fd072a258b48b1638f79a1cde8800",
-    "line": 6,
-    "record_key": "Bat (Sootwing)"
-  },
+  "ingested_at": "2026-08-11T19:42:15Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_races.lst",
+    "record_key": "Bat (Sootwing)",
+    "sha256": "80f24ceace9f3ad0ac120a959781688b5e9fd072a258b48b1638f79a1cde8800"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

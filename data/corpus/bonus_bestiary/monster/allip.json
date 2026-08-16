@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-11T09:16:36Z",
   "data": {
     "ability_keys": [
       "bonus_bestiary:monster_ability:babble",
@@ -25,6 +23,92 @@
     ],
     "race_subtype": "Incorporeal",
     "race_type": "Undead",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Babble|Channel Resistance|Flight Maneuverability|Madness|Touch of Insanity"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChannelResistance|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|5"
+      },
+      {
+        "key": "CR",
+        "value": "3"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Maneuverability|0"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CE"
+      },
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Undead:4"
+      },
+      {
+        "key": "MOVE",
+        "value": "Fly,30"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Incorporeal touch,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Wisdom,*1,0"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Incorporeal"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Undead"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "ROLE",
+        "value": "Skill"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.4"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "M",
     "source_page": "p.4",
     "speeds": [
@@ -34,16 +118,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bonus_bestiary/bb_races.lst",
-    "sha256": "14ef1129bc2ea0a5055d56d3a09dda0b93c8740a14f97c1b448114edf6189bef",
-    "line": 6,
-    "record_key": "Allip"
-  },
+  "ingested_at": "2026-08-11T09:16:36Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/bonus_bestiary/bb_races.lst",
+    "record_key": "Allip",
+    "sha256": "14ef1129bc2ea0a5055d56d3a09dda0b93c8740a14f97c1b448114edf6189bef"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:21Z",
   "data": {
     "ability_keys": [
       "horror_adventures:monster_ability:hive_queen_egg_layer",
@@ -29,6 +27,112 @@
     ],
     "race_subtype": "Hive",
     "race_type": "Aberration",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Race Traits ~ Hive Queen|Bite|Tail Slap"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Aklo (cannot speak)|Common (cannot speak)"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|18"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|14|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tail Slap|REACH|20"
+      },
+      {
+        "key": "CR",
+        "value": "10"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|H"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KEY",
+        "value": "Hive Queen"
+      },
+      {
+        "key": "KIT",
+        "value": "1|NE"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Aberration:15"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,50,Climb,20"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw,Natural.Melee.Finesseable.Weapon,*2,1d10"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Hive"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Aberration"
+      },
+      {
+        "key": "REACH",
+        "value": "15"
+      },
+      {
+        "key": "SIZE",
+        "value": "H"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.236"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aberration"
+      }
+    ],
     "size": "H",
     "source_page": "p.236",
     "speeds": [
@@ -42,16 +146,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_races.lst",
-    "sha256": "09976b6c9e77606c0b7d76da9fff38a80148242e22f02896d0c44bdaa3140d89",
-    "line": 4,
-    "record_key": "Hive Queen"
-  },
+  "ingested_at": "2026-08-15T01:24:21Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 4,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_races.lst",
+    "record_key": "Hive Queen",
+    "sha256": "09976b6c9e77606c0b7d76da9fff38a80148242e22f02896d0c44bdaa3140d89"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

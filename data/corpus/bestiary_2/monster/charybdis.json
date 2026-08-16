@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "ability_keys": [
       "bestiary_2:monster_ability:charybdis_rending_claws",
@@ -33,6 +31,132 @@
     ],
     "race_subtype": "Aquatic",
     "race_type": "Aberration",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Can't Be Tripped|Charybdis ~ Rending Claws|Charybdis ~ Vortex|Fast Healing|Fast Swallow|Grab ~ Bite|Immunity to Acid|Resistance to Cold|Swallow Whole"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Aquan"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|24"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|23|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BlindsightRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FastHealingRate|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SwallowWholeDamageDie|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SwallowWholeDice|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "VISION|Darkvision|60"
+      },
+      {
+        "key": "CR",
+        "value": "13"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|G"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CN"
+      },
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Aberration:16"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20,Swim,50"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Piercing.Slashing.Grab,*1,2d8"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Slashing,*2,2d6"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Aquatic"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Aberration"
+      },
+      {
+        "key": "REACH",
+        "value": "20"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "G"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "G",
     "source_page": "p.56",
     "speeds": [
@@ -46,16 +170,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
-    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
-    "line": 177,
-    "record_key": "Charybdis"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 177,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Charybdis",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

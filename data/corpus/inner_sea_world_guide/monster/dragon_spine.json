@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:22Z",
   "data": {
     "ability_keys": [
       "inner_sea_world_guide:monster_ability:spine_dragon_breath_weapon",
@@ -39,6 +37,148 @@
     ],
     "race_subtype": "Earth",
     "race_type": "Dragon",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite|Claw"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Immunity to Sonic|Resistance to Cold|Resistance to Electricity|Resistance to Fire|Spine Dragon ~ Breath Weapon|Spine Dragon ~ Ray Deflection|Spine Dragon ~ Spines"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common|Draconic"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|18"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|22"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|22|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus,ElectricityResistanceBonus,FireResistanceBonus|20|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RaceSizeIsLong|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tail|DAMAGE|max(0,STR)"
+      },
+      {
+        "key": "CR",
+        "value": "16"
+      },
+      {
+        "key": "DR",
+        "value": "10/Adamantine"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|G"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CN"
+      },
+      {
+        "key": "LEGS",
+        "value": "4"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Dragon:16"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Spine,Weapon.Natural.Weapon Group Natural.Ranged.Thrown.Piercing,*4,2d8"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Tail,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning,*1,2d8"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME] Dragon"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Earth"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Dragon"
+      },
+      {
+        "key": "REACH",
+        "value": "15"
+      },
+      {
+        "key": "SIZE",
+        "value": "G"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.312"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=(max(TL,1))|Telekinetic Sphere,18+CHA|Wall of Force"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=(max(TL,1))|Spike Growth,13+CHA|Spike Stones,14+CHA|Telekinesis,15+CHA"
+      },
+      {
+        "key": "SR",
+        "value": "27"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "PFSNotLegal"
+      },
+      {
+        "key": "VISION",
+        "value": "Blindsight (30')|Darkvision (120')|Low-Light Vision"
+      }
+    ],
     "size": "G",
     "source_page": "p.312",
     "speeds": [
@@ -48,16 +188,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races.lst",
-    "sha256": "d4ce7298dc71c3527171e3b3b4591974432bdd0d41fc20f8002197b0d5bcf8d8",
-    "line": 15,
-    "record_key": "Dragon (Spine)"
-  },
+  "ingested_at": "2026-08-15T01:24:22Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 15,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races.lst",
+    "record_key": "Dragon (Spine)",
+    "sha256": "d4ce7298dc71c3527171e3b3b4591974432bdd0d41fc20f8002197b0d5bcf8d8"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

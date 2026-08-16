@@ -964,6 +964,22 @@ fn reach_of(family: &Family) -> Option<Reach> {
                 .map(|entry| entry.key.to_owned())
                 .collect(),
         )),
+        // SD31-E6-F2-004: UC joins `spell_resolver::spell_catalog_rows()` as
+        // the catalog's 8th book, the same `build_spell_catalog`/"All
+        // books" render path UM/OA use. 3 records (`Life Conduit` and its
+        // two named variants) carry no `CLASSES:` token so no `level`, but
+        // every shipped record still carries a real `key` plus at least
+        // one of `school`/`level`/`description`, so `has_payload` is
+        // satisfied for all 146, proven by this gate's own
+        // `bare_records_are_exactly_the_recorded_findings` check below
+        // rather than assumed.
+        ("ultimate_combat", "spells") => Some(spells_reach(
+            "UC",
+            uc::spell_list::SPELL_LIST
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
 
         // Equipment: `list_equipment_catalog` / `list_equipment` serve every
         // ingested book's table since the SD-27 widening of

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "ability_keys": [
       "bestiary_4:monster_ability:giant_ocean_conch_focus"
@@ -20,6 +18,136 @@
     ],
     "race_subtype": "Aquatic|Giant",
     "race_type": "Humanoid",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Slam|Racial Traits ~ Giant (Ocean)"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Aquan|Common|Giant"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|20|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|30|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityResistanceBonus|30|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RockThrowingRange|110"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CL|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlamAttacks|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SlamSize|1"
+      },
+      {
+        "key": "CR",
+        "value": "14"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|H"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KEY",
+        "value": "Giant (Ocean)"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CG|CE"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Climb|TYPE.Craft|Handle Animal|Heal|Intimidate|Perception|TYPE.Profession|Ride|Survival"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Humanoid:19"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,50,Swim,40"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Aquatic|Giant"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Humanoid"
+      },
+      {
+        "key": "REACH",
+        "value": "15"
+      },
+      {
+        "key": "SIZE",
+        "value": "H"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Giant"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.127"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Humanoid"
+      }
+    ],
     "size": "H",
     "source_page": "p.127",
     "speeds": [
@@ -33,16 +161,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
-    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
-    "line": 102,
-    "record_key": "Giant (Ocean)"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 102,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "record_key": "Giant (Ocean)",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

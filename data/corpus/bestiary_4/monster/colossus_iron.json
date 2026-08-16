@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "ability_keys": [
       "bestiary_4:monster_ability:colossus_iron_alternate_form",
@@ -28,6 +26,128 @@
     ],
     "race_subtype": "Colossus|Mythic",
     "race_type": "Construct",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Colossus (Iron)"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|40"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|38|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mythic_Rank|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CL|17"
+      },
+      {
+        "key": "CR",
+        "value": "21"
+      },
+      {
+        "key": "DR",
+        "value": "10/Epic"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|C"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KEY",
+        "value": "Colossus (Iron)"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Construct:23"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,50"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Heavy Ballistae,Natural.Ranged.Weapon,*2,4d8"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Stomp,Natural.Melee.Finesseable.Weapon,*1,6d6"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME] Colossus"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Colossus|Mythic"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Construct"
+      },
+      {
+        "key": "REACH",
+        "value": "30"
+      },
+      {
+        "key": "SIZE",
+        "value": "C"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Construct"
+      }
+    ],
     "size": "C",
     "source_page": "p.36",
     "speeds": [
@@ -37,16 +157,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
-    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
-    "line": 31,
-    "record_key": "Colossus (Iron)"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 31,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "record_key": "Colossus (Iron)",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

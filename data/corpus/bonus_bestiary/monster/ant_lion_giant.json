@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-11T09:16:36Z",
   "data": {
     "ability_keys": [
       "bonus_bestiary:monster_ability:sand_trap"
@@ -22,6 +20,84 @@
     ],
     "race_subtype": null,
     "race_type": "Vermin",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Grab|Sand Trap"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|10|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mindless|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RaceSizeIsLong|1|TYPE=Base"
+      },
+      {
+        "key": "CR",
+        "value": "5"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "8"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Vermin:8"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Burrow,10"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME] Ant Lion"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Vermin"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.5"
+      },
+      {
+        "key": "VISION",
+        "value": "Tremorsense (60')"
+      }
+    ],
     "size": "L",
     "source_page": "p.5",
     "speeds": [
@@ -35,16 +111,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bonus_bestiary/bb_races.lst",
-    "sha256": "14ef1129bc2ea0a5055d56d3a09dda0b93c8740a14f97c1b448114edf6189bef",
-    "line": 7,
-    "record_key": "Ant Lion (Giant)"
-  },
+  "ingested_at": "2026-08-11T09:16:36Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 7,
+    "path": "pathfinder/paizo/roleplaying_game/bonus_bestiary/bb_races.lst",
+    "record_key": "Ant Lion (Giant)",
+    "sha256": "14ef1129bc2ea0a5055d56d3a09dda0b93c8740a14f97c1b448114edf6189bef"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

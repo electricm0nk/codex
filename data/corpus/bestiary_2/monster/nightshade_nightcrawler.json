@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "ability_keys": [
       "bestiary_2:monster_ability:nightcrawler_cold",
@@ -35,6 +33,148 @@
     ],
     "race_subtype": "Extraplanar|Nightshade",
     "race_type": "Undead",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Air Walk ~ Constant|Can't Be Tripped|Detect Magic ~ Constant|Grab ~ Bite|Immunity to Cold|Magic Fang ~ Constant|Nightcrawler ~ Cold|Nightcrawler ~ Energy Drain|Nightcrawler ~ Poison|Swallow Whole|Telepathy"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Abyssal|Common|Infernal"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Stealth=In darkness|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT,WIS|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|27|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CL|18"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SwallowWholeBonusDamage|1.5*STR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SwallowWholeDamageDie|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SwallowWholeDice|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TremorsenseRange|120|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VISION|Darkvision|60"
+      },
+      {
+        "key": "CR",
+        "value": "18"
+      },
+      {
+        "key": "DR",
+        "value": "15/good and silver"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|G"
+      },
+      {
+        "key": "HANDS",
+        "value": "0"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CE"
+      },
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Undead:25"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Burrow,60"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Piercing.Slashing.Cold.Grab,*1,4d10"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Sting,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Piercing.Cold.Poison,*1,4d6"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME]"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Extraplanar|Nightshade"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Undead"
+      },
+      {
+        "key": "REACH",
+        "value": "20"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "G"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.200"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=18|Finger of Death,17+CHA|Hold Monster (Mass),19+CHA|Plane Shift,17+CHA|Summon Monster VIII (Nightcrawler)"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=18|Confusion,14+CHA|Haste|Hold Monster,15+CHA|Quickened Cone of Cold,15+CHA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=18|Contagion,14+CHA|Deeper Darkness|Dispel Magic (Greater)|Invisibility|Unholy Blight,14+CHA"
+      },
+      {
+        "key": "SR",
+        "value": "29"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "G",
     "source_page": "p.200",
     "speeds": [
@@ -48,16 +188,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
-    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
-    "line": 642,
-    "record_key": "Nightshade (Nightcrawler)"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 642,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Nightshade (Nightcrawler)",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

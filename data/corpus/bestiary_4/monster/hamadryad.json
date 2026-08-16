@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "ability_keys": [
       "bestiary_4:monster_ability:hamadryad_druid_magic",
@@ -17,6 +15,144 @@
     "natural_attacks": [],
     "race_subtype": null,
     "race_type": "Fey",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Hamadryad"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common|Elven|Sylvan"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (Wood)|2|TYPE=Circumstance"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Craft (wood)|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|12|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidResistanceBonus|30|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|30|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityResistanceBonus|30|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FastHealingRate|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowlightVision|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CL|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WildEmpathyLVL|20"
+      },
+      {
+        "key": "CR",
+        "value": "15"
+      },
+      {
+        "key": "DR",
+        "value": "10/Cold Iron"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KEY",
+        "value": "Hamadryad"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CG"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Acrobatics|Bluff|Climb|TYPE.Craft|Diplomacy|Disguise|Escape Artist|Fly|Knowledge (geography)|Knowledge (local)|Knowledge (nature)|Perception|TYPE.Perform|Sense Motive|Sleight of Hand|Stealth|Swim|Use Magic Device"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Fey:20"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Fey"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.148"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Fey"
+      }
+    ],
     "size": "M",
     "source_page": "p.148",
     "speeds": [
@@ -26,16 +162,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
-    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
-    "line": 119,
-    "record_key": "Hamadryad"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 119,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "record_key": "Hamadryad",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

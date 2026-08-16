@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "ability_keys": [],
     "challenge_rating": "1",
@@ -22,6 +20,104 @@
     ],
     "race_subtype": "Earth|Elemental|Extraplanar|Fire",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Burn|Magma Elemental ~ Earth Glide|Magma Elemental ~ Lava Puddle"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Ignan"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|5|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BurnDC|-2|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BurnDamageDieSize|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Slam|DAMAGE|max(0,(STR/2))"
+      },
+      {
+        "key": "CR",
+        "value": "1"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|S"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Climb|Intimidate|Knowledge (Dungeoneering)"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Fort/Ref):2"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20,Burrow,20"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Slam,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Burn,*1,1d3"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Magma Elemental, Small"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Earth|Elemental|Extraplanar|Fire"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "S"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.118"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "S",
     "source_page": "p.118",
     "speeds": [
@@ -35,16 +131,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
-    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
-    "line": 347,
-    "record_key": "Elemental (Magma/Small)"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 347,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Elemental (Magma/Small)",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

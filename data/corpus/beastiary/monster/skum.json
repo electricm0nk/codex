@@ -1,47 +1,153 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-07T20:21:41Z",
   "data": {
+    "challenge_rating": 2.0,
     "id": "beastiary1:monster:skum",
     "name": "Skum",
-    "challenge_rating": 2.0,
-    "size": "M",
-    "speed_ft": 20,
-    "race_type": "Monstrous Humanoid",
-    "race_subtype": "Aquatic",
-    "source_page": "p.253",
     "natural_attacks": [
       {
-        "name": "Bite (w/o weapon)",
-        "damage_dice": "1d6"
+        "damage_dice": "1d6",
+        "name": "Bite (w/o weapon)"
       },
       {
-        "name": "Bite (w/weapon)",
-        "damage_dice": "1d6"
+        "damage_dice": "1d6",
+        "name": "Bite (w/weapon)"
       },
       {
-        "name": "Claw (w/o weapon)",
-        "damage_dice": "1d4"
+        "damage_dice": "1d4",
+        "name": "Claw (w/o weapon)"
       },
       {
-        "name": "Claw (w/weapon)",
-        "damage_dice": "1d4"
+        "damage_dice": "1d4",
+        "name": "Claw (w/weapon)"
       }
-    ]
+    ],
+    "race_subtype": "Aquatic",
+    "race_type": "Monstrous Humanoid",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Multiattack"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Amphibious"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Aboleth|Undercommon"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Trident"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|SKILL=Underwater|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|2|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|10|TYPE=Resistance"
+      },
+      {
+        "key": "CR",
+        "value": "2"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Monstrous Humanoid:2"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20,Swim,40"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite (w/o weapon),Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Piercing.Slashing,*1,1d6|Bite (w/weapon),Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Piercing.Slashing,*1,1d6"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw (w/o weapon),Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Piercing.Slashing,*1,1d4|Claw (w/weapon),Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Piercing.Slashing,*1,1d4"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Aquatic"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Monstrous Humanoid"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.253"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
+    "size": "M",
+    "source_page": "p.253",
+    "speed_ft": 20
   },
+  "ingested_at": "2026-08-07T20:21:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
-    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
     "line": 366,
-    "record_key": "Skum"
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "record_key": "Skum",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9"
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:21Z",
   "data": {
     "ability_keys": [
       "inner_sea_bestiary:monster_ability:quantium_golem_eldritch_surge",
@@ -18,6 +16,92 @@
     "natural_attacks": [],
     "race_subtype": null,
     "race_type": "Construct",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Quantium Golem ~ Eldritch Surge|Quantium Golem ~ Immunity to Magic|Quantium Golem ~ Link|Quantium Golem ~ Urban Defender"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Sword (Bastard)"
+      },
+      {
+        "key": "BONUS",
+        "value": "HP|CURRENTMAX|210"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON,INT|-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|33|TYPE=Base"
+      },
+      {
+        "key": "CR",
+        "value": "20"
+      },
+      {
+        "key": "DR",
+        "value": "20/Adamantine and Bludgeoning"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|G"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Construct:30"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Construct"
+      },
+      {
+        "key": "REACH",
+        "value": "20"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "G"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "G",
     "source_page": "p.19",
     "speeds": [
@@ -27,16 +111,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
-    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
-    "line": 34,
-    "record_key": "Golem (Quantium)"
-  },
+  "ingested_at": "2026-08-15T01:24:21Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 34,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "record_key": "Golem (Quantium)",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

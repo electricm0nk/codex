@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-11T09:16:36Z",
   "data": {
     "ability_keys": [
       "bonus_bestiary:monster_ability:faerie_dragon_breath_weapon"
@@ -24,6 +22,112 @@
     ],
     "race_subtype": null,
     "race_type": "Dragon",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Faerie Dragon ~ Breath Weapon|Flight Maneuverability|Immunity to Paralysis|Immunity to Sleep"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common|Draconic|Elven|Sylvan"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX,INT,CHA|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|2|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RaceSizeIsLong|1|TYPE=Base"
+      },
+      {
+        "key": "CR",
+        "value": "2"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Maneuverability|0"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|T"
+      },
+      {
+        "key": "LEGS",
+        "value": "4"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Faerie Dragon:3"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,10,Fly,60,Swim,30"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME] Dragon"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Dragon"
+      },
+      {
+        "key": "REACH",
+        "value": "0"
+      },
+      {
+        "key": "ROLE",
+        "value": "Sorcerer"
+      },
+      {
+        "key": "SIZE",
+        "value": "T"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.9"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=3|Invisibility (Greater/self only)"
+      },
+      {
+        "key": "SR",
+        "value": "14"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60')|Low-Light Vision"
+      }
+    ],
     "size": "T",
     "source_page": "p.9",
     "speeds": [
@@ -41,16 +145,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bonus_bestiary/bb_races.lst",
-    "sha256": "14ef1129bc2ea0a5055d56d3a09dda0b93c8740a14f97c1b448114edf6189bef",
-    "line": 12,
-    "record_key": "Dragon (Faerie)"
-  },
+  "ingested_at": "2026-08-11T09:16:36Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 12,
+    "path": "pathfinder/paizo/roleplaying_game/bonus_bestiary/bb_races.lst",
+    "record_key": "Dragon (Faerie)",
+    "sha256": "14ef1129bc2ea0a5055d56d3a09dda0b93c8740a14f97c1b448114edf6189bef"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

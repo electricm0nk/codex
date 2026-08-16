@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "ability_keys": [
       "bestiary_2:monster_ability:jyoti_breath_weapon",
@@ -36,6 +34,148 @@
     ],
     "race_subtype": "Extraplanar",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Fast Healing|Flight Maneuverability|Immunity to Death Effects|Immunity to Disease|Immunity to Energy Drain|Immunity to Poison|Jyoti ~ Breath Weapon|Jyoti ~ Divine Aversion|Jyoti ~ Positive Energy|Jyoti ~ Positive Energy Affinity|Mage Armor ~ Constant|Resistance to Acid|Resistance to Cold|Resistance to Electricity|Resistance to Fire|Resistance to Sonic"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Aquan|Auran|Common|Ignan|Terran"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Knowledge (Planes),Knowledge (Religion),Perception|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,WIS,CHA|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|4|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidResistanceBonus|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityResistanceBonus|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FastHealingRate|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowLightVision|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SonicResistanceBonus|10"
+      },
+      {
+        "key": "CR",
+        "value": "9"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Heal|Intimidate|Knowledge (Religion)|Stealth"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Fort/Will):11"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Fly,90"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Piercing.Slashing.Fire,*1,1d6"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Extraplanar"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.171"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=11|Breath of Life|Disrupting Weapon"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=11|Aid|Cure Serious Wounds|Daylight|Dimension Door|Restoration (Lesser)|Searing Light"
+      },
+      {
+        "key": "SR",
+        "value": "20"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "M",
     "source_page": "p.171",
     "speeds": [
@@ -49,16 +189,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
-    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
-    "line": 546,
-    "record_key": "Jyoti"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 546,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Jyoti",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

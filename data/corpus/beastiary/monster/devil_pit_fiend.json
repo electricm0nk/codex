@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "ability_keys": [
       "beastiary:monster_ability:pit_fiend_devil_shaping",
@@ -39,6 +37,164 @@
     ],
     "race_subtype": "Devil|Evil|Extraplanar|Lawful",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Constrict|Flight Maneuverability|Grab|Pit Fiend ~ Devil Shaping|Pit Fiend ~ Disease|Pit Fiend ~ Poison|Regeneration ~ Good"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|24"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|18"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT,CHA|16"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|26"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|20|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstrictBonusDamage|STR*1.5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstrictDice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstrictDieSize|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RegenerationRate|5"
+      },
+      {
+        "key": "CR",
+        "value": "20"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Diplomacy|Intimidate|Knowledge (Religion)|Spellcraft"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Maneuverability|0"
+      },
+      {
+        "key": "DR",
+        "value": "15/Good"
+      },
+      {
+        "key": "DR",
+        "value": "15/Silver"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|LE"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Fort/Ref):20"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,40,Fly,60"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Piercing.Poison.Disease,*1,4d6|Tail Slap,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Grab,*1,2d8"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Piercing.Slashing,*2,2d8|Wing,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning,*2,2d6"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME]"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Devil|Evil|Extraplanar|Lawful"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "10"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.80"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=18|Meteor Swarm|Summon Monster IX (Pit Fiend)"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|TIMEUNIT=Year|CASTERLEVEL=18|Wish"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=18|Quickened Fireball,13+CHA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=18|Blasphemy,17+CHA|Create Undead|Dispel Magic (Greater)|Fireball,13+CHA|Hold Monster (Mass),15+CHA|Invisibility|Magic Circle against Good|Persistent Image,15+CHA|Power Word Stun|Scorching Ray|Scrying (Greater),17+CHA|Teleport (Greater/self plus objects)|Trap the Soul,18+CHA|Unholy Aura,18+CHA|Wall of Fire"
+      },
+      {
+        "key": "SR",
+        "value": "31"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "L",
     "source_page": "p.80",
     "speeds": [
@@ -52,16 +208,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
-    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
-    "line": 113,
-    "record_key": "Devil (Pit Fiend)"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 113,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "record_key": "Devil (Pit Fiend)",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

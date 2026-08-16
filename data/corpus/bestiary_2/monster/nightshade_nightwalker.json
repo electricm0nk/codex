@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "ability_keys": [
       "bestiary_2:monster_ability:nightwalker_cold",
@@ -28,6 +26,124 @@
     ],
     "race_subtype": "Extraplanar|Nightshade",
     "race_type": "Undead",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Air Walk ~ Constant|Detect Magic ~ Constant|Immunity to Cold|Magic Fang ~ Constant|Nightwalker ~ Cold|Nightwalker ~ Fear Gaze|Nightwalker ~ Swift Sundering|Telepathy"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Abyssal|Common|Infernal"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Stealth=In darkness|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT,WIS,CHA|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|24"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|21|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CL|16"
+      },
+      {
+        "key": "CR",
+        "value": "16"
+      },
+      {
+        "key": "DR",
+        "value": "15/good and silver"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|H"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CE"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Undead:21"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,40"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Slashing.Cold,*2,3d6"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME]"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Extraplanar|Nightshade"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Undead"
+      },
+      {
+        "key": "REACH",
+        "value": "15"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "H"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.201"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=16|Cone of Cold,15+CHA|Finger of Death,17+CHA|Plane Shift,17+CHA|Summon Monster VII (Nightwalker)"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=16|Confusion,14+CHA|Haste|Hold Monster,15+CHA|Invisibility|Quickened Unholy Blight,14+CHA"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=16|Contagion,14+CHA|Deeper Darkness|Dispel Magic (Greater)|Unholy Blight,14+CHA"
+      },
+      {
+        "key": "SR",
+        "value": "27"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "H",
     "source_page": "p.201",
     "speeds": [
@@ -37,16 +153,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
-    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
-    "line": 644,
-    "record_key": "Nightshade (Nightwalker)"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 644,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Nightshade (Nightwalker)",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

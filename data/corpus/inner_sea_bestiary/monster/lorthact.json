@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:21Z",
   "data": {
     "ability_keys": [
       "inner_sea_bestiary:monster_ability:good_regeneration",
@@ -27,6 +25,108 @@
     ],
     "race_subtype": "Evil|Lawful|Devil|Extraplanar",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Good ~ Regeneration|Lorthact ~ Infernal Duke Traits|Lorthact ~ Intelligence Drain|Lorthact ~ Scholastic Masquerade|Lorthact ~ Spell-Like Abilities|Lorthact ~ Spell Reservoir|Lorthact ~ Temporal Anomaly"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Abyssal|Aklo|Azlanti|Celestial|Common|Draconic|Infernal|Dwarven|Elven|Giant|Ignan|Undercommon"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|26"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|24"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|22"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|16"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|10|TYPE=Base"
+      },
+      {
+        "key": "CR",
+        "value": "25"
+      },
+      {
+        "key": "DR",
+        "value": "20/Good and Silver"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Diplomacy|Disguise|Knowledge (Arcana)|Spellcraft"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Ref/Will):32"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw,Weapon.Natural.Weapon Group Natural.Melee.Slashing.Finesseable,*2,1d6"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Evil|Lawful|Devil|Extraplanar"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.26"
+      },
+      {
+        "key": "SR",
+        "value": "36"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "M",
     "source_page": "p.26",
     "speeds": [
@@ -36,16 +136,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
-    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
-    "line": 46,
-    "record_key": "Lorthact"
-  },
+  "ingested_at": "2026-08-15T01:24:21Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 46,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "record_key": "Lorthact",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

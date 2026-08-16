@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "ability_keys": [
       "bestiary_4:monster_ability:argus_absolute_readiness",
@@ -29,6 +27,168 @@
     ],
     "race_subtype": "Mythic",
     "race_type": "Aberration",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Argus"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Aklo|Celestial|Common"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|4|TYPE=Insight"
+      },
+      {
+        "key": "BONUS",
+        "value": "SITUATION|Perception=sight-based|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|28"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|18|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|30|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus|30|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FrightfulPresenceDC|16"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FrightfulPresenceRange|40"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mythic_Rank|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RendBonusDamage|21"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RendDamageDice|3"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RendDamageDieSize|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RockThrowingRange|200"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CL|14"
+      },
+      {
+        "key": "CR",
+        "value": "13"
+      },
+      {
+        "key": "DR",
+        "value": "10/Epic"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|G"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KEY",
+        "value": "Argus"
+      },
+      {
+        "key": "KIT",
+        "value": "1|LN"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Acrobatics|Climb|Escape Artist|Fly|Intimidate|Knowledge (History)|Perception|Sense Motive|Spellcraft|Stealth|Survival|Swim"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Aberration:13"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,40"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Natural.Melee.Finesseable.Weapon,*1,2d8"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw,Natural.Melee.Finesseable.Weapon,*1,3d6"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Mythic"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Aberration"
+      },
+      {
+        "key": "REACH",
+        "value": "20"
+      },
+      {
+        "key": "SIZE",
+        "value": "G"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aberration"
+      }
+    ],
     "size": "G",
     "source_page": "p.13",
     "speeds": [
@@ -38,16 +198,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
-    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
-    "line": 12,
-    "record_key": "Argus"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 12,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "record_key": "Argus",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

@@ -1,39 +1,121 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-07T20:21:41Z",
   "data": {
+    "challenge_rating": 1.0,
     "id": "beastiary1:monster:squid",
     "name": "Squid",
-    "challenge_rating": 1.0,
-    "size": "M",
-    "speed_ft": 0,
-    "race_type": "Animal",
-    "race_subtype": "Aquatic",
-    "source_page": "p.259",
     "natural_attacks": [
       {
-        "name": "Bite",
-        "damage_dice": "1d3"
+        "damage_dice": "1d3",
+        "name": "Bite"
       },
       {
-        "name": "Tentacles",
-        "damage_dice": "1d4"
+        "damage_dice": "1d4",
+        "name": "Tentacles"
       }
-    ]
+    ],
+    "race_subtype": "Aquatic",
+    "race_type": "Animal",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Multiattack"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Grab|Squid ~ Ink Cloud|Squid ~ Jet"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT,CHA|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,DEX|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|InkCloudRadius|5"
+      },
+      {
+        "key": "CR",
+        "value": "1"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Animal:3"
+      },
+      {
+        "key": "MOVE",
+        "value": "Swim,60,Jet,240"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Piercing.Slashing,*1,1d3|Tentacles,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning,*1,1d4"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Aquatic"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Animal"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.259"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
+    "size": "M",
+    "source_page": "p.259",
+    "speed_ft": 0
   },
+  "ingested_at": "2026-08-07T20:21:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
-    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
     "line": 380,
-    "record_key": "Squid"
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "record_key": "Squid",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9"
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

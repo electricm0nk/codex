@@ -1,35 +1,125 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-07T20:21:41Z",
   "data": {
+    "challenge_rating": 3.0,
     "id": "beastiary1:monster:doppelganger",
     "name": "Doppelganger",
-    "challenge_rating": 3.0,
-    "size": "M",
-    "speed_ft": 30,
-    "race_type": "Monstrous Humanoid",
-    "race_subtype": "Shapechanger",
-    "source_page": "p.89",
     "natural_attacks": [
       {
-        "name": "Claw",
-        "damage_dice": "1d8"
+        "damage_dice": "1d8",
+        "name": "Claw"
       }
-    ]
+    ],
+    "race_subtype": "Shapechanger",
+    "race_type": "Monstrous Humanoid",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Doppelganger ~ Change Shape|Doppelganger ~ Mimicry|Doppelganger ~ Perfect Copy|Immunity to Charm|Immunity to Sleep"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Bluff,Disguise|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX,CON,INT,CHA|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|4|TYPE=Base"
+      },
+      {
+        "key": "CR",
+        "value": "3"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Monstrous Humanoid:4"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Piercing.Slashing,*2,1d8"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Shapechanger"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Monstrous Humanoid"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat.Skill"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.89"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=ATWILL|CASTERLEVEL=18|Detect Thoughts,12+CHA"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
+    "size": "M",
+    "source_page": "p.89",
+    "speed_ft": 30
   },
+  "ingested_at": "2026-08-07T20:21:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
-    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
     "line": 127,
-    "record_key": "Doppelganger"
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "record_key": "Doppelganger",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9"
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

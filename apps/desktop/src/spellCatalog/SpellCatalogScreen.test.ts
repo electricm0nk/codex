@@ -27,7 +27,7 @@ import { assert, assertEqual } from '../testSupport/asserts';
  */
 
 /** The wire codes `build_spell_catalog` chains, in that order. */
-const CHAINED_BOOK_CODES = ['CRB', 'APG', 'ACG', 'ARG', 'UI', 'UM', 'OA'] as const;
+const CHAINED_BOOK_CODES = ['CRB', 'APG', 'ACG', 'ARG', 'UI', 'UM', 'OA', 'UC'] as const;
 
 function testBookOrderCoversEveryServedBookInChainOrder() {
   assertEqual(
@@ -68,6 +68,10 @@ function testOaIsLabelledWithItsRealBookName() {
   assertEqual(BOOK_LABELS.OA, 'Occult Adventures', "OA's display label");
 }
 
+function testUcIsLabelledWithItsRealBookName() {
+  assertEqual(BOOK_LABELS.UC, 'Ultimate Combat', "UC's display label");
+}
+
 function testFormatBookListReadsAsProseOverTheRealLabels() {
   assertEqual(formatBookList(['CRB']), 'Core Rulebook', 'single book');
   assertEqual(
@@ -77,7 +81,7 @@ function testFormatBookListReadsAsProseOverTheRealLabels() {
   );
   assertEqual(
     formatBookList(BOOK_ORDER),
-    "Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Advanced Race Guide, Ultimate Intrigue, Ultimate Magic and Occult Adventures",
+    "Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Advanced Race Guide, Ultimate Intrigue, Ultimate Magic, Occult Adventures and Ultimate Combat",
     'every served book'
   );
 }
@@ -93,6 +97,7 @@ function main() {
   testArgIsLabelledWithItsRealBookName();
   testUmIsLabelledWithItsRealBookName();
   testOaIsLabelledWithItsRealBookName();
+  testUcIsLabelledWithItsRealBookName();
   testFormatBookListReadsAsProseOverTheRealLabels();
   testFormatBookListNeverInventsALabelForAnUnknownCode();
 }

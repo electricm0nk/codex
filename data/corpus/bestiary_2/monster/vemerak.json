@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "ability_keys": [
       "bestiary_2:monster_ability:vemerak_breath_weapon",
@@ -39,6 +37,116 @@
     ],
     "race_subtype": null,
     "race_type": "Aberration",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Grab ~ Claw/Tentacle|Immunity to Acid|Immunity to Disease|Immunity to Electricity|Immunity to Mind-Affecting Effects|Immunity to Poison|Resistance to Sonic|Vemerak ~ Breath Weapon|Vemerak ~ Constrict|Vemerak ~ Earthquake|Vemerak ~ Spore Cloud"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Aklo"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON,CHA|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX,WIS|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|22"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|18|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RaceSizeIsLong|1|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SonicResistanceBonus|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TremorsenseRange|30|TYPE=Base"
+      },
+      {
+        "key": "CR",
+        "value": "14"
+      },
+      {
+        "key": "DR",
+        "value": "5/-"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|H"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CE"
+      },
+      {
+        "key": "LEGS",
+        "value": "8"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Aberration:17"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,40,Burrow,20,Climb,40"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Natural.Weapon Group Natural.Melee.Finesseable,*1,2d6"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Grab,*2,1d8|Tentacle,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Grab,*3,1d6"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Aberration"
+      },
+      {
+        "key": "REACH",
+        "value": "15"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "H"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.278"
+      },
+      {
+        "key": "SR",
+        "value": "25"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "H",
     "source_page": "p.278",
     "speeds": [
@@ -56,16 +164,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
-    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
-    "line": 892,
-    "record_key": "Vemerak"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 892,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "record_key": "Vemerak",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-12T11:18:46Z",
   "data": {
     "ability_keys": [
       "book_of_the_damned_volume_2:monster_ability:brimorak_boiling_blood",
@@ -24,6 +22,132 @@
     ],
     "race_subtype": "Chaotic|Demon|Evil|Extraplanar|Fire",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Brimorak ~ Boiling Blood|Brimorak ~ Breath Weapon|Brimorak ~ Burning Hooves|Brimorak ~ Flaming Weapon|Brimorak ~ Smoke Breath"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Ignan"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT,WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,DEX|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|4|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CL|HD"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Hoof|DAMAGE|-ceil(STR/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Hoof|TOHIT|-5"
+      },
+      {
+        "key": "CR",
+        "value": "5"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Acrobatics|Knowledge (Engineering)"
+      },
+      {
+        "key": "DR",
+        "value": "5/Cold Iron or Good"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|S"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CE"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Fort/Ref):6"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Hoof,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Piercing,*1,1d3,SPROP=plus 1d6 fire"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME]"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Chaotic|Demon|Evil|Extraplanar|Fire"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "S"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=1|CASTERLEVEL=TL|Air Walk|Fireball,13+CHA|Summon Monster III (Brimorak)|Teleport (Greater/self plus objects)"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Innate|TIMES=3|CASTERLEVEL=TL|Dispel Magic|Heat Metal,12+CHA|Produce Flame"
+      },
+      {
+        "key": "SR",
+        "value": "16"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "S",
     "source_page": "p.56",
     "speeds": [
@@ -33,16 +157,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_races.lst",
-    "sha256": "837eb03a72aedd5790bab3fc53ffd3a19f7e66f3d75e32fdad653697abef6dd7",
-    "line": 8,
-    "record_key": "Demon (Brimorak)"
-  },
+  "ingested_at": "2026-08-12T11:18:46Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 8,
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_races.lst",
+    "record_key": "Demon (Brimorak)",
+    "sha256": "837eb03a72aedd5790bab3fc53ffd3a19f7e66f3d75e32fdad653697abef6dd7"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:21Z",
   "data": {
     "ability_keys": [
       "inner_sea_bestiary:monster_ability:veiled_master_consume_memory",
@@ -43,6 +41,128 @@
     ],
     "race_subtype": "Aquatic|Shapechanger",
     "race_type": "Aberration",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite|Claw|Tentacle"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Can't Be Tripped|Fast Healing|Immunity to Electricity|Immunity to Mind-Affecting Effects|Resistance to Cold|Telepathy|Veiled Master ~ Consume Memory|Veiled Master ~ Delayed Suggestion|Veiled Master ~ Mucus Cloud|Veiled Master ~ Runemastery|Veiled Master ~ Slime|Veiled Master ~ Spell-Like Abilities|Veiled Master ~ Spells|Veiled Master ~ Swift Transformation|Veiled Master ~ Thoughtlance"
+      },
+      {
+        "key": "ADD",
+        "value": "SPELLCASTER|Sorcerer"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Aboleth|Aklo|Aquan|Azlanti|Undercommon"
+      },
+      {
+        "key": "BONUS",
+        "value": "PCLEVEL|Sorcerer|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|16"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,DEX,CHA|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|11|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|20|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FastHealingRate|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TelepathyRange|200"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TentacleAttacks|2"
+      },
+      {
+        "key": "CR",
+        "value": "14"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "HITDIE",
+        "value": "8"
+      },
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Aberration:16"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,10,Swim,80"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Aquatic|Shapechanger"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Aberration"
+      },
+      {
+        "key": "REACH",
+        "value": "20"
+      },
+      {
+        "key": "ROLE",
+        "value": "Special"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "SR",
+        "value": "25"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (120')"
+      }
+    ],
     "size": "L",
     "source_page": "p.56",
     "speeds": [
@@ -56,16 +176,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
-    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
-    "line": 94,
-    "record_key": "Veiled Master"
-  },
+  "ingested_at": "2026-08-15T01:24:21Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 94,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "record_key": "Veiled Master",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

@@ -1,56 +1,142 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-07T20:21:41Z",
   "data": {
+    "challenge_rating": 2.0,
     "id": "beastiary1:monster:cave_fisher",
     "name": "Cave Fisher",
-    "challenge_rating": 2.0,
-    "size": "M",
-    "speed_ft": 20,
-    "race_type": "Vermin",
-    "race_subtype": null,
-    "source_page": "p.41",
     "natural_attacks": [
       {
-        "name": "Filament",
-        "damage_dice": "0"
+        "damage_dice": "0",
+        "name": "Filament"
       },
       {
-        "name": "Claw",
-        "damage_dice": "1d4"
+        "damage_dice": "1d4",
+        "name": "Claw"
       }
-    ]
-  },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
-    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
-    "line": 59,
-    "record_key": "Cave Fisher"
+    ],
+    "race_subtype": null,
+    "race_type": "Vermin",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Claw"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cave Fisher ~ Filament|Cave Fisher ~ Pull"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CON|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|4|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mindless|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RaceSizeIsLong|1|TYPE=Base"
+      },
+      {
+        "key": "CR",
+        "value": "2"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "8"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Vermin:3"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20,Climb,20"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Filament,Weapon.Natural.Weapon Group Natural.Ranged.Finesseable,*1,0"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Vermin"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.41"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
+    "size": "M",
+    "source_page": "p.41",
+    "speed_ft": 20
   },
   "field_provenance": [
     {
-      "field": "natural_attacks[1].damage_dice",
-      "value": "1d4",
       "corpus_name_token": "ABILITY:Internal|AUTOMATIC|Claw",
+      "field": "natural_attacks[1].damage_dice",
       "published_melee_text": "2 claws +5 (1d4+3)",
       "source": {
+        "fetched_at": "2026-07-29",
+        "identity_match_basis": "name + CR 2 + Medium vermin + Bestiary pg. 41 (matches the cached chassis's own source_page); all sources place Filament on the Ranged line, matching the real row's own NATURALATTACKS:Filament,...Ranged... token",
         "kind": "web_second_source",
         "urls": [
           "https://legacy.aonprd.com/bestiary/caveFisher.html",
           "https://www.d20pfsrd.com/bestiary/monster-listings/vermin/cave-fisher/"
-        ],
-        "fetched_at": "2026-07-29",
-        "identity_match_basis": "name + CR 2 + Medium vermin + Bestiary pg. 41 (matches the cached chassis's own source_page); all sources place Filament on the Ranged line, matching the real row's own NATURALATTACKS:Filament,...Ranged... token"
-      }
+        ]
+      },
+      "value": "1d4"
     }
   ],
+  "ingested_at": "2026-08-07T20:21:41Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 59,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "record_key": "Cave Fisher",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

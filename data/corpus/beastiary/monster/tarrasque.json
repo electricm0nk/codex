@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "ability_keys": [
       "beastiary:monster_ability:tarrasque_bleed",
@@ -59,6 +57,152 @@
     ],
     "race_subtype": null,
     "race_type": "Magical Beast",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Cannot Speak|Frightful Presence|Grab|Immunity to Ability Damage|Immunity to Acid|Immunity to Disease|Immunity to Energy Drain|Immunity to Fire|Immunity to Mind-Affecting Effects|Immunity to Paralysis|Immunity to Petrification|Immunity to Poison|Immunity to Polymorph|Scent|Tarrasque ~ Bleed|Tarrasque ~ Carapace|Tarrasque ~ Permanent Wounds|Tarrasque ~ Powerful Leaper|Tarrasque ~ Regeneration|Tarrasque ~ Rush|Tarrasque ~ Spines|Tarrasque ~ Swallow Whole"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Magical Beast Traits Output|PRERULE:1,DISPLAYTYPETRAITS"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Aklo"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception|8|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|24"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|30"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS,CHA|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|35|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FrightfulPresenceRange|300"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowLightVision|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NoTypeTraits|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bite|CRITMULTADD|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bite|CRITRANGEADD|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Spine|CRITMULTADD|1"
+      },
+      {
+        "key": "CR",
+        "value": "25"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NoTypeTraits|0"
+      },
+      {
+        "key": "DR",
+        "value": "15/Epic"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|C"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Magical Beast:30"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,40"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Bite,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Piercing.Grab,*1,4d8"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Claw,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Piercing.Slashing.Grab,*2,1d12"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Gore,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Piercing,*2,1d10|Tail Slap,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning,*1,3d8"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Spine,Weapon.Natural.Weapon Group Natural.Ranged.Thrown.Piercing,*6,2d10"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Magical Beast"
+      },
+      {
+        "key": "REACH",
+        "value": "30"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "C"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.262"
+      },
+      {
+        "key": "SR",
+        "value": "36"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "C",
     "source_page": "p.262",
     "speeds": [
@@ -68,16 +212,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
-    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
-    "line": 386,
-    "record_key": "Tarrasque"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 386,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "record_key": "Tarrasque",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

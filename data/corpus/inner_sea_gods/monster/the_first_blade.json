@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T02:34:27Z",
   "data": {
     "ability_keys": [],
     "challenge_rating": "15",
@@ -18,6 +16,128 @@
     ],
     "race_subtype": "Chaotic|Extraplanar|Herald",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Race Traits ~ First Blade"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Abyssal|Celestial|Common|Infernal|Protean"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|18"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX,CHA|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|22"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|20|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|60|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HasLowLightVision|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SonicResistanceBonus|10"
+      },
+      {
+        "key": "CR",
+        "value": "15"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Acrobatics|Climb|Intimidate|Knowledge (History)"
+      },
+      {
+        "key": "DR",
+        "value": "15/Adamantine"
+      },
+      {
+        "key": "DR",
+        "value": "15/Law"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|L"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|CN"
+      },
+      {
+        "key": "LANGBONUS",
+        "value": "ALL"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Fort/Ref):18"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Slam,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning.Slashing.Bleed,*2,2d10,SPROP=1d10 bleed"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Chaotic|Extraplanar|Herald"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "10"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "L"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.288"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "L",
     "source_page": "p.288",
     "speeds": [
@@ -27,16 +147,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/support/isg_races_b4.lst",
-    "sha256": "3b8742b6d620ef3ed9e8b6170b4413872d594c5d5b857ba99919dfd2f8173494",
-    "line": 6,
-    "record_key": "The First Blade"
-  },
+  "ingested_at": "2026-08-15T02:34:27Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/support/isg_races_b4.lst",
+    "record_key": "The First Blade",
+    "sha256": "3b8742b6d620ef3ed9e8b6170b4413872d594c5d5b857ba99919dfd2f8173494"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

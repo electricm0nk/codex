@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "ability_keys": [
       "bestiary_4:monster_ability:taniniver_breath_weapon",
@@ -29,6 +27,156 @@
     ],
     "race_subtype": null,
     "race_type": "Dragon",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite|Claw|Tail Slap|Racial Traits ~ Taniniver"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common|Draconic|Undercommon"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|14"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|22"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|25|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AcidResistanceBonus|30|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BiteSize|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClawSize|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ColdResistanceBonus|30|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkvisionRange|120|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityResistanceBonus|30|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FireResistanceBonus|30|TYPE=Resistance"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|FrightfulPresenceRange|180"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Maneuverability|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SLA_CL|20"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TailSlapSize|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Bite|REACH|5"
+      },
+      {
+        "key": "CR",
+        "value": "18"
+      },
+      {
+        "key": "DR",
+        "value": "15/Good and Magic"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|H"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KEY",
+        "value": "Taniniver"
+      },
+      {
+        "key": "KIT",
+        "value": "1|NE"
+      },
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "MONCSKILL",
+        "value": "Appraise|Bluff|Climb|TYPE.Craft|Diplomacy|Fly|Heal|Intimidate|TYPE.Knowledge|Linguistics|Perception|Sense Motive|Spellcraft|Stealth|Survival|Swim|Use Magic Device"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Dragon:20"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Fly,200"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Dragon"
+      },
+      {
+        "key": "REACH",
+        "value": "10"
+      },
+      {
+        "key": "SIZE",
+        "value": "H"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.258"
+      },
+      {
+        "key": "SR",
+        "value": "29"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Dragon"
+      }
+    ],
     "size": "H",
     "source_page": "p.258",
     "speeds": [
@@ -42,16 +190,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
-    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
-    "line": 227,
-    "record_key": "Taniniver"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 227,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "record_key": "Taniniver",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

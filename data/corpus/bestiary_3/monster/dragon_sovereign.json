@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-12T18:42:18Z",
   "data": {
     "ability_keys": [],
     "challenge_rating": "7",
@@ -13,6 +11,84 @@
     "natural_attacks": [],
     "race_subtype": null,
     "race_type": "Dragon",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Dragon (Sovereign)"
+      },
+      {
+        "key": "ADD",
+        "value": "SPELLCASTER|Sorcerer"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX,CON,INT,WIS,CHA|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BreathWeaponDamageDie|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DragonNaturalArmor|7"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RaceSizeIsLong|1|TYPE=Base"
+      },
+      {
+        "key": "CR",
+        "value": "7"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|T"
+      },
+      {
+        "key": "KEY",
+        "value": "Dragon (Sovereign)"
+      },
+      {
+        "key": "KIT",
+        "value": "2|Sovereign Imperial Dragon Default|TN"
+      },
+      {
+        "key": "LEGS",
+        "value": "4"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Dragon:8"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,50"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Dragon"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Dragon_Imperial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.100"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Dragon"
+      }
+    ],
     "size": "T",
     "source_page": "p.100",
     "speeds": [
@@ -22,16 +98,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
-    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
-    "line": 94,
-    "record_key": "Dragon (Sovereign)"
-  },
+  "ingested_at": "2026-08-12T18:42:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 94,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "record_key": "Dragon (Sovereign)",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

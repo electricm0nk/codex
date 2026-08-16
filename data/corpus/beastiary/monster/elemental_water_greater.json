@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "ability_keys": [
       "beastiary:monster_ability:water_elemental_drench",
@@ -22,6 +20,112 @@
     ],
     "race_subtype": "Elemental|Extraplanar|Water",
     "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Elemental (Water)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Water Elemental ~ Drench|Water Elemental ~ Vortex|Water Elemental ~ Water Mastery"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Aquan"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|18"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|9|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VortexHeight|60"
+      },
+      {
+        "key": "CR",
+        "value": "9"
+      },
+      {
+        "key": "CSKILL",
+        "value": "Acrobatics|Escape Artist|Swim"
+      },
+      {
+        "key": "DR",
+        "value": "10/-"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|H"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "LEGS",
+        "value": "0"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Fort/Ref):13"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20,Swim,90"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Slam,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Bludgeoning,*2,2d8"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Water Elemental, Greater"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Elemental|Extraplanar|Water"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "15"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "H"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.127"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
     "size": "H",
     "source_page": "p.127",
     "speeds": [
@@ -35,16 +139,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
-    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
-    "line": 171,
-    "record_key": "Elemental (Water/Greater)"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 171,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "record_key": "Elemental (Water/Greater)",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",
