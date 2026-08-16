@@ -1,0 +1,83 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Calling down a litany of anathema, you make an evil more susceptible to the attacks of good creatures. If the target is evil, it takes double damage from attacks made by creatures with a good aura (from a class feature or as a creature with the good subtype). If the target also has the evil subtype; when it is hit with attacks made by creatures with a good aura, it is also dazzled for 1d4 rounds. If this spell targets a nonevil creature (or one that lacks the evil subtype), it has no effect, and the spell is wasted. While subject to this spell, the target cannot be the target of another spell that has the word \"litany\" in the title.",
+    "key": "Litany of Righteousness",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 swift action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Paladin=2|Inquisitor=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "A single evil creature takes more damage from creatures with a good aura.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "Calling down a litany of anathema, you make an evil more susceptible to the attacks of good creatures. If the target is evil, it takes double damage from attacks made by creatures with a good aura (from a class feature or as a creature with the good subtype). If the target also has the evil subtype; when it is hit with attacks made by creatures with a good aura, it is also dazzled for 1d4 rounds. If this spell targets a nonevil creature (or one that lacks the evil subtype), it has no effect, and the spell is wasted. While subject to this spell, the target cannot be the target of another spell that has the word \"litany\" in the title.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Good|Language-Dependent"
+      },
+      {
+        "key": "DURATION",
+        "value": "1 round"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateCombat/spells/litanyOfRighteousness.html#_litany-of-righteousness"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.235"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one creature"
+      }
+    ],
+    "school": "Evocation"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 73,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+    "record_key": "Litany of Righteousness",
+    "sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:range_keyword"
+  ]
+}

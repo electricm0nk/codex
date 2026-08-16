@@ -1,0 +1,87 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "This functions similarly to false vision, but instead of placing the illusion on a nearby area, you can tie it to a specific individual, and can do so from great distances. The spell can be cast at any distance. The difficulty of the save depends on your knowledge of the subject and what sort of physical connection (if any) you have to that creature. The target gains the same bonuses and penalties on its Will save to resist this spell as the bonuses and penalties that apply to the scrying spell (including a +5 bonus if the target is on another plane). The illusion created by the spell moves with the target, and is not stationary. The image can affect the way the target is perceived, the way the target's surroundings are perceived, and the way that specific creatures or objects around the target are perceived. For the target, and any other specific creatures or objects you specify, you can cause them to appear as other creatures or objects that you designate, not to appear at all, or to have their appearance unaltered. For the target's surroundings, you can choose to make the target appear to be somewhere else, either a specific location with which you are familiar, or a generic location conjured from your imagination. You can change the way that the spell affects the appearance of any of these things by concentrating on the spell. You can also cause creatures or objects to appear in the illusion that are not really there, or to make a creature or object seem to act in a way other than it is actually acting. In this case, you must concentrate on the spell, or these aspects of the illusion simply remain static. The spell can provide visual, auditory, olfactory, tactile, and thermal sensations as needed. The illusion applies to only those who observe the target via a divination (scrying) spell, and has no effect on viewers who are there in person. Material component; a jade sphere worth 500 gp.|PRERULE:1,DisplayFullSpell",
+    "key": "False Vision (Greater)",
+    "level": 6,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Mesmerist=6|Psychic,Sorcerer,Wizard=7"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M"
+      },
+      {
+        "key": "DESC",
+        "value": "As false vision, but moves with the target.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This functions similarly to false vision, but instead of placing the illusion on a nearby area, you can tie it to a specific individual, and can do so from great distances. The spell can be cast at any distance. The difficulty of the save depends on your knowledge of the subject and what sort of physical connection (if any) you have to that creature. The target gains the same bonuses and penalties on its Will save to resist this spell as the bonuses and penalties that apply to the scrying spell (including a +5 bonus if the target is on another plane). The illusion created by the spell moves with the target, and is not stationary. The image can affect the way the target is perceived, the way the target's surroundings are perceived, and the way that specific creatures or objects around the target are perceived. For the target, and any other specific creatures or objects you specify, you can cause them to appear as other creatures or objects that you designate, not to appear at all, or to have their appearance unaltered. For the target's surroundings, you can choose to make the target appear to be somewhere else, either a specific location with which you are familiar, or a generic location conjured from your imagination. You can change the way that the spell affects the appearance of any of these things by concentrating on the spell. You can also cause creatures or objects to appear in the illusion that are not really there, or to make a creature or object seem to act in a way other than it is actually acting. In this case, you must concentrate on the spell, or these aspects of the illusion simply remain static. The spell can provide visual, auditory, olfactory, tactile, and thermal sensations as needed. The illusion applies to only those who observe the target via a divination (scrying) spell, and has no effect on viewers who are there in person. Material component; a jade sphere worth 500 gp.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) hours [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "See text"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Illusion"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=False Vision, Greater"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.214"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Glamer"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One creature"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Psychic"
+      }
+    ],
+    "school": "Illusion"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 57,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "False Vision (Greater)",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

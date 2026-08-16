@@ -1,0 +1,83 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You cause ammunition, including shuriken, to exude radiant energy. Creatures that take penalties in bright light take these penalties for 1 round after being struck by such ammunition. Undead and creatures harmed by sunlight take an additional 1d6 points of damage from such projectiles. This extra damage and half of any other damage you deal with an affected projectile results directly from radiant energy and is not subject to damage resistance. Such a projectile sheds light as if it were a sunrod for 1 round after it is fired or thrown.",
+    "key": "Daybreak Arrow",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Inquisitor,Paladin=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Targeted ammunition exudes radiant energy.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You cause ammunition, including shuriken, to exude radiant energy. Creatures that take penalties in bright light take these penalties for 1 round after being struck by such ammunition. Undead and creatures harmed by sunlight take an additional 1d6 points of damage from such projectiles. This extra damage and half of any other damage you deal with an affected projectile results directly from radiant energy and is not subject to damage resistance. Such a projectile sheds light as if it were a sunrod for 1 round after it is fired or thrown.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "light"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*10) minutes"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude negates (harmless, object)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateCombat/spells/daybreakArrow.html#_daybreak-arrow"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.226"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless, object)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "up to 50 pieces of ammunition, all of which must be together at the time of casting"
+      }
+    ],
+    "school": "Evocation"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 30,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+    "record_key": "Daybreak Arrow",
+    "sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

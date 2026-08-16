@@ -14,6 +14,7 @@ pub mod beastiary1;
 pub mod class_feature;
 pub mod equipment_gap;
 pub mod hand_authored_equipment;
+pub mod spell_lane_dump;
 pub mod ultimate_equipment;
 
 use std::collections::BTreeMap;

@@ -1,0 +1,91 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "This spell functions as false resurrection except that it calls a belier devil (Bestiary 2 p.85) with the young simple template to possess the body and all parts of false resurrection that function like resurrection instead function like true resurrection. Attempts to identify greater false resurrection with a skill check incorrectly identify it as true resurrection. A fooled viewer mistakes greater false resurrection's aura as the lingering aura of an instantaneous conjuration effect. Material component; diamond worth 25,000 gp.|PRERULE:1,DisplayFullSpell",
+    "key": "False Resurrection (Greater)",
+    "level": 9,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 minute"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric=9"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M"
+      },
+      {
+        "key": "DESC",
+        "value": "Appear to use true resurrection on someone but instead allow a belier devil to possess the corpse.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions as false resurrection except that it calls a belier devil (Bestiary 2 p.85) with the young simple template to possess the body and all parts of false resurrection that function like resurrection instead function like true resurrection. Attempts to identify greater false resurrection with a skill check incorrectly identify it as true resurrection. A fooled viewer mistakes greater false resurrection's aura as the lingering aura of an instantaneous conjuration effect. Material component; diamond worth 25,000 gp.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Chaotic|Evil|Ruse"
+      },
+      {
+        "key": "DURATION",
+        "value": "Permanent"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://aonprd.com/SpellDisplay.aspx?ItemName=False Resurrection, Greater"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.214"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Calling"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "Dead creature touched"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Conjuration"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 56,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+    "record_key": "False Resurrection (Greater)",
+    "sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

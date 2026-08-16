@@ -1,0 +1,84 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "The target is surrounded by a glowing green aura of ill fate. Each time the spell's subject makes an attack or casts a spell, it must succeed at a Will saving throw with a DC = 10 + 1/2 caster level + Charisma (in the case of oracles), Intelligence (in the case of witches), or Wisdom (in the case of clerics). If it fails the saving throw, it deals half damage with the attack or spell. You can dismiss this spell as an immediate action when the target confirms a critical hit; doing so negates the critical hit. The attack that you negated still hits, but only deals half damage.",
+    "key": "Debilitating Portent",
+    "level": 4,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Witch=4"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "Inflicts an ill fate on a creature, halving its damage when it attacks or casts a spell.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "The target is surrounded by a glowing green aura of ill fate. Each time the spell's subject makes an attack or casts a spell, it must succeed at a Will saving throw with a DC = 10 + 1/2 caster level + Charisma (in the case of oracles), Intelligence (in the case of witches), or Wisdom (in the case of clerics). If it fails the saving throw, it deals half damage with the attack or spell. You can dismiss this spell as an immediate action when the target confirms a critical hit; doing so negates the critical hit. The attack that you negated still hits, but only deals half damage.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds (D) see text"
+      },
+      {
+        "key": "RANGE",
+        "value": "Medium"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "None"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/ultimateCombat/spells/debilitatingPortent.html#_debilitating-portent"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.227"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Compulsion"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one creature"
+      }
+    ],
+    "school": "Enchantment"
+  },
+  "ingested_at": "2026-08-16T12:10:17Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 33,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+    "record_key": "Debilitating Portent",
+    "sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}
