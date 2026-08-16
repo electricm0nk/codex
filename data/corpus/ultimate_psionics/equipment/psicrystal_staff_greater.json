@@ -1,0 +1,114 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 10000.0,
+    "description": "Can hold psicrystal, 5 setting stones, 10 companion stones; psicrystal repairs 1 hp/minute; double personality bonuses [not implemented]",
+    "key": "Psicrystal Staff (Greater)",
+    "name": "Psicrystal Staff, Greater",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "PsiCrystalLVL",
+          "2"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Psicrystal Staff, Greater"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Quarterstaff"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Melee.OneHanded.Simple.Standard.Double.Bludgeoning.Quarterstaff.Polearm.Psionic.Wondrous"
+      },
+      {
+        "key": "ALTTYPE",
+        "value": "Weapon.Melee.Bludgeoning"
+      },
+      {
+        "key": "COST",
+        "value": "10000"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "ALTCRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "ALTCRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "ALTDAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Wood"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Quality ~ Masterwork ~ Weapon"
+      },
+      {
+        "key": "ALTEQMOD",
+        "value": "Material ~ Wood"
+      },
+      {
+        "key": "WIELD",
+        "value": "TwoHanded"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.420"
+      },
+      {
+        "key": "SPROP",
+        "value": "Can hold psicrystal, 5 setting stones, 10 companion stones; psicrystal repairs 1 hp/minute; double personality bonuses [not implemented]"
+      }
+    ],
+    "weight_lbs": 5.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 325,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
+    "record_key": "Psicrystal Staff (Greater)",
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": null,
+    "description": null,
+    "key": "Helm of the Hydra",
+    "name": "Helm of the Hydra",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "TacticianCollectiveLVL",
+          "4",
+          "PREABILITY:1,CATEGORY=Special Ability,Tactician ~ Collective"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "CollectiveLVL",
+          "4",
+          "PREABILITY:1,CATEGORY=Special Ability,Vitalist ~ Collective"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Psionic.Legendary"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.438"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Helm of the Hydra Collective|!PREABILITY:1,CATEGORY=Special Ability,Vitalist ~ Collective,Tactician ~ Collective"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Helm of the Hydra Attunement|PREMULT:3,[PRESKILL:1,Intimidate=5],[PRESPELLSCHOOL:1,Psychometabolism=0],[PREVARGTEQ:TL,5]"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 470,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
+    "record_key": "Helm of the Hydra",
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

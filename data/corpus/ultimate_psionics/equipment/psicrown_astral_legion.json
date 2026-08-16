@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 122400.0,
+    "description": "Power Points - 170; Manifester Level - 17; Powers - Astral Construct; Recharge Cost 17 pp, Gain 17 pp",
+    "key": "Psicrown (Astral Legion)",
+    "name": "True Psicrown of the [NAME]",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "True Psicrown of the [NAME]"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psionic.Psicrown"
+      },
+      {
+        "key": "COST",
+        "value": "122400"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "BASEITEM",
+        "value": "Psicrown"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.402"
+      },
+      {
+        "key": "SPROP",
+        "value": "Power Points - 170; Manifester Level - 17; Powers - Astral Construct; Recharge Cost 17 pp, Gain 17 pp"
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 158,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
+    "record_key": "Psicrown (Astral Legion)",
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

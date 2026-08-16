@@ -1,0 +1,75 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": null,
+    "description": null,
+    "key": "Dancing Robes of Sharatwan",
+    "name": "Dancing Robes of Sharatwan",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "1",
+          "TYPE=Armor"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Padded"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psionic.Legendary.Armor.Light.ArmorProfLight.Suit.Specific.Nonmetal"
+      },
+      {
+        "key": "WT",
+        "value": "10"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "0"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Cloth.Special Quality ~ Dancing Robes of Sharatwan / Determination.Special Quality ~ Masterwork ~ Armor.Special Quality ~ Dancing Robes of Sharatwan / Armor Bonus"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.433"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "5"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Dancing Robes of Sharatwan Attunement|PREMULT:4,[PREABILITY:2,CATEGORY=FEAT,Two-Weapon Fighting,Weapon Finesse],[PRESKILL:2,Diplomacy=4,Intimidate=4],[PREVARGTEQ:TL,4],[PRETEXT:Ability to form two mind blades]"
+      }
+    ],
+    "weight_lbs": 10.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 465,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
+    "record_key": "Dancing Robes of Sharatwan",
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

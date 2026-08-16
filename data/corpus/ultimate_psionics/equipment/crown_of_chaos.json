@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": null,
+    "description": "Power Points - 60; Manifester Level - 11; Powers - Deflect Missiles, Energy Burst, Energy Push, Force Screen; Recharge Cost 11 pp, Gain 6 pp; treat powers as if on power list|PREVARLT:CrownOfChaosLVL,4; Power Points - 140; Manifester Level - 14; Powers - Deflect Missiles, Energy Burst, Energy Push, Force Screen; Recharge Cost 14 pp, Gain 14 pp; treat powers as if on power list; 1/day recharge for 14 pp|PREVARGTEQ:CrownOfChaosLVL,4",
+    "key": "Crown of Chaos",
+    "name": "Crown of Chaos",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Psionic.Legendary.Psicrown"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.432"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Crown of Chaos Attunement|PREMULT:4,[!PREALIGN:LG,LN,LE],[PRESKILL:1,Bluff=5],[PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Overchannel],[PREABILITY:1,CATEGORY=Special Ability,Wilder ~ Wild Surge]],[PREVARGTEQ:TL,5]"
+      },
+      {
+        "key": "SPROP",
+        "value": "Power Points - 60; Manifester Level - 11; Powers - Deflect Missiles, Energy Burst, Energy Push, Force Screen; Recharge Cost 11 pp, Gain 6 pp; treat powers as if on power list|PREVARLT:CrownOfChaosLVL,4"
+      },
+      {
+        "key": "SPROP",
+        "value": "Power Points - 140; Manifester Level - 14; Powers - Deflect Missiles, Energy Burst, Energy Push, Force Screen; Recharge Cost 14 pp, Gain 14 pp; treat powers as if on power list; 1/day recharge for 14 pp|PREVARGTEQ:CrownOfChaosLVL,4"
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 464,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
+    "record_key": "Crown of Chaos",
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

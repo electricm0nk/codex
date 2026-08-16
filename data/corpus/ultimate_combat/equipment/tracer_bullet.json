@@ -1,0 +1,46 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 100.0,
+    "description": "These +1 firearm bullets deal no damage, but instead cause a pale glow to outline the target, granting the effect of a faerie fire spell and causing the target to take a -2 penalty to AC against ranged attacks. These effects last for 1d4 rounds.",
+    "key": "Tracer Bullet",
+    "name": "Tracer Bullet",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Ammunition.Resizable.FirearmGear.FirearmBullet"
+      },
+      {
+        "key": "COST",
+        "value": "100"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.142"
+      },
+      {
+        "key": "SPROP",
+        "value": "These +1 firearm bullets deal no damage, but instead cause a pale glow to outline the target, granting the effect of a faerie fire spell and causing the target to take a -2 penalty to AC against ranged attacks. These effects last for 1d4 rounds."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 36,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_equip_arms_armor.lst",
+    "record_key": "Tracer Bullet",
+    "sha256": "adc5e058994bfae7f14ff0a41a408e0e6bf74ed0f4e656d50533bc66874b67fc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

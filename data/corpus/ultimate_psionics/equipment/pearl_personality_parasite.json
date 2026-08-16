@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 1400.0,
+    "description": "DC 16 Will",
+    "key": "Pearl (Personality Parasite)",
+    "name": "Pearl, Personality Parasite",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Pearl, Personality Parasite"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psionic.Universal"
+      },
+      {
+        "key": "COST",
+        "value": "1400"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.419"
+      },
+      {
+        "key": "SPROP",
+        "value": "DC 16 Will"
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 321,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
+    "record_key": "Pearl (Personality Parasite)",
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

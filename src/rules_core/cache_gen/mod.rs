@@ -13,6 +13,7 @@ pub mod apg;
 pub mod beastiary1;
 pub mod class_feature;
 pub mod equipment_gap;
+pub mod hand_authored_equipment;
 pub mod ultimate_equipment;
 
 use std::collections::BTreeMap;

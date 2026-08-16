@@ -1,0 +1,59 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 18000.0,
+    "description": null,
+    "key": "Psychoactive Skin (Chameleon)",
+    "name": "Skin of the [NAME]",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Stealth",
+          "10",
+          "TYPE=Enhancement"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Skin of the [NAME]"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psionic.Universal.Ectoshell"
+      },
+      {
+        "key": "COST",
+        "value": "18000"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.421"
+      }
+    ],
+    "weight_lbs": 2.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 336,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
+    "record_key": "Psychoactive Skin (Chameleon)",
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

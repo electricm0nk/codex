@@ -1,27 +1,34 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-16T01:34:55Z",
   "data": {
-    "key": "MITHRAL_ITEM",
     "category": "Equipmods",
-    "name": "MITHRAL_ITEM",
     "cost_gp": null,
-    "weight_lbs": null,
-    "description": null
+    "description": null,
+    "key": "MITHRAL_ITEM",
+    "name": "MITHRAL_ITEM",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      }
+    ],
+    "weight_lbs": null
   },
+  "ingested_at": "2026-08-16T01:34:55Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
-    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df",
     "line": 542,
-    "record_key": "MITHRAL_ITEM"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "MITHRAL_ITEM",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

@@ -1,0 +1,70 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 13055.0,
+    "description": "Level 15 Abjurer; Protection - Explosive runes (Reflex DC 26) and fire trap (Reflex DC 17); Opposition Schools - Illusion, necromancy; Spells - 8.binding, maze, protection from spells(S); 7.banishment(S), delayed blast fireball, expend(S), form of the dragon II, grasping hand; 6.analyze dweomer, antimagic field(S), chain lightning, greater dispel magic(S), true seeing; 5.break enchantment(S), cone of cold, dismissal(S), polymorph, summon monster V, wall of force; 4.confusion, dimension door, dimensional anchor(S), fire trap(S), mass enlarge person, secure shelter, true form(S); 3.cloak of winds(S), daylight, enter image, explosive runes, haste, lightning bolt, magic circle against evil(S), water breathing; 2.cushioning bands, detect thoughts, glitterdust, knock, protection from arrows(S), resist energy(S), scorching ray, whispering wind; 1.animate rope, detect secret doors, detect undead, endure elements(S), feather fall, obscuring mist, protection from chaos(S), shadow blade(S), shield(S), shocking grasp, touch of gracelessness; Preparation Ritual - Guardian Trick",
+    "key": "Guardian Grimoire",
+    "name": "Guardian Grimoire",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "NUMPAGES",
+        "value": "300"
+      },
+      {
+        "key": "COST",
+        "value": "13055"
+      },
+      {
+        "key": "WT",
+        "value": "9"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.125"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Preparation Ritual ~ Guardian Trick"
+      },
+      {
+        "key": "SPROP",
+        "value": "Level 15 Abjurer"
+      },
+      {
+        "key": "SPROP",
+        "value": "Protection - Explosive runes (Reflex DC 26) and fire trap (Reflex DC 17)"
+      },
+      {
+        "key": "SPROP",
+        "value": "Opposition Schools - Illusion, necromancy"
+      },
+      {
+        "key": "SPROP",
+        "value": "Spells - 8.binding, maze, protection from spells(S); 7.banishment(S), delayed blast fireball, expend(S), form of the dragon II, grasping hand; 6.analyze dweomer, antimagic field(S), chain lightning, greater dispel magic(S), true seeing; 5.break enchantment(S), cone of cold, dismissal(S), polymorph, summon monster V, wall of force; 4.confusion, dimension door, dimensional anchor(S), fire trap(S), mass enlarge person, secure shelter, true form(S); 3.cloak of winds(S), daylight, enter image, explosive runes, haste, lightning bolt, magic circle against evil(S), water breathing; 2.cushioning bands, detect thoughts, glitterdust, knock, protection from arrows(S), resist energy(S), scorching ray, whispering wind; 1.animate rope, detect secret doors, detect undead, endure elements(S), feather fall, obscuring mist, protection from chaos(S), shadow blade(S), shield(S), shocking grasp, touch of gracelessness"
+      },
+      {
+        "key": "SPROP",
+        "value": "Preparation Ritual - Guardian Trick"
+      }
+    ],
+    "weight_lbs": 9.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 29,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_equip_general.lst",
+    "record_key": "Guardian Grimoire",
+    "sha256": "9b2e23c56f9f7c79d3b52169c9fc786a3bad00c8587abc03796c306d122de9f5"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

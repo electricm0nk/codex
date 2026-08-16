@@ -1,0 +1,38 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 6000.0,
+    "description": " Range (50 ft. min.); Crew 2, Aim 1, Load 3, Speed 10 ft.",
+    "key": "Bombard (Light)",
+    "name": "Bombard (Light)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bombard (Light)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Exotic.Ranged.SiegeEngine.Siege.SiegeWeapon.SiegeFirearm.Bludgeoning.Piercing.Firearm"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 182,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_profs_weapon.lst",
+    "record_key": "Bombard (Light)",
+    "sha256": "7b6c476a643e80578b0e493fbfcc7928619628bbb57ad56be0e6d3e3fc50493c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

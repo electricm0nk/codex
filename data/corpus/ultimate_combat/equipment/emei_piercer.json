@@ -1,0 +1,66 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 3.0,
+    "description": null,
+    "key": "Emei Piercer",
+    "name": "Emei Piercer",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Emei Piercer"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.EasternWeapon.Eastern.Melee.Exotic.Piercing.Monk"
+      },
+      {
+        "key": "COST",
+        "value": "3"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "2"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d3"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Quality ~ Monk.Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 68,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_equip_arms_armor.lst",
+    "record_key": "Emei Piercer",
+    "sha256": "adc5e058994bfae7f14ff0a41a408e0e6bf74ed0f4e656d50533bc66874b67fc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 350.0,
+    "description": null,
+    "key": "Kusari Gusoku",
+    "name": "Kusari Gusoku",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "7",
+          "TYPE=Armor",
+          "PREVAREQ:DisableArmorBonus,0"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Kusari Gusoku"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Heavy.ArmorProfHeavy.Suit.Standard"
+      },
+      {
+        "key": "COST",
+        "value": "350"
+      },
+      {
+        "key": "WT",
+        "value": "45"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "-7"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "1"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "35"
+      }
+    ],
+    "weight_lbs": 45.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 44,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_equip_arms_armor.lst",
+    "record_key": "Kusari Gusoku",
+    "sha256": "adc5e058994bfae7f14ff0a41a408e0e6bf74ed0f4e656d50533bc66874b67fc"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

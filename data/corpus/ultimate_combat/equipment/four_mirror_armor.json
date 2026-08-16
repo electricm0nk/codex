@@ -1,0 +1,72 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 125.0,
+    "description": null,
+    "key": "Four-mirror Armor",
+    "name": "Four-mirror Armor",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "6",
+          "TYPE=Armor",
+          "PREVAREQ:DisableArmorBonus,0"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Four-mirror Armor"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Medium.ArmorProfMedium.Suit.Standard"
+      },
+      {
+        "key": "COST",
+        "value": "125"
+      },
+      {
+        "key": "WT",
+        "value": "45"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "-5"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "2"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "30"
+      }
+    ],
+    "weight_lbs": 45.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 42,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_equip_arms_armor.lst",
+    "record_key": "Four-mirror Armor",
+    "sha256": "adc5e058994bfae7f14ff0a41a408e0e6bf74ed0f4e656d50533bc66874b67fc"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

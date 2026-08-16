@@ -1,0 +1,129 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": null,
+    "description": "Can hold psicrystal, 3 setting stones, 10 companion stones|PREVARLT:HeartstaffLVL,5; Can hold psicrystal, 5 setting stones, 10 companion stones; psicrystal repairs 1 hp/minute; double personality bonuses [not implemented]|PREVARGTEQ:HeartstaffLVL,5",
+    "key": "Heartstaff",
+    "name": "The Heartstaff",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "HeartstaffLVL",
+          "1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "PsiCrystalLVL",
+          "2"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "The Heartstaff"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Quarterstaff"
+      },
+      {
+        "key": "TYPE",
+        "value": "Psionic.Legendary.Staff.Weapon.Melee.OneHanded.Simple.Standard.Double.Bludgeoning.Quarterstaff.Polearm"
+      },
+      {
+        "key": "ALTTYPE",
+        "value": "Weapon.Melee.Bludgeoning"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HeartstaffLVL|0"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "ALTCRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "ALTCRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "ALTDAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Wood"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Quality ~ Masterwork ~ Weapon"
+      },
+      {
+        "key": "ALTEQMOD",
+        "value": "Material ~ Wood"
+      },
+      {
+        "key": "WIELD",
+        "value": "TwoHanded"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.437"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Heartstaff Attunement|PREMULT:3,[PREABILITY:2,CATEGORY=FEAT,Psicrystal Affinity,Psicrystal Containment],[PRESKILL:1,Spellcraft=5],[PREVARGTEQ:TL,4]"
+      },
+      {
+        "key": "SPROP",
+        "value": "Can hold psicrystal, 3 setting stones, 10 companion stones|PREVARLT:HeartstaffLVL,5"
+      },
+      {
+        "key": "SPROP",
+        "value": "Can hold psicrystal, 5 setting stones, 10 companion stones; psicrystal repairs 1 hp/minute; double personality bonuses [not implemented]|PREVARGTEQ:HeartstaffLVL,5"
+      }
+    ],
+    "weight_lbs": 5.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 469,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
+    "record_key": "Heartstaff",
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

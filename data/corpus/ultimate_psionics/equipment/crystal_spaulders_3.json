@@ -1,0 +1,67 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 50400.0,
+    "description": "enhancement of mind armor is increased by +3, up to +5",
+    "key": "Crystal Spaulders +3",
+    "name": "Crystal Spaulders +3",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "3",
+          "TYPE=ArmorEnhancement.STACK",
+          "PREEQUIP:1,TYPE=AstralSuit,TYPE=Mind Armor"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "CustomPoints",
+          "3"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Psionic.CrystallineFocus"
+      },
+      {
+        "key": "COST",
+        "value": "50400"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.400"
+      },
+      {
+        "key": "SPROP",
+        "value": "enhancement of mind armor is increased by +3, up to +5"
+      }
+    ],
+    "weight_lbs": 2.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 153,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_equipment.lst",
+    "record_key": "Crystal Spaulders +3",
+    "sha256": "ffdbcf81cb0f2d832299a9c6e4c6b124f35fd447a720b0fdda11cf88fe1ca371"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

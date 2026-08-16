@@ -107,30 +107,34 @@ fn enrich_one(path: &Path, data_root: &Path) -> Outcome {
         return Outcome::CitationMiss(format!("no record at {lst_rel_path}:{line} (record_key={record_key:?})"));
     };
 
-    // `SD31-W4-INTEGRATE-001` (`OPEN-ISSUES.md` row 48/49): `open_record`'s
+    // `OPEN-ISSUES.md` row 61, ROOT-CAUSED (`SD31-E6-F5-003`): `open_record`'s
     // same-name merge (this parser's own documented handling of PCGen
-    // restating one logical item across multiple lines) also fires on
-    // rows that are NOT restatements at all -- two separate `.lst` rows
-    // sharing a base template name (a duplicate corpus row, or
-    // `extract_record_name` returning a `.COPY=` row's BASE name rather
-    // than its own distinct post-`.COPY=` name) merge into one parsed
-    // entry whose token list can carry tokens that never appear on the
-    // SPECIFIC cited line at all -- confirmed for `bastard_s_sting`
-    // (line 447, a bare `.COPY=` row with no tokens of its own, shipped
-    // an unrelated `EQMOD:Material ~ Steel` and a duplicated
-    // `VISIBLE:YES`), `mountain_pattern_armor` (every token doubled from
-    // a second, near-identical row at line 46) and `hunter_s_stand`
+    // restating one logical item across multiple lines) is deliberate and
+    // correct for its designed case, but nothing about "these rows merged
+    // into one logical record" says which of the merged rows is the
+    // SPECIFIC one this corpus citation (`source.line`) points at.  Three
+    // real shipped records proved a caller that takes the whole merged
+    // `raw_record.tokens`/`bonus_chains` ships tokens the CITED line never
+    // states: `bastard_s_sting` (line 447, a bare `.COPY=` row, shipped an
+    // unrelated `EQMOD:Material ~ Steel` and a duplicated `VISIBLE:YES`
+    // pulled in from a DIFFERENT `.COPY=` variant sharing the same base
+    // template), `mountain_pattern_armor` (every token doubled from a
+    // second, near-identical restated row at line 46) and `hunter_s_stand`
     // (three genuinely distinct `.COPY=` items' tokens merged into one).
-    // Guard: every token this enrichment is about to ship must be
-    // byte-present on the record's OWN cited line -- the same invariant
-    // `corpus_literal_sweep` independently re-checks after the fact, run
-    // here BEFORE writing so a merged-entry defect is refused at the
-    // source rather than caught downstream. A record that fails this
-    // check is left un-enriched (`MergedEntryMismatch`, counted and
-    // reported, never silently dropped) rather than shipping a citation
-    // whose tokens the cited line does not actually carry.
+    //
+    // Fix: `EquipmentRecord::tokens_on_line`/`bonus_chains_on_line`
+    // (`lst_parser::equipment`) filter the merged record's own token list
+    // down to exactly the tokens whose OWN `line_number` is this citation's
+    // `line` -- every `EquipmentToken` already carries that field, so this
+    // is a pure, zero-risk filter with no change to `open_record`'s merge
+    // behavior (which OTHER callers still rely on for genuine multi-line
+    // restatements). The byte-present-on-cited-line guard below is kept as
+    // a second, independent proof of the same invariant (defense in depth,
+    // now expected to always pass by construction) rather than removed.
     let cited_line_text = lst_text.lines().nth(line.saturating_sub(1)).unwrap_or("");
-    for token in &raw_record.tokens {
+    let line_tokens = raw_record.tokens_on_line(line);
+    let line_bonus_chains = raw_record.bonus_chains_on_line(line);
+    for token in &line_tokens {
         let rendered = format!("{}:{}", token.key, token.value);
         if !cited_line_text.contains(&rendered) {
             return Outcome::MergedEntryMismatch(format!(
@@ -139,13 +143,10 @@ fn enrich_one(path: &Path, data_root: &Path) -> Outcome {
         }
     }
 
-    let raw_tokens: Vec<Value> = raw_record
-        .tokens
-        .iter()
-        .map(|t| json!({ "key": t.key, "value": t.value }))
-        .collect();
+    let raw_tokens: Vec<Value> =
+        line_tokens.iter().map(|t| json!({ "key": t.key, "value": t.value })).collect();
     let raw_bonus_chains: Vec<Value> =
-        raw_record.bonus_chains.iter().map(|b| json!({ "qualifiers": b.qualifiers })).collect();
+        line_bonus_chains.iter().map(|b| json!({ "qualifiers": b.qualifiers })).collect();
 
     let data_obj = root
         .get_mut("data")
@@ -189,6 +190,16 @@ fn main() {
         "ultimate_intrigue",
         "ultimate_psionics",
         "ultimate_wilderness",
+        // SD-31 SD31-E6-F5-003: `gen_cache_hand_authored_equipment`
+        // (`cache_gen::hand_authored_equipment`) landed 620 real
+        // `lst_token` equipment records this cycle across Ultimate
+        // Psionics/Combat/Intrigue/Magic's already-compiled but never-
+        // dumped `equipment_tables()`. The first three books were already
+        // in this list (their `equipmods` residue landed via
+        // `SD31-E6-F5-002`); Ultimate Magic was not -- add it now or its
+        // 18 new records stay at the thin KEY:-token-only fallback, same
+        // reasoning as every entry above.
+        "ultimate_magic",
     ];
 
     let mut total_enriched = 0u32;

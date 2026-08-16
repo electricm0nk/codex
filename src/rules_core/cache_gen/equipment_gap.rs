@@ -74,6 +74,14 @@
 //! is exercised by a unit test with a synthetic PI-declared name instead,
 //! because the real 704-row population happens not to need it.
 
+// `SD31-E6-F5-003`: `book_routing`, `find_citation`, `disabled_identity_
+// column`, `declared_pi_at`, `slugify`, and `write_json` below are
+// `pub(crate)` so `cache_gen::hand_authored_equipment` (a sibling module,
+// same file territory) can reuse this module's already-verified citation
+// resolution, PI reading, and no-clobber write discipline instead of
+// duplicating it for a second, book-list-shaped generator. Pure visibility
+// widening -- zero behavior change to this module's own `generate()`.
+
 use std::collections::{BTreeSet, HashMap};
 use std::path::{Path, PathBuf};
 use std::process::Command;
@@ -140,7 +148,7 @@ pub struct EquipmentData {
 // deliberately absent: `cache_gen::ultimate_equipment` owns that book.
 // ---------------------------------------------------------------------
 
-fn book_routing(short_code: &str) -> Option<(&'static str, &'static str)> {
+pub(crate) fn book_routing(short_code: &str) -> Option<(&'static str, &'static str)> {
     match short_code {
         "CRB" => Some(("core_rulebook", "pathfinder/paizo/roleplaying_game/core_rulebook")),
         "APG" => Some(("advanced_players_guide", "pathfinder/paizo/roleplaying_game/advanced_players_guide")),
@@ -279,7 +287,7 @@ fn try_files(files: &[PathBuf], book_dir: &Path, key: &str, name: &str) -> Optio
 /// `book_dir` is the absolute directory; the returned path is relative to
 /// it (POSIX-separated) so the caller can build both the citation
 /// `source.path` and re-open the file.
-fn find_citation(book_dir: &Path, key: &str, name: &str) -> Option<(PathBuf, u32)> {
+pub(crate) fn find_citation(book_dir: &Path, key: &str, name: &str) -> Option<(PathBuf, u32)> {
     let flat = list_lst_files_flat(book_dir);
     if let Some(hit) = try_files(&flat, book_dir, key, name) {
         return Some(hit);
@@ -295,7 +303,7 @@ fn find_citation(book_dir: &Path, key: &str, name: &str) -> Option<(PathBuf, u32
 /// treated as NOT disabled (the pre-existing unresolved-citation path
 /// already handles a genuinely absent row; this check only fires on a
 /// row that resolved and needs its identity column read).
-fn disabled_identity_column(lst_path: &Path, line: u32) -> bool {
+pub(crate) fn disabled_identity_column(lst_path: &Path, line: u32) -> bool {
     if line == 0 {
         return false;
     }
@@ -306,7 +314,7 @@ fn disabled_identity_column(lst_path: &Path, line: u32) -> bool {
 
 /// Reads [`DeclaredProductIdentity`] off the real corpus line at
 /// `lst_path:line` (1-indexed) -- `§53.5`'s declared-PI reader.
-fn declared_pi_at(lst_path: &Path, line: u32) -> DeclaredProductIdentity {
+pub(crate) fn declared_pi_at(lst_path: &Path, line: u32) -> DeclaredProductIdentity {
     if line == 0 {
         return DeclaredProductIdentity::default();
     }
@@ -321,7 +329,7 @@ fn declared_pi_at(lst_path: &Path, line: u32) -> DeclaredProductIdentity {
     pi_screening::declared_product_identity(tokens)
 }
 
-fn slugify(name: &str, used: &mut BTreeSet<String>) -> String {
+pub(crate) fn slugify(name: &str, used: &mut BTreeSet<String>) -> String {
     let mut slug: String = name
         .to_lowercase()
         .chars()
@@ -362,7 +370,7 @@ fn slugify(name: &str, used: &mut BTreeSet<String>) -> String {
 /// real citation line (446 vs. this row's 895) -- two real corpus rows,
 /// same slug, and the first `write_json` implementation clobbered the
 /// better one before this guard existed.
-fn write_json<T: Serialize>(out_dir: &Path, slug: &str, record: &CacheRecord<T>) -> std::io::Result<bool> {
+pub(crate) fn write_json<T: Serialize>(out_dir: &Path, slug: &str, record: &CacheRecord<T>) -> std::io::Result<bool> {
     std::fs::create_dir_all(out_dir)?;
     let path = out_dir.join(format!("{slug}.json"));
     if path.exists() {

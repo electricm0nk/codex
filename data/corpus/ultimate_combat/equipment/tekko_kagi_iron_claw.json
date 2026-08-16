@@ -1,0 +1,38 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 3.0,
+    "description": null,
+    "key": "Tekko-Kagi (Iron Claw)",
+    "name": "Tekko-Kagi (Iron Claw)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tekko-Kagi (Iron Claw)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Eastern.Melee.Exotic.Light.Piercing.Disarm"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 79,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_profs_weapon.lst",
+    "record_key": "Tekko-Kagi (Iron Claw)",
+    "sha256": "7b6c476a643e80578b0e493fbfcc7928619628bbb57ad56be0e6d3e3fc50493c"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

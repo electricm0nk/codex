@@ -1,0 +1,78 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 200.0,
+    "description": "Full-round action to reloaded, Sleight of Hand check to keep concealed after firing.",
+    "key": "Wrist Launcher",
+    "name": "Wrist Launcher",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wrist Launcher"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Crossbow (Hand)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Exotic.Ranged.Standard.Piercing.Container.Projectile.Blowgun"
+      },
+      {
+        "key": "CONTAINS",
+        "value": "UNLIM|Dart=1"
+      },
+      {
+        "key": "COST",
+        "value": "200"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel.Material ~ Leather"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "RANGE",
+        "value": "20"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.232"
+      },
+      {
+        "key": "SPROP",
+        "value": "Full-round action to reloaded, Sleight of Hand check to keep concealed after firing."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-16T05:06:54Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 21,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_equip_arms_armor.lst",
+    "record_key": "Wrist Launcher",
+    "sha256": "e26d0cc65210cee59a2976677c7385a467248278cd2c1951351f9b0a0941f74b"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}
