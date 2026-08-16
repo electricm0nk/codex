@@ -844,10 +844,10 @@
     "engine_wiring_class": "derived",
     "engine_wiring_class_reason": "bonus",
     "engine_status": "grounded",
-    "hand_wiring_class": "static",
+    "hand_wiring_class": "derived",
     "confidence": "high",
-    "agrees_with_engine": false,
-    "token_evidence": "engine=derived via ['derived:bonus','derived:dr'], both false positives: every BONUS:STAT|<ability>|<int> value is a flat literal (STAT-selector coincidence), and 'DR:10/Cold Iron' trips has_arith's unconditional '/' check even though it is PCGen's literal DR-bypass notation, not division. No genuine scalar/arithmetic field exists anywhere in the row -> static (D6) -- bonus_stat_selector_false_positive, dr_slash_false_positive",
+    "agrees_with_engine": true,
+    "token_evidence": "CORRECTED (SD31-E2-F3-001, 2026-08-15): the original 'static' label was itself wrong, not just stale -- it missed a real signal because SPELLS: fields were unscanned by every classifier (production and reference) at label time. The row's SPELLS: field carries genuine CHA-scalar save-DC formulas the label's own 'no genuine scalar/arithmetic field exists anywhere in the row' claim contradicts: SPELLS:Innate|TIMES=ATWILL|CASTERLEVEL=20|Charm Monster,14+CHA|Clairaudience/Clairvoyance|Detect Thoughts,12+CHA|Poison,14+CHA|Suggestion,13+CHA|Telekinesis,15+CHA|Teleport (b1_races.lst:305, verbatim). True class is derived via this field alone; the BONUS:STAT-selector and DR:-slash false positives the original label ruled out are still correctly ruled out (unrelated, both real fixes already landed, D3/D4) -- they were just never the row's ONLY signal. Original (now-superseded) evidence, preserved for audit: \"engine=derived via ['derived:bonus','derived:dr'], both false positives: every BONUS:STAT|<ability>|<int> value is a flat literal (STAT-selector coincidence), and 'DR:10/Cold Iron' trips has_arith's unconditional '/' check even though it is PCGen's literal DR-bypass notation, not division. No genuine scalar/arithmetic field exists anywhere in the row -> static (D6) -- bonus_stat_selector_false_positive, dr_slash_false_positive\"",
     "source_file": "b1_races.lst",
     "source_line": 305
   },

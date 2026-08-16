@@ -38,6 +38,19 @@ pub const MAGNITUDE_TOKENS: &[&str] = &[
     "DR:",
     "SPELLFAILURE:",
     "STAT:",
+    // `SPELLS:<label>|TIMES=...|CASTERLEVEL=<scalar-or-int>|<spell name>[,<DC formula>]`
+    // -- a spell-like-ability grant. The `CASTERLEVEL=` segment and any
+    // trailing comma-delimited DC formula are real numeric magnitude, not
+    // prose (`OPEN-ISSUES.md` row 16, Finding D, `SD31-E2-F1-002`):
+    // `bestiary_4:monster_ability:winter_hag_ice_staff`'s
+    // `SPELLS:Ice Staff|CASTERLEVEL=10|Cone of Cold,15+CHA` states a
+    // CHA-scalar save DC nowhere else on the row. Previously unscanned --
+    // neither a `prose_fields` entry (it is a structured pipe-delimited
+    // token, not English text) nor a `MAGNITUDE_TOKENS` entry -- so a
+    // record whose only magnitude lived here fell to
+    // `display:no_magnitude_token` (no chassis found at all) instead of
+    // being scanned at all.
+    "SPELLS:",
 ];
 
 /// PCGen keyword ranges whose real value is a function of caster level.
@@ -399,9 +412,47 @@ fn has_arith_scoped(value: &str, allow_slash: bool) -> bool {
     {
         return true;
     }
-    if value.to_ascii_lowercase().contains("min(") || value.to_ascii_lowercase().contains("max(")
-    {
+    let lower = value.to_ascii_lowercase();
+    if lower.contains("min(") || lower.contains("max(") {
         return true;
+    }
+    // PCGen's `classlevel("<ClassName>")` function-call form is a genuine
+    // class-level-scaling formula, same shape as the bare `CLASSLEVEL`
+    // scalar keyword `has_scalar`/`SCALARS_SUBSTRING` already recognizes --
+    // but that check is case-sensitive (`value.contains("CLASSLEVEL")`) and
+    // real corpus rows spell the function call lowercase
+    // (`OPEN-ISSUES.md` row 9(a), `SD31-E2-F2-001-wiringfix`):
+    // `ultimate_magic:class_feature:dragon_shaman_totem_transformation`'s
+    // `BONUS:VAR|TotemTransformationDuration|classlevel("Druid")` carries no
+    // uppercase `CLASSLEVEL` anywhere and was misread `static`. Checked as
+    // its own case-insensitive function-call form here rather than by
+    // lower-casing the whole `SCALARS_SUBSTRING` scan, which would risk new
+    // false positives on ordinary lowercase corpus prose the bare-keyword
+    // scan was never exposed to.
+    if lower.contains("classlevel(") {
+        return true;
+    }
+    // A `+` immediately followed by a parenthesised sub-expression is
+    // arithmetic even when nothing inside the parens starts with an
+    // uppercase-letter run right after the `+` (`has_arith`'s existing
+    // `+\s*\w*[A-Z]{2,}` check requires a WORD character after `+`, not `(`;
+    // `OPEN-ISSUES.md` row 9(c)): `horror_adventures/support/ha_abilities_class_oa.lst:305`,
+    // "Rapturous Rage" -- `BONUS:ABILITYPOOL|Rage Power|10+(SpiritualistLVL>=14)+(SpiritualistLVL>=18)`
+    // is a real level-gated formula stated entirely inside parenthesised
+    // comparisons after each `+`.
+    {
+        let bytes = value.as_bytes();
+        for (i, b) in bytes.iter().enumerate() {
+            if *b == b'+' {
+                let mut j = i + 1;
+                while j < bytes.len() && bytes[j].is_ascii_whitespace() {
+                    j += 1;
+                }
+                if bytes.get(j) == Some(&b'(') {
+                    return true;
+                }
+            }
+        }
     }
     // `+\s*\w*[A-Z]{2,}`: a `+` followed by optional whitespace, then a
     // MAXIMAL run of word characters (any case), somewhere within which
@@ -490,6 +541,9 @@ fn strip_stat_selector(value: &str) -> std::borrow::Cow<'_, str> {
 /// `literal_magnitudes_only` just because it fails the (deliberately
 /// narrow) `SCALARS`/`ARITH` word lists.
 fn has_scalar_or_arith_for_token(token: &str, value: &str) -> bool {
+    if token == "SPELLS" {
+        return has_scalar_or_arith_in_spells_field(value);
+    }
     let scan_value = strip_stat_selector(value);
     let allow_slash = token != "CR" && token != "DR";
     if has_scalar(&scan_value) || has_arith_scoped(&scan_value, allow_slash) {
@@ -498,6 +552,49 @@ fn has_scalar_or_arith_for_token(token: &str, value: &str) -> bool {
     if value.starts_with("STAT|") {
         let magnitude = scan_value.split('|').next().unwrap_or("");
         if !is_integer_literal(magnitude) {
+            return true;
+        }
+    }
+    false
+}
+
+/// Scoped scalar/arithmetic scan for a `SPELLS:` field value
+/// (`<label>|TIMES=<n>/DAY-or-ATWILL|CASTERLEVEL=<int-or-scalar>|<spell
+/// name>[,<DC formula>]`). A whole-value scan the way every other
+/// `MAGNITUDE_TOKENS` field is scanned false-positives on two of this
+/// token's own STRUCTURAL tags, the same selector-vs-magnitude collision
+/// shape already fixed for `BONUS:STAT`/`STAT:` (`OPEN-ISSUES.md` row 16,
+/// Finding D, discovered while adding this test coverage):
+///
+/// - The literal tag text `CASTERLEVEL=` always contains the substring
+///   `CASTERLEVEL`, so a whole-value scan calls EVERY `SPELLS:` field
+///   `derived` regardless of whether the level after `=` is a real scalar
+///   (`CASTERLEVEL=TL`) or a flat literal (`CASTERLEVEL=10`) — the tag
+///   NAME, not the value, was triggering the signal.
+/// - `TIMES=<n>/DAY` is PCGen's literal "N times per day" notation, not
+///   division; a whole-value scan's unscoped `/` check would call every
+///   limited-use spell-like ability `derived` purely for using this
+///   near-universal notation.
+///
+/// Scanned per pipe segment instead: `CASTERLEVEL=`'s value counts only
+/// when it is not a bare integer literal (same `is_integer_literal` rule
+/// as the `BONUS:STAT`/`CR:`/`DR:` fixes); `TIMES=` is skipped outright
+/// (its `/DAY` suffix is never a formula); every other segment — the spell
+/// name and any trailing comma-delimited DC formula — is scanned in full
+/// with the ordinary unscoped rules, since a genuine DC formula
+/// (`Cone of Cold,15+CHA`) carries no tag prefix to collide with.
+fn has_scalar_or_arith_in_spells_field(value: &str) -> bool {
+    for seg in value.split('|') {
+        if let Some(level) = seg.strip_prefix("CASTERLEVEL=") {
+            if !is_integer_literal(level) {
+                return true;
+            }
+            continue;
+        }
+        if seg.starts_with("TIMES=") {
+            continue;
+        }
+        if has_scalar(seg) || has_arith_scoped(seg, true) {
             return true;
         }
     }
@@ -1331,18 +1428,29 @@ mod tests {
         assert_eq!(reason, "literal_magnitudes_only");
     }
 
-    // Full real row, both false positives compounded in one record:
-    // `bestiary/b1_races.lst:305`, "Neothelid" (re-derived this cycle) —
-    // six `BONUS:STAT|<ability>|<int>` fields (selector collision) plus
-    // `DR:10/Cold Iron` (slash bypass) were the record's ONLY two
-    // derived-triggering signals; with both fixed the record has no
-    // genuine scalar/arithmetic magnitude anywhere and its true class is
-    // `static`, matching the ground-truth hand label
-    // (`bestiary:monster:neothelid`,
-    // `SD31-E2-F1-ground-truth-sample-v1.json`, `hand_wiring_class: static`,
-    // `confidence: high`).
+    // Both `BONUS:STAT`/`DR:` false positives compounded in one record,
+    // testing THOSE TWO FIXES IN ISOLATION: `bestiary/b1_races.lst:305`,
+    // "Neothelid" — six `BONUS:STAT|<ability>|<int>` fields (selector
+    // collision) plus `DR:10/Cold Iron` (slash bypass) are proven, on their
+    // own, to carry no genuine scalar/arithmetic magnitude.
+    //
+    // **This is deliberately NOT the full real row.** Neothelid's real
+    // corpus row also carries a `SPELLS:Innate|TIMES=ATWILL|CASTERLEVEL=20|
+    // Charm Monster,14+CHA|...` field with genuine CHA-scalar save-DC
+    // formulas — invisible before `SD31-E2-F3-001` added `SPELLS:` to
+    // `MAGNITUDE_TOKENS` (D6, Finding D). The record's TRUE overall class
+    // is `derived`, via that field (see
+    // `d6_neothelid_full_row_is_derived_via_spells_not_static` below), not
+    // `static` — the ground-truth sample's original `hand_wiring_class:
+    // static` label was itself wrong (not just stale), because at label
+    // time no scanner anywhere examined `SPELLS:` fields either;
+    // corrected in `SD31-E2-F1-ground-truth-sample-v1.json` this cycle
+    // (`token_evidence` carries the full correction trail). This
+    // stripped-row test still earns its keep as a narrow regression guard
+    // that the STAT-selector and DR-slash fixes specifically don't
+    // false-positive on their own.
     #[test]
-    fn d3_neothelid_compounded_false_positives_resolve_to_static() {
+    fn d3_bonus_stat_and_dr_false_positives_alone_resolve_to_static() {
         let (class, reason) = cls(
             "Neothelid\tSTARTFEATS:1\tSIZE:G\tMOVE:Walk,30,Fly,60\tREACH:20\t\
              BONUS:STAT|STR|20\tBONUS:STAT|DEX|-4\tBONUS:STAT|CON|14\t\
@@ -1353,6 +1461,31 @@ mod tests {
         );
         assert_eq!(class, WiringClass::Static);
         assert_eq!(reason, "literal_magnitudes_only");
+    }
+
+    // D6 (SD31-E2-F3-001, Finding D) — the FULL real Neothelid row,
+    // `bestiary/b1_races.lst:305` verbatim, including the `SPELLS:` field
+    // the test above deliberately omits. The BONUS:STAT/DR: fields are
+    // still all false positives (proven above in isolation), but the row's
+    // TRUE class is `derived` via a real signal neither the BONUS:STAT nor
+    // the DR fix has anything to do with: `SPELLS:Innate|TIMES=ATWILL|
+    // CASTERLEVEL=20|Charm Monster,14+CHA|...` states genuine CHA-scalar
+    // save DCs for the creature's innate spell-like abilities.
+    #[test]
+    fn d6_neothelid_full_row_is_derived_via_spells_not_static() {
+        let (class, reason) = cls(
+            "Neothelid\tSTARTFEATS:1\tSIZE:G\tMOVE:Walk,30,Fly,60\tREACH:20\t\
+             BONUS:STAT|STR|20\tBONUS:STAT|DEX|-4\tBONUS:STAT|CON|14\t\
+             BONUS:STAT|INT|6\tBONUS:STAT|WIS|4\tBONUS:STAT|CHA|10\t\
+             BONUS:VAR|AC_Natural_Armor|26|TYPE=Base\tBONUS:VAR|BlindsightRange|100|TYPE=Base\t\
+             BONUS:VAR|Maneuverability|4\tBONUS:VAR|NoTypeTraits|1\t\
+             DEFINE:Maneuverability|0\tDEFINE:NoTypeTraits|0\tSR:26\tDR:10/Cold Iron\tCR:15\t\
+             SPELLS:Innate|TIMES=ATWILL|CASTERLEVEL=20|Charm Monster,14+CHA|Clairaudience/Clairvoyance|\
+             Detect Thoughts,12+CHA|Poison,14+CHA|Suggestion,13+CHA|Telekinesis,15+CHA|Teleport\t\
+             SPELLS:Neothelid|TIMES=3|CASTERLEVEL=20|Quickened Suggestion,13+CHA",
+        );
+        assert_eq!(class, WiringClass::Derived);
+        assert_eq!(reason, "spells");
     }
 
     // D3 — derived:prose_expr
@@ -1437,6 +1570,116 @@ mod tests {
         let (class, reason) = cls("Longsword\tCOST:15\tWT:4");
         assert_eq!(class, WiringClass::Static);
         assert_eq!(reason, "literal_magnitudes_only");
+    }
+
+    // D6 (SD31-E2-F3-001, Finding D, `OPEN-ISSUES.md` row 16). Real row,
+    // `bestiary_4/b4_abilities_race.lst:1460`, "Winter Hag ~ Ice Staff":
+    // `SPELLS:Ice Staff|CASTERLEVEL=10|Cone of Cold,15+CHA` states a
+    // CHA-scalar save DC nowhere else on the row -- the record's ONLY
+    // magnitude field. Before `SPELLS:` joined `MAGNITUDE_TOKENS`, this
+    // fell all the way to `display:no_magnitude_token` (`mags` was empty,
+    // so the row was never even scanned as carrying a chassis at all).
+    #[test]
+    fn d6_spells_field_scalar_formula_is_derived() {
+        let (class, reason) = cls(
+            "Ice Staff\tKEY:Winter Hag ~ Ice Staff\tCATEGORY:Special Ability\tTYPE:SpecialQuality.Supernatural\tSPELLS:Ice Staff|CASTERLEVEL=10|Cone of Cold,15+CHA",
+        );
+        assert_eq!(class, WiringClass::Derived);
+        assert_eq!(reason, "spells");
+    }
+
+    // A `SPELLS:` field whose `CASTERLEVEL=` value is itself a named
+    // variable (not a literal int) is exactly the same shape --
+    // `advanced_class_guide:feat:nature_magic`'s
+    // `SPELLS:Innate|TIMES=ATWILL|CASTERLEVEL=TL` (`TL` -- total level, a
+    // recognized `SCALARS_WORD` entry).
+    #[test]
+    fn d6_spells_field_casterlevel_scalar_keyword_is_derived() {
+        let (class, reason) =
+            cls("Nature Magic\tTYPE:General\tSPELLS:Innate|TIMES=ATWILL|CASTERLEVEL=TL|Know Direction");
+        assert_eq!(class, WiringClass::Derived);
+        assert_eq!(reason, "spells");
+    }
+
+    // Regression guard: a `SPELLS:` field with no scalar/arithmetic
+    // anywhere in it (a flat at-will grant, no scaling DC or duration)
+    // must still resolve `static`, not be swept into `derived` just for
+    // existing.
+    #[test]
+    fn d6_spells_field_with_no_scalar_stays_static() {
+        let (class, reason) =
+            cls("Innate Light\tTYPE:General\tSPELLS:Innate|CASTERLEVEL=1|Light");
+        assert_eq!(class, WiringClass::Static);
+        assert_eq!(reason, "literal_magnitudes_only");
+    }
+
+    // Regression guard, discovered writing the test above: a whole-value
+    // scan of a `SPELLS:` field false-positives on its own STRUCTURAL tag
+    // text -- `CASTERLEVEL=` always contains the substring `CASTERLEVEL`
+    // regardless of what follows `=`, and `TIMES=<n>/DAY` (PCGen's "N times
+    // per day" notation, not division) trips the unscoped `/` check. A
+    // flat, fully-literal `SPELLS:` field carrying both tags must still
+    // resolve `static`.
+    #[test]
+    fn d6_spells_field_times_per_day_slash_is_not_arithmetic() {
+        let (class, reason) = cls(
+            "Innate Fireball\tTYPE:General\tSPELLS:Innate|TIMES=3/DAY|CASTERLEVEL=10|Fireball",
+        );
+        assert_eq!(class, WiringClass::Static);
+        assert_eq!(reason, "literal_magnitudes_only");
+    }
+
+    // Regression guard: a `TIMES=N/DAY` field must not hide a REAL scalar
+    // elsewhere in the same `SPELLS:` value.
+    #[test]
+    fn d6_spells_field_times_per_day_does_not_hide_a_real_scalar() {
+        let (class, reason) = cls(
+            "Innate Fireball\tTYPE:General\tSPELLS:Innate|TIMES=3/DAY|CASTERLEVEL=TL|Fireball",
+        );
+        assert_eq!(class, WiringClass::Derived);
+        assert_eq!(reason, "spells");
+    }
+
+    // D6 — `classlevel(...)` function-call form, case-insensitive
+    // (`OPEN-ISSUES.md` row 9(a)). Real row,
+    // `ultimate_magic/um_abilities_class.lst:1101`, "Dragon Shaman ~ Totem
+    // Transformation": `BONUS:VAR|TotemTransformationDuration|classlevel("Druid")`
+    // carries no uppercase `CLASSLEVEL` anywhere, so the pre-fix
+    // case-sensitive `SCALARS_SUBSTRING` check missed it and the record
+    // read `static` despite stating a genuine class-level-scaling duration.
+    #[test]
+    fn d6_lowercase_classlevel_function_call_is_derived() {
+        let (class, reason) = cls(
+            "Totem Transformation\tKEY:Dragon Shaman ~ Totem Transformation\tCATEGORY:Special Ability\tTYPE:DruidClassFeatures.ArchetypeDruid.SpecialQuality.Supernatural\tDEFINE:TotemTransformationDuration|0\tBONUS:VAR|TotemTransformationDuration|classlevel(\"Druid\")",
+        );
+        assert_eq!(class, WiringClass::Derived);
+        assert_eq!(reason, "bonus");
+    }
+
+    // D6 — `+` immediately followed by a parenthesised sub-expression is
+    // arithmetic (`OPEN-ISSUES.md` row 9(c)). Real row,
+    // `horror_adventures/support/ha_abilities_class_oa.lst:305`, "Exciter ~
+    // Rapturous Rage": `BONUS:ABILITYPOOL|Rage Power|10+(SpiritualistLVL>=14)+(SpiritualistLVL>=18)`
+    // -- the pre-fix `+\s*\w*[A-Z]{2,}` rule requires a WORD character
+    // immediately after `+`, which a `(` is not, so this real level-gated
+    // formula was invisible to `has_arith_scoped` and the record read
+    // `static`.
+    #[test]
+    fn d6_plus_paren_subexpression_is_derived() {
+        let (class, reason) = cls(
+            "Rapturous Rage\tKEY:Exciter ~ Rapturous Rage\tCATEGORY:Special Ability\tTYPE:Spiritualist Class Feature.ExciterClassFeatures.SpecialQuality\tBONUS:ABILITYPOOL|Rage Power|10+(SpiritualistLVL>=14)+(SpiritualistLVL>=18)",
+        );
+        assert_eq!(class, WiringClass::Derived);
+        assert_eq!(reason, "bonus");
+    }
+
+    // Regression guard: an ordinary `+` followed by whitespace then a
+    // lowercase word (no parenthesis, no uppercase run) must NOT be swept
+    // into arithmetic by the new `+(` check -- only a literal `(`
+    // immediately (modulo whitespace) after `+` counts.
+    #[test]
+    fn d6_plus_then_lowercase_word_without_paren_stays_non_arith() {
+        assert!(!has_arith_scoped("10+ this is not a formula", true));
     }
 
     // Lattice collapse: a dual-signal unit resolves to `computed` while

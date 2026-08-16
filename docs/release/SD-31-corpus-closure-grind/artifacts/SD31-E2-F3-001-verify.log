@@ -1,0 +1,47 @@
+codex verify — mode: full, jobs: 2
+repo:  /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_e4e73f9a-9af-6
+logs:  /tmp/codex-verify-hSxluE
+---------------------------------------------------------------
+==> preflight-disk — disk budget check before any build starts
+    repo filesystem (/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_e4e73f9a-9af-6, mounted at /): 29% used, 695G available
+    scratch-log filesystem (/tmp/codex-verify-hSxluE, mounted at /): 29% used, 695G available
+    PASS  preflight-disk  (disk budget OK)
+---------------------------------------------------------------
+==> preflight-oracle — scripts/fetch-pcgen-oracle.sh --check
+    PASS  preflight-oracle  (oracle at pin 7f818006e371188e5717fd18d74d18a420747fc6)
+---------------------------------------------------------------
+==> oracle-pin-selftest — scripts/tests/test_fetch_pcgen_oracle.sh
+    PASS  oracle-pin-selftest  (11 passed, 0 failed)
+---------------------------------------------------------------
+==> producer-selftest — python3 -m unittest scripts/tests/test_pf1e_dashboard_producer.py
+    PASS  producer-selftest  (5 cases passed)
+---------------------------------------------------------------
+==> reachability-audit-selftest — python3 -m unittest scripts/tests/test_reachability_audit.py
+    PASS  reachability-audit-selftest  (11 cases passed)
+---------------------------------------------------------------
+==> reachability-audit — python3 scripts/reachability_audit.py
+    PASS  reachability-audit  (reachable ceiling 98.94%)
+---------------------------------------------------------------
+==> groundtruth-guard-selftest — python3 -m unittest scripts/tests/test_ground_truth_evidence_guard.py scripts/tests/test_sample_ground_truth_units.py
+    PASS  groundtruth-guard-selftest  (14 cases passed)
+---------------------------------------------------------------
+==> pi-sweep — Product-Identity blacklist over src/rules_core/rules_tables
+    PASS  pi-sweep  (10 hits over src/rules_core/rules_tables, 10 baseline rows)
+---------------------------------------------------------------
+==> audit-selftest — scripts/tests/test_identifier_discipline_audit.sh
+    PASS  audit-selftest  (28 passed, 0 failed)
+---------------------------------------------------------------
+==> reclaim-selftest — scripts/tests/test_reclaim_orphan_targets.sh
+    PASS  reclaim-selftest  (13 passed, 0 failed)
+---------------------------------------------------------------
+==> driver-selftest — scripts/tests/test_run_desktop_driver.sh
+    PASS  driver-selftest  (7 passed, 0 failed)
+---------------------------------------------------------------
+==> corpus-sweep-selftest — scripts/tests/test_corpus_literal_sweep.sh
+    PASS  corpus-sweep-selftest  (15 passed, 0 failed)
+---------------------------------------------------------------
+==> root-lib — cargo test --locked --lib -j 2  (repo root)
+    PASS  root-lib  (1804 passed)
+---------------------------------------------------------------
+==> root-full — cargo test --locked --no-fail-fast -j 2  (repo root)
+    building ~490 test binaries; this is the slow one
