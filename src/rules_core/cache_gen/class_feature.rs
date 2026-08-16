@@ -87,6 +87,20 @@
 //! written at all** -- the safer default absent an operator ruling on a
 //! per-book override (`docs/governance/ogl-pi-blacklist.md` §3), counted
 //! in [`GenerationReport::name_pi_skipped`] rather than silently dropped.
+//!
+//! **Wave-4 correction (`SD31-W4-INTEGRATE-001`, `OPEN-ISSUES.md` row 48):**
+//! the wave-3 hole this section describes fixing is `§53.5` (the declared
+//! `NAMEISPI:`/`DESCISPI:` reader) ONLY. This generator's own first landed
+//! version carried the identical hole one level over: it ran `§52.3`'s
+//! bounded blacklist term scan (`pi_screening::classify_field`) on
+//! `description` but never on `name` -- so a name containing a blacklisted
+//! term with NO `NAMEISPI:YES` declaration on its row shipped unredacted.
+//! 14 shipped records were exposed this way (2 with no PI marking on the
+//! record at all); fixed by running `classify_field("name", ...)` on the
+//! same union basis `equipment_gap.rs` already established as the correct
+//! pattern (`declared.name || name_license == PiRedacted` => whole-record
+//! skip, `name_pi_skipped` incremented) -- see the module's own doc comment
+//! there for why a name has no field-level redaction path to fall back to.
 //! `description` still runs the union screen
 //! (`pi_screening::classify_optional_field_declared`) exactly as every
 //! other generator does. Real, non-hypothetical stakes: this cycle's own
@@ -387,7 +401,8 @@ pub fn generate(
                 }
             };
             let declared = declared_pi_at(&file_path, unit.source_line).unwrap_or_default();
-            if declared.name {
+            let (name_license, _, _, _) = pi_screening::classify_field("name", &unit.name);
+            if declared.name || name_license == crate::rules_core::shape_b_v1::License::PiRedacted {
                 report.name_pi_skipped += 1;
                 continue;
             }
@@ -512,5 +527,35 @@ mod tests {
         let b = slugify("Sneak Attack", &mut used);
         assert_eq!(a, "sneak_attack");
         assert_ne!(a, b);
+    }
+
+    /// `OPEN-ISSUES.md` row 48: a class-feature name carrying a
+    /// blacklisted Product-Identity term must be flagged even with no
+    /// `NAMEISPI:YES` declaration on its own row -- the same union basis
+    /// `equipment_gap.rs` already established. Both of the two shipped
+    /// records that carried NO PI marking at all reproduce this exact
+    /// shape: their row does not declare `NAMEISPI:YES`, only the
+    /// blacklist term scan catches them.
+    #[test]
+    fn a_blacklisted_name_is_flagged_even_with_no_nameispi_declaration() {
+        let (license, _, _, _) = pi_screening::classify_field("name", "Gorum");
+        assert_eq!(license, crate::rules_core::shape_b_v1::License::PiRedacted);
+        let (license2, _, _, _) = pi_screening::classify_field("name", "Death (Pharasma)");
+        assert_eq!(license2, crate::rules_core::shape_b_v1::License::PiRedacted);
+    }
+
+    /// The production call site's actual gating logic, isolated from file
+    /// I/O: the union of `declared.name` (row-declared) and the blacklist
+    /// term scan (undeclared-but-listed) must both trigger a skip, and a
+    /// clean name with neither signal must not.
+    #[test]
+    fn name_skip_is_the_union_of_declared_and_blacklisted() {
+        fn should_skip(declared_name: bool, name: &str) -> bool {
+            let (name_license, _, _, _) = pi_screening::classify_field("name", name);
+            declared_name || name_license == crate::rules_core::shape_b_v1::License::PiRedacted
+        }
+        assert!(should_skip(true, "Ordinary Feature"), "row-declared NAMEISPI:YES must skip");
+        assert!(should_skip(false, "Gorum"), "blacklisted name with no declaration must still skip");
+        assert!(!should_skip(false, "Sneak Attack"), "an ordinary name must not skip");
     }
 }
