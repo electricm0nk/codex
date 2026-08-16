@@ -7045,3 +7045,225 @@ out of budget is not blocked."
 Branch `worktree-wf_1d83a743-99e-2` pushed at both `ca261b3d7` and `6a9cb5d63` (the second is the tip).
 `scripts/reclaim.sh --apply` run twice this cycle (both times: 0 bytes, box under concurrent load from
 other agents' live builds — nothing was old/idle enough to reclaim).
+
+## Cycle: SD31-W4-INTEGRATE-001 (sd31-w4-integrate) — 2026-08-16
+
+**Role:** `sd31-w4-integrate` (`RETRO_ACTOR=sd31-w4-integrate`), primary checkout at `tranche/11`, sole
+writer this cycle. `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-w4-integrate` (verify.sh) and a
+second `.../sd31-w4-integrate2` (my own guarded-regen/build work, to avoid colliding with the
+background gate). HEAD at claim: `40771d3bf` (class_feature cache-gen lane's own last commit, already
+on `tranche/11`). Oracle pin: `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
+(`scripts/pcgen-oracle-pin.env`), confirmed via `./scripts/verify.sh --only preflight-oracle` (PASS)
+and cross-checked against `~/workspace/repos/pcgen`'s own `git rev-parse HEAD` (identical).
+
+**Merge.** 5 branches merged onto `tranche/11`, PI repair first per instruction:
+
+| Branch | Head | Merge commit |
+|---|---|---|
+| `sd31/pi-fix` | `6234ee8fe` | `3402fe384` |
+| `sd31/sweep-attrib-race-e6f3-002` | `1324bcab4` | `6ddcdb2e2` |
+| `sd31/monster-widen-SD31-E6-F1-002` | `1b17fbcc1` | `b60a4119a` |
+| `sd31/spell-reach-e6-f2-002` | `fb3c0ef52` | `37c3abd77` |
+| `worktree-wf_1d83a743-99e-2` (equipment_gap, `SD31-E6-F5-002`) | `7fca5bbc1` | `df5ba64d5` |
+
+The dispatch's branch list also named `worktree-wf_1d83a743-99e-2` first ("other-kind cache-gen"); I
+merged it LAST after discovering, well into the cycle, that I had only merged 4 of the 5 named
+branches on my first pass — caught by `grep -n "pub mod" src/rules_core/cache_gen/mod.rs` showing no
+`equipment_gap` entry after the first 4 merges. Corrected before any further work assumed it was
+present; the omission itself is logged here rather than silently absorbed. Content proven present by
+name after all 5: `pub mod equipment_gap;` in `cache_gen/mod.rs`, `src/rules_core/cache_gen/
+equipment_gap.rs` (697 records' worth of generator code), `src/bin/declared_pi_shipping_audit.rs`
+(from pi-fix), `short_book_of`/Dreamscarred-Press handling in `corpus_literal_sweep.rs` (sweep-attrib
++ this cycle's own widening), `spell_like_ability_caster_level` wired into `monster_catalog.rs`
+(monster-widen), `ingest_ultimate_magic_spells.rs` (spell-reach).
+
+**kanban.md's `epic-6-ingest-lanes` row conflicted 4 separate times** (every branch after the first
+edited the same physical table row) — each resolved by merging the incoming lane's own addendum text
+into the single consolidated row rather than leaving duplicate rows for the same epic; verified
+`grep -oE '^\| \`epic-[a-z0-9-]+\`'` returns exactly one row per epic ID after every merge.
+`OPEN-ISSUES.md`/`progress.md` conflicts were pure appends (kept both sides). `docs/work-inventory.json`
+was not committed by any branch (wave rule honored by all 5).
+
+**Cross-lane defects fixed (adversarial-review CONFIRMED findings + this cycle's own discoveries),
+TDD throughout:**
+
+1. **LICENSE.json double-count (CONFIRMED).** class_feature and equipment_gap lanes each restated
+   `records_processed` on the same 4 books counting only their own addition. Re-derived all 4 from disk
+   with the sd27 test's own enumeration: `advanced_players_guide` 2701/683→2738 (later 2737, 2735 after
+   two further deletions below), `advanced_race_guide` 1337/710→1352, `core_rulebook` 4443/3814→4773,
+   `ultimate_wilderness` 1080/454→1207. Raised `corpus_ingest_diagnostic.rs`'s ARG corpus-only pin
+   844→859 to reconcile equipment_gap's 15 new ARG records.
+2. **class_feature NAME PI blacklist hole (CONFIRMED, SAFETY-CRITICAL).** `cache_gen::class_feature`
+   ran the declared-PI reader (§53.5) on both fields but the §52.3 blacklist term scan on description
+   only — the exact wave-3 defect the module's own doc comment claimed to have fixed, one level over,
+   at 7x the volume. 14 shipped records exposed (2 with no PI marking at all). Fixed with
+   `pi_screening::classify_field("name", ...)` on the same union basis `equipment_gap.rs` established;
+   deleted the 14 stale records (the generator doesn't clear its output dir); re-ran the generator for
+   real (12417 records, 137 skipped, was 12431/123); corpus-wide re-scan confirms 0 exposed. 2 new
+   tests. Reconciled `advanced_players_guide`/`inner_sea_combat` LICENSE.json after.
+3. **UPSI `corpus_literal_sweep` abort (CONFIRMED).** `book_dir_of` required >=5 path segments,
+   `fatal()`-aborting the ENTIRE sweep (not a per-record skip) on any Dreamscarred Press record with
+   `raw_tokens` — equipment_gap's 113 `ultimate_psionics` records tripped this, so the sweep had NEVER
+   completed over lane B's 697 records. Widened to accept the real 4-segment, no-line-tier Dreamscarred
+   Press shape, keyed explicitly on the publisher name (not segment count alone). 2 new tests. Sweep now
+   completes: 19422 records examined, eventually 0 findings (see next item).
+4. **2+1 corpus-fidelity defects the newly-unblocked sweep surfaced.** `bastard_s_sting.json`/
+   `mountain_pattern_armor.json` (from `SD31-PI-REPAIR-001`'s regen) and `hunter_s_stand.json` (from
+   equipment_gap, only visible after item 3's fix) shipped tokens NOT byte-present on their own cited
+   line — `parse_equipment_entries::open_record`'s same-name-row merge (a deliberate, documented
+   feature for a DIFFERENT PCGen shape) pulled in a different row's tokens. Reverted all 3 records'
+   `raw_tokens`/`raw_bonus_chains` to empty per the review's own sanctioned interim remedy; added a
+   production guard to `enrich_equipment_raw_tokens.rs` (every token must be byte-present on the cited
+   line before being shipped, or the record is left un-enriched and reported). Root parser fix NOT
+   done — logged (`OPEN-ISSUES.md` row 61) for a future cycle.
+5. **equipment_gap disabled-`#`-row records (CONFIRMED).** 3 records (`CRRSVE_BRST_M`,
+   `CRRSVE_BRST_R`, `REACH`) sourced from commented-out corpus rows shipped the raw internal `KEY:`
+   token as their name. Added `disabled_identity_column()` at the same call site the `.FORGET` guard
+   already lives, deleted the 3 stale records, 1 new test.
+6. **DESC PI leak in `raw_tokens` (SAFETY-CRITICAL, own discovery, corpus-wide).** Every SD-30/SD-31
+   redaction call site writes `[redacted PI]` into `data.description` but never touches
+   `data.raw_tokens`. Corpus-wide re-derivation (NOT the 32-record figure the dispatch's own review
+   summary cited — that was against a smaller pre-class_feature-lane tree): **413** shipped records
+   exposed (367 declared-PI-triggered, 46 blacklist-only — the declared-PI reader cannot see that
+   second trigger at all). Redacted every leaking `raw_tokens` DESC entry on all 413 (field-by-field
+   diff confirms only DESC changed). Extended `declared_pi_shipping_audit`'s CHECK A to scan
+   `raw_tokens` over EVERY `PI-REDACTED`/`description` record, not only the `declared.description`
+   subset (3 new mutation-proof tests). Added a narrow, declared exemption to
+   `corpus_literal_sweep::compare_tokens` so the redaction marker is not itself flagged (3 new tests
+   proving the exemption is narrow). `declared-pi-audit: CLEAN` and `corpus-sweep: CLEAN` both
+   confirmed against the real, fixed corpus.
+7. **2 pre-existing (predate wave 4 entirely, confirmed against the inherited `40771d3bf` tip) test-pin
+   defects**, both traced to the same 8 ACG equipmod records: `equipment_resolver.rs`'s
+   `the_two_lookups_agree...` OVER-claimed a cost collision for 8 names that actually agree (both
+   4500gp); `character_hub.rs`'s `every_offered_modifier_row_charges...` UNDER-counted
+   `priced_non_crb` by the same 8. Corrected both pins to their true, live-computed values (28 and 137
+   respectively), each verified green in isolation.
+
+**6 missing LICENSE.json compliance artifacts created** (`ultimate_combat`, `ultimate_intrigue`,
+`occult_adventures`, `adventurers_guide`, `inner_sea_magic`, `inner_sea_taverns`) — both wave-4 lanes
+wrote real, PI-screened content into these books' directories but never created the compliance
+artifact; invisible to `tests/sd27_book_license_record_counts.rs`'s own `books_on_disk()` (only scans
+books that already have one) rather than failing it. All 6 `sd27_book_license_record_counts` tests
+pass with these books now in scope.
+
+**OPEN-ISSUES.md consolidated.** Merging 5 branches produced real row-number collisions in the append-
+only "Open" table: 6 rows claimed "46", 4 claimed "47", 2 claimed "48". Renumbered the 10 later
+arrivals to 50-59 (kept the two pre-existing rows at 46/47), fixed 2 internal self-references. Appended
+7 new rows (60-66) for this cycle's own findings. Added a "## Needs an operator ruling" section at the
+top per the wave-4 dispatch instruction, listing only the 4 rows genuinely blocked on a decision (36,
+44, 55, 63) rather than making a check-in scan all 66 rows.
+
+**Guarded regen (the ONE sanctioned run this wave), at the fully merged and fixed tip:**
+
+    cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-w4-integrate.json
+    cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-w4-integrate.json
+    CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... cargo run --locked --bin v06_work_inventory
+
+Zero stamp loss — the guard's own refusal check did not fire (exit 0 without `--allow-stamp-loss`). A
+second identical run changes only `generated_at` (verified via a full-document diff). Committed at
+`37c0e5666`. `derived_evaluator_fixture_check` reports one failure,
+`advanced_players_guide:equipment:spindle_of_perfect_knowledge` — confirmed PRE-EXISTING (a
+`web_second_source` record with no `raw_tokens`/`ability_bonus` field at all, `ingested_at:
+2026-08-03`, untouched by any wave-4 commit or the fixture entry itself, which dates to `7f70c45d1`) —
+still produces the `--json-out` report the regen chain needs.
+
+**Board headline, re-derived with the producer's own `doneness_verdict`:**
+
+    python3 -c "import json,sys,collections; sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P; d=json.load(open('docs/work-inventory.json')); U=[u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]; c=collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U); print(len(U), dict(c), round(100*c['done']/len(U),2))"
+    -> 38521 {'done': 7603, 'not-started': 20277, 'unmeasurable': 4223, 'deferred': 36, 'held': 5596, 'in-progress': 786} 19.74
+
+**7,355 → 7,603 (+248), 19.09% → 19.74%.** Per-kind (total / done / done%): `class` 185/27/14.59%,
+`class_feature` 15472/39/0.25%, `companion` 1696/416/24.53%, `equipment` 6208/4022/64.79%,
+`equipment_modifier` 1580/920/58.23%, `feat` 2610/1176/45.06%, `monster` 1270/14/1.10%,
+`monster_ability` 3107/336/10.81%, `race` 103/7/6.80%, `race_trait` 3447/489/14.19%, `spell`
+2843/157/5.52%. This wave's +248 movement is almost entirely the sweep-attrib race fix (+12 from wave
+3's own guarded regen, already reflected in wave 3's 7,355) plus this cycle's own PI/fidelity fixes
+promoting no NEW units (deletions/redactions do not create `done`) — **the dominant driver of +248 is
+simply the corpus's own re-derivation reconciling drift between the last several lanes' local,
+uncommitted measurements and the true state at the fully merged tip**, not a new lever. `class_feature`
+remains the dominant unsolved population at 40% of the board and 0.25% done, confirming Wave 3's own
+finding: the `ultimate_equipment`-shaped dump lever does not generalize to `class_feature` — a corpus
+dump only unlocks a stamp for units the engine already grounds, it cannot manufacture grounding.
+
+**Reachability audit** (`python3 scripts/reachability_audit.py`, `AUDIT_EXIT=0`): reachable ceiling
+**98.95% (38117/38521)**, unchanged from wave 3. Same 9 `ambiguous|*` dead-end cells, all Epic-2-owned.
+Committed at `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-W4-INTEGRATE-001-audit.json`.
+
+**Trap report** (`cargo run --locked --bin v06_corpus_trap_report -- --audit`): `TRAP_EXIT=2`,
+`1 0 mod-record; 0 1191 wiring-class-mismatch` — up from the last-reported baseline of 950
+(`SD31-E6-F3-002`) / the original 1,040 (row 27). Per-kind: `monster` 839, `spell` 243, `companion` 84,
+`monster_ability` 25 — **zero** from `class_feature`/`equipment`/`equipment_modifier` despite those
+being this wave's largest corpus deltas, arguing against "more records" as the direct cause. NOT
+root-caused within this cycle's remaining budget (`OPEN-ISSUES.md` row 65) — the honest count is
+reported rather than reusing the stale baseline or silently absorbing the increase; DoD item 3 stays
+the pre-existing documented shortfall (row 27), confirmed not worsened by this cycle's own literal
+data-record changes (deletions/redactions, both away from `class_feature`/`equipment` where 0 mismatch
+comes from).
+
+**Full gate.** Launched TWICE. Run 1 (`SD31-W4-INTEGRATE-001-verify.log`, commit `6b62df0dd`):
+19 passed, 4 FAILED (`root-lib`, `root-full`, `desktop`, `clippy`) — `VERIFY_EXIT=1`. All 4 traced,
+fixed (items 7 above plus the clippy ceiling), and independently re-verified green in isolation before
+launching Run 2 (`SD31-W4-INTEGRATE-001-verify-run2.log`) at the fully fixed tip.
+
+**Full gate, continued.** Run 2 (`SD31-W4-INTEGRATE-001-verify-run2.log`, commit `37c0e5666`):
+21 passed, 2 FAILED — `root-full` (2 NEW failures, both stale count-pins in `tests/
+sd26_cache_core_rulebook.rs` and `tests/sd27_equipment_modifier_price_matches_corpus_cost_token.rs`,
+confirmed already red at the merged tip via every per-record assertion inside each test's own loop
+already passing — real coverage growth from `equipment_gap`'s ACG/ARG/CRB residue, not a defect) and
+`clippy` (47 vs recorded ceiling 46, not traced to any file this cycle touched — `cargo clippy --tests`
+scoped to every file I edited returned zero warnings). `VERIFY_EXIT=1`. Both count-pins corrected
+(commit `14ed2c389`) with the exact reconciling arithmetic in each test's own updated comment; baselines
+raised in a separate reviewable commit (`5bc9a0e9e`) per DoD item 7. Run 3
+(`SD31-W4-INTEGRATE-001-verify-run3.log`, commit `5bc9a0e9e`) launched to confirm — see that log's own
+`RESULT`/`VERIFY_EXIT` line for the final answer; if this receipt is read before that run finished, the
+log's own tail is authoritative over anything summarized here, and `root-lib` (1849 passed, matching the
+raised baseline exactly) and `declared-pi-audit`/`corpus-sweep` (both CLEAN, matching every prior
+independent run) had already confirmed the safety-critical surfaces before this receipt was written.
+
+**DoD-8 (on-screen verification).** Not re-run this cycle. This integration cycle's own changes are
+either (a) deletions of invalid records (14 class_feature, 3 equipment_gap), (b) redactions of an
+already-hidden field's shadow copy (413 records' `raw_tokens` DESC, `data.description` was already
+`[redacted PI]` before this fix — no player-visible text changed), or (c) test-pin corrections with no
+production code path — none of these change what a player sees on any screen. The two lanes whose work
+DOES carry a player-visible reach claim (`sweep-attrib`'s `race`/`race_trait` Dwarf screenshot,
+`monster-widen`'s DoD-8 screenshot) already carry their own DoD-8 evidence, committed by their own
+cycles and unaffected by anything this cycle touched.
+
+**Reclaim.** `scripts/reclaim.sh` then `--apply` run at the end of this cycle, after the full gate's
+live process exited and the cargo-target directories named in the dispatch were confirmed to have no
+live PID building into them.
+
+**Followups, ordered by units they would move:**
+
+1. **`class_feature` engine grounding (Epic 3/4)** — 11,476 `not-started` (40% of the whole 38,521-unit
+   board's remaining gap), 74 `held`. Confirmed by this wave's own lane: the `ultimate_equipment`-shaped
+   corpus-dump lever does NOT generalize here — a dump only unlocks a stamp for units the engine already
+   grounds, it cannot manufacture grounding. The real lever is Epic 3/4's supersession-shape wiring per
+   cleared class (24 classes already CLEARED-FOR-EPIC-4 by `SD31-E3-F1-001`'s no-proxy measurement).
+   Needs: `src/rules_core/` per-class archetype-slot mechanism work, file territory
+   `src/rules_core/pilot_compute.rs` + per-class chassis modules, one class at a time.
+2. **`spell` residual** — 1,292 `not-started`. `SD31-E6-F2-002` closed the 6th book (Ultimate Magic);
+   the engine's spell catalog now chains 6 books. Remaining gap is spells in the other 17 in-scope books
+   the catalog does not yet chain. Needs: a new `cache_gen`-shaped module per additional book, same
+   shape as `ingest_ultimate_magic_spells.rs`. File territory: `src/rules_core/rules_tables/<book>/
+   spell_list.rs` (new), `apps/desktop/src-tauri/src/spell_catalog.rs`, `apps/desktop/src-tauri/src/
+   class_spell_levels.rs`.
+3. **`monster_ability` misclassification (row 34)** — 486 units corpus-shape-misclassified via a
+   shared, cross-kind `refine_kind()`/`MONSTER_ABILITY_TYPE_FACETS` heuristic in `apps/desktop/src-tauri/
+   src/corpus_ingest_diagnostic.rs` (or wherever that heuristic now lives after this wave's merges) —
+   fixing the heuristic itself (not a per-record ingest) could move a meaningful fraction of the
+   remaining 1,478 `not-started`.
+4. **`equipment`/`equipment_modifier` residual** — ~840/228 `not-started` respectively, spread across
+   books `equipment_gap` has not yet touched (per its own book-kind map artifact, corrected this
+   integration cycle at `OPEN-ISSUES.md` row 62's citation). File territory: `src/rules_core/cache_gen/
+   equipment_gap.rs` (extend `book_routing`), `src/rules_core/rules_tables/equipment_gap_tables.rs`.
+5. **Root-cause the `parse_equipment_entries::open_record` same-name-merge bug (row 61)** — currently
+   masked by reverting 3 records to `raw_tokens: []`; a real fix would re-enrich those 3 and prevent
+   the next equipment book onboard from hitting the identical defect shape silently. File territory:
+   `src/pcgen_import/lst_parser/equipment.rs`.
+6. **Root-cause the trap-report wiring-class-mismatch increase (row 65)** — 950→1,191, concentrated in
+   `monster`/`spell`/`companion`, zero in `class_feature`/`equipment` despite those being this wave's
+   largest deltas. Needs a record-by-record diff against the pre-wave-4 tip (`40771d3bf`) to determine
+   whether `SD31-E6-F1-002`'s table widening or `SD31-E6-F2-002`'s citation repair introduced a genuine
+   `wiring_class` drift, or whether this wave's fixes simply made a pre-existing population newly
+   comparable.
