@@ -4967,3 +4967,269 @@ This closes DoD item 1 (`VERIFY_EXIT=0`, captured directly) and confirms DoD ite
 with a real, non-zero claim) for this integration cycle. DoD item 3 (`v06_corpus_trap_report --audit`)
 remains a documented, pre-existing shortfall (§6.3 above, exit 2, `OPEN-ISSUES.md` row 41) — the full
 gate does not run that check as a stage, so this PASS does not speak to it either way.
+
+## SD31-E6-F3-002 — `corpus_literal_sweep` book-attribution bug (`OPEN-ISSUES.md` row 22) + `race` off zero
+
+**Cycle-id:** `SD31-E6-F3-002` (`RETRO_ACTOR=sd31-sweep-attrib`). **Card:** `OPEN-ISSUES.md` rows 22
+and 27 — the `corpus_literal_sweep --json-out` book-attribution bug, and `race` stuck at 0.0 %.
+**Worktree:** `.claude/worktrees/wf_1d83a743-99e-4`, own branch `sd31/sweep-attrib-race-e6f3-002`.
+**HEAD started from:** the worktree's initial checkout was `061b623ee` — `origin/main`'s tip (a
+PR-#362 site-deploy merge with no `docs/release/SD-31-corpus-closure-grind/` tree at all), on branch
+`worktree-wf_1d83a743-99e-4`. `git status --porcelain` was empty, so per the mandatory recovery step:
+`git fetch origin && git reset --hard origin/tranche/11` → **`89846f5c9`** ("docs(sd31): wave-4 budget
++ the cache-gen lever wave 3 proved"), then `git checkout -b sd31/sweep-attrib-race-e6f3-002`. **Oracle
+pin:** `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` (`./scripts/verify.sh --only
+preflight-oracle` → PASS, `scripts/pcgen-oracle-pin.env`).
+
+### 1. Re-derived and confirmed row 22's root cause, one unit deep
+
+Read `src/bin/corpus_literal_sweep.rs`'s `--json-out` writer (lines 253-297 pre-fix): it derived each
+verified triple's `"book"` field via `Path::new(&record.source_path).parent().file_name()` — the
+IMMEDIATE parent directory of the PCGen `.lst` file, a single-level join, not the same 4-segment
+`book_dir_of()` (`<system>/<publisher>/<line>/<book>`) grouping the binary's own `by_book` pass
+already uses at line 123. For a `race`/`race_trait` record filed under
+`core_essentials/races/<race>/<race>_*.lst` (one directory level deeper than a flat book layout), the
+parent directory is the RACE NAME (`"dwarf"`, `"aasimar"`, …), never a real book — so
+`v06_work_inventory.rs`'s `apply_done_rung_stamps` (join key `(item.unit.book,
+item.unit.provenance.file, item.unit.provenance.line)`) can never match, and `literal-verified` can
+never stamp for any race chassis or nested race-trait row, regardless of how many races have a real
+chassis.
+
+**Confirmed the CORRECT expected `book` value against the committed inventory before writing any
+fix** — this caught a wrong first instinct (see the retro correction below):
+
+```
+python3 -c "import json; d=json.load(open('docs/work-inventory.json'));
+print([u for u in d['units'] if u['id']=='core_essentials:race:dwarf'])"
+```
+
+→ `{"id": "core_essentials:race:dwarf", "book": "core_essentials", "source_file":
+"dwarf_races.lst", "source_line": 6, "status": "grounded", "wiring_class": "static", ...}`. The CRB
+dwarf race's inventory unit carries `book: "core_essentials"` — the PCGen **ORACLE** book directory
+`v06_work_inventory.rs`'s raw enumeration walked it under
+(`books_dir = corpus_root.join(BOOKS_RELATIVE)` where that `corpus_root` is `$PCGEN_CORPUS_ROOT`, NOT
+this repo's `data/corpus/` — confirmed `core_essentials` is a real, separate top-level oracle
+directory, distinct from `core_rulebook`: `ls
+$PCGEN_CORPUS_ROOT/pathfinder/paizo/roleplaying_game/core_essentials/races/dwarf` exists). This is a
+DIFFERENT namespace from where this repo chooses to ship the record
+(`data/corpus/core_rulebook/race/dwarf.json`) — `v06_work_inventory.rs`'s own `pcc_includes` doc
+comment explains why the shipped JSON is filed under `core_rulebook` ("the seven CRB races... belong
+to the Core Rulebook", derived from real `PCC:` include lines) while the RAW population's `unit.book`
+stays the oracle-origin `core_essentials` (`core_essentials` gets `scope: "shared_library"`, not
+excluded, in `v06_work_inventory.rs`'s book roster — it is still fully enumerated).
+
+**Retro correction, self-caught before landing:** my first draft derived `book` from the record's own
+`data/corpus/<book>/` shipped directory (`corpus_book_of(&record.record_path)` → `"core_rulebook"` for
+the dwarf race), reasoning from `record.record_path`'s repo-relative shape alone without checking the
+join target first. The `python3` check above caught this before any test was written against it —
+`docs/work-inventory.json` proves the true join key is the oracle-derived `"core_essentials"`, not the
+shipped-record directory. `scripts/retro.py correction --subject "SD31-E6-F3-002 (own draft
+mid-cycle)" --claimed "... core_rulebook ..." --actual "... core_essentials ..." --verified-by "..."
+--caught-before implementation` filed.
+
+### 2. Fixed: `short_book_of()`, reusing the binary's own trusted `book_dir_of()`
+
+`src/bin/corpus_literal_sweep.rs`: added `short_book_of(source_path: &str) -> Option<String>` =
+`book_dir_of(source_path)`'s last path segment (the same 4-segment grouping key the binary's `by_book`
+pass at line 123 already trusts, reduced to its short form). Replaced the buggy
+`source_path.parent().file_name()` call in the `--json-out` writer with `short_book_of(&record.
+source_path)`. No other logic touched.
+
+**Collision requirement (this card's own bar): resolving to *a* book is not the deliverable, resolving
+to the *correct* book is.**
+- Enumerated for a real cross-book collision in the currently-shipped corpus and found NONE:
+  `python3` one-liner grouping every `data/corpus/**/*.json`'s `source.path` basename by
+  `book_dir_of`'s last segment → **0 basenames shared across >1 real oracle book** among
+  currently-shipped records.
+- Enumerated the oracle tree directly for a race-subdirectory-name collision:
+  `$PCGEN_CORPUS_ROOT/pathfinder/paizo/roleplaying_game/*/races/` → **`core_essentials` is currently
+  the ONLY oracle book with per-race nested subdirectories at all** (0 other books have a `races/`
+  subdirectory), so no cross-book race-name collision can exist today by construction.
+- Because neither enumeration found a real case, also proved correctness under a SYNTHETIC collision
+  (`synthetic_collision_two_different_books_sharing_a_nested_directory_name_resolve_correctly`): two
+  fabricated source paths sharing an identical nested subdirectory name (`shared_name`) under two
+  different top-level books (`book_alpha`, `book_beta`) — the OLD buggy code would read `"shared_name"`
+  for BOTH; `short_book_of` correctly resolves each to its own distinct book.
+
+**6 new tests**, `src/bin/corpus_literal_sweep.rs`'s new `short_book_of_tests` module:
+`crb_race_chassis_resolves_to_core_essentials_the_oracle_book_not_the_race_name`,
+`flat_filed_record_resolves_to_its_own_book_same_as_before` (regression: the shape the old code
+already got right stays byte-identical), `nested_race_trait_resolves_to_the_oracle_book_not_the_race_
+name_directory`, `synthetic_collision_two_different_books_sharing_a_nested_directory_name_resolve_
+correctly`, `rejects_a_source_path_not_shaped_system_publisher_line_book_file`, and
+`every_shipped_race_source_path_agrees_with_book_dir_of` (corpus-wide regression: for every currently
+shipped `race`/`race_trait` record, `short_book_of` must agree with the binary's own `book_dir_of` —
+zero disagreements). `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-sweep-attrib cargo test
+--locked --bin corpus_literal_sweep short_book_of_tests` → **6/6 passed**.
+
+### 3. Regression proof: real before/after `--json-out` diff, no attribution change on the population the bug never touched
+
+Built BOTH binaries at the same oracle pin and corpus tip — the pre-fix `git show HEAD:` content and
+the fixed content — and ran `--json-out` with each:
+
+```
+before verified count: 6327
+after  verified count: 6327
+newly verified (after, not before): 330
+lost (before, not after):           330
+unchanged (both):                   5997
+```
+
+Diffing the two reports' `(book, source_file, source_line)` sets: **330 triples corrected**, ALL of
+them moving from a wrong race-name string (`"dwarf"`, `"aasimar"`, `"tiefling"`, `"sylph"`, …) to the
+single correct oracle book, `"core_essentials"` — matching the shape row 22 traced, exactly. Every one
+of the **5,997 already-correct triples is byte-identical before and after — zero regressions** on the
+population the bug never touched (confirmed by set-diffing `(file, line)` pairs' book attribution
+across both reports, not merely counting). Wave 3's ~330-unit estimate for this bug re-derives to
+**330 exactly**.
+
+### 4. Guarded regen — measured, not committed (wave rule)
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-sweep-attrib.json
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-sweep-attrib.json
+CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep-sd31-sweep-attrib.json \
+DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture-sd31-sweep-attrib.json \
+  cargo run --locked --bin v06_work_inventory
+```
+
+No stamp-loss refusal this run (0 units dropped — the fix strictly ADDS matches, never removes a
+previously-valid one, matching §3's zero-regression finding). Measured via the producer's own
+`doneness_verdict()`, `EXCLUDED_BOOKS`-filtered, before (`git show HEAD:docs/work-inventory.json`) vs.
+after (this cycle's regen), both read with the identical `python3` command:
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+print(len(U), dict(c), round(100*c['done']/len(U),2))
+"
+```
+
+| | before (HEAD, `89846f5c9`) | after (this cycle) | delta |
+|---|---|---|---|
+| board `done` | 7,355 (19.09%) | 7,367 (19.12%) | **+12** |
+| `race` `done` | 0 | **7** | **+7 — off zero** |
+| `race` `held` | 7 | 0 | -7 |
+| `race_trait` `done` | 484 | 489 | **+5** |
+| `race_trait` `held` | 151 | 146 | -5 |
+
+`race` `done` **units, individually confirmed** (`status == "literal-verified"`): `core_essentials:
+race:dwarf`, `:elf`, `:gnome`, `:half_elf`, `:half_orc`, `:halfling`, `:human` — all 7 CRB races, the
+exact population row 22 named. `docs/work-inventory.json` restored per the wave rule:
+`git checkout -- docs/work-inventory.json` (confirmed clean, `git status --porcelain
+docs/work-inventory.json` → empty).
+
+### 5. Row 27 — investigated, found the claimed root cause FALSE, corrected
+
+Row 27 claims fixing row 22 would clear the 1,040 `[wiring-class-mismatch]` findings in
+`v06_corpus_trap_report --audit`, "same root cause". Read `src/pcgen_import/corpus_traps.rs`'s
+`WiringClassMismatch` check before trusting this: it never calls `corpus_literal_sweep`
+(`grep -c corpus_literal_sweep src/pcgen_import/corpus_traps.rs` → **0**), and already carries its
+OWN nested-path-safe book/file resolution (fixed for a different, earlier defect, `SD30-E8-F3-002` —
+its own doc comment and the `wiring_class_mismatch_reads_a_citation_nested_one_level_under_a_book_
+subdirectory` test). It compares each corpus JSON record's STORED `wiring_class` field (stamped at
+ingest time) against a FRESH `determine_closure` classify — a stale-ingest-stamp defect, unrelated to
+this card's book-attribution bug.
+
+**Proved empirically, not just argued**: ran `cargo run --locked --bin v06_corpus_trap_report --
+--audit` twice at this cycle's tip — once with the row-22 fix applied, once with
+`src/bin/corpus_literal_sweep.rs` swapped back to `git show HEAD:` content and rebuilt —
+**byte-identical output both times**:
+
+```
+     TRAP   DEFECT  trap
+      259        0  mod-record
+        0      950  wiring-class-mismatch
+```
+
+exit `2` both runs. This also corrects the count itself — **950, not 1,040** — already stale by the
+time row 27 was written, from other wave-3 lanes' merges landing after `SD31-E6-F11-002` (not
+attributable to this cycle, confirmed unchanged by this cycle's own diff via the identical-output
+test above). `scripts/retro.py correction` filed; `OPEN-ISSUES.md` row 46 appended (row 27 left
+untouched, per "append, never rewrite"). **DoD item 3 is unchanged by this card**: still exits 2, for
+the same pre-existing, now-correctly-attributed reason; `./scripts/verify.sh` does not run this check
+as a stage, so the full gate is unaffected either way.
+
+### 6. DoD-8, on-screen verification (race is player-visible)
+
+`RUN_DESKTOP_AGENT=sd31-sweep-attrib` (unique, per the collision hazard). `apps/desktop/.claude/skills
+/run-desktop/driver.sh launch` (first build 4m31s cold, `RUN_DESKTOP_WINDOW_TIMEOUT=120` needed once
+the binary was already warm-cached from a prior cold-start attempt that missed the default 180s window
+budget after a 4m31s build). Created a new character with default Race = **Dwarf (CRB)** — one of the
+7 units this cycle newly moved to `done` (`core_essentials:race:dwarf`):
+
+`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F3-002/dod8-01-newchar.png` — the
+character-creation form renders **"Dwarf racial modifiers: +2 CON, +2 WIS, -2 CHA"** applied to the
+CALCULATED ability scores (CON 14→16, WIS 12→14, CHA 8→6), `Size: Medium`, `Vision: Darkvision 60
+ft.` — the `core_essentials:race:dwarf` unit's real racial data rendering on the player-visible sheet,
+not merely a passing `reach_gate` claim. (A second screenshot,
+`dod8-02-sheet.png`, captures the same form after typing a character name and shows the "Alternate
+Racial Traits" panel — `arg_races.lst`-sourced content, a different unit, not part of this claim.)
+`race_trait`'s 5 newly-`done` units were NOT separately on-screen-verified this cycle — the concurrent
+full-gate run was consuming the box's CPU heavily enough that a second `v06_work_inventory` regen (to
+name the specific 5 ids) timed out at the 2-minute tool budget; the `race` kind (this card's headline
+target, named explicitly in the dispatch) is verified, `race_trait`'s mechanism is byte-identical
+(same join, same fix), and this shortfall is recorded here rather than silently dropped.
+
+### 7. Gate
+
+`./scripts/verify.sh` launched EARLY, in the background, immediately after the code change was
+complete (`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F3-002-verify.log`,
+`VERIFY_EXIT` captured directly: `./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"`).
+
+**22/22 stages PASS, `VERIFY_EXIT=0`.** Full stage list: `preflight-disk`, `preflight-oracle`,
+`oracle-pin-selftest`, `producer-selftest`, `reachability-audit-selftest`, `reachability-audit`
+(reachable ceiling 98.95%, unchanged), `groundtruth-guard-selftest`, `pi-sweep`, `audit-selftest`,
+`reclaim-selftest`, `driver-selftest`, `corpus-sweep-selftest`, `root-lib` (1,816 passed, unchanged —
+this cycle's 6 new tests live in a BIN target, not the lib), `root-full` (**6,471 passed across 552
+suites, all 529 `tests/*.rs` suites executed** — +6 over the last recorded baseline, exactly this
+cycle's `short_book_of_tests`), `desktop` (445 passed, unchanged), `reach` (**27 passed, unchanged** —
+this closes DoD item 2, no family dropped in this cycle's diff), `corpus-sweep` (**6,331 records
+examined of 11,006 read, 0 findings** — byte-identical to this cycle's own standalone run, confirming
+the fix ships CLEAN), `frontend-install`, `frontend-test` (99/99), `frontend-typecheck`, `clippy`
+(46 root / 7 desktop warnings, unchanged, 0 errors), `class-dump` (31/31 computing). One BASELINE
+NOTE, not a failure: `BASELINE_ROOT_FULL_TESTS` stale at 6465 vs. 6471 measured — raised in
+`scripts/verify-baselines.env` as its own separate commit per DoD item 7, carrying this exact
+`--show-actuals`-equivalent block. `BASELINE_ROOT_LIB_TESTS` and `BASELINE_ROOT_TEST_BINARIES` are
+correctly UNCHANGED (no lib test, no new test file).
+
+This closes DoD item 1 (`VERIFY_EXIT=0`, captured directly) and DoD item 2 (`reach` passes with a
+real, unchanged, non-zero claim — no family this card touches needed a NEW reach claim; the fix is
+purely a `--json-out` reporting correction, not a new player-visible surface). DoD item 3
+(`v06_corpus_trap_report --audit`) is investigated and reported in §5 above: still exits 2, for a
+DIFFERENT, now-correctly-attributed pre-existing reason (`OPEN-ISSUES.md` row 46) — `verify.sh` does
+not run this check as a stage, so the PASS above does not speak to it either way. DoD item 4 (guarded
+regen, zero stamp loss) is closed in §4. DoD item 5 (four-check wired-integration audit): this cycle
+writes no generated record and touches no production consumer path — it corrects a diagnostic-only
+`--json-out` report writer's string derivation — so the no-stub-mvp four-check audit's "stub/fixture
+data in a production path" and "empty handler" checks are vacuously satisfied (nothing new is wired to
+a user-facing affordance); the "invented number" check is satisfied by §2-§4's re-derivation-first
+discipline. DoD item 6: no family in this card's scope could not be surfaced — `race` and
+`race_trait`'s only shortfall is the on-screen-verification breadth noted in §6, not a missing
+OPEN_FINDINGS entry. DoD item 7: closed above (baseline commit, separate from the code commit). DoD
+item 8: closed in §6, with the one named, honestly-reported shortfall (`race_trait` individual-unit
+on-screen verification, CPU-contention-limited this cycle).
+
+### 8. What was NOT done, and why
+
+- Did not touch `src/pcgen_import/corpus_traps.rs` (row 27's real fix, a corpus-wide `wiring_class`
+  stamp refresh) — out of this card's file territory (`corpus_literal_sweep.rs` and its tests, plus
+  race-specific ingest/rules_tables paths only) and, per row 27's own dispatch-decision note, a
+  data-mutation task needing its own PI-exposure review.
+- Did not widen `IN_SCOPE_RACES`/ingest any new race chassis — this card's bug is infrastructure
+  (`corpus_literal_sweep`'s reporting), not a chassis gap; `epic-1-race-chassis`/`epic-6-ingest-lanes`
+  F3/F4's per-race gate is unaffected and unchanged by this cycle.
+- Did not on-screen-verify the 5 newly-`done` `race_trait` units individually (§6) — logged, not
+  silently dropped.
+
+### 9. Disk reclaim
+
+`scripts/reclaim.sh` (dry run) then `scripts/reclaim.sh --apply` at cycle end; reclaimed bytes recorded
+in the commit's own follow-up note. `CARGO_TARGET_DIR`s (`sd31-sweep-attrib`,
+`sd31-sweep-attrib-desktop`) live under `/home/ubuntu/cargo-targets/`, outside `reclaim.sh`'s scanned
+roots per the dispatcher's own note — left for the dispatcher to clear, not deleted mid-gate while the
+background `verify.sh` may still be reading them.
