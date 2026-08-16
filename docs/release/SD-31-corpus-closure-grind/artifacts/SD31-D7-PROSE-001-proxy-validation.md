@@ -148,13 +148,18 @@ applies in production code.
 ## The tightened predicate
 
 Given the above, the safe, already-shipped predicate is **`wiring_class == 'display' AND
-magnitude_token_count == 0`** — not `magnitude_token_count == 0` alone. This sample found **zero**
-cases where that combination missed a real magnitude (all 41 hand-confirmed magnitude-bearing units
-were already routed off `display` by the classifier). The card's own "tighten the proxy" instruction
-is discharged by confirming the code never used the untightened form in the first place: every
-`text-complete`-granting branch in `v06_work_inventory.rs` gates on the unit's resolved `wiring_class`
-(via the outer per-kind `classify()` dispatch, which only reaches the zero-magnitude branches for
-kinds/records the wiring_class pipeline separately confirmed), not on raw token count alone.
+magnitude_token_count == 0`** — not `magnitude_token_count == 0` alone. This sample found the
+combination cuts the false-positive rate from 57/121 (47%, raw `magnitude_token_count == 0`) to 9/121
+(7%, `wiring_class == 'display'` AND `magnitude_token_count == 0`) — a large, real improvement, but
+**not perfect**: the 9-unit Failure mode A residual (above) stands. The card's own "tighten the proxy"
+instruction is discharged two ways: (1) confirming the code never used the untightened form in the
+first place — every `text-complete`-granting branch in `v06_work_inventory.rs` gates on the unit's
+resolved `wiring_class` (via the outer per-kind `classify()` dispatch, which only reaches the
+zero-magnitude branches for kinds/records the wiring_class pipeline separately confirmed), not on raw
+token count alone; and (2) this cycle's own new work adds a THIRD, independent condition on top of
+both — `has_real_description` (below) — which the 9 Failure-mode-A units do not evade (they carry real
+descriptions, so they are not banked by the new description check either; they were already `done`
+through the pre-existing magnitude-blind path, unchanged by anything in this cycle).
 
 ## Condition 3 — the proxy this cycle's own new work depends on, ALSO validated by measurement, not assumption
 
