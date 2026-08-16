@@ -39,7 +39,7 @@
     ],
     "weight_lbs": 1.0
   },
-  "ingested_at": "2026-08-15T22:41:23Z",
+  "ingested_at": "2026-08-16T01:34:54Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
@@ -51,8 +51,8 @@
     "record_key": "Bracers of the Merciful Knight",
     "sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291"
   },
-  "wiring_class": "static",
+  "wiring_class": "derived",
   "wiring_class_signals": [
-    "static:literal_magnitudes_only"
+    "derived:spells"
   ]
 }

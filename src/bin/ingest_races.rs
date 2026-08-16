@@ -63,6 +63,7 @@ use std::path::{Path, PathBuf};
 use sha2::{Digest, Sha256};
 
 use codex::rules_core::cache_gen::WiringClassIndex;
+use codex::rules_core::pi_screening;
 use codex::rules_core::shape_b_v1::{
     Completeness, CorpusRecordV1, CorpusSource, License, Population, RaceCacheData, RaceTraitCacheData, RawBonusChain,
     RawToken,
@@ -874,6 +875,20 @@ fn write_record<T: serde::Serialize>(path: &Path, record: &CorpusRecordV1<T>) {
     fs::write(path, json).unwrap_or_else(|e| panic!("failed to write {path:?}: {e}"));
 }
 
+/// [`pi_screening::declared_product_identity`] over one parsed record's
+/// preserved `raw_tokens` -- the same shape `ingest_race_traits.rs`'s own
+/// `declared_product_identity_of` uses, and for the same reason: `raw_tokens`
+/// is what actually ships, so screening it (rather than re-parsing the row)
+/// means a token dropped on the way into a record can never be silently
+/// under-screened.
+///
+/// OPEN-ISSUES row 39: this binary's two writers previously hardcoded
+/// `pi_field: None` and never called the declared-PI reader at all, despite
+/// `data/corpus/bestiary_5/LICENSE.json` claiming they did.
+fn declared_product_identity_of(raw_tokens: &[RawToken]) -> pi_screening::DeclaredProductIdentity {
+    pi_screening::declared_product_identity(raw_tokens.iter().map(|t| (t.key.as_str(), t.value.as_str())))
+}
+
 /// Returns the blacklisted terms present in a record's free text, if any.
 fn pi_hits(texts: &[&str]) -> Vec<String> {
     let mut hits = Vec::new();
@@ -966,6 +981,12 @@ fn main() {
     let mut gates_from_globalvar: Vec<String> = Vec::new();
     let mut gate_supersets: Vec<String> = Vec::new();
     let mut ungated_traits: Vec<String> = Vec::new();
+    // Rows refused outright because the corpus declares their NAME to be
+    // Product Identity (OPEN-ISSUES row 39). Reported, never silent: a row
+    // that vanishes without a line in the receipt is indistinguishable
+    // from an ingest bug. Matches `ingest_race_traits.rs`'s own field.
+    let mut pi_dropped: Vec<String> = Vec::new();
+    let mut pi_declared_descriptions = 0usize;
 
     for spec in IN_SCOPE_RACES {
         let dir = races_root.join(spec.dir);
@@ -1010,6 +1031,24 @@ fn main() {
         let hits = pi_hits(&[&chassis.key, &chassis.name]);
         if !hits.is_empty() {
             errors.push(format!("PI-blacklist hit on race {race_key}: {hits:?}"));
+        }
+
+        // The corpus's own per-record declaration (`NAMEISPI:YES`), read
+        // for the first time by this binary as of OPEN-ISSUES row 39. A
+        // NAME cannot be redacted -- it is the record's identity on every
+        // screen and half of its key, and every trait below is filed under
+        // it -- so a chassis declaring it is DROPPED outright, cascading to
+        // every trait this race would otherwise own (same ruling
+        // `ingest_race_traits.rs` applies and `SD-29-corpus-wide-catch-up-
+        // lanes/decisions.md §50.3` states: "Dropping a monster cascades:
+        // an ability whose only owner is gone reaches nothing either.").
+        // None of the 20 in-scope races declare it today (re-derived:
+        // `grep -c NAMEISPI:YES */*.lst` across every `IN_SCOPE_RACES` dir),
+        // so this is a forward guard, not a behavior change for this run.
+        let chassis_declared = declared_product_identity_of(&chassis.raw_tokens);
+        if chassis_declared.name {
+            pi_dropped.push(format!("{chassis_rel}:{} race {race_key} (NAMEISPI:YES)", chassis_row.line_no));
+            continue;
         }
 
         let chassis_file_rel_to_races_root =
@@ -1064,7 +1103,7 @@ fn main() {
                 errors.push(format!("{abilities_rel}:{}: .MOD row matched the standard-trait selector", row.line_no));
                 continue;
             }
-            let data = match parse_trait(&row, &race_key, &gates) {
+            let mut data = match parse_trait(&row, &race_key, &gates) {
                 Ok(d) => d,
                 Err(e) => {
                     errors.push(format!("{abilities_rel}: {e}"));
@@ -1174,6 +1213,33 @@ fn main() {
                 errors.push(format!("PI-blacklist hit on trait {}: {hits:?}", data.key));
             }
 
+            // The corpus's own per-record declaration
+            // (`NAMEISPI:YES`/`DESCISPI:YES`), read for the first time by
+            // this binary as of OPEN-ISSUES row 39 -- previously computed
+            // nowhere, despite `data/corpus/bestiary_5/LICENSE.json`
+            // claiming the declared-PI reader ran. A NAME cannot be
+            // redacted, so a declaring row is DROPPED (matching
+            // `ingest_race_traits.rs`); a declared DESCRIPTION *can* be
+            // redacted and the trait still works, so it is redacted the
+            // same way that binary redacts one, replacing the hardcoded
+            // `License::Ogl`/`None`/`None` this writer previously shipped
+            // unconditionally. The two screens are a union: an undeclared
+            // row is still covered by `pi_hits` above.
+            let declared = declared_product_identity_of(&data.raw_tokens);
+            if declared.name {
+                pi_dropped.push(format!("{abilities_rel}:{} trait {} (NAMEISPI:YES)", row.line_no, data.key));
+                continue;
+            }
+            let (license, pi_field, pi_marker, stored_desc) = pi_screening::classify_optional_field_declared(
+                "description",
+                data.description.as_deref(),
+                declared.description,
+            );
+            if declared.description {
+                pi_declared_descriptions += 1;
+            }
+            data.description = stored_desc;
+
             let slug = slugify(&data.key);
             if let Some(prev) = seen_slugs.insert(slug.clone(), data.key.clone()) {
                 errors.push(format!("slug collision {slug:?}: {prev:?} and {:?}", data.key));
@@ -1203,9 +1269,9 @@ fn main() {
                     record_key: data.key.clone(),
                 },
                 data,
-                license: Some(License::Ogl),
-                pi_field: None,
-                pi_marker: None,
+                license: Some(license),
+                pi_field,
+                pi_marker,
                 wiring_class,
                 wiring_class_signals,
             };
@@ -1247,6 +1313,11 @@ fn main() {
     for t in &unresolved_desc_args {
         println!("  {t}");
     }
+    println!("dropped, NAMEISPI:YES (declared-PI reader, OPEN-ISSUES row 39): {}", pi_dropped.len());
+    for t in &pi_dropped {
+        println!("  {t}");
+    }
+    println!("descriptions redacted by DESCISPI:YES: {pi_declared_descriptions}");
     println!("\n--- replace-flag gates: the two sources reconciled ---");
     println!("rows where the trait's own !PREFACT and the globalvar PREVAREQ agree: {gates_agreeing}");
     println!("rows gated ONLY by the globalvar file (no !PREFACT on the row): {}", gates_from_globalvar.len());
@@ -2008,5 +2079,68 @@ mod tests {
         assert_eq!(b, "duergar_spell_like_ability_invisibility");
         assert_ne!(a, b, "same display name, distinct keys -> distinct files");
         assert_eq!(slugify("Half-Elf"), "half_elf");
+    }
+
+    // --- OPEN-ISSUES row 39: the declared-PI reader must actually run ---
+
+    #[test]
+    fn declared_product_identity_of_reads_nameispi_off_a_parsed_chassis() {
+        let line = padded_line(&["Dwarf", "NAMEISPI:YES", "FACT:BaseSize|M", "MOVE:Walk,20"]);
+        let chassis = parse_chassis(&one_row(&line));
+        let declared = declared_product_identity_of(&chassis.raw_tokens);
+        assert!(declared.name, "a chassis row's own NAMEISPI:YES must be read, not silently discarded");
+    }
+
+    #[test]
+    fn declared_product_identity_of_reads_descispi_off_a_parsed_trait() {
+        let line = padded_line(&[
+            "Greed",
+            "KEY:Dwarf ~ Greed",
+            "DESCISPI:YES",
+            "TYPE:RacialTraits.Dwarf Racial Trait.Dwarf Racial Default.SpecialQuality",
+            "DESC:Dwarves receive a bonus tied to a named Golarion place the term list does not know.",
+        ]);
+        let data = parse_trait(&one_row(&line), "Dwarf", &no_gates()).unwrap();
+        let declared = declared_product_identity_of(&data.raw_tokens);
+        assert!(!declared.name);
+        assert!(declared.description, "a trait row's own DESCISPI:YES must be read, not silently discarded");
+    }
+
+    /// The exact defect OPEN-ISSUES row 39 confirmed: previously this
+    /// writer hardcoded `License::Ogl`/`pi_field: None` unconditionally, so
+    /// a declared description would have shipped un-redacted even though
+    /// the corpus states it is Product Identity. This proves the real
+    /// screening call (`pi_screening::classify_optional_field_declared`,
+    /// wired into `main`'s trait loop) redacts it instead.
+    #[test]
+    fn a_declared_description_is_redacted_by_the_real_screening_call() {
+        let line = padded_line(&[
+            "Greed",
+            "KEY:Dwarf ~ Greed",
+            "DESCISPI:YES",
+            "TYPE:RacialTraits.Dwarf Racial Trait.Dwarf Racial Default.SpecialQuality",
+            "DESC:Dwarves receive a bonus tied to a named Golarion place the term list does not know.",
+        ]);
+        let mut data = parse_trait(&one_row(&line), "Dwarf", &no_gates()).unwrap();
+        let declared = declared_product_identity_of(&data.raw_tokens);
+        let (license, pi_field, pi_marker, stored_desc) =
+            pi_screening::classify_optional_field_declared("description", data.description.as_deref(), declared.description);
+        data.description = stored_desc;
+        assert_eq!(license, License::PiRedacted);
+        assert_eq!(pi_field.as_deref(), Some("description"));
+        assert!(pi_marker.is_some());
+        assert_eq!(data.description.as_deref(), Some("[redacted PI]"));
+    }
+
+    /// Mirrors `ingest_race_traits.rs`'s own precedent (and `SD-29-corpus-
+    /// wide-catch-up-lanes/decisions.md §50.3`): a key/name cannot be
+    /// redacted, so a NAMEISPI:YES row must be recognised so the caller can
+    /// drop it, never partially published under its real name.
+    #[test]
+    fn a_declared_name_cannot_be_screened_into_something_publishable() {
+        let line = padded_line(&["Sovyrian-Born", "KEY:Elf ~ Sovyrian-Born", "NAMEISPI:YES", "DESC:Test."]);
+        let data = parse_trait(&one_row(&line), "Elf", &no_gates()).unwrap();
+        let declared = declared_product_identity_of(&data.raw_tokens);
+        assert!(declared.name, "the caller's drop branch depends on this being true");
     }
 }

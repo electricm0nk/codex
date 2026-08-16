@@ -4967,3 +4967,256 @@ This closes DoD item 1 (`VERIFY_EXIT=0`, captured directly) and confirms DoD ite
 with a real, non-zero claim) for this integration cycle. DoD item 3 (`v06_corpus_trap_report --audit`)
 remains a documented, pre-existing shortfall (§6.3 above, exit 2, `OPEN-ISSUES.md` row 41) — the full
 gate does not run that check as a stage, so this PASS does not speak to it either way.
+
+---
+
+## Cycle: SD31-PI-REPAIR-001 (sd31-pi-fix) — 2026-08-16
+
+**Card:** `OPEN-ISSUES.md` rows 38/39 — confirmed PI-screening defects in shipped records. Own
+worktree/branch (`sd31/pi-fix`), not the shared checkout.
+
+**HEAD started from:** `89846f5c982ade12458595d0e7d885f4a5d91f80` ("docs(sd31): wave-4 budget + the
+cache-gen lever wave 3 proved"), the tip of `origin/tranche/11` at cycle start (`git fetch origin &&
+git reset --hard origin/tranche/11` — package dir was absent on a clean worktree, per the mandatory
+recovery step). Branch `sd31/pi-fix` cut from that HEAD.
+
+**Oracle pin:** `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
+(`scripts/pcgen-oracle-pin.env`), confirmed via `./scripts/verify.sh --only preflight-oracle` → PASS
+before any other command.
+
+### Row 38 — unredacted PI names in `cache_gen::ultimate_equipment.rs`
+
+**Re-derived the finding and the full population before fixing it.** Confirmed the mechanism:
+`cache_gen::ultimate_equipment.rs` computed `DeclaredProductIdentity.name` via `declared_pi_at` but
+only ever passed `declared.description` into `pi_screening::classify_optional_field_declared` — the
+`.name` half was silently discarded. Re-derived the FULL corpus-wide population (not just the
+2-record sample review reported), with `scan_nameispi.py` (scratchpad — walks every
+`data/corpus/**/*.json` with `source.kind=="lst_token"`, resolves the real cited line under the
+pinned `$PCGEN_CORPUS_ROOT`, checks `NAMEISPI:YES`, and flags a record whose shipped `data.name` is
+present and not the redaction marker):
+
+```
+python3 scan_nameispi.py
+scanned 11006 json files, 10394 lst_token-sourced records
+NAMEISPI:YES declared + unredacted name shipped: 1
+{"file": "data/corpus/ultimate_equipment/equipment/otyugh_hide.json", ...}
+```
+
+**Correction to row 38's own text (retro event `1786844635920-sd31-pi-fix-c323fd`, `--verified-by`
+the scan above): the true population is 1, not 2.** `Otyugh Hide` is the one real defect. "Elysian
+Shield" (row 38's second cited example, `ue_equip_arms_armor.lst:129`) was never actually dumped by
+this generator at all — `rules_core::rules_tables::ultimate_equipment::equipment_tables()` (the table
+`cache_gen::ultimate_equipment.rs` reads) has no entry for it (`grep -n "Elysian Shield"
+src/rules_core/rules_tables/ultimate_equipment/` → 0 hits). It DOES appear elsewhere in the tree: (a)
+a separate, clean `advanced_race_guide` corpus row already shipped
+(`data/corpus/advanced_race_guide/equipment/arms_armor/elysian_shield.json`, sourced from
+`arg_equip_arms_armor.lst:23`, which carries no `NAMEISPI:` token at all — confirmed by reading that
+exact line), and (b) a hand-curated Rust literal in `src/rules_core/rules_tables/
+equipment_gap_tables.rs:541` (`book: "UE"`, real UE cost `27470.0`) that is entirely outside
+`pi_screening`'s reach and outside this card's file territory — logged as a new finding,
+`OPEN-ISSUES.md` row 46, not fixed (not in `YOUR FILES`).
+
+**Fix (TDD).** Added a branch in `generate_equipment()`: when `declared.name` is true, the record is
+DROPPED (not redacted) before the description screen runs — matching the established, already-shipped
+precedent `SD-29-corpus-wide-catch-up-lanes/decisions.md §50.3` states ("a key cannot be redacted...
+so PI rows are dropped rather than screened") and `ingest_race_traits.rs`'s own `pi_dropped` pattern.
+Also added a directory-clear step (`fs::remove_dir_all(&equipment_dir)` at the top of
+`generate_equipment`, mirroring `ingest_races.rs`'s own "the output tree is rebuilt" precedent) so a
+dropped record cannot linger as a stale on-disk file across regenerations — without this, the code fix
+alone would have left `otyugh_hide.json` sitting on disk forever, since the generator never previously
+cleared its output directory.
+
+3 new tests in `src/rules_core/cache_gen/ultimate_equipment.rs`
+(`nameispi_yes_drops_the_record_instead_of_publishing_the_real_name`,
+`without_the_declaration_the_same_row_ships_normally`,
+`a_dropped_record_does_not_linger_from_a_prior_run`), using a `ScratchCorpus` fixture (temp dir,
+same pattern as `wiring_class.rs::ScratchBook`) carrying the real `Otyugh Hide` key against a synthetic
+`.lst` row. **Confirmed red without the fix**: temporarily removed the `if declared.name { ... }`
+branch, re-ran the 3 tests — 2 of 6 failed, and the captured JSON printed in the failure output showed
+`"name": "Otyugh Hide"` shipping verbatim. Restored the fix, re-ran: 6/6 green.
+`cargo test --locked --lib rules_core::cache_gen::ultimate_equipment` → 6 passed.
+
+**Re-dumped for real** (not a hand edit): `cargo run --locked --bin gen_cache_ultimate_equipment`
+against the pinned oracle → `1368 equipment` (was 1369), `dropped, NAMEISPI:YES (name is Product
+Identity, row cannot be published): 1` / `ue_equip_arms_armor.lst:66 Otyugh Hide`.
+`git status --porcelain -- data/corpus/ultimate_equipment/` confirms `otyugh_hide.json` deleted (`D`)
+and 1548 other equipment/equipment_modifier files modified (regenerated with a fresh `ingested_at`,
+content otherwise unchanged — the directory-clear+rebuild is a full-population regen every run, by
+design). Re-ran `cargo run --locked --bin enrich_equipment_raw_tokens` afterward to restore
+`raw_tokens`/`raw_bonus_chains` on the freshly-regenerated tree (that binary is idempotent — 3,955
+files scanned, 2918 already-enriched left untouched, 1511 newly enriched; 37 pre-existing citation
+misses unrelated to this fix, same divergence between this binary's own LST re-parse and
+`cache_gen`'s 3-tier citation resolver that would have existed before this cycle too — not in this
+card's file territory, not investigated further).
+
+Corpus-wide re-scan after the fix: **`NAMEISPI:YES declared + unredacted name shipped: 0`** (was 1),
+across all 11,005 `data/corpus/**/*.json` files.
+
+### Row 39 — false LICENSE.json screening claim in `ingest_races.rs`
+
+**Confirmed the defect exactly as reported.** `src/bin/ingest_races.rs`'s two writers (chassis +
+trait) hardcoded `license: Some(License::Ogl), pi_field: None, pi_marker: None` unconditionally and
+never called `pi_screening::declared_product_identity`, while `data/corpus/bestiary_5/LICENSE.json`
+claimed the 10 Skinwalker records were "screened by ... the declared-PI reader." Read
+`ingest_race_traits.rs` first (the good example named in the brief) and mirrored its shape.
+
+**Fix (TDD).** Added `declared_product_identity_of(raw_tokens: &[RawToken])` (reads a parsed record's
+own preserved `raw_tokens` — what actually ships — not a re-parse of the row, matching
+`ingest_race_traits.rs`'s stated reason for doing the same). Wired into both writers:
+
+- **Chassis writer:** on `declared.name`, the WHOLE race is dropped (chassis + every trait it would
+  otherwise own), matching `decisions.md §50.3`'s cascade ruling ("dropping a monster cascades: an
+  ability whose only owner is gone reaches nothing either"). `RaceCacheData` has no free-text
+  `description` field at all, so there is nothing else to redact on the chassis; its
+  `license`/`pi_field`/`pi_marker` stay `Ogl`/`None`/`None` correctly once a name-declared row can no
+  longer reach that code path.
+- **Trait writer:** on `declared.name`, the single trait is dropped (not the whole race). On
+  `declared.description`, the description is redacted via `pi_screening::classify_optional_field_
+  declared` (same call `ingest_race_traits.rs` uses), and the record's `license`/`pi_field`/`pi_marker`
+  are now the computed values, replacing the hardcoded `Ogl`/`None`/`None`.
+
+6 new tests in `src/bin/ingest_races.rs`: 2 prove `declared_product_identity_of` reads `NAMEISPI:YES`/
+`DESCISPI:YES` off a real parsed chassis/trait (not silently discarded), 1 proves the actual
+`pi_screening::classify_optional_field_declared` call redacts a declared description end-to-end
+(license `PiRedacted`, `pi_field` `"description"`, stored text `"[redacted PI]"`), 1 proves name
+declaration is detected on a trait row (the Elf ~ Sovyrian-Born shape from `SD-29
+decisions.md §50.2`). All 38 tests in the binary pass (34 pre-existing + 4 new — 2 of the "6 new" are
+covered by the same two `declared_product_identity_of` tests counted once).
+`cargo test --locked --bin ingest_races` → 38/38 passed.
+
+**Re-ingested for real**: `cargo run --locked --bin ingest_races` against the pinned oracle → 25
+races / 241 traits (`core_rulebook` 7/67, `beastiary` 11/108, `bestiary_2` 6/57, `bestiary_5` 1/9),
+`dropped, NAMEISPI:YES: 0`, `descriptions redacted by DESCISPI:YES: 0`. Re-verified today's population
+carries zero declarations at the source: `grep -c 'NAMEISPI:YES\|DESCISPI:YES'` over every
+`IN_SCOPE_RACES` chassis (`*_races.lst`) and abilities (`*_abilities_race.lst`) file → 0 for all 20.
+So this run's content is unchanged from before the fix — `git diff --stat -- data/corpus/{core_rulebook,beastiary,bestiary_2,bestiary_5}/race*`
+→ 266 files changed, 1 insertion + 1 deletion each (only `ingested_at` moved) — but the claim is now
+true by construction, not by the writer's absence of a code path, and the pipeline is ready for the
+deferred Skinwalker heritage batch that DOES carry real `DESCISPI:YES` declarations.
+
+**`data/corpus/bestiary_5/LICENSE.json` corrected** (appended, not rewritten): a new `FIXED
+(SD31-PI-REPAIR-001, 2026-08-16)` note appended to `screening_method_note` stating what changed and
+why the claim is now true, plus a new structured `redaction_policy.declared_pi_reader_verified: true`
++ `declared_pi_reader_writers: ["src/bin/ingest_races.rs", "src/bin/ingest_race_traits.rs"]` pair —
+the machine-checked replacement for the free-text claim (see gate section below). Checked every OTHER
+`LICENSE.json` in the tree for the same unenforced-claim shape: `grep -l "declared-PI reader\|
+declared_product_identity" data/corpus/*/LICENSE.json` → only `bestiary_5`'s (all 25 books checked).
+
+### Make it unrepeatable — `declared-pi-audit` gate
+
+Built `src/bin/declared_pi_shipping_audit.rs` and wired it into `scripts/verify.sh` as its own stage
+(`declared-pi-audit`, both `ALL_STAGES` and `QUICK_STAGES`, immediately after `pi-sweep`, following
+that stage's own conventions: log-file capture, a `CLEAN`/`FAIL` marker line the wrapper greps for, a
+"0 examined asserts nothing" guard).
+
+- **Check A** (the load-bearing, un-gameable half): walks every `data/corpus/**/*.json`, resolves each
+  `lst_token`-sourced record's real corpus line under the pinned oracle, and fails if (a) a
+  `NAMEISPI:YES`-declared record exists on disk at all, or (b) a `DESCISPI:YES`-declared record's
+  `data.description` is not exactly `"[redacted PI]"` with `license=="PI-REDACTED"` and
+  `pi_field=="description"`. This is a pure data-level cross-check — it does not need to know which
+  binary wrote a record, so it directly catches row 38's shape and would catch a future recurrence of
+  row 39's shape (e.g. the deferred heritage batch) regardless of which writer introduces it.
+- **Check B**: a `LICENSE.json` opting in to `redaction_policy.declared_pi_reader_verified: true` must
+  name writer source files (`declared_pi_reader_writers`) that literally contain the
+  `declared_product_identity` call, or the gate fails — a structured, machine-checked replacement for
+  the free-text claim row 39 found unenforced. (Prose claims that do NOT opt in to the structured field
+  are not flagged — deliberately narrow, so this cycle does not force a retrofit of all 25 existing
+  `LICENSE.json` files; the manual `grep` above already confirmed none of the other 24 make the claim.)
+
+**Mutation-proved, both check shapes, two ways:**
+
+1. **Unit-level (8 tests, `src/bin/declared_pi_shipping_audit.rs`):** each of the two check functions
+   (`audit_shipped_records`, `audit_license_claims`) is called directly — the exact functions `main()`
+   calls — against scratch fixtures constructing each defect shape (an unredacted `NAMEISPI:YES`
+   record, an unredacted `DESCISPI:YES` description, a `LICENSE.json` naming a writer that does not
+   call the reader) and its clean counterpart. `cargo test --locked --bin declared_pi_shipping_audit`
+   → 8/8 passed.
+2. **Live, end-to-end, against the real wired gate:** temporarily edited the real
+   `data/corpus/bestiary_5/LICENSE.json`'s `declared_pi_reader_writers` to name a nonexistent file,
+   ran `./scripts/verify.sh --only declared-pi-audit` → **FAIL, exit 1**, log:
+   `LICENSE-CLAIM-UNVERIFIED: ... names src/bin/nonexistent_writer_for_mutation_test.rs as a writer,
+   but that file does not call declared_product_identity`. Restored the real file from a backup copy,
+   re-ran the same stage → **PASS, clean**. (Check A's live mutation was not repeated against the
+   committed corpus — the unit tests already exercise the identical function with real
+   `serde_json::Value` parsing; briefly shipping a fake PI-violating record into the real tree to prove
+   a point was judged not worth the risk of a git-history artifact.)
+
+Run against the real, now-fixed corpus: `cargo run --locked --bin declared_pi_shipping_audit` →
+`declared-pi-audit: CLEAN — no shipped record contradicts its own corpus row's PI declaration`.
+
+### Files changed
+
+`src/rules_core/cache_gen/ultimate_equipment.rs`, `src/bin/gen_cache_ultimate_equipment.rs`,
+`src/bin/ingest_races.rs`, `src/bin/declared_pi_shipping_audit.rs` (new), `scripts/verify.sh`,
+`data/corpus/bestiary_5/LICENSE.json`, `data/corpus/ultimate_equipment/equipment/**` (1 deletion +
+1548 regenerated), `data/corpus/{core_rulebook,beastiary,bestiary_2,bestiary_5}/race*/**` (266
+regenerated, timestamp-only), `docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md`
+(rows 46, 8, 9, 10 appended — never rewrote 38/39).
+
+**Wired-Integration four-check audit** (`docs/governance/no-stub-mvp-doctrine.md` §"Per-cycle audit"),
+against base `89846f5c9`:
+
+```
+git diff --unified=0 89846f5c9 -- 'src/**/*.rs' ':!**/__tests__/**' ':!**/*.test.rs' \
+  | grep -nE '\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b' || echo OK_NO_TOKENS
+-> OK_NO_TOKENS
+git diff --unified=0 89846f5c9 -- 'src/**/*.rs' | grep -nE '"Would [^"]*"' || echo OK_NO_WOULD_STRINGS
+-> OK_NO_WOULD_STRINGS
+```
+
+(Checks 2/3 are TSX/mock-specific and this diff touches no `apps/desktop/**` file — not applicable.)
+
+### DoD
+
+1. `./scripts/verify.sh` — launched early, in the background, exit code captured directly in the same
+   shell statement (`./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"`), kept alive
+   via `nohup ... & disown` so it survives independently of this session
+   (`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-PI-REPAIR-001-verify.log`). At commit time
+   the log shows every stage through `root-lib` PASS (14 of 22 stages, including the new
+   `declared-pi-audit` — see excerpt above), with `root-full` (the ~490-binary build) still running,
+   CPU-starved by 7 concurrent sibling `cargo test --locked --no-fail-fast` processes on this shared
+   box (`pgrep -af 'cargo test --locked --no-fail-fast' | grep -c cargo` → 7) — a known, expected
+   condition of this wave's 6-agent concurrency, not a stall (`pgrep -fa 'verify.sh\|cargo test'`
+   confirms the process alive, log timestamps advancing on the live build). **`VERIFY_EXIT` was not
+   obtained before this commit landed** — the process was left running past this cycle's own turn
+   budget rather than be killed to force a premature number; if a later check-in finds it finished, the
+   result is appended to this receipt without editing the paragraph above, per this file's own
+   append-only convention. Every stage the run DID reach is genuinely green, including the two new
+   `declared-pi-audit` mutation-proof runs (`--only declared-pi-audit`, FAIL→PASS demonstrated live
+   against the real gate, see the "Make it unrepeatable" section above) and `root-lib` (1819 passed,
+   +3 over the 1816 baseline, exactly this cycle's 3 new `ultimate_equipment.rs` tests — `ingest_races.rs`'s
+   4 and `declared_pi_shipping_audit.rs`'s 8 new tests live in binaries `root-lib` does not build,
+   confirmed separately via `cargo test --locked --bin ingest_races` (38/38) and `cargo test --locked
+   --bin declared_pi_shipping_audit` (8/8) above).
+2. `reach` — this card writes no new player-visible record family (row 38/39 are a screening-path
+   fix, not a new kind); no new reach claim expected or needed. Existing reach claims must be
+   unaffected — confirmed no `reach_gate.rs`/family-registration file is in this diff.
+3. `v06_corpus_trap_report --audit` — pre-existing shortfall, `OPEN-ISSUES.md` row 41; not this card's
+   scope, not made worse (this cycle touches `race`/`race_trait`/`equipment` records only via a full
+   regen that re-stamps `wiring_class` fresh each time from the live classifier, the same mechanism
+   `v06_work_inventory` already uses — no NEW stamp/classifier disagreement introduced).
+4. Guarded regen — not run this cycle (measuring the corpus-wide board delta is the integration
+   cycle's sanctioned regen, per the wave rule; this card's own record counts (266 race, 1548+1
+   equipment) are directly measured above via `git status --porcelain`/binary stdout, not the guarded
+   regen).
+5. Four-check wired-integration audit — see above, both applicable checks clean.
+6. No family could not be surfaced — n/a, no new family.
+7. No baseline movement in `scripts/verify-baselines.env` — `git diff --stat` confirms untouched.
+8. On-screen verification — n/a: this card's fix is not a player-visible new record family, it is a
+   PI-screening correctness fix to existing families already on-screen. No new value became visible
+   that was not visible before (the fixed records' actual game-mechanical values are unchanged; only
+   `license`/`pi_field`/`ingested_at` metadata and, for the one dropped record, its ceasing to exist,
+   changed).
+
+**Board movement this cycle: 0 units** (row 38/39 are correctness/safety fixes to already-`done`
+records' metadata, not new grounding — 1 previously-`done` `ultimate_equipment` unit (`Otyugh Hide`)
+is now REMOVED from the corpus entirely, which is a `done`→gone movement the next guarded regen will
+need to account for, not a hidden loss: it was never legitimately shippable). This card's value is
+categorical (closing a PI-exposure class before two lanes currently writing thousands of new records
+copy the same broken call site), not board-percentage.
+
+Retro events: 1 `correction` (`1786844635920-sd31-pi-fix-c323fd`, row-38 population 2→1), 4
+`verification` events auto-emitted by `verify.sh --only` runs during development (2 under actor
+`wf_1d83a743-99e-3` before `RETRO_ACTOR` was exported in that shell, 2 under `sd31-pi-fix` after) —
+committed both shards rather than discard the earlier ones, since both are genuine records of real
+runs.
