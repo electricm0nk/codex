@@ -992,7 +992,12 @@ mod tests {
                 "core_essentials",
                 "ultimate_combat",
                 "ultimate_magic",
-                "ultimate_psionics"
+                "ultimate_psionics",
+                // SD31-E6-F2-003 -- this book's first compiled record family
+                // of any kind, appended at the end of the list rather than
+                // inserted into a book-family block, since it shares no
+                // chassis with any book above it.
+                "occult_adventures"
             ]
         );
     }
