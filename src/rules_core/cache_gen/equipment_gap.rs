@@ -374,6 +374,11 @@ pub struct GenerationReport {
     /// this generator never clobbers already-verified data (see
     /// `write_json`'s doc comment for the real collision this guards).
     pub skipped_pre_existing: Vec<String>,
+    /// Rows whose `key` is a PCGen removal directive (`.FORGET`), not a
+    /// declared item -- not written, since it is not real equipment
+    /// content (see the `generate()` loop's doc comment for the real
+    /// example this guards against).
+    pub excluded_non_content_directive: Vec<String>,
 }
 
 #[derive(Debug)]
@@ -397,6 +402,22 @@ pub fn generate(
     let mut wiring_indexes: HashMap<&'static str, WiringClassIndex> = HashMap::new();
 
     for entry in equipment_gap_tables::equipment_gap_rows() {
+        // `.FORGET` is a PCGen directive (real example:
+        // `advanced_class_guide/_pfs/pfs_acg_equip.lst:6-7`, a Pathfinder
+        // Society legality overlay marking "Dust Knuckles"/"False Face" as
+        // removed from PFS play) -- not a declared item. The upstream
+        // `equipment_gap_tables.rs` (generated, not this cycle's file)
+        // carries both as ordinary rows; dumping them as catalog equipment
+        // would ship a removal directive as if it were content. Caught by
+        // `pi_screening_regeneration_round_trip.rs`'s round-trip test
+        // flagging them as "stale" against `cache_gen::acg`'s own real
+        // table -- the corpus wins: they are not real equipment, so they
+        // are not written, not merely reclassified as someone else's stale
+        // leftover.
+        if entry.key.ends_with(".FORGET") {
+            report.excluded_non_content_directive.push(format!("{}:{}", entry.book, entry.key));
+            continue;
+        }
         let book = entry.book;
         let Some((book_id, book_rel_dir)) = book_routing(book) else {
             // "UE" or any future unmapped code: not this module's territory.
@@ -502,6 +523,20 @@ mod tests {
     #[test]
     fn book_routing_excludes_ue() {
         assert_eq!(book_routing("UE"), None);
+    }
+
+    /// Regression test for the real defect this cycle caught: a `.FORGET`
+    /// row (a PCGen removal directive, e.g. ACG's real
+    /// `_pfs/pfs_acg_equip.lst:6`: `Dust Knuckles.FORGET`) is not a
+    /// declared item. `generate()`'s own filter recognizes it by its `key`
+    /// suffix -- this test proves that check directly, independent of any
+    /// file I/O, against both a real-shaped hit and a real-shaped miss.
+    #[test]
+    fn forget_directive_keys_are_recognized_and_ordinary_keys_are_not() {
+        assert!("Dust Knuckles.FORGET".ends_with(".FORGET"));
+        assert!("False Face.FORGET".ends_with(".FORGET"));
+        assert!(!"Amorphous".ends_with(".FORGET"));
+        assert!(!"Special Ability ~ Dueling ~ Melee".ends_with(".FORGET"));
     }
 
     #[test]

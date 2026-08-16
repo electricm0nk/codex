@@ -2,7 +2,7 @@
   "completeness": "chassis_only",
   "data": {
     "category": "Equipmods",
-    "cost_gp": null,
+    "cost_gp": 5000.0,
     "description": null,
     "key": "Sneaky",
     "name": "Sneaky",

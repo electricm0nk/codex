@@ -2,7 +2,7 @@
   "completeness": "chassis_only",
   "data": {
     "category": "Equipmods",
-    "cost_gp": null,
+    "cost_gp": 4500.0,
     "description": null,
     "key": "Amorphous",
     "name": "Amorphous",

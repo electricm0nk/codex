@@ -2,7 +2,7 @@
   "completeness": "chassis_only",
   "data": {
     "category": "Equipmods",
-    "cost_gp": null,
+    "cost_gp": 2500.0,
     "description": null,
     "key": "Prehensile",
     "name": "Prehensile",

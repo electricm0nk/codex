@@ -654,6 +654,18 @@ const CORPUS_BOOK_IDS: &[(&str, &str)] = &[
     // this entry names the directory the same way every other book here
     // does.
     ("ultimate_equipment", "ultimate_equipment"),
+    // SD-31 `epic-6-ingest-lanes` F5/F6 (`SD31-E6-F5-002`). Ultimate
+    // Combat and Ultimate Intrigue had no `data/corpus/` directory at all
+    // before this cycle -- `cache_gen::equipment_gap`
+    // (`gen_cache_equipment_gap`) writes the first real corpus JSON for
+    // each book (their `rules_tables` modules already existed and were
+    // already reported by `corpus_ingest_diagnostic.rs`'s
+    // `ultimate_combat_counts()`/`ultimate_intrigue_counts()`; this is the
+    // separate on-disk-corpus mapping `reach_gate`'s own inventory needs).
+    // Directory and book id are the same string, like every `ultimate_*`
+    // book above.
+    ("ultimate_combat", "ultimate_combat"),
+    ("ultimate_intrigue", "ultimate_intrigue"),
 ];
 
 /// Corpus content-kind directory (singular, as the ingest tools write it) ->

@@ -224,7 +224,19 @@ fn equipment_cache_deduplicates_equipmods_and_covers_the_other_three_categories(
         .map(|e| e.key)
         .collect();
 
-    let expected_total = live_non_equipmods + live_unique_equipmods_keys.len();
+    // SD-31 `SD31-E6-F5-002`: `cache_gen::equipment_gap` separately dumps
+    // `rules_tables::equipment_gap_tables`'s core_rulebook residue -- real,
+    // oracle-cited equipment/equipment_modifier records the hand-authored
+    // `crb::equipment_tables()` above never held -- into this SAME
+    // `equipment/` directory. **330** resolved that cycle (`git diff
+    // --stat 89846f5c9 ca261b3d7 -- data/corpus/core_rulebook/` -- exact,
+    // not estimated). This is a SECOND generator writing into a book this
+    // test was written before that generator existed, the same shape
+    // `pi_screening_regeneration_round_trip.rs`'s
+    // `KNOWN_EXTRA_ON_DISK_FROM_A_DIFFERENT_GENERATOR` names for ACG.
+    const EQUIPMENT_GAP_TABLE_CRB_ADDITIONS: usize = 330;
+    let expected_total =
+        live_non_equipmods + live_unique_equipmods_keys.len() + EQUIPMENT_GAP_TABLE_CRB_ADDITIONS;
 
     let files = json_files_under(&root);
     assert_eq!(
@@ -232,7 +244,8 @@ fn equipment_cache_deduplicates_equipmods_and_covers_the_other_three_categories(
         expected_total,
         "equipment cache should have exactly one record per real EquipmentTableEntry, with \
          equipmods.rs's known duplicate-`key` shell records (decisions.md §11.6) collapsed to \
-         one record per unique key rather than silently duplicated into the cache"
+         one record per unique key rather than silently duplicated into the cache, PLUS the \
+         SD31-E6-F5-002 equipment_gap_tables residue (see this test's own comment above)"
     );
 
     // Every equipmods record's `key` in the cache must be a real, distinct

@@ -5202,3 +5202,80 @@ regen that would confirm the equipment-effect wiring probe actually observes the
 not run this cycle per §4/§6; widening it without being able to verify the observation would be an
 unverified claim, not a landed fix — left for the cycle that lands row 46's fix or a working scratch
 workaround at guarded-regen time).
+
+### 11. Follow-up commit — sweep obligation (`AGENTS.md`: "a count change needs a sweep, not just a build")
+
+The first commit (`ca261b3d7`) landed clean lib tests (1825 passed) but the full gate's `root-full`
+stage (only reachable after committing, per the box's shared-target-dir constraints this cycle) found
+**6 hardcoded count-pinning test files** the new records broke, plus **1 reach_gate book-id gap** and
+**1 real data defect this cycle's own generator shipped**. All fixed in a follow-up commit, TDD'd where
+the fix was code rather than a constant restatement:
+
+1. **`tests/sd26_cache_core_rulebook.rs`** — `equipment_cache_deduplicates_equipmods_and_covers_the_other_three_categories`
+   hardcoded CRB's equipment total from `crb::equipment_tables()` alone; widened to add the 330
+   `cache_gen::equipment_gap` CRB records (exact count re-derived: `git diff --stat 89846f5c9 ca261b3d7
+   -- data/corpus/core_rulebook/` → 330 files).
+2. **`tests/sd27_advanced_race_guide_cache_shape.rs`** — same shape for ARG, 200→215 (+15, exact),
+   two assertions (`equipment_cache_has_all_200...` and `every_v1_record_passes_the_shared_
+   validate_license_gate`'s `92+200+187` sum).
+3. **A real defect these tests caught, not just a stale count**: 8 ACG `Equipmods` rows
+   (`Amorphous`, `Burdenless`, `Restful`, `Spiteful`, `Trackless`, `Exclusionary`, `Prehensile`,
+   `Sneaky`) carry `cost_gp: None` in the upstream `equipment_gap_tables.rs` despite each one's real,
+   cited `acg_equipmods.lst` line stating a plain literal `COST:` token (verified all 8 directly
+   against the real oracle, e.g. `acg_equipmods.lst:10`: `Amorphous␉␉KEY:Special Ability ~ Amorphous ~
+   Armor␉␉TYPE:Armor␉␉␉COST:4500`) — `tests/sd27_equipment_modifier_price_matches_corpus_cost_token.rs`
+   caught the first (`Amorphous`) because `equipment_resolver::equipment_catalog_row_by_key` (line 211)
+   ALREADY chains `equipment_gap_tables` directly into the live engine resolver, so this `None` was
+   already reaching the player-facing price before this cycle — this cycle's corpus dump is only what
+   finally gave a test a corpus record to check the resolver's answer against. Corrected all 8 directly
+   in `equipment_gap_tables.rs` (a hand-correction to a GENERATED file, the same precedent
+   `SD31-W3-INTEGRATE-001`'s Miser's Mask fix set for `equipment_tables.rs` — documented inline, not a
+   full 578-row audit of the table's other `cost_gp: None` rows, out of bounded scope) and patched the
+   8 already-shipped JSON files' `cost_gp` to match. A corpus-wide scan for the SAME shape across all 8
+   dumped books found exactly 2 more candidates (`core_rulebook` "Cold Iron"/"Alchemical Silver",
+   `COST:0`) — verified these are genuinely base-`COST:0` rows whose real price is a `BONUS:ITEMCOST`
+   formula the table correctly declines to evaluate, not the same defect; left as `None`, not "fixed."
+4. **A second, unrelated real defect**: `equipment_gap_tables.rs`'s ACG rows include 2 PCGen `.FORGET`
+   removal-directive rows (`Dust Knuckles.FORGET`/`False Face.FORGET`, real source
+   `advanced_class_guide/_pfs/pfs_acg_equip.lst:6-7` — a Pathfinder Society legality overlay marking
+   items removed from PFS play, not declared items) that `cache_gen::equipment_gap` had been dumping as
+   if they were real equipment. Caught by `tests/pi_screening_regeneration_round_trip.rs`'s stale-record
+   check (which compares ACG's on-disk equipment against `cache_gen::acg`'s own real table and correctly
+   flagged both as having no real backing). Fixed at the source: `generate()` now skips any row whose
+   `key` ends `.FORGET` (`GenerationReport::excluded_non_content_directive`, tested directly), and the 2
+   already-shipped files were removed. Net effect: ACG's real equipment count returns to its original
+   269 (271 - 2), so `sd26_cache_acg.rs`'s own hardcoded 269 needed NO change.
+5. **`apps/desktop/src-tauri/src/reach_gate.rs`** — `CORPUS_BOOK_IDS` (the `data/corpus/<dir>/` ->
+   `book_id` map `reach_gate`'s own cross-source inventory check needs) did not know
+   `ultimate_combat`/`ultimate_intrigue`, since this cycle gave them a `data/corpus/` directory for the
+   first time (their `rules_tables` modules already existed and were already reported by
+   `corpus_ingest_diagnostic.rs`'s own, SEPARATE `ultimate_combat_counts()`/`ultimate_intrigue_counts()`
+   — confirmed that diagnostic's own drift guard, `every_book_landed_in_rules_tables_is_reported`, did
+   NOT fail, so only `reach_gate`'s own map needed the addition). Added both, book_id = directory name,
+   matching every other `ultimate_*` entry's convention.
+6. **5 `LICENSE.json` compliance artifacts restated** (`advanced_players_guide`, `advanced_race_guide`,
+   `core_rulebook`, `ultimate_psionics`, `ultimate_wilderness`) per `tests/sd27_book_license_record_
+   counts.rs`'s explicit instruction ("restate the number... rather than adjusting this test" — this is
+   a real redistribution-compliance artifact, not test fixture data). Each restated `records_processed`
+   to the true on-disk count, with an `UPDATE -- SD31-E6-F5-002` note stating what changed and
+   confirming the new records were screened on BOTH name and description (zero hits). **One pre-existing,
+   not-mine drift found and named while re-deriving**: `advanced_race_guide`'s stated 694 was already
+   stale against its OWN starting-HEAD count of 695 (`git ls-tree -r 89846f5c9`) before this cycle
+   touched anything — restated 694→710 (695 + this cycle's 15), with the 1-record pre-existing gap
+   named explicitly rather than silently absorbed into the new number. `ultimate_combat`/
+   `ultimate_intrigue` have no `LICENSE.json` at all and none was required —
+   `tests/sd27_book_license_record_counts.rs`'s own `books_on_disk()` only covers books that already
+   ship one.
+
+**Net corpus figure correction**: 701 resolved → **697 real records shipped** (701 − 2 `.FORGET`
+directives never real content − 2 core_essentials-misattributed unresolved already excluded in the
+original count). `git diff --name-status 89846f5c9 -- data/corpus/` (working tree, post-fix): **697
+`A`, 5 `M`** (the 5 `LICENSE.json` restatements) — the authoritative final count, re-derived after
+every fix, not narrated from the first commit's now-superseded number.
+
+All of §1-10 above (map, citation resolution, PI screening, the write_json collision guard, the
+corpus_literal_sweep blocker, the Mitre-of-the-Hierophant guard) stand as originally reported; this
+section documents ONLY what the full gate's later stages (root-full/desktop/reach, unreachable until
+after the first commit on this shared, concurrently-loaded box) additionally caught and this cycle
+fixed before the branch was considered done. Follow-up commit and its own gate run are the authoritative
+final state; see the commit log and `$LOG`'s tail for the terminal `VERIFY_EXIT`.

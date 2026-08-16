@@ -2,7 +2,7 @@
   "completeness": "chassis_only",
   "data": {
     "category": "Equipmods",
-    "cost_gp": null,
+    "cost_gp": 4000.0,
     "description": null,
     "key": "Burdenless",
     "name": "Burdenless",
