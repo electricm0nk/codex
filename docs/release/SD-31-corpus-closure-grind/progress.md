@@ -13436,3 +13436,279 @@ Manually removed (per the mandate's named list, all confirmed no live PID buildi
 
 `da9bed2dd` before this receipt's own commit; final tip after landing this receipt and pushing is
 recorded in the handoff below.
+
+## Cycle: SD31-ATTRIB-003 (sd31-attrib-evidence) — 2026-08-16
+
+**Role:** `sd31-attrib-evidence` (`RETRO_ACTOR=sd31-attrib-evidence`), own worktree
+`/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_56ffbd55-d83-6`, branch
+`sd31/attrib-evidence-003` (checked out from a clean, package-dir-absent worktree via
+`git fetch origin && git reset --hard origin/tranche/11` per the mandatory branch-state
+check — the pre-assigned worktree's own HEAD was `061b623ee`, `origin/main`'s tip, with no
+`docs/release/SD-31-corpus-closure-grind/` tree at all; tree was clean, so the recovery
+protocol applied). **Starting HEAD:** `17ba8be53` ("docs(sd31): SD31-W7-INTEGRATE-001
+receipt + ORCHESTRATOR-LOG wave-7 entry"). Oracle pin:
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
+(`scripts/pcgen-oracle-pin.env`), confirmed via `./scripts/verify.sh --only
+preflight-oracle` (PASS, "oracle at pin 7f818006e..."). `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-attrib-evidence`
+(deleted at end of cycle, §6).
+
+**Card:** three tasks — (1) the per-race book-citation evidence table (operator asked
+for evidence, not a summary, re CRB-7-vs-ARG and the Bestiary-4 exception); (2) finish
+the `core_essentials` residual (§9); (3) wire the public status feed into the gate.
+
+### §1 — Per-race citation evidence table
+
+Built `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-ATTRIB-003-race-evidence.md`
+covering all 51 races (the 43-entry `RACE_TRUE_BOOK` roster + the 8 `core_essentials`-
+ambiguous races, re-derived — see the figure correction below, this is 43, not the
+"44-entry table" prior receipts describe). **No attribution changed** —
+`src/bin/v06_work_inventory.rs` (`RACE_TRUE_BOOK`/`RACE_NEWEST_PRINTING`) is lane 1's
+file and untouched.
+
+**Methodology, re-run to reproduce (full commands in the artifact's own §3):** for each
+race, each of the 37 in-scope books' own top-level `*abilities_race*.lst` file(s) is
+scanned for `<Name> ~ <BaseTrait>.MOD` citation rows (Ability Scores/Type/Size/Speed/
+Vision), field-anchored to the PCGen grammar `CATEGORY=...|<Name> ~ <Trait>.MOD` (not a
+substring test — see the bug below); each book's own `SOURCEDATE` is read directly from
+its own top-level `.pcc` (`_for_players` variant preferred for the Bestiary line).
+
+**Two structural findings, both independently re-derived, neither previously
+documented:**
+
+1. **Every one of the 43 races has exactly ONE real base declaration in the whole
+   corpus**, always under `core_essentials/races/<slug>/<slug>_races.lst`. Every other
+   book — including the book currently credited as "true book" — supplies only `.MOD`
+   citation rows on top of that single shared declaration (verified for Dwarf/CRB and
+   Changeling/Bestiary-4, the dispatch's own worked example: `bestiary_4/*.lst` has
+   **zero** base `Changeling` declarations). "Which book prints this race" is a
+   citation-precedence question, not two competing full stat blocks.
+2. **`campaign_setting/inner_sea_races`** (`SOURCEDATE:2015-09`, newer than ARG's
+   2012-06) supplies full base-trait `.MOD` citations, with real page numbers, for
+   **all 43** races — but `isr_races.lst` itself carries **zero** base `RACE:`
+   declarations (`grep -c "^RACE:" isr_races.lst` → 0), the same "cites, never
+   declares" shape `core_essentials`'s own root files have under Decision 9 — except
+   Inner Sea Races is a real, independently-published Paizo book, not a PCGen packaging
+   construct. Applied literally, strict newest-wins would move every CRB/Bestiary-1/2/3
+   race to Inner Sea Races instead of ARG. **New open question, filed as
+   `OPEN-ISSUES.md` row 129 (RULING-NEEDED):** does a citation-only compendium count as
+   a "printing" under Decision 10? Every table in the artifact reports the verdict both
+   including and excluding Inner Sea Races so the operator sees the effect directly.
+
+**A real bug caught and fixed before committing the table (retro `correction` filed,
+`1786910398969-sd31-attrib-evidence-a62e51`):** a first-draft substring/single-char-
+lookbehind match wrongly credited Bestiary 6 with citing the CRB/Bestiary-1 race
+"Goblin" — the actual match was "Monkey Goblin ~ Ability Scores.MOD" (Bestiary 6's own,
+unrelated race; the space before "Goblin" satisfies a naive word-boundary check).
+Verified the true shape first (`grep -n "Goblin ~" b6_abilities_race.lst` → nothing;
+only "Monkey Goblin ~" lines exist), then fixed by anchoring to the actual PCGen field
+grammar (split on the LAST `|`, then on ` ~ `, require an EXACT match) rather than any
+character-level regex. Re-verified clean afterward: Goblin shows no Bestiary 6
+citation; Monkey Goblin's own citation is unaffected. The same shape would have
+silently contaminated Elf (via Half-Elf/Aquatic Elf) and Orc (via Half-Orc) had it
+shipped.
+
+**Figure corrections, both recorded in the artifact rather than silently reconciled:**
+- `RACE_TRUE_BOOK` is a **43**-entry table (7+11+7+5+9+2+1+1), not the "44-entry table"
+  prior receipts (`SD31-ATTRIB-001`) describe — counted directly from the live const.
+- The dispatch's own pre-verified sanity-check figures (Samsaran 30, Kitsune 21,
+  Changeling 20, Wayang 17, Nagaji 16, Kasatha/Trox/Wyvaran 1, Wyrwood 0) were
+  reproduced EXACTLY by this table's loose first-draft `grep -c "<Name>"` count, but
+  that count also picks up the race name inside unrelated fields (DESC text, TYPE
+  tokens). The field-anchored citation-row count this table actually reports is
+  smaller and more precise (e.g. Samsaran: 30 → 9) — a deliberate, documented
+  divergence from the dispatch's own figure, not an unexplained mismatch.
+
+### §2 — `core_essentials` residual, re-verified at 128
+
+```
+python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json')); u=[x for x in d['units'] if x.get('book')=='core_essentials']; print(len(u), collections.Counter(x['kind'] for x in u))"
+# -> 128 Counter({'race_trait': 111, 'monster_ability': 9, 'race': 8})
+```
+
+Matches the dispatch's own "~128 units remain" exactly. **The mechanism that produced
+this floor (`resolve_true_book_for_core_essentials`) is `sd31/dissolve-core-essentials`'s
+work, already merged onto `tranche/11` at `2a69c5fb4` before this cycle's own dispatch**
+— `v06_work_inventory.rs` is lane 1's file, not touched. This card's contribution is
+independent one-record-deep re-verification, written up at
+`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-ATTRIB-003-core-essentials-residual.md`:
+
+- **8 `race` units:** confirmed as Decision 9's own named 8 multi-book-native races
+  (`android`, `elf_aquatic`, `gathlain`, `ghoran`, `goblin_monkey`, `lashunta`,
+  `syrinx`, `triaxian`) — this cycle's own §1 evidence table independently confirms
+  each is natively citable from 2+ in-scope books.
+- **91 `race_trait` units:** the same 8 races' own trait rows (inherits the race's
+  ambiguity).
+- **38 `race_trait`/`monster_ability` units in `ce_abilities_race.lst`:** read the file
+  directly (not trusted from the prior receipt's prose) — confirmed the ~23-row Vision
+  Modes block genuinely precedes the file's first `SOURCELONG:` directive (PCGen-
+  internal glossary content, per the file's own top-of-file comment), and the
+  `SOURCELONG:Universal Rules` directive (`SOURCESHORT:UR`) is PCGen's own internal
+  designation, not a Paizo book.
+- **"Books outside the roster" check, independently re-run:** `grep -n
+  "SOURCELONG:Ironfang\|SOURCELONG:.*Blood of the Moon" ce_abilities_race.lst` → no
+  output. No `RULING-NEEDED` row filed for this — nothing in the 128-unit residual cites
+  a book outside the 37-book roster.
+
+**Conclusion: no further re-attribution is resolvable one record deep at this cycle's
+tip.** 128 stays the honest floor, confirmed rather than merely re-quoted.
+
+### §3 — Public status feed wired into the gate
+
+**A real bug found and fixed in `scripts/publish-site-dashboard.sh`'s `--check` mode**
+before it could be trusted as a gate: it rendered into a blank-slate scratch file
+instead of one seeded from the committed copy, so the real producer's owner-state merge
+(`_load_existing_owner_state`) and unit-shard cache (`build_unit_shards`) always saw
+"nothing prior" — `--check` reported STALE unconditionally, even on an untouched tree
+(reproduced: `./scripts/publish-site-dashboard.sh --check` failed on a completely clean
+checkout with no committed-copy edit at all). Fixed:
+1. Seed the scratch `--out` file (and its sibling `units/` shard dir) from the
+   currently-committed copy before invoking the producer, mirroring what a real
+   in-place regen sees.
+2. Strip stamps (`generated_at`/`generated_by`) **recursively**, not just at the top
+   level — the payload nests independently-stamped sub-objects (`unit_index`,
+   `retrospective`) that a shallow strip missed on the first pass (caught by running
+   `--check` twice on an untouched tree and seeing it fail both times on
+   `retrospective.generated_at` specifically).
+3. Pin `PF1E_WORK_INVENTORY_DOC` to `$REPO_ROOT/docs/work-inventory.json` explicitly —
+   the real producer's own default hardcodes `~/workspace/repos/codex/...`, wrong from
+   any worktree.
+
+**Mutation-proven, not merely asserted:** wrote
+`scripts/tests/test_publish_site_dashboard.sh` (6 cases, fast, against a tiny FAKE
+producer, no real corpus needed) and sabotaged the seeding fix to confirm it reproduces
+the exact bug (3 of 6 cases fail); restored, all 6 pass. Also proved able to fail for
+real against the actual committed feed: patched `site/dashboard/PF1e-dashboard.json`'s
+`schema_version` to a bogus value, ran `./scripts/verify.sh --only site-dashboard-check`,
+confirmed `FAIL`, restored, confirmed `PASS` again — both inside the real `verify.sh`
+harness, not just the standalone script.
+
+**Two new `verify.sh` stages, both QUICK+FULL** (next to `producer-selftest`, matching
+convention): `site-dashboard-selftest` (runs the new self-test) and
+`site-dashboard-check` (runs `scripts/publish-site-dashboard.sh --check` for real
+against the committed feed — this is the gate the operator asked for).
+
+**Refreshed the committed feed** at this cycle's tip: `site/dashboard/PF1e-dashboard.json`
+regenerated (438 insertions/414 deletions — content refresh, not a rewrite),
+`site/dashboard/units/` (5.3MB, 10 shard files) committed alongside it — the feed's own
+`unit_index` references this directory and it did not exist in the repo before this
+cycle, so unit search on the public site was structurally broken until now. PI-checked
+directly: `PI-REDACTED` / `Product Identity` occurrences in the refreshed feed: 0/0.
+`site/dashboard/PF1e-dashboard.json.last-good` (the producer's own crash-recovery
+snapshot) and `docs/work-inventory.json` (the wave rule) both left untracked/reverted,
+never staged.
+
+**`index.html` not restyled**, per the dispatch's own instruction — zero changes to
+that file this cycle.
+
+**On-screen verification for this card's actual deliverable (the public dashboard
+page), not the desktop app:** this cycle moved 0 units to `done` and touched no
+desktop-app code, so DoD item 8's `driver.sh`-screenshot mechanism (tied to §7's
+prose-done-bar condition 3) has nothing of this cycle's own to show inside the
+character-sheet app — driving it would only screenshot unrelated pre-existing content.
+Instead verified the actual data contract for real: `python3 -m http.server` from
+`site/dashboard/`, then `curl` both `index.html` (HTTP 200, 184,323 bytes) and
+`PF1e-dashboard.json` (HTTP 200, 1,330,250 bytes) from the same directory, confirmed the
+JSON parses and is non-trivial, and confirmed `index.html`'s own `JSON_URL` constant
+(`"PF1e-dashboard.json"`) and its one fetch call match exactly. **No browser is
+available in this environment to capture a literal pixel screenshot** — logged here
+honestly rather than faked or silently dropped; the HTTP-level proof above is the most
+rigorous verification available of this card's own change.
+
+### §4 — Gate
+
+`LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-ATTRIB-003-verify.log`.
+Launched early, in the background, kept alive:
+```
+./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+**`VERIFY_EXIT=0`, captured directly** (all 27 stages PASS, including the 2 new ones —
+`site-dashboard-selftest` (6 passed) and `site-dashboard-check` ("is current")).
+`root-lib` 1909 passed; `root-full` 6741 passed across 564 suites (all 529 `tests/*.rs`
+suites executed); `desktop` 455 passed; `reach` 27 passed; `corpus-sweep` CLEAN (24519
+records examined, 0 findings); `supersession-gate` 116 objects clean; `frontend-test`
+99/99 files; `clippy` 0 errors (47/7 pre-existing warnings, root/desktop); `class-dump`
+31/31 computing.
+
+**`v06_corpus_trap_report -- --audit`:** `TRAP_EXIT=2` (captured directly, not through a
+pipe), **1 mod-record + 1191 wiring-class-mismatch** — exactly the documented
+pre-existing baseline, not worsened.
+
+**Guarded regen — zero stamp loss:**
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-attrib-evidence.json
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-attrib-evidence.json
+CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... cargo run --locked --bin v06_work_inventory
+```
+Matched by `(kind, source_file, source_line)`, not id: **0 transitions, 0 units gained,
+0 units lost** between the freshly-regenerated inventory and the committed one — this
+cycle touched no corpus generation logic, and the regen independently confirms it.
+`docs/work-inventory.json` reverted (`git checkout --`) before committing, per the wave
+rule.
+
+**Board, re-measured against the live regen (matches the committed HEAD exactly, per
+the zero-transitions result above):**
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+print(len(U), dict(c), round(100*c['done']/len(U),4))
+"
+# -> 38521 {'done': 9780, ...} 25.3887
+```
+**Board unchanged: 9,780/38,521 = 25.3887%.** This card moved zero units on the board —
+by design; its scope was evidence, residual verification, and gate infrastructure, none
+of which touch `doneness_verdict`.
+
+**Wired-integration four-check audit** (`scripts/wired-integration-audit.sh 17ba8be53`,
+diffed against this cycle's own starting HEAD): all four checks clean —
+`OK_NO_TOKENS`/`OK_NO_NOOP_HANDLERS`/`OK_NO_MOCK_LEAKS`/`OK_NO_WOULD_STRINGS`.
+
+### §5 — Denominator
+
+**Unchanged: 38,521.** No unit left the denominator through either register. Structural
+Exclusion Register: still unsigned, still empty — this card proposed no exclusion (per
+its own instruction, "resolve what is resolvable ... leave genuinely unresolvable units
+unattributed and say so", never propose deletion). Supersession Register: unchanged by
+this card (still PROPOSED, not applied, per the standing rule established by prior
+cycles).
+
+### §6 — Reclaim
+
+`scripts/reclaim.sh --apply`: **0 items, 0 bytes** — every candidate was either too
+young (verify-log dirs under 6h old, several other agents' concurrent runs) or a
+checked-out worktree/branch (SKIPPED, correctly not touched). Manually deleted this
+cycle's own `CARGO_TARGET_DIR` (`/home/ubuntu/cargo-targets/sd31-attrib-evidence`, 31G)
+after confirming no live PID referenced it (`pgrep -fa sd31-attrib-evidence` → only the
+check command itself). Disk: 363G used (38%) → 339G used (36%), **~24GB reclaimed**.
+
+### Definition of Done — checked against every item
+
+1. `verify.sh` exits 0, captured directly: **yes**, `VERIFY_EXIT=0`. ✅
+2. `reach` passes with a claim: **yes**, 27 passed — this card added no new reach
+   family, and none regressed. ✅
+3. `v06_corpus_trap_report -- --audit`: **TRAP_EXIT=2**, exactly the documented
+   baseline (1 mod-record, 1191 wiring-class-mismatch), confirmed by exact count. ✅
+4. Guarded regen: **zero stamp loss**, zero transitions, exact match to committed. ✅
+5. Four-check wired-integration audit: **clean**, all four checks. ✅
+6. No unsurfaced family without an `OPEN_FINDINGS` entry: this card introduced one new
+   open question (Inner Sea Races' citation-only status), filed as `OPEN-ISSUES.md`
+   row 129, not left silent. ✅
+7. Baseline moves: **none** — this card moved 0 units and touched no baseline-bearing
+   file, so there is nothing to raise in a separate `--show-actuals` commit. ✅
+8. On-screen verification: **HTTP-level, honestly scoped** (§3) — no unit moved to
+   `done`, so §7 condition 3 does not bind; verified the actual deliverable (the public
+   feed's data contract) instead of faking an unrelated desktop-app screenshot.
+
+### Blockers
+
+None that stopped work. The Inner Sea Races question (§1, `OPEN-ISSUES.md` row 129) is
+a genuinely new open question this card surfaced, not a blocker — this card's own three
+tasks were all deliverable without it.
+
+### Branch tip
+
+`17ba8be53` (starting HEAD) before this receipt's own commit; final tip after landing
+this receipt and pushing is recorded in the handoff below.
