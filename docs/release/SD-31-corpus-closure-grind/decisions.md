@@ -847,3 +847,74 @@ own number — `§5` defines the mandate denominator and a change to it is never
 book (Decision 9).
 
 **Authority:** operator rulings, 2026-08-16, both verbatim above.
+
+### Decision 10 — AMENDMENT: variant lines are new content, never supersession (operator ruling 2026-08-16)
+
+**Ruled, verbatim:**
+
+> "good catch with mythic and unchained.  that goes along with the previous ruling that rogue and
+> unchained rogue are two completely different classes - one does not replace the other."
+
+**This promotes the "later variant is not a reprint" guard from a cycle's caution to standing
+doctrine, and it is not new — it restates a ruling this program already holds.**
+
+**The prior ruling, located rather than paraphrased:**
+`SD-28-ultimate-book-content-ingestion/decisions.md:1855-1858` records *"the operator's separate
+ruling that **Unchained variants are distinct classes, not replacements**, at the data layer"* —
+and records that SD-28's own measurement *independently validated* it: Summoner's
+shield-ally / aspect / life-link ground **only** under `pu.unchained_summoner`, never under the base
+APG class the archetype tables target. The engine already models them as two things.
+
+### The rule, stated generally
+
+**A book that publishes a VARIANT of an object publishes a NEW object. It never supersedes the
+original, and the original is never flagged out of scope because the variant exists.** Named
+instances, all in scope for this package:
+
+| line | example | status |
+|---|---|---|
+| **Pathfinder Unchained** | Rogue vs **Unchained** Rogue; Summoner vs Unchained Summoner; Rage Power vs **Unchained** Rage Power | **two objects**, both in the denominator |
+| **Mythic Adventures** | `feat:weapon_focus` vs its mythic version; `feat:improved_channel` | **two objects**, both in the denominator |
+
+A reprint carries the same object forward under a newer book; a variant creates a second object that
+coexists. **Decision 10's "most recent publishing wins" applies ONLY to the first.** Where the two
+are confused, the failure is silent and permanent: the base Rogue, or base Weapon Focus, would be
+struck from the mandate while remaining unambiguously in the game.
+
+### What the corpus already shows, re-derived 2026-08-16
+
+The engine does **not** currently conflate them, and a supersession cycle's risk is *creating* the
+conflation rather than inheriting it:
+
+```
+python3 -c "
+import json, collections
+d=json.load(open('docs/work-inventory.json'))
+u=[x for x in d['units'] if x.get('book')=='pathfinder_unchained']
+print(len(u), collections.Counter(x.get('kind') for x in u).most_common())
+"
+# -> 826 units: class_feature 577, race_trait 127, monster_ability 72, equipment_modifier 42, feat 8
+#    and ZERO `class` units — Unchained content is keyed `Unchained Rogue ~ ...`, distinct by key.
+```
+
+Scanning every rogue-named object for cross-book `corpus_key` collisions returns **exactly one**, and
+it is not a Rogue/Unchained pair at all: `class_feature: Rogue Talent ~ Nimble Climber`
+(`advanced_players_guide` ↔ `advanced_race_guide`) — a genuine reprint candidate of the kind
+Decision 10 *does* govern.
+
+### Binding on the register-building cycle
+
+1. **Blanket-exclude the variant lines from supersession pairing.** No `pathfinder_unchained` or
+   `mythic_adventures` record may be entered as either side of a supersession pair without
+   record-level proof that it is a reprint and not a variant — and the default answer for those two
+   books is **variant**.
+2. The 95 `core_rulebook` ↔ `mythic_adventures` and the `pathfinder_unchained` ↔ `ultimate_combat`
+   collisions counted in Decision 10 are therefore **presumed NOT supersessions**, and the 805
+   redundant-excess figure recorded there is an **upper bound** that will fall once they are removed.
+   Re-derive it after the variant lines are excluded; do not quote 805 as the outcome.
+3. The same caution applies to the race scan: Mythic Adventures over-fires there because it publishes
+   mythic racial traits without printing the race. A book "covers" a race for attribution purposes
+   only if it prints the race, not merely content keyed to it.
+
+**Authority:** operator ruling 2026-08-16, verbatim above, restating and generalizing the operator's
+earlier Unchained-variants ruling recorded at `SD-28 decisions.md:1855-1858`.
