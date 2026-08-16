@@ -243,3 +243,50 @@ name the race batch; `epic-6-ingest-lanes` cycles name the kind and book.
 
 Operator may add or remove cards directly by editing this file. Cycle dispatch honors the post-edit
 state.
+
+## Wave 7 integration status (`SD31-W7-INTEGRATE-001`, 2026-08-16)
+
+Five worktree branches merged onto `tranche/11` in the required order (dissolution, register, class
+wiring, spell+racetrait, feat+equip+class), all confirmed content-present by direct symbol grep, not by
+merge status alone. Board re-derived at the merged, fixed tip: **9,488 → 9,780 `done` / 38,521
+(24.63% → 25.39%)**, zero units regressed off `done`, reachable ceiling **98.95% unchanged**.
+
+Per-epic landing, named honestly rather than declared closed:
+
+- **`epic-1-race-chassis`** — unchanged this wave; no race-chassis lane merged. Still `READY (first
+  batch landed, more races remain)`.
+- **`epic-4-mechanism`** — `sd31/classwire3-e4f1-003` landed: Ninja's real chassis
+  (`class_ninja.rs`) + Scout archetype supersession, 9 new `build_pilot_headless_receipt` tests.
+  **Shortfall named, not closed**: Ninja `class_feature` records cannot reach `done`/`held` at all —
+  `modelled_class_books()` (`v06_work_inventory.rs`, lane-1 territory, `OPEN-ISSUES.md` row 96) still
+  names only CRB/APG/ACG, so board credit for this wiring is structurally blocked until that lane-1
+  fix lands. DoD-8 also blocked one level earlier: `CLASS_OPTIONS` (frontend) carries no `ninja` entry.
+  Reachability of the computation itself is proven by the 9 headless-receipt tests instead.
+- **`epic-6-ingest-lanes`** — `sd31-spell-racetrait-e6-f2-005` (660 new spell records, 4 books; 93
+  `spell` units `held`→`done`) and `sd31/feat-equip-class-e6-f8-001` (15 `ce_feats.lst` gap rows
+  reachable via `RuleSetId::Ce`) both landed. **Shortfall named**: `feat-equip-class`'s own
+  `SD31-E6-F8-001-verify.log` ended mid-stage with no `VERIFY_EXIT` (CONFIRMED by wave-7 adversarial
+  review) — discharged by this integration cycle's own full-gate run at the merged tip instead of
+  re-running the branch in isolation. 7 of its 11 banked `ce_feats` units were found to carry an
+  unchecked flat magnitude (Decision 7 PROXY WARNING not discharged) and excluded pending the rows
+  69/87/95/107 ruling — see `progress.md`'s receipt.
+- **Decision 9 (`core_essentials` dissolution)** — `sd31/dissolve-core-essentials` landed:
+  `resolve_true_book_for_core_essentials` now source-line-aware; residual **644 → 128** (unchanged
+  count from its own receipt). This wave's regen additionally surfaced a corpus-wide id-namespace
+  repair as a side effect: `core_essentials:`-prefixed unit ids fell **1,610 → 128** once `unit_id()`
+  minted consistently off the corrected `book` field (previously many re-attributed units still
+  carried a stale `core_essentials:` id prefix, Decision 9's own named residual issue).
+- **Decision 10 (Supersession Register)** — `sd31/d10-supersession-register` landed; wave-7 review
+  found its gate could not detect a fabricated entry (dead oracle re-derivation) and one bad entry
+  (`companion` corpus_key `"1"`). Both fixed this integration cycle (separate commit,
+  `247b32dba`-shaped): gate now genuinely re-derives 116/116 objects from the pinned oracle;
+  regenerated register 117→116 objects, `count_removed` 135→134. **Still PROPOSED, NOT applied to the
+  live denominator** — wiring `EXCLUDED_UNIT_IDS` into the production doneness computation is the
+  named next step (`OPEN-ISSUES.md` row 127, `SUPERSESSION-REGISTER.md` §11).
+- **`epic-9-closure`** — not reached. Reachable ceiling is 98.95%, not 100%; 9 `ambiguous|*` dead-end
+  cells remain, all Epic-2-owned. The flat-magnitude interpretive question (rows 69/87/95/107) is the
+  single largest lever not yet turned — at least 856 units ride on it (see `OPEN-ISSUES.md`'s
+  "Needs an operator ruling" section).
+
+Full command-level detail, every figure's derivation, and the complete finding-by-finding fix record
+are in `progress.md`'s `SD31-W7-INTEGRATE-001` receipt.
