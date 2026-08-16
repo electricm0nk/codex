@@ -11283,6 +11283,22 @@ receipt: 1870/6629/562/22937), then again after the FINAL green gate at the full
 `SD31-E6-F7-001`'s `enrich_companion_raw_tokens.rs` count). Landed as a separate, reviewable commit
 per DoD item 7's own rule, after the gate confirmed green rather than mid-run against a moving target.
 
+### §7b — DoD item 8: on-screen verification for this cycle's own credited unit
+
+The 34 companion units this cycle's own join-key fix (§2 item 1) moved to `literal-verified` render
+through `companion_catalog.rs`'s pre-existing, already-proven render path (`SD31-E6-F7-001`'s own
+DoD-8 already proved the general mechanism live) — but per Decision 7 condition 3's own bar, that is
+proof of the MECHANISM, not proof of THESE 34 records specifically. Captured one directly:
+`core_essentials:companion:cat`, the app driven at HEAD `b3b621ba8`, `RUN_DESKTOP_AGENT=
+sd31-w6-integrate`. Rendered on the live Companion Catalog screen: `Ability score adjustments
+(corpus BONUS:STAT tokens): STR -8, DEX +4, CON -2, INT -8, WIS +2, CHA -4` — byte-matching the
+corpus row's own six `BONUS:STAT` tokens (`data/corpus/core_essentials/companion/cat.json`), no
+fabrication. `verify-on-screen.sh`'s own automated run false-FAILED first (a load-timing race
+distinct from `OPEN-ISSUES` row 93's coordinate-drift shape, logged separately as row 109; kept the
+FAILED artifact as evidence) — worked around by driving `driver.sh` directly. Artifacts:
+`artifacts/SD31-W6-INTEGRATE-001/item8/companion-cat.verify.md`,
+`companion-cat-literal-verified.png`, `companion-cat.FAILED.verify.md`.
+
 ### §8 — What was corrected, reworked, or narrowly avoided
 
 - **Reworked the equipment-repair and companion-lane `progress.md` merges from scratch** after catching
