@@ -22,14 +22,23 @@
 //! uc_abilities_class_apg.lst`) the clearance evidence method's
 //! single-file grep never reached (the same nested-directory gap
 //! `OPEN-ISSUES.md` row 1 already names). See `class_ninja.rs`'s own doc
-//! comment for the full citation trail. Samurai remains `named_raw: 0`
-//! (not re-checked this cycle beyond a targeted nested-directory sweep
-//! for "Samurai Archetype" -- see this cycle's own receipt) and is not
-//! yet named here.
+//! comment for the full citation trail.
+//!
+//! `SD31-E4-F1-004` adds the third: Samurai. Unlike Ninja, Samurai's
+//! `named_raw: 0` figure is RE-VERIFIED here, not corrected -- a full
+//! `grep -rn "Samurai Archetype"` across the pinned oracle tree (not just
+//! the single-file grep the clearance table used) turns up exactly two
+//! structural hits (an `ABILITY:` automatic grant and an
+//! `ABILITYCATEGORY:` definition), neither a real swappable archetype
+//! entry. Samurai genuinely has no archetype content this book's own
+//! corpus rows name, so `UcClassId` names it for chassis + class-feature
+//! wiring only, with no supersession branch -- see `class_samurai.rs`'s
+//! own doc comment for the full citation trail.
 
 pub mod archetype_tables;
 pub mod class_gunslinger;
 pub mod class_ninja;
+pub mod class_samurai;
 pub mod equipment_tables;
 pub mod feat_tables;
 pub mod spell_list;
@@ -48,17 +57,18 @@ pub struct ClassTableRow {
     pub will_save: i16,
 }
 
-/// Identifies which UC class a chassis-table query targets. Gunslinger
-/// and Ninja, as of `SD31-E4-F1-003` -- see this module's own doc comment
-/// for why Samurai is not yet named here.
+/// Identifies which UC class a chassis-table query targets. Gunslinger,
+/// Ninja and Samurai, as of `SD31-E4-F1-004` -- all three of UC's real
+/// `Base.PC`/`Base.PC.Rogue`/`Base.PC.Cavalier` classes are now named.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum UcClassId {
     Gunslinger,
     Ninja,
+    Samurai,
 }
 
 impl UcClassId {
-    pub const ALL: [UcClassId; 2] = [UcClassId::Gunslinger, UcClassId::Ninja];
+    pub const ALL: [UcClassId; 3] = [UcClassId::Gunslinger, UcClassId::Ninja, UcClassId::Samurai];
 
     /// Lowercase class name, matching the `class_id` string convention
     /// `pilot_compute.rs`'s per-class constants use (`"class:<name>"`).
@@ -67,6 +77,7 @@ impl UcClassId {
         match self {
             UcClassId::Gunslinger => "gunslinger",
             UcClassId::Ninja => "ninja",
+            UcClassId::Samurai => "samurai",
         }
     }
 
@@ -96,6 +107,9 @@ pub fn class_chassis_resolve(
         UcClassId::Ninja => {
             class_ninja::class_table().into_iter().find(|row| row.level == level)
         }
+        UcClassId::Samurai => {
+            class_samurai::class_table().into_iter().find(|row| row.level == level)
+        }
     }
 }
 
@@ -104,10 +118,11 @@ mod tests {
     use super::*;
 
     #[test]
-    fn from_class_id_str_round_trips_gunslinger_and_ninja() {
+    fn from_class_id_str_round_trips_gunslinger_ninja_and_samurai() {
         assert_eq!(UcClassId::from_class_id_str("class:gunslinger"), Some(UcClassId::Gunslinger));
         assert_eq!(UcClassId::from_class_id_str("class:ninja"), Some(UcClassId::Ninja));
-        assert_eq!(UcClassId::from_class_id_str("class:samurai"), None);
+        assert_eq!(UcClassId::from_class_id_str("class:samurai"), Some(UcClassId::Samurai));
+        assert_eq!(UcClassId::from_class_id_str("class:cavalier"), None);
     }
 
     #[test]

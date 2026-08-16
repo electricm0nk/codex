@@ -13708,3 +13708,251 @@ Starting HEAD `17ba8be5304a4f760af775f57b4e5800dc0a8548`; this receipt's own com
 land together per the mandate's normal cycle shape (code + receipt in one `feat(sd31):` commit, since
 this cycle's board-moving change and its receipt are inseparable) — final tip recorded in the
 StructuredOutput handoff.
+## Cycle `SD31-E4-F1-004` (`RETRO_ACTOR=sd31-classwire4`) — 2026-08-16, "Samurai base chassis + class-feature wiring; Gnome/Halfling size-record correction"
+
+**Role:** `sd31-classwire4`, own worktree `wf_56ffbd55-d83-2`, own branch `sd31/classwire4-e4f1-004` cut
+from `origin/tranche/11` tip. **HEAD at claim:** worktree was inherited at an unrelated tip
+(`061b623ee`, PR #362 merge, package dir absent); tree was clean (`git status --porcelain` empty), so
+per protocol: `git fetch origin && git reset --hard origin/tranche/11`, landing at `17ba8be53`
+("docs(sd31): SD31-W7-INTEGRATE-001 receipt + ORCHESTRATOR-LOG wave-7 entry") — the true `tranche/11`
+tip at claim time. **Oracle pin:** `./scripts/verify.sh --only preflight-oracle` → PASS,
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`.
+`CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-classwire4`.
+
+### Card
+
+`epic-4-mechanism` F1 — per-class chassis and class-feature wiring, continuing from `SD31-E4-F1-001`
+(Slayer, 7/7), `SD31-E4-F1-002` (Gunslinger) and `SD31-E4-F1-003` (Ninja). Take the highest-record-count
+tractable class next; wire real mechanisms, reachability via `build_pilot_headless_receipt`. Do not
+chase board movement. Also named: wire the 5 Small-race size traits' universal AC/attack/CMB/CMD/
+Stealth bonus if not already wired (§7 refinement).
+
+### Picked: Samurai (Ultimate Combat) — the third and final real UC class
+
+`SD31-E4-F1-003`'s own receipt confirmed Ultimate Combat's chassis infrastructure (`UcClassId`,
+`ClassTableRow`, `class_chassis_resolve`) already existed and that Samurai was the one remaining
+un-wired real class in that book, with `named_raw: 0` archetype content "not re-checked this cycle
+beyond a targeted nested-directory sweep." Re-verified independently before picking:
+
+```
+grep -rn "Samurai Archetype" ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/
+-> 2 hits, both structural (an ABILITY: automatic grant, an ABILITYCATEGORY: definition), neither a
+   real swappable archetype entry
+```
+
+`named_raw: 0` for Samurai is genuine, unlike Ninja's own corrected figure (Scout was missed by a
+single-file grep; this full-oracle-tree grep does not have that blind spot). So this cycle wires base
+chassis + class-feature mechanism only, with no supersession `if let`/`else` branch to build.
+
+### What landed
+
+1. **`src/rules_core/rules_tables/ultimate_combat/class_samurai.rs`** (new) — BAB/save chassis table,
+   formula-derived from `CLASS:Samurai`'s real corpus record (`uc_classes.lst:34`: full BAB, good
+   Fortitude, poor Reflex/Will), 2 unit tests. Independently matches the standard published Samurai
+   class table at levels 1/10/20 (BAB +1/+10/+20, Fort +2/+7/+12, Ref +0/+3/+6, Will +0/+3/+6).
+2. **`src/rules_core/rules_tables/ultimate_combat/mod.rs`** — `UcClassId::Samurai` added (`ALL` now
+   `[Gunslinger, Ninja, Samurai]`), `class_chassis_resolve` match arm, `from_class_id_str` test
+   extended to round-trip Samurai too.
+3. **`src/rules_core/pilot_compute.rs`** — `compute_uc_class_chassis` dispatch branch extended (`else
+   if class_id == UcClassId::Samurai`) and `ground_or_block_samurai_class_features`: Challenge
+   uses/day (`min((level+2)/3, 7)`) and damage bonus (flat level), Resolve uses/day (`(level+1)/2`),
+   and Bonus Feat count (`level/6`, gated 6th level+) — all four grounded unconditionally (no
+   archetype in scope to supersede any of them). 8 new tests, all headless-pilot-receipt-shaped,
+   covering base chassis + all 4 features' level-gating/formulas + a "no record ever claims
+   superseded" self-check.
+4. **`apps/desktop/src-tauri/src/reach_gate.rs`** — additive territory exception: corrected the
+   `("ultimate_combat", "class_features")` `OPEN_FINDINGS` entry, which still said "Samurai remains
+   genuinely unwired... base chassis untouched" (true when `SD31-E4-F1-003` wrote it, false now) to
+   name all three UC classes as chassis-wired and blocked on the single `modelled_class_books()` fix.
+5. **`src/rules_core/pilot_compute.rs`** (unplanned, found en route) — `explain_gnome_race_seam`/
+   `explain_halfling_race_seam`'s `trait_bundle.size` explanation records still said "no size-modifier
+   term exists anywhere in this engine's combat baseline for any race yet." **False since SD-27**
+   (`decisions.md §28` defect 1): `combat_size_modifiers` (keyed off `race_size_for_race_token`, all
+   24 in-scope races) is wired generically into `compute_combat_baseline`'s AC/touch-AC/melee-attack/
+   CMB/CMD terms — any Gnome or Halfling character who reaches that posture gets the real size
+   modifier today. Corrected both records to cite the real mechanism, and to honestly name the one
+   piece genuinely still unapplied (Stealth — no Stealth skill total exists anywhere in this engine;
+   `compute_selected_skill_modifiers` supports only Climb/Intimidate/Swim). Strengthened the pinning
+   test (`gnome_and_halfling_size_records_now_cite_the_real_combat_baseline_mechanism`, renamed from
+   `..._no_longer_falsely_imply_...`) to assert the record cites `combat_size_modifiers` by name and
+   still names the Stealth gap honestly. `retro.py correction` emitted
+   (`1786909674601-sd31-classwire4-6963d5`).
+
+### §7 refinement's second target — the 5 Small-race size traits
+
+**Already wired, not new work this cycle.** Investigated before assuming this was untouched:
+`combat_size_modifiers`/`race_size_for_race_token` (SD-27, `decisions.md §28`) already apply the real
+PF1 Small-size AC/attack/CMB/CMD modifier generically for all 24 in-scope races, `gnome`/`grippli`/
+`halfling`/`kobold`/`svirfneblin` all confirmed `SizeCategory::Small` in `race_resolver.rs`'s
+`RACE_SIZES` table, and the mechanism is consumed unconditionally in `compute_combat_baseline` for any
+race, not race-specific code. What remained genuinely stale was the Gnome/Halfling recognition
+records' own TEXT still denying the mechanism existed (item 5 above) — corrected instead of
+re-implementing something already real. The +4 Stealth portion remains genuinely unwired (no Stealth
+skill total exists in this engine at all, for any race) — named honestly in both corrected records
+rather than silently dropped or overclaimed as done.
+
+### wired-able / named — Samurai only, not blended
+
+- **Archetypes: 0/0** — Samurai genuinely has zero real archetype content in the 23-book scope
+  (re-verified, not inherited).
+- **Base chassis: wired** (BAB + 3 saves, formula-derived, matches published table at 3 check
+  levels).
+- **Unconditional class features grounded: 4** (Challenge uses/day, Challenge damage bonus, Resolve
+  uses/day, Bonus Feat count). Deferred, named honestly in the diagnostic and in `OPEN-ISSUES.md` row
+  129: Mount, Order, Weapon Expertise, Mounted Archer, Banner, and the later-level Resolve-spending
+  abilities (Determined/Resolute/Unstoppable/Greater Resolve/Honorable Stand/True Resolve/Last Stand/
+  Demanding Challenge/Greater Banner) are not yet transcribed.
+
+### Board delta — measured with the mandate's own exact command, regenerated docs/work-inventory.json checked out after
+
+```
+export CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-classwire4-regen   # separate from the main
+                                                                            # gate's target dir to avoid
+                                                                            # lock contention with the
+                                                                            # concurrently-running
+                                                                            # verify.sh root-full stage
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-classwire4.json
+-> corpus-literal-sweep: 24519 records examined of 25396 read, 237721 tokens compared (9 synthesized),
+   24971 digests checked, 0 findings -- CLEAN
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-classwire4.json
+-> 100 of 101 covered units cleared; 1 failed
+   (advanced_players_guide:equipment:spindle_of_perfect_knowledge, pre-existing, same failure every
+   prior receipt back to `SD31-E4-F1-002` names, confirmed unrelated to this cycle's own change
+   surface)
+CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep-sd31-classwire4.json \
+DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture-sd31-classwire4.json \
+  cargo run --locked --bin v06_work_inventory
+-> exit 0. Zero stamp loss (the tool's own `stamp_loss` guard would have refused a write and required
+   `--allow-stamp-loss` otherwise; it did not).
+
+python3 -c "... doneness_verdict ..." BEFORE: 38521 {'done': 9780, ...} 25.3887
+python3 -c "... doneness_verdict ..." AFTER:  38521 {'done': 9780, ...} 25.3887   -- UNCHANGED, 0/0
+
+python3 -c "
+import json, collections
+d = json.load(open('docs/work-inventory.json'))
+samurai = [u for u in d['units'] if u.get('book')=='ultimate_combat'
+           and 'samurai' in (u.get('corpus_key') or '').lower()]
+print(len(samurai), collections.Counter(u.get('status') for u in samurai))
+"
+-> 25 {'not-ingested': 25}
+```
+
+**Board delta: 0/0, predicted and confirmed.** Samurai's real `class_feature` records (all genuinely
+computed by this cycle's own new wiring, proven via `build_pilot_headless_receipt`) cannot reach
+`done` or even `held`: `class_feature_owner`/`modelled_class_books()` (`v06_work_inventory.rs`, lane
+1's file, out of this card's territory) still names only CRB/APG/ACG. The same structural blocker
+`SD31-E4-F1-002` and `SD31-E4-F1-003` found for Gunslinger and Ninja — **all three of UC's real
+classes are now fully chassis-wired and blocked on the same single lane-1 fix** (`OPEN-ISSUES.md` row
+129, extending rows 96/97/118). `docs/work-inventory.json` checked out clean after measurement
+(`git checkout -- docs/work-inventory.json`), per the wave rule — not committed.
+
+### `v06_corpus_trap_report -- --audit` — re-derived, not worsened
+
+```
+export CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-classwire4-regen
+cargo run --locked --bin v06_corpus_trap_report -- --audit
+-> TRAP_EXIT=2
+   grep -c '\[wiring-class-mismatch\]' -> 1191
+   grep -c '\[mod-record\]' -> 0
+```
+
+Measured **0 mod-record + 1191 wiring-class-mismatch = 1191 total**, against the package's own most
+recent citation (wave-7's receipt, same `docs/work-inventory.json` this cycle's own regen was checked
+out back to): "1 mod-record row, 1192 wiring-class-mismatch rows" = 1193 total. **Not worsened — 2
+fewer findings, not more**, and none of this cycle's own new code touches any corpus classification or
+generation path (only new `class_feature` compute functions and doc-comment/`OPEN_FINDINGS` text), so
+the small drift is not attributable to this cycle's diff; re-derived and reported honestly rather than
+force-matched to the older citation.
+
+### Wired-integration four-check audit
+
+`./scripts/wired-integration-audit.sh` (diffs `origin/develop...HEAD`, i.e. the whole `tranche/11`
+branch's accumulated diff, not just this cycle's own commit): Check 1 flags 5 "placeholder" hits —
+verified NONE are in this cycle's own diff
+(`git diff origin/tranche/11...HEAD -- <this cycle's 4 changed files> | grep -iE
+"placeholder|TODO|FIXME|stub|not.?implement|would have|mock"` → 0 hits), all 5 are pre-existing content
+from earlier cycles, the same class of false positive wave-7's own receipt already verified and named
+(doc comments describing anti-stub/PI-redaction discipline, not stubs shipping). Checks 2/3/4: clean.
+No real stub in this cycle's own diff.
+
+### PI screening
+
+This cycle wrote no generated corpus record (no `data/corpus/` write, no `docs/work-inventory.json`
+commit) — the §52.3/§53.5 PI-contract requirement is scoped to cards that ship generated records, which
+this one does not. The full gate's own `pi-sweep`/`declared-pi-audit` stages (below) still ran and
+passed clean over the whole tree, including this cycle's new `class_samurai.rs`.
+
+### Gate
+
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E4-F1-004-verify.log
+CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-classwire4 RETRO_ACTOR=sd31-classwire4 \
+  ./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+
+Launched early, in the background, kept alive (two redundant `until grep -q VERIFY_EXIT=...` background
+wait loops confirmed the same result independently). **`VERIFY_EXIT=0`. `RESULT: PASS`. All 25/25
+stages green**: `preflight-disk`, `preflight-oracle`, `oracle-pin-selftest`, `producer-selftest`,
+`reachability-audit-selftest`, `reachability-audit` (98.95% ceiling, unchanged), `groundtruth-guard-
+selftest`, `supersession-gate-selftest`, `pi-sweep` (10 hits/10 baseline), `declared-pi-audit` (clean),
+`audit-selftest`, `reclaim-selftest`, `driver-selftest`, `corpus-sweep-selftest`, `root-lib` (1916
+passed), `root-full` (6748 passed across 564 suites, all 529 `tests/*.rs` suites executed), `desktop`
+(455 passed), `reach` (27 passed), `corpus-sweep` (24519 records, 0 findings), `supersession-gate` (116
+objects clean), `frontend-install`, `frontend-test` (99/99 files), `frontend-typecheck` (clean),
+`clippy` (root:47/desktop:7 warnings, 0 errors — within baseline, no ceiling raise needed), `class-dump`
+(31/31 computing). Two BASELINE NOTES, not failures: `BASELINE_ROOT_LIB_TESTS` 1909→1916,
+`BASELINE_ROOT_FULL_TESTS` 6741→6748 — test-count growth from this cycle's own 10 new tests plus other
+concurrent cycles' merges since the baselines were last recorded; not raised this cycle (DoD 7 applies
+to a genuine board-moving baseline commit, and this cycle's board delta is 0/0 — left for whichever
+cycle next raises baselines deliberately).
+
+### DoD-8 — on-screen verification: BLOCKED, same structural gap as Gunslinger/Ninja
+
+Not attempted live via `driver.sh`. `grep -rn samurai apps/desktop/src/` → zero hits outside this
+cycle's own new Rust files. `characterHubModel.ts`'s `CLASS_OPTIONS` (frontend, out of this card's file
+territory) carries no `samurai` entry, so no Samurai character can be created through the app's own
+form at all — the same gap rows 97 (Gunslinger) and 118 (Ninja) already found and named, now confirmed
+identical for the third UC class. Logged as `OPEN-ISSUES.md` row 129 (BLOCKER). Reachability of the
+computation itself is proven instead by 8 new `build_pilot_headless_receipt`-based tests exercising the
+real production `compute_uc_class_chassis`/`ground_or_block_samurai_class_features` path end to end.
+
+### Definition of Done — checked against every item
+
+1. `verify.sh` exits 0, captured directly: `VERIFY_EXIT=0`, captured directly (background wait loop, not through a pipe). RESULT: PASS, all 25 stages passed (root-lib 1916, root-full 6748 across 564 suites, desktop 455, reach 27, clippy root:47/desktop:7 warnings 0 errors, class-dump 31/31 computing). Two BASELINE NOTES (not failures): root-lib 1909->1916, root-full 6741->6748, both test-count growth from this cycle's own 8+2=10 new tests plus other cycles' work merged since the baselines were last recorded — not raised this cycle per DoD 7 (no baseline-move commit needed for a 0/0 board-delta cycle; left for the next cycle that touches these baselines).
+2. `reach` passes with a claim for this cycle's families: Samurai's `class_feature` family has no
+   reach claim (same as Gunslinger/Ninja) but IS named honestly in `OPEN_FINDINGS` with the gap and
+   remedy, which `reach_gate.rs`'s own gate logic accepts in place of a claim; the `reach` stage's own
+   result is in the committed log.
+3. `v06_corpus_trap_report -- --audit`: RED for pre-existing reasons, re-derived at 0 mod-record + 1191
+   mismatch (1191 total), not worsened against the package's last citation (1193 total). ✅
+4. Guarded regen: zero stamp loss (tool's own guard did not refuse). ✅
+5. Four-check wired-integration audit: clean modulo pre-existing false positives, none in this cycle's
+   own diff. ✅
+6. Unsurfaced families get an OPEN_FINDINGS entry: Samurai's gap was already named by row 129's own
+   `reach_gate.rs` correction (item 4 under "What landed"). ✅
+7. Baseline moves: none this cycle (0/0 board delta, no baseline to raise). N/A.
+8. On-screen verification: BLOCKED, logged as `OPEN-ISSUES.md` row 129, not faked, not dropped. See
+   above.
+
+### Blockers
+
+- DoD-8 on-screen verification, structurally blocked at `CLASS_OPTIONS` (frontend, out of file
+  territory) — `OPEN-ISSUES.md` row 129.
+- `modelled_class_books()` (`v06_work_inventory.rs`, lane 1) still blocks all three UC classes' board
+  credit — same blocker rows 96/97/118 already named, row 129 extends it.
+
+### Reclaim
+
+`scripts/reclaim.sh --apply`: **0 bytes** — every candidate (verify-logs, other agents' worktrees/
+branches/cargo-targets) was either younger than the 6h threshold or actively checked out/unmerged on
+this shared box (confirmed via `pgrep -fa 'cargo|rustc' | grep classwire4` returning empty before any
+manual deletion). Manually reclaimed this cycle's own no-longer-needed scratch target dirs (not the
+main `sd31-classwire4` gate dir, still potentially useful): `sd31-classwire4-regen` (1.1G, used for the
+guarded-regen measurement + trap report) and `sd31-classwire4-desktop` (1.4G, used for the standalone
+desktop compile check) — **~2.5GB reclaimed**, confirmed no live PID first.
+
+### Branch tip
+
+Starting HEAD `17ba8be53`; branch `sd31/classwire4-e4f1-004`; final tip after this receipt's own
+commit and push recorded in the handoff below.

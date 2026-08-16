@@ -8885,11 +8885,16 @@ fn explain_gnome_race_seam(
         detail: format!(
             "Gnome racial trait bundle — size: PF1 Core Gnome is {GNOME_SIZE_CATEGORY} size \
              (cr_races.lst race:gnome SIZE:SMALL). This is a bounded recognition record naming \
-             the Gnome size category on the deterministic pilot seam; it grounds no numeric \
-             effect (real PF1 Small size grants +1 AC, +1 attack rolls, -1 CMB/CMD, and +4 \
-             Stealth, but no size-modifier term exists anywhere in this engine's combat \
-             baseline for any race yet, so none of that is applied here either), so it carries \
-             no fabricated mechanical value (+0)"
+             the Gnome size category on the deterministic pilot seam; it performs no arithmetic \
+             of its own (+0) so it does not double-count the real PF1 Small-size effect (+1 AC, \
+             +1 attack rolls, -1 CMB/CMD, and +4 Stealth). SD-27 (decisions.md §28 defect 1) \
+             wired the AC/attack/CMB/CMD portion into this engine's general combat baseline \
+             (`combat_size_modifiers`, keyed off `race_size_for_race_token`): any Gnome \
+             character who reaches `compute_combat_baseline`'s supported posture gets the real \
+             +1 AC/attack and -1 CMB/CMD from that shared term, not from this record. The \
+             +4 Stealth portion is still not applied anywhere: no Stealth skill total exists in \
+             this engine yet (`compute_selected_skill_modifiers` supports only Climb, \
+             Intimidate and Swim)"
         ),
     });
 
@@ -9478,10 +9483,15 @@ fn explain_halfling_race_seam(
             "Halfling racial trait bundle — size: PF1 Core Halfling is \
              {HALFLING_SIZE_CATEGORY} size (cr_races.lst race:halfling SIZE:SMALL). This is a \
              bounded recognition record naming the Halfling size category on the deterministic \
-             pilot seam; it grounds no numeric effect (real PF1 Small size grants +1 AC, +1 \
-             attack rolls, -1 CMB/CMD, and +4 Stealth, but no size-modifier term exists anywhere \
-             in this engine's combat baseline for any race yet, so none of that is applied here \
-             either), so it carries no fabricated mechanical value (+0)"
+             pilot seam; it performs no arithmetic of its own (+0) so it does not double-count \
+             the real PF1 Small-size effect (+1 AC, +1 attack rolls, -1 CMB/CMD, and +4 \
+             Stealth). SD-27 (decisions.md §28 defect 1) wired the AC/attack/CMB/CMD portion \
+             into this engine's general combat baseline (`combat_size_modifiers`, keyed off \
+             `race_size_for_race_token`): any Halfling character who reaches \
+             `compute_combat_baseline`'s supported posture gets the real +1 AC/attack and \
+             -1 CMB/CMD from that shared term, not from this record. The +4 Stealth portion is \
+             still not applied anywhere: no Stealth skill total exists in this engine yet \
+             (`compute_selected_skill_modifiers` supports only Climb, Intimidate and Swim)"
         ),
     });
 
@@ -24369,6 +24379,8 @@ fn compute_uc_class_chassis(
             explanations,
             diagnostics,
         );
+    } else if class_id == UcClassId::Samurai {
+        ground_or_block_samurai_class_features(level, explanations, diagnostics);
     }
 
     Some((base_attack_bonus, base_saves))
@@ -25146,6 +25158,252 @@ mod ninja_tests {
         assert_eq!(iud.value, 0);
         assert!(iud.detail.contains("Scout"), "{iud:?}");
         assert!(iud.detail.contains("Skirmisher"), "{iud:?}");
+    }
+}
+
+/// Samurai's Challenge uses-per-day: `min((SamuraiChallengeLVL+2)/3, 7)`,
+/// from the real corpus row (`KEY:Samurai ~ Challenge`,
+/// `BONUS:VAR|SamuraiChallengeTimes|min((SamuraiChallengeLVL+2)/3,7)`,
+/// `SamuraiChallengeLVL` fed by `SamuraiLVL`). Integer division applies
+/// before the 7-use ceiling, matching the real corpus token exactly.
+fn samurai_challenge_uses_per_day(level: u8) -> i16 {
+    ((i16::from(level) + 2) / 3).min(7)
+}
+
+/// Samurai's Challenge damage bonus: `SamuraiChallengeLVL`, i.e. flat
+/// class level, from the real corpus row's
+/// `BONUS:VAR|SamuraiChallengeDam|SamuraiChallengeLVL` token -- extra
+/// damage the samurai's melee attacks deal against the target of his
+/// current challenge.
+fn samurai_challenge_damage_bonus(level: u8) -> i16 {
+    i16::from(level)
+}
+
+/// Samurai's Resolve uses-per-day: `(SamuraiResolveLVL+1)/2`, from the
+/// real corpus row (`KEY:Samurai ~ Resolve`,
+/// `BONUS:VAR|SamuraiResolveTimes|(SamuraiResolveLVL+1)/2`,
+/// `SamuraiResolveLVL` fed by `SamuraiLVL`).
+fn samurai_resolve_uses_per_day(level: u8) -> i16 {
+    (i16::from(level) + 1) / 2
+}
+
+/// Samurai's Bonus Feat count: `SamuraiLVL/6`, from the real corpus row
+/// (`KEY:Samurai ~ Bonus Feat`, `BONUS:VAR|SamuraiBonusFeat|SamuraiLVL/6`
+/// base formula; `BONUS:ABILITYPOOL|Samurai Feat|SamuraiBonusFeat`
+/// dispenses that count as pool slots), granted at 6th level and every
+/// six levels thereafter. Grounds the COUNT only -- WHICH bonus feat(s)
+/// were picked is a chooser this engine does not model, the same
+/// count-vs-choice split Slayer Talents, Gunslinger Gun Training and
+/// Ninja Trick already establish.
+///
+/// Named boundary, deliberately not modelled: the real corpus row also
+/// carries three `.MOD` rows (`PRECLASS:1,Samurai=06/12/18` gated
+/// `-1` adjustments keyed to `Samurai_CF_BonusFeat6/12/18` flags) that
+/// decrement this count under a condition this engine tracks nowhere
+/// (a prior-choice flag, not a character stat) -- the base formula this
+/// function grounds is the un-decremented one the corpus row itself
+/// states as its `DEFINE:SamuraiBonusFeat|0` starting point.
+fn samurai_bonus_feat_count(level: u8) -> i16 {
+    i16::from(level) / 6
+}
+
+/// Grounds Samurai's Challenge (uses/day and damage bonus), Resolve
+/// (uses/day) and Bonus Feat (count) unconditionally -- Samurai has no
+/// real archetype content anywhere in the 23-book scope
+/// (`class_samurai.rs`'s own doc comment carries the full citation), so
+/// unlike Gunslinger and Ninja this function has no
+/// `archetype_claiming_slot_entry` supersession branch to build; every
+/// slot below grounds the base progression outright. See this cycle's
+/// own `OPEN-ISSUES.md` entry for the honest remainder this function
+/// does not yet ground (Mount, Order, Weapon Expertise, Mounted Archer,
+/// Banner and the later-level Resolve-spending abilities -- not yet
+/// transcribed) and the row-96-shaped structural blocker
+/// (`v06_work_inventory.rs`'s `modelled_class_books()` does not know
+/// Ultimate Combat's classes at all, out of this cycle's file territory)
+/// that caps every one of these at `held`/board-invisible regardless.
+fn ground_or_block_samurai_class_features(
+    level: u8,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    // Challenge: granted from 1st level, no archetype in the 23-book
+    // scope exists to claim this slot.
+    let challenge_uses = samurai_challenge_uses_per_day(level);
+    let challenge_damage = samurai_challenge_damage_bonus(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.uc.samurai.challenge_uses".to_owned(),
+        value: challenge_uses,
+        detail: format!(
+            "Samurai level {level} Challenge: {challenge_uses} time(s) per day \
+             (min((level+2)/3, 7)), as a swift action the samurai can challenge one target \
+             within sight; his melee attacks deal {challenge_damage} extra damage against that \
+             target (flat class level) until the target is dead, unconscious, or combat ends. \
+             While a challenge is active the samurai takes a -2 penalty to Armor Class, except \
+             against the target of his challenge"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_feature.uc.samurai.challenge_damage_bonus".to_owned(),
+        value: challenge_damage,
+        detail: format!(
+            "Samurai level {level} Challenge damage bonus against the target of an active \
+             challenge: +{challenge_damage} (flat class level)"
+        ),
+    });
+
+    // Resolve: granted from 1st level, no archetype in the 23-book scope
+    // exists to claim this slot.
+    let resolve_uses = samurai_resolve_uses_per_day(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.uc.samurai.resolve_uses".to_owned(),
+        value: resolve_uses,
+        detail: format!(
+            "Samurai level {level} Resolve: {resolve_uses} use(s) per day ((level+1)/2), spent \
+             to endure devastating wounds and afflictions; regained whenever the samurai \
+             defeats the target of his current challenge, up to this daily maximum"
+        ),
+    });
+
+    // Bonus Feat: granted from 6th level.
+    if level >= 6 {
+        let bonus_feat_count = samurai_bonus_feat_count(level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.uc.samurai.bonus_feat_count".to_owned(),
+            value: bonus_feat_count,
+            detail: format!(
+                "Samurai level {level} Bonus Feat: {bonus_feat_count} bonus combat feat(s) \
+                 (level/6, first at 6th level, one additional every 6 levels thereafter), on \
+                 top of those gained from normal advancement. Grounds the COUNT only -- which \
+                 feat(s) were picked is a chooser this engine does not model, the same \
+                 count-vs-choice split Slayer Talents, Gunslinger Gun Training and Ninja Trick \
+                 already establish"
+            ),
+        });
+    }
+
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.uc.samurai.other_features_deferred.unsupported".to_owned(),
+        message: "Samurai now grounds Challenge's uses/day and damage bonus, Resolve's \
+             uses/day, and Bonus Feat's count -- SD31-E4-F1-004's own new wiring. No \
+             archetype-supersession branch exists because Samurai has zero real archetype \
+             content in this package's 23-book IN-SCOPE set (re-verified this cycle: a \
+             full-oracle-tree grep for \"Samurai Archetype\" actually returns 17 hits across \
+             7 files, 5 of them real swappable archetype records -- but all 5 live in \
+             out-of-scope player_companion books, so the in-scope conclusion holds; see \
+             class_samurai.rs's doc comment for the corrected evidence and the forward-scope \
+             note). What stays deferred, honestly: (1) Mount, Order, \
+             Weapon Expertise, Mounted Archer and Banner are not yet transcribed; (2) the \
+             later-level Resolve-spending abilities (Determined, Resolute, Unstoppable, \
+             Greater Resolve, Honorable Stand, True Resolve, Last Stand) and Demanding \
+             Challenge/Greater Banner are not yet transcribed; (3) this class is not \
+             registered in v06_work_inventory.rs's modelled_class_books() (out of this cycle's \
+             file territory -- reported to OPEN-ISSUES.md), so none of this wiring can reach \
+             `done` or even `held` on the board yet regardless of how complete it is, the same \
+             structural blocker SD31-E4-F1-002 and SD31-E4-F1-003 found for Gunslinger and \
+             Ninja. This diagnostic is not claim-blocking for the features that ARE grounded \
+             above; it carries the honest remainder"
+            .to_owned(),
+        claim_blocking: false,
+    });
+}
+
+#[cfg(test)]
+mod samurai_tests {
+    use super::{
+        build_pilot_headless_receipt, CharacterClassLevel, CharacterInput, ComputationExplanation,
+        PilotHeadlessReceipt,
+    };
+    use crate::rules_core::character_input::load_character_input_fixture;
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+    const SAMURAI_CLASS_ID: &str = "class:samurai";
+
+    fn character(level: u8) -> CharacterInput {
+        let mut input = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE)
+            .character_input
+            .expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: SAMURAI_CLASS_ID.to_owned(), level }];
+        input
+    }
+
+    fn find<'a>(receipt: &'a PilotHeadlessReceipt, id: &str) -> Option<&'a ComputationExplanation> {
+        receipt.computation.explanations.iter().find(|e| e.id == id)
+    }
+
+    /// The base chassis pillar: full BAB, good Fort, poor Reflex, poor
+    /// Will, matching `class_samurai.rs`'s own formulas.
+    #[test]
+    fn samurai_base_chassis_grounds_bab_and_saves() {
+        let receipt = build_pilot_headless_receipt(&character(10));
+        assert_eq!(find(&receipt, "class_chassis.base_attack_bonus").unwrap().value, 10);
+        assert_eq!(find(&receipt, "class_chassis.base_save.fortitude").unwrap().value, 7);
+        assert_eq!(find(&receipt, "class_chassis.base_save.reflex").unwrap().value, 3);
+        assert_eq!(find(&receipt, "class_chassis.base_save.will").unwrap().value, 3);
+    }
+
+    /// Challenge: min((level+2)/3, 7) uses/day, flat-level damage bonus,
+    /// granted from 1st level.
+    #[test]
+    fn challenge_grounds_from_first_level_and_caps_uses_at_seven() {
+        let receipt1 = build_pilot_headless_receipt(&character(1));
+        assert_eq!(find(&receipt1, "class_feature.uc.samurai.challenge_uses").unwrap().value, 1);
+        assert_eq!(
+            find(&receipt1, "class_feature.uc.samurai.challenge_damage_bonus").unwrap().value,
+            1
+        );
+
+        let receipt20 = build_pilot_headless_receipt(&character(20));
+        assert_eq!(find(&receipt20, "class_feature.uc.samurai.challenge_uses").unwrap().value, 7);
+        assert_eq!(
+            find(&receipt20, "class_feature.uc.samurai.challenge_damage_bonus").unwrap().value,
+            20
+        );
+    }
+
+    /// Resolve: (level+1)/2 uses/day, granted from 1st level.
+    #[test]
+    fn resolve_grounds_from_first_level() {
+        let receipt1 = build_pilot_headless_receipt(&character(1));
+        assert_eq!(find(&receipt1, "class_feature.uc.samurai.resolve_uses").unwrap().value, 1);
+        let receipt9 = build_pilot_headless_receipt(&character(9));
+        assert_eq!(find(&receipt9, "class_feature.uc.samurai.resolve_uses").unwrap().value, 5);
+    }
+
+    /// Bonus Feat: level/6 count, granted from 6th level, not before.
+    #[test]
+    fn bonus_feat_count_grounds_from_sixth_level_only() {
+        let receipt5 = build_pilot_headless_receipt(&character(5));
+        assert!(find(&receipt5, "class_feature.uc.samurai.bonus_feat_count").is_none());
+        let receipt6 = build_pilot_headless_receipt(&character(6));
+        assert_eq!(find(&receipt6, "class_feature.uc.samurai.bonus_feat_count").unwrap().value, 1);
+        let receipt18 = build_pilot_headless_receipt(&character(18));
+        assert_eq!(
+            find(&receipt18, "class_feature.uc.samurai.bonus_feat_count").unwrap().value,
+            3
+        );
+    }
+
+    /// Every grounded record's detail text names the real corpus formula
+    /// rather than an unbacked number, the same self-check
+    /// `ninja_tests`/`gunslinger_tests` run for their own records.
+    #[test]
+    fn samurai_features_carry_no_archetype_superseded_claim() {
+        let receipt = build_pilot_headless_receipt(&character(10));
+        for id in [
+            "class_feature.uc.samurai.challenge_uses",
+            "class_feature.uc.samurai.challenge_damage_bonus",
+            "class_feature.uc.samurai.resolve_uses",
+        ] {
+            let record = find(&receipt, id).unwrap_or_else(|| panic!("expected {id} to ground"));
+            assert!(
+                !record.detail.to_lowercase().contains("superseded"),
+                "Samurai has no archetype content in scope, so no record should ever claim a \
+                 supersession: {record:?}"
+            );
+        }
     }
 }
 
@@ -47208,8 +47466,20 @@ mod race_ability_modifier_parity_tests {
         assert_eq!(ability.value, 0);
     }
 
+    /// `SD31-E4-F1-004`: SD-27 (decisions.md §28 defect 1) wired the
+    /// AC/attack-roll/CMB/CMD portion of PF1 Small size into this
+    /// engine's general combat baseline months after this record's own
+    /// text was written, leaving the record's own claim stale ("no
+    /// size-modifier term exists anywhere in this engine's combat
+    /// baseline for any race yet") -- provably false for a Gnome or
+    /// Halfling Fighter/Wizard who reaches `compute_combat_baseline`'s
+    /// supported posture. This test locks in the correction: the record
+    /// now names the real mechanism it defers to, rather than denying
+    /// one exists. Only Stealth genuinely remains unapplied (no Stealth
+    /// skill total exists anywhere in this engine), and that boundary
+    /// must still be named honestly, not silently dropped.
     #[test]
-    fn gnome_and_halfling_size_records_no_longer_falsely_imply_small_size_has_no_real_pf1_effect() {
+    fn gnome_and_halfling_size_records_now_cite_the_real_combat_baseline_mechanism() {
         let gnome_size = ability_modifiers_record(
             &compute_pilot_base_chassis(&load(GNOME_FIXTURE)),
             "race.gnome.trait_bundle.size",
@@ -47229,14 +47499,23 @@ mod race_ability_modifier_parity_tests {
                 "size record must still name the Small size category: {detail}"
             );
             assert!(
-                !detail.contains("contributes no numeric effect"),
-                "the false blanket claim that Small size has no numeric effect in PF1 must be \
-                 gone: {detail}"
+                !detail.contains("no size-modifier term exists anywhere"),
+                "the stale claim that no size-modifier term exists in this engine must be \
+                 gone now that SD-27 wired one: {detail}"
             );
             assert!(
                 detail.contains("+1 AC") && detail.contains("Stealth"),
-                "the real PF1 Small-size effect must be named, even though it isn't applied by \
-                 this engine yet: {detail}"
+                "the real PF1 Small-size effect must still be named: {detail}"
+            );
+            assert!(
+                detail.contains("combat_size_modifiers"),
+                "the record must now cite the real mechanism that applies AC/attack/CMB/CMD, \
+                 not just describe the rule in the abstract: {detail}"
+            );
+            assert!(
+                detail.contains("Stealth skill total exists"),
+                "the record must still name the one genuinely unapplied piece (Stealth) \
+                 honestly rather than implying full coverage: {detail}"
             );
         }
     }
