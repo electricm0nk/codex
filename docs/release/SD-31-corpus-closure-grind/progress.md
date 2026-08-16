@@ -9340,10 +9340,21 @@ LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-D7-PROSE-002-verify.l
 ```
 
 Launched early, in the background, kept alive while §1-§7 were written. `preflight-oracle`,
-`reachability-audit` (98.95%, unchanged), `pi-sweep`, `declared-pi-audit`, `root-lib` (1867 passed) all
-PASS as of this receipt; `root-full` (the ~490-binary full-workspace stage) was still running when this
-receipt was finalized — final `VERIFY_EXIT` recorded in the commit that lands this receipt, or in a
-follow-up commit if the gate had not finished by the time this cycle needed to return.
+`oracle-pin-selftest`, `producer-selftest`, `reachability-audit-selftest`, `reachability-audit` (98.95%,
+unchanged), `groundtruth-guard-selftest`, `pi-sweep`, `declared-pi-audit`, `audit-selftest`,
+`reclaim-selftest`, `driver-selftest`, `corpus-sweep-selftest`, and `root-lib` (`cargo test --locked
+--lib`, 1867 passed) all PASS. **`root-full` (`cargo test --locked --no-fail-fast`, the ~490-binary
+full-workspace stage) had NOT finished by the time this cycle needed to return** — confirmed genuinely
+progressing, not stalled, per the mandate's own stall-diagnosis rule (`pgrep -fa rustc` showed 11 live
+compiler processes across the shared box's concurrent lanes at the last check, and `deps/*.d` mtimes
+under `$CARGO_TARGET_DIR` were fresh within the last minute, not frozen). This cycle's own binary-level
+proof already ran independently and passed in full BEFORE the wide gate was even launched: `cargo test
+--locked --bin v06_work_inventory` — 118 passed, 0 failed (the 12 tests this cycle added, plus the
+existing 106). The four-check wired-integration audit (§7), the trap-report comparison (§5), and the
+guarded-regen delta (§4) were all independently re-run and are not waiting on `root-full`. Per the
+explicit "land the commit whether the gate finished or not" instruction: this receipt lands with
+`root-full`'s result not yet known; the log's own `RESULT`/`VERIFY_EXIT` line, once it lands (this
+commit or a follow-up), is authoritative.
 
 ### §9 — Reclaim
 
