@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Astradaemon ~ Devour Soul",
     "delivery": "Supernatural",
@@ -15,19 +13,75 @@
     "owners": [
       "bestiary_2:monster:daemon_astradaemon"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Devour Soul"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AstradaemonDevourSoulDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AstradaemonDevourSoulDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Devour Soul)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AstradaemonDevourSoulDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, an astradaemon that begins its turn with a grappled opponent can attempt to draw out and consume the soul of its victim, killing it instantly.  This ability only works on living creatures, which may resist with a DC %1 Fortitude saving throw.  For every 5 HD of the slain creature, the daemon gets a +1 profane bonus on attacks, saving throws, and checks for 24 hours.  This ability does not consume all of the soul, and pieces of it still exist after the daemon completes its feast (enough to be able to resurrect the slain victim normally).|AstradaemonDevourSoulDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Astradaemon ~ Devour Soul"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.63"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|TOHIT|%CHOICE|TYPE=Profane"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SAVE|ALL|%CHOICE|TYPE=Profane"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SKILL|ALL|%CHOICE|TYPE=Profane"
+      },
+      {
+        "key": "TEMPVALUE",
+        "value": "MIN=1|MAX=20|TITLE=Devour Soul profane bonus gained (+1/5 HD of victim)"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.63",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 275,
-    "record_key": "Astradaemon ~ Devour Soul"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 275,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Astradaemon ~ Devour Soul",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:choice",

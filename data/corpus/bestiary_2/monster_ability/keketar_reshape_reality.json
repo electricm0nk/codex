@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Keketar ~ Reshape Reality",
     "delivery": "SpellLike",
@@ -15,19 +13,43 @@
     "owners": [
       "bestiary_2:monster:protean_keketar"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "This ability functions as the spell mirage arcana heightened to a 9th-level spell, except the changes are quasi-real, like those created by shadow conjuration.  A creature that interacts with reshaped reality may make a DC %1 Will save to see through the semi-real illusion.  Terrain can provide concealment, and against foes who do not make the Will save to see through the facade, reshaped reality can provide cover.  For disbelievers, quasi-real objects and terrain have only 20%% normal hardness and hit points, and break DCs are 10 lower than normal.  Dangerous terrain cannot exceed 5d6 points of damage per round (1d6 per round against disbelievers).  This ability cannot damage existing structures, nor does it function in areas where planar travel is prohibited.|19+CHA"
+      },
+      {
+        "key": "KEY",
+        "value": "Keketar ~ Reshape Reality"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.215"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.SpellLike"
+      }
+    ],
     "source_page": "p.215",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 978,
-    "record_key": "Keketar ~ Reshape Reality"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 978,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Keketar ~ Reshape Reality",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

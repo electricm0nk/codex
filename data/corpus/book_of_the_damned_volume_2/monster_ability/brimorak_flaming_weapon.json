@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T11:18:46Z",
   "data": {
     "corpus_key": "Brimorak ~ Flaming Weapon",
     "delivery": "Supernatural",
@@ -13,19 +11,47 @@
     "owners": [
       "book_of_the_damned_volume_2:monster:demon_brimorak"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a free action, a brimorak can infuse a wielded weapon (including a two-handed weapon, but not a second weapon held in the off-hand) with its fiery nature, allowing it to inflict an additional 1d6 points of fire damage with the weapon. This fire damage stacks with any additional fire damage that the weapon might also inflict. The weapon loses this ability if it leaves the demon's grasp.|PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "DESC",
+        "value": "As a free action, a brimorak can infuse a wielded weapon with its fiery nature, allowing it to inflict an additional 1d6 points of fire damage with the weapon.|!PRERULE:1,DisplayFullAbility"
+      },
+      {
+        "key": "KEY",
+        "value": "Brimorak ~ Flaming Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.56"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": "p.56",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_race.lst",
-    "sha256": "885aa43c609fa27a4566424433c65b9433e39627f498bca12fd3b3354ebb10cf",
-    "line": 10,
-    "record_key": "Brimorak ~ Flaming Weapon"
-  },
+  "ingested_at": "2026-08-12T11:18:46Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_race.lst",
+    "record_key": "Brimorak ~ Flaming Weapon",
+    "sha256": "885aa43c609fa27a4566424433c65b9433e39627f498bca12fd3b3354ebb10cf"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

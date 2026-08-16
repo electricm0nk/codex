@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Intellect Devourer ~ Body Thief",
     "delivery": "Supernatural",
@@ -13,19 +11,43 @@
     "owners": [
       "beastiary:monster:intellect_devourer"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a full-round action that provokes an attack of opportunity, an intellect devourer can reduce its size, crawl into the mouth of a helpless or dead creature, and burrow into the victim's skull to devour its brain. This is a coup de grace attempt that inflicts 8d4+3d6+8 points of damage. If the victim is slain (or already dead), the intellect devourer usurps control of the body and may use it as its own, as if it controlled the target via a dominate monster spell. The intellect devourer has full access to all of the host's defensive and offensive abilities save for spellcasting and spell-like abilities (although the intellect devourer can still use its own spell-like abilities). A host body may not have been dead for longer than 1 day for this ability to function, and even successfully inhabited bodies decay to uselessness in 7 days (unless this time is extended via gentle repose). As long as the intellect devourer occupies the body, it knows (and can speak) the languages known by the victim and basic information about the victim's identity and personality, yet has none of the victim's specific memories or knowledge. Damage done to a host body does not harm the intellect devourer, and if the host body is slain, the intellect devourer emerges and is dazed for 1 round. Raise dead cannot restore a victim of body theft, but resurrection or more powerful magic can."
+      },
+      {
+        "key": "KEY",
+        "value": "Intellect Devourer ~ Body Thief"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.180"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.180",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 788,
-    "record_key": "Intellect Devourer ~ Body Thief"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 788,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Intellect Devourer ~ Body Thief",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

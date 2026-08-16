@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Hezrou ~ Nausea",
     "delivery": "Extraordinary",
@@ -15,19 +13,63 @@
     "owners": [
       "beastiary:monster:demon_hezrou"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Nausea"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|NauseaDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NauseaDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NauseaDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Nausea)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NauseaDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The noxious vapors and foul fluids that constantly weep and seethe from a hezrou's body are particularly heinous to those the creature grapples. Each round a creature is grappled by a hezrou, the grappled foe must make a DC %1 Fortitude save to avoid becoming nauseated. A creature nauseated in this manner remains nauseated until he succeeds on a DC %1 Fortitude save, or until a minute has passed during which he is not grappled by the hezrou, whichever condition comes first.|NauseaDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Hezrou ~ Nausea"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.62",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 282,
-    "record_key": "Hezrou ~ Nausea"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 282,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Hezrou ~ Nausea",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

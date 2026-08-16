@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Sinspawn ~ Martial Proficiency",
     "delivery": "Extraordinary",
@@ -19,19 +17,51 @@
       "bestiary_2:monster:sinspawn_pridespawn",
       "bestiary_2:monster:sinspawn_slothspawn"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Armor Proficiency (Heavy)|Armor Proficiency (Light)|Armor Proficiency (Medium)|Martial Weapon Proficiency Output|Shield Proficiency|Simple Weapon Proficiency"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|All Martial Weapon Proficiencies"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Sinspawn are proficient in all simple and martial weapons, armor, and shields (except tower shields)."
+      },
+      {
+        "key": "KEY",
+        "value": "Sinspawn ~ Martial Proficiency"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.246"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": "p.246",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1148,
-    "record_key": "Sinspawn ~ Martial Proficiency"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1148,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Sinspawn ~ Martial Proficiency",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Water Elemental ~ Drench",
     "delivery": "Extraordinary",
@@ -19,22 +17,46 @@
       "beastiary:monster:elemental_water_greater",
       "beastiary:monster:elemental_water_elder"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The elemental's touch puts out nonmagical flames of Large size or smaller. The creature can dispel magical fire it touches as Dispel Magic (caster level %1).|TL"
+      },
+      {
+        "key": "KEY",
+        "value": "Water Elemental ~ Drench"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.126"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Special Attack.Special Ability.Extraordinary"
+      }
+    ],
     "source_page": "p.126",
     "traits": [
       "Special Attack",
       "Special Ability"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 594,
-    "record_key": "Water Elemental ~ Drench"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 594,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Water Elemental ~ Drench",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

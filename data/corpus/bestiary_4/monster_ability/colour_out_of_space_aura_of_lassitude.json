@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Colour Out of Space ~ Aura of Lassitude",
     "delivery": "Supernatural",
@@ -15,21 +13,45 @@
     "owners": [
       "bestiary_4:monster:colour_out_of_space"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(300 ft., DC %1)|CHA+16"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature within 300 feet of a colour out of space (even when the colour is hiding within a solid object) must succeed at a DC %1 Will save or become overwhelmed with listlessness and ennui. While under this effect, the creature takes a -4 penalty on all Will saving throws, and doesn't willingly travel farther than a mile from the area where it failed its saving throw against that colour's aura of lassitude. A break enchantment spell (DC %1) ends the effect, as does removing the victim from the aura's area of effect. Every 24 hours, a creature affected by an aura of lassitude can attempt a new DC %1 Will save to cast off the effects of the aura. A creature that succeeds at this saving throw is immune to that colour's aura of lassitude for 24 hours. A creature that is under the effects of an aura of lassitude from a colour out of space can't be further affected by this ability from other colours. This is a mind-affecting effect.|CHA+16"
+      },
+      {
+        "key": "KEY",
+        "value": "Colour Out of Space ~ Aura of Lassitude"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural.Aura"
+      }
+    ],
     "source_page": null,
     "traits": [
       "Aura"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 414,
-    "record_key": "Colour Out of Space ~ Aura of Lassitude"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 414,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Colour Out of Space ~ Aura of Lassitude",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

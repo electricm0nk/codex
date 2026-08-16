@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Dinosaur (Diplodocus) ~ Tail Lash",
     "delivery": "Extraordinary",
@@ -13,19 +11,47 @@
     "owners": [
       "bestiary_4:monster:dinosaur_diplodocus"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tail Lash|DAMAGE|STR/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Tail Lash|TOHIT|5"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The diplodocus prefers to attack with its tail. The dinosaur can snap its incredibly long tail with surprising speed like an enormous whip-this is a primary attack that deals bludgeoning and slashing damage. A diplodocus can make two separate attacks with its tail lash as a full-attack action."
+      },
+      {
+        "key": "KEY",
+        "value": "Dinosaur (Diplodocus) ~ Tail Lash"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 487,
-    "record_key": "Dinosaur (Diplodocus) ~ Tail Lash"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 487,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Dinosaur (Diplodocus) ~ Tail Lash",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

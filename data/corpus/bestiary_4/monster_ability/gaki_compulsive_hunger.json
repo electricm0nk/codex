@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Gaki ~ Compulsive Hunger",
     "delivery": "Extraordinary",
@@ -13,19 +11,39 @@
     "owners": [
       "bestiary_4:monster:gaki"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Despite being undead, a gaki is plagued by an insatiable hunger, and believes it can gain a normal body or rest in peace if it consumes the right mixture of flesh, food, and drink. A gaki that finds a corpse or is offered food, wine, holy water, or flowers must succeed at a DC 20 Will save or spend one turn trying to grab and consume it. Its narrow neck prevents it from swallowing more than a tiny amount, and it gives up after 1 round of attempting to do so. A gaki that consumes holy water in this way is not harmed by it."
+      },
+      {
+        "key": "KEY",
+        "value": "Gaki ~ Compulsive Hunger"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 732,
-    "record_key": "Gaki ~ Compulsive Hunger"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 732,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Gaki ~ Compulsive Hunger",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Shriezyx ~ Fear of Fire",
     "delivery": "Extraordinary",
@@ -13,21 +11,41 @@
     "owners": [
       "bestiary_4:monster:shriezyx"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A shriezyx within 30 feet of a fire the size of a torch or larger becomes shaken as long as it remains within that range. If damaged by fire, a shriezyx must make a successful Will save (DC equals the amount of fire damage dealt) or become frightened for 1 round."
+      },
+      {
+        "key": "KEY",
+        "value": "Shriezyx ~ Fear of Fire"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Shriezyx"
+      }
+    ],
     "source_page": null,
     "traits": [
       "Shriezyx"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 1285,
-    "record_key": "Shriezyx ~ Fear of Fire"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1285,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Shriezyx ~ Fear of Fire",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

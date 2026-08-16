@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Chernobue ~ Horrific Appearance",
     "delivery": "Supernatural",
@@ -13,19 +11,63 @@
     "owners": [
       "bestiary_2:monster:qlippoth_chernobue"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Horrific Appearance"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|ChernobueHorrificAppearanceDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChernobueHorrificAppearanceDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ChernobueHorrificAppearanceDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Horrific Appearance)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ChernobueHorrificAppearanceDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Creatures that succumb to a chernobue's horrific appearance become paralyzed with disgust for 2d6 rounds; a paralyzed creature gets a new save each round to recover from the effect, provided he is no longer aware of the chernobue or within 30 feet of it."
+      },
+      {
+        "key": "KEY",
+        "value": "Chernobue ~ Horrific Appearance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.220"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.220",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 998,
-    "record_key": "Chernobue ~ Horrific Appearance"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 998,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Chernobue ~ Horrific Appearance",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

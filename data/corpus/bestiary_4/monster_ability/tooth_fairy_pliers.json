@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Tooth Fairy ~ Pliers",
     "delivery": "Supernatural",
@@ -13,19 +11,47 @@
     "owners": [
       "bestiary_4:monster:tooth_fairy"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "FEAT|VIRTUAL|Greater Dirty Trick"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CMB_DirtyTrick,CMB_Steal|4"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Each tooth fairy owns a pair of pliers it uses to torment its victims. In the hands of a tooth fairy, the pliers deal damage as a +1 dagger wielded by a Medium creature. The pliers have hardness 10 and 3 hit points. If its pliers are destroyed, a tooth fairy is stunned for 1 round. If the tooth fairy is killed, the pliers rust away into worthless splinters 1d4 rounds later. A tooth fairy can create a new pair of pliers by spending one hour crafting (no materials required), which destroys the previous pair. The pliers grant the tooth fairy the Greater Dirty Trick feat and a +4 bonus on dirty trick and steal combat maneuvers."
+      },
+      {
+        "key": "KEY",
+        "value": "Tooth Fairy ~ Pliers"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 1373,
-    "record_key": "Tooth Fairy ~ Pliers"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1373,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Tooth Fairy ~ Pliers",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

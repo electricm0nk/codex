@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Fleshwarp (Grothlut) ~ Disgusting Demise",
     "delivery": "Extraordinary",
@@ -15,19 +13,39 @@
     "owners": [
       "bestiary_4:monster:fleshwarp_grothlut"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "When a grothlut reaches 0 or fewer hit points, its digestive organs rupture, freeing alchemical agents that have a violent effect on the rest of the grothlut's internal organs and flesh. This causes an explosion of grothlut viscera within a 30-foot-radius burst of the creature. Though this viscera deals no damage, it's disgusting to behold and its smell can cause living creatures within that radius to become nauseated for 1d4 rounds (Fortitude DC %1 negates). This is a poison effect.|10+CON"
+      },
+      {
+        "key": "KEY",
+        "value": "Fleshwarp (Grothlut) ~ Disgusting Demise"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 671,
-    "record_key": "Fleshwarp (Grothlut) ~ Disgusting Demise"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 671,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Fleshwarp (Grothlut) ~ Disgusting Demise",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

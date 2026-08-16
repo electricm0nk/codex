@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Drake (Mist) ~ Fogvision",
     "delivery": "Extraordinary",
@@ -13,21 +11,41 @@
     "owners": [
       "bestiary_4:monster:drake_mist"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A mist drake can see normally through any form of natural or magical mist, fog, or precipitation."
+      },
+      {
+        "key": "KEY",
+        "value": "Drake (Mist) ~ Fogvision"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Senses"
+      }
+    ],
     "source_page": null,
     "traits": [
       "Senses"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 586,
-    "record_key": "Drake (Mist) ~ Fogvision"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 586,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Drake (Mist) ~ Fogvision",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

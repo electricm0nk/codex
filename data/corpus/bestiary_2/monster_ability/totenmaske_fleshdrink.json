@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Totenmaske ~ Fleshdrink",
     "delivery": "Supernatural",
@@ -15,19 +13,55 @@
     "owners": [
       "bestiary_2:monster:totenmaske"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Fleshdrink"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TotenmaskeFleshdrinkDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TotenmaskeFleshdrinkDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Fleshdrink)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TotenmaskeFleshdrinkDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "If a totenmaske hits a single creature with both claw attacks, the hollow claws drain away some of the target's flesh, dealing 1d6 points of Constitution damage and making the victim sickened for 1d4 rounds.  A successful DC %1 Fortitude save negates the Constitution damage and reduces the sickened condition duration to 1 round.|TotenmaskeFleshdrinkDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Totenmaske ~ Fleshdrink"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1290,
-    "record_key": "Totenmaske ~ Fleshdrink"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1290,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Totenmaske ~ Fleshdrink",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

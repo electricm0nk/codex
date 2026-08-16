@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Giant Maggot ~ Regurgitate",
     "delivery": "Extraordinary",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:maggot_giant"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Regurgitate"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GiantMaggotRegurgitateDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GiantMaggotRegurgitateDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Regurgitate)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GiantMaggotRegurgitateDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, a giant maggot can empty its putrid stomach upon one creature within 5 feet.  The target must make a DC %1 Fortitude save or be sickened for 1 minute (or until the target spends a full-round action with at least a gallon of water to wash off the filth).|GiantMaggotRegurgitateDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Giant Maggot ~ Regurgitate"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.124"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.124",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 538,
-    "record_key": "Giant Maggot ~ Regurgitate"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 538,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Giant Maggot ~ Regurgitate",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

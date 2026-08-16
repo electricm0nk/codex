@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Weasel (Dire) ~ Blood Drain",
     "delivery": "Extraordinary",
@@ -13,19 +11,59 @@
     "owners": [
       "bestiary_4:monster:weasel_dire"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1d%2+1 Constitution)|BloodDrainDice|BloodDrainDieSize"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BloodDrainDice|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodDrainDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BloodDrainDieSize|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The creature drains blood at the end of its turn if it is attached to a foe, inflicting Constitution damage."
+      },
+      {
+        "key": "KEY",
+        "value": "Weasel (Dire) ~ Blood Drain"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.294"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.294",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 1437,
-    "record_key": "Weasel (Dire) ~ Blood Drain"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1437,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Weasel (Dire) ~ Blood Drain",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Clockwork Golem ~ Death Burst",
     "delivery": "Extraordinary",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:golem_clockwork"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Death Burst"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClockworkGolemDeathBurstDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ClockworkGolemDeathBurstDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Death Burst)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ClockworkGolemDeathBurstDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When a clockwork golem is reduced to 0 or fewer hit ponts, it explodes in a shower of razor-sharp gears and debris.  All creatures within a 10-foot burst take 12d6 points of slashing damage - a DC %1 Reflex save results in half damage.|ClockworkGolemDeathBurstDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Clockwork Golem ~ Death Burst"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.137"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.137",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 607,
-    "record_key": "Clockwork Golem ~ Death Burst"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 607,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Clockwork Golem ~ Death Burst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Clockwork Dragon ~ Rusting Breath",
     "delivery": "Extraordinary",
@@ -13,19 +11,39 @@
     "owners": [
       "bestiary_4:monster:clockwork_dragon"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Rust-breath clockwork dragons do not breathe fire. Instead, the creatures breathe out a fine mist of an alchemical solvent that instantly rusts exposed metals. This so-called \"rust breath\" forth in a 60-foot line. Creatures can attempt a DC 22 Reflex save to avoid the effect for attended items; however, they need to make a separate attempt for each exposed item. Each alchemical dragon can hold enough of the alchemical solvent to make up to three breath weapon attacks before the solvent must be refilled manually, which takes 10 minutes. These clockwork dragons are made of ironwood, adamantine, and other resistant materials immune to rusting of any form."
+      },
+      {
+        "key": "KEY",
+        "value": "Clockwork Dragon ~ Rusting Breath"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 384,
-    "record_key": "Clockwork Dragon ~ Rusting Breath"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 384,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Clockwork Dragon ~ Rusting Breath",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

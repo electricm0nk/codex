@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Einherji ~ Challenge of Single Combat",
     "delivery": "Extraordinary",
@@ -13,19 +11,39 @@
     "owners": [
       "bestiary_4:monster:einherji"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, an einherji can choose a single target within sight to challenge by attempting an Intimidate check to demoralize that creature. If the check succeeds, the target is shaken and the einherji gains a +2 bonus on attack rolls and damage rolls against that target. For the duration of the challenge, the einherji must attack that target, and takes a -2 penalty to its AC, except against attacks made by the target. The challenge (and the shaken condition) remains in effect until the target successfully attacks the einherji in melee combat, the target is dead or unconscious, or the combat ends."
+      },
+      {
+        "key": "KEY",
+        "value": "Einherji ~ Challenge of Single Combat"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 602,
-    "record_key": "Einherji ~ Challenge of Single Combat"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 602,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Einherji ~ Challenge of Single Combat",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

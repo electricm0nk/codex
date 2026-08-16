@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T02:34:27Z",
   "data": {
     "corpus_key": "Orsheval ~ Glittering Radiance",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "inner_sea_gods:monster:orsheval"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Glittering Radiance"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(5' radius, as glitterdust for 6 rounds, Will DC %1 negates blindness, at will free action)|OrshevalGlitterDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OrshevalGlitterDC|10+(HD/2)+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|OrshevalGlitterDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Glittering Radiance)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "OrshevalGlitterDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An orsheval usually glows with a golden light equivalent to that of a candle. In battle, its glow increases, filling the area within 5 feet of it with shining motes. These motes cling to all creatures in the affected area, outlining them as glitterdust for 6 rounds. Opponents in the area must succeed at a DC %1 Will save or be blinded; a blinded creature may attempt a new saving throw each round at the end of its turn to end the blindness. The motes persist for 1 round after the orsheval moves from a square, leaving a trailing cloud that can affect creatures that move into the affected area. The orsheval can suppress or reactivate the glow or motes as a free action.|OrshevalGlitterDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Orsheval ~ Glittering Radiance"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
-    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
-    "line": 94,
-    "record_key": "Orsheval ~ Glittering Radiance"
-  },
+  "ingested_at": "2026-08-15T02:34:27Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 94,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "record_key": "Orsheval ~ Glittering Radiance",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

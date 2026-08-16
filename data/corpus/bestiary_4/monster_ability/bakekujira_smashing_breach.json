@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Bakekujira ~ Smashing Breach",
     "delivery": "Extraordinary",
@@ -15,19 +13,39 @@
     "owners": [
       "bestiary_4:monster:bakekujira"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a full-round action, a swimming bakekujira can make a special charge attack against a creature on the water's surface. At the end of its charge, the whale breaches, slamming down with incredible force. Any Huge or smaller creatures in the bakekujira's space must succeed at a DC %1 Reflex save or take 4d8+24 points of bludgeoning damage and be forced into the nearest empty square adjacent to the bakekujira. Humanoid creatures killed by this ability rise as draugr (Bestiary 2 p.110) in 1d6 hours. A bakekujira can use its capsize special attack in conjunction with this ability.|CHA+22"
+      },
+      {
+        "key": "KEY",
+        "value": "Bakekujira ~ Smashing Breach"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 295,
-    "record_key": "Bakekujira ~ Smashing Breach"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 295,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Bakekujira ~ Smashing Breach",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

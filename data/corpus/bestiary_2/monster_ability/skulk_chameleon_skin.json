@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Skulk ~ Chameleon Skin",
     "delivery": "Extraordinary",
@@ -13,19 +11,47 @@
     "owners": [
       "bestiary_2:monster:skulk"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "SKILL|Stealth|8|TYPE=Racial|!PREEQUIP:1,TYPE=Armor,TYPE=Robe,TYPE=Shirt"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A skulk's racial bonus to Stealth comes from his ability to change the color of his skin to match his surroundings, even complex or regular patterns like bricks and mortar.  A skulk loses this conditional bonus if he is wearing armor, or if he wears any clothing that covers more than one-quarter of his body, as skulks can only change their own flesh, not things they carry.  A skulk normally conceals small items behind his body; by putting his back to a wall and changing his front half, he can hide the item because observers don't have line of sight to the item."
+      },
+      {
+        "key": "KEY",
+        "value": "Skulk ~ Chameleon Skin"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.248"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": "p.248",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1166,
-    "record_key": "Skulk ~ Chameleon Skin"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1166,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Skulk ~ Chameleon Skin",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard"

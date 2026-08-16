@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Dark Slayer ~ Death Throes",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:dark_slayer"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Death Throes"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkSlayerDeathThroesDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DarkSlayerDeathThroesDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Death Throes)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DarkSlayerDeathThroesDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When a dark slayer is slain, its body implodes violently into nothingness, leaving its gear in a heap on the ground.  All creatures within a 10-foot burst take 1d8 points of sonic damage and must make a DC %1 Fortitude save or be deafened for 2d4 rounds.|DarkSlayerDeathThroesDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Dark Slayer ~ Death Throes"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.75"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.75",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 333,
-    "record_key": "Dark Slayer ~ Death Throes"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 333,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Dark Slayer ~ Death Throes",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T02:34:27Z",
   "data": {
     "corpus_key": "Mother's Maw ~ Swallow Whole",
     "delivery": "Extraordinary",
@@ -16,21 +14,73 @@
     "owners": [
       "inner_sea_gods:monster:mother_s_maw"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(special, AC %1, %2 hp)|SwallowWholeAC|SwallowWholeHP"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SwallowWholeAC|10+(var(\"AC.NaturalArmor\")/2)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SwallowWholeHP|HP/10"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SwallowWholeAC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SwallowWholeBonusDamage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SwallowWholeDamageDie|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SwallowWholeDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SwallowWholeHP|0"
+      },
+      {
+        "key": "DESC",
+        "value": "If the herald begins its turn with an opponent grappled in its mouth, it can attempt a new combat maneuver check. If it succeeds, it swallows its prey, and the opponent takes bite damage. The opponent can be up to one size category smaller than the Maw. Being swallowed causes a creature to take damage each round. A swallowed creature keeps the grappled condition, while the Maw does not. A swallowed creature can try to cut its way free with any light slashing or piercing weapon, or it can just try to escape the grapple. If a swallowed creature cuts its way out, you cannot use swallow whole again until the damage is healed. If the swallowed creature escapes the grapple, success puts it back in the Maw's mouth, where it may be bitten or swallowed again. (see Devour Soul, AC %1, %2 hp)|SwallowWholeAC|SwallowWholeHP"
+      },
+      {
+        "key": "KEY",
+        "value": "Mother's Maw ~ Swallow Whole"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.AttackOption"
+      }
+    ],
     "source_page": null,
     "traits": [
       "AttackOption"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
-    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
-    "line": 286,
-    "record_key": "Mother's Maw ~ Swallow Whole"
-  },
+  "ingested_at": "2026-08-15T02:34:27Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 286,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "record_key": "Mother's Maw ~ Swallow Whole",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

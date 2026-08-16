@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Thanatotic Titan ~ Godslayer",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:titan_thanatotic"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Godslayer"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ThanatoticTitanGodslayerDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ThanatoticTtianGodslayerDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Godslayer)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ThanatoticTitanGodslayerDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When a thanatotic titan damages a creature capable of casting divine spells, that creature must make a DC %1 Will save or be unable to cast any divine spells for 1d4 rounds and be shaken.  If the save is successful, the creature struck is merely shaken for 1 round.  A thanatotic titan's attacks are treated as epic and evil for the purposes of overcoming damage reduction.|ThanatoticTitanGodslayerDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Thanatotic Titan ~ Godslayer"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.267"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.267",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1269,
-    "record_key": "Thanatotic Titan ~ Godslayer"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1269,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Thanatotic Titan ~ Godslayer",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

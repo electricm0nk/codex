@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Mite ~ Vermin Empathy",
     "delivery": "Extraordinary",
@@ -15,19 +13,59 @@
     "owners": [
       "beastiary:monster:mite"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "VAR|VerminEmpathy|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VerminEmpathy|VerminEmpathyLVL+CHA"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VerminEmpathyLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VerminEmpathy|0"
+      },
+      {
+        "key": "DESC",
+        "value": "This ability functions as a druid's wild empathy, save that a mite can only use this ability on vermin. A mite gains a +4 racial bonus on this check. Vermin are normally mindless, but this empathic communication imparts on them a modicum of implanted intelligence, allowing mites to train Medium vermin and use them as mounts. Vermin empathy treats swarms as if they were one creature possessing a single mind'a mite can thus use this ability to influence and direct the actions of swarms with relative ease. +%1 to train Medium vermin as mounts or direct the actions of vermin swarms.|VerminEmpathy"
+      },
+      {
+        "key": "KEY",
+        "value": "Mite ~ Vermin Empathy"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.207"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": "p.207",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 934,
-    "record_key": "Mite ~ Vermin Empathy"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 934,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Mite ~ Vermin Empathy",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

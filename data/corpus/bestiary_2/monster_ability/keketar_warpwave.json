@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Keketar ~ Warpwave",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:protean_keketar"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Inflict Warpwave"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KeketarWarpwaveDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|KeketarWarpwaveDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Inflict Warpwave)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "KeketarWarpwaveDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature struck by a keketar's claw or bite must make a DC %1 Fortitude save orbe affected by a warpwave.|KeketarWarpwaveDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Keketar ~ Warpwave"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.215"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.215",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 977,
-    "record_key": "Keketar ~ Warpwave"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 977,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Keketar ~ Warpwave",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

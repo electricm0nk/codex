@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Moonflower ~ Light Pulse",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:moonflower"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Light Pulse"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MoonflowerLightPulseDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|MoonflowerLightPulseDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Light Pulse)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MoonflowerLightPulseDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, a moonflower can release a pulse of bright light.  All creatures within a 50-foot burst that can see the moonflower must make a DC %1 Fortitude save or be blinded for 1d4 rounds.  Moonflowers are immune to this ability.|MoonflowerLightPulseDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Moonflower ~ Light Pulse"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.192"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.192",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 838,
-    "record_key": "Moonflower ~ Light Pulse"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 838,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Moonflower ~ Light Pulse",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

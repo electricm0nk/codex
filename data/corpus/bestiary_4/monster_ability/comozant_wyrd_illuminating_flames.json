@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Comozant Wyrd ~ Illuminating Flames",
     "delivery": "Supernatural",
@@ -13,19 +11,39 @@
     "owners": [
       "bestiary_4:monster:comozant_wyrd"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, a comozant wyrd can shroud the upper halves of any Small or larger creatures it can see within 30 feet of it in cold, buzzing flames similar to the wyrd's own. Any electricity resistance blocks this effect unless the target willingly submits. Otherwise the flames persist until the wyrd is out of range. Targets of this effect take a -10 penalty on Stealth checks. A comozant wyrd can communicate empathically with creatures subject to this effect, and gains a +4 racial bonus on Sense Motive checks when doing so. Interacting with a wyrd in this way still uses standard social skills and rules. While communicating this way, a comozant can confer unexpected insight or information equivalent to a divination spell."
+      },
+      {
+        "key": "KEY",
+        "value": "Comozant Wyrd ~ Illuminating Flames"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 420,
-    "record_key": "Comozant Wyrd ~ Illuminating Flames"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 420,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Comozant Wyrd ~ Illuminating Flames",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

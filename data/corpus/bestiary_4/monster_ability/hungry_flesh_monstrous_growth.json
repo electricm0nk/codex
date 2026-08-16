@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Hungry Flesh ~ Monstrous Growth",
     "delivery": "Extraordinary",
@@ -13,19 +11,39 @@
     "owners": [
       "bestiary_4:monster:hungry_flesh"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A hungry flesh gains growth points from its reactive regeneration ability or from eating creatures. When it consumes a creature that's been dead no more than an hour, it gains 1 growth point if that creature is of its size or one size category smaller, or 2 growth points if its meal is larger than it is. Eating a creature takes a full-round action if it is the same size or smaller than the hungry flesh or 1 minute if it is larger. Each time a hungry flesh reaches 5 growth points, it gains the giant creature simple template. This template stacks with itself each time the hungry flesh gains another 5 growth points, but the hungry flesh can't increase its size beyond Gargantuan. When it stops gaining growth points, a hungry flesh loses a single application of the giant creature simple template for each hour that passes."
+      },
+      {
+        "key": "KEY",
+        "value": "Hungry Flesh ~ Monstrous Growth"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 870,
-    "record_key": "Hungry Flesh ~ Monstrous Growth"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 870,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Hungry Flesh ~ Monstrous Growth",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

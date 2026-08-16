@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Imentesh ~ Inflict Warpwave",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:protean_imentesh"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Inflict Warpwave"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ImenteshWarpwaveDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ImenteshWarpwaveDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Inflict Warpwave)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ImenteshWarpwaveDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a standard action, an imentesh can inflict a warpwave upon any corporeal creature within 100 feet.  The target can resist the warpwave's effects with a DC %1 Fortitude save.  If the imentesh wishes, it can use this ability as a swift action, but if it does so, it is affected by the warpwave as well unless it resists the effects with its own Fortitude save.  See page 213 for a list of possible effects caused by a warpwave.|ImenteshWarpwaveDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Imentesh ~ Inflict Warpwave"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.214"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.214",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 972,
-    "record_key": "Imentesh ~ Inflict Warpwave"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 972,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Imentesh ~ Inflict Warpwave",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Animated Object ~ Hardness",
     "delivery": null,
@@ -21,21 +19,57 @@
       "beastiary:monster:animated_object_gargantuan",
       "beastiary:monster:animated_object_colossal"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|%1|Hardness"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Hardness|5"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Hardness|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The Animated Object can ignore the first %1 points of damage from an attack.|Hardness"
+      },
+      {
+        "key": "KEY",
+        "value": "Animated Object ~ Hardness"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.14"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Defensive"
+      }
+    ],
     "source_page": "p.14",
     "traits": [
       "Defensive"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 69,
-    "record_key": "Animated Object ~ Hardness"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 69,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Animated Object ~ Hardness",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

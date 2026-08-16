@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Glass Golem ~ Dazzling Brightness",
     "delivery": "Extraordinary",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:golem_glass"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Dazzling Brightness"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GlassGolemDazzlingBrightnessDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GlassGolemDazzlingBrightnessDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Dazzling Brightness)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GlassGolemDazzlingBrightnessDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A glass golem in an area of bright light dazzles any creature within 30 feet that sees it (Fortitude DC %1 negates).  Once a creature makes its save against this ability, it is immune to that golem's brightness for 24 hours.|GlassGolemDazzlingBrightnessDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Glass Golem ~ Dazzling Brightness"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.138"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.138",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 614,
-    "record_key": "Glass Golem ~ Dazzling Brightness"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 614,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Glass Golem ~ Dazzling Brightness",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

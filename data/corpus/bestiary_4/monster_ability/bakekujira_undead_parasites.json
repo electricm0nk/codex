@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Bakekujira ~ Undead Parasites",
     "delivery": "Supernatural",
@@ -13,19 +11,39 @@
     "owners": [
       "bestiary_4:monster:bakekujira"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A 30-foot-radius cloud of undead fish and sea birds surrounds a bakekujira. Creatures starting their turn within the cloud must succeed at a DC 28 Will save or be nauseated for 1 round and take 6d6 points of damage. Creatures with the ability to channel positive energy can suppress this aura for 1 round by expending one use of channel energy. The bakekujira receives a Will save against this effect. The save DC is equal to 10 + 1/2 the channeler's caster level + the channeler's Charisma modifier. The channeled energy has no other effect."
+      },
+      {
+        "key": "KEY",
+        "value": "Bakekujira ~ Undead Parasites"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 296,
-    "record_key": "Bakekujira ~ Undead Parasites"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 296,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Bakekujira ~ Undead Parasites",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

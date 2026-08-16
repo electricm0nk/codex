@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Leaf Ray ~ Seed",
     "delivery": "Extraordinary",
@@ -13,19 +11,39 @@
     "owners": [
       "bestiary_4:monster:leaf_ray"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, a leaf ray can implant a seed into a helpless target with its stinger. As a full-round action, the leaf ray stings its victim, depositing a seed into the victim's flesh. This process deals 1 hit point of damage to the victim, but the implanted creature isn't subject to the leaf ray's poison in this process. The seed germinates inside the victim, making it sickened while it harbors the leaf ray seed, and dealing 1d2 points of Constitution damage to the victim each day the seed grows within. This damage is negated with a successful DC 14 Fortitude save. The seed feeds off the victim's body and only grows into a new leaf ray tree when the victim dies from Constitution damage. Removing an implanted seed requires a successful DC 20 Heal check (a full-round action); each attempt deals 1 hit point of damage. Although immunity to disease offers no special protection against a leaf ray seed's implantation, remove disease, heal, or similar effects automatically destroy any implanted seeds."
+      },
+      {
+        "key": "KEY",
+        "value": "Leaf Ray ~ Seed"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 1006,
-    "record_key": "Leaf Ray ~ Seed"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1006,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Leaf Ray ~ Seed",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

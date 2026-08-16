@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Alchemical Golem ~ Alchemy",
     "delivery": "Extraordinary",
@@ -15,19 +13,63 @@
     "owners": [
       "bestiary_2:monster:golem_alchemical"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Alchemy"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(slam)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemicalGolemAlchemyDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AlchemicalGolemAlchemyDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Alchemy)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AlchemicalGolemAlchemyDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When an alchemical golem strikes a foe, the attack has an additional random effect, chosen from the options below.  The attack can either deal 1d6 points of acid, cold, electricity, or fire damage, or cause the target to become sickened (Fortitude DC %1 negates) or entangled (Reflex %1 negates) for 1d4 rounds.|AlchemicalGolemAlchemyDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Alchemical Golem ~ Alchemy"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.135"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.135",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 594,
-    "record_key": "Alchemical Golem ~ Alchemy"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 594,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Alchemical Golem ~ Alchemy",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

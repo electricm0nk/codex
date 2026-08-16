@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Nalfeshnee ~ Unholy Nimbus",
     "delivery": "Supernatural",
@@ -15,19 +13,63 @@
     "owners": [
       "beastiary:monster:demon_nalfeshnee"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Unholy Nimbus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|UnholyNimbusDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UnholyNimbusDC|10+(HD/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UnholyNimbusDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Unholy Nimbus)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UnholyNimbusDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Three times per day as a free action a nalfeshnee can create a nimbus of unholy light, causing nauseating beams of writhing color to play around its body. One round later, the light bursts in a 60-foot radius. Any non-demon creature caught within this area must succeed on a DC %1 Will save or be dazed for 1d10 rounds as visions of madness hound it.|UnholyNimbusDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Nalfeshnee ~ Unholy Nimbus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.65",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 297,
-    "record_key": "Nalfeshnee ~ Unholy Nimbus"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 297,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Nalfeshnee ~ Unholy Nimbus",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

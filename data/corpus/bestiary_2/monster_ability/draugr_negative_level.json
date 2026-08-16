@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Draugr ~ Negative Level",
     "delivery": "Supernatural",
@@ -16,19 +14,59 @@
       "bestiary_2:monster:draugr_captain",
       "bestiary_2:monster:draugr"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Negative Level"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DraugrNegativeLevelDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DraugrNegativeLevelDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Negative Level)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DraugrNegativeLevelDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature that is damaged by a draugr must make a DC %1 Fortitude save or gain one negative level.  The draugr captain can even bestow a negative level via a weapon it wields, but if it gains multiple attacks with a weapon, it can only bestow 1 negative level per round in this manner.|DraugrNegativeLevelDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Draugr ~ Negative Level"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.110"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.110",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 511,
-    "record_key": "Draugr ~ Negative Level"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 511,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Draugr ~ Negative Level",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Vrolikai ~ Black Flame Knives",
     "delivery": "Supernatural",
@@ -15,19 +13,63 @@
     "owners": [
       "bestiary_2:monster:demon_vrolikai"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Black Flame Knives"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(energy drain, 1 level, DC %1)|VrolikaiBlackFlameKnivesDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VrolikaiBlackFlameKnivesDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VrolikaiBlackFlameKnivesDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Black Flame Knives)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VrolikaiBlackFlameKnivesDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A vrolikai can manifest daggers made of crystallized black flames in each of its four hands as a free action.  These weapons function as +1 daggers that bestow one permanent negative level on a successful hit.  A DC %1 Fortitude negates the negative level, although on a critical hit, no save is allowed.|VrolikaiBlackFlameKnivesDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Vrolikai ~ Black Flame Knives"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.81",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 369,
-    "record_key": "Vrolikai ~ Black Flame Knives"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 369,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Vrolikai ~ Black Flame Knives",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

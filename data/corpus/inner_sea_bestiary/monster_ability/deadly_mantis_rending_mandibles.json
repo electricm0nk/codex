@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:21Z",
   "data": {
     "corpus_key": "Deadly Mantis ~ Rending Mandibles",
     "delivery": "Extraordinary",
@@ -13,19 +11,43 @@
     "owners": [
       "inner_sea_bestiary:monster:mantis_deadly"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "If a deadly mantis hits with both claws and successfully grabs a foe, it can make an immediate bite attack against that foe as a secondary attack. This bite attack has a +12 attack bonus and deals 4d6+6 points of damage. In addition to dealing damage, the mantis can tear away the victim's armor as a free action by making a combat maneuver check. If the mantis is successful, the target's armor is ripped from its body. If the target fails a DC 31 Reflex save, the armor subjected to this attack loses half its hit points and gains the broken condition. The save DC is Strength-based."
+      },
+      {
+        "key": "KEY",
+        "value": "Deadly Mantis ~ Rending Mandibles"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.30",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
-    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
-    "line": 216,
-    "record_key": "Deadly Mantis ~ Rending Mandibles"
-  },
+  "ingested_at": "2026-08-15T01:24:21Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 216,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "record_key": "Deadly Mantis ~ Rending Mandibles",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

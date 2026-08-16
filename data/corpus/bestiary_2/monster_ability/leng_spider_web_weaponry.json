@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Leng Spider ~ Web Weaponry",
     "delivery": "Extraordinary",
@@ -13,19 +11,43 @@
     "owners": [
       "bestiary_2:monster:leng_spider"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A Leng spider is talented at using its webs to construct masterwork weapons.  This technique of weapon creation allows the spider to effectively create a flail or bolas by attaching a heavy object such as a rock or chunk of metal to a cord of webbing.  The spider attaches one end of this webbing to a leg and can then wield the weighted cords as a masterwork flail or a masterwork bolas.  It can only wield one such weapon at a time - it must use its other legs to walk.  If a Leng spider drops or loses a web weapon, it can create a new one as a full-round action, provided it has access to heavy-weight objects of the correct size (such as loose rocks or skulls)."
+      },
+      {
+        "key": "KEY",
+        "value": "Leng Spider ~ Web Weaponry"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.176"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.176",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 769,
-    "record_key": "Leng Spider ~ Web Weaponry"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 769,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Leng Spider ~ Web Weaponry",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Sinspawn ~ Sinful Bite",
     "delivery": "Supernatural",
@@ -21,19 +19,59 @@
       "bestiary_2:monster:sinspawn_pridespawn",
       "bestiary_2:monster:sinspawn_slothspawn"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Sinful Bite"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SinspawnSinfulBiteDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SinspawnSinfulBiteDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Sinful Bite)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SinspawnSinfulBiteDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature bitten by a sinspawn is overwhelmed with sinful thoughts (DC %1 Will save negates).  These emotions are so powerful that the target becomes sickened for 1d6 minutes.  An effected target that is bitten a second time is staggered for 1 round if it fails its saving throw.  Calm emotions, remove curse, or break enchantment negates the effects of sinful bite.|SinspawnSinfulBiteDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Sinspawn ~ Sinful Bite"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.246"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.246",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1150,
-    "record_key": "Sinspawn ~ Sinful Bite"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1150,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Sinspawn ~ Sinful Bite",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

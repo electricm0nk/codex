@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Devil (Nemesis) ~ Infernal Wound",
     "delivery": "Supernatural",
@@ -15,19 +13,39 @@
     "owners": [
       "bestiary_4:monster:devil_nemesis"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "An advodaza's assaults leave vicious marks that do not easily heal. The damage an advodaza inflicts with its claws leaves persistent wounds that deal 2d6 points of bleed damage. Bleeding caused in this way is difficult to stanch-a successful DC %1 Heal check is required to stop the bleeding, and anyone attempting to magically heal a creature suffering from an infernal wound must succeed at a DC %1 caster level check or the spell does not function. Success indicates the healing works normally and stops all bleed effects.|CON+19"
+      },
+      {
+        "key": "KEY",
+        "value": "Devil (Nemesis) ~ Infernal Wound"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 475,
-    "record_key": "Devil (Nemesis) ~ Infernal Wound"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 475,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Devil (Nemesis) ~ Infernal Wound",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

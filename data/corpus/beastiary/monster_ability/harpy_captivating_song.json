@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Harpy ~ Captivating Song",
     "delivery": "Supernatural",
@@ -15,19 +13,63 @@
     "owners": [
       "beastiary:monster:harpy"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Captivating Song"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|CaptivatingSongDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CaptivatingSongDC|10+(HD/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CaptivatingSongDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Captivating Song)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CaptivatingSongDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A harpy's song has the power to infect the minds of those that hear it, calling them to the harpy's side. When a harpy sings, all creatures aside from other harpies within a 300-foot spread must succeed on a DC %1 Will saving throw or become captivated. A creature that successfully saves is not subject to the same harpy's song for 24 hours. A victim under the effects of the captivating song moves toward the harpy using the most direct means available. If the path leads them into a dangerous area such as through fire or off a cliff, that creature receives a second saving throw to end the effect before moving into peril. Captivated creatures can take no actions other than to defend themselves. A victim within 5 feet of the harpy simply stands and offers no resistance to the harpy's attacks. This effect continues for as long as the harpy sings and for 1 round thereafter. This is a sonic mind-affecting charm effect.|CaptivatingSongDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Harpy ~ Captivating Song"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.172"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.172",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 763,
-    "record_key": "Harpy ~ Captivating Song"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 763,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Harpy ~ Captivating Song",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

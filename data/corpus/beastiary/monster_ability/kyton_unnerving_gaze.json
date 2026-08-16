@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Kyton ~ Unnerving Gaze",
     "delivery": "Supernatural",
@@ -15,19 +13,63 @@
     "owners": [
       "beastiary:monster:kyton"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Unnerving Gaze"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|UnnervingGazeDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UnnervingGazeDC|10+(HD/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|UnnervingGazeDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Unnerving Gaze)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UnnervingGazeDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Range 30 ft., Will DC %1 negates. A kyton can make its face resemble one of an opponent's departed loved ones or bitter enemies. Those who fail their saves become shaken for 1d3 rounds. This is a mind-affecting fear effect.|UnnervingGazeDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Kyton ~ Unnerving Gaze"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.185"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.185",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 817,
-    "record_key": "Kyton ~ Unnerving Gaze"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 817,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Kyton ~ Unnerving Gaze",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

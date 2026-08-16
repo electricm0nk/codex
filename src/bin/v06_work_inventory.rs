@@ -646,6 +646,68 @@ const MONSTER_ABILITY_TYPE_FACETS: &[&str] =
 /// `_abilities_race.lst` rows that are real content in the wrong bucket.
 const RACE_TRAIT_EXCLUDED_TYPE_PREFIX: &str = "ClassLevelAdjustment";
 
+/// SD31-E6-F9-001 (2026-08-16, `OPEN-ISSUES.md` row 34): a
+/// `SpecialQuality`/`SpecialAttack`-first-segment `_abilities_race.lst` row is
+/// STILL a player race+class mechanic row, not a monster ability, when it carries
+/// either corpus-stated shape below. Neither is invented by this tool; both are
+/// PCGen's own naming conventions for a Favored Class Bonus record, confirmed
+/// **absent** (0 occurrences, `grep -c` over the raw `.lst`) from every file this
+/// program currently ingests `monster_ability` from that is NOT one of these two --
+/// `core_essentials/ce_abilities_race.lst`, every registered Bestiary
+/// (`bestiary`/`bestiary_2`/`bestiary_3`/`bestiary_4`/`bestiary_5`/`bestiary_6`,
+/// `bonus_bestiary`, `monster_codex`, `inner_sea_bestiary`), and
+/// `inner_sea_gods`/`pathfinder_unchained`/`horror_adventures`/`book_of_the_damned_volume_1`/`_2`.
+///
+/// - The `TYPE:` **second** segment ends in the literal word `Choice`, e.g.
+///   `SpecialQuality.ElfHunterCritialConfirmationChoice`
+///   (`advanced_class_guide/acg_abilities_race.lst`) or
+///   `SpecialQuality.ElfShamanHexRangeChoice`
+///   (`acg_abilities_race.lst` and, re-derived this cycle, the not-yet-ingested
+///   `player_companion/heroes_of_the_wild/hotw_abilities_race.lst`) -- PCGen's own
+///   naming for a Favored Class Bonus sub-choice option table entry. No genuine
+///   monster-ability `TYPE:` second segment observed anywhere in this corpus ends
+///   in `Choice` (the confirmed vocabulary is `Extraordinary`/`Supernatural`/
+///   `SpellLike`/`PermanencySpell`/`Immunity`/`Vision`/`Defensive`/`Communicate`/
+///   `Special Attack`/`Special Ability`, plus per-book creature-template facets
+///   like `OgrekinDisadvantageousDeformity`/`LycanthropeKind` -- none end in
+///   `Choice` either).
+/// - Any field carries the literal corpus string `Favored Class Bonus`, e.g.
+///   `KEY:Favored Class Bonus Output ~ Shifter ~ Dwarf`
+///   (`ultimate_wilderness/uw_abilities_race.lst`) -- PCGen's own
+///   `Favored Class Bonus Output ~ <class> ~ <race>` KEY convention for the
+///   auto-granted **display** row a Favored Class Bonus choice feeds (the row
+///   with a bare, second-segment-less `TYPE:SpecialQuality` that the
+///   `race_favored_class_bonus_row` trap below cannot catch, because that trap
+///   reads only the row's OWN `TYPE:`, and this row's own `TYPE:` never carries a
+///   `FavoredClassBonus` dot-component) -- or the `FavClassBonus`-suffixed
+///   `DEFINE:`/`BONUS:VAR` variable-name convention every Favored Class Bonus row
+///   in this corpus uses, e.g. `DEFINE:HalfOrcHunterFavClassBonus|0`.
+///
+/// Re-derived corpus-wide before this ruling, not assumed: of the 486 `monster_ability`
+/// `not-ingested` units `OPEN-ISSUES.md` row 34 flagged across `advanced_class_guide`
+/// (106) and `core_essentials` (380), this test moves **106 of 106** ACG units (100%
+/// of that file's facet-matching content; `acg_abilities_race.lst` carries 0
+/// `NaturalAttack`/`Universal Monster Rule` rows anywhere) and **0 of 380** CE units
+/// (CE's facet-matching content is 100% genuine `Extraordinary`/`Supernatural`/
+/// `SpellLike`/`Universal Monster Rule` vocabulary, matching the SD28-E15 precedent
+/// this const's own doc comment already established) -- row 34's inclusion of CE as
+/// also-misclassified does not survive a one-record-deep check and is corrected via
+/// `retro.py correction` alongside this fix. A THIRD book this same audit newly
+/// found misclassified, `ultimate_wilderness` (50 of its 52 `monster_ability` units;
+/// the 2 real exceptions, "Plant Traits" and "Leshy Traits", are genuine
+/// Bestiary-appendix creature-type traits with `TYPE:SpecialQuality.Extraordinary`
+/// and neither test above matches), moves alongside ACG under the same two
+/// corpus-stated tests -- proof this is a general row-content fix, not a
+/// book-specific patch: no book name appears anywhere in the test itself.
+fn is_player_favored_class_choice_row(fields: &[&str], type_second_segment: &str) -> bool {
+    if type_second_segment.ends_with("Choice") {
+        return true;
+    }
+    fields
+        .iter()
+        .any(|f| f.contains("Favored Class Bonus") || f.contains("FavClassBonus"))
+}
+
 /// A record's kind, refined from the file-level guess by what the record
 /// itself says.
 ///
@@ -657,21 +719,134 @@ const RACE_TRAIT_EXCLUDED_TYPE_PREFIX: &str = "ClassLevelAdjustment";
 ///   own sub-ability, not a racial trait -- `file_kind`'s own whole-file
 ///   `_abilities_race` -> `Kind::RaceTrait` guess was always a file-level
 ///   approximation; this is the row-content correction `§55`/`§56` already
-///   proved necessary for `race_trait`'s own declared counts.
+///   proved necessary for `race_trait`'s own declared counts -- UNLESS the row
+///   itself is a player race+class Favored Class Bonus row wearing a monster
+///   facet's `TYPE:` first segment (`is_player_favored_class_choice_row`,
+///   `OPEN-ISSUES.md` row 34).
 fn refine_kind(file_kind: Kind, fields: &[&str]) -> Kind {
     match file_kind {
         Kind::Race if has_token(fields, "CR:") => Kind::Monster,
         Kind::RaceTrait => {
-            let type_first_segment = token_value(fields, "TYPE:")
-                .and_then(|t| t.split('.').next())
-                .unwrap_or("");
-            if MONSTER_ABILITY_TYPE_FACETS.contains(&type_first_segment) {
+            let type_value = token_value(fields, "TYPE:").unwrap_or("");
+            let mut type_segments = type_value.split('.');
+            let type_first_segment = type_segments.next().unwrap_or("");
+            let type_second_segment = type_segments.next().unwrap_or("");
+            if MONSTER_ABILITY_TYPE_FACETS.contains(&type_first_segment)
+                && !is_player_favored_class_choice_row(fields, type_second_segment)
+            {
                 Kind::MonsterAbility
             } else {
                 Kind::RaceTrait
             }
         }
         other => other,
+    }
+}
+
+#[cfg(test)]
+mod refine_kind_monster_ability_tests {
+    use super::*;
+
+    /// `acg_abilities_race.lst:331` (`Kind::RaceTrait` file-level guess), verbatim
+    /// field shape -- a Favored Class Bonus sub-choice option table entry wearing
+    /// `TYPE:SpecialQuality`, one of `MONSTER_ABILITY_TYPE_FACETS`'s own facets.
+    /// Before this fix `refine_kind` promoted this to `Kind::MonsterAbility`;
+    /// `OPEN-ISSUES.md` row 34 is exactly this shape, 106 of 106 in this file.
+    #[test]
+    fn acg_elf_hunter_choice_row_stays_race_trait_not_monster_ability() {
+        let fields = [
+            "Longbow",
+            "KEY:Elf Hunter Critical Confirmation Choice ~ Longbow",
+            "CATEGORY:Special Ability",
+            "TYPE:SpecialQuality.ElfHunterCritialConfirmationChoice",
+            "VISIBLE:YES",
+            "DEFINE:ElfHunterCritConfLongbowBonus|0",
+            "DESC:Gain a bonus.",
+            "BONUS:VAR|ElfHunterCritConfLongbowBonus|1",
+        ];
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields), Kind::RaceTrait);
+    }
+
+    /// `uw_abilities_race.lst:235` -- the auto-granted "Output" display row a
+    /// Favored Class Bonus choice feeds. Its OWN `TYPE:` is bare `SpecialQuality`
+    /// (no `FavoredClassBonus` dot-component), so the pre-existing
+    /// `race_favored_class_bonus_row` trap (which reads only the row's own
+    /// `TYPE:`) cannot catch it -- this is the second, independent shape row 34's
+    /// fix must also close.
+    #[test]
+    fn uw_favored_class_bonus_output_row_stays_race_trait_not_monster_ability() {
+        let fields = [
+            "Wild Empathy Bonus",
+            "KEY:Favored Class Bonus Output ~ Shifter ~ Dwarf",
+            "CATEGORY:Special Ability",
+            "TYPE:SpecialQuality",
+            "VISIBLE:EXPORT",
+            "DESC:Add a bonus on wild empathy checks.|DwarfShifterEmpathyBonus/2",
+        ];
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields), Kind::RaceTrait);
+    }
+
+    /// Same shape, caught via the `FavClassBonus`-suffixed variable-name
+    /// convention rather than the literal `Favored Class Bonus` KEY text --
+    /// `acg_abilities_race.lst:316`'s "Animal Companion Hit Points" row, one of
+    /// the 10 ACG rows whose `TYPE:` is bare `SpecialQuality` (no `...Choice`
+    /// second segment) and whose KEY does not literally contain the phrase
+    /// `Favored Class Bonus`.
+    #[test]
+    fn acg_bare_specialquality_row_with_favclassbonus_variable_stays_race_trait() {
+        let fields = [
+            "Animal Companion Hit Points",
+            "KEY:Half-orc ~ Hunter ~ Animal Companion Hit Points",
+            "CATEGORY:Special Ability",
+            "TYPE:SpecialQuality",
+            "DESC:Your animal companion has extra hit points.|HalfOrcHunterFavClassBonus",
+        ];
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields), Kind::RaceTrait);
+    }
+
+    /// `ce_abilities_race.lst:1739`, one of Core Essentials' 380 genuine
+    /// monster/creature-type-trait rows this fix must NOT move -- confirmed by
+    /// this cycle's own corpus-wide re-derivation to be legitimate
+    /// `Extraordinary`/`Supernatural`/`SpellLike` vocabulary, not player content,
+    /// contra `OPEN-ISSUES.md` row 34's inclusion of CE in its 486-unit claim.
+    #[test]
+    fn ce_aberration_traits_output_row_still_becomes_monster_ability() {
+        let fields = [
+            "Aberration Traits Output",
+            "OUTPUTNAME:Aberration Traits",
+            "CATEGORY:Special Ability",
+            "TYPE:SpecialQuality.Extraordinary",
+            "DESC:Aberrations breathe, eat, and sleep.",
+        ];
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields), Kind::MonsterAbility);
+    }
+
+    /// `uw_abilities_race.lst:25`, one of `ultimate_wilderness`'s 2 genuine
+    /// exceptions among its 52 `monster_ability` units -- a creature-TYPE trait
+    /// (every Plant-type creature, not a player race), same `Extraordinary`
+    /// vocabulary as the CE case above, must also still promote.
+    #[test]
+    fn uw_plant_traits_output_row_still_becomes_monster_ability() {
+        let fields = [
+            "Plant Traits",
+            "KEY:Plant Traits Output (PC)",
+            "CATEGORY:Special Ability",
+            "TYPE:SpecialQuality.Extraordinary",
+            "DESC:Plants breathe and eat, but do not sleep.",
+        ];
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields), Kind::MonsterAbility);
+    }
+
+    /// A bare `NaturalAttack`/`Universal Monster Rule` first segment is
+    /// unambiguous on its own (corpus-wide: 0 false positives, see this fix's own
+    /// doc comment) and must never be gated by `is_player_favored_class_choice_row`
+    /// even when a coincidental `Choice`-suffixed or `Favored Class Bonus`-bearing
+    /// field is also present -- regression guard so a future edit cannot widen the
+    /// gate onto these two self-evident facets.
+    #[test]
+    fn natural_attack_first_segment_is_never_gated_by_the_choice_test() {
+        let fields = ["Bite 1 (Medium)", "CATEGORY:Special Ability", "TYPE:NaturalAttack"];
+        assert_eq!(refine_kind(Kind::RaceTrait, &fields), Kind::MonsterAbility);
     }
 }
 

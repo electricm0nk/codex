@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Chuul ~ Paralytic Tentacles",
     "delivery": "Extraordinary",
@@ -15,19 +13,63 @@
     "owners": [
       "beastiary:monster:chuul"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Paralytic Tentacles"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|ParalyticTentaclesDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ParalyticTentaclesDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ParalyticTentaclesDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Paralytic Tentacles)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ParalyticTentaclesDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A chuul can transfer a grappled victim from a claw to its tentacles as a move action. The tentacles grapple with the same strength as the claw but deal no damage, instead exuding a paralytic secretion. Anyone held in the tentacles must succeed on a DC %1 Fortitude save each round on the chuul's turn or be paralyzed for 6 rounds. While held in the tentacles, paralyzed or not, a victim automatically takes 1d8+7 points of damage each round from the creature's mandibles.|ParalyticTentaclesDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Chuul ~ Paralytic Tentacles"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.46",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 220,
-    "record_key": "Chuul ~ Paralytic Tentacles"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 220,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Chuul ~ Paralytic Tentacles",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

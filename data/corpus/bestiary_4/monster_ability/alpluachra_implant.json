@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Alpluachra ~ Implant",
     "delivery": "Extraordinary",
@@ -13,19 +11,39 @@
     "owners": [
       "bestiary_4:monster:alpluachra"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "As a full-round action, an alpluachra can crawl into the mouth of a helpless creature (no more than three size categories larger than itself) and implant itself into the creature's throat. Once implanted, anything that the creature ingests is instead consumed by the alpluachra, including such substances as elixirs and potions or ingested alchemical items, diseases, drugs, or poisons. Once the alpluachra is implanted, the host creature begins suffering the effects of starvation and thirst (Core Rulebook p.444 ). Due in part to its numbing slime, an implanted alpluachra is difficult to detect. Each time the host creature ingests anything, it gains an automatic Perception check against the alpluachra's Stealth. After the newtlike fey is detected, it can be removed either by consuming at least half a pound of salt or a gallon of salt water, by a remove disease spell cast on the host creature, or by treating the host with a successful DC 15 Heal check. When a Heal check made for this purpose fails by 5 or more, the host creature takes 1d6 points of damage. If the host attempts to remove the alpluachra by eating salt or drinking salt water, it must succeed at a DC 12 Fortitude save or become sickened for 1d8 hours from the reaction with the alpluachra. If the alpluachra dies or becomes unconscious, it is immediately detected by the host creature, and can be removed safely as a full-round action. While implanted, an alpluachra is considered helpless."
+      },
+      {
+        "key": "KEY",
+        "value": "Alpluachra ~ Implant"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 263,
-    "record_key": "Alpluachra ~ Implant"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 263,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Alpluachra ~ Implant",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

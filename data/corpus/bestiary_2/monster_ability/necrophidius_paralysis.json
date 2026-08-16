@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Necrophidius ~ Paralysis",
     "delivery": "Supernatural",
@@ -15,19 +13,63 @@
     "owners": [
       "bestiary_2:monster:necrophidius"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Paralysis"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NecrophidiusParalysisDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NecrophidiusParalysisDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Paralysis)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NecrophidiusParalysisDC|2|TYPE=Racial"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NecrophidiusParalysisDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Any living creature that is bitten by a necrophidius must succeed on a DC %1 Fortitude save or be paralyzed for 1d4 rounds.|NecrophidiusParalysisDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Necrophidius ~ Paralysis"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.196"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.196",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 862,
-    "record_key": "Necrophidius ~ Paralysis"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 862,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Necrophidius ~ Paralysis",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

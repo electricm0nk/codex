@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Crawling Hand ~ Pus Burst",
     "delivery": "Supernatural",
@@ -16,19 +14,59 @@
       "bestiary_2:monster:crawling_hand_giant",
       "bestiary_2:monster:crawling_hand"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Pus Burst"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CrawlingHandPusBurstDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|CrawlingHandPusBurstDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Pus Burst)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "CrawlingHandPusBurstDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When damaged by a piercing or slashing melee weapon, a spray of vile pus strikes the attacker unless the attacker makes a DC %1 Reflex save.  Weapons that provide reach protect the attacker completely from a pus burst.  Creatures struck by pus become nauseated for 1d3 rounds and take 2d6 points of negative energy damage.|CrawlingHandPusBurstDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Crawling Hand ~ Pus Burst"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.59"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.59",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 260,
-    "record_key": "Crawling Hand ~ Pus Burst"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 260,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Crawling Hand ~ Pus Burst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

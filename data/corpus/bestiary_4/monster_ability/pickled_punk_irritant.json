@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Pickled Punk ~ Irritant",
     "delivery": "Extraordinary",
@@ -15,19 +13,39 @@
     "owners": [
       "bestiary_4:monster:pickled_punk"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The water in a pickled punk's jar is highly irritating to all living creatures. A creature damaged by a pickled punk's bite that deals damage to pickled punk with a natural weapon or unarmed attack, or that otherwise comes into contact with a pickled punk or the water in its jar, must succeed at a DC %1 Fortitude save or break out in an itching rash. A creature affected by this rash takes a -2 penalty to Dexterity and Charisma for 24 hours (multiple allergic reactions do not stack). Remove disease or any magical healing removes the rash instantly. This is a disease effect.|CHA+11"
+      },
+      {
+        "key": "KEY",
+        "value": "Pickled Punk ~ Irritant"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 1169,
-    "record_key": "Pickled Punk ~ Irritant"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1169,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Pickled Punk ~ Irritant",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

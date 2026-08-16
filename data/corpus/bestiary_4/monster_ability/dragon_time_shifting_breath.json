@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Dragon (Time) ~ Shifting Breath",
     "delivery": "Supernatural",
@@ -16,19 +14,39 @@
     "owners": [
       "bestiary_4:monster:dragon_time"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Instead of a cone of electricity, an old or older time dragon can use its breath weapon to displace creatures in time. Each creature in the cone must succeed at a Will save (DC %1) or be shifted forward in time %2 rounds. For an affected creature, it's as if no time passed. Creatures that succeed at their saves are staggered for 1 round.|BreathWeaponDC|DragonAgeCategory/2"
+      },
+      {
+        "key": "KEY",
+        "value": "Dragon (Time) ~ Shifting Breath"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 531,
-    "record_key": "Dragon (Time) ~ Shifting Breath"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 531,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Dragon (Time) ~ Shifting Breath",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",

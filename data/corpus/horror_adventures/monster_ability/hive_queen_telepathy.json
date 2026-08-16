@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:21Z",
   "data": {
     "corpus_key": "Hive Queen ~ Telepathy",
     "delivery": "Supernatural",
@@ -13,21 +11,45 @@
     "owners": [
       "horror_adventures:monster:hive_queen"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A hive queen can communicate telepathically with any creature with the hive subtype within 1 mile. This telepathy conveys empathic concepts rather than true language."
+      },
+      {
+        "key": "KEY",
+        "value": "Hive Queen ~ Telepathy"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.237"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.HiveQueen"
+      }
+    ],
     "source_page": "p.237",
     "traits": [
       "HiveQueen"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
-    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00",
-    "line": 282,
-    "record_key": "Hive Queen ~ Telepathy"
-  },
+  "ingested_at": "2026-08-15T01:24:21Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 282,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "record_key": "Hive Queen ~ Telepathy",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

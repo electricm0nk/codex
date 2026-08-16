@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Vrolikai ~ Death-Stealing Gaze",
     "delivery": "Supernatural",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:demon_vrolikai"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Death-Stealing Gaze"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VorlikaiDeathStealingGazeDC|10+TL/2+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|VorlikaiDeathStealingGazeDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Death-Stealing Gaze)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "VorlikaiDeathStealingGazeDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "1 permanent negative level, 30 ft., DC %1 negates.  Creatures slain by these negative levels become juju zombies (see page 291) under the vrolikai's control.|VorlikaiDeathStealingGazeDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Vrolikai ~ Death-Stealing Gaze"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.81"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.81",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 370,
-    "record_key": "Vrolikai ~ Death-Stealing Gaze"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 370,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Vrolikai ~ Death-Stealing Gaze",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

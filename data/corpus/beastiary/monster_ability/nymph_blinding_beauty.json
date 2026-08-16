@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Nymph ~ Blinding Beauty",
     "delivery": "Supernatural",
@@ -15,21 +13,57 @@
     "owners": [
       "beastiary:monster:nymph"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(30 ft., permenant blindness, DC %1)|NymphBlindingBeautyDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NymphBlindingBeautyDC|10+(HD/2)+CHA"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NymphBlindingBeautyDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "This ability affects all humanoids within 30 feet of a nymph. Those who look directly at a nymph must succeed on a DC %2 Fortitude save or be blinded permanently. A nymph can suppress or resume this ability as a free action. The save DC is Charisma-based.|NymphBlindingBeautyDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Nymph ~ Blinding Beauty"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.217"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Aura"
+      }
+    ],
     "source_page": "p.217",
     "traits": [
       "Aura"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 998,
-    "record_key": "Nymph ~ Blinding Beauty"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 998,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Nymph ~ Blinding Beauty",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

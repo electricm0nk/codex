@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:20Z",
   "data": {
     "corpus_key": "Drakainia ~ Impregnate Surrogate",
     "delivery": "Supernatural",
@@ -13,19 +11,39 @@
     "owners": [
       "bestiary_4:monster:drakainia"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A drakainia can disgorge a monstrous embryo into the mouth of a living, corporeal creature that is pinned or helpless. She makes a grapple combat maneuver check, and if she succeeds she impregnates that creature regardless of its gender. A mythic character must succeed at a DC 38 Fortitude saving throw to avoid being impregnated; a non-mythic character is impregnated automatically. An impregnated creature's pregnancy lasts for 2d4 rounds. During this pregnancy, the victim is nauseated until the monster bursts forth from the victim's abdomen, which deals 10d6 points of damage to the pregnant creature and applies the broken condition to any armor it is wearing. Remove disease ( DC 28 ) eliminates the unnatural embryo. Alternatively, as a full-round action another creature can attempt to cut out the growing monster with a DC 38 Heal check. On a successful check, the offspring is removed, and the formerly pregnant creature takes 1d4 points of bleed damage. On failed check, the pregnant creature takes 2d6 points of bleed damage and is stunned for 1 round, but the offspring is not removed. The creature spawned by means of this impregnation is any creature of the drakainia's choice that is at least one size category smaller than the creature she impregnated. These spawn count against the drakainia's daily CR allowance for birth spawn."
+      },
+      {
+        "key": "KEY",
+        "value": "Drakainia ~ Impregnate Surrogate"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": null,
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
-    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
-    "line": 552,
-    "record_key": "Drakainia ~ Impregnate Surrogate"
-  },
+  "ingested_at": "2026-08-15T01:24:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 552,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "record_key": "Drakainia ~ Impregnate Surrogate",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

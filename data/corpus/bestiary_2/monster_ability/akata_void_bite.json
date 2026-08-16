@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Akata ~ Void Bite",
     "delivery": "Extraordinary",
@@ -15,19 +13,63 @@
     "owners": [
       "bestiary_2:monster:akata"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Void Bite"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(bite)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AkataVoidBiteDC|12"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AkataVoidBiteDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Void Bite)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "AkataVoidBiteDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Akatas hold hundreds of invisibly small larval young within their mouths, spreading these parasitic creatures to hosts through their bite.  Only humanoids make suitable hosts for akata young - all other creature types are immune to this parasitic infection.  The disease itself is known as void death.  Disease: Void Death: Bite - injury; save Fort DC %1; onset 1 hour; frequency 1/day; effect 1d2 Dex and 1d2 Con damage; an infected creature who dies rises as a void zombie 2d4 hours later; cure 2 consecutive saves.|AkataVoidBiteDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Akata ~ Void Bite"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.23",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 76,
-    "record_key": "Akata ~ Void Bite"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 76,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Akata ~ Void Bite",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard"

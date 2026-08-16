@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:18Z",
   "data": {
     "corpus_key": "Green Hag ~ Weakness",
     "delivery": "Supernatural",
@@ -15,19 +13,63 @@
     "owners": [
       "beastiary:monster:green_hag"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Weakness"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|WeaknessDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaknessDC|10+(HD/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|WeaknessDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Weakness)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "WeaknessDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A green hag's claws sap strength from those she strikes. Each time a green hag hits a foe with her claw attack, the victim takes 2 points of Strength damage unless he resists the weakness with a DC %1 Fortitude save. Alternatively, a green hag can attempt to inflict even greater weakness on a foe by making a touch attack--this variant requires a standard action, and cannot be attempted in the same round the hag makes claw attacks. The opponent touched must succeed on a DC %1 Fortitude save or take 2d4 points of Strength damage.|WeaknessDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Green Hag ~ Weakness"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.167"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.167",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 758,
-    "record_key": "Green Hag ~ Weakness"
-  },
+  "ingested_at": "2026-08-15T01:24:18Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 758,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Green Hag ~ Weakness",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

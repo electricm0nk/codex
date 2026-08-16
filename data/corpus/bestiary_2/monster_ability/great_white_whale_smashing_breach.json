@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Great White Whale ~ Smashing Breach",
     "delivery": "Extraordinary",
@@ -16,19 +14,59 @@
     "owners": [
       "bestiary_2:monster:whale_great_white"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Smashing Breach"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GreatWhiteWhaleSmashingBreachDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|GreatWhiteWhaleSmashingBreachDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Smashing Breach)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "GreatWhiteWhaleSmashingBreachDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a full-round action, a great white whale can make a special charge attack against creatures on the surface of the water.  At the end of its charge, the whale breaches, then slams down onto the target with incredible force.  Any Huge or smaller creatures in the whale's space must make a DC %1 Reflex save or take 4d8+%2 points of bludgeoning damage and be forced into the nearest square that is adjacent to the whale.  This breach automatically attempts to capsize any boats caught wholly or partially in this area.|GreatWhiteWhaleSmashingBreachDC|STR*1.5"
+      },
+      {
+        "key": "KEY",
+        "value": "Great White Whale ~ Smashing Breach"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.282"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.282",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 1362,
-    "record_key": "Great White Whale ~ Smashing Breach"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1362,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Great White Whale ~ Smashing Breach",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Naunet ~ Confusion",
     "delivery": "Supernatural",
@@ -15,19 +13,63 @@
     "owners": [
       "bestiary_2:monster:protean_naunet"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Confusion"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(tentacle)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NaunetConfusionDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|NaunetConfusionDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Confusion)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "NaunetConfusionDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature struck by a naunet's tentacle attack is infused with raw chaos, and must make a DC %1 Will save or be confused for 1 round.  Rounds of confusion dealt in this manner stack.  A creature with a chaotic component to its alignment gains a +4 bonus on saves against this effect, and creatures with the chaotic subtype are immune.  This is a mind-affecting effect.|NaunetConfusionDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Naunet ~ Confusion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.216"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.216",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 986,
-    "record_key": "Naunet ~ Confusion"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 986,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Naunet ~ Confusion",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

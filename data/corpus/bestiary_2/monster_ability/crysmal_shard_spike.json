@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-15T01:24:19Z",
   "data": {
     "corpus_key": "Crysmal ~ Shard Spike",
     "delivery": "Extraordinary",
@@ -15,19 +13,47 @@
     "owners": [
       "bestiary_2:monster:crysmal"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+%1 (3d6, range increment 60 ft.)|BAB+DEX+1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, a crysmal can launch its tail spike as a ranged attack that shatters when it hits, dealing 3d6 points of piercing damage to the target and 1d4 points of piercing damage to all creatures in adjacent squares.  The spike regrows in 24 hours, but until it does, its impaired sting does only 1d6+%1 damage.|STR*1.5"
+      },
+      {
+        "key": "KEY",
+        "value": "Crysmal ~ Shard Spike"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.61"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.61",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
-    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
-    "line": 270,
-    "record_key": "Crysmal ~ Shard Spike"
-  },
+  "ingested_at": "2026-08-15T01:24:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 270,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "record_key": "Crysmal ~ Shard Spike",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:prose_formula_segment",
