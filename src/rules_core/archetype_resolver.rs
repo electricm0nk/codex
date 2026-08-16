@@ -101,6 +101,22 @@ pub fn archetype_claiming_slot(
     subject: &str,
     slot_id: &str,
 ) -> Option<&'static str> {
+    archetype_claiming_slot_entry(input, subject, slot_id).map(|entry| entry.archetype_name)
+}
+
+/// Same primitive as `archetype_claiming_slot`, but returns the claiming
+/// archetype's own full catalog entry rather than only its display name --
+/// for a caller that needs to read a SPECIFIC named grant off the
+/// superseding archetype (e.g. its own "~ Weapon and Armor Proficiency"
+/// sub-feature text), not just the fact that supersession happened.
+/// `archetype_claiming_slot` is now a thin wrapper over this (SD31-E4-F1-001,
+/// 2026-08-16, Slayer's Weapon and Armor Proficiency supersession -- the
+/// first caller that needed the full entry, not just the name).
+pub fn archetype_claiming_slot_entry(
+    input: &CharacterInput,
+    subject: &str,
+    slot_id: &str,
+) -> Option<&'static ArchetypeSwapEntry> {
     input
         .chosen
         .selected_choices
@@ -111,7 +127,6 @@ pub fn archetype_claiming_slot(
             entry.subject == subject
                 && entry.replaces.map(|r| r.contains(&slot_id)).unwrap_or(false)
         })
-        .map(|entry| entry.archetype_name)
 }
 
 #[cfg(test)]
@@ -201,5 +216,37 @@ mod tests {
     fn a_wrong_subject_check_never_claims_the_slot() {
         let input = input_with_archetype("Alchemist Archetype ~ Plague Bringer");
         assert!(!archetype_claims_slot(&input, "Barbarian", "AlchemistPoisonResistance"));
+    }
+
+    /// `archetype_claiming_slot_entry` (SD31-E4-F1-001): the whole catalog
+    /// entry comes back, not just the name, so a caller can read a specific
+    /// named grant off it. Bounty Hunter's real ACG row is the test case --
+    /// added by this same cycle, so this also proves the new Slayer
+    /// archetype rows are reachable through this primitive end to end.
+    #[test]
+    fn claiming_slot_entry_returns_the_whole_catalog_row_with_its_grants() {
+        let input = input_with_archetype("Slayer Archetype ~ Bounty Hunter");
+        let entry = archetype_claiming_slot_entry(&input, "Slayer", "WeaponProficiencies")
+            .expect("Bounty Hunter must claim the WeaponProficiencies slot");
+        assert_eq!(entry.archetype_name, "Bounty Hunter");
+        let grant = entry
+            .grants
+            .iter()
+            .find(|g| g.grants_feature_key == "Bounty Hunter ~ Weapon and Armor Proficiency")
+            .expect("Bounty Hunter must grant its own Weapon and Armor Proficiency sub-feature");
+        assert!(grant.description.unwrap().contains("aklys"));
+    }
+
+    /// No selection, no entry -- the base case for the same new primitive.
+    #[test]
+    fn claiming_slot_entry_is_none_with_no_archetype_selected() {
+        let input = crate::rules_core::character_input::load_character_input_fixture(
+            include_str!(
+                "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+            ),
+        )
+        .character_input
+        .expect("fixture must load");
+        assert!(archetype_claiming_slot_entry(&input, "Slayer", "WeaponProficiencies").is_none());
     }
 }

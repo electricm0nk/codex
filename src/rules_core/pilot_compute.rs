@@ -17290,6 +17290,8 @@ fn ground_or_block_slayer_class_features(
         ),
     });
 
+    ground_slayer_weapon_and_armor_proficiency(input, explanations);
+
     ground_slayer_remaining_named_features(input, level, explanations);
 
     diagnostics.push(ComputationDiagnostic {
@@ -17298,8 +17300,12 @@ fn ground_or_block_slayer_class_features(
             "{SLAYER_CLASS_ID} now grounds every named feature on its corpus class table: the \
              base-attack-bonus/base-save chassis pillar, its class-skill list, Sneak Attack dice, \
              Trap Sense, Trapfinding, Track, Studied Target's bonus and count, the talent count \
-             with its canonical Foil Scrutiny pick, and -- newly, task #91 -- Stalker, Swift \
-             Tracker, Slayer's Advance, Quarry, Improved Quarry and Master Slayer. This \
+             with its canonical Foil Scrutiny pick, -- task #91 -- Stalker, Swift Tracker, \
+             Slayer's Advance, Quarry, Improved Quarry and Master Slayer, and -- SD31-E4-F1-001, \
+             the class's last previously-unwired slot -- Weapon and Armor Proficiency, now \
+             wired through the real `archetype_claiming_slot_entry` supersession primitive \
+             against the 3 Slayer archetypes (Bounty Hunter, Deliverer, Stygian Slayer) this \
+             same cycle added to the ACG archetype-swap catalog. This \
              diagnostic is therefore no longer claim-blocking; it is retained to carry the \
              honest remainder. What stays deferred: (1) APPLICATION, not magnitude -- Studied \
              Target's, Stalker's and Quarry's bonuses all only matter against a studied or \
@@ -17322,6 +17328,111 @@ fn ground_or_block_slayer_class_features(
         ),
         claim_blocking: false,
     });
+}
+
+/// Grounds Slayer's Weapon and Armor Proficiency (corpus `KEY:Slayer ~
+/// Weapon and Armor Proficiency`) with the real archetype-supersession
+/// `if let`/`else` shape SD31-E4-F1's acceptance names, using
+/// `archetype_resolver::archetype_claiming_slot_entry` -- the first ACG
+/// consumer of that primitive (Alchemist/Fighter, APG/CRB, were the
+/// first two consumers overall).
+///
+/// **Zero-magnitude, grant-only record, by design.** The corpus row
+/// carries no `BONUS:` token, only `ABILITY:...AUTOMATIC` proficiency
+/// grants -- confirmed against the ingested corpus JSON
+/// (`data/corpus/advanced_class_guide/class_feature/slayer/
+/// weapon_and_armor_proficiency.json`, `wiring_class: "display"`,
+/// `wiring_class_signals: ["display:no_magnitude_token"]`). Matches
+/// Decision 7's prose done-bar (`decisions.md §7`) exactly: prose only,
+/// nothing to compute, and the description is populated here and
+/// rendered on the character sheet's Class Features section
+/// (`classFeaturesModel.ts`'s generic `class_feature.` prefix pickup) --
+/// the same "grant-only identity record" idiom this file already uses
+/// for Sorcerer's Arcane Apotheosis and Rogue's Master Strike.
+///
+/// **The weapon half's real mechanical consequence is grounded
+/// elsewhere, not duplicated here.** `weapon_tables::
+/// class_weapon_proficiency("class:slayer")` already carries Slayer's
+/// Simple+Martial weapon tiers and is read by
+/// `character_is_proficient_with` to decide the real -4
+/// nonproficiency-attack-penalty on every equipped weapon -- this
+/// record is the class-features-tab DISPLAY grounding, a different
+/// concern from that combat-math grounding.
+///
+/// **No armor-nonproficiency-penalty mechanic exists anywhere in this
+/// engine, verified rather than assumed.** The PF1 game system's own
+/// machine-readable `system/gameModes/Pathfinder/miscinfo.lst` carries
+/// exactly one `NONPROF` token, `WEAPONNONPROFPENALTY:-4` -- no armor
+/// equivalent. Building one (an armor-proficiency table plus an
+/// armor-check-penalty consumer, mirroring the weapon lane) is real,
+/// bounded, out-of-territory-this-cycle follow-on work (this file's own
+/// `pilot_compute.rs`/`archetype_resolver.rs` territory does not
+/// include a new armor table module), named rather than silently
+/// skipped -- see `OPEN-ISSUES.md`.
+fn ground_slayer_weapon_and_armor_proficiency(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    const SLAYER_PROFICIENCY_SLOT_IDS: [&str; 3] =
+        ["WeaponProficiencies", "ArmorProficiencies", "Proficiencies"];
+
+    let claimed = SLAYER_PROFICIENCY_SLOT_IDS
+        .iter()
+        .find_map(|slot| archetype_resolver::archetype_claiming_slot_entry(input, "Slayer", slot));
+
+    if let Some(entry) = claimed {
+        // Supersession branch: a real, selected Slayer archetype claims one
+        // of the three proficiency-shaped slot ids this book's Slayer rows
+        // declare (Bounty Hunter's own FACT-set names the split
+        // WeaponProficiencies+ArmorProficiencies pair; Deliverer/Stygian
+        // Slayer's own PREMULT clause names the generic Proficiencies
+        // fact instead -- a real, verified corpus inconsistency between
+        // the two shapes, not smoothed over). The base ACG progression
+        // does not apply; the archetype's OWN "~ Weapon and Armor
+        // Proficiency" sub-feature text is read directly off its real
+        // catalog `grants` entry, never re-typed by hand a second time.
+        let own_grant = entry
+            .grants
+            .iter()
+            .find(|g| g.grants_feature_key.ends_with("~ Weapon and Armor Proficiency"));
+        let detail = match own_grant.and_then(|g| g.description) {
+            Some(text) => format!(
+                "Slayer Weapon and Armor Proficiency: superseded by the selected {} archetype \
+                 (corpus KEY:{}), which replaces this base-class slot. {}'s own text: \"{text}\"",
+                entry.archetype_name, entry.key, entry.archetype_name
+            ),
+            None => format!(
+                "Slayer Weapon and Armor Proficiency: superseded by the selected {} archetype \
+                 (corpus KEY:{}), which replaces this base-class slot. The base ACG progression \
+                 does not apply; {}'s own replacement proficiency text is not resolved in this \
+                 catalog entry",
+                entry.archetype_name, entry.key, entry.archetype_name
+            ),
+        };
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.slayer.weapon_and_armor_proficiency".to_owned(),
+            value: 0,
+            detail,
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.acg.slayer.weapon_and_armor_proficiency".to_owned(),
+            value: 0,
+            detail: "Slayer Weapon and Armor Proficiency (corpus KEY:Slayer ~ Weapon and Armor \
+                 Proficiency): \"A slayer is proficient with all simple and martial weapons, as \
+                 well as with light armor, medium armor, and shields (except tower shields).\" \
+                 This is a bounded grant-only identity record (value 0, non-fabricated): the \
+                 record's only tokens are ABILITY:...AUTOMATIC proficiency grants, no BONUS: \
+                 magnitude anywhere. The weapon half's real mechanical consequence -- avoiding \
+                 the -4 nonproficiency attack penalty -- is already grounded separately by \
+                 `weapon_tables::class_weapon_proficiency(\"class:slayer\")`, which this record \
+                 does not duplicate. No armor-nonproficiency-penalty mechanic exists anywhere in \
+                 this engine (the game system's own miscinfo.lst carries only \
+                 WEAPONNONPROFPENALTY:-4, no armor equivalent), so the armor half has nothing \
+                 further to compute here"
+                .to_owned(),
+        });
+    }
 }
 
 /// Grounds Slayer's last seven named class features (task #91): Stalker,
@@ -64797,6 +64908,108 @@ mod opponent_conditioned_tier_zero_tests {
         assert!(
             penalty.detail.to_lowercase().contains("except against"),
             "the AC penalty is scoped to everyone EXCEPT the target: {penalty:?}"
+        );
+    }
+
+    /// SD31-E4-F1-001: Slayer's Weapon and Armor Proficiency, base case --
+    /// no archetype selected, so the base ACG progression grounds with the
+    /// real corpus DESC text and value 0 (zero-magnitude, grant-only).
+    #[test]
+    fn slayer_weapon_and_armor_proficiency_grounds_the_base_grant_with_no_archetype() {
+        let base = character(SLAYER_CLASS_ID, 1);
+        let receipt = build_pilot_headless_receipt(&base);
+        let explanation = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.slayer.weapon_and_armor_proficiency")
+            .expect("the base grant must ground for a Slayer with no archetype selected");
+        assert_eq!(explanation.value, 0);
+        assert!(
+            explanation.detail.contains("light armor, medium armor, and shields"),
+            "must quote the real base corpus DESC: {explanation:?}"
+        );
+        assert!(
+            !explanation.detail.to_lowercase().contains("superseded"),
+            "no archetype is selected, so nothing is superseded: {explanation:?}"
+        );
+    }
+
+    /// The supersession branch, Bounty Hunter shape: Bounty Hunter's own
+    /// FACT-set names the SPLIT WeaponProficiencies+ArmorProficiencies
+    /// pair, and its own "~ Weapon and Armor Proficiency" sub-feature text
+    /// (naming the aklys/bolas/dan bong/lasso/net additions) replaces the
+    /// base grant's text entirely.
+    #[test]
+    fn slayer_weapon_and_armor_proficiency_is_superseded_by_bounty_hunter() {
+        let mut input = character(SLAYER_CLASS_ID, 1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: crate::rules_core::archetype_resolver::ARCHETYPE_CHOICE_ID.to_owned(),
+            selection_id: "Slayer Archetype ~ Bounty Hunter".to_owned(),
+        });
+        let receipt = build_pilot_headless_receipt(&input);
+        let explanation = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.slayer.weapon_and_armor_proficiency")
+            .expect("the record must still ground, with superseded text");
+        assert_eq!(explanation.value, 0);
+        assert!(
+            explanation.detail.contains("Bounty Hunter"),
+            "must name the superseding archetype: {explanation:?}"
+        );
+        assert!(
+            explanation.detail.contains("aklys"),
+            "must quote Bounty Hunter's OWN real corpus text, not the base grant's: \
+             {explanation:?}"
+        );
+        assert!(
+            !explanation.detail.contains("light armor, medium armor, and shields (except"),
+            "the base grant's own text must NOT appear once superseded: {explanation:?}"
+        );
+    }
+
+    /// The supersession branch, Stygian Slayer shape: this archetype's own
+    /// PREMULT clause names the GENERIC `Proficiencies` fact rather than
+    /// the split pair -- a real, verified corpus authoring inconsistency
+    /// between Slayer's own three archetypes, and proof the primitive
+    /// checks all three named slot ids, not only the split pair.
+    #[test]
+    fn slayer_weapon_and_armor_proficiency_is_superseded_by_stygian_slayer_via_the_generic_slot() {
+        let mut input = character(SLAYER_CLASS_ID, 1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: crate::rules_core::archetype_resolver::ARCHETYPE_CHOICE_ID.to_owned(),
+            selection_id: "Slayer Archetype ~ Stygian Slayer".to_owned(),
+        });
+        let receipt = build_pilot_headless_receipt(&input);
+        let explanation = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.acg.slayer.weapon_and_armor_proficiency")
+            .expect("the record must still ground, with superseded text");
+        assert!(explanation.detail.contains("Stygian Slayer"));
+        assert!(
+            explanation.detail.contains("not with medium armor, heavy armor"),
+            "must quote Stygian Slayer's own real corpus text: {explanation:?}"
+        );
+    }
+
+    /// Nothing leaks onto a non-Slayer: a Fighter must never emit the
+    /// Slayer-namespaced explanation id at all.
+    #[test]
+    fn weapon_and_armor_proficiency_does_not_ground_for_a_non_slayer() {
+        let fighter = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE)
+            .character_input
+            .expect("valid fixture");
+        assert!(
+            !build_pilot_headless_receipt(&fighter)
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.acg.slayer.weapon_and_armor_proficiency"),
+            "a Fighter must not ground Slayer's Weapon and Armor Proficiency"
         );
     }
 }
