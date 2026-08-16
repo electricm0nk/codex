@@ -107,8 +107,8 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
+ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest site-dashboard-selftest site-dashboard-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
+QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest site-dashboard-selftest site-dashboard-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -437,6 +437,94 @@ run_producer_selftest() {
     fi
 
     stage_pass producer-selftest "$ran cases passed"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: site-dashboard-selftest
+#
+# Runs `bash scripts/tests/test_publish_site_dashboard.sh` -- the detection
+# self-test for `scripts/publish-site-dashboard.sh`'s `--check` mode
+# (SD31-ATTRIB-003, operator request to version the public status feed).
+# Against a tiny FAKE producer (not the real one, so this is cheap and
+# deterministic), it proves `--check` reports "current" on an untouched
+# tree, is stable across repeated runs, catches a genuinely stale committed
+# copy, and never mutates the committed file on disk. Mutation-proven against
+# the real bug this cycle found and fixed: the first version of `--check`
+# rendered into a blank-slate scratch file instead of one seeded from the
+# committed copy, so it reported STALE unconditionally, even with nothing
+# changed -- sabotaging the seeding step reproduces exactly that (3 of 6
+# cases fail). Placed next to `producer-selftest`, same "self-test for a
+# check that raises on purpose deserves its own gate" reasoning.
+# ---------------------------------------------------------------------------
+
+run_site_dashboard_selftest() {
+    stage_start "site-dashboard-selftest — bash scripts/tests/test_publish_site_dashboard.sh"
+    local log="$LOG_DIR/site-dashboard-selftest.log"
+    local script="$REPO_ROOT/scripts/tests/test_publish_site_dashboard.sh"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail site-dashboard-selftest "self-test script missing at scripts/tests/test_publish_site_dashboard.sh"
+        return
+    fi
+
+    bash "$script" >"$log" 2>&1
+    local status=$?
+
+    local tally
+    tally=$(sed -n 's/^passed: \([0-9]*\)  failed: \([0-9]*\)$/\1 passed, \2 failed/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail site-dashboard-selftest "self-test exit $status${tally:+; $tally} — $log"
+        return
+    fi
+
+    local passed
+    passed=$(sed -n 's/^passed: \([0-9]*\).*$/\1/p' "$log" | tail -1)
+    if [[ -z "$passed" || "$passed" -eq 0 ]]; then
+        stage_fail site-dashboard-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass site-dashboard-selftest "${tally:-$passed cases passed}"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: site-dashboard-check
+#
+# Runs `scripts/publish-site-dashboard.sh --check` for real, against the
+# actually-committed `site/dashboard/PF1e-dashboard.json` and the real
+# `scripts/observer/pf1e_dashboard_producer.py` -- the freshness gate the
+# operator asked for so the public site's copy can never silently drift from
+# what `docs/work-inventory.json` currently says. Cheap (reads local repo
+# files only, no pinned oracle, no cargo build), so it sits in both stage
+# sets next to its own selftest. A failure here means: run
+# `./scripts/publish-site-dashboard.sh` and commit the refreshed feed.
+# ---------------------------------------------------------------------------
+
+run_site_dashboard_check() {
+    stage_start "site-dashboard-check — scripts/publish-site-dashboard.sh --check"
+    local log="$LOG_DIR/site-dashboard-check.log"
+    local script="$REPO_ROOT/scripts/publish-site-dashboard.sh"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail site-dashboard-check "script missing at scripts/publish-site-dashboard.sh"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec "$script" --check ) >"$log" 2>&1
+    local status=$?
+
+    if (( status != 0 )); then
+        stage_fail site-dashboard-check "exit $status — $log"
+        return
+    fi
+
+    if ! grep -q "is current" "$log"; then
+        stage_fail site-dashboard-check "exited 0 without confirming currency — $log"
+        return
+    fi
+
+    stage_pass site-dashboard-check "site/dashboard/PF1e-dashboard.json is current"
 }
 
 # ---------------------------------------------------------------------------
@@ -1428,6 +1516,8 @@ for stage in "${SELECTED[@]}"; do
         preflight-oracle)    run_preflight_oracle ;;
         oracle-pin-selftest) run_oracle_pin_selftest ;;
         producer-selftest)   run_producer_selftest ;;
+        site-dashboard-selftest) run_site_dashboard_selftest ;;
+        site-dashboard-check) run_site_dashboard_check ;;
         reachability-audit-selftest) run_reachability_audit_selftest ;;
         reachability-audit)  run_reachability_audit ;;
         groundtruth-guard-selftest) run_groundtruth_guard_selftest ;;
