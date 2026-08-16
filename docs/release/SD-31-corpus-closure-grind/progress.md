@@ -7292,6 +7292,300 @@ raised ceilings exactly. One further stale-baseline note surfaced only by this f
 own new `tests/*.rs` file, not traced to a specific branch within remaining budget) -- corrected in
 the same commit as this receipt update. This is the definitive, authoritative result for this cycle.
 
+## Cycle: SD31-ATTRIB-001 (sd31-book-attrib) — 2026-08-16
+
+**Role:** `sd31-book-attrib` (`RETRO_ACTOR=sd31-book-attrib`), own worktree
+`/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_d70ea313-07f-2`, branch `sd31-book-attrib`
+(reset onto `origin/tranche/11` at claim — the pre-assigned worktree's own HEAD was `061b623ee`,
+`origin/main`'s tip with no `docs/release/SD-31-corpus-closure-grind/` tree at all; tree was clean, so
+`git fetch origin && git checkout -B sd31-book-attrib origin/tranche/11` per the recovery protocol).
+HEAD at claim: `d47acc8fa` (`docs(sd31): OPEN-ISSUES row 68 -- operator-raised book-attribution defect;
+rows 36/44 answered`). `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-book-attrib`. Oracle pin:
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/pcgen-oracle-pin.env`), confirmed
+via `./scripts/verify.sh --only preflight-oracle` (PASS, "oracle at pin 7f818006e...").
+
+**Card:** `OPEN-ISSUES.md` row 68, the operator-raised book-attribution defect ("race is at 0%, ... I
+don't see the core rules book listed under race, and advanced race guide reports as nearly untouched").
+
+### 1. The gate, built first, proven able to fail
+
+`src/bin/v06_work_inventory.rs`'s new `core_essentials_book_attribution_tests` module (6 tests) asserts
+the documented contract mechanically: a unit's `book` must equal its TRUE source book, never
+`core_essentials`, wherever that is provable one record deep. **Proven able to fail before committing
+the fix**: temporarily made `resolve_true_book_for_core_essentials` return `None` unconditionally and
+re-ran the suite — 3 of 6 tests failed immediately with `left: "core_essentials", right: "core_rulebook"`
+/ `"bestiary"`, reproducing row 68's defect exactly. Reverted the sabotage; all 6 green again. This
+gate is `cargo test`-native (no `verify.sh` stage-list edit needed) — it runs inside `root-lib`/
+`root-full` automatically as part of the existing `cargo test --workspace` invocation.
+
+### 2. The repair
+
+`enumerate_file` (`v06_work_inventory.rs`) resolves each `core_essentials`-sourced unit's TRUE book via
+`resolve_true_book_for_core_essentials(path, text)`, two independent, per-record-provable signals:
+
+1. **Per-race files** (`core_essentials/races/<slug>/...`): `RACE_TRUE_BOOK`, a 44-entry table
+   hand-derived race-by-race from each in-scope book's own real `.pcc` file — re-derived directly
+   against the pinned oracle, NOT transcribed from row 68's own prose (which was wrong; see §4):
+   - Core Rulebook (7): `core_rulebook.pcc`'s own races.
+   - Bestiary 1/2/3/4 (11+7+5+10), Inner Sea World Guide (2): `advanced_race_guide.pcc`'s own six
+     labelled `# Core Races`/`# B1 races`/`# B2 races`/`# B3 races`/`# B4 races`/`#ISWG races` sections
+     (`grep -A60 'RACE:arg_races.lst' .../advanced_race_guide.pcc`) plus Bestiary 4's own additional 5
+     natives ARG does not reprint (`bestiary_4/_bestiary_4_for_players.pcc`'s own uncommented races
+     section: gathlain, kasatha, trox, wyrwood, wyvaran).
+   - Bestiary 5 (1: skinwalker), Bestiary 6 (1: rougarou): each book's own uncommented `.pcc` race
+     section, restricted to members no OTHER in-scope book's own `.pcc` also natively declares.
+2. **Root-level shared files** (`core_essentials/ce_*.lst`): `SOURCELONG_TO_BOOK`, mapping a file's own
+   header `SOURCELONG:<Book>` token to the corpus directory whose own top-level files independently
+   carry the identical string (cross-checked by a `find_sourcelong` sweep over every in-scope book,
+   not assumed from filename — `ce_races_familiar_cr.lst` carries `SOURCELONG:Bestiary` despite its
+   `_cr` suffix, exactly the "never inferred from a name" trap this card warned about).
+
+Left OUT on purpose, and documented as such: 7 races two-or-more in-scope books natively declare
+(Android, Aquatic Elf, Ghoran, Goblin (Monkey), Lashunta, Syrinx, Triaxian — `bestiary_5`/`bestiary_6`/
+`inner_sea_bestiary` genuinely overlap here) and `ce_abilities_race.lst` (1,637 non-comment rows, PCGen's
+own consolidated Size/Vision/Universal-Monster-Rule reference table, confirmed book-agnostic by its own
+in-file comment: *"Everything in the Pathfinder GameMode is run off the Default Internal Ability, placing
+it in Core Essentials"*). Per the card's own instruction — *"where a record's true book is genuinely
+ambiguous, say so and leave it rather than guessing"* — these stay `core_essentials`.
+
+Also fixed: `enumerate_book`'s book-roster `scope` classification had a dead branch — `if id ==
+"core_essentials" { "shared_library" }` never fired because `rule_set_for("core_essentials")` legitimately
+resolves via `RuleSetId::Ce` (added for real companion-engine consumers, unrelated to this card), so
+`core_essentials` silently reported `scope: "in_scope"` (a real book) instead. Reordered the `if`-chain
+to check the id first; `RuleSetId::Ce` itself and every downstream consumer untouched.
+
+Duplicated `RACE_TRUE_BOOK` into `src/bin/corpus_literal_sweep.rs`'s `short_book_of` (this repo's
+established convention for `book_dir_of`-shaped logic across bins, per `repair_spell_citations.rs`'s own
+doc comment) — required because that function's ENTIRE PURPOSE is "match whatever `unit.book`
+`v06_work_inventory` assigns" (its own doc comment says so verbatim), and my fix changed that assignment.
+Without this, the sweep's `--json-out` reverts to the pre-fix join key and the 330 already-`literal-
+verified` race/race_trait triples the sweep-attrib fix (`SD31-E6-F3-002`) had joined under
+`"core_essentials"` would silently lose that stamp under the new `"core_rulebook"`/`"bestiary"`/etc.
+labels. Also updated 3 pre-existing `short_book_of_tests` whose own assertions literally encoded row
+68's defect (`short_book_of(dwarf's path) == "core_essentials"`) — a legitimate test update, not a
+loosening: the tests were pinning the bug this card exists to fix.
+
+### 3. Two regressions caught and fixed BEFORE landing (rework logged)
+
+`unit.book` was silently overloaded for two purposes that had never diverged before this fix: (a)
+`token_closure_rows`'s physical-file lookup (`CorpusLines::line(book_id, file, line)`, which resolves a
+path via `book_paths[book_id]` — needs the directory ACTUALLY WALKED) and (b) `classify()`'s
+engine-consumer-table lookup (`engine_book_for(&unit.book)`, which finds which `RuleSetId`'s compiled
+table serves this content — also needs the directory ACTUALLY WALKED, since that is how the engine's own
+tables are registered). Both are safe to key on `unit.book` everywhere except my own newly-diverged
+re-attributed units.
+
+**Caught, not shipped:** the first `--allow-stamp-loss` regen silently downgraded the 7 CRB races from
+`literal-verified`/`static` to `grounded`/`display` (`CorpusLines` could not find `dwarf_races.lst` under
+a `"core_rulebook"` lookup — it physically lives under `core_essentials/races/dwarf/`). Fixed by adding
+`CorpusUnit::source_book` (always the walked directory, never re-attributed) and rewiring
+`token_closure_rows`'s call site to it.
+
+**Caught, not shipped, a second time:** with that fixed, a second regen showed 16 companion units
+(Mephit breath weapons, etc.) silently downgraded `grounded` → `not-ingested`
+(`companion_absent_from_bestiary_1_companion_tables`) — `engine_book_for(&unit.book)` was still being
+read, and the real, working companion table for this content is registered under `"core_essentials"`
+(`RuleSetId::Ce`, `companion_chassis::COMPANION_BOOKS`), not `"bestiary_1"`. Fixed by rewiring that call
+site to `unit.source_book` too.
+
+**Both caught by the same check, before either was ever committed:** a full before/after diff of every
+unit id's `doneness_verdict()` — see §5. Retro `rework` event emitted
+(`1786858543177-sd31-book-attrib-dc7c1e`).
+
+### 4. Correction to row 68's own prose
+
+Row 68 named Gathlain, Ghoran, Rougarou, Skinwalker, Syrinx, Wyrwood, Wyvaran as "~37 Advanced Race
+Guide" races. `advanced_race_guide.pcc` reprints EXACTLY 37 races across its own six labelled sections
+(7+11+7+5+5+2), and none of those 7 names appear in it — they are natively declared by
+`bestiary_4`/`bestiary_5`/`bestiary_6`/`inner_sea_bestiary`'s own uncommented `.pcc` race sections
+instead, confirmed one file deep each. The arithmetic (37) was right; the roster was not. Retro
+`correction` event emitted (`1786858531702-sd31-book-attrib-21b6de`).
+
+### 5. Re-derived recovery, exhaustively verified for side effects
+
+Guarded regen (local, uncommitted per the wave rule — `git checkout -- docs/work-inventory.json` after
+every measurement):
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-v3.json
+  -> corpus-literal-sweep: 19422 records examined of 24116 read, 167814 tokens compared, 0 findings, CLEAN
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-v3.json
+  -> 100 of 101 covered units cleared; 1 pre-existing failure (spindle_of_perfect_knowledge, unrelated,
+     traced in SD31-W4-INTEGRATE-001's own receipt)
+CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep-v3.json DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture-v3.json \
+  cargo run --locked --bin v06_work_inventory
+  -> exit 0, NO --allow-stamp-loss needed (confirms §3's fix; the first two attempts, before source_book
+     existed, both needed --allow-stamp-loss and both were the regressions §3 traces)
+```
+
+**Zero doneness side effects, exhaustively checked** — the property a pure relabel must have:
+
+```python
+# every unit id present in both snapshots, doneness_verdict() compared
+lost_done = [k for k in bv if bv[k]=='done' and av.get(k)!='done']   # -> 0
+gained_done = [k for k in av if av[k]=='done' and bv.get(k)!='done'] # -> 0
+any_transition = [k for k in bv if k in av and bv[k]!=av[k]]         # -> 0
+```
+Board headline unchanged: **38,521 units, 7,603 `done` (19.74%)** — identical before and after, as it
+must be for a relabel.
+
+**Per-book, before → after** (`python3` over `doneness_verdict()`, `EXCLUDED_BOOKS`-filtered):
+
+| book | race (done) | race_trait (done) |
+|---|---:|---:|
+| `core_rulebook` | 0→**7** (0→**7**) | 130→208 (0→**46**) |
+| `advanced_race_guide` | 1→1 (0→0) — correct, see below | 323→323 (198→198) — unaffected |
+| `bestiary` | 9→20 (0→0) | 21→215 (0→**91**) |
+| `bestiary_2` | 6→13 (0→0) | 162→242 (0→**29**) |
+| `bestiary_5` | 6→7 (0→0) | 63→146 (0→**6**) |
+| `bestiary_6` | 0→1 (0→0) | 0→9 (0→0) |
+| `inner_sea_world_guide` | 14→16 (0→0) | 30→54 (0→0) |
+
+`core_rulebook` race: **0 → 7, all 7 done** — the operator's exact complaint, closed. `advanced_race_guide`
+race stays at 1 (done 0) — **correctly, not a residual bug**: ARG reprints OTHER books' race chassis, per
+`decisions.md §25.2` it owns none of its own; the operator's "nearly untouched" read is answered by
+`race_trait` (ARG's genuine own contribution — Alternate Racial Traits), unaffected by this fix and
+already 323 units / 198 done both before and after.
+
+**`core_essentials`'s own residual: 1,610 → 634** (re-derived, not transcribed):
+
+| kind | before | after |
+|---|---:|---:|
+| race_trait | 884 | 249 |
+| monster_ability | 380 | 378 |
+| companion | 145 | 0 |
+| spell | 109 | 0 |
+| race | 51 | 7 |
+| class | 23 | 0 |
+| feat | 15 | 0 |
+| equipment | 3 | 0 |
+| **total** | **1,610** | **634** |
+
+627 of the 634 residual is `ce_abilities_race.lst`'s book-agnostic system table; the other 7 are the
+genuinely-ambiguous races (§2). `core_essentials` remains a `RuleSetId` (`Ce`) for real companion-engine
+purposes — untouched — but its dashboard `scope` field correctly reports `"shared_library"` again (§2).
+
+**Corroborating case, answered precisely** (the card's own headline ask). Fetchling/Grippli/Ifrit/Oread/
+Sylph/Undine now read `book: bestiary_2`, Skinwalker `book: bestiary_5` (was `core_essentials` for all
+7) — but their own race-CHASSIS `status` stays `not-ingested`: this fix corrects the LABEL, it does not
+and cannot invent a `done` verdict the underlying corpus/engine state has not earned (confirmed by the
+0-transition proof above). **The credit their wave-2/3 work already earned was hiding in `race_trait`,
+not `race`**: `bestiary_2` race_trait done 0→29, `bestiary_5` race_trait done 0→6, `bestiary` race_trait
+done 0→91, `core_rulebook` race_trait done 0→46 — **172 units of real, previously-earned credit**, now
+correctly attributed to the books that earned it (all already inside the board's 7,603 `done` both
+before and after this cycle — this is where it was hiding, not new work manufactured by this cycle).
+
+**Row 68's own `~4,007` figure does not reproduce at this cycle's tip**: re-run with row 68's own
+one-liner at HEAD before this fix → **3,550**, not 4,007. Not investigated further — an informal
+diagnostic superseded by the authoritative `doneness_verdict()` 0-transition proof above, and re-running
+a stale figure at HEAD before trusting it is standing program discipline, applied here to a prior
+receipt's own number, not only to inherited briefs.
+
+**Surfaced, not introduced, not fixed here:** re-attributing companion/race_trait content to
+`book: "bestiary"` newly exposes that `data/corpus/bestiary/` does not exist — the SHIPPED directory for
+Bestiary 1 is spelled `beastiary` (misspelled), a different string from the `"bestiary"` id
+`v06_work_inventory.rs`/`corpus_literal_sweep.rs` use everywhere else (`corpus_dir_for(RuleSetId::
+Bestiary1) => "bestiary"`, matching the 951 pre-existing `bestiary`-labeled monster units already on the
+board). Row 68's own informal `os.path.isdir` diagnostic newly flags 239 `grounded` bestiary-labeled
+units for this reason (172 race_trait + 67 companion) — dormant before this fix because almost no
+bestiary-attributed companion/race_trait population existed to trip it. **Not a doneness regression**
+(covered by the same 0-transition proof) and **not fixed here** — a separate, pre-existing naming
+divergence, logged at `OPEN-ISSUES.md` row 69 for a dedicated future cycle rather than touched blind
+inside this one.
+
+### 6. Dashboard producer's per-book panel
+
+Checked per the card's own instruction. `scripts/observer/pf1e_dashboard_producer.py`'s
+`work_inventory_panel()` deliberately keeps `core_essentials` un-excluded (a 2026-08-10 operator
+reversal, reasoning that hiding it hides real content) — `EXCLUDED_BOOKS` itself is left unchanged: the
+634-unit residual is real and genuinely un-attributable, and hiding it would repeat exactly the mistake
+that 2026-08-10 reversal was written to prevent. Its stale 2026-08-10 rationale comment (citing "1,595
+units unique to core_essentials", "51 races," pre-this-fix figures) and its live `excluded_books.reason`
+JSON string are both corrected in place with the fuller derivation and a pointer to `OPEN-ISSUES.md` row
+69. No panel LOGIC changed — confirmed by inspection: every added diff line is a comment or a string
+literal fragment, `git diff | python3` check, zero executable-line changes.
+`python3 -m unittest scripts.tests.test_pf1e_dashboard_producer -v`: 5/5 pass (unaffected, as expected).
+
+### 7. Trap report, before/after
+
+`cargo run --locked --bin v06_corpus_trap_report -- --audit`, exit code captured directly (not through a
+pipe, corrected from a first mis-measurement that piped through `tail` and read `tail`'s own exit 0):
+`TRAP_EXIT=2` both before and after my change (pre-existing red, `OPEN-ISSUES.md` rows 27/65) — **1,192
+wiring-class-mismatch + 1 mod-record = 1,193**, up by exactly 1 from wave 4's own last-reported 1,191/1
+baseline. This trap-report audits `data/corpus/**/*.json` against a fresh oracle token-closure
+recomputation; my diff touches no `data/corpus/` file and no `wiring_class.rs` logic, so this +1 is NOT
+attributable to this cycle's change — most plausibly further shared-box drift from a concurrent lane,
+consistent with row 65's own unresolved finding that the mismatch count has been drifting cycle to
+cycle. Confirmed not worsened by anything in this diff specifically (the count would be identical to
+1,191/1 if this cycle's own commits were reverted, since none of them touch a file this audit reads).
+
+### 8. DoD-8 (on-screen verification) — not applicable, reasoned explicitly
+
+This fix changes zero player-visible reach claims: the 0-transition proof (§5) shows no unit's
+`wiring_class`/`status` moved, so nothing a character sheet renders is different. The operator-facing
+surface this card exists to fix is the DASHBOARD's per-book panel, not the desktop app's character
+sheet — verified by direct `work_inventory_panel()` invocation against the locally-regenerated
+(uncommitted per the wave rule) inventory rather than a screenshot (no browser exists on this box per
+standing program note; the dashboard's own HTML viewer is a separate static-file pipeline stage this
+card's diff does not touch). Desktop-app driving was not attempted — nothing in this diff reaches
+`apps/desktop/`.
+
+### 9. Full gate
+
+Launched EARLY, in the background, before writing this receipt:
+`LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-ATTRIB-001-verify.log`.
+
+**Confirmed PASS through 13 stages before this commit landed** (log tail, each read directly, not
+inferred): `preflight-disk`, `preflight-oracle`, `oracle-pin-selftest`, `producer-selftest`,
+`reachability-audit-selftest`, `reachability-audit` (98.95%), `groundtruth-guard-selftest`,
+`pi-sweep`, `declared-pi-audit` (clean), `audit-selftest`, `reclaim-selftest`, `driver-selftest`,
+`corpus-sweep-selftest`, `root-lib` (1849 passed), `root-full` (6548 passed across 557 suites, all 529
+`tests/*.rs` suites executed), `desktop` (447 passed), `reach` (27 passed), `corpus-sweep` (19422
+records examined, 0 findings), `frontend-install`, `frontend-test` (99/99 files), `frontend-typecheck`
+(clean). `clippy` was still running (BOTH crates -- the desktop crate's from-scratch clippy build
+compiles a large GTK/Tauri dependency tree, per this program's own standing note) when this receipt
+was written; confirmed alive via `pgrep -fa rustc` showing 5 live processes, not stalled. Separately
+verified: a scoped `cargo clippy --locked --bin v06_work_inventory --bin corpus_literal_sweep --tests`
+run (own target dir) shows **zero new warnings from this cycle's diff** — the two `collapsible_if`
+lints and one `type_complexity` lint my first draft introduced were fixed (§ "Files changed" below)
+before this commit; only the 2 pre-existing `dead_code` warnings and 1 pre-existing (unrelated,
+`SPELL_PROBE_CASTING_CLASSES`) `type_complexity` warning remain, both present before this cycle too.
+
+Per protocol ("a gate that has not returned is not a gate that passed" / "ran out of budget is not
+blocked" / "always land the commit and receipt before returning, even if a gate has not finished"): **no
+final `VERIFY_EXIT` is claimed in this commit.** This receipt will be amended with a follow-up commit
+once the log's own tail resolves; that follow-up's own `VERIFY_EXIT` line is authoritative over
+anything summarized here if the two ever disagree.
+
+### 10. Wave-rule compliance
+
+`docs/work-inventory.json` was regenerated locally multiple times to measure this cycle's delta and is
+NOT committed — `git checkout -- docs/work-inventory.json` run after every measurement; `git status
+--porcelain` confirms it clean before every commit in this cycle.
+
+### Files changed
+
+- `src/bin/v06_work_inventory.rs` — `RACE_TRUE_BOOK`, `SOURCELONG_TO_BOOK`,
+  `resolve_true_book_for_core_essentials`, `CorpusUnit::source_book`, `ModTarget` type alias (clippy
+  `type_complexity`, no behaviour change), `enumerate_file`/`enumerate_book` rewiring, `mod_only_rescue`
+  rewiring, scope-classification reorder, `classify()`'s `engine_book_for` call site rewired to
+  `source_book`, `token_closure_rows` call site rewired to `source_book`, 6 new tests, `source_book`
+  added to every pre-existing test-helper `CorpusUnit` constructor. `resolve_true_book_for_core_essentials`
+  itself restructured to `.and_then()`/`.find_map()` chains (clippy `collapsible_if`, no behaviour
+  change — re-ran the full test module both before and after, 90/90 both times).
+- `src/bin/corpus_literal_sweep.rs` — `RACE_TRUE_BOOK` (duplicated), `short_book_of` widened (same
+  clippy `collapsible_if` restructure as above), 2 pre-existing tests updated (their old assertions
+  pinned row 68's defect), 2 new tests (`an_ambiguous_race_still_resolves_to_core_essentials_not_its_own_directory_name`,
+  the corpus-wide regression test's rename/widening).
+- `scripts/observer/pf1e_dashboard_producer.py` — doc-comment/string corrections only, no logic change.
+- `docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md` — row 69 appended (after row 68,
+  reordered once to keep ascending order — no other row's text touched).
+
+### Retro events
+
+- `correction` `1786858531702-sd31-book-attrib-21b6de` — row 68's ARG-race-roster overclaim.
+- `rework` `1786858543177-sd31-book-attrib-dc7c1e` — the two engine-consumer-lookup regressions caught
+  and fixed before landing.
 ## Cycle `SD31-D7-PROSE-001` (`RETRO_ACTOR=sd31-prose-path`) — 2026-08-16, "build the done-path Decision 7 created"
 
 **Role:** `sd31-prose-path`, primary checkout at `tranche/11`, sole writer. **HEAD at claim:**

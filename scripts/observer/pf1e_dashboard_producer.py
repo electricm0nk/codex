@@ -213,12 +213,16 @@ FUTURE_STATE_BOOKS = [
     # one, and correctly falls to `status: "unassigned"` under the same
     # three-state logic every other FUTURE_STATE_BOOKS entry uses (no SD-N
     # channel at all is exactly what that status means). This may read as
-    # underselling real, substantial landed content (1,595 units unique to
-    # this book) -- flagged rather than silently accepted, since the
-    # vocabulary's own "unassigned" wording ("work is known to be needed")
-    # does not fit a book with this much already done. A future pass may
-    # want a fourth status or a channel label for pre-SD foundational work;
-    # not invented here.
+    # underselling real, substantial landed content -- flagged rather than
+    # silently accepted, since the vocabulary's own "unassigned" wording
+    # ("work is known to be needed") does not fit a book with this much
+    # already done. A future pass may want a fourth status or a channel
+    # label for pre-SD foundational work; not invented here.
+    # (`SD31-ATTRIB-001`, 2026-08-16: the "unique to this book" framing above
+    # is now stale -- most of what was unique to `core_essentials` was a
+    # mislabelled true-book attribution, not genuinely core_essentials-only
+    # content; see `work_inventory_panel()`'s own doc comment. The row stays
+    # here because a genuine 634-unit residual remains.)
     {"id": "core_essentials", "title": "Core Essentials", "channel": ""},
     {"id": "advanced_race_guide", "title": "Advanced Race Guide", "channel": "SD-27"},
     {"id": "pathfinder_unchained", "title": "Pathfinder Unchained", "channel": "SD-27"},
@@ -622,19 +626,35 @@ def work_inventory_panel(inventory: dict | None, wiring: dict | None = None) -> 
     # ruled "redundant to other tomes, never coming into scope" and excluded
     # from this dashboard's book list.
     #
-    # REVERSED 2026-08-10 for `core_essentials` specifically: that rationale
-    # was factually inverted, not merely superseded. `core_rulebook/
-    # cr_races.lst` does not define the seven core races at all -- it is 8
-    # lines, a SOURCELONG header and seven `.MOD` rows (`Dwarf.MOD`,
-    # `Elf.MOD`, `Gnome.MOD`, `Half-Elf.MOD`, `Half-Orc.MOD`, `Halfling.MOD`,
-    # `Human.MOD`) patching base definitions that live in
-    # `core_essentials/races/`. `core_essentials` is not redundant to Core
-    # Rulebook; Core Rulebook is a set of patches ON TOP of it. Confirmed via
-    # the live inventory: 1,595 of `core_essentials`'s 1,610 units exist
-    # nowhere else (884 race_trait, 373 monster_ability, 140 companion, 108
-    # spell, 50 race, 23 class, 15 feat) -- only 15 are true duplicates. This
-    # is also why `core_rulebook` itself reads zero `race` units and
-    # `core_essentials` reads 51: the races live there, not here.
+    # REVERSED 2026-08-10 for `core_essentials` specifically, on the
+    # reasoning that hiding it hid 1,595 units that "exist nowhere else."
+    # That reasoning is now PARTIALLY SUPERSEDED, not overturned:
+    # `core_essentials` genuinely is PCGen's shared packaging directory
+    # (physical storage), never a book (attribution) -- the operator's own
+    # 2026-08-16 dashboard read caught the resulting defect directly
+    # (`OPEN-ISSUES.md` row 68: "race is at 0%, I don't see the core rules
+    # book listed under race, and advanced race guide reports as nearly
+    # untouched"), and `SD31-ATTRIB-001` fixed `v06_work_inventory`'s own
+    # `book` field to attribute each `core_essentials`-sourced unit to its
+    # TRUE source book wherever that is provable one record deep (44 of 51
+    # races; every companion/spell/class/feat/equipment unit whose file
+    # carries a `SOURCELONG:` header; every race_trait row nested under a
+    # resolved race's own directory). `core_rulebook` now correctly reads 7
+    # races (was 0); `core_essentials`'s own residual dropped from 1,610 to
+    # **634** (re-derived 2026-08-16, same `EXCLUDED_BOOKS`-scoped inventory
+    # count this file already computes below): 378 `monster_ability` + 249
+    # `race_trait` (both from PCGen's own book-agnostic Universal-Monster-
+    # Rule/default-ability reference tables, which carry no `SOURCELONG` and
+    # are not any one book's content) + 7 `race` (races two or more in-scope
+    # books natively declare, so no single true book is provable -- Android,
+    # Aquatic Elf, Ghoran, Goblin (Monkey), Lashunta, Syrinx, Triaxian; see
+    # `v06_work_inventory.rs`'s `RACE_TRUE_BOOK` doc comment for the full
+    # derivation). This panel keeps `core_essentials` UN-excluded rather than
+    # re-hiding it: that residual is real, genuinely un-attributable content,
+    # and the 2026-08-10 directive's underlying worry -- a shrinking
+    # denominator with nobody told -- applies exactly as much to it as it
+    # ever did. Only the SIZE of what core_essentials legitimately owns has
+    # changed, not the decision to show it.
     #
     # `beginner_box` stays excluded -- 19 units, a genuinely simplified
     # intro subset, the original 2026-08-02 rationale still holds for it.
@@ -926,7 +946,13 @@ def work_inventory_panel(inventory: dict | None, wiring: dict | None = None) -> 
                 "(`core_essentials` was excluded under this same directive until "
                 "2026-08-10, when the operator reversed it -- it is not "
                 "redundant, Core Rulebook's races are .MOD patches over "
-                "core_essentials's own base definitions, not a duplicate of them.)"
+                "core_essentials's own base definitions, not a duplicate of them. "
+                "As of SD31-ATTRIB-001 (2026-08-16) core_essentials-sourced units "
+                "attribute to their TRUE book wherever provable one record deep; "
+                "its own residual -- content no single in-scope book can be shown "
+                "to own -- is the `core_essentials` row still shown below, now 634 "
+                "units, down from 1,610. See work_inventory_panel()'s own doc "
+                "comment for the full derivation.)"
             ),
         },
         "full_document": "docs/work-inventory.json",
