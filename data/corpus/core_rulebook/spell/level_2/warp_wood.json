@@ -1,26 +1,32 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "You cause wood to bend and warp, permanently destroying its straightness, form, and strength. A warped door springs open [or becomes stuck, requiring a Strength check to open, at your option]. A boat or ship springs a leak. Warped ranged weapons are useless. A warped melee weapon causes a -4 penalty on attack rolls. You may warp one Small or smaller object or its equivalent per caster level. A Medium object counts as two Small objects, a Large object as four, a Huge object as eight, a Gargantuan object as 16, and a Colossal object as 32. Alternatively, you can unwarp wood [effectively warping it back to normal] with this spell. Make whole, on the other hand, does no good in repairing a warped item. You can combine multiple consecutive warp wood spells to warp [or unwarp] an object that is too large for you to warp with a single spell. Until the object is completely warped, it suffers no ill effects.",
     "key": "Warp Wood",
-    "school": "Transmutation",
     "level": 2,
-    "description": "You cause wood to bend and warp, permanently destroying its straightness, form, and strength. A warped door springs open [or becomes stuck, requiring a Strength check to open, at your option]. A boat or ship springs a leak. Warped ranged weapons are useless. A warped melee weapon causes a -4 penalty on attack rolls. You may warp one Small or smaller object or its equivalent per caster level. A Medium object counts as two Small objects, a Large object as four, a Huge object as eight, a Gargantuan object as 16, and a Colossal object as 32. Alternatively, you can unwarp wood [effectively warping it back to normal] with this spell. Make whole, on the other hand, does no good in repairing a warped item. You can combine multiple consecutive warp wood spells to warp [or unwarp] an object that is too large for you to warp with a single spell. Until the object is completely warped, it suffers no ill effects."
+    "raw_tokens": [
+      {
+        "key": "DESC",
+        "value": "You cause wood to bend and warp, permanently destroying its straightness, form, and strength. A warped door springs open [or becomes stuck, requiring a Strength check to open, at your option]. A boat or ship springs a leak. Warped ranged weapons are useless. A warped melee weapon causes a -4 penalty on attack rolls. You may warp one Small or smaller object or its equivalent per caster level. A Medium object counts as two Small objects, a Large object as four, a Huge object as eight, a Gargantuan object as 16, and a Colossal object as 32. Alternatively, you can unwarp wood [effectively warping it back to normal] with this spell. Make whole, on the other hand, does no good in repairing a warped item. You can combine multiple consecutive warp wood spells to warp [or unwarp] an object that is too large for you to warp with a single spell. Until the object is completely warped, it suffers no ill effects.|PRERULE:1,DisplayFullSpell"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
     "line": 1412,
-    "record_key": "Warp Wood.MOD"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "record_key": "Warp Wood.MOD",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

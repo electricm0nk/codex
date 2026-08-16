@@ -1,25 +1,43 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "A malevolent darkness surrounds the subjects, protecting them from attacks, granting them resistance to spells cast by good creatures, and weakening good creatures when they strike the subjects. This abjuration has four effects. First, each warded creature gains a +4 deflection bonus to AC and a +4 resistance bonus on saves. Unlike the effect of protection from good, this benefit applies against all attacks, not just against attacks by good creatures. Second, a warded creature gains SR 25 against good spells and spells cast by good creatures. Third, the abjuration protects the subjects from possession and mental influence, just as protection from good does. Finally, if a good creature succeeds on a melee attack against a warded creature, the offending attacker takes 1d6 points of Strength damage [Fortitude negates].",
     "key": "Unholy Aura",
-    "school": "Abjuration",
     "level": 8,
-    "description": "A malevolent darkness surrounds the subjects, protecting them from attacks, granting them resistance to spells cast by good creatures, and weakening good creatures when they strike the subjects. This abjuration has four effects. First, each warded creature gains a +4 deflection bonus to AC and a +4 resistance bonus on saves. Unlike the effect of protection from good, this benefit applies against all attacks, not just against attacks by good creatures. Second, a warded creature gains SR 25 against good spells and spells cast by good creatures. Third, the abjuration protects the subjects from possession and mental influence, just as protection from good does. Finally, if a good creature succeeds on a melee attack against a warded creature, the offending attacker takes 1d6 points of Strength damage [Fortitude negates]."
+    "raw_tokens": [
+      {
+        "key": "DESC",
+        "value": "A malevolent darkness surrounds the subjects, protecting them from attacks, granting them resistance to spells cast by good creatures, and weakening good creatures when they strike the subjects. This abjuration has four effects. First, each warded creature gains a +4 deflection bonus to AC and a +4 resistance bonus on saves. Unlike the effect of protection from good, this benefit applies against all attacks, not just against attacks by good creatures. Second, a warded creature gains SR 25 against good spells and spells cast by good creatures. Third, the abjuration protects the subjects from possession and mental influence, just as protection from good does. Finally, if a good creature succeeds on a melee attack against a warded creature, the offending attacker takes 1d6 points of Strength damage [Fortitude negates].|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|COMBAT|AC|4|TYPE=Deflection"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|SAVE|ALL|4|TYPE=Resistance"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "Grants a +4 deflection bonus to AC and a +4 resistance bonus on saves"
+      }
+    ],
+    "school": "Abjuration"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
     "line": 1395,
-    "record_key": "Unholy Aura.MOD"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "record_key": "Unholy Aura.MOD",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

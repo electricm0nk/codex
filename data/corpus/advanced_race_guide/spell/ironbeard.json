@@ -1,23 +1,89 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T19:41:45Z",
   "data": {
+    "description": "This spell causes a brushy beard of stiff iron to erupt from the face of a willing target. The ironbeard grants a +1 armor bonus to AC, and this bonus stacks with any armor worn by the creature. The ironbeard may also be used as a weapon equivalent to cold iron armor spikes. The ironbeard makes it difficult to speak, so any spellcasting with a verbal component has a 20% spell failure chance.",
     "key": "Ironbeard",
-    "school": "Transmutation",
     "level": 1,
-    "description": "This spell causes a brushy beard of stiff iron to erupt from the face of a willing target. The ironbeard grants a +1 armor bonus to AC, and this bonus stacks with any armor worn by the creature. The ironbeard may also be used as a weapon equivalent to cold iron armor spikes. The ironbeard makes it difficult to speak, so any spellcasting with a verbal component has a 20% spell failure chance."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Antipaladin,Cleric,Magus,Paladin,Ranger=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell causes a brushy beard of stiff iron to erupt from the face of a willing target. The ironbeard grants a +1 armor bonus to AC, and this bonus stacks with any armor worn by the creature. The ironbeard may also be used as a weapon equivalent to cold iron armor spikes. The ironbeard makes it difficult to speak, so any spellcasting with a verbal component has a 20%% spell failure chance."
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassAdvancedRaceSpellRestriction,1],[PREFACT:1,TEMPLATES,IsDwarf=true]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Touch"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedRaceGuide/coreRaces/dwarves.html#_ironbeard"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One Creature"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|COMBAT|AC|1|TYPE=Armor.STACK"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|MISC|SPELLFAILURE|20"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
+      }
+    ],
+    "school": "Transmutation"
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
-    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58",
-    "line": 12,
-    "record_key": "Ironbeard"
-  },
+  "ingested_at": "2026-08-03T19:41:45Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 12,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
+    "record_key": "Ironbeard",
+    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

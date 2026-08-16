@@ -1,26 +1,32 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Grace",
-    "school": "Abjuration",
-    "level": 1,
     "description": "Until the end of your turn, your movement does not provoke attacks of opportunity.",
-    "full_text": true
+    "full_text": true,
+    "key": "Grace",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "DESC",
+        "value": "Until the end of your turn, your movement does not provoke attacks of opportunity.|PRERULE:1,DisplayFullSpell"
+      }
+    ],
+    "school": "Abjuration"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
     "line": 1970,
-    "record_key": "Grace"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+    "record_key": "Grace",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

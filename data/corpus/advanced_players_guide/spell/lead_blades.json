@@ -1,26 +1,32 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Lead Blades",
-    "school": "Transmutation",
-    "level": 1,
     "description": "Lead blades increases the momentum and density of your melee weapons just as they strike a foe. All melee weapons you are carrying when the spell is cast deal damage as if one size category larger than they actually are. For instance, a Medium longsword normally deals 1d8 points of damage, but it would instead deal 2d6 points of damage if benefiting from lead blades (see page 145 of the Core Rulebook for more information). Only you can benefit from this spell. If anyone else uses one of your weapons to make an attack it deals damage as normal for its size.",
-    "full_text": true
+    "full_text": true,
+    "key": "Lead Blades",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "DESC",
+        "value": "Lead blades increases the momentum and density of your melee weapons just as they strike a foe. All melee weapons you are carrying when the spell is cast deal damage as if one size category larger than they actually are. For instance, a Medium longsword normally deals 1d8 points of damage, but it would instead deal 2d6 points of damage if benefiting from lead blades (see page 145 of the Core Rulebook for more information). Only you can benefit from this spell. If anyone else uses one of your weapons to make an attack it deals damage as normal for its size.|PRERULE:1,DisplayFullSpell"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
     "line": 1999,
-    "record_key": "Lead Blades"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+    "record_key": "Lead Blades",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

@@ -1,26 +1,40 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "Heal enables you to channel positive energy into a creature to wipe away injury and afflictions. It immediately ends any and all of the following adverse conditions affecting the target: ability damage, blinded, confused, dazed, dazzled, deafened, diseased, exhausted, fatigued, feebleminded, insanity, nauseated, poisoned, sickened, and stunned. It also cures 10 hit points of damage per level of the caster, to a maximum of 150 points at 15th level. Heal does not remove negative levels or restore permanently drained ability score points. If used against an undead creature, heal instead acts like harm.",
     "key": "Heal",
-    "school": "Conjuration",
     "level": 6,
-    "description": "Heal enables you to channel positive energy into a creature to wipe away injury and afflictions. It immediately ends any and all of the following adverse conditions affecting the target: ability damage, blinded, confused, dazed, dazzled, deafened, diseased, exhausted, fatigued, feebleminded, insanity, nauseated, poisoned, sickened, and stunned. It also cures 10 hit points of damage per level of the caster, to a maximum of 150 points at 15th level. Heal does not remove negative levels or restore permanently drained ability score points. If used against an undead creature, heal instead acts like harm."
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "SKILL|Heal|3|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Skill Focus (Heal)"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Heal|6|TYPE=SkillFocus|PREABILITY:1,CATEGORY=FEAT,Skill Focus (Heal)|PRESKILL:1,Heal=10"
+      },
+      {
+        "key": "DESC",
+        "value": "Heal enables you to channel positive energy into a creature to wipe away injury and afflictions. It immediately ends any and all of the following adverse conditions affecting the target: ability damage, blinded, confused, dazed, dazzled, deafened, diseased, exhausted, fatigued, feebleminded, insanity, nauseated, poisoned, sickened, and stunned. It also cures 10 hit points of damage per level of the caster, to a maximum of 150 points at 15th level. Heal does not remove negative levels or restore permanently drained ability score points. If used against an undead creature, heal instead acts like harm.|PRERULE:1,DisplayFullSpell"
+      }
+    ],
+    "school": "Conjuration"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
     "line": 1046,
-    "record_key": "Heal.MOD"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "record_key": "Heal.MOD",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

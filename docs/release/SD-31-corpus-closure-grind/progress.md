@@ -3895,7 +3895,7 @@ Equipment Catalog screen. Screenshots + verify.md committed under `artifacts/SD3
   `data/corpus/ultimate_equipment/equipment/equipmods/*.json` (new, 180 records)
 - `data/corpus/beastiary/equipment/{aklys,heartstone_night_hag,poison_black_smear}.json` (incidental
   enrichment, §3)
-- `docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md` (rows 22-24 appended)
+- `docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md` (rows appended, renumbered 29-31 at integration — see the row-30 note above)
 - `docs/release/SD-31-corpus-closure-grind/kanban.md` (`epic-6-ingest-lanes` row updated)
 - `docs/release/SD-31-corpus-closure-grind/progress.md` (this entry)
 - `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F5-001-verify{,-v2,-v3}.log` (all three
@@ -3908,3 +3908,380 @@ Equipment Catalog screen. Screenshots + verify.md committed under `artifacts/SD3
   1789→1798, `BASELINE_ROOT_FULL_TESTS` 6423→6433, `BASELINE_ROOT_TEST_BINARIES` 549→550,
   `BASELINE_CORPUS_LITERAL_RECORDS` 3516→5148
 - `docs/work-inventory.json` — **NOT committed**, restored to `HEAD` after measurement per the wave rule
+
+## Cycle `SD31-E6-F2-001` (`RETRO_ACTOR=sd31-e6-spell-mab`, own worktree
+`wf_e4e73f9a-9af-5`, branch `worktree-wf_e4e73f9a-9af-5`)
+
+**Card:** `epic-6-ingest-lanes` F2 (`spell`) and F9 (`monster_ability`).
+
+**HEAD at start:** `061b623eee3f3a4c4a375032202746d620646e0c`. This did NOT descend from
+`tranche/11` (it was `origin/main`'s tip, a PR-#362 Cloudflare-Pages-deploy merge with no
+`docs/release/SD-31-corpus-closure-grind/` tree at all) and the package directory was absent.
+`git status --porcelain` was empty, so per the branch-state-check protocol: `git fetch origin &&
+git reset --hard origin/tranche/11`. Recovered to **`6f857525bcd7917035f07be680d72559010dd0bc`**
+(`docs(sd31): wave-3 disk budget + measured post-wave-2 board`) — this cycle's real starting point.
+Recorded here per the standing rule that a silent recovery is under-counted three-to-one in the
+retrospective log if not stated.
+
+**Oracle pin:** `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
+(`scripts/pcgen-oracle-pin.env`), confirmed `./scripts/verify.sh --only preflight-oracle` → PASS
+before any other command.
+
+**HEAD at end (this branch, unmerged):** `c4c73d4e7...` (commit
+`feat(sd31): enrich_spell_raw_tokens -- static spell literal-verified done rung (Epic 6-F2)`).
+
+### 1. Find out what actually moves each kind — before ingesting anything
+
+Per this card's own "1. FIRST, FIND OUT WHAT ACTUALLY MOVES EACH ONE" instruction, traced both
+kinds end to end BEFORE writing any ingest code, and verified by content (not by a card's status)
+what SD-30 Epic 0 / SD-32's own prior cycles actually landed for `spell`:
+
+```
+grep -n "spell_effect_wired\|probe_spell_key\|Kind::Spell =>" src/bin/v06_work_inventory.rs
+```
+→ the spell consumer-delta probe IS wired into `classify()`'s `Kind::Spell` arm (contrary to a
+stale doc comment at `v06_work_inventory.rs:2162` still claiming "classify()'s Kind::Spell arm is
+untouched" — that comment describes the probe-BUILDING cycle, `SD-32 spell-consumer-delta-probe`;
+a LATER, separate module (`spell_grounding_tests`, `v06_work_inventory.rs:6480`) documents the
+actual wiring cycle, `SD-32 ground-spell-units`). Confirmed live: `Kind::Spell` promotes to
+`grounded` when `facts.spell_effect_wired.contains(&(engine_book, key))`, which is populated by
+`probe_spell_effect_wiring` — a real character-sheet-reading consumer-delta probe
+(`spellbook::compute_spellbook_coverage` -> `PilotSpellbookViewModel::from_coverage` ->
+`spellSaveDc` on the rendered sheet), scoped to exactly FIVE engine books:
+`SPELL_PROBE_CASTING_CLASSES`/`spell_resolver::spell_catalog_rows()` chain only CRB, APG, ACG, ARG,
+UI (`spell_book_slug_for`, `v06_work_inventory.rs:1131-1144`, `panic!`s loudly on an unmapped
+code rather than silently dropping a book).
+
+For `monster_ability`: `Kind::MonsterAbility` (`v06_work_inventory.rs:3262`) grounds purely by
+KEY MEMBERSHIP against `facts.chassis_monster_ability_keys[engine_book]` — no consumer-delta probe
+at all, unlike spell/feat/equipment/class. That registry is `monster_chassis::MONSTER_BOOKS`
+(`src/rules_core/rules_tables/monster_chassis.rs:229`), 13 registered books, each a
+`MonsterAbilityRecord` table built by the existing `gen_book_cache.rs::gen_monster_book` generator
+from `MONSTER_BOOK_SPECS`.
+
+### 2. `spell` — the reachable ceiling is 13 units, not 1,561
+
+Re-derived which of `spell`'s corpus-wide `not-started` mass sits inside the five books the engine
+actually models at all:
+
+```python
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+FIVE = {'core_rulebook','advanced_players_guide','advanced_class_guide','advanced_race_guide','ultimate_intrigue'}
+U = [u for u in d['units'] if u.get('kind')=='spell']
+print(collections.Counter((u['book'] in FIVE, P.doneness_verdict(u['wiring_class'],u['status'],'spell')) for u in U))
+"
+```
+→ `{(True, 'done'): 47, (True, 'held'): 1103, (True, 'in-progress'): 132, (True, 'not-started'): 13,
+(False, 'not-started'): 1548}`. **1,548 of the kind's 1,561 `not-started` units cannot reach `done`
+through any existing instrument — ingest or otherwise — until a sixth `SPELL_LIST` module is
+built for their own book; that is real, but out-of-cycle, capability work (`OPEN-ISSUES.md` row
+32, renumbered from this cycle's own row 22 at integration), not a partial ingest to attempt.**
+
+Read all 13 in-scope `not-started` units by hand (`docs/release/SD-31-corpus-closure-grind`'s own
+corpus-shape discipline — verify the KIND at source, one record deep, never trust the count):
+every one is a PCGen `.COPY=` "restricted use" spell variant carrying `CLASSES:.CLEARALL` and no
+`SCHOOL:`/`CLASSES:` of its own (`core_rulebook/cr_spells.lst:1467-1478`, `advanced_race_guide/
+arg_spells.lst:230`) — e.g. `Animate Objects (Small or Smaller)`, `Speak with Animals (rodents
+only)`. `CLEARALL` is PCGen's own statement that the corpus does not assign these a class level.
+`crb::spell_list::SpellListEntry.level` (`src/rules_core/rules_tables/crb/spell_list.rs:82`) is a
+non-optional `u8` — ingesting these 13 without inventing a level would be exactly the "no invented
+numbers" doctrine violation (`docs/governance/no-stub-mvp-doctrine.md`). **Not ingested. Logged as
+`OPEN-ISSUES.md` row 32 (renumbered from this cycle's own row 22 at integration), needs a domain ruling before it is safe to attempt.**
+
+### 3. `spell` — the real lever: 120 `static`-held units, `enrich_spell_raw_tokens`
+
+Re-derived which lever actually moves `done` for the `held` mass: `wiring_class == Static` units
+already `ingested-magnitude`/`grounded`/`text-complete` promote to `literal-verified`/`done` ONLY
+via a clean `corpus_literal_sweep` match on `(book, source_file, source_line)`
+(`v06_work_inventory.rs::apply_done_rung_stamps`) — the SAME mechanism `OPEN-ISSUES.md` row 11
+already named for `equipment`'s 2,481 held `static` units (0 overlap with the sweep's population
+because they lack `data.raw_tokens`). Confirmed the spell corpus carries the identical gap: every
+shipped `data/corpus/*/spell/*.json` record inspected (`blade_lash.json`,
+`curse_of_burning_sleep.json`) has `source.kind == "lst_token"` but no `raw_tokens` array at all —
+outside `corpus_literal_sweep`'s population by construction (`parse_transcription`,
+`src/rules_core/corpus_literal_sweep.rs:319-341`).
+
+**Built `src/bin/enrich_spell_raw_tokens.rs`** — the `spell` counterpart to the existing
+`enrich_equipment_raw_tokens.rs` precedent, but reusing `corpus_literal_sweep`'s OWN
+`tab_tokens`/`token_closure` functions directly (not a reimplementation) so the tool that writes
+the tokens and the verifier that checks them run one function, not two that could drift. TDD: 9
+unit tests written first (`split_token_field` round-trip, `enrich_one` end-to-end against a
+throwaway scratch corpus, `.MOD`-row closure inclusion, already-enriched idempotency, citation-miss
+refusal, non-`lst_token` skip). **Caught a real bug via the tests before it shipped:** the first
+draft's `find_spell_json_files` was a single-level `read_dir`, silently reporting "0 spell files
+scanned" for `core_rulebook` because its `spell/` directory nests one subdirectory per spell level
+(`spell/level_0/`, `spell/level_4/`, …) — the exact single-level-join hazard `OPEN-ISSUES.md` row 1
+already named for `wiring_class::CorpusLines::line()`, reproduced independently in a second tool.
+Fixed to a recursive walk (matching `enrich_equipment_raw_tokens.rs`'s own equipment-directory
+walk), pinned with `find_spell_json_files_walks_into_level_subdirectories`.
+
+```
+cargo test --locked --bin enrich_spell_raw_tokens
+```
+→ **9 passed, 0 failed.**
+
+Ran for real, scoped to exactly the five engine-modeled books:
+```
+PCGEN_CORPUS_ROOT=/home/ubuntu/workspace/repos/pcgen/data cargo run --locked --bin enrich_spell_raw_tokens
+```
+→ `core_rulebook: 652/652 enriched, advanced_players_guide: 285/297 (12 no-LST-citation,
+web_second_source-shaped), advanced_class_guide: 144/144, advanced_race_guide: 92/92` —
+**1,173 total enriched, 0 citation misses.** (`ultimate_intrigue` has no `data/corpus/` directory
+at all — 0 spell content ingested for it today, outside this tool's reach by construction.)
+
+Re-swept:
+```
+PCGEN_CORPUS_ROOT=/home/ubuntu/workspace/repos/pcgen/data cargo run --locked --bin corpus_literal_sweep -- --max-report 60
+```
+→ **`corpus-literal-sweep: 4808 records examined of 9447 read, 42298 tokens compared (9
+synthesized), 9022 digests checked, 0 findings` / `CLEAN`.** Records examined moved 3,635 → 4,808
+(+1,173, exactly matching the enrichment count — every enriched record byte-verified clean, not
+just accepted).
+
+### 4. The one sanctioned guarded regen (measured locally, NOT committed — wave rule)
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-e6-spell-mab.json
+# -> 4808 records examined of 9447 read, 42298 tokens compared (9 synthesized), 0 findings, CLEAN
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-e6-spell-mab.json
+# -> 49 of 94 covered units cleared; 1 FAILED (advanced_players_guide:equipment:
+#    spindle_of_perfect_knowledge -- pre-existing, unrelated to this cycle, same failure the
+#    SD31-W2-INTEGRATE-001 receipt already recorded); 44 not ingested
+CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep-sd31-e6-spell-mab.json \
+DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture-sd31-e6-spell-mab.json \
+  cargo run --locked --bin v06_work_inventory
+```
+
+Measured board delta with the dashboard producer's own verdict function:
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+print(len(U), dict(c), round(100*c['done']/len(U),4))
+"
+```
+→ `38521 {'done': 6085, 'not-started': 20737, 'unmeasurable': 4034, 'deferred': 36, 'held': 6781,
+'in-progress': 848} 15.7966` — **corpus-wide `done` 6,076 → 6,085 (+9, 15.77% → 15.7966%)**.
+`spell`-specific: `done` **47 → 56 (+9)**, `held` 1,103 → 1,094 (-9), `not-started` unchanged at
+1,561 (this cycle moved `held` -> `done`, not `not-started` -> anything, exactly as §2's finding
+said it must).
+
+**Only 9 of the 120 `static`-held candidates promoted, not 120.** Root-caused rather than either
+silently under-reporting the shortfall or over-claiming "1,173 enriched" as the headline:
+```python
+python3 -c "
+import json, os
+d = json.load(open('docs/work-inventory.json'))
+FIVE={'core_rulebook','advanced_players_guide','advanced_class_guide','advanced_race_guide','ultimate_intrigue'}
+u=[x for x in d['units'] if x.get('kind')=='spell' and x.get('book') in FIVE and x.get('wiring_class')=='static' and x.get('status') in ('grounded','ingested-magnitude','text-complete')]
+match=mismatch=missing=0
+for x in u:
+    found=None
+    for root,_,files in os.walk('data/corpus/%s/spell' % x['book']):
+        for f in files:
+            if not f.endswith('.json'): continue
+            try: j=json.load(open(os.path.join(root,f)))
+            except Exception: continue
+            if j.get('data',{}).get('key')==x['name']: found=j; break
+        if found: break
+    if not found: missing+=1; continue
+    (match, mismatch)[found['source']['line'] != x['source_line']] += 1
+print('total',len(u),'match',match,'mismatch',mismatch,'missing',missing)
+"
+```
+→ **`total 120 match 9 mismatch 101 missing 10`.** The 101 "mismatch" units carry a corpus JSON
+`source.line` that points at a `.MOD` row (a description-only override), not the record's own base
+declaration — the sweep byte-verifies the `.MOD` row correctly, but `apply_done_rung_stamps`
+matches on the unit's OWN `provenance.line` (the base row, independently derived by
+`v06_work_inventory`'s own raw-`.lst` scan), so the stamp never lands even though nothing is wrong
+with the transcription. Worked example in `OPEN-ISSUES.md` row 33 (renumbered from this cycle's own row 23 at integration):
+`advanced_players_guide:spell:accelerate_poison` — unit cites `apg_spells.lst:17` (the real base
+row), shipped JSON cites `1842` (`Accelerate Poison.MOD`, `DESC:`-only). This is a pre-existing
+defect in the ORIGINAL spell ingest (`ingested_at: 2026-08-03`, well before this cycle), not
+introduced here. **Logged as `OPEN-ISSUES.md` row 33 (renumbered from this cycle's own row 23 at
+integration) — the single highest-leverage lever a future
+cycle could pull for `spell` (~100 more units, no new engine code), out of this cycle's own bounded
+turn budget to build AND verify to the standard a citation rewrite deserves.**
+
+### 5. `monster_ability` — investigated, did not ingest unsafely (`OPEN-ISSUES.md` row 34, renumbered from this cycle's own row 24 at integration; also stamped with the correct cycle-id `SD31-E6-F2-001`, corrected from the original mis-stamp `SD31-E6-F9-001`)
+
+Sampled the largest `computed`\|`not-started` candidate pools before writing a single
+`MonsterAbilityRecord`, per this card's "corpus shape is a claim you must test" mandate, and found
+two independent reasons NOT to hand-add records this cycle:
+
+1. **Corpus-shape misclassification.** `advanced_class_guide` (106 units) and `core_essentials`
+   (380 units) — 486 of the kind's 2,773 not-done total, 17.5% — are 100% sourced from
+   `acg_abilities_race.lst`/`ce_abilities_race.lst`, files whose own content is per-RACE ability
+   OPTIONS (`acg_abilities_race.lst` opens `# Dwarf`; sample keys read `Elf Hunter Critical
+   Confirmation Choice ~ Elven Curve Blade`, `Aeon ~ Envisaging`, `Aberration Traits Output`).
+   `file_kind()` correctly types these `Kind::RaceTrait`; `refine_kind()`'s
+   `MONSTER_ABILITY_TYPE_FACETS` re-routes any row whose `TYPE:` first segment is
+   `SpecialQuality`/`SpecialAttack` to `Kind::MonsterAbility` regardless of the owning creature —
+   and PCGen labels ordinary player-race traits `SpecialQuality` too. This is the SAME defect class
+   this card's own brief warned about (`isi_abilities_race_companion.lst` turning out to be
+   construct-companion abilities), one bracket over.
+2. **Player-reachability, even for genuine bestiary content.** Spot-checked `bestiary` (Bestiary
+   1)'s 57 `computed`\|`not-started` units and `bestiary_2`'s 23: every sampled ability's owning
+   monster (Air Mephit, Acid Draconal, Black Scorpion, Cloud Dragon, Giant Tarantula, …) is absent
+   from that book's own `monsters_static()` table (`grep -c "Acid Draconal"
+   src/rules_core/rules_tables/bestiary_2/monster_data.rs` -> 0) and absent from every already-
+   modeled monster's `external_ability_refs` too. Hand-adding these would produce a
+   `MonsterAbilityRecord` no player-visible surface can ever reach — the DoD-8 "twin problem" this
+   program has caught three times before, not a new gap this cycle discovered by accident.
+
+**Near-miss, corrected before it did damage.** While investigating whether the existing
+`gen_book_cache.rs::gen_monster_book` generator was stale (a possible safe re-run lever), ran
+`cargo run --locked --bin gen_book_cache -- beastiary --dry-run` — `--dry-run` is not a real flag
+(silently ignored, the tool took `beastiary` as the book argument and ran for real), which
+regenerated and rewrote 604 already-committed `data/corpus/beastiary/*.json` files (a real,
+non-trivial diff — e.g. `aboleth.json`'s `wiring_class` field flipped `derived` -> `static`,
+reflecting this WAVE's own D3/D4 classifier fixes the committed cache predates). **Reverted
+immediately**, before writing anything else: `git checkout -- data/corpus/beastiary/`, confirmed
+`git status --porcelain` clean. Logged in `OPEN-ISSUES.md` row 34 (renumbered from this cycle's own row 24 at integration) as a `wiring_class`-cache-drift
+finding rather than silently discarded — the same drift, corpus-wide, is a live gap this book's
+generator would need to reconcile before a safe re-run.
+
+**Did not write any `MonsterAbilityRecord` entries this cycle.** Neither finding is fixable inside
+this card's file territory (`refine_kind`/`MONSTER_ABILITY_TYPE_FACETS` is shared, cross-kind
+classifier logic; player-reachability requires the OWNING monster's own `Kind::Monster` ingest,
+Epic 6-F1's card, a different kind). `OPEN-ISSUES.md` row 34 (renumbered from this cycle's own row 24 at integration) names both as concrete follow-ons
+needing an Epic-1/Epic-2-level ruling, not a card-level fix.
+
+### 6. Gate
+
+Launched in the background before writing this receipt:
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F2-001-verify.log
+CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-e6-spell-mab PCGEN_CORPUS_ROOT=/home/ubuntu/workspace/repos/pcgen/data ./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+Confirmed live-progressing throughout this receipt's writing (not stalled): `groundtruth-guard-
+selftest`/`pi-sweep`/`audit-selftest`/`reclaim-selftest`/`driver-selftest`/`corpus-sweep-selftest`
+all PASS, `root-lib` PASS (1,795 passed). At return time the log was still on `root-full` (building
+~490 test binaries — this box's own-documented slow stage); corroborated live rather than assumed
+frozen: `find /home/ubuntu/cargo-targets/sd31-e6-spell-mab/debug/deps -newer "$LOG"` → 1,127 files
+newer than the log's own last write, `pgrep -af rustc` → 6 live compiler processes. **No
+`VERIFY_EXIT` was obtained by return time.** Per loop-instruction.md's stop-vs-press-on rule,
+"ran out of budget" is not "blocked" — this is explicitly sanctioned rather than treated as a red
+gate. `$LOG` (this same file) carries the authoritative terminal `VERIFY_EXIT` whenever the process
+completes; check it directly, do not infer a result from this receipt's absence of one.
+
+**CORRECTED (integration, `SD31-W3-INTEGRATE-001`):** adversarial review confirmed this process did
+NOT complete — it is dead, not still running (`pgrep -fa 'verify.sh'` returns nothing at review time;
+the log was frozen ~1h45m stale at `root-full`, no SUMMARY/RESULT/VERIFY_EXIT line ever landed). The
+`desktop` and `reach` stages never ran, so this card's `spell`/`monster_ability` reach claim was never
+exercised by this cycle's own gate. DoD-1 and DoD-2 are therefore unmet for this cycle in isolation.
+Integration re-runs `./scripts/verify.sh` to a captured exit code at the merged tip (this receipt's
+own §Full Gate, below) before the card can close.
+
+### 7. The other DoD items, run independently of the still-building full gate
+
+- **`v06_corpus_trap_report -- --audit`:** `AUDIT_EXIT=0`. Ran clean (repo-wide trap audit,
+  including the SAME `wiring-class-mismatch` check class this cycle's §5 near-miss surfaced —
+  confirms the cached-vs-live `wiring_class` drift is a KNOWN, already-instrumented finding, not a
+  new gap; exit 0 means it is informational, not a hard failure).
+- **`scripts/reachability_audit.py`:** `AUDIT_EXIT=0`, `ok: true`. **Reachable ceiling: 98.94%
+  (38,112/38,521)** — unchanged from wave 2's own measurement (this cycle moves units between
+  `held`/`done`, never touches the `ambiguous` dead-end population; verified: 409 dead-end units
+  both before and after). Written to
+  `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F2-001-audit.json`.
+- **Four-check wired-integration audit** (`docs/governance/no-stub-mvp-doctrine.md` §"Per-cycle
+  audit"), run against this cycle's own diff (`6f857525b...HEAD`, this cycle's true base):
+  ```
+  OK_NO_TOKENS / OK_NO_NOOP_HANDLERS / OK_NO_MOCK_LEAKS / OK_NO_WOULD_STRINGS
+  ```
+  All four clean.
+- **DoD-8 (on-screen verification).** Not run this cycle, and this is stated plainly rather than
+  silently skipped or faked: the 9 units this cycle moved to `done` were ALREADY `grounded`/
+  `ingested-magnitude` before this cycle — their `data.description`/`school`/`level` fields, and
+  therefore whatever the character sheet already renders for them, are UNCHANGED by
+  `enrich_spell_raw_tokens.rs`. This cycle added `data.raw_tokens` (transcription evidence backing
+  the `static` bar) and a `literal-verified` stamp; it did not ingest a new spell, add a new value,
+  or change any player-visible surface. There is no NEW on-screen state for a screenshot to prove
+  that reach_gate's existing claim did not already prove before this cycle. Recorded here rather
+  than fabricated: a future cycle that DOES ingest a genuinely new spell record (the 1,548-unit
+  out-of-scope mass named in §2, once a sixth `SPELL_LIST` module exists) is the one that owes a
+  real DoD-8 screenshot.
+
+### 8. Retrospective events
+
+`docs/retro/events/sd31-e6-spell-mab.jsonl`:
+- `correction` — the stale `v06_work_inventory.rs:2162` doc comment claiming `Kind::Spell` is
+  unwired, corrected against the live `spell_effect_wired` check (§1).
+- `incident` — the `gen_book_cache -- beastiary --dry-run` near-miss (§5), `recurrence-key:
+  cli-flag-silently-ignored`, `silent: true`.
+- `verification` — auto-emitted by `./scripts/verify.sh` itself (Cycle mechanics step 4's own
+  discipline; nothing additional to do here beyond not skipping it).
+
+### 9. Board delta (headline)
+
+| figure | before | after | delta | command |
+|---|---:|---:|---:|---|
+| corpus-wide `done` | 6,076 | 6,085 | **+9** | §4's `pf1e_dashboard_producer.doneness_verdict` replay |
+| corpus-wide `done`% | 15.77% | 15.7966% | +0.0266pp | same |
+| `spell` `done` | 47 | 56 | **+9** | same, filtered `kind=='spell'` |
+| `spell` `held` | 1,103 | 1,094 | -9 | same |
+| `corpus_literal_sweep` records examined | 3,635 | 4,808 | +1,173 | `corpus_literal_sweep` stdout |
+| reachable ceiling | 98.94% | 98.94% | unchanged | `reachability_audit.py` |
+
+**`monster_ability`: 0 units moved.** Investigated thoroughly (§5), found two real, well-evidenced
+reasons not to ingest unsafely this cycle, and logged both as concrete follow-ons rather than
+forcing a partial or unreachable result — matching this program's own `SD31-E6-F11-001` precedent
+("0 new fixture entries landed this cycle... the real levers are...").
+
+### What I corrected, reworked, or narrowly avoided this cycle
+
+- Corrected my own working assumption, mid-investigation, that `spell` ingest could move `done` for
+  its whole 1,561-unit `not-started` mass — traced the actual grounding path first (§1-2) and found
+  the real reachable slice is 13 units, 0 of them safely ingestible without inventing a spell level.
+- Pivoted from a `not-started`-focused plan to a `held`-focused one (§3) once §2's finding closed
+  off the original target — the card's own instruction to trace the path BEFORE bulk-ingesting is
+  exactly what caught this before any wasted ingest work.
+- Caught, via TDD (not via the real run), a single-level-`read_dir` bug in
+  `enrich_spell_raw_tokens.rs` that would have silently under-scanned `core_rulebook` to zero — the
+  SAME defect shape (`OPEN-ISSUES.md` row 1) recurring in a brand-new tool, independently.
+  Regression-tested before the real run, not after.
+- Investigated why only 9 of 120 candidate units promoted rather than declaring "1,173 enriched"
+  the headline and moving on — found and precisely quantified a pre-existing `.MOD`-row citation
+  defect in 101 of them (§4, `OPEN-ISSUES.md` row 33, renumbered from this cycle's own row 23 at
+  integration), the single highest-leverage follow-on this
+  cycle located.
+- Caught and reverted, before it did any lasting damage, an accidental full-book corpus regen
+  triggered by a non-existent `--dry-run` flag being silently ignored (§5, `incident` event) —
+  `git status --porcelain` immediately after every write-shaped command, per the standing shared-box
+  discipline, is what caught it.
+- Did NOT hand-add `MonsterAbilityRecord` entries under time pressure once the `spell` lever ran
+  short — found real, structural reasons (corpus-shape misclassification; player-unreachable orphan
+  abilities) that a hasty ingest would have either mis-scoped or shipped as an unreachable "twin,"
+  and logged both precisely instead (§5, `OPEN-ISSUES.md` row 34, renumbered from this cycle's own
+  row 24 at integration).
+
+### Files changed (commit `c4c73d4e7...`, branch `worktree-wf_e4e73f9a-9af-5`)
+
+- `src/bin/enrich_spell_raw_tokens.rs` (new — the tool, 9 tests)
+- `data/corpus/{core_rulebook,advanced_players_guide,advanced_class_guide,advanced_race_guide}/
+  spell/*.json` (1,173 files — `raw_tokens` added, nothing else changed)
+- `docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md` (rows appended, renumbered 32-34 at integration — see the row-32 note above)
+- `docs/release/SD-31-corpus-closure-grind/kanban.md` (F2/F9 card note appended)
+- `docs/release/SD-31-corpus-closure-grind/progress.md` (this entry)
+- `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F2-001-verify.log` (gate log, in
+  progress at commit time)
+- `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F2-001-audit.json` (reachability audit)
+- `docs/retro/events/sd31-e6-spell-mab.jsonl` (new, 2 events + verify.sh's own auto-emissions)
+- `docs/retro/events/wf_e4e73f9a-9af-5.jsonl` (auto-emitted by two `--only` gate stages run before
+  `RETRO_ACTOR` was exported, during the branch-state-check step — left as-is, a legitimate
+  by-product of the mandated cycle-0 checks, not hand-edited)
+- **`docs/work-inventory.json` — NOT committed**, per the wave rule. Regenerated locally to measure
+  §9's delta, then `git checkout -- docs/work-inventory.json` before every commit this cycle.
+
+### Reclaim
+
+`scripts/reclaim.sh` / `scripts/reclaim.sh --apply` deferred to end-of-cycle (after the gate log's
+final `VERIFY_EXIT`, so a live build's own target dir is never a reclaim candidate mid-run) —
+run and recorded in this same section once the background gate completes, or in a follow-up note if
+this cycle returns first.

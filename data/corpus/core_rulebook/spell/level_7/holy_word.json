@@ -1,26 +1,32 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "Any nongood creature within the area of a holy word spell suffers the following ill effects. \nHD Effect \nEqual to caster level | Deafened \nUp to caster level -1 | Blinded, deafened \nUp to caster level -5 | Paralyzed, blinded, deafened \nUp to caster level -10 | Killed, paralyzed, blinded, deafened \nThe effects are cumulative and concurrent. A successful Will save reduces or eliminates these effects. Creatures affected by multiple effects make only one save and apply the result to all the effects. Deafened: The creature is deafened for 1d4 rounds. Save negates. Blinded: The creature is blinded for 2d4 rounds. Save reduces the blinded effect to 1d4 rounds. Paralyzed: The creature is paralyzed and helpless for 1d10 minutes. Save reduces the paralyzed effect to 1 round. Killed: Living creatures die. Undead creatures are destroyed. Save negates. If the save is successful, the creature instead takes 3d6 points of damage + 1 point per caster level [maximum +25]. Furthermore, if you are on your home plane when you cast this spell, nongood extraplanar creatures within the area are instantly banished back to their home planes. Creatures so banished cannot return for at least 24 hours. This effect takes place regardless of whether the creatures hear the holy word or not. The banishment effect allows a Will save [at a -4 penalty] to negate. Creatures whose HD exceed your caster level are unaffected by holy word.",
     "key": "Holy Word",
-    "school": "Evocation",
     "level": 7,
-    "description": "Any nongood creature within the area of a holy word spell suffers the following ill effects. \nHD Effect \nEqual to caster level | Deafened \nUp to caster level -1 | Blinded, deafened \nUp to caster level -5 | Paralyzed, blinded, deafened \nUp to caster level -10 | Killed, paralyzed, blinded, deafened \nThe effects are cumulative and concurrent. A successful Will save reduces or eliminates these effects. Creatures affected by multiple effects make only one save and apply the result to all the effects. Deafened: The creature is deafened for 1d4 rounds. Save negates. Blinded: The creature is blinded for 2d4 rounds. Save reduces the blinded effect to 1d4 rounds. Paralyzed: The creature is paralyzed and helpless for 1d10 minutes. Save reduces the paralyzed effect to 1 round. Killed: Living creatures die. Undead creatures are destroyed. Save negates. If the save is successful, the creature instead takes 3d6 points of damage + 1 point per caster level [maximum +25]. Furthermore, if you are on your home plane when you cast this spell, nongood extraplanar creatures within the area are instantly banished back to their home planes. Creatures so banished cannot return for at least 24 hours. This effect takes place regardless of whether the creatures hear the holy word or not. The banishment effect allows a Will save [at a -4 penalty] to negate. Creatures whose HD exceed your caster level are unaffected by holy word."
+    "raw_tokens": [
+      {
+        "key": "DESC",
+        "value": "Any nongood creature within the area of a holy word spell suffers the following ill effects. &nl;HD Effect &nl;Equal to caster level &pipe; Deafened &nl;Up to caster level -1 &pipe; Blinded, deafened &nl;Up to caster level -5 &pipe; Paralyzed, blinded, deafened &nl;Up to caster level -10 &pipe; Killed, paralyzed, blinded, deafened &nl;The effects are cumulative and concurrent. A successful Will save reduces or eliminates these effects. Creatures affected by multiple effects make only one save and apply the result to all the effects. Deafened: The creature is deafened for 1d4 rounds. Save negates. Blinded: The creature is blinded for 2d4 rounds. Save reduces the blinded effect to 1d4 rounds. Paralyzed: The creature is paralyzed and helpless for 1d10 minutes. Save reduces the paralyzed effect to 1 round. Killed: Living creatures die. Undead creatures are destroyed. Save negates. If the save is successful, the creature instead takes 3d6 points of damage + 1 point per caster level [maximum +25]. Furthermore, if you are on your home plane when you cast this spell, nongood extraplanar creatures within the area are instantly banished back to their home planes. Creatures so banished cannot return for at least 24 hours. This effect takes place regardless of whether the creatures hear the holy word or not. The banishment effect allows a Will save [at a -4 penalty] to negate. Creatures whose HD exceed your caster level are unaffected by holy word.|PRERULE:1,DisplayFullSpell"
+      }
+    ],
+    "school": "Evocation"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
     "line": 1066,
-    "record_key": "Holy Word.MOD"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "record_key": "Holy Word.MOD",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

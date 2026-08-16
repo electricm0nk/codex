@@ -1,25 +1,31 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "You can observe magical auras. Each round, you may examine a single creature or object that you can see as a free action. In the case of a magic item, you learn its functions [including any curse effects], how to activate its functions [if appropriate], and how many charges are left [if it uses charges]. In the case of an object or creature with active spells cast upon it, you learn each spell, its effect, and its caster level. An attended object may attempt a Will save to resist this effect if its holder so desires. If the save succeeds, you learn nothing about the object except what you can discern by looking at it. An object that makes its save cannot be affected by any other analyze dweomer spells for 24 hours. Analyze dweomer does not function when used on an artifact.",
     "key": "Analyze Dweomer",
-    "school": "Divination",
     "level": 6,
-    "description": "You can observe magical auras. Each round, you may examine a single creature or object that you can see as a free action. In the case of a magic item, you learn its functions [including any curse effects], how to activate its functions [if appropriate], and how many charges are left [if it uses charges]. In the case of an object or creature with active spells cast upon it, you learn each spell, its effect, and its caster level. An attended object may attempt a Will save to resist this effect if its holder so desires. If the save succeeds, you learn nothing about the object except what you can discern by looking at it. An object that makes its save cannot be affected by any other analyze dweomer spells for 24 hours. Analyze dweomer does not function when used on an artifact."
+    "raw_tokens": [
+      {
+        "key": "DESC",
+        "value": "You can observe magical auras. Each round, you may examine a single creature or object that you can see as a free action. In the case of a magic item, you learn its functions [including any curse effects], how to activate its functions [if appropriate], and how many charges are left [if it uses charges]. In the case of an object or creature with active spells cast upon it, you learn each spell, its effect, and its caster level. An attended object may attempt a Will save to resist this effect if its holder so desires. If the save succeeds, you learn nothing about the object except what you can discern by looking at it. An object that makes its save cannot be affected by any other analyze dweomer spells for 24 hours. Analyze dweomer does not function when used on an artifact.|PRERULE:1,DisplayFullSpell"
+      }
+    ],
+    "school": "Divination"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
     "line": 783,
-    "record_key": "Analyze Dweomer.MOD"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "record_key": "Analyze Dweomer.MOD",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

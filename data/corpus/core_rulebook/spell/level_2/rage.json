@@ -1,25 +1,51 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "Each affected creature gains a +2 morale bonus to Strength and Constitution, a +1 morale bonus on Will saves, and a -2 penalty to AC. The effect is otherwise identical with a barbarian's rage except that the subjects aren't fatigued at the end of the rage.",
     "key": "Rage",
-    "school": "Enchantment",
     "level": 2,
-    "description": "Each affected creature gains a +2 morale bonus to Strength and Constitution, a +1 morale bonus on Will saves, and a -2 penalty to AC. The effect is otherwise identical with a barbarian's rage except that the subjects aren't fatigued at the end of the rage."
+    "raw_tokens": [
+      {
+        "key": "DESC",
+        "value": "Each affected creature gains a +2 morale bonus to Strength and Constitution, a +1 morale bonus on Will saves, and a -2 penalty to AC. The effect is otherwise identical with a barbarian's rage except that the subjects aren't fatigued at the end of the rage.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|COMBAT|AC|-2"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|SAVE|Will|1|TYPE=Morale"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|STAT|CON|2|TYPE=Morale"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|STAT|STR|2|TYPE=Morale"
+      },
+      {
+        "key": "TEMPDESC",
+        "value": "Grants a +2 morale bonus to Strength and Constitution, a +1 morale bonus on Will saves, and a −2 penalty to AC"
+      }
+    ],
+    "school": "Enchantment"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
     "line": 1227,
-    "record_key": "Rage.MOD"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "record_key": "Rage.MOD",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

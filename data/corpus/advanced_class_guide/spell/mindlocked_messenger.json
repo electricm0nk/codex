@@ -1,27 +1,89 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:41:57Z",
   "data": {
-    "key": "Mindlocked Messenger",
-    "school": "Enchantment",
-    "level": 2,
     "description": "You speak a short message (up to 10 words per caster level), implanting both it and the identity of the message's intended recipient in the mind of a willing creature. The creature is aware of the message and who the recipient is. Any attempt to speak, write, or otherwise communicate the message to anyone other than its intended recipient causes the target to forget the message for 1d6 minutes. Attempts to read the target's mind (such as with detect thoughts) or to force the target to reveal the message (such as with torture or magical compulsion) likewise cause temporary amnesia regarding the message. The target can communicate the message only to someone it believes is the intended recipient, which means that disguises, illusions, and polymorph effects might fool the target into delivering the message. Once the target communicates the message, the message is permanently erased from the target's memory.",
-    "full_text": true
+    "full_text": true,
+    "key": "Mindlocked Messenger",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "10 minutes"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard=2|Shaman,Sorcerer,Witch,Wizard=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Target gains a message that can be given only to its intended recipient.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You speak a short message (up to 10 words per caster level), implanting both it and the identity of the message's intended recipient in the mind of a willing creature. The creature is aware of the message and who the recipient is. Any attempt to speak, write, or otherwise communicate the message to anyone other than its intended recipient causes the target to forget the message for 1d6 minutes. Attempts to read the target's mind (such as with detect thoughts) or to force the target to reveal the message (such as with torture or magical compulsion) likewise cause temporary amnesia regarding the message. The target can communicate the message only to someone it believes is the intended recipient, which means that disguises, illusions, and polymorph effects might fool the target into delivering the message. Once the target communicates the message, the message is permanently erased from the target's memory.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Language-Dependent|Mind-Affecting"
+      },
+      {
+        "key": "DURATION",
+        "value": "permanent until discharged [see text]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates (harmless)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Enchantment"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedClassGuide/spells/mindlockedMessenger.html"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.187"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "yes (harmless)"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Compulsion"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "one willing living creature"
+      }
+    ],
+    "school": "Enchantment"
   },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
-    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
     "line": 82,
-    "record_key": "Mindlocked Messenger"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "record_key": "Mindlocked Messenger",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3"
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "derived:range_keyword"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

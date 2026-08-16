@@ -1,25 +1,31 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "The subject's outline appears blurred, shifting, and wavering. This distortion grants the subject concealment [20%% miss chance]. A see invisibility spell does not counteract the blur effect, but a true seeing spell does. Opponents that cannot see the subject ignore the spell's effect [though fighting an unseen opponent carries penalties of its own].",
     "key": "Blur",
-    "school": "Illusion",
     "level": 2,
-    "description": "The subject's outline appears blurred, shifting, and wavering. This distortion grants the subject concealment [20%% miss chance]. A see invisibility spell does not counteract the blur effect, but a true seeing spell does. Opponents that cannot see the subject ignore the spell's effect [though fighting an unseen opponent carries penalties of its own]."
+    "raw_tokens": [
+      {
+        "key": "DESC",
+        "value": "The subject's outline appears blurred, shifting, and wavering. This distortion grants the subject concealment [20%% miss chance]. A see invisibility spell does not counteract the blur effect, but a true seeing spell does. Opponents that cannot see the subject ignore the spell's effect [though fighting an unseen opponent carries penalties of its own].|PRERULE:1,DisplayFullSpell"
+      }
+    ],
+    "school": "Illusion"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
     "line": 828,
-    "record_key": "Blur.MOD"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "record_key": "Blur.MOD",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

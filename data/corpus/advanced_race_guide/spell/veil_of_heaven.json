@@ -1,23 +1,85 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T19:41:45Z",
   "data": {
+    "description": "You surround yourself with a veil of positive energy, making it harder for evil outsiders to harm you. For the duration of this spell, you gain a +2 sacred bonus to AC and on saves. Both of these bonuses apply only against attacks or effects created by outsiders with the evil subtype. You can dismiss this spell as a swift action to deal 1d8 points of damage + 1 point per paladin level to all such outsiders within 5 feet. A Will save halves this damage.",
     "key": "Veil of Heaven",
-    "school": "Abjuration",
     "level": 1,
-    "description": "You surround yourself with a veil of positive energy, making it harder for evil outsiders to harm you. For the duration of this spell, you gain a +2 sacred bonus to AC and on saves. Both of these bonuses apply only against attacks or effects created by outsiders with the evil subtype. You can dismiss this spell as a swift action to deal 1d8 points of damage + 1 point per paladin level to all such outsiders within 5 feet. A Will save halves this damage."
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Paladin=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "You surround yourself with a veil of positive energy, making it harder for evil outsiders to harm you. For the duration of this spell, you gain a +2 sacred bonus to AC and on saves. Both of these bonuses apply only against attacks or effects created by outsiders with the evil subtype. You can dismiss this spell as a swift action to deal 1d8 points of damage + 1 point per paladin level to all such outsiders within 5 feet. A Will save halves this damage."
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Good"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL*10) minutes"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREVAREQ:BypassAdvancedRaceSpellRestriction,1],[PREFACT:1,TEMPLATES,IsAasimar=true]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will Half"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Abjuration"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedRaceGuide/featuredRaces/aasimars.html#_veil-of-heaven"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.89"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
+      }
+    ],
+    "school": "Abjuration"
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
-    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58",
-    "line": 68,
-    "record_key": "Veil of Heaven"
-  },
+  "ingested_at": "2026-08-03T19:41:45Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 68,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
+    "record_key": "Veil of Heaven",
+    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

@@ -1,26 +1,32 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Expend",
-    "school": "Abjuration",
-    "level": 7,
     "description": "You cause all creatures in the affected area to use up one or more of their limited-use magical abilities without any actual effect. A limited-use magical ability is any supernatural or spelllike ability which a creature can only activate a certain number of times during a set interval (3/day, 1/hour, etc.). The spell does not affect abilities which the creature can use at will or which are constant. It also does not apply to magical items or anything else external to a creature. A creature in the spell's area must make a Will saving throw or expend a single use of one of its abilities. Abilities with the greatest number of uses per day are affected first; if more than one ability has the same number of uses, randomly determine which one is affected first. Creatures must continue making Will saves, expending an additional use of an ability for each failed save, until they succeed, at which point the spell has no further effect.",
-    "full_text": true
+    "full_text": true,
+    "key": "Expend",
+    "level": 7,
+    "raw_tokens": [
+      {
+        "key": "DESC",
+        "value": "You cause all creatures in the affected area to use up one or more of their limited-use magical abilities without any actual effect. A limited-use magical ability is any supernatural or spelllike ability which a creature can only activate a certain number of times during a set interval (3/day, 1/hour, etc.). The spell does not affect abilities which the creature can use at will or which are constant. It also does not apply to magical items or anything else external to a creature. A creature in the spell's area must make a Will saving throw or expend a single use of one of its abilities. Abilities with the greatest number of uses per day are affected first; if more than one ability has the same number of uses, randomly determine which one is affected first. Creatures must continue making Will saves, expending an additional use of an ability for each failed save, until they succeed, at which point the spell has no further effect.|PRERULE:1,DisplayFullSpell"
+      }
+    ],
+    "school": "Abjuration"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
     "line": 1939,
-    "record_key": "Expend"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+    "record_key": "Expend",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

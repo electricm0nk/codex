@@ -1,26 +1,32 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
+    "description": "You can sense the presence of evil. The amount of information revealed depends on how long you study a particular area or subject. 1st Round: Presence or absence of evil. 2nd Round: Number of evil auras [creatures, objects, or spells] in the area and the power of the most potent evil aura present. If you are of good alignment, and the strongest evil aura's power is overwhelming [see below], and the HD or level of the aura's source is at least twice your character level, you are stunned for 1 round and the spell ends. 3rd Round: The power and location of each aura. If an aura is outside your line of sight, then you discern its direction but not its exact location. Aura Power: An evil aura's power depends on the type of evil creature or object that you're detecting and its HD, caster level, or [in the case of a cleric] class level; see the table below. If an aura falls into more than one strength category, the spell indicates the stronger of the two. Lingering Aura: An evil aura lingers after its original source dissipates [in the case of a spell] or is destroyed [in the case of a creature or magic item]. If detect evil is cast and directed at such a location, the spell indicates an aura strength of dim [even weaker than a faint aura]. How long the aura lingers at this dim level depends on its original power: \nOriginal Strength | Duration of Lingering Aura \nFaint | 1d6 rounds \nModerate | 1d6 minutes \nStrong | 1d6 x 10 minutes \nOverwhelming | 1d6 days \nAnimals, traps, poisons, and other potential perils are not evil, and as such this spell does not detect them. Creatures with actively evil intents count as evil creatures for the purpose of this spell. Each round, you can turn to detect evil in a new area. The spell can penetrate barriers, but 1 foot of stone, 1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt blocks it.",
     "key": "Detect Evil",
-    "school": "Divination",
     "level": 1,
-    "description": "You can sense the presence of evil. The amount of information revealed depends on how long you study a particular area or subject. 1st Round: Presence or absence of evil. 2nd Round: Number of evil auras [creatures, objects, or spells] in the area and the power of the most potent evil aura present. If you are of good alignment, and the strongest evil aura's power is overwhelming [see below], and the HD or level of the aura's source is at least twice your character level, you are stunned for 1 round and the spell ends. 3rd Round: The power and location of each aura. If an aura is outside your line of sight, then you discern its direction but not its exact location. Aura Power: An evil aura's power depends on the type of evil creature or object that you're detecting and its HD, caster level, or [in the case of a cleric] class level; see the table below. If an aura falls into more than one strength category, the spell indicates the stronger of the two. Lingering Aura: An evil aura lingers after its original source dissipates [in the case of a spell] or is destroyed [in the case of a creature or magic item]. If detect evil is cast and directed at such a location, the spell indicates an aura strength of dim [even weaker than a faint aura]. How long the aura lingers at this dim level depends on its original power: \nOriginal Strength | Duration of Lingering Aura \nFaint | 1d6 rounds \nModerate | 1d6 minutes \nStrong | 1d6 x 10 minutes \nOverwhelming | 1d6 days \nAnimals, traps, poisons, and other potential perils are not evil, and as such this spell does not detect them. Creatures with actively evil intents count as evil creatures for the purpose of this spell. Each round, you can turn to detect evil in a new area. The spell can penetrate barriers, but 1 foot of stone, 1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt blocks it."
+    "raw_tokens": [
+      {
+        "key": "DESC",
+        "value": "You can sense the presence of evil. The amount of information revealed depends on how long you study a particular area or subject. 1st Round: Presence or absence of evil. 2nd Round: Number of evil auras [creatures, objects, or spells] in the area and the power of the most potent evil aura present. If you are of good alignment, and the strongest evil aura's power is overwhelming [see below], and the HD or level of the aura's source is at least twice your character level, you are stunned for 1 round and the spell ends. 3rd Round: The power and location of each aura. If an aura is outside your line of sight, then you discern its direction but not its exact location. Aura Power: An evil aura's power depends on the type of evil creature or object that you're detecting and its HD, caster level, or [in the case of a cleric] class level; see the table below. If an aura falls into more than one strength category, the spell indicates the stronger of the two. Lingering Aura: An evil aura lingers after its original source dissipates [in the case of a spell] or is destroyed [in the case of a creature or magic item]. If detect evil is cast and directed at such a location, the spell indicates an aura strength of dim [even weaker than a faint aura]. How long the aura lingers at this dim level depends on its original power: &nl;Original Strength &pipe; Duration of Lingering Aura &nl;Faint &pipe; 1d6 rounds &nl;Moderate &pipe; 1d6 minutes &nl;Strong &pipe; 1d6 x 10 minutes &nl;Overwhelming &pipe; 1d6 days &nl;Animals, traps, poisons, and other potential perils are not evil, and as such this spell does not detect them. Creatures with actively evil intents count as evil creatures for the purpose of this spell. Each round, you can turn to detect evil in a new area. The spell can penetrate barriers, but 1 foot of stone, 1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt blocks it.|PRERULE:1,DisplayFullSpell"
+      }
+    ],
+    "school": "Divination"
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
-    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
     "line": 915,
-    "record_key": "Detect Evil.MOD"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "record_key": "Detect Evil.MOD",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "ambiguous:prose_scaling_phrase",
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

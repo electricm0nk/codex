@@ -1,27 +1,89 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:41:57Z",
   "data": {
-    "key": "Extreme Flexibility",
-    "school": "Transmutation",
-    "level": 2,
     "description": "You gain a +1 dodge bonus to AC, a +4 circumstance bonus on Escape Artist checks and combat maneuver checks to escape a grapple, and +4 circumstance bonus to your CMD against grapple attempts.",
-    "full_text": true
+    "full_text": true,
+    "key": "Extreme Flexibility",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist,Bloodrager,Magus,Sorcerer,Witch,Wizard=2"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bloodrager=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "Gain a bonus to AC, on Escape Artist checks, and when grappling.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain a +1 dodge bonus to AC, a +4 circumstance bonus on Escape Artist checks and combat maneuver checks to escape a grapple, and +4 circumstance bonus to your CMD against grapple attempts.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCELINK",
+        "value": "http://paizo.com/pathfinderRPG/prd/advancedClassGuide/spells/extremeFlexibility.html"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.181"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "you"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|1|TYPE=Dodge"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|SKILL|Escape Artist|4|TYPE=Circumstance"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|CMB_Grapple,CMD_Grapple|4|TYPE=Circumstance"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
-    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
     "line": 52,
-    "record_key": "Extreme Flexibility"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "record_key": "Extreme Flexibility",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3"
   },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:tempbonus",
     "derived:prose_expr"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

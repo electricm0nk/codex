@@ -1,26 +1,32 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Innocence",
-    "school": "Transmutation",
-    "level": 1,
     "description": "You surround yourself with an aura of innocence and trustworthiness. You gain a +10 competence bonus on Bluff skill checks to convince others of your innocence. They find it difficult to believe you capable of any wrongdoing. This bonus does not apply to other uses of the Bluff skill, such as feinting in combat, creating a diversion to hide, or communicating secret messages via innuendo, nor does it apply to any use of the skill to convince anyone of anything other than your complete innocence and blamelessness.",
-    "full_text": true
+    "full_text": true,
+    "key": "Innocence",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "DESC",
+        "value": "You surround yourself with an aura of innocence and trustworthiness. You gain a +10 competence bonus on Bluff skill checks to convince others of your innocence. They find it difficult to believe you capable of any wrongdoing. This bonus does not apply to other uses of the Bluff skill, such as feinting in combat, creating a diversion to hide, or communicating secret messages via innuendo, nor does it apply to any use of the skill to convince anyone of anything other than your complete innocence and blamelessness.|PRERULE:1,DisplayFullSpell"
+      }
+    ],
+    "school": "Transmutation"
   },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
-    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
     "line": 1988,
-    "record_key": "Innocence"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+    "record_key": "Innocence",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7"
   },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }
