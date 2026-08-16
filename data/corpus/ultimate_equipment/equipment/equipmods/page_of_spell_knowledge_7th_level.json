@@ -1,0 +1,66 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 49000.0,
+    "description": null,
+    "key": "Page of Spell Knowledge ~ 7th Level",
+    "name": "Page of Spell Knowledge (7th)",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SPELLKNOWN",
+          "TYPE=Arcane.Divine;LEVEL=7",
+          "1"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Page of Spell Knowledge ~ 7th Level"
+      },
+      {
+        "key": "TYPE",
+        "value": "PageOfSpellKnowledge"
+      },
+      {
+        "key": "COST",
+        "value": "49000"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "LesserMajor"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.314"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "EQBUILDER.SPELL|Arcane.Divine|7|7"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-15T22:41:23Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 282,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equipmods.lst",
+    "record_key": "Page of Spell Knowledge ~ 7th Level",
+    "sha256": "360125009489703fb61f3143a5590f3576552382619c4b61f66b6d252f1ad8a4"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice"
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 2000.0,
+    "description": "This magical powder horn holds 20 doses of black powder. Furthermore, when a firearm is loaded with black powder directly from this horn, the horn creates a small pocket of air that envelops the gun and allows that shot to be fired underwater or in an area lacking air, such as a vacuum. Once the gun is loaded with powder from the dry load powder horn, it retains the pocket of air for 10 minutes or until the firearm is fired, whichever comes first. Firing a firearm that has been loaded from this horn underwater still incurs the -2 penalty on attack rolls for every 5 feet of water the bullet passes through, in addition to the normal penalties to range. When a shot loaded from a dry load powder horn results in a firearm explosion while underwater or in an airless environment, that explosion occurs normally.",
+    "key": "Dry Load Powder Horn",
+    "name": "Dry Load Powder Horn",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Consumable.LesserMinor.Powder Horn"
+      },
+      {
+        "key": "COST",
+        "value": "2000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Charged Item / 20 Maximum|CHARGES[20]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.292"
+      },
+      {
+        "key": "SPROP",
+        "value": "This magical powder horn holds 20 doses of black powder. Furthermore, when a firearm is loaded with black powder directly from this horn, the horn creates a small pocket of air that envelops the gun and allows that shot to be fired underwater or in an area lacking air, such as a vacuum. Once the gun is loaded with powder from the dry load powder horn, it retains the pocket of air for 10 minutes or until the firearm is fired, whichever comes first. Firing a firearm that has been loaded from this horn underwater still incurs the -2 penalty on attack rolls for every 5 feet of water the bullet passes through, in addition to the normal penalties to range. When a shot loaded from a dry load powder horn results in a firearm explosion while underwater or in an airless environment, that explosion occurs normally."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-15T22:41:23Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1056,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+    "record_key": "Dry Load Powder Horn",
+    "sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

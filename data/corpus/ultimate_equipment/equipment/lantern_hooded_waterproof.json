@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 12.0,
+    "description": "Bright illumination (30'), shadowy illumination (60'), 6 hr./pint, holds enough air to burn underwater for 5 rounds before going dark.",
+    "key": "Lantern (Hooded/Waterproof)",
+    "name": "Lantern (Hooded/Waterproof)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.General.Light Source"
+      },
+      {
+        "key": "COST",
+        "value": "12"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.156"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Bright Illumination|30 ft."
+      },
+      {
+        "key": "QUALITY",
+        "value": "Shadowy Illumination|60 ft."
+      },
+      {
+        "key": "QUALITY",
+        "value": "Duration|6 hr./pint"
+      },
+      {
+        "key": "SPROP",
+        "value": "Bright illumination (30'), shadowy illumination (60'), 6 hr./pint, holds enough air to burn underwater for 5 rounds before going dark."
+      }
+    ],
+    "weight_lbs": 2.0
+  },
+  "ingested_at": "2026-08-15T22:41:23Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 465,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_general.lst",
+    "record_key": "Lantern (Hooded/Waterproof)",
+    "sha256": "76c33612bbb40d7de0515e0e4662ca30129a92b9572e7094e4a9f4379444f690"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

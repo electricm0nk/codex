@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 70000.0,
+    "description": "Wearer's weapons gain Ghost Touch ability.; Wearer gains +4 sacred bonus against negative energy effects.; Wearer gains +4 profane bonus against positive energy effects.; Wearer must pick either a sacred or profane bonus against negative or positive energy effects.",
+    "key": "Spiritualist Rings",
+    "name": "Spiritualist Rings",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Ring.GreaterMajor"
+      },
+      {
+        "key": "COST",
+        "value": "70000"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.177"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Magic Item|TIMES=3|Speak with Dead|Spectral Hand"
+      },
+      {
+        "key": "SPROP",
+        "value": "Wearer's weapons gain Ghost Touch ability."
+      },
+      {
+        "key": "SPROP",
+        "value": "Wearer gains +4 sacred bonus against negative energy effects.|PREALIGN:LG,NG,CG"
+      },
+      {
+        "key": "SPROP",
+        "value": "Wearer gains +4 profane bonus against positive energy effects.|PREALIGN:LE,NE,CE"
+      },
+      {
+        "key": "SPROP",
+        "value": "Wearer must pick either a sacred or profane bonus against negative or positive energy effects.|PREALIGN:LN,TN,CN"
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-15T22:41:23Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 204,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+    "record_key": "Spiritualist Rings",
+    "sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

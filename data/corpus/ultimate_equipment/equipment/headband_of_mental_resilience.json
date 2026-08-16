@@ -1,0 +1,59 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 64000.0,
+    "description": "Wearer gains 5 temporary ability points. Any damage or drain to a mental ability score taken by the wearer is subtracted from these points first.",
+    "key": "Headband of Mental Resilience",
+    "name": "Headband of Mental Resilience",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "STAT",
+          "INT,WIS,CHA",
+          "2",
+          "TYPE=Enhancement"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Headband.GreaterMajor"
+      },
+      {
+        "key": "COST",
+        "value": "64000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.250"
+      },
+      {
+        "key": "SPROP",
+        "value": "Wearer gains 5 temporary ability points. Any damage or drain to a mental ability score taken by the wearer is subtracted from these points first."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-15T22:41:23Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 754,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+    "record_key": "Headband of Mental Resilience",
+    "sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

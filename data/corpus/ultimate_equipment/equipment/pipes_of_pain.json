@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 12000.0,
+    "description": "With a DC 15 Perform (wind instruments) check, the bearer can fascinate creatures within 30 feet for as long as the bearer continues to play (Will DC 14 negates). When the bearer stops playing, for the next 2d4 rounds all creatures who were fascinated are stricken by intense pain taking 1d4 points of damage per round, and have sonic vulnerability.",
+    "key": "Pipes of Pain",
+    "name": "Pipes of Pain",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.LesserMedium"
+      },
+      {
+        "key": "COST",
+        "value": "12000"
+      },
+      {
+        "key": "WT",
+        "value": "3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.315"
+      },
+      {
+        "key": "SPROP",
+        "value": "With a DC 15 Perform (wind instruments) check, the bearer can fascinate creatures within 30 feet for as long as the bearer continues to play (Will DC 14 negates). When the bearer stops playing, for the next 2d4 rounds all creatures who were fascinated are stricken by intense pain taking 1d4 points of damage per round, and have sonic vulnerability."
+      }
+    ],
+    "weight_lbs": 3.0
+  },
+  "ingested_at": "2026-08-15T22:41:23Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1242,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+    "record_key": "Pipes of Pain",
+    "sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 4000.0,
+    "description": "A glamered weapon can be commanded to change its shape and appearance to assume the form of another object of similar size.",
+    "key": "Special Ability ~ Glamered ~ Weapon",
+    "name": "Glamered",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Glamered ~ Weapon"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Melee.Ranged"
+      },
+      {
+        "key": "COST",
+        "value": "4000"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.142"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,WeaponEnhancement"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,Weapon,Melee,Ranged"
+      },
+      {
+        "key": "SPROP",
+        "value": "A glamered weapon can be commanded to change its shape and appearance to assume the form of another object of similar size."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-15T22:41:23Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 195,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equipmods.lst",
+    "record_key": "Special Ability ~ Glamered ~ Weapon",
+    "sha256": "360125009489703fb61f3143a5590f3576552382619c4b61f66b6d252f1ad8a4"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

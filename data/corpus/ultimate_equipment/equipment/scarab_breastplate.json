@@ -1,0 +1,76 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 23200.0,
+    "description": null,
+    "key": "Scarab Breastplate",
+    "name": "Scarab Breastplate",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "6",
+          "TYPE=Armor",
+          "PREVAREQ:DisableArmorBonus,0"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Breastplate"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Magic.ArmorProfMedium.Medium.Suit.Specific.GreaterMajor"
+      },
+      {
+        "key": "COST",
+        "value": "23200"
+      },
+      {
+        "key": "WT",
+        "value": "30"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "-4"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ +3 ~ Armor.Material ~ Steel"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.129"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "25"
+      }
+    ],
+    "weight_lbs": 30.0
+  },
+  "ingested_at": "2026-08-15T22:41:23Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 68,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_arms_armor.lst",
+    "record_key": "Scarab Breastplate",
+    "sha256": "0283152baf7f7c9e547849da095df5cd4a5275fc4041c92028cbd85c7a1b5322"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

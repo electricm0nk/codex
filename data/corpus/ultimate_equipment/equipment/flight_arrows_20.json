@@ -1,0 +1,86 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 2.0,
+    "description": "A flight arrow's range increment is 20 feet greater with longbows, 10 feet greater with shortbows. They deal damage as if one size category smaller.",
+    "key": "Flight Arrows (20)",
+    "name": "Flight Arrows (20)",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "EQMWEAPON",
+          "RANGEADD",
+          "10",
+          "PRETYPE:1,Shortbow"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQMWEAPON",
+          "RANGEADD",
+          "20",
+          "PRETYPE:1,Longbow"
+        ]
+      },
+      {
+        "qualifiers": [
+          "WEAPON",
+          "DAMAGESIZE",
+          "-1"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Ammunition.Resizable.Standard.Arrow"
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      },
+      {
+        "key": "WT",
+        "value": "3"
+      },
+      {
+        "key": "BASEQTY",
+        "value": "20"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel.Material ~ Wood"
+      },
+      {
+        "key": "MODS",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      },
+      {
+        "key": "SPROP",
+        "value": "A flight arrow's range increment is 20 feet greater with longbows, 10 feet greater with shortbows. They deal damage as if one size category smaller."
+      }
+    ],
+    "weight_lbs": 3.0
+  },
+  "ingested_at": "2026-08-15T22:41:23Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 235,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_arms_armor.lst",
+    "record_key": "Flight Arrows (20)",
+    "sha256": "0283152baf7f7c9e547849da095df5cd4a5275fc4041c92028cbd85c7a1b5322"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

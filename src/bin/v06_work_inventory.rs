@@ -1618,6 +1618,15 @@ const OBSERVABLE_BOOK_DIRS: &[&str] = &[
     "beastiary",
     "advanced_race_guide",
     "pathfinder_unchained",
+    // SD-31 SD31-E6-F5-001: `gen_cache_ultimate_equipment` (+
+    // `enrich_equipment_raw_tokens`) landed
+    // `data/corpus/ultimate_equipment/equipment/*.json` this cycle --
+    // previously the book had no corpus directory at all
+    // (`OPEN-ISSUES.md` row 12), so `probe_equipment_effect_wiring`
+    // never observed it and every UE-keyed equipment/equipment_modifier
+    // unit stayed `ingested-magnitude`/`held` regardless of the real
+    // catalog's `BONUS:STAT` content.
+    "ultimate_equipment",
 ];
 
 fn book_corpus_roots(repo_root: &Path) -> Vec<PathBuf> {
@@ -5383,10 +5392,22 @@ mod e14_harness_tests {
     /// `Celestial Shield` is printed in BOTH Ultimate Equipment and the
     /// Advanced Race Guide under the same key, and the two rows are different
     /// items: ARG's is a heavy shield (`ACCHECK:0`, `SPELLFAILURE:0`), UE's is
-    /// a light shield (`ACCHECK:-1`, `SPELLFAILURE:5`). Only ARG has a
-    /// `data/corpus/` directory, so a book-agnostic probe grounds UE's unit on
-    /// ARG's numbers — the name-coincidence defect
-    /// `modelled_race_of_race_trait` already records for `race_trait`.
+    /// a light shield (`ACCHECK:-1`, `SPELLFAILURE:5`). Before SD-31
+    /// `SD31-E6-F5-001`, only ARG had a `data/corpus/` directory at all, so a
+    /// book-agnostic probe would have grounded UE's unit on ARG's numbers —
+    /// the name-coincidence defect `modelled_race_of_race_trait` already
+    /// records for `race_trait`.
+    ///
+    /// **UE now has a real `data/corpus/ultimate_equipment/equipment/`
+    /// directory** (`cache_gen::ultimate_equipment`, dumping
+    /// `rules_tables::ultimate_equipment::equipment_tables`), but that
+    /// table's own doc comment documents 65 keys (55 equipment + 10
+    /// equipmods) deliberately EXCLUDED as cross-book republished items --
+    /// `Celestial Shield` is one of them (`Dogslicer` is the module's own
+    /// spot-checked example of the same exclusion). So the assertion below
+    /// still holds, now for the *correct*, book-scoped reason (UE's real
+    /// corpus was read and genuinely does not carry this key) rather than
+    /// the earlier, weaker reason (UE had no corpus to read at all).
     ///
     /// This pins the *attribution*, and it is a strictly HIGHER bar than the
     /// bare-key form it replaced: it can only ever withhold a grounding, never

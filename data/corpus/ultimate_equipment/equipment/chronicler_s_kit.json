@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 40.0,
+    "description": "This bundle contains a map case, two vials of ink, two inkpens, 10 sheets of paper, two blank journals, a pound of fine powder for drying ink, and a 20-foot measuring cord. The supplies usually suffice for chronicling a single expedition of not more than 2 months' duration.",
+    "key": "Chronicler's Kit",
+    "name": "Chronicler's Kit",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Kit"
+      },
+      {
+        "key": "COST",
+        "value": "40"
+      },
+      {
+        "key": "WT",
+        "value": "4.5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.62"
+      },
+      {
+        "key": "SPROP",
+        "value": "This bundle contains a map case, two vials of ink, two inkpens, 10 sheets of paper, two blank journals, a pound of fine powder for drying ink, and a 20-foot measuring cord. The supplies usually suffice for chronicling a single expedition of not more than 2 months' duration."
+      }
+    ],
+    "weight_lbs": 4.5
+  },
+  "ingested_at": "2026-08-15T22:41:23Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 583,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_general.lst",
+    "record_key": "Chronicler's Kit",
+    "sha256": "76c33612bbb40d7de0515e0e4662ca30129a92b9572e7094e4a9f4379444f690"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

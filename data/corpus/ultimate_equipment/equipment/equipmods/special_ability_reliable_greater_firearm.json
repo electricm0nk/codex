@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "Reduces the misfire value of the affected firearm by 4 (minimum 0).",
+    "key": "Special Ability ~ Reliable / Greater ~ Firearm",
+    "name": "Reliable (Greater)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Reliable / Greater ~ Firearm"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "TEXT=Reliable, Greater"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Firearm"
+      },
+      {
+        "key": "PLUS",
+        "value": "3"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.147"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,WeaponEnhancement,Firearm"
+      },
+      {
+        "key": "SPROP",
+        "value": "Reduces the misfire value of the affected firearm by 4 (minimum 0)."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-15T22:41:23Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 219,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equipmods.lst",
+    "record_key": "Special Ability ~ Reliable / Greater ~ Firearm",
+    "sha256": "360125009489703fb61f3143a5590f3576552382619c4b61f66b6d252f1ad8a4"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

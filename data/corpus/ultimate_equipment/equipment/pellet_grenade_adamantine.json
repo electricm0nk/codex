@@ -1,0 +1,70 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 150.0,
+    "description": "Lighting the fuse is a move action; 1d3 rounds later the grenade explodes, dealing 1d6 points of bludgeoning damage, 1d6 points of piercing damage and 1d6 points of fire damage in a 10-foot-radius burst (Reflex DC 15 halves).",
+    "key": "Pellet Grenade (Adamantine)",
+    "name": "Pellet Grenade (Adamantine)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Pellet Grenade, Adamantine"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Splash Weapon"
+      },
+      {
+        "key": "TYPE",
+        "value": "Alchemical.Consumable.Weapon.Ranged.Thrown.Piercing.Bludgeoning.Fire.Splash"
+      },
+      {
+        "key": "COST",
+        "value": "150"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "RANGE",
+        "value": "10"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.108"
+      },
+      {
+        "key": "SPROP",
+        "value": "Lighting the fuse is a move action; 1d3 rounds later the grenade explodes, dealing 1d6 points of bludgeoning damage, 1d6 points of piercing damage and 1d6 points of fire damage in a 10-foot-radius burst (Reflex DC 15 halves)."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-15T22:41:23Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 691,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_general.lst",
+    "record_key": "Pellet Grenade (Adamantine)",
+    "sha256": "76c33612bbb40d7de0515e0e4662ca30129a92b9572e7094e4a9f4379444f690"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

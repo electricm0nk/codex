@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 11000.0,
+    "description": "Wearer gains electricity resistance 5 and increases caster level by 1 for all spells with electricity descriptor.",
+    "key": "Shocking Robe",
+    "name": "Shocking Robe",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "CASTERLEVEL",
+          "DESCRIPTOR.Electricity",
+          "1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "ElectricityResistanceBonus",
+          "5",
+          "TYPE=Resistance"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.LesserMedium.Robe"
+      },
+      {
+        "key": "COST",
+        "value": "11000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.219"
+      },
+      {
+        "key": "SPROP",
+        "value": "Wearer gains electricity resistance 5 and increases caster level by 1 for all spells with electricity descriptor."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-15T22:41:23Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 521,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+    "record_key": "Shocking Robe",
+    "sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

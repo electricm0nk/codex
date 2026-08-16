@@ -1,0 +1,59 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 15000.0,
+    "description": "Any effect which would cause the wearer to become fatigued deals an additional 1d6 points of nonlethal damage instead. Any effect that would cause exhaustion likewise causes 1d6 points of nonlethal damage, and leaves the wearer fatigued instead of exhausted.",
+    "key": "Cord of Stubborn Resolve",
+    "name": "Cord of Stubborn Resolve",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "STAT",
+          "CON",
+          "2",
+          "TYPE=Enhancement"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Belt.LesserMedium"
+      },
+      {
+        "key": "COST",
+        "value": "15000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.211"
+      },
+      {
+        "key": "SPROP",
+        "value": "Any effect which would cause the wearer to become fatigued deals an additional 1d6 points of nonlethal damage instead. Any effect that would cause exhaustion likewise causes 1d6 points of nonlethal damage, and leaves the wearer fatigued instead of exhausted."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-15T22:41:23Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 471,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+    "record_key": "Cord of Stubborn Resolve",
+    "sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

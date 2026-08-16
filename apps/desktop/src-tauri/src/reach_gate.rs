@@ -643,6 +643,17 @@ const CORPUS_BOOK_IDS: &[(&str, &str)] = &[
     // into `rules_tables` without ever writing corpus JSON for them — so the
     // companion family is the first content this book serves off disk.
     ("ultimate_magic", "ultimate_magic"),
+    // SD-31 `epic-6-ingest-lanes` F5/F6 (`SD31-E6-F5-001`). Ultimate
+    // Equipment had no `data/corpus/ultimate_equipment/` directory at all
+    // before this cycle (`OPEN-ISSUES.md` row 12) despite already driving
+    // the desktop equipment catalog via `equipment_resolver::
+    // equipment_catalog_rows()`'s compiled table -- `cache_gen::
+    // ultimate_equipment` (`gen_cache_ultimate_equipment`) writes the first
+    // real corpus JSON for the book. `corpus_ingest_diagnostic.rs` already
+    // names this book `"ultimate_equipment"` (`ultimate_equipment_counts`);
+    // this entry names the directory the same way every other book here
+    // does.
+    ("ultimate_equipment", "ultimate_equipment"),
 ];
 
 /// Corpus content-kind directory (singular, as the ingest tools write it) ->

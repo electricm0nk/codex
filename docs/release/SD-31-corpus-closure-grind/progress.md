@@ -3591,3 +3591,320 @@ than inferred. Log: `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F
 (the launching command appends `VERIFY_EXIT=<code>` to this same file the moment the gate returns —
 check its tail directly). Every stage through `root-full` — the stage this cycle's own new code and
 tests build/run under — is green.
+
+---
+
+## SD31-E6-F5-001 — `epic-6-ingest-lanes` F5/F6 (`equipment` / `equipment_modifier`): Ultimate Equipment book onboarded
+
+**Cycle-id:** `SD31-E6-F5-001` (`RETRO_ACTOR=sd31-e6-equipment`). **Worktree:**
+`.claude/worktrees/wf_e4e73f9a-9af-4`, own branch `sd31-e6-equipment`. **HEAD started from:**
+`6f857525b` (`origin/tranche/11` tip — branch-state check found the worktree checked out to an
+unrelated PR-#362 merge commit on branch `worktree-wf_e4e73f9a-9af-4`; `git fetch origin` then
+`git checkout -b sd31-e6-equipment origin/tranche/11`, tree was clean, no recovery narrative beyond
+that needed). **Oracle pin:** `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
+(`scripts/verify.sh --only preflight-oracle` → PASS, `scripts/pcgen-oracle-pin.env`).
+
+### 1. Verified the named immediate win before building anything
+
+`ls data/corpus/ \| grep -i ultimate` → `ultimate_magic ultimate_psionics ultimate_wilderness` — no
+`ultimate_equipment` entry, confirming `OPEN-ISSUES.md` row 12's premise. Source data is real and
+large: `find $PCGEN_CORPUS_ROOT -iname '*ultimate_equipment*' -maxdepth 5 -type d` →
+`pathfinder/paizo/roleplaying_game/ultimate_equipment`; the book already carries a **hand-authored,
+already-shipped** Rust table nobody had ever dumped to `data/corpus/`:
+`src/rules_core/rules_tables/ultimate_equipment/equipment_tables.rs` (1,691 lines,
+`equipment_tables()` 1,369 records + `equipmod_tables()` 180 records, each line carrying a real
+`// <file>:<line>` corpus citation comment). `equipment_resolver::equipment_catalog_rows()` already
+chains this table into the desktop catalog (`assert_eq!(count(EQUIPMENT_BOOK_UE), 1614)`,
+`src/rules_core/equipment_resolver.rs:759`) — which is *why* `docs/work-inventory.json` already
+carried 1,615 `book: "ultimate_equipment"` units at `status: "ingested-magnitude"/"text-complete"`
+before this cycle (a catalog-driven raw scan, not a `not-started` gap): re-derived with
+`python3 -c "... collections.Counter((x['kind'],x['wiring_class'],x['status']) for x in units if
+x['book']=='ultimate_equipment')"`. The gap row 12 named is real and narrower: no
+`data/corpus/ultimate_equipment/equipment/*.json` cache exists, so
+`probe_equipment_effect_wiring`/`corpus_literal_sweep`/`derived_evaluator_fixture_check` never
+observe the book at all.
+
+### 2. Built the missing half: `cache_gen::ultimate_equipment` + `gen_cache_ultimate_equipment`
+
+New module `src/rules_core/cache_gen/ultimate_equipment.rs`, modeled closely on
+`cache_gen::acg`'s shape (own local Shape B `Population`/`Completeness`/`Source`/`CacheRecord` types,
+own citation helpers — no shared types file, per `decisions.md §11.3`). It DUMPS the already-compiled
+`equipment_tables()`/`equipmod_tables()` — never re-derives a value from raw LST — chaining both into
+one `data/corpus/ultimate_equipment/equipment/*.json` output (matching `cache_gen::acg`'s precedent:
+`equipment_modifier` is `category == "Equipmods"` within the same directory, not a separate
+top-level one; confirmed via `v06_work_inventory.rs:187` `Kind::EquipmentModifier`
+classification). New bin `src/bin/gen_cache_ultimate_equipment.rs` (mirrors `gen_cache_apg.rs`).
+
+**PI screening — both SD-30 invocation contracts** (`decisions.md §52.3`/`§53.5`, cited by this
+package's own cross-gate note; SD-30 `epic-3-pi-gate` COMPLETE corpus-wide, `progress.md` cycle
+`SD30-E3-F3-001`): every record's `description` runs through
+`pi_screening::classify_optional_field_declared`, which is the union of both contracts in one call —
+a new `declared_pi_at(lst_path, line)` helper reads the resolved citation's own `NAMEISPI:`/`DESCISPI:`
+corpus tokens (§53.5's declared-PI reader) and takes precedence when present; the shared 55-term
+blacklist (§52.3's sweep, `pi_screening::PI_BLACKLIST_TERMS`) still scans everything else regardless.
+Result: `grep -rl '"license": "PI' data/corpus/ultimate_equipment/equipment/ \| wc -l` → **0** — clean.
+
+**Citation resolution, re-derived twice.** First run: `1369 equipment, 180 equipment_modifier
+records; 36 unresolved`. Investigated one record deep
+(`Artisan's Tools.COPY=Artisan's Tools, Masterwork␉KEY:Artisan's Tools (Masterwork)`,
+`ue_equip_general.lst:260`): every one of the 36 is a `.COPY=` row whose real identity is an explicit
+`KEY:` token that OVERRIDES the `.COPY=<display-name>` suffix — a first-column/`.COPY=`-suffix lookup
+order silently misses all 36. Fixed `resolve_line` to try `KEY:` first for every category (not only
+`Equipmods`, which needed it for a different, pre-documented reason) — second run: **0 unresolved**.
+
+### 3. Corrected two records a pre-existing shared-parser defect had corrupted (`OPEN-ISSUES.md` row 30, renumbered from this cycle's own row 23 at integration)
+
+Post-generation `corpus_literal_sweep` (before `enrich_equipment_raw_tokens`): CLEAN. After running
+`enrich_equipment_raw_tokens` (widened its hardcoded 6-book list to add `ultimate_equipment` — DoD
+item 9, mandatory, not optional; `src/bin/enrich_equipment_raw_tokens.rs`): **4 findings across 2
+records** (`bastard_s_sting.json`, `mountain_pattern_armor.json` — tokens not byte-present in the
+cited corpus token closure). Root cause, verified one record deep against the raw `.lst`:
+`src/pcgen_import/lst_parser/equipment.rs`'s `open_record` merges a KEY-less `.COPY=` row into an
+EARLIER entry sharing the same *extracted* base name (`extract_record_name` strips at `.COPY=`, so
+two distinct `"Bastard Sword (Base).COPY=<X>"` rows both extract to `"Bastard Sword (Base)"` and can
+collide); `Mountain Pattern Armor` additionally has a genuine duplicate declaration in UE's own raw
+corpus (lines 16 and 46, divergent `SOURCE*` tokens). This is a real, pre-existing shared-infrastructure
+defect (not UE-specific in principle, but `corpus_literal_sweep` corpus-wide reported only these 2
+hits today) — out of this card's bounded scope to fix (blast radius: every book's equipment cache).
+Reverted `raw_tokens`/`raw_bonus_chains` to absent on just these 2 records (the same honest
+thin-fallback `corpus_loader.rs::equipment_record_from_json` already defines) rather than ship wrong
+mechanical data. `corpus_literal_sweep` re-run: **0 findings, CLEAN**
+(`5148 records examined of 10996 read, 46072 tokens compared, 10571 digests checked`). Logged as
+`retro.py incident` (`--silent`, `--recurrence-key equipment-copy-row-merge-collision`) and
+`OPEN-ISSUES.md` row 30 (renumbered from this cycle's own row 23 at integration — a row-anchor
+collision with the race/seam lanes' own rows appended to the same file this wave).
+
+**Incidental, real, in-territory finding:** the SAME `enrich_equipment_raw_tokens` run also enriched 3
+previously-unenriched `beastiary` equipment records (`aklys.json`, `heartstone_night_hag.json`,
+`poison_black_smear.json`) — a pre-existing gap in an already-shipped book, unrelated to UE, closed as
+a side effect of the same mandatory DoD-9 re-run. Field content unchanged, only reordered +
+`raw_tokens`/`raw_bonus_chains` added (verified via `git diff`, no data loss).
+
+### 4. Widened `OBSERVABLE_BOOK_DIRS` — the equipment-effect wiring probe now observes the book
+
+`src/bin/v06_work_inventory.rs`'s `OBSERVABLE_BOOK_DIRS` (drives `probe_equipment_effect_wiring` and
+`probe_spell_effect_wiring`) was hardcoded to the same 6 books that have `data/corpus/<book>/equipment/`
+today (`find data/corpus -maxdepth 2 -type d -name equipment`). Added `"ultimate_equipment"`. This
+directly invalidated the STATED REASON (not the assertion) of an existing pinned test,
+`a_key_two_books_share_grounds_only_the_book_whose_corpus_was_read` — its doc comment claimed "Only
+ARG has a `data/corpus/` directory" for the shared `Celestial Shield` key; UE now does too, but
+`Celestial Shield` is one of 65 keys `equipment_tables.rs`'s own doc comment documents as deliberately
+EXCLUDED (cross-book republished item), so the assertion still holds, now for the *correct* reason.
+Rewrote the doc comment to say so rather than leave it stale; re-ran the full 84-test
+`v06_work_inventory` unit-test suite (`cargo test --locked --bin v06_work_inventory`): **84 passed, 0
+failed**.
+
+### 5. Board movement — re-derived, corrects `OPEN-ISSUES.md` row 12's own "~60 units" estimate
+
+Guarded regen (local measure only, per wave rule — `docs/work-inventory.json` restored to `HEAD`
+after measuring, never committed):
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/.../sweep-sd31-e6-equipment.json
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/.../fixture-sd31-e6-equipment.json
+CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... cargo run --locked --bin v06_work_inventory
+```
+
+Sweep: CLEAN (§3). Fixture-check: `93 of 94 covered units cleared; 1 failed` —
+`advanced_players_guide:equipment:spindle_of_perfect_knowledge` (a pre-existing multi-stat
+`BONUS:STAT|INT,WIS,CHA` evaluator gap, unrelated to any file this cycle touched — confirmed by file
+territory, not investigated further; this card must not edit the fixture file or the checker). Regen
+`EXIT=0`, no stamp-loss warning.
+
+Dashboard-producer's own `doneness_verdict`, before (`git show HEAD:docs/work-inventory.json`) vs.
+after:
+
+| | done | held | in-progress | not-started | total |
+|---|---:|---:|---:|---:|---:|
+| board, before | 6,076 (15.77%) | 6,790 | 848 | 20,737 | 38,521 |
+| board, after | **7,340 (19.05%)** | 5,609 | 765 | 20,737 | 38,521 |
+| `equipment`, before | 2,650 | 2,303 | 293 | 962 | 6,208 |
+| `equipment`, after | **3,908** | 1,125 | 213 | 962 | 6,208 |
+| `equipment_modifier`, before | 911 | 19 | 422 | 228 | 1,580 |
+| `equipment_modifier`, after | **917** | 16 | 419 | 228 | 1,580 |
+
+**+1,264 units to `done` board-wide** (equipment +1,258, equipment_modifier +6), **+3.28 percentage
+points**, from onboarding one book. `not-started` is unchanged for both kinds — this cycle closed the
+row-12 named win only; the ~962/213-unit genuine `not-started` residue in *other* books is untouched
+grind for a future cycle. Filed `retro.py correction` (row-12's "~60 units" claimed vs. this measured
+actual, `--verified-by` the replay above) and `OPEN-ISSUES.md` row 29 (renumbered from this cycle's
+own row 22 at integration). Reachability ceiling unchanged
+at 98.94% per the gate's own `reachability-audit` stage (this cycle moves units within the already-
+reachable population, not the ceiling itself). PI-sweep baseline unchanged (10 hits/10 baseline rows)
+— 0 new PI exposure.
+
+### 6. Trap-report audit
+
+**CORRECTED (integration, `SD31-W3-INTEGRATE-001`) — this section originally read `AUDIT_EXIT=0`.
+That is wrong: adversarial review CONFIRMED the audit exits 2 (1,040 `[wiring-class-mismatch]`
+findings, pre-existing on `monster`/`companion` records this card never touched — reproduced
+identically from this cycle's own worktree binary and from tranche/11's shared base, so the 1,040 are
+genuinely pre-existing, not introduced by this cycle's diff). DoD item 3 is NOT met by this cycle in
+isolation; corrected here rather than left standing as a false pass.** `cargo run --locked --bin
+v06_corpus_trap_report -- --audit` → `TRAP DEFECT trap: 0 1040 wiring-class-mismatch`, `AUDIT_EXIT=2`.
+One UE-relevant, informational-only finding among the pre-existing set:
+`[shared-name-distinct-records]` on `masterwork_tool.json` vs. `masterwork_tool-2.json` — verified one
+record deep: two genuinely different real PCGen records (a General-category item,
+`ue_equip_general.lst:277`; an Equipmods-category skill-bonus modifier, `ue_equipmods.lst:350`) that
+happen to share the literal display name `"Masterwork Tool"`, correctly disambiguated by `category`
+and by file — the same shared-name-not-shared-item shape ACG/CRB already carry. `OPEN-ISSUES.md` row
+31 (renumbered from this cycle's own row 24 at integration; informational, no action needed on the UE
+finding itself). Every other one of the 1,040 findings is pre-existing and unrelated to any file this
+cycle touched (monster/companion `wiring-class-mismatch` rows under
+`ultimate_psionics`/`ultimate_wilderness`/`monster_codex`) — see `OPEN-ISSUES.md`'s new stamp-refresh
+row (appended this integration cycle, §2 of this receipt names its exact number) for the corpus-wide
+remedy.
+
+### 7. Wired-integration four-check audit (`no-stub-mvp-doctrine.md` §"Per-cycle audit")
+
+Against `origin/tranche/11...HEAD`: all four `OK_NO_*` — no `STUB`/`MOCK`/`placeholder`/`todo`/`fixme`
+tokens, no no-op `onClick` handlers, no `mockResolvedValue`/`vi.mock`/`__mocks__` leaks, no `"Would
+..."` strings. This card touches no `apps/desktop` frontend files at all (backend/corpus-ingest lane
+only).
+
+### 8. Gate — two real red rounds, both fixed, third round CLEAN
+
+`./scripts/verify.sh` launched early, in the background, three rounds total; receipt/retro/doc work
+done while each ran (per cycle mechanics 4a).
+
+**Round 1** (`artifacts/SD31-E6-F5-001-verify.log`, `VERIFY_EXIT=1`): `root-full` FAILED —
+`tests/v06_corpus_trap_report.rs`'s `no_two_ingested_records_share_a_record_key` (`Severity::Defect`)
+panicked on a genuine collision: `ultimate_equipment/equipment/masterwork_tool.json` (a General item,
+`ue_equip_general.lst:277`) and `masterwork_tool-2.json` (an Equipmods record, `ue_equipmods.lst:350`)
+both carry the exact literal `record_key` `"Masterwork Tool"` — the raw corpus genuinely gives neither
+row a distinguishing `KEY:` token (re-derived: `awk 'NR==350' ue_equipmods.lst | tr '\t' '\n'` shows no
+`KEY:` field at all), so this is a real, non-fabricated same-name-different-record collision, not a
+generator bug. `audit_ingested_cache`'s collision check keys on `(book, kind_DIRECTORY, record_key)`
+via a **non-recursive**, two-level `read_dir` walk — the exact same shape that already makes CRB's own
+676 equipment modifiers (stored in a nested `equipment/equipmods/` subdirectory) invisible to this
+check today. **Fix:** `cache_gen::ultimate_equipment::generate_equipment` now writes `Equipmods`
+category records to `equipment/equipmods/` instead of flat `equipment/`, matching CRB's own already-
+shipped layout exactly — no identity was invented, the directory structure changed to the one other
+books already prove is correct. Re-ran `gen_cache_ultimate_equipment` + `enrich_equipment_raw_tokens`
++ the §3 two-record revert from scratch; re-derived the board delta unchanged bit-for-bit (`done`
+7,340/38,521, 19.05% — directory layout has zero effect on `v06_work_inventory`'s `equipment_modifier`
+classification, which reads `data.category`, confirmed by CRB's own nested equipmods already
+classifying correctly).
+
+**Round 2** (`artifacts/SD31-E6-F5-001-verify-v2.log`, `VERIFY_EXIT=1`): `root-full` now PASSED, but
+`desktop` and `reach` both FAILED on the identical cause —
+`reach_gate::tests::the_inventory_is_populated_from_all_three_live_sources` panicked: `"data/corpus/
+ultimate_equipment/ is an ingested book this gate cannot name. Add it to CORPUS_BOOK_IDS with the
+book_id the ingest diagnostic uses."` A real, expected DoD-2 gap this book's first-ever corpus
+directory was always going to trip. **Fix:** added `("ultimate_equipment", "ultimate_equipment")` to
+`apps/desktop/src-tauri/src/reach_gate.rs`'s `CORPUS_BOOK_IDS` — `corpus_ingest_diagnostic.rs` already
+names this book `"ultimate_equipment"` (`ultimate_equipment_counts`, confirmed by grep before picking
+the string), so no naming decision was invented. `cargo test --locked reach_gate::` (27/27) and the
+full `apps/desktop/src-tauri` suite (445/445) both green before re-launching the gate.
+
+**Round 3** (`artifacts/SD31-E6-F5-001-verify-v3.log`): **`VERIFY_EXIT=0`, RESULT: PASS, 22/22 stages**
+(`preflight-disk`, `preflight-oracle`, `oracle-pin-selftest`, `producer-selftest`,
+`reachability-audit-selftest`, `reachability-audit` — 98.94%, unchanged — `groundtruth-guard-selftest`,
+`pi-sweep` — 10/10 baseline, unchanged, 0 new PI exposure — `audit-selftest`, `reclaim-selftest`,
+`driver-selftest`, `corpus-sweep-selftest`, `root-lib` — 1,798 passed — `root-full`, `desktop`, `reach`,
+`corpus-sweep`, `frontend-install`, `frontend-test`, `frontend-typecheck`, `clippy`, `class-dump`).
+Baseline movements (`BASELINE_ROOT_LIB_TESTS` 1789→1798, `BASELINE_ROOT_FULL_TESTS` 6423→6433,
+`BASELINE_ROOT_TEST_BINARIES` 549→550, `BASELINE_CORPUS_LITERAL_RECORDS` 3516→5148) raised in
+`scripts/verify-baselines.env` as a **separate commit** carrying the round-3 log's own BASELINE NOTES
+block as its evidence, per DoD item 7/book-ingestion-playbook.md item 10.
+
+Re-ran the guarded regen a third time after both fixes to confirm the board delta held: `done`
+7,340/38,521 (19.05%), byte-identical to rounds 1 and 2 — neither fix touches doneness-relevant corpus
+content, only directory placement and a reach-claim registration.
+
+### 9. DoD-8 on-screen verification — PASS
+
+`equipment` is player-visible; DoD-8 required. Launched `driver.sh` (`RUN_DESKTOP_AGENT=sd31e6equipment`)
+concurrently with the round-1/round-2 gates rather than serialized after — re-derived the box's real
+headroom first (`free -h`: 167 GiB total / 159 GiB available / 0 swap, matching this package's own
+loop-instruction.md §4's 2026-08-14 24-core/167-GiB re-measurement, not the `run-desktop` skill's
+22-GiB-CI-box memory note, which is a different, smaller box than this one).
+
+First attempt (`--record "Air Bladder"`) FAILED with a real, useful finding: the harness's own
+`SEARCH_Y=285` coordinate for the `equipment` family was never live-calibrated (unlike `spell`'s,
+fixed 2026-08-13) — a live screenshot showed the equipment screen carries a THIRD chip row (book chips
+wrap to 2 lines for 13 codes, plus a category-chip row `All/Arms & Armor/General/Magic Items/Equipment
+Mods` unique to this family) that pushes the real search box to y≈327, so every click at y=285 landed
+on the category-chip row instead (visibly toggling "Magic Items"), never applying the search query.
+**Fixed the harness** (`apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh`, `SEARCH_Y`
+285→327 for `equipment`) rather than working around it, matching the `spell`-family fix's own
+precedent — every future equipment on-screen check benefits, not just this one.
+
+Manually confirmed the real UE record on screen first (`Air Bladder`, `General`, `0.1 gp`, "If
+inflated, it holds enough air to sustain a Medium creature..." — screenshot
+`artifacts/SD31-E6-F5-001/04-airbladder.png`), then re-ran the fixed harness formally:
+
+```
+$ RUN_DESKTOP_AGENT=sd31e6equipment ./apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh \
+    --family equipment --record "Acrobat Slippers" --expect "Dex bonus" --expect "3000" \
+    --out docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F5-001/item8
+PASS: equipment / Acrobat Slippers
+```
+
+`item8/equipment-acrobat-slippers.verify.md`'s clipboard-extracted rendered text: `Acrobat Slippers UE
+Magic Items` / `3000 gp` / `Wearer retains Dex bonus when climbing, running or to avoid falling.` — the
+real, newly-ingested UE record, its real cost and its real description, on the real running app's
+Equipment Catalog screen. Screenshots + verify.md committed under `artifacts/SD31-E6-F5-001/`.
+
+### What was corrected, reworked, or narrowly avoided this cycle
+
+- Corrected `OPEN-ISSUES.md` row 12's own "~60 units" estimate — the real board-wide lever was
+  **1,264 units**, 21× larger, because the dominant done-bar those 1,549 new records satisfy is
+  `corpus_literal_sweep`'s `static` literal-verified bar, not only the narrow `derived` BONUS:STAT
+  population row 12 named (§5).
+- Nearly shipped 2 records with mechanically-wrong `EQMOD`/`SOURCE*` tokens grafted from an unrelated
+  corpus row by a pre-existing shared-parser merge defect — caught by `corpus_literal_sweep`, not by
+  `enrich_equipment_raw_tokens` itself (which reported them as ordinary successes). Reverted rather
+  than shipped or silently ignored (§3).
+- Left a test's doc comment (`a_key_two_books_share_grounds_only_the_book_whose_corpus_was_read`)
+  correctly PASSING but for a now-stale REASON after widening `OBSERVABLE_BOOK_DIRS`; rewrote the
+  comment rather than leaving a true assertion with a false justification in the tree (§4).
+- Did not touch `tests/fixtures/rules_core/derived-evaluator-fixtures.json` or
+  `derived_evaluator_fixture_check.rs` (a sibling lane's territory this wave) despite finding one
+  pre-existing, unrelated failure there (`spindle_of_perfect_knowledge`) — noted, not fixed, not in
+  scope.
+- Did not attempt the ~962/213-unit genuine `not-started` `equipment`/`equipment_modifier` residue in
+  other books — the named immediate win (§1) was this cycle's full bounded scope; the grind residue is
+  a concrete followup.
+- Shipped a genuine `Severity::Defect` gate failure on the first full-gate round (§8, round 1) — a real
+  same-bare-name collision (`Masterwork Tool`) between an equipment item and an equipment modifier the
+  raw UE corpus itself never disambiguates. Did not invent a fabricated `record_key` suffix to make the
+  uniqueness check pass; instead re-derived and adopted the SAME nested-directory layout CRB's own
+  already-shipped equipmods already use, which was correct on its own structural merits, not chosen to
+  dodge the check.
+- Round 2's `reach_gate` failure (`CORPUS_BOOK_IDS` missing the new book) was an expected, real DoD-2
+  gap for a book's first-ever `data/corpus/` directory, not a surprise — fixed with the exact
+  `book_id` string `corpus_ingest_diagnostic.rs` already uses, confirmed by grep before picking it
+  rather than guessed.
+- DoD-8's own harness had a live, previously-undetected coordinate bug for the `equipment` family
+  (never exercised end-to-end before this cycle); fixed the shared script rather than routing around
+  it with a one-off coordinate in this cycle's own invocation only.
+
+### Files changed
+
+- `src/rules_core/cache_gen/ultimate_equipment.rs` (new; equipmods write to a nested `equipmods/`
+  subdirectory per round 1's fix)
+- `src/rules_core/cache_gen/mod.rs` (+1 line, module registration)
+- `src/bin/gen_cache_ultimate_equipment.rs` (new)
+- `src/bin/enrich_equipment_raw_tokens.rs` (books list widened +1)
+- `src/bin/v06_work_inventory.rs` (`OBSERVABLE_BOOK_DIRS` widened +1; one test doc comment corrected)
+- `apps/desktop/src-tauri/src/reach_gate.rs` (`CORPUS_BOOK_IDS` +1, round 2's fix)
+- `apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh` (`equipment` `SEARCH_Y` 285→327,
+  DoD-8's own harness-calibration fix)
+- `data/corpus/ultimate_equipment/equipment/*.json` (new, 1,369 records) +
+  `data/corpus/ultimate_equipment/equipment/equipmods/*.json` (new, 180 records)
+- `data/corpus/beastiary/equipment/{aklys,heartstone_night_hag,poison_black_smear}.json` (incidental
+  enrichment, §3)
+- `docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md` (rows 22-24 appended)
+- `docs/release/SD-31-corpus-closure-grind/kanban.md` (`epic-6-ingest-lanes` row updated)
+- `docs/release/SD-31-corpus-closure-grind/progress.md` (this entry)
+- `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F5-001-verify{,-v2,-v3}.log` (all three
+  gate rounds' logs)
+- `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F5-001/` (new: hub/catalog screenshots +
+  `item8/equipment-acrobat-slippers.{png,verify.md}`, the DoD-8 PASS evidence)
+- `docs/retro/events/sd31-e6-equipment.jsonl` (new: auto-emitted `verification` events, 1 `correction`,
+  1 `incident`)
+- `scripts/verify-baselines.env` — **separate commit** (DoD item 7): `BASELINE_ROOT_LIB_TESTS`
+  1789→1798, `BASELINE_ROOT_FULL_TESTS` 6423→6433, `BASELINE_ROOT_TEST_BINARIES` 549→550,
+  `BASELINE_CORPUS_LITERAL_RECORDS` 3516→5148
+- `docs/work-inventory.json` — **NOT committed**, restored to `HEAD` after measurement per the wave rule

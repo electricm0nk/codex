@@ -1,0 +1,58 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 67000.0,
+    "description": null,
+    "key": "Rod (Mind Mastery)",
+    "name": "Rod (Mind Mastery)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Rod of Mind Mastery"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Rod.GreaterMajor"
+      },
+      {
+        "key": "COST",
+        "value": "67000"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.182"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Magic Item|TIMES=3|CASTERLEVEL=7|Detect Thoughts"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Magic Item|TIMES=1|CASTERLEVEL=7|Discern Lies"
+      }
+    ],
+    "weight_lbs": 5.0
+  },
+  "ingested_at": "2026-08-15T22:41:23Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 229,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+    "record_key": "Rod (Mind Mastery)",
+    "sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

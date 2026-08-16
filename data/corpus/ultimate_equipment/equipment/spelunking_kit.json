@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 174.0,
+    "description": "This kit holds equipment for exploring underground, consisting of a lantern with 4 flasks of oil, a hammer and 8 pitons, 100 feet of silk rope, a grappling hook, and a climber's kit.",
+    "key": "Spelunking Kit",
+    "name": "Spelunking Kit",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Kit"
+      },
+      {
+        "key": "COST",
+        "value": "174"
+      },
+      {
+        "key": "WT",
+        "value": "32"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      },
+      {
+        "key": "SPROP",
+        "value": "This kit holds equipment for exploring underground, consisting of a lantern with 4 flasks of oil, a hammer and 8 pitons, 100 feet of silk rope, a grappling hook, and a climber's kit."
+      }
+    ],
+    "weight_lbs": 32.0
+  },
+  "ingested_at": "2026-08-15T22:41:23Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 608,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_general.lst",
+    "record_key": "Spelunking Kit",
+    "sha256": "76c33612bbb40d7de0515e0e4662ca30129a92b9572e7094e4a9f4379444f690"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}
