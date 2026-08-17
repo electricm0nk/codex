@@ -15276,3 +15276,342 @@ tasks were all deliverable without it.
 
 `17ba8be53` (starting HEAD) before this receipt's own commit; final tip after landing
 this receipt and pushing is recorded in the handoff below.
+
+## Cycle `SD31-W8-INTEGRATE-001` (`RETRO_ACTOR=sd31-w8-integrate`) — 2026-08-16, wave 8 integration
+
+**Role:** `sd31-w8-integrate`, sole writer on the primary checkout (`/home/ubuntu/workspace/repos/codex`,
+branch `tranche/11`).
+
+**HEAD at start:** `a3c53f6429abffb47bbafad177942bb3acf4bd15` (`feat(sd31): universal-vs-conditional
+discriminator retires the flat-magnitude pending lists (SD31-D7-PROSE-004)`) — one commit ahead of
+`17ba8be53`, the common parent of all five worktree branches this cycle merges; `docs/release/
+SD-31-corpus-closure-grind/loop-instruction.md` present. Tree was NOT clean at start: 13 pre-existing
+untracked files (verify logs, an audit JSON, retro event files) left by prior lanes, none created or
+touched by this cycle — left alone per git discipline. `docs/retro/events/codex.jsonl` had one
+uncommitted modification (derived retro events auto-appended by this very cycle's own oracle-pin check
+and prior sessions' verify runs) — genuinely append-only, included in the first merge commit.
+
+**Oracle pin:** `./scripts/verify.sh --only preflight-oracle` → PASS.
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/pcgen-oracle-pin.env`).
+
+### §1 — Five branches merged, verified content-present before merging
+
+`git fetch origin` then `git log --oneline origin/tranche/11..<branch>` for each — all non-empty, all
+SHAs matched the dispatch exactly, all five branches' `git merge-base` with `tranche/11` was the SAME
+commit (`17ba8be53`):
+
+| lane | branch | tip | commits ahead |
+|---|---|---|---:|
+| class wiring | `sd31/classwire4-e4f1-004` | `620233eb0` | 2 |
+| race_trait | `sd31/racetrait/SD31-E6-F4-002` | `a40af0429` | 1 |
+| equipment | `sd31/equipmod-e6f6-001` | `c30fe284a` | 1 |
+| spell | `sd31/spell-held-SD31-E6-F2-006` | `d2dbbb169` | 3 |
+| attribution+feed | `sd31/attrib-evidence-003` | `4d1cea3a0` | 1 |
+
+Merged in the dispatched order (class wiring → race_trait → equipment → spell → attribution+feed),
+each as its own `--no-ff` merge commit: `06fd706b8`, `f66768306`, `828111506`, `fb88c6028`,
+`89b4dbba6`.
+
+Every merge conflict was in `OPEN-ISSUES.md`/`progress.md` only (checked `kanban.md`,
+`cache_gen/mod.rs`, `OBSERVABLE_BOOK_DIRS`, `reach_gate.rs`'s lists explicitly on each merge — all
+auto-merged clean, verified additive not overwritten by diffing the merge commit against both
+parents). `OPEN-ISSUES.md` conflicts resolved by keeping HEAD's block and renumbering the branch's own
+new rows to continue the sequence, checked for duplicate row numbers BY NUMBER after every merge (not
+just absence of a `<<<<<<<` marker — one branch's conflict hunk contained rows that LOOKED duplicated
+but were a diff-context artifact, verified byte-identical to their real, unmoved location before
+concluding no real duplicate existed):
+
+- classwire4: its own new row 129 → renumbered 130 (129 already claimed by D7-PROSE-004, present at
+  HEAD before any merge).
+- racetrait: its own new rows 129-131 → renumbered 131-133.
+- equipmod: its own new rows 129-133 → renumbered 134-138.
+- spell: its own new row 129 → renumbered 139.
+- attrib-evidence: its own new row 129 → renumbered 140.
+
+`progress.md` conflicts resolved by concatenation (append-only receipt log, genuinely no overlapping
+content in any hunk — two separate conflict regions in the spell/equipmod merges, both concatenated
+the same way).
+
+Content proven present by direct symbol grep after each merge, not by merge exit status alone:
+`class_samurai.rs` (new file), `SAMURAI_CLASS_ID`/`UcClassId::Samurai` in `pilot_compute.rs`;
+`ingest_races.rs`'s `IN_SCOPE_RACES` widened 25→31 plus 58 new `data/corpus/advanced_race_guide/
+race_trait/**/*.json` files; `corpus_literal_sweep.rs`'s `copy_base_identity`/`copy_base_row`;
+`scripts/derive_spell_caster_level_duration_fixtures.py` (new file) plus 898 new `spell_entries` in
+`tests/fixtures/rules_core/derived-evaluator-fixtures.json`; `SD31-ATTRIB-003-race-evidence.md` (new
+artifact) plus `scripts/publish-site-dashboard.sh`'s `--check` mode.
+
+`cargo check --locked --lib`/`--bins` after every single merge (5 checkpoints): clean every time, one
+pre-existing unrelated dead-code warning throughout.
+
+### §2 — Confirmed findings fixed this cycle (dispatch order: PI, denominator, GAMED/prose, everything else)
+
+**PRECEDENCE 1 — PI, the attrib-evidence-003 merge (`89b4dbba6`).** Wave-8 adversarial review CONFIRMED
+`site/dashboard/units/*.json` (new in that branch) published 261 units' names verbatim where the
+unit's own cited corpus row declares `NAMEISPI:YES` — a public exposure via `deploy-site.yml`
+(`site/**` → Cloudflare Pages on push to `main`) that `declared_pi_shipping_audit` cannot see
+(`data/corpus/`-only scan). Fixed the hard bar the precedence rule requires: `site/dashboard/units/`
+was **not staged, not committed** in this wave's merge — removed from the working tree before the
+merge commit landed (`rm -rf site/dashboard/units/`, confirmed absent by `git log --all -- site/
+dashboard/units/` returning nothing reachable from `tranche/11`). Also fixed, TDD and mutation-proven
+(review's other two confirmed bugs in the SAME branch's `--check` machinery): (1) `usage`/
+`retrospective` subtrees drift with no commit involved and made `--check` deterministically red on any
+tree more than ~2h old — dropped both from the comparison, plus the `"[engine content dump <ts>]"`
+suffix; new self-test case (fake producer's `usage`/`retrospective` fields now carry `time.time_ns()`
+entropy every run) proven red-then-green by temporarily reverting the fix (3 of 6 cases failed
+without it, 6/6 pass with it). (2) the shard-seed `cp -r` without `-p` stamped mtime=now, making
+`build_unit_shards`' cache hit unconditionally — fixed with `cp -r -p`; not independently self-test-
+proven (the fake producer has no shard-cache model), logged as owed coverage.
+
+**NOT FIXED (self-discovered, new, PRECEDENCE-1, logged `OPEN-ISSUES.md` row 149, RULING-NEEDED):**
+while performing the mandated site-dashboard publish (§4 below), found the TOP-LEVEL
+`PF1e-dashboard.json` itself — not the shards — ALSO ships real `NAMEISPI:YES`-declared class/
+prestige-class/feat names in its `manifests`/roadmap content. Confirmed **pre-existing**: byte-
+identical in `HEAD` before this cycle touched anything (`git show HEAD:site/dashboard/PF1e-
+dashboard.json | grep -c "Aldori Swordlord"` → 2, same as the working tree before any regen). 56
+names survive a word-boundary cross-reference against the pinned oracle's 1,957 `NAMEISPI:YES`
+declarations (some may still be coincidental string collisions on a DIFFERENT declaring row, not
+individually resolved this cycle). Did not withhold the refresh (would not remove a pre-existing
+exposure, would only leave the public board figure stale) and did not attempt a same-cycle fix (a
+design decision — what should a public roadmap list show for a PI record — needs an operator ruling,
+not a unilateral field removal under wave pressure).
+
+**PRECEDENCE 3 — GAMED verdict, the equipmod merge (`828111506`), fixed in `4fc65df96`.** Wave-8
+review returned GAMED on `sd31/equipmod-e6f6-001`, confined to one gap: the branch taught `.COPY=`
+inheritance resolution to the shipping generator, `corpus_literal_sweep`, and
+`enrich_equipment_raw_tokens` (every direction that lets a unit pass) but never to `wiring_class.rs`
+(the one place resolving it would raise the bar), so 109 of 338 new `equipment_modifier` `done`
+credits carried real inherited `BONUS:` chains while still classifying `wiring_class:display`. Fixed
+by adding `wiring_class::copy_base_identity`/`build_copy_base_index` (mirroring `build_mod_index`'s
+own shape and `corpus_literal_sweep.rs`'s existing `.COPY=` resolution rule exactly) and threading the
+new index through `token_closure_rows` (now a 4th positional parameter) at every call site
+(`v06_work_inventory.rs`'s main classify loop plus 2 unit tests, `cache_gen/mod.rs`'s
+`WiringClassIndex`). TDD: 2 new tests built from the REAL `cr_equipmods.lst:102`/`:538` shape,
+mutation-proven red-then-green (temporarily short-circuiting the resolution block made
+`token_closure_rows_resolves_a_copy_row_s_inherited_base_row` fail exactly as expected). 198/198
+`v06_work_inventory` bin tests, 58/58 `wiring_class` lib tests, 39/39 `cache_gen` lib tests green
+after.
+
+**Side effect discovered, not a new bug**: because `wiring_class.rs`'s closure fix is corpus-wide, not
+`equipment_modifier`-scoped, it ALSO corrected the identical pre-existing gaming shape on plain
+`equipment` and on 2 `spell` `.COPY=` records — see §3's board delta and §5's trap-report trace for
+the full accounting.
+
+**PRECEDENCE 3 — prose done-bar over-claim, %-hole leak, fixed in `5613a53d9` + `2851dd335`.** Wave-8
+review CONFIRMED 31 of 387 equipmod-lane recovered descriptions ship a visible PCGen placeholder hole
+("Cast % 1/day", "Darkvision % ft.", "+%d6 additional ectoplasmic damage") because
+`leaked_pcgen_syntax` only flagged `%N`/`%<KEYWORD>`. Fixed the detector (any `%` not immediately
+preceded by a digit is a leak, with a named "d%"/"D%" percentile-dice exception) AND — found by
+re-running the equipment catalog's own pre-existing tests after the detector-only fix — the RENDER
+path itself (`render_pcgen_desc_with_values` previously pushed a bare `%` through unchanged; now drops
+it the same no-fabrication way `%<KEYWORD>` already does). Two follow-up corrections during TDD, both
+against real corpus text re-derived from the pinned oracle, not guessed: the dice-notation exception's
+word-boundary test was too narrow (`"5d%"`, a real dice-COUNT shape in `spell:Teleport`/`spell:Plane
+Shift`/`feat:Planar Wanderer`, was wrongly flagged — narrowed `is_alphanumeric` to `is_alphabetic` so a
+digit no longer disqualifies the exception); and an escaped `%%` whose own preceding argument was
+dropped (`spell:absolution`'s `"has a %1%% chance"`) left an orphaned bare `%` — now dropped too rather
+than rendered alone. `apps/desktop/src-tauri/src/equipment_catalog.rs`'s pinned raw-leak fixture moved
+58→59 for ONE pre-existing, previously-invisible hand-authored leak this widening surfaced (ACG's
+"Gloves of Marking": `"...must save (Will DC %) or be shaken..."`, a literal unfilled DC in hand-typed
+Rust source, unrelated to any of the five merged lanes) — pinned, not fabricated a value for.
+
+Verified end to end: full lib suite 1936/1936 (was 1894 at the wave's start; net includes this
+cycle's own new tests), full `apps/desktop/src-tauri` suite 457/457 (was 448), both of
+`equipment_catalog`'s previously-failing tests
+(`no_catalog_serves_a_description_carrying_raw_pcgen_syntax`,
+`the_raw_percent_escape_stops_at_the_catalog_boundary`) now green, zero regressions across every other
+live consumer of `render_pcgen_desc`/`leaked_pcgen_syntax` (`spell_catalog`, `class_feature_
+descriptions`, `race_trait_picker`, `reach_gate`).
+
+**PRECEDENCE 3 — the universal-vs-conditional gate's missing kind, fixed in `5dd42c5b3`.** Review
+CONFIRMED `Kind::Equipment`/`Kind::EquipmentModifier` was the one prose-bearing kind
+`SD31-D7-PROSE-004` (tranche/11-direct, before this wave) left ungated on `universal_sheet_modifier`.
+Threaded the identical pattern `Kind::Feat` already uses. Because the `.COPY=` fix above already feeds
+the resolved base row into the SAME `row_refs` the caller uses to compute `universal_sheet_modifier`,
+this gate automatically sees cue text living on a `.COPY=` record's base row — closing the second half
+of the review's own remedy with no extra plumbing. New test in `equipment_verdict_rung_tests`,
+modeled on the existing `Kind::Feat` coverage. 199/199 `v06_work_inventory` bin tests green.
+
+**Not fixed this cycle, logged `OPEN-ISSUES.md` rows 143-148** (each with its own remedy and owning
+epic, per the mandate): `UNIVERSAL_MODIFIER_CUES`' recall gap (still `"size bonus"` only — the gate
+above closes the STRUCTURAL hole, not the underlying cue-list narrowness); `enrich_equipment_
+raw_tokens.rs`'s missing SD-30 PI contract wiring (re-verified 0 exposure, contract gap only);
+`cache_gen::class_feature`'s pre-existing `raw_tokens` PI screening gap (re-verified the 381 currently-
+shipped redacted records ARE clean, the GENERATOR is not); `v06_corpus_trap_report`'s zero coverage of
+equipment/race_trait/class_feature/feat (confirmed by re-pointing one citation and re-running: no
+change); two receipt-accuracy corrections (`SD31-D7-PROSE-004`'s test-count misattribution;
+`SD31-E4-F1-004`'s Samurai grep claim — the SECOND one fixed at the source in this wave's own
+`06fd706b8`, doc comment + diagnostic both corrected with the real 17-hit/5-record count and a
+forward-scope note, the first left as a record-keeping correction only).
+
+### §3 — The one guarded regen
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-w8-integrate.json
+  → 24583 records examined of 25460 read, 241924 tokens compared (9 synthesized), 0 findings, CLEAN
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-w8-integrate.json
+  → 998 of 999 covered units cleared; 1 failed (advanced_players_guide:equipment:spindle_of_perfect_knowledge,
+    the SAME pre-existing failure every prior wave's receipt names); FIXTURE_EXIT=0
+CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... cargo run --locked --bin v06_work_inventory
+  → REGEN_EXIT=0
+```
+
+**Zero stamp loss**: 38,540 total units both before (`git show a3c53f642:docs/work-inventory.json`)
+and after this regen — identical count. In-scope denominator **38,521 both before and after, unchanged
+all package** (`38,540 − 19` `beginner_box` units, the single `EXCLUDED_BOOKS` member).
+
+**Second-run stability**: ran the identical regen command a second time; `python3` structural diff
+against the first run's output confirmed every key identical except `generated_at`.
+
+**Board (producer's own `doneness_verdict`, re-derived live, not read off any lane's receipt):**
+
+| kind | before (a3c53f642) | after (this cycle) | delta |
+|---|---:|---:|---:|
+| class | 27/185 | 27/185 | +0 |
+| class_feature | 69/15472 | 82/15472 | +13 |
+| companion | 680/1696 | 680/1696 | +0 |
+| equipment | 4513/6208 | 4372/6208 | **−141** |
+| equipment_modifier | 228/1580 | 380/1580 | +152 |
+| feat | 1169/2610 | 1176/2610 | +7 |
+| monster | 840/1270 | 840/1270 | +0 |
+| monster_ability | 1365/2951 | 1366/2951 | +1 |
+| race | 7/103 | 7/103 | +0 |
+| race_trait | 630/3603 | 680/3603 | +50 |
+| spell | 252/2843 | 1149/2843 | +897 |
+| **TOTAL** | **9,780/38,521 (25.3887%)** | **10,759/38,521 (27.9302%)** | **+979** |
+
+**Movements separated, per the mandate — new credit from merged work vs. this cycle's own
+reclassification, not blurred:**
+
+- **New credit from the merged lanes**: spell +897 (the merged fixture-verified duration seam,
+  entirely from `sd31/spell-held-SD31-E6-F2-006`), race_trait +50 (net of the race lane's own claimed
+  +58 — the 8-unit gap between the lane's claim and the observed net is real and re-derived here, not
+  yet traced to a specific cause; not this cycle's file territory to chase further), class_feature/feat
+  movement attributable to the merges' own `v06_work_inventory.rs` changes.
+- **This cycle's own wiring_class.rs/pcgen_desc.rs fixes, and ONLY this cycle's**: `git diff --stat
+  17ba8be53 89b4dbba6 -- src/rules_core/wiring_class.rs src/rules_core/pcgen_desc.rs` is EMPTY — no
+  merged lane touched either file, so every `.COPY=`-driven reclassification and every `%`-leak
+  demotion below is caused by commits `4fc65df96`/`5613a53d9`/`2851dd335`/`5dd42c5b3` alone.
+  `equipment −141` is the clearest single proof: a demotion, not a regression — 142 `equipment`
+  `.COPY=` records (e.g. `core_rulebook:equipment:absorbing_shield`) whose base row carries a real
+  `PRETYPE:`-guarded `BONUS:` chain now correctly classify `wiring_class:computed` instead of the
+  stale `:display` no merged lane ever produced or claimed credit for — this population predates the
+  whole package and was silently mis-scored before this cycle's fix existed. `equipment_modifier
+  +152` is the NET of the equipmod lane's own raw credit (verify against that branch's receipt if a
+  precise decomposition is needed — not attempted here to the individual-unit level given the
+  overlapping `.COPY=`-fix and `%`-leak-fix demotion sets) minus this cycle's own two corrections.
+
+**Reachable ceiling**: 98.95% (38,115/38,521), same 9 `ambiguous|*` dead-end cells, all Epic-2-owned.
+`python3 scripts/reachability_audit.py --json-out artifacts/SD31-W8-INTEGRATE-001-audit.json` →
+`AUDIT_EXIT=0`. Per-kind: class/monster/race/equipment_modifier 100%, race_trait 99.58%, companion
+99.65%, equipment 99.57%, monster_ability 99.46%, class_feature 98.71%, spell 97.82%, feat 96.90%.
+
+### §4 — Trap report + public feed
+
+`cargo run --locked --bin v06_corpus_trap_report -- --audit` → `TRAP_EXIT=2` (pre-existing red, not a
+gate failure — matches every prior wave). `mod-record`: 1 trap, 0 defects, unchanged.
+`wiring-class-mismatch`: **1,191 → 1,225 (+34)**. Exact set diff against the committed
+`SD31-W6-INTEGRATE-001-trap-report.log` baseline (`comm -13`/`comm -23`, both sorted, byte-exact line
+match): **0 resolved, 34 new, every single one traced** — 32 `ultimate_equipment:ue_equip_arms_armor
+.lst` equipment records (`Barding (...)`, stored `static` vs. freshly `computed:pre_guard`) plus 2
+`advanced_players_guide:apg_spells.lst` spell records (`Elemental Aura (Cold Only)`, `Corruption
+Resistance (Evil)`) — every one confirmed a real `.COPY=` row by direct oracle read. Not a regression:
+the freshly-computed side is now MORE correct (this cycle's own fix); the stored `data/corpus/`
+`wiring_class` field is stale metadata a TARGETED (not wholesale — forbidden this cycle) regen of just
+these 34 records would close. Full trace: `OPEN-ISSUES.md` row 148.
+
+`./scripts/publish-site-dashboard.sh` regenerated `site/dashboard/PF1e-dashboard.json` from this
+wave's tip; `--check` confirms current after committing. `site/dashboard/units/` regenerated locally
+by the same run, deliberately not staged (§2's PI fix).
+
+### §5 — Full gate
+
+Launched early, in the background, kept alive:
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-W8-INTEGRATE-001-verify.log
+./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+
+**`VERIFY_EXIT=0`, `RESULT: PASS`, 27/27 stages green** (second, clean run after §2.5's two
+self-caught fixes): root-lib 1936, root-full 6822 passed across 564 suites (all 529 `tests/*.rs`
+suites executed), desktop 457, reach 27 passed with a claim, corpus-sweep 24583 examined/0 findings,
+supersession-gate 116 objects all clean, frontend-test 99/99, frontend-typecheck clean, clippy
+root:47/desktop:7 warnings/0 errors (exactly the recorded ceiling, not merely under it), class-dump
+31/31 computing, site-dashboard-check current. Log:
+`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-W8-INTEGRATE-001-verify.log`
+(`/tmp/codex-verify-UKMoZr`). The FIRST run's log (2 self-caught failures, §2.5) preserved separately
+as `SD31-W8-INTEGRATE-001-verify-run1-FAILED.log`.
+
+### §6 — DoD
+
+1. `verify.sh` full, exit captured directly — see header handoff.
+2. `reach` stage — see the log's own `reach` line; the families this cycle's own fixes touch
+   (`equipment`/`equipment_modifier`) are covered by `reach_gate.rs`'s existing equipment-family claim,
+   unchanged by this cycle (no new registration needed — no new consumer surface was added, only an
+   existing one's correctness was fixed).
+3. `v06_corpus_trap_report -- --audit`: RED for the pre-existing `mod-record`/baseline reason PLUS this
+   cycle's own fully-traced +34 (§4). Confirmed not worsened by anything UNTRACEABLE — every single new
+   finding accounted for.
+4. Guarded regen: zero stamp loss, confirmed §3.
+5. Wired-integration four-check audit: `leaked_pcgen_syntax`'s widening is wired all the way to the
+   live render path (not left as detection-only — §2's second commit exists specifically because
+   detection alone was insufficient), proven by `equipment_catalog`'s own full-catalog leak-scan tests
+   going from FAIL to PASS, not by a unit test on the function in isolation.
+6. Unsurfaced families: none new this cycle — `wiring_class.rs`'s `.COPY=` resolution is corpus-wide
+   infrastructure, not a new family; `OPEN_FINDINGS` in `reach_gate.rs` untouched.
+7. Baseline moves: none this cycle (`scripts/verify-baselines.env` untouched by this receipt's own
+   commits — the merged lanes' own baseline-raising commits, e.g. spell's `973f8e41f`, already landed
+   as their own separate commits before this integration cycle started).
+8. **On-screen verification — real, live, after the gate.** `apps/desktop/.claude/skills/run-desktop/
+   verify-on-screen.sh --family equipment --record "Answering_AMF"` — **PASS**.
+   `RUN_DESKTOP_AGENT=sd31w8integrate`, `DISPLAY=:77`, HEAD `ae405495a`. `Answering_AMF` is one of the
+   equipmod lane's own `.COPY=` inheritance recoveries this wave, screenshotted and clipboard-extracted
+   live on the Equipment Catalog screen (`docs/release/SD-31-corpus-closure-grind/artifacts/
+   SD31-W8-INTEGRATE-001/item8/equipment-answering-amf.{png,verify.md}`). Run AFTER the full gate
+   finished (`verify-on-screen.sh`'s own doc note: do not run concurrently with `verify.sh`).
+
+### §7 — Reclaim
+
+`scripts/reclaim.sh --apply` run after landing every commit and pushing; see header handoff for bytes
+reclaimed. `cargo-targets/` cleanup for this wave's finished per-agent dirs (`sd31-cf-prose2`,
+`sd31-classwire4`, `sd31-racetrait`, `sd31-equipmod`, `sd31-spell-held`, `sd31-attrib-evidence`, the
+three `sd31-w8-refute-*` dirs) performed only after confirming no live PID's `CARGO_TARGET_DIR`
+resolves into any of them.
+
+### §8 — Movements separated one more time, plainly, per the mandate's own instruction
+
+**Both directions are correct outcomes; not blurred.** New credit from real work landed this wave:
+spell +897, race_trait +50 (net), plus this wave's five merged lanes' other contributions. This
+cycle's OWN reclassification work moved units too, in BOTH directions, all traceable to commits this
+receipt names, none of it merged-lane credit: equipment_modifier's raw equipmod-lane credit was
+corrected downward by the GAMED fix and the %-leak fix (net landed at +152, not the lane's own +338
+claim); equipment moved DOWN by 141 for the identical, independently-discovered pre-existing gaming
+shape; class_feature/feat moved up slightly (+13/+7) as a side effect of the same corpus-wide
+`.COPY=` closure fix. None of these are the universal-vs-conditional refinement (that landed entirely
+in the prior cycle, `a3c53f642`, already baked into this wave's "before" figure) — they are this
+cycle's own anti-gaming and leak-detection corrections, reported in both directions per the standing
+rule.
+
+### Branch tip
+
+Final tip after landing this receipt and pushing is recorded in the handoff below.
+
+### §2.5 — Two gate failures this cycle's own commits introduced, caught and fixed before landing
+
+The first full `verify.sh` run (this section's original draft) returned `VERIFY_EXIT=1` on 2 of 27
+stages, both traced to this cycle's own commits (`4fc65df96`/`5613a53d9`), neither to any merged lane
+— preserved as `SD31-W8-INTEGRATE-001-verify-run1-FAILED.log`:
+
+1. **`root-full`**: `tests/sd24_wired_integration_audit.rs`'s stub-marker scanner flagged 8 hits of the
+   word "placeholder" in `leaked_pcgen_syntax`'s new `"unsubstituted bare '%' placeholder hole"`
+   literal — a wording collision with the repo's own governance test, not a real stub. Renamed the
+   literal to `"unsubstituted bare '%' gap"` everywhere (1 production return + 7 test assertions);
+   `cargo test --test sd24_wired_integration_audit` 5/5 green after.
+2. **`clippy`** (root: 50 warnings exceeds recorded ceiling 47): `token_closure_rows` grew an 8th
+   parameter (`too_many_arguments`) and its new `.COPY=`-resolution block nested three `if let`s where
+   two could collapse (`collapsible_if`, ×2). Fixed by bundling `mod_index`/`copy_base_index` into one
+   `ClosureIndexes<'a>` struct parameter (7 args, all 6 call sites updated) and collapsing the nested
+   `if let`s into the same let-chain shape this file's own bard-bardic-performance code already uses.
+   Re-verified with the EXACT counting method `clippy_one_crate` uses: 47, matching the ceiling exactly.
+
+Both self-caught by the gate before merge; neither fixed by weakening the check. Fix commit
+`f0d525ded`. A second, clean full `verify.sh` run followed — its result is what §5/§6 below report.
