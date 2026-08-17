@@ -940,6 +940,8 @@ const RACE_SIZES: &[(&str, SizeCategory)] = &[
     ("Nagaji", SizeCategory::Medium),      // TEMPLATE:SIZE_M
     ("Vanara", SizeCategory::Medium),      // TEMPLATE:SIZE_M
     ("Vishkanya", SizeCategory::Medium),   // TEMPLATE:SIZE_M
+    // Inner Sea Races' Triaxian, SD31-E6-F4-005 (2026-08-17).
+    ("Triaxian", SizeCategory::Medium),    // TEMPLATE:SIZE_M
 ];
 
 /// Creature size for a loose race identifier — a `race:<slug>` character-input
@@ -1513,6 +1515,99 @@ const ALTERNATE_TRAIT_REPLACE_FLAGS: &[(&str, &[&str])] = &[
     ("Tiefling ~ Oni-Spawn", &["Tiefling_ReplaceAbilityScores", "Tiefling_ReplaceSkilled", "Tiefling_ReplaceSpellLikeAbility"]),
     ("Tiefling ~ Qlippoth-Spawn", &["Tiefling_ReplaceAbilityScores", "Tiefling_ReplaceSkilled", "Tiefling_ReplaceSpellLikeAbility"]),
     ("Tiefling ~ Rakshasa-Spawn", &["Tiefling_ReplaceAbilityScores", "Tiefling_ReplaceSkilled", "Tiefling_ReplaceSpellLikeAbility"]),
+    // ---- Skinwalker (Bestiary 5, `SD31-E6-F4-005`) ----
+    // The inverse of Aasimar/Tiefling's shape: THESE 9 selectors carry no
+    // `FACT:` token on their own corpus row at all (`ingest_race_traits.rs`
+    // copies the derived flags onto them from `self_declared_subrace_
+    // grants`, matching Aasimar's precedent exactly). The book's other 36
+    // records are the replacement rows each heritage grants,
+    // `TraitRole::FlagGranted` -- their own corpus rows DO carry a `FACT:`
+    // tag each, but `ingest_race_traits.rs` clears it from the shipped
+    // `sets_replace_flags` (raw token preserved) precisely so they fall
+    // through to their `PREABILITY` gate and `link_automatic_grants`
+    // instead of also classifying `Alternate` -- see that binary's own
+    // comment for the full worked reasoning. A player never selects one.
+    (
+        "Skinwalker ~ Werebat-Kin",
+        &[
+            "Skinwalker_ReplaceAbilityScores",
+            "Skinwalker_ReplaceAnimalMinded",
+            "Skinwalker_ReplaceChangeShape",
+            "Skinwalker_ReplaceSpellLikeAbility",
+        ],
+    ),
+    (
+        "Skinwalker ~ Werebear-Kin",
+        &[
+            "Skinwalker_ReplaceAbilityScores",
+            "Skinwalker_ReplaceAnimalMinded",
+            "Skinwalker_ReplaceChangeShape",
+            "Skinwalker_ReplaceSpellLikeAbility",
+        ],
+    ),
+    (
+        "Skinwalker ~ Wereboar-Kin",
+        &[
+            "Skinwalker_ReplaceAbilityScores",
+            "Skinwalker_ReplaceAnimalMinded",
+            "Skinwalker_ReplaceChangeShape",
+            "Skinwalker_ReplaceSpellLikeAbility",
+        ],
+    ),
+    (
+        "Skinwalker ~ Werecrocodile-Kin",
+        &[
+            "Skinwalker_ReplaceAbilityScores",
+            "Skinwalker_ReplaceAnimalMinded",
+            "Skinwalker_ReplaceChangeShape",
+            "Skinwalker_ReplaceSpellLikeAbility",
+        ],
+    ),
+    (
+        "Skinwalker ~ Wereraptor-Kin",
+        &[
+            "Skinwalker_ReplaceAbilityScores",
+            "Skinwalker_ReplaceAnimalMinded",
+            "Skinwalker_ReplaceChangeShape",
+            "Skinwalker_ReplaceSpellLikeAbility",
+        ],
+    ),
+    (
+        "Skinwalker ~ Wererat-Kin",
+        &[
+            "Skinwalker_ReplaceAbilityScores",
+            "Skinwalker_ReplaceAnimalMinded",
+            "Skinwalker_ReplaceChangeShape",
+            "Skinwalker_ReplaceSpellLikeAbility",
+        ],
+    ),
+    (
+        "Skinwalker ~ Wereshark-Kin",
+        &[
+            "Skinwalker_ReplaceAbilityScores",
+            "Skinwalker_ReplaceAnimalMinded",
+            "Skinwalker_ReplaceChangeShape",
+            "Skinwalker_ReplaceSpellLikeAbility",
+        ],
+    ),
+    (
+        "Skinwalker ~ Weretiger-Kin",
+        &[
+            "Skinwalker_ReplaceAbilityScores",
+            "Skinwalker_ReplaceAnimalMinded",
+            "Skinwalker_ReplaceChangeShape",
+            "Skinwalker_ReplaceSpellLikeAbility",
+        ],
+    ),
+    (
+        "Skinwalker ~ Werewolf-Kin",
+        &[
+            "Skinwalker_ReplaceAbilityScores",
+            "Skinwalker_ReplaceAnimalMinded",
+            "Skinwalker_ReplaceChangeShape",
+            "Skinwalker_ReplaceSpellLikeAbility",
+        ],
+    ),
 ];
 
 /// The `<Race>_Replace<Trait>` flags a set of selected alternate racial traits
@@ -1812,17 +1907,19 @@ mod tests {
         let corpus = all_books();
         assert_eq!(
             corpus.race_keys().len(),
-            35,
-            "35 in-scope races: CRB 7 + Bestiary 1's 11 + Bestiary 2's 6 + Bestiary 5's 1 \
-             (Skinwalker, chassis + standard tier only) + Advanced Race Guide's 10 \
+            36,
+            "36 in-scope races: CRB 7 + Bestiary 1's 11 + Bestiary 2's 6 + Bestiary 5's 1 \
+             (Skinwalker, chassis + standard tier) + Advanced Race Guide's 10 \
              (SD-31-E6-F4-002, 2026-08-16: Catfolk, Kitsune, Ratfolk, Strix, Suli, Wayang; \
-             SD31-E6-F4-004, 2026-08-17: Gillman, Nagaji, Vanara, Vishkanya)"
+             SD31-E6-F4-004, 2026-08-17: Gillman, Nagaji, Vanara, Vishkanya) + Inner Sea \
+             Races' 1 (Triaxian, chassis + standard tier, SD31-E6-F4-005, 2026-08-17)"
         );
         assert_eq!(corpus.chassis("Dwarf").expect("Dwarf").book_id, "core_rulebook");
         assert_eq!(corpus.chassis("Tengu").expect("Tengu").book_id, "beastiary");
         assert_eq!(corpus.chassis("Fetchling").expect("Fetchling").book_id, "bestiary_2");
         assert_eq!(corpus.chassis("Skinwalker").expect("Skinwalker").book_id, "bestiary_5");
         assert_eq!(corpus.chassis("Catfolk").expect("Catfolk").book_id, "advanced_race_guide");
+        assert_eq!(corpus.chassis("Triaxian").expect("Triaxian").book_id, "inner_sea_races");
         // ARG contributed only traits, never a race chassis, until
         // SD-31-E6-F4-002 (2026-08-16, `decisions.md` Decision 10's Catfolk
         // worked example): it now declares 6 races of its own (Catfolk,
@@ -2094,8 +2191,12 @@ mod tests {
             }
         }
         assert_eq!(
-            redacted, 31,
-            "Inner Sea Races' 22 PI-redacted records + Core Essentials' 9, counted on disk. \
+            redacted, 39,
+            "Inner Sea Races' 22 PI-redacted records + Core Essentials' 9 + Bestiary 5's 8 \
+             (Skinwalker's `DESCISPI:YES` heritage-selector rows, SD31-E6-F4-005, \
+             2026-08-17 -- one per heritage; the redaction fires on the selector's own \
+             `DESCISPI:YES` DESC, not on any of its 4 replacement rows' own descriptions, \
+             which carry no such declaration and no blacklist hit), counted on disk. \
              Horror Adventures added 0: it is a rules supplement, not a campaign setting. \
              ISR's 18 -> 22 by SD-31 Epic 1-F2 (2026-08-15): `Fetchling ~ Shadow Agent`, \
              `Grippli ~ Defensive Training`, `Ifrit ~ Brazen Flame` and `Undine ~ Triton \
@@ -2135,7 +2236,11 @@ mod tests {
         // 297 -> 335 by SD31-E6-F4-004 (2026-08-17): Advanced Race Guide's
         // 4-race follow-on batch (Gillman, Nagaji, Vanara, Vishkanya) adds
         // 38 new standard rows, same flat shape, no heritage content.
-        assert_eq!(count(TraitRole::Default), 335);
+        // 335 -> 344 by SD31-E6-F4-005 (2026-08-17): Inner Sea Races'
+        // Triaxian batch adds 9 new standard rows, same flat shape. (This
+        // cycle's Skinwalker heritage batch adds ZERO to this count -- none
+        // of its 45 records carry a `<Race> Racial Default` TYPE marker.)
+        assert_eq!(count(TraitRole::Default), 344);
         // 153 ARG + Monster Codex's 4 + the Advanced Player's Guide's 1
         // (`Half-Orc ~ Plagueborn`) + Inner Sea Races' 67 + Horror
         // Adventures' 41, all landed by SD-29's race-trait lane, + SD-31
@@ -2144,7 +2249,11 @@ mod tests {
         // real ARG alternate-trait rows, minus Strix's Wing-Clipped-granted
         // Flight and Suli's Energy-Strike-granted Earthfoot/Firehand/
         // Icewalk/Shockshield (those 5 are `FlagGranted`, not `Alternate`).
-        assert_eq!(count(TraitRole::Alternate), 349);
+        // 349 -> 358 by SD31-E6-F4-005 (2026-08-17): Skinwalker's 9 heritage
+        // SELECTORS only -- their 36 constituent replacement rows are
+        // `FlagGranted` (`ALTERNATE_TRAIT_REPLACE_FLAGS`'s own new-entries
+        // comment explains why, in `race_resolver.rs`).
+        assert_eq!(count(TraitRole::Alternate), 358);
         // 5 + Inner Sea Races' 3: `Junk Tinker ~ Skilled` (named by an
         // `ABILITY:Goblin Racial Trait|AUTOMATIC|` grant) and the two rows
         // carrying a positive `PREFACT` gate, `Secret Magic ~ Merfolk ~ Speed`

@@ -65,8 +65,8 @@ use sha2::{Digest, Sha256};
 use codex::rules_core::cache_gen::WiringClassIndex;
 use codex::rules_core::pi_screening;
 use codex::rules_core::shape_b_v1::{
-    Completeness, CorpusRecordV1, CorpusSource, License, Population, RaceCacheData, RaceTraitCacheData, RawBonusChain,
-    RawToken,
+    Completeness, CorpusRecordV1, CorpusSource, License, Population, REDACTED_PI_MARKER, RaceCacheData,
+    RaceTraitCacheData, RawBonusChain, RawToken,
 };
 
 /// `wiring_class`'s corpus-wide book id for the shared race storage all
@@ -264,6 +264,47 @@ const IN_SCOPE_RACES: &[RaceSpec] = &[
     RaceSpec { dir: "nagaji", book: "advanced_race_guide" },
     RaceSpec { dir: "vanara", book: "advanced_race_guide" },
     RaceSpec { dir: "vishkanya", book: "advanced_race_guide" },
+    // SD31-E6-F4-005 (2026-08-17). One more race out of `core_essentials/
+    // races/` -- identical flat shape to every batch above (`<dir>_races.lst`
+    // + `<dir>_abilities_race.lst` + `<dir>_abilities_globalvar.lst`, no
+    // `_subrace.lst` file anywhere) -- attributed to `inner_sea_races`, the
+    // ONLY registered corpus book (`data/corpus/inner_sea_races/` exists,
+    // SD-29's ingest) that prints this race under ANY name, regardless of
+    // how `OPEN-ISSUES.md` row 140's pending Inner Sea Races attribution
+    // ruling resolves. Re-derived fresh this cycle, not transcribed --
+    // `grep -rl '^Triaxian\.MOD' ~/workspace/repos/pcgen/data/pathfinder`
+    // returns exactly one hit, under `campaign_setting/inner_sea_races/
+    // isr_races.lst` (`Triaxian.MOD SOURCEPAGE:p.267` -- a real page
+    // citation, not a placeholder). This is deliberately NOT the same move
+    // as re-attributing an ALREADY-ingested race off a colliding multi-book
+    // citation (frozen by `decisions.md`'s AMENDMENT pending an operator
+    // ruling) -- this race has never been ingested by any cycle, carries no
+    // existing attribution to move away from, and inner_sea_races is not one
+    // of several candidates here, it is the ONLY one found anywhere in the
+    // corpus (registered or not, Mythic Adventures aside, which is Decision
+    // 10's variant-line case, a different object entirely).
+    //
+    // **`aquatic_elf` was investigated alongside Triaxian and deliberately
+    // NOT added.** It is the ONLY race in the entire 37-race dataset (Monkey
+    // Goblin shares the shape but is separately out of scope, multi-book
+    // ambiguous) whose chassis row's bare NAME ("Elf, Aquatic"), `KEY:`
+    // field ("Elf (Aquatic)") and `OUTPUTNAME:` field ("Aquatic Elf") are
+    // three DIFFERENT strings -- every other race's three agree, which is
+    // why `parse_chassis`'s `key: row.name().to_string()` (the bare NAME)
+    // has never needed to read `KEY:`/`OUTPUTNAME:` at all. Its own
+    // `aquaticelf_abilities_race.lst`/`_globalvar.lst` rows are typed and
+    // gated against "Aquatic Elf" (the OUTPUTNAME), so ingesting it with the
+    // current chassis-key derivation produces a systemic race-key mismatch
+    // across every one of its 11 standard-trait rows (confirmed: run
+    // produced 26 errors, "trait KEY ... names race Some(\"Aquatic Elf\"),
+    // chassis says \"Elf, Aquatic\"" x11, plus the cascading "no PREVAREQ
+    // gate"/"no standard racial traits found" errors that follow from the
+    // same mismatch) -- genuinely new work (deciding, and testing, which of
+    // the three fields `parse_chassis` should prefer when they diverge, and
+    // confirming the other 36 races' behavior is unchanged), not a config
+    // widening, so it is reported rather than force-fit under time pressure.
+    // Logged `OPEN-ISSUES.md`, this cycle's row.
+    RaceSpec { dir: "triaxian", book: "inner_sea_races" },
 ];
 
 /// Heuristic OGL/PI screen (`docs/governance/ogl-pi-blacklist.md`) — the
@@ -1024,6 +1065,27 @@ fn declared_product_identity_of(raw_tokens: &[RawToken]) -> pi_screening::Declar
     pi_screening::declared_product_identity(raw_tokens.iter().map(|t| (t.key.as_str(), t.value.as_str())))
 }
 
+/// Redacts every `DESC` entry in `raw_tokens` to the redaction marker
+/// `data.description` was already given -- the exact fix
+/// `ingest_race_traits.rs` gained this cycle for the identical latent
+/// defect (`SD31-E6-F4-005`): this writer's own `data.description =
+/// stored_desc;` line never touched `raw_tokens`, so a future `DESCISPI:
+/// YES` trait for one of THIS binary's 37 races would ship the same
+/// description-redacted-but-raw_tokens-leaked shape `declared_pi_shipping_
+/// audit.rs`'s `DESC-PI-SHIPPED-IN-RAW-TOKENS` check exists to catch. No
+/// currently-shipped race triggers it (re-derived this cycle: 0 of the 337
+/// standard-trait records carry `DESCISPI:YES` or a blacklist hit), so this
+/// is a landmine defused before it fires, not a live leak fixed.
+fn redact_desc_raw_token(raw_tokens: Vec<RawToken>, redacted: bool) -> Vec<RawToken> {
+    if !redacted {
+        return raw_tokens;
+    }
+    raw_tokens
+        .into_iter()
+        .map(|t| if t.key == "DESC" { RawToken { key: t.key, value: REDACTED_PI_MARKER.to_string() } } else { t })
+        .collect()
+}
+
 /// Returns the blacklisted terms present in a record's free text, if any.
 fn pi_hits(texts: &[&str]) -> Vec<String> {
     let mut hits = Vec::new();
@@ -1402,7 +1464,9 @@ fn main() {
             if declared.description {
                 pi_declared_descriptions += 1;
             }
+            let description_redacted = stored_desc.as_deref() == Some(REDACTED_PI_MARKER);
             data.description = stored_desc;
+            data.raw_tokens = redact_desc_raw_token(data.raw_tokens, description_redacted);
 
             let slug = slugify(&data.key);
             if let Some(prev) = seen_slugs.insert(slug.clone(), data.key.clone()) {
@@ -1922,16 +1986,21 @@ mod tests {
                 // `ingest_race_traits.rs` for THIS binary's own 6-race ARG
                 // batch too (Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang), the
                 // same way it already was for the whole-book directory (see
-                // this test's own comment above). Scoped to that one book,
-                // not to `is_racial_default` in general: Bestiary 1's own
-                // `Duergar ~ Spell-Like Abilities`/`Duergar ~ Spell
-                // Resistance` are standard, `ingest_races.rs`-written rows
-                // that legitimately carry `is_racial_default: false` (their
-                // corpus row has no `<Race> Racial Default` TYPE marker —
-                // the pre-existing gap `raceCreationCoverage.test.ts`'s
-                // "173, not 175" comment names), and a blanket filter on the
-                // flag alone would wrongly skip them here too.
-                if spec.book == "advanced_race_guide" && !record.data.is_racial_default {
+                // this test's own comment above). **Widened to `bestiary_5`,
+                // `SD31-E6-F4-005` (2026-08-17):** `ingest_race_traits.rs`'s
+                // new self-declared-subrace batch shares
+                // `bestiary_5/race_trait/skinwalker/` with this binary's
+                // already-shipped 9 standard-tier records the same way.
+                // Scoped to these two books, not to `is_racial_default` in
+                // general: Bestiary 1's own `Duergar ~ Spell-Like
+                // Abilities`/`Duergar ~ Spell Resistance` are standard,
+                // `ingest_races.rs`-written rows that legitimately carry
+                // `is_racial_default: false` (their corpus row has no
+                // `<Race> Racial Default` TYPE marker — the pre-existing gap
+                // `raceCreationCoverage.test.ts`'s "173, not 175" comment
+                // names), and a blanket filter on the flag alone would
+                // wrongly skip them here too.
+                if matches!(spec.book, "advanced_race_guide" | "bestiary_5") && !record.data.is_racial_default {
                     continue;
                 }
                 validate_license(&record).unwrap_or_else(|e| panic!("{path:?}: {e}"));
@@ -1951,13 +2020,14 @@ mod tests {
         // 1-F2's Bestiary 2 batch of 6, the Skinwalker follow-on
         // (Bestiary 5, chassis + 9 standard-tier traits only), SD-31-E6-
         // F4-002's Advanced Race Guide batch of 6 (Catfolk 9, Kitsune 10,
-        // Ratfolk 9, Strix 11, Suli 9, Wayang 10 = 58), plus SD31-E6-F4-
+        // Ratfolk 9, Strix 11, Suli 9, Wayang 10 = 58), SD31-E6-F4-
         // 004's 4-race ARG follow-on (Gillman 9, Nagaji 9, Vanara 8,
-        // Vishkanya 12 = 38) -- 35 races / 337 standard racial trait
-        // records, re-measured 2026-08-17 by running this binary against
-        // the real corpus, not invented.
-        assert_eq!(races, 35, "35 in-scope race chassis records");
-        assert_eq!(traits, 337, "337 standard racial trait records");
+        // Vishkanya 12 = 38), plus SD31-E6-F4-005's Triaxian (Inner Sea
+        // Races, chassis + 9 standard-tier traits) -- 36 races / 346
+        // standard racial trait records, re-measured 2026-08-17 by running
+        // this binary against the real corpus, not invented.
+        assert_eq!(races, 36, "36 in-scope race chassis records");
+        assert_eq!(traits, 346, "346 standard racial trait records");
     }
 
     // -----------------------------------------------------------------
@@ -2311,6 +2381,41 @@ mod tests {
         assert_eq!(pi_field.as_deref(), Some("description"));
         assert!(pi_marker.is_some());
         assert_eq!(data.description.as_deref(), Some("[redacted PI]"));
+    }
+
+    /// `SD31-E6-F4-005`: `data.description` being redacted must not leave
+    /// the identical prose sitting unredacted in `data.raw_tokens`'s own
+    /// `DESC` entry -- `ingest_race_traits.rs` shipped exactly that leak
+    /// live this cycle (8 Skinwalker heritage records) before both writers'
+    /// `redact_desc_raw_token` fix landed.
+    #[test]
+    fn a_declared_description_s_raw_token_is_also_redacted() {
+        let line = padded_line(&[
+            "Greed",
+            "KEY:Dwarf ~ Greed",
+            "DESCISPI:YES",
+            "TYPE:RacialTraits.Dwarf Racial Trait.Dwarf Racial Default.SpecialQuality",
+            "DESC:Dwarves receive a bonus tied to a named Golarion place the term list does not know.",
+        ]);
+        let mut data = parse_trait(&one_row(&line), "Dwarf", &no_gates()).unwrap();
+        let declared = declared_product_identity_of(&data.raw_tokens);
+        let (_, _, _, stored_desc) =
+            pi_screening::classify_optional_field_declared("description", data.description.as_deref(), declared.description);
+        let redacted = stored_desc.as_deref() == Some(codex::rules_core::shape_b_v1::REDACTED_PI_MARKER);
+        data.description = stored_desc;
+        data.raw_tokens = redact_desc_raw_token(data.raw_tokens, redacted);
+        let desc_token = data.raw_tokens.iter().find(|t| t.key == "DESC").expect("a DESC raw token must survive");
+        assert_eq!(desc_token.value, "[redacted PI]");
+    }
+
+    /// The un-redacted path must be a strict no-op: an ordinary trait's
+    /// `raw_tokens` are untouched byte-for-byte.
+    #[test]
+    fn an_undeclared_description_leaves_raw_tokens_untouched() {
+        let tokens =
+            vec![RawToken { key: "DESC".to_string(), value: "Dwarves are stout and hardy.".to_string() }];
+        let out = redact_desc_raw_token(tokens.clone(), false);
+        assert_eq!(out, tokens);
     }
 
     /// Mirrors `ingest_race_traits.rs`'s own precedent (and `SD-29-corpus-
