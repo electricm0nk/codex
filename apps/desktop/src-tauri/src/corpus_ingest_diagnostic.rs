@@ -1191,7 +1191,11 @@ mod tests {
             // reason the 2026-08-16 batch's weren't -- they ARE counted in
             // `reported`, via the same `races` map merge (ARG's `races` row
             // moved `Some(6)` -> `Some(10)` this cycle).
-            ("advanced_race_guide", "advanced_race_guide", 979u32),
+            // 979 -> 990 by SD31-E6-F4-006 (2026-08-17): `ingest_race_traits
+            // .rs`'s own 11-record alternate-trait batch for those same 4
+            // races (Gillman/Nagaji/Vanara/Vishkanya) -- also
+            // corpus-JSON-only race_trait content, same shape as above.
+            ("advanced_race_guide", "advanced_race_guide", 990u32),
             ("pathfinder_unchained", "pathfinder_unchained", 0),
         ] {
             let response = build_corpus_ingest_diagnostic();

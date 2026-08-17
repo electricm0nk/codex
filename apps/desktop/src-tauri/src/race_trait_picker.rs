@@ -991,7 +991,7 @@ mod tests {
         );
         let total: usize = menu.races.iter().map(|race| race.alternates.len()).sum();
         assert_eq!(
-            total, 349,
+            total, 357,
             "ARG's 153 Alternate-classified records + Monster Codex's 4 (SD-29 decisions.md §43) \
              + APG's 1 (`Half-Orc ~ Plagueborn`, decisions.md §39's deferral, closed by SD-29's \
              race-trait extend lane) + Inner Sea Races' 67 (§45, the same lane's round 2) \
@@ -1001,7 +1001,8 @@ mod tests {
              + SD-31 Epic 1-F2's Bestiary 2 batch of 48 (ARG's 42 + Inner Sea Races' 6, \
              2026-08-15) + SD-31-E6-F4-003's 19 (2026-08-16, ARG's own 6-race chassis batch's \
              real alternate-trait rows, minus Strix's Wing-Clipped-granted Flight and Suli's \
-             Energy-Strike-granted Earthfoot/Firehand/Icewalk/Shockshield)"
+             Energy-Strike-granted Earthfoot/Firehand/Icewalk/Shockshield) + SD31-E6-F4-006's 8 \
+             (2026-08-17, ARG's own follow-on 4-race chassis batch's real alternate-trait rows)"
         );
 
         // Per-race counts, derived from the corpus by this very menu.
@@ -1035,6 +1036,12 @@ mod tests {
             ("Elf", 27),        // ARG 13 + ISR 7 + HA 7 (ISR 8 until 2026-08-12: `Elf ~
             // Sovyrian-Born` carries `NAMEISPI:YES` and is dropped, `decisions.md` 53)
             ("Fetchling", 6),   // ARG 5 + ISR 1 (SD-31 Epic 1-F2, 2026-08-15)
+            // Gillman's real ARG total is 3, but `Throwback` grants both
+            // `Throwback ~ Gillman ~ Type` and `Throwback ~ Gillman ~ Speed`
+            // (`TraitRole::FlagGranted`), so all 3 alternates ARE selectable
+            // menu rows -- unlike Strix/Suli, Throwback's own grants are not
+            // themselves alternates, so nothing is subtracted here.
+            ("Gillman", 3),     // ARG 3 (SD31-E6-F4-006, 2026-08-17)
             ("Gnome", 23),      // ARG 12 + ISR 6 + HA 5
             ("Goblin", 10),     // ARG 7 + MC 2 + ISR 1
             ("Grippli", 5),     // ARG 4 + ISR 1 (SD-31 Epic 1-F2)
@@ -1047,6 +1054,7 @@ mod tests {
             ("Kitsune", 2),     // ARG 2 (SD-31-E6-F4-003, 2026-08-16)
             ("Kobold", 5),      // ARG 4 + ISR 1
             ("Merfolk", 4),     // ARG 3 + ISR 1
+            ("Nagaji", 1),      // ARG 1 (SD31-E6-F4-006, 2026-08-17)
             ("Oread", 9),       // ARG 8 + ISR 1 (SD-31 Epic 1-F2)
             ("Orc", 5),         // ARG 4 + ISR 1
             ("Ratfolk", 4),     // ARG 4 (SD-31-E6-F4-003, 2026-08-16)
@@ -1064,12 +1072,18 @@ mod tests {
             ("Tengu", 5),       // ARG 4 + ISR 1
             ("Tiefling", 20),   // ARG 7 + ISR 3 + CE 10 (heritages)
             ("Undine", 10),     // ARG 9 + ISR 1 (SD-31 Epic 1-F2)
+            // Vanara's real ARG total is 2, and `Tree Stranger` grants
+            // `Tree Stranger ~ Vanara ~ Speed` (`TraitRole::FlagGranted`),
+            // but that grant is not itself an alternate so nothing is
+            // subtracted -- both 2 alternates ARE selectable menu rows.
+            ("Vanara", 2),      // ARG 2 (SD31-E6-F4-006, 2026-08-17)
+            ("Vishkanya", 2),   // ARG 2 (SD31-E6-F4-006, 2026-08-17)
             ("Wayang", 1),      // ARG 1 (SD-31-E6-F4-003, 2026-08-16)
         ];
         for (race_id, count) in expected {
             assert_eq!(race(&menu, race_id).alternates.len(), *count, "{race_id} alternate count");
         }
-        assert_eq!(expected.iter().map(|(_, n)| n).sum::<usize>(), 349);
+        assert_eq!(expected.iter().map(|(_, n)| n).sum::<usize>(), 357);
     }
 
     /// Every alternate is attributed to a book that really loaded it, and
@@ -1296,11 +1310,12 @@ mod tests {
             }
         }
         assert_eq!(
-            checked, 349,
+            checked, 357,
             "153 ARG + 4 Monster Codex + 1 APG (SD-29 decisions.md §43) + 67 Inner Sea Races \
              (§45) + 41 Horror Adventures (§47) + 16 Core Essentials heritages (§49) + \
              48 SD-31 Epic 1-F2 Bestiary 2 batch (ARG's 42 + Inner Sea Races' 6, 2026-08-15) + \
-             19 SD-31-E6-F4-003 (2026-08-16, ARG's own 6-race chassis batch)"
+             19 SD-31-E6-F4-003 (2026-08-16, ARG's own 6-race chassis batch) + 8 \
+             SD31-E6-F4-006 (2026-08-17, ARG's own follow-on 4-race chassis batch)"
         );
         assert!(unmatched.is_empty(), "no alternate may name a flag nothing declares: {unmatched:?}");
 
@@ -1850,9 +1865,15 @@ mod tests {
         // -- this batch does not ingest alternate-trait content for these
         // 4 races (see `ingest_races.rs`'s `IN_SCOPE_RACES` doc comment for
         // why Changeling and Samsaran are not part of this batch either).
-        assert_eq!((standard, alternates), (335, 349));
+        // SD31-E6-F4-006 (2026-08-17) closes that gap the same way
+        // SD-31-E6-F4-003 closed it for the prior 6-race batch:
+        // `ingest_race_traits.rs` now carries the same 4 races, and their
+        // real ARG alternate-trait rows land -- 8 more menu rows
+        // (349 -> 357; `standard` unmoved, this cycle wrote no
+        // chassis/standard-tier content).
+        assert_eq!((standard, alternates), (335, 357));
         assert_eq!(checked, standard + alternates);
-        assert_eq!(checked, 684);
+        assert_eq!(checked, 692);
 
         // What rendering changed for a player *with no character*, measured
         // against the stored `data.description` this module used to transcribe.
@@ -1878,6 +1899,13 @@ mod tests {
             vec![
                 "Oversized Goblin",
                 "Halfling ~ Adaptable Luck",
+                // SD31-E6-F4-006 (2026-08-17): `Nagaji ~ Hypnotic Gaze`'s
+                // `DESC:` carries two args (`Nagaji_RacialCasterlevel` and
+                // `11+Nagaji_RacialCastingMod`) the ingest could not resolve
+                // to a same-row literal, the identical shape `Adaptable
+                // Luck`/`Nereid Fascination` already establish -- dropped at
+                // ingest time, restored by rendering.
+                "Nagaji ~ Hypnotic Gaze",
                 "Suli ~ Energy Strike",
                 "Undine ~ Nereid Fascination"
             ],
