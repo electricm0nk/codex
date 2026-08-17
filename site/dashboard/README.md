@@ -29,22 +29,38 @@ data contract: read `PF1e-dashboard.json` from the same directory.
 
 ## What is in the feed — read this before treating it as public-safe
 
-Checked 2026-08-16 against the committed copy (1.3 MB, 274 free-text strings over 120 chars):
+**CORRECTED 2026-08-17.** The 2026-08-16 assessment below this line was wrong in the way that
+matters most for this section's own purpose: it checked the committed JSON text for the *strings*
+`PI-REDACTED`/`Product Identity`/`NAMEISPI`/`DESCISPI` and found none, and read that as "no
+declared-PI content." It was not — those strings are how `data/corpus/` marks a redaction; they were
+never going to appear on a name this feed's own roster-building code pulled straight from a PCGen
+`.lst` line with no PI screen at all. Wave-8 and wave-9 adversarial review found the real exposure by
+cross-referencing published NAMES against the pinned oracle's own `NAMEISPI:YES` declarations instead
+of scanning for redaction-marker text: **261 names in `site/dashboard/units/*.json` and 56 more in
+this file's own `manifests`/roadmap content** (`OPEN-ISSUES.md` rows 141/149). Operator ruling,
+Decision 12 (`SD-31-corpus-closure-grind/decisions.md §12`, 2026-08-17): **"withhold the name, keep
+the row."** A public artifact may publish that a record exists and every derived figure about it, but
+never a name its own corpus row declares Product Identity.
 
-- **No Paizo Product Identity text.** `PI-REDACTED` and `Product Identity` appear **zero** times. The
-  two `NAMEISPI`, one `DESCISPI` and one `raw_tokens` occurrences are field *names* discussed inside
-  engineering prose, not declared-PI content.
-- **It does carry internal engineering prose** — resolved and open decision bodies (80 + 13),
-  decision titles and call text, per-book open questions, agent snippets, and session-progress lines.
-- **It carries some local and operational strings** — `worktree` ×68, `/home/ubuntu` ×3, `session_`
-  ×4, agent entries ×15.
-- Monster `detail` strings are factual stat summaries including source page references, e.g.
-  `CR 1 · size M · Undead · speed 30 ft · p.146 · natural attacks: Claw 1d6, Bite 1d6`.
+**Fixed in the producer, not by hand-trimming this file** (a hand-trim is undone by the next refresh —
+this section's own 2026-08-16 warning about that pattern was correct even though its PI-safety claim
+was not). `scripts/observer/pi_redaction.py` cross-references every published name against the pinned
+PCGen oracle's own declaration — exact `(book, source_file, source_line)` coordinates where available
+(`build_unit_shards`), the raw source line directly where the roster builder already holds it
+(`_parse_lst_first_field`), and a full-oracle exact-match sweep as a defense-in-depth pass over the
+whole assembled document and every shard. A declared name ships as `[redacted PI]`; the row, its
+count, and every other figure about it are unaffected. A `verify.sh` stage,
+`site-dashboard-pi-gate`, fails the build if a declared-PI name is ever found in the committed feed
+or a shard — mutation-proven by seeding a leak in both and confirming both are caught.
 
-None of that is a licensing exposure. The operational strings simply were not written for a public
-audience. **If the public page should show figures only, the right fix is a narrow allow-listed
-projection generated as its own file — not a hand-trim of this one**, which would be silently undone
-by the next refresh.
+`site/dashboard/units/` (the per-kind unit-search shards, ~38.5k rows) is committed here for the
+first time as of the same fix — it was deliberately withheld until the redaction above existed
+(row 141's requirement #4).
+
+None of the ordinary internal-engineering-prose content this section originally described (decision
+bodies, per-book open questions, agent snippets, local paths, monster stat-block `detail` strings) is
+a licensing exposure on its own; that part of the 2026-08-16 assessment stands. The correction above
+is specifically about published NAMES, the one thing PCGen's own PI declaration governs.
 
 ## Provenance
 
