@@ -860,8 +860,21 @@ mod tests {
         assert_eq!(count_by_book(&response, "B3"), 8);
         assert_eq!(count_by_book(&response, "B4"), 5);
 
+        // `SD31-E6-F10-004`: 5 further already-compiled books, the ones
+        // `SD31-E6-F10-003` deliberately left out (`OPEN-ISSUES.md` row 186)
+        // because their real corpus text hit `screen_generated_table`'s
+        // whole-file blacklist hard stop. Reachable now that a per-record
+        // `blacklist_hit` pre-filter excludes/redacts only the individual
+        // offending rows; see `tests/equipment_gap_tables.rs`'s own
+        // `EXPECTED_PER_BOOK` for the full citation.
+        assert_eq!(count_by_book(&response, "ISG"), 125);
+        assert_eq!(count_by_book(&response, "MYTHIC"), 252);
+        assert_eq!(count_by_book(&response, "ISC"), 65);
+        assert_eq!(count_by_book(&response, "ISI"), 34);
+        assert_eq!(count_by_book(&response, "BOTD2"), 5);
+
         // 3309 + 375 + 319 + 7 + 215 + 42 + 105 + 1613 + 26 + 552 + 224 + 127
-        // + 119 + 117 + 71 + 46 + 49 + 7 + 8 + 5.
+        // + 119 + 117 + 71 + 46 + 49 + 7 + 8 + 5 + 125 + 252 + 65 + 34 + 5.
         // Pinned as a total as well as per book so that a book silently
         // dropping out of the chain cannot be masked by another book
         // growing. The +769 over the previous 6146 is exactly the corpus
@@ -870,8 +883,11 @@ mod tests {
         // `not-ingested` population); the further +421 (6915 -> 7336) is
         // `SD31-E6-F10-003`'s 8-book extension of that same lane, net of
         // the 1 pre-existing UE PI leak (`"Elysian Shield"`) and the 2 bare
-        // PFS legality overlay rows this cycle's fixes also caught.
-        assert_eq!(response.entries.len(), 7336);
+        // PFS legality overlay rows this cycle's fixes also caught. The
+        // further +481 (7336 -> 7817) is `SD31-E6-F10-004`'s 5-book
+        // extension, net of 35 declared-PI name exclusions and 9 new
+        // per-record blacklist name/key exclusions corpus-wide.
+        assert_eq!(response.entries.len(), 7817);
     }
 
     #[test]

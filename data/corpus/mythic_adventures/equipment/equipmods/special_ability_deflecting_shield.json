@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "3/day gain deflection bonus +% to self and allies within 10', lasts 1 minute or dismissed as a free action.|var(\"AC.ShieldEnhancement\")",
+    "key": "Special Ability ~ Deflecting ~ Shield",
+    "name": "Deflecting",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Deflecting ~ Shield"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shield"
+      },
+      {
+        "key": "PLUS",
+        "value": "3"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.142"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,ShieldEnhancement"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,Shield,Metal"
+      },
+      {
+        "key": "SPROP",
+        "value": "3/day gain deflection bonus +% to self and allies within 10', lasts 1 minute or dismissed as a free action.|var(\"AC.ShieldEnhancement\")"
+      },
+      {
+        "key": "SPROP",
+        "value": " A mythic wearer can expend one use of mythic power when using this ability to increase the deflection bonus granted by the shield by half his mythic tier (minimum 1). This ability can be applied only to steel shields.|PREVARGTEQ:MythicLevel,1"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 7,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_equipmods.lst",
+    "record_key": "Special Ability ~ Deflecting ~ Shield",
+    "sha256": "abb04fbe2a924fe90ce1d2a6517e423141d9b79b24642f5ac76878f2e7e43876"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

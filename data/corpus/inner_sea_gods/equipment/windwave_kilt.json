@@ -1,0 +1,71 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 7000.0,
+    "description": "[redacted PI]",
+    "key": "Windwave Kilt",
+    "name": "Windwave Kilt",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Swim",
+          "3",
+          "TYPE=Competence"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous Item.SLOT_Belt.Belt"
+      },
+      {
+        "key": "COST",
+        "value": "7000"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.271"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Windwave Kilt|TIMES=1|CASTERLEVEL=5|Gaseous Form|PREDEITY:1,Gozreh"
+      },
+      {
+        "key": "DESC",
+        "value": "This kilt is made of thick woven strips of sea-green and sky-blue cloth decorated with tiny pearls and bits of coral along the beltline. The wearer gains a +3 competence bonus on Swim checks. When not worn, a windwave kilt floats on water like a dry log, automatically buoying upward any creature that weighs 100 pounds or less and aiding in flotation for heavier creatures. If Gozreh is the wearer's patron, once per day the wearer can use Gaseous Form. In this form, the wearer does not need to breathe and can enter water or other liquid, appearing as a mass of fine bubbles and gaining the ability to swim at a speed of 10 feet. The wearer can also drink salt water as if it were fresh water."
+      }
+    ],
+    "weight_lbs": 5.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 233,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "record_key": "Windwave Kilt",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

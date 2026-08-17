@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 5400.0,
+    "description": "[redacted PI]",
+    "key": "Glorious Flame Ring",
+    "name": "Glorious Flame Ring",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "SLOT_Ring.Ring.Magic"
+      },
+      {
+        "key": "COST",
+        "value": "5400"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.258"
+      },
+      {
+        "key": "DESC",
+        "value": "This richly colored, burnished brass ring appears to be crimson red, sunset orange, or golden yellow depending on how it is held. Clerics of Sarenrae prize glorious flame rings as facets through which they may channel their deity's divine will. Once per day, the wearer may speak the ring's command word to create a 5-foot-radius burst of flame centered on herself. This burst of flame deals 1d6 points of damage to any adjacent creatures (Reflex DC 14 halves), though the wearer is safe from this effect. If the wearer is capable of channeling positive energy, she may as a standard action expend one use of channeled energy to activate the ring's burst of flame, even if she has already spoken the ring's command word for the day. If the wearer also has the Selective Channeling feat, she may select a number of allies equal to her Charisma modifier to exclude from the burst of flame; these allies are not affected by the flame. This effect is otherwise identical to creating the ring's burst of flame by speaking the command word."
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 158,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "record_key": "Glorious Flame Ring",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 2400.0,
+    "description": "This crumpled leather hat has roughly hammered metal studs around its brim, and is often worn by worshipers of Droskar who venerate the dwarf god for his cheating aspect. The wearer can use it as a hat of disguise, but only to disguise herself as a dwarf. Three times per day as a free action, the wearer can manipulate a rolled die within 10 feet (such as in a game of chance), altering the roll by a value of 1 in either direction. The wearer adds 1 to the DC of any enchantment (compulsion) spells she casts.",
+    "key": "Gray Gambler's Hat",
+    "name": "Gray Gambler's Hat",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "DC",
+          "SUBSCHOOL.Compulsion",
+          "1"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous Item.SLOT_Head.Headgear"
+      },
+      {
+        "key": "COST",
+        "value": "2400"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.264"
+      },
+      {
+        "key": "DESC",
+        "value": "This crumpled leather hat has roughly hammered metal studs around its brim, and is often worn by worshipers of Droskar who venerate the dwarf god for his cheating aspect. The wearer can use it as a hat of disguise, but only to disguise herself as a dwarf. Three times per day as a free action, the wearer can manipulate a rolled die within 10 feet (such as in a game of chance), altering the roll by a value of 1 in either direction. The wearer adds 1 to the DC of any enchantment (compulsion) spells she casts."
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 198,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "record_key": "Gray Gambler's Hat",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

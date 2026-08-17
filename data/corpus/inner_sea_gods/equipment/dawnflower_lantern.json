@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 6400.0,
+    "description": "[redacted PI]",
+    "key": "Dawnflower Lantern",
+    "name": "Dawnflower Lantern",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous Item.SLOT_None"
+      },
+      {
+        "key": "COST",
+        "value": "6400"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.262"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Dawnflower Lantern|TIMES=1|CASTERLEVEL=5|Bless|Consecrate"
+      },
+      {
+        "key": "DESC",
+        "value": "On command, this ornate Qadiran hooded lantern lights itself with a Continual Flame or extinguishes itself. Once per day when holding the lantern, the user can speak a command word to use Bless. If placed on a sturdy surface and another command word is spoken, it activates a Consecrate effect, though this effect immediately ends if the lantern is moved or its light is extinguished."
+      }
+    ],
+    "weight_lbs": 2.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 185,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "record_key": "Dawnflower Lantern",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

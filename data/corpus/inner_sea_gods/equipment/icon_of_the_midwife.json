@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 3500.0,
+    "description": "[redacted PI]",
+    "key": "Icon Of The Midwife",
+    "name": "Icon Of The Midwife",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous Item.SLOT_None"
+      },
+      {
+        "key": "COST",
+        "value": "3500"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.265"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Icon of the Midwife|TIMES=1|CASTERLEVEL=3|Stabilize|Resistance|Virtue"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Icon of the Midwife|TIMES=1|CASTERLEVEL=3|Augury|PREDEITY:1,Pharasma"
+      },
+      {
+        "key": "DESC",
+        "value": "This gray stone carving of a gaunt older woman is usually painted with black hair and black clothing with red trim. Once per day, the bearer can use it to cast Stabilize, Resistance, and Virtue - this is usually enough to ensure that a mother and newborn both live through a difficult birth. If Pharasma is the bearer's patron: the bearer can use the icon to cast Augury once per day; as a standard action, the bearer can touch a pregnant woman and know whether she is carrying a boy or girl and whether it will be a single birth or multiple; once per day, the bearer can consecrate a corpse so if it is buried within 24 hours it cannot be reanimated as an undead."
+      }
+    ],
+    "weight_lbs": 2.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 203,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "record_key": "Icon Of The Midwife",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

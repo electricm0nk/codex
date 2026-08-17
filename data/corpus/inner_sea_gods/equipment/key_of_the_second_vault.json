@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 3000.0,
+    "description": "[redacted PI]",
+    "key": "Key Of The Second Vault",
+    "name": "Key Of The Second Vault",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous Item.SLOT_Neck.Amulet"
+      },
+      {
+        "key": "COST",
+        "value": "3000"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.266"
+      },
+      {
+        "key": "DESC",
+        "value": "This elaborate key on a fine gold chain always glints, even in the dimmest light. The bearer can use it to lock (but not unlock) any nonmagical lock as if it were the proper key. Once per day, the bearer can turn the key clockwise once to activate a Shield of Faith upon herself (though if the wearer is chaotic it provides only a +1 deflection bonus). If Abadar is the bearer's patron: the key counts as a holy symbol; once per day, the bearer can speak a command word and summon a two-headed eagle as if using Summon Monster II (the eagle's extra head does not grant it an extra attack); while the key is worn as a pendant or held in hand, the bearer gains a +2 bonus on Appraise checks to assess an object's value."
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 206,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "record_key": "Key Of The Second Vault",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

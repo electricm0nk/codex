@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 3800.0,
+    "description": "[redacted PI]",
+    "key": "Flask Of The Reaper",
+    "name": "Flask Of The Reaper",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous Item.SLOT_None"
+      },
+      {
+        "key": "COST",
+        "value": "3800"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.264"
+      },
+      {
+        "key": "DESC",
+        "value": "This metal container looks like a hip flask for carrying alcoholic drinks except it is barely larger than a potion vial. The side of the flask may be blank or have a personalized decoration, but the screw-on stopper usually bears a mark like a shield or perhaps a featureless mask. Once per day, the bearer can drink from the flask to gain a +5 alchemical bonus on Fortitude saving throws against poison and a +5 competence bonus on Stealth checks for 1 hour. If Norgorber is the bearer's patron, once per day the bearer can drink from the flask to gain a +5 competence bonus on perception, Sleight of Hand, or Stealth checks (drinker's choice) for 1 hour. In addition, the bearer can pour acid from the flask (equivalent in volume to a standard acid flask) once per day."
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 195,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "record_key": "Flask Of The Reaper",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

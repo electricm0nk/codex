@@ -2164,6 +2164,24 @@ fn equipment_book_slug_for(short_code: &str) -> &'static str {
         "B2" => "bestiary_2",
         "B3" => "bestiary_3",
         "B4" => "bestiary_4",
+        // SD31-E6-F10-004: 5 further already-compiled books extended into
+        // `equipment_gap_tables` this cycle (`OPEN-ISSUES.md` row 186's own
+        // named follow-on -- a new per-record blacklist pre-filter in
+        // `gen_equipment_gap_tables.rs` reaches them without weakening that
+        // generator's whole-file hard stop). Same narrow, additive-only
+        // exception as the `SD31-E6-F10-003` arms immediately above, for the
+        // identical reason: this function's own panic (below) otherwise
+        // hard-crashes `v06_work_inventory` for every caller the moment
+        // `equipment_resolver::equipment_catalog_rows()` carries these 5
+        // codes, which this cycle's regen makes true unconditionally.
+        // 5-line match-arm list append only, self-verified by this file's
+        // own pre-existing `equipment_book_slug_for_covers_every_catalog_
+        // book` test; no other line in this file touched.
+        "ISG" => "inner_sea_gods",
+        "MYTHIC" => "mythic_adventures",
+        "ISC" => "inner_sea_combat",
+        "ISI" => "inner_sea_intrigue",
+        "BOTD2" => "book_of_the_damned_volume_2",
         other => panic!(
             "equipment_resolver::equipment_catalog_rows() now carries an unmapped book code \
              {other:?} -- add it to equipment_book_slug_for so the equipment classifier does \

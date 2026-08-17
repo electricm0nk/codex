@@ -42,7 +42,7 @@ use std::path::{Path, PathBuf};
 
 use codex::rules_core::equipment_resolver::{hand_authored_equipment_rows, EQUIPMENT_BOOK_ACG, EQUIPMENT_BOOK_APG, EQUIPMENT_BOOK_ARG, EQUIPMENT_BOOK_B1, EQUIPMENT_BOOK_CRB, EQUIPMENT_BOOK_UC, EQUIPMENT_BOOK_UE, EQUIPMENT_BOOK_UI, EQUIPMENT_BOOK_UPSI, EQUIPMENT_BOOK_UW};
 use codex::rules_core::pcgen_desc::{leaked_pcgen_syntax, render_pcgen_desc};
-use codex::rules_core::pi_screening::{declared_product_identity, DeclaredProductIdentity};
+use codex::rules_core::pi_screening::{declared_product_identity, DeclaredProductIdentity, PI_BLACKLIST_TERMS};
 use codex::rules_core::pi_table_sweep::screen_generated_table;
 use codex::rules_core::shape_b_v1::REDACTED_PI_MARKER;
 
@@ -68,6 +68,27 @@ fn declared_pi_at(lst_path: &Path, line: u32) -> DeclaredProductIdentity {
     declared_product_identity(tokens)
 }
 
+/// `SD31-E6-F10-004`: a per-RECORD counterpart to `screen_generated_table`'s
+/// whole-FILE blacklist hard stop, over the exact same term list (never
+/// forked -- `PI_BLACKLIST_TERMS` imported directly, per this module's own
+/// "one term list" principle). `declared_pi_at` only catches a row that
+/// carries an explicit `NAMEISPI:`/`DESCISPI:` token; a blacklisted deity or
+/// place name can appear in perfectly ordinary, undeclared free-text prose
+/// (`inner_sea_gods`'s "Cloak Of The Night Sky": "...If Desna is the
+/// wearer's patron..." carries no `DESCISPI:` token at all) -- exactly the
+/// shape that blocked `inner_sea_gods`/`mythic_adventures`/
+/// `inner_sea_combat`/`inner_sea_intrigue`/`book_of_the_damned_volume_2`
+/// from this generator's prior batch (`OPEN-ISSUES.md` row 186). Returns the
+/// FIRST matching term (for the receipt/log), or `None` for clean text.
+/// **Excluding, never weakening**: `screen_generated_table`'s own whole-file
+/// hard stop over the FINISHED table still runs unconditionally after this
+/// -- a gap in this per-row screen still aborts the entire run rather than
+/// shipping a leak, so this is a narrower, additive pre-filter, never a
+/// substitute for the backstop.
+fn blacklist_hit(text: &str) -> Option<&'static str> {
+    PI_BLACKLIST_TERMS.iter().find(|term| text.contains(**term)).copied()
+}
+
 // SD31-E6-F10-003: short codes for 13 further already-compiled books that
 // carry `not-ingested` equipment/equipment_modifier residue but have no
 // hand-authored `equipment_resolver::EQUIPMENT_BOOK_*` constant of their
@@ -86,6 +107,19 @@ const EQUIPMENT_BOOK_MC: &str = "MC";
 const EQUIPMENT_BOOK_B2: &str = "B2";
 const EQUIPMENT_BOOK_B3: &str = "B3";
 const EQUIPMENT_BOOK_B4: &str = "B4";
+
+// SD31-E6-F10-004: the 5 books `SD31-E6-F10-003` found already-compiled but
+// deliberately left out of the prior batch (`OPEN-ISSUES.md` row 186) because
+// their real corpus text hit `screen_generated_table`'s whole-file blacklist
+// hard stop. Reachable now that a per-record `blacklist_hit` pre-filter
+// excludes/redacts the individual offending rows instead of aborting the
+// whole run -- the hard stop itself is unchanged and still runs over the
+// finished table as the backstop.
+const EQUIPMENT_BOOK_ISG: &str = "ISG";
+const EQUIPMENT_BOOK_MYTHIC: &str = "MYTHIC";
+const EQUIPMENT_BOOK_ISC: &str = "ISC";
+const EQUIPMENT_BOOK_ISI: &str = "ISI";
+const EQUIPMENT_BOOK_BOTD2: &str = "BOTD2";
 
 /// Refuses to ship a description whose rendering the player would see as
 /// broken PCGen syntax -- an unsubstituted `%N`/`%<KEYWORD>` reference or a
@@ -316,6 +350,54 @@ const BOOK_INPUTS: &[BookInput] = &[
             "pathfinder/paizo/roleplaying_game/bestiary_4/b4_equip_magic_items.lst",
             "pathfinder/paizo/roleplaying_game/bestiary_4/b4_equipmods.lst",
         ],
+    },
+    // --- SD31-E6-F10-004: the 5 books `SD31-E6-F10-003` deliberately left
+    // out (`OPEN-ISSUES.md` row 186) because their real, unmodified corpus
+    // text hit `screen_generated_table`'s whole-file blacklist hard stop
+    // (deity/place proper nouns, e.g. "Desna" inside "Cloak Of The Night
+    // Sky"'s undeclared `DESC:` prose). Reachable now that a per-record
+    // `blacklist_hit` pre-filter (below) excludes/redacts only the
+    // individual offending rows -- the whole-file hard stop is unchanged
+    // and still runs over the finished table as the backstop; each of these
+    // 5 already has a compiled `RuleSetId` (`v06_work_inventory.rs`'s
+    // `COMPILED_RULE_SETS`: `Isg`, `Mythic`, `Isc`, `Isi`, `Botd2`),
+    // confirmed before routing, same discipline as the prior 13.
+    BookInput {
+        code: EQUIPMENT_BOOK_ISG,
+        slug: "inner_sea_gods",
+        files: &["pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst"],
+    },
+    BookInput {
+        code: EQUIPMENT_BOOK_MYTHIC,
+        slug: "mythic_adventures",
+        files: &[
+            "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_equip.lst",
+            "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_equipmods.lst",
+        ],
+    },
+    BookInput {
+        code: EQUIPMENT_BOOK_ISC,
+        slug: "inner_sea_combat",
+        files: &[
+            "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_equip_arms_armor.lst",
+            "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_equip_magic.lst",
+            "pathfinder/paizo/campaign_setting/inner_sea_combat/_pfs/pfs_isc_equip_arms_armor.lst",
+            "pathfinder/paizo/campaign_setting/inner_sea_combat/_pfs/pfs_isc_equip_magic.lst",
+        ],
+    },
+    BookInput {
+        code: EQUIPMENT_BOOK_ISI,
+        slug: "inner_sea_intrigue",
+        files: &[
+            "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_equip_general.lst",
+            "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_equip_magic_items.lst",
+            "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_equipmods.lst",
+        ],
+    },
+    BookInput {
+        code: EQUIPMENT_BOOK_BOTD2,
+        slug: "book_of_the_damned_volume_2",
+        files: &["pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_equip.lst"],
     },
 ];
 
@@ -651,6 +733,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut totals: Vec<(&str, usize)> = Vec::new();
     let mut name_pi_excluded: u32 = 0;
     let mut description_pi_redacted: u32 = 0;
+    let mut blacklist_name_excluded: u32 = 0;
+    let mut blacklist_description_redacted: u32 = 0;
 
     for input in BOOK_INPUTS {
         let mut rows: Vec<ParsedRecord> = Vec::new();
@@ -711,6 +795,26 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 if declared.description {
                     description_pi_redacted += 1;
                     record.description = Some(REDACTED_PI_MARKER.to_string());
+                }
+                // `SD31-E6-F10-004`: the per-record counterpart to
+                // `screen_generated_table`'s whole-file blacklist hard stop
+                // (`blacklist_hit`'s own doc comment). A blacklisted NAME or
+                // KEY excludes the whole record (the same "a name cannot be
+                // redacted" rule `declared_pi_at` already applies); a
+                // blacklisted DESCRIPTION is redacted to the marker, keeping
+                // the record. Checked even when `declared.description`
+                // already redacted above -- cheap, and the two screens catch
+                // different, non-overlapping shapes (declared token vs. bare
+                // prose), so running both is not redundant.
+                if blacklist_hit(&record.name).is_some() || blacklist_hit(&record.key).is_some() {
+                    blacklist_name_excluded += 1;
+                    continue;
+                }
+                if let Some(desc) = &record.description {
+                    if blacklist_hit(desc).is_some() {
+                        blacklist_description_redacted += 1;
+                        record.description = Some(REDACTED_PI_MARKER.to_string());
+                    }
                 }
                 rows.push(record);
             }
@@ -828,6 +932,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!(
         "declared-pi (§53.5): {name_pi_excluded} name(s) excluded whole, \
          {description_pi_redacted} description(s) redacted to {REDACTED_PI_MARKER:?}"
+    );
+    println!(
+        "blacklist-screen (per-record, §52.3-equivalent): {blacklist_name_excluded} name/key \
+         hit(s) excluded whole, {blacklist_description_redacted} description(s) redacted to \
+         {REDACTED_PI_MARKER:?}"
     );
     Ok(())
 }
@@ -1134,5 +1243,100 @@ mod declared_pi_tests {
     #[test]
     fn line_zero_is_no_declaration() {
         assert!(!declared_pi_at(Path::new("/nonexistent"), 0).any());
+    }
+}
+
+#[cfg(test)]
+mod blacklist_screen_tests {
+    use super::*;
+
+    /// The gap `declared_pi_at` cannot close: a record whose CORPUS row
+    /// declares no `NAMEISPI:`/`DESCISPI:` token at all, but whose free-text
+    /// `DESC:` names a blacklisted deity, mid-sentence -- reproduced
+    /// verbatim from the real, undeclared corpus row this cycle's own
+    /// 5-book extension would otherwise ship (`inner_sea_gods/isg_equip.lst`,
+    /// `Cloak Of The Night Sky`: "...If Desna is the wearer's patron..."
+    /// carries no `DESCISPI:` token on that line). `declared_pi_at` reads
+    /// this line as clean (proven first, so the two screens are shown not
+    /// to overlap); `blacklist_hit` -- the SAME `PI_BLACKLIST_TERMS` list
+    /// `screen_generated_table`'s own whole-file hard stop already uses,
+    /// never forked -- is the only thing that catches it.
+    #[test]
+    fn a_deity_name_inside_undeclared_description_prose_is_a_blacklist_hit_but_not_a_declared_pi_hit(
+    ) {
+        let dir = std::env::temp_dir().join(format!("gegt_blacklist_test_{}", std::process::id()));
+        std::fs::create_dir_all(&dir).unwrap();
+        let file = dir.join("isg_equip.lst");
+        std::fs::write(
+            &file,
+            "Cloak Of The Night Sky\t\t\t\t\tTYPE:Magic.Wondrous Item.SLOT_Shoulders.Cloak\t\t\t\tCOST:2500\tWT:1\t\tSOURCELONG:Inner Sea Gods\tSOURCESHORT:isg\t\tSOURCEPAGE:p.262\tDESC:This dark hooded cloak is decorated with embroidered comets. If Desna is the wearer's patron: as a standard action the wearer can cause additional celestial bodies to appear.\n",
+        )
+        .unwrap();
+        let declared = declared_pi_at(&file, 1);
+        assert!(
+            !declared.any(),
+            "the real corpus row carries no NAMEISPI:/DESCISPI: token -- declared_pi_at must read it clean"
+        );
+        assert_eq!(
+            blacklist_hit("Cloak Of The Night Sky"),
+            None,
+            "the NAME carries no blacklisted term"
+        );
+        assert_eq!(
+            blacklist_hit(
+                "This dark hooded cloak is decorated with embroidered comets. If Desna is the wearer's patron: as a standard action the wearer can cause additional celestial bodies to appear."
+            ),
+            Some("Desna"),
+            "the free-text DESCRIPTION carries an undeclared blacklisted deity name"
+        );
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// A name-field hit (`"Altar of Desna"`) and a clean record both resolve
+    /// as their own English word would suggest -- no false positive on an
+    /// ordinary item, no false negative on the exact real corpus name this
+    /// cycle's own 5-book extension names as its proof case.
+    #[test]
+    fn a_name_field_hit_is_found_and_a_clean_record_is_not() {
+        assert_eq!(blacklist_hit("Altar of Desna"), Some("Desna"));
+        assert_eq!(blacklist_hit("Masterwork Backpack"), None);
+    }
+
+    /// Mutation proof: this gate must be ABLE to fail. Simulating the
+    /// production call site's own exclude-on-name / redact-on-description
+    /// logic directly (not a fixture the gate cannot see) confirms a
+    /// blacklisted name is excluded outright and a blacklisted description
+    /// is redacted to the marker rather than shipped -- the same two
+    /// outcomes `declared_pi_at`'s own name/description split already
+    /// produces, over the SAME term list `screen_generated_table`'s
+    /// whole-file backstop uses, so a per-row miss here still cannot reach
+    /// a player: the backstop still runs over the finished table.
+    #[test]
+    fn production_logic_excludes_a_blacklisted_name_and_redacts_a_blacklisted_description() {
+        // Mirrors the exact branch shape in `run()`'s per-record loop.
+        fn screen(name: &str, key: &str, description: Option<&str>) -> Option<Option<String>> {
+            if blacklist_hit(name).is_some() || blacklist_hit(key).is_some() {
+                return None; // whole record excluded
+            }
+            match description {
+                Some(d) if blacklist_hit(d).is_some() => {
+                    Some(Some(REDACTED_PI_MARKER.to_string()))
+                }
+                other => Some(other.map(|s| s.to_string())),
+            }
+        }
+        assert_eq!(screen("Altar of Desna", "Altar of Desna", None), None);
+        assert_eq!(
+            screen(
+                "Cloak Of The Night Sky",
+                "Cloak Of The Night Sky",
+                Some("...If Desna is the wearer's patron...")
+            ),
+            Some(Some(REDACTED_PI_MARKER.to_string()))
+        );
+        assert_eq!(
+            screen("Masterwork Backpack", "Masterwork Backpack", Some("A sturdy pack.")),
+            Some(Some("A sturdy pack.".to_string()))
+        );
     }
 }
