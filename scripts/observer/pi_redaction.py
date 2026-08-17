@@ -68,13 +68,60 @@ _NAME_PREFIX_STRIPS = ("CLASS:", "SUBCLASS:")
 
 def clean_first_field(raw: str) -> str:
     """The row's first tab-delimited field, with the same CLASS:/SUBCLASS:
-    prefix stripping `_parse_lst_first_field` already applies. Kept here so
-    both the roster builder and the PI index agree on what "the name" is."""
+    prefix stripping `_parse_lst_first_field` already applies, PLUS PCGen
+    row-operator syntax normalised (SD31-W13-INTEGRATE-001 finding 1): a
+    `.MOD`/`.FORGET` row tags an EXISTING object, and a `.COPY=<new name>`
+    row CREATES one -- neither is part of the object's own published name,
+    and a `.MOD` declaration must resolve onto the same bare name any other
+    reference to that object uses, or a real declared-PI leak (a `.MOD` row
+    tagging an object a `.COPY=` row elsewhere creates) is silently missed.
+    Kept here so both the roster builder and the PI index agree on what
+    "the name" is."""
     name = raw.strip()
     for prefix in _NAME_PREFIX_STRIPS:
         if name.startswith(prefix):
             name = name[len(prefix):]
+    name = name.strip()
+    # `.COPY=<new name>` creates a NEW object named after the right-hand
+    # side; take that, not the left-hand source key.
+    upper = name.upper()
+    if ".COPY=" in upper:
+        idx = upper.index(".COPY=")
+        name = name[idx + len(".COPY="):]
+        name = name.strip()
+    else:
+        # `.MOD`/`.FORGET` tag an EXISTING object by the same key; strip the
+        # suffix so the tagged object's bare name is what gets indexed.
+        upper = name.upper()
+        for suffix in (".MOD", ".FORGET"):
+            if upper.endswith(suffix):
+                name = name[: -len(suffix)]
+                break
+        name = name.strip()
+    # A leading `CATEGORY=...|` qualifier is not part of the name.
+    if name.upper().startswith("CATEGORY=") and "|" in name:
+        name = name.split("|", 1)[1]
     return name.strip()
+
+
+_ROW_OPERATOR_SUFFIXES = (".MOD", ".FORGET")
+
+
+def _is_row_operator_reference(first_field: str) -> bool:
+    """True when `first_field` is a PCGen row-OPERATOR reference to an
+    existing object (`.MOD`, `.FORGET`, `.COPY=`) rather than a fresh
+    object definition. SD31-W13-INTEGRATE-001 finding 1's root cause: such
+    a row very often carries no `NAMEISPI:`/`DESCISPI:` token of its own
+    (the declaration lives on a DIFFERENT row for the same object), so
+    treating its silence as "this name is non-PI" is wrong -- it silently
+    cancelled a real `.MOD` declaration via the pi_names - non_pi_names
+    subtraction below. An operator row is therefore never treated as
+    non-PI evidence; it can still contribute a PI hit if it happens to
+    carry the token itself."""
+    upper = first_field.upper()
+    if ".COPY=" in upper:
+        return True
+    return any(upper.endswith(suffix) for suffix in _ROW_OPERATOR_SUFFIXES)
 
 
 def pcgen_corpus_root() -> str:
@@ -281,8 +328,52 @@ def build_declared_pi_name_index(corpus_root: str | None = None) -> set[str]:
             cleaned = clean_first_field(first_field)
             if not cleaned:
                 continue
-            (pi_names if name_is_pi else non_pi_names).add(cleaned)
+            if name_is_pi:
+                pi_names.add(cleaned)
+            elif not _is_row_operator_reference(first_field):
+                # See `_is_row_operator_reference`'s docstring: a `.MOD`/
+                # `.COPY=` row's silence is not a non-PI assertion.
+                non_pi_names.add(cleaned)
     return pi_names - non_pi_names
+
+
+def build_declared_pi_name_book_index(corpus_root: str | None = None) -> dict[str, set[str]]:
+    """`name -> {book ids the oracle declares it NAMEISPI:YES in}`.
+    SD31-W13-INTEGRATE-001 finding 2: `build_declared_pi_name_index`'s
+    global `pi_names - non_pi_names` subtraction is the right conservative
+    default for a caller with NO book context (it must not flag "Teleport"
+    or "Shield" -- two unrelated objects sharing a bare name, one PI in an
+    unrelated book, one not) -- but it also silently drops a name that is
+    genuinely PI in one book and a genuinely different, genuinely non-PI
+    object in another, for any caller that DOES have a book to check
+    against. Shard rows carry `book`; this index lets that caller ask
+    "is this name declared PI in THIS book" instead of "is this name
+    unambiguous everywhere," which is what "the record's own declared-PI
+    state is the authority" (Decision 12) actually requires. Built by
+    walking each book directory (`build_book_index`) individually rather
+    than the whole paizo tree at once, so every declaration can be
+    attributed to the book it came from."""
+    book_index = build_book_index(corpus_root or pcgen_corpus_root())
+    index: dict[str, set[str]] = {}
+    for book, book_dir in book_index.items():
+        for path in iter_lst_files(book_dir):
+            try:
+                with open(path, encoding="utf-8", errors="replace") as f:
+                    text = f.read()
+            except OSError:
+                continue
+            for line in text.split("\n"):
+                if not line or line.startswith("#"):
+                    continue
+                name_is_pi, _ = declared_product_identity(parse_row_tokens(line))
+                if not name_is_pi:
+                    continue
+                first_field = line.split("\t", 1)[0]
+                cleaned = clean_first_field(first_field)
+                if not cleaned:
+                    continue
+                index.setdefault(cleaned, set()).add(book)
+    return index
 
 
 def compile_name_patterns(names):
@@ -322,6 +413,36 @@ def find_declared_pi_leaks(value, declared_names, path: str = "$") -> list[tuple
             hits.extend(find_declared_pi_leaks(v, declared_names, f"{path}[{i}]"))
     elif isinstance(value, str) and value.strip() in declared_names:
         hits.append((path, value.strip()))
+    return hits
+
+
+def find_declared_pi_leaks_in_shard_rows(doc, name_to_books: dict) -> list[tuple[str, str]]:
+    """Per-book leak scan for a shard's own `{"fields": [...], "rows": [...]}`
+    shape (`pf1e_dashboard_producer.py`'s `UNIT_SHARD_FIELDS`/
+    `SPELL_SHARD_FIELDS`). Closes SD31-W13-INTEGRATE-001 finding 2 for the
+    one shape that DOES carry a `book` alongside each `name`: a shard row.
+    A no-op (returns `[]`) on any document that is not shaped this way --
+    `find_declared_pi_leaks`'s global, book-blind exact-match scan remains
+    the net for everything else (the top-level feed's `categories[*].label`
+    and similar book-free text)."""
+    hits: list[tuple[str, str]] = []
+    fields = doc.get("fields") if isinstance(doc, dict) else None
+    rows = doc.get("rows") if isinstance(doc, dict) else None
+    if not isinstance(fields, list) or not isinstance(rows, list):
+        return hits
+    if "name" not in fields or "book" not in fields:
+        return hits
+    name_idx = fields.index("name")
+    book_idx = fields.index("book")
+    for i, row in enumerate(rows):
+        if not isinstance(row, list) or len(row) <= max(name_idx, book_idx):
+            continue
+        name = row[name_idx]
+        book = row[book_idx]
+        if not isinstance(name, str) or name == REDACTED_PI_MARKER:
+            continue
+        if book in name_to_books.get(name.strip(), set()):
+            hits.append((f"$.rows[{i}][{name_idx}]", f"{name!r} declared PI in book {book!r}"))
     return hits
 
 

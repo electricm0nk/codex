@@ -4217,6 +4217,15 @@ def build_unit_shards(doc_path: str = WORK_INVENTORY_FULL_DOC,
         declared_pi_names if declared_pi_names is not None
         else pi_redaction.build_declared_pi_name_index()
     )
+    # Per-book counterpart (SD31-W13-INTEGRATE-001 finding 2): the flat
+    # index above is deliberately conservative -- it drops any name that is
+    # PI in one book and a genuinely different, non-PI object in another
+    # (Teleport, Shield), which also means it drops a name that is the SAME
+    # object, legitimately PI in one book and legitimately not another
+    # (`Weapon and Armor Proficiency`: PI at inner_sea_magic:175, ordinary
+    # everywhere else). Rows already carry `book`, so this closes that gap
+    # with context the flat set structurally cannot have.
+    declared_pi_name_books = pi_redaction.build_declared_pi_name_book_index()
 
     kinds: dict[str, dict] = {}
     for kind, units in sorted(grouped.items()):
@@ -4255,10 +4264,23 @@ def build_unit_shards(doc_path: str = WORK_INVENTORY_FULL_DOC,
         # Exact-match only (`in declared_pi_name_index`), never a substring
         # scan -- `redact_declared_pi_names`'s own docstring covers why.
         name_idx = fields.index("name") if "name" in fields else None
+        book_idx = fields.index("book") if "book" in fields else None
         if name_idx is not None:
             for row in rows:
                 val = row[name_idx]
                 if isinstance(val, str) and val != pi_redaction.REDACTED_PI_MARKER and val in declared_pi_name_index:
+                    row[name_idx] = pi_redaction.REDACTED_PI_MARKER
+                    pi_redacted_total += 1
+        # Per-book pass (see `declared_pi_name_books` above): runs AFTER the
+        # flat sweep so it only ever has to check rows the flat, book-blind
+        # index left alone -- a name already redacted is skipped by the
+        # `!= REDACTED_PI_MARKER` guard, same as the flat pass.
+        if name_idx is not None and book_idx is not None:
+            for row in rows:
+                val = row[name_idx]
+                if not isinstance(val, str) or val == pi_redaction.REDACTED_PI_MARKER:
+                    continue
+                if row[book_idx] in declared_pi_name_books.get(val, ()):
                     row[name_idx] = pi_redaction.REDACTED_PI_MARKER
                     pi_redacted_total += 1
         by_status: dict[str, int] = {}

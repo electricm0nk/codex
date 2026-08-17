@@ -48,10 +48,16 @@ was not). `scripts/observer/pi_redaction.py` cross-references every published na
 PCGen oracle's own declaration — exact `(book, source_file, source_line)` coordinates where available
 (`build_unit_shards`), the raw source line directly where the roster builder already holds it
 (`_parse_lst_first_field`), and a full-oracle exact-match sweep as a defense-in-depth pass over the
-whole assembled document and every shard. A declared name ships as `[redacted PI]`; the row, its
-count, and every other figure about it are unaffected. A `verify.sh` stage,
-`site-dashboard-pi-gate`, fails the build if a declared-PI name is ever found in the committed feed
-or a shard — mutation-proven by seeding a leak in both and confirming both are caught.
+whole assembled document and every shard, PLUS (added SD31-W13-INTEGRATE-001, after that sweep was
+found to miss three `.MOD`-declared names it should have caught) a per-book exact-match pass over
+every shard's own `fields`/`rows` schema, closing the gap where a name is declared PI in one book and
+legitimately not in another. A declared name ships as `[redacted PI]`; the row, its count, and every
+other figure about it are unaffected. A `verify.sh` stage, `site-dashboard-pi-gate`, fails the build
+if a declared-PI name is ever found in the committed feed or a shard — mutation-proven by seeding a
+leak in both and confirming both are caught, including the three specific names (`Bow of Erastil`,
+`Legendsbane`, `Witherfang`) that slipped through before this cycle's fix. KNOWN RESIDUAL GAP: a
+declared-PI name embedded inside a longer derived string (e.g. a `categories[*].label` built from a
+TYPE token) is still invisible to exact-leaf matching — see `OPEN-ISSUES.md`.
 
 `site/dashboard/units/` (the per-kind unit-search shards, ~38.5k rows) is committed here for the
 first time as of the same fix — it was deliberately withheld until the redaction above existed

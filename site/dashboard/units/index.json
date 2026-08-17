@@ -2,7 +2,7 @@
   "available": true,
   "schema": 14,
   "generated_at": "2026-08-17T15:19:21Z",
-  "source_document": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_c9995ce5-db0-1/docs/work-inventory.json",
+  "source_document": "/home/ubuntu/workspace/repos/codex/docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
     "name",
@@ -15,7 +15,7 @@
   "total_units": 38521,
   "proven_units": 6013,
   "doneness_unmapped_seen": false,
-  "pi_redacted_names": 289,
+  "pi_redacted_names": 306,
   "pi_oracle_available": true,
   "kinds": {
     "class": {
@@ -100,7 +100,7 @@
         "not-started": 929
       },
       "shard": "PF1e-units-class_feature.json",
-      "bytes": 2342429,
+      "bytes": 2342399,
       "doneness_unmapped": {},
       "categories": {
         "specialquality": {
@@ -5518,7 +5518,7 @@
         "fixture-verified": 11
       },
       "shard": "PF1e-units-equipment.json",
-      "bytes": 833915,
+      "bytes": 833811,
       "doneness_unmapped": {},
       "categories": {
         "magic": {
@@ -7208,7 +7208,7 @@
         "not-ingested": 28
       },
       "shard": "PF1e-units-monster.json",
-      "bytes": 108992,
+      "bytes": 109004,
       "doneness_unmapped": {},
       "categories": {
         "none": {
@@ -7401,7 +7401,7 @@
         "not-started": 3
       },
       "shard": "PF1e-units-race.json",
-      "bytes": 9974,
+      "bytes": 9971,
       "doneness_unmapped": {},
       "categories": {
         "base": {

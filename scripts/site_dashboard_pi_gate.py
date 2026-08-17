@@ -8,15 +8,29 @@ WHAT THIS SCANS: every committed file under `site/dashboard/` that ends in
 `.json`, walked as a decoded JSON document, every string leaf checked
 against the pinned PCGen oracle's own full `NAMEISPI:YES` name index
 (`scripts/observer/pi_redaction.py::build_declared_pi_name_index`) with
-word-boundary matching -- the same technique `OPEN-ISSUES.md` row 149 used
-by hand to find the original 56-name leak. This is a SAFETY NET, not the
-primary defense: the primary defense is the producer redacting at
+EXACT string-leaf equality (see `find_declared_pi_leaks`'s own docstring
+for why exact-match, not a substring/word-boundary scan, is the right
+default: an earlier word-boundary version flagged the ordinary, non-PI
+"Shackles of Compliance" purely because "Shackles" occurs as one word
+inside it). A SECOND, book-scoped pass
+(`find_declared_pi_leaks_in_shard_rows`) additionally runs over every
+`units/*.json` shard's own `fields`/`rows` schema against a PER-BOOK
+declared-PI index (`build_declared_pi_name_book_index`), closing the
+name-declared-PI-in-one-book-but-not-another gap the book-blind index
+cannot see (SD31-W13-INTEGRATE-001 finding 2). This is a SAFETY NET, not
+the primary defense: the primary defense is the producer redacting at
 generation time (`pf1e_dashboard_producer.py`'s `build_unit_shards` and
 `_parse_lst_first_field`, both wired this cycle). This gate exists because
 a hand-edit, a reverted redaction, or a future change to the producer that
 forgets to call the reader are all real failure modes a generation-time fix
 alone cannot catch -- exactly `declared_pi_shipping_audit.rs`'s own
 rationale for `data/corpus/`, applied to this second surface.
+
+KNOWN RESIDUAL GAP (SD31-W13-INTEGRATE-001 finding 3, not yet closed): a
+declared-PI name EMBEDDED inside a longer published string (e.g. a derived
+`categories[*].label` built from a TYPE token) is invisible to exact-leaf
+matching. `OPEN-ISSUES.md` names the count and the remedy; do not read a
+CLEAN result from this gate as proof no such embedding exists.
 
 Exit 0 and print `site-dashboard-pi-gate: CLEAN` when no declared-PI name is
 found in any scanned file. Exit 1 and print every hit (file, JSON path,
@@ -84,6 +98,7 @@ def main() -> int:
         return 1
 
     patterns = pi_redaction.compile_name_patterns(declared_names)
+    name_to_books = pi_redaction.build_declared_pi_name_book_index(corpus_root)
 
     files = scanned_files(DASHBOARD_DIR)
     if not files:
@@ -103,6 +118,8 @@ def main() -> int:
             return 1
         rel = os.path.relpath(path, str(_REPO_ROOT))
         for json_path, name in pi_redaction.find_declared_pi_leaks(doc, patterns):
+            all_hits.append((rel, json_path, name))
+        for json_path, name in pi_redaction.find_declared_pi_leaks_in_shard_rows(doc, name_to_books):
             all_hits.append((rel, json_path, name))
 
     if all_hits:

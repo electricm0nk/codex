@@ -87,6 +87,36 @@ class ParseRowTokensTests(unittest.TestCase):
         self.assertNotIn("BAREFLAG", keys)
 
 
+class CleanFirstFieldOperatorSyntaxTests(unittest.TestCase):
+    """SD31-W13-INTEGRATE-001 finding 1: a `.MOD`/`.FORGET`/`.COPY=` row
+    operator is PCGen syntax, not part of the object's name -- normalise it
+    before indexing so a `.MOD` declaration resolves onto the SAME name a
+    `.COPY=` creation row (or any other reference) publishes."""
+
+    def test_mod_suffix_is_stripped(self):
+        self.assertEqual(pi_redaction.clean_first_field("Bow of Erastil.MOD"), "Bow of Erastil")
+
+    def test_forget_suffix_is_stripped(self):
+        self.assertEqual(pi_redaction.clean_first_field("Old Relic.FORGET"), "Old Relic")
+
+    def test_copy_row_indexes_under_the_new_name(self):
+        # `<existing key>.COPY=<new name>` creates a NEW object named after
+        # the right-hand side -- the shipped unit's name, not the source key.
+        self.assertEqual(
+            pi_redaction.clean_first_field("Composite Longbow (Base).COPY=Bow of Erastil"),
+            "Bow of Erastil",
+        )
+
+    def test_category_prefix_is_stripped(self):
+        self.assertEqual(
+            pi_redaction.clean_first_field("CATEGORY=Wondrous Item|Ring of Xanthos"),
+            "Ring of Xanthos",
+        )
+
+    def test_plain_name_is_unaffected(self):
+        self.assertEqual(pi_redaction.clean_first_field("Otyugh Hide"), "Otyugh Hide")
+
+
 class OracleNameCheckerTests(unittest.TestCase):
     """Mutation-proof: a real NAMEISPI:YES row is caught; a clean row is not."""
 
@@ -189,6 +219,57 @@ class BuildDeclaredPiNameIndexTests(unittest.TestCase):
         names = pi_redaction.build_declared_pi_name_index(str(self.s.root))
         self.assertNotIn("Shield", names)
 
+    def test_a_mod_declaration_survives_alongside_its_own_copy_creation_row(self):
+        # SD31-W13-INTEGRATE-001 finding 1, reproduced exactly: a `.MOD` row
+        # declares an object PI; a SEPARATE `.COPY=` row creates that same
+        # object and carries no PI token of its own. The `.COPY=` row must
+        # not read as "non-PI evidence" for the object it is creating --
+        # before the fix this silently cancelled the `.MOD` declaration via
+        # the pi_names - non_pi_names subtraction.
+        self.s.write(
+            "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_equip.lst",
+            "Composite Longbow (Base).COPY=Bow of Erastil\tTYPE:Weapon\n"
+            "Bow of Erastil.MOD\tNAMEISPI:YES\tTYPE:Artifact.Minor\n",
+        )
+        names = pi_redaction.build_declared_pi_name_index(str(self.s.root))
+        self.assertIn("Bow of Erastil", names)
+
+    def test_a_forget_row_referencing_a_declared_object_does_not_cancel_it(self):
+        self.s.write(
+            "pathfinder/paizo/roleplaying_game/some_book/items.lst",
+            "Relic.FORGET\tTYPE:Weapon\n"
+            "Relic\tNAMEISPI:YES\tTYPE:Artifact\n",
+        )
+        names = pi_redaction.build_declared_pi_name_index(str(self.s.root))
+        self.assertIn("Relic", names)
+
+
+class BuildDeclaredPiNameBookIndexTests(unittest.TestCase):
+    """SD31-W13-INTEGRATE-001 finding 2: `build_declared_pi_name_index`'s
+    global subtraction drops any name declared PI in one book and
+    non-PI in another -- entirely correctly for two UNRELATED objects that
+    happen to share a bare name (Teleport, Shield), but also for the SAME
+    object shipped legitimately as PI in one book and not in another. This
+    per-book index closes that gap for callers that have a `book` to check
+    against (shard rows do)."""
+
+    def setUp(self):
+        self.s = Scratch("book_index")
+        self.addCleanup(self.s.cleanup)
+        self.s.write(
+            "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_equip_general.lst",
+            "Harrow Deck\tNAMEISPI:YES\tCOST:1\n",
+        )
+        self.s.write(
+            "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_general.lst",
+            "Harrow Deck\tCOST:1\n",
+        )
+
+    def test_name_is_flagged_only_for_the_book_that_declares_it(self):
+        idx = pi_redaction.build_declared_pi_name_book_index(str(self.s.root))
+        self.assertIn("inner_sea_world_guide", idx.get("Harrow Deck", set()))
+        self.assertNotIn("ultimate_equipment", idx.get("Harrow Deck", set()))
+
 
 class LeakScanTests(unittest.TestCase):
     """`find_declared_pi_leaks` — the verify.sh gate's own scan engine."""
@@ -234,6 +315,32 @@ class LeakScanTests(unittest.TestCase):
         doc = {"rows": [["Otyugh Hide", "ultimate_equipment", "grounded"]]}
         hits = pi_redaction.find_declared_pi_leaks(doc, patterns)
         self.assertEqual(len(hits), 1)
+
+
+class ShardRowBookScanTests(unittest.TestCase):
+    """`find_declared_pi_leaks_in_shard_rows` -- the per-book scan that
+    closes finding 2 for the one shape that DOES carry book context: a
+    shard's own `fields`/`rows` schema."""
+
+    def test_flags_a_name_only_in_its_declaring_book(self):
+        name_to_books = {"Harrow Deck": {"inner_sea_world_guide"}}
+        doc = {
+            "kind": "equipment",
+            "fields": ["name", "book", "status"],
+            "rows": [
+                ["Harrow Deck", "inner_sea_world_guide", "ingested"],
+                ["Harrow Deck", "ultimate_equipment", "ingested"],
+            ],
+        }
+        hits = pi_redaction.find_declared_pi_leaks_in_shard_rows(doc, name_to_books)
+        self.assertEqual(len(hits), 1)
+        self.assertIn("inner_sea_world_guide", hits[0][1])
+
+    def test_no_fields_rows_shape_yields_no_hits(self):
+        name_to_books = {"Harrow Deck": {"inner_sea_world_guide"}}
+        doc = {"units": [{"name": "Harrow Deck", "book": "inner_sea_world_guide"}]}
+        hits = pi_redaction.find_declared_pi_leaks_in_shard_rows(doc, name_to_books)
+        self.assertEqual(hits, [])
 
 
 class RedactDeclaredPiNamesTests(unittest.TestCase):
