@@ -22,28 +22,44 @@ column.
 
 ## Needs an operator ruling
 
-**Quick-reference summary, refreshed 2026-08-17 by `SD31-W12-INTEGRATE-001` — full detail below each
+**Quick-reference summary, refreshed 2026-08-17 by `SD31-W13-INTEGRATE-001` — full detail below each
 pointer, this is only the one-line index:**
-- **PI, public feed (rows 141/149)** — 261 declared-PI unit names would ship in `site/dashboard/units/`
-  if that shard directory is ever committed (not committed this wave either); 56 more candidate names
-  ship today in the top-level `PF1e-dashboard.json` roadmap manifest, RE-VERIFIED STILL PRESENT this
-  wave. Redaction rule undecided.
-- **Race attribution (row 140, evidence at `SD31-ATTRIB-003-race-evidence.md`)** — 16 races (7 CRB + 9
-  Bestiary 4) sit on the board under Inner Sea Races purely by citation, not original publication.
-  FROZEN pending this ruling; do not move any race's book. Untouched this wave.
-- **Row 55 — spell Structural Exclusion Register proposal** — 13 `spell` `not-ingested` units within
-  the engine's 5-modelled-effect ceiling, PROPOSED for exclusion, NOT applied. Denominator unaffected
-  either way until ruled on.
+- **Rows 36/44/55 — ANSWERED.** Row 36 (Structural Exclusion Register proposal) and row 55 (spell's
+  13-unit exclusion proposal) are answered by operator ruling §7/§8 (universal-modifier cue narrowed,
+  text-only-feature Decision applied) and §15 (the 13 `.COPY=` spell variants are ordinary ingest, no
+  exclusion — ingested this wave by `SD31-E6-F7-002`, merged row 234). Row 44 (adversarial-review
+  evidence question on `SD31-E6-F11-002`'s 7-unit movement) is answered by the same §7/§8 rulings the
+  review's own open question turned on. No Structural Exclusion Register entry has ever been GRANTED;
+  it remains EMPTY.
+- **PI, public feed — LARGELY FIXED this wave (Decision 12, rows 222/234).** `site/dashboard/units/`
+  is now committed, redacted, and gate-clean (1,612 declared-PI names, zero leaked, mutation-proven on
+  the 3 exact names a first attempt missed — see row 234 item 1 for the one known residual: ~23
+  embedded-in-a-derived-label word-boundary hits the exact-leaf gate still cannot see). Rows 141/149
+  are RESOLVED (row 222). Row 197 below is the one PI question still open.
+- **Race attribution (row 140) — the operator's OWED EVIDENCE has now been delivered.** Lane 2 this
+  wave (`SD31-D13-REG-001`) built `RACE-EVIDENCE-D13.md`: a corpus-wide, re-derived table classifying
+  every multi-book race's branch under `§13`'s corrected direction (first print owns an identical
+  pair). Headline: 5 of Bestiary 4's 9 races (Changeling, Kitsune, Nagaji, Samsaran, Wayang) belong to
+  Advanced Race Guide instead, 16 months earlier; Catfolk belongs to Bestiary 3, not ARG. `RACE_TRUE_
+  BOOK`/`RACE_NEWEST_PRINTING` remain FROZEN, unapplied, awaiting exactly this ruling.
 - **Row 197 — cross-book declared-PI propagation (`Elysian Shield`, 1 equipment record)** — declared
   `NAMEISPI:YES` in one printing (`ultimate_equipment`), ships unscreened from a second printing
   (`advanced_race_guide`) whose own row is silent. Does a PI declaration in ANY printing bind every
-  printing of the same name? Not acted on unilaterally this wave.
-- **Row 205 — `mod_only_rescue` 249-unit feat-kind phantom-duplicate population (new this wave)** —
+  printing of the same name? Not acted on unilaterally this wave. Note: Decision 12's per-book PI
+  index (row 234) answers a DIFFERENT question (same name, different books, independently declared)
+  than row 197 asks (same OBJECT, same name, PI in one printing only) — the two are not the same
+  mechanism and this wave's fix does not resolve row 197.
+- **Row 205 — `mod_only_rescue` 249-unit feat-kind phantom-duplicate population** —
   every `feat`-kind unit with `origin=mod_only` (249, zero exceptions) is a provable cross-kind
   duplicate of a REAL unit already counted under its correct kind (race_trait 231, monster_ability 18,
   class_feature 2, companion 2). PROPOSED fix (broaden the existence check across all kinds, not just
   the file's own nominal kind) would shrink `feat` 2,610 -> ~2,361 and the board denominator
-  38,521 -> ~38,272 (-0.65pp). NOT applied — same propose-then-rule pathway as Decision 9/10.
+  38,521 -> ~38,272 (-0.65pp). NOT applied — same propose-then-rule pathway as Decision 9/10. Untouched
+  this wave.
+- **§14 errata field-level-overlay question** — not surfaced by lane 1 this wave. The provenance
+  schema (origin/duplicate/superseded/errata-source/variant/etc.) is built and self-tested but NOT
+  applied to any unit or the denominator; no field-level errata-overlay mechanism exists yet to raise
+  the question against.
 
 **MOST URGENT, PRECEDENCE-1, PI — rows 141/149, 2026-08-16, `SD31-W8-INTEGRATE-001`.** Two public-feed
 exposures on `site/dashboard/`, the ONE surface `deploy-site.yml` deploys to Cloudflare Pages on every
