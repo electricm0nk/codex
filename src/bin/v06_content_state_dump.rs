@@ -853,6 +853,11 @@ fn main() {
             // `Isg`'s and `Isb`'s above do -- `all_feat_tables()` never
             // yields an `Oa` table.
             RuleSetId::Oa => "occult_adventures",
+            // SD31-E6-F2-007 -- this book's first compiled rule set of any
+            // kind. Unlike `Oa` above, `all_feat_tables()` DOES yield a
+            // `Mythic` table (358 gap rows from `ma_feats.lst`), so this arm
+            // is real, not exhaustiveness-only.
+            RuleSetId::Mythic => "mythic_adventures",
         };
         let records = table.entries.len();
         let wired_here = table

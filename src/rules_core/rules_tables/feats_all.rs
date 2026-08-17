@@ -967,6 +967,12 @@ pub fn hand_authored_feat_tables() -> &'static [BookFeatTable] {
             BookFeatTable { rule_set: RuleSetId::Oa, entries: &[] },
             BookFeatTable { rule_set: RuleSetId::Iswg, entries: &[] },
             BookFeatTable { rule_set: RuleSetId::MonsterCodex, entries: &[] },
+            // `SD31-E6-F2-007` -- Mythic Adventures' first compiled rule set
+            // of any kind. Same shape as the five books immediately above:
+            // no hand-authored table, an empty slice here so
+            // `feat_gap_rows_for(RuleSetId::Mythic)`'s rows (all of
+            // `ma_feats.lst`'s non-`.MOD` declarations) join on below.
+            BookFeatTable { rule_set: RuleSetId::Mythic, entries: &[] },
         ]
     })
 }
@@ -1020,7 +1026,7 @@ mod tests {
     #[test]
     fn spans_every_ingested_book_with_their_real_counts() {
         let books = hand_authored_feat_tables();
-        assert_eq!(books.len(), 17);
+        assert_eq!(books.len(), 18);
         assert_eq!(books[0].rule_set, RuleSetId::Crb);
         assert_eq!(books[0].entries.len(), 185);
         assert_eq!(books[1].rule_set, RuleSetId::Apg);
@@ -1061,12 +1067,16 @@ mod tests {
         assert_eq!(books[15].entries.len(), 0);
         assert_eq!(books[16].rule_set, RuleSetId::MonsterCodex);
         assert_eq!(books[16].entries.len(), 0);
+        // `SD31-E6-F2-007` -- Mythic Adventures' first compiled rule set of
+        // any kind, same empty-hand-authored-slice shape as the five above.
+        assert_eq!(books[17].rule_set, RuleSetId::Mythic);
+        assert_eq!(books[17].entries.len(), 0);
 
         let total: usize = books.iter().map(|book| book.entries.len()).sum();
         assert_eq!(
             total,
             1578,
-            "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA + 104 UI + 135 UW + 261 UC + 144 UM + 221 UPsi + 0 Ce + 0 Ha + 0 Isr + 0 Oa + 0 Iswg + 0 MonsterCodex"
+            "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA + 104 UI + 135 UW + 261 UC + 144 UM + 221 UPsi + 0 Ce + 0 Ha + 0 Isr + 0 Oa + 0 Iswg + 0 MonsterCodex + 0 Mythic"
         );
     }
 
@@ -1090,12 +1100,14 @@ mod tests {
         }
         let total: usize = joined.iter().map(|book| book.entries.len()).sum();
         assert_eq!(
-            total, 1903,
-            "1578 hand-authored + 325 corpus gap rows: the original 83 \
-             (SD31-E6-F8-001: 1 CRB, 15 core_essentials, 48 ARG, 12 UM, 3 UI, \
-             2 UC, 1 UPsi, 1 UW) + 242 more from five books already compiled \
-             for another kind that had no feat table at all (SD31-E6-F8-002: \
-             61 Ha, 50 Isr, 68 Oa, 31 Iswg, 32 MonsterCodex)"
+            total, 2102,
+            "1578 hand-authored + 524 corpus gap rows: the original 325 \
+             (SD31-E6-F8-001's 83: 1 CRB, 15 core_essentials, 48 ARG, 12 UM, 3 UI, \
+             2 UC, 1 UPsi, 1 UW; SD31-E6-F8-002's 242: 61 Ha, 50 Isr, 68 Oa, 31 Iswg, \
+             32 MonsterCodex) + 199 more from Mythic Adventures' first-ever compiled \
+             rule set (SD31-E6-F2-007, `ma_feats.lst`'s non-`.MOD` declarations -- \
+             SD31-W10-INTEGRATE-001 excluded 159 VISIBLE:EXPORT display-plumbing \
+             twins from the original 358)"
         );
     }
 
@@ -1220,7 +1232,14 @@ mod tests {
         // carry their own `PRE`-family tokens verbatim, so they are gated by
         // `feat_prereqs` exactly like every other record rather than being
         // offered unconditionally.
-        assert_eq!(total, 1715, "1715 of the joined catalog's 1903 records have a prerequisite");
+        // 1715 of the pre-Mythic 1903 (as before) + 195 of Mythic's 199 gap
+        // rows (`SD31-E6-F2-007`) -- the gap rows carry their own `PRE`-
+        // family tokens verbatim, gated by `feat_prereqs` like every other
+        // record, never offered unconditionally. Unchanged by SD31-W10-
+        // INTEGRATE-001's exclusion of 159 VISIBLE:EXPORT twins: every one
+        // of them carried zero `PRE` tokens, so none was ever in this
+        // numerator -- only the denominator (2261 -> 2102) moved.
+        assert_eq!(total, 1910, "1910 of the joined catalog's 2102 records have a prerequisite");
     }
 
     /// `Some(&[])` must never reach a consumer: an empty slice would read
@@ -1639,8 +1658,11 @@ mod tests {
         // Pinned exactly, so a further collision — reprint or coincidence —
         // still fails here until it too is checked against its own corpus
         // text.
+        let all_collisions = collide(all_feat_tables());
+        let (mythic_collisions, other_collisions): (Vec<_>, Vec<_>) =
+            all_collisions.into_iter().partition(|(_, _, second)| *second == RuleSetId::Mythic);
         assert_eq!(
-            collide(all_feat_tables()),
+            other_collisions,
             vec![
                 ("Endurance", RuleSetId::Crb, RuleSetId::Pu),
                 ("Extended Animal Focus", RuleSetId::Acg, RuleSetId::Uw),
@@ -1651,18 +1673,64 @@ mod tests {
             ]
         );
 
+        // `SD31-E6-F2-007` -- `RuleSetId::Mythic`'s 142 collisions are not
+        // hand-enumerated the way the six above are: `decisions.md §10`'s
+        // AMENDMENT already establishes, as standing doctrine, that a
+        // Mythic feat sharing a key with the base feat it upgrades is the
+        // paradigm VARIANT case, not a reprint -- re-litigating each of 142
+        // records by hand would restate the operator's own ruling, not
+        // verify anything new. What this loop checks INSTEAD is the
+        // mechanical, per-record fact that makes the doctrine apply here:
+        // every colliding Mythic row's own `PREABILITY:` prerequisite names
+        // that exact key under `CATEGORY=FEAT`, i.e. the corpus itself
+        // states "you must already hold the base feat to take its mythic
+        // form" -- proof of variant-hood a coincidental name clash could
+        // never carry. A future collision that is NOT a real mythic-upgrade
+        // (a corpus edit, or a new book whose feat happens to share a name)
+        // fails this loop rather than sliding in silently.
+        assert_eq!(mythic_collisions.len(), 142, "re-derive if a book's feat gap rows change");
+        let mythic_table = all_feat_tables()
+            .iter()
+            .find(|book| book.rule_set == RuleSetId::Mythic)
+            .expect("RuleSetId::Mythic must be in the joined catalog");
+        for (key, _first, _second) in &mythic_collisions {
+            let entry = mythic_table
+                .entries
+                .iter()
+                .find(|e| e.key == *key)
+                .unwrap_or_else(|| panic!("Mythic table missing colliding key {key:?}"));
+            let prereqs = entry.prerequisites.unwrap_or_default();
+            let names_base_feat = prereqs
+                .iter()
+                .any(|p| p.starts_with("PREABILITY:") && p.contains("CATEGORY=FEAT") && p.contains(key));
+            assert!(
+                names_base_feat,
+                "Mythic feat {key:?} collides with an earlier book but its own \
+                 PREABILITY prerequisite does not name {key:?} under CATEGORY=FEAT -- \
+                 this is the mechanical proof of variant-hood and it is missing, so \
+                 this collision needs real per-record verification before it is trusted",
+            );
+        }
+
         // ... and it really is the same feat re-listed, not a name clash
-        // between two different ones: both rows carry the corpus's own
-        // identical `DESC:` text, and only the block-derived category
-        // differs.
+        // between two different ones: the CRB and PU rows carry the
+        // corpus's own identical `DESC:` text, and only the block-derived
+        // category differs.
         let rows: Vec<&FeatCatalogRecord> = all_feat_tables()
             .iter()
             .flat_map(|book| book.entries.iter())
             .filter(|entry| entry.key == "Endurance")
             .collect();
-        assert_eq!(rows.len(), 2);
+        // `SD31-E6-F2-007` -- a third "Endurance" row now exists, Mythic
+        // Adventures' own mythic upgrade of the feat (its `PREABILITY:
+        // ...,CATEGORY=FEAT,Endurance` prerequisite is checked in the loop
+        // above, alongside every other Mythic collision). CRB and PU stay
+        // the first two, in the same table order `all_feat_tables()` always
+        // yields.
+        assert_eq!(rows.len(), 3);
         assert_eq!(rows[0].description, rows[1].description);
         assert_eq!(rows[0].category, "General");
         assert_eq!(rows[1].category, "WoundThreshold");
+        assert_eq!(rows[2].category, "Mythic");
     }
 }

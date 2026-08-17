@@ -271,4 +271,34 @@ pub enum RuleSetId {
     /// an EARLIER, unrelated feat-catalog cycle (SD-28 Epic 28), which is
     /// why this gate's existence was easy to miss until traced.
     Oa,
+    /// Mythic Adventures. `SD31-E6-F2-007` -- the book's FIRST compiled rule
+    /// set of any kind, first record family: 358 base feat records
+    /// (`rules_tables::feat_gap_tables::MYTHIC_ADVENTURES_FEAT_GAP_ROWS`).
+    ///
+    /// Same book-level gate `RuleSetId::Oa` records above: without this
+    /// variant, every `mythic_adventures` corpus unit reads `not-started`/
+    /// `no_compiled_rule_set_for_book` regardless of what any per-kind lane
+    /// ships.
+    ///
+    /// **Decision 10's AMENDMENT governs this book's collisions.** A Mythic
+    /// feat's corpus `KEY:` is, by game-mechanic design, the SAME key as the
+    /// base feat it upgrades (`Accursed Hex (Mythic)` carries
+    /// `KEY:Accursed Hex`, exactly the Core Rulebook feat's own key) --
+    /// this is not a reprint collision Decision 10's "newest wins" rule
+    /// reaches; it is the paradigm variant case the AMENDMENT names
+    /// (`feat:weapon_focus` vs its mythic version). Both stay in the
+    /// denominator, both ship, and `feats_all.rs`'s collision test verifies
+    /// the shape mechanically rather than accepting it on say-so: every
+    /// colliding key's Mythic row carries a `PREABILITY:...,CATEGORY=FEAT,
+    /// <that same key>` prerequisite, i.e. the corpus itself states you
+    /// must already hold the base feat to take its mythic form.
+    ///
+    /// **Only `ma_feats.lst`'s non-`.MOD` declarations are ingested here.**
+    /// The file's 208 `.MOD` rows (e.g. `Android ~ Vision.MOD`) target
+    /// records this book files under `race_trait` elsewhere in the corpus
+    /// (Android's racial Vision trait, not a feat) -- rescuing them as
+    /// standalone `feat`-kind units would misattribute a race_trait
+    /// overlay as a new feat. Reported, not ingested here (`OPEN-ISSUES.md`,
+    /// out of this card's `race_trait` file territory).
+    Mythic,
 }

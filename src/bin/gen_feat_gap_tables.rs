@@ -190,6 +190,21 @@ const BOOK_INPUTS: &[BookInput] = &[
         slug: "monster_codex",
         files: &["pathfinder/paizo/roleplaying_game/monster_codex/mc_feats.lst"],
     },
+    // `SD31-E6-F2-007` -- Mythic Adventures' first compiled rule set of any
+    // kind (named in this generator's own doc comment above as an example
+    // needing a new `RuleSetId` and a `v06_work_inventory.rs` edit; both
+    // now done). Only `ma_feats.lst`'s 358 non-`.MOD` declarations are
+    // parsed here -- `parse_lst`'s existing `.MOD` skip already excludes
+    // the file's 208 `.MOD` rows, which target `race_trait`-kind base
+    // records elsewhere in the corpus (e.g. `Android ~ Vision`), not a
+    // feat this table could honestly hold (`RuleSetId::Mythic`'s own doc
+    // comment; reported, not ingested, `OPEN-ISSUES.md`).
+    BookInput {
+        rule_set: RuleSetId::Mythic,
+        variant: "Mythic",
+        slug: "mythic_adventures",
+        files: &["pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst"],
+    },
 ];
 
 /// One parsed corpus feat record, before the already-held filter runs.
@@ -252,6 +267,29 @@ fn parse_lst(text: &str) -> Vec<ParsedRecord> {
         }
         // `.MOD` rows are overlays onto an existing record, never a new one.
         if first.contains(".MOD") {
+            continue;
+        }
+        // SD31-W10-INTEGRATE-001 fix for a CONFIRMED review finding: a
+        // `VISIBLE:EXPORT` row is PCGen's own export-plumbing twin of a real,
+        // player-selectable record -- it exists so a character sheet PDF can
+        // print the auto-granted feat's name/benefit text, never so a player
+        // can select it independently. `mythic_adventures/ma_feats.lst`
+        // carries 159 such twins (e.g. `Dual Path` at CATEGORY:Mythic Feat
+        // with `PREVARGTEQ:MythicTierLevel,1`, granted automatically, sits
+        // alongside `KEY:Mythic Feat Output ~ Dual Path` at CATEGORY:FEAT
+        // VISIBLE:EXPORT, identical DESC/BENEFIT, ZERO `PRE*` token).
+        // Shipping the twin into this generator's output puts it in the
+        // player-facing Add Feat picker as an independently selectable,
+        // ungated duplicate -- bypassing the mythic-tier gate the real row
+        // enforces (proven live: a level-1 non-mythic search for "Accursed
+        // Hex" surfaced both the correctly-gated real feat AND a second,
+        // fully-selectable "Accursed Hex (Mythic)"). Skipping it here means
+        // its unit correctly lands in the `not-ingested` gap population
+        // instead of a bogus `done` credit -- it is real PCGen content, not
+        // retracted, just not independently selectable, matching every
+        // other `VISIBLE:EXPORT`/`VISIBLE:DISPLAY`-shaped exclusion this
+        // codebase already makes for non-player-facing rows.
+        if fields.iter().any(|f| f.trim() == "VISIBLE:EXPORT") {
             continue;
         }
         let name = if let Some((_, variant)) = first.split_once(".COPY=") {
@@ -588,6 +626,27 @@ mod pi_screen_tests {
         let records = parse_lst(text);
         assert_eq!(records.len(), 1);
         assert!(!records[0].name_is_pi);
+    }
+
+    /// SD31-W10-INTEGRATE-001 (CONFIRMED review finding): a `VISIBLE:EXPORT`
+    /// row is PCGen's own display-plumbing twin of an auto-granted feat, not
+    /// a second, independently selectable one. Skipping it here is what
+    /// keeps it out of the player-facing Add Feat picker without inventing
+    /// a `PRE` token it never carried.
+    #[test]
+    fn parse_lst_skips_a_visible_export_row() {
+        let text = "Dual Path\tKEY:Mythic Feat Output ~ Dual Path\tCATEGORY:FEAT\tTYPE:Mythic\tVISIBLE:EXPORT\tDESC:You follow two mythic paths.\n";
+        let records = parse_lst(text);
+        assert!(records.is_empty(), "a VISIBLE:EXPORT row must never reach the catalog, got {} record(s)", records.len());
+    }
+
+    /// The real, gated row (no `VISIBLE:EXPORT`) is untouched by the same
+    /// fix -- this is a targeted skip, not a blanket Mythic-feat filter.
+    #[test]
+    fn parse_lst_still_parses_the_real_gated_sibling_row() {
+        let text = "Dual Path\tCATEGORY:Mythic Feat\tTYPE:Mythic\tPREVARGTEQ:MythicTierLevel,1\tDESC:You follow two mythic paths.\n";
+        let records = parse_lst(text);
+        assert_eq!(records.len(), 1, "the real, ungated-by-this-fix sibling row must still parse");
     }
 
     /// Contract 53.5's other half: `DESCISPI:YES` redacts the description in

@@ -499,13 +499,15 @@ mod prerequisite_tests {
         let facts = character_prereq_facts(&input, 1);
         let reports = evaluate_every_catalog_feat(&facts);
 
-        // 1578 hand-authored records + the 325 corpus gap rows the feat gap
+        // 1578 hand-authored records + the 524 corpus gap rows the feat gap
         // lane joined on (`SD31-E6-F8-001`'s original 83 + `SD31-E6-F8-002`'s
-        // 242). Every gap row's own `PRE`-family tokens are carried verbatim
-        // into `FeatCatalogRecord::prerequisites`, so the new rows are
-        // evaluated by this gate exactly like every other record — they are
-        // not offered unconditionally.
-        assert_eq!(reports.len(), 1903);
+        // 242 + `SD31-E6-F2-007`'s 199 Mythic Adventures rows -- SD31-W10-
+        // INTEGRATE-001 excluded 159 VISIBLE:EXPORT display-plumbing twins
+        // from the original 358). Every gap row's own `PRE`-family tokens
+        // are carried verbatim into `FeatCatalogRecord::prerequisites`, so
+        // the new rows are evaluated by this gate exactly like every other
+        // record — they are not offered unconditionally.
+        assert_eq!(reports.len(), 2102);
         let eligible = reports.iter().filter(|report| report.is_eligible).count();
         // 211 (of the original 690) + all 23 UCA Story Feats: every one of
         // UCA's records carries only a `PRETEXT:` prose prerequisite, which
@@ -528,7 +530,24 @@ mod prerequisite_tests {
         // this number down, and that direction is the point.
         // +94 with `SD31-E6-F8-002`'s 242 more gap rows joined on
         // (2026-08-16): re-derived by this same test, not guessed.
-        assert_eq!(eligible, 646, "a starting Fighter's real eligible-feat count");
+        // +207 with `SD31-E6-F2-007`'s 358 Mythic Adventures rows joined on
+        // (2026-08-17). Most of Mythic's own gate is `PREVARGTEQ:
+        // MythicTierLevel,...` -- an unmodelled var this evaluator already
+        // treats as non-blocking for every OTHER book's records
+        // (`pre_tokens::tests::an_unrecognised_kind_never_blocks`), so a
+        // level-1 Fighter is reported, not denied, on the mythic-tier gate
+        // alone; a colliding row's OWN `PREABILITY:...,CATEGORY=FEAT,<key>`
+        // clause (proven present for every collision by
+        // `feats_all::tests::cross_book_key_collisions_are_exactly_the_known_set`)
+        // is what still correctly denies a record whose base feat this
+        // Fighter build does not hold.
+        // -159 with `SD31-W10-INTEGRATE-001`'s exclusion of the
+        // `VISIBLE:EXPORT` display-plumbing twins: every one of them carried
+        // `prerequisites: None` (no `PRE` token at all), so every one of
+        // them was trivially eligible and counted here -- removing them
+        // moves this number down by exactly 159, the full twin population,
+        // not a partial figure.
+        assert_eq!(eligible, 694, "a starting Fighter's real eligible-feat count");
 
         for report in reports.iter().filter(|report| !report.is_eligible) {
             let reason = report.unavailable_reason().unwrap_or_default();

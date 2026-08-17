@@ -17652,6 +17652,23 @@ clean-tree reset (package dir was absent, tree was clean, `git fetch origin && g
 `sd31/racetrait3-SD31-E6-F4-004`, pushed.
 
 ### §0 — Re-derived baseline, before touching anything
+## SD31-E6-F2-007 — Mythic Adventures feat book onboarded + spell/feat held-mass traces
+
+**Cycle-id:** `SD31-E6-F2-007` (`RETRO_ACTOR=sd31-spell-feat`). **Card:** `epic-6-ingest-lanes` F2
+(`spell`)/F8 (`feat`) -- spell catalog + per-book `spell_list.rs`, `class_spell_levels.rs`, the
+spell ingest path, the feat ingest path + `feat_tables`/`feats_all.rs`/`feat_gap_tables.rs`, and
+their tests. **Worktree:** `.claude/worktrees/wf_800ec009-61e-6`, own branch
+`sd31/spell-feat-e6-f2-007` (renamed from the auto-generated `worktree-wf_800ec009-61e-6` before
+commit), pushed to origin.
+
+**HEAD started from:** the worktree's initial checkout was `bab19b201` -- `origin/main`'s tip (PR
+#364 site-content merge), on branch `worktree-wf_800ec009-61e-6`, with no `docs/release/SD-31-...`
+tree at all. `git status --porcelain` was empty, so per the mandatory recovery step:
+`git fetch origin && git reset --hard origin/tranche/11` -> **`f8d2dc1d0`** ("docs(sd31): trailing
+auto-appended retro events"). **Oracle pin:** `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
+(`./scripts/verify.sh --only preflight-oracle` -> PASS).
+
+### §0 -- Re-derived figures at the starting tip (all commands re-run this cycle)
 
 ```
 python3 -c "
@@ -18671,3 +18688,309 @@ reported in the handoff below.
 ### Branch tip
 
 Recorded in the handoff below (`branch`/`head_end`).
+-> 38521 {'done': 10958, 'not-started': 19479, 'unmeasurable': 4912, 'deferred': 37,
+   'held': 2149, 'in-progress': 986} 28.4468
+```
+
+**10,958/38,521 (28.4468%) -- byte-identical to the mandate's own stated figure and to wave-9's
+own committed tip.** `spell`: 2843 total, `done` 1157 (40.70%), 910 not-started (789
+`not-ingested` + 121 raw `not-started`), **593 held**, 157 in-progress, 26 unmeasurable. `feat`:
+2610 total, `done` 1352 (51.80%), 716 not-started, **450 unmeasurable**, 89 held, 2 deferred, 1
+in-progress. Every figure matches this card's own dispatch brief exactly -- no correction needed.
+
+### §1 -- Task 1: the 593 held-spell trace (required, per the dispatch)
+
+Traced `advanced_class_guide:spell:air_geyser` (`wiring_class: derived`, `status:
+ingested-magnitude`, `wiring_class_reason: range_keyword`) end to end. **NOT a citation defect**
+-- `source.line` correctly names the declaring row (`acg_spells.lst:14`). Short of `done` because
+the existing `derived_evaluator_fixture_check` seam (`SD31-E6-F2-006`,
+`parse_caster_level_linear_duration`) covers ONLY `DURATION:(CASTERLEVEL...)`-shaped magnitude;
+Air Geyser's own `DURATION:instantaneous` carries zero scaling -- its magnitude is `RANGE:Close`,
+a token shape that seam's own doc comment names as explicitly out of scope
+("range_keyword/TARGETAREA-shaped units this seam does not attempt").
+
+Re-derived the 593-unit population's own shape corpus-wide:
+```
+python3 -c "... collections.Counter(u['wiring_class_reason'] for u in held) ..."
+-> prose_expr 322, range_keyword 206, prose_scaling_phrase 59, prose_formula_segment 5,
+   prose_ability_scaling 1
+```
+`range_keyword`'s 206 units (35% of held) are a real, sized lever the existing seam doesn't reach:
+PF1's `RANGE:Close`/`Medium`/`Long` keywords are each a STANDARD, universal, caster-level-linear
+formula (Close = 25 ft + 5 ft per 2 caster levels), structurally identical in shape to the
+already-built DURATION seam -- a non-resolving structural derivation, never a live-caster-level
+number. **Not built this cycle** (scope discipline: the Mythic Adventures book onboard, task 3,
+was this cycle's real bounded deliverable; a second evaluator-seam build risked finishing neither
+properly). Filed as `OPEN-ISSUES.md` row 178.
+
+### §2 -- Task 2: the 450 unmeasurable-feat trace (required, per the dispatch)
+
+Traced 6 sample records (`advanced_class_guide:feat:amateur_investigator`/
+`amateur_swashbuckler`/`battle_cry`/`befuddling_strike`/`believer_s_boon`/`dazing_fist`) one level
+deep. **Found a shape the dispatch did not anticipate**: neither the option-pool/no-chooser shape
+(`class_feature`'s) nor a lane-2 inventory-side stamping bug -- a PROBE-COVERAGE limitation in the
+feat-effect probe `pilot_compute::compute_pilot_base_chassis` feeds (lane 1's file, out of this
+card's territory).
+
+```
+status is uniformly `unknown` (450/450); evidence splits:
+  in_catalog_with_corpus_magnitude_but_no_observed_consumer  424 (94%)
+  feat_served_description_is_a_placeholder_marker_not_prose   15 (row 166's residual)
+  text_only_but_corpus_record_carries_no_description...       11
+```
+The dominant 424 span every `wiring_class` (`computed` 336, `derived` 68, `display` 25, `static`
+20, `ambiguous` 1) but share ONE uniform reason string: the probe's own documented lower-bound
+behaviour (`v06_content_state_dump.rs`'s `feat_effects`/`PROBE_CLASSES`x`PROBE_LEVELS` sweep) --
+no opponent, no combat action, no maneuver context, so a feat whose effect only manifests
+against a named target/action/trigger reads "no delta observed" even when the chassis genuinely
+computes it once that context exists. Reported to lane 1 (`pilot_compute.rs`) as `OPEN-ISSUES.md`
+row 179 -- book distribution and full command in that row.
+
+### §3 -- Task 3: the grind -- Mythic Adventures onboarded as the feat catalog's 18th book
+
+`v06_corpus_trap_report -- mythic_adventures` run before any ingest code (Decision 10, cycle
+mechanics step 0b) -- no fatal traps; `ma_feats.lst` DECLARES=376/.MOD=208 (raw-vs-workable
+split). Hand-verified the workable population against `v06_work_inventory`'s own Feat predicate:
+**358 genuine non-`.MOD` declarations** (distinct from the trap-report's raw 376, which counts
+comment/header noise differently) + **208 `.MOD` rows** that `mod_only_rescue` was minting as
+phantom feat units because their base name (`Android ~ Vision`, etc.) exists corpus-wide only
+under `kind: race_trait` -- the within-kind-only rescue search cannot see it. Characterized, NOT
+ingested (misattributing a race_trait mythic-upgrade as a new feat is the exact defect shape this
+program has repeatedly found and fixed elsewhere) -- `OPEN-ISSUES.md` row 177.
+
+**Ingest.** Added `RuleSetId::Mythic` (`mod.rs`), registered it in `COMPILED_RULE_SETS` +
+`corpus_dir_for` (`v06_work_inventory.rs`, 2 arms -- this is the SAME book-level gate `RuleSetId::Oa`
+required for spells, named in that variant's own doc comment), an empty
+`hand_authored_feat_tables()` slot (`feats_all.rs`) and a `BookInput`
+(`gen_feat_gap_tables.rs`) -- exactly the pattern that generator's own doc comment named THIS book
+as the worked example for. Ran `gen_feat_gap_tables` against the pinned oracle: **358 gap rows,
+6 records dropped for `NAMEISPI:YES`** (both SD-30 PI contracts invoked by the generator itself --
+independently re-verified below).
+
+**Decision 10 AMENDMENT applied mechanically, not by hand-narration.** 142 of the 358 collide by
+key with an earlier book (`Accursed Hex`, `Weapon Focus`, `Toughness`, ...). Every one of them
+carries its own `PREABILITY:...,CATEGORY=FEAT,<that same key>` prerequisite -- the corpus itself
+stating "you must already hold the base feat to take its mythic form," proof of variant-hood a
+coincidental name clash could never carry. Encoded as a real assertion loop in
+`feats_all::tests::cross_book_key_collisions_are_exactly_the_known_set` (and mirrored in
+`tests/v06_apg_acg_feat_catalog.rs`'s sibling test) rather than 142 hand-written pair citations.
+
+**One genuine upstream corpus typo found and shipped byte-faithful, not silently corrected**:
+`ma_feats.lst:54`'s "Blind-Fight (Mythic)" carries `KEY:Blind Fight` (missing the base feat's own
+hyphen) -- confirmed via `grep -rn` that no engine producer is keyed off either spelling, so it is
+not a live-wiring hazard; allow-listed by exact name pair with a citation in
+`feat_identity.rs`'s `folding_never_merges_two_distinct_catalog_feats` test rather than silently
+correcting the KEY (which would be inventing data the source row does not carry).
+
+### §4 -- Count-change sweep (`grep` old AND new counts across `tests/`/`src/`/`apps/`)
+
+`grep -rln "1903\|\b1715\b\|feat gap lane is 325"` found and fixed 7 files (each verified green
+via a targeted `cargo test` run before moving to the next):
+
+- `src/rules_core/rules_tables/feats_all.rs` -- hand-authored books 17->18, joined catalog
+  1903->2261, gap total 325->683, prereq-coverage 1715/1903->1910/2261, collision test
+  partitioned (6 hand-pinned + 142 mechanically-proved via the loop above), Endurance-listing
+  count 2->3.
+- `src/rules_core/feat_prereqs.rs` -- `a_starting_fighter_...` test: `reports.len` 1903->2261,
+  `eligible` 646->853 (re-derived, not guessed: most of the +207 is `PREVARGTEQ:MythicTierLevel`
+  reporting rather than denying for an unmodelled var, the SAME non-blocking treatment every
+  other book's unmodelled tokens already get).
+- `src/rules_core/feat_identity.rs` -- checked-count 1903->2261; folding-collision test gained
+  the one documented Blind-Fight exception.
+- `src/rules_core/feat_prereqs/pre_tokens.rs` -- `UNMODELLED_KINDS` gained `PRETEMPLATE` (34
+  occurrences, all Mythic's own "Racial Heritage" feats' `PRETEMPLATE:1,Racial Heritage ~ <Race>`
+  clause -- this engine has no template system).
+- `tests/sd27_feat_prerequisite_enforcement.rs` -- census dict (9 kind-count deltas +
+  `PRETEMPLATE` new), total 4425->4781, modelled 4103->4422, distinct kinds 40->41; `with_any`
+  1715/1903->1910/2261; `every_ineligible_feat_states_a_reason_...` `reports.len` 1903->2261.
+- `tests/v06_apg_acg_feat_catalog.rs` -- `books.len` 17->18, `entries_for(Mythic)` 358 assertion
+  added, total 1903->2261, collision test partitioned identically to `feats_all.rs`'s.
+- `apps/desktop/src-tauri/src/feat_catalog.rs` -- `catalog_spans_...`: General 773->775,
+  Metamagic 58->59, +4 new category assertions (`Mythic` 319, `Mythic Racial Heritage` 34,
+  `SpecialAttack` 1, `Familiar Class Feature` 1); `with_description` 1872->2195; `raw_leaks`
+  186->188, `changed.len` 196->200 (+4 named entries); `filter_feat_catalog_matches_category_...`
+  Metamagic 58->59; `both_endurance_listings_...` 2->3 rows, sources vec gained `"Mythic"`.
+- `apps/desktop/src-tauri/src/character_hub.rs` -- `response.entries.len` 1903->2261 (2 sites).
+
+**One file MISSED on the first sweep pass, found by the first full-gate run's own `root-full`
+failure, not by the grep pass**: `tests/feat_gap_tables.rs`'s
+`the_gap_rows_are_exactly_the_joined_catalog_minus_the_hand_authored_one` pinned `added` (a
+`BTreeSet`-deduped count, distinct from the raw-row totals above) at 325; fixed to 683 (325 + 358,
+since all 358 Mythic keys are distinct). Standalone-verified green (`cargo test --test
+feat_gap_tables`: 8/8) before the fresh full-gate rerun that ultimately proved it.
+
+### §5 -- PI screening (both SD-30 contracts)
+
+`gen_feat_gap_tables.rs`'s own generator invokes BOTH contracts already (confirmed by reading its
+source, not assumed): `pi_screening::declared_product_identity` per record (6 Mythic records
+dropped for `NAMEISPI:YES`) + `pi_screening::classify_field` blacklist scan on every
+description/prerequisite token (redacts in place). Independently re-verified this cycle:
+- `declared_pi_shipping_audit` (standalone binary run) -> **CLEAN**.
+- Gate's own `pi-sweep` stage -> **PASS, 10 hits over `src/rules_core/rules_tables`, 10 baseline
+  rows, unchanged** (0 new hits from 358 new records).
+- No `data/corpus/` JSON was written (feat gap rows are compiled Rust tables only, same shape as
+  the five prior gap-only books) -- `raw_tokens` screening does not apply to this content shape,
+  consistent with precedent.
+
+### §6 -- Guarded regen (local measurement, `docs/work-inventory.json` `git checkout --`'d
+immediately after per the wave rule -- zero stamp loss: the diff was exactly 984 insertions/984
+deletions matching `generated_at` alone plus real content; the guard did not refuse; exit 0)
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-post-mythic.json
+  -> corpus-literal-sweep: 24699 records examined, 0 findings -- CLEAN, unchanged (I never touched
+     data/corpus/)
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-post-mythic.json
+  -> 998 of 999 covered units cleared; 1 failed (pre-existing spindle_of_perfect_knowledge,
+     unchanged)
+CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... \
+  cargo run --locked --bin v06_work_inventory
+```
+
+**Board, re-derived with the producer's own `doneness_verdict()`:**
+
+```
+BEFORE: 38521 {done 10958 (28.4468%), not-started 19479, unmeasurable 4912, deferred 37,
+         held 2149, in-progress 986}
+AFTER:  38521 {done 11204 (29.0854%), not-started 19121, unmeasurable 5016, deferred 37,
+         held 2157, in-progress 986}
+```
+
+**Board delta: +246 `done` (10958 -> 11204), +0.6386pp (28.4468% -> 29.0854%).**
+
+Per-kind: `feat` 2610 {done 1352->1598 (51.80%->61.23%), unmeasurable 450->554, held 89->97,
+not-started 716->358}; `spell` unchanged (1157 done, 40.70%) -- exactly as expected, this cycle's
+spell work was trace-and-characterize only. `mythic_adventures` feat book, standalone: 566 total
+{done 246, unmeasurable 104, held 8, not-started 208} -- 246+104+8=358, exactly the 358 ingested
+records; the 208 not-started are the `.MOD` rows (row 177), correctly untouched.
+
+### §7 -- Trap report (DoD item 3)
+
+```
+cargo run --locked --bin v06_corpus_trap_report -- --audit
+-> TRAP_EXIT=2, 1 mod-record + 1225 wiring-class-mismatch
+```
+**Byte-identical to wave-9's own committed baseline (1 mod-record, 1225 wiring-class-mismatch) --
+confirmed NOT worsened.**
+
+### §8 -- Full gate
+
+**Launched early, in the background, kept alive while the rest of this cycle's work continued.**
+First launch (`SD31-E6-F2-007-verify.log`, own `CARGO_TARGET_DIR=sd31-spell-feat`) found ONE real
+failure at `root-full`: `tests/feat_gap_tables.rs`'s count pin (see §4) -- a file the initial
+`grep`-based sweep had missed. **Every other stage in that run passed through `class-dump`,
+including `clippy` at exactly `root:52 desktop:7 warnings, 0 errors` -- the recorded baseline,
+zero new warnings** (confirmed because the fix landed on disk before that run reached its
+`clippy` stage, so it linted the corrected tree even though `root-full`'s own recorded result
+predates the fix).
+
+Fixed the one real defect (§4), verified green standalone, then **relaunched a completely fresh
+full gate** (`SD31-E6-F2-007-verify-rerun.log`, second `CARGO_TARGET_DIR=sd31-spell-feat-regen`,
+warm from the measurement binaries already built for §6) rather than re-running only the failed
+stage, per the standing "a re-run of only the failed stage is not a green gate" rule.
+
+```
+SUMMARY
+  passed:  26  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest
+  site-dashboard-selftest reachability-audit-selftest reachability-audit
+  groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit
+  audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full
+  desktop reach corpus-sweep supersession-gate frontend-install frontend-test
+  frontend-typecheck clippy class-dump
+  FAILED:  1  site-dashboard-check
+
+RESULT: FAIL — logs in /tmp/codex-verify-4Wt75o
+VERIFY_EXIT=1
+```
+
+**`root-full` PASSED on the rerun: 6875 passed across 565 suites, all 529 `tests/*.rs` suites
+executed.** `reach` PASSED 27/27 WITH A CLAIM. `desktop` PASSED 457/457. `clippy` PASSED at
+`root:52 desktop:7`, identical to the first run's own measurement -- confirmed twice, in two
+independent invocations. **The one failing stage, `site-dashboard-check`, is the SAME pre-existing
+worktree-path hazard `OPEN-ISSUES.md` row 153 already documents and root-causes** (an absolute
+`/unit_index/source_document` path drifting between whichever worktree last published the
+dashboard feed vs. this one, zero real content difference) -- confirmed by reading
+`site-dashboard-check.log`'s own message ("STALE -- run ./scripts/publish-site-dashboard.sh"),
+not fixed here (out of this card's file territory, and row 153 already names it a
+per-worktree artifact rather than a real defect).
+
+**Every stage this card's own files could affect is green, in a single fresh invocation, twice
+corroborated for clippy.** The DoD-1 exit-code caveat is stated exactly as measured, not rounded
+up: process `VERIFY_EXIT=1`, with the one contributing stage a confirmed pre-existing, unrelated,
+already-documented hazard.
+
+Logs: `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F2-007-verify.log` (first run),
+`SD31-E6-F2-007-verify-rerun.log` (second, clean run).
+
+### §9 -- Wired-integration dual-audit (`loop-instruction-template.md §6`)
+
+```
+BASE_BRANCH=f8d2dc1d087d3ceeeb71d0f9785d185f65eede46
+git diff --unified=0 "${BASE_BRANCH}...HEAD" -- src/ apps/desktop/src-tauri/src/ tests/ \
+  | grep -nE '\b(sd[0-9]+_|SD[0-9]+_|Sd[0-9]+|t_[0-9a-f]{8,})' || echo 'OK_NO_BUNDLE_TAGS'
+-> OK_NO_BUNDLE_TAGS
+git diff --unified=0 "${BASE_BRANCH}...HEAD" -- src/ apps/desktop/src-tauri/src/ tests/ \
+  | grep -nE '\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b' || echo 'OK_NO_TOKENS'
+-> OK_NO_TOKENS
+```
+
+### §10 -- DoD item 8: on-screen verification
+
+Driven directly via `apps/desktop/.claude/skills/run-desktop/driver.sh`
+(`RUN_DESKTOP_AGENT=sd31spellfeat`), strictly after BOTH full-gate runs finished (serialized per
+the skill's own RAM-contention rule). Full narrative:
+`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F2-007/item8-verify.md`. Headline: the
+live Feats-tab header reads **"Add feats from the real feat catalog: 2261 feats across 18 books
+(..., Mythic)"** -- the exact figure this cycle derived, generated live from the compiled catalog;
+two pre-existing Mythic feats (`Power Attack (Mythic)`, `Weapon Focus (Mythic)`) already render
+real corpus text on a loaded character; searching the real Add-Feat picker for `Accursed Hex`
+surfaces **`Accursed Hex (Mythic)`** -- the exact record traced in `OPEN-ISSUES.md` row 177 --
+rendering byte-for-byte the corpus `DESC:`+`BENEFIT:` text, with its own sibling variant correctly
+marked "Unavailable -- requires the Accursed Hex feat" for a character who doesn't hold the base.
+Screenshots: `01-hub.png` through `10-search.png` in the same artifacts directory.
+
+### Definition of Done -- checked against every item
+
+1. `verify.sh` exits 0, captured directly: rerun's own process exit was `VERIFY_EXIT=1`, the
+   ONE contributing stage a confirmed pre-existing, unrelated, already-documented worktree-path
+   hazard (row 153); every stage this card's files could affect passed, `root-full`/`clippy`
+   corroborated across two independent full invocations. Stated exactly as measured. ⚠️ (honest
+   caveat, not a real defect)
+2. `reach` passes with a claim: **yes**, 27/27, corroborated twice (first run + rerun). ✅
+3. `v06_corpus_trap_report -- --audit`: TRAP_EXIT=2, byte-identical to wave-9's baseline (1
+   mod-record, 1225 wiring-class-mismatch) -- confirmed NOT worsened. ✅
+4. Guarded regen: zero stamp loss (984 insertions/984 deletions = `generated_at` + real content
+   only; guard did not refuse). ✅
+5. Wired-integration dual-audit: `OK_NO_BUNDLE_TAGS` + `OK_NO_TOKENS`. ✅
+6. Unsurfaced families: none -- the Mythic feat family reaches the SAME already-served `feats`
+   surface every other book's feats use (`reach_gate.rs`'s existing `feats_reach` claim covers it
+   without a new per-book arm, confirmed by the 27/27 reach pass with no new failures). ✅
+7. Baseline moves: none this cycle (clippy stayed exactly at the recorded 52/7 ceiling, no
+   tightening or loosening needed). N/A.
+8. On-screen verification: done, §10 above, real Mythic feat text confirmed live on a real
+   character. ✅
+
+### §11 -- Retrospective events
+
+`scripts/retro.py note` emitted (`RETRO_ACTOR=sd31-spell-feat`) summarizing the Mythic ingest +
+both required traces. No figure this cycle re-derived disagreed with the dispatch brief's own
+stated numbers, so no `correction` event was warranted.
+
+### §12 -- Reclaim
+
+`scripts/reclaim.sh` (dry run, mid-cycle): 0 items eligible (both this cycle's own
+`CARGO_TARGET_DIR`s correctly protected as live/fresh). `scripts/reclaim.sh --apply` (cycle end):
+0 items via the tool's own 6h-freshness policy (same reason). Manually removed both of this
+cycle's own target dirs after confirming zero live PID referenced them (`pgrep -fa
+"cargo-targets/sd31-spell-feat"` empty): `sd31-spell-feat` (32G) + `sd31-spell-feat-regen` (32G) =
+**~64G reclaimed**. Disk: 55% -> 41% used.
+
+### Branch tip
+
+Committed on `sd31/spell-feat-e6-f2-007`, pushed to origin. Card stays READY for further F2/F8
+work: `spell`'s `range_keyword` lever (206 units, row 178) and `feat`'s probe-coverage population
+(424 units, row 179) are both real, sized, named follow-ons this cycle deliberately did not build
+under its own scope discipline.
+
+Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_012LQjhfcbAEBt6SiquQXEAE
