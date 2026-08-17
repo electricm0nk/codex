@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:15:19Z",
+  "data": {
+    "key": "Vanara ~ Tree Stranger",
+    "name": "Tree Stranger",
+    "race_key": "Vanara",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Vanara Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Vanara_ReplaceSpeed"
+    ],
+    "description": "Some vanaras have spent their lives among humans in centers of learning instead of traditional treetop homes. These vanaras treat all Knowledge skills as class skills, but lose their climb speed racial trait.",
+    "source_page": "p.206",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vanara ~ Tree Stranger"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Vanara Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Vanara ~ Tree Stranger],[!PREFACT:1,ABILITIES,Vanara_ReplaceSpeed=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some vanaras have spent their lives among humans in centers of learning instead of traditional treetop homes. These vanaras treat all Knowledge skills as class skills, but lose their climb speed racial trait."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Class Skill|AUTOMATIC|TYPE=Knowledge"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Vanara Racial Trait|AUTOMATIC|Tree Stranger ~ Vanara ~ Speed"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.206"
+      },
+      {
+        "key": "FACT",
+        "value": "Vanara_ReplaceSpeed|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 1236,
+    "record_key": "Vanara ~ Tree Stranger"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

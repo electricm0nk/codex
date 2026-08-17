@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:15:19Z",
+  "data": {
+    "key": "Throwback ~ Gillman ~ Type",
+    "name": "Human",
+    "race_key": "Gillman",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Gillman Racial Trait",
+      "SpecialQuality",
+      "Racial Type"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [],
+    "description": "Throwback gillmen are humanoids with the human subtype.",
+    "source_page": "p.188",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Throwback ~ Gillman ~ Type"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Gillman Racial Trait.SpecialQuality.Racial Type"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,ABILITIES,Gillman_ReplaceType=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Throwback gillmen are humanoids with the human subtype."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Humanoid|Human"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.188"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 880,
+    "record_key": "Throwback ~ Gillman ~ Type"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

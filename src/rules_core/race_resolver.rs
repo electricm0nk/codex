@@ -1292,6 +1292,32 @@ const ALTERNATE_TRAIT_REPLACE_FLAGS: &[(&str, &[&str])] = &[
     ("Suli ~ Energy Strike", &["Suli_ReplaceElementalAssault", "Suli_ReplaceEnergyResistance"]),
     ("Wayang ~ Dissolution's Child", &["Wayang_ReplaceShadowMagic"]),
 
+    // ---- Gillman, Nagaji, Vanara, Vishkanya (SD31-E6-F4-006, 2026-08-17) ----
+    // Advanced Race Guide's own follow-on chassis batch (SD31-E6-F4-004
+    // built the standard-tier chassis; this cycle ingested the real
+    // alternate-trait rows `arg_abilities_race.lst` carries for them).
+    // Values read verbatim off
+    // `data/corpus/advanced_race_guide/race_trait/` for these races' new
+    // `TraitRole::Alternate` rows, the same way every row above was.
+    // Gillman's `Throwback` sets four flags on one row (it replaces type,
+    // speed, amphibious and water-dependent together) and is the only entry
+    // here that ALSO grants two dependent rows (`Throwback ~ Gillman ~
+    // Type`, `Throwback ~ Gillman ~ Speed`, both `TraitRole::FlagGranted`
+    // via its own `ABILITY:...|AUTOMATIC|` token, never themselves in this
+    // table). Vanara's `Tree Stranger` likewise grants one dependent row
+    // (`Tree Stranger ~ Vanara ~ Speed`) the same way.
+    ("Gillman ~ Riverfolk", &["Gillman_ReplaceWaterDependent"]),
+    ("Gillman ~ Slime Hunter", &["Gillman_ReplaceEnchantmentResistance"]),
+    (
+        "Gillman ~ Throwback",
+        &["Gillman_ReplaceType", "Gillman_ReplaceSpeed", "Gillman_ReplaceAmphibious", "Gillman_ReplaceWaterDependent"],
+    ),
+    ("Nagaji ~ Hypnotic Gaze", &["Nagaji_ReplaceSerpentsSense"]),
+    ("Vanara ~ Tree Stranger", &["Vanara_ReplaceSpeed"]),
+    ("Vanara ~ Whitecape", &["Vanara_ReplacePrehensileTail"]),
+    ("Vishkanya ~ Sensual", &["Vishkanya_ReplaceKeenSenses"]),
+    ("Vishkanya ~ Subtle Appearance", &["Vishkanya_ReplaceVision"]),
+
     // ================= Inner Sea Races =================
     // SD-29 race-trait lane, round 2. 68 of the book's 72 in-scope rows set
     // a `<Race>_Replace<Trait>` flag and are therefore `TraitRole::Alternate`;
@@ -2144,7 +2170,14 @@ mod tests {
         // real ARG alternate-trait rows, minus Strix's Wing-Clipped-granted
         // Flight and Suli's Energy-Strike-granted Earthfoot/Firehand/
         // Icewalk/Shockshield (those 5 are `FlagGranted`, not `Alternate`).
-        assert_eq!(count(TraitRole::Alternate), 349);
+        // 349 -> 357 by SD31-E6-F4-006 (2026-08-17): Gillman (3: Riverfolk,
+        // Slime Hunter, Throwback), Nagaji (1: Hypnotic Gaze), Vanara (2:
+        // Tree Stranger, Whitecape) and Vishkanya (2: Sensual, Subtle
+        // Appearance)'s own real ARG alternate-trait rows -- 8 total, none
+        // of them granting a further dependent row that would also count
+        // here (Throwback's and Tree Stranger's grants are `FlagGranted`,
+        // counted below instead).
+        assert_eq!(count(TraitRole::Alternate), 357);
         // 5 + Inner Sea Races' 3: `Junk Tinker ~ Skilled` (named by an
         // `ABILITY:Goblin Racial Trait|AUTOMATIC|` grant) and the two rows
         // carrying a positive `PREFACT` gate, `Secret Magic ~ Merfolk ~ Speed`
@@ -2188,7 +2221,12 @@ mod tests {
         // whose trailing `PREABILITY` clause `link_automatic_grants` already
         // tolerates (same shape it already reads for the Fetchling/Oread
         // rows named above).
-        assert_eq!(count(TraitRole::FlagGranted), 71);
+        // 71 -> 74 by SD31-E6-F4-006 (2026-08-17): Gillman's `Throwback`
+        // grants both `Throwback ~ Gillman ~ Type` and `Throwback ~ Gillman
+        // ~ Speed` (one `ABILITY:...|AUTOMATIC|` token naming two keys), and
+        // Vanara's `Tree Stranger` grants `Tree Stranger ~ Vanara ~ Speed`
+        // the same way -- 3 new dependent rows total.
+        assert_eq!(count(TraitRole::FlagGranted), 74);
         // `Oversized Goblin` and `Human ~ Tribalistic Languages` -- see
         // `no_corpus_trait_is_left_without_a_readable_gate`, which pins both by
         // key and names each one's remedy. Unchanged by SD-31 Epic 1-F2: every
@@ -2197,7 +2235,7 @@ mod tests {
         assert_eq!(count(TraitRole::Unclassified), 2);
         assert_eq!(
             corpus.traits.values().flatten().count(),
-            757,
+            768,
             "175 standard + 156 ARG + 5 Monster Codex + 1 APG + 71 Inner Sea Races \
              + 43 Horror Adventures + 64 Core Essentials heritage records (16 heritages \
              + the 48 replacement rows they grant) + SD-31 Epic 1-F2's 113 (57 standard \
@@ -2208,7 +2246,9 @@ mod tests {
              Kitsune, Ratfolk, Strix, Suli, Wayang; 637 -> 695) + SD-31-E6-F4-003's own \
              24-record alternate-trait batch for those same 6 races (2026-08-16: 695 -> 719) \
              + SD31-E6-F4-004's Advanced Race Guide follow-on batch of 38 standard-tier \
-             rows (2026-08-17: Gillman, Nagaji, Vanara, Vishkanya; 719 -> 757)"
+             rows (2026-08-17: Gillman, Nagaji, Vanara, Vishkanya; 719 -> 757) + \
+             SD31-E6-F4-006's own 11-record alternate-trait batch for those same 4 races \
+             (2026-08-17: 8 alternates + 3 grant-linked rows; 757 -> 768)"
         );
     }
 
@@ -2381,7 +2421,18 @@ mod tests {
         // (`ingest_races.rs`'s `SD-31-E6-F4-002` batch wrote each race's
         // `!PREFACT` gates from its own globalvar file), so the orphan-flag
         // assertion above still does not move.
-        assert_eq!(all_flags.len(), 127);
+        //
+        // SD31-E6-F4-006 (2026-08-17) moved this 127 -> 137: 10 brand-new
+        // `<Race>_Replace*` flags across Gillman (5: WaterDependent,
+        // EnchantmentResistance, Type, Speed, Amphibious), Nagaji (1:
+        // SerpentsSense), Vanara (2: Speed, PrehensileTail) and Vishkanya
+        // (2: KeenSenses, Vision)'s own real ARG alternate-trait rows -- all
+        // in those 4 races' own namespaces, none colliding with any earlier
+        // book's. Every one is claimed by that same race's own standard row
+        // (`ingest_races.rs`'s `SD31-E6-F4-004` batch wrote each race's
+        // `!PREFACT` gates from its own globalvar file), so the orphan-flag
+        // assertion above still does not move.
+        assert_eq!(all_flags.len(), 137);
     }
 
     /// **No alternate in the loaded corpus fires an inert flag any more.**
@@ -2404,13 +2455,15 @@ mod tests {
         }
         assert_eq!(
             checked,
-            349,
+            357,
             "153 ARG + 4 Monster Codex + 1 APG + 67 Inner Sea Races + 41 Horror Adventures + \
              48 SD-31 Epic 1-F2 Bestiary 2 batch (ARG's 42 + Inner Sea Races' 6, 2026-08-15) + \
              SD-31-E6-F4-003's 19 (2026-08-16, ARG's own 6-race chassis batch's alternates, \
              minus Strix's Wing-Clipped-granted Flight and Suli's Energy-Strike-granted \
              Earthfoot/Firehand/Icewalk/Shockshield -- those 5 are `FlagGranted`, never \
-             offered by the picker). **282, not 283, since 2026-08-12** (SD-29 \
+             offered by the picker) + SD31-E6-F4-006's 8 (2026-08-17, ARG's own follow-on \
+             4-race batch's alternates -- Gillman 3, Nagaji 1, Vanara 2, Vishkanya 2). \
+             **282, not 283, since 2026-08-12** (SD-29 \
              `decisions.md` 53): Inner Sea Races' \
              `Elf ~ Sovyrian-Born` carries `NAMEISPI:YES`, PCGen's own declaration that the \
              record NAME is Product Identity, and a name cannot be redacted -- so the row is \
@@ -2629,11 +2682,12 @@ mod tests {
         }
         assert_eq!(
             corpus_rows.len(),
-            349,
+            357,
             "153 ARG + 4 Monster Codex + 1 APG + 67 Inner Sea Races + 41 Horror Adventures + \
              48 SD-31 Epic 1-F2 Bestiary 2 batch (ARG's 42 + Inner Sea Races' 6) + \
-             SD-31-E6-F4-003's 19 (2026-08-16, ARG's own 6-race chassis batch) selectable \
-             alternates"
+             SD-31-E6-F4-003's 19 (2026-08-16, ARG's own 6-race chassis batch) + \
+             SD31-E6-F4-006's 8 (2026-08-17, ARG's own follow-on 4-race chassis batch) \
+             selectable alternates"
         );
         assert_eq!(ALTERNATE_TRAIT_REPLACE_FLAGS.len(), corpus_rows.len(), "no table row is extra or missing");
         for (key, flags) in ALTERNATE_TRAIT_REPLACE_FLAGS {
@@ -2674,7 +2728,7 @@ mod tests {
         let typo = vec!["Dwarf ~ Saltbeerd".to_string()];
         assert!(replace_flags_fired_by(&typo).is_empty());
         assert_eq!(unknown_alternate_trait_keys(&typo), vec!["Dwarf ~ Saltbeerd".to_string()]);
-        assert_eq!(selectable_alternate_trait_keys().len(), 349);
+        assert_eq!(selectable_alternate_trait_keys().len(), 357);
     }
 
     #[test]
