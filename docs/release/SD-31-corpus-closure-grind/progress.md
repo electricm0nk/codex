@@ -20459,3 +20459,323 @@ character context exists for in this reference catalog; not a new lever, the hon
 
 Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
 Claude-Session: https://claude.ai/code/session_012LQjhfcbAEBt6SiquQXEAE
+
+## Cycle `SD31-W11-INTEGRATE-001` (`RETRO_ACTOR=sd31-w11-integrate`) — 2026-08-17, wave-11 integration: merge six lanes, fix the pool-matcher's same-class-slot bulk-credit defect, guarded regen, full gate
+
+**Role:** `sd31-w11-integrate`, primary checkout, branch `tranche/11`. **Starting HEAD:** `b034408b1`
+(`docs(sd31): SD31-W10-INTEGRATE-001 reclaim retro events`), confirmed identical to
+`origin/tranche/11`'s tip at cycle start; `git status --porcelain` clean of anything but
+pre-existing untracked artifacts this cycle did not create. `docs/release/SD-31-corpus-closure-grind/loop-instruction.md` present.
+**Oracle:** `./scripts/verify.sh --only preflight-oracle` PASS — `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`.
+
+### 1. Merge — six lanes dispatched, five real, verified content-present before merge
+
+`git fetch origin`; `git log --oneline origin/tranche/11..<branch>` per branch confirmed real
+content ahead (lane 1: 1 commit; lane 2: 2; monster+companion: 1; equipment+class: 2; spell+feat:
+1). The race_trait lane was dispatched `null` — no branch existed; confirmed via `git branch -r`
+that the two prior race-lane branches (`sd31/race-lane-SD31-E6-F4-001`,
+`sd31/racetrait3-SD31-E6-F4-004`) are both 0 commits ahead of `origin/tranche/11` (fully absorbed
+in earlier waves), so there was genuinely nothing to merge this wave — recorded as
+`OPEN-ISSUES.md` row 203, not silently skipped.
+
+Merged in the mandated order (pool-match first, then pools-wire, since they interact directly):
+`5420af660` (lane 1, clean, no conflicts) → `b02bd2176` (lane 2, conflicts in `OPEN-ISSUES.md` and
+`progress.md` — both append-only logs, resolved by keeping BOTH sides and renumbering row 187 to
+avoid a duplicate row 186) → `f7d06d875` (monster+companion, same two files conflicted, resolved
+the same way, rows 188-192 renumbered) → `3dc992350` (equipment+class, `progress.md` conflicted
+only — a simple append, `OPEN-ISSUES.md`/`v06_work_inventory.rs`/`reach_gate.rs` all auto-merged
+clean) → `52f29d488` (spell+feat, both files conflicted again, rows 193-194 renumbered from a
+second 186/187 collision). Every conflict was in an append-only log; every resolution kept BOTH
+sides' content, never discarded a row. Checked `cache_gen/mod.rs`, `OBSERVABLE_BOOK_DIRS` and
+`reach_gate.rs`'s registration lists for duplicates after all six merges: zero real duplicates
+(one false-positive hit on `"beastiary"` traced to a doc-comment's own quoted mention of the
+string, not a second table entry). No branch committed `docs/work-inventory.json`.
+
+**Watched for double-counting between lanes 1 and 2 per the mandate's own warning:** lane 1 makes
+pools eligible via `class_feature_pool_group_matches`, lane 2 supplies 4 more wired Oracle
+Mystery pools through `chooser_option_selected` for a DIFFERENT class (Oracle) than the units
+lane 1's matcher fix touches (Shaman/Witch/Sorcerer/Ranger/Druid/Summoner) — verified by id-set
+diff after the guarded regen (§3 below) that no unit is credited by both lanes' mechanisms; zero
+overlap.
+
+### 2. Fixed the confirmed pool-matcher finding before the regen ran — the mandate's
+precedence-3 rule ("any confirmed finding against the pool matcher or the slug fix... a wrong one
+poisons the headline")
+
+The dispatched adversarial review CONFIRMED 20 of lane 1's 38 credited `class_feature` units
+(`Shaman Wandering Spirit ~ *` ×10, `Secondary Shaman Wandering Spirit ~ *` ×10) were grounded on
+a byte-identical computation to the DIFFERENT corpus record `Shaman Spirit ~ *` —
+`class_feature_pool_group_matches`'s two existing guards (cross-class prefix token, verified
+false-suffix list) are both scoped to cross-CLASS collisions and are structurally blind to a
+same-class DIFFERENT-SLOT collision. Re-derivation in the review found ~533 more units
+corpus-wide sit on the identical fault line, including 44 `Unchained Rogue Talent` units that
+decisions.md §10's own AMENDMENT explicitly forbids crediting off base Rogue.
+
+**Fix landed this cycle** (`9cd7144bb`, `src/bin/v06_work_inventory.rs`, this integration cycle's
+own file): a third guard, `CLASS_FEATURE_POOL_SLOT_QUALIFIERS`
+(`wandering`/`secondary`/`major`/`grand`/`advanced`/`unchained`), refuses any suffix match whose
+adjective prefix names a different slot of the owner class. One permanent regression test,
+`same_class_different_slot_qualifier_is_refused_even_though_the_owner_matches`, pins the three
+concrete corpus collisions (Shaman Wandering Spirit, Witch Major/Grand Hex, Unchained Rogue
+Talent, Psionic Advanced Rogue Talent) while confirming the real primary slot (`Shaman Spirit`)
+still matches. `cargo test --locked --bin v06_work_inventory` — 246/246 passed, zero regressions
+in any existing test (the enumeration test's 249-newly-recognised-group figure and the false-
+suffix-list eyeball are both unaffected, since the new guard only NARROWS matches that used to be
+accepted, never widens).
+
+Because this fix landed BEFORE the guarded regen ran, the 20 wrongly-attributed units never
+reached committed board state at all — the class_feature board delta below (+18) is the correct
+number outright, not a correction applied after the fact.
+
+Appended `OPEN-ISSUES.md` rows 195-203 (16 findings from the dispatched review, 15 CONFIRMED + the
+race-lane-absence note): row 195 (the fix above), row 196 (a receipt figure correction — 3 not 4
+units eligible once row 168 lands, since `stone_mystery_steelbreaker_skin` is `wiring_class:
+derived` and caps at `held`, never reclassified), row 197 (RULING-NEEDED — `Elysian Shield`
+cross-book declared-PI propagation, routed to the operator rather than acted on unilaterally), row
+198 (inherited negative-duration DoD-8 screenshot defect, not this cycle's), rows 199-200
+(monster_ability/companion root-cause trace corrections), row 201 (spell lane's tautological
+mutation test + fixture-independence-filter gap), row 202 (equipment lane receipt figure
+corrections, 422 not 424 / 25,163 not 25,165), row 203 (lane A absence, DoD-6). One retro
+`correction` event per finding emitted with `--verified-by`
+(`docs/retro/events/sd31-w11-integrate.jsonl`).
+
+**GAMING: NOT GAMED.** No wiring_class reclassified, no threshold loosened, no gate weakened, no
+`#[ignore]`/`.skip(`/`todo!`/`assert!(true` anywhere in this cycle's own diff, `EXCLUDED_BOOKS`
+and `scripts/observer/pf1e_dashboard_producer.py` untouched, the trap baseline reproduces
+bit-identical (1 mod-record, 1,225 wiring-class-mismatch, §4). The fix NARROWS an over-broad
+matcher the review proved was over-crediting; it does not widen anything.
+
+### 3. The one guarded regen
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out $SCRATCH/sweep-sd31-w11-integrate.json
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out $SCRATCH/fixture-sd31-w11-integrate.json
+CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... cargo run --locked --bin v06_work_inventory
+```
+
+`corpus-literal-sweep`: 25,163 records examined of 26,043 read, 246,142 tokens compared, 0
+findings, CLEAN. `derived-evaluator-fixture-check`: 1,267/1,268 covered units cleared; the 1
+failure (`advanced_players_guide:equipment:spindle_of_perfect_knowledge`) is the pre-existing,
+previously-characterized `web_second_source` ingestion defect at `OPEN-ISSUES.md` row 191 — not
+new, not this cycle's file territory.
+
+**Zero stamp loss:** 38,540 raw unit ids identical before and after (full id-set diff — `0 added,
+0 removed`, not a count comparison). **A second run changes only `generated_at`** (byte-identical
+after clearing that one field) — verified directly, not asserted. Committed at `65400ddc9`.
+
+**Board, re-derived with the producer's OWN `doneness_verdict`:**
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+print(len(U), dict(c), round(100*c['done']/len(U),4))
+"
+```
+
+BEFORE (wave-10 committed tip, `b034408b1`): 38,521 in scope, `done` **11,229 (29.1503%)**.
+AFTER (this regen): 38,521 in scope, `done` **11,828 (30.7053%)**. **Delta: +599 units (+1.5550
+percentage points).** Denominator unchanged.
+
+**Movement traced id-by-id (full old/new id-set diff, not a bucket count), zero `done`->non-`done`
+regressions anywhere:**
+
+| kind | direction | count | cause |
+|---|---|---:|---|
+| equipment | not-started → done | 382 | lane C, 8-book equipment gap widen (corrected figure) |
+| spell | held → done | 199 | lane D, RANGE caster-level formula seam |
+| class_feature | not-started → done | 16 | lane 1, post-fix (real credits) |
+| class_feature | deferred → done | 2 | lane 1, post-fix (real credits) |
+| equipment | not-started → unmeasurable | 14 | lane C's remaining new records, probe-coverage-limited |
+| equipment_modifier | not-started → unmeasurable | 13 | lane C's remaining new records |
+| equipment | not-started → held | 6 | lane C's remaining new records |
+| equipment_modifier | not-started → in-progress | 4 | lane C's remaining new records |
+| equipment | not-started → in-progress | 3 | lane C's remaining new records |
+| equipment | in-progress → not-started | 1 | `ultimate_equipment:elysian_shield` — the Elysian Shield PI fix correctly dropped it from UE's compiled table (row 197); a real, disclosed, non-regressing demotion |
+
+`382+14+6+3=405` equipment + `13+4=17` equipment_modifier = **422**, matching lane C's own
+corrected figure (`OPEN-ISSUES.md` row 202) exactly. `16+2=18` class_feature credits confirms the
+pool-matcher fix's expected net (38 the lane originally computed, 20 withdrawn before this regen
+ever ran). monster_ability, companion, race, class, feat, race_trait: **zero movement**, matching
+lane B's own honest zero-movement report and lane A's absence.
+
+### 4. Standing audit + public feed
+
+`python3 scripts/reachability_audit.py`: **REACHABLE CEILING 98.95% (38,115/38,521)** — exactly
+the mandate's own stated figure and wave 10's, unmoved. Per-kind ceilings identical to wave 10
+(class 100.00%, class_feature 98.71%, companion 99.65%, equipment 99.57%, equipment_modifier
+100.00%, feat 96.90%, monster 100.00%, monster_ability 99.46%, race 100.00%, race_trait 99.58%,
+spell 97.82%). 9 dead-end cells, all `ambiguous|*`, `ambiguous_wiring_class_units: 406`
+(unchanged), `unmeasurable_unknown_status_units: 5,007` (by kind: class_feature 3,895, feat 540,
+equipment_modifier 402, equipment 144, spell 26). Committed at
+`artifacts/SD31-W11-INTEGRATE-001-audit.json`.
+
+`cargo run --locked --bin v06_corpus_trap_report -- --audit`: exit 2, **1 mod-record + 1,225
+wiring-class-mismatch — bit-identical to the recorded baseline, not worsened.** Log committed at
+`artifacts/SD31-W11-INTEGRATE-001-trap-report.log`.
+
+`./scripts/publish-site-dashboard.sh` (real publish, not `--check`): wrote
+`site/dashboard/PF1e-dashboard.json` at the wave-11 tip, committed at `75dd74dbb`.
+`site/dashboard/units/` **NOT committed** (mandatory rule; row 141's shard exposure stays
+uncommitted). **PI GATE DISCLOSURE, mandatory and explicit rather than quiet:** re-checked the
+refreshed top-level feed by direct substring search for row 149's named declared-PI roadmap
+strings — `"Aldori Swordlord"`, `"Magaambyan Arcanist"`, `"Rivethun Emissary"`, `"Aldori
+Alacrity"`, `"Shobhad Longrifle"`, `"Otyugh Hide"`, `"Scepter of Shibaxet"` — **all still present.**
+This is the SAME pre-existing, RULING-NEEDED exposure row 149 named 2026-08-16; not introduced or
+worsened this cycle, not closed either (scrubbing manifest names is the design decision row 149
+already asks the operator to make, not something a cycle can decide unilaterally under time
+pressure). Published rather than withheld, because withholding leaves the public feed silently
+stale without closing the actual exposure.
+
+### 5. Full gate — green end to end
+
+Launched early, in the background, kept alive through the whole cycle. Exit captured DIRECTLY:
+
+```
+VERIFY_EXIT=0
+```
+
+27/27 stages PASS: preflight-disk, preflight-oracle, oracle-pin-selftest, producer-selftest,
+site-dashboard-selftest, site-dashboard-check, reachability-audit-selftest, reachability-audit,
+groundtruth-guard-selftest, supersession-gate-selftest, pi-sweep, declared-pi-audit,
+audit-selftest, reclaim-selftest, driver-selftest, corpus-sweep-selftest, root-lib (1,984 passed),
+root-full (6,945 passed across 565 suites, all 529 `tests/*.rs` suites executed), desktop (459
+passed), reach (27 passed), corpus-sweep (25,163 examined, 0 findings), supersession-gate (116
+objects, all clean), frontend-install, frontend-test (99/99), frontend-typecheck, clippy (root:52
+desktop:7 warnings, 0 errors — AT ceiling, not over it), class-dump (31/31 computing). Log:
+`artifacts/SD31-W11-INTEGRATE-001-verify.log`.
+
+**Note on sequencing:** this gate launch happened BEFORE the guarded regen (§3) and the public
+dashboard publish (§4) landed on top, so its own `site-dashboard-check`/`reachability-audit`
+stages read the PRE-regen `docs/work-inventory.json` and correctly PASSED against THAT state (not
+stale — the gate is a snapshot of the merged+fixed tip at launch time, and the regen commits
+landed after). §3 and §4's own commands were re-run directly, post-regen, and their results
+reported above are the live, current-tip numbers, not the gate log's.
+
+`scripts/verify-baselines.env` reconciled in its own separate commit (`aa6e7b3ef`,
+`--show-actuals`): `BASELINE_ROOT_LIB_TESTS` 1968→1984, `BASELINE_ROOT_FULL_TESTS` 6910→6945,
+`BASELINE_DESKTOP_TESTS` 457→459, `BASELINE_CORPUS_LITERAL_RECORDS` 24741→25163. Clippy ceilings
+(root:52 desktop:7) unchanged, no stale note for either.
+
+### DoD-8 — on-screen verification
+
+Drove the real desktop app via `apps/desktop/.claude/skills/run-desktop/driver.sh`
+(`RUN_DESKTOP_AGENT=sd31-w11-integrate`, launched directly, not through
+`verify-on-screen.sh` per this package's own known-gap note). Created a fresh Dwarf
+Shaman 1 ("W11 Test"), loaded the full character sheet, opened the Actions tab and
+scrolled to the class-feature block. Screenshot committed at
+`artifacts/SD31-W11-INTEGRATE-001/shaman-actions-tab.png`.
+
+**What it proves, directly targeted at this cycle's own fix (not a generic smoke
+test):** the sheet renders exactly ONE Spirit slot for this Shaman — `Life Spirit
+Channel Uses Per Day`, `Life Spirit Channel Dice`, `Life Spirit Channel Dc`, each with
+its own live explanation string citing `rules_tables::acg::class_chassis_resolve` and
+the Shaman's own level/Charisma-modifier arithmetic — and, scrolling the full Actions
+tab, no `Wandering Spirit` or `Secondary Wandering Spirit` entry renders anywhere,
+duplicated or otherwise. This is on-screen confirmation of finding 1's own claim: the
+engine genuinely models exactly one Shaman spirit slot, so the 20 units withdrawn by
+this cycle's fix were never a real, separately-reachable player-facing feature to begin
+with — withdrawing their credit did not remove anything a player could ever have seen.
+(The default spirit shown is Life Spirit, the `pf1_adapter.rs` Path A canonical-default
+seed — not the `Battle Spirit` unit specifically credited this wave — but the Spirit
+SLOT mechanism itself is identical for both, since `SHAMAN_SPIRIT_CHOICE_ID` is a single
+shared choice set for all ten Spirits per the finding's own code citation.)
+
+### 6. Board headline, chooser payout, followups
+
+**Denominator: 38,521, unchanged all wave** (re-derived both directions, `EXCLUDED_BOOKS` and the
+Supersession Register untouched — register stays PROPOSED, race attribution stays FROZEN, no lane
+touched `data/corpus/` book attribution or any race/race_trait record).
+
+**Per-kind board table** (re-derived live with the producer's own `doneness_verdict()`):
+
+| kind | total | done (wave 10) | done (wave 11) | delta |
+|---|---:|---:|---:|---:|
+| class | 185 | 27 (14.5946%) | 27 (14.5946%) | +0 |
+| class_feature | 15,472 | 119 (0.7691%) | 137 (0.8855%) | +18 |
+| companion | 1,696 | 680 (40.0943%) | 680 (40.0943%) | +0 |
+| equipment | 6,208 | 4,372 (70.4253%) | 4,754 (76.5786%) | +382 |
+| equipment_modifier | 1,580 | 380 (24.0506%) | 380 (24.0506%) | +0 |
+| feat | 2,610 | 1,470 (56.3218%) | 1,470 (56.3218%) | +0 |
+| monster | 1,270 | 910 (71.6535%) | 910 (71.6535%) | +0 |
+| monster_ability | 2,951 | 1,366 (46.2894%) | 1,366 (46.2894%) | +0 |
+| race | 103 | 7 (6.7961%) | 7 (6.7961%) | +0 |
+| race_trait | 3,603 | 741 (20.5662%) | 741 (20.5662%) | +0 |
+| spell | 2,843 | 1,157 (40.6964%) | 1,356 (47.6961%) | +199 |
+| **TOTAL** | **38,521** | **11,229 (29.1503%)** | **11,828 (30.7053%)** | **+599** |
+
+**Separating the two directions, not blurring them:** all +599 is real new credit landing this
+wave (equipment +382, spell +199, class_feature +18) — there is no correction-driven DEMOTION out
+of `done` anywhere this wave (§3's regen confirmed zero `done`→non-`done` transitions). The one
+demotion in either direction, `ultimate_equipment:elysian_shield` (`in-progress`→`not-started`),
+never touched `done` — it is the honest byproduct of removing a PI-declared name from one shipped
+table (row 197), not a credit reversal.
+
+**Does the chooser now pay out — the operator's own question, answered plainly, with the
+number:** Yes, but modestly, and through a DIFFERENT lane than the mandate's own headline
+expected. The mandate framed this wave around unblocking `chooser_option_selected` via the pool-
+matcher/slug fixes (~1,974 units "one predicate fix away"). What actually happened: the pool-
+matcher fix (row 168/181) genuinely landed and genuinely widened recognition to 249 previously-
+unmatchable corpus groups — but of those, only **18 units** currently produce an attributable
+delta on the sheet (10 primary `Shaman Spirit`, 3 `Witch Hex`, 2 `Sorcerer Bloodline`, 3 apostrophe
+joins), after this cycle withdrew the 20 units that were wrongly credited through a same-class-
+different-slot conflation. Recognition (matching a corpus group to a pool) and grounding (the
+matched member producing an observably different sheet value) are two different bars — the
+`--class-feature-probe` diagnostic reports 863 of the newly-recognised groups' members still
+decline as `NoConsumerDelta`. Separately, lane 2 wired 4 MORE Oracle Mystery pools through
+`chooser_option_selected` (Stone/Waves/Wind/Heavens, joining wave 10's Battle) — this moved **zero
+board units** this wave (the same honest zero wave 10 reported for the primitive's first Battle-
+Mystery wiring), because the units those pools would ground are themselves gated behind the same
+`OwnerClassNotModelled`/`NoChoiceSlotOffersIt` recognition bar the pool-matcher fix addresses for
+OTHER classes, not Oracle. **So: the chooser primitive is real, has 5 wired pools now (not 1), and
+the pool-matcher fix that was meant to unblock it in bulk instead unblocked a mostly-unrelated
+18-unit slice of OTHER classes' pools (Shaman/Witch/Sorcerer) — the ~4,520-unit option-pool
+population the mandate named as the single largest lever is still there, now with the matcher
+fixed under it, waiting on the per-pool consumer-delta wiring `OPEN-ISSUES.md` row 186 names as
+the real remaining gap.**
+
+**Needs an operator ruling — refreshed:**
+- **Public-feed PI redaction (rows 141/149)** — 261 declared-PI unit names would ship in
+  `site/dashboard/units/` if ever committed (still not committed); 56 candidate names (7
+  confirmed present again this wave by direct check) ship today in the top-level
+  `PF1e-dashboard.json` roadmap manifest.
+- **Race attribution (row 140, evidence at `SD31-ATTRIB-003-race-evidence.md`)** — 16 races (7 CRB
+  + 9 Bestiary 4) sit under Inner Sea Races by citation only. FROZEN pending ruling; untouched this
+  wave (0 units moved).
+- **Row 55 — spell Structural Exclusion Register proposal** — 13 `spell` `not-ingested` units
+  within the engine's 5-modelled-effect ceiling, PROPOSED, NOT applied. Unaffected this wave.
+- **Row 197 (new) — cross-book declared-PI propagation (`Elysian Shield`, 1 equipment record)** —
+  declared PI in one printing, ships unscreened from a second, silent printing. Does a PI
+  declaration in ANY printing bind every printing of the same name?
+
+Followups, ordered by units they would move (see `OPEN-ISSUES.md` rows 186/199/200 for the full
+traces):
+1. **`class_feature` per-pool consumer-delta wiring** (row 186, epic-4/epic-5 territory,
+   `src/rules_core/pilot_compute/mod.rs` + `archetype_resolver.rs`) — of the 249 groups the
+   pool-matcher fix newly recognises, only 3 pools (Spirit/Hex/Bloodline) currently produce an
+   attributable delta; the ~4,271-unit remainder (Domain 74 groups, Blessing 37, most of
+   Bloodline's 63, Mystery's 22, etc.) needs a real chooser wiring path per pool. Single largest
+   remaining lever on the board.
+2. **`monster_ability` in-book transcription** (row 199 correction, `scripts/
+   transcribe_monster_tables.py`, epic-6 territory) — ~443 owned, un-transcribed abilities in
+   bestiary_1/2/3/4, corrected root cause from row 186's overstated `core_essentials` registry-gap
+   claim (which reaches at most 378, not ~1,317).
+3. **`companion` archetype-owner widening** (row 200 correction, `scripts/
+   transcribe_companion_tables.py`, epic-6 territory) — 288 units owned by an already-transcribed
+   archetype/class-feature row the transcriber's creature-row-only ownership test does not see,
+   127 of them in `ultimate_wilderness` alone.
+4. **`race_trait` audit, not another ingest batch** (row 165, lane A's next card) — every
+   magnitude-bearing race_trait reaches `done` on load-only evidence regardless of whether
+   `pilot_compute.rs` wires it; lane A produced no wave-11 output at all (row 203).
+5. **`spell` RANGE seam mutation-test hardening** (row 201, `derived_evaluator_fixture_check.rs`,
+   epic-6 territory) — replace the tautological "MUTATION PROOF" test with one that actually
+   exercises `run_spell_range_bar_check`'s failure branches; low unit count, high trust-debt.
+
+Full command-level detail, every figure's derivation and the six-lane merge conflict resolution
+record are above in this same receipt (§1-§5).
+
+Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_012LQjhfcbAEBt6SiquQXEAE
