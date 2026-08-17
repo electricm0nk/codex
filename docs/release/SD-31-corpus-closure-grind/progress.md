@@ -22568,3 +22568,316 @@ reclaimed-bytes figure.
 fully reconciled — see §3). `done %`: 30.7053% → 30.7079%. Reachable ceiling: 98.95%
 (38,115/38,521), unchanged. `ambiguous` wiring-class population: 406 units, unchanged. Race
 attribution: FROZEN, untouched. Supersession Register: PROPOSED, NOT applied, untouched.
+
+## Cycle `SD31-E6-F11-003` (`RETRO_ACTOR=sd31-fixture-seam`) — 2026-08-17, `epic-6-ingest-lanes` F11: `derived_evaluator_fixture_check` class_feature seam
+
+**Role:** `sd31-fixture-seam`. **Checkout:** own worktree
+`.claude/worktrees/wf_c9995ce5-db0-3`, branch `sd31-fixture-seam-SD31-E6-F11-003`
+(renamed from the worktree's default branch name; cut from `tranche/11` tip).
+**Starting HEAD:** `10c666125` (`git reset --hard origin/tranche/11` — the worktree's
+own HEAD at dispatch was stale, sitting on `bab19b201` with no package dir present,
+`git status --porcelain` clean; reset per the mandatory-first-actions branch-state rule).
+**Oracle pin:** `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
+(`scripts/pcgen-oracle-pin.env`), confirmed via `./scripts/verify.sh --only preflight-oracle`.
+
+### Mandate re-derivation (before)
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+print(len(U), dict(c), round(100*c['done']/len(U),4))
+"
+-> 38521 {'done': 11829, 'not-started': 18243, 'unmeasurable': 5128, 'deferred': 38, 'held': 1901,
+  'in-progress': 1382} 30.7079
+```
+
+Matches the dispatch's own headline exactly (11,829 of 38,521, 30.71%).
+
+### §1 — The gap this card was dispatched to close
+
+Wave 12's own finding (`decisions.md`/`OPEN-ISSUES.md`): Barbarian Superstition
+(`SD31-E4-F2-003`, `pilot_compute::barbarian_superstition_save_bonus`) was wired as a real
+production consumer and still could not reach `done` — it lands `derived`+`grounded`, and
+`pf1e_dashboard_producer.doneness_verdict()` caps that at `held` without a `fixture-verified`
+stamp, which `derived_evaluator_fixture_check` had **zero evaluator seams for `kind=class_feature`
+at all** before this cycle (confirmed by reading the file: only `equipment`, `monster`
+(`SD31-E6-F11-002`), and `spell` `DURATION`/`RANGE` (`SD31-E6-F2-006`/`SD31-E6-F2-008`) seams
+existed).
+
+### §2 — Corpus-wide census (re-derived fresh, not quoted from the dispatch)
+
+```
+data/corpus/*/class_feature/**/*.json's BONUS:VAR tokens: 7,564 total
+of which 23 match floor((LEVELVAR + offset_pre) / divisor) + offset_post exactly
+  (BASE+VAR/DIVISOR shape, independent Python regex census)
+```
+
+Cross-referenced against `docs/work-inventory.json`: of those 23, **45** `class_feature` units
+corpus-wide are ALREADY `derived`+`grounded` (i.e. already have a real `pilot_compute` production
+consumer) — a wider population than the 23-record BONUS:VAR-shape census alone suggested, because
+several already-wired formulas (`max(...)`/`min(...)`-wrapped, ability-score-mixed) fall outside
+this cycle's parseable shape. Every one of the 9 units this cycle fixtures is drawn from the
+intersection of "matches the parseable shape" AND "already `derived`+`grounded`" — confirmed by
+grepping `pilot_compute::mod.rs` for each formula's own `id:` string before selecting it (all 9
+found: `class_feature.rogue.trap_sense`, `class_feature.ranger.favored_terrain`,
+`class_feature.acg.bloodrager.damage_reduction`, `class_feature.acg.slayer.sneak_attack_dice`,
+`class_feature.acg.slayer.trapfinding_bonus`, `class_feature.acg.slayer.stalker_bonus`,
+`class_feature.rage_power.superstition` (via `barbarian_superstition_save_bonus`), Paladin
+Channel Positive Energy, Ninja No Trace).
+
+### §3 — The seam, built
+
+`src/rules_core/derived_evaluator_fixture_check.rs`:
+- `ClassFeatureLevelScalingFormula { offset_pre, divisor, offset_post }` — states
+  `floor((LEVELVAR + offset_pre) / divisor) + offset_post`, matching the DURATION/RANGE spell
+  seams' posture of never resolving the live character level.
+- `parse_class_feature_level_scaling(raw) -> Option<(level_var, formula)>` — a from-scratch parser
+  covering all four corpus-observed algebraic spellings (`N+VAR/D`, `VAR/D`, `VAR/D+N`,
+  `(VAR+/-N)/D`), refusing `max()`/`min()`-wrapped and ability-score-mixed formulas rather than
+  guessing.
+- `run_class_feature_bar_check` — resolves each fixture's headline formula AND independently
+  cross-checks the level-variable's own declared class alias, searched across the WHOLE BOOK
+  (the alias may sit on a sibling record — `RagePowersLVL` is defined on `Barbarian ~ Rage Powers`,
+  a pool-header ability, consumed by `Rage Power ~ Superstition`; the same "follow the reference
+  one hop further" lesson `decisions.md §15` names). Merged into `run_bar_check`.
+- `scripts/derive_class_feature_level_scaling_fixtures.py` — derives `class_feature_entries`
+  straight from the pinned oracle `.lst` bytes with its own from-scratch parser (`parse_level_scaling`,
+  a structurally different implementation in a different language). Imports no engine module, opens
+  no `data/corpus/` file, shells out to no cargo binary.
+- `tests/derived_evaluator_fixture_check_class_feature.rs` — the same four independent guarantees
+  (different source artifact, committed first, re-derivable, byte-anchored to the pinned oracle)
+  the equipment/monster/spell seams keep, plus a mutation-proof assertion.
+- 13 in-module unit tests (`class_feature_seam_tests`) — one TDD red/green anchor per algebraic
+  shape, a `max()`/`min()`-refusal test, a zero-divisor-refusal test, two mutation-proof tests
+  against a synthetic scratch corpus tree (wrong divisor, wrong class-level alias) each with a
+  positive control.
+
+### §4 — 9 fixtures, hand-derived and independently re-derived, per-unit cost
+
+All 9 hand-verified byte-for-byte against the pinned oracle (`grep`/`sed -n` against
+`$PCGEN_CORPUS_ROOT`, not the corpus JSON) BEFORE writing the derivation script, then
+independently re-produced by the script and diffed against the hand-verification — all 9 matched
+exactly on the first run.
+
+| unit | book | formula | divisor | offsets |
+|---|---|---|---|---|
+| `core_rulebook:class_feature:rage_power_superstition` | CRB | `2+RagePowersLVL/4` | 4 | post=2 |
+| `core_rulebook:class_feature:rogue_trap_sense` | CRB | `RogueTrapSenseLVL/3` | 3 | none |
+| `core_rulebook:class_feature:ranger_favored_terrain` | CRB | `(RangerFavoredTerrainLVL+2)/5` | 5 | pre=2 |
+| `core_rulebook:class_feature:paladin_channel_positive_energy` | CRB | `(PaladinChannelLVL+1)/2` | 2 | pre=1 |
+| `advanced_class_guide:class_feature:slayer_trapfinding` | ACG | `SlayerTrapfindingLVL/2` | 2 | none |
+| `advanced_class_guide:class_feature:slayer_sneak_attack` | ACG | `SlayerSneakAttackLVL/3` | 3 | none |
+| `advanced_class_guide:class_feature:slayer_stalker` | ACG | `SlayerStalkerLVL/5+1` | 5 | post=1 |
+| `advanced_class_guide:class_feature:bloodrager_damage_reduction` | ACG | `(BloodragerDRLVL-4)/3` | 3 | pre=-4 |
+| `ultimate_combat:class_feature:ninja_no_trace` | UC | `NinjaNoTraceLVL/3` | 3 | none |
+
+**Per-unit cost**: this batch's own wall-clock (oracle grep verification + script authoring +
+Rust seam + tests), split across 9 units, is dominated by the FIXED cost of building the seam
+itself, not the marginal cost of each fixture — a future cycle extending the same seam to the
+14 remaining corpus-wide `BASE+VAR/DIVISOR` records (once wired to a real consumer) should cost
+roughly one oracle-grep-and-JSON-append cycle per unit, a few minutes each, since the parser and
+bar-check machinery are already built.
+
+### §5 — Board delta, measured via the guarded regen
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-fixture-seam.json
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-fixture-seam.json
+CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep-sd31-fixture-seam.json \
+DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture-sd31-fixture-seam.json \
+  cargo run --locked --bin v06_work_inventory
+```
+
+`v06_work_inventory` exit 0. Diff against the pre-cycle committed `docs/work-inventory.json`: 15
+lines changed — `generated_at`, `by_status.fixture-verified` 1185->1194 (+9),
+`by_status.grounded` 2557->2548 (-9), and the same +/-9 replicated in the per-book cross-tab
+section. Zero other movement. `derived_evaluator_fixture_check --json-out` (standalone): **1276
+of 1277 covered units cleared** (94 equipment + 77 monster + 898 spell + 199 spell_range + **9 new
+class_feature** = 1277); the sole failure is the pre-existing, named
+`advanced_players_guide:equipment:spindle_of_perfect_knowledge` (`OPEN-ISSUES.md` row 191 — the
+fix is a `data/corpus/` re-ingest outside this lane's file territory, not touched here).
+
+Doneness-verdict replay (producer's own function, before/after):
+
+```
+BEFORE 38521 {'done': 11829, ...} 30.7079
+AFTER  38521 {'done': 11838, ...} 30.7313
+```
+
+**`done` 11,829 -> 11,838 (+9), `held` 1,901 -> 1,892 (-9). Denominator unchanged at 38,521.**
+`docs/work-inventory.json` restored per the wave rule (`git checkout -- docs/work-inventory.json`)
+before every commit.
+
+### §6 — A second defect found and fixed: the monster seam's own tautological mutation-proof
+
+Per this card's explicit instruction ("check for that shape among the tests you inherit, and fix
+any you find" — referring to row 201/row 218's tautological-mutation-test finding already fixed
+for the equipment/spell RANGE/DURATION seams): audited `derived_evaluator_fixture_check_monster.rs`'s
+own `a_wrong_expected_caster_level_makes_the_bar_check_fail` and found the SAME shape, unfixed
+since `SD31-E6-F11-002` (wave 3): it never calls `run_monster_bar_check` at all, only the bare
+`spell_like_ability_caster_level` evaluator function, so the production COMPARISON logic
+(`Some(cl) if cl == expected`) has never actually been exercised by any test.
+
+**Fixed** (in-module, `derived_evaluator_fixture_check.rs`'s `monster_seam_tests`, since
+`run_monster_bar_check` is a private `fn` only same-module tests can call — the external
+`tests/derived_evaluator_fixture_check_monster.rs` file architecturally cannot drive it, which is
+WHY its own mutation-proof stayed weak): added
+`a_wrong_expected_caster_level_makes_run_monster_bar_check_report_a_failure` and its positive
+control, driving `run_monster_bar_check` end to end via a scratch fixture-only root — unlike the
+equipment/spell seams, `run_monster_bar_check` resolves records through the COMPILED
+`monster_chassis::MONSTER_BOOKS` static registry, never the filesystem, so `repo_root` only ever
+controls which fixture file is read; the real, resolved Demon (Balor) stat block still resolves
+regardless of which scratch root is passed, making a fixture-only scratch root sufficient. Old,
+weaker test kept as a cheap red/green anchor on the bare evaluator, not deleted (it is still
+correct, just not sufficient on its own — the new test supersedes it as the mutation-proof
+evidence).
+
+Retro correction emitted (`docs/retro/events/sd31-fixture-seam.jsonl`).
+
+### §7 — `spindle_of_perfect_knowledge`, the standing failure named by every wave since 10
+
+Confirmed via the guarded regen and the standalone `derived_evaluator_fixture_check` run: still
+the SOLE pre-existing failure, unchanged. `OPEN-ISSUES.md` row 191 (`SD31-E6-F9-004`) already
+located the exact fix — re-ingest the ONE record from `apg_equip_magic_items.lst:13` (a real
+`.lst` row exists; the shipped corpus record was ingested from a `web_second_source` AoN webpage
+scrape instead) — but that fix touches `data/corpus/advanced_players_guide/equipment/*.json`,
+outside this card's granted file territory (`YOUR FILES` names the fixture path/check/derivation
+script, not `data/corpus/`). Not touched here, per file-territory discipline; the precise fix is
+already on record for the equipment lane.
+
+### §8 — Remaining scope, characterized not fabricated (`OPEN-ISSUES.md` row 222)
+
+14 of the 23 corpus-wide `BASE+VAR/DIVISOR`-shaped records are NOT covered: 10 are
+`max()`/`min()`-wrapped (real, scoped parser-widening follow-on), 2 have a level-variable alias
+this cycle's own book-wide search could not locate (`Fighter ~ Bravery`'s `BraveryLVL`, likely
+defined on the Fighter class record itself, a different `.lst` this seam does not walk), 1 needs a
+second hop of level-var alias resolution (`Nature Spirit ~ Storm Burst`'s `ShamanSpiritLVL`, an
+archetype-level indirection). None of the 14 are currently `derived`+`grounded` (no production
+consumer wired yet), so covering them buys zero board units until a future cycle wires a real
+consumer first — same "capability before consumer" ordering this card itself followed.
+`monster`'s remaining 307-unit held mass (ability-score-scaling family, `OPEN-ISSUES.md` row 47)
+and `spell`'s 91% held population (row 76, needs a `DESC:`-embedded arithmetic parser) were
+surveyed but not attempted — both correctly refuse to fabricate a magnitude this corpus does not
+state, matching the existing refusal precedent for both.
+
+### §9 — clippy: a real ceiling breach, found and fixed
+
+The full gate's FIRST run (against the two source commits above) reported
+`root:53 warnings exceeds recorded ceiling 52`, traced to a genuine `clippy::collapsible_if`
+in `tests/derived_evaluator_fixture_check_class_feature.rs`'s own
+`reference_parse_class_feature_formula` (a nested `if let`/`if let` clippy correctly flagged).
+Fixed by collapsing into a let-chain (`if let ... && let ...`), the exact form clippy's own
+suggestion proposed. Verified with a scoped `cargo clippy --locked --test
+derived_evaluator_fixture_check_class_feature` and `cargo clippy --locked --lib`: zero hits
+against either this file or `src/rules_core/derived_evaluator_fixture_check.rs`. Re-ran the
+5-test suite: 5 passed, 0 failed, behavior unchanged. Separate commit
+(`fix(sd31): clippy collapsible-if in class_feature reference derivation`).
+
+### §10 — Gate, launched early and kept alive, RE-LAUNCHED CLEAN after every source edit
+
+Two intermediate `verify.sh` runs are NOT cited as this cycle's DoD-1 evidence: the first
+launched before any of this cycle's code existed (branch-state baseline only); the second
+caught the clippy ceiling breach above mid-flight (source was edited while it ran, so its
+`root-full`/`clippy` stages graded a moving target — the exact "relaunch cleanly after every
+source edit is final" discipline `SD31-E5-F1-004`'s own receipt names). **This cycle also
+briefly violated "never run driver.sh concurrently with verify.sh"** (launched `driver.sh`
+while a `verify.sh` run was still on `root-full`) — caught before the app window appeared,
+both tasks stopped immediately via `TaskStop`, confirmed no orphaned Xvfb/tauri-dev processes
+remained, retro incident emitted (`docs/retro/events/sd31-fixture-seam.jsonl`,
+`recurrence-key: driver-sh-concurrent-with-verify-sh`).
+
+**Definitive run**, launched after every source edit (including the clippy fix) was final and
+pushed:
+
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F11-003-verify.log
+./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+
+**Result (`VERIFY_EXIT=1` — 26 of 27 stages PASS**, non-zero solely because the documented,
+non-regressing `site-dashboard-check` failed): `preflight-disk` `preflight-oracle`
+`oracle-pin-selftest` `producer-selftest` `site-dashboard-selftest` `reachability-audit-selftest`
+`reachability-audit` `groundtruth-guard-selftest` `supersession-gate-selftest` `pi-sweep`
+`declared-pi-audit` `audit-selftest` `reclaim-selftest` `driver-selftest`
+`corpus-sweep-selftest` `root-lib` (2015 passed) `root-full` (**6997 passed across 566
+suites, all 530 `tests/*.rs` suites executed** — +1 suite over the 529 baseline, exactly this
+cycle's own new `tests/derived_evaluator_fixture_check_class_feature.rs`) `desktop` (461
+passed) `reach` (27 passed, unchanged — no new production surface, only a fixture-seam
+widening) `corpus-sweep` (25655 records examined, 248939 tokens compared, **0 findings**)
+`supersession-gate` (116 objects, all clean) `frontend-install` `frontend-test` (99/99 files)
+`frontend-typecheck` (clean) **`clippy` `root:52 desktop:7 warnings, 0 errors` — exactly at
+the recorded ceiling** `class-dump` (31/31 computing) — all PASS. **Sole failure
+`site-dashboard-check`**: re-derived — `site/dashboard/PF1e-dashboard.json is STALE`, the
+documented row-153 worktree-path-drift shape (`SD31-E4-F1-005`'s own finding: "spuriously
+fails from ANY worktree whose checkout path differs from the one that last published
+`site/dashboard/`, even with ZERO real content drift"), confirmed structurally the same
+non-regressing cause, not chased. **Baseline drift noted, not fixed** (per the wave rule,
+baseline updates are a separate deliberate commit, out of this card's file territory):
+`BASELINE_ROOT_LIB_TESTS` 2000 recorded vs 2015 measured, `BASELINE_ROOT_FULL_TESTS` 6977 vs
+6997, `BASELINE_ROOT_TEST_BINARIES` 565 vs 566 — all three already exceeded the recorded
+floor before this cycle's own +15/+20/+1 deltas (other lanes' work in between), reported per
+the standing rule rather than silently absorbed.
+
+`v06_corpus_trap_report -- --audit`, run separately (not a `verify.sh` stage): `TRAP_EXIT=2`
+(RED, by design). **1 mod-record, 1225 wiring-class-mismatch** — byte-identical to the
+recorded baseline every prior wave names. Confirmed this cycle did not worsen it.
+
+### §11 — DoD-8, on-screen, driven live via `driver.sh` (no `class_feature` family in
+`verify-on-screen.sh`; drove `driver.sh` directly, per this card's own instruction)
+
+`RUN_DESKTOP_AGENT=sd31fixtureseam`, own DISPLAY (driver-allocated `:77`). Created a real
+Dwarf Slayer 3 character ("Fixture Seam T") through the actual app form — Slayer chosen
+specifically because two of this cycle's own 9 fixtures
+(`advanced_class_guide:class_feature:slayer_sneak_attack`/`slayer_trapfinding`) are real,
+pre-existing `pilot_compute` production consumers for that class. Loaded the full sheet,
+Actions tab: **`Sneak Attack Dice 1`** ("Slayer level 3 Sneak Attack dice: level/3 = 1d6")
+and **`Trapfinding Bonus 1`** ("Slayer level 3 Trapfinding: ... level/2 = 1") both render
+live with the exact values this cycle's own hand-derived structural formulas predict
+(`SlayerSneakAttackLVL/3` → 3/3=1; `SlayerTrapfindingLVL/2` → 3/2=1) — both units this
+cycle's guarded regen moved `grounded` → `fixture-verified` (board `done`), now provably
+visible on the real screen a player looks at. Screenshots + verify note committed:
+`artifacts/SD31-E6-F11-003/class-feature-slayer3-sheet-header.png`,
+`artifacts/SD31-E6-F11-003/class-feature-slayer3-actions-tab-derived-values.png`,
+`artifacts/SD31-E6-F11-003/dod8-verify.md`. `driver.sh stop` run after; `git status
+--porcelain` confirms zero tracked-directory changes from character creation.
+
+### §12 — DoD, checked against every item
+
+1. `verify.sh` exit captured directly — §10, `VERIFY_EXIT=1`, sole failure the documented
+   row-153 `site-dashboard-check`.
+2. `reach` — 27 passed, unchanged: no new production consumer surface added this cycle, only
+   the fixture-seam widening (which reads `data/corpus/` JSON already reachable).
+3. `v06_corpus_trap_report -- --audit` — `TRAP_EXIT=2`, byte-identical baseline (1
+   mod-record, 1225 wiring-class-mismatch), §10.
+4. Guarded regen: zero stamp loss both times it was run (initial measurement §5, final
+   confirmation at the pushed tip) — `REGEN_EXIT=0` both runs, `docs/work-inventory.json`
+   restored per the wave rule before every commit.
+5. Four-check wired-integration audit: all 4 checks clean, scoped to this cycle's own diff
+   (`git diff --unified=0 10c666125 -- <this cycle's 4 files>` — zero bundle tags, zero stub
+   tokens; checks 2/3 vacuously clean, zero `apps/desktop/**` files touched).
+6. Unsurfaced families: none newly introduced — `OPEN-ISSUES.md` row 222 names the 14 of 23
+   corpus-wide records this seam does NOT yet cover, with the exact reason for each.
+7. This receipt's board-delta commits (the two `feat`/`fix` commits) are NOT a separate
+   baseline-move commit — no `verify-baselines.env` file was touched; the stale baselines
+   named in §10 are reported, not silently updated, per the wave rule.
+8. On-screen verification: §11, driven live, screenshots + verify note committed.
+
+### §13 — Reclaim
+
+`scripts/reclaim.sh --apply` run at cycle close (result recorded in the closing commit); this
+cycle's own `CARGO_TARGET_DIR` (`/home/ubuntu/cargo-targets/sd31-fixture-seam`) deleted after
+the gate's final confirmation run, per AGENTS.md's own "delete when you finish" rule.
+
+### Branch tip
+
+Committed on `sd31-fixture-seam-SD31-E6-F11-003` (cut from `tranche/11` at `10c666125`),
+pushed to `origin`. Integration cycle merges it. Three commits: `a216e0856` (the seam + 9
+fixtures), `8540e5c71` (monster-seam mutation-proof fix + OPEN-ISSUES row 222), `a4eaea284`
+(clippy fix).
+
+Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_012LQjhfcbAEBt6SiquQXEAE
