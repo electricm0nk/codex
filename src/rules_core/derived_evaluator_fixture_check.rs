@@ -1072,16 +1072,113 @@ mod spell_range_seam_tests {
         assert_eq!(report.cleared.len(), report.fixtures_total);
     }
 
-    // MUTATION PROOF: a fixture asserting a wrong expected value must make
-    // the bar check disagree, not silently pass.
+    /// A synthetic `repo_root` carrying exactly one spell corpus record
+    /// (`RANGE:Close`) plus one fixture file whose `spell_range_entries`
+    /// row is the caller's to corrupt -- lets a test drive the REAL
+    /// `run_spell_range_bar_check(&root)` end to end without touching the
+    /// committed fixture (which a concurrent cycle may also be reading).
+    /// Same `std::env::temp_dir()` + pid-suffixed scratch-dir pattern as
+    /// `wiring_class.rs`'s `ScratchBook`.
+    struct ScratchRangeRoot {
+        root: PathBuf,
+    }
+
+    impl ScratchRangeRoot {
+        fn new(name: &str, expected_base_ft: i32, expected_rate_ft: i32, expected_per_levels: i32) -> Self {
+            let root = std::env::temp_dir()
+                .join(format!("codex_spell_range_mutation_proof_{name}_{}", std::process::id()));
+            let _ = std::fs::remove_dir_all(&root);
+            let spell_dir = root.join("data/corpus/core_rulebook/spell");
+            std::fs::create_dir_all(&spell_dir).unwrap();
+            std::fs::write(
+                spell_dir.join("scratch_close_spell.json"),
+                r#"{"data":{"key":"scratch_close_spell","raw_tokens":[{"key":"RANGE","value":"Close"}]}}"#,
+            )
+            .unwrap();
+            let fixture_dir = root.join("tests/fixtures/rules_core");
+            std::fs::create_dir_all(&fixture_dir).unwrap();
+            std::fs::write(
+                fixture_dir.join("derived-evaluator-fixtures.json"),
+                format!(
+                    r#"{{"spell_range_entries":[{{
+                        "unit_id":"scratch:spell:scratch_close_spell",
+                        "book":"core_rulebook",
+                        "record_key":"scratch_close_spell",
+                        "upstream_lst":"scratch.lst",
+                        "upstream_lst_sha256":"0",
+                        "upstream_line":1,
+                        "corpus_field":"RANGE:Close",
+                        "expected":{{"base_ft":{expected_base_ft},"rate_ft":{expected_rate_ft},"per_levels":{expected_per_levels}}}
+                    }}]}}"#
+                ),
+            )
+            .unwrap();
+            ScratchRangeRoot { root }
+        }
+    }
+
+    impl Drop for ScratchRangeRoot {
+        fn drop(&mut self) {
+            let _ = std::fs::remove_dir_all(&self.root);
+        }
+    }
+
+    // MUTATION PROOF, made real (`OPEN-ISSUES.md` row 201, adversarial
+    // review CONFIRMED wave 11): the prior version of this test asserted
+    // `999 != 25` in isolation and never called `run_spell_range_bar_check`
+    // at all -- none of that function's three failure branches was
+    // exercised by any test. This version builds a synthetic corpus row +
+    // a fixture whose `expected.base_ft` is deliberately wrong and drives
+    // the REAL function, proving it actually reports the mismatch.
     #[test]
-    fn a_wrong_expected_base_ft_makes_the_evaluator_disagree() {
+    fn a_wrong_expected_base_ft_makes_run_spell_range_bar_check_report_a_failure() {
         let real = spell_range_formula("Close").unwrap();
         let wrong_expected_base_ft = 999;
         assert_ne!(
             real.base_ft, wrong_expected_base_ft,
             "a corrupted expected value must genuinely disagree with the real formula"
         );
+
+        let scratch = ScratchRangeRoot::new(
+            "wrong_base_ft",
+            wrong_expected_base_ft,
+            real.rate_ft,
+            real.per_levels,
+        );
+        let report = run_spell_range_bar_check(&scratch.root);
+
+        assert!(
+            report.cleared.is_empty(),
+            "a fixture asserting a wrong expected base_ft must never clear the bar, got {:?}",
+            report.cleared
+        );
+        assert_eq!(
+            report.failures.len(),
+            1,
+            "the one corrupted fixture must be reported as a failure, got {:?}",
+            report.failures
+        );
+        assert!(
+            report.failures.contains_key("scratch:spell:scratch_close_spell"),
+            "failures: {:?}",
+            report.failures
+        );
+    }
+
+    // The positive control for the same synthetic harness: a fixture whose
+    // `expected` matches the real formula EXACTLY must clear the bar. This
+    // proves the mutation-proof test above fails because the value is
+    // wrong, not because the synthetic harness always reports a failure.
+    #[test]
+    fn a_correct_expected_base_ft_clears_run_spell_range_bar_check() {
+        let real = spell_range_formula("Close").unwrap();
+        let scratch =
+            ScratchRangeRoot::new("correct_base_ft", real.base_ft, real.rate_ft, real.per_levels);
+        let report = run_spell_range_bar_check(&scratch.root);
+
+        assert!(report.failures.is_empty(), "failures: {:?}", report.failures);
+        assert_eq!(report.cleared.len(), 1);
+        assert!(report.cleared.contains("scratch:spell:scratch_close_spell"));
     }
 }
 
@@ -1184,26 +1281,127 @@ mod spell_seam_tests {
         assert_eq!(report.cleared.len(), report.fixtures_total);
     }
 
-    // MUTATION PROOF: a fixture asserting a wrong expected value must make
-    // the bar check fail, not silently pass -- the same guarantee
-    // `run_monster_bar_check_clears_every_committed_monster_fixture`'s
-    // sibling mutation test establishes for the monster seam. Constructs a
-    // synthetic corpus dir + fixture rather than mutating the committed
-    // file (which a concurrent cycle may also be reading).
+    /// Duration-seam sibling of `spell_range_seam_tests::ScratchRangeRoot`:
+    /// a synthetic `repo_root` carrying one `DURATION:(CASTERLEVEL*10)
+    /// minutes [D]` spell record plus a fixture whose `spell_entries` row
+    /// the caller corrupts, so a test can drive the REAL
+    /// `run_spell_bar_check(&root)` rather than asserting the parser's
+    /// output against a hand-typed wrong number in isolation.
+    struct ScratchDurationRoot {
+        root: PathBuf,
+    }
+
+    impl ScratchDurationRoot {
+        fn new(name: &str, expected_per_level: i32, expected_unit: &str) -> Self {
+            let root = std::env::temp_dir()
+                .join(format!("codex_spell_duration_mutation_proof_{name}_{}", std::process::id()));
+            let _ = std::fs::remove_dir_all(&root);
+            let spell_dir = root.join("data/corpus/core_rulebook/spell");
+            std::fs::create_dir_all(&spell_dir).unwrap();
+            std::fs::write(
+                spell_dir.join("scratch_duration_spell.json"),
+                r#"{"data":{"key":"scratch_duration_spell","raw_tokens":[{"key":"DURATION","value":"(CASTERLEVEL*10) minutes [D]"}]}}"#,
+            )
+            .unwrap();
+            let fixture_dir = root.join("tests/fixtures/rules_core");
+            std::fs::create_dir_all(&fixture_dir).unwrap();
+            std::fs::write(
+                fixture_dir.join("derived-evaluator-fixtures.json"),
+                format!(
+                    r#"{{"spell_entries":[{{
+                        "unit_id":"scratch:spell:scratch_duration_spell",
+                        "book":"core_rulebook",
+                        "record_key":"scratch_duration_spell",
+                        "upstream_lst":"scratch.lst",
+                        "upstream_lst_sha256":"0",
+                        "upstream_line":1,
+                        "corpus_field":"DURATION:(CASTERLEVEL*10) minutes [D]",
+                        "expected":{{"per_level":{expected_per_level},"unit":{expected_unit:?}}}
+                    }}]}}"#
+                ),
+            )
+            .unwrap();
+            ScratchDurationRoot { root }
+        }
+    }
+
+    impl Drop for ScratchDurationRoot {
+        fn drop(&mut self) {
+            let _ = std::fs::remove_dir_all(&self.root);
+        }
+    }
+
+    // MUTATION PROOF, made real (same defect class as
+    // `spell_range_seam_tests`'s row-201 fix, found by auditing this
+    // seam's OTHER assertions the same way per this card's own
+    // instruction: a tautology rarely arrives alone). The prior version of
+    // this test asserted `99 != 10` in isolation and never called
+    // `run_spell_bar_check` at all. This version builds a synthetic corpus
+    // row + a fixture whose `expected.per_level` is deliberately wrong and
+    // drives the REAL function.
     #[test]
-    fn a_wrong_expected_per_level_makes_the_evaluator_disagree() {
+    fn a_wrong_expected_per_level_makes_run_spell_bar_check_report_a_failure() {
         let real = parse_caster_level_linear_duration("(CASTERLEVEL*10) minutes [D]").unwrap();
         let wrong_expected_per_level = 99;
         assert_ne!(
             real.per_level, wrong_expected_per_level,
             "a corrupted expected value must genuinely disagree with the real parse"
         );
+
+        let scratch =
+            ScratchDurationRoot::new("wrong_per_level", wrong_expected_per_level, &real.unit);
+        let report = run_spell_bar_check(&scratch.root);
+
+        assert!(
+            report.cleared.is_empty(),
+            "a fixture asserting a wrong expected per_level must never clear the bar, got {:?}",
+            report.cleared
+        );
+        assert_eq!(
+            report.failures.len(),
+            1,
+            "the one corrupted fixture must be reported as a failure, got {:?}",
+            report.failures
+        );
+        assert!(
+            report.failures.contains_key("scratch:spell:scratch_duration_spell"),
+            "failures: {:?}",
+            report.failures
+        );
     }
 
+    // Same real-function proof for the OTHER field this fixture asserts
+    // (`expected.unit`): a wrong unit must also make the real function
+    // disagree, not just the wrong per_level above.
     #[test]
-    fn a_wrong_expected_unit_makes_the_evaluator_disagree() {
-        let real = parse_caster_level_linear_duration("(CASTERLEVEL) minutes").unwrap();
+    fn a_wrong_expected_unit_makes_run_spell_bar_check_report_a_failure() {
+        // The scratch corpus row always states "(CASTERLEVEL*10) minutes [D]"
+        // (`ScratchDurationRoot::new`) -- get its real parse so `per_level`
+        // is correct and only `unit` is corrupted, isolating this test from
+        // the sibling per_level-wrong test above.
+        let real = parse_caster_level_linear_duration("(CASTERLEVEL*10) minutes [D]").unwrap();
         assert_ne!(real.unit, "rounds", "a corrupted expected unit must genuinely disagree");
+
+        let scratch = ScratchDurationRoot::new("wrong_unit", real.per_level, "rounds");
+        let report = run_spell_bar_check(&scratch.root);
+
+        assert!(report.cleared.is_empty(), "cleared: {:?}", report.cleared);
+        assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
+    }
+
+    // The positive control: a fixture whose `expected` matches the real
+    // parse exactly must clear the bar, proving the two tests above fail
+    // because the value is wrong, not because the synthetic harness always
+    // reports a failure.
+    #[test]
+    fn a_correct_expected_duration_clears_run_spell_bar_check() {
+        let real = parse_caster_level_linear_duration("(CASTERLEVEL*10) minutes [D]").unwrap();
+        let scratch = ScratchDurationRoot::new("correct", real.per_level, &real.unit);
+        let report = run_spell_bar_check(&scratch.root);
+
+        assert!(report.failures.is_empty(), "failures: {:?}", report.failures);
+        assert_eq!(report.cleared.len(), 1);
+        assert!(report.cleared.contains("scratch:spell:scratch_duration_spell"));
     }
 }
 
