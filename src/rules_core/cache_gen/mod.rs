@@ -51,6 +51,33 @@ impl WiringClassIndex {
         WiringClassIndex { book_id: book_id.to_string(), book_paths, mod_index, copy_base_index }
     }
 
+    /// Same as [`build`], but ALSO indexes a second book-keyed directory.
+    ///
+    /// `decisions.md §9`: a `decisions.md §9`-re-attributed unit's physical
+    /// file can live under `core_essentials`'s own directory while its
+    /// REPORTING `book_id` is this index's primary one -- confirmed live
+    /// (`SD31-E6-F9-005`): `beastiary`/`bestiary_2`'s 168 newly-transcribed
+    /// `ce_abilities_race.lst`-origin `monster_ability` records all stamped
+    /// `wiring_class: "ambiguous"` (`no_corpus_line`) under plain [`build`],
+    /// because `book_paths` held only `beastiary`'s own directory and
+    /// `ce_abilities_race.lst` is not under it. [`wiring_class_for_book`] is
+    /// the matching lookup half: pass `extra_book_id` there (never the
+    /// primary `book_id`) for a citation whose `source.path` names the extra
+    /// directory.
+    pub fn build_with_extra(
+        book_id: &str,
+        book_dir: &Path,
+        extra_book_id: &str,
+        extra_dir: &Path,
+    ) -> Self {
+        let mut book_paths = BTreeMap::new();
+        book_paths.insert(book_id.to_string(), book_dir.to_path_buf());
+        book_paths.insert(extra_book_id.to_string(), extra_dir.to_path_buf());
+        let mod_index = build_mod_index(&book_paths);
+        let copy_base_index = build_copy_base_index(&book_paths);
+        WiringClassIndex { book_id: book_id.to_string(), book_paths, mod_index, copy_base_index }
+    }
+
     /// A fresh raw-line reader borrowing this index's book-path table.
     /// Callers keep one alive across a `generate_*` function's whole loop
     /// so repeated citations into the same `.lst` file are cached.
@@ -79,10 +106,26 @@ impl WiringClassIndex {
         name: &str,
         key: &str,
     ) -> (String, Vec<String>) {
+        self.wiring_class_for_book(lines, &self.book_id.clone(), file, line, name, key)
+    }
+
+    /// Same as [`wiring_class_for`], but resolves the citation against
+    /// `book` (which must be a key [`build`]/[`build_with_extra`]
+    /// registered) rather than always this index's own `book_id` -- the
+    /// matching lookup half of [`build_with_extra`]'s second directory.
+    pub fn wiring_class_for_book(
+        &self,
+        lines: &mut CorpusLines,
+        book: &str,
+        file: &str,
+        line: u32,
+        name: &str,
+        key: &str,
+    ) -> (String, Vec<String>) {
         let rows = token_closure_rows(
             lines,
             ClosureIndexes { mod_index: &self.mod_index, copy_base_index: &self.copy_base_index },
-            &self.book_id,
+            book,
             file,
             line as usize,
             name,
@@ -93,5 +136,80 @@ impl WiringClassIndex {
         let mut signals: Vec<String> = sigs.into_iter().collect();
         signals.sort();
         (class.id().to_string(), signals)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::fs;
+
+    /// A throwaway pair of directories -- `primary` and `extra` -- cleaned up
+    /// on drop, mirroring `gen_book_cache.rs`'s own scratch-fixture pattern.
+    struct Scratch {
+        primary: PathBuf,
+        extra: PathBuf,
+    }
+
+    impl Scratch {
+        fn new(name: &str) -> Self {
+            let base = std::env::temp_dir()
+                .join(format!("codex_wiring_class_index_{name}_{}", std::process::id()));
+            let _ = fs::remove_dir_all(&base);
+            let primary = base.join("primary");
+            let extra = base.join("extra");
+            fs::create_dir_all(&primary).unwrap();
+            fs::create_dir_all(&extra).unwrap();
+            Scratch { primary, extra }
+        }
+    }
+
+    impl Drop for Scratch {
+        fn drop(&mut self) {
+            let _ = fs::remove_dir_all(self.primary.parent().unwrap());
+        }
+    }
+
+    /// `SD31-E6-F9-005`: proves `build_with_extra`/`wiring_class_for_book`
+    /// actually reaches a citation that lives ONLY under the extra directory
+    /// -- confirmed live against the real pinned oracle (168
+    /// `ce_abilities_race.lst`-origin `monster_ability` records all stamped
+    /// `wiring_class: "ambiguous"` before this fix existed), reproduced here
+    /// hermetically so a regression fails fast without the live oracle.
+    #[test]
+    fn wiring_class_for_book_resolves_a_citation_only_present_in_the_extra_directory() {
+        let scratch = Scratch::new("extra_dir");
+        fs::write(scratch.extra.join("x.lst"), "Row\tKEY:Row\tBONUS:VAR|Foo|1+HD\n").unwrap();
+        let index =
+            WiringClassIndex::build_with_extra("primary_book", &scratch.primary, "extra_book", &scratch.extra);
+        let mut lines = index.lines();
+        let (class, signals) = index.wiring_class_for_book(&mut lines, "extra_book", "x.lst", 1, "Row", "Row");
+        assert_ne!(class, "ambiguous", "the extra directory's row must resolve, not fall through to no_corpus_line");
+        assert!(!signals.contains(&"no_corpus_line".to_string()));
+    }
+
+    /// The mutation-proof half: plain `build` (no extra directory registered
+    /// at all) canNOT see the same file, so the SAME citation correctly
+    /// stamps `ambiguous`/`no_corpus_line` -- proving the fix in the test
+    /// above is really exercising the fallback path, not something that
+    /// would have passed anyway.
+    #[test]
+    fn build_alone_cannot_see_a_file_outside_its_own_directory() {
+        let scratch = Scratch::new("no_extra");
+        fs::write(scratch.extra.join("x.lst"), "Row\tKEY:Row\tBONUS:VAR|Foo|1+HD\n").unwrap();
+        let index = WiringClassIndex::build("primary_book", &scratch.primary);
+        let mut lines = index.lines();
+        // `line: 2`, not `1` -- `OPEN-ISSUES.md` row 10's documented,
+        // pre-existing, deliberately-left-unfixed `CorpusLines::line()`
+        // quirk: an unresolved `(book, file)` caches as `"".split('\n')`,
+        // which yields a 1-element `[""]` buffer, so `line == 1` against ANY
+        // unresolved file returns `Some("")` rather than `None`; only
+        // `line > 1` correctly reports "genuinely absent." Using `2` here is
+        // the same workaround that row's own remedy names, not a new
+        // discovery -- unrelated to this test's actual subject
+        // (`build`/`build_with_extra`'s directory scoping).
+        let (class, signals) = index.wiring_class_for(&mut lines, "x.lst", 2, "Row", "Row");
+        assert_eq!(class, "ambiguous");
+        assert_eq!(signals, vec!["no_corpus_line".to_string()]);
     }
 }

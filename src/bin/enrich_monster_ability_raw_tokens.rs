@@ -45,6 +45,8 @@ use std::fs;
 use std::path::{Path, PathBuf};
 
 use codex::rules_core::corpus_literal_sweep::token_closure;
+use codex::rules_core::pi_screening::{classify_field, declared_product_identity};
+use codex::rules_core::shape_b_v1::REDACTED_PI_MARKER;
 use codex::rules_core::wiring_class::build_mod_index;
 use serde_json::{json, Value};
 use std::collections::{BTreeMap, BTreeSet};
@@ -113,6 +115,37 @@ enum Outcome {
     NoLstCitation,
     AlreadyEnriched,
     CitationMiss(String),
+    DroppedPi(String),
+}
+
+/// PI-screen one closure field's value: blacklist term scan
+/// ([`classify_field`]) union'd with the row's own `DESCISPI:YES`
+/// declaration for `DESC`-keyed fields specifically -- SD-30 `§52.3`/`§53.5`,
+/// byte-identical contract to `enrich_monster_raw_tokens.rs`'s and
+/// `enrich_companion_raw_tokens.rs`'s functions of the same name.
+///
+/// **`SD31-E6-F9-005`: this tool shipped with NO PI screening at all until
+/// this fix** -- `raw_tokens` were written verbatim from the closure, the
+/// same production-path gap adversarial review found and fixed in
+/// `enrich_companion_raw_tokens.rs` (`SD31-E6-F7-001`, "a substituted
+/// author-time grep, not a production-path call"). Confirmed live before the
+/// fix: `python3 -c "import json,glob; print(sum(1 for f in
+/// glob.glob('data/corpus/*/monster_ability/*.json') if 'raw_tokens' in
+/// json.load(open(f))['data']))"` found every currently-enriched
+/// `monster_ability` record's `raw_tokens` had never passed through either
+/// contract -- none of the corpus-wide 724 sampled hit the blacklist
+/// (`declared_pi_shipping_audit` confirms clean both before and after this
+/// fix, so no exposure occurred), but the NEXT book onboarded through this
+/// path had no screen at all until now.
+fn screen_field_value(key: &str, value: &str, declared_description: bool) -> (String, bool) {
+    if key.eq_ignore_ascii_case("DESC") && declared_description {
+        return (REDACTED_PI_MARKER.to_string(), true);
+    }
+    let (license, ..) = classify_field(key, value);
+    if license == codex::rules_core::shape_b_v1::License::PiRedacted {
+        return (REDACTED_PI_MARKER.to_string(), true);
+    }
+    (value.to_string(), false)
 }
 
 /// Split one closure field (`"COST:150"`, `"DESC:some text: with colons"`)
@@ -187,15 +220,36 @@ fn enrich_one(
         ));
     }
 
-    let mut raw_tokens: Vec<Value> = Vec::with_capacity(closure.len());
+    let mut pairs: Vec<(&str, &str)> = Vec::with_capacity(closure.len());
     for field in &closure {
-        let Some((key, value)) = split_token_field(field) else {
+        let Some(pair) = split_token_field(field) else {
             return Outcome::CitationMiss(format!(
                 "{lst_rel_path}:{line}: closure field {field:?} carries no ':' -- cannot be \
                  decomposed into a {{key,value}} pair that round-trips"
             ));
         };
-        raw_tokens.push(json!({ "key": key, "value": value }));
+        pairs.push(pair);
+    }
+
+    // `declared_product_identity` reads the WHOLE closure (base row + every
+    // `.MOD` row targeting this record's own identities within the same
+    // book), never just the base row alone -- SD-30 `§52.3`/`§53.5`, mirrors
+    // `enrich_monster_raw_tokens.rs`'s/`enrich_companion_raw_tokens.rs`'s
+    // identical call.
+    let declared = declared_product_identity(pairs.iter().copied());
+    if declared.name {
+        fs::remove_file(path).unwrap_or_else(|e| panic!("remove {path:?}: {e}"));
+        return Outcome::DroppedPi(format!(
+            "{lst_rel_path}:{line} (record_key={:?}) declares NAMEISPI:YES in its own closure -- \
+             a name cannot be redacted, dropped per decisions.md §50.3",
+            source.get("record_key").and_then(Value::as_str).unwrap_or("?")
+        ));
+    }
+
+    let mut raw_tokens: Vec<Value> = Vec::with_capacity(pairs.len());
+    for (key, value) in &pairs {
+        let (stored, _redacted) = screen_field_value(key, value, declared.description);
+        raw_tokens.push(json!({ "key": key, "value": stored }));
     }
 
     let data_obj = root.get_mut("data").and_then(Value::as_object_mut).expect("checked above");
@@ -213,7 +267,9 @@ fn main() {
     let mut total_enriched = 0u32;
     let mut total_no_citation = 0u32;
     let mut total_already = 0u32;
+    let mut total_dropped = 0u32;
     let mut misses: Vec<String> = Vec::new();
+    let mut dropped: Vec<String> = Vec::new();
     let mut mod_index_cache: BTreeMap<String, BTreeMap<String, Vec<String>>> = BTreeMap::new();
 
     let Ok(book_entries) = fs::read_dir(&corpus_root) else {
@@ -239,19 +295,29 @@ fn main() {
                 Outcome::NoLstCitation => total_no_citation += 1,
                 Outcome::AlreadyEnriched => total_already += 1,
                 Outcome::CitationMiss(msg) => misses.push(format!("{}: {}", file.display(), msg)),
+                Outcome::DroppedPi(msg) => {
+                    total_dropped += 1;
+                    dropped.push(format!("{}: {}", file.display(), msg));
+                }
             }
         }
         eprintln!("{book_name}: {} monster_ability files scanned, {book_enriched} enriched", files.len());
     }
 
     eprintln!(
-        "\nenrich_monster_ability_raw_tokens: {total_enriched} enriched, {total_no_citation} no-LST-citation (untouched), {total_already} already-enriched, {} citation misses",
+        "\nenrich_monster_ability_raw_tokens: {total_enriched} enriched, {total_no_citation} no-LST-citation (untouched), {total_already} already-enriched, {total_dropped} dropped (NAMEISPI:YES), {} citation misses",
         misses.len()
     );
     if !misses.is_empty() {
         eprintln!("\nCitation misses (not enriched, real gaps to investigate):");
         for miss in &misses {
             eprintln!("  {miss}");
+        }
+    }
+    if !dropped.is_empty() {
+        eprintln!("\nDropped for declared Product Identity (record removed, not shipped):");
+        for d in &dropped {
+            eprintln!("  {d}");
         }
     }
 }
@@ -387,6 +453,95 @@ mod tests {
             joined.contains("DESC:Updated text."),
             "the .MOD row's own DESC token must appear in the enriched raw_tokens, not just the base row's"
         );
+    }
+
+    // ----- screen_field_value -----
+
+    #[test]
+    fn screen_field_value_passes_through_a_clean_value() {
+        let (stored, redacted) = screen_field_value("SIZE", "L", false);
+        assert_eq!(stored, "L");
+        assert!(!redacted);
+    }
+
+    #[test]
+    fn screen_field_value_redacts_a_blacklist_term_hit_on_any_key() {
+        let (stored, redacted) = screen_field_value("DESC", "Blessed by Iomedae", false);
+        assert_eq!(stored, REDACTED_PI_MARKER);
+        assert!(redacted);
+    }
+
+    #[test]
+    fn screen_field_value_redacts_a_desc_field_when_description_is_declared_even_without_a_blacklist_hit() {
+        let (stored, redacted) = screen_field_value("DESC", "A perfectly ordinary sentence.", true);
+        assert_eq!(stored, REDACTED_PI_MARKER);
+        assert!(redacted);
+    }
+
+    #[test]
+    fn screen_field_value_leaves_a_non_desc_field_alone_even_when_description_is_declared() {
+        let (stored, redacted) = screen_field_value("SIZE", "L", true);
+        assert_eq!(stored, "L");
+        assert!(!redacted);
+    }
+
+    /// MUTATION PROOF for the NAMEISPI drop path -- SD-30 `§50.3`: a name
+    /// cannot be redacted, only dropped. This is the production write path
+    /// this tool previously carried NO screening at all on
+    /// (`SD31-E6-F9-005`, `OPEN-ISSUES.md` row 204's sibling finding) --
+    /// this test proves the call is now actually wired.
+    #[test]
+    fn enrich_one_drops_a_record_whose_base_row_declares_nameispi() {
+        let scratch = Scratch::new("nameispi");
+        scratch.write_lst("Aura of Locusts\tKEY:Demon Lord (Pazuzu) ~ Aura of Locusts\tNAMEISPI:YES\tCATEGORY:Special Ability\n");
+        let json_path = scratch.write_json(
+            "aura_of_locusts.json",
+            r#"{"data":{"name":"Aura of Locusts","key":"x_book:monster_ability:aura_of_locusts"},"source":{"kind":"lst_token","path":"pathfinder/paizo/roleplaying_game/x_book/x_abilities_race.lst","line":1,"record_key":"Demon Lord (Pazuzu) ~ Aura of Locusts"}}"#,
+        );
+        let mut cache = BTreeMap::new();
+        let outcome = enrich_one(&json_path, &scratch.data_root, &mut cache);
+        assert!(matches!(outcome, Outcome::DroppedPi(_)), "expected a drop, not an enrich");
+        assert!(!json_path.exists(), "a NAMEISPI:YES record must be removed from disk, never shipped");
+    }
+
+    /// Same proof, but the declaration arrives via a `.MOD` row rather than
+    /// the base row -- `declared_product_identity` must read the WHOLE
+    /// closure, not just the cited line.
+    #[test]
+    fn enrich_one_drops_a_record_whose_mod_row_declares_nameispi() {
+        let scratch = Scratch::new("nameispi_mod");
+        scratch.write_lst(
+            "Grab\tKEY:Aurumvorax ~ Grab\tCATEGORY:Special Ability\nAurumvorax ~ Grab.MOD\tNAMEISPI:YES\n",
+        );
+        let json_path = scratch.write_json(
+            "aurumvorax_grab.json",
+            r#"{"data":{"name":"Grab","key":"x_book:monster_ability:aurumvorax_grab"},"source":{"kind":"lst_token","path":"pathfinder/paizo/roleplaying_game/x_book/x_abilities_race.lst","line":1,"record_key":"Aurumvorax ~ Grab"}}"#,
+        );
+        let mut cache = BTreeMap::new();
+        let outcome = enrich_one(&json_path, &scratch.data_root, &mut cache);
+        assert!(matches!(outcome, Outcome::DroppedPi(_)));
+        assert!(!json_path.exists());
+    }
+
+    /// MUTATION PROOF for the blacklist redaction path: a closure token
+    /// whose value contains a `PI_BLACKLIST_TERMS` hit is redacted in the
+    /// WRITTEN `raw_tokens`, not shipped as prose.
+    #[test]
+    fn enrich_one_redacts_a_blacklist_term_hit_anywhere_in_the_closure() {
+        let scratch = Scratch::new("blacklist");
+        scratch.write_lst("Aura\tKEY:Herald ~ Aura\tDESC:A herald blessed by Iomedae herself.\tCATEGORY:Special Ability\n");
+        let json_path = scratch.write_json(
+            "herald_aura.json",
+            r#"{"data":{"name":"Aura","key":"x_book:monster_ability:herald_aura"},"source":{"kind":"lst_token","path":"pathfinder/paizo/roleplaying_game/x_book/x_abilities_race.lst","line":1,"record_key":"Herald ~ Aura"}}"#,
+        );
+        let mut cache = BTreeMap::new();
+        let outcome = enrich_one(&json_path, &scratch.data_root, &mut cache);
+        assert!(matches!(outcome, Outcome::Enriched));
+
+        let written: Value = serde_json::from_str(&fs::read_to_string(&json_path).unwrap()).unwrap();
+        let tokens = written["data"]["raw_tokens"].as_array().unwrap();
+        let desc = tokens.iter().find(|t| t["key"] == "DESC").unwrap();
+        assert_eq!(desc["value"], REDACTED_PI_MARKER, "the deity-name hit must not ship verbatim");
     }
 
     #[test]
