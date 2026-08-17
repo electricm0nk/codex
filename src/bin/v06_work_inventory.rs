@@ -76,6 +76,7 @@ use codex::rules_core::pcgen_desc::leaked_pcgen_syntax;
 use codex::rules_core::pilot_view_model::{PilotSnapshot, PilotSpellbookViewModel, PilotViewModel};
 use codex::rules_core::spell_resolver::{self, spell_id_resolve};
 use codex::rules_core::spellbook::compute_spellbook_coverage;
+use codex::rules_core::rules_tables::pathfinder_unchained::class_chassis::PuClassId;
 use codex::rules_core::rules_tables::ultimate_campaign::feat_tables as uca_feat_tables;
 use codex::rules_core::rules_tables::ultimate_combat::UcClassId;
 use codex::rules_core::wiring_class::{self, MAGNITUDE_TOKENS};
@@ -4225,19 +4226,46 @@ fn engine_book_for(book: &str) -> Option<&'static str> {
     rule_set_for(book).map(rule_set_id)
 }
 
+/// `modelled_class_books()` keys the engine's own underscored `class_id`
+/// convention (`"unchained_rogue"`, matching `PuClassId::name()` and every
+/// `pilot_compute.rs` explanation id's own literal token), because that is
+/// the string the `grounded` check's `.{owner}.` needle must match verbatim.
+/// Corpus group prefixes are natural-language text with spaces
+/// (`"Unchained Rogue ~ Sneak Attack"` -> group `"unchained rogue"`).
+/// Every comparison between a registered class name and a corpus group must
+/// go through this normalization first, or a multi-word owner can never
+/// match its own corpus rows at all (underscore != space) — which would
+/// silently leave it exposed to a SHORTER single-word class's suffix
+/// collision (`"rogue"` matching the tail of `"unchained rogue"` via
+/// `ends_with(" rogue")`) instead of resolving to itself. `class_feature_
+/// owner`'s existing longest-match tie-break is what prevents that
+/// collision from mis-attributing the record to the base class — but only
+/// once the longer, correctly-spelled candidate is actually present in the
+/// comparison set, which is what registering the multi-word class fixes.
+fn class_name_as_group_text(class: &str) -> String {
+    class.replace('_', " ")
+}
+
 /// The class a class-feature corpus record belongs to, derived from its
 /// `<Group> ~ <Feature>` key. The group is the longest name in `classes` that
 /// appears as a whole word at the start or end of it — `"Sorcerer Bloodline
 /// Feat ~ X"` resolves to sorcerer, `"Domain Power ~ X"` to nothing. A record
 /// whose group names no class falls out and is reported honestly rather than
 /// guessed at.
+///
+/// Multi-word, underscore-keyed classes (`"unchained_rogue"`) are compared
+/// against the group text via [`class_name_as_group_text`] so a corpus
+/// group's natural spacing matches the engine's own naming convention; see
+/// that function's doc comment for why both the match AND the collision
+/// guard depend on this.
 fn class_feature_owner<'a, I: Iterator<Item = &'a String>>(key: &str, classes: I) -> Option<String> {
     let group = key.split(" ~ ").next().unwrap_or(key).to_lowercase();
     let mut best: Option<String> = None;
     for class in classes {
-        let matches = group == *class
-            || group.starts_with(&format!("{class} "))
-            || group.ends_with(&format!(" {class}"));
+        let class_text = class_name_as_group_text(class);
+        let matches = group == class_text
+            || group.starts_with(&format!("{class_text} "))
+            || group.ends_with(&format!(" {class_text}"));
         if matches && best.as_ref().map(|b| class.len() > b.len()).unwrap_or(true) {
             best = Some(class.clone());
         }
@@ -4355,11 +4383,66 @@ fn class_feature_exact_suffix_grounded<'a>(
     group: &str,
     feature_slug: &str,
 ) -> bool {
-    if !group.eq_ignore_ascii_case(owner) {
+    // `owner` is the engine's underscored `class_id` form; `group` is the
+    // corpus's natural-language text -- normalize before comparing (see
+    // `class_name_as_group_text`'s doc comment). A no-op for every
+    // single-word owner that predates this normalization.
+    if !group.eq_ignore_ascii_case(&class_name_as_group_text(owner)) {
         return false;
     }
     let needle = format!(".{owner}.");
     explanation_ids.into_iter().any(|id| id.contains(&needle) && id.rsplit('.').next() == Some(feature_slug))
+}
+
+/// Whether a `ComputationDiagnostic` id genuinely names `feature_slug` under
+/// `owner`, for the "quote the engine's own diagnostic" branch below.
+///
+/// **`SD31-E5-F1-003` finding.** The original check was a bare `id.contains
+/// (&format!(".{owner}.")) && id.contains(&feature_slug)`. Registering
+/// `PuClassId` exposed a real false match this check had never been asked
+/// to survive before: `"Unchained Rogue Talent ~ Feat"` (`feature_slug ==
+/// "feat"`) matched `"class_feature.pu.unchained_rogue.corpus_record.
+/// improved_uncanny_dodge.unsupported"` -- a diagnostic that names Improved
+/// Uncanny Dodge, not this record at all -- purely because every id in this
+/// engine begins with the literal token `"class_feature"`, which contains
+/// `"feat"` as a substring of `"feature"` itself. `BTreeMap` iteration order
+/// (`facts.diagnostics` is sorted by id) then let this unrelated diagnostic
+/// win over the class's own real catch-all (`"...unchained_rogue.
+/// other_features_deferred.unsupported"`, which sorts later) purely by
+/// alphabetical accident.
+///
+/// The fix strips exactly that one fixed, universal `"class_feature"`
+/// prefix token before searching for `feature_slug` -- narrower than
+/// requiring an exact trailing-dot-segment match (which would regress
+/// established, already-shipped matches this file has never gamed: e.g.
+/// `"Bloodrager ~ Bloodrage"` legitimately matches
+/// `"class_feature.acg.bloodrager.other_features_deferred.unsupported"`
+/// only because `feature_slug = "bloodrage"` is a substring of the OWNER
+/// token `"bloodrager"` itself, and `"Slayer Talent ~ Feat"` / `"Ninja
+/// Trick ~ Feat"` legitimately match their class's own `"other_features_
+/// deferred"` catch-all because `"features"` genuinely contains `"feat"`
+/// -- neither of those substrings lives inside the stripped prefix, so
+/// both keep working unchanged; only the prefix-only collision is closed.
+/// Checked against every one of the 35 pre-existing `class_feature`
+/// `deferred-with-reason` units this cycle found shipped: 34 unaffected,
+/// **one genuine, disclosed change** -- `"Phrenic Slayer ~ AS"`
+/// (`feature_slug == "as"`) loses a match, because its old match was the
+/// SAME spurious-substring shape this fix closes (`"as"` is a substring of
+/// the stripped prefix's own `"class"` token: `cl-AS-s`), and `"Phrenic
+/// Slayer"` is itself an archetype-qualified group -- attributing base
+/// Slayer's catch-all to it was already in tension with the
+/// `decisions.md §10` AMENDMENT, which this branch has no `group == owner`
+/// guard against at all (a separate, wider, NOT fixed here gap; see
+/// `OPEN-ISSUES.md` row 169). Reported rather than rounded into "zero
+/// regressions" per this program's own "beware the flattering matcher"
+/// standard (`docs/release/SD-31-corpus-closure-grind/progress.md`, this
+/// cycle's receipt).
+fn diagnostic_id_names_feature(id: &str, owner: &str, feature_slug: &str) -> bool {
+    if !id.contains(&format!(".{owner}.")) {
+        return false;
+    }
+    let body = id.strip_prefix("class_feature").unwrap_or(id);
+    body.contains(feature_slug)
 }
 
 /// Resolve one corpus unit against the engine.
@@ -5455,7 +5538,7 @@ fn classify(
             // exists specifically to close).
             let suffix_stripped_grounded = !exact_suffix_grounded
                 && unit.key.contains(" ~ ")
-                && group.eq_ignore_ascii_case(owner.as_str())
+                && group.eq_ignore_ascii_case(&class_name_as_group_text(owner.as_str()))
                 && feature_slug != owner
                 && facts.explanation_ids.iter().any(|id| {
                     id.contains(&format!(".{owner}."))
@@ -5499,9 +5582,10 @@ fn classify(
             }
             // The engine's own diagnostics name the specific remaining gaps.
             // Quote one verbatim when it names this feature -- never re-narrate.
-            let hit = facts.diagnostics.iter().find(|(id, _)| {
-                id.contains(&format!(".{owner}.")) && id.contains(&feature_slug)
-            });
+            let hit = facts
+                .diagnostics
+                .iter()
+                .find(|(id, _)| diagnostic_id_names_feature(id, &owner, &feature_slug));
             if let Some((id, (message, claim_blocking))) = hit {
                 return Verdict {
                     status: "deferred-with-reason",
@@ -6113,19 +6197,41 @@ fn load_probe_fixture(repo_root: &Path) -> CharacterInput {
 /// `crb_class_name`/`ApgClassId::name`/`AcgClassId::name` already use, so
 /// this mirrors those three loops with no representation change.
 ///
-/// `PuClassId` (Pathfinder Unchained) is deliberately NOT added here: its
-/// names are multi-word and underscored (`"unchained_rogue"`), which
-/// `class_feature_owner`'s `group == *class` comparison (`group` keeps the
-/// corpus key's raw space-separated words, never underscored) cannot match
-/// without its own, separate fix -- registering it as-is would silently
-/// leave every PU record unmatched by the exact-name branch while still
-/// letting `class_feature_owner`'s SUBSTRING fallback (`group.ends_with(&
-/// format!(" {class}"))`) mis-attribute PU's variant records to the BASE
-/// class instead (`"Unchained Rogue"` already matches `"rogue"` today via
-/// that same fallback) -- a `decisions.md §10` AMENDMENT hazard (a variant
-/// is a different object) that a same-cycle registry widening must not
-/// create. Left as a named, reported gap for a follow-on cycle that also
-/// reworks the matching, not fixed here.
+/// `PuClassId` (Pathfinder Unchained: Unchained Barbarian/Monk/Rogue/
+/// Summoner) is now added too (`SD31-E5-F1-003`). It was previously
+/// withheld here because its names are multi-word and underscored
+/// (`"unchained_rogue"`), which `class_feature_owner`'s old `group ==
+/// *class` comparison (`group` keeps the corpus key's raw space-separated
+/// words, never underscored) could not match, while its SUBSTRING fallback
+/// (`group.ends_with(&format!(" {class}"))`) would separately mis-attribute
+/// PU's variant records to the BASE class instead (`"Unchained Rogue"`
+/// matched `"rogue"` via that fallback) -- a `decisions.md §10` AMENDMENT
+/// hazard (a variant is a different object). Both are now closed by
+/// [`class_name_as_group_text`], which every comparison in
+/// `class_feature_owner`, `class_feature_exact_suffix_grounded`, and
+/// `classify`'s own inline suffix-strip guard now routes through: it
+/// normalizes a registered class's underscores to spaces before comparing
+/// against the corpus's natural-language group text, so `"unchained_rogue"`
+/// matches `"unchained rogue"` exactly (winning the existing longest-match
+/// tie-break over the shorter, unrelated `"rogue"` suffix collision) while
+/// `"Rogue ~ ..."` (no `"unchained"` prefix) still resolves only to
+/// `"rogue"`, unaffected.
+///
+/// The wiring is real, not asserted: `compute_class_chassis`
+/// (`pilot_compute/mod.rs`) dispatches any single class_level whose
+/// `class_id` matches `PuClassId::from_class_id_str` to
+/// `compute_pu_class_chassis`, which calls `ground_unchained_barbarian_
+/// class_features` / `ground_unchained_monk_class_features` / `ground_
+/// unchained_rogue_class_features` / `ground_unchained_summoner_class_
+/// features` -- four real, unconditional-per-sweep grounding functions
+/// (e.g. `ground_unchained_rogue_class_features` alone pushes 10
+/// `ComputationExplanation`s: sneak_attack_dice, trapfinding_bonus,
+/// danger_sense_bonus, rogue_talents_known, ...), independently confirmed
+/// by direct source read, not inferred from this registry entry.
+/// `class_sweep_input`'s existing sweep loop (`for class_name in
+/// class_books.keys()`) reaches this path automatically the moment the
+/// four names are registered here -- no separate wiring is needed for the
+/// sweep itself.
 fn modelled_class_books() -> BTreeMap<String, &'static str> {
     let mut class_books: BTreeMap<String, &'static str> = BTreeMap::new();
     for id in ClassId::ALL {
@@ -6139,6 +6245,9 @@ fn modelled_class_books() -> BTreeMap<String, &'static str> {
     }
     for id in UcClassId::ALL {
         class_books.insert(id.name().to_string(), "ultimate_combat");
+    }
+    for id in PuClassId::ALL {
+        class_books.insert(id.name().to_string(), "pathfinder_unchained");
     }
     class_books
 }
@@ -9562,6 +9671,124 @@ mod class_feature_exact_suffix_grounded_tests {
             "active",
         ));
     }
+
+    /// `SD31-E5-F1-003`: an underscored, multi-word owner (`"unchained_
+    /// rogue"`, `PuClassId::name()`'s own convention) must still ground
+    /// against the corpus's space-separated group text (`"Unchained
+    /// Rogue"`), via [`class_name_as_group_text`]. The explanation id is
+    /// real, quoted verbatim from `ground_unchained_rogue_class_features`
+    /// (`pilot_compute/mod.rs`).
+    #[test]
+    fn an_underscored_multi_word_owner_grounds_against_its_spaced_group_text() {
+        let ids = ["class_feature.pu.unchained_rogue.trapfinding_bonus".to_string()];
+        assert!(class_feature_exact_suffix_grounded(
+            ids.iter(),
+            "unchained_rogue",
+            "Unchained Rogue",
+            "trapfinding_bonus",
+        ));
+    }
+
+    /// The base `"rogue"` owner must NOT ground off the same id purely
+    /// because `"unchained_rogue"` contains `"rogue"` -- the `.{owner}.`
+    /// needle is a real dot-delimited literal-token check
+    /// (`.rogue.` is not a substring of `.unchained_rogue.`), independent
+    /// of the group/owner text-equality guard this cycle touched.
+    #[test]
+    fn the_base_owner_needle_does_not_match_inside_the_variants_underscored_token() {
+        let ids = ["class_feature.pu.unchained_rogue.trapfinding_bonus".to_string()];
+        assert!(!class_feature_exact_suffix_grounded(
+            ids.iter(),
+            "rogue",
+            "Rogue",
+            "trapfinding_bonus",
+        ));
+    }
+}
+
+/// `SD31-E5-F1-003`: `diagnostic_id_names_feature`'s prefix-strip fix and
+/// the exact real-corpus shapes it must keep working / must newly refuse.
+#[cfg(test)]
+mod diagnostic_id_names_feature_tests {
+    use super::*;
+
+    /// The false match this cycle found and fixed: `"feat"` is a substring
+    /// of `"feature"`, so a bare `feat`-slug unit must not match an
+    /// unrelated diagnostic purely via the fixed `"class_feature"` prefix.
+    #[test]
+    fn a_feat_slug_does_not_match_purely_via_the_class_feature_prefix() {
+        assert!(!diagnostic_id_names_feature(
+            "class_feature.pu.unchained_rogue.corpus_record.improved_uncanny_dodge.unsupported",
+            "unchained_rogue",
+            "feat",
+        ));
+    }
+
+    /// The same `feat`-slug unit DOES still match its own class's real
+    /// catch-all, because `"other_features_deferred"` genuinely contains
+    /// `"feat"` (inside `"features"`) OUTSIDE the stripped prefix.
+    #[test]
+    fn a_feat_slug_still_matches_a_genuine_features_catch_all() {
+        assert!(diagnostic_id_names_feature(
+            "class_feature.pu.unchained_rogue.other_features_deferred.unsupported",
+            "unchained_rogue",
+            "feat",
+        ));
+    }
+
+    /// Regression guard, quoted verbatim: `"Slayer Talent ~ Feat"` and
+    /// `"Ninja Trick ~ Feat"` are real, already-shipped matches this fix
+    /// must not disturb.
+    #[test]
+    fn established_feat_slug_matches_are_unaffected() {
+        assert!(diagnostic_id_names_feature(
+            "class_feature.acg.slayer.other_features_deferred.unsupported",
+            "slayer",
+            "feat",
+        ));
+        assert!(diagnostic_id_names_feature(
+            "class_feature.uc.ninja.other_features_deferred.unsupported",
+            "ninja",
+            "feat",
+        ));
+    }
+
+    /// Regression guard: `"Bloodrager ~ Bloodrage"` legitimately matches
+    /// only because `"bloodrage"` is a substring of the OWNER token
+    /// `"bloodrager"` itself -- outside the stripped prefix, so the fix
+    /// must not touch it.
+    #[test]
+    fn a_slug_that_is_a_substring_of_the_owner_token_still_matches() {
+        assert!(diagnostic_id_names_feature(
+            "class_feature.acg.bloodrager.other_features_deferred.unsupported",
+            "bloodrager",
+            "bloodrage",
+        ));
+    }
+
+    /// The one genuine, disclosed regression this fix causes:
+    /// `"Phrenic Slayer ~ AS"` (`feature_slug == "as"`) loses its match
+    /// because its old match was the SAME spurious-prefix shape
+    /// (`"as"` is a substring of `"class"`, `cl-AS-s`) -- this test
+    /// documents the new, correct `false`, not merely the fix's mechanism.
+    #[test]
+    fn a_slug_that_only_matched_inside_the_stripped_prefix_now_correctly_refuses() {
+        assert!(!diagnostic_id_names_feature(
+            "class_feature.acg.slayer.other_features_deferred.unsupported",
+            "slayer",
+            "as",
+        ));
+    }
+
+    /// No owner-token match at all: refuses regardless of `feature_slug`.
+    #[test]
+    fn refuses_when_the_owner_token_is_entirely_absent() {
+        assert!(!diagnostic_id_names_feature(
+            "class_feature.acg.slayer.other_features_deferred.unsupported",
+            "monk",
+            "feat",
+        ));
+    }
 }
 
 /// SD31-E5-F1-002 (`OPEN-ISSUES.md` rows 96/118): `modelled_class_books()`
@@ -9587,6 +9814,100 @@ mod modelled_class_books_registry_tests {
         assert_eq!(class_books.get("fighter"), Some(&"core_rulebook"));
         assert_eq!(class_books.get("alchemist"), Some(&"advanced_players_guide"));
         assert_eq!(class_books.get("slayer"), Some(&"advanced_class_guide"));
+    }
+
+    /// `SD31-E5-F1-003`: the four Pathfinder Unchained classes, real chassis
+    /// wiring confirmed by direct read of `compute_pu_class_chassis` and its
+    /// four `ground_unchained_*_class_features` callees (`pilot_compute/
+    /// mod.rs`), each pushing real `ComputationExplanation`s every sweep.
+    #[test]
+    fn pathfinder_unchained_classes_are_registered() {
+        let class_books = modelled_class_books();
+        assert_eq!(class_books.get("unchained_barbarian"), Some(&"pathfinder_unchained"));
+        assert_eq!(class_books.get("unchained_monk"), Some(&"pathfinder_unchained"));
+        assert_eq!(class_books.get("unchained_rogue"), Some(&"pathfinder_unchained"));
+        assert_eq!(class_books.get("unchained_summoner"), Some(&"pathfinder_unchained"));
+    }
+}
+
+/// `SD31-E5-F1-003`: `class_feature_owner`'s multi-word/underscored-owner
+/// normalization ([`class_name_as_group_text`]), and the
+/// `decisions.md §10` AMENDMENT collision it must keep closed.
+#[cfg(test)]
+mod class_feature_owner_multi_word_owner_tests {
+    use super::*;
+
+    fn classes(names: &[&str]) -> Vec<String> {
+        names.iter().map(|s| s.to_string()).collect()
+    }
+
+    #[test]
+    fn unchained_rogue_group_resolves_to_the_unchained_owner_not_the_base_class() {
+        let names = classes(&["rogue", "unchained_rogue"]);
+        assert_eq!(
+            class_feature_owner("Unchained Rogue ~ Sneak Attack", names.iter()),
+            Some("unchained_rogue".to_string())
+        );
+    }
+
+    #[test]
+    fn base_rogue_group_still_resolves_to_the_base_class_once_the_variant_is_also_registered() {
+        // Regression: adding the longer, more specific candidate must never
+        // steal an unrelated, genuinely-base-class group.
+        let names = classes(&["rogue", "unchained_rogue"]);
+        assert_eq!(
+            class_feature_owner("Rogue ~ Sneak Attack", names.iter()),
+            Some("rogue".to_string())
+        );
+    }
+
+    #[test]
+    fn unchained_rogue_group_still_falls_back_to_base_owner_when_the_variant_is_unregistered() {
+        // Documents the exact PRE-fix defect this cycle closed on the
+        // REGISTRY side (`modelled_class_books`), so a future refactor
+        // cannot silently reopen it by dropping `PuClassId` from that
+        // registry: `class_feature_owner` in isolation still has this
+        // substring-collision property when only the shorter, unrelated
+        // base class is in its candidate set -- `class_name_as_group_text
+        // ("rogue")` is `"rogue"`, and `"unchained rogue".ends_with(
+        // " rogue")` is true regardless. The collision is closed only by
+        // making sure the longer, correctly-named candidate is ALSO always
+        // in the set, which is `modelled_class_books`'s job (see the next
+        // test), never `class_feature_owner`'s alone. `classify()`'s own
+        // `group == owner` exact-match guard is the second, independent
+        // layer that stops this mis-resolved owner from ever GROUNDING a
+        // credit (`class_feature_exact_suffix_grounded_tests::
+        // an_archetype_qualified_group_cannot_ground_off_the_base_class_id`
+        // covers that layer already).
+        let names = classes(&["rogue"]);
+        assert_eq!(
+            class_feature_owner("Unchained Rogue ~ Sneak Attack", names.iter()),
+            Some("rogue".to_string())
+        );
+    }
+
+    #[test]
+    fn all_four_unchained_classes_resolve_to_themselves() {
+        let names = classes(&[
+            "barbarian",
+            "unchained_barbarian",
+            "monk",
+            "unchained_monk",
+            "summoner",
+            "unchained_summoner",
+        ]);
+        assert_eq!(
+            class_feature_owner("Unchained Barbarian ~ Rage", names.iter()),
+            Some("unchained_barbarian".to_string())
+        );
+        assert_eq!(
+            class_feature_owner("Unchained Monk ~ Ki Pool", names.iter()),
+            Some("unchained_monk".to_string())
+        );
+        assert_eq!(
+            class_feature_owner("Unchained Summoner ~ Life Link", names.iter()),
+            Some("unchained_summoner".to_string())
+        );
     }
 }
 
