@@ -1737,7 +1737,7 @@
     }
   ],
   "monster_token_family": "BONUS:VAR|SLA_CL",
-  "monster_derivation": "PF1's own \"Spell-Like Abilities\" universal monster rule (Bestiary Appendix 1: \"Unless otherwise noted... the creature's caster level is equal to its Hit Dice.\"). PCGen encodes this per-monster as a bare BONUS:VAR|SLA_CL|HD token (or the equivalent max(TL,1) form used inside its own SPELLS:Innate lines). This repo's monster ingest carries no dedicated Hit Dice field, so expected.spell_like_ability_caster_level is hand-read from the SAME row's MONSTERCLASS:<type>:<HD> token's trailing integer -- pinned verbatim here as monster_class_token -- never from running the evaluator under test.",
+  "monster_derivation": "PF1's own \"Spell-Like Abilities\" universal monster rule (Bestiary Appendix 1: \"Unless otherwise noted... the creature's caster level is equal to its Hit Dice.\"). PCGen encodes the GENERIC case per-monster as a bare BONUS:VAR|SLA_CL|HD token (or the equivalent max(TL,1)/(max(TL,1)) forms). SD31-E6-F9-003: the rule's own \"unless otherwise noted\" clause is corpus fact too -- many rows carry a monster-specific LITERAL override instead (Couatl: BONUS:VAR|SLA_CL|9 against 12 Hit Dice; Demon (Glabrezu): BONUS:VAR|SLA_CL|14 against 12 HD), pinned verbatim here as sla_cl_token. expected.spell_like_ability_caster_level is hand-read as: the literal override's own integer when the row states one, else the SAME row's MONSTERCLASS:<type>:<HD> token's trailing integer (pinned verbatim as monster_class_token) under the generic rule -- never from running the evaluator under test, and never a guess for an unparseable formula (e.g. HD*3/4), which is excluded from this fixture set entirely rather than fixtured against a fabricated expectation.",
   "monster_independence": "Every monster_entries value is read by hand from the upstream PCGen .lst bytes (upstream_lst/upstream_lst_sha256/upstream_line) -- the same four independent guarantees derived_evaluator_fixture_check.rs's module doc states for the equipment entries apply here: different source artifact (upstream .lst, not data/corpus/), committed before the check that reads it, re-derivable from the pinned field (tests/derived_evaluator_fixture_check_monster.rs), and anchored to the same upstream bytes the engine's own corpus ingest cites.",
   "monster_entries": [
     {
@@ -1829,6 +1829,986 @@
       "monster_class_token": "Outsider (Fort/Will):18",
       "expected": {
         "spell_like_ability_caster_level": 18
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:azata_ghaele",
+      "book": "bestiary",
+      "record_key": "Azata (Ghaele)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 31,
+      "corpus_field": "BONUS:VAR|SLA_CL|max(TL,1)",
+      "monster_class_token": "Outsider (Fort/Will):13",
+      "sla_cl_token": "max(TL,1)",
+      "expected": {
+        "spell_like_ability_caster_level": 13
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:couatl",
+      "book": "bestiary",
+      "record_key": "Couatl",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 74,
+      "corpus_field": "BONUS:VAR|SLA_CL|9",
+      "monster_class_token": "Couatl Outsider:12",
+      "sla_cl_token": "9",
+      "expected": {
+        "spell_like_ability_caster_level": 9
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:demon_glabrezu",
+      "book": "bestiary",
+      "record_key": "Demon (Glabrezu)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 95,
+      "corpus_field": "BONUS:VAR|SLA_CL|14",
+      "monster_class_token": "Outsider (Fort/Will):12",
+      "sla_cl_token": "14",
+      "expected": {
+        "spell_like_ability_caster_level": 14
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:demon_marilith",
+      "book": "bestiary",
+      "record_key": "Demon (Marilith)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 97,
+      "corpus_field": "BONUS:VAR|SLA_CL|max(TL,1)",
+      "monster_class_token": "Outsider (Fort/Ref):16",
+      "sla_cl_token": "max(TL,1)",
+      "expected": {
+        "spell_like_ability_caster_level": 16
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:demon_nalfeshnee",
+      "book": "bestiary",
+      "record_key": "Demon (Nalfeshnee)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 99,
+      "corpus_field": "BONUS:VAR|SLA_CL|12",
+      "monster_class_token": "Outsider (Fort/Will):14",
+      "sla_cl_token": "12",
+      "expected": {
+        "spell_like_ability_caster_level": 12
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:demon_succubus",
+      "book": "bestiary",
+      "record_key": "Demon (Succubus)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 102,
+      "corpus_field": "BONUS:VAR|SLA_CL|12",
+      "monster_class_token": "Outsider (Ref/Will):8",
+      "sla_cl_token": "12",
+      "expected": {
+        "spell_like_ability_caster_level": 12
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:devil_bone",
+      "book": "bestiary",
+      "record_key": "Devil (Bone)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 107,
+      "corpus_field": "BONUS:VAR|SLA_CL|12",
+      "monster_class_token": "Outsider (Fort/Ref):10",
+      "sla_cl_token": "12",
+      "expected": {
+        "spell_like_ability_caster_level": 12
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:devil_erinyes",
+      "book": "bestiary",
+      "record_key": "Devil (Erinyes)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 108,
+      "corpus_field": "BONUS:VAR|SLA_CL|12",
+      "monster_class_token": "Outsider (Fort/Ref):9",
+      "sla_cl_token": "12",
+      "expected": {
+        "spell_like_ability_caster_level": 12
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:devil_ice",
+      "book": "bestiary",
+      "record_key": "Devil (Ice)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 110,
+      "corpus_field": "BONUS:VAR|SLA_CL|13",
+      "monster_class_token": "Outsider (Fort/Ref):14",
+      "sla_cl_token": "13",
+      "expected": {
+        "spell_like_ability_caster_level": 13
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:drider",
+      "book": "bestiary",
+      "record_key": "Drider",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 139,
+      "corpus_field": "BONUS:VAR|SLA_CL|max(TL,1)",
+      "monster_class_token": "Drider:9",
+      "sla_cl_token": "max(TL,1)",
+      "expected": {
+        "spell_like_ability_caster_level": 9
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:genie_efreeti",
+      "book": "bestiary",
+      "record_key": "Genie (Efreeti)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 192,
+      "corpus_field": "BONUS:VAR|SLA_CL|11",
+      "monster_class_token": "Outsider (Ref/Will):10",
+      "sla_cl_token": "11",
+      "expected": {
+        "spell_like_ability_caster_level": 11
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:genie_efreeti_noble",
+      "book": "bestiary",
+      "record_key": "Genie (Efreeti/Noble)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 193,
+      "corpus_field": "BONUS:VAR|SLA_CL|15",
+      "monster_class_token": "Outsider (Ref/Will):13",
+      "sla_cl_token": "15",
+      "expected": {
+        "spell_like_ability_caster_level": 15
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:genie_marid",
+      "book": "bestiary",
+      "record_key": "Genie (Marid)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 196,
+      "corpus_field": "BONUS:VAR|SLA_CL|12",
+      "monster_class_token": "Outsider (Ref/Will):12",
+      "sla_cl_token": "12",
+      "expected": {
+        "spell_like_ability_caster_level": 12
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:genie_marid_noble",
+      "book": "bestiary",
+      "record_key": "Genie (Marid/Noble)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 197,
+      "corpus_field": "BONUS:VAR|SLA_CL|20",
+      "monster_class_token": "Outsider (Ref/Will):15",
+      "sla_cl_token": "20",
+      "expected": {
+        "spell_like_ability_caster_level": 20
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:oni_ogre_mage",
+      "book": "bestiary",
+      "record_key": "Oni (Ogre Mage)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 317,
+      "corpus_field": "BONUS:VAR|SLA_CL|9",
+      "monster_class_token": "Outsider (Fort/Will):8",
+      "sla_cl_token": "9",
+      "expected": {
+        "spell_like_ability_caster_level": 9
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:pixie",
+      "book": "bestiary",
+      "record_key": "Pixie",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 326,
+      "corpus_field": "BONUS:VAR|SLA_CL|8",
+      "monster_class_token": "Fey:4",
+      "sla_cl_token": "8",
+      "expected": {
+        "spell_like_ability_caster_level": 8
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:agathion_avoral",
+      "book": "bestiary_2",
+      "record_key": "Agathion (Avoral)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 36,
+      "corpus_field": "BONUS:VAR|SLA_CL|9",
+      "monster_class_token": "Outsider (Fort/Ref):9",
+      "sla_cl_token": "9",
+      "expected": {
+        "spell_like_ability_caster_level": 9
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:blink_dog",
+      "book": "bestiary_2",
+      "record_key": "Blink Dog",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 145,
+      "corpus_field": "BONUS:VAR|SLA_CL|7",
+      "monster_class_token": "Magical Beast:3",
+      "sla_cl_token": "7",
+      "expected": {
+        "spell_like_ability_caster_level": 7
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:daemon_astradaemon",
+      "book": "bestiary_2",
+      "record_key": "Daemon (Astradaemon)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 207,
+      "corpus_field": "BONUS:VAR|SLA_CL|17",
+      "monster_class_token": "Outsider (Ref/Will):17",
+      "sla_cl_token": "17",
+      "expected": {
+        "spell_like_ability_caster_level": 17
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:daemon_cacodaemon",
+      "book": "bestiary_2",
+      "record_key": "Daemon (Cacodaemon)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 209,
+      "corpus_field": "BONUS:VAR|SLA_CL|6",
+      "monster_class_token": "Outsider (Ref/Will):3",
+      "sla_cl_token": "6",
+      "expected": {
+        "spell_like_ability_caster_level": 6
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:daemon_ceustodaemon",
+      "book": "bestiary_2",
+      "record_key": "Daemon (Ceustodaemon)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 210,
+      "corpus_field": "BONUS:VAR|SLA_CL|8",
+      "monster_class_token": "Outsider (Fort/Will):8",
+      "sla_cl_token": "8",
+      "expected": {
+        "spell_like_ability_caster_level": 8
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:daemon_ceustodaemon_greater",
+      "book": "bestiary_2",
+      "record_key": "Daemon (Ceustodaemon/Greater)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 212,
+      "corpus_field": "BONUS:VAR|SLA_CL|8",
+      "monster_class_token": "Outsider (Fort/Will):8",
+      "sla_cl_token": "8",
+      "expected": {
+        "spell_like_ability_caster_level": 8
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:daemon_ceustodaemon_lesser",
+      "book": "bestiary_2",
+      "record_key": "Daemon (Ceustodaemon/Lesser)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 211,
+      "corpus_field": "BONUS:VAR|SLA_CL|8",
+      "monster_class_token": "Outsider (Fort/Will):8",
+      "sla_cl_token": "8",
+      "expected": {
+        "spell_like_ability_caster_level": 8
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:daemon_derghodaemon",
+      "book": "bestiary_2",
+      "record_key": "Daemon (Derghodaemon)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 216,
+      "corpus_field": "BONUS:VAR|SLA_CL|12",
+      "monster_class_token": "Outsider (Fort/Ref):14",
+      "sla_cl_token": "12",
+      "expected": {
+        "spell_like_ability_caster_level": 12
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:daemon_leukodaemon",
+      "book": "bestiary_2",
+      "record_key": "Daemon (Leukodaemon)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 225,
+      "corpus_field": "BONUS:VAR|SLA_CL|10",
+      "monster_class_token": "Outsider (Ref/Will):10",
+      "sla_cl_token": "10",
+      "expected": {
+        "spell_like_ability_caster_level": 10
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:daemon_meladaemon",
+      "book": "bestiary_2",
+      "record_key": "Daemon (Meladaemon)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 238,
+      "corpus_field": "BONUS:VAR|SLA_CL|11",
+      "monster_class_token": "Outsider (Ref/Will):14",
+      "sla_cl_token": "11",
+      "expected": {
+        "spell_like_ability_caster_level": 11
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:daemon_olethrodaemon",
+      "book": "bestiary_2",
+      "record_key": "Daemon (Olethrodaemon)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 242,
+      "corpus_field": "BONUS:VAR|SLA_CL|20",
+      "monster_class_token": "Outsider (Fort/Will):20",
+      "sla_cl_token": "20",
+      "expected": {
+        "spell_like_ability_caster_level": 20
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:daemon_piscodaemon",
+      "book": "bestiary_2",
+      "record_key": "Daemon (Piscodaemon)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 245,
+      "corpus_field": "BONUS:VAR|SLA_CL|11",
+      "monster_class_token": "Outsider (Fort/Will):11",
+      "sla_cl_token": "11",
+      "expected": {
+        "spell_like_ability_caster_level": 11
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:daemon_purrodaemon",
+      "book": "bestiary_2",
+      "record_key": "Daemon (Purrodaemon)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 251,
+      "corpus_field": "BONUS:VAR|SLA_CL|18",
+      "monster_class_token": "Outsider (Fort/Ref):19",
+      "sla_cl_token": "18",
+      "expected": {
+        "spell_like_ability_caster_level": 18
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:demon_kalavakus",
+      "book": "bestiary_2",
+      "record_key": "Demon (Kalavakus)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 266,
+      "corpus_field": "BONUS:VAR|SLA_CL|12",
+      "monster_class_token": "Outsider (Ref/Will):10",
+      "sla_cl_token": "12",
+      "expected": {
+        "spell_like_ability_caster_level": 12
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:demon_omox",
+      "book": "bestiary_2",
+      "record_key": "Demon (Omox)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 267,
+      "corpus_field": "BONUS:VAR|SLA_CL|12",
+      "monster_class_token": "Outsider (Fort/Will):13",
+      "sla_cl_token": "12",
+      "expected": {
+        "spell_like_ability_caster_level": 12
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:demon_shemhazian",
+      "book": "bestiary_2",
+      "record_key": "Demon (Shemhazian)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 268,
+      "corpus_field": "BONUS:VAR|SLA_CL|15",
+      "monster_class_token": "Outsider (Fort/Will):17",
+      "sla_cl_token": "15",
+      "expected": {
+        "spell_like_ability_caster_level": 15
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:demon_vrolikai",
+      "book": "bestiary_2",
+      "record_key": "Demon (Vrolikai)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 269,
+      "corpus_field": "BONUS:VAR|SLA_CL|19",
+      "monster_class_token": "Outsider (Ref/Will):19",
+      "sla_cl_token": "19",
+      "expected": {
+        "spell_like_ability_caster_level": 19
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:denizen_of_leng",
+      "book": "bestiary_2",
+      "record_key": "Denizen of Leng",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 270,
+      "corpus_field": "BONUS:VAR|SLA_CL|10",
+      "monster_class_token": "Outsider (Fort/Ref):10",
+      "sla_cl_token": "10",
+      "expected": {
+        "spell_like_ability_caster_level": 10
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:devil_handmaiden",
+      "book": "bestiary_2",
+      "record_key": "Devil (Handmaiden)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 278,
+      "corpus_field": "BONUS:VAR|SLA_CL|14",
+      "monster_class_token": "Outsider (Fort/Ref):15",
+      "sla_cl_token": "14",
+      "expected": {
+        "spell_like_ability_caster_level": 14
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:devil_immolation",
+      "book": "bestiary_2",
+      "record_key": "Devil (Immolation)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 280,
+      "corpus_field": "BONUS:VAR|SLA_CL|17",
+      "monster_class_token": "Outsider (Fort/Ref):18",
+      "sla_cl_token": "17",
+      "expected": {
+        "spell_like_ability_caster_level": 17
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:dragon_magma",
+      "book": "bestiary_2",
+      "record_key": "Dragon (Magma)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 311,
+      "corpus_field": "BONUS:VAR|SLA_CL|(max(TL,1))",
+      "monster_class_token": "Dragon:5",
+      "sla_cl_token": "(max(TL,1))",
+      "expected": {
+        "spell_like_ability_caster_level": 5
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:giant_brineborn_marsh",
+      "book": "bestiary_2",
+      "record_key": "Giant (Brineborn Marsh)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 395,
+      "corpus_field": "BONUS:VAR|SLA_CL|12",
+      "monster_class_token": "Humanoid:12",
+      "sla_cl_token": "12",
+      "expected": {
+        "spell_like_ability_caster_level": 12
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:giant_marsh",
+      "book": "bestiary_2",
+      "record_key": "Giant (Marsh)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 394,
+      "corpus_field": "BONUS:VAR|SLA_CL|12",
+      "monster_class_token": "Humanoid:12",
+      "sla_cl_token": "12",
+      "expected": {
+        "spell_like_ability_caster_level": 12
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:giant_rune",
+      "book": "bestiary_2",
+      "record_key": "Giant (Rune)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 397,
+      "corpus_field": "BONUS:VAR|SLA_CL|20",
+      "monster_class_token": "Humanoid (Will):20",
+      "sla_cl_token": "20",
+      "expected": {
+        "spell_like_ability_caster_level": 20
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:giant_wood",
+      "book": "bestiary_2",
+      "record_key": "Giant (Wood)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 410,
+      "corpus_field": "BONUS:VAR|SLA_CL|7",
+      "monster_class_token": "Humanoid:9",
+      "sla_cl_token": "7",
+      "expected": {
+        "spell_like_ability_caster_level": 7
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:inevitable_arbiter",
+      "book": "bestiary_2",
+      "record_key": "Inevitable (Arbiter)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 504,
+      "corpus_field": "BONUS:VAR|SLA_CL|2",
+      "monster_class_token": "Outsider (Fort/Will):2",
+      "sla_cl_token": "2",
+      "expected": {
+        "spell_like_ability_caster_level": 2
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:inevitable_lhaksharut",
+      "book": "bestiary_2",
+      "record_key": "Inevitable (Lhaksharut)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 516,
+      "corpus_field": "BONUS:VAR|SLA_CL|22",
+      "monster_class_token": "Outsider (Fort/Will):22",
+      "sla_cl_token": "22",
+      "expected": {
+        "spell_like_ability_caster_level": 22
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:inevitable_marut",
+      "book": "bestiary_2",
+      "record_key": "Inevitable (Marut)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 518,
+      "corpus_field": "BONUS:VAR|SLA_CL|16",
+      "monster_class_token": "Outsider (Fort/Will):16",
+      "sla_cl_token": "16",
+      "expected": {
+        "spell_like_ability_caster_level": 16
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:inevitable_zelekhut",
+      "book": "bestiary_2",
+      "record_key": "Inevitable (Zelekhut)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 519,
+      "corpus_field": "BONUS:VAR|SLA_CL|10",
+      "monster_class_token": "Outsider (Fort/Will):10",
+      "sla_cl_token": "10",
+      "expected": {
+        "spell_like_ability_caster_level": 10
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:leprechaun",
+      "book": "bestiary_2",
+      "record_key": "Leprechaun",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 579,
+      "corpus_field": "BONUS:VAR|SLA_CL|4",
+      "monster_class_token": "Fey:4",
+      "sla_cl_token": "4",
+      "expected": {
+        "spell_like_ability_caster_level": 4
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:lurker_in_light",
+      "book": "bestiary_2",
+      "record_key": "Lurker in Light",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 587,
+      "corpus_field": "BONUS:VAR|SLA_CL|8",
+      "monster_class_token": "Fey:8",
+      "sla_cl_token": "8",
+      "expected": {
+        "spell_like_ability_caster_level": 8
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:mothman",
+      "book": "bestiary_2",
+      "record_key": "Mothman",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 621,
+      "corpus_field": "BONUS:VAR|SLA_CL|12",
+      "monster_class_token": "Monstrous Humanoid:9",
+      "sla_cl_token": "12",
+      "expected": {
+        "spell_like_ability_caster_level": 12
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:nightshade_nightcrawler",
+      "book": "bestiary_2",
+      "record_key": "Nightshade (Nightcrawler)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 642,
+      "corpus_field": "BONUS:VAR|SLA_CL|18",
+      "monster_class_token": "Undead:25",
+      "sla_cl_token": "18",
+      "expected": {
+        "spell_like_ability_caster_level": 18
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:nightshade_nightwalker",
+      "book": "bestiary_2",
+      "record_key": "Nightshade (Nightwalker)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 644,
+      "corpus_field": "BONUS:VAR|SLA_CL|16",
+      "monster_class_token": "Undead:21",
+      "sla_cl_token": "16",
+      "expected": {
+        "spell_like_ability_caster_level": 16
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:nightshade_nightwave",
+      "book": "bestiary_2",
+      "record_key": "Nightshade (Nightwave)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 648,
+      "corpus_field": "BONUS:VAR|SLA_CL|20",
+      "monster_class_token": "Undead:29",
+      "sla_cl_token": "20",
+      "expected": {
+        "spell_like_ability_caster_level": 20
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:nightshade_nightwing",
+      "book": "bestiary_2",
+      "record_key": "Nightshade (Nightwing)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 650,
+      "corpus_field": "BONUS:VAR|SLA_CL|14",
+      "monster_class_token": "Undead:17",
+      "sla_cl_token": "14",
+      "expected": {
+        "spell_like_ability_caster_level": 14
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:protean_imentesh",
+      "book": "bestiary_2",
+      "record_key": "Protean (Imentesh)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 694,
+      "corpus_field": "BONUS:VAR|SLA_CL|10",
+      "monster_class_token": "Outsider (Fort/Will):13",
+      "sla_cl_token": "10",
+      "expected": {
+        "spell_like_ability_caster_level": 10
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:protean_keketar",
+      "book": "bestiary_2",
+      "record_key": "Protean (Keketar)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 699,
+      "corpus_field": "BONUS:VAR|SLA_CL|17",
+      "monster_class_token": "Outsider (Fort/Will):23",
+      "sla_cl_token": "17",
+      "expected": {
+        "spell_like_ability_caster_level": 17
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:protean_naunet",
+      "book": "bestiary_2",
+      "record_key": "Protean (Naunet)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 703,
+      "corpus_field": "BONUS:VAR|SLA_CL|7",
+      "monster_class_token": "Outsider (Fort/Ref):9",
+      "sla_cl_token": "7",
+      "expected": {
+        "spell_like_ability_caster_level": 7
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:protean_voidworm",
+      "book": "bestiary_2",
+      "record_key": "Protean (Voidworm)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 705,
+      "corpus_field": "BONUS:VAR|SLA_CL|6",
+      "monster_class_token": "Outsider (Ref/Will):3",
+      "sla_cl_token": "6",
+      "expected": {
+        "spell_like_ability_caster_level": 6
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:qlippoth_chernobue",
+      "book": "bestiary_2",
+      "record_key": "Qlippoth (Chernobue)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 711,
+      "corpus_field": "BONUS:VAR|SLA_CL|12",
+      "monster_class_token": "Outsider (Fort/Will):12",
+      "sla_cl_token": "12",
+      "expected": {
+        "spell_like_ability_caster_level": 12
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:qlippoth_iathavos",
+      "book": "bestiary_2",
+      "record_key": "Qlippoth (Iathavos)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 716,
+      "corpus_field": "BONUS:VAR|SLA_CL|20",
+      "monster_class_token": "Outsider (Fort/Will):24",
+      "sla_cl_token": "20",
+      "expected": {
+        "spell_like_ability_caster_level": 20
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:qlippoth_thulgant",
+      "book": "bestiary_2",
+      "record_key": "Qlippoth (Thulgant)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 736,
+      "corpus_field": "BONUS:VAR|SLA_CL|20",
+      "monster_class_token": "Outsider (Fort/Ref):20",
+      "sla_cl_token": "20",
+      "expected": {
+        "spell_like_ability_caster_level": 20
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:sceaduinar",
+      "book": "bestiary_2",
+      "record_key": "Sceaduinar",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 759,
+      "corpus_field": "BONUS:VAR|SLA_CL|9",
+      "monster_class_token": "Outsider (Fort/Ref):9",
+      "sla_cl_token": "9",
+      "expected": {
+        "spell_like_ability_caster_level": 9
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:scylla",
+      "book": "bestiary_2",
+      "record_key": "Scylla",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 774,
+      "corpus_field": "BONUS:VAR|SLA_CL|16",
+      "monster_class_token": "Aberration:20",
+      "sla_cl_token": "16",
+      "expected": {
+        "spell_like_ability_caster_level": 16
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:titan_thanatotic",
+      "book": "bestiary_2",
+      "record_key": "Titan (Thanatotic)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 853,
+      "corpus_field": "BONUS:VAR|SLA_CL|20",
+      "monster_class_token": "Outsider (Ref/Will):23",
+      "sla_cl_token": "20",
+      "expected": {
+        "spell_like_ability_caster_level": 20
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:winterwight",
+      "book": "bestiary_2",
+      "record_key": "Winterwight",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 907,
+      "corpus_field": "BONUS:VAR|SLA_CL|17",
+      "monster_class_token": "Undead:20",
+      "sla_cl_token": "17",
+      "expected": {
+        "spell_like_ability_caster_level": 17
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:witchwyrd",
+      "book": "bestiary_2",
+      "record_key": "Witchwyrd",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 909,
+      "corpus_field": "BONUS:VAR|SLA_CL|8",
+      "monster_class_token": "Monstrous Humanoid:8",
+      "sla_cl_token": "8",
+      "expected": {
+        "spell_like_ability_caster_level": 8
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:xacarba",
+      "book": "bestiary_2",
+      "record_key": "Xacarba",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 913,
+      "corpus_field": "BONUS:VAR|SLA_CL|18",
+      "monster_class_token": "Outsider (Fort/Will):20",
+      "sla_cl_token": "18",
+      "expected": {
+        "spell_like_ability_caster_level": 18
+      }
+    },
+    {
+      "unit_id": "bestiary_4:monster:chaneque",
+      "book": "bestiary_4",
+      "record_key": "Chaneque",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+      "upstream_lst_sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+      "upstream_line": 26,
+      "corpus_field": "BONUS:VAR|SLA_CL|5",
+      "monster_class_token": "Fey:3",
+      "sla_cl_token": "5",
+      "expected": {
+        "spell_like_ability_caster_level": 5
+      }
+    },
+    {
+      "unit_id": "bestiary_4:monster:gremlin_grimple",
+      "book": "bestiary_4",
+      "record_key": "Gremlin (Grimple)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+      "upstream_lst_sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+      "upstream_line": 113,
+      "corpus_field": "BONUS:VAR|SLA_CL|1",
+      "monster_class_token": "Fey:1",
+      "sla_cl_token": "1",
+      "expected": {
+        "spell_like_ability_caster_level": 1
+      }
+    },
+    {
+      "unit_id": "bestiary_4:monster:gremlin_haniver",
+      "book": "bestiary_4",
+      "record_key": "Gremlin (Haniver)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+      "upstream_lst_sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+      "upstream_line": 114,
+      "corpus_field": "BONUS:VAR|SLA_CL|1",
+      "monster_class_token": "Fey:1",
+      "sla_cl_token": "1",
+      "expected": {
+        "spell_like_ability_caster_level": 1
+      }
+    },
+    {
+      "unit_id": "bestiary_4:monster:lampad",
+      "book": "bestiary_4",
+      "record_key": "Lampad",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+      "upstream_lst_sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+      "upstream_line": 147,
+      "corpus_field": "BONUS:VAR|SLA_CL|7",
+      "monster_class_token": "Fey:7",
+      "sla_cl_token": "7",
+      "expected": {
+        "spell_like_ability_caster_level": 7
+      }
+    },
+    {
+      "unit_id": "bestiary_4:monster:leanan_sidhe",
+      "book": "bestiary_4",
+      "record_key": "Leanan Sidhe",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+      "upstream_lst_sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+      "upstream_line": 149,
+      "corpus_field": "BONUS:VAR|SLA_CL|10",
+      "monster_class_token": "Fey:11",
+      "sla_cl_token": "10",
+      "expected": {
+        "spell_like_ability_caster_level": 10
       }
     }
   ],

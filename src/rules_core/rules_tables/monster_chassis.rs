@@ -213,6 +213,34 @@ pub struct MonsterStatBlock {
     /// spell-like abilities at all is never served a caster level it has no
     /// use for (SD31-E6-F1-002, `OPEN-ISSUES.md` row 44).
     pub has_spell_like_abilities: bool,
+    /// The row's `BONUS:VAR|SLA_CL|<value>` trailing value, verbatim, when
+    /// [`Self::has_spell_like_abilities`] is `true`; `None` otherwise.
+    ///
+    /// **Load-bearing, not decorative** (SD31-E6-F9-003, `OPEN-ISSUES.md` row
+    /// 44's own follow-on, already forecast in `progress.md`'s
+    /// `SD31-E6-F11-002` receipt as "a follow-on within THIS seam"). PF1's
+    /// Universal Monster Rule states a spell-like ability's caster level
+    /// "equal[s] its Hit Dice" **unless otherwise noted**, and the corpus
+    /// routinely notes otherwise: `BONUS:VAR|SLA_CL|HD` and
+    /// `BONUS:VAR|SLA_CL|max(TL,1)` (PCGen's own two equivalent spellings of
+    /// "apply the generic rule") coexist, record by record, with a bare
+    /// literal override — Couatl (`b1_races.lst:74`) carries
+    /// `BONUS:VAR|SLA_CL|9` while its own `MONSTERCLASS:Couatl Outsider:12`
+    /// states 12 Hit Dice; Demon (Glabrezu) (`b1_races.lst:95`) carries
+    /// `BONUS:VAR|SLA_CL|14` against 12 HD. Neither is a defect — both are
+    /// the corpus correctly stating the printed stat block's actual SLA
+    /// caster level, which sometimes differs from HD exactly as the rule's
+    /// own "unless otherwise noted" clause anticipates. Before this field
+    /// existed, `spell_like_ability_caster_level` had no way to see the
+    /// override and always applied the generic HD rule, which is silently
+    /// WRONG for every monster whose row carries one (re-derived corpus-wide
+    /// this cycle: the majority of the registry's own already-shipped,
+    /// `has_spell_like_abilities`-true monsters carry an override, not the
+    /// bare `HD`/`max(TL,1)` spelling — verified sampling every derived-
+    /// grounded `monster` unit's own corpus row, not assumed from the shape
+    /// of the 7 already-committed fixtures, all of which happen to be the
+    /// bare-`HD` case and so never surfaced the gap).
+    pub sla_cl_token: Option<&'static str>,
     /// Keys into this book's `monster_abilities`, in row order.
     pub ability_keys: &'static [&'static str],
     /// Ability names this row cites that this book does not define.
