@@ -34,15 +34,15 @@
       },
       {
         "key": "DESC",
-        "value": "Poison gum is often used by agents of Norgorber, particularly those alchemists and poisoners who venerate the insidious god as Blackfingers. Chewing a piece of poison gum - which resembles nothing so much as a lump of congealed sap - is a move action that provokes attacks of opportunity, though the user can continue to chew the gum as a free action on consecutive rounds. Doing so fills the user's mouth with three doses of Medium spider venom (Pathfinder RPG Core Rulebook 560). This poison lasts for up to 5 minutes before losing its potency. As a swift action while chewing poison gum, the user can apply the poison to a wielded weapon. If the user lacks the poison use class feature, there is a 5%% chance that he exposes herself to the poison while chewing the gum or applying the poison to a weapon, and if he rolls a natural 1 on an attack roll with a poisoned weapon, he also exposes himself to the poison."
+        "value": "[redacted PI]"
       }
     ],
     "weight_lbs": 0.0
   },
   "ingested_at": "2026-08-17T12:09:37Z",
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
   "population": "in_scope",
   "source": {
     "kind": "lst_token",

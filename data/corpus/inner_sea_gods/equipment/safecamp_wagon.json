@@ -34,15 +34,15 @@
       },
       {
         "key": "DESC",
-        "value": "Abadar's church created the first safecamp wagons to protect valuable cargo as it traveled between cities. When inactive, a safecamp wagon looks like an elaborately carved wooden toy wagon, 12 inches long, 6 inches wide, and 6 inches tall. On command, the toy transforms in a single round into an open-topped wagon. A second command word creates a canvas top supported with a sturdy wooden frame over the wagon. A third command word causes wooden panels to extend down and outward from the wagon, forming a stable wooden platform extending 5 feet in all directions from the wagon's base, suitable for walking, sitting, standing, or sleeping upon. A sliding wooden door in the back panel allows access to the space under the wagon. Speaking the command word again causes these panels to retract into the wagon. A fourth command word returns the wagon to its toy shape; any items on or in the wagon are carefully placed on the ground around the toy. A safecamp wagon cannot transform if there isn't enough open space for it to occupy at full size. In any form, the wooden parts of this item have hardness 8, the canvas parts have hardness 2, and the entire object has fire resistance 5. "
+        "value": "[redacted PI]"
       }
     ],
     "weight_lbs": 2.0
   },
   "ingested_at": "2026-08-17T12:09:37Z",
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
   "population": "in_scope",
   "source": {
     "kind": "lst_token",

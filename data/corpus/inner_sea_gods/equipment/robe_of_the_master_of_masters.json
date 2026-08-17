@@ -43,15 +43,15 @@
       },
       {
         "key": "DESC",
-        "value": "This brightly colored robe is made of fine silk and cut in the Vudrani style. As a full-round action, the wearer can shift the original hue of the garment slightly (from red to pink or crimson, from blue to cyan or sapphire, and so on) or return it to its original color; the robe instantly reverts to its original color if the wearer removes the robe. The wearer gains a +2 competence bonus on Perform (Dance) checks. If Irori is the wearer's patron: once per day as a free action the wearer can touch a tiny button on the wrist of the robe, granting her the effects of Haste for 1 round; once per day, the wearer can also perform a healing dance that lasts 5 minutes. When she does so, up to 7 allies within 30 feet heal 1 hit point."
+        "value": "[redacted PI]"
       }
     ],
     "weight_lbs": 3.0
   },
   "ingested_at": "2026-08-17T12:09:37Z",
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
   "population": "in_scope",
   "source": {
     "kind": "lst_token",

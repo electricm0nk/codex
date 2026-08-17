@@ -34,19 +34,19 @@
       },
       {
         "key": "SPELLS",
-        "value": "Pallid Crystal|TIMES=1|CASTERLEVEL=3|Death Knell|PREDEITY:1,Urgathoa"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "This finger-length crystal is a pale, opaque pink color when worn by a living creature, but slowly changes to a deep, translucent violet when carried by an undead. The wearer can consume spoiled food or drink as if it were fresh and wholesome, tasting as good as it did before it spoiled. Any person with the Profession (Cook) skill can use the crystal to season a meal with the flavor of salt, sugar, cinnamon, ginger, or pepper (or the equivalent spices for the undead palate - fear's breath, nightfog, bloodroot, thileu bark, or hatefinger). If Urgathoa is the wearer's patron: the wearer can use Death Knell once per day; both cure and inflict spells heal the wearer, whether the wearer is living or undead; the crystal flares with black or white energy when it converts these spells into a form that does not harm the wearer. The crystal does not affect any other uses of positive or negative energy, just cure and inflict spells (and effects that duplicate those spells)."
+        "value": "[redacted PI]"
       }
     ],
     "weight_lbs": 0.0
   },
   "ingested_at": "2026-08-17T12:09:37Z",
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
   "population": "in_scope",
   "source": {
     "kind": "lst_token",

@@ -38,19 +38,19 @@
       },
       {
         "key": "SPELLS",
-        "value": "Icon of the Midwife|TIMES=1|CASTERLEVEL=3|Augury|PREDEITY:1,Pharasma"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "This gray stone carving of a gaunt older woman is usually painted with black hair and black clothing with red trim. Once per day, the bearer can use it to cast Stabilize, Resistance, and Virtue - this is usually enough to ensure that a mother and newborn both live through a difficult birth. If Pharasma is the bearer's patron: the bearer can use the icon to cast Augury once per day; as a standard action, the bearer can touch a pregnant woman and know whether she is carrying a boy or girl and whether it will be a single birth or multiple; once per day, the bearer can consecrate a corpse so if it is buried within 24 hours it cannot be reanimated as an undead."
+        "value": "[redacted PI]"
       }
     ],
     "weight_lbs": 2.0
   },
   "ingested_at": "2026-08-17T12:09:37Z",
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
   "population": "in_scope",
   "source": {
     "kind": "lst_token",

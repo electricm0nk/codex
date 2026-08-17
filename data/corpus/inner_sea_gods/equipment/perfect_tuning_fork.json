@@ -34,15 +34,15 @@
       },
       {
         "key": "DESC",
-        "value": "Shelyn's association with harmony and music inspires many composers to pen glorious songs in the Eternal Rose's honor, and numerous tools have been devised by her church to improve the performances of such melodies. The perfect tuning fork provides the ideal pitch to quickly begin an inspirational tune. When holding a perfect tuning fork in the hand, the wielder can strike the fork as part of the action of beginning a bardic performance to decrease the time required to start it (standard to move or move to swift). A perfect tuning fork loses its magic after one use, but it can be used as an ordinary tuning fork thereafter."
+        "value": "[redacted PI]"
       }
     ],
     "weight_lbs": 0.0
   },
   "ingested_at": "2026-08-17T12:09:37Z",
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
   "population": "in_scope",
   "source": {
     "kind": "lst_token",

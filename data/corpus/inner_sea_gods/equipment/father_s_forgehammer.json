@@ -38,19 +38,19 @@
       },
       {
         "key": "SPELLS",
-        "value": "Father's Forgehammer|TIMES=1|CASTERLEVEL=3|Shield Other|PREDEITY:1,Torag"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "This iron blacksmith's hammer bears designs of Torag's holy symbol; it is not designed for combat, but the bearer can use it as a Medium light hammer. Once per day, the bearer can strike the hammer hard against a weapon to target that weapon with Magic Weapon. The owner gains a +2 competence bonus on all smithing (armorsmithing, blacksmithing, weaponsmithing, and so on) skill checks made when crafting with the forgehammer. If Torag is the owner's patron: once per day the owner can strike the hammer against another character's armor or shield to cast Shield Other on that character; if the owner can craft magic weapons or armor and uses the forgehammer during the crafting, the total time to craft the item is decreased by 25%% (minimum 1 day). This does not reduce the cost to create the item. A particular forgehammer can aid in only one item's crafting at a time."
+        "value": "[redacted PI]"
       }
     ],
     "weight_lbs": 2.0
   },
   "ingested_at": "2026-08-17T12:09:37Z",
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
   "population": "in_scope",
   "source": {
     "kind": "lst_token",

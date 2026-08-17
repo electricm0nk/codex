@@ -38,15 +38,15 @@
       },
       {
         "key": "DESC",
-        "value": "On command, this ornate Qadiran hooded lantern lights itself with a Continual Flame or extinguishes itself. Once per day when holding the lantern, the user can speak a command word to use Bless. If placed on a sturdy surface and another command word is spoken, it activates a Consecrate effect, though this effect immediately ends if the lantern is moved or its light is extinguished."
+        "value": "[redacted PI]"
       }
     ],
     "weight_lbs": 2.0
   },
   "ingested_at": "2026-08-17T12:09:37Z",
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
   "population": "in_scope",
   "source": {
     "kind": "lst_token",

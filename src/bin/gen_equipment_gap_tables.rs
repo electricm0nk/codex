@@ -89,6 +89,47 @@ fn blacklist_hit(text: &str) -> Option<&'static str> {
     PI_BLACKLIST_TERMS.iter().find(|term| text.contains(**term)).copied()
 }
 
+/// Outcome of screening one parsed record for Product Identity before it
+/// may enter the compiled table. This IS the production screen -- `main()`'s
+/// per-record loop calls it directly, and `blacklist_screen_tests` drives it
+/// directly too, so a test asserting this function's behavior can never pass
+/// while the real screen has been removed or bypassed (wave-12 adversarial
+/// review CONFIRMED the prior test defined its own local re-implementation
+/// instead, which survived deletion of the whole production screen).
+enum ScreenOutcome {
+    /// The record's own corpus row declares `NAMEISPI:YES` -- a name cannot
+    /// be redacted, so the whole record is excluded.
+    ExcludedDeclaredName,
+    /// The record's `name`/`key` hits the blacklist term scan even though
+    /// nothing declared it -- same exclusion, undeclared shape.
+    ExcludedBlacklistName,
+    /// The record survives screening, carrying whichever redaction(s) fired
+    /// so the caller's receipt counters stay accurate.
+    Kept { record: ParsedRecord, description_pi_redacted: bool, description_blacklist_redacted: bool },
+}
+
+fn screen_record(mut record: ParsedRecord, declared: DeclaredProductIdentity) -> ScreenOutcome {
+    if declared.name {
+        return ScreenOutcome::ExcludedDeclaredName;
+    }
+    let mut description_pi_redacted = false;
+    if declared.description {
+        description_pi_redacted = true;
+        record.description = Some(REDACTED_PI_MARKER.to_string());
+    }
+    if blacklist_hit(&record.name).is_some() || blacklist_hit(&record.key).is_some() {
+        return ScreenOutcome::ExcludedBlacklistName;
+    }
+    let mut description_blacklist_redacted = false;
+    if let Some(desc) = &record.description
+        && blacklist_hit(desc).is_some()
+    {
+        description_blacklist_redacted = true;
+        record.description = Some(REDACTED_PI_MARKER.to_string());
+    }
+    ScreenOutcome::Kept { record, description_pi_redacted, description_blacklist_redacted }
+}
+
 // SD31-E6-F10-003: short codes for 13 further already-compiled books that
 // carry `not-ingested` equipment/equipment_modifier residue but have no
 // hand-authored `equipment_resolver::EQUIPMENT_BOOK_*` constant of their
@@ -785,38 +826,32 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 // redacted, `pi_screening::DeclaredProductIdentity::name`'s
                 // own doc comment); a declared-PI description is redacted to
                 // the marker, same as every other PI-screened description in
-                // this program.
+                // this program. `screen_record` (below) is the real
+                // production screen; `blacklist_screen_tests` drives THIS
+                // function directly rather than a hand-rolled restatement
+                // that cannot detect it being removed (wave-12 adversarial
+                // review CONFIRMED the prior in-test `fn screen` was a gate
+                // that could not fail).
                 let declared = declared_pi_at(path, record.line);
-                if declared.name {
-                    name_pi_excluded += 1;
-                    continue;
+                match screen_record(record, declared) {
+                    ScreenOutcome::ExcludedDeclaredName => {
+                        name_pi_excluded += 1;
+                        continue;
+                    }
+                    ScreenOutcome::ExcludedBlacklistName => {
+                        blacklist_name_excluded += 1;
+                        continue;
+                    }
+                    ScreenOutcome::Kept { record, description_pi_redacted: d1, description_blacklist_redacted: d2 } => {
+                        if d1 {
+                            description_pi_redacted += 1;
+                        }
+                        if d2 {
+                            blacklist_description_redacted += 1;
+                        }
+                        rows.push(record);
+                    }
                 }
-                let mut record = record;
-                if declared.description {
-                    description_pi_redacted += 1;
-                    record.description = Some(REDACTED_PI_MARKER.to_string());
-                }
-                // `SD31-E6-F10-004`: the per-record counterpart to
-                // `screen_generated_table`'s whole-file blacklist hard stop
-                // (`blacklist_hit`'s own doc comment). A blacklisted NAME or
-                // KEY excludes the whole record (the same "a name cannot be
-                // redacted" rule `declared_pi_at` already applies); a
-                // blacklisted DESCRIPTION is redacted to the marker, keeping
-                // the record. Checked even when `declared.description`
-                // already redacted above -- cheap, and the two screens catch
-                // different, non-overlapping shapes (declared token vs. bare
-                // prose), so running both is not redundant.
-                if blacklist_hit(&record.name).is_some() || blacklist_hit(&record.key).is_some() {
-                    blacklist_name_excluded += 1;
-                    continue;
-                }
-                if let Some(desc) = &record.description
-                    && blacklist_hit(desc).is_some()
-                {
-                    blacklist_description_redacted += 1;
-                    record.description = Some(REDACTED_PI_MARKER.to_string());
-                }
-                rows.push(record);
             }
         }
 
@@ -1313,30 +1348,74 @@ mod blacklist_screen_tests {
     /// a player: the backstop still runs over the finished table.
     #[test]
     fn production_logic_excludes_a_blacklisted_name_and_redacts_a_blacklisted_description() {
-        // Mirrors the exact branch shape in `run()`'s per-record loop.
-        fn screen(name: &str, key: &str, description: Option<&str>) -> Option<Option<String>> {
-            if blacklist_hit(name).is_some() || blacklist_hit(key).is_some() {
-                return None; // whole record excluded
-            }
-            match description {
-                Some(d) if blacklist_hit(d).is_some() => {
-                    Some(Some(REDACTED_PI_MARKER.to_string()))
-                }
-                other => Some(other.map(|s| s.to_string())),
+        // **Wave-12 fix**: drives the REAL production function
+        // (`screen_record`, called by `main()`'s own per-record loop) rather
+        // than a hand-rolled restatement — adversarial review CONFIRMED the
+        // prior version of this test defined its own local `fn screen`,
+        // which could not detect the production screen being removed
+        // entirely (verified by deleting `main()`'s screening block: all
+        // three tests in this module still passed). This version cannot
+        // make that mistake because there is only one `screen_record` to
+        // call.
+        fn record(name: &str, description: Option<&str>) -> ParsedRecord {
+            ParsedRecord {
+                key: name.to_string(),
+                name: name.to_string(),
+                category: "General",
+                cost_gp: None,
+                weight_lbs: None,
+                description: description.map(|d| d.to_string()),
+                line: 1,
             }
         }
-        assert_eq!(screen("Altar of Desna", "Altar of Desna", None), None);
-        assert_eq!(
-            screen(
-                "Cloak Of The Night Sky",
-                "Cloak Of The Night Sky",
-                Some("...If Desna is the wearer's patron...")
-            ),
-            Some(Some(REDACTED_PI_MARKER.to_string()))
-        );
-        assert_eq!(
-            screen("Masterwork Backpack", "Masterwork Backpack", Some("A sturdy pack.")),
-            Some(Some("A sturdy pack.".to_string()))
-        );
+        let clean = DeclaredProductIdentity::default();
+
+        match screen_record(record("Altar of Desna", None), clean) {
+            ScreenOutcome::ExcludedBlacklistName => {}
+            _ => panic!("a blacklisted NAME must exclude the whole record"),
+        }
+
+        match screen_record(
+            record("Cloak Of The Night Sky", Some("...If Desna is the wearer's patron...")),
+            clean,
+        ) {
+            ScreenOutcome::Kept { record, description_pi_redacted, description_blacklist_redacted } => {
+                assert_eq!(record.description.as_deref(), Some(REDACTED_PI_MARKER));
+                assert!(!description_pi_redacted, "not a DECLARED hit -- must count as the blacklist counter, not the declared one");
+                assert!(description_blacklist_redacted);
+            }
+            _ => panic!("a blacklisted free-text DESCRIPTION must redact and keep the record"),
+        }
+
+        match screen_record(record("Masterwork Backpack", Some("A sturdy pack.")), clean) {
+            ScreenOutcome::Kept { record, description_pi_redacted, description_blacklist_redacted } => {
+                assert_eq!(record.description.as_deref(), Some("A sturdy pack."));
+                assert!(!description_pi_redacted);
+                assert!(!description_blacklist_redacted);
+            }
+            _ => panic!("a clean record must be kept with its description untouched"),
+        }
+    }
+
+    /// A DECLARED `NAMEISPI:YES` excludes the record even when its name
+    /// carries no blacklist term at all -- the two exclusion paths
+    /// (`ExcludedDeclaredName`/`ExcludedBlacklistName`) are genuinely
+    /// distinct branches, not one path double-counted as the other.
+    #[test]
+    fn a_declared_name_hit_excludes_even_with_no_blacklist_term() {
+        let record = ParsedRecord {
+            key: "Belkzen Battle Standard".to_string(),
+            name: "Belkzen Battle Standard".to_string(),
+            category: "General",
+            cost_gp: None,
+            weight_lbs: None,
+            description: None,
+            line: 1,
+        };
+        let declared = DeclaredProductIdentity { name: true, description: false };
+        match screen_record(record, declared) {
+            ScreenOutcome::ExcludedDeclaredName => {}
+            _ => panic!("a declared NAMEISPI:YES record must be excluded via the declared path"),
+        }
     }
 }

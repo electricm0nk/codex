@@ -34,15 +34,15 @@
       },
       {
         "key": "DESC",
-        "value": "This elaborate key on a fine gold chain always glints, even in the dimmest light. The bearer can use it to lock (but not unlock) any nonmagical lock as if it were the proper key. Once per day, the bearer can turn the key clockwise once to activate a Shield of Faith upon herself (though if the wearer is chaotic it provides only a +1 deflection bonus). If Abadar is the bearer's patron: the key counts as a holy symbol; once per day, the bearer can speak a command word and summon a two-headed eagle as if using Summon Monster II (the eagle's extra head does not grant it an extra attack); while the key is worn as a pendant or held in hand, the bearer gains a +2 bonus on Appraise checks to assess an object's value."
+        "value": "[redacted PI]"
       }
     ],
     "weight_lbs": 0.0
   },
   "ingested_at": "2026-08-17T12:09:37Z",
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
   "population": "in_scope",
   "source": {
     "kind": "lst_token",

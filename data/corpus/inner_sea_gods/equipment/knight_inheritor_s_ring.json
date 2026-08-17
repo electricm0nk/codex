@@ -51,15 +51,15 @@
       },
       {
         "key": "DESC",
-        "value": "This simple gold band is engraved with the holy symbol of Iomedae. It functions as a ring of protection +1. In addition, the wearer can use Bless Weapon and Wartrain Mount each once per day. At will, the wearer can make himself presentable as if using Prestidigitation to clean up his clothing, skin, hair, and armor."
+        "value": "[redacted PI]"
       }
     ],
     "weight_lbs": 0.0
   },
   "ingested_at": "2026-08-17T12:09:37Z",
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
   "population": "in_scope",
   "source": {
     "kind": "lst_token",

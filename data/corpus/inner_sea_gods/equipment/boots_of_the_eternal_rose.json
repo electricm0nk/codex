@@ -43,19 +43,19 @@
       },
       {
         "key": "SPELLS",
-        "value": "Boots Of The Eternal Rose|TIMES=1|CASTERLEVEL=3|Daze Monster|PREDEITY:1,Shelyn"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "These leather boots are found in a variety of styles but always have a prominent engraving of a rose. The wearer gains a +2 competence bonus on Perform (Dance) and Stealth checks. The wearer may move through areas of flowers (whether wild-growing or a garden) at normal speed and without suffering any impairment or taking damage from thorns, brambles, or similar hazards; areas of flowers that have been magically manipulated to impede motion still affect the wearer. If Shelyn is the wearer's patron: the wearer may use Daze Monster once per day; if the wearer is dancing, singing, or using some other perform skill as part of a performance lasting at least 1 minute, he may activate Daze Monster as a free action during his performance; as a free action once per round, the wearer may conjure a beautiful, nonmagical, common flower (such as a daisy, pansy, rose, sunflower, or the like) that lasts for 1 day before crumbling into perfume and dust."
+        "value": "[redacted PI]"
       }
     ],
     "weight_lbs": 1.0
   },
   "ingested_at": "2026-08-17T12:09:37Z",
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
   "population": "in_scope",
   "source": {
     "kind": "lst_token",

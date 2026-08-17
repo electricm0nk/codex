@@ -9,11 +9,7 @@
     "raw_bonus_chains": [
       {
         "qualifiers": [
-          "COMBAT",
-          "AC",
-          "1",
-          "TYPE=NaturalArmor",
-          "PREDEITY:1,Iomedae"
+          "[redacted PI]"
         ]
       }
     ],
@@ -48,15 +44,15 @@
       },
       {
         "key": "DESC",
-        "value": "This brilliant red cloak bears a golden symbol of an upright winged sword. The wearer can use Bless once per day. If Iomedae is the wearer's patron: the wearer gains a +1 enhancement bonus to natural armor; as a standard action, the wearer can create an illusory image of Iomedae's banner, which floats 2 to 5 feet above the wearer's head and remains in place as long as the wearer is conscious. If the wearer has the banner class feature, she can use this battle standard as her banner."
+        "value": "[redacted PI]"
       }
     ],
     "weight_lbs": 1.0
   },
   "ingested_at": "2026-08-17T12:09:37Z",
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
   "population": "in_scope",
   "source": {
     "kind": "lst_token",

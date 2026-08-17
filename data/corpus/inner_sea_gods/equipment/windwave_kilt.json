@@ -43,19 +43,19 @@
       },
       {
         "key": "SPELLS",
-        "value": "Windwave Kilt|TIMES=1|CASTERLEVEL=5|Gaseous Form|PREDEITY:1,Gozreh"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "This kilt is made of thick woven strips of sea-green and sky-blue cloth decorated with tiny pearls and bits of coral along the beltline. The wearer gains a +3 competence bonus on Swim checks. When not worn, a windwave kilt floats on water like a dry log, automatically buoying upward any creature that weighs 100 pounds or less and aiding in flotation for heavier creatures. If Gozreh is the wearer's patron, once per day the wearer can use Gaseous Form. In this form, the wearer does not need to breathe and can enter water or other liquid, appearing as a mass of fine bubbles and gaining the ability to swim at a speed of 10 feet. The wearer can also drink salt water as if it were fresh water."
+        "value": "[redacted PI]"
       }
     ],
     "weight_lbs": 5.0
   },
   "ingested_at": "2026-08-17T12:09:37Z",
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
   "population": "in_scope",
   "source": {
     "kind": "lst_token",

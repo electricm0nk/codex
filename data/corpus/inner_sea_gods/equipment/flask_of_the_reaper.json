@@ -34,15 +34,15 @@
       },
       {
         "key": "DESC",
-        "value": "This metal container looks like a hip flask for carrying alcoholic drinks except it is barely larger than a potion vial. The side of the flask may be blank or have a personalized decoration, but the screw-on stopper usually bears a mark like a shield or perhaps a featureless mask. Once per day, the bearer can drink from the flask to gain a +5 alchemical bonus on Fortitude saving throws against poison and a +5 competence bonus on Stealth checks for 1 hour. If Norgorber is the bearer's patron, once per day the bearer can drink from the flask to gain a +5 competence bonus on perception, Sleight of Hand, or Stealth checks (drinker's choice) for 1 hour. In addition, the bearer can pour acid from the flask (equivalent in volume to a standard acid flask) once per day."
+        "value": "[redacted PI]"
       }
     ],
     "weight_lbs": 0.0
   },
   "ingested_at": "2026-08-17T12:09:37Z",
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
   "population": "in_scope",
   "source": {
     "kind": "lst_token",

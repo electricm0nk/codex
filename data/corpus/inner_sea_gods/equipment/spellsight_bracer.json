@@ -43,19 +43,19 @@
       },
       {
         "key": "SPELLS",
-        "value": "Spellsight Bracer|TIMES=1|CASTERLEVEL=5|Detect Magic|PREDEITY:1,Nethys"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "Dozens of variants of this bracer exist, but they are usually leather, always ornately patterned, and bear a single spherical polished stone or gem (typically a carbuncle, olivine, or sard) mounted near the wrist. Medium to high-ranking Nethysian priests and priestesses often wear spellsight bracers, which also serve as a quick means of identifying fellow followers of the All-Seeing Eye. The wearer can use Detect Magic once per day. When she does, the spherical stone or gem in the bracer appears to open like a human eye. The bracer also provides a +1 resistance bonus on Will saving throws. If Nethys is the wearer's patron; the wearer can use the bracer as if it were a lesser silent metamagic rod once per day; the wearer can spontaneously convert prepared spells or use available spell slots to cast Mage Hand, even if this spell is not on the wearer's class spell list or the wearer does not know the spell. Using either of these abilities also causes the eye in the bracer to open."
+        "value": "[redacted PI]"
       }
     ],
     "weight_lbs": 1.0
   },
   "ingested_at": "2026-08-17T12:09:37Z",
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
   "population": "in_scope",
   "source": {
     "kind": "lst_token",

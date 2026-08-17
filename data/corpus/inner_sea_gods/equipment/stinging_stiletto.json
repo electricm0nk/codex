@@ -47,19 +47,19 @@
       },
       {
         "key": "SPELLS",
-        "value": "Stinging Stiletto|TIMES=1|CASTERLEVEL=3|Fox's Cunning|PREDEITY:1,Calistria"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "This tiny dagger has a black leather hilt and a gold-inlaid pattern of stripes and sharp angles on its steel blade. It can transform into a delicate necklace or ornate finger-ring at the wearer's command. The wearer gains a +3 competence bonus on Perception checks while the item is carried or worn. The wearer can also use it to cast Ghost Sound once per day. If Calistria is the wearer's patron: once per day the wearer may speak a command word to use Fox's Cunning; as a standard action, the wearer can prick her finger with the dagger and swear an oath on her own blood to avenge herself against a particular named creature; the wearer gains a +1 competence bonus on her next attack roll within 1 minute against that creature. Speaking a new vengeance-oath removes the old one, whether or not the wearer has achieved her vengeance."
+        "value": "[redacted PI]"
       }
     ],
     "weight_lbs": 0.0
   },
   "ingested_at": "2026-08-17T12:09:37Z",
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
   "population": "in_scope",
   "source": {
     "kind": "lst_token",

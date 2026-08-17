@@ -43,19 +43,19 @@
       },
       {
         "key": "SPELLS",
-        "value": "Bronze Skinning Knife|TIMES=1|CASTERLEVEL=5|True Strike|PREDEITY:1,Erastil"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "This bronze skinning knife bears the symbol of Old Deadeye on its blade. Designed as a hunting tool, it cannot be used as an effective weapon. As long as the bearer carries the knife, he can find enough food and water in the wilderness to satisfy one creature's hunger and thirst (either the bearer himself or someone traveling with him). In addition, the bearer gains a +1 resistance bonus on Fortitude saving throws. If Erastil is the bearer's patron: once per day the bearer can speak a command word to use True Strike; once per day the bearer can speak a command word to give a touched thrown weapon, arrow, or bolt the returning weapon special ability for 1 minute. A magic arrow or bolt that returns does not keep its magical properties but is still usable as masterwork ammunition."
+        "value": "[redacted PI]"
       }
     ],
     "weight_lbs": 1.0
   },
   "ingested_at": "2026-08-17T12:09:37Z",
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
   "population": "in_scope",
   "source": {
     "kind": "lst_token",

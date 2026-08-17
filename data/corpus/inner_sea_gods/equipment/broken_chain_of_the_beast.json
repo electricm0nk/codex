@@ -38,19 +38,19 @@
       },
       {
         "key": "SPELLS",
-        "value": "Broken Chain Of The Beast|TIMES=1|CASTERLEVEL=5|Rage (Self only)|PREDEITY:1,Rovagug"
+        "value": "[redacted PI]"
       },
       {
         "key": "DESC",
-        "value": "This 8-foot length of corroded, broken chain is threaded with a leather strap to hold it together; it is worn like a belt and must be tied in place, as it lacks a buckle. Once per day, the wearer can call upon its power to summon an evil creature from the Summon Monster I list; the creature attacks the wearer's enemies if any are present, but it is not under the wearer's control and attacks the wearer or the wearer's allies if there are no more enemies to kill. If Rovagug is the wearer's patron, the wearer can gain the benefits of a Rage spell once per day by speaking the god's name. If the wearer is ever bound, shackled, or otherwise rendered helpless while still conscious, this rage ability automatically activates if the wearer hasn't already used it that day."
+        "value": "[redacted PI]"
       }
     ],
     "weight_lbs": 5.0
   },
   "ingested_at": "2026-08-17T12:09:37Z",
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
   "population": "in_scope",
   "source": {
     "kind": "lst_token",

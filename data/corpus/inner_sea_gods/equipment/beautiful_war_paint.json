@@ -34,15 +34,15 @@
       },
       {
         "key": "DESC",
-        "value": "This pot of multicolored makeup was created by warpriests of Shelyn who wanted to be beautiful as well as deadly in battle. It can be used as conventional makeup, stage makeup, or war paint. It can be applied quickly for a lesser effect, but its true power is revealed when it's applied with great care. If the wearer applies the makeup as a full-round action, she gains the effects of Bless and Expeditious Retreat. If the wearer applies the makeup over the course of 10 minutes, she gains the effects of Good Hope and Haste. Applying the makeup provokes attacks of opportunity. The finished makeup has no effect until the wearer activates it as a swift action, at which time its magic lasts either 5 minutes or 5 rounds, depending on the duration of the activated spells (thereafter, the makeup lasts as long as high-quality nonmagical makeup). The magic of the makeup fades after 24 hours if not activated. The makeup uses only the head magic item slot when applied (the pot does not use a magic item slot). The pot contains enough makeup for three uses."
+        "value": "[redacted PI]"
       }
     ],
     "weight_lbs": 1.0
   },
   "ingested_at": "2026-08-17T12:09:37Z",
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
   "population": "in_scope",
   "source": {
     "kind": "lst_token",

@@ -49,15 +49,15 @@
       },
       {
         "key": "DESC",
-        "value": "These calf-high leather boots are inscribed with Cayden Cailean's holy symbol. The wearer can stand up from prone without provoking attacks of opportunity and gains a +4 bonus to CMD against bull rush and trip combat maneuvers. Once per day as an immediate action, the wearer can move up to 30 feet; this movement provokes attacks of opportunity as normal."
+        "value": "[redacted PI]"
       }
     ],
     "weight_lbs": 1.0
   },
   "ingested_at": "2026-08-17T12:09:37Z",
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
   "population": "in_scope",
   "source": {
     "kind": "lst_token",
