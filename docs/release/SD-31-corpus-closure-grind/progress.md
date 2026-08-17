@@ -21105,9 +21105,12 @@ the mod_only_rescue root-cause finding (§3).
 
 ### §12 — Reclaim
 
-`scripts/reclaim.sh --apply` run at cycle close, after `driver.sh stop` and after this cycle's
-own scratch `CARGO_TARGET_DIR`s (`sd31-feat-matcher-regen`, `sd31-feat-matcher-desktop`) were
-confirmed to have zero live PID referencing them.
+`scripts/reclaim.sh --apply` run at cycle close: `0 item(s), 0.0B` via the tool's own 6h-freshness
+policy (all three of this cycle's own `CARGO_TARGET_DIR`s were too fresh to qualify). Confirmed
+zero live PID referenced any of `sd31-feat-matcher`, `sd31-feat-matcher-regen`,
+`sd31-feat-matcher-desktop` (`ps aux | grep cargo-targets/sd31-feat-matcher`, empty), then removed
+all three manually, matching the established precedent for this exact situation. **~40GB
+reclaimed**: `df -B1G /` 557G used (58%) -> 517G used (54%).
 
 ### Branch tip
 
