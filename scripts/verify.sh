@@ -107,8 +107,8 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
+ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
+QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -668,6 +668,138 @@ run_site_dashboard_pi_gate() {
     local summary
     summary=$(sed -n 's/^site-dashboard-pi-gate: CLEAN — \(.*\)$/\1/p' "$log" | tail -1)
     stage_pass site-dashboard-pi-gate "${summary:-clean}"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: build-public-status-selftest
+#
+# Runs `python3 -m unittest scripts/tests/test_build_public_status.py` --
+# SITE-PUBSTATUS-001's own self-test for `scripts/site/build_public_status.py`
+# (PI screening, the public done/partial/not-started doneness bucket
+# mapping, and the standing/denominator wiring). Same shape as
+# `pi-redaction-selftest`/`provenance-selftest` above: a scratch-fixture
+# unit test, no pinned oracle or committed ledger required, cheap enough for
+# both stage sets.
+# ---------------------------------------------------------------------------
+
+run_build_public_status_selftest() {
+    stage_start "build-public-status-selftest — python3 -m unittest scripts/tests/test_build_public_status.py"
+    local log="$LOG_DIR/build-public-status-selftest.log"
+    local script="$REPO_ROOT/scripts/tests/test_build_public_status.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail build-public-status-selftest "self-test script missing at scripts/tests/test_build_public_status.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 -m unittest -v "$script" ) >"$log" 2>&1
+    local status=$?
+
+    local ran
+    ran=$(sed -n 's/^Ran \([0-9]*\) tests\? in .*$/\1/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail build-public-status-selftest "self-test exit $status${ran:+; ran $ran}  — $log"
+        return
+    fi
+
+    if [[ -z "$ran" || "$ran" -eq 0 ]]; then
+        stage_fail build-public-status-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass build-public-status-selftest "$ran cases passed"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: site-public-status-check
+#
+# Runs `python3 scripts/site/build_public_status.py --check` directly against
+# the actually-committed `site/status-data.json` and `site/status-data/*.json`
+# -- the operator's explicit self-maintaining requirement ("the data set...
+# needs to be a part of our normal process just like it is for our
+# pf1e-dashboard.html"), applied as its own named, directly-invoked gate
+# (rather than only transitively through `site-dashboard-check`'s call into
+# `scripts/publish-site-dashboard.sh --check`, which also reaches this same
+# script — see that script's own trailing step). Cheap (reads local repo
+# files plus one pinned-oracle sweep for the redaction indices, no cargo
+# build), so it sits in both stage sets next to its own selftest and PI
+# gate. A failure here means: run
+# `python3 scripts/site/build_public_status.py` and commit the refreshed
+# projection.
+# ---------------------------------------------------------------------------
+
+run_site_public_status_check() {
+    stage_start "site-public-status-check — scripts/site/build_public_status.py --check"
+    local log="$LOG_DIR/site-public-status-check.log"
+    local script="$REPO_ROOT/scripts/site/build_public_status.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail site-public-status-check "script missing at scripts/site/build_public_status.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 "$script" --check ) >"$log" 2>&1
+    local status=$?
+
+    if (( status != 0 )); then
+        stage_fail site-public-status-check "exit $status — $log"
+        return
+    fi
+
+    if ! grep -q "^OK: " "$log"; then
+        stage_fail site-public-status-check "exited 0 without confirming currency — $log"
+        return
+    fi
+
+    stage_pass site-public-status-check "site/status-data.json and site/status-data/*.json are current"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: site-public-status-pi-gate
+#
+# Decision 12's binding implementation requirement #3, applied to the
+# PUBLIC status projection specifically (`site-dashboard-pi-gate` above
+# covers the separate `site/dashboard/**` surface): "A verify.sh stage must
+# fail when the committed feed or any shard carries a declared-PI name."
+# Runs `scripts/site_public_status_pi_gate.py` for real against whatever is
+# actually committed under `site/status-data.json` and
+# `site/status-data/*.json` -- the SAFETY NET behind
+# `build_public_status.py`'s own generation-time redaction
+# (`redact_for_display`'s per-book name check plus its `type_facet`
+# substring screen, and the final blanket exact-match sweep over the whole
+# assembled document). Cloudflare Pages deploys `site/**` on push to `main`
+# with no build step, so this gate is the last thing standing between a
+# leaked name and a live page. Cheap (a ~2.5s Paizo-scoped oracle sweep, no
+# build) -- placed in BOTH stage sets next to `site-public-status-check`.
+# ---------------------------------------------------------------------------
+
+run_site_public_status_pi_gate() {
+    stage_start "site-public-status-pi-gate — declared-PI names vs. what is committed under site/status-data*"
+    local log="$LOG_DIR/site-public-status-pi-gate.log"
+    local script="$REPO_ROOT/scripts/site_public_status_pi_gate.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail site-public-status-pi-gate "gate script missing at scripts/site_public_status_pi_gate.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 "$script" ) >"$log" 2>&1
+    local status=$?
+
+    if (( status != 0 )); then
+        stage_fail site-public-status-pi-gate "declared-PI name found, or the oracle could not be read (exit $status) — $log"
+        return
+    fi
+
+    if ! grep -q '^site-public-status-pi-gate: CLEAN' "$log"; then
+        stage_fail site-public-status-pi-gate "exited 0 without reporting CLEAN — $log"
+        return
+    fi
+
+    local summary
+    summary=$(sed -n 's/^site-public-status-pi-gate: CLEAN — \(.*\)$/\1/p' "$log" | tail -1)
+    stage_pass site-public-status-pi-gate "${summary:-clean}"
 }
 
 # ---------------------------------------------------------------------------
@@ -1664,6 +1796,9 @@ for stage in "${SELECTED[@]}"; do
         site-dashboard-selftest) run_site_dashboard_selftest ;;
         site-dashboard-check) run_site_dashboard_check ;;
         site-dashboard-pi-gate) run_site_dashboard_pi_gate ;;
+        build-public-status-selftest) run_build_public_status_selftest ;;
+        site-public-status-check) run_site_public_status_check ;;
+        site-public-status-pi-gate) run_site_public_status_pi_gate ;;
         reachability-audit-selftest) run_reachability_audit_selftest ;;
         reachability-audit)  run_reachability_audit ;;
         groundtruth-guard-selftest) run_groundtruth_guard_selftest ;;

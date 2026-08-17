@@ -8,7 +8,7 @@ kind — and writes:
   - site/status-data.json           overall + per-book summary
   - site/status-data/<book_id>.json per-book detail: per-kind rollups and
                                      the full item list with each item's
-                                     doneness verdict
+                                     public doneness bucket and standing
 
 This deliberately does NOT read site/dashboard/PF1e-dashboard.json. That
 file is a pre-aggregated summary computed by a separate pipeline (engine
@@ -16,16 +16,43 @@ state-dump binaries, a doneness cache, etc.) that depends on more of the
 operator's machine than a plain checkout has, and it has degraded to
 all-zero aggregates twice in one evening for exactly that reason. The unit
 ledgers are the first-party source those aggregates are themselves derived
-from — recomputing straight from them here has no such dependency and, on
-the last known-good comparison, produced byte-identical figures (10,759 /
-38,521, 27.9%) to the pipeline it replaces.
+from — recomputing straight from them here has no such dependency.
 
 This is a projection, not a trim: it only ever *copies specific fields* it
 knows about (name, book id, a curated display-name/label map, a doneness
-verdict) into a new document. It never passes through free-text fields from
-elsewhere in the dashboard tree, so agent snippets, decisions, session
-prose, worktree paths, and Claude usage/quota data structurally cannot leak
-into the output even if that tree's shape changes.
+verdict, a provenance standing) into a new document. It never passes
+through free-text fields from elsewhere in the dashboard tree, so agent
+snippets, decisions, session prose, worktree paths, and Claude usage/quota
+data structurally cannot leak into the output even if that tree's shape
+changes.
+
+THREE SAFETY/CORRECTNESS RULES THIS SCRIPT ENFORCES (2026-08-17, operator
+ruling — see SD-31-corpus-closure-grind/decisions.md §12 and §14):
+
+1. PI SCREENING (Decision 12, "withhold the name, keep the row"). Every
+   `name` and every `type_facet` is checked against the pinned PCGen
+   oracle's own declared-PI state (`scripts/observer/pi_redaction.py` — the
+   AUTHORITY is the record's own `NAMEISPI:`/`DESCISPI:` declaration, never
+   a hand-maintained blacklist) and replaced with
+   `pi_redaction.REDACTED_PI_MARKER` when it is declared PI. The row
+   itself, its counts, its standing and its doneness are unaffected — only
+   the display string is withheld.
+
+2. PUBLIC DONENESS BUCKETS. The internal six-value doneness verdict
+   (`pf1e_dashboard_producer.doneness_verdict`) is collapsed to the three
+   public buckets `done` / `partial` / `not-started` via
+   `DONENESS_TO_PUBLIC` below (see that mapping's own comment for the
+   per-value rationale).
+
+3. STANDING AND THE DENOMINATOR (Decision 14). Every item also carries a
+   `standing` — one of `scripts/observer/provenance.py`'s nine canonical
+   statuses (or its `unclassified` bookkeeping value), reused rather than
+   reimplemented. `denominator = origin + variant`
+   (`provenance.DENOMINATOR_STATUSES`) — only items with a qualifying
+   standing count toward `done`/`denominator`/`pct` at every rollup level.
+   Every other standing is still SHOWN (the item's own `standing` field,
+   and each rollup's `standing_breakdown` + `excluded_from_percentage`) —
+   never silently dropped from view, only from the percentage math.
 
 Usage:
     python3 scripts/site/build_public_status.py
@@ -47,9 +74,61 @@ BOOK_DETAIL_DIR = REPO_ROOT / "site" / "status-data"
 # never quietly disagree with the engineering-side doneness definition.
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "observer"))
 import pf1e_dashboard_producer as producer  # noqa: E402
+import pi_redaction  # noqa: E402
+import provenance  # noqa: E402
 
-DONE = producer.DONENESS_DONE
-EXCLUDED_FROM_DENOMINATOR = {producer.DONENESS_UNMEASURABLE, producer.DONENESS_DEFERRED}
+REDACTED_PI_MARKER = pi_redaction.REDACTED_PI_MARKER
+
+# --- Public doneness buckets (operator ruling 2026-08-17) -----------------
+#
+# "Anything that 'counts' should either be done, partial, or not started."
+# Derived from the producer's own six-value doneness_verdict() output, never
+# a re-implementation of its (wiring_class, status, kind) table:
+#
+#   done          -> done      the unchanged best-evidence bucket
+#   held          -> partial   real, partial progress recorded by the ladder
+#   in-progress   -> partial   same — real, partial progress
+#   not-started   -> not-started
+#   unmeasurable  -> not-started   JUDGEMENT CALL: we cannot yet measure
+#                    these units at all, so claiming ANY of "done" or
+#                    "partial" would overstate what is known. Under-claiming
+#                    is the correct direction here, not the flattering one.
+#   deferred      -> not-started   explicitly deferred work is not done and
+#                    not in progress; "not started" is the honest bucket.
+DONENESS_DONE = "done"
+DONENESS_PARTIAL = "partial"
+DONENESS_NOT_STARTED = "not-started"
+PUBLIC_DONENESS_VALUES = (DONENESS_DONE, DONENESS_PARTIAL, DONENESS_NOT_STARTED)
+
+DONENESS_TO_PUBLIC = {
+    producer.DONENESS_DONE: DONENESS_DONE,
+    producer.DONENESS_HELD: DONENESS_PARTIAL,
+    producer.DONENESS_IN_PROGRESS: DONENESS_PARTIAL,
+    producer.DONENESS_NOT_STARTED: DONENESS_NOT_STARTED,
+    producer.DONENESS_UNMEASURABLE: DONENESS_NOT_STARTED,
+    producer.DONENESS_DEFERRED: DONENESS_NOT_STARTED,
+}
+# Fail loud if the producer ever adds a seventh doneness value this mapping
+# does not know about — silently defaulting an unmapped verdict would be
+# exactly the kind of confidently-wrong figure this package keeps finding.
+_unmapped = set(producer.DONENESS_VALUES) - set(DONENESS_TO_PUBLIC)
+if _unmapped:
+    raise KeyError(
+        f"producer.DONENESS_VALUES has value(s) {sorted(_unmapped)} with no "
+        "entry in DONENESS_TO_PUBLIC — add one before regenerating."
+    )
+
+# --- Standing / provenance (Decision 14) -----------------------------------
+#
+# `core_essentials` is the one already-decided packaging-artifact book
+# (decisions.md §9's census) -- every (object, book) pair naming it is
+# `packaging-artifact` unconditionally, per provenance.classify_unambiguous.
+PACKAGING_ARTIFACT_BOOKS = frozenset({"core_essentials"})
+
+# Only these standings count toward the published denominator. Reused
+# directly from provenance.py (never hand-listed) so a future change to the
+# canonical set is inherited automatically rather than silently missed here.
+DENOMINATOR_STANDINGS = provenance.DENOMINATOR_STATUSES
 
 # Curated display labels for the unit "kind" facets. Fail-loud: an
 # unrecognized kind raises instead of silently omitting it.
@@ -108,13 +187,13 @@ BOOK_TITLES = {
 }
 
 
-def load_units_by_kind():
+def load_units_by_kind(units_dir: Path = UNITS_DIR):
     """Read every site/dashboard/units/PF1e-units-<kind>.json ledger.
 
     Returns {kind: [{name, book, status, wiring_class, type_facet}, ...]}.
     """
     by_kind = {}
-    for path in sorted(UNITS_DIR.glob("PF1e-units-*.json")):
+    for path in sorted(units_dir.glob("PF1e-units-*.json")):
         doc = json.loads(path.read_text())
         kind = doc["kind"]
         fields = doc["fields"]
@@ -128,34 +207,151 @@ def load_units_by_kind():
 
 
 def classify_all(units_by_kind):
-    """Attach a doneness verdict to every row, across every book (including
-    ones not in BOOK_TITLES) — needed so the overall headline matches the
-    "everything in scope" definition rather than only the shown books.
+    """Attach a raw (internal, six-value) doneness verdict to every row,
+    across every book (including ones not in BOOK_TITLES) — needed so the
+    overall headline matches the "everything in scope" definition rather
+    than only the shown books.
 
-    Returns a flat list of {kind, book, name, doneness, type_facet}.
+    Returns a flat list of {kind, book, name, doneness_raw, type_facet}.
+    Names and type_facets here are the TRUE, unredacted values — provenance
+    identity (object_id) and PI screening both need the real name, so
+    redaction happens in a later, separate pass (see redact_for_display).
     """
     out = []
     for kind, rows in units_by_kind.items():
         for row in rows:
-            doneness = producer.doneness_verdict(row["wiring_class"], row["status"], kind)
+            doneness_raw = producer.doneness_verdict(row["wiring_class"], row["status"], kind)
             out.append({
                 "kind": kind,
                 "book": row["book"],
                 "name": row["name"],
-                "doneness": doneness,
+                "doneness_raw": doneness_raw,
                 "type_facet": row.get("type_facet") or None,
             })
     return out
 
 
-def build_overview(all_items):
-    done = sum(1 for it in all_items if it["doneness"] == DONE)
-    denominator = len(all_items)
-    overall = {
-        "done": done,
+def object_id(item) -> str:
+    """The best identity key available at this ledger layer: kind-qualified
+    name. The unit ledger carries no finer-grained corpus_key (no
+    source_line, no PCC-level identifier), so this is the most precise
+    grouping classify_unambiguous can be given here — it is still correct
+    to keep `kind` in the key (`corpus_identifier_scope_collisions`: "a
+    shared name never implies a shared thing") even though it cannot
+    disambiguate two genuinely different objects of the SAME kind that
+    happen to share a bare name across books; those fall out as
+    `unclassified`, the honest, conservative default classify_unambiguous
+    already uses for anything it cannot prove is a single printing."""
+    return f"{item['kind']}::{item['name']}"
+
+
+def compute_standing(all_items):
+    """{(object_id, book): status} for every item, via
+    provenance.classify_unambiguous — reused, not reimplemented. Runs over
+    ALL items (not just BOOK_TITLES-scoped ones) so an object's cross-book
+    footprint is judged against its full appearance, not a filtered view."""
+    pairs = [(object_id(it), it["book"], it["kind"]) for it in all_items]
+    records = provenance.classify_unambiguous(pairs, PACKAGING_ARTIFACT_BOOKS)
+    return {(r.object_id, r.book): r.status for r in records}
+
+
+def attach_standing_and_public_doneness(all_items, standing_by_pair):
+    """Mutates each item in place: adds `standing`, and replaces
+    `doneness_raw` with the public three-bucket `doneness`."""
+    for it in all_items:
+        it["standing"] = standing_by_pair[(object_id(it), it["book"])]
+        it["doneness"] = DONENESS_TO_PUBLIC[it.pop("doneness_raw")]
+
+
+def _type_facet_carries_declared_pi(type_facet, declared_names_by_length):
+    """True if `type_facet` contains any declared-PI name as a (case-
+    sensitive) substring.
+
+    WHY SUBSTRING HERE, WHEN pi_redaction'S OWN DOCTRINE PREFERS EXACT
+    MATCH: `type_facet` is not a natural-language object name (where a
+    substring scan false-positived on "Shackles of Compliance" containing
+    "Shackles" — see pi_redaction.find_declared_pi_leaks's own docstring);
+    it is a compound, PCGen-TYPE-derived identifier
+    (`MagaambyanInitiateClassFeatures.SpecialQuality.Supernatural`), and a
+    proper noun surfaces there embedded in an adjectival/compound form a
+    whole-token match would miss ("Magaambyan" contains, but does not
+    equal, the declared name "Magaambya"). PROVEN against the live corpus
+    this cycle (SITE-PUBSTATUS-001): a substring sweep over every distinct
+    type_facet in the shipped ledger found exactly 30 genuine hits
+    (Magaambya, Talmandor, Rivethun, Qadira/Qadiran, Varisia, Signifer,
+    Jezelda, Ulfen, Galt, Keleshite, Nex/Nexian, Hermea — all real Golarion
+    proper nouns) and ZERO coincidental short-name collisions, so the
+    false-positive risk that motivated the exact-match rule for object
+    NAMES does not carry over to this different-shaped field."""
+    for name in declared_names_by_length:
+        if name in type_facet:
+            return True
+    return False
+
+
+def redact_for_display(all_items, name_to_books, declared_names):
+    """Mutates each item in place: replaces `name` and, when it carries a
+    declared-PI name, the WHOLE `type_facet` with REDACTED_PI_MARKER.
+    Called AFTER standing has been computed (object_id/provenance identity
+    must use the true name — see classify_all's docstring) so redaction is
+    a pure display-layer concern, never a classification one.
+
+    Two independent checks combine for the `name` field, matching
+    site_dashboard_pi_gate.py's own two-pass posture: `name_to_books` is
+    the precise, per-book declared-PI index (the primary defense, since
+    every row carries its own `book`); `declared_names` is the global
+    unambiguous-everywhere index (the safety net, in case a ledger `book`
+    id and an oracle directory basename ever disagree)."""
+    declared_by_length = sorted(declared_names, key=len, reverse=True)
+    facet_cache: dict[str, bool] = {}
+
+    for it in all_items:
+        name = it["name"]
+        if it["book"] in name_to_books.get(name, ()) or name.strip() in declared_names:
+            it["name"] = REDACTED_PI_MARKER
+
+        tf = it["type_facet"]
+        if tf:
+            if tf not in facet_cache:
+                facet_cache[tf] = _type_facet_carries_declared_pi(tf, declared_by_length)
+            if facet_cache[tf]:
+                it["type_facet"] = REDACTED_PI_MARKER
+
+
+def _standing_breakdown(items):
+    breakdown = {}
+    for it in items:
+        breakdown[it["standing"]] = breakdown.get(it["standing"], 0) + 1
+    return breakdown
+
+
+def _rollup(items):
+    """{done, partial, not_started, denominator, pct, excluded_from_percentage,
+    standing_breakdown} for a list of already-classified, already-redacted
+    items. `denominator` (and therefore `pct`) counts ONLY items whose
+    `standing` is in DENOMINATOR_STANDINGS (origin/errata-source/variant,
+    Decision 14 §5) — every other standing is still counted in
+    `standing_breakdown` and `excluded_from_percentage`, never silently
+    dropped."""
+    counted = [it for it in items if it["standing"] in DENOMINATOR_STANDINGS]
+    denominator = len(counted)
+    done_n = sum(1 for it in counted if it["doneness"] == DONENESS_DONE)
+    partial_n = sum(1 for it in counted if it["doneness"] == DONENESS_PARTIAL)
+    not_started_n = sum(1 for it in counted if it["doneness"] == DONENESS_NOT_STARTED)
+    pct = round(100 * done_n / denominator, 1) if denominator else 0.0
+    return {
+        "done": done_n,
+        "partial": partial_n,
+        "not_started": not_started_n,
         "denominator": denominator,
-        "pct": round(100 * done / denominator, 1) if denominator else 0.0,
+        "pct": pct,
+        "excluded_from_percentage": len(items) - denominator,
+        "standing_breakdown": _standing_breakdown(items),
     }
+
+
+def build_overview(all_items):
+    overall = _rollup(all_items)
 
     by_book = {}
     for it in all_items:
@@ -165,26 +361,17 @@ def build_overview(all_items):
 
     books = []
     for book_id, items in by_book.items():
-        done_n = sum(1 for it in items if it["doneness"] == DONE)
-        denom_n = sum(1 for it in items if it["doneness"] not in EXCLUDED_FROM_DENOMINATOR)
-        pct = round(100 * done_n / denom_n, 1) if denom_n else 0.0
-        books.append({
-            "id": book_id,
-            "title": BOOK_TITLES[book_id],
-            "done": done_n,
-            "denominator": denom_n,
-            "pct": pct,
-        })
+        roll = _rollup(items)
+        books.append({"id": book_id, "title": BOOK_TITLES[book_id], **roll})
     books.sort(key=lambda b: -b["denominator"])
 
     return overall, books
 
 
 def build_book_details(all_items):
-    """Return {book_id: {id, title, kinds: [{kind, label, done, denominator,
-    pct, items: [{name, doneness, type_facet}, ...]}, ...]}} for every book
-    in BOOK_TITLES.
-    """
+    """Return {book_id: {id, title, kinds: [{kind, label, ...rollup,
+    items: [{name, doneness, type_facet, standing}, ...]}, ...]}} for every
+    book in BOOK_TITLES."""
     grouped = {}
     for it in all_items:
         if it["book"] not in BOOK_TITLES:
@@ -193,6 +380,7 @@ def build_book_details(all_items):
             "name": it["name"],
             "doneness": it["doneness"],
             "type_facet": it["type_facet"],
+            "standing": it["standing"],
         })
 
     details = {}
@@ -200,15 +388,11 @@ def build_book_details(all_items):
         kind_entries = []
         for kind, items in kinds_map.items():
             items.sort(key=lambda x: x["name"])
-            done_n = sum(1 for x in items if x["doneness"] == DONE)
-            denom_n = sum(1 for x in items if x["doneness"] not in EXCLUDED_FROM_DENOMINATOR)
-            pct = round(100 * done_n / denom_n, 1) if denom_n else 0.0
+            roll = _rollup(items)
             kind_entries.append({
                 "kind": kind,
                 "label": KIND_LABELS[kind],
-                "done": done_n,
-                "denominator": denom_n,
-                "pct": pct,
+                **roll,
                 "items": items,
             })
         kind_entries.sort(key=lambda k: k["label"])
@@ -219,10 +403,19 @@ def build_book_details(all_items):
 def build():
     units_by_kind = load_units_by_kind()
     all_items = classify_all(units_by_kind)
+
+    standing_by_pair = compute_standing(all_items)
+    attach_standing_and_public_doneness(all_items, standing_by_pair)
+
+    corpus_root = pi_redaction.pcgen_corpus_root()
+    name_to_books = pi_redaction.build_declared_pi_name_book_index(corpus_root)
+    declared_names = pi_redaction.build_declared_pi_name_index(corpus_root)
+    redact_for_display(all_items, name_to_books, declared_names)
+
     overall, books = build_overview(all_items)
     book_details = build_book_details(all_items)
 
-    missing = set(BOOK_TITLES) - set(books_seen := {b["id"] for b in books})
+    missing = set(BOOK_TITLES) - {b["id"] for b in books}
     if missing:
         raise KeyError(
             f"BOOK_TITLES has entries with no units in the ledger: {sorted(missing)} — "
@@ -232,9 +425,23 @@ def build():
     overview = {
         "generated_at": __import__("datetime").datetime.now(__import__("datetime").timezone.utc)
         .strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "doneness_values": list(PUBLIC_DONENESS_VALUES),
         "overall": overall,
         "books": books,
     }
+
+    # Defense-in-depth blanket sweep (site_dashboard_pi_gate.py's own
+    # "safety net" posture): the two call-site-specific redactions above
+    # (name, type_facet) are the primary defense; this final exact-match
+    # pass over the WHOLE assembled document catches any name-shaped leak
+    # through a surface neither pass individually targeted (a curated
+    # label, a future field) before anything is written or compared.
+    overview = pi_redaction.redact_declared_pi_names(overview, declared_names)
+    book_details = {
+        book_id: pi_redaction.redact_declared_pi_names(detail, declared_names)
+        for book_id, detail in book_details.items()
+    }
+
     return overview, book_details
 
 

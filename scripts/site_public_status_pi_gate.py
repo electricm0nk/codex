@@ -1,0 +1,133 @@
+#!/usr/bin/env python3
+"""scripts/site_public_status_pi_gate.py -- Decision 12 (2026-08-17, operator
+ruling) requirement #3, applied to the public status projection: "A gate,
+proven able to fail. A verify.sh stage must fail when the committed feed or
+any shard carries a declared-PI name."
+
+`scripts/site_dashboard_pi_gate.py` already covers `site/dashboard/**`
+(the internal feed and its unit shards). This is that same gate SHAPE
+applied to the SEPARATE public surface `scripts/site/build_public_status.py`
+generates: `site/status-data.json` (overview + per-book roll-up) and
+`site/status-data/<book_id>.json` (per-book item detail). Cloudflare Pages
+deploys `site/**` on every push to `main` with no build step, so these
+committed files ARE the published artifact -- this gate is the last thing
+standing between a leaked name and a live page.
+
+WHAT THIS SCANS: every committed `.json` file directly under `site/status-
+data/` plus the top-level `site/status-data.json`, walked as a decoded JSON
+document, every string leaf checked against the pinned PCGen oracle's own
+full `NAMEISPI:YES` name index (`scripts/observer/pi_redaction.py
+::build_declared_pi_name_index`) with EXACT string-leaf equality -- same
+exact-match rationale as `site_dashboard_pi_gate.py` (a word-boundary/
+substring scan over ordinary object names false-positives on real non-PI
+names that merely contain a declared-PI word, e.g. "Shackles of
+Compliance"). This is a SAFETY NET, not the primary defense: the primary
+defense is `build_public_status.py`'s own `redact_for_display` (book-scoped
+name check, plus a `type_facet` substring screen -- see that function's own
+docstring for why `type_facet` needs a different, substring-based check).
+This gate exists because a hand-edit, a reverted redaction, or a future
+change to the builder that forgets to call the redaction path are all real
+failure modes a generation-time fix alone cannot catch.
+
+Exit 0 and print `site-public-status-pi-gate: CLEAN` when no declared-PI
+name is found in any scanned file. Exit 1 and print every hit (file,
+JSON path, name) otherwise.
+
+Degraded-oracle posture: if the pinned checkout cannot be found at all, this
+prints a loud warning and exits 1 -- a gate that cannot see the oracle
+cannot prove anything clean, and "could not check" must never read as
+"checked and clean."
+
+Run: python3 scripts/site_public_status_pi_gate.py
+Wired as the `site-public-status-pi-gate` stage in `scripts/verify.sh`.
+"""
+from __future__ import annotations
+
+import glob
+import importlib.util
+import json
+import os
+import pathlib
+import sys
+
+_REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent
+_PI_REDACTION = _REPO_ROOT / "scripts" / "observer" / "pi_redaction.py"
+_spec = importlib.util.spec_from_file_location("pi_redaction", _PI_REDACTION)
+pi_redaction = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(pi_redaction)
+
+STATUS_DATA_TOP = _REPO_ROOT / "site" / "status-data.json"
+STATUS_DATA_DIR = _REPO_ROOT / "site" / "status-data"
+
+
+def scanned_files() -> list[str]:
+    """The top-level overview feed plus every committed per-book detail
+    file under `site/status-data/`, sorted for a deterministic report."""
+    files = []
+    if STATUS_DATA_TOP.exists():
+        files.append(str(STATUS_DATA_TOP))
+    files.extend(sorted(glob.glob(str(STATUS_DATA_DIR / "*.json"))))
+    return sorted(files)
+
+
+def main() -> int:
+    corpus_root = pi_redaction.pcgen_corpus_root()
+    if not os.path.isdir(corpus_root):
+        print(
+            f"site-public-status-pi-gate: FAIL — pinned PCGen oracle not found at "
+            f"{corpus_root!r}; a gate that cannot read the oracle cannot prove "
+            f"the feed clean (run scripts/fetch-pcgen-oracle.sh)",
+            file=sys.stderr,
+        )
+        return 1
+
+    declared_names = pi_redaction.build_declared_pi_name_index(corpus_root)
+    if not declared_names:
+        print(
+            "site-public-status-pi-gate: FAIL — the pinned oracle sweep found zero "
+            "NAMEISPI:YES declarations anywhere; this has never been true of "
+            "the real checkout and most likely means the sparse checkout is "
+            "broken or empty, not that the corpus is PI-free",
+            file=sys.stderr,
+        )
+        return 1
+
+    files = scanned_files()
+    if not files:
+        print(
+            "site-public-status-pi-gate: CLEAN — no site/status-data.json or "
+            "site/status-data/*.json files are committed yet (nothing to scan)"
+        )
+        return 0
+
+    all_hits: list[tuple[str, str, str]] = []
+    for path in files:
+        try:
+            with open(path, encoding="utf-8") as f:
+                doc = json.load(f)
+        except (OSError, json.JSONDecodeError) as exc:
+            print(f"site-public-status-pi-gate: FAIL — could not read/parse {path}: {exc}", file=sys.stderr)
+            return 1
+        rel = os.path.relpath(path, str(_REPO_ROOT))
+        for json_path, name in pi_redaction.find_declared_pi_leaks(doc, declared_names):
+            all_hits.append((rel, json_path, name))
+
+    if all_hits:
+        print(
+            f"site-public-status-pi-gate: FAIL — {len(all_hits)} declared-PI name(s) "
+            f"found across {len(files)} scanned file(s):",
+            file=sys.stderr,
+        )
+        for rel, json_path, name in all_hits:
+            print(f"  {rel}:{json_path} carries declared-PI name {name!r}", file=sys.stderr)
+        return 1
+
+    print(
+        f"site-public-status-pi-gate: CLEAN — {len(files)} file(s) scanned against "
+        f"{len(declared_names)} declared-PI name(s), zero leaked"
+    )
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
