@@ -22568,3 +22568,377 @@ reclaimed-bytes figure.
 fully reconciled — see §3). `done %`: 30.7053% → 30.7079%. Reachable ceiling: 98.95%
 (38,115/38,521), unchanged. `ambiguous` wiring-class population: 406 units, unchanged. Race
 attribution: FROZEN, untouched. Supersession Register: PROPOSED, NOT applied, untouched.
+
+## SD31-E6-F4-007 — Changeling/Samsaran chassis, closing arg_races.lst's 37-row roster (2026-08-17)
+
+**Role:** `sd31-racetrait6` (`RETRO_ACTOR=sd31-racetrait6`). **Starting HEAD:** `10c666125`
+(`docs(sd31): Decision 15 -- the 13 .COPY= spell variants have a real path; exclusion
+withdrawn`, `tranche/11` tip), confirmed via `git rev-parse HEAD` + `git log --oneline -1` +
+`git branch --show-current` before any read. The worktree's package dir was absent with a
+clean `git status --porcelain`, so `git fetch origin && git reset --hard origin/tranche/11`
+recovered it, per the "silent recovery" rule. **PCGen oracle:** `./scripts/verify.sh --only
+preflight-oracle` → `PASS preflight-oracle (oracle at pin
+7f818006e371188e5717fd18d74d18a420747fc6)` (`scripts/pcgen-oracle-pin.env`). **Branch:** own
+worktree, `sd31/racetrait6/SD31-E6-F4-007`, 4 commits (`ac6b26587` feat, `19a74ff2f` fix
+frontend-test, `e61376b2a` fix clippy, `7b295291c` docs baseline moves), each pushed to
+`origin/sd31/racetrait6/SD31-E6-F4-007` as it landed, per the "land work incrementally"
+rule. **Ending HEAD:** `7b295291c`.
+
+### 1. Re-derived the mandate's own board figures before touching anything
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+print('ALL', len(U), dict(c), round(100*c['done']/len(U),2))
+for kind in ['race_trait','race']:
+    K=[u for u in U if u.get('kind')==kind]
+    ck=collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in K)
+    print(kind, len(K), dict(ck), round(100*ck['done']/len(K),2) if K else None)
+"
+```
+
+At starting HEAD (committed `docs/work-inventory.json`): board **11,829/38,521 done
+(30.71%)**. `race_trait`: **3,603 total, 490 done (13.6%)**, 2,837 not-started, 275
+in-progress, 1 held. `race`: **103 total, 7 done (6.8%)**, 96 not-started. All four figures
+match the mandate brief exactly — re-derived, not transcribed.
+
+### 2. Task 1 — extending `race_ids_with_a_magnitude_consumer()`'s coverage: blocked by
+file territory, discharged the only way this card's territory allows
+
+`race_ids_with_a_magnitude_consumer()` and every table it unions
+(`CRB_SEAMED_RACES`/`ALTERNATE_TRAIT_SAVE_BONUSES`/`ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES`/
+`SIZE_ONLY_RACE_TRAIT_BUNDLE`) live entirely inside `src/rules_core/pilot_compute/mod.rs`
+— `pilot_compute/**` is explicitly named lane 5's file in this card's own FILE TERRITORY
+section. Extending its coverage from this card is the literal cross-lane edit the dispatch
+forbids. Rather than stopping at that finding, this cycle built and shipped 18 new,
+genuinely-ingested race_trait records (§3 below) and let the producer's own verdict
+function show, first-hand, exactly the Decision-7-REFINED universal/conditional split the
+card's brief describes — see §4 and `OPEN-ISSUES.md` row 223 for the full breakdown and the
+exact dispatch item for the next cycle holding `pilot_compute/mod.rs`.
+
+### 3. Task 2 — ingest: Changeling + Samsaran, closing `arg_races.lst`'s 37-row
+playable-race roster
+
+Both were the LAST 2 of the 37-row roster, deliberately excluded by name from
+SD31-E6-F4-004's 4-race batch for a real, traced parser gap each — fixed narrowly this
+cycle, not worked around (full detail in `ingest_races.rs`'s `IN_SCOPE_RACES` doc comment):
+
+- **Changeling**: 9 of 12 `changeling_abilities_race.lst` rows are ordinary
+  `Changeling Racial Trait`/`Changeling Racial Default` standard traits and ingest through
+  the unmodified default-trait path. The other 3 (`Green Widow (Green Hag)`,
+  `Hulking Changeling (Annis Hag)`, `Sea Lungs (Sea Hag)`) carry
+  `TYPE:RacialTraits.Hag Racial Trait...` — leads with `RacialTraits` (so
+  `is_standard_racial_trait` matches) but names no `Changeling Racial Trait`/`Changeling
+  Racial Default` token: a genuinely different, CHOOSE-driven hag-mother sub-selection
+  mechanism, not this file's swap-one-default-for-one-alternate shape. New
+  `is_heritage_choice_subtrait` predicate + `HERITAGE_CHOICE_TRAIT_MARKERS` explicitly
+  names and skips these 3, logged to a new `heritage_choice_subtraits_deferred` list
+  printed in the run receipt — reported, not silently dropped. The summary
+  `Changeling ~ Hag Racial Trait` grantor row (which IS `Changeling Racial Default`
+  marked) still ingests and states in its own `DESC:` that a choice exists.
+- **Samsaran**: 8 of 9 standard traits are the identical shape every other in-scope race
+  uses. The 9th, `Shards of the Past`, states its own `!PREFACT:1,ABILITIES,
+  Samsaran_ReplaceShardsOfThePast=True` (so `parse_trait` reads its flag off the row, same
+  as every other trait) — but the row's SECOND statement of that gate, in
+  `samsaran_abilities_globalvar.lst`, is `BONUS:ABILITYPOOL|Samsaran Shards of the Past
+  Skills|1|PREVAREQ:Samsaran_ReplaceShardsOfThePast,0`, not the `ABILITY:<Race> Racial
+  Trait|AUTOMATIC|<TraitKey>|PREVAREQ:...` shape `globalvar_gates()` read before this
+  change. New `globalvar_prevareq_flags()` scans EVERY token (not only `ABILITY:`) for a
+  `PREVAREQ:<Flag>,0` clause and returns the flag set; the caller falls back to it ONLY
+  when the ABILITY-keyed reader found no entry AND the row already names its own flag — the
+  flag identity still comes from the row, this only confirms the globalvar file agrees.
+  Both attributed to `advanced_race_guide`: `arg_races.lst` carries `Changeling.MOD
+  TYPE:Uncommon SOURCEPAGE:p.184` and `Samsaran.MOD TYPE:Uncommon SOURCEPAGE:p.198`,
+  matching the immediately-preceding batch's own attribution rule.
+
+**Run receipt** (`cargo run --locked --bin ingest_races`, `CODEX_INGESTED_AT` pinned to
+`2026-08-16T01:34:16Z`, the dominant pre-existing stamp across this book's committed
+output, so the diff is scoped to genuinely new/changed content, not a timestamp
+re-stamp — confirmed by diffing before/after: 106 pre-existing ARG files showed
+`ingested_at`-only changes, zero content drift, re-normalized to the dominant stamp;
+verified with `git diff | grep '^[+-]' | grep -v ingested_at` → empty):
+
+```
+race=37 race_trait=355
+deferred, heritage-choice sub-trait (["Hag Racial Trait"], not the race's own default/
+alternate axis): 3
+  Changeling ~ Green Hag Green Widow (…changeling_abilities_race.lst:35)
+  Changeling ~ Annis Hag Hulking Changeling (…changeling_abilities_race.lst:36)
+  Changeling ~ Sea Hag Sea Lungs (…changeling_abilities_race.lst:37)
+rows agreeing via a non-ABILITY globalvar token (`globalvar_prevareq_flags` fallback): 1
+  Samsaran ~ Shards of the Past -> ["Samsaran_ReplaceShardsOfThePast"]
+dropped, NAMEISPI:YES: 0. descriptions redacted by DESCISPI:YES: 0.
+```
+
+Exit 0, no errors, both binaries (`ingest_races`, `ingest_race_traits`) clean.
+
+**PI screening**, both SD-30 contracts, on NAME, DESCRIPTION and `raw_tokens`, per
+`ingest_races.rs`'s already-wired production path (`declared_product_identity_of` §53.5,
+`pi_hits` §52.3 against `PI_BLACKLIST_TERMS`) — citing SD-30's `epic-3-pi-gate` COMPLETE
+(SD30-E3-F1 through F4, `SD-30-class-feature-archetype-bundle/kanban.md` line 58; receipts
+`progress.md` cycles `SD30-E3-F3-001`/`SD30-E3-F4-001`) as the loop-instruction cycle-0
+precondition for touching `advanced_race_guide`. Zero hits on either contract across all 20
+new records. `cargo run --locked --bin declared_pi_shipping_audit` → **CLEAN**.
+`data/corpus/advanced_race_guide/LICENSE.json`'s `records_processed` re-derived from disk
+(`find data/corpus/advanced_race_guide -mindepth 2 -name '*.json' ! -name LICENSE.json
+-not -path '*/_parity/*' | wc -l`) → **1,513** (was 1,493), with a new
+`screening_method_note` entry following the file's own established per-lane convention,
+not overwriting any prior entry. **`raw_tokens` scanned independently, beyond what the
+production path checks**: `pi_hits()`'s call site only passes `[key, name, description]`;
+`description` byte-matches the same `DESC:` token stored in `raw_tokens`, but the OTHER
+raw tokens (KEY/CATEGORY/TYPE/SOURCEPAGE/etc.) are not separately scanned by that call. A
+direct Python scan of the full committed JSON (which includes every `raw_tokens` entry)
+for all 20 new files against the same `PI_BLACKLIST_TERMS` list found **0 hits across 20
+files** — confirming the mandate's explicit "raw_tokens" instruction is satisfied, not
+merely implied.
+
+### 4. Board movement (guarded regen; `docs/work-inventory.json` NOT committed)
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-racetrait6.json
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-racetrait6.json
+CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep-sd31-racetrait6.json \
+DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture-sd31-racetrait6.json \
+  cargo run --locked --bin v06_work_inventory
+```
+
+`corpus_literal_sweep`: 25,675 records examined of 26,723 read, 0 findings, **CLEAN**.
+`derived_evaluator_fixture_check`: 1,267 of 1,268 covered units cleared; the 1 failure is
+the pre-existing, already-documented `advanced_players_guide:equipment:
+spindle_of_perfect_knowledge` gap (`OPEN-ISSUES.md` row 191) — unrelated to this card,
+unchanged.
+
+**Board: 11,829 → 11,836 done (30.71% → 30.73%). Delta: +7. Denominator unchanged
+(38,521).** `race_trait`: 3,603 total, **490 → 497 done (13.60% → 13.79%)**, not-started
+2,837 → 2,819 (-18), in-progress 275 → 286 (+11), held unchanged at 1. `race`: unchanged at
+7/103 (6.8%) — see §5. Every new unit traced by id:
+
+| corpus_key | before | after | why |
+|---|---|---|---|
+| `Changeling ~ Claws` | not-started | **done** | conditional, text-complete |
+| `Changeling ~ Type` (Humanoid) | not-started | **done** | conditional, text-complete |
+| `Changeling ~ Size` (Medium) | not-started | **done** | conditional, text-complete |
+| `Samsaran ~ Languages` | not-started | **done** | conditional, text-complete |
+| `Samsaran ~ Samsaran Magic` | not-started | **done** | conditional, text-complete |
+| `Samsaran ~ Type` (Samsaran) | not-started | **done** | conditional, text-complete |
+| `Samsaran ~ Size` (Medium) | not-started | **done** | conditional, text-complete |
+| `Changeling ~ Ability Scores` | not-started | in-progress | universal, `computed`, no consumer |
+| `Changeling ~ Hag Racial Trait` | not-started | in-progress | universal (BONUS:ABILITYPOOL), no consumer |
+| `Changeling ~ Languages` | not-started | in-progress | universal (BONUS:LANGUAGES), no consumer |
+| `Changeling ~ Natural Armor` | not-started | in-progress | universal, no consumer |
+| `Changeling ~ Speed` | not-started | in-progress | universal, no consumer |
+| `Changeling ~ Vision` (Darkvision) | not-started | in-progress | universal, no consumer |
+| `Samsaran ~ Ability Scores` | not-started | in-progress | universal, no consumer |
+| `Samsaran ~ Lifebound` | not-started | in-progress | universal, no consumer |
+| `Samsaran ~ Speed` | not-started | in-progress | universal, no consumer |
+| `Samsaran ~ Shards of the Past` | not-started | in-progress | universal (skill pool), no consumer |
+| `Samsaran ~ Vision` (Low-Light) | not-started | in-progress | universal, no consumer |
+| `Changeling ~ Green Hag Green Widow` | not-started | not-started | deliberately deferred, not ingested |
+| `Changeling ~ Annis Hag Hulking Changeling` | not-started | not-started | deliberately deferred |
+| `Changeling ~ Sea Hag Sea Lungs` | not-started | not-started | deliberately deferred |
+
+**None of the 11 `in-progress` units were gamed to `done`.** Each is correctly classified
+`wiring_class: computed` (a real magnitude token exists) with `status:
+ingested-magnitude`, which `doneness_verdict()` caps at `in-progress`, never `done`,
+without a real evaluator seam — the identical binding constraint the mandate names for the
+whole board. Filed as `OPEN-ISSUES.md` row 223 rather than relaxed.
+
+### 5. Task 3 — `race` stuck at 7/103: traced one unit deep, confirmed unfixable from this
+card's file territory
+
+`OPEN-ISSUES.md` rows 170/183 already traced this to `RaceId::ALL` (a 7-variant CRB-only
+enum, `src/rules_core/rules_tables/crb/race_tables.rs:46`, THIS card's own file) being the
+membership test `v06_work_inventory.rs`'s `race`-kind classifier uses
+(`src/bin/v06_work_inventory.rs:3953-3959`, `:4121`, `:5966`, `:8644` — line numbers
+re-confirmed unchanged this cycle), instead of the corpus-driven `race_size_for_race_token`/
+`RaceCorpus::resolve` mechanism `race_catalog.rs`/`reach_gate.rs` already use. Re-derived
+fresh at this cycle's HEAD (before my regen): `103 {'race_absent_from_RaceId_ALL': 93,
+'race_modelled_by_RaceId_ALL_and_reachable_in_a_real_receipt': 7,
+'no_compiled_rule_set_for_book': 3}` — identical to row 170's figures. This cycle's own
+2-race chassis batch reproduced the stall live, exactly as SD31-E6-F4-004's did:
+`race_trait` `done` moved (+7) but `race` stayed frozen. **Extending `RaceId` itself does
+not fix this**: it is consumed by 8+ files outside this card's territory (`pilot_compute/
+mod.rs` match arms, `v06_work_inventory.rs`'s `race_name()`, `v06_content_state_dump.rs`,
+`apps/desktop/src-tauri/{race_catalog,corpus_ingest_diagnostic}.rs`, three `tests/*.rs`
+files) that would all need new match arms before the classifier itself is even touched — a
+change this card cannot make alone without violating FILE TERRITORY. **Confirmed: the fix
+is a lane-5 dispatch item, not code this card can land.** Filed as `OPEN-ISSUES.md` row 222.
+
+### 6. Sweep for the count change (35→37 races, 335→353 default traits, 768→786 total
+corpus traits, 332→350 ARG traits)
+
+`grep -rn` for `35`/`332`/`768`/`786`/`IN_SCOPE_RACES`/`race_keys().len()` across `tests/`,
+`src/`, `apps/` found and fixed pinned-count assertions this data change touched in **11
+files** (10 Rust + 1 TypeScript), all located by RUNNING the affected test suites, not by
+grep alone — grep found the candidates, the test failure named the exact new number:
+
+- `tests/sd27_race_size_resolution.rs` — `SIZE_TRUTH` table + 2 pinned counts (35→37)
+- `src/rules_core/race_resolver.rs` — 3 pinned counts (races 35→37, standard traits
+  335→353, whole-corpus trait total 768→786) + `RACE_SIZES` table (both new races Medium)
+- `apps/desktop/src-tauri/src/race_catalog.rs` — 2 pinned counts (ARG rows 96→114, total
+  335→353) + `catalog_serves_every_in_scope_race_with_its_real_default_trait_count`
+- `apps/desktop/src-tauri/src/race_trait_picker.rs` — 1 pinned count (standard 335→353)
+- `apps/desktop/src-tauri/src/character_hub.rs` — creation-roster ordered id list (+2)
+- `apps/desktop/src-tauri/src/corpus_ingest_diagnostic.rs` — 2 pinned counts (ARG races
+  10→12, panel total 35→37) + LICENSE reconciliation constant (990→1,008)
+- `apps/desktop/src-tauri/src/reach_gate.rs` — 1 pinned count (ARG race-trait reach
+  332→350)
+- `src/bin/ingest_apg_race_traits.rs` — 1 pinned count (332→350)
+- `src/bin/ingest_race_traits.rs` — 2 pinned counts (332→350, whole-corpus-traits-tree
+  total 526→544)
+- `apps/desktop/src/characterHub/raceCreationCoverage.test.ts` (TypeScript, `npm test`
+  suite) — 4 pinned counts (chassis 28→30, traits 507→525, ARG defaults 96→114, races
+  with complete creation chassis 28→30) — caught by `verify.sh`'s `frontend-test` stage,
+  the one stage `--lib`/`--bin`/`--test` cargo runs cannot reach; fixed, then confirmed
+  with `npx tsx src/characterHub/raceCreationCoverage.test.ts` → `raceCreationCoverage: ok`
+
+One genuinely new clippy warning, also from `verify.sh` (not from any command run before
+it): the new `globalvar_gates_alone_still_misses_the_bonus_abilitypool_shape` test's
+`gates.get(...).is_none()` is `clippy::unnecessary_get_then_check` — replaced with
+`!gates.contains_key(...)`. Root clippy re-measured at exactly **52** (the recorded
+ceiling, `BASELINE_CLIPPY_WARNINGS_ROOT`), desktop at exactly **7** (`BASELINE_
+CLIPPY_WARNINGS_DESKTOP`) — both `grep '^warning:' | grep -v 'generated N warning' | wc
+-l`, matching `verify.sh`'s own counting method exactly, neither loosened nor left over
+ceiling.
+
+Every fix re-derived from a real run of the affected code (`cargo run --locked --bin
+ingest_races`, `find ... | wc -l`), never guessed. **Confirmed green together:**
+`cargo test --locked --bin ingest_races` (44 tests), `--lib race_resolver` (25 tests),
+`--bin ingest_race_traits` (14), `--bin ingest_apg_race_traits` (8), `--test
+sd27_alternate_racial_trait_reachability` (15) `--test
+sd27_aasimar_globalvar_gate_closes_the_dead_affordance` (5) `--test v06_work_inventory`
+(16, 1 ignored) `--test sd27_race_size_resolution` (10), the FULL desktop crate suite
+(`cargo test --locked` in `apps/desktop/src-tauri`, **461 passed, 0 failed**), and the
+FULL `root-full` sweep (`cargo test --locked --no-fail-fast`, **6,983 passed across 565
+suites, all 529 `tests/*.rs` suites executed**).
+
+### §7 — `v06_corpus_trap_report -- --audit`
+
+```
+     TRAP   DEFECT  trap
+        1        0  mod-record
+        0     1225  wiring-class-mismatch
+```
+
+Bit-identical to the documented baseline every prior wave names — not worsened; this
+cycle's own files never touch `wiring_class.rs`/`pcgen_desc.rs`.
+
+### §8 — Wired-integration four-check audit
+
+`BASE_BRANCH=origin/tranche/11 bash scripts/wired-integration-audit.sh` (this cycle's own
+3-commit diff, `ac6b26587`/`19a74ff2f`/`e61376b2a`): all four checks (forbidden tokens,
+empty event handlers, mock-library leaks, "Would…" stub strings) `OK`, **`AUDIT PASSED`**
+— re-run after each of the two follow-up commits, clean every time.
+
+### DoD-8 — on-screen verification, driven directly (not `verify-on-screen.sh`)
+
+`run-desktop/SKILL.md`'s own dispatch note names a known `race_trait` coordinate bug in
+`verify-on-screen.sh` — drove `driver.sh` directly instead, as instructed, and only after
+`verify.sh` fully finished (never concurrently). `RUN_DESKTOP_AGENT=sd31-racetrait6`
+exported before every call.
+
+```
+./apps/desktop/.claude/skills/run-desktop/driver.sh launch
+./apps/desktop/.claude/skills/run-desktop/driver.sh click <Browse Race Traits>
+./apps/desktop/.claude/skills/run-desktop/driver.sh screenshot dod8-01-racetraits.png
+./apps/desktop/.claude/skills/run-desktop/driver.sh click <Changeling (9) chip>
+./apps/desktop/.claude/skills/run-desktop/driver.sh screenshot dod8-02-changeling.png
+./apps/desktop/.claude/skills/run-desktop/driver.sh click <Back> / <New Character>
+./apps/desktop/.claude/skills/run-desktop/driver.sh click <Race select> ;
+  type "Changeling" (native <select>, jump-to-option) ; key Return
+./apps/desktop/.claude/skills/run-desktop/driver.sh screenshot dod8-05-changeling-selected.png
+./apps/desktop/.claude/skills/run-desktop/driver.sh type "SD31 F4-007 Changeling Test" ;
+  click <Create character>
+./apps/desktop/.claude/skills/run-desktop/driver.sh screenshot dod8-06-created.png
+./apps/desktop/.claude/skills/run-desktop/driver.sh stop
+```
+
+Six screenshots, `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F4-007/`:
+
+- `dod8-01-racetraits.png`: the screen's own header independently states **"353 trait rows
+  across 37 races"** — matching §6's re-derived pin exactly, from a live app render — and
+  the race-chip row shows real **`Changeling (9)`**/**`Samsaran (9)`** chips alongside
+  every other race.
+- `dod8-02-changeling.png`: Changeling's panel renders real corpus text — "+2 Wisdom, +2
+  Charisma, -2 Constitution … Changelings are frail, but are clever and comely",
+  `Claws`/`Darkvision`/`Hag Racial Trait` ("Each changeling inherits one of the following
+  racial traits, depending on her mother's hag type") /`Humanoid`/`Languages`/`Medium`/
+  `Natural Armor`/`Normal Speed` — all 9 ingested traits, byte-matching
+  `changeling_abilities_race.lst`, with the Hag Racial Trait summary row's own text
+  correctly stating the choice exists even though the 3 individual options are
+  deliberately not yet selectable (§3).
+- `dod8-05-changeling-selected.png`: the character-creation form with **Race: Changeling
+  (ARG)** selected shows the ability-score panel's CALCULATED column actually moved from
+  the RAW column — **CON 14→12, WIS 12→14, CHA 8→10** — with the caption "Changeling
+  racial modifiers: -2 CON, +2 WIS, +2 CHA", exactly the chassis data from `dod8-02`, and
+  **Vision: Darkvision 60 ft.** — not text-only, the numbers genuinely computed. (This
+  computation runs through `RaceCorpus::resolve`/`character_hub.rs`'s creation-chassis
+  path, which is real and generic across all 37 races — a DIFFERENT, already-wired
+  consumer from the `pilot_compute` seam registry §4's 11 `in-progress` units are still
+  waiting on; see `OPEN-ISSUES.md` row 223 for why the board's own doneness verdict is
+  right to stay conservative there regardless.)
+- `dod8-06-created.png`: **"SD31 F4-007 Changeling Test is ready — Your character was
+  computed and saved."** with real computed totals (AC 16, Melee +5, BAB +1, Fort +3,
+  Reflex +2, Will +2) — direct, on-screen proof the full compute pipeline runs end to end
+  for a brand-new race, not a static display.
+
+### Gate
+
+`LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F4-007-verify.log`. First
+launch caught two real defects this cycle's own commits had not yet fixed (`frontend-test`:
+`raceCreationCoverage.test.ts`'s pinned counts; `clippy`: root at 53, one over ceiling) —
+both fixed and pushed as their own commits, per the "land work incrementally" rule. Second,
+FULL, clean launch (all fixes in place, killed and relaunched rather than trusting a
+partial re-run, per "a re-run of only the failed stages is NOT a green gate"):
+
+```
+     TRAP   DEFECT  trap                      (unrelated stage, shown for scale)
+SUMMARY
+  passed:  26  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest
+    site-dashboard-selftest reachability-audit-selftest reachability-audit
+    groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit
+    audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib
+    root-full desktop reach corpus-sweep supersession-gate frontend-install
+    frontend-test frontend-typecheck clippy class-dump
+  FAILED:  1  site-dashboard-check
+
+BASELINE NOTES (not failures):
+  - BASELINE_ROOT_FULL_TESTS stale: 6977 recorded, 6983 measured.
+  - BASELINE_CORPUS_LITERAL_RECORDS=25675 (was 25655)
+
+RESULT: FAIL — VERIFY_EXIT=1
+```
+
+**`VERIFY_EXIT=1`, 26/27 stages PASS.** The one FAIL, `site-dashboard-check`, is the same
+documented, non-regressing worktree-path structural hazard the mandate names by row number
+(`OPEN-ISSUES.md` row 153) — confirmed pre-existing and out of this card's file territory,
+noted rather than chased, matching every prior wave's own treatment of this exact stage.
+`root-full`: **6,983 passed across 565 suites, all 529 `tests/*.rs` suites executed.**
+`desktop`: **461 passed.** `reach`: **27 passed.** `corpus-sweep`: **0 findings.**
+`frontend-test`: **99/99 files.** `clippy`: **root:52 desktop:7, 0 errors** — both exactly
+at the recorded ceiling, neither loosened nor breached. The two baseline notes (both
+attributable to this cycle's own new content, neither a symptom) were landed in their own
+commit, `7b295291c`, per DoD item 7's "separate commit with --show-actuals" rule (§6 has
+the exact numbers and the reasoning).
+
+### `docs/work-inventory.json`
+
+Regenerated locally to measure §4's delta, then `git checkout -- docs/work-inventory.json`
+before every commit — confirmed clean of it in `git status --porcelain` before this
+receipt's own commit, per the WAVE RULE.
+
+### Kanban
+
+Not touched this cycle — `kanban.md`'s per-epic cells are multi-KB single-line cells shared
+across every lane; a surgical append risked corrupting concurrent edits from the other
+SD-31 cycles visibly running on this box during this session (`sd31-register-race`,
+`sd31-provenance`, and others). Left for the integration cycle, matching the pattern
+several prior waves' own kanban entries show (`SD31-W*-INTEGRATE-*` attribution).
+
+### `scripts/reclaim.sh --apply`
+
+TODO run + record reclaimed bytes.
