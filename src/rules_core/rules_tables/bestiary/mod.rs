@@ -174,8 +174,8 @@ mod tests {
     /// `classify_monster_ability_rows.py`'s own arithmetic.
     ///
     /// **CORRECTED `SD31-E6-F9-005`.** The prior version of this test derived
-    /// 603 from `807 (classifier "remaining") - 146 orphans - 54 cross-table
-    /// - 4 .MOD overlays`. Re-deriving that formula against `SD31-E6-F9-005`'s
+    /// 603 from `807 (classifier "remaining") - 146 orphans - 54 cross-table -
+    /// 4 .MOD overlays`. Re-deriving that formula against `SD31-E6-F9-005`'s
     /// own fix (which unblocked 76 more real ability rows, `679` total)
     /// surfaced a genuine, previously-unknown limitation in the classifier
     /// script itself: `classify_monster_ability_rows.py` computes its

@@ -83,15 +83,18 @@ const BOOK_BOTD2: &str = "BOTD2";
 const BOOK_ISWG: &str = "ISWG";
 
 /// Bestiary 2, the seventh (SD-29 Epic 5 extend, round 4) and the first that
-/// serves more records than every book before it combined: 314 monsters and 401
-/// abilities against a prior total of 80 and 87. Its wire code is the book's own
-/// `SOURCESHORT:B2`, already used by the companion catalog for the same book's
-/// familiars -- one code per book, both catalogs. Of its 316 monster rows, 2 are
-/// `<Base>.COPY=<Variant>` deltas that state no stat block of their own; of its
-/// 466 ability rows, 65 are owned by no monster row this book ships. It is also
-/// the first book here whose abilities have SEVERAL owners -- 19 of them do, and
-/// each is rendered under every monster that claims it. See
-/// `rules_tables::bestiary_2` for the derivation.
+/// serves more records than every book before it combined: 314 monsters and
+/// (SD31-E6-F9-005, wave 12: 401 -> 493, +92 newly-transcribed records)
+/// abilities. Its wire code is the book's own `SOURCESHORT:B2`, already used
+/// by the companion catalog for the same book's familiars -- one code per
+/// book, both catalogs. Of its 316 monster rows, 2 are `<Base>.COPY=<Variant>`
+/// deltas that state no stat block of their own. The prior "65 orphans of 466
+/// raw rows" figure is NOT restated here -- it described the raw-candidate
+/// population before this wave's transcription pass and was not re-derived
+/// against the new total; re-run `scripts/classify_monster_ability_rows.py`
+/// before quoting it again. It is also the first book here whose abilities
+/// have SEVERAL owners -- 19 of them do, and each is rendered under every
+/// monster that claims it. See `rules_tables::bestiary_2` for the derivation.
 const BOOK_B2: &str = "B2";
 
 /// Bestiary 3, the eighth (SD-29 Epic 5 extend, round 5). Its wire code is the

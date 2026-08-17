@@ -8930,7 +8930,18 @@ mod race_trait_grounding_tests {
             verdict.status, "text-complete",
             "a universal size-bonus race trait must never read text-complete"
         );
-        assert_eq!(verdict.status, "grounded");
+        // SD31-W12-INTEGRATE-001: the magnitude-bearing fallthrough's own
+        // `!universal_sheet_modifier` gate (this test's OWN subject) now
+        // also refuses `grounded` there, not just inside the `text_only`
+        // arm above -- the confirmed hole this cycle closed. `grounded`
+        // would have been `held` for `display` anyway, but for `computed`
+        // it is unconditional `done`; `ingested-magnitude` is `in-progress`
+        // under both, which is what this refusal must guarantee.
+        assert_eq!(verdict.status, "ingested-magnitude");
+        assert_eq!(
+            verdict.evidence,
+            "race_trait_states_a_universal_sheet_modifier_pending_compute"
+        );
     }
 
     /// PROVE THE RUNG CAN FAIL, case 1: a record the race corpus applies but
@@ -8949,7 +8960,14 @@ mod race_trait_grounding_tests {
         let unit = race_trait_unit("empty_desc_race.lst", 1, "Empty ~ Trait", 0);
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_ne!(verdict.status, "text-complete");
-        assert_eq!(verdict.status, "grounded");
+        // SD31-W12-INTEGRATE-001: the fallthrough now also requires a
+        // verified engine consumer for the unit's race (this synthetic
+        // fixture's "advanced_race_guide" book has none registered in
+        // `EngineFacts::default()`'s empty `consumer_verified` set), so the
+        // honest fallback is `ingested-magnitude`, not an unconditional
+        // `grounded` -- both cap below `done`, which is this test's real
+        // invariant (asserted above).
+        assert_eq!(verdict.status, "ingested-magnitude");
     }
 
     /// PROVE THE RUNG CAN FAIL, case 2: a record the race corpus applies but
@@ -8966,7 +8984,9 @@ mod race_trait_grounding_tests {
         let unit = race_trait_unit("no_render_race.lst", 1, "No Render ~ Trait", 0);
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_ne!(verdict.status, "text-complete");
-        assert_eq!(verdict.status, "grounded");
+        // SD31-W12-INTEGRATE-001: same fallthrough consumer-verification
+        // requirement as the sibling test above.
+        assert_eq!(verdict.status, "ingested-magnitude");
     }
 
     /// PROVE THE RUNG CAN FAIL, case 3: a record that carries a real
@@ -8986,7 +9006,11 @@ mod race_trait_grounding_tests {
         let unit = race_trait_unit("has_magnitude_race.lst", 1, "Has Magnitude ~ Trait", 1);
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_ne!(verdict.status, "text-complete");
-        assert_eq!(verdict.status, "grounded");
+        // SD31-W12-INTEGRATE-001: same fallthrough consumer-verification
+        // requirement as the sibling tests above -- this is the exact
+        // magnitude-bearing (`text_only == false`) branch the confirmed
+        // load-only-evidence finding demotes.
+        assert_eq!(verdict.status, "ingested-magnitude");
     }
 
     /// PROVE THE RUNG CAN FAIL, case 4 (SD31-W5-INTEGRATE-001, confirmed
@@ -9012,7 +9036,9 @@ mod race_trait_grounding_tests {
         let unit = race_trait_unit("pi_redacted_race.lst", 1, "Tiefling ~ Daemon-Spawn", 0);
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_ne!(verdict.status, "text-complete");
-        assert_eq!(verdict.status, "grounded");
+        // SD31-W12-INTEGRATE-001: same fallthrough consumer-verification
+        // requirement as the sibling tests above.
+        assert_eq!(verdict.status, "ingested-magnitude");
     }
 }
 

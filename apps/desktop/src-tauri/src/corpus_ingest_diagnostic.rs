@@ -1251,7 +1251,9 @@ mod tests {
             .find(|b| b.book_id == "beastiary1")
             .expect("beastiary1 present");
         assert_eq!(bestiary.content_kind_counts["monsters"], 46 + 280);
-        assert_eq!(bestiary.content_kind_counts["monster_abilities"], 323);
+        // SD31-E6-F9-005 (transcription lane, wave 12): 323 -> 399 (+76),
+        // 76 new monster_ability records transcribed for this book.
+        assert_eq!(bestiary.content_kind_counts["monster_abilities"], 399);
     }
 
     #[test]

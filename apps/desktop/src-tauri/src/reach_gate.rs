@@ -4229,11 +4229,13 @@ mod tests {
             314,
             "the 314 rows that state a stat block; the other 2 are `.COPY=` deltas"
         );
-        assert_eq!(
-            abilities.len(),
-            401,
-            "the 401 owned rows; the book's other 65 are orphans owned by no monster row here"
-        );
+        // SD31-E6-F9-005 (transcription lane, wave 12): 401 -> 493 (+92 new
+        // monster_ability records transcribed for this book). The prior
+        // comment's "65 orphans" figure described a different, un-written
+        // raw-candidate population this test does not itself assert on and
+        // this cycle did not re-derive -- not restated here to avoid
+        // quoting a number nobody has re-checked against the new total.
+        assert_eq!(abilities.len(), 493, "the owned rows on disk for this book/kind");
 
         let response = crate::monster_catalog::build_monster_catalog();
         let served_monsters: BTreeSet<String> = response
@@ -4278,7 +4280,8 @@ mod tests {
             .expect("a claim is declared")
         {
             Reach::Surfaced { records, surface } => {
-                assert_eq!(records, 401);
+                // SD31-E6-F9-005 (transcription lane, wave 12): 401 -> 493.
+                assert_eq!(records, 493);
                 assert_eq!(surface, "list_monster_catalog");
             }
             other => panic!("expected every linked ability to reach, got {other:?}"),
@@ -4425,13 +4428,15 @@ mod tests {
 
         // The book's monster ABILITIES, a family it has had records for only
         // since round 8. Same shape as every other chassis book's claim.
+        // SD31-E6-F9-005 (transcription lane, wave 12): 323 -> 399 (+76 new
+        // monster_ability records transcribed for this book).
         let abilities = corpus_record_keys("beastiary", "monster_ability");
-        assert_eq!(abilities.len(), 323, "the chassis's owned ability records on disk");
+        assert_eq!(abilities.len(), 399, "the chassis's owned ability records on disk");
         match reach_of(&Family::new("beastiary1", "monster_abilities"))
             .expect("a claim is declared")
         {
-            Reach::Surfaced { records, .. } => assert_eq!(records, 323),
-            other => panic!("expected all 323 abilities to reach, got {other:?}"),
+            Reach::Surfaced { records, .. } => assert_eq!(records, 399),
+            other => panic!("expected all 399 abilities to reach, got {other:?}"),
         }
     }
 
