@@ -1247,3 +1247,61 @@ vocabulary for that ruling, not a substitute for it.**
 **Status:** PROPOSED 2026-08-17 from operator direction. Race attribution stays FROZEN and the
 Supersession Register stays PROPOSED, NOT APPLIED, until this set is confirmed and the race evidence
 table is ruled on.
+
+### Decision 14 — CONFIRMED, with the origin-flip mechanics (operator ruling 2026-08-17)
+
+**Ruled, verbatim:**
+
+> "in that case, origin becomes superceded and the later book becomes errata-source. Origin is the
+> original publish, all identical values become duplicate. If a later publication comes out with
+> corrected values, origin flips to superseded."
+
+**The status set in Decision 14 is CONFIRMED.** The open question is answered — **neither (a) nor
+(b) as I framed them**, but a cleaner third mechanic:
+
+### The lifecycle of a pair
+
+1. **`origin`** — the original publish. Assigned on first printing, always.
+2. A later book reprinting **identical values** → that later pair is **`duplicate`**. The origin pair
+   is untouched and stays `origin`.
+3. A later book publishing **corrected values** → that later pair becomes **`errata-source`**, **and
+   the origin pair FLIPS to `superseded`.**
+
+So `origin` is not permanent. It is the status of the original publish *until corrected*, at which
+point ownership of the live record moves to the errata.
+
+**With successive errata (A → B → C), only the LATEST is `errata-source`;** every earlier pair,
+including the original publish, is `superseded`. Exactly one `errata-source` per object, or none.
+
+### FORCED CORRECTION to Decision 14's invariants 2 and 3
+
+The proposal said *"exactly one `origin` per object"* and *"denominator = origin + variant"*. **Both
+break under this ruling**: an object with errata has NO `origin` pair at all — it flipped — so it
+would fall out of the denominator entirely and silently vanish from the 100 % mandate. That is
+plainly not the intent (*"i dont want duplicates falsely adding to the denominator"* is about
+accuracy, not disappearance), and it is exactly the class of silent-shrinkage defect this package
+exists to prevent. The invariants are therefore restated:
+
+* **Invariant 2 (restated): exactly one AUTHORITATIVE pair per object**, being its `origin` if no
+  errata exists, or its single `errata-source` if one does. Zero authoritative pairs means the object
+  is unowned; two means the comparison was never applied. Both are gate failures.
+* **Invariant 3 (restated): `denominator = authoritative + variant`**, i.e.
+  `origin + errata-source + variant`. Still derived, never hand-maintained.
+
+The remaining invariants (totality; `packaging-artifact` trending to zero; `descoped-structural`
+needing an operator signature; a provenance change moving zero doneness fields; any denominator
+change reported as its own number) stand unchanged.
+
+### OWED DETAIL — flagged, not assumed
+
+**Does an `errata-source` replace the WHOLE record, or only the fields it corrects?** Real errata
+often restates a single value (darkvision 60 → 90) while the rest of the record stays as first
+printed. Under a whole-record reading, everything the errata omits would be lost; under a
+field-level reading, the live record is the original overlaid with the errata's changed fields.
+**Field-level overlay is the only reading that does not destroy data**, so cycles will implement
+that unless the operator says otherwise — recorded here rather than decided silently, and it should
+be re-confirmed against the first real worked example the race evidence table produces.
+
+**Authority:** operator ruling, 2026-08-17, verbatim above. Decision 14 moves from PROPOSED to
+CONFIRMED with these mechanics. Race attribution stays FROZEN and the Supersession Register stays
+PROPOSED, NOT APPLIED, until the race evidence table exists and is ruled on.
