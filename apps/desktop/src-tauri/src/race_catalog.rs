@@ -639,15 +639,15 @@ mod tests {
     /// `every_book_code_is_a_declared_one_and_every_declared_code_is_present`
     /// instead. The alternate traits these books *do* declare are not
     /// catalog rows — see this module's doc comment — and are counted here
-    /// so that gap stays measured rather than forgotten. 330, derived:
+    /// so that gap stays measured rather than forgotten. 349, derived:
     /// ARG's 156 corpus records are 153 `Alternate` plus 3 the resolver
     /// classifies otherwise (its `FlagGranted`/`Unclassified` rows),
     /// Monster Codex's 5 are 4 `Alternate` plus `Oversized Goblin`
-    /// (`Unclassified`), and APG's 1 is an `Alternate`. Unchanged by this
-    /// cycle's ARG race-chassis batch: none of its 6 new races have any
-    /// alternate-trait content ingested yet (`ingest_race_traits.rs`'s own
-    /// `IN_SCOPE_RACES` does not carry them — a named follow-on, not this
-    /// cycle's scope).
+    /// (`Unclassified`), and APG's 1 is an `Alternate`. **Widened by
+    /// SD-31-E6-F4-003 (2026-08-16): `ingest_race_traits.rs`'s
+    /// `IN_SCOPE_RACES` now carries the same 6 new races, and their real
+    /// ARG alternate-trait content is ingested — +19 `Alternate` (+24
+    /// records total, 5 of them `FlagGranted`).
     ///
     /// **APG's `Half-Orc ~ Plagueborn` is no longer deferred.** SD-27
     /// `decisions.md §39` held it back because `race_resolver.rs`'s
@@ -677,14 +677,17 @@ mod tests {
         let alternates: usize =
             corpus.race_keys().iter().map(|key| corpus.alternate_traits(key).len()).sum();
         assert_eq!(
-            alternates, 330,
+            alternates, 349,
             "alternate racial traits loaded but contributing no catalog row: ARG's 153 + Monster \
              Codex's 4 (SD-29 decisions.md §43) + APG's 1 (`Half-Orc ~ Plagueborn`) + Inner Sea \
              Races' 68 (§45) + Horror Adventures' 41 (§47) + Core Essentials' 16 heritages \
              (§49) + SD-31 Epic 1-F2's 6 Bestiary 2 races' 48 (ARG's 42 + Inner Sea Races' 6 \
              actually-Alternate rows; re-derived by role, not by the raw per-book row counts \
              `ingest_race_traits` prints, which also include that batch's 8 `Unclassified` rows \
-             -- ARG 3, Inner Sea Races 5). \
+             -- ARG 3, Inner Sea Races 5) + SD-31-E6-F4-003's 19 (2026-08-16, ARG's own 6-race \
+             chassis batch's real alternate-trait rows, minus Strix's Wing-Clipped-granted \
+             Flight and Suli's Energy-Strike-granted Earthfoot/Firehand/Icewalk/Shockshield, \
+             which are `FlagGranted` not `Alternate`). \
              Two loaded records are not \
              alternates at all and are correctly \
              outside this count: Monster Codex's `Oversized Goblin` and Inner Sea Races' \

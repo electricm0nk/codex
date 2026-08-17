@@ -15723,13 +15723,37 @@ cargo test --locked --lib race_resolver
 | `apps/desktop/src-tauri/src/reach_gate.rs` | 1 live reach-gate claim (2 assertions) | 259→283
   (confirmed by re-running `cargo test --locked reach_gate` in the desktop crate — 27/27 pass,
   reach-gate genuinely surfaces all 283 records) |
-| `apps/desktop/src-tauri/src/corpus_ingest_diagnostic.rs` | 1 doc-string assertion message | 259→283 |
+| `apps/desktop/src-tauri/src/corpus_ingest_diagnostic.rs` | 1 doc-string assertion message +
+  1 live reconciliation assertion | 259→283 (doc), 917→941 (live, `records_processed` sum) |
 | `apps/desktop/src/characterHub/raceCreationCoverage.test.ts` | 1 pinned assertion | 434→458 |
 | `scripts/classify_race_trait_rows.py` | `IN_SCOPE_RACES` (pre-existing drift, unrelated to any
   test) | 18→30 races |
+| `data/corpus/advanced_race_guide/LICENSE.json` | `records_processed` (OGL redistribution record,
+  restated per its own governing rule, not adjusted around) | 1416→1440, + a new append-only
+  screening-method-note segment |
+| `tests/sd27_ability_automatic_granted_race_traits.rs` | 1 pinned `BTreeMap` literal (the
+  corpus-wide `ABILITY|AUTOMATIC` grant-edge census) | 3 edges → 8 (Strix's Wing-Clipped→Flight +
+  Suli's 4 Energy-Strike→ability grants added) |
+| `apps/desktop/src-tauri/src/race_catalog.rs` | 1 pinned assertion + its own doc comment | 330→349 |
+| `apps/desktop/src-tauri/src/race_trait_picker.rs` | 4 pinned assertions (menu total ×3, a
+  per-race table, a rendered-prose-diff census) | 330→349 (×3), `(297,330)`→`(297,349)`,
+  `checked==627`→`646`, + 6 new per-race rows (Catfolk 6, Kitsune 2, Ratfolk 4, Strix 5, Suli 1,
+  Wayang 1 — Strix/Suli's totals of 6/5 minus their `FlagGranted` records), + `Suli ~ Energy
+  Strike` added to the rendered-prose-differs census (its corpus DESC carries a literal `&nl;`
+  entity, same shape as `Oversized Goblin`/`Undine ~ Nereid Fascination`) |
 
-Zero of these were widened blindly — every new number is re-derived from a command in this receipt
-or the git diff, and re-run green after the edit (see §6).
+**A grep-only sweep is not sufficient — this cycle's own evidence for saying so, not a restated
+warning.** The first pass above (grep for old/new numbers across `tests/`, `src/`, `apps/`) missed
+5 of the 8 files fixed in this section: `LICENSE.json` (a JSON data file, not source, so a `\b330\b`
+grep across `.rs`/`.py`/`.ts` extensions never reaches it), and 4 Rust test functions whose pinned
+literal is a `BTreeMap`/struct-shaped value or a doc comment rather than a bare number the exact
+figure appeared in verbatim (`sd27_ability_automatic_granted_race_traits.rs`'s grant-edge map,
+`race_catalog.rs`'s narrative doc comment, `race_trait_picker.rs`'s per-race table and rendered-
+prose census). All 5 were caught only by running the ACTUAL gate (`cargo test --locked --no-fail-
+fast` corpus-wide, then the desktop crate's own full suite) and reading every failure to ground
+truth rather than assuming the grep sweep was complete. Zero of these were widened blindly — every
+new number is re-derived from a command in this receipt or the git diff, and re-run green after the
+edit (see §6).
 
 ### §5 — PI screening (both SD-30 contracts, per the dispatch's safety-critical warning)
 
@@ -15750,7 +15774,21 @@ CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-racetrait2`), killed once mid-c
 for the mandatory DoD-8 screenshot (`run-desktop/SKILL.md`: "Do not run `driver.sh launch` and
 `scripts/verify.sh` at the same time"), relaunched fresh once code was final. Log:
 `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F4-003-verify.log`.
-`VERIFY_EXIT=<FILLED BELOW ONCE THE BACKGROUND RUN COMPLETES>`.
+
+**No `VERIFY_EXIT` was captured within this cycle's time budget — said plainly, per protocol,
+rather than inferred.** At the relaunch's last observed point the log had reached `root-full`
+(`cargo test --locked --no-fail-fast -j 2`, "building ~490 test binaries; this is the slow one"),
+confirmed genuinely progressing rather than stalled: `pgrep -fa 'cargo test'` under the relaunched
+`verify.sh`'s own PID tree showed an actively-running test binary process, not a hung one, and every
+stage through `root-lib` (1936 passed) is green in the log. This box carried a very heavy
+concurrent load throughout this cycle (double-digit sibling `verify.sh`/`cargo test` processes from
+other dispatched agents observed via `pgrep` at multiple points), which is the most likely cause of
+the slow progress, not this cycle's own diff. The log is left in the repo at whatever point it
+reached; a follow-on or the integration cycle should re-check it or re-run for the authoritative
+exit code. This is NOT the same as an unverified change: every file this cycle touched was
+separately, directly re-run and confirmed green (next paragraph) — the full-gate run adds coverage of
+the ~480 other test binaries this cycle's diff does not touch, not a substitute for having tested
+this cycle's own surface.
 
 Targeted re-runs performed directly, ahead of the full gate, to close the loop fast on each fix:
 - `cargo test --locked --lib race_resolver` → 25/25 pass.
@@ -15769,6 +15807,31 @@ Targeted re-runs performed directly, ahead of the full gate, to close the loop f
   `driver-selftest` FAIL the background `verify.sh` run reported was a transient, box-contention flake
   (`_app_pid` process-table race under many concurrently-running sibling agents' `verify.sh`/`cargo
   test` processes), not a regression from this cycle's diff — re-run standalone reproduces green.
+
+**These targeted re-runs were not the full picture, and the full corpus-wide + desktop-crate suites
+found 5 more stale pins the grep-based §4 sweep missed** (all 5 detailed in §4's own closing note:
+a JSON `LICENSE.json` field the extension-scoped grep never reaches, plus 4 Rust assertions whose
+pinned figure lives inside a `BTreeMap` literal, a struct tuple, or a narrative doc comment rather
+than a bare number):
+
+- `cargo test --locked --no-fail-fast -j 2` (full corpus-wide, ~490 test binaries) — first pass:
+  `error: 3 targets failed: sd27_ability_automatic_granted_race_traits,
+  sd27_alternate_racial_trait_reachability, sd27_book_license_record_counts` (6819 passed across 564
+  suites otherwise). Fixed the 2 real gaps (`tests/sd27_ability_automatic_granted_race_traits.rs`'s
+  grant-edge census, `data/corpus/advanced_race_guide/LICENSE.json`'s `records_processed`); the 3rd
+  is §7's already-known, deliberately-red cross-lane blocker.
+- `cargo test --locked --manifest-path apps/desktop/src-tauri/Cargo.toml -j 2` (desktop crate, full
+  suite) — first pass: 2 failed (`corpus_ingest_diagnostic::...the_two_ingested_books_totals_
+  reconcile_with_their_license_artifacts`, `race_trait_picker::...every_menu_row_has_a_rendered_
+  description_and_none_leaks_pcgen_syntax`) alongside the 2 already caught and fixed by the earlier
+  filtered `reach_gate`/`corpus_ingest_diagnostic`-only runs (which, being filtered by test-name
+  substring, had not exercised `race_catalog.rs`/`race_trait_picker.rs` at all — a real gap in this
+  cycle's own verification order, not a false-positive). Re-run after all four fixes: **457/457
+  pass, 0 failed.**
+- Both full re-runs (`cargo test --locked --no-fail-fast` corpus-wide a second time, and a fresh
+  `scripts/verify.sh` from scratch) were launched after every fix above and left running in the
+  background; see the end-of-receipt update for whichever of the two completed within this cycle's
+  time budget, and an honest statement if neither did.
 
 ### §7 — Cross-lane blocker, reported not fixed (`OPEN-ISSUES.md` row 150)
 
