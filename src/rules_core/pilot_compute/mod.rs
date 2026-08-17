@@ -32598,16 +32598,44 @@ fn explain_barbarian_level1_chassis(
 /// postures. Validated against `CORE_RULEBOOK_RAGE_POWER_POOL`, never a
 /// bare string match, so an untrusted or drifted id can never ground a
 /// value (`chooser_option_selected`'s own contract).
+///
+/// **Accepts a `"rage_power:"`-namespaced selection identically to the bare
+/// form** (`rage_power_selection_denamespaced`). Real bug found live via
+/// DoD-8 driving the actual desktop app, not a hypothetical: a bare
+/// (zero-colon) `selection_id` cannot be PERSISTED through the real save
+/// path at all -- `saved_character::local_store::validate_character_input`
+/// requires every `selected_choices` entry to carry at least one colon to
+/// round-trip through the fixture grammar (the exact shape the Arcanist
+/// Metamagic Knowledge seed already hit and fixed, see
+/// `apps/desktop/src-tauri/src/pf1_adapter.rs`'s
+/// `EMPOWER_SPELL_METAMAGIC_SELECTION` doc comment). But `CLASS_FEATURE_
+/// POOLS` (`v06_work_inventory.rs`, lane 6's file) registers this pool's
+/// namespace as EMPTY, so the board's own `--class-feature-probe`
+/// generates the BARE form. Both are the same real, corpus-verified value;
+/// this de-namespaces the incoming selection before validating it against
+/// the pool, rather than picking one convention and breaking the other
+/// consumer.
 fn barbarian_selected_rage_power(input: &CharacterInput, level: u8, option_id: &str) -> bool {
     BARBARIAN_RAGE_POWER_SLOTS.iter().any(|(_, grant_level, choice_id)| {
-        level >= *grant_level
-            && archetype_resolver::chooser_option_selected(
-                input,
-                choice_id,
-                option_id,
-                CORE_RULEBOOK_RAGE_POWER_POOL,
-            )
+        if level < *grant_level {
+            return false;
+        }
+        input.chosen.selected_choices.iter().any(|choice| {
+            choice.choice_set_id == *choice_id
+                && rage_power_selection_denamespaced(&choice.selection_id) == option_id
+                && CORE_RULEBOOK_RAGE_POWER_POOL.contains(&option_id)
+        })
     })
+}
+
+/// The storage-only namespace prefix `pf1_adapter.rs`'s Path A seed must use
+/// to satisfy `validate_character_input`'s colon requirement. Stripped here,
+/// never re-added anywhere else -- the engine-facing value is always the
+/// bare corpus slug (`CORE_RULEBOOK_RAGE_POWER_POOL`'s own shape).
+const RAGE_POWER_SEED_NAMESPACE: &str = "rage_power:";
+
+fn rage_power_selection_denamespaced(raw: &str) -> &str {
+    raw.strip_prefix(RAGE_POWER_SEED_NAMESPACE).unwrap_or(raw)
 }
 
 /// PF1 Core Rulebook Superstition rage power: `BONUS:VAR|SuperstitionSaveBonus|
@@ -52765,6 +52793,34 @@ mod barbarian_rage_power_superstition_tests {
         // PF1 Core Rulebook `BONUS:VAR|SuperstitionSaveBonus|2+RagePowersLVL/4`,
         // RagePowersLVL = BarbarianLVL = 5: 2 + 5/4 (integer division) = 3.
         assert_eq!(bonus.value, 3, "Superstition save bonus at barbarian level 5: {bonus:?}");
+    }
+
+    /// Real bug found live via DoD-8 driving the actual desktop app: a bare
+    /// (zero-colon) `selection_id` cannot be PERSISTED at all --
+    /// `saved_character::local_store::validate_character_input` requires at
+    /// least one colon to round-trip through the fixture grammar (the same
+    /// shape the Arcanist Metamagic Knowledge seed hit and fixed, see
+    /// `apps/desktop/src-tauri/src/pf1_adapter.rs`'s
+    /// `EMPOWER_SPELL_METAMAGIC_SELECTION` doc comment). `pf1_adapter.rs`'s
+    /// own Path A seed therefore persists the NAMESPACED form
+    /// `"rage_power:superstition"`, not the bare `SUPERSTITION_RAGE_POWER_
+    /// SELECTION` the board's own `--class-feature-probe` generates (per
+    /// `CLASS_FEATURE_POOLS`'s registered EMPTY namespace for this pool).
+    /// Both must ground the SAME real value.
+    #[test]
+    fn a_namespaced_seed_selection_also_grounds_the_real_save_bonus() {
+        let mut input = human_barbarian_input(5);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:barbarian_rage_power".to_owned(),
+            selection_id: "rage_power:superstition".to_owned(),
+        });
+
+        let computation = compute_pilot_base_chassis(&input);
+        let bonus = explanation(&computation.explanations, SUPERSTITION_RECORD_ID);
+        assert_eq!(
+            bonus.value, 3,
+            "the namespaced seed form must ground the identical real value: {bonus:?}"
+        );
     }
 
     #[test]
