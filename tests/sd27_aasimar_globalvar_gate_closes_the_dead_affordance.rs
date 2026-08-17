@@ -363,12 +363,14 @@ fn the_two_gate_sources_agree_wherever_both_speak() {
 
     assert_eq!(
         from_row,
-        290,
+        328,
         "rows whose own !PREFACT declares the gate (166 -> 223: SD-31 Epic 1-F2's 57 new \
          standard rows, 2026-08-15, all of which declare their own !PREFACT; 223 -> 232: the \
          Skinwalker follow-on batch's 9 standard rows, all of which also declare their own \
          !PREFACT; 232 -> 290: SD-31-E6-F4-002's Advanced Race Guide batch of 58 standard \
-         rows, 2026-08-16, same shape, all self-gated)"
+         rows, 2026-08-16, same shape, all self-gated; 290 -> 328: SD31-E6-F4-004's \
+         Advanced Race Guide follow-on batch of 38 standard rows, 2026-08-17, same shape, \
+         all self-gated)"
     );
     assert_eq!(from_globalvar, 9, "Aasimar's nine, whose only declaration is the globalvar file");
 }

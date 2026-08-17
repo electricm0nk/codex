@@ -930,6 +930,16 @@ const RACE_SIZES: &[(&str, SizeCategory)] = &[
     ("Strix", SizeCategory::Medium),       // TEMPLATE:SIZE_M
     ("Suli", SizeCategory::Medium),        // TEMPLATE:SIZE_M
     ("Wayang", SizeCategory::Small),       // TEMPLATE:SIZE_S
+    // Advanced Race Guide's 4-race follow-on, SD31-E6-F4-004 (2026-08-17).
+    ("Gillman", SizeCategory::Medium),     // TEMPLATE:SIZE_M
+    // Nagaji's `~ Size` row's `DESC:` and `~ Type` row's `DESC:` are
+    // swapped in the upstream corpus (the Size row's prose describes the
+    // reptilian subtype and vice versa) -- a real upstream data-quality
+    // defect, not a project bug -- but both rows carry a genuine
+    // `TEMPLATE:SIZE_M`, so the size itself is unambiguous.
+    ("Nagaji", SizeCategory::Medium),      // TEMPLATE:SIZE_M
+    ("Vanara", SizeCategory::Medium),      // TEMPLATE:SIZE_M
+    ("Vishkanya", SizeCategory::Medium),   // TEMPLATE:SIZE_M
 ];
 
 /// Creature size for a loose race identifier — a `race:<slug>` character-input
@@ -1802,10 +1812,11 @@ mod tests {
         let corpus = all_books();
         assert_eq!(
             corpus.race_keys().len(),
-            31,
-            "31 in-scope races: CRB 7 + Bestiary 1's 11 + Bestiary 2's 6 + Bestiary 5's 1 \
-             (Skinwalker, chassis + standard tier only) + Advanced Race Guide's 6 \
-             (SD-31-E6-F4-002, 2026-08-16: Catfolk, Kitsune, Ratfolk, Strix, Suli, Wayang)"
+            35,
+            "35 in-scope races: CRB 7 + Bestiary 1's 11 + Bestiary 2's 6 + Bestiary 5's 1 \
+             (Skinwalker, chassis + standard tier only) + Advanced Race Guide's 10 \
+             (SD-31-E6-F4-002, 2026-08-16: Catfolk, Kitsune, Ratfolk, Strix, Suli, Wayang; \
+             SD31-E6-F4-004, 2026-08-17: Gillman, Nagaji, Vanara, Vishkanya)"
         );
         assert_eq!(corpus.chassis("Dwarf").expect("Dwarf").book_id, "core_rulebook");
         assert_eq!(corpus.chassis("Tengu").expect("Tengu").book_id, "beastiary");
@@ -1815,8 +1826,9 @@ mod tests {
         // ARG contributed only traits, never a race chassis, until
         // SD-31-E6-F4-002 (2026-08-16, `decisions.md` Decision 10's Catfolk
         // worked example): it now declares 6 races of its own (Catfolk,
-        // Kitsune, Ratfolk, Strix, Suli, Wayang), so the assertion is
-        // exactly the 6 expected chassis, not zero.
+        // Kitsune, Ratfolk, Strix, Suli, Wayang). SD31-E6-F4-004
+        // (2026-08-17) added 4 more (Gillman, Nagaji, Vanara, Vishkanya),
+        // so the assertion is exactly these 10 expected chassis.
         let arg_chassis: BTreeSet<&str> = corpus
             .chassis
             .values()
@@ -1825,8 +1837,11 @@ mod tests {
             .collect();
         assert_eq!(
             arg_chassis,
-            BTreeSet::from(["Catfolk", "Kitsune", "Ratfolk", "Strix", "Suli", "Wayang"]),
-            "ARG must contribute exactly this batch's 6 race chassis, no more, no fewer"
+            BTreeSet::from([
+                "Catfolk", "Gillman", "Kitsune", "Nagaji", "Ratfolk", "Strix", "Suli", "Vanara",
+                "Vishkanya", "Wayang"
+            ]),
+            "ARG must contribute exactly this batch's 10 race chassis, no more, no fewer"
         );
     }
 
@@ -2117,7 +2132,10 @@ mod tests {
         // own 6-race batch (Catfolk, Kitsune, Ratfolk, Strix, Suli, Wayang)
         // adds 58 new standard rows, the same flat chassis+standard-trait
         // shape as Bestiary 2/5 above, no heritage content.
-        assert_eq!(count(TraitRole::Default), 297);
+        // 297 -> 335 by SD31-E6-F4-004 (2026-08-17): Advanced Race Guide's
+        // 4-race follow-on batch (Gillman, Nagaji, Vanara, Vishkanya) adds
+        // 38 new standard rows, same flat shape, no heritage content.
+        assert_eq!(count(TraitRole::Default), 335);
         // 153 ARG + Monster Codex's 4 + the Advanced Player's Guide's 1
         // (`Half-Orc ~ Plagueborn`) + Inner Sea Races' 67 + Horror
         // Adventures' 41, all landed by SD-29's race-trait lane, + SD-31
@@ -2179,7 +2197,7 @@ mod tests {
         assert_eq!(count(TraitRole::Unclassified), 2);
         assert_eq!(
             corpus.traits.values().flatten().count(),
-            719,
+            757,
             "175 standard + 156 ARG + 5 Monster Codex + 1 APG + 71 Inner Sea Races \
              + 43 Horror Adventures + 64 Core Essentials heritage records (16 heritages \
              + the 48 replacement rows they grant) + SD-31 Epic 1-F2's 113 (57 standard \
@@ -2188,7 +2206,9 @@ mod tests {
              Skinwalker follow-on batch's 9 standard-tier rows + SD-31-E6-F4-002's \
              Advanced Race Guide batch of 58 standard-tier rows (2026-08-16: Catfolk, \
              Kitsune, Ratfolk, Strix, Suli, Wayang; 637 -> 695) + SD-31-E6-F4-003's own \
-             24-record alternate-trait batch for those same 6 races (2026-08-16: 695 -> 719)"
+             24-record alternate-trait batch for those same 6 races (2026-08-16: 695 -> 719) \
+             + SD31-E6-F4-004's Advanced Race Guide follow-on batch of 38 standard-tier \
+             rows (2026-08-17: Gillman, Nagaji, Vanara, Vishkanya; 719 -> 757)"
         );
     }
 
@@ -2568,9 +2588,10 @@ mod tests {
         let corpus = all_books();
         assert_eq!(
             RACE_SIZES.len(),
-            31,
+            35,
             "18 original + SD-31 Epic 1-F2's Bestiary 2 batch of 6 + the Skinwalker follow-on \
-             batch + SD-31-E6-F4-002's Advanced Race Guide batch of 6 (2026-08-16)"
+             batch + SD-31-E6-F4-002's Advanced Race Guide batch of 6 (2026-08-16) + \
+             SD31-E6-F4-004's Advanced Race Guide follow-on batch of 4 (2026-08-17)"
         );
         for key in corpus.race_keys() {
             let resolved = corpus.resolve(key, &[]).expect("resolves");

@@ -4252,12 +4252,20 @@ mod tests {
                 "race:undine",
                 // Bestiary 5's 1, the Skinwalker follow-on batch (2026-08-15).
                 "race:skinwalker",
-                // Advanced Race Guide's 6, SD-31-E6-F4-002 (2026-08-16).
+                // Advanced Race Guide's 6, SD-31-E6-F4-002 (2026-08-16),
+                // plus SD31-E6-F4-004's 4-race follow-on (2026-08-17:
+                // Gillman, Nagaji, Vanara, Vishkanya) -- the roster sorts by
+                // race id, so the new races interleave alphabetically
+                // rather than appending at the end.
                 "race:catfolk",
+                "race:gillman",
                 "race:kitsune",
+                "race:nagaji",
                 "race:ratfolk",
                 "race:strix",
                 "race:suli",
+                "race:vanara",
+                "race:vishkanya",
                 "race:wayang",
             ]
         );

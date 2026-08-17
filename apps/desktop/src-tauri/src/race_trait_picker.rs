@@ -982,11 +982,12 @@ mod tests {
         let menu = menu();
         assert_eq!(
             menu.races.len(),
-            31,
-            "31 in-scope races: decisions.md §25.3's original 18 + SD-31 Epic 1-F2's \
+            35,
+            "35 in-scope races: decisions.md §25.3's original 18 + SD-31 Epic 1-F2's \
              Bestiary 2 batch of 6 (2026-08-15) + the Skinwalker follow-on batch's 1 + \
              SD-31-E6-F4-002's Advanced Race Guide batch of 6 (2026-08-16: Catfolk, Kitsune, \
-             Ratfolk, Strix, Suli, Wayang)"
+             Ratfolk, Strix, Suli, Wayang) + SD31-E6-F4-004's Advanced Race Guide follow-on \
+             batch of 4 (2026-08-17: Gillman, Nagaji, Vanara, Vishkanya)"
         );
         let total: usize = menu.races.iter().map(|race| race.alternates.len()).sum();
         assert_eq!(
@@ -1843,9 +1844,15 @@ mod tests {
         // now carries the same 6 races, and their real ARG alternate-trait
         // rows land -- 19 more menu rows (330 -> 349; `standard` unmoved,
         // this cycle wrote no chassis/standard-tier content).
-        assert_eq!((standard, alternates), (297, 349));
+        // SD31-E6-F4-004 (2026-08-17) adds 4 more of ARG's own races
+        // (Gillman, Nagaji, Vanara, Vishkanya): 4 more race/ chassis and 38
+        // more standard rows (297 -> 335). `alternates` is unchanged (349)
+        // -- this batch does not ingest alternate-trait content for these
+        // 4 races (see `ingest_races.rs`'s `IN_SCOPE_RACES` doc comment for
+        // why Changeling and Samsaran are not part of this batch either).
+        assert_eq!((standard, alternates), (335, 349));
         assert_eq!(checked, standard + alternates);
-        assert_eq!(checked, 646);
+        assert_eq!(checked, 684);
 
         // What rendering changed for a player *with no character*, measured
         // against the stored `data.description` this module used to transcribe.

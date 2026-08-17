@@ -552,13 +552,21 @@ mod tests {
         assert_eq!(count_for(&response, "Suli"), 9);
         assert_eq!(count_for(&response, "Wayang"), 10);
 
+        // SD31-E6-F4-004 (2026-08-17): 4 more of ARG's own races (Gillman,
+        // Nagaji, Vanara, Vishkanya) -- same flat shape, no heritage
+        // content. Re-derived the same way as the batch above.
+        assert_eq!(count_for(&response, "Gillman"), 9);
+        assert_eq!(count_for(&response, "Nagaji"), 9);
+        assert_eq!(count_for(&response, "Vanara"), 8);
+        assert_eq!(count_for(&response, "Vishkanya"), 12);
+
         // Pinned as a total as well as per race so a race silently dropping
         // out cannot be masked by another race growing.
-        // 173 + 57 + 9 + 58 (9+10+9+11+9+10) = 297.
-        assert_eq!(response.entries.len(), 297);
+        // 173 + 57 + 9 + 96 (58 + 9+9+8+12) = 335.
+        assert_eq!(response.entries.len(), 335);
 
         let races: BTreeSet<&str> = response.entries.iter().map(|e| e.race_id.as_str()).collect();
-        assert_eq!(races.len(), 31, "31 in-scope races: {races:?}");
+        assert_eq!(races.len(), 35, "35 in-scope races: {races:?}");
     }
 
     /// The regression guard for the identity change: `reach_gate::races_reach`
@@ -614,9 +622,10 @@ mod tests {
 
         // Derived, not assumed: 67 CRB rows + 106 Bestiary 1 rows + 57
         // Bestiary 2 rows (SD-31 Epic 1-F2, 2026-08-15) + 9 Bestiary 5 rows
-        // (Skinwalker follow-on batch, 2026-08-15) + ARG's 6-race batch
-        // (SD-31-E6-F4-002, 2026-08-16: Catfolk, Kitsune, Ratfolk, Strix,
-        // Suli, Wayang).
+        // (Skinwalker follow-on batch, 2026-08-15) + ARG's 10-race total
+        // (58 from SD-31-E6-F4-002's Catfolk/Kitsune/Ratfolk/Strix/Suli/
+        // Wayang batch, 2026-08-16, + 38 from SD31-E6-F4-004's Gillman/
+        // Nagaji/Vanara/Vishkanya batch, 2026-08-17).
         let crb = response.entries.iter().filter(|e| e.book == BOOK_CRB).count();
         let b1 = response.entries.iter().filter(|e| e.book == BOOK_B1).count();
         let b2 = response.entries.iter().filter(|e| e.book == BOOK_B2).count();
@@ -626,7 +635,7 @@ mod tests {
         assert_eq!(b1, 106);
         assert_eq!(b2, 57);
         assert_eq!(b5, 9);
-        assert_eq!(arg, 58);
+        assert_eq!(arg, 96);
         assert_eq!(crb + b1 + b2 + b5 + arg, response.entries.len());
     }
 

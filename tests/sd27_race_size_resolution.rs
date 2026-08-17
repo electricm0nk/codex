@@ -154,6 +154,13 @@ const SIZE_TRUTH: &[(&str, &str, SizeCategory, SizeCategory)] = &[
     ("race:strix", "Strix", SizeCategory::Medium, SizeCategory::Medium),
     ("race:suli", "Suli", SizeCategory::Medium, SizeCategory::Medium),
     ("race:wayang", "Wayang", SizeCategory::Small, SizeCategory::Small),
+    // Advanced Race Guide's 4-race follow-on, SD31-E6-F4-004 (2026-08-17).
+    // Chassis and trait agree for every one of them (none carries an
+    // Aasimar/Tiefling/Skinwalker-shaped disagreement).
+    ("race:gillman", "Gillman", SizeCategory::Medium, SizeCategory::Medium),
+    ("race:nagaji", "Nagaji", SizeCategory::Medium, SizeCategory::Medium),
+    ("race:vanara", "Vanara", SizeCategory::Medium, SizeCategory::Medium),
+    ("race:vishkanya", "Vishkanya", SizeCategory::Medium, SizeCategory::Medium),
 ];
 
 fn all_books() -> RaceCorpus {
@@ -183,12 +190,12 @@ fn the_expected_table_covers_all_eighteen_races_and_matches_the_on_disk_chassis_
     let corpus = all_books();
     assert_eq!(
         SIZE_TRUTH.len(),
-        31,
-        "31 in-scope races: CRB 7 + Bestiary 1's 11 + Bestiary 2's 6 (SD-31 Epic 1-F2) + \
-         Bestiary 5's 1 (Skinwalker follow-on batch) + Advanced Race Guide's 6 \
-         (SD-31-E6-F4-002, 2026-08-16)"
+        35,
+        "35 in-scope races: CRB 7 + Bestiary 1's 11 + Bestiary 2's 6 (SD-31 Epic 1-F2) + \
+         Bestiary 5's 1 (Skinwalker follow-on batch) + Advanced Race Guide's 10 \
+         (SD-31-E6-F4-002, 2026-08-16 + SD31-E6-F4-004, 2026-08-17)"
     );
-    assert_eq!(corpus.race_keys().len(), 31, "and the corpus must carry all 31");
+    assert_eq!(corpus.race_keys().len(), 35, "and the corpus must carry all 35");
 
     for (_, key, chassis_size, _) in SIZE_TRUTH {
         let chassis = corpus.chassis(key).unwrap_or_else(|| panic!("{key} must have a chassis"));

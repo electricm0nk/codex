@@ -1870,7 +1870,7 @@ mod tests {
         // `inner_sea_races` -> 82.
         let expected: BTreeMap<&str, usize> =
             [
-                ("advanced_race_guide", 283usize),
+                ("advanced_race_guide", 321usize),
                 ("monster_codex", 5),
                 ("inner_sea_races", 82),
                 ("horror_adventures", 43),
@@ -1942,10 +1942,12 @@ mod tests {
         }
         assert_eq!(
             total,
-            477,
-            "283 ARG (of which 58 are `ingest_races.rs`'s own Catfolk/Kitsune/Ratfolk/Strix/Suli/\
-             Wayang standard-tier batch, SD-31-E6-F4-002, plus this binary's own 24-record \
-             alternate-tier batch for those same 6 races, SD-31-E6-F4-003, both 2026-08-16) + \
+            515,
+            "321 ARG (of which 96 are `ingest_races.rs`'s own standard-tier batches: \
+             58 from Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang, SD-31-E6-F4-002, plus 38 \
+             from Gillman/Nagaji/Vanara/Vishkanya, SD31-E6-F4-004; the remaining 225 are \
+             this binary's own alternate-tier batches: 201 pre-existing + 24 for the first \
+             6-race batch, SD-31-E6-F4-003, both 2026-08-16) + \
              5 Monster Codex + 82 Inner Sea Races + \
              43 Horror Adventures + 64 Core \
              Essentials heritage records (ARG/ISR moved from 156/71 by SD-31 Epic 1-F2, \
@@ -1955,9 +1957,9 @@ mod tests {
              byte-mechanically-identical, via `advanced_race_guide`'s own reprint of them. \
              This total sits alongside the per-book map above and must move with it; round \
              3 moved the map first and this pin caught the omission, round 4 did the same, \
-             the companion lane hit it a third time in one cycle, and this batch is the \
-             fourth -- fixing one assertion reveals the next one below it, which is the \
-             whole reason the test states both"
+             the companion lane hit it a third time in one cycle, this batch a fourth, and \
+             SD31-E6-F4-004 a fifth -- fixing one assertion reveals the next one below it, \
+             which is the whole reason the test states both"
         );
     }
 

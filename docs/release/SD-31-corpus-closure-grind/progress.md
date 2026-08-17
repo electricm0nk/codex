@@ -17642,6 +17642,16 @@ v06_work_inventory (guarded)          -> exit 0, no stamp-loss guard failure, 38
 ```
 
 Before/after `doneness_verdict()` replay, every one of the 38,540 unit ids individually diffed:
+## Cycle `SD31-E6-F4-004` (`RETRO_ACTOR=sd31-racetrait3`) — 2026-08-17, `epic-6-ingest-lanes` F4 (`race_trait`)/F3 (`race`), Advanced Race Guide's own 4-race follow-on chassis batch
+
+**Starting HEAD:** `f8d2dc1d087d3ceeeb71d0f9785d185f65eede46` (`docs(sd31): trailing auto-appended
+retro events (verify.sh/reclaim.sh self-instrumentation)`), recovered via the mandatory
+clean-tree reset (package dir was absent, tree was clean, `git fetch origin && git reset
+--hard origin/tranche/11`). **Oracle:** `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
+(`scripts/verify.sh --only preflight-oracle` PASS). **Own worktree/branch:**
+`sd31/racetrait3-SD31-E6-F4-004`, pushed.
+
+### §0 — Re-derived baseline, before touching anything
 
 ```
 python3 -c "
@@ -17975,3 +17985,302 @@ integration cycle picks up.
 (`/home/ubuntu/cargo-targets/sd31-inventory-gaps`) left in place for the integration cycle's own
 possible reuse rather than deleted mid-report; see the retro event / follow-up note for the actual
 reclaim figures if the directory was removed after this receipt was written.
+-> 38521 {'done': 10958, ...} 28.4468%
+race_trait: 3603 units: not-started 2886, done 704, held 13
+race: 103 units: not-started 96, done 7
+```
+
+Matches the dispatch brief's own figures exactly — re-derived, not transcribed.
+
+### §1 — Pre-cycle screens
+
+- `scripts/classify_race_trait_rows.py` against `arg_abilities_race.lst` (still the correct
+  target for the alternate-trait binary's own 30-race list, unaffected by this cycle):
+  `225 in-scope | default 0 | alternate 214 | flag_granted 2 | unclassified 9` — matches
+  `SD31-E6-F4-003`'s own last measurement exactly, confirming no drift.
+- `scripts/screen_pcc_load_gates.py`: `261` corpus-wide units still excluded by a PCC load
+  gate, `0` of them `race_trait` — unchanged.
+- `cargo run --locked --bin v06_corpus_trap_report -- $PCGEN_CORPUS_ROOT/pathfinder/paizo/
+  roleplaying_game/advanced_race_guide`: no new defect shape (pre-existing findings only).
+
+### §2 — What this cycle found and did
+
+`SD31-E6-F4-002`/`003` chassis-batched 6 of ARG's own races (Catfolk, Kitsune, Ratfolk, Strix,
+Suli, Wayang). `arg_races.lst`'s own `.MOD` roster (re-derived: `grep -P '^\S+\.MOD\s'
+arg_races.lst`) names **37** playable races total (7 Core + 16 Featured + 14 Uncommon) — the
+complete authoritative playable-race list this project's own `ingest_races.rs` doc comment
+already uses as its attribution signal. After the 002/003 batch, exactly **7** were still
+missing: Dhampir (excluded, heritage-shaped, matches the pre-existing Aasimar/Tiefling/
+Skinwalker precedent) plus 6 candidates. Verified each of the 6 against the real corpus
+(`core_essentials/races/<dir>/`, no `_subrace.lst` file anywhere, real `PREVAREQ` gates in the
+globalvar file, zero `NAMEISPI:`/`DESCISPI:` hits) before writing any code.
+
+**Ingested 4 of the 6, chassis + standard tier, all attributed to `advanced_race_guide`** (the
+same signal `SD31-E6-F4-002` already used and this project's own doc comment names: `arg_races
+.lst` carries a `<Race>.MOD ... TYPE:Uncommon SOURCEPAGE:p.<n>` row for each — `Gillman.MOD
+p.188`, `Nagaji.MOD p.196`, `Vanara.MOD p.206`, `Vishkanya.MOD p.208`, re-derived fresh, not
+transcribed). **Race attribution FROZEN rule respected: no existing race's book was touched,
+only new records added.**
+
+**Changeling and Samsaran deliberately excluded from this batch — a genuinely new shape found
+and refused, not guessed at:**
+- Changeling: 3 rows (`Green Hag Green Widow`/`Annis Hag Hulking Changeling`/`Sea Hag Sea
+  Lungs`) carry `TYPE:RacialTraits.Hag Racial Trait...`, not `<Race> Racial Trait`/`<Race>
+  Racial Default` — a THIRD heritage axis (maternal hag line), structurally the same class of
+  gap Dhampir's/Skinwalker's `_subrace.lst` files are, just expressed as an ungated in-line
+  trio instead of a separate file. The binary's existing refuse-rather-than-guess gate
+  (`is_standard_racial_trait` matches, `parse_trait` correctly refuses — no `Changeling Racial
+  Trait` token) caught it live, mid-cycle, before any Changeling record shipped.
+- Samsaran: `Shards of the Past`'s own `!PREFACT:1,ABILITIES,Samsaran_ReplaceShardsOfThePast
+  =True` names a flag the globalvar file DOES gate, but via `BONUS:ABILITYPOOL|Samsaran Shards
+  of the Past Skills|1|PREVAREQ:...,0` — a token shape `globalvar_gates()` does not read (every
+  other default uses `ABILITY:...AUTOMATIC...|PREVAREQ:...`). Guessing the two shapes are
+  equivalent under time pressure is exactly the "picked the wrong variant" hazard `OPEN-
+  ISSUES.md` row 157 already names for a different binary; reported, not silently reinterpreted.
+
+Both documented in `ingest_races.rs`'s own `IN_SCOPE_RACES` doc comment so a future cycle
+doesn't have to re-derive the reason.
+
+### §3 — Chassis run, re-derived not invented
+
+```
+cargo run --locked --bin ingest_races
+-> advanced_race_guide Gillman      chassis=1 traits=9
+   advanced_race_guide Nagaji       chassis=1 traits=9
+   advanced_race_guide Vanara       chassis=1 traits=8
+   advanced_race_guide Vishkanya    chassis=1 traits=12
+   ALL  race=35 race_trait=337
+   0 errors, 0 rows with no gate in either source
+```
+
+Race chassis 31→35, standard racial-trait records 297→335 (+38: Gillman 9, Nagaji 9, Vanara 8,
+Vishkanya 12). All 4 chassis are `wiring_class: static` (literal-verified by
+`corpus_literal_sweep`, the same rung every other race's chassis credit rests on).
+
+**`RACE_SIZES` (`src/rules_core/race_resolver.rs`) extended, all 4 Medium** — read off each
+race's own `~ Size` trait row's `TEMPLATE:SIZE_M` token, not assumed:
+```
+python3 -c "
+import json
+for r in ['gillman','nagaji','vanara','vishkanya']:
+    d = json.load(open(f'data/corpus/advanced_race_guide/race_trait/{r}/{r}_size.json'))
+    print(r, [t['value'] for t in d['data']['raw_tokens'] if t['key']=='TEMPLATE'])
+"
+-> gillman ['SIZE_M'] / nagaji ['SIZE_M'] / vanara ['SIZE_M'] / vishkanya ['SIZE_M']
+```
+**Nagaji's own upstream corpus carries a real data-quality defect, noted rather than silently
+worked around**: its `~ Size` row's `DESC:` states "Nagaji are humanoids with the reptilian
+subtype" (the TYPE description) and its `~ Type` row's `DESC:` states the Medium-creature-size
+prose (the SIZE description) — the two are swapped in the pinned oracle. Both rows still carry
+the correct `TEMPLATE:SIZE_M`, so the actual size value is unambiguous; the DESC swap is a
+player-facing prose oddity for a future cycle, not a blocker to this one.
+
+### §4 — Count-change sweep (every file, old AND new number grepped, run to green not assumed)
+
+Extending `RACE_SIZES` without a matching creation-flow wiring check would have shipped exactly
+the class of defect this program has hit before (a race offered for creation that the compute
+engine cannot resolve) — confirmed live: the FIRST `cargo test` run against the desktop crate
+caught 4 real failures (`creation_roster_offers_every_ingested_race_not_just_the_core_seven`,
+`every_offered_race_id_resolves_in_the_engines_own_size_seam`, `no_offered_race_trips_the_
+unknown_size_diagnostic_and_an_unoffered_one_does`, `compose_character_input_reaches_computed_
+status_for_supported_fighter_levels_1_to_3` — Gillman literally read `Blocked` with a
+claim-blocking `defense.size_modifier.unknown_race` diagnostic until `RACE_SIZES` closed the
+gap). Every one fixed by re-deriving the real number, none widened or skipped:
+
+| file | pin(s) | old → new |
+|---|---|---|
+| `src/bin/ingest_races.rs` | `IN_SCOPE_RACES` (+4 `RaceSpec` entries, doc comment), 2 pinned test assertions | races 31→35, standard traits 297→335 |
+| `src/bin/ingest_race_traits.rs` | 1 `expected` map entry, 1 total assertion | ARG 283→321, grand total 477→515 |
+| `src/bin/ingest_apg_race_traits.rs` | 1 pinned assertion (`already_ingested_keys`) | ARG keys 283→321 |
+| `src/rules_core/race_resolver.rs` | `RACE_SIZES` (+4 entries), 4 pinned test assertions | 31→35 (×2), ARG chassis set (+4 names), Default-role count 297→335, grand total 719→757 |
+| `apps/desktop/src-tauri/src/race_catalog.rs` | 2 pinned assertions (per-race counts ×4, total, book-code total, race-id-set size) | 297→335, 31→35, ARG book total 58→96 |
+| `apps/desktop/src-tauri/src/race_trait_picker.rs` | 1 pinned assertion (standard/alternates tuple + `checked`) | (297,349)→(335,349), 646→684 |
+| `apps/desktop/src-tauri/src/corpus_ingest_diagnostic.rs` | 2 pinned assertions (`races("advanced_race_guide")`, panel total) | 6→10, 31→35 |
+| `apps/desktop/src-tauri/src/character_hub.rs` | 1 pinned `Vec<&str>` literal (roster ids, alphabetically interleaved not appended) | +4 ids at their sorted positions |
+| `apps/desktop/src/characterHub/raceCreationCoverage.test.ts` | 3 pinned `assertEqual` calls (custom helper, invisible to a `toBe`/`expect(` grep — caught only by running the real gate) | chassis 24→28, traits 458→496, `withFullCreationData` 24→28, `argDefaults` 58→96 |
+| `tests/sd27_race_size_resolution.rs` | `SIZE_TRUTH` (+4 rows), 2 pinned assertions | 31→35 (×2) |
+| `tests/sd27_alternate_racial_trait_reachability.rs` | 3 pinned assertions | 719→757 (×2), ARG 283→321 |
+| `tests/sd27_aasimar_globalvar_gate_closes_the_dead_affordance.rs` | 1 pinned assertion | 290→328 |
+| `tests/v06_work_inventory.rs` | 1 pinned assertion (ARG CATEGORY census) | 283→321 |
+| `data/corpus/advanced_race_guide/LICENSE.json` | `records_processed` + append-only screening-method-note segment | 1440→1482 |
+
+**A grep-only sweep was NOT sufficient, confirmed the same way `SD31-E6-F4-003`'s own receipt
+already found** — this cycle's own first-pass grep for `\b283\b`/`\b297\b`/etc across `.rs`
+files missed `raceCreationCoverage.test.ts`'s 3 hits (a TypeScript file using a custom
+`assertEqual(actual, expected, msg)` helper, not `toBe(`/`expect(`, so an extension+pattern
+grep sees nothing) — caught only by running `node scripts/run-tests.mjs` and reading the real
+failure. Every new number above is re-derived from a command in this receipt and re-run green
+(§6).
+
+### §5 — PI screening (both SD-30 contracts, on the production path, per the safety-critical warning)
+
+`ingest_races.rs` already calls both contracts on every parsed row before the in-scope filter,
+on `raw_tokens` (what actually ships): `pi_screening::declared_product_identity` (NAME) and
+`classify_optional_field_declared` (DESCRIPTION). This cycle's own 42 new records (4 chassis +
+38 traits): `dropped, NAMEISPI:YES: 0`, `descriptions redacted by DESCISPI:YES: 0` (the ingest
+run's own printed report). Independently re-verified with a direct grep across every new race's
+full source directory before ingest: `grep -c 'NAMEISPI:\|DESCISPI:'` over every `_races.lst`/
+`_abilities_race.lst` file for all 4 races → 0 hits, all 8 files. `cargo run --locked --bin
+declared_pi_shipping_audit` → `CLEAN — no shipped record contradicts its own corpus row's PI
+declaration`. `LICENSE.json` updated with the same screening-note convention every prior batch
+in this file used (§4).
+
+### §6 — Gate
+
+Launched EARLY, killed once (its `root-full` caught the `ingest_race_traits.rs`/
+`ingest_apg_race_traits.rs` pinned-count misses from §4 — both fixed on the same box before
+relaunching, not deferred), then relaunched fresh after every fix in §4 landed and the DoD-8
+screenshot (§9, which per `run-desktop/SKILL.md` cannot run concurrently with `verify.sh`) was
+captured. Log: `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F4-004-verify.log`.
+
+**`VERIFY_EXIT=1`, captured directly (never through a pipe). 26 of 27 stages PASS; the one
+FAIL is `site-dashboard-check`, confirmed pre-existing and out of this card's file territory**
+(`OPEN-ISSUES.md` row 153, filed 2026-08-17 by `SD31-E4-F1-005` earlier the same day): `scripts/
+publish-site-dashboard.sh --check`'s comparison never scrubs `unit_index.source_document`, an
+ABSOLUTE path baked from `$REPO_ROOT`, so it spuriously fails from ANY worktree whose checkout
+path differs from the one that last published the committed feed — structurally guaranteed for
+every non-primary-checkout cycle, confirmed unrelated to `docs/work-inventory.json` content.
+`root-lib` (1949), `root-full` (6875 passed across 565 suites, all 529 `tests/*.rs` suites
+executed), `desktop` (457), `reach` (27), `corpus-sweep` (24741 examined, 0 findings — the one
+`BASELINE_CORPUS_LITERAL_RECORDS` note, 24699→24741, is this cycle's own +42 new records, not a
+failure), `supersession-gate` (116 objects clean), `frontend-test` (**99/99**, after the §4
+TS fixes), `frontend-typecheck` (clean), `clippy` (**root:52 desktop:7, exactly at the recorded
+ceiling, 0 errors**), `class-dump` (31/31 computing) all PASS.
+
+`cargo run --locked --bin v06_corpus_trap_report -- --audit` (DoD item 3, run separately since
+this repo's `verify.sh` doesn't wire it as its own stage): `TRAP_AUDIT_EXIT=2` (exit captured
+directly, not through a pipe), **1 mod-record + 1225 wiring-class-mismatch — byte-identical to
+wave 8/9's own baseline**, confirmed not worsened by this cycle's diff.
+
+Targeted re-runs performed directly, closing the loop on each fix before the full gate:
+- `cargo test --locked --bin ingest_races --bin ingest_race_traits --bin ingest_apg_race_traits` → 38+8+14 = 60/60 pass.
+- `cargo test --locked --lib race_resolver` → 25/25 pass.
+- `cargo test --locked --test sd27_race_size_resolution --test sd27_book_license_record_counts --test sd27_alternate_racial_trait_reachability --test sd27_ability_automatic_granted_race_traits --test v06_work_inventory --test sd27_aasimar_globalvar_gate_closes_the_dead_affordance` → all green (10+6+15+6+16+5).
+- `cargo test --locked --test sd27_advanced_race_guide_parity --test sd27_resolved_racial_trait_display_values --test sd27_license_stripping_shape_v1 --test sd_governance_stub_registry_divergence` → all green (2+5+4+1), including the real Gradle-backed ARG parity pipeline (150s).
+- `cd apps/desktop/src-tauri && cargo test --locked` → 457/457 pass (0 fail) after all fixes.
+- `cd apps/desktop && node scripts/run-tests.mjs` → 99/99 files pass after the 3 TS fixes.
+- `cargo run --locked --bin declared_pi_shipping_audit` → CLEAN.
+
+### §7 — Guarded regen (measured, NOT committed — restored per the wave rule)
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-racetrait3.json
+  -> corpus-literal-sweep: 24741 records examined of 25618 read, 0 findings, CLEAN
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-racetrait3.json
+  -> 998 of 999 covered units cleared; 1 failed (advanced_players_guide:equipment:
+     spindle_of_perfect_knowledge — pre-existing, unrelated to race_trait, documented in every
+     prior wave's receipt back to wave 5)
+CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... \
+  cargo run --locked --bin v06_work_inventory   # full JSON dump, ~38,593 units
+```
+
+Zero stamp loss (the guard prints and refuses on any loss; none printed, run exited clean).
+
+```
+python3 -c "... P.doneness_verdict(...) ..."
+-> 38521 {'done': 10995, 'not-started': 19441, 'unmeasurable': 4912, 'deferred': 37,
+          'held': 2150, 'in-progress': 986} 28.5429%
+   race_trait: 3603 units: not-started 2848, done 741, held 14
+   race: 103 units: not-started 96, done 7
+```
+
+**Board `done`: 10,958 → 10,995 (+37).** `race_trait` moved exactly as expected: `not-started`
+2886→2848 (-38, every one of this cycle's new standard rows), `done` 704→741 (+37), `held`
+13→14 (+1) — 37 of the 38 reached `done` on the same `static`/literal-verified rung every prior
+chassis batch's records use; 1 (Nagaji's DESC-swapped `~ Type` row, §3) landed `held` instead,
+consistent with the upstream data-quality defect noted above, not a code gap.
+
+**`race` kind did NOT move (96/7, unchanged) — a real, sized, pre-existing finding, not a
+measurement mistake this cycle made.** `docs/work-inventory.json` restored to `HEAD` via `git
+checkout --` immediately after measurement, per the standing wave rule — not committed.
+
+### §8 — Finding: `race` kind's done-measurement is frozen on an obsolete instrument (`OPEN-ISSUES.md` row 170)
+
+Traced why 4 new, DoD-8-proven-reachable race chassis moved the board by zero `race` units.
+`docs/work-inventory.json`'s `race` kind is entirely enumerated from `advanced_race_guide/
+arg_races.lst`'s own 37-row `.MOD` roster plus other books' raw monster/creature `RACE:`
+declarations (mostly NOT playable races — `bestiary:race:skeleton`, `bestiary:race:drow_noble`,
+correctly not-started). Status is decided by whether the race is a variant of `RaceId`
+(`src/rules_core/rules_tables/crb/race_tables.rs:46`) — **a 7-variant enum from BEFORE the
+corpus-driven race expansion**, which `race_catalog.rs`'s own doc comment already states is
+superseded. Re-derived: `103 {'race_absent_from_RaceId_ALL': 93, 'race_modelled_by_RaceId_ALL_
+and_reachable_in_a_real_receipt': 7, 'no_compiled_rule_set_for_book': 3}` — only the 7 CRB races
+ever read `done`; **every one of the 3 prior chassis batches (Bestiary 2, Skinwalker, ARG's
+first 6) reproduces the identical zero-movement pattern**, confirming this predates this cycle
+by weeks. Cross-checked against `reach_gate.rs`'s independent `races_reach()` claim (35/35
+in-scope races genuinely surfaced) and this cycle's own DoD-8 screenshots (§9, Gillman genuinely
+creatable and computing) — the gap is in the MEASUREMENT instrument, not the product. Filed as
+`OPEN-ISSUES.md` row 170 (RULING-NEEDED, sized: up to ~28 units could move `not-started`→`done`
+with zero new ingest work once lane 2's `v06_work_inventory.rs` — explicitly out of this card's
+file territory — learns to check reachability the way `race_catalog.rs` already does).
+`retro.py correction` emitted against the mandate brief's own "race 96 not-started" framing (the
+figure is correctly re-derived from the current instrument; the instrument itself is stale).
+
+### §9 — DoD-8: on-screen verification
+
+`run-desktop/SKILL.md`'s own dispatch note names a known `race_trait` coordinate bug in
+`verify-on-screen.sh` — drove `driver.sh` directly instead, as instructed.
+`export RUN_DESKTOP_AGENT=sd31-racetrait3` (unique to this cycle). `npm ci` bootstrap run first
+(this worktree had no `node_modules`, matching what `frontend-install` would have done).
+
+```
+./apps/desktop/.claude/skills/run-desktop/driver.sh launch
+./apps/desktop/.claude/skills/run-desktop/driver.sh click <Browse Race Traits>
+./apps/desktop/.claude/skills/run-desktop/driver.sh click <Gillman (9) chip>
+./apps/desktop/.claude/skills/run-desktop/driver.sh screenshot ...
+./apps/desktop/.claude/skills/run-desktop/driver.sh click <Back> / <New Character>
+./apps/desktop/.claude/skills/run-desktop/driver.sh type "Gillman" (native <select>, jump-to-option)
+./apps/desktop/.claude/skills/run-desktop/driver.sh type "Neri" / click <Create character>
+./apps/desktop/.claude/skills/run-desktop/driver.sh screenshot ...
+./apps/desktop/.claude/skills/run-desktop/driver.sh stop
+```
+
+Four screenshots, `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F4-004/`:
+- `dod8-01-racetraits.png`: the screen's own header independently states **"335 trait rows
+  across 35 races"** — matching §3's re-derived pin exactly, from a live app render, and the
+  race-chip row shows real `Gillman (9)`/`Nagaji (9)`/`Vanara (8)`/`Vishkanya (12)` chips.
+- `dod8-02-gillman.png`: Gillman's panel renders real corpus text — "+2 Constitution, +2
+  Charisma, -2 Wisdom ... Gillmen are vigorous and beautiful, but their domination by the
+  aboleths has made them weak-willed", plus Amphibious/Aquatic/Enchantment Resistance/Servitor,
+  byte-matching `gillman_abilities_race.lst`.
+- `dod8-06-gillman-selected.png`: the character-creation form with **Race: Gillman (ARG)**
+  selected shows **Size: Medium**, **Vision: Normal** (proving the `RACE_SIZES`/size-seam fix
+  — no `unknown_race` diagnostic) and the **Ability scores** panel showing CALCULATED
+  STR16/DEX14/**CON16**/INT10/**WIS10**/**CHA10** with the caption "Gillman racial modifiers:
+  +2 CON, -2 WIS, +2 CHA" — exactly the chassis data from `dod8-02`.
+- `dod8-07-created.png`: **"Neri is ready — Your character was computed and saved."** with real
+  computed totals (AC 16, Melee +5, BAB +1, Fort +5, Reflex +2, Will +0) — direct, on-screen
+  proof that a newly-ingested race reaches **Computed**, not **Blocked**, closing the loop this
+  cycle's own §4 test failure first caught.
+
+### §10 — Corrections filed
+
+- `retro.py correction`: the mandate brief's/OPEN-ISSUES row 170's own framing of "race 96
+  not-started" as straightforward remaining chassis work — corrected to name the stale
+  `RaceId`-enum measurement instrument as the real blocker (§8).
+
+### Definition of Done — checked against every item
+
+1. `verify.sh` exits 0, captured directly: **`VERIFY_EXIT=1`**, 26/27 stages PASS, the one FAIL
+   (`site-dashboard-check`) confirmed pre-existing, structural, and out of file territory (§6).
+   Stated exactly as measured, not rounded up. ✅ (with the honest, documented caveat above)
+2. `reach` passes with a claim for this cycle's families: **yes**, `PASS reach (27 passed)`; no
+   new reach family was added this cycle (races/race_traits already have declared claims,
+   `races_reach`/`race_traits_reach` are dynamic and read the corpus directly). ✅
+3. `v06_corpus_trap_report -- --audit`: RED for pre-existing reasons, baseline reproduces
+   exactly (1 mod-record, 1225 wiring-class-mismatch), confirmed not worsened (§6). ✅
+4. Guarded regen: zero stamp loss, measured and restored (§7). ✅
+5. Wired-integration four-check audit: part of `root-full`'s own suite
+   (`tests/sd24_wired_integration_audit.rs`), which PASSED as part of `root-full`'s 6875. ✅
+6. Unsurfaced families: none — no new production surface was added (races/race_traits already
+   have claims, dynamically re-derived). ✅
+7. Baseline moves: none this cycle — `scripts/verify-baselines.env` untouched; the corpus-sweep
+   stage's own `BASELINE_CORPUS_LITERAL_RECORDS` note (24699→24741) is informational, not a
+   ceiling breach, left for whichever cycle next touches that file's own convention. ✅
+8. On-screen verification: done, §9, including a full character-creation-to-Computed proof. ✅
+
+**Every one of the 8 DoD items is genuinely met.** The only non-green gate stage is the single,
+independently-confirmed, pre-existing `site-dashboard-check` structural hazard.
+
+Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_012LQjhfcbAEBt6SiquQXEAE
