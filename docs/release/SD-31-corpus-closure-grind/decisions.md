@@ -1009,3 +1009,50 @@ text" rule (the same rule this exact ruling's own history had already violated o
 is therefore the 6th demotion, not a 7th text-complete unit; `retro.py correction` emitted.
 
 **Authority:** operator ruling, 2026-08-16, verbatim above.
+
+## Decision 12 — Public-feed PI redaction: withhold the name, keep the row (operator ruling 2026-08-17)
+
+**Asked:** `artifacts/OPEN-ISSUES.md` rows 141 and 149. The versioned public status feed under
+`site/dashboard/` publishes names their own corpus rows declare as Product Identity —
+**261 unit names** in `site/dashboard/units/*.json`, and **56 class / prestige-class / feat /
+spellbook identities** in the top-level `PF1e-dashboard.json`'s `manifests` roadmap content. Row 149's
+exposure is pre-existing and predates this package's dashboard feature. Three options were put:
+(A) withhold the name and keep the row, (B) drop the record entirely, (C) publish totals only.
+
+**Ruled: A.**
+
+**The rule.** A public artifact may publish that a record exists, and every derived figure about it —
+counts, percentages, kind, book, status — but **never a name its own corpus row declares as Product
+Identity**. The row survives with the name withheld; the counts stay honest and continue to
+reconcile against the internal board.
+
+**Why A rather than B or C.** This is already the treatment `data/corpus/` gives declared-PI records
+(`license: "PI-REDACTED"`, `pi_field`), so A is the existing rule applied to a new surface rather
+than a new special case. B would make the public totals disagree with the internal denominator for a
+reason no reader could see; C would discard the roadmap the feed exists to show.
+
+### Binding implementation requirements
+
+1. **The redaction happens in the PRODUCER, not in a hand-edit.** `site/dashboard/PF1e-dashboard.json`
+   is generated; a trimmed file is silently undone by the next `scripts/publish-site-dashboard.sh`
+   run. `scripts/observer/pf1e_dashboard_producer.py` — including `build_unit_shards` — must apply
+   the rule at generation time.
+2. **The oracle is the authority, not a blacklist.** Row 141's own finding is that
+   `build_unit_shards` has **no oracle cross-reference at all**. Redaction is decided by the record's
+   own declared-PI state (`NAMEISPI:` / `DESCISPI:`, via `SD-30 decisions.md §53.5`'s reader), not by
+   substring matching against a term list. **An exact-substring blacklist is not sufficient evidence
+   of safety** — this program has already shipped deity-name typo variants straight through one
+   (wave 10), and near-miss text has been the live failure mode in four of the last nine waves.
+3. **A gate, proven able to fail.** A `verify.sh` stage must fail when the committed feed or any
+   shard carries a declared-PI name. Mutation-prove it by seeding one, in both the top-level feed and
+   a shard.
+4. **`site/dashboard/units/` stays uncommitted until 1-3 are in place.** It is currently absent from
+   the tree, which is why row 141 reads as fixed-for-now; committing it before the producer redacts
+   would reintroduce all 261.
+5. **Nothing merges to `main` until this lands.** `deploy-site.yml` publishes `site/` to Cloudflare
+   Pages on every push to `main`, and `main` currently has no `site/dashboard/` directory — so the
+   exposure is real but **not live**. That is the whole margin, and it closes on merge.
+
+**Authority:** operator ruling, 2026-08-17, answering rows 141 and 149. Row 197 (Elysian Shield
+cross-book declared-PI propagation) is a related but SEPARATE question and is **not** answered by
+this decision.
