@@ -4592,6 +4592,81 @@ const BARBARIAN_RAGE_POWER_SLOTS: [(u8, u8, &str); 10] = [
     (9, 18, "choice:barbarian_rage_power_9"),
     (10, 20, "choice:barbarian_rage_power_10"),
 ];
+/// SD31-E4-F2-003: the real, corpus-declared Core Rulebook Rage Power pool
+/// `chooser_option_selected` validates every Rage Power selection against --
+/// every `KEY:Rage Power ~ <X>` row `core_rulebook/cr_abilities_class.lst`
+/// declares, grep-verified: `grep -oP '(?<=KEY:Rage Power ~ )[^\t]+'
+/// cr_abilities_class.lst | sort -u` -> exactly these 28. Scoped to the
+/// Core Rulebook's own base Rage Power list only -- the wider ~60-record
+/// corpus-wide family (ACG/APG/UC/UW/AG/HA/UI/player-companion additions,
+/// e.g. Skald's/Bloodrager's own copies) stays named-but-unproven, matching
+/// the standing "ground one representative pool, transcribed verbatim"
+/// ruling this program has applied to every other option-pool closure
+/// (`ORACLE_MYSTERY_POOL`, `ORACLE_BATTLE_MYSTERY_REVELATION_POOL`, ...).
+/// Transcribed verbatim from the pinned oracle, never generated or
+/// inferred.
+///
+/// **Bare slugs, no prefix** -- `src/bin/v06_work_inventory.rs`'s own
+/// `CLASS_FEATURE_POOLS` registry declares `("Rage Power", "barbarian",
+/// "choice:barbarian_rage_power", "")`: an EMPTY namespace column, whose own
+/// doc comment states "An empty namespace means the consumer is open-ended
+/// (it echoes whatever raw string it is given)". A `"rage_power:"`-prefixed
+/// id would silently mismatch every real selection this engine's own
+/// `--class-feature-probe` diagnostic and the production `class_feature`
+/// classify() path both generate (`class_feature_engine_join_slug(member)`,
+/// no namespace prepended) -- checked directly against that file rather
+/// than assumed, after an earlier draft of this pool used a
+/// `"rage_power:"` prefix and the probe reported `no_consumer_delta`
+/// instead of `wired` as a direct result.
+const CORE_RULEBOOK_RAGE_POWER_POOL: &[&str] = &[
+    "animal_fury",
+    "clear_mind",
+    "fearless_rage",
+    "guarded_stance",
+    "increased_damage_reduction",
+    "internal_fortitude",
+    "intimidating_glare",
+    "knockback",
+    "low_light_vision",
+    "mighty_swing",
+    "moment_of_clarity",
+    "night_vision",
+    "no_escape",
+    "powerful_blow",
+    "quick_reflexes",
+    "raging_climber",
+    "raging_leaper",
+    "raging_swimmer",
+    "renewed_vigor",
+    "rolling_dodge",
+    "roused_anger",
+    "scent",
+    "strength_surge",
+    "superstition",
+    "surprise_accuracy",
+    "swift_foot",
+    "terrifying_howl",
+    "unexpected_strike",
+];
+/// Superstition is this cycle's representative Rage Power (mirrors the
+/// standing "ground one representative option per pool honestly" ruling
+/// Battle Mystery/Ward Hex/Life Spirit each already applied). Its own
+/// `KEY:Rage Power ~ Superstition`, `BONUS:VAR|SuperstitionSaveBonus|
+/// 2+RagePowersLVL/4` token carries NO `PREVARGTEQ:Raging,1`/
+/// `PREVAREQ:Raging,1` gate anywhere on that line (checked directly against
+/// the full raw row, field by field -- unlike Raging Climber/Raging
+/// Swimmer's or Witch's Ward hex's own explicit Raging-state gates), so
+/// this closure follows the corpus token literally: the bonus grounds once
+/// the power is selected, not only while actively raging. `RagePowersLVL`
+/// is `BONUS:VAR|RagePowersLVL|BarbarianLVL` on the base Barbarian's own
+/// `Rage Powers` internal record (`cr_abilities_class.lst`), so the formula
+/// is `2 + BarbarianLVL/4` for the base class this closure scopes to.
+const SUPERSTITION_RAGE_POWER_SELECTION: &str = "superstition";
+/// The base value Superstition's own `DEFINE:SuperstitionSaveBonus|0`
+/// formula adds to, before the level term.
+const SUPERSTITION_SAVE_BONUS_BASE: i16 = 2;
+/// `RagePowersLVL / 4`'s divisor, straight from the corpus formula.
+const SUPERSTITION_SAVE_BONUS_LEVEL_DIVISOR: i16 = 4;
 /// SD13-E5 Barbarian level-range gate, mirroring the Fighter
 /// `supported_fighter_level` / Paladin `supported_paladin_level` / Rogue
 /// `supported_rogue_level` idiom. Monk's own level-range gate is
@@ -32466,12 +32541,81 @@ fn explain_barbarian_level1_chassis(
         });
     }
 
+    // SD31-E4-F2-003: the loop above deliberately grounds no per-power
+    // magnitude (open-ended raw string, no power-list validation), which is
+    // exactly why every one of the pool's corpus-wide records read as
+    // `NoConsumerDelta` on the board's own `--class-feature-probe` --
+    // recognising WHICH string was picked is not the same as computing a
+    // value that differs by WHAT was picked. This closure grounds one real,
+    // corpus-verified representative (Superstition) as the actual chooser
+    // consumer this family has been missing, validated against
+    // `CORE_RULEBOOK_RAGE_POWER_POOL` so an invented or drifted id can never
+    // ground it.
+    if barbarian_selected_rage_power(input, level, SUPERSTITION_RAGE_POWER_SELECTION) {
+        let superstition_bonus = barbarian_superstition_save_bonus(level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.barbarian.rage_power.superstition.save_bonus".to_owned(),
+            value: superstition_bonus,
+            detail: format!(
+                "Barbarian level {level} with the Superstition rage power selected (PF1 Core \
+                 Rulebook, `KEY:Rage Power ~ Superstition`, `BONUS:VAR|SuperstitionSaveBonus|\
+                 2+RagePowersLVL/4`, RagePowersLVL = BarbarianLVL): a +{superstition_bonus} \
+                 morale bonus on saving throws made to resist spells, supernatural abilities, \
+                 and spell-like abilities (base {SUPERSTITION_SAVE_BONUS_BASE}, +1 every \
+                 {SUPERSTITION_SAVE_BONUS_LEVEL_DIVISOR} barbarian levels). The corpus's own \
+                 `BONUS:VAR` token for this power carries no `Raging`-state gate (checked \
+                 directly against the full raw row -- unlike Raging Climber/Raging Swimmer's \
+                 or Witch's Ward hex's own explicit gates), so this grounds once the power is \
+                 selected, not only while actively raging. Standalone magnitude only -- not \
+                 yet integrated into the real total saves this codebase computes, the same \
+                 posture Witch's Ward hex magnitude carries; the corpus record's OTHER clause \
+                 (\"While raging, you cannot be a willing target of any spell and must make \
+                 saving throws to resist all spells, even those cast by allies\") is an \
+                 unmodeled restriction, not a magnitude, and is not fabricated here. The other \
+                 27 Core Rulebook Rage Powers, and the wider ~60-record corpus-wide family \
+                 across ACG/APG/UC/UW/AG/HA/UI and the player-companion books, remain \
+                 named-but-unproven -- this is a representative-pool closure, not a claim that \
+                 the family is exhausted."
+            ),
+        });
+    }
+
     // v0.6 alpha swarm, risks item 8: the unconditional "rage-state
     // execution engine is missing" diagnostic that used to live here moved
     // to `ground_or_block_barbarian_rage`, called at the top of this
     // function -- the engine is real now, and its validity depends on
     // `class_ability_activations`, not on level/race alone, so it could
     // not stay a flat unconditional diagnostic at this position.
+}
+
+/// True when the Barbarian's own selection across ANY of the ten numbered
+/// Rage Power slots (`BARBARIAN_RAGE_POWER_SLOTS`) names the given real,
+/// corpus-verified Rage Power. Composes
+/// `archetype_resolver::chooser_option_selected` per eligible slot (only
+/// slots the character's level has actually reached) -- a Rage Power may
+/// land in any numbered slot depending on the level at which the player
+/// picked it, so a single-slot check would silently miss most valid
+/// postures. Validated against `CORE_RULEBOOK_RAGE_POWER_POOL`, never a
+/// bare string match, so an untrusted or drifted id can never ground a
+/// value (`chooser_option_selected`'s own contract).
+fn barbarian_selected_rage_power(input: &CharacterInput, level: u8, option_id: &str) -> bool {
+    BARBARIAN_RAGE_POWER_SLOTS.iter().any(|(_, grant_level, choice_id)| {
+        level >= *grant_level
+            && archetype_resolver::chooser_option_selected(
+                input,
+                choice_id,
+                option_id,
+                CORE_RULEBOOK_RAGE_POWER_POOL,
+            )
+    })
+}
+
+/// PF1 Core Rulebook Superstition rage power: `BONUS:VAR|SuperstitionSaveBonus|
+/// 2+RagePowersLVL/4`, `RagePowersLVL` = `BarbarianLVL` on the base class.
+/// Integer division, matching the corpus formula exactly (no rounding
+/// beyond PCGen's own floor-toward-zero `/` on non-negative operands).
+fn barbarian_superstition_save_bonus(level: u8) -> i16 {
+    SUPERSTITION_SAVE_BONUS_BASE + i16::from(level) / SUPERSTITION_SAVE_BONUS_LEVEL_DIVISOR
 }
 
 /// The four "Extra <resource>" General feats (task #19, 2026-07-27).
@@ -52548,6 +52692,173 @@ mod raging_climber_and_swimmer_tests {
         // unaffected by a stray Barbarian/Skald rage activation.
         assert_eq!(climb, 6, "a Fighter's Climb total must never be inflated by a spoofed rage activation");
         assert_eq!(swim, 6, "a Fighter's Swim total must never be inflated by a spoofed rage activation");
+    }
+}
+
+/// SD31-E4-F2-003: the `Rage Power` pool `chooser_option_selected` had never
+/// grounded a real per-power magnitude before this test module -- the
+/// pre-existing `BARBARIAN_RAGE_POWER_SLOTS` loop (`explain_barbarian_
+/// level1_chassis`) deliberately records WHICH raw string was picked with a
+/// flat +0 (open-ended, no power-list validation), so every one of the
+/// pool's ~60 corpus-wide records read as `NoConsumerDelta` on the board's
+/// own `--class-feature-probe`. Superstition is this cycle's representative
+/// (mirrors the standing "ground one representative option per pool
+/// honestly" ruling): grounds a real, level-scaling save bonus once the
+/// player's own recorded selection names it, validated against the real
+/// Core Rulebook Rage Power pool so an invented id can never ground it.
+#[cfg(test)]
+mod barbarian_rage_power_superstition_tests {
+    use super::{
+        compute_pilot_base_chassis, CharacterClassLevel, CharacterInput, ComputationExplanation,
+        BARBARIAN_CLASS_ID, SUPERSTITION_RAGE_POWER_SELECTION,
+    };
+    use crate::rules_core::character_input::{load_character_input_fixture, SelectedChoice};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+    const SUPERSTITION_RECORD_ID: &str = "class_feature.barbarian.rage_power.superstition.save_bonus";
+
+    fn human_barbarian_input(level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: BARBARIAN_CLASS_ID.to_owned(), level }];
+        input
+    }
+
+    fn explanation<'a>(
+        explanations: &'a [ComputationExplanation],
+        id: &str,
+    ) -> &'a ComputationExplanation {
+        explanations
+            .iter()
+            .find(|e| e.id == id)
+            .unwrap_or_else(|| panic!("expected explanation record {id}, got: {explanations:?}"))
+    }
+
+    #[test]
+    fn barbarian_without_any_rage_power_selection_grounds_no_superstition_record() {
+        let input = human_barbarian_input(5);
+        let computation = compute_pilot_base_chassis(&input);
+        assert!(
+            !computation
+                .explanations
+                .iter()
+                .any(|e| e.id == SUPERSTITION_RECORD_ID),
+            "no Superstition record without a real recorded selection: {:?}",
+            computation.explanations
+        );
+    }
+
+    #[test]
+    fn barbarian_level5_with_superstition_selected_at_slot1_grounds_the_real_save_bonus() {
+        let mut input = human_barbarian_input(5);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:barbarian_rage_power".to_owned(),
+            selection_id: SUPERSTITION_RAGE_POWER_SELECTION.to_owned(),
+        });
+
+        let computation = compute_pilot_base_chassis(&input);
+        let bonus = explanation(&computation.explanations, SUPERSTITION_RECORD_ID);
+        // PF1 Core Rulebook `BONUS:VAR|SuperstitionSaveBonus|2+RagePowersLVL/4`,
+        // RagePowersLVL = BarbarianLVL = 5: 2 + 5/4 (integer division) = 3.
+        assert_eq!(bonus.value, 3, "Superstition save bonus at barbarian level 5: {bonus:?}");
+    }
+
+    #[test]
+    fn barbarian_level9_with_superstition_selected_at_a_later_numbered_slot_still_grounds() {
+        let mut input = human_barbarian_input(9);
+        // Picked at the 8th-level slot (`choice:barbarian_rage_power_4`), not
+        // slot 1 -- proves the check spans every numbered slot a Rage Power
+        // can land in, not only the first.
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:barbarian_rage_power_4".to_owned(),
+            selection_id: SUPERSTITION_RAGE_POWER_SELECTION.to_owned(),
+        });
+
+        let computation = compute_pilot_base_chassis(&input);
+        let bonus = explanation(&computation.explanations, SUPERSTITION_RECORD_ID);
+        // 2 + 9/4 (integer division) = 4.
+        assert_eq!(bonus.value, 4, "Superstition save bonus at barbarian level 9: {bonus:?}");
+    }
+
+    /// MUTATION-PROOF guard: an invented selection id must never ground the
+    /// real magnitude, even though it is recorded under a real choice-set id
+    /// a Barbarian genuinely owns. Confirms `chooser_option_selected`'s own
+    /// `corpus_pool.contains` check is load-bearing here, not decorative.
+    #[test]
+    fn an_invented_selection_id_never_grounds_the_superstition_bonus() {
+        let mut input = human_barbarian_input(5);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:barbarian_rage_power".to_owned(),
+            selection_id: "made_up_power".to_owned(),
+        });
+
+        let computation = compute_pilot_base_chassis(&input);
+        assert!(
+            !computation
+                .explanations
+                .iter()
+                .any(|e| e.id == SUPERSTITION_RECORD_ID),
+            "an untrusted/invented selection id must never ground a real magnitude: {:?}",
+            computation.explanations
+        );
+    }
+
+    /// A DIFFERENT real, corpus-verified Rage Power selection must not
+    /// spuriously ground Superstition's own record -- the same same-class,
+    /// different-SLOT collision shape row 186/wave-11's own regression
+    /// guarded against for the pool-name matcher.
+    #[test]
+    fn a_different_real_rage_power_selection_never_grounds_superstition() {
+        let mut input = human_barbarian_input(5);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:barbarian_rage_power".to_owned(),
+            selection_id: "surprise_accuracy".to_owned(),
+        });
+
+        let computation = compute_pilot_base_chassis(&input);
+        assert!(
+            !computation
+                .explanations
+                .iter()
+                .any(|e| e.id == SUPERSTITION_RECORD_ID),
+            "selecting a DIFFERENT real Rage Power must never ground Superstition's own \
+             record: {:?}",
+            computation.explanations
+        );
+    }
+
+    /// Reachability proof, per this cycle's own dispatch ("Reachability is
+    /// proven through a headless pilot receipt, never a resolver unit
+    /// test"): the real `build_pilot_headless_receipt` entry point --
+    /// the same one `v06_class_state_dump`'s dashboard surface and the
+    /// desktop app's own reach-gate both call -- reaches `Computed` (not
+    /// `Blocked`) for a Human Barbarian with a genuine Superstition
+    /// selection, and the real receipt's own explanations carry the
+    /// grounded save-bonus record.
+    #[test]
+    fn the_headless_pilot_receipt_reaches_computed_with_superstition_selected() {
+        use super::{build_pilot_headless_receipt, HeadlessReceiptStatus};
+
+        let mut input = human_barbarian_input(5);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:barbarian_rage_power".to_owned(),
+            selection_id: SUPERSTITION_RAGE_POWER_SELECTION.to_owned(),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "a Human Barbarian with Superstition selected must reach Computed, not Blocked: \
+             {:?}",
+            receipt.computation.diagnostics
+        );
+        let bonus = explanation(&receipt.computation.explanations, SUPERSTITION_RECORD_ID);
+        assert_eq!(bonus.value, 3, "the real headless receipt must carry the grounded value: {bonus:?}");
     }
 }
 
