@@ -2566,7 +2566,7 @@ mod tests {
         // finds nothing for this trait key, which is why the caller falls
         // back rather than this function growing a second responsibility.
         let gates = globalvar_gates(&samsaran_shards_globalvar_line(), "Samsaran");
-        assert!(gates.get("Samsaran ~ Shards of the Past").is_none());
+        assert!(!gates.contains_key("Samsaran ~ Shards of the Past"));
     }
 
     #[test]
