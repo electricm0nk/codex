@@ -296,7 +296,7 @@ fn cross_book_feat_key_repeats_are_exactly_the_known_set() {
 #[test]
 fn the_aggregate_catalog_spans_every_ingested_book() {
     let books = all_feat_tables();
-    assert_eq!(books.len(), 18);
+    assert_eq!(books.len(), 20);
 
     let entries_for = |rule_set: RuleSetId| {
         books
@@ -345,9 +345,13 @@ fn the_aggregate_catalog_spans_every_ingested_book() {
     // display-plumbing twins (PCGen's own export-only duplicate of an
     // auto-granted feat, never independently selectable): 358 -> 199.
     assert_eq!(entries_for(RuleSetId::Mythic), 199); // 0 + 199
+    // `SD31-E6-F8-003` -- two more books already compiled for another kind
+    // that had no feat table at all; every served entry is a gap row.
+    assert_eq!(entries_for(RuleSetId::Isi), 6); // 0 + 6
+    assert_eq!(entries_for(RuleSetId::Botd2), 1); // 0 + 1
 
     let total: usize = books.iter().map(|b| b.entries.len()).sum();
-    assert_eq!(total, 2102, "186 CRB + 172 APG + 129 ACG + 235 ARG + 17 PU + 23 UCA + 107 UI + 136 UW + 263 UC + 156 UM + 222 UPsi + 15 Ce + 61 Ha + 50 Isr + 68 Oa + 31 Iswg + 32 MonsterCodex + 199 Mythic = 1578 hand-authored + 524 corpus gap rows (SD31-E6-F8-001's 83 + SD31-E6-F8-002's 242 + SD31-E6-F2-007's 199, after SD31-W10-INTEGRATE-001 excluded 159 VISIBLE:EXPORT twins from the raw 358)");
+    assert_eq!(total, 2109, "186 CRB + 172 APG + 129 ACG + 235 ARG + 17 PU + 23 UCA + 107 UI + 136 UW + 263 UC + 156 UM + 222 UPsi + 15 Ce + 61 Ha + 50 Isr + 68 Oa + 31 Iswg + 32 MonsterCodex + 199 Mythic + 6 Isi + 1 Botd2 = 1578 hand-authored + 531 corpus gap rows (SD31-E6-F8-001's 83 + SD31-E6-F8-002's 242 + SD31-E6-F2-007's 199, after SD31-W10-INTEGRATE-001 excluded 159 VISIBLE:EXPORT twins from the raw 358 + SD31-E6-F8-003's 7)");
 }
 
 #[test]

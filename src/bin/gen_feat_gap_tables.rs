@@ -205,6 +205,28 @@ const BOOK_INPUTS: &[BookInput] = &[
         slug: "mythic_adventures",
         files: &["pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst"],
     },
+    // `SD31-E6-F8-003` -- two more books already compiled into
+    // `COMPILED_RULE_SETS` for another kind (`Isi`: familiars + abilities,
+    // `Botd2`: monsters) that never had a feat table of their own, same
+    // shape as the five-book lane above. `docs/work-inventory.json`'s
+    // remaining `feat` `not-ingested` population for these two books is
+    // `origin: "declared"` (real standalone records, not a `.MOD`-only
+    // artifact) and neither file's records carry `NAMEISPI:YES`, re-derived
+    // by direct read of both files.
+    BookInput {
+        rule_set: RuleSetId::Isi,
+        variant: "Isi",
+        slug: "inner_sea_intrigue",
+        files: &["pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_feats.lst"],
+    },
+    BookInput {
+        rule_set: RuleSetId::Botd2,
+        variant: "Botd2",
+        slug: "book_of_the_damned_volume_2",
+        files: &[
+            "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_feats.lst",
+        ],
+    },
 ];
 
 /// One parsed corpus feat record, before the already-held filter runs.

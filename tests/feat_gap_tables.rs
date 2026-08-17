@@ -82,6 +82,15 @@ const REPRESENTATIVES: &[(RuleSetId, &str)] = &[
     (RuleSetId::Oa, "Alter Binary Mindscape"),
     (RuleSetId::Iswg, "Altitude Affinity"),
     (RuleSetId::MonsterCodex, "Angelbane Strike"),
+    // `SD31-E6-F8-003` -- two more books already compiled into
+    // `COMPILED_RULE_SETS` for another kind (`Isi`: familiars + abilities;
+    // `Botd2`: monsters) that never had a feat table of their own. Neither
+    // record carries `NAMEISPI:YES` (re-derived by direct read of
+    // `isi_feats.lst`/`botd2_feats.lst`), unlike `inner_sea_world_guide`'s
+    // remaining 6 `not-ingested` feats, which all do and correctly stay
+    // undeliverable (SD-30 contract 53.5).
+    (RuleSetId::Isi, "Convincing Persona"),
+    (RuleSetId::Botd2, "Demonic Obedience"),
 ];
 
 #[test]
@@ -170,13 +179,17 @@ fn the_gap_rows_are_exactly_the_joined_catalog_minus_the_hand_authored_one() {
     // display-plumbing twins (PCGen's own duplicate-for-PDF-export rows,
     // never independently selectable): 358 -> 199.
     assert_eq!(
-        added, 524,
-        "the gap lane is 524 rows: 83 from the original 7-book lane \
+        added, 531,
+        "the gap lane is 531 rows: 83 from the original 7-book lane \
          (`SD31-E6-F8-001`) + 242 from the five books `SD31-E6-F8-002` added \
          (horror_adventures 61 + inner_sea_races 50 + occult_adventures 68 + \
          inner_sea_world_guide 31 + monster_codex 32) + 199 from Mythic \
          Adventures (`SD31-E6-F2-007`, 358 raw minus 159 `VISIBLE:EXPORT` \
-         twins excluded by `SD31-W10-INTEGRATE-001`), verbatim from \
+         twins excluded by `SD31-W10-INTEGRATE-001`) + 7 from two more \
+         already-compiled books `SD31-E6-F8-003` added (inner_sea_intrigue 6 \
+         + book_of_the_damned_volume_2 1; neither carries a `NAMEISPI:YES` \
+         record, unlike `inner_sea_world_guide`'s remaining 6 `not-ingested` \
+         feats, which all do and correctly stay dropped), verbatim from \
          `gen_feat_gap_tables`'s own stdout at the pinned oracle"
     );
 }
