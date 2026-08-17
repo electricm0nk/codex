@@ -15731,7 +15731,15 @@ LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E5-F1-002-verify.log
 
 ### §9 — Reclaim
 
-`scripts/reclaim.sh --apply` run after landing and pushing; bytes reclaimed recorded in the handoff below. `apps/desktop` driver stopped (`driver.sh stop`) before reclaim.
+`apps/desktop` driver stopped (`driver.sh stop`) before reclaim. Own `CARGO_TARGET_DIR`
+(`/home/ubuntu/cargo-targets/sd31-cf-ground`, confirmed no live PID referencing it via
+`/proc/<pid>/environ`) deleted directly per the standing rule — **31 GB reclaimed**
+(`df -h /`: 396G used → 440G used *before* deletion had already grown from other agents'
+concurrent activity on the shared box, so the before/after delta is read from `du -sh` on the
+directory itself: 31G immediately prior to `rm -rf`, 0 after). `scripts/reclaim.sh --apply` run
+afterward for the generic categories: **0 additional items, 0 bytes** (everything else on the box
+either belongs to a live sibling agent — correctly `SKIPPED`, 153 items — or is too young to
+qualify under the script's own conservative age filters).
 
 ### Blockers
 
@@ -15739,4 +15747,19 @@ None. Both PU-registration (row 151) and the 3,744/17-unit engine-gap population
 
 ### Branch tip
 
-Recorded in the handoff below, after landing this receipt and pushing.
+`a4910c48b577966f6eb4cd28ee06adedb6d14f80` (this cycle's own commit, amended once — see the retro
+incident below), followed by `42d2d43a6` (a small separate follow-up commit recording that
+incident). Pushed to `origin/tranche/11` (`a9426b760..42d2d43a6`).
+
+**Incident, self-caught, self-fixed before push:** `git commit -F` on the first attempt landed
+with the WRONG commit message — a scratchpad-path collision with a concurrently-dispatched sibling
+cycle (`SD31-E6-F4-003`, race_trait work) meant the shared task-notification scratchpad directory
+(keyed only by session id, apparently shared across sibling cycles dispatched in the same batch)
+had the commit-message file this cycle wrote silently overwritten by the sibling's own file before
+`git commit -F` read it. The landed commit's DIFF was always correct (verified via `git show
+--stat HEAD` immediately after committing, per the standing rule to verify every claim); only the
+message text was wrong. Caught by reading the commit back before pushing, fixed with `git commit
+--amend -F <freshly-written-file-outside-the-shared-scratchpad>` since the commit was still
+unpushed — no push of the wrong message occurred, no work lost. Full incident record:
+`docs/retro/events/sd31-cf-ground.jsonl` (`recurrence_key:
+shared-scratchpad-collision-commit-message`).
