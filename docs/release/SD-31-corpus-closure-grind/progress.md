@@ -15615,3 +15615,220 @@ stages, both traced to this cycle's own commits (`4fc65df96`/`5613a53d9`), neith
 
 Both self-caught by the gate before merge; neither fixed by weakening the check. Fix commit
 `f0d525ded`. A second, clean full `verify.sh` run followed — its result is what §5/§6 below report.
+
+## Cycle `SD31-E6-F9-002` (`RETRO_ACTOR=sd31-monster2`) — 2026-08-16, `monster_ability`/`monster` ingest lane
+
+**Role:** `sd31-monster2`, own worktree (`worktree-wf_071aed05-f44-5`), branch
+`sd31/monster2-SD31-E6-F9-002`, own `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-monster2`.
+
+**HEAD at start:** `a9426b760014004b4b3c42cf47fa927725139675` (`docs(sd31): SD31-W8-INTEGRATE-001
+full cycle receipt`), reached via `git fetch origin && git reset --hard origin/tranche/11` (package
+directory was absent at the worktree's initial checkout — `bab19b201`, `origin/main`'s tip — and
+`git status --porcelain` was empty, so the recovery step fired per protocol). Branched off cleanly.
+
+**Oracle pin:** `./scripts/verify.sh --only preflight-oracle` → PASS.
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/pcgen-oracle-pin.env`).
+
+### §0 — Re-derived figures (all commands re-run this cycle, not transcribed)
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+for kind in ('monster_ability','monster'):
+    units=[u for u in U if u.get('kind')==kind]
+    v=lambda u: P.doneness_verdict(u.get('wiring_class'),u.get('status'),kind)
+    c=collections.Counter(v(u) for u in units)
+    print(kind, len(units), dict(c), round(100*c['done']/len(units),2))
+"
+```
+→ `monster_ability 2951 {'not-started': 1322, 'done': 1366, 'held': 263} 46.29` — matches the
+dispatch brief's "~46.3%, 1,322 not-started, 263 held" exactly. `monster 1270 {'held': 402, 'done':
+840, 'not-started': 28} 66.14` — matches "~66.1%, 28 not-started, 402 held" exactly. Board overall
+unchanged from `SD31-W8-INTEGRATE-001`'s own figure at this same HEAD:
+`10,759/38,521 (27.9302%)` (no `docs/work-inventory.json` regen committed this cycle — wave rule).
+
+Full not-done cell breakdown for `monster_ability` (re-derived, per-cell):
+`('display','not-ingested') 634 · ('computed','not-ingested') 251 · ('derived','not-ingested') 224 ·
+('derived','grounded') 223 · ('static','not-ingested') 186 · ('display','grounded') 30 ·
+('display','not-started') 21 · ('ambiguous','text-complete') 10 · ('ambiguous','not-ingested') 6`.
+
+### §1 — Trace-one-unit-per-lever, before ingesting (mandatory first action)
+
+- **`display` (685 units: 634+30+21)** — lane 2's rung (Epic 2's `display|grounded` verdict-path
+  capability), not mine. Reported, not touched.
+- **`derived` (447 units: 224 not-ingested + 223 grounded)** — traced
+  `bestiary_4:monster_ability:bakekujira_smashing_breach` end to end: corpus row
+  `b4_abilities_race.lst:295`, real shipped JSON (`data/corpus/bestiary_4/monster_ability/
+  bakekujira_smashing_breach.json`), `DESC:"...DC %1 Reflex save..."`, `description_variables:
+  ["CHA+22"]`. Short of the `fixture-verified` rung because computing the concrete DC needs the
+  monster's BASE ability score, which `MonsterStatBlock` (widened by `SD31-E6-F1-002` with
+  `stat_adjustments`, an ability-score DELTA, never a score) does not carry and this ingest does not
+  fabricate — exactly the trap `SD31-E6-F1-002`'s own `OPEN-ISSUES.md` row 26/27 already named.
+  Re-derived corpus-wide (not assumed from one record): of the 223 `derived|grounded` held units,
+  **146 need a base ability-score modifier** (regex-matched `STR|DEX|CON|INT|WIS|CHA` in
+  `description_variables`, structurally blocked the same way), **~40 name an opaque per-monster
+  `SPECIAL:`/`DEFINE:`-declared variable** (`ClingDC`, `NightmareSmokeDC`, …) needing individual `.lst`
+  forensics I did not attempt this cycle, and **37 carry NO `description_variables` at all** (real
+  `BONUS:` token, but the `DESC:` prose is already fully self-contained) — sized and reported as
+  `OPEN-ISSUES.md` row 152 rather than reclassified (§3 below).
+- **`static` (186 not-ingested)** — traced by book. Sampled `ultimate_psionics`'s 24 candidates
+  (`Astral_Buff`, `Astral_Deflection`, …, `Horror ~ Devastating Touch`): read the live pinned oracle
+  row (`up_abilities_race.lst:646`+) and found these are the **Astral Construct upgrade MENU** —
+  options a Psion selects at manifest-time for a summoned construct, never a fixed bestiary monster's
+  stat-block ability. No monster owner, no possible player-visible "twin" under `MonsterCatalogScreen`
+  — genuinely unreachable via this lane, not merely unclassified. Sampled `bestiary`'s 39 candidates
+  (`Animated Object ~ Burrow Movement`, `Centaur ~ Undersized Weapons`, `Choker ~ Grab`, `Darkmantle ~
+  Grab`, `Doppelganger ~ Change Shape`, `Bleed`, `Can't Be Tripped`, `Channel Resistance`, `Constrict`)
+  — genuine Bestiary-1-shaped content, but every one comes from `ce_abilities_race.lst` (a
+  `core_essentials`-origin file, re-attributed to `book:"bestiary"` per `decisions.md §9` but
+  physically living under `core_essentials/`'s own PCGen directory) — see §2, the real blocker found
+  and fixed here.
+
+### §2 — Real, in-territory infrastructure fixes (`monster`/`monster_ability` ingest path)
+
+**TDD throughout** (`scripts/tests/test_transcribe_monster_tables.py`, new, 7 cases — RED confirmed
+before each fix, GREEN after, the truncation-guard case additionally mutation-proven by reverting the
+write-order and re-running to confirm it goes red again).
+
+1. **`resolve_book_file` core_essentials fallback.** Confirmed live against the pinned oracle:
+   `python3 scripts/transcribe_monster_tables.py bestiary` raised
+   `SystemExit("ce_abilities_race.lst is not present anywhere under .../roleplaying_game/bestiary")`
+   — `resolve_book_file` only ever walked the book's OWN directory, and a `SD31-ATTRIB-*`-re-attributed
+   unit's physical file never moves (re-attribution is a pure `book`-field relabel, `SD31-ATTRIB-001`'s
+   own receipt). Fixed: falls back to `core_essentials`'s directory (never the reverse, and never
+   self-falls-back when `root` already IS `core_essentials`) when the book's own root doesn't have the
+   name. Sized the affected population precisely: **136 `static`/`derived` `monster_ability` units**
+   across `bestiary`(32)/`bestiary_2`(72)/`bestiary_3`(4) via `ce_abilities_race.lst` plus
+   `bestiary_4`(28) via `b4_abilities_races_ce.lst`.
+2. **`write_book` atomic-write safety fix.** `main()`'s `open(path, "w")` ran BEFORE `transcribe()`,
+   so a mid-`transcribe()` raise (a real, honest refusal, not a bug) truncated the target
+   `monster_data.rs` to 0 bytes. **Reproduced live, twice, this cycle**: re-running the (now
+   file-resolution-fixed) transcriber for `bestiary` crashed on 3 newly-reachable rows with an
+   unmodelled `DESC:` shape (`Energy Drain`/`Fast Healing`/`Stench`) and the target file went to 0
+   lines; recovered only via a manually-kept `/tmp` backup, not by any guard in the tree at the time.
+   Same for `bestiary_2` (2 more rows, same shape). Fixed: `transcribe()` is computed to a complete
+   string BEFORE the file is touched, so a raise now leaves the pre-existing file byte-for-byte
+   unchanged — proven both synthetically (test) and against the two live crashes above (`diff -q`
+   confirmed unchanged both times).
+3. **Doc-comment correction, in the same file.** `parse_desc`'s own doc comment claimed "not one of
+   the 14 [refused] rows is a row any book ships" — true only because `core_essentials`-origin rows
+   were unreachable before fix (1) landed. Corrected in place (not just here) once the 5 rows named in
+   §1/§3 turned out to have real owners.
+
+Re-ran the transcriber for all 4 candidate books (`bestiary`, `bestiary_2`, `bestiary_3`,
+`bestiary_4`) after both fixes to validate correctness before committing anything. **Net board-count
+movement: zero** — reported plainly, not inflated. `bestiary_3`/`bestiary_4`'s new-to-fix-1
+`ce_abilities_race.lst`/`b4_abilities_races_ce.lst` candidates are genuine orphans (no `ABILITY:`
+cross-ref, no namespaced-prefix owner on any modeled monster row of that book — `Universal Monster
+Rule ~ *`/`Traits Output ~ *`/type-keyed rows like `Kami ~ Ward`, correctly excluded by the existing
+orphan pass); `bestiary`/`bestiary_2` each crashed on a genuinely NEW `parse_desc`-refused shape (5
+records total, all confirmed real owners this time) that I deliberately did NOT hand-widen the parser
+for under time pressure — picking the wrong `DESC:` variant would ship subtly wrong player-facing
+text. All test-only regen runs (`bestiary`/`bestiary_2`/`bestiary_3`/`bestiary_4` `monster_data.rs`)
+were reverted to their committed state before this receipt (`diff -q` confirmed byte-identical to
+`HEAD` for all four); none of the four `monster_data.rs` files are part of this cycle's commit.
+
+### §3 — Findings logged, not acted on out of territory
+
+`OPEN-ISSUES.md` rows 150 (the two fixes above, sized), 151 (why re-running the fixed transcriber
+still moved zero units, per book, with the 5-record `parse_desc` remedy named precisely) and 152 (the
+37-unit `derived|grounded`-with-no-`description_variables` population, sized, with the exact tension
+against `decisions.md` Decision 8's "wire it, don't retract" precedent named — genuinely needs an
+operator ruling or a `monster_catalog.rs` DTO widening, neither of which is a same-cycle, in-territory
+fix). Append-only; no other row rewritten.
+
+### §4 — PI screening
+
+**No new corpus records shipped this cycle** (zero `data/corpus/**/monster_ability/*.json`,
+`data/corpus/**/monster/*.json` changes — every transcriber test-run above was reverted). Both SD-30
+PI contracts (`§52.3` blacklist sweep, `§53.5` declared-PI reader) therefore have nothing new to
+screen; `declared_pi_shipping_audit` ran clean as part of the full gate (§6) as it did before this
+cycle, unaffected by this cycle's diff (`scripts/transcribe_monster_tables.py` + its test file only).
+
+### §5 — Guarded regen
+
+Not run this cycle in the sanctioned committing sense — no corpus content changed, so a regen would
+reproduce `docs/work-inventory.json` byte-for-byte modulo `generated_at` (confirmed by the §0 figures
+above matching the wave-8 tip exactly). Per the wave rule, `docs/work-inventory.json` is left
+untouched (`git status --porcelain` confirms no diff on it).
+
+### §6 — Full gate
+
+Launched early (before the deep transcriber investigation), in the background, kept alive:
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F9-002-verify.log
+RETRO_ACTOR=sd31-monster2 CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-monster2 \
+  ./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+**`VERIFY_EXIT=1`, `RESULT: FAIL`, 26 of 27 stages green.** The SOLE failing stage,
+`site-dashboard-check`, is pre-existing and unrelated — confirmed by `git log` on
+`site/dashboard/PF1e-dashboard.json`: last refreshed at `4d1770933` (wave-8's own `SD31-ATTRIB-003`
+commit), and the 7 commits between that refresh and this cycle's starting HEAD (`a9426b760`) are all
+`docs(sd31):` receipt/baseline text — none touch `site/dashboard/`. This cycle's own diff (§2) touches
+only `scripts/transcribe_monster_tables.py` and its test file — nothing this cycle wrote or could have
+written causes a dashboard staleness check. Not this card's file territory to fix (attribution/feed
+lane's surface, per `OPEN-ISSUES.md` rows 141/149).
+
+Every OTHER stage matches wave-8's own recorded figures exactly, positively confirming zero
+regression: `root-lib` 1936 (same), `root-full` 6822 passed across 564 suites, all 529 `tests/*.rs`
+executed (same), `desktop` 457 (same), `reach` 27 passed with a claim (same), `corpus-sweep` 24583
+examined / 0 findings (same), `clippy` root:47 desktop:7 (same exact ceiling), `frontend-test` 99/99,
+`frontend-typecheck` clean, `class-dump` 31/31, `supersession-gate` 116 objects clean. One baseline
+NOTE (not a failure): `BASELINE_CORPUS_LITERAL_RECORDS=24583 (was 24519)` — pre-existing drift from
+wave-8's own corpus growth, not from this cycle (this cycle shipped zero corpus records, §4/§5).
+Log: `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F9-002-verify.log`.
+
+### §7 — DoD
+
+1. `verify.sh` full — `VERIFY_EXIT=1`, sole failing stage pre-existing/unrelated, see §6.
+2. `reach` stage — `PASS (27 passed)`, matches wave-8 exactly; no new record, no new consumer surface
+   added or removed this cycle, so no new claim was expected or needed.
+3. `v06_corpus_trap_report -- --audit`, run separately after the gate (own command, own exit code
+   captured directly, not through a pipe): `TRAP_EXIT=2` — RED for the same pre-existing reasons,
+   confirmed by exact count: `1 mod-record` (0 defects, unchanged) and `1225 wiring-class-mismatch`
+   (matches wave-8's own post-fix baseline of 1,191→1,225 EXACTLY — zero new findings from this
+   cycle). Not worsened.
+4. Guarded regen: N/A this cycle (§5) — zero stamp loss because zero regen was run against changed
+   content; the standing figures reproduce exactly (§0).
+5. Wired-integration four-check audit: N/A in the "new surface" sense (nothing new ships to a player
+   this cycle) — the two fixes are ingest-tooling correctness/safety fixes, not player-facing
+   features, so there is no stub/no fake-success surface introduced. `write_book`'s own fix is itself
+   an anti-stub, anti-data-loss correction in spirit.
+6. Unsurfaced families: none new.
+7. Baseline moves: none — `scripts/verify-baselines.env` untouched by this cycle's own commits.
+8. **On-screen verification — REGRESSION check, run AFTER the full gate finished** (never
+   concurrently, per `run-desktop/SKILL.md`). No new corpus record was grounded this cycle (§2's net
+   movement is zero), so there is nothing new to screenshot under item 8's usual framing; confirmed
+   instead that the app still renders correctly post-diff. `monster` IS one of `verify-on-screen.sh`'s
+   four supported families (`equipment`/`spell`/`race_trait`/`monster` — the dispatch's caution named
+   `class_feature`/`race_trait` gaps, not `monster`), so used it directly rather than `driver.sh`
+   manually:
+   ```
+   RUN_DESKTOP_AGENT=sd31monster2 ./.claude/skills/run-desktop/verify-on-screen.sh \
+     --family monster --record "Demon (Balor)" \
+     --expect "Vorpal Strike" --expect "gains the vorpal weapon quality" \
+     --out docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F9-002/item8
+   ```
+   → **PASS**. `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F9-002/item8/
+   monster-demon-balor.{png,verify.md}` — rendered text extracted live from the app's clipboard
+   confirms both `--expect` strings present (`"Vorpal Strike — Special Quality (Su)p.58"`, and the
+   full ability description). `RUN_DESKTOP_AGENT=sd31monster2`, `HEAD a9426b760`. `driver.sh stop` run
+   after. This is a regression proof (the Monster Catalog / `monster_chassis.rs` surface E6-F1-002
+   wired is untouched by this cycle's diff and still renders), not evidence of new work — reported as
+   exactly that, per the mandate's "never fake it" instruction.
+
+### §8 — Reclaim
+
+`scripts/reclaim.sh --apply` run at cycle end; bytes reclaimed recorded in the handoff.
+
+### Blockers
+
+None hard-blocking. Two genuine, precisely-sized follow-on levers named (§3, `OPEN-ISSUES.md` rows
+151/152) rather than forced through under time pressure.
+
+### Branch tip
+
+Recorded in the handoff below (`branch`/`head_end`).

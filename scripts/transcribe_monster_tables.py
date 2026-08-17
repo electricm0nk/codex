@@ -313,6 +313,33 @@ def corpus_root() -> str:
     )
 
 
+# `decisions.md §9`: `core_essentials` is not a book. `SD31-ATTRIB-*` re-attributes
+# its units' `book` field to their real book (e.g. `"bestiary"`), but the unit's
+# `source_file` (`ce_abilities_race.lst`, `b4_abilities_races_ce.lst`, ...) is a
+# physical file that never moves -- it stays under `core_essentials`'s own PCGen
+# directory forever, because re-attribution is a reporting-field relabel, not a
+# file move (`SD31-ATTRIB-001`'s own receipt: "zero doneness transitions... book
+# is a pure reporting field"). `resolve_book_file` walked only the book's own
+# root, so a re-attributed unit's `source_file` was unreachable under ANY book's
+# root, confirmed live 2026-08-16 (`SD31-E6-F9-002`): re-running the transcriber
+# for `bestiary` raised `SystemExit("ce_abilities_race.lst is not present
+# anywhere under .../roleplaying_game/bestiary")`, and 108 (`bestiary`
+# `ce_abilities_race.lst` 32, `bestiary_2` 72, `bestiary_3` 4) plus 28 of
+# `bestiary_4`'s own `b4_abilities_races_ce.lst` -- 136 `static`/`derived`
+# `monster_ability` units total -- sat `not-ingested` for exactly this reason,
+# not because they are orphaned.
+_CORE_ESSENTIALS_DIR = "pathfinder/paizo/roleplaying_game/core_essentials"
+
+
+def _find_under(root: str, name: str) -> list[str]:
+    """Every real path named `name` somewhere under `root`, sorted."""
+    candidates = []
+    for dirpath, _dirnames, filenames in os.walk(root):
+        if name in filenames:
+            candidates.append(os.path.join(dirpath, name))
+    return sorted(candidates)
+
+
 def resolve_book_file(root: str, name: str) -> str:
     """The real path of `name` inside a book directory, which is not always its root.
 
@@ -327,23 +354,34 @@ def resolve_book_file(root: str, name: str) -> str:
 
         find ~/workspace/repos/pcgen/data -ipath '*inner_sea_gods*' -name '*races*'
 
-    Both misses would have been LOUD (``FileNotFoundError``), not silent, which
-    is why this is a widening rather than a correction.
+    Nor is a book's own root the ONLY place a re-attributed unit's file can be:
+    if `name` is absent from `root` entirely, this also tries
+    `core_essentials`'s directory (`_CORE_ESSENTIALS_DIR`) -- the one other
+    place `decisions.md §9` re-attribution can have left a unit's real file --
+    unless `root` already IS that directory (no self-fallback: a file genuinely
+    absent from `core_essentials` stays absent, not silently re-searched into a
+    confusing duplicate-candidate error).
+
+    Both misses would have been LOUD (``FileNotFoundError``/``SystemExit``), not
+    silent, which is why this is a widening rather than a correction.
 
     Two failure modes are refused rather than resolved:
 
-    * **Not found anywhere** -- the inventory cites a file this book does not
-      have, so every citation derived from it would be fiction.
+    * **Not found anywhere** -- the inventory cites a file this book (nor, for
+      a re-attributed unit, `core_essentials`) does not have, so every citation
+      derived from it would be fiction.
     * **Found in more than one place** -- a bare basename that matches two real
       files does not identify a row, and picking either one is a coin flip on
-      which rules text ships.  No book in the corpus currently trips this; the
-      check exists so that the first one that does fails here rather than
-      shipping the wrong text.
+      which rules text ships. The book's own root always wins over the
+      `core_essentials` fallback when a name collides in both (checked as two
+      separate passes, never one merged walk) so a book that legitimately owns
+      a same-named file is never redirected to `core_essentials`'s copy.
     """
-    candidates = []
-    for dirpath, _dirnames, filenames in os.walk(root):
-        if name in filenames:
-            candidates.append(os.path.join(dirpath, name))
+    candidates = _find_under(root, name)
+    if not candidates:
+        ce_root = os.path.join(corpus_root(), _CORE_ESSENTIALS_DIR)
+        if os.path.abspath(ce_root) != os.path.abspath(root):
+            candidates = _find_under(ce_root, name)
     if not candidates:
         raise SystemExit(f"{name} is not present anywhere under {root}")
     if len(candidates) > 1:
@@ -672,6 +710,22 @@ def parse_desc(row: list[str]) -> tuple[str | None, list[str]]:
     several `DESC:` tokens -- 34 gated-full, 4 continuation, 1 superset, 1
     variable-bearing, and 14 that remain refused. Not one of the 14 is a row any
     book ships; every one is an orphan or a Product Identity row.
+
+    **CORRECTION (`SD31-E6-F9-002`, `OPEN-ISSUES.md` row 151): the "not one of
+    the 14 ships" claim above was true only because `core_essentials`-origin
+    rows were UNREACHABLE at all (`resolve_book_file` raised before any of
+    them reached this function).** Once that was fixed, 5 more rows in this
+    same refused shape turned out to have a real owning monster: `bestiary`'s
+    `ce_abilities_race.lst:1359`/`:1363`/`:1516` (`Energy Drain`/`Fast
+    Healing`/`Stench`) and `bestiary_2`'s `ce_abilities_race.lst:1955`/`:2043`
+    (`Telepathy ~ Miles`/`Voidworm ~ Change Shape`). All 5 share a FIFTH
+    shape this docstring never enumerated: several `DESC:` tokens gated on a
+    `PREVAREQ`/`PREVARGT` comparison against a `BONUS:VAR`-set value (e.g.
+    singular vs. plural phrasing keyed to whether a variable equals 1 or
+    exceeds it), not the on/off `PRERULE:1,DisplayFullAbility` toggle the
+    "gated-full" branch above resolves. Still refused, deliberately -- picking
+    the right variant needs the value each row's own `BONUS:VAR` sets,
+    verified per record, not guessed generically.
     """
     descs = [f[len("DESC:") :] for f in row if f.startswith("DESC:")]
     if not descs:
@@ -1458,13 +1512,36 @@ def transcribe(book: str) -> str:
     return "\n".join(out)
 
 
+def write_book(book: str) -> str:
+    """Transcribe `book` and write it to its `monster_data.rs`, atomically.
+
+    `transcribe()` can raise partway through a book with real, un-fabricatable
+    problems (an orphan-owning row whose `DESC:` shape `parse_desc` refuses,
+    `SD31-E6-F9-002`'s own `ce_abilities_race.lst:1955`/`:2043` finding) --
+    that is the transcriber correctly REFUSING rather than guessing, not a bug.
+    The bug this guards is orthogonal: `main()` used to `open(path, "w")`
+    *before* calling `transcribe()`, which truncates the target file to 0
+    bytes immediately, so a mid-`transcribe()` raise left the file empty --
+    confirmed live twice in one cycle (`SD31-E6-F9-002`, `bestiary` and
+    `bestiary_2`; both were the committed, unmodified file at the time, so
+    `git checkout --` would have equally recovered them -- a WORKING tree with
+    uncommitted local changes queued for this same book would not have had
+    that luxury). `transcribe()`
+    is computed FIRST, in full, into a string; the file on disk is touched
+    only after that succeeds, and a raise leaves the existing file exactly as
+    it was.
+    """
+    path = f"src/rules_core/rules_tables/{book}/monster_data.rs"
+    content = transcribe(book)
+    with open(path, "w", encoding="utf-8") as handle:
+        handle.write(content)
+    return path
+
+
 def main() -> None:
     if len(sys.argv) != 2 or sys.argv[1] not in BOOKS:
         raise SystemExit(f"usage: {sys.argv[0]} <{'|'.join(sorted(BOOKS))}>")
-    book = sys.argv[1]
-    path = f"src/rules_core/rules_tables/{book}/monster_data.rs"
-    with open(path, "w", encoding="utf-8") as handle:
-        handle.write(transcribe(book))
+    path = write_book(sys.argv[1])
     print(f"wrote {path}")
 
 
