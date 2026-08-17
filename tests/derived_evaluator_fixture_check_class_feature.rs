@@ -133,14 +133,14 @@ fn reference_parse_class_feature_formula(corpus_field: &str) -> Option<(String, 
         let offset: i32 = inner[split_at..].parse().ok()?;
         return Some((var, offset, divisor, 0));
     }
-    if let Some(plus_idx) = formula.find('+') {
-        if let Ok(n) = formula[..plus_idx].parse::<i32>() {
-            let rest = &formula[plus_idx + 1..];
-            let slash_idx = rest.find('/')?;
-            let var = rest[..slash_idx].to_string();
-            let divisor: i32 = rest[slash_idx + 1..].parse().ok()?;
-            return Some((var, 0, divisor, n));
-        }
+    if let Some(plus_idx) = formula.find('+')
+        && let Ok(n) = formula[..plus_idx].parse::<i32>()
+    {
+        let rest = &formula[plus_idx + 1..];
+        let slash_idx = rest.find('/')?;
+        let var = rest[..slash_idx].to_string();
+        let divisor: i32 = rest[slash_idx + 1..].parse().ok()?;
+        return Some((var, 0, divisor, n));
     }
     let slash_idx = formula.find('/')?;
     let var = formula[..slash_idx].to_string();
