@@ -1546,7 +1546,7 @@ mod class_feature_seam_tests {
     }
 
     impl ScratchClassFeatureRoot {
-        fn new(name: &str, expected_offset_pre: i32, expected_divisor: i32, expected_offset_post: i32) -> Self {
+        fn new(name: &str, expected_divisor: i32, expected_offset_post: i32) -> Self {
             let root = std::env::temp_dir().join(format!(
                 "codex_class_feature_mutation_proof_{name}_{}",
                 std::process::id()
@@ -1595,7 +1595,6 @@ mod class_feature_seam_tests {
                 ),
             )
             .unwrap();
-            let _ = expected_offset_pre;
             ScratchClassFeatureRoot { root }
         }
     }
@@ -1613,7 +1612,7 @@ mod class_feature_seam_tests {
     fn a_wrong_expected_divisor_makes_run_class_feature_bar_check_report_a_failure() {
         let (_, real) = parse_class_feature_level_scaling("2+ProbeLVL/4").unwrap();
         let wrong_divisor = real.divisor + 1;
-        let scratch = ScratchClassFeatureRoot::new("wrong_divisor", 0, wrong_divisor, real.offset_post);
+        let scratch = ScratchClassFeatureRoot::new("wrong_divisor", wrong_divisor, real.offset_post);
         let report = run_class_feature_bar_check(&scratch.root);
 
         assert!(
@@ -1690,7 +1689,7 @@ mod class_feature_seam_tests {
     #[test]
     fn a_correct_expected_class_feature_formula_clears_run_class_feature_bar_check() {
         let (_, real) = parse_class_feature_level_scaling("2+ProbeLVL/4").unwrap();
-        let scratch = ScratchClassFeatureRoot::new("correct", 0, real.divisor, real.offset_post);
+        let scratch = ScratchClassFeatureRoot::new("correct", real.divisor, real.offset_post);
         let report = run_class_feature_bar_check(&scratch.root);
 
         assert!(report.failures.is_empty(), "failures: {:?}", report.failures);
@@ -2291,5 +2290,91 @@ mod monster_seam_tests {
             report.not_ingested
         );
         assert_eq!(report.cleared.len(), report.fixtures_total);
+    }
+
+    /// A scratch `repo_root` carrying ONLY a custom `monster_entries`
+    /// fixture row -- unlike the equipment/spell seams, `run_monster_bar_check`
+    /// resolves records through the compiled `monster_chassis::MONSTER_BOOKS`
+    /// static registry, never the filesystem, so `repo_root` only ever
+    /// controls which FIXTURE file is read; the real Demon (Balor) stat
+    /// block still resolves regardless of which scratch root is passed.
+    struct ScratchMonsterFixtureRoot {
+        root: PathBuf,
+    }
+
+    impl ScratchMonsterFixtureRoot {
+        fn new(name: &str, expected_caster_level: i32) -> Self {
+            let root = std::env::temp_dir()
+                .join(format!("codex_monster_mutation_proof_{name}_{}", std::process::id()));
+            let _ = std::fs::remove_dir_all(&root);
+            let fixture_dir = root.join("tests/fixtures/rules_core");
+            std::fs::create_dir_all(&fixture_dir).unwrap();
+            std::fs::write(
+                fixture_dir.join("derived-evaluator-fixtures.json"),
+                format!(
+                    r#"{{"monster_entries":[{{
+                        "unit_id":"scratch:monster:demon_balor",
+                        "book":"bestiary",
+                        "record_key":"Demon (Balor)",
+                        "upstream_lst":"scratch.lst",
+                        "upstream_lst_sha256":"0",
+                        "upstream_line":1,
+                        "corpus_field":"BONUS:VAR|SLA_CL|HD",
+                        "monster_class_token":"Outsider (Fort/Will):20",
+                        "expected":{{"spell_like_ability_caster_level":{expected_caster_level}}}
+                    }}]}}"#
+                ),
+            )
+            .unwrap();
+            ScratchMonsterFixtureRoot { root }
+        }
+    }
+
+    impl Drop for ScratchMonsterFixtureRoot {
+        fn drop(&mut self) {
+            let _ = std::fs::remove_dir_all(&self.root);
+        }
+    }
+
+    // MUTATION PROOF, made real, driving `run_monster_bar_check` end to end
+    // (the same shape wave 11's fix applied to the spell RANGE seam,
+    // `OPEN-ISSUES.md` row 201 -- checked for and fixed here per this
+    // card's own instruction): the OLD test
+    // (`a_wrong_expected_caster_level_makes_the_bar_check_fail`, still above,
+    // kept as a cheap red/green anchor on the evaluator alone) never called
+    // `run_monster_bar_check` itself, only the bare evaluator function --
+    // the production COMPARISON logic (`Some(cl) if cl == expected`) was
+    // never actually exercised by any test. This one drives the real
+    // function against a scratch fixture pointing at the real, resolved
+    // Demon (Balor) with a deliberately wrong expected caster level (21 vs
+    // the true 20) and confirms it reports a failure, not a vacuous pass.
+    #[test]
+    fn a_wrong_expected_caster_level_makes_run_monster_bar_check_report_a_failure() {
+        let wrong_expected = 21;
+        let scratch = ScratchMonsterFixtureRoot::new("wrong", wrong_expected);
+        let report = run_monster_bar_check(&scratch.root);
+
+        assert!(
+            report.cleared.is_empty(),
+            "a fixture asserting a wrong expected caster level must never clear the bar, got {:?}",
+            report.cleared
+        );
+        assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
+        assert!(report.failures.contains_key("scratch:monster:demon_balor"));
+    }
+
+    // The positive control: a fixture whose `expected` matches the real,
+    // resolved Demon (Balor) EXACTLY (caster level 20) must clear the bar --
+    // proving the mutation-proof test above fails because the asserted
+    // value is wrong, not because the synthetic harness always reports a
+    // failure.
+    #[test]
+    fn a_correct_expected_caster_level_clears_run_monster_bar_check() {
+        let scratch = ScratchMonsterFixtureRoot::new("correct", 20);
+        let report = run_monster_bar_check(&scratch.root);
+
+        assert!(report.failures.is_empty(), "failures: {:?}", report.failures);
+        assert_eq!(report.cleared.len(), 1);
+        assert!(report.cleared.contains("scratch:monster:demon_balor"));
     }
 }
