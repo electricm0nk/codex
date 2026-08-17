@@ -113,13 +113,18 @@ def _entry(surviving_book, surviving_date, superseded_book, superseded_date,
 
 
 class CleanEntryPassesTest(HermeticCorpusMixin, unittest.TestCase):
+    """Decision 13 (2026-08-17): for an IDENTICAL pair the FIRST print owns
+    it. A clean, passing entry now has the OLDER book as `surviving` and
+    the NEWER book as `superseded` -- the opposite of the pre-Decision-13
+    shape."""
+
     def test_genuinely_identical_reordered_type_tags_passes(self):
-        entry = _entry("bookB", "2012-01", "bookA", "2009-08")
+        entry = _entry("bookA", "2009-08", "bookB", "2012-01")
         violations = gate_mod.validate_entry(entry, self.finder)
         self.assertEqual(violations, [], f"a genuinely identical pair must clear the gate: {violations}")
 
     def test_full_register_with_one_clean_entry_is_ok(self):
-        register = {"objects": [_entry("bookB", "2012-01", "bookA", "2009-08")],
+        register = {"objects": [_entry("bookA", "2009-08", "bookB", "2012-01")],
                     "denominator": {"count_removed": 1}}
         result = gate_mod.validate_register(register, self.finder)
         self.assertTrue(result["ok"], result["violations"])
@@ -128,13 +133,14 @@ class CleanEntryPassesTest(HermeticCorpusMixin, unittest.TestCase):
 class MaterialDifferenceRefusalTest(HermeticCorpusMixin, unittest.TestCase):
     """The gate must be proven able to fail on refusal 1: two records that
     are NOT the same object (a genuinely different BONUS magnitude) must
-    never be silently accepted as a supersession pair."""
+    never be silently accepted as a supersession pair. Direction is the
+    Decision-13-correct shape (surviving = older/first print); the
+    materially-different content is planted on the SUPERSEDED side
+    (`b2.lst`) instead."""
 
     def test_materially_different_bonus_is_refused(self):
-        entry = _entry("bookB", "2012-01", "bookA", "2009-08",
-                        superseded_file="a.lst", superseded_line=1)
-        # swap the surviving side to point at the record with BONUS|2 (b2.lst)
-        entry["surviving"]["source_file"] = "b2.lst"
+        entry = _entry("bookA", "2009-08", "bookB", "2012-01",
+                        superseded_file="b2.lst", superseded_line=1)
         violations = gate_mod.validate_entry(entry, self.finder)
         self.assertTrue(
             any("do NOT carry identical" in v for v in violations),
@@ -142,8 +148,7 @@ class MaterialDifferenceRefusalTest(HermeticCorpusMixin, unittest.TestCase):
         )
 
     def test_full_register_with_one_bad_entry_fails_the_gate(self):
-        entry = _entry("bookB", "2012-01", "bookA", "2009-08")
-        entry["surviving"]["source_file"] = "b2.lst"
+        entry = _entry("bookA", "2009-08", "bookB", "2012-01", superseded_file="b2.lst")
         register = {"objects": [entry], "denominator": {"count_removed": 1}}
         result = gate_mod.validate_register(register, self.finder)
         self.assertFalse(result["ok"], "a materially-different entry must fail validate_register")
@@ -211,11 +216,13 @@ class StructuralRefusalTest(HermeticCorpusMixin, unittest.TestCase):
         violations = gate_mod.validate_entry(entry, self.finder)
         self.assertTrue(any("core_essentials" in v for v in violations))
 
-    def test_backwards_sourcedate_order_is_refused(self):
-        # surviving OLDER than the thing it supposedly supersedes
-        entry = _entry("bookA", "2005-01", "bookB", "2012-01")
+    def test_survivor_newer_than_superseded_is_refused(self):
+        # Decision 13 (2026-08-17): for an identical pair the FIRST print
+        # owns it. A "newest wins" shaped entry -- surviving is NEWER than
+        # the thing it supposedly supersedes -- must now be refused.
+        entry = _entry("bookB", "2012-01", "bookA", "2005-01")
         violations = gate_mod.validate_entry(entry, self.finder)
-        self.assertTrue(any("OLDER than superseded" in v for v in violations))
+        self.assertTrue(any("NEWER than superseded" in v for v in violations))
 
     def test_denominator_count_removed_mismatch_is_refused(self):
         register = {"objects": [_entry("bookB", "2012-01", "bookA", "2009-08")],

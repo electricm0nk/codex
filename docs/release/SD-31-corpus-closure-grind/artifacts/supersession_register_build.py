@@ -2,7 +2,10 @@
 """SD31-D10-REGISTER-001 -- builds SUPERSESSION-REGISTER.json from
 docs/work-inventory.json and the pinned PCGen oracle.
 
-Implements `decisions.md` Decision 10 + its 2026-08-16 amendment:
+Implements `decisions.md` Decision 10 + its 2026-08-16 amendment, direction
+CORRECTED by Decision 13 (2026-08-17, `SD31-D13-REG-001`): for an IDENTICAL
+pair the FIRST print (earliest SOURCEDATE) owns it, not the newest -- see
+`§13` below.
 
   * GUARD 1 -- match candidate duplicates on (kind, corpus_key), never
     (kind, name). A shared name across owners (e.g. `class_feature` "Flight"
@@ -250,13 +253,17 @@ def main() -> None:
         parsed = {b: fields_of(lines[b]) for b in books}
         base = books[0]
         if all(parsed[b] == parsed[base] for b in books[1:]):
-            newest = max(books, key=lambda b: dates[b])
+            # Decision 13 (2026-08-17): for an IDENTICAL pair the FIRST
+            # print owns it -- the later printing is superseded. (Decision
+            # 10's original direction, "newest wins", was corrected by
+            # Decision 13; see decisions.md §13.)
+            first = min(books, key=lambda b: dates[b])
             proven.append({
                 "kind": kind, "corpus_key": ckey,
                 "surviving": {
-                    "id": recs[newest]["id"], "book": newest, "source_date": dates[newest],
-                    "source_file": recs[newest].get("source_file"),
-                    "source_line": recs[newest].get("source_line"),
+                    "id": recs[first]["id"], "book": first, "source_date": dates[first],
+                    "source_file": recs[first].get("source_file"),
+                    "source_line": recs[first].get("source_line"),
                 },
                 "superseded": [
                     {
@@ -264,12 +271,14 @@ def main() -> None:
                         "source_file": recs[b].get("source_file"),
                         "source_line": recs[b].get("source_line"),
                     }
-                    for b in books if b != newest
+                    for b in books if b != first
                 ],
                 "evidence": (
                     "field-level: raw .lst rows for every book in this group are "
                     "IDENTICAL after stripping SOURCE*/COST/OUTPUTNAME/KEY/NAMEISPI "
-                    "and normalizing TYPE: as an order-insensitive tag set."
+                    "and normalizing TYPE: as an order-insensitive tag set. Decision 13: "
+                    "the FIRST printing (lowest SOURCEDATE) owns the object; later "
+                    "identical printing(s) are superseded."
                 ),
                 "raw_lines": lines,
                 "command": "python3 " + os.path.relpath(__file__, REPO_ROOT),
@@ -333,9 +342,11 @@ def main() -> None:
 
     out = {
         "generated_at": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "cycle_id": "SD31-D10-REGISTER-001",
+        "cycle_id": "SD31-D13-REG-001",
         "oracle_sha": oracle_sha,
-        "authority": "decisions.md Decision 10 + its 2026-08-16 amendment (operator rulings)",
+        "authority": ("decisions.md Decision 10 + its 2026-08-16 amendment, direction "
+                      "CORRECTED by Decision 13 (2026-08-17): for an identical pair the "
+                      "FIRST print owns it, not the newest (operator rulings)"),
         "guard_1_shared_name_is_not_a_duplicate": {
             "rule": "match on (kind, corpus_key), never (kind, name)",
             "re_derived_kind_name_collision_units": name_collision_units,
