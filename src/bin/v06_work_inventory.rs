@@ -985,6 +985,17 @@ mod equipment_verdict_rung_tests {
 /// `v06_content_state_dump::derived_choice_set_id` uses, and the same honest
 /// failure direction: a record whose engine id uses a different shape falls
 /// out and reads as un-grounded rather than being fabricated as grounded).
+///
+/// **Do not add apostrophe-swallowing here.** This function backs
+/// [`unit_id`] -- every kind's persisted id, not just `class_feature` --
+/// so a behaviour change here renames every apostrophe-bearing unit id in
+/// the committed inventory (equipment included: `assassin_s_dust`,
+/// `hero_s_hauberk`, ...) and the guarded regen's own stamp-preservation
+/// check correctly refuses to write when that happens (confirmed directly:
+/// swallowing here dropped 304 of 6502 verification stamps on the first
+/// attempt at row 181's fix, `SD31-E5-F1-004`). Row 181's actual defect is
+/// narrower than this function -- see [`class_feature_engine_join_slug`],
+/// which carries the apostrophe fix scoped to the one join that needed it.
 fn slug(name: &str) -> String {
     let mut out = String::with_capacity(name.len());
     let mut last_underscore = true;
@@ -992,6 +1003,50 @@ fn slug(name: &str) -> String {
         if c.is_ascii_alphanumeric() {
             out.push(c.to_ascii_lowercase());
             last_underscore = false;
+        } else if !last_underscore {
+            out.push('_');
+            last_underscore = true;
+        }
+    }
+    while out.ends_with('_') {
+        out.pop();
+    }
+    out
+}
+
+/// `"Fast Movement"` -> `"fast_movement"`, `"Maker's Call"` -> `"makers_call"`.
+/// [`slug`]'s own naming rule, but with the apostrophe SWALLOWED rather than
+/// promoted to a separator -- `pilot_compute::pu_feature_slug`/
+/// `is_intraword_punctuation`'s existing, documented convention
+/// (`src/rules_core/pilot_compute/mod.rs`, cited example `"Swashbuckler's
+/// Edge"` -> `"swashbucklers_edge"`), reproduced here rather than imported
+/// because this file's territory does not include `pilot_compute/**`.
+///
+/// **Scoped deliberately to the two class_feature join sites that compare a
+/// corpus name's slug against an id the ENGINE itself wrote** (this
+/// function's only two callers: [`class_feature_exact_suffix_grounded`]'s
+/// `feature_slug`, and [`probe_class_feature_key`]'s pool-member
+/// `selection_id`) -- never [`unit_id`] or any other id this repo's own
+/// inventory persists, because that shared surface has its own stamp-
+/// preservation contract [`slug`]'s doc comment now names directly. Splitting
+/// the word in two silently blocked every join at the two sites above: row
+/// 181 (`OPEN-ISSUES.md`) found `class_feature_owner_matched_by_name_but_
+/// record_not_held_by_engine` affirmatively FALSE for e.g. `Unchained
+/// Summoner ~ Maker's Call`, which the engine both computes AND cites a
+/// roster row for (`summoner_makers_call_uses_per_day`) -- the old slug
+/// (`maker_s_call`) simply could never equal the engine's own id segment
+/// (`makers_call`). Both the ASCII apostrophe and the Unicode right single
+/// quotation mark are swallowed, matching `is_intraword_punctuation`'s own
+/// both-forms handling.
+fn class_feature_engine_join_slug(name: &str) -> String {
+    let mut out = String::with_capacity(name.len());
+    let mut last_underscore = true;
+    for c in name.chars() {
+        if c.is_ascii_alphanumeric() {
+            out.push(c.to_ascii_lowercase());
+            last_underscore = false;
+        } else if c == '\'' || c == '\u{2019}' {
+            // Swallowed, not separated -- see this function's doc comment.
         } else if !last_underscore {
             out.push('_');
             last_underscore = true;
@@ -5525,7 +5580,7 @@ fn classify(
                 };
             };
             let feature = unit.key.split(" ~ ").nth(1).unwrap_or(&unit.name);
-            let feature_slug = slug(feature);
+            let feature_slug = class_feature_engine_join_slug(feature);
             let exact_suffix_grounded = class_feature_exact_suffix_grounded(
                 facts.explanation_ids.iter(),
                 &owner,
@@ -6334,6 +6389,111 @@ const CLASS_FEATURE_POOLS: &[(&str, &str, &str, &str)] = &[
     ("Focused Arcane School", "wizard", "choice:wizard_school_specialization", "school:"),
 ];
 
+/// Corpus groups whose text shape satisfies [`class_feature_pool_group_matches`]'s
+/// suffix rule -- they end in a registered pool word -- but whose OWN corpus
+/// record (`TYPE:`/`PREABILITY:`/`BONUS:` tokens, or the ingest directory the
+/// record lives under) proves the record belongs to a different class, a
+/// cross-class multiclass option, or an unrelated subsystem entirely. Row 168
+/// (`OPEN-ISSUES.md`): the cross-class-token guard alone cannot catch these,
+/// because none of their adjective prefixes IS another modelled class's name --
+/// each one required reading the actual corpus row before it could be told
+/// apart from a real pool member, and each citation below is that reading.
+/// `SD31-E5-F1-004`'s own artifact (`artifacts/SD31-E5-F1-004-pool-match-enumeration.md`)
+/// carries the full per-group evidence this comment summarizes.
+const CLASS_FEATURE_POOL_FALSE_SUFFIX_MATCHES: &[&str] = &[
+    // "Heretical Revelation ~ Abraxas" (book_of_the_damned_volume_2):
+    // TYPE:SpecialQuality.Supernatural -- no OracleClassFeatures/
+    // OracleRevelation lineage anywhere in the group's tokens. A demon-lord
+    // "Demonic Obedience" boon, not an Oracle mystery revelation.
+    "Heretical Revelation",
+    // "Shifter's Blessing ~ Form of the Otter" (advanced_players_guide):
+    // TYPE:ClassFeatures.RangerClassFeatures.SpecialQuality.ShifterBlessing,
+    // PREABILITY requires the Ranger's own Shapeshifter archetype. A Ranger
+    // feature, not a Warpriest blessing.
+    "Shifter's Blessing",
+    // "Spider's Blessing" / "Zevgavizeb's Blessing" (book_of_the_damned_volume_2):
+    // both live under that book's `demonic_obedience/` ingest directory --
+    // ritual boons granted for worshipping a specific demon lord, unrelated to
+    // Warpriest.
+    "Spider's Blessing",
+    "Zevgavizeb's Blessing",
+    // "Totem Spirit ~ *" (inner_sea_world_guide, `iswg_abilities_class.lst`'s
+    // own "###BLOCK: Totem Spirit Abilities"): TYPE:SpecialQuality.TotemSpirit,
+    // NAMEISPI:YES -- Shoanti regional/cultural trait bonuses, not a Shaman
+    // spirit.
+    "Totem Spirit",
+    // "Inspired Discovery ~ *" (advanced_class_guide): TYPE:
+    // InspiredInvestigatorTalent, DESC reads "The investigator can use ...",
+    // PREABILITY requires the Alchemist archetype "Inspired Chemist" as a
+    // PREREQUISITE -- an Investigator talent, not an Alchemist's own discovery.
+    "Inspired Discovery",
+    // "Mutation Warrior Discovery ~ *" (advanced_class_guide): every record's
+    // BONUS:VAR scales off `classlevel("Fighter")` -- a Fighter archetype's
+    // mutagen-flavored ability, not an Alchemist discovery.
+    "Mutation Warrior Discovery",
+    // "Merciful Healer Mercy ~ *" (ultimate_combat): TYPE:ClericClassFeatures.
+    // SpecialQuality.Supernatural.Mercy.ChannelEnergy -- a Cleric archetype's
+    // channel-energy mercies, not a Paladin mercy.
+    "Merciful Healer Mercy",
+    // "Take Inquisition ~ Cleric" / "~ Druid" (ultimate_magic): PRECLASS:
+    // 1,Cleric=1 -- a cross-class option that lets a CLERIC trade a domain for
+    // an inquisition slot, not the Inquisitor class's own progression.
+    "Take Inquisition",
+];
+
+/// Whether a real corpus `group` (a `class_feature` key's text before its own
+/// `" ~ "`) belongs to a registered [`CLASS_FEATURE_POOLS`] entry.
+///
+/// The corpus's real shape is `"<Adjective> <PoolWord>"` (`"Battle Mystery"`,
+/// `"Witch Hex"`, `"Aberrant Bloodline"`) while several entries were registered
+/// as the bare pool word alone (`"Mystery"`, `"Hex"`, `"Bloodline"`) and so
+/// could never match anything (row 168, `OPEN-ISSUES.md`) -- 13 of 28 entries,
+/// ~1,562 units sized by the naive suffix count, re-derived and refined here.
+///
+/// A word-boundary suffix match (`group` ends with `" " + registered`, never a
+/// bare substring) recognises the real shape. Two guards keep it from admitting
+/// more than it should -- Decision 1(a) forbids a matcher that widens a bucket
+/// past what it can prove:
+///
+/// 1. **No cross-class collision.** If any whitespace token in the group's
+///    adjective prefix (an apostrophe-`s` stripped first) names a DIFFERENT
+///    class this engine models, the group belongs to THAT class, not `owner`:
+///    `"Shaman Hex"` must never join Witch's `Hex`, `"Druid Domain"` /
+///    `"Inquisitor Domain"` must never join Cleric's `Domain`, `"Aberrant
+///    Bloodrager Bloodline"` must never join Sorcerer's `Bloodline`. Checked
+///    against `class_books` (this run's live [`modelled_class_books`] output,
+///    not a hand-duplicated list) so this guard can never drift from what the
+///    engine actually models.
+/// 2. **No verified false suffix.** [`CLASS_FEATURE_POOL_FALSE_SUFFIX_MATCHES`]
+///    excludes the groups direct corpus verification proved belong elsewhere --
+///    textual shape alone cannot catch a Ranger archetype quietly named
+///    `"Shifter's Blessing"` or an Investigator talent named `"Inspired
+///    Discovery"`; only reading the record's own `TYPE:`/`PREABILITY:`/
+///    `BONUS:` tokens can.
+fn class_feature_pool_group_matches(
+    registered: &str,
+    owner: &str,
+    group: &str,
+    class_books: &BTreeMap<String, &'static str>,
+) -> bool {
+    if group == registered {
+        return true;
+    }
+    let Some(prefix) = group.strip_suffix(&format!(" {registered}")) else {
+        return false;
+    };
+    if prefix.is_empty() {
+        return true;
+    }
+    if CLASS_FEATURE_POOL_FALSE_SUFFIX_MATCHES.contains(&group) {
+        return false;
+    }
+    prefix.split_whitespace().all(|token| {
+        let normalized = token.trim_end_matches("'s").trim_end_matches('\'').to_ascii_lowercase();
+        !class_books.contains_key(&normalized) || normalized == owner
+    })
+}
+
 /// Every `class_feature` corpus key in the committed inventory, deduplicated.
 /// The inventory is read rather than the PCGen corpus because the units this
 /// probe is asked about are inventory units.
@@ -6454,8 +6614,9 @@ fn probe_class_feature_key(
     corpus_key: &str,
 ) -> ClassFeatureProbeOutcome {
     let group = corpus_key.split(" ~ ").next().unwrap_or(corpus_key);
-    let Some((_, owner, choice_set_id, namespace)) =
-        CLASS_FEATURE_POOLS.iter().find(|(g, _, _, _)| *g == group)
+    let Some((_, owner, choice_set_id, namespace)) = CLASS_FEATURE_POOLS
+        .iter()
+        .find(|(g, o, _, _)| class_feature_pool_group_matches(g, o, group, class_books))
     else {
         return ClassFeatureProbeOutcome::NoChoiceSlotOffersIt;
     };
@@ -6469,7 +6630,7 @@ fn probe_class_feature_key(
 
     let pick = |selection: &str| SelectedChoice {
         choice_set_id: (*choice_set_id).to_owned(),
-        selection_id: format!("{namespace}{}", slug(selection)),
+        selection_id: format!("{namespace}{}", class_feature_engine_join_slug(selection)),
     };
 
     let mut verdict = ClassFeatureProbeOutcome::NoConsumerDelta;
@@ -6529,7 +6690,9 @@ fn probe_class_feature_effect_wiring(
             continue;
         }
         let group = key.split(" ~ ").next().unwrap_or(key);
-        let Some((_, owner, _, _)) = CLASS_FEATURE_POOLS.iter().find(|(g, _, _, _)| *g == group)
+        let Some((_, owner, _, _)) = CLASS_FEATURE_POOLS
+            .iter()
+            .find(|(g, o, _, _)| class_feature_pool_group_matches(g, o, group, class_books))
         else {
             continue;
         };
@@ -10508,6 +10671,64 @@ mod unit_id_uniqueness_tests {
         }
     }
 
+    /// Row 181 (`OPEN-ISSUES.md`): the shared `slug()` -- [`unit_id`]'s own
+    /// id-builder for EVERY kind, not just `class_feature` -- must keep
+    /// promoting an apostrophe to a separator, unchanged. This is the
+    /// stamp-preservation regression guard: a first attempt at row 181
+    /// swallowed the apostrophe INSIDE `slug()` itself and the guarded
+    /// regen's own stamp check correctly refused to write, having found 304
+    /// of 6502 verification stamps would be dropped (every apostrophe-
+    /// bearing `equipment` id -- `assassin_s_dust`, `hero_s_hauberk`, ... --
+    /// silently renamed out from under its own stamp). The real fix is
+    /// scoped narrower; see `class_feature_engine_join_slug` below.
+    #[test]
+    fn slug_still_promotes_an_apostrophe_to_a_separator_equipment_ids_depend_on_this() {
+        assert_eq!(slug("Assassin's Dust"), "assassin_s_dust");
+        assert_eq!(slug("Hero's Hauberk"), "hero_s_hauberk");
+        assert_eq!(slug("Maker's Call"), "maker_s_call");
+    }
+
+    /// [`class_feature_engine_join_slug`] must swallow an apostrophe the same
+    /// way `pilot_compute`'s own `pu_feature_slug`/`is_intraword_punctuation`
+    /// convention does (`mod.rs`'s doc comment, cited example
+    /// `Swashbuckler's Edge` -> `swashbucklers_edge`), not promote it to a
+    /// separator. The old behaviour (shared `slug()`) split the word in two
+    /// (`maker_s_call`), so a class_feature explanation id built the OTHER
+    /// convention's way (`makers_call`) could never join it -- 412
+    /// apostrophe-bearing `class_feature` keys, corpus-wide, all stuck
+    /// `not-ingested`/`unknown` on this alone.
+    #[test]
+    fn class_feature_engine_join_slug_swallows_apostrophes_matching_pilot_computes_convention() {
+        assert_eq!(class_feature_engine_join_slug("Maker's Call"), "makers_call");
+        assert_eq!(class_feature_engine_join_slug("Swashbuckler's Edge"), "swashbucklers_edge");
+        assert_eq!(class_feature_engine_join_slug("Scavenger's Eye"), "scavengers_eye");
+        // The Unicode right single quotation mark is swallowed too, matching
+        // `is_intraword_punctuation`'s own both-forms handling -- a future row
+        // arriving with the typographic form must not reopen this defect.
+        assert_eq!(class_feature_engine_join_slug("Maker\u{2019}s Call"), "makers_call");
+    }
+
+    /// An apostrophe adjacent to a real word boundary on both sides must
+    /// still collapse to a single separator, never a double one -- the same
+    /// invariant `no_slug_can_contain_the_double_underscore_delimiter` pins
+    /// for every other punctuation shape.
+    #[test]
+    fn an_apostrophe_at_a_word_boundary_produces_no_stray_separator_in_the_engine_join_slug() {
+        assert!(!class_feature_engine_join_slug("Foo ' Bar").contains("__"));
+        assert_eq!(class_feature_engine_join_slug("Foo ' Bar"), "foo_bar");
+        assert_eq!(class_feature_engine_join_slug("'''"), "");
+    }
+
+    /// This is the real-world record row 181 named directly: the engine emits
+    /// `makers_call` for this exact key (`ground_unchained_summoner_class_
+    /// features`'s `summoner_makers_call_uses_per_day`), so
+    /// `class_feature_engine_join_slug` on the corpus member name must
+    /// produce the identical string or the join can never happen.
+    #[test]
+    fn class_feature_engine_join_slug_matches_the_engines_own_explanation_id_for_makers_call() {
+        assert_eq!(class_feature_engine_join_slug("Maker's Call"), "makers_call");
+    }
+
     /// The digest algorithm is pinned, because every disambiguated id is built
     /// from it and a silent change to it would rewrite those ids wholesale and
     /// break the byte-equality contract in the least visible way available.
@@ -11305,6 +11526,142 @@ mod class_probe_tests {
 mod class_feature_consumer_delta_tests {
     use super::*;
 
+    /// A small stand-in `class_books` covering every class name this test
+    /// module's cases reference, mirroring [`modelled_class_books`]'s real
+    /// output shape without depending on its full 32-class contents.
+    fn test_class_books() -> BTreeMap<String, &'static str> {
+        [
+            ("witch", "advanced_players_guide"),
+            ("shaman", "advanced_class_guide"),
+            ("cleric", "core_rulebook"),
+            ("druid", "core_rulebook"),
+            ("inquisitor", "advanced_players_guide"),
+            ("sorcerer", "core_rulebook"),
+            ("bloodrager", "advanced_class_guide"),
+            ("warpriest", "advanced_class_guide"),
+            ("oracle", "advanced_players_guide"),
+        ]
+        .into_iter()
+        .map(|(k, v)| (k.to_string(), v))
+        .collect()
+    }
+
+    /// Row 168 (`OPEN-ISSUES.md`): the whole point of the fix. A bare
+    /// registered pool word must now recognise its real
+    /// `"<Adjective> <PoolWord>"` corpus shape.
+    #[test]
+    fn suffix_match_reaches_the_real_adjective_qualified_corpus_group() {
+        let class_books = test_class_books();
+        assert!(class_feature_pool_group_matches("Mystery", "oracle", "Battle Mystery", &class_books));
+        assert!(class_feature_pool_group_matches("Hex", "witch", "Witch Hex", &class_books));
+        assert!(class_feature_pool_group_matches(
+            "Bloodline",
+            "sorcerer",
+            "Aberrant Bloodline",
+            &class_books
+        ));
+    }
+
+    /// The exact-match behaviour every entry relied on before this fix must
+    /// be unchanged -- this is a widening, not a rewrite.
+    #[test]
+    fn exact_match_is_unaffected() {
+        let class_books = test_class_books();
+        assert!(class_feature_pool_group_matches("Mystery", "oracle", "Mystery", &class_books));
+        assert!(!class_feature_pool_group_matches("Mystery", "oracle", "Curse", &class_books));
+    }
+
+    /// The anti-gaming guard the mandate names explicitly: a matcher that
+    /// admits more than it should is the violation. `"Shaman Hex"` is a real,
+    /// different class's own hex-shaped feature and must never be credited to
+    /// Witch's `Hex` pool merely because it shares the trailing word.
+    #[test]
+    fn cross_class_prefix_token_is_refused_even_though_the_suffix_matches() {
+        let class_books = test_class_books();
+        assert!(!class_feature_pool_group_matches("Hex", "witch", "Shaman Hex", &class_books));
+        assert!(!class_feature_pool_group_matches(
+            "Hex",
+            "witch",
+            "Shaman Spirit Hex",
+            &class_books
+        ));
+        assert!(!class_feature_pool_group_matches(
+            "Domain",
+            "cleric",
+            "Druid Domain",
+            &class_books
+        ));
+        assert!(!class_feature_pool_group_matches(
+            "Domain",
+            "cleric",
+            "Inquisitor Domain",
+            &class_books
+        ));
+        assert!(!class_feature_pool_group_matches(
+            "Bloodline",
+            "sorcerer",
+            "Aberrant Bloodrager Bloodline",
+            &class_books
+        ));
+    }
+
+    /// The prefix guard must not reject the pool's OWN class name appearing in
+    /// its own qualified group text (`"Sorcerer Bloodline"`,
+    /// `"Cavalier Order"`) -- the owner is always a legal prefix for its own
+    /// pool.
+    #[test]
+    fn owner_class_name_as_its_own_prefix_is_allowed() {
+        let class_books = test_class_books();
+        assert!(class_feature_pool_group_matches(
+            "Bloodline",
+            "sorcerer",
+            "Sorcerer Bloodline",
+            &class_books
+        ));
+    }
+
+    /// A trailing apostrophe-`s` prefix is normalised the same way
+    /// `pilot_compute`'s own convention treats mid-word apostrophes, so a
+    /// class-named prefix in possessive form is still recognised as a
+    /// collision (`"Shifter's Blessing"` would read as prefix `"Shifter"` once
+    /// stripped -- covered directly by the false-suffix-match list since
+    /// `shifter` is not itself a modelled class in this engine).
+    #[test]
+    fn false_suffix_matches_are_refused_even_when_the_shape_and_prefix_both_look_clean() {
+        let class_books = test_class_books();
+        for (registered, owner, group) in [
+            ("Revelation", "oracle", "Heretical Revelation"),
+            ("Blessing", "warpriest", "Shifter's Blessing"),
+            ("Blessing", "warpriest", "Spider's Blessing"),
+            ("Blessing", "warpriest", "Zevgavizeb's Blessing"),
+        ] {
+            assert!(
+                !class_feature_pool_group_matches(registered, owner, group, &class_books),
+                "{group:?} must stay excluded from {registered:?}'s pool"
+            );
+        }
+    }
+
+    /// A bare substring is not a suffix: `"SomeDiscoveryX"` does not END with
+    /// `" Discovery"` and must never match, guarding against exactly the
+    /// widened-substring failure mode the mandate calls out by name.
+    #[test]
+    fn substring_without_a_word_boundary_never_matches() {
+        let class_books = test_class_books();
+        assert!(!class_feature_pool_group_matches(
+            "Discovery",
+            "alchemist",
+            "SomeDiscoveryX",
+            &class_books
+        ));
+        assert!(!class_feature_pool_group_matches(
+            "Discovery",
+            "alchemist",
+            "GrandDiscovery",
+            &class_books
+        ));
+    }
+
     /// Every pool in [`CLASS_FEATURE_POOLS`] must name a `choice_set_id` the
     /// engine actually recognises. A pool naming a slot no engine code reads
     /// would make the probe report `no_consumer_delta` for a reason that is
@@ -11401,6 +11758,96 @@ mod class_feature_consumer_delta_tests {
              in probe_class_feature_key is dead code and should be reconsidered, not deleted \
              silently"
         );
+    }
+
+    /// Row 168's per-entry enumeration, against the real committed inventory
+    /// (not a hand-built fixture) -- the evidence
+    /// `SD31-E5-F1-004-pool-match-enumeration.md` transcribes verbatim. This is
+    /// the anti-gaming check the card's own text names by name: "eyeball that
+    /// list for anything that does not belong", and "report movement in BOTH
+    /// directions". `eprintln!` output is silent on a normal `cargo test` pass
+    /// and only surfaces with `--nocapture`, so this carries its own pinned
+    /// assertions rather than relying on a human re-reading output every run.
+    #[test]
+    fn class_feature_pool_group_matches_enumerates_the_real_corpus_against_every_pool_entry() {
+        let repo_root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+        let class_books = modelled_class_books();
+        let inventory = std::fs::read_to_string(repo_root.join(OUTPUT_RELATIVE_PATH))
+            .expect("docs/work-inventory.json is readable");
+        let keys = class_feature_keys_from_inventory(&inventory);
+        let all_groups: BTreeSet<&str> =
+            keys.iter().filter_map(|k| k.split(" ~ ").next()).collect();
+
+        let mut matched_by_entry: BTreeMap<&str, BTreeSet<&str>> = BTreeMap::new();
+        let mut any_entry_matches: BTreeMap<&str, &str> = BTreeMap::new();
+        for group in &all_groups {
+            for (registered, owner, _, _) in CLASS_FEATURE_POOLS {
+                if class_feature_pool_group_matches(registered, owner, group, &class_books) {
+                    matched_by_entry.entry(registered).or_default().insert(group);
+                    any_entry_matches.entry(group).or_insert(registered);
+                }
+            }
+        }
+
+        eprintln!("=== per pool-entry: real corpus groups it now matches ===");
+        for (registered, _, _, _) in CLASS_FEATURE_POOLS {
+            let groups = matched_by_entry.get(registered).cloned().unwrap_or_default();
+            eprintln!("{registered} -> {} group(s): {:?}", groups.len(), groups);
+        }
+        let exact_only_would_match: BTreeSet<&str> = CLASS_FEATURE_POOLS
+            .iter()
+            .map(|(g, _, _, _)| *g)
+            .filter(|g| all_groups.contains(g))
+            .collect();
+        let newly_matched: BTreeSet<&str> =
+            any_entry_matches.keys().copied().filter(|g| !exact_only_would_match.contains(g)).collect();
+        eprintln!(
+            "=== groups newly recognised (suffix match, not exact) vs the pre-fix exact-only set ==="
+        );
+        eprintln!("{} group(s): {:?}", newly_matched.len(), newly_matched);
+        eprintln!(
+            "=== groups whose shape satisfies a suffix but were excluded by \
+             CLASS_FEATURE_POOL_FALSE_SUFFIX_MATCHES or the cross-class guard ==="
+        );
+        let excluded_despite_suffix_shape: BTreeSet<&str> = all_groups
+            .iter()
+            .filter(|g| {
+                !any_entry_matches.contains_key(*g)
+                    && CLASS_FEATURE_POOLS.iter().any(|(registered, _, _, _)| {
+                        g.ends_with(&format!(" {registered}")) || **g == *registered
+                    })
+            })
+            .copied()
+            .collect();
+        eprintln!("{} group(s): {:?}", excluded_despite_suffix_shape.len(), excluded_despite_suffix_shape);
+
+        // Pinned floor: every group row 168's own corpus-scan named as
+        // structurally reachable after the fix must still be reachable. A
+        // regression here means the fix stopped matching something it used
+        // to.
+        for expected in [
+            "Battle Mystery",
+            "Witch Hex",
+            "Aberrant Bloodline",
+            "Sorcerer Bloodline",
+            "Air Domain",
+            "Hunter Animal Focus",
+        ] {
+            assert!(
+                any_entry_matches.contains_key(expected),
+                "{expected:?} must match a registered pool entry after the row-168 fix"
+            );
+        }
+        // Pinned ceiling: the false-suffix list and the cross-class guard
+        // must still refuse every group direct corpus reading proved does
+        // NOT belong, even though its text shape satisfies the suffix rule.
+        for excluded in CLASS_FEATURE_POOL_FALSE_SUFFIX_MATCHES {
+            assert!(
+                !any_entry_matches.contains_key(excluded),
+                "{excluded:?} was verified by direct corpus reading to belong to a different \
+                 class/subsystem and must stay excluded"
+            );
+        }
     }
 
     /// The discriminator that makes this a consumer-delta probe rather than a
