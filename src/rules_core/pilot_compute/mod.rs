@@ -4667,6 +4667,110 @@ const SUPERSTITION_RAGE_POWER_SELECTION: &str = "superstition";
 const SUPERSTITION_SAVE_BONUS_BASE: i16 = 2;
 /// `RagePowersLVL / 4`'s divisor, straight from the corpus formula.
 const SUPERSTITION_SAVE_BONUS_LEVEL_DIVISOR: i16 = 4;
+
+/// SD31-E4-F2-004: Pathfinder Unchained's OWN Rage Power chooser slots, a
+/// SEPARATE numbered-slot family from [`BARBARIAN_RAGE_POWER_SLOTS`] --
+/// `decisions.md §10`'s AMENDMENT ("rogue and unchained rogue are two
+/// completely different classes -- one does not replace the other") forbids
+/// folding Unchained Barbarian's own chooser into the base class's, which is
+/// exactly the shape wave 12 found and declined to credit
+/// (`OPEN-ISSUES.md`/`progress.md` `SD31-E4-F2-003` §3: the probe's own
+/// "free ride" through `owner="barbarian"` mapped every Unchained Rage Power
+/// key to book `core_rulebook`, so the real `pathfinder_unchained` record
+/// could never satisfy `classify()`'s book-attribution guard). Same 10-gate
+/// cadence as the base class (`pu_abilities_class.lst:328-337`'s own
+/// `PREVARGTEQ:RagePowersLVL,<2|4|6|8|10|12|14|16|18|20>` pool-reduction
+/// gates, byte-identical to the base Barbarian's own grant levels), a
+/// DISTINCT `choice:unchained_barbarian_rage_power[_N]` id family so a
+/// selection recorded under one class can never satisfy the other's slot.
+const UNCHAINED_BARBARIAN_RAGE_POWER_SLOTS: [(u8, u8, &str); 10] = [
+    (1, 2, "choice:unchained_barbarian_rage_power"),
+    (2, 4, "choice:unchained_barbarian_rage_power_2"),
+    (3, 6, "choice:unchained_barbarian_rage_power_3"),
+    (4, 8, "choice:unchained_barbarian_rage_power_4"),
+    (5, 10, "choice:unchained_barbarian_rage_power_5"),
+    (6, 12, "choice:unchained_barbarian_rage_power_6"),
+    (7, 14, "choice:unchained_barbarian_rage_power_7"),
+    (8, 16, "choice:unchained_barbarian_rage_power_8"),
+    (9, 18, "choice:unchained_barbarian_rage_power_9"),
+    (10, 20, "choice:unchained_barbarian_rage_power_10"),
+];
+/// The real, corpus-declared Pathfinder Unchained Rage Power pool -- every
+/// `KEY:Unchained Rage Power ~ <X>` row `pathfinder_unchained/pu_abilities_
+/// class.lst` declares, transcribed verbatim (`grep -oP '(?<=KEY:Unchained
+/// Rage Power ~ )[^\t]+' pu_abilities_class.lst | sort -u` -> exactly these
+/// 54; matches `SD31-E4-F2-003`'s own "the 54 Unchained Rage Powers" figure).
+/// A DIFFERENT, non-overlapping 54-member pool from
+/// [`CORE_RULEBOOK_RAGE_POWER_POOL`]'s 28 -- Unchained Barbarian's own book
+/// republishes its Rage Powers under this book's own `Unchained Rage Power`
+/// category rather than reusing the base class's `Rage Power` one (each row's
+/// own `SERVESAS:ABILITY=Special Ability|Rage Power ~ <X>` token names the
+/// base-class ability it stands in for, never claims to BE it). Slugged by
+/// the identical `class_feature_engine_join_slug` transform
+/// `v06_work_inventory.rs`'s probe and `classify()` both use (alphanumeric
+/// lowercased, apostrophes swallowed, everything else one underscore).
+const UNCHAINED_RAGE_POWER_POOL: &[&str] = &[
+    "accurate_stance",
+    "animal_fury",
+    "auspicious_mark",
+    "bleeding_blow",
+    "calm_stance",
+    "clear_mind",
+    "crippling_blow",
+    "deadly_accuracy",
+    "eater_of_magic",
+    "elemental_stance",
+    "energy_absorption",
+    "energy_resistance",
+    "fearless_rage",
+    "flesh_wound",
+    "ground_breaker",
+    "ground_breaker_greater",
+    "guarded_stance",
+    "increased_damage_reduction",
+    "inspire_ferocity",
+    "internal_fortitude",
+    "intimidating_glare",
+    "knockback",
+    "knockdown_stance",
+    "lethal_accuracy",
+    "low_light_vision",
+    "mighty_swing",
+    "night_vision",
+    "no_escape",
+    "perfect_clarity",
+    "powerful_stance",
+    "protect_vitals",
+    "quick_reflexes",
+    "raging_climber",
+    "raging_leaper",
+    "raging_swimmer",
+    "reckless_stance",
+    "reflexive_dodge",
+    "regenerative_stance",
+    "renewed_vigor",
+    "renewed_vitality",
+    "roused_anger",
+    "scent",
+    "sharpened_accuracy",
+    "shove_aside",
+    "shove_aside_greater",
+    "smasher",
+    "sprint",
+    "strength_stance",
+    "superstition",
+    "swift_foot",
+    "taunting_stance",
+    "terrifying_howl",
+    "unexpected_strike",
+    "witch_hunter",
+];
+/// Unchained Barbarian's own representative Rage Power selection, the same
+/// real name as the base class's ([`SUPERSTITION_RAGE_POWER_SELECTION`]) --
+/// both are the identical PF1 Superstition ability, just declared under two
+/// separate corpus categories (`Rage Power` vs `Unchained Rage Power`).
+const UNCHAINED_SUPERSTITION_RAGE_POWER_SELECTION: &str = "superstition";
+
 /// SD13-E5 Barbarian level-range gate, mirroring the Fighter
 /// `supported_fighter_level` / Paladin `supported_paladin_level` / Rogue
 /// `supported_rogue_level` idiom. Monk's own level-range gate is
@@ -24802,7 +24906,13 @@ fn compute_pu_class_chassis(
 
     match class_id {
         PuClassId::UnchainedBarbarian => {
-            ground_unchained_barbarian_class_features(level, ability_modifiers, explanations, diagnostics);
+            ground_unchained_barbarian_class_features(
+                level,
+                input,
+                ability_modifiers,
+                explanations,
+                diagnostics,
+            );
         }
         PuClassId::UnchainedMonk => {
             ground_unchained_monk_class_features(
@@ -25362,6 +25472,7 @@ fn push_pu_class_feature_records(
 /// not yet granted" contract the ACG/APG groundings use.
 fn ground_unchained_barbarian_class_features(
     level: u8,
+    input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
@@ -25543,6 +25654,51 @@ fn ground_unchained_barbarian_class_features(
         });
     }
 
+    // SD31-E4-F2-004: Unchained Barbarian's OWN Rage Power chooser consumer
+    // -- a genuinely separate wiring from the base class's
+    // (`barbarian_selected_rage_power`/`UNCHAINED_BARBARIAN_RAGE_POWER_SLOTS`
+    // is its own 10-slot family, never the base's), per `decisions.md §10`'s
+    // AMENDMENT that Unchained classes must resolve as their own class, not
+    // fold into the base. Superstition is the representative here too, for
+    // the same reason it is the base class's: `KEY:Unchained Rage Power ~
+    // Superstition`'s own `BONUS:VAR|SuperstitionSaveBonus|2+floor(
+    // RagePowersLVL/4)` token (`pu_abilities_class.lst:389`) is
+    // byte-identical in shape to the base's, carries no `Raging`-state gate
+    // either, and its own `RagePowersLVL` is
+    // `BONUS:VAR|RagePowersLVL|BarbarianLVL` on the Unchained Barbarian's own
+    // internal `Rage Powers` record (`pu_abilities_class.lst:291`) -- the
+    // SAME chain the base class's formula rests on, so
+    // `barbarian_superstition_save_bonus` (a pure function of `level` alone)
+    // is reused rather than duplicated: this class's own `level` parameter
+    // IS that chain's `BarbarianLVL` for a character built through this
+    // class's own chassis.
+    if unchained_barbarian_selected_rage_power(
+        input,
+        level,
+        UNCHAINED_SUPERSTITION_RAGE_POWER_SELECTION,
+    ) {
+        let superstition_bonus = barbarian_superstition_save_bonus(level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_barbarian.rage_power.superstition.save_bonus"
+                .to_owned(),
+            value: superstition_bonus,
+            detail: format!(
+                "Unchained Barbarian level {level} with the Superstition rage power selected \
+                 (Pathfinder Unchained, `KEY:Unchained Rage Power ~ Superstition`, \
+                 `BONUS:VAR|SuperstitionSaveBonus|2+floor(RagePowersLVL/4)`, RagePowersLVL = \
+                 BarbarianLVL = this class's own level): a +{superstition_bonus} competence \
+                 bonus on saving throws made to resist spells, supernatural abilities, and \
+                 spell-like abilities (base {SUPERSTITION_SAVE_BONUS_BASE}, +1 every \
+                 {SUPERSTITION_SAVE_BONUS_LEVEL_DIVISOR} levels), validated against the real, \
+                 corpus-verified 54-member Unchained Rage Power pool so an invented or drifted \
+                 id can never ground it. Standalone magnitude only, matching the base class's own \
+                 Superstition closure's posture -- not yet integrated into a total saves field. \
+                 The other 53 Unchained Rage Powers remain named-but-unproven -- this is a \
+                 representative-pool closure, not a claim that the family is exhausted"
+            ),
+        });
+    }
+
     push_deferred_class_features(
         "class_feature.pu.unchained_barbarian.other_features_deferred.unsupported",
             "class:unchained_barbarian grounds every Unchained Barbarian magnitude this book \
@@ -25551,16 +25707,18 @@ fn ground_unchained_barbarian_class_features(
              per day, morale bonus, Armor Class penalty and temporary hit points, the Rage Power \
              pool size, Danger Sense, Damage Reduction, Fast Movement, Indomitable Will, the \
              Uncanny Dodge flanking level and tier, the morale bonus and temporary-hit-point \
-             multiplier Greater Rage and Mighty Rage each produce, and Tireless Rage's \
-             temporary-hit-point lockout. This diagnostic is NOT claim-blocking; it carries the \
-             honest remainder. What is missing: (1) the 54 Unchained Rage Powers themselves -- \
-             the pool size is real, the catalogue of choices is not ingested; (2) APPLICATION \
-             rather than magnitude -- Rage is an activated state with no activation model here, \
-             so the morale bonus, Armor Class penalty, temporary hit points and Indomitable Will \
-             are derived correctly but deliberately not folded into any resting total; (3) Fast \
-             Movement's encumbrance/heavy-armor condition, which this engine cannot evaluate; (4) \
-             Tireless Rage's other clause -- no longer being fatigued when a rage ends -- removes \
-             a condition this engine does not track, so it carries no magnitude; and Weapon and \
+             multiplier Greater Rage and Mighty Rage each produce, Tireless Rage's \
+             temporary-hit-point lockout, and one real, corpus-verified representative Rage \
+             Power (Superstition) of its own separate 54-member pool. This diagnostic is NOT \
+             claim-blocking; it carries the honest remainder. What is missing: (1) the other 53 \
+             Unchained Rage Powers -- the pool size is real, Superstition is now wired, the rest \
+             of the catalogue is not; (2) APPLICATION rather than magnitude -- Rage is an \
+             activated state with no activation model here, so the morale bonus, Armor Class \
+             penalty, temporary hit points and Indomitable Will are derived correctly but \
+             deliberately not folded into any resting total; (3) Fast Movement's \
+             encumbrance/heavy-armor condition, which this engine cannot evaluate; (4) Tireless \
+             Rage's other clause -- no longer being fatigued when a rage ends -- removes a \
+             condition this engine does not track, so it carries no magnitude; and Weapon and \
              Armor Proficiency is a proficiency-lane fact this engine models per-item, not \
              per-class"
             .to_owned(),
@@ -32744,10 +32902,42 @@ fn rage_power_selection_denamespaced(raw: &str) -> &str {
     raw.strip_prefix(RAGE_POWER_SEED_NAMESPACE).unwrap_or(raw)
 }
 
+/// The Unchained Barbarian's own analogue of [`barbarian_selected_rage_power`]
+/// -- structurally identical (numbered-slot scan, denamespace, then validate
+/// against the real pool), but over the SEPARATE
+/// [`UNCHAINED_BARBARIAN_RAGE_POWER_SLOTS`]/[`UNCHAINED_RAGE_POWER_POOL`]
+/// family, so a base-class selection can never satisfy this check and vice
+/// versa (`decisions.md §10` AMENDMENT: distinct classes, distinct records).
+/// Reuses [`rage_power_selection_denamespaced`] -- the namespace strip is a
+/// generic string operation with no base-class-specific meaning, and
+/// `v06_work_inventory.rs`'s `CLASS_FEATURE_POOLS` registers this pool's own
+/// namespace column EMPTY too (mirroring the base pool), so the board's own
+/// `--class-feature-probe` generates the identical bare-slug shape here.
+fn unchained_barbarian_selected_rage_power(input: &CharacterInput, level: u8, option_id: &str) -> bool {
+    UNCHAINED_BARBARIAN_RAGE_POWER_SLOTS.iter().any(|(_, grant_level, choice_id)| {
+        if level < *grant_level {
+            return false;
+        }
+        input.chosen.selected_choices.iter().any(|choice| {
+            choice.choice_set_id == *choice_id
+                && rage_power_selection_denamespaced(&choice.selection_id) == option_id
+                && UNCHAINED_RAGE_POWER_POOL.contains(&option_id)
+        })
+    })
+}
+
 /// PF1 Core Rulebook Superstition rage power: `BONUS:VAR|SuperstitionSaveBonus|
 /// 2+RagePowersLVL/4`, `RagePowersLVL` = `BarbarianLVL` on the base class.
 /// Integer division, matching the corpus formula exactly (no rounding
 /// beyond PCGen's own floor-toward-zero `/` on non-negative operands).
+///
+/// **Also the Unchained Barbarian's own formula, reused rather than
+/// duplicated** (`SD31-E4-F2-004`): `KEY:Unchained Rage Power ~ Superstition`
+/// carries the byte-identical `BONUS:VAR|SuperstitionSaveBonus|2+floor(
+/// RagePowersLVL/4)` token, and that class's own internal `Rage Powers`
+/// record independently states `BONUS:VAR|RagePowersLVL|BarbarianLVL` too
+/// (`pu_abilities_class.lst:291`) -- the same variable chain, so this pure
+/// function of `level` alone is correct for either caller.
 fn barbarian_superstition_save_bonus(level: u8) -> i16 {
     SUPERSTITION_SAVE_BONUS_BASE + i16::from(level) / SUPERSTITION_SAVE_BONUS_LEVEL_DIVISOR
 }
@@ -53017,6 +53207,180 @@ mod barbarian_rage_power_superstition_tests {
             HeadlessReceiptStatus::Computed,
             "a Human Barbarian with Superstition selected must reach Computed, not Blocked: \
              {:?}",
+            receipt.computation.diagnostics
+        );
+        let bonus = explanation(&receipt.computation.explanations, SUPERSTITION_RECORD_ID);
+        assert_eq!(bonus.value, 3, "the real headless receipt must carry the grounded value: {bonus:?}");
+    }
+}
+
+/// SD31-E4-F2-004: Unchained Barbarian's OWN Rage Power chooser had no
+/// consumer-delta wiring at all -- `decisions.md §10`'s AMENDMENT forbids
+/// resolving it by folding into the base Barbarian's chooser (the exact
+/// "free ride" `SD31-E4-F2-003` found and correctly declined to credit, per
+/// its own §3), so this closure wires the class's own SEPARATE
+/// `UNCHAINED_BARBARIAN_RAGE_POWER_SLOTS`/`UNCHAINED_RAGE_POWER_POOL` family.
+/// Mirrors `barbarian_rage_power_superstition_tests` structurally, including
+/// its two mutation-proof negative controls.
+#[cfg(test)]
+mod unchained_barbarian_rage_power_superstition_tests {
+    use super::{
+        compute_pilot_base_chassis, CharacterClassLevel, CharacterInput, ComputationExplanation,
+        UNCHAINED_SUPERSTITION_RAGE_POWER_SELECTION,
+    };
+    use crate::rules_core::character_input::{load_character_input_fixture, SelectedChoice};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+    const UNCHAINED_BARBARIAN_CLASS_ID: &str = "class:unchained_barbarian";
+    const SUPERSTITION_RECORD_ID: &str =
+        "class_feature.pu.unchained_barbarian.rage_power.superstition.save_bonus";
+
+    fn human_unchained_barbarian_input(level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: UNCHAINED_BARBARIAN_CLASS_ID.to_owned(), level }];
+        input
+    }
+
+    fn explanation<'a>(
+        explanations: &'a [ComputationExplanation],
+        id: &str,
+    ) -> &'a ComputationExplanation {
+        explanations
+            .iter()
+            .find(|e| e.id == id)
+            .unwrap_or_else(|| panic!("expected explanation record {id}, got: {explanations:?}"))
+    }
+
+    #[test]
+    fn unchained_barbarian_without_any_rage_power_selection_grounds_no_superstition_record() {
+        let input = human_unchained_barbarian_input(5);
+        let computation = compute_pilot_base_chassis(&input);
+        assert!(
+            !computation.explanations.iter().any(|e| e.id == SUPERSTITION_RECORD_ID),
+            "no Superstition record without a real recorded selection: {:?}",
+            computation.explanations
+        );
+    }
+
+    #[test]
+    fn unchained_barbarian_level5_with_superstition_selected_at_slot1_grounds_the_real_save_bonus()
+    {
+        let mut input = human_unchained_barbarian_input(5);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:unchained_barbarian_rage_power".to_owned(),
+            selection_id: UNCHAINED_SUPERSTITION_RAGE_POWER_SELECTION.to_owned(),
+        });
+
+        let computation = compute_pilot_base_chassis(&input);
+        let bonus = explanation(&computation.explanations, SUPERSTITION_RECORD_ID);
+        // 2 + 5/4 (integer division) = 3, same formula as the base class.
+        assert_eq!(bonus.value, 3, "Superstition save bonus at Unchained Barbarian level 5: {bonus:?}");
+    }
+
+    #[test]
+    fn unchained_barbarian_level9_with_superstition_selected_at_a_later_numbered_slot_still_grounds()
+    {
+        let mut input = human_unchained_barbarian_input(9);
+        // Picked at the 8th-level slot, not slot 1 -- proves the check spans
+        // every numbered slot, not only the first.
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:unchained_barbarian_rage_power_4".to_owned(),
+            selection_id: UNCHAINED_SUPERSTITION_RAGE_POWER_SELECTION.to_owned(),
+        });
+
+        let computation = compute_pilot_base_chassis(&input);
+        let bonus = explanation(&computation.explanations, SUPERSTITION_RECORD_ID);
+        assert_eq!(bonus.value, 4, "Superstition save bonus at Unchained Barbarian level 9: {bonus:?}");
+    }
+
+    /// MUTATION-PROOF guard 1: a selection recorded under the BASE class's
+    /// own choice-set id must never satisfy the Unchained class's check --
+    /// the two are separate slot families by design (`decisions.md §10`
+    /// AMENDMENT), and this is the exact "free ride" `SD31-E4-F2-003` found
+    /// and declined.
+    #[test]
+    fn a_base_class_slot_selection_never_grounds_the_unchained_superstition_bonus() {
+        let mut input = human_unchained_barbarian_input(5);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:barbarian_rage_power".to_owned(),
+            selection_id: UNCHAINED_SUPERSTITION_RAGE_POWER_SELECTION.to_owned(),
+        });
+
+        let computation = compute_pilot_base_chassis(&input);
+        assert!(
+            !computation.explanations.iter().any(|e| e.id == SUPERSTITION_RECORD_ID),
+            "a selection recorded under the BASE class's choice-set id must never ground the \
+             Unchained class's own record: {:?}",
+            computation.explanations
+        );
+    }
+
+    /// MUTATION-PROOF guard 2: an invented selection id must never ground the
+    /// real magnitude, even under the correct Unchained choice-set id.
+    #[test]
+    fn an_invented_selection_id_never_grounds_the_unchained_superstition_bonus() {
+        let mut input = human_unchained_barbarian_input(5);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:unchained_barbarian_rage_power".to_owned(),
+            selection_id: "made_up_power".to_owned(),
+        });
+
+        let computation = compute_pilot_base_chassis(&input);
+        assert!(
+            !computation.explanations.iter().any(|e| e.id == SUPERSTITION_RECORD_ID),
+            "an untrusted/invented selection id must never ground a real magnitude: {:?}",
+            computation.explanations
+        );
+    }
+
+    /// A DIFFERENT real, corpus-verified Unchained Rage Power selection must
+    /// not spuriously ground Superstition's own record -- the same
+    /// same-class-different-slot collision shape wave 11's own regression
+    /// guards against for the pool-name matcher.
+    #[test]
+    fn a_different_real_unchained_rage_power_selection_never_grounds_superstition() {
+        let mut input = human_unchained_barbarian_input(5);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:unchained_barbarian_rage_power".to_owned(),
+            selection_id: "knockback".to_owned(),
+        });
+
+        let computation = compute_pilot_base_chassis(&input);
+        assert!(
+            !computation.explanations.iter().any(|e| e.id == SUPERSTITION_RECORD_ID),
+            "selecting a DIFFERENT real Unchained Rage Power must never ground Superstition's own \
+             record: {:?}",
+            computation.explanations
+        );
+    }
+
+    /// Reachability proof, per this cycle's own dispatch ("Reachability is
+    /// proven through a headless pilot receipt, never a resolver unit
+    /// test"): the real `build_pilot_headless_receipt` entry point reaches
+    /// `Computed` (not `Blocked`) for a Human Unchained Barbarian with a
+    /// genuine Superstition selection, and the real receipt's own
+    /// explanations carry the grounded save-bonus record.
+    #[test]
+    fn the_headless_pilot_receipt_reaches_computed_with_unchained_superstition_selected() {
+        use super::{build_pilot_headless_receipt, HeadlessReceiptStatus};
+
+        let mut input = human_unchained_barbarian_input(5);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:unchained_barbarian_rage_power".to_owned(),
+            selection_id: UNCHAINED_SUPERSTITION_RAGE_POWER_SELECTION.to_owned(),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "a Human Unchained Barbarian with Superstition selected must reach Computed, not \
+             Blocked: {:?}",
             receipt.computation.diagnostics
         );
         let bonus = explanation(&receipt.computation.explanations, SUPERSTITION_RECORD_ID);
