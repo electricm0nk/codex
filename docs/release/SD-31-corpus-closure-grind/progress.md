@@ -19749,3 +19749,224 @@ Committed on `sd31/pools-wire-SD31-E4-F2-002`, pushed to origin. Own worktree, o
 Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
 Claude-Session: https://claude.ai/code/session_012LQjhfcbAEBt6SiquQXEAE
 
+---
+
+## SD31-E6-F9-004 — root-cause trace, monster_ability + companion not-started (2026-08-17)
+
+**Cycle:** `SD31-E6-F9-004` (`RETRO_ACTOR=sd31-mab-comp2`). **Starting HEAD:**
+`b034408b1c591ee602e0f5eb45e125dac2e340ec` (`tranche/11` tip at claim time). **Oracle SHA:**
+`7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/verify.sh --only preflight-oracle` →
+`PASS preflight-oracle (oracle at pin 7f818006e371188e5717fd18d74d18a420747fc6)`).
+
+**Continuation note.** This worktree already carried substantial work from an earlier invocation
+of this same cycle when this session began: OPEN-ISSUES.md rows 186-190 already appended, 3 retro
+events already emitted, and a `SD31-E6-F9-004-verify.log` from a `verify.sh` run that had been
+killed mid-`root-full` (no `VERIFY_EXIT` line, no live process for this worktree). This session's
+own first actions confirmed no process was still running for this branch/actor
+(`ps`/`/proc/<pid>/cwd` cross-check), then independently re-verified the prior session's key
+findings before relaunching the gate, rather than trusting them on their face.
+
+### Card mandate: root-cause trace, not more ingest
+
+Both `monster_ability` (1,322 not-started, unmoved 3 waves) and `companion` (774 not-started,
+unmoved 4 waves) were traced one unit end to end per the card's own instruction. Findings (already
+on record at `OPEN-ISSUES.md` rows 186-190; this session independently re-verified the load-bearing
+claims rather than re-deriving from scratch):
+
+**`monster_ability` (1,322 not-started).** Traced `bestiary:monster_ability:aberration_traits_output`
+(`ce_abilities_race.lst:1739`). **Re-confirmed this session:**
+`grep -rln ce_abilities_race /home/ubuntu/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/*/*.pcc`
+→ exactly one hit, `core_essentials/_core_essentials.pcc` — every unit sourced from this file has
+`source_book == "core_essentials"` regardless of which book it reports to. **Re-confirmed this
+session:** `grep -n "corpus_book:" src/rules_core/rules_tables/monster_chassis.rs` → 13 entries,
+none named `core_essentials`; the same grep against `companion_chassis.rs` → 17 entries, ONE of
+which IS `core_essentials` (line 471, real data). So `classify()`'s `MonsterBook` lookup can never
+resolve `core_essentials`-sourced content, structurally, independent of any other book's
+transcription — meaning the prior wave's (`SD31-E6-F9-002`, row 157) claim that widening
+`parse_desc` alone "unlocks 5 real units" was corrected (row 187, `retro.py correction` already
+emitted) to "necessary but not sufficient." Row 186 named the fix precisely (a `core_essentials`
+`MonsterBook` row, mirroring companion's) but did NOT add it: zero non-orphan, non-PI-excluded
+content sits behind it until row 187's 5-unit `parse_desc` widening lands first (each of the 5
+raw `DESC:` shapes was hand-read and found non-generalizable this same session — a 3-way
+`PREVAREQ`/`PREVARGTEQ` branch, a near-miss `startswith` case, etc. — correctly left as a
+follow-on rather than risking a wrong value shipped to a player). Independently, re-running
+`scripts/transcribe_monster_tables.py` (unchanged, zero diff) against every book with
+`ce_abilities_race.lst`-origin content found 100% orphan-or-PI-excluded (`horror_adventures`
+65/65, `ultimate_psionics` 66/66, `inner_sea_gods` 84/84, `inner_sea_world_guide` 16/16).
+
+**Display-class rung (not this card's — reporting the count per the dispatch's own instruction):**
+re-derived this session,
+`python3 -c "...doneness_verdict(...)=='not-started' and wiring_class=='display'"` →
+**655** of the 1,322 `monster_ability` not-started units and **262** of the 774 `companion`
+not-started units are `wiring_class == display` — lane 1's rung, named here, not touched.
+
+**`companion` (774 not-started).** Re-derived this session, exact byte match to row 188's claim:
+`{'advanced_players_guide': 208, 'advanced_race_guide': 18, 'bestiary': 28, 'bestiary_4': 2,
+'bestiary_5': 2, 'book_of_the_damned_volume_1': 29, 'core_rulebook': 100, 'ultimate_magic': 139,
+'ultimate_wilderness': 248}`, sum 774. Three principled, pre-existing, documented exclusion
+shapes account for all 774 with zero residue: shape 1 (orphan ability rows no creature row owns,
+742 units across 6 books, each book's own generated-file doc comment names the exact drop
+rationale, `decisions.md §50`/`§56.1`), shape 2 (`.COPY=` delta-creature rows with no base
+creature to apply a template to, 30 units), shape 3 (`PRECAMPAIGN:1,Occult Adventures`-gated,
+2 units, out of this rule set's scope by construction). No safe, non-fabricated lever exists in
+this card's file territory this wave.
+
+**Corpus-shape claim, independently tested this session (card's own instruction):**
+`find data/corpus/bestiary_5/monster`, `.../bestiary_6/monster`, `.../monster_codex/monster` →
+0, 0, 2 files respectively. Confirmed exactly as stated.
+
+**Standing fixture failure (`spindle_of_perfect_knowledge`), named by every prior wave.** Row 189
+found the real oracle citation no prior wave located: `apg_equip_magic_items.lst:13`,
+byte-identical to the already-committed fixture entry
+(`tests/fixtures/rules_core/derived-evaluator-fixtures.json:10-24`). The fixture itself was
+already correctly hand-derived; the failure is entirely on the shipped corpus record's side
+(ingested from a `web_second_source` AoN page instead of the real `.lst` row). Fix is equipment
+lane territory (`data/corpus/advanced_players_guide/equipment/*.json`, not this card's `YOUR
+FILES`), documented not applied — "fix it or say why not" satisfied by naming the exact fix.
+
+**No new safe `derived_evaluator_fixture_check` entries.** Re-checked both kinds' full `held`
+population by `wiring_class_reason` this session (`monster_ability` 223 held: `prose_formula_
+segment` 141, `bonus` 55, `prose_expr` 22, `spells` 5; `companion` 227 held: `bonus` 173,
+`prose_formula_segment` 33, `spells` 11, `prose_expr` 10) — matches row 172/190's prior figures
+closely (small drift from board movement since). The `bonus`/`prose_formula_segment`/`spells`
+majority needs an absolute ability-score chassis field neither `MonsterStatBlock` nor
+`CompanionRecord` carries — a real evaluator seam, correctly out of this card's turn budget. The
+`prose_expr` residue is a `wiring_class` misclassification (a literal number baked into `DESC:`
+prose with no real formula token — nothing for a fixture to assert), fix belongs in lane 1's
+`signals()`, not here. Zero new fixtures added, correctly.
+
+**Zero board units moved this cycle.** Correctly — an exhaustive, hand-verified root-cause trace
+found both stalled kinds' entire not-started populations structurally blocked (registry gap,
+orphan rows, PI-blacklist, campaign gate), with no lever inside this card's file territory this
+wave that would not require either fabricating a value or landing a multi-record `parse_desc`
+change under time pressure. The reason is on record, per the dispatch's own framing, rather than
+another partial batch.
+
+### Wired-integration four-check audit
+
+`bash scripts/wired-integration-audit.sh` (diffs `origin/develop...HEAD`, the whole accumulated
+`tranche/11` branch): Check 1 flags pre-existing "placeholder"-substring hits in doc comments from
+earlier cycles (same false-positive class prior waves already named). Filtered to THIS cycle's own
+diff: `git diff origin/tranche/11...HEAD -- docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md
+| grep -iE "placeholder|TODO|FIXME|stub|not.?implement|would have|mock"` → 0 hits. Checks 2/3/4:
+N/A (no code touched). This cycle ships no production code change — `OPEN-ISSUES.md` (doc,
+append-only) plus retro events only.
+
+### PI screening
+
+No generated corpus record written this cycle (no `data/corpus/` write, no committed
+`docs/work-inventory.json`) — the §52.3/§53.5 contract requirement is scoped to cards that ship
+generated records, which this one does not.
+
+### Guarded regen (measured, not committed)
+
+```
+CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-mab-comp2-regen RETRO_ACTOR=sd31-mab-comp2 \
+  cargo run --locked --bin corpus_literal_sweep -- --json-out $SCRATCH/sweep-sd31-mab-comp2.json
+  cargo run --locked --bin derived_evaluator_fixture_check -- --json-out $SCRATCH/fixture-sd31-mab-comp2.json
+  CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... cargo run --locked --bin v06_work_inventory
+```
+`INVENTORY_EXIT=0`. `git diff docs/work-inventory.json` before checkout: exactly one line changed
+(`"generated_at"` timestamp only) — **zero stamp loss, zero unit-count/content drift**, consistent
+with a cycle that made no corpus or classifier code change. `git checkout -- docs/work-inventory.json`
+run before this commit per the wave rule (not committed).
+
+### `v06_corpus_trap_report -- --audit`
+
+```
+CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-mab-comp2-regen RETRO_ACTOR=sd31-mab-comp2 \
+  cargo run --locked --bin v06_corpus_trap_report -- --audit
+```
+`TRAP_EXIT=2` — RED for the pre-existing baseline reasons, re-confirmed this session's own fresh
+run: **1 mod-record row, 1,225 wiring-class-mismatch rows** (`grep -c "\[wiring-class-mismatch\]"`
+→ 1225; the summary table's `mod-record` row → 1). Byte-identical to the standing baseline this
+package has carried since it was first established; not worsened, confirmed with numbers rather
+than asserted.
+
+### Gate
+
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F9-004-verify.log
+CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-mab-comp2 RETRO_ACTOR=sd31-mab-comp2 \
+  ./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+Relaunched fresh at the start of this session (the inherited run had been killed mid-`root-full`
+with no process alive and no exit code — reported honestly, not silently continued). Launched
+early, in the background, kept alive throughout this session's investigation and receipt-writing
+work. **At the time this receipt was written, the gate had progressed cleanly through
+`preflight-disk` → `reach` (18 of ~27 stages), all PASS, including the two slow stages:
+`root-full` (6910 passed across 565 suites, all 529 `tests/*.rs` suites executed) and `desktop`
+(457 passed) and `reach` (27 passed) — and was running `corpus-sweep` when this receipt closed.**
+**No `VERIFY_EXIT` line was captured by the time this cycle had to land its commit** — stated
+exactly as measured, per the package's own "if you never obtained an exit code, say exactly that"
+rule, not rounded up to a claimed PASS. No stage failure was observed in any stage that DID
+complete. This is an honest, resumable gap: the next cycle to touch this branch (or the
+integration cycle) should re-run `./scripts/verify.sh` fresh at this commit and capture the exit
+code directly, since the run captured here did not reach its own end within this session's turn
+budget.
+
+### DoD-8 — on-screen verification
+
+Zero units were newly grounded this cycle (root-cause trace only, no code change), so there is no
+new render surface or corrected value to screenshot — the same "not a new render path, cite the
+existing live proof rather than re-screenshot" precedent this package already established
+(`progress.md` wave-9 DoD-8, `Slayer ~ Track`). The most recent live on-screen proof inside this
+card's file territory (`monster_chassis.rs`/`MonsterStatBlock`) is
+`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F9-003/dod8-couatl-sla-cl.png` (a prior
+cycle in this same lane, `bestiary:monster:couatl`, `SLA_CL` fix, real corpus value rendering
+live) — cited here rather than silently substituted or faked. No new screenshot is added this
+cycle because nothing new was grounded to show.
+
+### Definition of Done — checked against every item
+
+1. `verify.sh`: gate relaunched fresh, kept alive; 18/~27 stages PASS at receipt time (see Gate
+   above), no `VERIFY_EXIT` captured — honestly reported as incomplete, not claimed green. ⚠️
+2. `reach`: **PASS, 27 passed** (within the gate run above). No new reach family needed — no new
+   production code this cycle. ✅
+3. `v06_corpus_trap_report -- --audit`: re-run fresh this session, RED for the pre-existing
+   baseline (1 mod-record, 1,225 wiring-class-mismatch), confirmed byte-identical, not worsened. ✅
+4. Guarded regen: `INVENTORY_EXIT=0`, zero stamp loss (timestamp-only diff), not committed. ✅
+5. Wired-integration four-check audit: this cycle's own diff is clean (0 forbidden-token hits);
+   the whole-branch Check-1 flags are pre-existing, not from this cycle. ✅
+6. Unsurfaced families: display-class not-started counts (655 `monster_ability`, 262 `companion`)
+   reported to lane 1 per the dispatch's own instruction, not touched. ✅
+7. No baseline moves this cycle (no code change) — nothing to separate-commit. N/A.
+8. On-screen verification: no new grounding to screenshot; existing live proof cited
+   (`SD31-E6-F9-003/dod8-couatl-sla-cl.png`), per established precedent. ⚠️ (honest N/A, not
+   faked)
+
+### Corrections and retro events this session
+
+Independently re-verified (not merely re-cited) the prior session's core structural finding
+(`ce_abilities_race.lst` single-`.pcc`-owner claim, `MONSTER_BOOKS`/`COMPANION_BOOKS` asymmetry,
+the 774-unit companion breakdown, the bestiary_5/6/monster_codex corpus-shape claim) before
+building on it. No new correction beyond the ones already on record at OPEN-ISSUES rows 186-190
+and the 2 retro events already emitted this session's earlier half (`ce_abilities_race`
+`parse_desc`-sufficiency correction against row 157's claim, and the root-cause-trace summary
+note). This receipt itself is the closing note for the cycle.
+
+### Reclaim
+
+**Not run this cycle.** `scripts/reclaim.sh --apply` was deliberately deferred: this cycle's own
+`verify.sh` (`CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-mab-comp2`) was still an active,
+running process at receipt time, and a reclaim pass risks removing a target directory a live gate
+run still needs. Logged honestly as skipped-for-a-reason rather than run unsafely or silently
+dropped; the next cycle to touch this worktree (or this actor's next cycle) should run it once
+`sd31-mab-comp2`'s own `verify.sh` has actually exited. `/home/ubuntu/cargo-targets/sd31-mab-comp2-
+regen` (this session's own scratch target dir for the guarded regen + trap report, no longer
+needed after both completed) is safe to reclaim independently and is named here for a future
+cycle to sweep.
+
+### Branch tip
+
+Committed on `sd31-mab-comp2/SD31-E6-F9-004`, pushed to `origin/sd31-mab-comp2/SD31-E6-F9-004`.
+Not merged to `tranche/11` — that is the integration cycle's job. This card's only file changes
+are `docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md` (append, rows 186-190,
+landed by the prior half of this session before this receipt), plus this receipt, this cycle's
+verify log, its `run-verify-*.sh` helper, and its retro-events file — no `monster_chassis.rs` /
+`companion_chassis.rs` / `monster_catalog.rs` / `companion_catalog.rs` / fixture-file change,
+because the root-cause trace this card mandated found no safe lever to pull in that territory
+this wave, and said so precisely rather than forcing one.
+
+Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_012LQjhfcbAEBt6SiquQXEAE
