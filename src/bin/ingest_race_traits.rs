@@ -1885,9 +1885,19 @@ mod tests {
         // Appearance = 11) now pass the in-scope filter for the first time.
         // Re-derived on disk: `find data/corpus/advanced_race_guide/
         // race_trait -name '*.json' | wc -l` -> 332.
+        // ARG 332->350: SD31-E6-F4-007 (2026-08-17) added `ingest_races.rs`'s
+        // own 2-race chassis batch (Changeling, Samsaran) into this SAME
+        // book directory -- 18 more standard-tier race_trait records,
+        // closing `arg_races.lst`'s full 37-row playable-race roster.
+        // Neither race has any real ARG alternate-trait content for THIS
+        // binary to ingest (re-derived: `grep -c '^Changeling ~\|^Samsaran
+        // ~' arg_abilities_race.lst` -> 0), so this binary's own in-scope
+        // roster is unchanged this cycle. Re-derived on disk: `find
+        // data/corpus/advanced_race_guide/race_trait -name '*.json' | wc -l`
+        // -> 350.
         let expected: BTreeMap<&str, usize> =
             [
-                ("advanced_race_guide", 332usize),
+                ("advanced_race_guide", 350usize),
                 ("monster_codex", 5),
                 ("inner_sea_races", 82),
                 ("horror_adventures", 43),
@@ -1959,11 +1969,14 @@ mod tests {
         }
         assert_eq!(
             total,
-            526,
-            "332 ARG (of which 96 are `ingest_races.rs`'s own standard-tier batches: \
+            544,
+            "350 ARG (of which 114 are `ingest_races.rs`'s own standard-tier batches: \
              58 from Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang, SD-31-E6-F4-002, plus 38 \
-             from Gillman/Nagaji/Vanara/Vishkanya, SD31-E6-F4-004; the remaining 236 are \
-             this binary's own alternate-tier batches: 201 pre-existing + 24 for the first \
+             from Gillman/Nagaji/Vanara/Vishkanya, SD31-E6-F4-004, plus 18 from Changeling/\
+             Samsaran, SD31-E6-F4-007 -- closing arg_races.lst's full 37-row playable-race \
+             roster; the remaining 236 are this binary's own alternate-tier batches, \
+             unchanged this cycle (neither Changeling nor Samsaran has real ARG \
+             alternate-trait content): 201 pre-existing + 24 for the first \
              6-race batch, SD-31-E6-F4-003, 2026-08-16, plus 11 for the second 4-race \
              follow-on batch, SD31-E6-F4-006, 2026-08-17) + \
              5 Monster Codex + 82 Inner Sea Races + \

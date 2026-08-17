@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:34:16Z",
+  "data": {
+    "key": "Samsaran ~ Vision",
+    "name": "Low-Light Vision",
+    "race_key": "Samsaran",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Samsaran Racial Trait",
+      "Samsaran Racial Default",
+      "SpecialQuality",
+      "Racial Vision"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Samsaran_ReplaceVision",
+    "sets_replace_flags": [],
+    "description": "Samsarans can see twice as far as humans in conditions of dim light.",
+    "source_page": "p.198",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Samsaran ~ Vision"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Samsaran Racial Trait.Samsaran Racial Default.SpecialQuality.Racial Vision"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Samsaran_ReplaceVision=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Samsarans can see twice as far as humans in conditions of dim light."
+      },
+      {
+        "key": "VISION",
+        "value": "Low-Light Vision"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.198"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "HasRacialVision",
+          "1"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/samsaran/samsaran_abilities_race.lst",
+    "sha256": "70da33c402699e1d2fcaa92aa5b5704d73c07e9fcaf0bf49925f5062637b7278",
+    "line": 18,
+    "record_key": "Samsaran ~ Vision"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

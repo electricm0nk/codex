@@ -364,14 +364,20 @@ fn the_two_gate_sources_agree_wherever_both_speak() {
 
     assert_eq!(
         from_row,
-        328,
+        346,
         "rows whose own !PREFACT declares the gate (166 -> 223: SD-31 Epic 1-F2's 57 new \
          standard rows, 2026-08-15, all of which declare their own !PREFACT; 223 -> 232: the \
          Skinwalker follow-on batch's 9 standard rows, all of which also declare their own \
          !PREFACT; 232 -> 290: SD-31-E6-F4-002's Advanced Race Guide batch of 58 standard \
          rows, 2026-08-16, same shape, all self-gated; 290 -> 328: SD31-E6-F4-004's \
          Advanced Race Guide follow-on batch of 38 standard rows, 2026-08-17, same shape, \
-         all self-gated)"
+         all self-gated; 328 -> 346: SD31-E6-F4-007's Advanced Race Guide follow-on batch of \
+         18 standard rows (Changeling, Samsaran), 2026-08-17, closing arg_races.lst's full \
+         37-row playable-race roster, same shape, all self-gated -- including Samsaran's \
+         `Shards of the Past`, whose own row carries `!PREFACT:1,ABILITIES,Samsaran_\
+         ReplaceShardsOfThePast=True` even though its SECOND gate statement in the globalvar \
+         file is a `BONUS:ABILITYPOOL` grant rather than an `ABILITY:` one -- see \
+         `ingest_races.rs`'s `globalvar_prevareq_flags`)"
     );
     assert_eq!(from_globalvar, 9, "Aasimar's nine, whose only declaration is the globalvar file");
 }

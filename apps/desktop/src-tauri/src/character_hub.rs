@@ -4254,14 +4254,19 @@ mod tests {
                 "race:skinwalker",
                 // Advanced Race Guide's 6, SD-31-E6-F4-002 (2026-08-16),
                 // plus SD31-E6-F4-004's 4-race follow-on (2026-08-17:
-                // Gillman, Nagaji, Vanara, Vishkanya) -- the roster sorts by
-                // race id, so the new races interleave alphabetically
-                // rather than appending at the end.
+                // Gillman, Nagaji, Vanara, Vishkanya) plus SD31-E6-F4-007's
+                // 2-race follow-on (2026-08-17: Changeling, Samsaran --
+                // closing `arg_races.lst`'s full 37-row playable-race
+                // roster) -- the roster sorts by race id, so the new races
+                // interleave alphabetically rather than appending at the
+                // end.
                 "race:catfolk",
+                "race:changeling",
                 "race:gillman",
                 "race:kitsune",
                 "race:nagaji",
                 "race:ratfolk",
+                "race:samsaran",
                 "race:strix",
                 "race:suli",
                 "race:vanara",

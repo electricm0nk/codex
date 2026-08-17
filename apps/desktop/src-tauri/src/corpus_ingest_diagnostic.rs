@@ -1195,7 +1195,15 @@ mod tests {
             // .rs`'s own 11-record alternate-trait batch for those same 4
             // races (Gillman/Nagaji/Vanara/Vishkanya) -- also
             // corpus-JSON-only race_trait content, same shape as above.
-            ("advanced_race_guide", "advanced_race_guide", 990u32),
+            // 990 -> 1008 by SD31-E6-F4-007 (2026-08-17): `ingest_races.rs`'s
+            // own 2-race follow-on batch adds 18 more corpus-JSON-only
+            // race_trait records (Changeling 9, Samsaran 9), closing
+            // `arg_races.lst`'s full 37-row playable-race roster; its 2
+            // `race` chassis records are again NOT added here for the same
+            // reason every prior batch's weren't -- they ARE counted in
+            // `reported` (ARG's `races` row moved `Some(10)` -> `Some(12)`
+            // this cycle).
+            ("advanced_race_guide", "advanced_race_guide", 1008u32),
             ("pathfinder_unchained", "pathfinder_unchained", 0),
         ] {
             let response = build_corpus_ingest_diagnostic();
@@ -1296,11 +1304,13 @@ mod tests {
         );
         assert_eq!(
             races("advanced_race_guide"),
-            Some(10),
-            "ARG's own 10-race total: the 6-race batch (Catfolk, Kitsune, Ratfolk, Strix, \
+            Some(12),
+            "ARG's own 12-race total: the 6-race batch (Catfolk, Kitsune, Ratfolk, Strix, \
              Suli, Wayang; SD-31-E6-F4-002, 2026-08-16) -- ARG no longer declares zero races \
              of its own (superseding `decisions.md §25.2`'s premise) -- plus SD31-E6-F4-004's \
-             4-race follow-on (Gillman, Nagaji, Vanara, Vishkanya; 2026-08-17)"
+             4-race follow-on (Gillman, Nagaji, Vanara, Vishkanya; 2026-08-17) plus \
+             SD31-E6-F4-007's 2-race follow-on (Changeling, Samsaran; 2026-08-17), closing \
+             `arg_races.lst`'s full 37-row playable-race roster"
         );
         assert_eq!(
             races("bestiary_2"),
@@ -1332,12 +1342,13 @@ mod tests {
             "the panel's per-book race counts must sum to exactly the races the catalog serves"
         );
         assert_eq!(
-            panel_total, 35,
-            "35 in-scope races today: CRB's 7 plus Bestiary 1's 11 plus Bestiary 2's 6 \
+            panel_total, 37,
+            "37 in-scope races today: CRB's 7 plus Bestiary 1's 11 plus Bestiary 2's 6 \
              (SD-31 Epic 1-F2, 2026-08-15) plus Bestiary 5's 1 (Skinwalker follow-on batch, \
-             2026-08-15) plus Advanced Race Guide's 10 (SD-31-E6-F4-002, 2026-08-16: Catfolk, \
+             2026-08-15) plus Advanced Race Guide's 12 (SD-31-E6-F4-002, 2026-08-16: Catfolk, \
              Kitsune, Ratfolk, Strix, Suli, Wayang; SD31-E6-F4-004, 2026-08-17: Gillman, \
-             Nagaji, Vanara, Vishkanya)"
+             Nagaji, Vanara, Vishkanya; SD31-E6-F4-007, 2026-08-17: Changeling, Samsaran -- \
+             closing `arg_races.lst`'s full 37-row playable-race roster)"
         );
     }
 

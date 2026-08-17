@@ -264,7 +264,80 @@ const IN_SCOPE_RACES: &[RaceSpec] = &[
     RaceSpec { dir: "nagaji", book: "advanced_race_guide" },
     RaceSpec { dir: "vanara", book: "advanced_race_guide" },
     RaceSpec { dir: "vishkanya", book: "advanced_race_guide" },
+    // SD31-E6-F4-007 (2026-08-17). The LAST 2 of `arg_races.lst`'s 37-row
+    // playable-race roster (`grep -P '^\S+\.MOD\s' arg_races.lst` --
+    // `Changeling.MOD TYPE:Uncommon SOURCEPAGE:p.184`, `Samsaran.MOD
+    // TYPE:Uncommon SOURCEPAGE:p.198`), closing the roster entirely.
+    // **Not the config-only widening the 6-race and 4-race batches above
+    // were** -- each was excluded by name from THOSE batches for a real,
+    // traced parser gap, both now fixed narrowly rather than worked
+    // around:
+    // - Changeling: `changeling_abilities_race.lst`'s 9 standard traits
+    //   (`Changeling Racial Trait`/`Changeling Racial Default` marked,
+    //   `!PREFACT`-gated, globalvar-confirmed) ingest through the
+    //   unmodified default-trait path. Its OTHER 3 rows (`Green Widow
+    //   (Green Hag)`, `Hulking Changeling (Annis Hag)`, `Sea Lungs (Sea
+    //   Hag)`) are `TYPE:RacialTraits.Hag Racial Trait...` -- leads with
+    //   `RacialTraits` (so `is_standard_racial_trait` would match) but
+    //   carries no `Changeling Racial Trait`/`Changeling Racial Default`
+    //   token at all, because they are the 3 CHOICES a
+    //   `CHOOSE:ABILITYSELECTION|Special Ability|TYPE=Changeling Race
+    //   Trait` picker offers depending on the changeling's hag-mother
+    //   type -- a genuinely different, additive-choice mechanism from the
+    //   swap-one-default-for-one-alternate shape this file's
+    //   `is_racial_default`/`ALTERNATE_TRAIT_*` machinery models. Explicitly
+    //   named and skipped below (`HERITAGE_CHOICE_TRAIT_MARKERS`), loudly
+    //   logged, not silently dropped -- the summary "Hag Racial Trait" row
+    //   itself (`KEY:Changeling ~ Hag Racial Trait`, which IS
+    //   `Changeling Racial Default` marked) still ingests and states in
+    //   its own `DESC:` that a choice exists, so nothing about the choice
+    //   is lost from the shipped description even though the 3 individual
+    //   options are not yet selectable. Modelling the CHOOSE mechanism
+    //   itself is real, named follow-on work (`OPEN-ISSUES.md`), not a
+    //   stub -- no half-written record for any of the 3 ships.
+    // - Samsaran: 8 of 9 standard traits are the identical shape to every
+    //   other race in this table. The 9th, `Shards of the Past`, carries
+    //   its own `!PREFACT:1,ABILITIES,Samsaran_ReplaceShardsOfThePast=True`
+    //   (so `parse_trait` reads its flag from the ROW, same as every other
+    //   trait) but `samsaran_abilities_globalvar.lst`'s second statement of
+    //   that SAME gate is a `BONUS:ABILITYPOOL|Samsaran Shards of the Past
+    //   Skills|1|PREVAREQ:Samsaran_ReplaceShardsOfThePast,0` line, not an
+    //   `ABILITY:...AUTOMATIC...` grant -- the only token shape
+    //   `globalvar_gates()` read before this batch. That made the
+    //   cross-check treat a real second statement as if it were absent and
+    //   fail the whole run (`None if !row_flags.is_empty() =>` branch).
+    //   `globalvar_gates()` is widened below to read `BONUS:ABILITYPOOL`
+    //   grants exactly the way it already reads `ABILITY:` grants -- same
+    //   `<Race> Racial Trait|` prefix requirement, same `PREVAREQ:<Flag>,0`
+    //   extraction, no new leniency -- rather than special-casing Samsaran.
+    // PI-blacklist scan (`PI_BLACKLIST_TERMS`) and a `DESCISPI:`/
+    // `NAMEISPI:` grep across every file in both directories: zero hits.
+    RaceSpec { dir: "changeling", book: "advanced_race_guide" },
+    RaceSpec { dir: "samsaran", book: "advanced_race_guide" },
 ];
+
+/// `TYPE:` markers that lead with `RacialTraits` (so
+/// [`is_standard_racial_trait`] matches) but name a CHOOSE-driven
+/// sub-selection rather than a race's own default/alternate trait --
+/// Changeling's 3 hag-mother choices (see the `IN_SCOPE_RACES` doc comment
+/// above). Matched by substring against the raw `TYPE:` chain rather than
+/// the split `type_tokens()` list because the marker is itself a
+/// multi-word `TYPE:` component (`Hag Racial Trait`), not a single dotted
+/// segment boundary.
+const HERITAGE_CHOICE_TRAIT_MARKERS: &[&str] = &["Hag Racial Trait"];
+
+/// True when a row's `TYPE:` chain names one of [`HERITAGE_CHOICE_TRAIT_MARKERS`]
+/// as something OTHER than the race's own default-trait segment (i.e. the
+/// marker appears, but the chain does not also carry
+/// `"{race_key} Racial Trait"` -- the summary/grantor row for the same
+/// choice, like `Changeling ~ Hag Racial Trait`, DOES carry that token and
+/// is not matched here).
+fn is_heritage_choice_subtrait(row: &LstRow, race_key: &str) -> bool {
+    let raw_type = row.first("TYPE").unwrap_or_default();
+    let own_default_token = format!("{race_key} Racial Trait");
+    HERITAGE_CHOICE_TRAIT_MARKERS.iter().any(|marker| raw_type.contains(marker))
+        && !raw_type.contains(&own_default_token)
+}
 
 /// Heuristic OGL/PI screen (`docs/governance/ogl-pi-blacklist.md`) — the
 /// same bounded substring scan `src/bin/gen_book_cache.rs` and
@@ -820,6 +893,50 @@ fn globalvar_gates(text: &str, race_key: &str) -> BTreeMap<String, Vec<String>> 
     out
 }
 
+/// Every `PREVAREQ:<Flag>,0` clause anywhere in a race's
+/// `_abilities_globalvar.lst`, on ANY token — not only the `ABILITY:`
+/// grants [`globalvar_gates`] reads.
+///
+/// # Why this exists alongside `globalvar_gates`
+///
+/// `globalvar_gates` ties a flag to the specific trait KEY the `ABILITY:`
+/// grant names, which is the strongest possible statement (it re-derives
+/// *which* trait the flag gates, not merely *that* the flag is gated
+/// somewhere). Every race this project has ingested through SD-31 states
+/// its second gate that way. Samsaran's `Shards of the Past` is the first
+/// counter-example: `samsaran_abilities_globalvar.lst` gates
+/// `Samsaran_ReplaceShardsOfThePast` on a `BONUS:ABILITYPOOL|Samsaran
+/// Shards of the Past Skills|1|PREVAREQ:Samsaran_ReplaceShardsOfThePast,0`
+/// line — a real ability-pool grant, not an `ABILITY:` one, so it carries
+/// no `<Race> Racial Trait|AUTOMATIC|<TraitKey>|` prefix for
+/// `globalvar_gates` to key on.
+///
+/// This function reads the weaker, but still real, second statement:
+/// *this flag is gated somewhere in the globalvar file*, without claiming
+/// to know which trait it names. The caller only uses it as a fallback
+/// when [`globalvar_gates`] found no entry for the trait's key AND the
+/// trait's own row already names the flag directly (`replace_flags`) — so
+/// the flag identity still comes from the row, this function only confirms
+/// the globalvar file agrees, exactly the cross-check
+/// [`globalvar_gates`]'s own doc comment describes, generalised to a token
+/// shape that grant is not the only one PCGen uses for it.
+fn globalvar_prevareq_flags(text: &str) -> std::collections::BTreeSet<String> {
+    let mut flags = std::collections::BTreeSet::new();
+    for row in parse_rows(text) {
+        for (_, value) in row.tokens() {
+            for clause in value.split('|') {
+                let Some(rest) = clause.trim().strip_prefix("PREVAREQ:") else { continue };
+                let Some((flag, target)) = rest.rsplit_once(',') else { continue };
+                if target.trim() != "0" {
+                    continue;
+                }
+                flags.insert(flag.trim().to_string());
+            }
+        }
+    }
+    flags
+}
+
 /// Extracts the replace-flag names from a `!PREFACT:1,ABILITIES,<Flag>=True`
 /// token (`decisions.md §26`'s swap protocol: the trait applies *unless*
 /// the named flag is set).
@@ -1127,6 +1244,7 @@ fn main() {
     // measurement rather than a claim in a doc comment.
     let mut gates_agreeing = 0usize;
     let mut gates_from_globalvar: Vec<String> = Vec::new();
+    let mut gates_from_non_ability_token: Vec<String> = Vec::new();
     let mut gate_supersets: Vec<String> = Vec::new();
     let mut ungated_traits: Vec<String> = Vec::new();
     // Rows refused outright because the corpus declares their NAME to be
@@ -1135,6 +1253,9 @@ fn main() {
     // from an ingest bug. Matches `ingest_race_traits.rs`'s own field.
     let mut pi_dropped: Vec<String> = Vec::new();
     let mut pi_declared_descriptions = 0usize;
+    // Rows explicitly deferred by `is_heritage_choice_subtrait` -- reported,
+    // never silent (matches `pi_dropped`'s own reporting discipline).
+    let mut heritage_choice_subtraits_deferred: Vec<String> = Vec::new();
 
     for spec in IN_SCOPE_RACES {
         let dir = races_root.join(spec.dir);
@@ -1236,6 +1357,7 @@ fn main() {
 
         // --- standard racial traits ---
         let gates = globalvar_gates(&String::from_utf8_lossy(&globalvar_bytes), &race_key);
+        let gate_flags_anywhere = globalvar_prevareq_flags(&String::from_utf8_lossy(&globalvar_bytes));
         if gates.is_empty() {
             errors.push(format!("{globalvar_rel}: declares no PREVAREQ gate for any {race_key} trait"));
         }
@@ -1265,6 +1387,11 @@ fn main() {
             }
             if row.name().contains(".MOD") {
                 errors.push(format!("{abilities_rel}:{}: .MOD row matched the standard-trait selector", row.line_no));
+                continue;
+            }
+            if is_heritage_choice_subtrait(&row, &race_key) {
+                heritage_choice_subtraits_deferred
+                    .push(format!("{} ({abilities_rel}:{})", row.first("KEY").unwrap_or(row.name()), row.line_no));
                 continue;
             }
             let mut data = match parse_trait(&row, &race_key, &gates) {
@@ -1307,6 +1434,22 @@ fn main() {
                             gate_supersets.push(format!("{} -> globalvar also gates on {extra:?}", data.key));
                         }
                     }
+                }
+                // `globalvar_gates` found no `ABILITY:`-grant entry keyed to
+                // this trait, but the row itself names flags. Before
+                // failing the run, check the weaker, token-shape-agnostic
+                // reading (`globalvar_prevareq_flags`): if the globalvar
+                // file gates every one of the row's own flags SOMEWHERE
+                // (any token, e.g. Samsaran's `BONUS:ABILITYPOOL` grant),
+                // the two sources still agree — they just used a different
+                // token to say so, which is a real second statement, not a
+                // missing one.
+                None if !row_flags.is_empty() && row_flags.iter().all(|f| gate_flags_anywhere.contains(f)) => {
+                    gates_from_non_ability_token.push(format!(
+                        "{} -> {row_flags:?} (globalvar gates the flag via a non-ABILITY token, {globalvar_rel})",
+                        data.key
+                    ));
+                    gates_agreeing += 1;
                 }
                 None if !row_flags.is_empty() => {
                     errors.push(format!(
@@ -1482,10 +1625,25 @@ fn main() {
         println!("  {t}");
     }
     println!("descriptions redacted by DESCISPI:YES: {pi_declared_descriptions}");
+    println!(
+        "deferred, heritage-choice sub-trait ({:?}, not the race's own default/alternate axis): {}",
+        HERITAGE_CHOICE_TRAIT_MARKERS,
+        heritage_choice_subtraits_deferred.len()
+    );
+    for t in &heritage_choice_subtraits_deferred {
+        println!("  {t}");
+    }
     println!("\n--- replace-flag gates: the two sources reconciled ---");
     println!("rows where the trait's own !PREFACT and the globalvar PREVAREQ agree: {gates_agreeing}");
     println!("rows gated ONLY by the globalvar file (no !PREFACT on the row): {}", gates_from_globalvar.len());
     for t in &gates_from_globalvar {
+        println!("  {t}");
+    }
+    println!(
+        "rows agreeing via a non-ABILITY globalvar token (`globalvar_prevareq_flags` fallback): {}",
+        gates_from_non_ability_token.len()
+    );
+    for t in &gates_from_non_ability_token {
         println!("  {t}");
     }
     println!("rows where the globalvar file gates on strictly more flags: {}", gate_supersets.len());
@@ -1951,13 +2109,15 @@ mod tests {
         // 1-F2's Bestiary 2 batch of 6, the Skinwalker follow-on
         // (Bestiary 5, chassis + 9 standard-tier traits only), SD-31-E6-
         // F4-002's Advanced Race Guide batch of 6 (Catfolk 9, Kitsune 10,
-        // Ratfolk 9, Strix 11, Suli 9, Wayang 10 = 58), plus SD31-E6-F4-
-        // 004's 4-race ARG follow-on (Gillman 9, Nagaji 9, Vanara 8,
-        // Vishkanya 12 = 38) -- 35 races / 337 standard racial trait
+        // Ratfolk 9, Strix 11, Suli 9, Wayang 10 = 58), SD31-E6-F4-004's
+        // 4-race ARG follow-on (Gillman 9, Nagaji 9, Vanara 8, Vishkanya
+        // 12 = 38), plus SD31-E6-F4-007's 2-race ARG follow-on that closes
+        // `arg_races.lst`'s full 37-row playable-race roster (Changeling 9,
+        // Samsaran 9 = 18) -- 37 races / 355 standard racial trait
         // records, re-measured 2026-08-17 by running this binary against
         // the real corpus, not invented.
-        assert_eq!(races, 35, "35 in-scope race chassis records");
-        assert_eq!(traits, 337, "337 standard racial trait records");
+        assert_eq!(races, 37, "37 in-scope race chassis records");
+        assert_eq!(traits, 355, "355 standard racial trait records");
     }
 
     // -----------------------------------------------------------------
@@ -2323,5 +2483,103 @@ mod tests {
         let data = parse_trait(&one_row(&line), "Elf", &no_gates()).unwrap();
         let declared = declared_product_identity_of(&data.raw_tokens);
         assert!(declared.name, "the caller's drop branch depends on this being true");
+    }
+
+    // ----- SD31-E6-F4-007: Changeling's heritage-choice sub-traits -----
+
+    /// The real `Changeling ~ Green Hag Green Widow` row (one of the 3
+    /// hag-mother choices, `changeling_abilities_race.lst:35`) — leads with
+    /// `RacialTraits` but carries no `Changeling Racial Trait` token, so it
+    /// must be recognised as a heritage-choice sub-trait, not a default one.
+    fn changeling_hag_choice_line() -> String {
+        padded_line(&[
+            "Green Widow (Green Hag)",
+            "KEY:Changeling ~ Green Hag Green Widow",
+            "OUTPUTNAME:Green Widow",
+            "CATEGORY:Special Ability",
+            "TYPE:RacialTraits.Hag Racial Trait.SpecialQuality.Special Quality.Applied Bonus",
+            "DESC:The changeling gains a +2 racial bonus on Bluff checks against creatures that are sexually attracted to her.",
+            "BONUS:SITUATION|Bluff=against sexually attracted creatures|2|TYPE=Racial",
+            "SOURCEPAGE:p.xx",
+        ])
+    }
+
+    /// The real `Changeling ~ Hag Racial Trait` grantor row
+    /// (`changeling_abilities_race.lst:31`) — this ALSO leads with
+    /// `RacialTraits` and its `DESC:` even mentions "the following racial
+    /// traits", but it carries `Changeling Racial Trait`/`Changeling Racial
+    /// Default`, so it must NOT be treated as a heritage-choice sub-trait.
+    fn changeling_hag_grantor_line() -> String {
+        padded_line(&[
+            "Hag Racial Trait",
+            "KEY:Changeling ~ Hag Racial Trait",
+            "CATEGORY:Special Ability",
+            "TYPE:RacialTraits.Changeling Racial Trait.Changeling Racial Default.SpecialQuality",
+            "!PREFACT:1,ABILITIES,Changeling_ReplaceHagRacialTrait=True",
+            "DESC:Each changeling inherits one of the following racial traits, depending on her mother's hag type.",
+            "BONUS:ABILITYPOOL|Changeling Hag Racial Trait|1",
+            "SOURCEPAGE:p.xx",
+        ])
+    }
+
+    #[test]
+    fn a_hag_mother_choice_row_is_a_heritage_choice_subtrait() {
+        let row = one_row(&changeling_hag_choice_line());
+        assert!(is_heritage_choice_subtrait(&row, "Changeling"));
+    }
+
+    #[test]
+    fn the_hag_racial_trait_grantor_row_is_not_a_heritage_choice_subtrait() {
+        let row = one_row(&changeling_hag_grantor_line());
+        assert!(!is_heritage_choice_subtrait(&row, "Changeling"));
+    }
+
+    #[test]
+    fn an_ordinary_default_trait_is_not_a_heritage_choice_subtrait() {
+        let row = one_row(&dwarf_greed_line());
+        assert!(!is_heritage_choice_subtrait(&row, "Dwarf"));
+    }
+
+    // ----- SD31-E6-F4-007: Samsaran's non-`ABILITY:` second gate source -----
+
+    /// Samsaran's real `samsaran_abilities_globalvar.lst` line for `Shards
+    /// of the Past`: a `BONUS:ABILITYPOOL` grant, not the `ABILITY:...
+    /// AUTOMATIC...` shape `globalvar_gates` reads.
+    fn samsaran_shards_globalvar_line() -> String {
+        padded_line(&[
+            "CATEGORY=Internal|Racial Traits ~ Samsaran.MOD",
+            "DEFINE:Samsaran_ReplaceShardsOfThePast|0",
+            "BONUS:ABILITYPOOL|Samsaran Shards of the Past Skills|1|PREVAREQ:Samsaran_ReplaceShardsOfThePast,0",
+        ])
+    }
+
+    #[test]
+    fn a_bonus_abilitypool_prevareq_is_read_as_a_gated_flag() {
+        let flags = globalvar_prevareq_flags(&samsaran_shards_globalvar_line());
+        assert!(flags.contains("Samsaran_ReplaceShardsOfThePast"));
+    }
+
+    #[test]
+    fn globalvar_gates_alone_still_misses_the_bonus_abilitypool_shape() {
+        // Documents exactly the gap `globalvar_prevareq_flags` exists to
+        // cover as a fallback: the ABILITY-grant-keyed reader legitimately
+        // finds nothing for this trait key, which is why the caller falls
+        // back rather than this function growing a second responsibility.
+        let gates = globalvar_gates(&samsaran_shards_globalvar_line(), "Samsaran");
+        assert!(!gates.contains_key("Samsaran ~ Shards of the Past"));
+    }
+
+    #[test]
+    fn a_prevareq_1_clause_is_not_read_as_a_suppressor_flag() {
+        // Mirrors `globalvar_gates`'s own `PREVAREQ:<Flag>,1` guard --
+        // a positive requirement is the opposite statement and must not be
+        // read as a gate.
+        let line = padded_line(&[
+            "CATEGORY=Internal|Racial Traits ~ Duergar.MOD",
+            "ABILITY:Duergar Racial Trait|AUTOMATIC|Duergar ~ Spell-Like Ability ~ Enlarge Person\
+             |PREVAREQ:Duergar_ReplaceSLAEnlargePerson,1",
+        ]);
+        let flags = globalvar_prevareq_flags(&line);
+        assert!(!flags.contains("Duergar_ReplaceSLAEnlargePerson"));
     }
 }

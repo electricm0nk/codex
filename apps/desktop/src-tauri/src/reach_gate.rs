@@ -3333,8 +3333,8 @@ mod tests {
         let ingested = corpus_record_keys("advanced_race_guide", "race_trait");
         assert_eq!(
             ingested.len(),
-            332,
-            "ARG's 332 ingested race-trait records, counted on disk (156 -> 201 by SD-31 Epic \
+            350,
+            "ARG's 350 ingested race-trait records, counted on disk (156 -> 201 by SD-31 Epic \
              1-F2, 2026-08-15, Bestiary 2's 6-race batch; 201 -> 259 by SD-31-E6-F4-002, \
              2026-08-16, ingest_races.rs's own 6-race batch of 58 standard-tier records for \
              Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang, sharing this book directory with this \
@@ -3345,10 +3345,13 @@ mod tests {
              4-race follow-on batch of 38 standard-tier records for Gillman/Nagaji/Vanara/\
              Vishkanya; 321 -> 332 by SD31-E6-F4-006, 2026-08-17, ingest_race_traits.rs's own \
              real ARG alternate-trait rows for those same 4 races -- Gillman 5, Nagaji 1, \
-             Vanara 3, Vishkanya 2 = 11)"
+             Vanara 3, Vishkanya 2 = 11; 332 -> 350 by SD31-E6-F4-007, 2026-08-17, \
+             ingest_races.rs's own 2-race follow-on batch of 18 standard-tier records for \
+             Changeling/Samsaran, closing arg_races.lst's full 37-row playable-race roster -- \
+             no alternate-trait batch for these 2, neither race has ARG alternate content)"
         );
         match reach_of(&arg_traits).expect("ARG race traits have a declared claim") {
-            Reach::Surfaced { records, .. } => assert_eq!(records, 332),
+            Reach::Surfaced { records, .. } => assert_eq!(records, 350),
             other => panic!("every ARG race-trait record must reach a player, got {other:?}"),
         }
     }

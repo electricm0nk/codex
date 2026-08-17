@@ -1,0 +1,82 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:34:16Z",
+  "data": {
+    "key": "Samsaran ~ Lifebound",
+    "name": "Lifebound",
+    "race_key": "Samsaran",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Samsaran Racial Trait",
+      "Samsaran Racial Default",
+      "SpecialQuality",
+      "Special Quality",
+      "Extraordinary"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Samsaran_ReplaceLifebound",
+    "sets_replace_flags": [],
+    "description": "Samsarans gain a +2 racial bonus on all saving throws to resist death effects, saving throws against negative energy effects, Fortitude saves to remove negative levels, and Constitution checks to stabilize if reduced to negative hit points.",
+    "source_page": "p.198",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Samsaran ~ Lifebound"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Samsaran Racial Trait.Samsaran Racial Default.SpecialQuality.Special Quality.Extraordinary"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Samsaran_ReplaceLifebound=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Samsarans gain a +2 racial bonus on all saving throws to resist death effects, saving throws against negative energy effects, Fortitude saves to remove negative levels, and Constitution checks to stabilize if reduced to negative hit points."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.198"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+2 racial bonus on Constitution checks to stabilize if reduced to negative hit points."
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 racial bonus on all saving throws to resist death effects, saving throws against negative energy effects, and Fortitude saves to remove negative levels."
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "SaveBonus_vs_DeathEffects,SaveBonus_vs_NegativeEnergy,FortSave_vs_NegativeLevels",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/samsaran/samsaran_abilities_race.lst",
+    "sha256": "70da33c402699e1d2fcaa92aa5b5704d73c07e9fcaf0bf49925f5062637b7278",
+    "line": 19,
+    "record_key": "Samsaran ~ Lifebound"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -982,12 +982,14 @@ mod tests {
         let menu = menu();
         assert_eq!(
             menu.races.len(),
-            35,
-            "35 in-scope races: decisions.md §25.3's original 18 + SD-31 Epic 1-F2's \
+            37,
+            "37 in-scope races: decisions.md §25.3's original 18 + SD-31 Epic 1-F2's \
              Bestiary 2 batch of 6 (2026-08-15) + the Skinwalker follow-on batch's 1 + \
              SD-31-E6-F4-002's Advanced Race Guide batch of 6 (2026-08-16: Catfolk, Kitsune, \
              Ratfolk, Strix, Suli, Wayang) + SD31-E6-F4-004's Advanced Race Guide follow-on \
-             batch of 4 (2026-08-17: Gillman, Nagaji, Vanara, Vishkanya)"
+             batch of 4 (2026-08-17: Gillman, Nagaji, Vanara, Vishkanya) + SD31-E6-F4-007's \
+             Advanced Race Guide follow-on batch of 2 (2026-08-17: Changeling, Samsaran -- \
+             closing `arg_races.lst`'s full 37-row playable-race roster)"
         );
         let total: usize = menu.races.iter().map(|race| race.alternates.len()).sum();
         assert_eq!(
@@ -1871,9 +1873,16 @@ mod tests {
         // real ARG alternate-trait rows land -- 8 more menu rows
         // (349 -> 357; `standard` unmoved, this cycle wrote no
         // chassis/standard-tier content).
-        assert_eq!((standard, alternates), (335, 357));
+        // SD31-E6-F4-007 (2026-08-17) adds the last 2 of ARG's own races
+        // (Changeling, Samsaran), closing `arg_races.lst`'s full 37-row
+        // playable-race roster: 2 more `race`/ chassis and 18 more standard
+        // rows (335 -> 353). `alternates` is unchanged (357) -- neither
+        // race has any ARG alternate-trait content to ingest (re-derived:
+        // `grep -c '^Changeling ~\|^Samsaran ~'
+        // advanced_race_guide/arg_abilities_race.lst` -> 0).
+        assert_eq!((standard, alternates), (353, 357));
         assert_eq!(checked, standard + alternates);
-        assert_eq!(checked, 692);
+        assert_eq!(checked, 710);
 
         // What rendering changed for a player *with no character*, measured
         // against the stored `data.description` this module used to transcribe.

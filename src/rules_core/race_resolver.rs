@@ -940,6 +940,10 @@ const RACE_SIZES: &[(&str, SizeCategory)] = &[
     ("Nagaji", SizeCategory::Medium),      // TEMPLATE:SIZE_M
     ("Vanara", SizeCategory::Medium),      // TEMPLATE:SIZE_M
     ("Vishkanya", SizeCategory::Medium),   // TEMPLATE:SIZE_M
+    // Advanced Race Guide's 2-race follow-on, SD31-E6-F4-007 (2026-08-17),
+    // closing `arg_races.lst`'s full 37-row playable-race roster.
+    ("Changeling", SizeCategory::Medium),  // TEMPLATE:SIZE_M
+    ("Samsaran", SizeCategory::Medium),    // TEMPLATE:SIZE_M
 ];
 
 /// Creature size for a loose race identifier — a `race:<slug>` character-input
@@ -1838,11 +1842,13 @@ mod tests {
         let corpus = all_books();
         assert_eq!(
             corpus.race_keys().len(),
-            35,
-            "35 in-scope races: CRB 7 + Bestiary 1's 11 + Bestiary 2's 6 + Bestiary 5's 1 \
-             (Skinwalker, chassis + standard tier only) + Advanced Race Guide's 10 \
+            37,
+            "37 in-scope races: CRB 7 + Bestiary 1's 11 + Bestiary 2's 6 + Bestiary 5's 1 \
+             (Skinwalker, chassis + standard tier only) + Advanced Race Guide's 12 \
              (SD-31-E6-F4-002, 2026-08-16: Catfolk, Kitsune, Ratfolk, Strix, Suli, Wayang; \
-             SD31-E6-F4-004, 2026-08-17: Gillman, Nagaji, Vanara, Vishkanya)"
+             SD31-E6-F4-004, 2026-08-17: Gillman, Nagaji, Vanara, Vishkanya; SD31-E6-F4-007, \
+             2026-08-17: Changeling, Samsaran -- the full `arg_races.lst` 37-row playable-race \
+             roster, closed)"
         );
         assert_eq!(corpus.chassis("Dwarf").expect("Dwarf").book_id, "core_rulebook");
         assert_eq!(corpus.chassis("Tengu").expect("Tengu").book_id, "beastiary");
@@ -1854,7 +1860,9 @@ mod tests {
         // worked example): it now declares 6 races of its own (Catfolk,
         // Kitsune, Ratfolk, Strix, Suli, Wayang). SD31-E6-F4-004
         // (2026-08-17) added 4 more (Gillman, Nagaji, Vanara, Vishkanya),
-        // so the assertion is exactly these 10 expected chassis.
+        // and SD31-E6-F4-007 (2026-08-17) added the last 2 (Changeling,
+        // Samsaran), closing `arg_races.lst`'s full 37-row roster -- so the
+        // assertion is exactly these 12 expected chassis.
         let arg_chassis: BTreeSet<&str> = corpus
             .chassis
             .values()
@@ -1864,10 +1872,10 @@ mod tests {
         assert_eq!(
             arg_chassis,
             BTreeSet::from([
-                "Catfolk", "Gillman", "Kitsune", "Nagaji", "Ratfolk", "Strix", "Suli", "Vanara",
-                "Vishkanya", "Wayang"
+                "Catfolk", "Changeling", "Gillman", "Kitsune", "Nagaji", "Ratfolk", "Samsaran",
+                "Strix", "Suli", "Vanara", "Vishkanya", "Wayang"
             ]),
-            "ARG must contribute exactly this batch's 10 race chassis, no more, no fewer"
+            "ARG must contribute exactly this batch's 12 race chassis, no more, no fewer"
         );
     }
 
@@ -2161,7 +2169,13 @@ mod tests {
         // 297 -> 335 by SD31-E6-F4-004 (2026-08-17): Advanced Race Guide's
         // 4-race follow-on batch (Gillman, Nagaji, Vanara, Vishkanya) adds
         // 38 new standard rows, same flat shape, no heritage content.
-        assert_eq!(count(TraitRole::Default), 335);
+        // 335 -> 353 by SD31-E6-F4-007 (2026-08-17): Advanced Race Guide's
+        // 2-race follow-on batch (Changeling, Samsaran) adds 18 new
+        // standard rows, closing `arg_races.lst`'s full 37-row roster --
+        // Changeling's 3 hag-mother heritage-choice sub-traits are
+        // deliberately excluded (`ingest_races.rs`'s
+        // `is_heritage_choice_subtrait`), not silently absorbed here.
+        assert_eq!(count(TraitRole::Default), 353);
         // 153 ARG + Monster Codex's 4 + the Advanced Player's Guide's 1
         // (`Half-Orc ~ Plagueborn`) + Inner Sea Races' 67 + Horror
         // Adventures' 41, all landed by SD-29's race-trait lane, + SD-31
@@ -2235,7 +2249,7 @@ mod tests {
         assert_eq!(count(TraitRole::Unclassified), 2);
         assert_eq!(
             corpus.traits.values().flatten().count(),
-            768,
+            786,
             "175 standard + 156 ARG + 5 Monster Codex + 1 APG + 71 Inner Sea Races \
              + 43 Horror Adventures + 64 Core Essentials heritage records (16 heritages \
              + the 48 replacement rows they grant) + SD-31 Epic 1-F2's 113 (57 standard \
@@ -2248,7 +2262,11 @@ mod tests {
              + SD31-E6-F4-004's Advanced Race Guide follow-on batch of 38 standard-tier \
              rows (2026-08-17: Gillman, Nagaji, Vanara, Vishkanya; 719 -> 757) + \
              SD31-E6-F4-006's own 11-record alternate-trait batch for those same 4 races \
-             (2026-08-17: 8 alternates + 3 grant-linked rows; 757 -> 768)"
+             (2026-08-17: 8 alternates + 3 grant-linked rows; 757 -> 768) + SD31-E6-F4-007's \
+             Advanced Race Guide follow-on batch of 18 standard-tier rows (2026-08-17: \
+             Changeling 9, Samsaran 9; 768 -> 786), closing `arg_races.lst`'s full 37-row \
+             playable-race roster -- no new alternate-trait batch, neither race has any ARG \
+             alternate content"
         );
     }
 
@@ -2641,10 +2659,12 @@ mod tests {
         let corpus = all_books();
         assert_eq!(
             RACE_SIZES.len(),
-            35,
+            37,
             "18 original + SD-31 Epic 1-F2's Bestiary 2 batch of 6 + the Skinwalker follow-on \
              batch + SD-31-E6-F4-002's Advanced Race Guide batch of 6 (2026-08-16) + \
-             SD31-E6-F4-004's Advanced Race Guide follow-on batch of 4 (2026-08-17)"
+             SD31-E6-F4-004's Advanced Race Guide follow-on batch of 4 (2026-08-17) + \
+             SD31-E6-F4-007's Advanced Race Guide follow-on batch of 2 (2026-08-17: \
+             Changeling, Samsaran), closing `arg_races.lst`'s full 37-row roster"
         );
         for key in corpus.race_keys() {
             let resolved = corpus.resolve(key, &[]).expect("resolves");
