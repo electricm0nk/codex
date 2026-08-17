@@ -1,0 +1,41 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:26:26Z",
+  "data": {
+    "corpus_key": "Rock Throwing",
+    "delivery": "Extraordinary",
+    "description": "You are an accomplished rock thrower and have a +1 racial bonus on attack rolls with thrown rocks. A creature can hurl rocks up to two categories smaller than its size. A \"rock\" is any large, bulky, and relatively regularly shaped object made of any material with a hardness of at least 5. The creature can hurl the rock up to five range increments. Damage from a thrown rock is generally twice your base slam damage plus 1-1/2 your Strength bonus.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:rock_throwing",
+    "name": "Rock Throwing",
+    "owners": [
+      "beastiary:monster:giant_cloud",
+      "beastiary:monster:giant_fire",
+      "beastiary:monster:giant_frost",
+      "beastiary:monster:giant_hill",
+      "beastiary:monster:giant_stone",
+      "beastiary:monster:treant"
+    ],
+    "source_page": "p.303",
+    "traits": [
+      "AttackOption"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1511,
+    "record_key": "Rock Throwing"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "derived:bonus"
+  ]
+}

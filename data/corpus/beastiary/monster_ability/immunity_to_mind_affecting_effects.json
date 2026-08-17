@@ -1,0 +1,42 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:26:26Z",
+  "data": {
+    "corpus_key": "Immunity to Mind-Affecting Effects",
+    "delivery": "Extraordinary",
+    "description": "You are never affected by mind-affecting effects (charms, compulsions, phantasms, patterns, and morale effects).",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:immunity_to_mind_affecting_effects",
+    "name": "Immunity to Mind-Affecting Effects",
+    "owners": [
+      "beastiary:monster:intellect_devourer",
+      "beastiary:monster:kraken",
+      "beastiary:monster:linnorm_crag",
+      "beastiary:monster:linnorm_ice",
+      "beastiary:monster:linnorm_tarn",
+      "beastiary:monster:mantis_giant",
+      "beastiary:monster:slug_giant",
+      "beastiary:monster:tarrasque"
+    ],
+    "source_page": "p.301",
+    "traits": [
+      "Immunity"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1415,
+    "record_key": "Immunity to Mind-Affecting Effects"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

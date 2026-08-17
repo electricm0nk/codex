@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:26:27Z",
+  "data": {
+    "corpus_key": "Cacodaemon ~ Disease",
+    "delivery": "Supernatural",
+    "description": "Cacodaemonia- Bite - injury; save Fort DC %1; onset 1 day; frequency 1/day; effect 1d2 Wis damage, cure 2 consecutive saves.  In addition to the normal effects of the disease, as long as a victim is infected, the cacodaemon can telepathically communicate with the creature over any distance (as long as they remain on the same plane).",
+    "description_variables": [
+      "CacodaemonDiseaseDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:cacodaemon_disease",
+    "name": "Disease",
+    "owners": [
+      "bestiary_2:monster:daemon_cacodaemon"
+    ],
+    "source_page": "p.64",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 2033,
+    "record_key": "Cacodaemon ~ Disease"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:26:26Z",
+  "data": {
+    "corpus_key": "Ooze Traits Output",
+    "delivery": "Extraordinary",
+    "description": "Oozes are not subject to critical hits or flanking and do not take additional damage from precision-based attacks, such as sneak attack. Oozes eat and breathe, but do not sleep.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:ooze_traits_output",
+    "name": "Ooze Traits Output",
+    "owners": [
+      "beastiary:monster:shoggoth"
+    ],
+    "source_page": "p.309",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1749,
+    "record_key": "Ooze Traits Output"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

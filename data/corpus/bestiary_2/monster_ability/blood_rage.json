@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:26:27Z",
+  "data": {
+    "corpus_key": "Blood Rage",
+    "delivery": "Extraordinary",
+    "description": "When the creature takes damage in combat, on its next turn it can fly into a rage as a free action.  It gains +2 Constitution and +2 Strength, but takes a -2 penalty on AC.  The rage lasts as long as the battle or 1 minute, whichever is shorter.  It cannot end its rage voluntarily.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:blood_rage",
+    "name": "Blood Rage",
+    "owners": [
+      "bestiary_2:monster:badger",
+      "bestiary_2:monster:badger_dire"
+    ],
+    "source_page": "p.294",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1856,
+    "record_key": "Blood Rage"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:tempbonus"
+  ]
+}

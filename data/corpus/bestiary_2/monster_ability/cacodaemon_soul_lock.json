@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:26:27Z",
+  "data": {
+    "corpus_key": "Cacodaemon ~ Soul Lock",
+    "delivery": "Supernatural",
+    "description": "Once per day as a full-round action, a cacodaemon can ingest the spirit of any sentient creature that has died within the last minute.  This causes a soul gem to grow inside of the cacodaemon's gut, which it can regurgitate as a standard action.  A soul gem is a fine-sized object with 1 hit point and hardness 2.  Destroying a soul gem frees the soul within, though it does not return the deceased creature to life.  Any attempt to resurrect a body whose soul is trapped in a soul gem requires a DC %1 caster check.  Failure results in the spell having no effect, while success shatters the victim's soul gem and returns the creature to life as normal.  If the soul gem rests in an unholy location, such as that created by the spell unhallow, the DC of this caster level check increases by +2.  Any evil outsider can, as a standard action, ingest a soul gem.  Doing so frees the soul within, but condemns it to one of the lower planes (though the soul can be returned to life as normal).  The outsider gains fast healing 2 for a number of rounds equal to its Hit Dice.",
+    "description_variables": [
+      "CacodaemonSoulLockCasterLevelCheck"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:cacodaemon_soul_lock",
+    "name": "Soul Lock",
+    "owners": [
+      "bestiary_2:monster:daemon_cacodaemon"
+    ],
+    "source_page": "p.64",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 2034,
+    "record_key": "Cacodaemon ~ Soul Lock"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

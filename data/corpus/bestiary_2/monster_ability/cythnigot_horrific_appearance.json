@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:26:27Z",
+  "data": {
+    "corpus_key": "Cythnigot ~ Horrific Appearance",
+    "delivery": "Supernatural",
+    "description": "Creatures that succumb to a Cythnigot's horrific appearance become sickened for 1 round - a Cythnigot's horrific appearance only functions to a range of 10 feet.  Once a creature makes a saving throw against a particular Cythnigot's horrific appearance, that creature is immune to the horrific appearance of all Cythnigots for 24 hours.  A spellcaster that has a Cythnigot as a familiar is immune to the horrific appearance of all Cythnigots, and also gains a +4 bonus on saving throws made against any qlippoth's horrific appearance.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:cythnigot_horrific_appearance",
+    "name": "Horrific Appearance",
+    "owners": [
+      "bestiary_2:monster:qlippoth_cythnigot"
+    ],
+    "source_page": "p.221",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 2045,
+    "record_key": "Cythnigot ~ Horrific Appearance"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

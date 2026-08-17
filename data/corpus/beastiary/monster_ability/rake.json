@@ -1,0 +1,41 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:26:26Z",
+  "data": {
+    "corpus_key": "Rake",
+    "delivery": "Extraordinary",
+    "description": "You gain extra natural attacks under certain conditions, typically when you grapple foes. In addition to the options available to all grapplers, a monster with the rake ability gains two additional claw attacks that it can use only against a grappled foe. A monster with the rake ability must begin its turn already grappling to use its rake--it can't begin a grapple and rake in the same turn.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:rake",
+    "name": "Rake",
+    "owners": [
+      "beastiary:monster:behir",
+      "beastiary:monster:cat_leopard",
+      "beastiary:monster:griffon",
+      "beastiary:monster:lion_dire",
+      "beastiary:monster:tiger",
+      "beastiary:monster:tiger_dire",
+      "beastiary:monster:wyvern"
+    ],
+    "source_page": "p.303",
+    "traits": [
+      "AttackOption"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1469,
+    "record_key": "Rake"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

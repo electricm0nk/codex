@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:26:27Z",
+  "data": {
+    "corpus_key": "Mud Elemental ~ Entrap",
+    "delivery": "Extraordinary",
+    "description": "The mud from an elemntal's entrap ability can be washed away in 1d3 rounds of immersion in water.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:mud_elemental_entrap",
+    "name": "Entrap",
+    "owners": [
+      "bestiary_2:monster:elemental_mud_small",
+      "bestiary_2:monster:elemental_mud_medium",
+      "bestiary_2:monster:elemental_mud_large",
+      "bestiary_2:monster:elemental_mud_huge",
+      "bestiary_2:monster:elemental_mud_greater",
+      "bestiary_2:monster:elemental_mud_elder"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 2139,
+    "record_key": "Mud Elemental ~ Entrap"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

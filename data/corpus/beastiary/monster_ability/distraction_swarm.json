@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:26:26Z",
+  "data": {
+    "corpus_key": "Distraction ~ Swarm",
+    "delivery": "Extraordinary",
+    "description": "You can nauseate creatures that you damage. Any living creature that takes damage from you is nauseated for 1 round; a Fortitude save (DC %1) negates the effect.",
+    "description_variables": [
+      "DistractionDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:distraction_swarm",
+    "name": "Distraction",
+    "owners": [
+      "beastiary:monster:centipede_swarm"
+    ],
+    "source_page": "p.299",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1356,
+    "record_key": "Distraction ~ Swarm"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

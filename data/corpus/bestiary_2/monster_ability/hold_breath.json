@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:26:27Z",
+  "data": {
+    "corpus_key": "Hold Breath",
+    "delivery": "Extraordinary",
+    "description": "The creature can hold its breath for %1 minutes before it risks drowning.",
+    "description_variables": [
+      "6*CONSCORE"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:hold_breath",
+    "name": "Hold Breath",
+    "owners": [
+      "bestiary_2:monster:cockroach_giant",
+      "bestiary_2:monster:cockroach_giant_hissing",
+      "bestiary_2:monster:cockroach_venomroach",
+      "bestiary_2:monster:cockroach_spitting",
+      "bestiary_2:monster:cockroach_sawback",
+      "bestiary_2:monster:cockroach_dragonroach",
+      "bestiary_2:monster:cockroach_swarm",
+      "bestiary_2:monster:hippopotamus",
+      "bestiary_2:monster:hippopotamus_behemoth",
+      "bestiary_2:monster:turtle_snapping",
+      "bestiary_2:monster:turtle_giant_snapping",
+      "bestiary_2:monster:whale",
+      "bestiary_2:monster:whale_great_white"
+    ],
+    "source_page": "p.298",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1888,
+    "record_key": "Hold Breath"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

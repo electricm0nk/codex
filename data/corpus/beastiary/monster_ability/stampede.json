@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:26:26Z",
+  "data": {
+    "corpus_key": "Stampede",
+    "delivery": "Extraordinary",
+    "description": "A stampede occurs if three or more creatures with stampede make a trample attack while remaining adjacent to each other. While stampeding, the creatures can trample foes of their size or smaller, and the trample's save DC increases by +2.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:stampede",
+    "name": "Stampede",
+    "owners": [
+      "beastiary:monster:herd_animal_aurochs",
+      "beastiary:monster:herd_animal_bison"
+    ],
+    "source_page": "p.174",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1564,
+    "record_key": "Stampede"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

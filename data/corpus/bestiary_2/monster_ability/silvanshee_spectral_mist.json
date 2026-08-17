@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:26:27Z",
+  "data": {
+    "corpus_key": "Silvanshee ~ Spectral Mist",
+    "delivery": "Supernatural",
+    "description": "A silvanshee can assume an eerie, mist-like form roughly the size and shape of a cat.  This ability has the same effect as a gaseous form spell, except the silvanshee retains its own DR and supernatural abilities and can move at its normal speed.  It can remain in mist form up to 5 minutes per day.  This duration does not have to be consecutive, but it must be used in 1-minute increments.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:silvanshee_spectral_mist",
+    "name": "Spectral Mist",
+    "owners": [
+      "bestiary_2:monster:agathion_silvanshee"
+    ],
+    "source_page": "p.21",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 2151,
+    "record_key": "Silvanshee ~ Spectral Mist"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

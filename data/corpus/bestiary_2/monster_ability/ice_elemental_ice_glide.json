@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:26:27Z",
+  "data": {
+    "corpus_key": "Ice Elemental ~ Ice Glide",
+    "delivery": "Supernatural",
+    "description": "A burrowing ice elemental can pass through nonmagical ice and snow as easily as a fish swims through water.  Its burrowing leaves behind no tunnel or hole, nor does it create any ripple or other sign of its presence.  A control water spell cast on an area containing a burrowing ice elemental flings the elemental back 30 feet, stunning the creature for 1 round unless it succeeds on a DC 15 Fortitude save.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:ice_elemental_ice_glide",
+    "name": "Ice Glide",
+    "owners": [
+      "bestiary_2:monster:elemental_ice_small",
+      "bestiary_2:monster:elemental_ice_medium",
+      "bestiary_2:monster:elemental_ice_large",
+      "bestiary_2:monster:elemental_ice_huge",
+      "bestiary_2:monster:elemental_ice_greater",
+      "bestiary_2:monster:elemental_ice_elder"
+    ],
+    "source_page": "p.114",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 2118,
+    "record_key": "Ice Elemental ~ Ice Glide"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

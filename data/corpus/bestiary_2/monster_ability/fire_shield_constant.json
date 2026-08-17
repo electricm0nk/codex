@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:26:27Z",
+  "data": {
+    "corpus_key": "Fire Shield ~ Constant",
+    "delivery": "SpellLike",
+    "description": "You can use Fire Shield, as per the spell, as a constant ability. Constant spell-like abilities function at all times but can be dispelled. Constant spell-like abilities can be reactivated as a swift action.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:fire_shield_constant",
+    "name": "Fire Shield",
+    "owners": [
+      "bestiary_2:monster:devil_immolation"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 2238,
+    "record_key": "Fire Shield ~ Constant"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:spells"
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:26:26Z",
+  "data": {
+    "corpus_key": "Trample",
+    "delivery": "Extraordinary",
+    "description": "As a full-round action, you can attempt to overrun any creature that is at least one size category smaller than yourself. This works just like the overrun combat maneuver, but the trampling creature does not need to make a check, it merely has to move over opponents in its path. Targets of a trample take %1d%2+%3 points of damage. Targets of a trample can make an attack of opportunity, but at a -4 penalty. If targets forgo an attack of opportunity, they can attempt to avoid the trampling creature and receive a Reflex (DC %4) save to take half damage. You can only deal trampling damage to each target once per round, no matter how many times its movement takes it over a target creature.",
+    "description_variables": [
+      "TrampleDamageDice",
+      "TrampleDamageDieSize",
+      "TrampleDamageBonus",
+      "TrampleDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:trample",
+    "name": "Trample",
+    "owners": [
+      "beastiary:monster:beetle_giant_stag",
+      "beastiary:monster:dinosaur_brachiosaurus",
+      "beastiary:monster:dinosaur_triceratops",
+      "beastiary:monster:elephant",
+      "beastiary:monster:elephant_mastodon",
+      "beastiary:monster:gorgon",
+      "beastiary:monster:herd_animal_aurochs",
+      "beastiary:monster:herd_animal_bison",
+      "beastiary:monster:rhinoceros_woolly",
+      "beastiary:monster:shoggoth",
+      "beastiary:monster:treant"
+    ],
+    "source_page": "p.305",
+    "traits": [
+      "AttackOption"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1532,
+    "record_key": "Trample"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}
