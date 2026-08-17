@@ -22,14 +22,15 @@ column.
 
 ## Needs an operator ruling
 
-**Quick-reference summary, refreshed 2026-08-17 by `SD31-W11-INTEGRATE-001` — full detail below each
+**Quick-reference summary, refreshed 2026-08-17 by `SD31-W12-INTEGRATE-001` — full detail below each
 pointer, this is only the one-line index:**
 - **PI, public feed (rows 141/149)** — 261 declared-PI unit names would ship in `site/dashboard/units/`
   if that shard directory is ever committed (not committed this wave either); 56 more candidate names
-  ship today in the top-level `PF1e-dashboard.json` roadmap manifest. Redaction rule undecided.
+  ship today in the top-level `PF1e-dashboard.json` roadmap manifest, RE-VERIFIED STILL PRESENT this
+  wave. Redaction rule undecided.
 - **Race attribution (row 140, evidence at `SD31-ATTRIB-003-race-evidence.md`)** — 16 races (7 CRB + 9
   Bestiary 4) sit on the board under Inner Sea Races purely by citation, not original publication.
-  FROZEN pending this ruling; do not move any race's book.
+  FROZEN pending this ruling; do not move any race's book. Untouched this wave.
 - **Row 55 — spell Structural Exclusion Register proposal** — 13 `spell` `not-ingested` units within
   the engine's 5-modelled-effect ceiling, PROPOSED for exclusion, NOT applied. Denominator unaffected
   either way until ruled on.
@@ -37,6 +38,12 @@ pointer, this is only the one-line index:**
   `NAMEISPI:YES` in one printing (`ultimate_equipment`), ships unscreened from a second printing
   (`advanced_race_guide`) whose own row is silent. Does a PI declaration in ANY printing bind every
   printing of the same name? Not acted on unilaterally this wave.
+- **Row 205 — `mod_only_rescue` 249-unit feat-kind phantom-duplicate population (new this wave)** —
+  every `feat`-kind unit with `origin=mod_only` (249, zero exceptions) is a provable cross-kind
+  duplicate of a REAL unit already counted under its correct kind (race_trait 231, monster_ability 18,
+  class_feature 2, companion 2). PROPOSED fix (broaden the existence check across all kinds, not just
+  the file's own nominal kind) would shrink `feat` 2,610 -> ~2,361 and the board denominator
+  38,521 -> ~38,272 (-0.65pp). NOT applied — same propose-then-rule pathway as Decision 9/10.
 
 **MOST URGENT, PRECEDENCE-1, PI — rows 141/149, 2026-08-16, `SD31-W8-INTEGRATE-001`.** Two public-feed
 exposures on `site/dashboard/`, the ONE surface `deploy-site.yml` deploys to Cloudflare Pages on every

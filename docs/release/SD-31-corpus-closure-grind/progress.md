@@ -22206,3 +22206,365 @@ targets, not evidence the box is clean.
 
 Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
 Claude-Session: https://claude.ai/code/session_012LQjhfcbAEBt6SiquQXEAE
+
+## Cycle `SD31-W12-INTEGRATE-001` (`RETRO_ACTOR=sd31-w12-integrate`) — 2026-08-17, wave-12 integration: merge six lanes, fix a confirmed PI exposure and a confirmed wrongly-credited-units defect, guarded regen, full gate
+
+**Role:** `sd31-w12-integrate`, primary checkout `/home/ubuntu/workspace/repos/codex`, branch
+`tranche/11`. **Starting HEAD:** `b8699a29ddd509b44e69c93efa81edc96f2698aa` (descends from
+`SD31-W11-INTEGRATE-001`'s own tip `50d36f3b2`, confirmed by `git log`). **Oracle:**
+`./scripts/verify.sh --only preflight-oracle` → PASS, `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
+(matches `scripts/pcgen-oracle-pin.env` and the live `~/workspace/repos/pcgen` HEAD).
+
+### §1 — Six-lane merge
+
+`git fetch origin` then, per lane, `git log --oneline origin/tranche/11..<branch>` to verify real
+unmerged content before merging (never trusted branch status alone):
+
+1. `sd31/pool-consumers/SD31-E4-F2-003` @ `32a874bf6` — 3 commits, real (Barbarian Superstition
+   rage power wiring). Clean merge, no conflicts.
+2. `sd31/feat-matcher-SD31-E6-F8-003` @ `4836f642e` — 2 commits, real (`mod_only_rescue` 249-unit
+   phantom-duplicate trace + 2-book feat gap lane). Conflict in `progress.md` (both lanes' appended
+   receipts — kept both, HEAD's first). OPEN-ISSUES row-204 collision — pool-consumers' row (NOTE)
+   kept 204, feat-matcher's row (RULING-NEEDED) renumbered to 205.
+3. `sd31/racetrait5-SD31-E6-F4-006` @ `41f4e0421` — 5 commits, real (11 new race_trait records +
+   the load-only-evidence audit). Conflicts in `OPEN-ISSUES.md` and `progress.md` — kept both
+   sides, racetrait5's rows 204/205 renumbered to 206/207.
+4. `worktree-wf_091c1ff2-4bf-3` (transcription, `SD31-E6-F9-005`) @ `14691c5ad7` — 8 commits, real
+   (168 new `monster_ability` records across beastiary/bestiary_2, a wholesale-regen data-loss
+   hazard fix, a `WiringClassIndex` fix). Conflicts in both shared docs — kept both, this lane's 5
+   rows (204-208) renumbered to 208-212.
+5. `sd31/equip-class4/SD31-E6-F10-004` @ `ac1f959fb` — 3 commits, real (5 more equipment books,
+   481 new records). Conflicts in both shared docs — kept both, this lane's 5 rows (204-208)
+   renumbered to 213-217.
+6. `sd31/spell3-E6-F2-009` @ `442ee48c4` — 3 commits, real (2 tautological mutation-proof test
+   fixes, a spell `.COPY=` ingest gap characterized). Conflicts in both shared docs — kept both,
+   this lane's 1 row (204) renumbered to 218.
+
+No lane was null this wave — all six had real, verified unmerged content. `cache_gen/mod.rs` and
+`reach_gate.rs`'s registration lists merged additively with no conflicts (git's own auto-merge).
+No branch had committed `docs/work-inventory.json` (checked per lane before merging). All six merge
+commits pushed to `origin/tranche/11` immediately after landing, per the "land incrementally"
+instruction.
+
+### §2 — Confirmed findings fixed, precedence order
+
+**Precedence 1, PI — fixed and verified gone from disk.** `enrich_equipment_raw_tokens.rs` (the
+only writer of shipped `raw_tokens` on equipment records) had no PI screening at all. 28
+`inner_sea_gods` records (equip-class4's own new content) shipped a blacklisted deity/place name
+verbatim in `raw_tokens` while `description` was correctly redacted, under `license: "OGL"`,
+`pi_field: null`. Fixed in the production path: `declared_product_identity` now reads the raw
+tab-separated line directly (the parsed `EquipmentToken` list's `KNOWN_TAGS` allowlist excludes
+`NAMEISPI:`/`DESCISPI:` entirely, so reading from it would have missed every declaration),
+`classify_field`'s blacklist scan runs on every token key, not just `DESC`. 8 tests
+(`cargo test --locked --bin enrich_equipment_raw_tokens`, all pass), including 2 end-to-end tests
+driving `enrich_one` itself against the confirmed defect shape. `gen_equipment_gap_tables.rs`'s
+"Mutation proof" test was ALSO confirmed unable to fail (its own local `fn screen` re-implementation
+never called production code) — extracted the real per-record screen into
+`screen_record`/`ScreenOutcome`, called by both `main()` and the test; MUTATION-VERIFIED by hand:
+reverted `screen_record` to a no-op, 2 of 4 `blacklist_screen_tests` went RED (`a_declared_name_hit_
+excludes_even_with_no_blacklist_term`, `production_logic_excludes_a_blacklisted_name_and_redacts_a_
+blacklisted_description`), then reverted the mutation and confirmed all 22 tests green again.
+
+Remediated all 28 already-shipped records in place (a targeted, surgical fix — not a
+`data/corpus/` wholesale regen): blacklist-term hits in `raw_tokens`/`raw_bonus_chains` redacted to
+`[redacted PI]`; `license`/`pi_field`/`pi_marker` corrected from `OGL`/`null`/`null` to
+`PI-REDACTED`/`description`/`redacted` where `description` was already redacted but the metadata
+had drifted (root cause: `gen_equipment_gap_tables.rs`'s blacklist redaction happens INSIDE the
+compiled table, before `cache_gen/equipment_gap.rs`'s own `classify_optional_field_declared` screen
+ever sees the un-redacted text — not fixed at that root this cycle, logged as a follow-up,
+`OPEN-ISSUES.md` row 219). `data/corpus/inner_sea_gods/LICENSE.json`'s `records_redacted` restated
+5 → 33, which was necessary to keep `tests/sd27_book_license_record_counts.rs` green (it correctly
+caught the metadata change and failed until the count was restated — confirmed by seeing it fail
+first, then fixing the file, not by pre-emptively guessing).
+
+**Verified gone from disk**, not merely asserted: `cargo run --locked --bin corpus_literal_sweep`
+re-run after the fix → `clean: true`, 25655 examined, 0 findings (the redacted tokens are correctly
+exempted by `corpus_literal_sweep.rs`'s pre-existing `pi_redacted_description` / `classify_field`
+exemption logic, now that the record-level `license` metadata is consistent with the redaction).
+Independent Python re-scan of every equipment/equipment_modifier `raw_tokens` value corpus-wide
+against the 62-term `PI_BLACKLIST_TERMS` list, byte-identical to `pi_screening.rs`: 0 hits remaining
+after the fix (was 41 hits over 28 files before).
+
+**Scope note, not remediated**: a DIFFERENT-shaped raw_tokens leak was found while sweeping
+corpus-wide for the row-219 shape — `class_feature`/`spell` kinds carry ~150 blacklist-term hits,
+entirely in structural fields (KEY/TYPE/PREMULT/ABILITY/PREDEITY/DEFINE/BONUS/AUTO/PRETEXT/SPELLS/
+SOURCELINK), zero in DESC. Several are false positives (a term appearing as a substring of an
+unrelated identifier, e.g. `"Galt"` inside `KEY:`/`TYPE:` values for `galtan_agitator`'s
+class_feature records — a real archetype name, not a nation reference). NOT remediated: blind
+redaction of a KEY field would corrupt record identity, and this equipment-scoped fix's blacklist
+redaction is not safe to apply blindly to an identifier field. Logged `OPEN-ISSUES.md` row 220 for
+the owning kind's own PI-screening pass.
+
+**Precedence 2, units credited on insufficient evidence — demoted, not argued.** Two CONFIRMED
+defects in `v06_work_inventory.rs`'s `Kind::RaceTrait` verdict branch:
+
+1. `!universal_sheet_modifier` (Decision 7 REFINED) was checked ONLY inside the `text_only` arm. A
+   REAL universal magnitude record (`MOVE:Walk,30`, not `text_only` at all) walked straight past it
+   to `grounded`, which for `computed` wiring_class IS unconditional board `done`
+   (`doneness_verdict`: `computed`+`grounded` → `done`, no other condition consulted). Live
+   instances: `advanced_race_guide:race_trait:throwback_gillman_speed`,
+   `advanced_race_guide:race_trait:tree_stranger_vanara_speed` (both racetrait5's own new records).
+2. `race_trait_applied_by_the_race_corpus_the_app_loads` was a LOAD observation (`role !=
+   Unclassified`), never a consumer-delta observation — the identical "credit resting on a
+   different record's computation" shape wave 11 found, one axis over.
+
+Fixed: new `pub fn race_ids_with_a_magnitude_consumer()` in `pilot_compute/mod.rs`, DERIVED (not
+hand-duplicated, following this program's own "a measurement, not a selection" standard) from the
+union of the 7 CRB `explain_<race>_race_seam` functions (pinned by a self-verifying test that
+counts them via `include_str!`, so a future race gaining/losing a seam function fails a test rather
+than silently drifting), `ALTERNATE_TRAIT_SAVE_BONUSES`'s and `ALTERNATE_TRAIT_SELECTED_SKILL_
+BONUSES`'s own race-id columns, and `SIZE_ONLY_RACE_TRAIT_BUNDLE`'s 4 races — 13 races total,
+matching adversarial review's own `grep -oE '"race:[a-z_-]+"'` verification exactly (4 new tests in
+`pilot_compute/mod.rs`, all passing, including an explicit "Gillman/Vanara/Nagaji/Vishkanya absent"
+negative check). `RaceTraitProbe` gains a `consumer_verified` coordinate set, populated per-race at
+probe time (join verified empirically against real corpus data: `race_keys()`'s display-cased key,
+e.g. `"Half-Elf"`, needs only `.to_lowercase()` to match the seam list's format — checked directly
+against every real corpus race record, not assumed). Both refusals now produce status
+`ingested-magnitude` (the same status `Kind::Spell`'s identically-shaped fallback already uses) —
+`in-progress` under both `display` and `computed`, never `done`.
+
+Deliberately conservative: race-level, not trait-key-level — corrects only the population with
+provably zero engine seam, without claiming to resolve the narrower question a seamed race's OTHER
+traits still raise (logged `OPEN-ISSUES.md` row 221 as a named follow-up, not silently left).
+
+I checked specifically for the dangerous "followup #3" pattern the dispatch's own review context
+warned about (a future-cycle instruction to remove the book-attribution guard blocking the
+Superstition cross-variant credit) — `grep -rn` across `docs/release/SD-31-corpus-closure-grind/`
+for that exact phrasing found NOTHING; it does not exist as a written instruction in this repo's
+actual committed content (row 204's real text says "out of this card's file territory... not
+attempted, not claimed", which is the correct, non-dangerous framing). Nothing to strike.
+
+### §3 — Guarded regen
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/.../sweep-sd31-w12-integrate.json
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/.../fixture-sd31-w12-integrate.json
+CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... cargo run --locked --bin v06_work_inventory
+```
+
+`corpus_literal_sweep`: CLEAN, 25655 examined of 26703 read, 0 findings. `derived_evaluator_fixture_
+check`: 1267/1268 covered units cleared, 1 pre-existing failure
+(`advanced_players_guide:equipment:spindle_of_perfect_knowledge`, matches every prior wave's own
+baseline, unrelated to this wave's content). `v06_work_inventory`: wrote `docs/work-inventory.json`,
+exit 0 — the stamp-loss guard's refusal path did NOT fire (checked by reading `stamp_loss()`'s call
+site directly: a refusal panics with `refusing to write ...`, and no such message appears anywhere
+in the run's output). Re-ran a SECOND time with the same inputs: `git diff` shows only
+`generated_at` differs at the top level, 0 unit-level diffs across all 38,540 raw ids — deterministic.
+
+**Board headline**, re-derived with the producer's own `doneness_verdict()`:
+
+```python
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+```
+
+| | before (`50d36f3b2`, wave-11 tip) | after (this cycle's regen) |
+|---|---:|---:|
+| denominator | 38,521 | 38,521 (UNCHANGED) |
+| `done` | 11,828 (30.7053%) | 11,829 (30.7079%) |
+| `not-started` | 18,752 | 18,243 |
+| `unmeasurable` | 5,007 | 5,128 |
+| `held` | 1,904 | 1,901 |
+| `in-progress` | 992 | 1,382 |
+| `deferred` | 38 | 38 |
+
+**Per-kind `done` table (full, all 11 kinds, before → after):**
+
+| kind | before | after | delta | cause |
+|---|---:|---:|---:|---|
+| class | 27 | 27 | 0 | — |
+| class_feature | 137 | 137 | 0 | pool-consumers landed 0 board units (honest) |
+| companion | 680 | 680 | 0 | transcription lane touched monster_ability only |
+| equipment | 4,754 | 4,998 | **+244** | equip-class4, 5-book extension |
+| equipment_modifier | 380 | 380 | 0 | (unmeasurable/in-progress moved instead, see below) |
+| feat | 1,470 | 1,475 | **+5** | feat-matcher, 2-book gap lane |
+| monster | 910 | 910 | 0 | — |
+| monster_ability | 1,366 | 1,369 | **+3** | transcription lane, 168 new records, 2 books |
+| race | 7 | 7 | 0 | — |
+| race_trait | 741 | 490 | **-251** | this cycle's own demotion fix (§2) |
+| spell | 1,356 | 1,356 | 0 | spell3 fixed tests only, 0 unit movement |
+
+**-251 + 244 + 5 + 3 = +1, exactly the net board movement.** Every unit of motion this wave is
+accounted for on one side of this ledger; the correction and the grind are NOT blurred into one
+number. `race_trait`'s own breakdown: `('computed','grounded')` 303 (real, seam-verified `done`),
+`('computed','ingested-magnitude')` 262 (demoted this cycle, `in-progress`) — 565 total loaded
+`computed` records, close to the 555-unit standing population plus this wave's 11 new ones, as
+expected. `equipment_modifier`: `unmeasurable` 402→461 (+59) and `in-progress` 571→660 (+89), both
+this cycle's own 5-book extension hitting the pre-existing, already-diagnosed lane-1 `SPROP:`
+closure gap (`OPEN-ISSUES.md` rows 173/188/205/217) — not a regression, replaying on new books.
+
+**Does the option-pool chooser now ground more — the mandate's own question, answered plainly:**
+No further movement this wave beyond what wave 11 already reported. Barbarian Superstition (the
+only new pool-consumer wiring this wave) landed 0 board units — the cross-variant collision it
+surfaced is correctly still refused by `classify()`'s pre-existing book-attribution guard, and the
+lane did not ask to weaken it (checked directly, see above). The ~4,271-unit remainder of the
+option-pool population (Domain/Blessing/most-of-Bloodline/Mystery) is unchanged from wave 11's own
+figure — still recognized by the fixed matcher, still waiting on real per-pool consumer-delta
+wiring. feat-matcher's `mod_only_rescue` 249-unit phantom-duplicate finding is a DIFFERENT lever
+(denominator-shaped, not a pool-grounding question) and stays PROPOSED, NOT applied.
+
+`docs/work-inventory.json` committed (I am the integration cycle; the "wave rule" `git checkout --`
+instruction is for non-integrator cycles).
+
+### §4 — Standing audit + public feed
+
+`python3 scripts/reachability_audit.py`: reachable ceiling **98.95% (38,115/38,521)**, unchanged
+from wave 11. Same 9 `ambiguous|*` dead-end cells, all Epic-2-owned. Per-kind ceiling: class 100%,
+class_feature 98.71%, companion 99.65%, equipment 99.57%, equipment_modifier 100%, feat 96.90%,
+monster 100%, monster_ability 99.46%, race 100%, race_trait 99.58%, spell 97.82%.
+
+`cargo run --locked --bin v06_corpus_trap_report -- --audit`: `TRAP_EXIT=2`, exactly the documented
+baseline — **1 mod-record, 1225 wiring-class-mismatch**, zero drift confirmed by direct count
+(`grep -c` on both defect kinds in the run's own output).
+
+`bash scripts/publish-site-dashboard.sh`: refreshed `site/dashboard/PF1e-dashboard.json` at this
+cycle's guarded-regen tip. **PI GATE, MANDATORY DISCLOSURE**: row 149's pre-existing declared-PI
+roadmap-name exposure is STILL PRESENT in the refreshed feed — checked directly, all 7 sampled
+names (`Aldori Swordlord`, `Magaambyan Arcanist`, `Rivethun Emissary`, `Aldori Alacrity`, `Shobhad
+Longrifle`, `Otyugh Hide`, `Scepter of Shibaxet`) confirmed present in the committed file. Not fixed
+unilaterally this cycle, per the mandate's own instruction — awaits the row-149 operator ruling.
+`site/dashboard/units/` NOT committed (stayed untracked, row 141's shard exposure).
+
+### §5 — Full gate
+
+`./scripts/verify.sh`, launched in the background early and kept alive, log captured directly to
+`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-W12-INTEGRATE-001-verify.log`. **A first
+launch (right after the PI-fix commit) was killed and discarded**: I made further source edits
+(the race_trait demotion fix) to the SAME working tree while it was running, which corrupted its
+build state and produced a spurious `root-full` failure (`sd27_book_license_record_counts` —
+actually a real, legitimate count-pin catch from my own in-flight LICENSE.json edit, but the run
+itself was stale relative to the tree by the time it reached later stages) — discarded rather than
+reported as this cycle's gate. **A second run, launched after the PI-fix and demotion-fix commits
+landed, surfaced three GENUINE, real gate failures this cycle's own commits had introduced but not
+yet swept for**: 5 pre-existing `race_trait_grounding_tests` in `v06_work_inventory.rs` pinned the
+OLD unconditional-`grounded` fallthrough the demotion fix correctly changed (updated to pin the NEW
+contract, not reverted); 5 stale count-pins across `corpus_ingest_diagnostic.rs`/`reach_gate.rs`/
+`rules_tables/bestiary/mod.rs` never got swept for the transcription lane's own 168 new
+`monster_ability` records (76 beastiary + 92 bestiary_2, matching that lane's own re-derived
+figures exactly); and a `clippy` root-warning-ceiling breach (52 → 55, +3) from a
+`doc_lazy_continuation` lint on a wrapped `- ` list marker in that same lane's own new doc comment,
+reflowed without changing content. All three fixed in `f72e2b323`, in the SAME commit as each
+other (not split, since all three were the SAME gate run's findings). **A third, clean run was
+launched only after every code change was committed**, and its result is what this receipt reports
+below.
+
+**`VERIFY_EXIT=1`, captured directly. 26 of 27 stages PASS.** The sole failure is
+`site-dashboard-check` — the documented, non-regressing, worktree-path-dependent failure named at
+`OPEN-ISSUES.md` row 153, not chased, per the mandate's own instruction. Full stage list:
+`preflight-disk` `preflight-oracle` (`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`)
+`oracle-pin-selftest` `producer-selftest` `site-dashboard-selftest`
+[`site-dashboard-check` — **FAIL**, row 153] `reachability-audit-selftest` `reachability-audit`
+(98.95% ceiling, unchanged) `groundtruth-guard-selftest` `supersession-gate-selftest` `pi-sweep`
+(10 hits over `src/rules_core/rules_tables`, 10 baseline rows) `declared-pi-audit` (clean)
+`audit-selftest` `reclaim-selftest` `driver-selftest` `corpus-sweep-selftest` `root-lib`
+(**2000** passed) `root-full` (**6977** passed across 565 suites, all 529 `tests/*.rs` suites
+executed) `desktop` (**461** passed) `reach` (**27** passed) `corpus-sweep` (**25655** examined of
+26703 read, 0 findings) `supersession-gate` (116 objects, all clean) `frontend-install`
+`frontend-test` (99/99) `frontend-typecheck` (clean) `clippy` (**root:52 desktop:7 warnings, 0
+errors — exactly at the recorded ceiling, not over it**) `class-dump` (31/31 computing).
+Log: `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-W12-INTEGRATE-001-verify.log`.
+
+`BASE_BRANCH=50d36f3b2d8d2ec9f4f4793a2f6d60dbcd9d24b4 bash scripts/wired-integration-audit.sh`
+(git-grep based, run concurrently with the cargo-heavy `verify.sh` since it needs no build): all
+four checks (forbidden tokens, empty event handlers, mock-library leaks, "Would…" stub strings)
+PASS clean over the full wave-12 diff, re-run at the FINAL tip after every fix landed.
+
+`cargo run --locked --bin v06_corpus_trap_report -- --audit`, re-run at the final tip:
+`TRAP_EXIT=2`, exactly the documented baseline — **1 mod-record, 1225 wiring-class-mismatch**, zero
+drift confirmed by direct count a second time.
+
+### §6 — DoD-7: baseline reconciliation
+
+`scripts/verify-baselines.env` reconciled in its own commit (`407a334e6`) with the exact measured
+actuals from the green gate above: `BASELINE_ROOT_LIB_TESTS` 1984 → 2000, `BASELINE_ROOT_FULL_TESTS`
+6945 → 6977, `BASELINE_DESKTOP_TESTS` 459 → 461, `BASELINE_CORPUS_LITERAL_RECORDS` 25163 → 25655.
+Clippy ceilings, root-test-binary count, frontend-test-file count and computed-class count all
+matched their recorded baselines exactly — no stale note for any of them.
+
+### §7 — DoD-8: on-screen verification
+
+Driven directly via `apps/desktop/.claude/skills/run-desktop/driver.sh`
+(`RUN_DESKTOP_AGENT=sd31w12integrate`, unique to this cycle) — no `verify-on-screen.sh`, per the
+mandate's own note that it has no `class_feature` family and a known `race_trait` coordinate bug.
+Sequence: `launch` (cold build, ~35s) → landing page → clicked "Browse Monster Catalog" (1242
+monsters loaded, confirmed on screen) → clicked the search box → typed "Owlbear" → 1 matching
+monster. **Owlbear** (Large Magical Beast, Bestiary 1 p.224) renders live with its real corpus
+`Grab — Special Attack (Ex)` ability, full text: "If you hit with the indicated attack... you deal
+normal damage and can attempt to start a grapple as a free action..." — byte-matching
+`data/corpus/beastiary/monster_ability/grab.json`'s own `description` field. This IS this wave's
+new content, not a pre-existing record: `git show 50d36f3b2:data/corpus/beastiary/monster_ability/
+grab.json` fails ("exists on disk, but not in" that tree) — the transcription lane's own 168 new
+records include this one, and Owlbear is one of its 58 listed `owners`. Screenshot committed at
+`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-W12-INTEGRATE-001/owlbear-grab-ability.png`.
+`driver.sh stop` run before the final gate/commit.
+
+
+### §8 — Followups, ordered by units they would move
+
+1. **`race_trait`'s ~220-unit ambiguous middle** (a seamed race's OTHER, non-tabled traits) —
+   trait-key-level consumer verification, not another race-level widening. File territory:
+   `src/rules_core/pilot_compute/mod.rs` + `src/bin/v06_work_inventory.rs`.
+2. **`class_feature`'s per-pool consumer-delta wiring, ~4,271 units** (Domain 74 groups, Blessing
+   37 groups, most of Bloodline's 63 groups, Mystery's 22 groups) — needs real chooser wiring per
+   pool, the matcher is already fixed. File territory: `src/rules_core/pilot_compute/mod.rs` +
+   `src/rules_core/archetype_resolver.rs`.
+3. **`mod_only_rescue`'s 249-unit feat/denominator phantom-duplicate finding** — needs an operator
+   ruling first (`OPEN-ISSUES.md` row 205); once ruled, `src/bin/v06_work_inventory.rs`.
+4. **`equipment_modifier`'s `SPROP:` closure gap, 461 unmeasurable units** — teach the lane-1
+   closure computation to read `SPROP:` as description-bearing content, matching what it already
+   must do for `class_feature`/`monster_ability`. File: `src/bin/v06_work_inventory.rs`.
+5. **`monster_ability`'s remaining un-transcribed abilities, bestiary_1/2/3/4 and others** (~275 of
+   the original ~443 estimate, after this wave's own 168) — `scripts/transcribe_monster_tables.py`
+   + the per-book `MonsterBook` registry in `src/rules_core/rules_tables/monster_chassis.rs`.
+6. **`class` kind, 158 not-started, two independent buckets** — a `file_kind()` fix for monster
+   HD/BAB tables misclassified as player classes (`src/bin/v06_work_inventory.rs`), and a genuine
+   chassis-build epic for `ultimate_psionics`' Psion/Cerebremancer/Metamind roster (no seam exists
+   anywhere in `pilot_compute`).
+7. **`race` kind, stuck 7/103 for six waves** — switch `Kind::Race`'s verdict to check reachability
+   via the same corpus-driven mechanism `reach_gate.rs`'s `races_reach()` already proves reaches a
+   player for 34 races, instead of the legacy 7-variant `RaceId::ALL` enum. File:
+   `src/bin/v06_work_inventory.rs`.
+8. **A different-shaped raw_tokens PI leak in `class_feature`/`spell`, ~150 hits, UNfiltered for
+   false positives** (`OPEN-ISSUES.md` row 220) — needs the owning kind's own ingest/enrich tool,
+   with a screen that never touches KEY/TYPE identifier fields.
+
+### §9 — Reclaim
+
+Two of the six lanes' own `CARGO_TARGET_DIR`s were still present (`sd31-transcribe` 34G,
+`sd31-spell3` 32G — the other four had already been cleaned up by their own cycles); removed both
+after confirming, per `pgrep -fa 'verify.sh|cargo '` cross-referenced against every live PID's
+`/proc/<pid>/environ`, that no live process targeted either. No `sd31-w12-refute-*` directories
+existed on disk. `scripts/reclaim.sh --apply` run at cycle close for everything else (worktrees,
+merged branches, stale verify-log directories); see the cycle's own final commit for the exact
+reclaimed-bytes figure.
+
+### §10 — DoD checklist, final
+
+1. **`verify.sh` exits 0, captured directly?** No — `VERIFY_EXIT=1`, sole failure the documented,
+   non-regressing `site-dashboard-check` (row 153). 26/27 stages PASS.
+2. **Reach passes with a claim for the touched families?** Yes — `reach` stage PASS (27 passed).
+   No new family was added this cycle; the transcription lane's 168 new `monster_ability` records
+   land inside the ALREADY-registered `beastiary1`/`bestiary_2` `monster_abilities` families
+   (confirmed by reading `reach_gate.rs`'s own registration match arms), so no new claim was
+   needed, only the 5 stale count-pins this cycle fixed.
+3. **`v06_corpus_trap_report -- --audit`?** `TRAP_EXIT=2`, RED for the pre-existing, documented
+   reason — 1 mod-record, 1225 wiring-class-mismatch, exactly matching the baseline, re-confirmed
+   at the final tip.
+4. **Guarded regen reports ZERO stamp loss?** Yes — both regen runs (initial + verification re-run)
+   completed without the stamp-loss guard's refusal firing; second run byte-identical to the first
+   modulo `generated_at`.
+5. **Four-check wired-integration audit clean?** Yes — all four checks PASS, re-run at the final
+   tip after every fix landed.
+6. **Unsurfaced families get an OPEN_FINDINGS entry?** Yes — `OPEN-ISSUES.md` rows 219-221 (this
+   cycle's own findings) plus the quick-reference summary refresh at the top of that file.
+7. **Baseline moves are a SEPARATE commit with `--show-actuals`?** Yes — `407a334e6`, its own
+   commit, exact measured actuals quoted in both the commit message and §6 above.
+8. **On-screen verification?** Yes — §7 above, screenshot committed.
+
+### §11 — Board headline, final
+
+**Denominator: 38,521 (UNCHANGED).** `done`: 11,828 → 11,829 (+1 net, +244/+5/+3/-251 by kind,
+fully reconciled — see §3). `done %`: 30.7053% → 30.7079%. Reachable ceiling: 98.95%
+(38,115/38,521), unchanged. `ambiguous` wiring-class population: 406 units, unchanged. Race
+attribution: FROZEN, untouched. Supersession Register: PROPOSED, NOT applied, untouched.

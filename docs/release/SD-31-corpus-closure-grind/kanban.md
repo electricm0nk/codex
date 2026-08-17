@@ -498,3 +498,104 @@ Per-epic landing, named honestly:
 
 Full command-level detail, every figure's derivation, the six-lane merge conflict resolution record,
 and the full gate log are in `progress.md`'s `SD31-W11-INTEGRATE-001` receipt.
+
+## Wave 12 integration status (`SD31-W12-INTEGRATE-001`, 2026-08-17)
+
+Six lanes merged onto `tranche/11` (pool-consumers first, then feat-matcher, then racetrait5,
+transcription, equip-class4, spell3 — the two class_feature lanes merged first per the mandate's
+own instruction since they interact). All six lanes had real content this wave — no `null` lane,
+unlike wave 11. OPEN-ISSUES.md row-number collisions from four independently-appended "204" rows
+(and racetrait5's "205") were resolved by renumbering sequentially in merge order (204-218); every
+row kept, none dropped.
+
+Board re-derived at the merged, fixed, guarded-regen tip: **11,828 → 11,829 `done` / 38,521
+(30.7053% → 30.7079%)**, denominator UNCHANGED, reachable ceiling **98.95% (38,115/38,521),
+unchanged**. This tiny net headline number hides real motion in both directions and must not be
+read as "a quiet wave" — see below.
+
+**Two CONFIRMED review findings fixed before the regen ran, precedence order followed exactly
+(PI first, then wrongly-credited units):**
+
+1. **PI exposure, `enrich_equipment_raw_tokens.rs`** — the only writer of shipped `raw_tokens` on
+   equipment records had NO Product Identity screening at all. 28 `inner_sea_gods` records
+   (equip-class4's own new content) shipped a blacklisted deity/place name verbatim in
+   `raw_tokens` while `description` was correctly redacted, under `license: "OGL"`. Fixed in the
+   production path (both SD-30 contracts now run on every `raw_tokens`/`raw_bonus_chains` value);
+   `gen_equipment_gap_tables.rs`'s "Mutation proof" test was ALSO confirmed unable to fail and was
+   rewired to drive the real production function. All 28 already-shipped records remediated in
+   place; `corpus_literal_sweep` re-run clean (0 findings) after the fix. `OPEN-ISSUES.md` row 219.
+
+2. **`race_trait` credited on insufficient evidence, `v06_work_inventory.rs`** — a real universal
+   magnitude record (Gillman/Vanara `~ Speed`, `MOVE:Walk,30`) walked past the universal-modifier
+   refusal gate because that gate was only checked on the `text_only` branch; and 262 `computed`
+   race_trait units reached `grounded`/board `done` on a LOAD observation alone (the record parsed
+   and classified), never a consumer-delta observation — the identical "credit resting on a
+   different record's computation" shape wave 11 found, one axis over. Both demoted to
+   `ingested-magnitude` (`in-progress`, never `done`), gated on a new, table-derived (not
+   hand-typed) `race_ids_with_a_magnitude_consumer()` check in `pilot_compute/mod.rs`. Deliberately
+   conservative: race-level, not trait-key-level, so it corrects only the races with genuinely zero
+   engine seam. `OPEN-ISSUES.md` row 221.
+
+**The net board number is a wash between a real demotion and real new content, not a quiet wave:**
+`race_trait` `done` fell **741 → 490 (-251)** from the fix above; `equipment` `done` rose
+**4,754 → 4,998 (+244)** from equip-class4's own 5-book extension; `feat` **1,470 → 1,475 (+5)**
+from feat-matcher's Superstition-adjacent gap rows; `monster_ability` **1,366 → 1,369 (+3)** from
+the transcription lane (this CONFIRMS, by a live regen rather than narrative, the "+3" figure
+adversarial review flagged as unverified in the wave-12 dispatch text — id-traced, not assumed).
+`-251 + 244 + 5 + 3 = +1`, exactly the net board movement. Every unit of motion is accounted for on
+one side of the ledger or the other; none is blurred into the headline number.
+
+**Does the option-pool chooser now pay out more — re-derived, not re-quoted:** No further movement
+this wave. `class_feature` `done` is unchanged at 137 (pool-consumers' Barbarian Superstition
+wiring landed 0 board units, honestly — the same-choice-slot cross-variant collision it found is
+correctly still refused by `classify()`'s book-attribution check, and lane A did not ask to remove
+it); feat-matcher's 249-unit `mod_only_rescue` phantom-duplicate finding (a real, exact,
+zero-exception population) was PROPOSED but NOT applied, routed to OPEN-ISSUES row 205 for an
+operator ruling per the same propose-then-rule pathway Decision 9/10 established. The ~4,271-unit
+option-pool population still sitting on a fixed matcher, waiting on per-pool consumer-delta wiring,
+is unchanged from wave 11.
+
+Per-epic landing, named honestly:
+
+- **`epic-1-race-chassis`** — real wave-12 output for the first time in 5 waves: 11 new records
+  (Gillman/Nagaji/Vanara/Vishkanya), but net `race_trait` `done` FELL 251 once the load-only
+  evidence gate closed — the honest outcome, not the lane's own claimed +11. `race` unchanged at
+  7/103, still the standing five-wave stall (`OPEN-ISSUES.md` row 207).
+- **`epic-4-mechanism` / `epic-5-chassis-sweep`** — Barbarian Superstition wired as a real
+  consumer-delta representative in `pilot_compute/mod.rs`; 0 board units this wave (the credit is
+  correctly refused by a pre-existing cross-book guard the lane itself did not ask to weaken).
+- **`epic-6-ingest-lanes`** — equipment/class widened 5 more books (+244 `done`, 481 new corpus
+  records) with a real PI exposure found and fixed in the same territory (row 219); spell fixed 2
+  tautological mutation-proof tests (0 unit movement, test-quality only) and characterized a new
+  14-unit `.COPY=` spell ingest gap (row 218, not built this cycle); monster_ability/companion
+  transcription landed 168 new monster_ability records across 2 books (+3 `done`), closed a real
+  wholesale-regen data-loss hazard in `gen_book_cache.rs` before it reached disk, and fixed a
+  `WiringClassIndex` gap that had stamped 168 `core_essentials`-attributed citations `ambiguous`
+  regardless of their real shape; feat landed 7 new gap rows across 2 books (+5 `done`) and
+  root-caused (not applied) the 249-unit `mod_only_rescue` phantom-duplicate population.
+- **Decision 9/10** — untouched this wave; no register or `core_essentials` mechanism changes.
+  Supersession Register stays PROPOSED, NOT applied; race attribution stays FROZEN.
+- **`epic-9-closure`** — not reached. Reachable ceiling still 98.95%, not 100%; same 9
+  `ambiguous|*` dead-end cells, all Epic-2-owned.
+- **Public feed (PI gate)** — `site/dashboard/PF1e-dashboard.json` refreshed at the wave-12 tip;
+  `site/dashboard/units/` NOT committed. The refreshed feed still carries row 149's declared-PI
+  roadmap names (re-checked directly, all 7 sampled names confirmed present) — disclosed explicitly
+  in the receipt per the mandate's own rule, not silently published.
+
+**Shortfalls named on open cards, honestly:**
+- `race` (epic-1) — still 7/103, five-wave stall continues; `OPEN-ISSUES.md` row 207 traces exactly
+  why the obvious fix (widening `RaceId::ALL`) would itself be a Decision-1(a) violation.
+- `race_trait`'s remaining ~220-unit ambiguous middle (a seamed race's OTHER, non-tabled traits) —
+  this wave's fix is deliberately conservative and does not resolve it; named as the next
+  race_trait-owning cycle's own follow-up, not left silent.
+- `class_feature`'s per-pool consumer-delta gap (epic-4/epic-5) — unchanged from wave 11, still
+  only 3 of the newly-recognised pools produce an attributable delta.
+- `class` (epic-6-F10) — 158/185 not-started, still never successfully worked this program.
+- `mod_only_rescue`'s 249-unit feat-kind phantom-duplicate population (new, row 205) —
+  RULING-NEEDED, not acted on unilaterally.
+- A different-shaped, ~150-hit raw_tokens PI leak in `class_feature`/`spell` kinds, found while
+  sweeping for row 219's shape but NOT remediated (several are false-positive substring matches on
+  identifier fields; blind redaction there risks corrupting record identity) — row 220.
+
+Full command-level detail, every figure's derivation, the six-lane merge conflict resolution
+record, and the full gate log are in `progress.md`'s `SD31-W12-INTEGRATE-001` receipt.
