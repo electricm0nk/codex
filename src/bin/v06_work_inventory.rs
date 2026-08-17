@@ -2219,6 +2219,18 @@ struct EngineFacts {
     spell_effect_wired: BTreeSet<(String, String)>,
     /// Every feat key the catalog holds, per book.
     feat_keys: BTreeMap<&'static str, BTreeSet<String>>,
+    /// The SERVED `description` field (`FeatCatalogRecord.description`,
+    /// verbatim, post-PI-screening) for every `(book, key)` the catalog
+    /// holds. Deliberately distinct from `closure_has_real_description`'s
+    /// raw-corpus-closure scan: a gap-table generator (e.g.
+    /// `feat_gap_tables.rs`) redacts a PI hit or carries an upstream
+    /// tooling marker (`"[redacted PI]"`, `"[NOT IMPLEMENTED]"`) into the
+    /// COMPILED table itself, downstream of the raw `.lst` closure the
+    /// generator read -- the closure's own `DESC:` can be real prose while
+    /// the served value the player actually sees is the marker string.
+    /// `SD31-W9-INTEGRATE-001` finding: `Kind::Feat`'s rung had no check of
+    /// this SERVED value at all, so 9 marker-only records reached `done`.
+    feat_served_descriptions: BTreeMap<(&'static str, String), Option<&'static str>>,
     /// Every spell key the catalog holds, per book, with whether the engine
     /// resolved a numeric level for it.
     spell_levels: BTreeMap<&'static str, BTreeMap<String, bool>>,
@@ -2459,6 +2471,32 @@ impl EngineFacts {
             .get(book)
             .map(|s| s.contains(&key.to_lowercase()) || s.contains(&name.to_lowercase()))
             .unwrap_or(false)
+    }
+
+    /// Whether `book`/`key`/`name` names a `feat` whose SERVED description
+    /// (`FeatCatalogRecord.description`, the compiled value a player
+    /// actually reads in the Add Feat dialog) is a placeholder rather than
+    /// real prose -- the PI-redaction marker or PCGen's own upstream
+    /// `"[NOT IMPLEMENTED]"` editorial marker, either of which a gap-table
+    /// generator can carry into the compiled table downstream of a raw
+    /// corpus closure that carries real `DESC:` text. `is_real_description_
+    /// value` already refuses `"[redacted pi]"`; this reuses it on the
+    /// SERVED value rather than the closure's, and additionally refuses the
+    /// upstream tooling marker (a different placeholder, same family:
+    /// neither is a player-facing description). `SD31-W9-INTEGRATE-001`.
+    fn feat_desc_leaks_pi_or_upstream_marker(&self, book: &str, key: &str, name: &str) -> bool {
+        let served = self
+            .feat_served_descriptions
+            .get(&(book, key.to_string()))
+            .or_else(|| self.feat_served_descriptions.get(&(book, name.to_string())));
+        match served {
+            Some(Some(desc)) => {
+                !is_real_description_value(desc)
+                    || desc.trim().eq_ignore_ascii_case("[NOT IMPLEMENTED]")
+                    || desc.contains("[NOT IMPLEMENTED")
+            }
+            _ => false,
+        }
     }
 }
 
@@ -3786,11 +3824,18 @@ fn gather_engine_facts(
     repo_root: &Path,
 ) -> EngineFacts {
     let mut feat_keys: BTreeMap<&'static str, BTreeSet<String>> = BTreeMap::new();
+    let mut feat_served_descriptions: BTreeMap<(&'static str, String), Option<&'static str>> =
+        BTreeMap::new();
     for table in all_feat_tables() {
         let book = rule_set_id(table.rule_set);
         let set = feat_keys.entry(book).or_default();
         for entry in table.entries {
             set.insert(entry.key.to_string());
+            // Indexed by both `key` and `name` -- `classify()`'s own
+            // `known` check above matches a unit against either, so this
+            // lookup must be reachable the same way.
+            feat_served_descriptions.insert((book, entry.key.to_string()), entry.description);
+            feat_served_descriptions.insert((book, entry.name.to_string()), entry.description);
         }
     }
 
@@ -3980,6 +4025,7 @@ fn gather_engine_facts(
             fixture, repo_root,
         )),
         feat_keys,
+        feat_served_descriptions,
         spell_levels,
         equipment_keys,
         monster_names,
@@ -4745,11 +4791,45 @@ fn classify(
                     engine_book: engine_book_field,
                 };
             }
-            if text_only && has_real_description && !universal_sheet_modifier {
+            if text_only
+                && has_real_description
+                && !universal_sheet_modifier
+                && !facts.feat_desc_leaks_pi_or_upstream_marker(
+                    engine_book.as_str(),
+                    &unit.key,
+                    &unit.name,
+                )
+            {
                 return Verdict {
                     status: "text-complete",
                     evidence: "in_catalog_and_corpus_record_carries_no_magnitude_token".to_string(),
                     reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            // SD31-W9-INTEGRATE-001: the fallback for a record that IS
+            // text_only with a real CLOSURE description but whose SERVED
+            // value is a placeholder marker -- `unknown` (so
+            // `doneness_verdict` reads it `unmeasurable`, never `done` or
+            // `held`), the same shape the "nothing to show a player" branch
+            // just below already uses, because the player's screen carries
+            // nothing real either way -- never a fabricated description.
+            if text_only
+                && has_real_description
+                && !universal_sheet_modifier
+                && facts.feat_desc_leaks_pi_or_upstream_marker(engine_book.as_str(), &unit.key, &unit.name)
+            {
+                return Verdict {
+                    status: "unknown",
+                    evidence: "feat_served_description_is_a_placeholder_marker_not_prose".to_string(),
+                    reason: Some(
+                        "the feat is in the engine's catalog and its raw corpus closure carries \
+                         real DESC: text, but the SERVED description (the compiled value a \
+                         player actually reads) is a placeholder marker -- a PI redaction or \
+                         PCGen's own upstream '[NOT IMPLEMENTED]' editorial marker, not prose -- \
+                         so there is nothing real to show a player either way"
+                            .to_string(),
+                    ),
                     engine_book: engine_book_field,
                 };
             }
@@ -7332,6 +7412,80 @@ mod prose_magnitude_status_tests {
             verdict.evidence,
             "text_only_but_corpus_record_carries_no_description_to_show_a_player"
         );
+    }
+
+    /// `SD31-W9-INTEGRATE-001`: a feat whose raw corpus CLOSURE carries
+    /// real `DESC:` text (so `has_real_description = true`) but whose
+    /// SERVED description is the PI-redaction marker must NOT read
+    /// `text-complete` -- a player sees the literal string `"[redacted
+    /// PI]"`, not prose. Confirmed live before this fix: 7 feat records
+    /// (Alien Mindpaths, Juju Way, Cypher Magic, Cypher Script, Eye of the
+    /// Arclord, Harrowed, Wand Dancer) reached `done` this way.
+    #[test]
+    fn a_feat_served_only_the_pi_redaction_marker_does_not_read_text_complete() {
+        let mut facts = facts_with_feat_catalog("inner_sea_races", "Alien Mindpaths");
+        facts.feat_served_descriptions.insert(
+            ("inner_sea_races", "Alien Mindpaths".to_string()),
+            Some("[redacted PI]"),
+        );
+        let verdict = classify(
+            &feat_unit("inner_sea_races", "Alien Mindpaths", 0),
+            &facts,
+            &BTreeSet::new(),
+            false,
+            true, // the raw closure's own DESC: is real prose pre-redaction
+            "display",
+            false,
+        );
+        assert_ne!(verdict.status, "text-complete");
+        assert_eq!(verdict.status, "unknown");
+        assert_eq!(verdict.evidence, "feat_served_description_is_a_placeholder_marker_not_prose");
+    }
+
+    /// The `"[NOT IMPLEMENTED]"` sibling of the same finding -- PCGen's own
+    /// upstream editorial marker, not a PI redaction, carried verbatim into
+    /// the compiled table.
+    #[test]
+    fn a_feat_served_pcgens_not_implemented_marker_does_not_read_text_complete() {
+        let mut facts = facts_with_feat_catalog("monster_codex", "Vampiric Companion");
+        facts.feat_served_descriptions.insert(
+            ("monster_codex", "Vampiric Companion".to_string()),
+            Some("...reflects the vile nature of vampirism. [NOT IMPLEMENTED} Your animal companion changes."),
+        );
+        let verdict = classify(
+            &feat_unit("monster_codex", "Vampiric Companion", 0),
+            &facts,
+            &BTreeSet::new(),
+            false,
+            true,
+            "display",
+            false,
+        );
+        assert_ne!(verdict.status, "text-complete");
+        assert_eq!(verdict.status, "unknown");
+        assert_eq!(verdict.evidence, "feat_served_description_is_a_placeholder_marker_not_prose");
+    }
+
+    /// A feat whose served description is real, non-marker prose still
+    /// reads `text-complete` -- the fix must not over-refuse the other 233
+    /// clean gap-table records.
+    #[test]
+    fn a_feat_with_a_real_served_description_still_reads_text_complete() {
+        let mut facts = facts_with_feat_catalog("core_rulebook", "Iron Will");
+        facts.feat_served_descriptions.insert(
+            ("core_rulebook", "Iron Will".to_string()),
+            Some("You get a +2 bonus on all Will saving throws."),
+        );
+        let verdict = classify(
+            &feat_unit("core_rulebook", "Iron Will", 0),
+            &facts,
+            &BTreeSet::new(),
+            false,
+            true,
+            "display",
+            false,
+        );
+        assert_eq!(verdict.status, "text-complete");
     }
 }
 
