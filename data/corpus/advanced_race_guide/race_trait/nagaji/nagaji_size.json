@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T04:16:38Z",
+  "data": {
+    "key": "Nagaji ~ Size",
+    "name": "Reptilian",
+    "race_key": "Nagaji",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Nagaji Racial Trait",
+      "Nagaji Racial Default",
+      "SpecialQuality",
+      "Racial Size"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Nagaji_ReplaceSize",
+    "sets_replace_flags": [],
+    "description": "Nagaji are humanoids with the reptilian subtype.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nagaji ~ Size"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Nagaji Racial Trait.Nagaji Racial Default.SpecialQuality.Racial Size"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Nagaji_ReplaceSize=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Nagaji are humanoids with the reptilian subtype."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "SIZE_M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/nagaji/nagaji_abilities_race.lst",
+    "sha256": "6cddf94332e28fcf6cc9ee86e2a89d547e8a0c34e822613ab52478eecae4361a",
+    "line": 16,
+    "record_key": "Nagaji ~ Size"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

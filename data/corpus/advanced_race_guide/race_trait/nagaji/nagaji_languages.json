@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T04:16:38Z",
+  "data": {
+    "key": "Nagaji ~ Languages",
+    "name": "Languages",
+    "race_key": "Nagaji",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Nagaji Racial Trait",
+      "Nagaji Racial Default",
+      "SpecialQuality",
+      "Racial Language"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Nagaji_ReplaceLanguages",
+    "sets_replace_flags": [],
+    "description": "Nagaji begin play speaking Common and Nagaji. Nagaji with high Intelligence scores can choose from the following languages: any human tongue, Abyssal, Aklo, Celestial, Draconic, Giant, Infernal, and Sylvan.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Nagaji ~ Languages"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Nagaji Racial Trait.Nagaji Racial Default.SpecialQuality.Racial Language"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Nagaji_ReplaceLanguages=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Nagaji begin play speaking Common and Nagaji. Nagaji with high Intelligence scores can choose from the following languages: any human tongue, Abyssal, Aklo, Celestial, Draconic, Giant, Infernal, and Sylvan."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Bonus Language ~ Any Human Language|Bonus Language ~ Abyssal|Bonus Language ~ Aklo|Bonus Language ~ Celestial|Bonus Language ~ Draconic|Bonus Language ~ Giant|Bonus Language ~ Infernal|Bonus Language ~ Sylvan"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common|Nagaji"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/nagaji/nagaji_abilities_race.lst",
+    "sha256": "6cddf94332e28fcf6cc9ee86e2a89d547e8a0c34e822613ab52478eecae4361a",
+    "line": 22,
+    "record_key": "Nagaji ~ Languages"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

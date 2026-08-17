@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T04:16:38Z",
+  "data": {
+    "key": "Vanara ~ Languages",
+    "name": "Languages",
+    "race_key": "Vanara",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Vanara Racial Trait",
+      "Vanara Racial Default",
+      "SpecialQuality",
+      "Racial Language"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Vanara_ReplaceLanguages",
+    "sets_replace_flags": [],
+    "description": "Vanaras begin play speaking Common and Vanaran. Vanaras with high Intelligence scores can choose from the following languages: Aklo, Celestial, Elven, Gnome, Goblin, and Sylvan.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vanara ~ Languages"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Vanara Racial Trait.Vanara Racial Default.SpecialQuality.Racial Language"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Vanara_ReplaceLanguages=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Vanaras begin play speaking Common and Vanaran. Vanaras with high Intelligence scores can choose from the following languages: Aklo, Celestial, Elven, Gnome, Goblin, and Sylvan."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Bonus Language ~ Aklo|Bonus Language ~ Celestial|Bonus Language ~ Elven|Bonus Language ~ Gnome|Bonus Language ~ Goblin|Bonus Language ~ Sylvan"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common|Vanaran"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/vanara/vanara_abilities_race.lst",
+    "sha256": "38a5594d666b86af43216a07d358e640360ecf15e28b3351849680be07ba96b3",
+    "line": 21,
+    "record_key": "Vanara ~ Languages"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

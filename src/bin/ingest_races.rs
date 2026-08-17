@@ -213,6 +213,57 @@ const IN_SCOPE_RACES: &[RaceSpec] = &[
     RaceSpec { dir: "strix", book: "advanced_race_guide" },
     RaceSpec { dir: "suli", book: "advanced_race_guide" },
     RaceSpec { dir: "wayang", book: "advanced_race_guide" },
+    // SD31-E6-F4-004 (2026-08-17). Four more of ARG's own "Uncommon" races
+    // that were not yet in scope -- `arg_races.lst`'s full `.MOD` roster
+    // (37 rows: 7 Core + 16 Featured + 14 Uncommon) names exactly 37
+    // playable races, and after the SD31-E6-F4-002/003 batch above 7 were
+    // still missing: Dhampir (excluded, heritage-shaped, see the
+    // `skinwalker`-adjacent doc comment above) plus these 6 candidates.
+    // Confirmed each of the 6 is the identical flat shape (`<dir>_races.
+    // lst` + `<dir>_abilities_race.lst` + `<dir>_abilities_globalvar.lst`,
+    // no `_subrace.lst` file anywhere) as the batch immediately above, and
+    // attributed to `advanced_race_guide` for the same reason and by the
+    // same signal that batch already used: `arg_races.lst` itself carries
+    // a `<Race>.MOD ... TYPE:Uncommon SOURCEPAGE:p.<n>` row for every one
+    // of them (re-derived fresh this cycle, not transcribed --
+    // `grep -P '^\S+\.MOD\s' arg_races.lst`). PI-blacklist scan
+    // (`PI_BLACKLIST_TERMS`) and a `DESCISPI:`/`NAMEISPI:` grep across
+    // every file in all 6 directories: zero hits.
+    //
+    // Only 4 of the 6 are added here. **Changeling and Samsaran are
+    // deliberately excluded**, each hitting this binary's existing refuse-
+    // rather-than-guess gates for a genuinely new shape, not a config
+    // widening:
+    // - Changeling: 3 rows (`Green Hag Green Widow`/`Annis Hag Hulking
+    //   Changeling`/`Sea Hag Sea Lungs`) carry `TYPE:RacialTraits.Hag
+    //   Racial Trait...`, not `<Race> Racial Trait`/`<Race> Racial
+    //   Default` -- a THIRD heritage axis (which hag mother the changeling
+    //   descends from), structurally the same class of gap Dhampir's/
+    //   Skinwalker's subrace files are, just expressed as an ungated
+    //   in-line trio rather than a `_subrace.lst` file. `is_standard_
+    //   racial_trait` matches them (they lead with `RacialTraits`) but
+    //   `parse_trait` correctly refuses (no `Changeling Racial Trait`
+    //   token), so the run fails loudly rather than misfiling them as
+    //   ordinary standard traits.
+    // - Samsaran: `Shards of the Past`'s own `!PREFACT:1,ABILITIES,
+    //   Samsaran_ReplaceShardsOfThePast=True` names a flag the globalvar
+    //   file (`samsaran_abilities_globalvar.lst:17`) does gate, but via
+    //   `BONUS:ABILITYPOOL|Samsaran Shards of the Past Skills|1|PREVAREQ:
+    //   Samsaran_ReplaceShardsOfThePast,0` -- a genuinely different token
+    //   shape from the `ABILITY:Samsaran Racial Trait|AUTOMATIC|...
+    //   |PREVAREQ:...` line every one of this race's other 7 defaults
+    //   uses, which `globalvar_gates()` does not read. Guessing that the
+    //   two shapes mean the same thing under time pressure is exactly the
+    //   "picked the wrong variant" hazard this program's own standing rule
+    //   forbids (see `OPEN-ISSUES.md` row 157's `parse_desc` precedent) --
+    //   reported, not silently reinterpreted.
+    // Both are real, named follow-on work (`OPEN-ISSUES.md`), not stubs:
+    // neither race's directory is touched by this batch at all, so no
+    // half-written record for either ships.
+    RaceSpec { dir: "gillman", book: "advanced_race_guide" },
+    RaceSpec { dir: "nagaji", book: "advanced_race_guide" },
+    RaceSpec { dir: "vanara", book: "advanced_race_guide" },
+    RaceSpec { dir: "vishkanya", book: "advanced_race_guide" },
 ];
 
 /// Heuristic OGL/PI screen (`docs/governance/ogl-pi-blacklist.md`) — the
@@ -1898,16 +1949,15 @@ mod tests {
         // Pinned counts, derived from the real corpus (`decisions.md
         // §25.3`: Core Rulebook's 7 races + Bestiary 1's 11, SD-31 Epic
         // 1-F2's Bestiary 2 batch of 6, the Skinwalker follow-on
-        // (Bestiary 5, chassis + 9 standard-tier traits only), plus
-        // SD-31-E6-F4-002's Advanced Race Guide batch of 6 (Catfolk 9,
-        // Kitsune 10, Ratfolk 9, Strix 11, Suli 9, Wayang 10 = 58) -- 31
-        // races / 299 standard racial trait records, re-measured
-        // 2026-08-16 by running this binary against the real corpus, not
-        // invented (raw row counts per race ran 13-17; `is_standard_
-        // racial_trait` and the internal-flag filters bring the true count
-        // per race down to 9-11)).
-        assert_eq!(races, 31, "31 in-scope race chassis records");
-        assert_eq!(traits, 299, "299 standard racial trait records");
+        // (Bestiary 5, chassis + 9 standard-tier traits only), SD-31-E6-
+        // F4-002's Advanced Race Guide batch of 6 (Catfolk 9, Kitsune 10,
+        // Ratfolk 9, Strix 11, Suli 9, Wayang 10 = 58), plus SD31-E6-F4-
+        // 004's 4-race ARG follow-on (Gillman 9, Nagaji 9, Vanara 8,
+        // Vishkanya 12 = 38) -- 35 races / 337 standard racial trait
+        // records, re-measured 2026-08-17 by running this binary against
+        // the real corpus, not invented.
+        assert_eq!(races, 35, "35 in-scope race chassis records");
+        assert_eq!(traits, 337, "337 standard racial trait records");
     }
 
     // -----------------------------------------------------------------

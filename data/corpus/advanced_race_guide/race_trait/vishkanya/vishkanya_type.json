@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T04:16:38Z",
+  "data": {
+    "key": "Vishkanya ~ Type",
+    "name": "Vishkanya",
+    "race_key": "Vishkanya",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Vishkanya Racial Trait",
+      "Vishkanya Racial Default",
+      "SpecialQuality",
+      "Racial Type"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Vishkanya_ReplaceType",
+    "sets_replace_flags": [],
+    "description": "Vishkanyas are humanoids with the vishkanya subtype.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Vishkanya ~ Type"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Vishkanya Racial Trait.Vishkanya Racial Default.SpecialQuality.Racial Type"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Vishkanya_ReplaceType=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Vishkanyas are humanoids with the vishkanya subtype."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Humanoid|Vishkanya"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/vishkanya/vishkanya_abilities_race.lst",
+    "sha256": "74752a1ca741cd19edf363315cf87e576e5d1cf2f7cfbc3f030d977541ccf627",
+    "line": 15,
+    "record_key": "Vishkanya ~ Type"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}
