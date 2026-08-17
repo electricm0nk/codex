@@ -15615,3 +15615,128 @@ stages, both traced to this cycle's own commits (`4fc65df96`/`5613a53d9`), neith
 
 Both self-caught by the gate before merge; neither fixed by weakening the check. Fix commit
 `f0d525ded`. A second, clean full `verify.sh` run followed — its result is what §5/§6 below report.
+
+## Cycle `SD31-E5-F1-002` (`RETRO_ACTOR=sd31-cf-ground`) — 2026-08-16, the class_feature not-started question
+
+**Role:** `sd31-cf-ground`, primary checkout (`/home/ubuntu/workspace/repos/codex`), branch `tranche/11`, sole writer.
+
+**Starting HEAD:** `a9426b760014004b4b3c42cf47fa927725139675` (`docs(sd31): SD31-W8-INTEGRATE-001 full cycle receipt`) — descends from `tranche/11`; package dir present. Tree was NOT clean at start: pre-existing untracked wave-8 artifacts (verify logs, retro event files, `site/dashboard/PF1e-dashboard.json.last-good`, `site/dashboard/units/`) left by prior lanes, none created or touched by this cycle — left alone per git discipline. `docs/retro/events/codex.jsonl` had one uncommitted modification (append-only retro events from prior sessions' verify runs), also left alone.
+
+**Oracle pin:** `./scripts/verify.sh --only preflight-oracle` → PASS. `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/pcgen-oracle-pin.env`).
+
+**Files owned/touched:** `src/bin/v06_work_inventory.rs` (owned entirely), `docs/release/SD-31-corpus-closure-grind/**` (this receipt, `OPEN-ISSUES.md`, the new artifact). `scripts/observer/pf1e_dashboard_producer.py` and `cache_gen/class_feature.rs` were read (to confirm `doneness_verdict`'s status→bucket mapping and the PI-screening posture of the wave-4 dump) and left unmodified — no change was needed in either file this cycle.
+
+### The mandate, restated
+
+Answer the single question deciding the package: of `class_feature`'s 11,404 `not-started` units, where exactly does each one stall, and how much of that is this file's own bug versus a genuine engine gap in `pilot_compute.rs`.
+
+### §1 — The trace, one real unit, end to end
+
+Full trace (corpus row → shipped JSON → `classify()`'s exact line → `doneness_verdict`) for `advanced_class_guide:class_feature:Slayer ~ Track` is in the new artifact §1 — not repeated here in full. Summary: the corpus row is shipped (wave 4), `pilot_compute.rs` computes it unconditionally every sweep (`class_feature.acg.slayer.track_bonus`), and the ONE thing that left it `not-ingested` was `src/bin/v06_work_inventory.rs`'s `id.ends_with(&feature_slug)` check (pre-fix line 5260) — a raw string-suffix test that `pilot_compute.rs`'s own `<slug>_<suffix-word>` naming idiom defeats. **This is a measurement defect in my own file, not a missing corpus record and not missing engine wiring.**
+
+### §2 — The 11,404 quantified
+
+```
+python3 -c "
+import json, collections
+d=json.load(open('docs/work-inventory.json'))
+U=[u for u in d['units'] if u.get('kind')=='class_feature' and u.get('status') in ('not-ingested','not-started')]
+c=collections.Counter((u.get('evidence') or '').split(':')[0] for u in U)
+for k,v in c.most_common(): print(v,k)
+"
+```
+
+| evidence | count |
+|---|---:|
+| `class_feature_option_pool_record_not_held_by_engine` | 4,520 |
+| `class_feature_of_unmodelled_corpus_class` | 2,152 |
+| `class_feature_owner_matched_by_name_but_record_not_held_by_engine` | 2,002 |
+| `no_explanation_id_and_no_diagnostic_names_this_feature` | 1,801 |
+| `no_compiled_rule_set_for_book` | 929 |
+| **total** | **11,404** ✓ |
+
+Every figure re-derived by the command shown, not transcribed from the dispatch brief. Full sub-breakdowns (by book, by named corpus class, by pool prefix, and the 3,803-unit "owner matched, no explanation id" population split into 4 sub-causes with per-unit citations) are in the new artifact, `artifacts/SD31-E5-F1-002-class-feature-not-started-breakdown.md`, §2/§2a/§2b/§2c — this is the "future wave dispatches straight off it" deliverable the card names, and it is derived, not narrated: every number in it has its exact command inline.
+
+### §3 — The 3,917 `unmeasurable` characterized
+
+All 3,917 share ONE evidence reason (`class_feature_group_names_no_class_at_all`) — the magnitude>0 counterpart of the option-pool population. Split per Epic 3-F4's method: **191** touch an already-wired `CLASS_FEATURE_POOLS` chooser slot (narrower gap: the slot exists, the per-option delta doesn't), **3,726** touch no chooser primitive at all. Combined with §2's 4,520 zero-magnitude option-pool units: **8,437 units (74% of the not-started+unmeasurable class_feature population)** are option-pool-shaped, and only **472 (5.6%)** of those touch any wired chooser at all — the other **7,965 (94.4%) span 1,847 distinct pool names**. This is characterization only; no unit was reclassified by this section. Full derivation in the artifact §3.
+
+### §4 — What I fixed, in-territory, TDD
+
+Two fixes, both additive and scoped, in `src/bin/v06_work_inventory.rs`:
+
+1. **`modelled_class_books()` registers `UcClassId`** (Gunslinger/Ninja/Samurai → `ultimate_combat`), closing `OPEN-ISSUES.md` rows 96/118. `PuClassId` deliberately NOT added this cycle (representation-mismatch risk with `class_feature_owner`'s substring fallback — named, not fixed, `OPEN-ISSUES.md` row 151).
+2. **A scoped known-magnitude-suffix fallback** (`id_matches_feature_slug_after_known_magnitude_suffix_strip`, `CLASS_FEATURE_ID_MAGNITUDE_SUFFIXES` — row 78's own 18-word list, reused verbatim) for the `explanation_id.ends_with(feature_slug)` check. Fires only when the exact check already failed, the group is the bare class name (never an archetype/variant qualifier — a `decisions.md §10` AMENDMENT guard), `feature_slug != owner` (excludes a malformed no-separator corpus_key shape found and closed during this cycle's own pre-flight safety check), and stripping exactly one trailing known-suffix word makes the remainder match.
+
+**TDD:** 12 new tests (`class_feature_id_magnitude_suffix_strip_tests` — 5 cases on the helper in isolation; `modelled_class_books_registry_tests` — 2; 5 new cases in the existing `class_feature_text_complete_rung_tests` module covering the real Slayer-Track shape, the "exact match keeps its own evidence string" regression guard, the archetype-qualified refusal, the no-separator refusal, and the text-complete promotion path). All pass. Zero regressions: `cargo test --locked --bin v06_work_inventory` → 211/211 (was 199/199).
+
+**Safety check performed before landing** (not merely asserted): cross-checked every `(owner, id)` pair the fallback could match against every candidate `feature_slug` sharing that owner, corpus-wide, for collisions (one real id matching two distinct feature_slugs). Found exactly one — a malformed, no-`" ~ "`-separator corpus_key literally named `"Slayer"` whose fallback-derived slug `"slayer"` is a suffix of `"master_slayer"` — closed by the `feature_slug != owner` guard before it could ship, not discovered after.
+
+### §5 — Guarded regen, measured, both directions
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-cf-ground.json
+  → 24583 records examined of 25460 read, 241924 tokens compared (9 synthesized), 0 findings, CLEAN
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-cf-ground.json
+  → 998 of 999 covered units cleared; 1 pre-existing failure (advanced_players_guide:equipment:
+    spindle_of_perfect_knowledge, the same one every prior wave names); FIXTURE_EXIT=0
+CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... cargo run --locked --bin v06_work_inventory
+```
+
+**Zero stamp loss**: 38,540 total units both before (`cp`'d pre-regen snapshot) and after — identical count.
+
+**Board (producer's own `doneness_verdict`, re-derived live):**
+
+| kind | before | after | delta |
+|---|---:|---:|---:|
+| class_feature `done` | 82 | 105 | **+23** |
+| class_feature `held` | 35 | 56 | **+21** |
+| class_feature `deferred` | 34 | 35 | **+1** |
+| class_feature `not-started` | 11,404 | 11,359 | **−45** |
+| class_feature `unmeasurable` | 3,917 | 3,917 | +0 (correctly untouched) |
+| **board `done`** | **10,759** | **10,782** | **+23 (27.9302% → 27.9899%)** |
+
+**45 units moved, all `class_feature`, every one individually diffed by id, zero regressions anywhere on the board** (board-wide regression scan run both directions across all 38,540 ids: 0 found; 0 movement in any kind other than `class_feature`). 31 from the suffix-strip fallback alone (2 more than my pre-regen hand-enumeration found — `Swashbuckler ~ Deadly Stab`/`Stunning Stab`, correctly caught by the production code path I didn't hand-check for), 14 from the `UcClassId` registration (some via the SAME fallback firing on newly-modelled UC content). Full per-unit table in the artifact §4.
+
+`docs/work-inventory.json` restored per the wave rule: `git checkout -- docs/work-inventory.json`; `git status --porcelain -- docs/work-inventory.json` → clean, confirmed.
+
+### §6 — What's NOT mine, reported for lane 1
+
+- The `class_feature_owner_matched`/`no_explanation_id` population's remaining **3,744 units** (no matching explanation id even with generous stripping) and **17 units** (archetype/variant-qualified, correctly left unfixed per the `decisions.md §10` guard): genuine `pilot_compute.rs` gaps or correctly-guarded variant content.
+- **2,032 units** across 81 classes with literally zero engine chassis (Medium, Aegis, Psychic, Vigilante, Magus, Shifter, Occultist, Mesmerist, Kineticist, ...) — independently confirmed by `SD31-E3-F1-001`'s own no-proxy measurement.
+- **929 units** (`no_compiled_rule_set_for_book`: `adventurers_guide` 700, `inner_sea_magic` 218, `inner_sea_taverns` 11) — entire books with no compiled rule-set module.
+- **The single largest lever, sized precisely**: 7,965 of the combined 8,437-unit option-pool population span 1,847 distinct pool names with NO chooser-interaction primitive wired at all (only 472, 5.6%, touch any of the 28 currently-wired `CLASS_FEATURE_POOLS` entries). This is Epic 4-F2's designed-not-built primitive, scaled from 28 pools to ~1,875 — the number a future dispatch should size against, not 28. `OPEN-ISSUES.md` row 152.
+
+Three new rows appended: 150 (row 78, RESOLVED partial), 151 (rows 96/118, RESOLVED partial — UC yes, PU no), 152 (the chooser-primitive sizing, NOTE).
+
+### §7 — Gate
+
+Launched early, in the background, kept alive (killed and relaunched once, after code changes were complete — the first launch predated the edits and would have built stale code):
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E5-F1-002-verify.log
+./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+**`VERIFY_EXIT=0`, `RESULT: PASS`, 27/27 stages green** (`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E5-F1-002-verify.log`, `/tmp/codex-verify-PZZITv`). `root-lib` 1936 passed (unchanged — my new tests live in a `src/bin/` binary, not `--lib`); `root-full` **6834 passed across 564 suites** (was 6822 at wave-8's own tip — the +12 is exactly this cycle's own new tests, all 529 `tests/*.rs` suites executed); `desktop` 457 passed (unchanged); `reach` 27 passed; `corpus-sweep` 24583 examined/0 findings, CLEAN; `supersession-gate` 116 objects, all clean; `frontend-test` 99/99 files; `frontend-typecheck` clean; `clippy` **root:47 desktop:7 warnings, 0 errors — byte-identical to wave-8's own recorded ceiling, not merely under it**; `class-dump` 31/31 computing.
+
+### §8 — DoD
+
+1. `verify.sh` full, exit captured directly (`VERIFY_EXIT=0`, not through a pipe) — see §7 and header handoff.
+2. `reach` — 27 passed, unchanged by this cycle: no new consumer surface was added, only an existing classification's correctness was widened (no new registration needed).
+3. `v06_corpus_trap_report -- --audit` — run standalone (`/tmp/trap-report-sd31cfground.log`): **`TRAP DEFECT`: 1 mod-record (0 defects, unchanged) / 1,225 wiring-class-mismatch (unchanged) — byte-identical to the `SD31-W8-INTEGRATE-001` baseline**, confirmed by exact count match, not merely "not worse." This cycle never touches `wiring_class.rs`/`pcgen_desc.rs` (the files that drove wave-8's own +34 trap-report delta), so zero movement is the correct, predicted outcome, not an unverified assumption.
+4. Guarded regen: zero stamp loss, confirmed §5.
+5. Wired-integration four-check audit: N/A in the stub sense — this cycle adds no new render surface, only corrects an existing classifier's naming-match completeness; the newly-`grounded`/`text-complete` units render through the ALREADY-shipped `class_feature_descriptions.rs` surface (`SD31-D7-PROSE-003`), proven live in §9 below, not merely asserted.
+6. Unsurfaced families: none new.
+7. Baseline moves: none this cycle (`scripts/verify-baselines.env` untouched).
+8. **On-screen verification — real, live.** `verify-on-screen.sh` has no `class_feature` family (confirmed by reading its Families list) — drove `apps/desktop/.claude/skills/run-desktop/driver.sh` directly, `RUN_DESKTOP_AGENT=sd31cfground`, `DISPLAY=:77`. Created a real Dwarf Slayer 1 character through the real app form, loaded its full character sheet, opened the Actions tab, and confirmed **Track Bonus 1** ("Slayer level 1 Track: a +1 bonus on Survival checks made to follow tracks...") rendering live alongside its 5 siblings this cycle's fix newly grounds (Studied Target Bonus/Count, Sneak Attack Dice, Trap Sense Bonus, Trapfinding Bonus, Weapon And Armor Proficiency) — screenshot + verify note committed at `artifacts/SD31-E5-F1-002/class-feature-slayer-track-actions-tab.{png,verify.md}`.
+
+### §9 — Reclaim
+
+`scripts/reclaim.sh --apply` run after landing and pushing; bytes reclaimed recorded in the handoff below. `apps/desktop` driver stopped (`driver.sh stop`) before reclaim.
+
+### Blockers
+
+None. Both PU-registration (row 151) and the 3,744/17-unit engine-gap population (§6) are named, reported, and correctly left to lane 1 rather than worked around.
+
+### Branch tip
+
+Recorded in the handoff below, after landing this receipt and pushing.

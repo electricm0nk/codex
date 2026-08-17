@@ -77,6 +77,7 @@ use codex::rules_core::pilot_view_model::{PilotSnapshot, PilotSpellbookViewModel
 use codex::rules_core::spell_resolver::{self, spell_id_resolve};
 use codex::rules_core::spellbook::compute_spellbook_coverage;
 use codex::rules_core::rules_tables::ultimate_campaign::feat_tables as uca_feat_tables;
+use codex::rules_core::rules_tables::ultimate_combat::UcClassId;
 use codex::rules_core::wiring_class::{self, MAGNITUDE_TOKENS};
 
 /// The shared deterministic pilot input fixture, relative to the crate root.
@@ -4184,6 +4185,43 @@ fn class_feature_owner<'a, I: Iterator<Item = &'a String>>(key: &str, classes: I
     best
 }
 
+/// The exact magnitude-descriptor suffix words `OPEN-ISSUES.md` row 78's own
+/// scale-estimate regex named (`_(bonus|count|dc|...)$`), reused verbatim
+/// rather than re-derived, so this list stays auditable against the finding
+/// that motivated it. `pilot_compute.rs`'s own established idiom
+/// (`class_feature.acg.slayer.track_bonus`, `.master_slayer_dc`, ...)
+/// appends exactly one of these words to many explanation ids, which is
+/// invisible to `id.ends_with(&feature_slug)` even though the engine
+/// genuinely emits the record (`Slayer ~ Track`'s `class_feature.acg.
+/// slayer.track_bonus` is pushed unconditionally by
+/// `ground_or_block_slayer_class_features` whenever a Slayer character is
+/// swept -- confirmed by direct read, not inferred).
+const CLASS_FEATURE_ID_MAGNITUDE_SUFFIXES: &[&str] = &[
+    "bonus", "count", "dc", "dice", "per_day", "uses", "penalty", "modifier", "total", "value",
+    "amount", "die", "damage", "save", "resistance", "reduction", "range", "duration", "radius",
+    "limit",
+];
+
+/// Retries a failed `id.ends_with(&feature_slug)` check by stripping exactly
+/// one trailing `_<known-suffix-word>` from `id` and re-checking. Returns
+/// `false` (never a fix) when the exact check already passes -- this is a
+/// FALLBACK, never a replacement, and the caller must not call it when
+/// `id.ends_with(feature_slug)` is already true.
+///
+/// Deliberately narrow versus a general "strip N trailing underscore-words"
+/// or substring/contains match: `OPEN-ISSUES.md` row 78 named the wider
+/// version as a real, separate, higher-blast-radius undertaking ("(b) relax
+/// ... exact-suffix to a scoped-but-looser check ... is this card's owner's
+/// decision, not this cycle's"). Single-word-only keeps the false-positive
+/// surface to what row 78's own regex already named and hand-verified.
+fn id_matches_feature_slug_after_known_magnitude_suffix_strip(id: &str, feature_slug: &str) -> bool {
+    if id.ends_with(feature_slug) {
+        return false;
+    }
+    let Some((stripped, last_word)) = id.rsplit_once('_') else { return false };
+    CLASS_FEATURE_ID_MAGNITUDE_SUFFIXES.contains(&last_word) && stripped.ends_with(feature_slug)
+}
+
 /// Resolve one corpus unit against the engine.
 ///
 /// `carries_prose_magnitude` is the caller's own `wiring_class` verdict for
@@ -5217,10 +5255,40 @@ fn classify(
             };
             let feature = unit.key.split(" ~ ").nth(1).unwrap_or(&unit.name);
             let feature_slug = slug(feature);
-            let grounded = facts
+            let exact_suffix_grounded = facts
                 .explanation_ids
                 .iter()
                 .any(|id| id.contains(&format!(".{owner}.")) && id.ends_with(&feature_slug));
+            // SD31-E5-F1-002 (`OPEN-ISSUES.md` row 78): retried ONLY when the
+            // exact check already failed, ONLY when this unit's own group
+            // prefix IS the bare class name (never an archetype/variant
+            // qualifier -- `decisions.md §10`'s AMENDMENT is why: "Unchained
+            // Monk ~ Perfect Self" and "Sanctified Slayer ~ Sneak Attack"
+            // match `owner` via `class_feature_owner`'s substring fallback
+            // but name a DIFFERENT object than base Monk's/Slayer's same-
+            // named feature, and crediting them off the base class's
+            // explanation id would be exactly the cross-variant conflation
+            // that decision forbids), and `feature_slug != owner` (excludes
+            // the single-token, no-`~`-separator corpus_key shape, where
+            // `feature` silently falls back to `unit.name` and a stripped
+            // suffix can spuriously match an unrelated sibling explanation
+            // -- reproduced against the real corpus during this cycle's own
+            // pre-flight check: a bare `"Slayer"` unit's slug is `"slayer"`,
+            // which `"master_slayer_dc"` strips down to `"master_slayer"`,
+            // itself ending in `"slayer"` -- a real collision this guard
+            // exists specifically to close).
+            let suffix_stripped_grounded = !exact_suffix_grounded
+                && unit.key.contains(" ~ ")
+                && group.eq_ignore_ascii_case(owner.as_str())
+                && feature_slug != owner
+                && facts.explanation_ids.iter().any(|id| {
+                    id.contains(&format!(".{owner}."))
+                        && id_matches_feature_slug_after_known_magnitude_suffix_strip(
+                            id,
+                            &feature_slug,
+                        )
+                });
+            let grounded = exact_suffix_grounded || suffix_stripped_grounded;
             if grounded {
                 // SD31-D7-PROSE-003: same promotion as the
                 // `class_feature_effect_wired` branch above, for the sibling
@@ -5232,16 +5300,23 @@ fn classify(
                 {
                     return Verdict {
                         status: "text-complete",
-                        evidence:
+                        evidence: if suffix_stripped_grounded {
+                            "explanation_id_observed_after_known_magnitude_suffix_strip_and_corpus_record_carries_real_description".to_string()
+                        } else {
                             "explanation_id_observed_and_corpus_record_carries_real_description"
-                                .to_string(),
+                                .to_string()
+                        },
                         reason: None,
                         engine_book: engine_book_field,
                     };
                 }
                 return Verdict {
                     status: "grounded",
-                    evidence: "explanation_id_observed_in_a_real_computation".to_string(),
+                    evidence: if suffix_stripped_grounded {
+                        "explanation_id_observed_after_known_magnitude_suffix_strip".to_string()
+                    } else {
+                        "explanation_id_observed_in_a_real_computation".to_string()
+                    },
                     reason: None,
                     engine_book: engine_book_field,
                 };
@@ -5850,6 +5925,31 @@ fn load_probe_fixture(repo_root: &Path) -> CharacterInput {
 /// Every class this engine models, mapped to the book that models it. Shared
 /// by `engine_facts` and the class_feature probe so the two can never disagree
 /// about what "modelled" means.
+///
+/// `UcClassId` (Ultimate Combat: Gunslinger, Ninja, Samurai) closes
+/// `OPEN-ISSUES.md` rows 96/118 -- `SD31-E4-F1-002`/`SD31-E4-F1-003` wired
+/// real chassis and features for all three (proven reachable via
+/// `build_pilot_headless_receipt`) and reported, twice, that this registry
+/// never named their book at all, so `class_feature_owner` returned `None`
+/// for every one of their records before the `explanation_id` check (row 78)
+/// was ever reached. `UcClassId::name()` returns single lowercase words
+/// (`"gunslinger"`, `"ninja"`, `"samurai"`) matching the exact convention
+/// `crb_class_name`/`ApgClassId::name`/`AcgClassId::name` already use, so
+/// this mirrors those three loops with no representation change.
+///
+/// `PuClassId` (Pathfinder Unchained) is deliberately NOT added here: its
+/// names are multi-word and underscored (`"unchained_rogue"`), which
+/// `class_feature_owner`'s `group == *class` comparison (`group` keeps the
+/// corpus key's raw space-separated words, never underscored) cannot match
+/// without its own, separate fix -- registering it as-is would silently
+/// leave every PU record unmatched by the exact-name branch while still
+/// letting `class_feature_owner`'s SUBSTRING fallback (`group.ends_with(&
+/// format!(" {class}"))`) mis-attribute PU's variant records to the BASE
+/// class instead (`"Unchained Rogue"` already matches `"rogue"` today via
+/// that same fallback) -- a `decisions.md §10` AMENDMENT hazard (a variant
+/// is a different object) that a same-cycle registry widening must not
+/// create. Left as a named, reported gap for a follow-on cycle that also
+/// reworks the matching, not fixed here.
 fn modelled_class_books() -> BTreeMap<String, &'static str> {
     let mut class_books: BTreeMap<String, &'static str> = BTreeMap::new();
     for id in ClassId::ALL {
@@ -5860,6 +5960,9 @@ fn modelled_class_books() -> BTreeMap<String, &'static str> {
     }
     for id in AcgClassId::ALL {
         class_books.insert(id.name().to_string(), "advanced_class_guide");
+    }
+    for id in UcClassId::ALL {
+        class_books.insert(id.name().to_string(), "ultimate_combat");
     }
     class_books
 }
@@ -8923,6 +9026,211 @@ mod class_feature_text_complete_rung_tests {
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
         assert_ne!(verdict.status, "text-complete");
         assert_eq!(verdict.status, "grounded");
+    }
+
+    // -----------------------------------------------------------------
+    // SD31-E5-F1-002 (`OPEN-ISSUES.md` row 78): the known-magnitude-suffix
+    // fallback for the `explanation_id.ends_with(feature_slug)` check.
+    // -----------------------------------------------------------------
+
+    /// The real, reproduced case row 78 named: `pilot_compute.rs` pushes
+    /// `class_feature.acg.slayer.track_bonus` unconditionally for any
+    /// Slayer character, but `Slayer ~ Track`'s `feature_slug` is `"track"`,
+    /// and `"track_bonus".ends_with("track")` is false. The fallback closes
+    /// exactly this gap. `magnitude_token_count: 1` (Track carries a real,
+    /// scaling Survival bonus) keeps `text_only` irrelevant here -- this
+    /// proves the `grounded` shape, not the `text-complete` promotion.
+    #[test]
+    fn slayer_track_grounds_via_the_known_magnitude_suffix_fallback() {
+        let mut facts = EngineFacts::default();
+        facts.class_books.insert("slayer".to_string(), "advanced_class_guide");
+        facts.explanation_ids.insert("class_feature.acg.slayer.track_bonus".to_string());
+        let unit = class_feature_unit(
+            "advanced_class_guide",
+            "acg_abilities_class.lst",
+            1,
+            "Slayer ~ Track",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "explanation_id_observed_after_known_magnitude_suffix_strip"
+        );
+    }
+
+    /// The exact check, when it already succeeds, must keep its ORIGINAL
+    /// evidence string -- the fallback is additive, never a replacement.
+    #[test]
+    fn an_exact_suffix_match_keeps_its_original_evidence_string_not_the_fallback_one() {
+        let mut facts = EngineFacts::default();
+        facts.class_books.insert("fighter".to_string(), "core_rulebook");
+        facts.explanation_ids.insert("class_feature.fighter.weapon_training".to_string());
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            1,
+            "Fighter ~ Weapon Training",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(verdict.evidence, "explanation_id_observed_in_a_real_computation");
+    }
+
+    /// PROVE THE GUARD CAN FAIL, case 1 (`decisions.md §10` AMENDMENT): an
+    /// archetype/variant-qualified group must NEVER borrow the base class's
+    /// explanation id, even when the stripped slug would otherwise match --
+    /// `class_feature_owner`'s substring fallback attributes `"Sanctified
+    /// Slayer ~ Sneak Attack"` to `owner = "slayer"`, but Sanctified Slayer
+    /// is a DIFFERENT object from base Slayer (the same "rogue and
+    /// unchained rogue are two completely different classes" ruling), so
+    /// crediting it off base Slayer's `sneak_attack_dice` explanation would
+    /// be exactly the cross-variant conflation that decision forbids.
+    #[test]
+    fn an_archetype_qualified_group_never_borrows_the_base_class_explanation_via_the_fallback() {
+        let mut facts = EngineFacts::default();
+        facts.class_books.insert("slayer".to_string(), "advanced_class_guide");
+        facts.explanation_ids.insert("class_feature.acg.slayer.sneak_attack_dice".to_string());
+        let unit = class_feature_unit(
+            "advanced_class_guide",
+            "acg_abilities_class.lst",
+            2,
+            "Sanctified Slayer ~ Sneak Attack",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
+        assert_ne!(
+            verdict.status, "grounded",
+            "an archetype-qualified group must not ground via the base class's explanation id"
+        );
+        assert_ne!(
+            verdict.evidence,
+            "explanation_id_observed_after_known_magnitude_suffix_strip"
+        );
+    }
+
+    /// PROVE THE GUARD CAN FAIL, case 2: a malformed/degenerate corpus_key
+    /// with no `" ~ "` separator at all (`feature` falls back to
+    /// `unit.name`, so `feature_slug == owner`) must never fire the
+    /// fallback -- reproduced against the real corpus during this cycle's
+    /// pre-flight check: a bare `"Slayer"` unit's slug `"slayer"` is a
+    /// SUFFIX of `"master_slayer"` (the stripped form of `master_slayer_
+    /// dc`), which would otherwise wrongly ground an unrelated record off
+    /// Master Slayer's own explanation.
+    #[test]
+    fn a_key_with_no_separator_never_fires_the_suffix_fallback() {
+        let mut facts = EngineFacts::default();
+        facts.class_books.insert("slayer".to_string(), "advanced_class_guide");
+        facts.explanation_ids.insert("class_feature.acg.slayer.master_slayer_dc".to_string());
+        let unit = class_feature_unit("advanced_class_guide", "acg_abilities_class.lst", 3, "Slayer", 1);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "display", false);
+        assert_ne!(
+            verdict.evidence,
+            "explanation_id_observed_after_known_magnitude_suffix_strip"
+        );
+    }
+
+    /// The `text-complete` promotion path reaches the fallback's own
+    /// evidence string too, not just the `grounded` path -- both promotion
+    /// sites `SD31-D7-PROSE-003` already proved must stay symmetric.
+    #[test]
+    fn the_suffix_fallback_promotes_to_text_complete_when_the_other_three_conditions_hold() {
+        let mut facts = EngineFacts::default();
+        facts.class_books.insert("brawler".to_string(), "advanced_class_guide");
+        facts
+            .explanation_ids
+            .insert("class_feature.acg.brawler.maneuver_training_count".to_string());
+        let unit = class_feature_unit(
+            "advanced_class_guide",
+            "acg_abilities_class.lst",
+            4,
+            "Brawler ~ Maneuver Training",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(verdict.status, "text-complete");
+        assert_eq!(
+            verdict.evidence,
+            "explanation_id_observed_after_known_magnitude_suffix_strip_and_corpus_record_carries_real_description"
+        );
+    }
+}
+
+/// Unit coverage for `id_matches_feature_slug_after_known_magnitude_suffix_strip`
+/// in isolation, ahead of `classify()`'s own integration coverage above.
+#[cfg(test)]
+mod class_feature_id_magnitude_suffix_strip_tests {
+    use super::*;
+
+    #[test]
+    fn strips_a_single_known_suffix_word_and_matches() {
+        assert!(id_matches_feature_slug_after_known_magnitude_suffix_strip(
+            "class_feature.acg.slayer.track_bonus",
+            "track"
+        ));
+    }
+
+    #[test]
+    fn does_not_refire_when_the_exact_check_already_passes() {
+        assert!(!id_matches_feature_slug_after_known_magnitude_suffix_strip(
+            "class_feature.fighter.weapon_training",
+            "weapon_training"
+        ));
+    }
+
+    #[test]
+    fn refuses_a_trailing_word_outside_the_known_suffix_list() {
+        // "grant" is a real `pilot_compute.rs` idiom (`swift_tracker_grant`)
+        // but is deliberately NOT in `CLASS_FEATURE_ID_MAGNITUDE_SUFFIXES`
+        // -- row 78's own regex list is reused verbatim, not widened.
+        assert!(!id_matches_feature_slug_after_known_magnitude_suffix_strip(
+            "class_feature.acg.slayer.swift_tracker_grant",
+            "swift_tracker"
+        ));
+    }
+
+    #[test]
+    fn refuses_when_stripping_once_still_does_not_end_with_the_slug() {
+        assert!(!id_matches_feature_slug_after_known_magnitude_suffix_strip(
+            "class_feature.acg.slayer.improved_quarry_attack_bonus",
+            "improved_quarry"
+        ));
+    }
+
+    #[test]
+    fn refuses_an_id_with_no_underscore_at_all() {
+        assert!(!id_matches_feature_slug_after_known_magnitude_suffix_strip(
+            "classfeatureacgslayertrackbonus",
+            "track"
+        ));
+    }
+}
+
+/// SD31-E5-F1-002 (`OPEN-ISSUES.md` rows 96/118): `modelled_class_books()`
+/// must register every book whose class enum `pilot_compute.rs` genuinely
+/// wires, not only the original three.
+#[cfg(test)]
+mod modelled_class_books_registry_tests {
+    use super::*;
+
+    #[test]
+    fn ultimate_combat_classes_are_registered() {
+        let class_books = modelled_class_books();
+        assert_eq!(class_books.get("gunslinger"), Some(&"ultimate_combat"));
+        assert_eq!(class_books.get("ninja"), Some(&"ultimate_combat"));
+        assert_eq!(class_books.get("samurai"), Some(&"ultimate_combat"));
+    }
+
+    /// Regression guard for the ORIGINAL three books -- this cycle's own
+    /// addition must be additive, never a replacement.
+    #[test]
+    fn the_original_three_books_classes_remain_registered() {
+        let class_books = modelled_class_books();
+        assert_eq!(class_books.get("fighter"), Some(&"core_rulebook"));
+        assert_eq!(class_books.get("alchemist"), Some(&"advanced_players_guide"));
+        assert_eq!(class_books.get("slayer"), Some(&"advanced_class_guide"));
     }
 }
 
