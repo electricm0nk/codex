@@ -17498,3 +17498,27 @@ has a live DoD-8 proof from wave 5, cited in the verify.md rather than silently 
 
 Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
 Claude-Session: https://claude.ai/code/session_012LQjhfcbAEBt6SiquQXEAE
+
+### Final reclaim figures (after push)
+
+`scripts/reclaim.sh --apply`: 0 items reclaimed via its own policy (everything on disk was
+either modified within the tool's 6h freshness window or still checked out in a live worktree
+-- correctly conservative, not a bug). Manually removed this wave's finished per-agent
+`CARGO_TARGET_DIR`s per the dispatch's own explicit list, after confirming zero live PID (`pgrep
+-fa 'cargo\|verify.sh'` returned nothing) held any of them:
+
+| dir | size | in dispatch list? |
+|---|---:|---|
+| `sd31-class-split-wire` | 33G | yes |
+| `sd31-racetrait2` | 33G | yes |
+| `sd31-monster2` | 31G | yes |
+| `sd31-w9-integrate` (this cycle's own) | 33G | this cycle's own, cleaned per the standing convention |
+| `sd31-w9-integrate-2` (this cycle's own scratch) | 3.8G | this cycle's own, cleaned per the standing convention |
+
+**Total reclaimed: ~133.8G.** `sd31-cf-ground`, `sd31-feat-companion`, `sd31-equip-class` and the
+three `sd31-w9-refute-*` dirs named in the dispatch did not exist under those names at this
+checkpoint (already cleaned up, or the lanes/reviewers used different `CARGO_TARGET_DIR` names)
+-- not removed because there was nothing there to remove. `sd31-w8-integrate` and
+`sd31-class-split-wire-regen` deliberately left untouched: neither is in this wave's own
+explicit list, and unilaterally judging another actor's directory "finished" is not this
+cycle's call to make.
