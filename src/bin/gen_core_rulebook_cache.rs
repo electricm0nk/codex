@@ -248,7 +248,7 @@ fn equipment_source(file: &CorpusFile, index: &LineIndex<'_>, entry: &EquipmentT
         .or_else(|| index.by_identity.get(entry.key).copied())?;
 
     let desc_toks = desc_tokens(line_text);
-    let has_clear = desc_toks.iter().any(|t| *t == "DESC:.CLEAR");
+    let has_clear = desc_toks.contains(&"DESC:.CLEAR");
     let real_desc = desc_toks.iter().find(|t| **t != "DESC:.CLEAR");
 
     if has_clear && real_desc.is_some() {
@@ -473,11 +473,11 @@ fn main() {
                 if line.starts_with('#') {
                     continue;
                 }
-                if let Some(identity) = identity_field(line) {
-                    if identity.ends_with(&copy_suffix) {
-                        found = Some(((idx + 1) as u32, identity.to_string()));
-                        break;
-                    }
+                if let Some(identity) = identity_field(line)
+                    && identity.ends_with(&copy_suffix)
+                {
+                    found = Some(((idx + 1) as u32, identity.to_string()));
+                    break;
                 }
             }
         }

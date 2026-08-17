@@ -15,7 +15,7 @@
 //! This module reported four books — `crb`, `apg`, `acg`, `beastiary1` —
 //! long after `advanced_race_guide` and `pathfinder_unchained` landed as
 //! real `rules_tables` books with real records (ARG: 200 equipment, 187
-//! feats, 92 spells, 156 racial traits; PU: 4 classes, 64 class features, 42
+//! feats, 93 spells, 156 racial traits; PU: 4 classes, 64 class features, 42
 //! equipment modifiers, 17 feats). Because the panel's own caption reads
 //! "every rule book landed in `rules_tables`", a tester reading that screen
 //! would correctly conclude, from a truthful-sounding caption, that two
@@ -1089,7 +1089,7 @@ mod tests {
             arg_book.content_kind_counts["spells"],
             arg::spell_list::SPELL_LIST.len() as u32
         );
-        assert_eq!(arg_book.content_kind_counts["spells"], 92);
+        assert_eq!(arg_book.content_kind_counts["spells"], 93);
         assert_eq!(
             arg_book.content_kind_counts["equipment"],
             arg::equipment_tables::equipment_tables().len() as u32
