@@ -15950,4 +15950,23 @@ files and cross-lane read-only pin corrections, no production logic touched outs
 `data/corpus/advanced_race_guide/{race,race_trait}/**/*.json` file touched by re-running the two
 ingest binaries (content identical for every pre-existing file except a fresh `ingested_at`
 timestamp — spot-checked via `git diff`; the only files with real content changes are the 24 new
-alternate-trait records).
+alternate-trait records). **531 timestamp-only files across `core_rulebook`/`beastiary`/
+`bestiary_2`/`bestiary_5`/`advanced_race_guide` (a side effect of re-running both whole-corpus
+binaries) were identified via a real content diff (comparing every changed file's `data` field,
+not assumed) and reverted with `git checkout --pathspec-from-file` before commit** — only the 24
+genuinely new files landed, avoiding needless diff noise and merge-conflict surface with concurrent
+cycles.
+
+### §12 — Disk reclamation
+
+`scripts/reclaim.sh --apply` → **0 bytes reclaimed** — every candidate (verify-log temp dirs from
+this and sibling agents' runs) was skipped as "too young" (created within the last 6h), an honest
+result of running mid-cycle on a box with many concurrently-active agents rather than a failure of
+the tool.
+
+### §13 — Final state
+
+Branch `sd31/racetrait2-SD31-E6-F4-003` pushed, 3 commits: `7e92292d4` (feat, the ingest+resolver
+work), `a8da89430` (fix, the 5 count-sweep gaps a grep-only pass missed), `1dc33b0cd` (docs, this
+receipt's own closure with the guarded-regen figures and the confirmation re-run's result). Tree
+clean at close. Starting HEAD `a9426b760`; branch tip `1dc33b0cd`.
