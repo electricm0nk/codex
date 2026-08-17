@@ -15763,3 +15763,281 @@ message text was wrong. Caught by reading the commit back before pushing, fixed 
 unpushed — no push of the wrong message occurred, no work lost. Full incident record:
 `docs/retro/events/sd31-cf-ground.jsonl` (`recurrence_key:
 shared-scratchpad-collision-commit-message`).
+## Cycle `SD31-E4-F1-005` (`RETRO_ACTOR=sd31-class-split-wire`) — 2026-08-16/17, `epic-4-mechanism`, class-split + owed size wiring
+
+**Role:** `sd31-class-split-wire`, own worktree (`.claude/worktrees/wf_071aed05-f44-1`), own branch
+`sd31/e4-classsplit-wire5`, own `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-class-split-wire`
+(regen/measurement work used a second, separate `.../sd31-class-split-wire-regen` to avoid lock
+contention with the concurrently-running full gate, per this program's own standing convention).
+
+**HEAD at start:** package dir absent, tree clean → `git fetch origin && git reset --hard
+origin/tranche/11` → `a9426b760` (`docs(sd31): SD31-W8-INTEGRATE-001 full cycle receipt`), one commit
+past the last integration wave.
+
+**Oracle pin:** `./scripts/verify.sh --only preflight-oracle` → PASS.
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/pcgen-oracle-pin.env`).
+
+### §1 — The split (first half of the card)
+
+`src/rules_core/pilot_compute.rs` was 67,307 lines, one file, in a single agent's write scope —
+the bottleneck every class-wiring wave since Epic 4 opened has hit. Enumerated every top-level
+function (506, via `grep -noP '^(pub fn |fn )\K[a-zA-Z0-9_]+'`) rather than trusting a remembered
+list, then grepped each candidate class-block's helper names across the WHOLE file to find blocks
+with zero external call sites before moving anything.
+
+**Landed** (`2c2616ebc`, `refactor(sd31): split pilot_compute.rs into per-class modules`):
+- `pilot_compute.rs` → `pilot_compute/mod.rs` (directory module; children see the parent's private
+  items via `use super::*;`, the standard Rust mechanism for this exact split).
+- `pilot_compute/class_slayer.rs` (573 lines): all Advanced Class Guide Slayer functions, moved
+  verbatim, lines 17031-17603 of the original file (boundary re-derived twice after a first,
+  self-caught off-by-2 cut ate a neighbour function's closing brace — restored from git, redone with
+  verified line numbers before proceeding). 13 top-level items marked `pub(super)` (mod.rs's own
+  inline unit-test module several thousand lines further down calls them via `super::<name>` and was
+  NOT moved) plus a blanket `use class_slayer::*;` back in mod.rs.
+- `pilot_compute/class_ultimate_combat.rs` (1121 lines): `compute_uc_class_chassis` (the UC class
+  dispatcher) plus all of Gunslinger/Ninja/Samurai's functions and their own inline test modules
+  (`gunslinger_tests`/`ninja_tests`/`samurai_tests`, moved with them, unedited) — fully
+  self-contained (every helper's only two references anywhere in the original 67k-line file were its
+  own definition and one call site, both inside the moved range; `compute_uc_class_chassis` alone
+  crosses the boundary and is the only `pub(super)` item).
+- Mechanical fallout, both fixed in the same commit: 69 `include_str!("../../tests/...")` sites
+  across `mod.rs` and `class_ultimate_combat.rs` needed one more `../` (file moved one directory
+  level deeper), sed-applied identically; `tests/sd27_feat_effects_reach_both_compute_paths.rs`
+  source-scans `pilot_compute.rs`'s raw text by literal path and needed its `include_str!` path
+  updated (the two functions it inspects, `compute_combat_baseline`/`compute_selected_skill_
+  modifiers`, both stayed in `mod.rs`, unmoved, so nothing else in that test needed to change).
+
+**Where it stopped, and why**: these two blocks (~1,700 lines) are the largest genuinely
+self-contained per-class seams. The remaining ~65,600 lines interleave race seams, generic combat
+math, and every other class's functions with shared helpers in ways that do not have an equally
+clean boundary — a partial, honest split rather than a total, entangled one.
+
+**Behaviour-preservation proof** (the card's own required first figure): `cargo test --locked --lib`
+reported **1936 passed / 0 failed** on the unmodified file immediately before the move, and again
+**1936 / 0** on the moved files immediately after (before any wiring commit) — the exact same count,
+including every hardcoded-value test for Slayer/Gunslinger/Ninja/Samurai
+(`slayer_studied_target_bonus_and_target_count_match_the_corpus`,
+`improved_quarry_supersedes_quarry_rather_than_stacking`, `gunslinger_tests::*`, `ninja_tests::*`,
+`samurai_tests::*`, and others). `cargo test --locked --test '*'` (full integration suite) also
+exited 0 with zero `FAILED` lines both before and after. `docs/work-inventory.json` is untouched by
+this commit, so the board's own `doneness_verdict` is unchanged by construction.
+
+### §2 — Owed universal size-bonus wiring (§8, "wire it, don't retract")
+
+Investigated before writing anything, per the standing rule: the AC/attack/CMB/CMD three-quarters of
+the "+1 size bonus to AC, +1 attack, -1 CMB/CMD, +4 Stealth" shape was **already wired**, corpus-wide,
+since SD-27 (`decisions.md §28` defect 1) — `combat_size_modifiers` (keyed off
+`race_size_for_race_token`) applies unconditionally inside `compute_combat_baseline` for ANY race
+string it resolves. `tests/sd27_size_modifiers_to_armor_class.rs` /
+`tests/sd27_size_modifiers_to_touch_cmb_cmd_and_attack.rs` already proved this for Gnome, Halfling,
+Goblin, Kobold, Svirfneblin. **Grippli was NOT in either test's "18 in-scope races" list** — checked
+empirically rather than assuming absence meant unsupported: a throwaway probe test loading
+`race_id=race:grippli` through `compute_pilot_base_chassis` returned **zero claim-blocking
+diagnostics and `baseline_armor_class == 18`** (the real Small +1 over the 17 Medium baseline),
+confirming Grippli was already covered too, just untested by name.
+
+**What was actually missing**: Gnome and Halfling's `race.<x>.trait_bundle.size` explanation records
+were already corrected (by `SD31-E4-F1-004`) to cite the real mechanism; Kobold, Svirfneblin, Goblin
+and Grippli have no dedicated `explain_<race>_race_seam` at all (no ability-score adjustments are
+transcribed for them anywhere in this engine), so they had **zero** `trait_bundle.size` explanation —
+the record-level provability gap DoD-8/§7-condition-3 exists to catch.
+
+**Landed** (`f39588863`, `feat(sd31): record-level provability for the owed universal size-bonus
+wiring (§8)`): `SIZE_ONLY_RACE_TRAIT_BUNDLE` (4-row table) + `explain_size_only_race_trait_bundle`
+in `pilot_compute/mod.rs`, each row's citation re-derived directly from the pinned oracle's own
+`<race>_abilities_race.lst` line 16 (`KEY:<Race> ~ Size`, `TEMPLATE:SIZE_S`) — not transcribed from
+memory. Emits ONE `race.<slug>.trait_bundle.size` explanation per matching race, `+0` value (a
+bounded recognition record, matching Gnome's/Halfling's own shape), citing `combat_size_modifiers`
+by name and honestly naming the one still-unwired piece (+4 Stealth — no Stealth skill total exists
+anywhere in this engine; `compute_selected_skill_modifiers` supports only Climb/Intimidate/Swim).
+Wired into `compute_pilot_base_chassis`'s existing race-explanation dispatch list, right after
+`explain_halfling_race_seam`. 3 new tests (`size_only_race_trait_bundle_tests`): each of the four
+races gets its own correctly-named/-cited explanation; the real Armor Class total (18 for all four)
+is unaffected by the new explanation; Human (outside the table) gets no stray record.
+
+**Board movement: zero, honestly.** Guarded regen (below) confirms **10,759/38,521 (27.9302%)**,
+byte-identical to the tip this cycle started from. This is the SAME structural blocker
+`SD31-E4-F1-001`/`SD31-E4-F1-003` already named: the dashboard producer's `doneness_verdict()` maps
+`display`+`grounded`/`held` to `held`, not `done`, and these four race_trait units' `wiring_class`
+field (set from raw corpus text at ingest time) is untouched by this cycle's addition — that
+crediting mechanism lives in `v06_work_inventory.rs`, explicitly lane 2's file, not this card's.
+
+**§2's part 2 (wire more classes) — not attempted this cycle, named honestly rather than padded.**
+Re-checked `SD31-E3-F1-001`'s clearance table: 23 of 24 measured classes show 0 wired-able base
+chassis, and every book outside CRB/APG/ACG remains structurally blocked for board credit by
+`modelled_class_books()` (`v06_work_inventory.rs`, lane 2's file, `OPEN-ISSUES.md` row 96/97) —
+wiring UC/OA/psionics classes further would be real engine work but could not move the board this
+cycle regardless of quality. The one avenue NOT blocked by that gate — Oracle/Arcanist/Sorcerer's
+CHOOSER-shape mysteries/exploits/bloodlines (CRB/ACG books) — is real, multi-hour-per-mechanism work
+(each Sorcerer bloodline alone carries ~9-10 individually-sourced powers); not started this cycle in
+favour of landing the split and the owed wiring cleanly rather than an unfinished third slice.
+
+### §3 — PI screening
+
+No corpus record was generated or modified this cycle (no writes under `data/corpus/`); the new
+explanation text is hand-authored Rust source citing four race names (Kobold, Svirfneblin, Goblin,
+Grippli) that are NOT `NAMEISPI:YES`-declared anywhere in their own `.lst` files (checked directly:
+`grep -rn "NAMEISPI:YES"` over each race's `core_essentials/races/<race>/` directory → 0 hits, all
+four). `declared_pi_shipping_audit` / `declared-pi-audit` stage: PASS (clean) in this cycle's own
+full gate run (§5).
+
+### §4 — Guarded regen + trap report (measured in the SEPARATE `-regen` target dir)
+
+```
+CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-class-split-wire-regen \
+  cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-class-split-wire.json
+  → 24583 records examined of 25460 read, 241924 tokens compared (9 synthesized), 25035 digests
+    checked, 0 findings — CLEAN, byte-identical to SD31-W8-INTEGRATE-001's own baseline.
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-class-split-wire.json
+  → 998 of 999 covered units cleared; 1 failed (advanced_players_guide:equipment:spindle_of_perfect_
+    knowledge, the SAME pre-existing failure every prior wave's receipt names).
+CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... cargo run --locked --bin v06_work_inventory
+  → exit 0.
+```
+
+**Zero stamp loss**: 38,540 total units both before (`a9426b760`) and after this regen — identical
+count. **Board, producer's own `doneness_verdict`, re-derived live**:
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+print(len(U), dict(c), round(100*c['done']/len(U),4))
+"
+→ 38521 {'done': 10759, 'not-started': 19842, 'unmeasurable': 4825, 'deferred': 36, 'held': 2073,
+  'in-progress': 986} 27.9302
+```
+
+**10,759/38,521 (27.9302%) — byte-identical to the tip this cycle started from.** `docs/work-
+inventory.json` `git checkout --`'d immediately after, never staged, per the wave rule.
+
+`cargo run --locked --bin v06_corpus_trap_report -- --audit` → `TRAP_EXIT=2` (pre-existing, matches
+every prior wave). `mod-record`: **1 trap, 0 defects** (byte-identical to baseline). `wiring-class-
+mismatch`: **1,225** (byte-identical to `SD31-W8-INTEGRATE-001`'s own committed baseline of 1,225 —
+grep-counted directly, `grep -c "\[wiring-class-mismatch\]"`) — **confirmed NOT worsened.**
+
+### §5 — Full gate
+
+Launched early, in the background, kept alive while the rest of this cycle's work continued:
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E4-F1-005-verify.log
+CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-class-split-wire \
+  ./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+
+**This receipt is being written before the gate finished** (turn-budget discipline: "always land the
+commit and the receipt before returning, even if the gate has not finished"). Confirmed by direct log
+read at receipt time, stage by stage, **all PASS, every measured count at or above baseline**:
+`preflight-disk`/`preflight-oracle`/all six selftest stages/`pi-sweep`/`declared-pi-audit`/
+`audit-selftest`/`reclaim-selftest`/`driver-selftest`/`corpus-sweep-selftest` PASS; **`root-lib` 1939
+passed** (1936 baseline + this cycle's own 3 new tests); **`root-full` 6825 passed across 564 suites,
+all 529 `tests/*.rs` suites executed** (6822 baseline + 3, same three tests, `root-full` runs the lib
+target too); **`desktop` 457 passed** (byte-identical to baseline — no desktop-crate change this
+cycle); **`reach` 27 passed**; **`corpus-sweep` CLEAN** (byte-identical to §4's own separate run);
+**`supersession-gate` 116 objects, all clean**; **`frontend-install`/`frontend-test` 99/99**;
+**`frontend-typecheck` clean**. `clippy` and `class-dump` (the gate's final two stages) had not yet
+reported a result line at receipt-writing time — **`VERIFY_EXIT` not yet obtained for those two
+stages specifically; every stage that HAD reported by receipt time was PASS with no regression from
+this cycle's own known baseline**. Log path above; resumable by any later cycle or by re-running
+`--only clippy --only class-dump` against the warm cache.
+
+**One pre-existing, NOT this cycle's own, gate finding, logged `OPEN-ISSUES.md` row 150**:
+`site-dashboard-check` fails from ANY worktree whose checkout path differs from the one that last
+published `site/dashboard/PF1e-dashboard.json`, with ZERO real content drift — proven by a scrub-diff
+using the real `--check` script's own scrub logic verbatim (seed-then-overwrite, strip stamps
+recursively, drop `usage`/`retrospective`), which showed the ONLY surviving difference is `/unit_
+index/source_document`, an absolute path never stamp-stripped. Confirmed not caused or worsened by
+this cycle's two commits: `docs/work-inventory.json` is byte-identical between `a9426b760` and this
+cycle's tip (`git diff --stat` empty), and the producer only reads that file plus `$REPO_ROOT`
+(this worktree's own path) to build the field that differs. Did NOT "fix" it by publishing from this
+worktree (would relocate the defect to the next non-primary-checkout cycle, not close it). Left
+`site/dashboard/PF1e-dashboard.json` untouched. Root-cause and fix recommendation (scrub `unit_index.
+source_document` the same way `generated_at`/`generated_by` are already scrubbed) are in the row —
+out of this card's own file territory (`scripts/publish-site-dashboard.sh` is lane-2/observer
+tooling, not `pilot_compute.rs`/`archetype_resolver.rs`/`rules_tables/*`).
+
+### §6 — DoD
+
+1. `verify.sh` — see §5. Two of 27 stages (`clippy`, `class-dump`) had not yet produced a result line
+   at receipt-writing time; every stage that had was PASS, matching or exceeding this cycle's own
+   known baseline, with zero regression traceable to this cycle's two commits.
+2. `reach` — 27 passed (§5). This cycle adds no new player-facing family (a code-move plus a
+   record-level explanation addition on an ALREADY-reachable compute path), so no new `reach_gate.rs`
+   registration was needed; confirmed by the stage passing unchanged.
+3. `v06_corpus_trap_report -- --audit` — RED for the pre-existing `mod-record`(1 trap/0 defects) and
+   `wiring-class-mismatch`(1,225) reasons only, both **byte-identical** to `SD31-W8-INTEGRATE-001`'s
+   own committed baseline — confirmed not worsened, with the exact counts (§4).
+4. Guarded regen: zero stamp loss, confirmed §4 (38,540 units, both before and after).
+5. Wired-integration four-check audit: ran the forbidden-pattern grep
+   (`stub|mock|placeholder|not yet implemented|todo|fixme|hack|temporary`, case-insensitive) against
+   this cycle's own two commits' diff (`git diff 2c2616ebc..f39588863`) — the ONLY hit is this
+   cycle's own doc comment using "placeholder" to say what the new code is NOT ("not a stub or a
+   copy-pasted placeholder"), matching this codebase's own established convention for that exact
+   phrase elsewhere. Clean.
+6. Unsurfaced families: none new — the split moves existing, already-registered class functions
+   without changing their `reach_gate.rs` registration; the size-wiring addition extends an
+   already-reachable `explanations` surface for four already-in-scope races, no new family.
+7. Baseline moves: **not landed this cycle, honestly deferred.** `root-lib`/`root-full` measured
+   1939/6825 against a recorded 1936/6822 (+3 exactly this cycle's own three new tests, root-full's
+   +3 matching root-lib's +3 since root-full runs the lib target too), but `scripts/verify-baselines.
+   env`'s own convention raises baselines "from a FULL green gate's own SUMMARY BASELINE NOTES
+   block" — and this gate's `clippy`/`class-dump` stages had not yet reported at receipt time (§5).
+   Left `scripts/verify-baselines.env` untouched rather than bump it from a partial run; named as a
+   clean, mechanical follow-up (values already known: `BASELINE_ROOT_LIB_TESTS 1936 -> 1939`,
+   `BASELINE_ROOT_FULL_TESTS 6822 -> 6825`, `BASELINE_ROOT_TEST_BINARIES` unchanged at 564 — no new
+   `tests/*.rs` file, only new tests inside an existing module) for whichever cycle next confirms the
+   gate's final two stages.
+8. **On-screen verification — real, live, driven directly per the card's own instruction
+   (`verify-on-screen.sh` has no `class_feature` family and a known `race_trait` coordinate bug).**
+   `RUN_DESKTOP_AGENT=sd31e4f1005`, `DISPLAY=:77`. `apps/desktop/.claude/skills/run-desktop/
+   driver.sh launch` (after `npm ci` — `node_modules` was absent in this worktree; first `tauri dev`
+   build took ~4m20s under box load, one transient launch failure self-recovered by retrying with
+   `RUN_DESKTOP_WINDOW_TIMEOUT=120` once the binary was warm). Created a live character — Race:
+   `Kobold (B1)` (the real corpus-driven picker, not the retired 7-race hardcoded list), Class:
+   Fighter, level 1 — through the actual creation form (typed "Kobold" into the native race
+   `<select>`, which type-ahead-selected `Kobold (B1)`). Resulting sheet: **Size: Small**, **Armor
+   Class: 18** (the real PF1 Small +1 over the 17 Medium baseline), **Melee Attack Bonus: +4**
+   (carrying the same +1 size term) — genuinely live, on-screen, player-visible proof of the
+   universal size modifier this cycle's own commit makes provable one corpus row deep. Screenshot +
+   verify note: `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E4-F1-005/item8/
+   kobold-size-armor-class-18.{png,verify.md}` (the verify.md names honestly what this DOES and does
+   NOT prove — the AC number is real and on-screen; the new explanation record's own text is proven
+   by the 3 unit tests, not by a line-item on this particular screen, matching the same split this
+   program already accepts between DoD-8's screenshot and record-level provability).
+
+### Commits, this cycle
+
+- `2c2616ebc` — `refactor(sd31): split pilot_compute.rs into per-class modules (Slayer, Ultimate Combat)`
+- `f39588863` — `feat(sd31): record-level provability for the owed universal size-bonus wiring (§8)`
+
+### Corrections / near-misses this cycle caught itself
+
+- **Slayer split boundary, self-caught before committing.** First extraction used `slayer_start=
+  17029`, one line too early — it silently ate the closing `}` of the PRECEDING function
+  (`push_warpriest_other_features_deferred_diagnostic`), producing an unclosed-delimiter compile
+  error. Diagnosed by re-deriving the boundary from scratch with fresh `grep`/`awk` line-number reads
+  rather than trusting the first (mis-transcribed) reading; restored the file from git (`git checkout
+  --`) and redid the cut with the verified boundary (`17031`). Not landed, not shipped — caught at
+  `cargo check` before any commit.
+- **`goblin_size`'s book, verified rather than assumed.** The shipped corpus row lives at
+  `data/corpus/beastiary/race_trait/goblin/goblin_size.json` (`beastiary`, the misspelled Bestiary-1
+  directory, not `bestiary_2`) — read directly before citing it in the new function's doc comment,
+  per this program's own standing "verify each against its ACTUAL shipped path" rule.
+- **Grippli's coverage, checked empirically rather than inferred from its absence in the SD-27 test
+  file's name list.** A throwaway probe (`tests/zzz_grippli_probe.rs`, deleted before committing;
+  never staged) proved `compute_pilot_base_chassis` already resolves Grippli's size correctly before
+  writing the `SIZE_ONLY_RACE_TRAIT_BUNDLE` table, avoiding both an under-claim (leaving Grippli out
+  as "unsupported") and an over-claim (asserting it without checking).
+
+### Reclaim
+
+`scripts/reclaim.sh --apply` run at cycle end; bytes reclaimed recorded in the commit landing this
+receipt.
+
+### Branch tip
+
+`sd31/e4-classsplit-wire5`, pushed to `origin`. Exact tip SHA is the commit that lands this receipt;
+the integration cycle merges this branch onto `tranche/11`.
