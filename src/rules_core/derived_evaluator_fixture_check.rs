@@ -13,10 +13,12 @@
 //! field states. See `tests/derived_evaluator_fixture_check.rs`'s module
 //! doc for the four independent guarantees the original (`kind=equipment`,
 //! `compute_equipment_effects`) seam rests on — the `kind=monster`
-//! (`spell_like_ability_caster_level`, SD31-E6-F11-002) and `kind=spell`
-//! (`parse_caster_level_linear_duration`, SD31-E6-F2-006) seams added
-//! since restate the same four guarantees for their own evaluator/fixture
-//! pair rather than reusing that module's equipment-specific test names.
+//! (`spell_like_ability_caster_level`, SD31-E6-F11-002), `kind=spell`
+//! `DURATION:` (`parse_caster_level_linear_duration`, SD31-E6-F2-006) and
+//! `kind=spell` `RANGE:` (`spell_range_formula`, SD31-E6-F2-008) seams
+//! added since restate the same four guarantees for their own
+//! evaluator/fixture pair rather than reusing that module's
+//! equipment-specific test names.
 
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};
@@ -105,20 +107,27 @@ pub fn run_bar_check(repo_root: &Path) -> BarCheckReport {
     let equipment = run_equipment_bar_check(repo_root);
     let monster = run_monster_bar_check(repo_root);
     let spell = run_spell_bar_check(repo_root);
+    let spell_range = run_spell_range_bar_check(repo_root);
     let mut cleared = equipment.cleared;
     cleared.extend(monster.cleared);
     cleared.extend(spell.cleared);
+    cleared.extend(spell_range.cleared);
     let mut failures = equipment.failures;
     failures.extend(monster.failures);
     failures.extend(spell.failures);
+    failures.extend(spell_range.failures);
     let mut not_ingested = equipment.not_ingested;
     not_ingested.extend(monster.not_ingested);
     not_ingested.extend(spell.not_ingested);
+    not_ingested.extend(spell_range.not_ingested);
     BarCheckReport {
         cleared,
         failures,
         not_ingested,
-        fixtures_total: equipment.fixtures_total + monster.fixtures_total + spell.fixtures_total,
+        fixtures_total: equipment.fixtures_total
+            + monster.fixtures_total
+            + spell.fixtures_total
+            + spell_range.fixtures_total,
     }
 }
 
@@ -729,6 +738,351 @@ fn run_spell_bar_check(repo_root: &Path) -> BarCheckReport {
     }
 
     BarCheckReport { cleared, failures, not_ingested, fixtures_total }
+}
+
+/// A PF1 rules-defined `RANGE:` formula for the three caster-level-linear
+/// SPELLRANGE keywords ("Close", "Medium", "Long"). Unlike
+/// [`CasterLevelLinearFormula`] (a per-spell literal parsed out of that
+/// spell's own `DURATION:` token, which can vary spell to spell), this
+/// formula is a RULESET-level constant: every spell whose `RANGE:` token
+/// names one of these three keywords shares the identical formula, stated
+/// once by the pinned PCGen game mode itself --
+/// `system/gameModes/Pathfinder/miscinfo.lst` (part of this repo's own
+/// oracle pin, `scripts/pcgen-oracle-pin.env`'s `PCGEN_ORACLE_SPARSE_PATHS`
+/// already covers `system/gameModes/Pathfinder`), re-derived 2026-08-17:
+///
+/// ```text
+/// SPELLRANGE:CLOSE|floor(CASTERLEVEL/2)*5+25
+/// SPELLRANGE:MEDIUM|(CASTERLEVEL*10)+100
+/// SPELLRANGE:LONG|(CASTERLEVEL*40)+400
+/// ```
+///
+/// A structural derivation, exactly like [`CasterLevelLinearFormula`]: it
+/// states the formula's own base + rate, independent of any live caster
+/// level, never a resolved feet-at-level-N number (matching
+/// `render_pcgen_desc`'s own `CASTERLEVEL`-argument-drop policy, restated
+/// at [`parse_caster_level_linear_duration`]'s own doc comment).
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub struct SpellRangeFormula {
+    pub base_ft: i32,
+    pub rate_ft: i32,
+    pub per_levels: i32,
+}
+
+/// Looks up the fixed [`SpellRangeFormula`] for a corpus `RANGE:` token's
+/// value. Refuses (returns `None`) on anything other than the three exact
+/// keywords the ruleset states a caster-level formula for --
+/// `Personal`/`Touch`/a literal distance (`RANGE:30 ft.`)/`See text`/etc.
+/// are real `RANGE:` shapes this seam does not attempt: `Personal`/`Touch`
+/// carry no scaling at all, and a literal distance is already a resolved
+/// number with no formula to state.
+pub fn spell_range_formula(raw: &str) -> Option<SpellRangeFormula> {
+    match raw.trim() {
+        "Close" => Some(SpellRangeFormula { base_ft: 25, rate_ft: 5, per_levels: 2 }),
+        "Medium" => Some(SpellRangeFormula { base_ft: 100, rate_ft: 10, per_levels: 1 }),
+        "Long" => Some(SpellRangeFormula { base_ft: 400, rate_ft: 40, per_levels: 1 }),
+        _ => None,
+    }
+}
+
+/// Renders a [`SpellRangeFormula`] as player-facing text -- a literal,
+/// non-interpretive restatement of the ruleset formula, never an invented
+/// "official" Paizo phrasing this crate cannot verify against a licensed
+/// source; see `docs/governance/no-stub-mvp-doctrine.md`.
+pub fn format_spell_range_formula(formula: &SpellRangeFormula) -> String {
+    if formula.per_levels == 1 {
+        format!("{} ft. + {} ft. per caster level", formula.base_ft, formula.rate_ft)
+    } else {
+        format!(
+            "{} ft. + {} ft. per {} caster levels",
+            formula.base_ft, formula.rate_ft, formula.per_levels
+        )
+    }
+}
+
+/// One `kind=spell` `RANGE:` fixture row. Mirrors [`SpellFixture`]'s
+/// provenance shape; `expected_*` restates the ruleset's own formula
+/// (independently transcribed by `scripts/derive_spell_range_fixtures.py`
+/// straight from the same pinned `miscinfo.lst` this module's doc comment
+/// cites, never imported from this Rust code) so the bar check compares two
+/// independent readings of the SAME oracle file, not the corpus row against
+/// itself.
+#[derive(Debug, Clone)]
+pub struct SpellRangeFixture {
+    pub unit_id: String,
+    pub book: String,
+    pub record_key: String,
+    pub upstream_lst: String,
+    pub upstream_lst_sha256: String,
+    pub upstream_line: u64,
+    pub corpus_field: String,
+    pub expected_base_ft: i32,
+    pub expected_rate_ft: i32,
+    pub expected_per_levels: i32,
+}
+
+/// Reads the `spell_range_entries` array of the committed fixture file.
+/// Absent-key returns empty, same tolerant shape [`load_spell_fixtures`]
+/// uses, so an older fixture file (before this seam existed) still parses.
+pub fn load_spell_range_fixtures(repo_root: &Path) -> Vec<SpellRangeFixture> {
+    let path = repo_root.join(FIXTURE_RELATIVE_PATH);
+    let text = std::fs::read_to_string(&path)
+        .unwrap_or_else(|e| panic!("the committed fixture must be readable at {path:?}: {e}"));
+    let doc: serde_json::Value =
+        serde_json::from_str(&text).expect("the committed fixture must be valid JSON");
+    let Some(entries) = doc.get("spell_range_entries").and_then(|v| v.as_array()) else {
+        return Vec::new();
+    };
+    entries
+        .iter()
+        .map(|e| {
+            let expected = &e["expected"];
+            SpellRangeFixture {
+                unit_id: e["unit_id"].as_str().expect("unit_id").to_string(),
+                book: e["book"].as_str().expect("book").to_string(),
+                record_key: e["record_key"].as_str().expect("record_key").to_string(),
+                upstream_lst: e["upstream_lst"].as_str().expect("upstream_lst").to_string(),
+                upstream_lst_sha256: e["upstream_lst_sha256"]
+                    .as_str()
+                    .expect("upstream_lst_sha256")
+                    .to_string(),
+                upstream_line: e["upstream_line"].as_u64().expect("upstream_line"),
+                corpus_field: e["corpus_field"].as_str().expect("corpus_field").to_string(),
+                expected_base_ft: i32::try_from(
+                    expected["base_ft"].as_i64().expect("expected.base_ft"),
+                )
+                .expect("base_ft fits in i32"),
+                expected_rate_ft: i32::try_from(
+                    expected["rate_ft"].as_i64().expect("expected.rate_ft"),
+                )
+                .expect("rate_ft fits in i32"),
+                expected_per_levels: i32::try_from(
+                    expected["per_levels"].as_i64().expect("expected.per_levels"),
+                )
+                .expect("per_levels fits in i32"),
+            }
+        })
+        .collect()
+}
+
+/// Walks `data/corpus/<book>/spell/` once and returns every record's
+/// `RANGE:` raw token, keyed by the record's `data.key` -- the RANGE
+/// sibling of [`load_spell_durations`], same recursive-walk shape.
+fn load_spell_ranges(spell_dir: &Path) -> BTreeMap<String, String> {
+    let mut out = BTreeMap::new();
+    let mut stack = vec![spell_dir.to_path_buf()];
+    while let Some(dir) = stack.pop() {
+        let Ok(read_dir) = std::fs::read_dir(&dir) else { continue };
+        for entry in read_dir.flatten() {
+            let path = entry.path();
+            if path.is_dir() {
+                stack.push(path);
+                continue;
+            }
+            if path.extension().and_then(|e| e.to_str()) != Some("json") {
+                continue;
+            }
+            let Ok(text) = std::fs::read_to_string(&path) else { continue };
+            let Ok(doc) = serde_json::from_str::<serde_json::Value>(&text) else { continue };
+            let Some(key) = doc["data"]["key"].as_str() else { continue };
+            let Some(tokens) = doc["data"]["raw_tokens"].as_array() else { continue };
+            for t in tokens {
+                if t["key"].as_str() == Some("RANGE") {
+                    if let Some(v) = t["value"].as_str() {
+                        out.insert(key.to_string(), v.to_string());
+                    }
+                    break;
+                }
+            }
+        }
+    }
+    out
+}
+
+/// Every spell record, across all 8 ingested books, whose corpus `RANGE:`
+/// token names one of the three caster-level-linear keywords
+/// [`spell_range_formula`] resolves -- keyed by `(data/corpus book dir,
+/// record_key)`. Built for a real production consumer
+/// (`apps/desktop/src-tauri/src/spell_catalog.rs`'s
+/// `SpellCatalogEntryDto::range`), same shape and same caveat as
+/// [`all_spell_caster_level_durations`]: this walks every book once and
+/// returns everything parseable, not only the fixture-covered subset.
+pub fn all_spell_caster_level_ranges(repo_root: &Path) -> BTreeMap<(String, String), SpellRangeFormula> {
+    let mut out = BTreeMap::new();
+    for book in SPELL_CORPUS_BOOK_DIRS {
+        let Some(dir) = spell_corpus_dir_exists(repo_root, book) else { continue };
+        for (key, raw) in load_spell_ranges(&dir.join("spell")) {
+            if let Some(formula) = spell_range_formula(&raw) {
+                out.insert((book.to_string(), key), formula);
+            }
+        }
+    }
+    out
+}
+
+/// The `kind=spell` `RANGE:` half of [`run_bar_check`]. Reads the SAME
+/// `data/corpus/<book>/spell/` JSON cache [`run_spell_bar_check`] and the
+/// desktop app's spell catalog both read.
+fn run_spell_range_bar_check(repo_root: &Path) -> BarCheckReport {
+    let fixtures = load_spell_range_fixtures(repo_root);
+    let fixtures_total = fixtures.len();
+    let books: BTreeSet<String> = fixtures.iter().map(|f| f.book.clone()).collect();
+
+    let mut cleared = BTreeSet::new();
+    let mut failures: BTreeMap<String, String> = BTreeMap::new();
+    let mut not_ingested: BTreeMap<String, String> = BTreeMap::new();
+
+    for book in &books {
+        let Some(dir) = spell_corpus_dir_exists(repo_root, book) else {
+            for f in fixtures.iter().filter(|f| &f.book == book) {
+                not_ingested.insert(f.unit_id.clone(), book.clone());
+            }
+            continue;
+        };
+        let ranges = load_spell_ranges(&dir.join("spell"));
+
+        for fixture in fixtures.iter().filter(|f| &f.book == book) {
+            let Some(raw) = ranges.get(&fixture.record_key) else {
+                failures.insert(
+                    fixture.unit_id.clone(),
+                    format!(
+                        "{:?} does not resolve against {book}'s ingested spell cache",
+                        fixture.record_key
+                    ),
+                );
+                continue;
+            };
+            match spell_range_formula(raw) {
+                None => {
+                    failures.insert(
+                        fixture.unit_id.clone(),
+                        format!(
+                            "corpus row states {} but the evaluator produced no caster-level \
+                             range formula at all (raw RANGE: {raw:?})",
+                            fixture.corpus_field
+                        ),
+                    );
+                }
+                Some(formula)
+                    if formula.base_ft == fixture.expected_base_ft
+                        && formula.rate_ft == fixture.expected_rate_ft
+                        && formula.per_levels == fixture.expected_per_levels =>
+                {
+                    cleared.insert(fixture.unit_id.clone());
+                }
+                Some(formula) => {
+                    failures.insert(
+                        fixture.unit_id.clone(),
+                        format!(
+                            "corpus row {:?} states {}/{}/{}, evaluator produced {}/{}/{}",
+                            fixture.corpus_field,
+                            fixture.expected_base_ft,
+                            fixture.expected_rate_ft,
+                            fixture.expected_per_levels,
+                            formula.base_ft,
+                            formula.rate_ft,
+                            formula.per_levels
+                        ),
+                    );
+                }
+            }
+        }
+    }
+
+    BarCheckReport { cleared, failures, not_ingested, fixtures_total }
+}
+
+#[cfg(test)]
+mod spell_range_seam_tests {
+    use super::*;
+
+    #[test]
+    fn close_keyword_resolves_to_the_ruleset_formula() {
+        assert_eq!(
+            spell_range_formula("Close"),
+            Some(SpellRangeFormula { base_ft: 25, rate_ft: 5, per_levels: 2 })
+        );
+    }
+
+    #[test]
+    fn medium_keyword_resolves_to_the_ruleset_formula() {
+        assert_eq!(
+            spell_range_formula("Medium"),
+            Some(SpellRangeFormula { base_ft: 100, rate_ft: 10, per_levels: 1 })
+        );
+    }
+
+    #[test]
+    fn long_keyword_resolves_to_the_ruleset_formula() {
+        assert_eq!(
+            spell_range_formula("Long"),
+            Some(SpellRangeFormula { base_ft: 400, rate_ft: 40, per_levels: 1 })
+        );
+    }
+
+    // TDD red/green anchor: `RANGE:Personal` and `RANGE:Touch` carry no
+    // caster-level scaling at all -- the ruleset states no `SPELLRANGE:`
+    // formula for either -- so this seam must refuse rather than invent one.
+    #[test]
+    fn personal_and_touch_refuse_rather_than_guess() {
+        assert_eq!(spell_range_formula("Personal"), None);
+        assert_eq!(spell_range_formula("Touch"), None);
+    }
+
+    // A literal distance is already a resolved number, not a formula to
+    // state -- refuse rather than fabricate a "base + rate" shape for it.
+    #[test]
+    fn a_literal_distance_refuses_rather_than_guesses() {
+        assert_eq!(spell_range_formula("30 ft."), None);
+        assert_eq!(spell_range_formula("See text"), None);
+    }
+
+    #[test]
+    fn format_renders_the_close_formula_with_its_two_level_step() {
+        let f = SpellRangeFormula { base_ft: 25, rate_ft: 5, per_levels: 2 };
+        assert_eq!(format_spell_range_formula(&f), "25 ft. + 5 ft. per 2 caster levels");
+    }
+
+    #[test]
+    fn format_renders_the_medium_formula_with_its_one_level_step() {
+        let f = SpellRangeFormula { base_ft: 100, rate_ft: 10, per_levels: 1 };
+        assert_eq!(format_spell_range_formula(&f), "100 ft. + 10 ft. per caster level");
+    }
+
+    #[test]
+    fn run_spell_range_bar_check_clears_every_committed_fixture() {
+        let repo_root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+        let report = run_spell_range_bar_check(&repo_root);
+        assert!(
+            report.fixtures_total > 0,
+            "the committed fixture must carry at least one spell_range_entries row"
+        );
+        assert!(
+            report.not_ingested.is_empty(),
+            "every committed spell-range fixture's book must be ingested, got: {:?}",
+            report.not_ingested
+        );
+        assert!(
+            report.failures.is_empty(),
+            "every committed spell-range fixture must clear the bar, got {} failures, first \
+             few: {:?}",
+            report.failures.len(),
+            report.failures.iter().take(5).collect::<Vec<_>>()
+        );
+        assert_eq!(report.cleared.len(), report.fixtures_total);
+    }
+
+    // MUTATION PROOF: a fixture asserting a wrong expected value must make
+    // the bar check disagree, not silently pass.
+    #[test]
+    fn a_wrong_expected_base_ft_makes_the_evaluator_disagree() {
+        let real = spell_range_formula("Close").unwrap();
+        let wrong_expected_base_ft = 999;
+        assert_ne!(
+            real.base_ft, wrong_expected_base_ft,
+            "a corrupted expected value must genuinely disagree with the real formula"
+        );
+    }
 }
 
 #[cfg(test)]

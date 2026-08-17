@@ -14490,5 +14490,2796 @@
         "unit": "hours"
       }
     }
+  ],
+  "spell_range_token_family": "RANGE (caster-level-linear, PF1 SPELLRANGE ruleset formula)",
+  "spell_range_derivation": "PCGen RANGE:Close / RANGE:Medium / RANGE:Long -- PF1's three standard caster-level-linear range keywords. Unlike the DURATION family above, the formula is NOT per-spell literal text; it is a ruleset-level constant defined once by the pinned PCGen game mode's system/gameModes/Pathfinder/miscinfo.lst SPELLRANGE: rows (SPELLRANGE:CLOSE|floor(CASTERLEVEL/2)*5+25, SPELLRANGE:MEDIUM|(CASTERLEVEL*10)+100, SPELLRANGE:LONG|(CASTERLEVEL*40)+400), part of this repo's own oracle pin (PCGEN_ORACLE_SPARSE_PATHS already covers system/gameModes/Pathfinder). expected.base_ft/rate_ft/per_levels restate that formula's own three integers verbatim, independently re-transcribed by scripts/derive_spell_range_fixtures.py straight from miscinfo.lst (never imported from the Rust spell_range_formula() it feeds). Each entry's own corpus_field/upstream_lst/upstream_line prove the SPELL's own RANGE: token genuinely names one of the three keywords -- RANGE:Personal/Touch/a literal distance/\"See text\" carry no caster-level formula at all and are refused, not entered here.",
+  "spell_range_independence": "Two independent readings of the SAME pinned oracle checkout: the Rust spell_range_formula() hardcodes the three SPELLRANGE: formulas (cited in its own doc comment); scripts/derive_spell_range_fixtures.py re-reads miscinfo.lst's raw bytes at run time via a standalone regex and writes the result here as expected -- it does not call or import the Rust function. Per-entry, the RANGE: keyword itself is read from the upstream spell .lst bytes at the exact (path, line) the corpus record cites, independently sha256-hashed. The generator opens no file under data/corpus/, which is what run_spell_range_bar_check evaluates at check time and must therefore stay independent of.",
+  "spell_range_entries": [
+    {
+      "unit_id": "advanced_class_guide:spell:air_geyser",
+      "book": "advanced_class_guide",
+      "record_key": "Air Geyser",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+      "upstream_lst_sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+      "upstream_line": 14,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "advanced_class_guide:spell:climbing_beanstalk",
+      "book": "advanced_class_guide",
+      "record_key": "Climbing Beanstalk",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+      "upstream_lst_sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+      "upstream_line": 38,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "advanced_class_guide:spell:curse_of_burning_sleep",
+      "book": "advanced_class_guide",
+      "record_key": "Curse of Burning Sleep",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+      "upstream_lst_sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+      "upstream_line": 44,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "advanced_class_guide:spell:gentle_breeze",
+      "book": "advanced_class_guide",
+      "record_key": "Gentle Breeze",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+      "upstream_lst_sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+      "upstream_line": 61,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "advanced_class_guide:spell:mindlocked_messenger",
+      "book": "advanced_class_guide",
+      "record_key": "Mindlocked Messenger",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+      "upstream_lst_sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+      "upstream_line": 82,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "advanced_class_guide:spell:molten_orb",
+      "book": "advanced_class_guide",
+      "record_key": "Molten Orb",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+      "upstream_lst_sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+      "upstream_line": 86,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "advanced_class_guide:spell:nauseating_dart",
+      "book": "advanced_class_guide",
+      "record_key": "Nauseating Dart",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+      "upstream_lst_sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+      "upstream_line": 89,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "advanced_class_guide:spell:stone_discus",
+      "book": "advanced_class_guide",
+      "record_key": "Stone Discus",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+      "upstream_lst_sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+      "upstream_line": 117,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "advanced_class_guide:spell:thunderstomp",
+      "book": "advanced_class_guide",
+      "record_key": "Thunderstomp",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+      "upstream_lst_sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+      "upstream_line": 126,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:arrow_eruption",
+      "book": "advanced_players_guide",
+      "record_key": "Arrow Eruption",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+      "upstream_lst_sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+      "upstream_line": 26,
+      "corpus_field": "RANGE:Long",
+      "expected": {
+        "base_ft": 400,
+        "rate_ft": 40,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:break",
+      "book": "advanced_players_guide",
+      "record_key": "Break",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+      "upstream_lst_sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+      "upstream_line": 49,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:clashing_rocks",
+      "book": "advanced_players_guide",
+      "record_key": "Clashing Rocks",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+      "upstream_lst_sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+      "upstream_line": 64,
+      "corpus_field": "RANGE:Long",
+      "expected": {
+        "base_ft": 400,
+        "rate_ft": 40,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:contagious_flame",
+      "book": "advanced_players_guide",
+      "record_key": "Contagious Flame",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+      "upstream_lst_sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+      "upstream_line": 70,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:deafening_song_bolt",
+      "book": "advanced_players_guide",
+      "record_key": "Deafening Song Bolt",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+      "upstream_lst_sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+      "upstream_line": 81,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:dust_of_twilight",
+      "book": "advanced_players_guide",
+      "record_key": "Dust of Twilight",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+      "upstream_lst_sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+      "upstream_line": 93,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:expeditious_excavation",
+      "book": "advanced_players_guide",
+      "record_key": "Expeditious Excavation",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+      "upstream_lst_sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+      "upstream_line": 105,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:expend",
+      "book": "advanced_players_guide",
+      "record_key": "Expend",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+      "upstream_lst_sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+      "upstream_line": 106,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:firefall",
+      "book": "advanced_players_guide",
+      "record_key": "Firefall",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+      "upstream_lst_sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+      "upstream_line": 119,
+      "corpus_field": "RANGE:Long",
+      "expected": {
+        "base_ft": 400,
+        "rate_ft": 40,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:flare_burst",
+      "book": "advanced_players_guide",
+      "record_key": "Flare Burst",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+      "upstream_lst_sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+      "upstream_line": 121,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:foe_to_friend",
+      "book": "advanced_players_guide",
+      "record_key": "Foe to Friend",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+      "upstream_lst_sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+      "upstream_line": 124,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:gallant_inspiration",
+      "book": "advanced_players_guide",
+      "record_key": "Gallant Inspiration",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+      "upstream_lst_sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+      "upstream_line": 129,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:heroic_finale",
+      "book": "advanced_players_guide",
+      "record_key": "Heroic Finale",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+      "upstream_lst_sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+      "upstream_line": 139,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:hydraulic_push",
+      "book": "advanced_players_guide",
+      "record_key": "Hydraulic Push",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+      "upstream_lst_sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+      "upstream_line": 148,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:king_s_castle",
+      "book": "advanced_players_guide",
+      "record_key": "King's Castle",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+      "upstream_lst_sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+      "upstream_line": 158,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:knight_s_calling",
+      "book": "advanced_players_guide",
+      "record_key": "Knight's Calling",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+      "upstream_lst_sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+      "upstream_line": 159,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:memory_lapse",
+      "book": "advanced_players_guide",
+      "record_key": "Memory Lapse",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+      "upstream_lst_sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+      "upstream_line": 167,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:paladin_s_sacrifice",
+      "book": "advanced_players_guide",
+      "record_key": "Paladin's Sacrifice",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+      "upstream_lst_sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+      "upstream_line": 176,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:purging_finale",
+      "book": "advanced_players_guide",
+      "record_key": "Purging Finale",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+      "upstream_lst_sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+      "upstream_line": 186,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:saving_finale",
+      "book": "advanced_players_guide",
+      "record_key": "Saving Finale",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+      "upstream_lst_sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+      "upstream_line": 208,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:spark",
+      "book": "advanced_players_guide",
+      "record_key": "Spark",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+      "upstream_lst_sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+      "upstream_line": 225,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:stunning_finale",
+      "book": "advanced_players_guide",
+      "record_key": "Stunning Finale",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+      "upstream_lst_sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+      "upstream_line": 235,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:suffocation",
+      "book": "advanced_players_guide",
+      "record_key": "Suffocation",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+      "upstream_lst_sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+      "upstream_line": 236,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:timely_inspiration",
+      "book": "advanced_players_guide",
+      "record_key": "Timely Inspiration",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+      "upstream_lst_sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+      "upstream_line": 243,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "advanced_players_guide:spell:unwitting_ally",
+      "book": "advanced_players_guide",
+      "record_key": "Unwitting Ally",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+      "upstream_lst_sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+      "upstream_line": 258,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:acid_splash",
+      "book": "core_rulebook",
+      "record_key": "Acid Splash",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 12,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:animal_trance",
+      "book": "core_rulebook",
+      "record_key": "Animal Trance",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 22,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:baleful_polymorph",
+      "book": "core_rulebook",
+      "record_key": "Baleful Polymorph",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 43,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:banishment",
+      "book": "core_rulebook",
+      "record_key": "Banishment",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 45,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:binding",
+      "book": "core_rulebook",
+      "record_key": "Binding",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 54,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:bleed",
+      "book": "core_rulebook",
+      "record_key": "Bleed",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 58,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:blindness_deafness",
+      "book": "core_rulebook",
+      "record_key": "Blindness/Deafness",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 62,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:blindness_deafness_blindness_only",
+      "book": "core_rulebook",
+      "record_key": "Blindness/Deafness (Blindness Only)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 1438,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:cause_fear",
+      "book": "core_rulebook",
+      "record_key": "Cause Fear",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 80,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:chaos_hammer",
+      "book": "core_rulebook",
+      "record_key": "Chaos Hammer",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 83,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:circle_of_death",
+      "book": "core_rulebook",
+      "record_key": "Circle of Death",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 90,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:command",
+      "book": "core_rulebook",
+      "record_key": "Command",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 97,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:confusion_lesser",
+      "book": "core_rulebook",
+      "record_key": "Confusion (Lesser)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 106,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:create_greater_undead",
+      "book": "core_rulebook",
+      "record_key": "Create Greater Undead",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 118,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:create_undead",
+      "book": "core_rulebook",
+      "record_key": "Create Undead",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 119,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:dancing_lights",
+      "book": "core_rulebook",
+      "record_key": "Dancing Lights",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 136,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:daze",
+      "book": "core_rulebook",
+      "record_key": "Daze",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 140,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:daze_monster",
+      "book": "core_rulebook",
+      "record_key": "Daze Monster",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 141,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:delayed_blast_fireball",
+      "book": "core_rulebook",
+      "record_key": "Delayed Blast Fireball",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 148,
+      "corpus_field": "RANGE:Long",
+      "expected": {
+        "base_ft": 400,
+        "rate_ft": 40,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:detect_poison",
+      "book": "core_rulebook",
+      "record_key": "Detect Poison",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 158,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:dimension_door",
+      "book": "core_rulebook",
+      "record_key": "Dimension Door",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 165,
+      "corpus_field": "RANGE:Long",
+      "expected": {
+        "base_ft": 400,
+        "rate_ft": 40,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:dismissal",
+      "book": "core_rulebook",
+      "record_key": "Dismissal",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 173,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:dispel_magic",
+      "book": "core_rulebook",
+      "record_key": "Dispel Magic",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 178,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:dispel_magic_greater",
+      "book": "core_rulebook",
+      "record_key": "Dispel Magic (Greater)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 179,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:disrupt_undead",
+      "book": "core_rulebook",
+      "record_key": "Disrupt Undead",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 181,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:earthquake",
+      "book": "core_rulebook",
+      "record_key": "Earthquake",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 196,
+      "corpus_field": "RANGE:Long",
+      "expected": {
+        "base_ft": 400,
+        "rate_ft": 40,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:energy_drain",
+      "book": "core_rulebook",
+      "record_key": "Energy Drain",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 203,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:enervation",
+      "book": "core_rulebook",
+      "record_key": "Enervation",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 204,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:enthrall",
+      "book": "core_rulebook",
+      "record_key": "Enthrall",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 208,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:erase",
+      "book": "core_rulebook",
+      "record_key": "Erase",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 210,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:feeblemind",
+      "book": "core_rulebook",
+      "record_key": "Feeblemind",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 225,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:flare",
+      "book": "core_rulebook",
+      "record_key": "Flare",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 238,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:flesh_to_stone",
+      "book": "core_rulebook",
+      "record_key": "Flesh to Stone",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 239,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:holy_smite",
+      "book": "core_rulebook",
+      "record_key": "Holy Smite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 307,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:hypnotic_pattern",
+      "book": "core_rulebook",
+      "record_key": "Hypnotic Pattern",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 311,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:hypnotism",
+      "book": "core_rulebook",
+      "record_key": "Hypnotism",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 312,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:illusory_wall",
+      "book": "core_rulebook",
+      "record_key": "Illusory Wall",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 319,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:insanity",
+      "book": "core_rulebook",
+      "record_key": "Insanity",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 332,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:mage_hand",
+      "book": "core_rulebook",
+      "record_key": "Mage Hand",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 365,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:magic_mouth",
+      "book": "core_rulebook",
+      "record_key": "Magic Mouth",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 381,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:maze",
+      "book": "core_rulebook",
+      "record_key": "Maze",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 390,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:meteor_swarm",
+      "book": "core_rulebook",
+      "record_key": "Meteor Swarm",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 394,
+      "corpus_field": "RANGE:Long",
+      "expected": {
+        "base_ft": 400,
+        "rate_ft": 40,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:mind_blank",
+      "book": "core_rulebook",
+      "record_key": "Mind Blank",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 395,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:mind_fog",
+      "book": "core_rulebook",
+      "record_key": "Mind Fog",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 396,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:modify_memory",
+      "book": "core_rulebook",
+      "record_key": "Modify Memory",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 405,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:move_earth",
+      "book": "core_rulebook",
+      "record_key": "Move Earth",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 408,
+      "corpus_field": "RANGE:Long",
+      "expected": {
+        "base_ft": 400,
+        "rate_ft": 40,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:open_close",
+      "book": "core_rulebook",
+      "record_key": "Open/Close",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 417,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:order_s_wrath",
+      "book": "core_rulebook",
+      "record_key": "Order's Wrath",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 418,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:phantasmal_killer",
+      "book": "core_rulebook",
+      "record_key": "Phantasmal Killer",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 430,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:planar_ally",
+      "book": "core_rulebook",
+      "record_key": "Planar Ally",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 434,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:planar_ally_greater",
+      "book": "core_rulebook",
+      "record_key": "Planar Ally (Greater)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 435,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:polar_ray",
+      "book": "core_rulebook",
+      "record_key": "Polar Ray",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 446,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:power_word_blind",
+      "book": "core_rulebook",
+      "record_key": "Power Word Blind",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 450,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:power_word_kill",
+      "book": "core_rulebook",
+      "record_key": "Power Word Kill",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 451,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:power_word_stun",
+      "book": "core_rulebook",
+      "record_key": "Power Word Stun",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 452,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:pyrotechnics",
+      "book": "core_rulebook",
+      "record_key": "Pyrotechnics",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 471,
+      "corpus_field": "RANGE:Long",
+      "expected": {
+        "base_ft": 400,
+        "rate_ft": 40,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:ray_of_frost",
+      "book": "core_rulebook",
+      "record_key": "Ray of Frost",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 481,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:remove_paralysis",
+      "book": "core_rulebook",
+      "record_key": "Remove Paralysis",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 493,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:scintillating_pattern",
+      "book": "core_rulebook",
+      "record_key": "Scintillating Pattern",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 514,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:shambler",
+      "book": "core_rulebook",
+      "record_key": "Shambler",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 535,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:shatter",
+      "book": "core_rulebook",
+      "record_key": "Shatter",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 537,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:soul_bind",
+      "book": "core_rulebook",
+      "record_key": "Soul Bind",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 558,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:sound_burst",
+      "book": "core_rulebook",
+      "record_key": "Sound Burst",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 559,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:stabilize",
+      "book": "core_rulebook",
+      "record_key": "Stabilize",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 573,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:stone_to_flesh",
+      "book": "core_rulebook",
+      "record_key": "Stone to Flesh",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 580,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:storm_of_vengeance",
+      "book": "core_rulebook",
+      "record_key": "Storm of Vengeance",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 581,
+      "corpus_field": "RANGE:Long",
+      "expected": {
+        "base_ft": 400,
+        "rate_ft": 40,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:summon_swarm",
+      "book": "core_rulebook",
+      "record_key": "Summon Swarm",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 603,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:sunburst",
+      "book": "core_rulebook",
+      "record_key": "Sunburst",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 605,
+      "corpus_field": "RANGE:Long",
+      "expected": {
+        "base_ft": 400,
+        "rate_ft": 40,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:transmute_metal_to_wood",
+      "book": "core_rulebook",
+      "record_key": "Transmute Metal to Wood",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 633,
+      "corpus_field": "RANGE:Long",
+      "expected": {
+        "base_ft": 400,
+        "rate_ft": 40,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:trap_the_soul",
+      "book": "core_rulebook",
+      "record_key": "Trap the Soul",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 637,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:undeath_to_death",
+      "book": "core_rulebook",
+      "record_key": "Undeath to Death",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 643,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:undetectable_alignment",
+      "book": "core_rulebook",
+      "record_key": "Undetectable Alignment",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 644,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:unholy_blight",
+      "book": "core_rulebook",
+      "record_key": "Unholy Blight",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 647,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "core_rulebook:spell:weird",
+      "book": "core_rulebook",
+      "record_key": "Weird",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "upstream_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "upstream_line": 670,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "occult_adventures:spell:deja_vu",
+      "book": "occult_adventures",
+      "record_key": "Deja Vu",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+      "upstream_lst_sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31",
+      "upstream_line": 27,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "occult_adventures:spell:explode_head",
+      "book": "occult_adventures",
+      "record_key": "Explode Head",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+      "upstream_lst_sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31",
+      "upstream_line": 51,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "occult_adventures:spell:id_insinuation_i",
+      "book": "occult_adventures",
+      "record_key": "Id Insinuation I",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+      "upstream_lst_sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31",
+      "upstream_line": 56,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "occult_adventures:spell:id_insinuation_ii",
+      "book": "occult_adventures",
+      "record_key": "Id Insinuation II",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+      "upstream_lst_sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31",
+      "upstream_line": 57,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "occult_adventures:spell:id_insinuation_iii",
+      "book": "occult_adventures",
+      "record_key": "Id Insinuation III",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+      "upstream_lst_sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31",
+      "upstream_line": 58,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "occult_adventures:spell:id_insinuation_iv",
+      "book": "occult_adventures",
+      "record_key": "Id Insinuation IV",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+      "upstream_lst_sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31",
+      "upstream_line": 59,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "occult_adventures:spell:microcosm",
+      "book": "occult_adventures",
+      "record_key": "Microcosm",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+      "upstream_lst_sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31",
+      "upstream_line": 74,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "occult_adventures:spell:mind_swap_major",
+      "book": "occult_adventures",
+      "record_key": "Mind Swap (Major)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+      "upstream_lst_sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31",
+      "upstream_line": 77,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "occult_adventures:spell:mind_thrust_i",
+      "book": "occult_adventures",
+      "record_key": "Mind Thrust I",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+      "upstream_lst_sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31",
+      "upstream_line": 78,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "occult_adventures:spell:mind_thrust_ii",
+      "book": "occult_adventures",
+      "record_key": "Mind Thrust II",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+      "upstream_lst_sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31",
+      "upstream_line": 79,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "occult_adventures:spell:mind_thrust_iii",
+      "book": "occult_adventures",
+      "record_key": "Mind Thrust III",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+      "upstream_lst_sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31",
+      "upstream_line": 80,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "occult_adventures:spell:mind_thrust_iv",
+      "book": "occult_adventures",
+      "record_key": "Mind Thrust IV",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+      "upstream_lst_sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31",
+      "upstream_line": 81,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "occult_adventures:spell:mind_thrust_v",
+      "book": "occult_adventures",
+      "record_key": "Mind Thrust V",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+      "upstream_lst_sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31",
+      "upstream_line": 82,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "occult_adventures:spell:mind_thrust_vi",
+      "book": "occult_adventures",
+      "record_key": "Mind Thrust VI",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+      "upstream_lst_sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31",
+      "upstream_line": 83,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "occult_adventures:spell:mindwipe",
+      "book": "occult_adventures",
+      "record_key": "Mindwipe",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+      "upstream_lst_sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31",
+      "upstream_line": 86,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "occult_adventures:spell:parchment_swarm",
+      "book": "occult_adventures",
+      "record_key": "Parchment Swarm",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+      "upstream_lst_sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31",
+      "upstream_line": 95,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "occult_adventures:spell:psychic_crush_i",
+      "book": "occult_adventures",
+      "record_key": "Psychic Crush I",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+      "upstream_lst_sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31",
+      "upstream_line": 101,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "occult_adventures:spell:psychic_crush_ii",
+      "book": "occult_adventures",
+      "record_key": "Psychic Crush II",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+      "upstream_lst_sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31",
+      "upstream_line": 102,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "occult_adventures:spell:psychic_crush_iii",
+      "book": "occult_adventures",
+      "record_key": "Psychic Crush III",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+      "upstream_lst_sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31",
+      "upstream_line": 103,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "occult_adventures:spell:psychic_crush_iv",
+      "book": "occult_adventures",
+      "record_key": "Psychic Crush IV",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+      "upstream_lst_sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31",
+      "upstream_line": 104,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "occult_adventures:spell:psychic_crush_v",
+      "book": "occult_adventures",
+      "record_key": "Psychic Crush V",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+      "upstream_lst_sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31",
+      "upstream_line": 105,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "occult_adventures:spell:psychic_reading",
+      "book": "occult_adventures",
+      "record_key": "Psychic Reading",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+      "upstream_lst_sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31",
+      "upstream_line": 107,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "occult_adventures:spell:telekinetic_projectile",
+      "book": "occult_adventures",
+      "record_key": "Telekinetic Projectile",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
+      "upstream_lst_sha256": "a979548b72ec236ee7c63ef86ce53a17535039e5084ed948c9a709a5c45a7f31",
+      "upstream_line": 128,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_combat:spell:damp_powder",
+      "book": "ultimate_combat",
+      "record_key": "Damp Powder",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+      "upstream_lst_sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0",
+      "upstream_line": 28,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_combat:spell:destabilize_powder",
+      "book": "ultimate_combat",
+      "record_key": "Destabilize Powder",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+      "upstream_lst_sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0",
+      "upstream_line": 35,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_combat:spell:energy_siege_shot_greater",
+      "book": "ultimate_combat",
+      "record_key": "Energy Siege Shot (Greater)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+      "upstream_lst_sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0",
+      "upstream_line": 42,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_combat:spell:flash_fire",
+      "book": "ultimate_combat",
+      "record_key": "Flash Fire",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+      "upstream_lst_sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0",
+      "upstream_line": 46,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_combat:spell:liberating_command",
+      "book": "ultimate_combat",
+      "record_key": "Liberating Command",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+      "upstream_lst_sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0",
+      "upstream_line": 63,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_combat:spell:litany_of_eloquence",
+      "book": "ultimate_combat",
+      "record_key": "Litany of Eloquence",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+      "upstream_lst_sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0",
+      "upstream_line": 69,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_combat:spell:litany_of_entanglement",
+      "book": "ultimate_combat",
+      "record_key": "Litany of Entanglement",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+      "upstream_lst_sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0",
+      "upstream_line": 70,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_combat:spell:litany_of_escape",
+      "book": "ultimate_combat",
+      "record_key": "Litany of Escape",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+      "upstream_lst_sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0",
+      "upstream_line": 71,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_combat:spell:litany_of_madness",
+      "book": "ultimate_combat",
+      "record_key": "Litany of Madness",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+      "upstream_lst_sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0",
+      "upstream_line": 72,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_combat:spell:litany_of_righteousness",
+      "book": "ultimate_combat",
+      "record_key": "Litany of Righteousness",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+      "upstream_lst_sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0",
+      "upstream_line": 73,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_combat:spell:litany_of_sloth",
+      "book": "ultimate_combat",
+      "record_key": "Litany of Sloth",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+      "upstream_lst_sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0",
+      "upstream_line": 75,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_combat:spell:litany_of_thunder",
+      "book": "ultimate_combat",
+      "record_key": "Litany of Thunder",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+      "upstream_lst_sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0",
+      "upstream_line": 76,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_combat:spell:litany_of_vengeance",
+      "book": "ultimate_combat",
+      "record_key": "Litany of Vengeance",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+      "upstream_lst_sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0",
+      "upstream_line": 77,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_combat:spell:litany_of_weakness",
+      "book": "ultimate_combat",
+      "record_key": "Litany of Weakness",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+      "upstream_lst_sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0",
+      "upstream_line": 79,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_combat:spell:mind_blank_communal",
+      "book": "ultimate_combat",
+      "record_key": "Mind Blank (Communal)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+      "upstream_lst_sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0",
+      "upstream_line": 86,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_combat:spell:obsidian_flow",
+      "book": "ultimate_combat",
+      "record_key": "Obsidian Flow",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+      "upstream_lst_sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0",
+      "upstream_line": 95,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_combat:spell:pilfering_hand",
+      "book": "ultimate_combat",
+      "record_key": "Pilfering Hand",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+      "upstream_lst_sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0",
+      "upstream_line": 101,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_combat:spell:recoil_fire",
+      "book": "ultimate_combat",
+      "record_key": "Recoil Fire",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+      "upstream_lst_sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0",
+      "upstream_line": 110,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_combat:spell:spontaneous_immolation",
+      "book": "ultimate_combat",
+      "record_key": "Spontaneous Immolation",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+      "upstream_lst_sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0",
+      "upstream_line": 129,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "ultimate_combat:spell:stabilize_powder",
+      "book": "ultimate_combat",
+      "record_key": "Stabilize Powder",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+      "upstream_lst_sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0",
+      "upstream_line": 130,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_combat:spell:telekinetic_assembly",
+      "book": "ultimate_combat",
+      "record_key": "Telekinetic Assembly",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+      "upstream_lst_sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0",
+      "upstream_line": 138,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_combat:spell:telekinetic_charge",
+      "book": "ultimate_combat",
+      "record_key": "Telekinetic Charge",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+      "upstream_lst_sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0",
+      "upstream_line": 139,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_combat:spell:thunder_fire",
+      "book": "ultimate_combat",
+      "record_key": "Thunder Fire",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+      "upstream_lst_sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0",
+      "upstream_line": 141,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_combat:spell:twisted_space",
+      "book": "ultimate_combat",
+      "record_key": "Twisted Space",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+      "upstream_lst_sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0",
+      "upstream_line": 144,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_combat:spell:weaken_powder",
+      "book": "ultimate_combat",
+      "record_key": "Weaken Powder",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+      "upstream_lst_sha256": "b3621f212f8bdde1d0e9a8861c43f7587bb493909a46c372ca0616b37f0706a0",
+      "upstream_line": 150,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_intrigue:spell:conditional_curse",
+      "book": "ultimate_intrigue",
+      "record_key": "Conditional Curse",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+      "upstream_lst_sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324",
+      "upstream_line": 26,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_intrigue:spell:crime_of_opportunity",
+      "book": "ultimate_intrigue",
+      "record_key": "Crime of Opportunity",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+      "upstream_lst_sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324",
+      "upstream_line": 32,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_intrigue:spell:curse_of_the_outcast",
+      "book": "ultimate_intrigue",
+      "record_key": "Curse of the Outcast",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+      "upstream_lst_sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324",
+      "upstream_line": 35,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_intrigue:spell:deflect_blame",
+      "book": "ultimate_intrigue",
+      "record_key": "Deflect Blame",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+      "upstream_lst_sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324",
+      "upstream_line": 39,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_intrigue:spell:entice_fey",
+      "book": "ultimate_intrigue",
+      "record_key": "Entice Fey",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+      "upstream_lst_sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324",
+      "upstream_line": 49,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_intrigue:spell:entice_fey_greater",
+      "book": "ultimate_intrigue",
+      "record_key": "Entice Fey (Greater)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+      "upstream_lst_sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324",
+      "upstream_line": 50,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_intrigue:spell:life_of_crime",
+      "book": "ultimate_intrigue",
+      "record_key": "Life of Crime",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+      "upstream_lst_sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324",
+      "upstream_line": 72,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_intrigue:spell:permanent_hallucination",
+      "book": "ultimate_intrigue",
+      "record_key": "Permanent Hallucination",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+      "upstream_lst_sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324",
+      "upstream_line": 84,
+      "corpus_field": "RANGE:Long",
+      "expected": {
+        "base_ft": 400,
+        "rate_ft": 40,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "ultimate_intrigue:spell:urban_step",
+      "book": "ultimate_intrigue",
+      "record_key": "Urban Step",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_spells.lst",
+      "upstream_lst_sha256": "5f4a23b7b02b3d3b2cd4a20d8f06ec24f49e39592d0822d32cdb80d13f3e6324",
+      "upstream_line": 110,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:spell:agonize",
+      "book": "ultimate_magic",
+      "record_key": "Agonize",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+      "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+      "upstream_line": 14,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:spell:arrow_of_law",
+      "book": "ultimate_magic",
+      "record_key": "Arrow of Law",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+      "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+      "upstream_line": 22,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:spell:blood_crow_strike",
+      "book": "ultimate_magic",
+      "record_key": "Blood Crow Strike",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+      "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+      "upstream_line": 35,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:spell:bungle",
+      "book": "ultimate_magic",
+      "record_key": "Bungle",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+      "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+      "upstream_line": 39,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:spell:burst_of_nettles",
+      "book": "ultimate_magic",
+      "record_key": "Burst of Nettles",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+      "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+      "upstream_line": 41,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:spell:cackling_skull",
+      "book": "ultimate_magic",
+      "record_key": "Cackling Skull",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+      "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+      "upstream_line": 42,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:spell:contagion_greater",
+      "book": "ultimate_magic",
+      "record_key": "Contagion (Greater)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+      "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+      "upstream_line": 51,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:spell:curse_major",
+      "book": "ultimate_magic",
+      "record_key": "Curse (Major)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+      "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+      "upstream_line": 60,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:spell:curse_of_disgust",
+      "book": "ultimate_magic",
+      "record_key": "Curse of Disgust",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+      "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+      "upstream_line": 62,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:spell:daze_mass",
+      "book": "ultimate_magic",
+      "record_key": "Daze (Mass)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+      "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+      "upstream_line": 71,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:spell:delusional_pride",
+      "book": "ultimate_magic",
+      "record_key": "Delusional Pride",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+      "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+      "upstream_line": 78,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:spell:diagnose_disease",
+      "book": "ultimate_magic",
+      "record_key": "Diagnose Disease",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+      "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+      "upstream_line": 79,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:spell:dread_bolt",
+      "book": "ultimate_magic",
+      "record_key": "Dread Bolt",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+      "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+      "upstream_line": 85,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:spell:eldritch_fever",
+      "book": "ultimate_magic",
+      "record_key": "Eldritch Fever",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+      "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+      "upstream_line": 89,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:spell:epidemic",
+      "book": "ultimate_magic",
+      "record_key": "Epidemic",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+      "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+      "upstream_line": 91,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:spell:forbid_action",
+      "book": "ultimate_magic",
+      "record_key": "Forbid Action",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+      "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+      "upstream_line": 100,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:spell:fumbletongue",
+      "book": "ultimate_magic",
+      "record_key": "Fumbletongue",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+      "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+      "upstream_line": 107,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:spell:haunting_choir",
+      "book": "ultimate_magic",
+      "record_key": "Haunting Choir",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+      "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+      "upstream_line": 110,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:spell:ice_crystal_teleport",
+      "book": "ultimate_magic",
+      "record_key": "Ice Crystal Teleport",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+      "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+      "upstream_line": 118,
+      "corpus_field": "RANGE:Long",
+      "expected": {
+        "base_ft": 400,
+        "rate_ft": 40,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:spell:murderous_command",
+      "book": "ultimate_magic",
+      "record_key": "Murderous Command",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+      "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+      "upstream_line": 150,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:spell:persuasive_goad",
+      "book": "ultimate_magic",
+      "record_key": "Persuasive Goad",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+      "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+      "upstream_line": 157,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:spell:rain_of_frogs",
+      "book": "ultimate_magic",
+      "record_key": "Rain of Frogs",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+      "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+      "upstream_line": 168,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:spell:reprobation",
+      "book": "ultimate_magic",
+      "record_key": "Reprobation",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+      "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+      "upstream_line": 174,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:spell:resonating_word",
+      "book": "ultimate_magic",
+      "record_key": "Resonating Word",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+      "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+      "upstream_line": 175,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:spell:shadow_step",
+      "book": "ultimate_magic",
+      "record_key": "Shadow Step",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+      "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+      "upstream_line": 187,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:spell:shard_of_chaos",
+      "book": "ultimate_magic",
+      "record_key": "Shard of Chaos",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+      "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+      "upstream_line": 189,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:spell:sonic_thrust",
+      "book": "ultimate_magic",
+      "record_key": "Sonic Thrust",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+      "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+      "upstream_line": 198,
+      "corpus_field": "RANGE:Long",
+      "expected": {
+        "base_ft": 400,
+        "rate_ft": 40,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:spell:soothe_construct",
+      "book": "ultimate_magic",
+      "record_key": "Soothe Construct",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+      "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+      "upstream_line": 199,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:spell:spear_of_purity",
+      "book": "ultimate_magic",
+      "record_key": "Spear of Purity",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+      "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+      "upstream_line": 200,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:spell:spit_venom",
+      "book": "ultimate_magic",
+      "record_key": "Spit Venom",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+      "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+      "upstream_line": 201,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:spell:steal_voice",
+      "book": "ultimate_magic",
+      "record_key": "Steal Voice",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+      "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+      "upstream_line": 202,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:spell:tar_ball",
+      "book": "ultimate_magic",
+      "record_key": "Tar Ball",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+      "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+      "upstream_line": 218,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:spell:unnatural_lust",
+      "book": "ultimate_magic",
+      "record_key": "Unnatural Lust",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+      "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+      "upstream_line": 232,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:spell:word_of_resolve",
+      "book": "ultimate_magic",
+      "record_key": "Word of Resolve",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
+      "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
+      "upstream_line": 251,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    }
   ]
 }
