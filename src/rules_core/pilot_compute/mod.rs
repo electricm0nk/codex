@@ -9092,6 +9092,12 @@ const ALTERNATE_TRAIT_SAVE_BONUSES: &[(&str, &str, i16, i16, i16)] = &[
     // `BONUS:COMBAT|INITIATIVE|4|TYPE=Racial`, which this engine totals no
     // initiative for and therefore deliberately does not model here.
     ("Half-Elf ~ Mismatched", "race:half-elf", 0, -2, 0),
+    // SD-31-E6-F4-003 (ARG's own Strix chassis batch, 2026-08-16), wired
+    // SD31-W9-INTEGRATE-001 (`arg_abilities_race.lst:1149-1153`): both
+    // `BONUS:SAVE|<Save>|1|TYPE=Racial`, untyped, landing on two DIFFERENT
+    // saves from Strix's own skill-bonus pair below.
+    ("Strix ~ Nimble", "race:strix", 0, 1, 0),
+    ("Strix ~ Tough", "race:strix", 1, 0, 0),
 ];
 
 /// The Fortitude / Reflex / Will contribution of this character's chosen
@@ -10082,6 +10088,13 @@ const ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES: &[(&str, &str, i16, i16, i16)] = &
     // SD-31 Epic 1-F2 (2026-08-15). `BONUS:SKILL|Diplomacy,Intimidate|2|
     // TYPE=Racial` -- Diplomacy has no total here, so only Intimidate lands.
     ("Grippli ~ Princely", "race:grippli", 0, 2, 0),
+    // SD-31-E6-F4-003 (ARG's own Strix chassis batch, 2026-08-16), wired
+    // SD31-W9-INTEGRATE-001 (`arg_abilities_race.lst:1149-1153`):
+    // `BONUS:SKILL|Intimidate|2` and `BONUS:SKILL|Bluff,Diplomacy,Climb|2` --
+    // only Intimidate and Climb are tracked totals here, Bluff/Diplomacy
+    // are not.
+    ("Strix ~ Frightening", "race:strix", 0, 2, 0),
+    ("Strix ~ Wing-Clipped", "race:strix", 2, 0, 0),
 ];
 
 /// The Climb / Intimidate / Swim racial bonus this character's chosen
