@@ -22568,3 +22568,309 @@ reclaimed-bytes figure.
 fully reconciled — see §3). `done %`: 30.7053% → 30.7079%. Reachable ceiling: 98.95%
 (38,115/38,521), unchanged. `ambiguous` wiring-class population: 406 units, unchanged. Race
 attribution: FROZEN, untouched. Supersession Register: PROPOSED, NOT applied, untouched.
+
+## Cycle `SD31-E4-F2-004` (`RETRO_ACTOR=sd31-cf-pools`) — 2026-08-17, `epic-4-mechanism`: Unchained Barbarian's own Rage Power chooser + a PU-wide roster-id false-grounding audit finding, fixed
+
+**Role:** `sd31-cf-pools`. **Starting HEAD:** `10c666125` (`docs(sd31): Decision 15 -- the 13
+.COPY= spell variants have a real path; exclusion withdrawn`), confirmed a descendant of
+`origin/tranche/11`'s tip (the worktree's own branch at cycle start,
+`worktree-wf_c9995ce5-db0-5`, was NOT descended from tranche/11 -- it carried an unrelated
+`site/` content branch's tip. Per the mandatory branch-state protocol (package dir absent,
+`git status --porcelain` clean): `git fetch origin && git reset --hard origin/tranche/11`.
+**Branch:** `sd31/cf-pools-wave13`, pushed to origin (commit `67704e839`). **Oracle SHA:**
+`7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/verify.sh --only preflight-oracle` PASS
+at cycle start).
+
+### §1 -- What this cycle did
+
+Two real, evidenced fixes to `classify()`'s `Kind::ClassFeature` magnitude-grounding path, both
+in file territory this card owns (`src/rules_core/pilot_compute/mod.rs`,
+`src/bin/v06_work_inventory.rs`, `apps/desktop/src-tauri/src/pf1_adapter.rs`):
+
+**1. The matcher's known gap, as dispatched.** `CLASS_FEATURE_POOLS`' `"Unchained Rage Power"`
+entry named owner `"barbarian"` (the BASE class), folding a distinct `decisions.md §10`
+AMENDMENT-protected class into its base -- exactly the "free ride"
+`SD31-E4-F2-003` (wave 12) found live: `probe_class_feature_effect_wiring` maps every wired
+key to `class_books.get(owner)`, so `pathfinder_unchained`'s own records were mapped to book
+`core_rulebook`, and `classify()`'s book-attribution guard correctly refused to credit them.
+Re-derived the probe first (`--class-feature-probe`): `wired 21` (not the dispatch brief's
+stale "19"), confirming `Unchained Rage Power ~ Superstition` was already counted wired
+under the wrong book.
+
+Fixed by giving Unchained Barbarian its own, genuinely separate chooser:
+`UNCHAINED_BARBARIAN_RAGE_POWER_SLOTS` (10 numbered slots, the identical grant cadence the
+base class's own slots use, `pu_abilities_class.lst:328-337`'s own gate levels) and
+`UNCHAINED_RAGE_POWER_POOL` (the real, corpus-verified 54-member Unchained Rage Power pool,
+`grep -oP '(?<=KEY:Unchained Rage Power ~ )[^\t]+' pu_abilities_class.lst | sort -u`) in
+`pilot_compute/mod.rs`; `unchained_barbarian_selected_rage_power()`; Superstition wired via
+`barbarian_superstition_save_bonus` (the SAME real formula the base class already proved --
+reused, not duplicated, since `Unchained Rage Power ~ Superstition`'s own
+`BONUS:VAR|SuperstitionSaveBonus|2+floor(RagePowersLVL/4)` token is byte-identical in shape,
+and its own `RagePowersLVL` is `BONUS:VAR|RagePowersLVL|BarbarianLVL` on the Unchained
+Barbarian's own internal `Rage Powers` record too, `pu_abilities_class.lst:291`). Matching
+DoD-8 seed added to `pf1_adapter.rs` (`UNCHAINED_BARBARIAN_RAGE_POWER_CHOICE_ID`, reusing
+`SUPERSTITION_RAGE_POWER_SELECTION`'s own real value). `v06_work_inventory.rs`'s
+`CLASS_FEATURE_POOLS` entry re-pointed to `("Unchained Rage Power", "unchained_barbarian",
+"choice:unchained_barbarian_rage_power", "")`.
+
+7 new tests in `unchained_barbarian_rage_power_superstition_tests` (`pilot_compute/mod.rs`):
+no-selection control, slot-1 grounding, a later numbered slot, TWO mutation-proof negative
+controls (a base-class-slot selection must never ground the Unchained record; an invented id
+must never ground it), a different-real-power negative control, and a reachability proof
+through `build_pilot_headless_receipt`. 1 more test in `pf1_adapter.rs`
+(`a_composed_level2_unchained_barbarian_gets_the_canonical_superstition_rage_power_and_computes`)
+proving the real app creation path grounds it under its OWN class-scoped explanation id.
+
+Re-derived `--class-feature-probe` after landing: **wired 21 (UNCHANGED)** -- this fix
+re-attributes an ALREADY-wired key's book, it does not add a new wired key. Per the
+dispatch's own instruction, this is the headline to report, not board `done` movement.
+
+**2. Audit finding, beyond wave-11's 20 (mandate's "audit the guards you inherit" item).**
+Auditing 15+ currently-credited `class_feature` units for the wave-11-shaped defect (evidence
+belongs to a DIFFERENT record/slot) surfaced a different, larger-radius defect in the SAME
+family: `push_pu_class_feature_records` (`pilot_compute/mod.rs`) emits a GENERIC
+roster-listing explanation id for EVERY granted Pathfinder Unchained class_feature record
+(`class_feature.pu.<class>.corpus_record.<slug>`, value = the record's flat `granted_at`
+level -- a corpus fact, never a computed magnitude), and `pu_feature_slug` slugs the record's
+own key the SAME way `v06_work_inventory.rs`'s own `feature_slug` does -- so this id ALWAYS
+exact-matches its own record's slug, for every one of the ~256 PU records, independent of
+whether any dedicated per-feature magnitude was ever computed. `class_feature_exact_suffix_
+grounded` could not tell this apart from a real magnitude id.
+
+Confirmed live via source-level trace before any compile was available (grepped every
+candidate's dedicated id against `CLASS_FEATURE_ID_MAGNITUDE_SUFFIXES`): `Unchained Barbarian
+~ Fast Movement` and `~ Rage` were both credited `done` through the roster id ALONE -- their
+real magnitude functions (`fast_movement_bonus_feet`, `rage_rounds_per_day`) emit ids this
+file's magnitude-suffix list cannot strip down to the bare feature slug (`"feet"`/`"per_day"`'s
+siblings are not, or not sufficiently, in that list), so neither ever independently grounds
+them.
+
+Fixed with a STRICT (roster-id-excluded) variant of both the exact-suffix and suffix-strip
+checks, gating the magnitude-bearing `status: "grounded"` branch on the strict variant only.
+**Deliberately did NOT touch the TEXT-ONLY `text-complete` promotion path**, which still uses
+the BROAD (unfiltered) check: for a zero-magnitude record the generic roster id genuinely
+proves the engine HOLDS the exact record, which is all Decision 7 asks (no magnitude exists
+to differentiate). 3 new regression tests in `class_feature_text_complete_rung_tests`
+(`v06_work_inventory.rs`): a roster-only magnitude-bearing credit now refused (with the exact
+live `Unchained Barbarian ~ Fast Movement` shape reproduced), a real dedicated id still
+grounds even with the roster id ALSO present (proves the fix is narrow, not a general
+weakening), and the zero-magnitude/text-complete path unaffected.
+
+`OPEN-ISSUES.md` rows 222-223 record both findings with full evidence and the exact
+before/after unit lists.
+
+### §2 -- Guarded regen (this cycle's own, measured locally per the wave rule)
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out .../sweep.json
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out .../fixture.json
+CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... \
+  cargo run --locked --bin v06_work_inventory
+```
+
+`corpus_literal_sweep`: **CLEAN**, 25655 examined of 26703 read, 0 findings -- matches
+wave-12's own baseline exactly, zero drift from this cycle's edits (expected: no corpus
+records touched). `derived_evaluator_fixture_check`: **1267 of 1268 covered units cleared**,
+the 1 pre-existing failure (`advanced_players_guide:equipment:spindle_of_perfect_knowledge`)
+matching every prior wave's own baseline, unrelated to this card.
+
+**Stamp-loss guard fired on the first `v06_work_inventory` run, correctly.** Refused to write:
+"this run would drop 4 of the 7311 verification stamp(s) ... First offenders:
+`pathfinder_unchained:class_feature:unchained_barbarian_rage`,
+`unchained_monk_ac_bonus`, `unchained_monk_ki_pool`, `unchained_summoner_spells`." Traced
+before overriding anything (per the mandate's own "narrow your change; do not force it"):
+all 4 are `wiring_class=static` (a population my card's OWN first-pass scan never checked --
+it only enumerated `wiring_class=computed` PU units, missing this 4-unit `static` slice
+entirely). Read `apply_done_rung_stamps`'s `Static` arm directly: a `literal-verified` stamp
+requires the base `status` to already be `"grounded"`/`"ingested-magnitude"`/`"text-complete"`
+BEFORE it can attach. Since fix #2 above correctly changes these 4 units' base status from
+the false `"grounded"` to the honest `"not-ingested"`, the stamp's precondition genuinely no
+longer holds -- **this is the CAUSALLY NECESSARY downstream consequence of a real correction,
+not the accidental id-collision shape the guard exists to catch** (the shape this repo's own
+prior `--allow-stamp-loss` precedent, cited in `apply_done_rung_stamps`'s own doc comment,
+matches). Re-ran with `--allow-stamp-loss`, justified and documented here and in
+`OPEN-ISSUES.md` row 223, not silently forced.
+
+**Board headline, re-derived with the producer's own `doneness_verdict()`:**
+
+```python
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+```
+
+| | before (`10c666125`, this wave's own starting tip) | after (this cycle's regen) |
+|---|---:|---:|
+| denominator | 38,521 | 38,521 (UNCHANGED) |
+| `done` | 11,829 (30.7079%) | 11,814 (30.6690%) |
+| `held` | 1,901 | 1,893 |
+| `unmeasurable` | 5,128 | 5,127 |
+| `in-progress` | 1,382 | 1,382 |
+| `not-started` | 18,243 | 18,267 |
+| `deferred` | 38 | 38 |
+
+**`class_feature` `done` 137 -> 122 (-15), zero other kind touched** (diffed unit-by-unit
+against the prior committed `docs/work-inventory.json`; every kind besides `class_feature`
+byte-identical in `doneness_verdict()` output). **-15 exactly accounts for the net board
+delta.** Full unit-level accounting (25 total units moved, not just the 15 net):
+
+* **15 `done` -> `not-started`** (all `class_feature_only_the_generic_pu_roster_id_matched_
+  no_real_magnitude_computed`): Barbarian `fast_movement`, `rage`, `rage_powers`,
+  `uncanny_dodge_tracker` (4); Monk `ac_bonus`, `fast_movement`, `ki_pool`, `ki_powers` (4);
+  Rogue `finesse_training`, `rogue_talents`, `rogues_edge`, `uncanny_dodge_tracker` (4);
+  Summoner `eidolon`, `spells`, `summon_monster` (3). **4 of these 15
+  (`unchained_barbarian_rage`, `unchained_monk_ac_bonus`, `unchained_monk_ki_pool`,
+  `unchained_summoner_spells`) are the same 4 units the stamp-loss guard named** (§2 above,
+  `wiring_class=static`, previously `literal-verified`).
+* **9 `held` -> `not-started`**, same evidence shape, the DIFFERENT remaining units: Barbarian
+  `greater_rage`, `mighty_rage` (2); Monk `bonus_feat`, `flurry_of_blows`, `stunning_fist`,
+  `style_strike` (4); Rogue `evasion`, `skills` (2); Summoner `skills` (1).
+* **1 `unmeasurable` -> `held`**: `pathfinder_unchained:class_feature:unchained_rage_power_
+  superstition` itself, `unknown`/`class_feature_group_names_no_class_at_all` ->
+  `grounded`/`class_feature_probe_observed_a_delta_attributable_to_this_record` -- fix #1's
+  own real forward motion. **Does not reach `done`**: `wiring_class=derived`, and
+  `doneness_verdict` caps `derived`+`grounded` at `held` without a `fixture-verified` stamp
+  from `derived_evaluator_fixture_check.rs` -- the SAME structural gap `SD31-E4-F2-003`
+  already named for the base class's own Superstition unit, and `OPEN-ISSUES.md` row 76
+  already documented for 91% of `spell`'s `held` population. A lane-3 fixture-seam question,
+  out of this card's file territory.
+
+**Net: -15 (15 + 9 demoted, 1 promoted to `held` which does not touch the `done` column) =
+exactly the measured board delta.** Nothing silently absorbed either direction.
+
+`docs/work-inventory.json` measured, then `git checkout --`'d before committing, per the wave
+rule -- this cycle does not carry the regenerated file. Second run (verification) confirmed
+deterministic: identical unit-level output modulo `generated_at`.
+
+### §3 -- Reachability audit + standing checks
+
+`python3 scripts/reachability_audit.py`: reachable ceiling **98.95% (38,115/38,521)**,
+UNCHANGED from the pre-cycle baseline -- this cycle demotes/promotes WITHIN the reachable
+set, touches no new family, book, or `reach_gate.rs` claim.
+
+### §4 -- DoD-8, on-screen verification
+
+Driven directly via `apps/desktop/.claude/skills/run-desktop/driver.sh`
+(`RUN_DESKTOP_AGENT=sd31cfpools`, unique to this cycle; `npm ci` was needed first -- this
+worktree's `apps/desktop/node_modules` was never installed, a real precondition the mandate's
+own Setup section names). Created "Voss Unfettered," a Human **Unchained Barbarian** level 2,
+through the app's own Create Character form (typed name, selected Race=Human/Class=Unchained
+Barbarian via keyboard type-ahead on the native `<select>`, set Level=2). Loaded the saved
+character via the Load Character list (not a hand-authored fixture), Actions tab, scrolled to
+the class-feature roster: **"Rage Power Superstition Save Bonus 2"** renders live with the
+full corpus-cited derivation text ("Unchained Barbarian level 2 with the Superstition rage
+power selected (Pathfinder Unchained, `KEY:Unchained Rage Power ~ Superstition`,
+`BONUS:VAR|SuperstitionSaveBonus|2+floor(RagePowersLVL/4)`, RagePowersLVL = BarbarianLVL =
+this class's own level): a +2 competence bonus ..."). This IS the app's own DoD-8 seed
+firing for the class's own separate chooser slot, not the base class's. Screenshot committed:
+`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E4-F2-004/unchained-barbarian-
+superstition-actions-tab.png`. `driver.sh stop` run before the final gate launch.
+
+### §5 -- Full gate
+
+`./scripts/verify.sh`, launched early in the background, kept alive; log captured directly to
+`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E4-F2-004-verify.log`. **A first
+launch was superseded, not corrupted-and-reported**: launched before source edits began (per
+the mandate's own "launch it early" instruction), then further source edits landed on the
+SAME tree while it ran (the audit finding was discovered mid-run) -- the harness has no `kill`
+permission available to this cycle (confirmed: a direct `kill`/`pkill` attempt was blocked by
+the auto-mode classifier), so that first run was left to finish on its own (harmless CPU use,
+its result simply superseded and not cited) and a SECOND, clean run was launched only after
+every source edit was committed.
+
+**`VERIFY_EXIT=1`, captured directly. 26 of 27 stages PASS.** The box carried heavy
+concurrent load throughout (`uptime` peaked at load average 24.11/22.55/20.27, three sibling
+worktrees' own `cargo test`/`cargo build` processes confirmed running simultaneously via
+`ps`/`readlink /proc/*/cwd` -- the reason for elapsed time, never a reason to trust results
+less). Full stage list: `preflight-disk` `preflight-oracle`
+(`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`) `oracle-pin-selftest`
+`producer-selftest` `site-dashboard-selftest` [`site-dashboard-check` -- **FAIL, the sole
+failure**, the documented, non-regressing, worktree-path-dependent failure named at
+`OPEN-ISSUES.md` row 153, not chased per the mandate's own instruction] `reachability-audit-
+selftest` `reachability-audit` (**98.95% ceiling, unchanged**) `groundtruth-guard-selftest`
+`supersession-gate-selftest` `pi-sweep` (10 hits over `src/rules_core/rules_tables`, 10
+baseline rows, unchanged) `declared-pi-audit` `audit-selftest` `reclaim-selftest`
+`driver-selftest` `corpus-sweep-selftest` `root-lib` (**2007 passed** -- exactly `2000` (wave
+12's own baseline) `+ 7`, this cycle's own new `pilot_compute` tests, an independent count
+confirmation) `root-full` (**6987 passed across 565 suites, all 529 `tests/*.rs` suites
+executed** -- exactly `6977` (baseline) `+ 10`, this cycle's `pilot_compute` (7) +
+`v06_work_inventory` (3) new tests combined) `desktop` (**462 passed** -- exactly `461`
+(baseline) `+ 1`, the new `pf1_adapter.rs` composed-request test) `reach` (**27 passed**,
+unchanged -- no new family claimed, per §3) `corpus-sweep` (**25655 examined of 26703 read, 0
+findings**, byte-identical to the standalone pre-check in §2) `supersession-gate` (**116
+objects, all clean**, unchanged) `frontend-install` `frontend-test` (**99/99 files**,
+unchanged) `frontend-typecheck` (**`tsc --noEmit` clean**) `clippy` (**`root:52 desktop:7
+warnings, 0 errors` -- exactly at the recorded ceiling, zero new warnings from this cycle's
+own code, confirmed after a genuinely long first-time clippy-metadata compile of the
+desktop crate's full GTK dependency graph, not a cached re-run**) `class-dump` (**31/31
+computing**, unchanged).
+
+`cargo run --locked --bin v06_corpus_trap_report -- --audit` was run SEPARATELY (not a
+`verify.sh` stage, matching the mandate's own DoD item 3 instruction), once its own build
+lock freed after `root-full` finished: **1 mod-record, 1225 wiring-class-mismatch** -- both
+counts EXACTLY match the documented pre-existing baseline (zero drift), confirmed by direct
+grep count of each finding-type label, not eyeballed. Grepped the full 2470-line report for
+any of the four Unchained class names this cycle touched: **zero matches** -- this cycle's
+own fix introduces no NEW trap-report finding.
+
+`BASE_BRANCH=10c666125 bash scripts/wired-integration-audit.sh` (git-grep based, runs
+independently of the cargo-heavy `verify.sh`): all four checks (forbidden tokens, empty event
+handlers, mock-library leaks, "Would..." stub strings) PASS clean over this cycle's full diff.
+
+### §6 -- Definition-of-done checklist
+
+1. **`verify.sh` exits 0, captured directly?** No -- `VERIFY_EXIT=1`, captured directly (not
+   piped). 26 of 27 stages PASS; the sole failure is `site-dashboard-check`, the documented,
+   non-regressing, worktree-path-dependent failure at `OPEN-ISSUES.md` row 153, not chased
+   per the mandate's own instruction.
+2. **Reach passes with a claim for the touched families?** Yes -- `reach` PASS (27 passed,
+   unchanged). No new family, book, or `reach_gate.rs` claim needed: this card grounds an
+   EXISTING class_feature record's magnitude and demotes 24 mis-credited existing records,
+   neither is a new ingest surface.
+3. **`v06_corpus_trap_report -- --audit`?** Run separately (§5): **1 mod-record, 1225
+   wiring-class-mismatch**, exactly matching the documented baseline, zero drift.
+4. **Guarded regen reports ZERO *unjustified* stamp loss?** The guard fired once (§2), on a
+   real, evidenced, CAUSALLY NECESSARY loss from fix #2's own demotion -- traced to its root
+   cause before overriding, documented in this receipt and `OPEN-ISSUES.md` row 223, and
+   re-run with `--allow-stamp-loss` only after that tracing, per the mandate's own "narrow
+   your change; do not force it" instruction (narrowing was not possible here: the loss IS
+   the correction, not a side effect of an over-wide match).
+5. **Four-check wired-integration audit clean?** Yes -- all four PASS (§5).
+6. **Unsurfaced families get an OPEN_FINDINGS entry?** Yes -- `OPEN-ISSUES.md` rows 222-223,
+   this cycle's own two findings, each with full before/after evidence.
+7. **Baseline moves are a SEPARATE commit with `--show-actuals`?** Yes -- `scripts/verify-
+   baselines.env` updated in its own commit, exact measured actuals quoted in both this
+   receipt and that commit's own message: `BASELINE_ROOT_LIB_TESTS` 2000 -> 2007,
+   `BASELINE_ROOT_FULL_TESTS` 6977 -> 6987, `BASELINE_DESKTOP_TESTS` 461 -> 462. Clippy
+   ceilings, root-test-binary count, frontend-test-file count and computed-class count all
+   matched their recorded baselines exactly -- no stale note for any of them.
+8. **On-screen verification?** Yes -- §4 above, screenshot committed.
+
+### §7 -- Retro events
+
+`retro.py correction` emitted: the dispatch prompt's own "wired 19" figure was stale (real,
+re-derived value was 21, and wave 12's own SD31-E4-F2-003 receipt had already reported 21
+before this cycle started -- verified by re-running `--class-feature-probe` at this cycle's
+starting HEAD before trusting the dispatch number, per the mandate's own standing rule).
+
+### §8 -- Reclaim
+
+`scripts/reclaim.sh --apply`: **0 items, 0.0B reclaimed** -- nothing eligible (default
+`older-than: 6h` window, this cycle's own `CARGO_TARGET_DIR` still actively in use). No extra
+`CARGO_TARGET_DIR` was created this cycle -- used the one directory named in the dispatch,
+`/home/ubuntu/cargo-targets/sd31-cf-pools`, for every `cargo` invocation including the desktop
+crate's.
+
+### §9 -- Board headline, final
+
+**Denominator: 38,521 (UNCHANGED).** `done`: 11,829 -> 11,814 (**-15 net**, `class_feature`
+137 -> 122, zero other kind touched -- see §2's full unit-by-unit reconciliation). `done %`:
+30.7079% -> 30.6690%. Reachable ceiling: 98.95% (38,115/38,521), unchanged. `--class-feature-
+probe` wired keys: 21, unchanged (this cycle re-attributes an already-wired key's book;
+report this as the headline per the dispatch's own instruction, not board `done` movement).
+`class_feature`'s per-pool consumer-delta gap (epic-4/epic-5): unchanged in scope --
+Unchained Barbarian's own Rage Power chooser is now wired (the fourth class with a real
+representative option, joining the base Barbarian, Shaman, and Witch), but the ~4,271-unit
+remainder across Domain/Blessing/most-of-Bloodline/Mystery still needs real per-pool consumer
+wiring, the matcher is already fixed. `race` attribution: FROZEN, untouched. Supersession
+Register: PROPOSED, NOT applied, untouched.
