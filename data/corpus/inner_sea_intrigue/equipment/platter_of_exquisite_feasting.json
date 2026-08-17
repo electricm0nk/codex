@@ -1,0 +1,46 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 250.0,
+    "description": null,
+    "key": "Platter of Exquisite Feasting",
+    "name": "Platter of Exquisite Feasting",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "250"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 28,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_equip_magic_items.lst",
+    "record_key": "Platter of Exquisite Feasting",
+    "sha256": "911512820caf3697f1fed49d28429a875dfbcbef65379a1c2860607afd200546"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

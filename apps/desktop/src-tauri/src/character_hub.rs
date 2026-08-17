@@ -6339,7 +6339,10 @@ mod tests {
         // newly offered rows is 584 new chances to ship one.
         // `SD31-E6-F10-003`: +17 further corpus gap-lane Equipmods rows,
         // across 8 further already-compiled books (1666 -> 1683).
-        assert_eq!(offered.len(), 1683, "the picker's real offered-row count");
+        // `SD31-E6-F10-004`: +148 further corpus gap-lane Equipmods rows,
+        // across 5 further already-compiled books (1683 -> 1831),
+        // re-derived fresh from the built picker, not adjusted by delta.
+        assert_eq!(offered.len(), 1831, "the picker's real offered-row count");
 
         let refused: Vec<&str> = offered
             .iter()
@@ -6434,8 +6437,13 @@ mod tests {
             "the widening must not add a display-vs-charge divergence outside the two named books"
         );
         assert_eq!(
-            priced_non_crb, 181,
-            "RAISED 137 -> 181, `SD31-E6-F6-001`, 2026-08-16: `gen_equipment_gap_tables.rs` \
+            priced_non_crb, 258,
+            "RAISED 181 -> 258, `SD31-E6-F10-004`, 2026-08-17: 5 further already-compiled books \
+             extended into the corpus gap lane, re-derived fresh from the built picker, not \
+             adjusted by delta. The divergence-set assertion above is unchanged (still exactly \
+             the same 3 named CRB/UE rows) -- none of this cycle's own new priced rows introduced \
+             a new display-vs-charge divergence.\n\
+             RAISED 137 -> 181, `SD31-E6-F6-001`, 2026-08-16: `gen_equipment_gap_tables.rs` \
              gained `.COPY=` inheritance for `cost_gp` (a `.COPY=` row with no `COST:` of its own \
              now inherits its base record's real one, resolved by the identical `KEY:`-or-bare- \
              name identity a `.COPY=` reference itself resolves against) -- 209 corpus-wide gap \

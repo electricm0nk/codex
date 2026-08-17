@@ -1125,4 +1125,62 @@ mod tests {
         let tokens = tab_tokens("Heavy Pick (Base).COPY=Pick, Heavy\tKEY:Pick (Heavy)");
         assert_eq!(tokens, vec!["KEY:Pick (Heavy)"]);
     }
+
+    /// `SD31-E6-F10-004`: real corpus reproduction, `inner_sea_gods/
+    /// isg_equip.lst:220`, `Safecamp Wagon`'s `DESC:` field -- the LAST
+    /// tab-delimited field on the row, followed by a single literal
+    /// trailing space before the newline (`cat -A` on the real corpus
+    /// file confirms `...fire resistance 5. $`, one space before the
+    /// line-ending `$`). `tab_tokens` (this sweep's own corpus-side
+    /// reader) correctly keeps that trailing space -- byte-equality means
+    /// byte-equality, per `whitespace_is_not_normalised_away` above; the
+    /// corpus's own literal is not this sweep's to normalize. The real
+    /// defect was upstream, in `src/pcgen_import/lst_parser/equipment.rs`:
+    /// `enrich_equipment_raw_tokens.rs` shipped a TRIMMED value into
+    /// `raw_tokens` (via `EquipmentToken::value`, documented to strip
+    /// surrounding whitespace for its OTHER callers) instead of the
+    /// byte-exact field text `EquipmentToken::raw_pair` is documented to
+    /// carry -- fixed there, not here. This test pins the sweep's own
+    /// unchanged, correct behavior: the corpus-side closure entry for this
+    /// exact real row keeps its trailing space, so a shipped value that
+    /// ALSO keeps it (the fixed parser's own output) matches, and a
+    /// shipped value that drops it (the pre-fix parser's output) does not.
+    #[test]
+    fn a_trailing_space_the_real_corpus_row_carries_is_kept_not_normalised_away() {
+        let tokens = tab_tokens(
+            "Safecamp Wagon\t\t\t\tTYPE:Magic.Wondrous Item.SLOT_None\t\tCOST:3000\tWT:2\t\tDESC:...fire resistance 5. ",
+        );
+        assert_eq!(
+            tokens.last(),
+            Some(&"DESC:...fire resistance 5. "),
+            "the corpus row's own literal trailing space must survive `tab_tokens` unchanged"
+        );
+
+        let rec = record(&[("COST", "3000"), ("DESC", "...fire resistance 5. ")]);
+        let rows = ["Safecamp Wagon\tCOST:3000\tDESC:...fire resistance 5. "];
+        let mut tally = SweepTally::default();
+        assert_eq!(
+            compare_tokens(&rec, &closure_of(&rows, &rec.identities), &BTreeSet::new(), &mut tally),
+            vec![],
+            "a shipped value that preserves the corpus's own trailing space must match"
+        );
+
+        let trimmed_rec = record(&[("COST", "3000"), ("DESC", "...fire resistance 5.")]);
+        let mut tally2 = SweepTally::default();
+        assert_eq!(
+            compare_tokens(
+                &trimmed_rec,
+                &closure_of(&rows, &trimmed_rec.identities),
+                &BTreeSet::new(),
+                &mut tally2
+            ),
+            vec![Finding::TokenNotInClosure {
+                record: trimmed_rec.record_path.clone(),
+                token: "DESC:...fire resistance 5.".to_string(),
+            }],
+            "a shipped value that DROPPED the corpus's own trailing space (the pre-fix \
+             `enrich_equipment_raw_tokens.rs` behavior) must still be reported by this sweep -- \
+             the fix belongs upstream in the parser, never in loosening this comparison"
+        );
+    }
 }

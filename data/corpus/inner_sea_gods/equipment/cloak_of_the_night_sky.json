@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 2500.0,
+    "description": "[redacted PI]",
+    "key": "Cloak Of The Night Sky",
+    "name": "Cloak Of The Night Sky",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous Item.SLOT_Shoulders.Cloak"
+      },
+      {
+        "key": "COST",
+        "value": "2500"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.262"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Cloak of the Night Sky|TIMES=1|CASTERLEVEL=5|Know Direction"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Cloak of the Night Sky|TIMES=1|CASTERLEVEL=5|Longstrider|Flare,10|PREDEITY:1,Desna"
+      },
+      {
+        "key": "DESC",
+        "value": "This dark hooded cloak is decorated with embroidered comets, moons, and stars along its edge. If the wearer sleeps while wearing the cloak, it protects him from hot and cold environments, as Endure Elements, and the wearer can sleep in medium armor without becoming fatigued. The wearer can use Know Direction once per day. If Desna is the wearer's patron: as a standard action the wearer can cause additional celestial bodies to appear on the cloak so that they match the current configuration in the sky above the wearer; the wearer can use Longstrider once per day; once per day, the wearer can throw a tiny, white-burning meteor that acts as a Flare effect. Some priests of Desna claim to have cloaks of this type that also allow them to travel from shadow to shadow when under a starry night sky."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 184,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "record_key": "Cloak Of The Night Sky",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

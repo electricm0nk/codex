@@ -1,0 +1,42 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "General",
+    "cost_gp": null,
+    "description": null,
+    "key": "Fleshhook of Mythic Sustenance",
+    "name": "Fleshhook of Mythic Sustenance",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Artifact.Minor"
+      },
+      {
+        "key": "WT",
+        "value": "12"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p."
+      }
+    ],
+    "weight_lbs": 12.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 133,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_equip.lst",
+    "record_key": "Fleshhook of Mythic Sustenance",
+    "sha256": "82192828759e9b9ecb8ba8eeb4aecbec7f7edc2f5af4b2d5cf909561ab91393b"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

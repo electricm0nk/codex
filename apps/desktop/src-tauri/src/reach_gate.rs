@@ -688,6 +688,12 @@ const CORPUS_BOOK_IDS: &[(&str, &str)] = &[
     ("ultimate_intrigue", "ultimate_intrigue"),
     ("inner_sea_magic", "inner_sea_magic"),
     ("inner_sea_taverns", "inner_sea_taverns"),
+    // `SD31-E6-F10-004`: `gen_cache_equipment_gap` wrote the first-ever
+    // `data/corpus/mythic_adventures/` directory at all (no LICENSE.json,
+    // no other kind's corpus JSON, nothing existed before this cycle) --
+    // same-name pairing, matching every other book above with no
+    // diagnostic entry.
+    ("mythic_adventures", "mythic_adventures"),
 ];
 
 /// Corpus content-kind directory (singular, as the ingest tools write it) ->
@@ -1137,6 +1143,19 @@ fn reach_of(family: &Family) -> Option<Reach> {
         ("bestiary_2", "equipment") => Some(equipment_reach("B2", BTreeSet::new())),
         ("bestiary_3", "equipment") => Some(equipment_reach("B3", BTreeSet::new())),
         ("bestiary_4", "equipment") => Some(equipment_reach("B4", BTreeSet::new())),
+        // `SD31-E6-F10-004`: 5 further already-compiled books extended into
+        // the corpus gap lane (the ones `SD31-E6-F10-003` deliberately left
+        // out, `OPEN-ISSUES.md` row 186 -- now reachable via a per-record
+        // blacklist pre-filter, `gen_equipment_gap_tables.rs`'s
+        // `blacklist_hit`). Same "no hand-authored table at all" shape as
+        // every entry above.
+        ("inner_sea_gods", "equipment") => Some(equipment_reach("ISG", BTreeSet::new())),
+        ("mythic_adventures", "equipment") => Some(equipment_reach("MYTHIC", BTreeSet::new())),
+        ("inner_sea_combat", "equipment") => Some(equipment_reach("ISC", BTreeSet::new())),
+        ("inner_sea_intrigue", "equipment") => Some(equipment_reach("ISI", BTreeSet::new())),
+        ("book_of_the_damned_volume_2", "equipment") => {
+            Some(equipment_reach("BOTD2", BTreeSet::new()))
+        }
 
         // Races: `list_race_catalog` serves every race's trait bundle, each
         // row carrying the trait's own name and derivation prose, rendered by

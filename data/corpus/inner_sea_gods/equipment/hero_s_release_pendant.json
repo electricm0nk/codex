@@ -1,0 +1,67 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 2800.0,
+    "description": "This small jeweled pendant looks like a tiny dagger set with handsome blue gems, but it is too small to be used as a weapon in combat. While wearing the pendant, the wearer does not provoke attacks of opportunity when delivering a coup de grace. In addition, the pendant grants its wearer a +2 resistance bonus on Will saves.",
+    "key": "Hero's Release Pendant",
+    "name": "Hero's Release Pendant",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SAVE",
+          "Will",
+          "2",
+          "TYPE=Resistance"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous Item.SLOT_Neck.Amulet"
+      },
+      {
+        "key": "COST",
+        "value": "2800"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.265"
+      },
+      {
+        "key": "DESC",
+        "value": "This small jeweled pendant looks like a tiny dagger set with handsome blue gems, but it is too small to be used as a weapon in combat. While wearing the pendant, the wearer does not provoke attacks of opportunity when delivering a coup de grace. In addition, the pendant grants its wearer a +2 resistance bonus on Will saves."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 202,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "record_key": "Hero's Release Pendant",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

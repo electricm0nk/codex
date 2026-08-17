@@ -1,0 +1,67 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 15000.0,
+    "description": "Swirling green and blue patterns bedeck the surface of this fine oak wayfinder, whose compass and needle are made of light polished steel engraved with themes of gozreh's oceanic aspect. The needle does not point north as one would expect, but instead indicates the direction the wind is traveling in the area around the wayfinder. A wayfinder of zephyrs grants its bearer a +5 circumstance bonus on Profession (Sailor) checks. Once per day, the bearer of a wayfinder of zephyrs can move the needle to change the direction the wind is traveling toward any direction on the compass. Optionally, the wielder may also increase or decrease the wind's intensity by one step while changing its direction. A wayfinder of zephyrs has no effect on magical wind effects other than indicating the direction they are traveling.",
+    "key": "Wayfinder Of Zephyrs",
+    "name": "Wayfinder Of Zephyrs",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Profession (Sailor)",
+          "5",
+          "TYPE=Circumstance"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous Item.SLOT_None"
+      },
+      {
+        "key": "COST",
+        "value": "15000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.271"
+      },
+      {
+        "key": "DESC",
+        "value": "Swirling green and blue patterns bedeck the surface of this fine oak wayfinder, whose compass and needle are made of light polished steel engraved with themes of gozreh's oceanic aspect. The needle does not point north as one would expect, but instead indicates the direction the wind is traveling in the area around the wayfinder. A wayfinder of zephyrs grants its bearer a +5 circumstance bonus on Profession (Sailor) checks. Once per day, the bearer of a wayfinder of zephyrs can move the needle to change the direction the wind is traveling toward any direction on the compass. Optionally, the wielder may also increase or decrease the wind's intensity by one step while changing its direction. A wayfinder of zephyrs has no effect on magical wind effects other than indicating the direction they are traveling."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 232,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "record_key": "Wayfinder Of Zephyrs",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

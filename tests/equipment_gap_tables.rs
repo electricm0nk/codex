@@ -67,6 +67,22 @@ const EXPECTED_PER_BOOK: &[(&str, usize)] = &[
     ("B2", 7),
     ("B3", 8),
     ("B4", 5),
+    // `SD31-E6-F10-004`: 5 further already-compiled books, the ones
+    // `SD31-E6-F10-003` deliberately left out of the batch above because
+    // their real corpus text hit `screen_generated_table`'s whole-file
+    // blacklist hard stop (`OPEN-ISSUES.md` row 186). Reachable now that a
+    // per-record `blacklist_hit` pre-filter excludes/redacts only the
+    // individual offending rows -- the whole-file hard stop is unchanged
+    // and still runs over the finished table (0 hits, confirmed). Each
+    // figure is that book's row count after both the declared-PI reader
+    // (`ISG` -2, `MYTHIC` -4, no hits for the other 3) and the new
+    // blacklist screen (9 name/key exclusions corpus-wide across the 5) net
+    // out.
+    ("ISG", 125),
+    ("MYTHIC", 252),
+    ("ISC", 65),
+    ("ISI", 34),
+    ("BOTD2", 5),
 ];
 
 #[test]
@@ -79,9 +95,9 @@ fn the_gap_lane_carries_one_row_per_previously_not_ingested_unit() {
          re-derive the per-book figures from docs/work-inventory.json before changing them"
     );
     assert_eq!(
-        total, 1190,
-        "1190 = 769 + 435 new (8 books, `SD31-E6-F10-003`) - 12 declared-PI exclusions - \
-         2 bare PFS legality overlay rows"
+        total, 1671,
+        "1671 = 1190 + 481 new (5 books, `SD31-E6-F10-004`) - 35 declared-PI exclusions - \
+         9 blacklist name/key exclusions (both net of redactions, which keep the record)"
     );
 }
 

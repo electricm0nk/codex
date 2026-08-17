@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 2500.0,
+    "description": "[redacted PI]",
+    "key": "Dawnflower Sash",
+    "name": "Dawnflower Sash",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous Item.SLOT_Belt.SLOT_Head.Headgear.Belt"
+      },
+      {
+        "key": "COST",
+        "value": "2500"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.262"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Dawnflower Sash|TIMES=1|CASTERLEVEL=5|Feather Fall"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Dawnflower Sash|TIMES=1|CASTERLEVEL=5|Cure Light Wounds|PREDEITY:1,Sarenrae"
+      },
+      {
+        "key": "DESC",
+        "value": "This long strip of red Qadiran fabric is wrapped around the wearer's waist or head several times and held in place by an ankh-shaped clasp of red gold. The wearer is protected as if by Endure Elements, but only in warm environments. If the wearer unwraps the sash to its full length and holds the clasp in her hand, she can use Feather Fall once per day, briefly leaving behind a trail of pleasant red-gold light as bright as a torch that lasts for 1 round. If Sarenrae is the wearer's patron: the wearer can use the sash to cast Cure Light Wounds once per day on command. The wearer can trigger this ability as an immediate action if reduced to -1 hit points or fewer, though thereafter the sash must be recharged by placing it in strong sunlight for 8 continuous hours; as a swift action, the wearer can cause the clasp to shine as brightly as a torch or cease this illumination; the light is warm, feels like sunlight, and is bright enough to make sun-fearing creatures slightly uncomfortable but not so bright as to cause them harm."
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 186,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "record_key": "Dawnflower Sash",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

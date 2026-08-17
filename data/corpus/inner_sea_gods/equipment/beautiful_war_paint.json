@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 6300.0,
+    "description": "[redacted PI]",
+    "key": "Beautiful War Paint",
+    "name": "Beautiful War Paint",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous Item.SLOT_Head.Headgear"
+      },
+      {
+        "key": "COST",
+        "value": "6300"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.260"
+      },
+      {
+        "key": "DESC",
+        "value": "This pot of multicolored makeup was created by warpriests of Shelyn who wanted to be beautiful as well as deadly in battle. It can be used as conventional makeup, stage makeup, or war paint. It can be applied quickly for a lesser effect, but its true power is revealed when it's applied with great care. If the wearer applies the makeup as a full-round action, she gains the effects of Bless and Expeditious Retreat. If the wearer applies the makeup over the course of 10 minutes, she gains the effects of Good Hope and Haste. Applying the makeup provokes attacks of opportunity. The finished makeup has no effect until the wearer activates it as a swift action, at which time its magic lasts either 5 minutes or 5 rounds, depending on the duration of the activated spells (thereafter, the makeup lasts as long as high-quality nonmagical makeup). The magic of the makeup fades after 24 hours if not activated. The makeup uses only the head magic item slot when applied (the pot does not use a magic item slot). The pot contains enough makeup for three uses."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 173,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "record_key": "Beautiful War Paint",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

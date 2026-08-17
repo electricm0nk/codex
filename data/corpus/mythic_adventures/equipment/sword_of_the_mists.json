@@ -1,0 +1,38 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "General",
+    "cost_gp": null,
+    "description": null,
+    "key": "Sword of the Mists",
+    "name": "Sword of the Mists",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 124,
+    "path": "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_equip.lst",
+    "record_key": "Sword of the Mists",
+    "sha256": "82192828759e9b9ecb8ba8eeb4aecbec7f7edc2f5af4b2d5cf909561ab91393b"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

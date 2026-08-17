@@ -206,8 +206,26 @@ fn enrich_one(path: &Path, data_root: &Path) -> Outcome {
         all_bonus_chains.extend(base_record.bonus_chains_on_line(base_line));
     }
 
-    let raw_tokens: Vec<Value> =
-        all_tokens.iter().map(|t| json!({ "key": t.key, "value": t.value })).collect();
+    // `SD31-E6-F10-004`: use the byte-exact value split from `raw_pair`,
+    // never the TRIMMED `t.value` -- real corpus reproduction,
+    // `inner_sea_gods/isg_equip.lst:220`'s `Safecamp Wagon`, whose `DESC:`
+    // field carries a literal trailing space before the line's own end.
+    // `t.value` strips it (correct for every OTHER caller that wants a
+    // clean value); this is the ONE call site whose whole job is a
+    // byte-exact citation, and `corpus_literal_sweep`'s own `tab_tokens`
+    // does not trim the corpus side (`whitespace_is_not_normalised_away`),
+    // so shipping the trimmed value here made the two sides of that byte
+    // comparison disagree over incidental formatting whitespace neither
+    // side treats as content. `raw_pair`'s own doc comment already
+    // promises the byte-exact field text; this is the fix reaching its
+    // one real consumer.
+    let raw_tokens: Vec<Value> = all_tokens
+        .iter()
+        .map(|t| {
+            let value = t.raw_pair.split_once(':').map(|(_, v)| v).unwrap_or(t.value.as_str());
+            json!({ "key": t.key, "value": value })
+        })
+        .collect();
     let raw_bonus_chains: Vec<Value> =
         all_bonus_chains.iter().map(|b| json!({ "qualifiers": b.qualifiers })).collect();
 
@@ -279,6 +297,18 @@ fn main() {
         "bestiary_2",
         "bestiary_3",
         "bestiary_4",
+        // SD31-E6-F10-004: `gen_equipment_gap_tables` extended to 5 further
+        // already-compiled books this cycle (`OPEN-ISSUES.md` row 186's own
+        // named follow-on -- a per-record blacklist pre-filter now reaches
+        // them without weakening the whole-file hard stop). Same reasoning
+        // as every entry above: omitting them here leaves their new records
+        // at the thin KEY:-token-only fallback and ineligible for
+        // `corpus_literal_sweep`'s `literal-verified` done rung.
+        "inner_sea_gods",
+        "mythic_adventures",
+        "inner_sea_combat",
+        "inner_sea_intrigue",
+        "book_of_the_damned_volume_2",
     ];
 
     let mut total_enriched = 0u32;

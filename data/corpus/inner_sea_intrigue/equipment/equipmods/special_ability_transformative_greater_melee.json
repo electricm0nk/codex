@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": 15000.0,
+    "description": "SPROP:On command, alters its shape to become any other weapon (but not ammo)",
+    "key": "Special Ability ~ Transformative / Greater ~ Melee",
+    "name": "Transformative (Greater)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Transformative / Greater ~ Melee"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon"
+      },
+      {
+        "key": "COST",
+        "value": "15000"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.52"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,WeaponEnhancement,Weapon"
+      },
+      {
+        "key": "SPROP",
+        "value": "SPROP:On command, alters its shape to become any other weapon (but not ammo)"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 14,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_equipmods.lst",
+    "record_key": "Special Ability ~ Transformative / Greater ~ Melee",
+    "sha256": "5f4c34436e4443113d22c449a3163df2dbc6094ff0dd1c1339a1b9ee2fbf9fd6"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 4800.0,
+    "description": "[redacted PI]",
+    "key": "Father's Forgehammer",
+    "name": "Father's Forgehammer",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous Item.SLOT_None"
+      },
+      {
+        "key": "COST",
+        "value": "4800"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.264"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Father's Forgehammer|TIMES=1|CASTERLEVEL=3|Magic Weapon"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Father's Forgehammer|TIMES=1|CASTERLEVEL=3|Shield Other|PREDEITY:1,Torag"
+      },
+      {
+        "key": "DESC",
+        "value": "This iron blacksmith's hammer bears designs of Torag's holy symbol; it is not designed for combat, but the bearer can use it as a Medium light hammer. Once per day, the bearer can strike the hammer hard against a weapon to target that weapon with Magic Weapon. The owner gains a +2 competence bonus on all smithing (armorsmithing, blacksmithing, weaponsmithing, and so on) skill checks made when crafting with the forgehammer. If Torag is the owner's patron: once per day the owner can strike the hammer against another character's armor or shield to cast Shield Other on that character; if the owner can craft magic weapons or armor and uses the forgehammer during the crafting, the total time to craft the item is decreased by 25%% (minimum 1 day). This does not reduce the cost to create the item. A particular forgehammer can aid in only one item's crafting at a time."
+      }
+    ],
+    "weight_lbs": 2.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 193,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "record_key": "Father's Forgehammer",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

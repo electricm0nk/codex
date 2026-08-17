@@ -1,0 +1,71 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 3300.0,
+    "description": "[redacted PI]",
+    "key": "Bronze Skinning Knife",
+    "name": "Bronze Skinning Knife",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SAVE",
+          "Fortitude",
+          "1",
+          "TYPE=Resistance"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous Item.SLOT_None"
+      },
+      {
+        "key": "COST",
+        "value": "3300"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.262"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Bronze Skinning Knife|TIMES=1|CASTERLEVEL=5|True Strike|PREDEITY:1,Erastil"
+      },
+      {
+        "key": "DESC",
+        "value": "This bronze skinning knife bears the symbol of Old Deadeye on its blade. Designed as a hunting tool, it cannot be used as an effective weapon. As long as the bearer carries the knife, he can find enough food and water in the wilderness to satisfy one creature's hunger and thirst (either the bearer himself or someone traveling with him). In addition, the bearer gains a +1 resistance bonus on Fortitude saving throws. If Erastil is the bearer's patron: once per day the bearer can speak a command word to use True Strike; once per day the bearer can speak a command word to give a touched thrown weapon, arrow, or bolt the returning weapon special ability for 1 minute. A magic arrow or bolt that returns does not keep its magical properties but is still usable as masterwork ammunition."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 182,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "record_key": "Bronze Skinning Knife",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

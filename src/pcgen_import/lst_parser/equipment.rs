@@ -722,7 +722,16 @@ fn collect_tokens_from_rest(line_number: usize, raw_line: &str, rest: &str) -> V
             key,
             value,
             line_number,
-            raw_pair: trimmed.to_string(),
+            // `SD31-E6-F10-004`: the field's BYTE-EXACT text, per this
+            // struct field's own doc comment -- `key`/`value` above still
+            // trim (every other caller wants a clean value), but `field`
+            // itself (not `trimmed`) preserves any leading/trailing
+            // whitespace the real corpus row's tab-delimited field carries,
+            // matching `corpus_literal_sweep::tab_tokens`'s own untrimmed
+            // reading of the identical corpus line so a byte-exact
+            // downstream comparison (`enrich_equipment_raw_tokens.rs`) has
+            // something byte-exact to compare.
+            raw_pair: field.to_string(),
         });
         column_index += 1;
     }
@@ -754,7 +763,9 @@ fn collect_tokens_from_columns(line_number: usize, raw_line: &str) -> Vec<Equipm
             key,
             value,
             line_number,
-            raw_pair: trimmed.to_string(),
+            // See `collect_tokens_from_rest`'s identical comment: `field`,
+            // not `trimmed`, so `raw_pair` stays byte-exact to the corpus.
+            raw_pair: field.to_string(),
         });
     }
     tokens
@@ -1012,6 +1023,39 @@ mod tests {
         let parsed = parse_equipment_entries("book_equip.lst", lst);
         let entry = &parsed.entries[0];
         assert!(entry.tokens_on_line(99).is_empty());
+    }
+
+    /// `SD31-E6-F10-004`: real corpus reproduction, `inner_sea_gods/
+    /// isg_equip.lst:220`, `Safecamp Wagon`'s `DESC:` field -- the LAST
+    /// tab-delimited field on the row, followed by a literal trailing
+    /// space before the newline (`cat -A` on the real file confirms
+    /// `...fire resistance 5. $`). `EquipmentToken::raw_pair`'s own doc
+    /// comment promises "Raw `KEY:VAL` text as it appeared between tabs on
+    /// the source line" -- but the field was built from the SAME
+    /// whitespace-trimmed string `key`/`value` come from, so it silently
+    /// dropped that trailing space, breaking its own documented contract.
+    /// `key`/`value` still trim (every other caller -- numeric parsing,
+    /// name matching -- correctly wants that); only `raw_pair` must carry
+    /// the byte-exact field. Found live: `enrich_equipment_raw_tokens.rs`
+    /// (which DOES use the trimmed `value`, not `raw_pair`, for its
+    /// `raw_tokens` JSON -- a separate fix, in that file) shipped a
+    /// trimmed `DESC` that `corpus_literal_sweep` correctly flagged as not
+    /// byte-present in the corpus's own (untrimmed) token closure.
+    #[test]
+    fn raw_pair_preserves_a_fields_own_trailing_whitespace_even_though_value_trims_it() {
+        let lst = "Safecamp Wagon\tCOST:3000\tDESC:...fire resistance 5. \n";
+        let parsed = parse_equipment_entries("isg_equip.lst", lst);
+        let entry = &parsed.entries[0];
+        let desc = entry.tokens.iter().find(|t| t.key == "DESC").expect("DESC token present");
+        assert_eq!(
+            desc.value, "...fire resistance 5.",
+            "the TRIMMED `value` field is unaffected -- other callers still get a clean value"
+        );
+        assert_eq!(
+            desc.raw_pair, "DESC:...fire resistance 5. ",
+            "`raw_pair` must carry the byte-exact field text, trailing space included, per its \
+             own documented contract"
+        );
     }
 
     #[test]

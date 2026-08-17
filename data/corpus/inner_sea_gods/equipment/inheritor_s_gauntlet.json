@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 2700.0,
+    "description": "[redacted PI]",
+    "key": "Inheritor's Gauntlet",
+    "name": "Inheritor's Gauntlet",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous Item.SLOT_Hands.Glove"
+      },
+      {
+        "key": "COST",
+        "value": "2700"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Inner Sea Gods"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "isg"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.265"
+      },
+      {
+        "key": "DESC",
+        "value": "This metal gauntlet is the sort appropriate for wearing with chainmail, though versions suited for leather or full plate exist. Affixed to the wrist is a white cloth with a longsword embroidered in gold thread. Once per day, the wearer can speak a command word to give a weapon the wearer holds in that hand (or the gauntlet itself) a +1 enhancement bonus on attack and damage rolls for 1 minute. If Iomedae is the wearer's patron: the gauntlet lets the wearer use any sword he holds in that hand as a holy symbol; once per day, the wearer can speak a command word and give any sword he holds the powers of an evil outsider-bane weapon for 1 minute; this effect ends if the wearer drops the sword or removes the gauntlet; if the wearer uses a finger to draw Iomedae's symbol on any solid surface, the symbol glows as brightly as a candle for 1 hour or until the wearer draws the symbol elsewhere (whichever comes first)."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 204,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_equip.lst",
+    "record_key": "Inheritor's Gauntlet",
+    "sha256": "cde6e3e0acd33edb906c404430e39a375d0721c6e136c5faf0cde575c7c27c74"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

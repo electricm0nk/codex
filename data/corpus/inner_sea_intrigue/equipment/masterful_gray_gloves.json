@@ -1,0 +1,46 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 5400.0,
+    "description": null,
+    "key": "Masterful Gray Gloves",
+    "name": "Masterful Gray Gloves",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Glove"
+      },
+      {
+        "key": "COST",
+        "value": "5400"
+      },
+      {
+        "key": "WT",
+        "value": ".5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.55"
+      }
+    ],
+    "weight_lbs": 0.5
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 25,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_equip_magic_items.lst",
+    "record_key": "Masterful Gray Gloves",
+    "sha256": "911512820caf3697f1fed49d28429a875dfbcbef65379a1c2860607afd200546"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

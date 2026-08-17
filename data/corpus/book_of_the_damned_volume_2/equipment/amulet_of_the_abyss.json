@@ -1,0 +1,63 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 15000.0,
+    "description": "Functions as holy symbol of attuned demon lord, worshiper is aware of any action or item that could adversely affect his alignment and his standing with demon lord, all 3 SLAs from first demonic boon 1/day each",
+    "key": "Amulet of the Abyss",
+    "name": "Amulet of the Abyss",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "NegLevels",
+          "2",
+          "PREALIGN:LG,NG,CG,LN,LE"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Amulet"
+      },
+      {
+        "key": "COST",
+        "value": "15000"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.49"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Negative Levels"
+      },
+      {
+        "key": "SPROP",
+        "value": "Functions as holy symbol of attuned demon lord, worshiper is aware of any action or item that could adversely affect his alignment and his standing with demon lord, all 3 SLAs from first demonic boon 1/day each"
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 14,
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_equip.lst",
+    "record_key": "Amulet of the Abyss",
+    "sha256": "a3abe7c104eb200a65f98f952c4f997ca6e275a5f06362bdd081ee9791c12010"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

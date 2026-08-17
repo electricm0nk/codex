@@ -811,8 +811,16 @@ Potion\tKEY:Potion of Blur\tTYPE:Magic.Potion\tCOST:300
         // by the same 421 (6,915 -> 7,336). Hand-authored count is
         // unchanged; this card's file grant never touches a hand-authored
         // table.
+        // `SD31-E6-F10-004`: the gap lane's own row count grew by another
+        // 481 (1,190 -> 1,671; the 5 books `SD31-E6-F10-003` deliberately
+        // left out, `OPEN-ISSUES.md` row 186, now reachable via a
+        // per-record blacklist pre-filter rather than the whole-file hard
+        // stop -- see `gen_equipment_gap_tables.rs`'s `blacklist_hit`), so
+        // the total grows by the same 481 (7,336 -> 7,817). Hand-authored
+        // count is unchanged; this card's file grant never touches a
+        // hand-authored table.
         assert_eq!(hand_authored_equipment_rows().len(), 6_146);
-        assert_eq!(rows.len(), 7_336);
+        assert_eq!(rows.len(), 7_817);
 
         // CRB first, then the documented chain order -- the property the
         // "CRB behaviour unchanged" guarantee rests on.
@@ -976,6 +984,27 @@ Potion\tKEY:Potion of Blur\tTYPE:Magic.Potion\tCOST:300
         // `inner_sea_world_guide`'s own declared-PI-excluded row, correctly
         // absent from the compiled table once `declared_pi_at` landed, so
         // it was never a real disagreement to pin).
+        //
+        // GREW 16 -> 19, `SD31-E6-F10-004` (5 further already-compiled
+        // books extended into the gap lane): `"Feather Token (Catapult)"`,
+        // `"Feather Token (Ram)"`, `"Feather Token (Siege Tower)"` --
+        // `inner_sea_combat`'s `isc_equip_magic.lst:9-11`, three real, keyed-
+        // by-name, priced rows (400/500/1000 gp) whose display name is the
+        // same shape as every entry above: a parenthetical-qualified
+        // variant name the free-form resolver's CRB-precedence tiers
+        // resolve to a DIFFERENT real row (CRB's own base `Feather Token`
+        // family) than the catalog's own by-key lookup returns for the
+        // SAME string. Both records are real and both belong in the
+        // catalog; the ambiguity is only in the free-form string, exactly
+        // the shape this test's own doc comment already prescribes the
+        // remedy for (resolve by catalog key, never the free-form
+        // resolver, when a caller holds one) -- not this cycle's file
+        // grant to fix (the free-form matcher lives in this file's own
+        // `equipment_cost_gp_headless_resolve`, `equipment_resolver.rs`,
+        // outside `cache_gen`/equipment-ingest territory). Re-derived this
+        // exact list from a fresh, isolated `cargo test --lib
+        // equipment_resolver::tests::the_two_lookups_agree` run against
+        // this cycle's own final state.
         assert_eq!(
             disagreements,
             vec![
@@ -987,6 +1016,9 @@ Potion\tKEY:Potion of Blur\tTYPE:Magic.Potion\tCOST:300
                 "Backpack (Hydration)",
                 "Backpack (Weaponrack)",
                 "Bullet (Sling/Alchemical)",
+                "Feather Token (Catapult)",
+                "Feather Token (Ram)",
+                "Feather Token (Siege Tower)",
                 "Incense (10 sticks)",
                 "Mithral (Heavy Armor)",
                 "Mithral (Item)",

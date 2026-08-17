@@ -1,0 +1,46 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 5750.0,
+    "description": null,
+    "key": "Iron Guard Pauldrons",
+    "name": "Iron Guard Pauldrons",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Wondrous.Magic.Slot_Shoulders.Cape"
+      },
+      {
+        "key": "COST",
+        "value": "5750"
+      },
+      {
+        "key": "WT",
+        "value": "6"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.60"
+      }
+    ],
+    "weight_lbs": 6.0
+  },
+  "ingested_at": "2026-08-17T12:09:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 24,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_equip_magic.lst",
+    "record_key": "Iron Guard Pauldrons",
+    "sha256": "6fc68dc8e7c39e038c3ac499020b7e86f948cf8b9303db583243e19028959f9e"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}
