@@ -560,13 +560,22 @@ mod tests {
         assert_eq!(count_for(&response, "Vanara"), 8);
         assert_eq!(count_for(&response, "Vishkanya"), 12);
 
+        // SD31-E6-F4-007 (2026-08-17): the last 2 of ARG's own races
+        // (Changeling, Samsaran), closing `arg_races.lst`'s full 37-row
+        // playable-race roster. Same flat chassis+standard-trait shape as
+        // the batch above -- Changeling's 3 hag-mother heritage-choice
+        // sub-traits are deliberately excluded (`ingest_races.rs`'s
+        // `is_heritage_choice_subtrait`), so its count is 9, not 12.
+        assert_eq!(count_for(&response, "Changeling"), 9);
+        assert_eq!(count_for(&response, "Samsaran"), 9);
+
         // Pinned as a total as well as per race so a race silently dropping
         // out cannot be masked by another race growing.
-        // 173 + 57 + 9 + 96 (58 + 9+9+8+12) = 335.
-        assert_eq!(response.entries.len(), 335);
+        // 173 + 57 + 9 + 96 (58 + 9+9+8+12) + 18 (9+9) = 353.
+        assert_eq!(response.entries.len(), 353);
 
         let races: BTreeSet<&str> = response.entries.iter().map(|e| e.race_id.as_str()).collect();
-        assert_eq!(races.len(), 35, "35 in-scope races: {races:?}");
+        assert_eq!(races.len(), 37, "37 in-scope races: {races:?}");
     }
 
     /// The regression guard for the identity change: `reach_gate::races_reach`
@@ -622,10 +631,12 @@ mod tests {
 
         // Derived, not assumed: 67 CRB rows + 106 Bestiary 1 rows + 57
         // Bestiary 2 rows (SD-31 Epic 1-F2, 2026-08-15) + 9 Bestiary 5 rows
-        // (Skinwalker follow-on batch, 2026-08-15) + ARG's 10-race total
+        // (Skinwalker follow-on batch, 2026-08-15) + ARG's 12-race total
         // (58 from SD-31-E6-F4-002's Catfolk/Kitsune/Ratfolk/Strix/Suli/
         // Wayang batch, 2026-08-16, + 38 from SD31-E6-F4-004's Gillman/
-        // Nagaji/Vanara/Vishkanya batch, 2026-08-17).
+        // Nagaji/Vanara/Vishkanya batch, 2026-08-17, + 18 from
+        // SD31-E6-F4-007's Changeling/Samsaran batch, 2026-08-17, closing
+        // `arg_races.lst`'s full 37-row playable-race roster).
         let crb = response.entries.iter().filter(|e| e.book == BOOK_CRB).count();
         let b1 = response.entries.iter().filter(|e| e.book == BOOK_B1).count();
         let b2 = response.entries.iter().filter(|e| e.book == BOOK_B2).count();
@@ -635,7 +646,7 @@ mod tests {
         assert_eq!(b1, 106);
         assert_eq!(b2, 57);
         assert_eq!(b5, 9);
-        assert_eq!(arg, 96);
+        assert_eq!(arg, 114);
         assert_eq!(crb + b1 + b2 + b5 + arg, response.entries.len());
     }
 

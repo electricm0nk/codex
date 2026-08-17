@@ -248,7 +248,7 @@ fn the_three_dependent_rows_are_not_offered_as_choices_and_the_menu_is_exactly_t
         .count();
     assert_eq!(
         all,
-        768,
+        786,
         "175 standard + 156 ARG + 5 Monster Codex + 1 APG + 71 Inner Sea Races \
          + 43 Horror Adventures + 64 Core Essentials heritage rows + SD-31 Epic 1-F2's \
          113 (57 standard + 42 ARG + 6 Inner Sea Races + 8 grant-linked, 2026-08-15) + the \
@@ -258,16 +258,20 @@ fn the_three_dependent_rows_are_not_offered_as_choices_and_the_menu_is_exactly_t
          for those same 6 races (2026-08-16: 695 -> 719) + SD31-E6-F4-004's Advanced Race \
          Guide follow-on batch of 38 standard rows (2026-08-17: Gillman, Nagaji, Vanara, \
          Vishkanya; 719 -> 757) + SD31-E6-F4-006's own 11-record alternate-trait batch for \
-         those same 4 races (2026-08-17: 757 -> 768)"
+         those same 4 races (2026-08-17: 757 -> 768) + SD31-E6-F4-007's Advanced Race Guide \
+         follow-on batch of 18 standard rows (2026-08-17: Changeling, Samsaran; 768 -> 786), \
+         closing arg_races.lst's full 37-row playable-race roster"
     );
     assert_eq!(
         arg,
-        332,
-        "ARG's 332 ingested race-trait records (156 -> 201 by SD-31 Epic 1-F2; 201 -> 259 \
+        350,
+        "ARG's 350 ingested race-trait records (156 -> 201 by SD-31 Epic 1-F2; 201 -> 259 \
          by SD-31-E6-F4-002's own 6-race chassis batch; 259 -> 283 by SD-31-E6-F4-003's own \
          alternate-trait batch for those same 6 races, both 2026-08-16; 283 -> 321 by \
          SD31-E6-F4-004's own 4-race chassis batch, 2026-08-17; 321 -> 332 by \
-         SD31-E6-F4-006's own alternate-trait batch for those same 4 races, 2026-08-17)"
+         SD31-E6-F4-006's own alternate-trait batch for those same 4 races, 2026-08-17; \
+         332 -> 350 by SD31-E6-F4-007's own 2-race chassis batch (Changeling, Samsaran), \
+         2026-08-17, closing arg_races.lst's full 37-row playable-race roster)"
     );
 
     let selectable: BTreeSet<&str> = selectable_alternate_trait_keys().into_iter().collect();
@@ -329,12 +333,14 @@ fn no_ingested_race_trait_key_contains_a_colon_so_the_storage_namespace_is_lossl
     }
     assert_eq!(
         checked,
-        768,
+        786,
         "515 -> 628 by SD-31 Epic 1-F2 (2026-08-15); 628 -> 637 by the Skinwalker follow-on \
          batch; 637 -> 695 by SD-31-E6-F4-002's Advanced Race Guide batch; 695 -> 719 by \
          SD-31-E6-F4-003's own alternate-trait batch for the same 6 races (2026-08-16); \
          719 -> 757 by SD31-E6-F4-004's own 4-race chassis batch (2026-08-17); 757 -> 768 \
-         by SD31-E6-F4-006's own alternate-trait batch for the same 4 races (2026-08-17)"
+         by SD31-E6-F4-006's own alternate-trait batch for the same 4 races (2026-08-17); \
+         768 -> 786 by SD31-E6-F4-007's own 2-race chassis batch (Changeling, Samsaran), \
+         2026-08-17, closing arg_races.lst's full 37-row playable-race roster"
     );
 }
 

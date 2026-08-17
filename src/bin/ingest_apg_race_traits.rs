@@ -775,16 +775,17 @@ mod tests {
         let keys = already_ingested_keys(&dir);
         assert_eq!(
             keys.len(),
-            332,
-            "ARG's 332 ingested race-trait keys (156 -> 201 by SD-31 Epic 1-F2, 2026-08-15; \
+            350,
+            "ARG's 350 ingested race-trait keys (156 -> 201 by SD-31 Epic 1-F2, 2026-08-15; \
              201 -> 259 by SD-31-E6-F4-002's own 6-race chassis batch; 259 -> 283 by \
              SD-31-E6-F4-003's own 24-record alternate-trait batch for those same 6 races, \
              both 2026-08-16; 283 -> 321 by SD31-E6-F4-004's own 4-race chassis batch \
              (Gillman/Nagaji/Vanara/Vishkanya), 2026-08-17; 321 -> 332 by SD31-E6-F4-006's \
-             own 11-record alternate-trait batch for those same 4 races, 2026-08-17 -- \
-             every one of those 131 new keys is `<NewRace> ~ ...` and shares no key with \
-             any of APG's 7 CRB-race rows, so this discriminator's own behavior is \
-             unaffected)"
+             own 11-record alternate-trait batch for those same 4 races, 2026-08-17; \
+             332 -> 350 by SD31-E6-F4-007's own 2-race chassis batch (Changeling/Samsaran), \
+             2026-08-17, closing arg_races.lst's full 37-row playable-race roster -- every \
+             one of those 149 new keys is `<NewRace> ~ ...` and shares no key with any of \
+             APG's 7 CRB-race rows, so this discriminator's own behavior is unaffected)"
         );
         assert!(keys.contains("Dwarf ~ Ancient Enmity"), "the exact collision this fix exists for");
         assert!(!keys.contains("Half-Orc ~ Plagueborn"), "APG's one genuinely unique key must not be in ARG's set");

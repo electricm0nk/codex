@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-16T01:34:16Z",
+  "data": {
+    "key": "Samsaran ~ Type",
+    "name": "Samsaran",
+    "race_key": "Samsaran",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Samsaran Racial Trait",
+      "Samsaran Racial Default",
+      "SpecialQuality",
+      "Racial Type"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Samsaran_ReplaceType",
+    "sets_replace_flags": [],
+    "description": "Samsarans are humanoids with the samsaran subtype.",
+    "source_page": "p.198",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Samsaran ~ Type"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Samsaran Racial Trait.Samsaran Racial Default.SpecialQuality.Racial Type"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Samsaran_ReplaceType=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Samsarans are humanoids with the samsaran subtype."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Humanoid|Samsaran"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.198"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/samsaran/samsaran_abilities_race.lst",
+    "sha256": "70da33c402699e1d2fcaa92aa5b5704d73c07e9fcaf0bf49925f5062637b7278",
+    "line": 15,
+    "record_key": "Samsaran ~ Type"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}
