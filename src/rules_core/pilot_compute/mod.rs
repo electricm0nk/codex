@@ -9363,6 +9363,112 @@ const ALTERNATE_TRAIT_SAVE_BONUSES: &[(&str, &str, i16, i16, i16)] = &[
     ("Strix ~ Tough", "race:strix", 1, 0, 0),
 ];
 
+/// Race ids (lowercase, no `"race:"` prefix) for which this engine has ANY
+/// real magnitude consumer of a race_trait record's numbers: either one of
+/// the 7 Core Rulebook races' hardcoded `explain_<race>_race_seam`
+/// (`explain_human_pilot_race_seam` for Human) functions, membership in
+/// [`ALTERNATE_TRAIT_SAVE_BONUSES`]'s or
+/// [`ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES`]'s own race-id column, or
+/// [`SIZE_ONLY_RACE_TRAIT_BUNDLE`]'s 4 races (each has a real
+/// `explain_size_only_race_trait_bundle` seam for their own `~ Size`
+/// record specifically).
+///
+/// **Why this exists (SD31-W12-INTEGRATE-001)**: `v06_work_inventory.rs`'s
+/// `probe_race_trait_corpus` promoted any LOADED, role-classified
+/// `computed` race_trait record straight to `grounded` (-> board `done`)
+/// regardless of whether anything downstream reads its magnitude at all --
+/// confirmed by adversarial review as the identical "credit resting on a
+/// DIFFERENT record's computation" shape wave 11 found elsewhere, one axis
+/// over (a Dwarf-only seam silently crediting a Vanara record carrying the
+/// byte-identical `BONUS:VAR` chain). Of the 555-unit standing population,
+/// 314 belong to a race with NO seam of any kind and are therefore
+/// DEFINITIVELY uncredited by anything this engine computes.
+///
+/// **Derived, not hand-duplicated** (this program's own "a measurement, not
+/// a selection" standard, `ALTERNATE_TRAIT_SAVE_BONUSES`'s own doc comment):
+/// the two alternate-trait tables are read directly rather than their
+/// race-id columns being re-typed here, so this can never silently drift
+/// from them the way a hand-copied list could. The 7 CRB races ARE
+/// hand-listed, because their seam is 7 separate hardcoded
+/// `explain_<race>_race_seam` functions with no single table to derive
+/// from -- `race_ids_with_a_magnitude_consumer_tests::crb_seamed_race_
+/// function_count_is_seven` (below) counts this file's own
+/// `fn explain_.*_race_seam` definitions via `include_str!` and asserts the
+/// count stays 7, so a future race gaining or losing a seam function fails
+/// a test rather than silently drifting.
+pub fn race_ids_with_a_magnitude_consumer() -> std::collections::BTreeSet<&'static str> {
+    const CRB_SEAMED_RACES: &[&str] = &["dwarf", "elf", "gnome", "half-elf", "half-orc", "halfling", "human"];
+    let mut set: std::collections::BTreeSet<&'static str> = CRB_SEAMED_RACES.iter().copied().collect();
+    for (_, race_id, ..) in ALTERNATE_TRAIT_SAVE_BONUSES {
+        set.insert(race_id.strip_prefix("race:").unwrap_or(race_id));
+    }
+    for (_, race_id, ..) in ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES {
+        set.insert(race_id.strip_prefix("race:").unwrap_or(race_id));
+    }
+    // `SIZE_ONLY_RACE_TRAIT_BUNDLE`'s 4 races (Kobold, Svirfneblin, Goblin,
+    // Grippli) have a real `explain_size_only_race_trait_bundle` seam for
+    // their own `~ Size` record specifically -- §7's own worked example.
+    for (race_id, ..) in SIZE_ONLY_RACE_TRAIT_BUNDLE {
+        set.insert(race_id.strip_prefix("race:").unwrap_or(race_id));
+    }
+    set
+}
+
+#[cfg(test)]
+mod race_ids_with_a_magnitude_consumer_tests {
+    use super::*;
+
+    /// Pins the hand-listed CRB half of `race_ids_with_a_magnitude_consumer`
+    /// against this file's OWN source text, counted at test time rather than
+    /// asserted -- a future race gaining or losing an `explain_*_race_seam`
+    /// function changes this count and this test goes red, rather than the
+    /// hand-list silently drifting from what the file actually implements.
+    #[test]
+    fn crb_seamed_race_function_count_is_seven() {
+        let source = include_str!("mod.rs");
+        let count = source
+            .lines()
+            .filter(|line| {
+                let trimmed = line.trim_start();
+                trimmed.starts_with("fn explain_") && trimmed.contains("_race_seam(")
+            })
+            .count();
+        assert_eq!(
+            count, 7,
+            "race_ids_with_a_magnitude_consumer's CRB_SEAMED_RACES lists exactly 7 races -- \
+             if this fails, a race seam function was added or removed and the hand-list must \
+             be updated to match"
+        );
+    }
+
+    /// The union is exactly the 13 races this module has ANY seam for --
+    /// the same 13 a corpus-wide `grep -oE '"race:[a-z_-]+"'` over this file
+    /// finds (adversarial review's own verification method, reproduced here
+    /// as a standing test rather than a one-time manual check).
+    #[test]
+    fn the_union_is_exactly_the_thirteen_seamed_races() {
+        let races = race_ids_with_a_magnitude_consumer();
+        let expected: std::collections::BTreeSet<&str> = [
+            "dwarf", "elf", "gnome", "goblin", "grippli", "half-elf", "half-orc", "halfling", "hobgoblin", "human",
+            "kobold", "strix", "svirfneblin",
+        ]
+        .into_iter()
+        .collect();
+        assert_eq!(races, expected);
+    }
+
+    /// A race with no seam at all -- Gillman, this wave's own confirmed
+    /// over-claim -- must NOT appear in the set.
+    #[test]
+    fn an_unseamed_race_is_absent() {
+        let races = race_ids_with_a_magnitude_consumer();
+        assert!(!races.contains("gillman"));
+        assert!(!races.contains("vanara"));
+        assert!(!races.contains("nagaji"));
+        assert!(!races.contains("vishkanya"));
+    }
+}
+
 /// The Fortitude / Reflex / Will contribution of this character's chosen
 /// alternate racial traits.
 ///

@@ -55,7 +55,7 @@ use codex::rules_core::equipment_effects::compute_equipment_effects;
 use codex::rules_core::equipment_resolver;
 use codex::rules_core::pilot_compute::{
     HeadlessReceiptStatus, PilotBaseChassisComputation, build_pilot_headless_receipt,
-    compute_pilot_base_chassis,
+    compute_pilot_base_chassis, race_ids_with_a_magnitude_consumer,
 };
 use codex::rules_core::rules_tables::RuleSetId;
 use codex::rules_core::rules_tables::acg::{self, AcgClassId};
@@ -2482,6 +2482,15 @@ impl EngineFacts {
         self.race_trait_probe.rendered.get(&coordinate).map(String::as_str)
     }
 
+    /// Whether this unit's race has a REAL magnitude consumer somewhere in
+    /// `pilot_compute` -- SD31-W12-INTEGRATE-001, see
+    /// [`RaceTraitProbe::consumer_verified`]'s own doc comment for why this
+    /// exists and what it deliberately does not claim.
+    fn race_trait_has_verified_consumer(&self, unit: &CorpusUnit) -> bool {
+        let coordinate = (unit.provenance.file.clone(), unit.provenance.line);
+        self.race_trait_probe.consumer_verified.contains(&coordinate)
+    }
+
     /// Whether one book really holds this unit. Delegates to
     /// [`Self::holds_key`] for every kind whose identity is its name, and
     /// uses the source-coordinate join for race traits, which is the only
@@ -2971,6 +2980,19 @@ struct RaceTraitProbe {
     /// already serves to the player, reused rather than re-implemented, so
     /// "renders on screen" is proven by construction, not asserted.
     rendered: BTreeMap<(String, usize), String>,
+    /// Coordinates whose race has a REAL magnitude consumer somewhere in
+    /// `pilot_compute` (`race_ids_with_a_magnitude_consumer`) -- SD31-W12-
+    /// INTEGRATE-001, closing the confirmed "load-only evidence" defect:
+    /// `reachable` alone (a record's `role != Unclassified`) is a LOAD
+    /// observation, not a consumer-delta observation, and previously
+    /// promoted a `computed` record straight to `grounded`/board `done`
+    /// even when its race has NO seam of any kind (46% of the 555-unit
+    /// standing population, confirmed by adversarial review). This is a
+    /// coarse, race-level, DELIBERATELY CONSERVATIVE gate -- it corrects the
+    /// unambiguous population (a race with zero seam anywhere) without
+    /// claiming to verify the finer trait-key-level question for a race
+    /// that has SOME seam; see OPEN-ISSUES for the narrower remaining gap.
+    consumer_verified: BTreeSet<(String, usize)>,
 }
 
 fn probe_race_trait_corpus(repo_root: &Path) -> RaceTraitProbe {
@@ -2984,6 +3006,7 @@ fn probe_race_trait_corpus(repo_root: &Path) -> RaceTraitProbe {
     let corpus = load_race_corpus(&roots);
 
     let mut probe = RaceTraitProbe::default();
+    let seamed_races = race_ids_with_a_magnitude_consumer();
     // `race_keys()` yields only races that have a chassis record in some
     // loaded book. A trait whose race has none is left out of BOTH sets by
     // construction, which is right: `RaceCorpus::resolve` returns `None`
@@ -2992,6 +3015,13 @@ fn probe_race_trait_corpus(repo_root: &Path) -> RaceTraitProbe {
     // the live instance -- the pilot skipped writing them for exactly this
     // reason (SD-29 `decisions.md §43.4`).
     for race in corpus.race_keys() {
+        // `race_keys()` yields the corpus's own display-cased key ("Dwarf",
+        // "Half-Elf"); `race_ids_with_a_magnitude_consumer()` is lowercase
+        // with hyphens preserved -- verified empirically against every real
+        // corpus race record (`data/corpus/**/race/*.json`'s own `key`
+        // field), not assumed: `.to_lowercase()` alone is the exact and only
+        // transform needed for every seamed race's real corpus spelling.
+        let is_seamed = seamed_races.contains(race.to_lowercase().as_str());
         for record in corpus.traits_for(race) {
             let Some(file) = Path::new(&record.source_path).file_name() else { continue };
             let coordinate = (file.to_string_lossy().into_owned(), record.source_line as usize);
@@ -3000,6 +3030,9 @@ fn probe_race_trait_corpus(repo_root: &Path) -> RaceTraitProbe {
                 coordinate.clone(),
                 record.render_description(&record.same_row_display_values()).text,
             );
+            if is_seamed {
+                probe.consumer_verified.insert(coordinate.clone());
+            }
             if record.role == TraitRole::Unclassified {
                 continue;
             }
@@ -5446,6 +5479,57 @@ fn classify(
                         evidence:
                             "race_trait_applied_by_the_race_corpus_and_rendered_with_real_text"
                                 .to_string(),
+                        reason: None,
+                        engine_book: engine_book_for_verdict,
+                    };
+                }
+                // SD31-W12-INTEGRATE-001, two CONFIRMED demotions on the
+                // magnitude-bearing (non-`text_only`) fallthrough that used
+                // to return `grounded` unconditionally:
+                //
+                // 1. `!universal_sheet_modifier` was checked ONLY inside the
+                //    `text_only` arm above -- a REAL universal magnitude
+                //    (`MOVE:Walk,30`, no `text_only` at all) walked straight
+                //    past it. For `display` wiring_class `grounded` caps at
+                //    `held` regardless, but for `computed` it IS board
+                //    `done` (`doneness_verdict`: `computed`+`grounded` ->
+                //    `done`, unconditionally). Live instances this cycle
+                //    caught: `Throwback ~ Gillman ~ Speed`,
+                //    `Tree Stranger ~ Vanara ~ Speed`, both stating an
+                //    unconditional land-speed replacement with nothing in
+                //    `pilot_compute` applying a race_trait `MOVE:` token at
+                //    all.
+                // 2. `race_trait_applied_by_the_race_corpus_the_app_loads`
+                //    is a LOAD observation (`role != Unclassified`), not a
+                //    consumer-delta observation -- confirmed by adversarial
+                //    review as the identical "credit resting on a DIFFERENT
+                //    record's computation" shape wave 11 found, one axis
+                //    over (same variable, different race: Vanara's
+                //    Whitecape carries the byte-identical CMD chain Dwarf's
+                //    Stability seam reads, but only Dwarf is wired). Gated
+                //    now on `race_ids_with_a_magnitude_consumer` -- a real,
+                //    table-derived (not hand-typed) check, deliberately
+                //    coarse (race-level, not trait-key-level) so it corrects
+                //    only the UNAMBIGUOUS population (314 of 555 belong to a
+                //    race with zero seam of any kind) without overreaching
+                //    into the narrower remaining question a race WITH some
+                //    seam still raises for its other traits.
+                //
+                // Both refusals produce `ingested-magnitude`, the same
+                // status `Kind::Spell`'s identically-shaped "real record,
+                // no verified consumer delta" fallback above already uses --
+                // `in-progress` under both `display` and `computed`, never
+                // `done`.
+                if universal_sheet_modifier || !facts.race_trait_has_verified_consumer(unit) {
+                    return Verdict {
+                        status: "ingested-magnitude",
+                        evidence: if universal_sheet_modifier {
+                            "race_trait_states_a_universal_sheet_modifier_pending_compute"
+                                .to_string()
+                        } else {
+                            "race_trait_applied_by_the_race_corpus_but_no_verified_consumer"
+                                .to_string()
+                        },
                         reason: None,
                         engine_book: engine_book_for_verdict,
                     };
