@@ -27,7 +27,7 @@ import { assert, assertEqual } from '../testSupport/asserts';
  */
 
 /** The wire codes `build_spell_catalog` chains, in that order. */
-const CHAINED_BOOK_CODES = ['CRB', 'APG', 'ACG', 'ARG', 'UI', 'UM', 'OA', 'UC'] as const;
+const CHAINED_BOOK_CODES = ['CRB', 'APG', 'ACG', 'ARG', 'UI', 'UM', 'OA', 'UC', 'ISG'] as const;
 
 function testBookOrderCoversEveryServedBookInChainOrder() {
   assertEqual(
@@ -81,7 +81,7 @@ function testFormatBookListReadsAsProseOverTheRealLabels() {
   );
   assertEqual(
     formatBookList(BOOK_ORDER),
-    "Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Advanced Race Guide, Ultimate Intrigue, Ultimate Magic, Occult Adventures and Ultimate Combat",
+    "Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Advanced Race Guide, Ultimate Intrigue, Ultimate Magic, Occult Adventures, Ultimate Combat and Inner Sea Gods",
     'every served book'
   );
 }

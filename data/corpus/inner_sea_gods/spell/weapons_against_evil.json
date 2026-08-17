@@ -1,0 +1,80 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Each weapon this spell affects each shines with pale light that dimly illuminates a 5-foot square. These weapons also ignore the DR of evil creatures that have DR 5 or lower, as long as the damage reduction is not DR/epic.",
+    "key": "Weapons Against Evil",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Inquisitor,Paladin=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, OF"
+      },
+      {
+        "key": "DESC",
+        "value": "Each weapon this spell affects each shines with pale light that dimly illuminates a 5-foot square. These weapons also ignore the DR of evil creatures that have DR 5 or lower, as long as the damage reduction is not DR/epic."
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "FACTSET",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "KEY",
+        "value": "Weapons Against Evil"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude negates (harmless, object)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.245"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (harmless, object)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "(CASTERLEVEL) weapons, no two of which can be more than 20 ft. apart"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-17T01:45:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 71,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_spells.lst",
+    "record_key": "Weapons Against Evil",
+    "sha256": "48bcb314dbdf8369982b3bc68d10dbe11baa5fe748d4121d6e197ab414406e68"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

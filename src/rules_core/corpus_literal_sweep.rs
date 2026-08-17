@@ -50,7 +50,9 @@
 
 use std::collections::{BTreeMap, BTreeSet};
 
-use crate::rules_core::shape_b_v1::REDACTED_PI_MARKER;
+use crate::rules_core::pi_screening::classify_field;
+
+use crate::rules_core::shape_b_v1::{License, REDACTED_PI_MARKER};
 
 /// Token keys this repo synthesizes rather than transcribes, each with the
 /// LST token name its value must be found under in the book's corpus.
@@ -330,6 +332,20 @@ fn compare_typed_numeric_field(
 /// NOT `license: "PI-REDACTED"`) is still checked normally, and every OTHER
 /// token on a redacted record still must byte-match.
 ///
+/// **A second, narrower exemption for non-`DESC` tokens (`SD31-E6-F10-001`).**
+/// `enrich_spell_raw_tokens.rs`'s `enrich_one` redacts ANY token (not only
+/// `DESC`) whose value hits the shared blacklist term scan, one field at a
+/// time -- so a `FACTSET:`-shaped token naming a deity on an Inner Sea Gods
+/// spell legitimately stores [`REDACTED_PI_MARKER`], the identical shape a
+/// redacted `DESC` uses, but the record-level `pi_redacted_description` flag
+/// only ever describes `DESC`. Rather than trust the marker string alone
+/// (which would let an accidental literal `"[redacted PI]"` value hide a
+/// real transcription defect), this token is exempt ONLY when the real
+/// corpus closure's own same-key value RE-SCREENS as blacklisted through the
+/// identical scan the write path used (`pi_screening::classify_field`) --
+/// so the exemption is re-derived against the oracle every sweep run, never
+/// merely asserted by the shipped record.
+///
 /// **The typed-field cross-check (`OPEN-ISSUES.md` row 91).** Before this,
 /// the sweep compared ONLY `data.raw_tokens` against the closure — and
 /// because the `enrich_*_raw_tokens` binaries harvest `raw_tokens` FROM the
@@ -354,6 +370,16 @@ pub fn compare_tokens(
     for token in &record.tokens {
         tally.tokens_compared += 1;
         if record.pi_redacted_description && token.key == "DESC" && token.value == REDACTED_PI_MARKER {
+            continue;
+        }
+        if token.key != "DESC"
+            && token.value == REDACTED_PI_MARKER
+            && closure.iter().any(|field| {
+                field.split_once(':').is_some_and(|(key, raw_value)| {
+                    key == token.key && classify_field(key, raw_value).0 != License::Ogl
+                })
+            })
+        {
             continue;
         }
         let joined = token.joined();
@@ -616,6 +642,71 @@ mod tests {
             &mut tally,
         );
         assert_eq!(findings, vec![], "a declared-redacted DESC token must not be flagged");
+    }
+
+    /// `SD31-E6-F10-001`: `enrich_spell_raw_tokens.rs` redacts ANY token
+    /// (not only `DESC`) whose value hits the shared blacklist term scan
+    /// (`enrich_one`'s `blacklisted = blacklist_license != License::Ogl`
+    /// branch, applied per-token) -- so a real `FACTSET:` token naming a
+    /// deity on an Inner Sea Gods spell (`FACTSET:Deity|Sarenrae`-shaped)
+    /// legitimately stores `[redacted PI]`, exactly like a redacted `DESC`
+    /// does. The pre-existing DESC-only exemption above does not cover it,
+    /// so 51 real, correctly-redacted records went `MISMATCH` for a
+    /// redaction that is legitimate, not a transcription defect
+    /// (re-derived against the real pinned oracle,
+    /// `cargo run --locked --bin corpus_literal_sweep`, before this fix).
+    ///
+    /// Narrower than the DESC exemption in one respect and safer in
+    /// another: rather than trusting a record-level flag
+    /// (`pi_redacted_description`, which only ever describes `DESC`), this
+    /// exemption RE-SCREENS the real corpus row's own same-key value
+    /// through the identical blacklist scan the enrichment write path used
+    /// -- so a token that merely happens to read the marker string by
+    /// coincidence, with no real blacklist hit backing it, is still
+    /// reported (see the sibling test below).
+    #[test]
+    fn a_non_desc_token_whose_raw_corpus_value_independently_reconfirms_as_blacklisted_is_exempt() {
+        let rec = record(&[("COST", "5"), ("FACTSET", "[redacted PI]")]);
+        let rows = ["Thing\tCOST:5\tFACTSET:Deity|Sarenrae"];
+        let mut tally = SweepTally::default();
+        let findings = compare_tokens(
+            &rec,
+            &closure_of(&rows, &rec.identities),
+            &BTreeSet::new(),
+            &mut tally,
+        );
+        assert_eq!(
+            findings,
+            vec![],
+            "a FACTSET token legitimately redacted for a real deity-name blacklist hit must \
+             not be flagged"
+        );
+    }
+
+    /// The re-screen genuinely runs: a token whose value happens to equal
+    /// the marker string, but whose real corpus row carries a CLEAN
+    /// (non-blacklisted) value under the same key, is not exempt -- proving
+    /// this is a real re-derivation, not a blanket "trust the marker" hole.
+    #[test]
+    fn a_token_merely_reading_the_marker_string_with_no_real_blacklist_backing_it_is_still_flagged() {
+        let rec = record(&[("COST", "5"), ("FACTSET", "[redacted PI]")]);
+        let rows = ["Thing\tCOST:5\tFACTSET:SomeOrdinaryValue"];
+        let mut tally = SweepTally::default();
+        let findings = compare_tokens(
+            &rec,
+            &closure_of(&rows, &rec.identities),
+            &BTreeSet::new(),
+            &mut tally,
+        );
+        assert_eq!(
+            findings,
+            vec![Finding::TokenNotInClosure {
+                record: rec.record_path.clone(),
+                token: "FACTSET:[redacted PI]".to_string(),
+            }],
+            "a token reading the marker string with no independently-reconfirmed blacklist \
+             hit on the real corpus row must still be reported"
+        );
     }
 
     /// The exemption is narrow: it does not extend to any OTHER drifted

@@ -38,6 +38,7 @@ export const BOOK_LABELS: Record<string, string> = {
   UM: 'Ultimate Magic',
   OA: 'Occult Adventures',
   UC: 'Ultimate Combat',
+  ISG: 'Inner Sea Gods',
 };
 
 /**
@@ -52,11 +53,11 @@ export const BOOK_LABELS: Record<string, string> = {
  * copy while serving five. Nothing failed — the frontend test's oracle was
  * a copy of this constant rather than a statement about the backend. See
  * `SpellCatalogScreen.test.ts`'s header. UM (SD31-E6-F2-002), OA
- * (SD31-E6-F2-003) and UC (SD31-E6-F2-004) are added here deliberately, in
- * the same edit as their respective Rust widenings, to not reproduce that
- * exact defect a second time.
+ * (SD31-E6-F2-003), UC (SD31-E6-F2-004) and ISG (SD31-E6-F10-001) are added
+ * here deliberately, in the same edit as their respective Rust widenings,
+ * to not reproduce that exact defect a second time.
  */
-export const BOOK_ORDER = ['CRB', 'APG', 'ACG', 'ARG', 'UI', 'UM', 'OA', 'UC'] as const;
+export const BOOK_ORDER = ['CRB', 'APG', 'ACG', 'ARG', 'UI', 'UM', 'OA', 'UC', 'ISG'] as const;
 
 /**
  * Renders book codes as a prose list of their display labels, so the

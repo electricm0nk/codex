@@ -1,0 +1,71 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You channel the power of righteousness into your weapon arm, allowing you to strike with great force. Your next melee attack (if made before the end of your next turn) gains a +5 sacred bonus on the attack roll. If the attack hits, you may immediately attempt a bull rush combat maneuver (with a +5 sacred bonus on your combat maneuver check) against the target without provoking an attack of opportunity; if your combat maneuver check exceeds the defender's CMD by more than 5, you do not need to move with the target to push it back more than 5 feet.",
+    "key": "Inheritor's Smite",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 swift action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Inquisitor,Paladin=2"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S, DF"
+      },
+      {
+        "key": "DESC",
+        "value": "You channel the power of righteousness into your weapon arm, allowing you to strike with great force. Your next melee attack (if made before the end of your next turn) gains a +5 sacred bonus on the attack roll. If the attack hits, you may immediately attempt a bull rush combat maneuver (with a +5 sacred bonus on your combat maneuver check) against the target without provoking an attack of opportunity; if your combat maneuver check exceeds the defender's CMD by more than 5, you do not need to move with the target to push it back more than 5 feet."
+      },
+      {
+        "key": "DURATION",
+        "value": "see text"
+      },
+      {
+        "key": "FACTSET",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "KEY",
+        "value": "Inheritor's Smite"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.236"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-17T01:45:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 38,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_spells.lst",
+    "record_key": "Inheritor's Smite",
+    "sha256": "48bcb314dbdf8369982b3bc68d10dbe11baa5fe748d4121d6e197ab414406e68"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

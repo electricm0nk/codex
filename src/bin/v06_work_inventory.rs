@@ -2115,6 +2115,20 @@ fn spell_book_slug_for(short_code: &str) -> &'static str {
         // (`spell_book_slug_for_covers_every_catalog_book`), not
         // attribution or measurement logic.
         "UC" => "ultimate_combat",
+        // SD31-E6-F10-001: ISG joins `spell_resolver::spell_catalog_rows()`
+        // as the catalog's 9th book. Same additive, single-line
+        // registration the UM/OA/UC spell-lane cycles made here before it.
+        // This one-line addition is made from outside this file's normal
+        // owning lane (SD-31 `epic-6-ingest-lanes` F2/F5/F10, whose file
+        // territory is `spell_resolver.rs`/per-book `spell_list.rs`, not
+        // this binary) ONLY because leaving it out makes
+        // `spell_book_slug_for_covers_every_catalog_book` (this file's own
+        // dedicated test, below) fail immediately -- the same "closed-set
+        // lookup table, not attribution or measurement logic" shape this
+        // function's own comment already documents as safe to extend this
+        // way. Logged in `OPEN-ISSUES.md` for this file's owning lane's
+        // awareness.
+        "ISG" => "inner_sea_gods",
         other => panic!(
             "spell_resolver::spell_catalog_rows() now carries an unmapped book code {other:?} \
              -- add it to spell_book_slug_for so the spell classifier does not silently drop \

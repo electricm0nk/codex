@@ -12,8 +12,8 @@
     "signed_off": false,
     "signed_off_at": null
   },
-  "records_processed": 116,
-  "records_redacted": 0,
+  "records_processed": 208,
+  "records_redacted": 4,
   "redaction_policy": {
     "blacklist_source": "docs/governance/ogl-pi-blacklist.md",
     "blacklist_version_reviewed": "2026-07-27",
@@ -22,5 +22,5 @@
     "schema_preserving": true
   },
   "redistribution_posture": "ogl-notice-attached",
-  "screening_method_note": "PASS -- SD29-E5-F2-010 (monster lane), 2026-08-15T02:34:27Z: every field of the 116 records this run wrote (39 monsters + 77 monster abilities) was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md, zero hits. A hit is a hard stop in this generator, not a warning. records_processed is 116: the real on-disk count for this book across every kind any lane has ingested, which for a book ingested by more than one lane is larger than this run's own output. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see."
+  "screening_method_note": "PASS -- SD29-E5-F2-010 (monster lane), 2026-08-15T02:34:27Z: every field of the 116 records this run wrote (39 monsters + 77 monster abilities) was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md, zero hits. A hit is a hard stop in this generator, not a warning. Updated by SD31-E6-F10-001 (2026-08-17): the spell lane (`ingest_inner_sea_gods_spells.rs` + `cache_gen::spell_lane_dump` + `enrich_spell_raw_tokens.rs`) added 92 more records (of 96 real base declarations; 4 dropped -- 2 for a declared/blacklisted NAME hit each caught independently by both screens, `Abadar's Truthtelling`/`Gozreh's Trident`/`Rovagug's Fury`/`Sympathy (Shelynite)`), both SD-30 PI contracts applied per record to NAME, DESCRIPTION and every `raw_tokens` field independently (not only NAME/DESCRIPTION -- a real `FACTSET:Deity|<name>` token redacts even when the description itself is clean). records_processed is now 208 (116 + 92): the real on-disk count for this book across every kind any lane has ingested (`find data/corpus/inner_sea_gods -name '*.json' ! -name LICENSE.json | wc -l`). records_redacted is 4: every shipped spell record whose DESCRIPTION itself was redacted for a blacklist hit (`license == \"PI-REDACTED\"`), re-derived directly from the shipped records, not carried forward. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see."
 }

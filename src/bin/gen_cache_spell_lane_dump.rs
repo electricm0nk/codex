@@ -4,10 +4,11 @@
 //! `PCGEN_CORPUS_ROOT` pointing at a local PCGen `data/` checkout
 //! (defaults to `$HOME/workspace/repos/pcgen/data`).
 //! Writes `data/corpus/{occult_adventures,ultimate_magic,ultimate_combat,
-//! ultimate_intrigue}/spell/*.json`.
+//! ultimate_intrigue,inner_sea_gods}/spell/*.json` (`inner_sea_gods` added
+//! by `SD31-E6-F10-001`).
 //!
 //! This binary is the generator itself, not a standing production
-//! surface -- it is re-run only when one of the four books' compiled
+//! surface -- it is re-run only when one of the books' compiled
 //! `spell_list::SPELL_LIST` table changes (mirrors
 //! `gen_cache_ultimate_equipment.rs`'s own framing).
 
