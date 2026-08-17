@@ -223,6 +223,19 @@ fn run_equipment_bar_check(repo_root: &Path) -> BarCheckReport {
 /// Returns `None` when the monster carries no `MONSTERCLASS:` token at all,
 /// or when its trailing segment is not a plain integer (e.g. a book that
 /// spells it differently) -- an honest absence, never a guessed value.
+///
+/// **SD31-E6-F9-003: the rule's own "unless otherwise noted" clause is not
+/// decorative.** A monster's `BONUS:VAR|SLA_CL|<value>` token
+/// ([`MonsterStatBlock::sla_cl_token`]) states EITHER the generic rule
+/// (`HD`, or the equivalent `max(TL,1)`/`(max(TL,1))`) OR a monster-specific
+/// literal override -- Couatl carries `BONUS:VAR|SLA_CL|9` against 12 Hit
+/// Dice; Demon (Glabrezu) carries `14` against 12 HD. Before this function
+/// read `sla_cl_token` it always applied the generic HD rule regardless,
+/// which silently served the WRONG caster level for every monster whose row
+/// carries an override -- re-derived corpus-wide this cycle: of the 71
+/// previously-uncovered `derived`+`grounded` `monster` units this cycle
+/// fixtured, 66 carry a literal override and only 5 carry the bare
+/// `HD`/`max(TL,1)` spelling the function used to assume unconditionally.
 pub fn spell_like_ability_caster_level(monster: &MonsterStatBlock) -> Option<i32> {
     // SD31-E6-F1-002 (`OPEN-ISSUES.md` row 44): a monster with no
     // `BONUS:VAR|SLA_CL|` token has no spell-like abilities, and this
@@ -237,7 +250,26 @@ pub fn spell_like_ability_caster_level(monster: &MonsterStatBlock) -> Option<i32
     }
     let monster_class = monster.monster_class?;
     let hd_str = monster_class.rsplit(':').next()?;
-    hd_str.trim().parse::<i32>().ok()
+    let hd = hd_str.trim().parse::<i32>().ok()?;
+
+    match monster.sla_cl_token {
+        // The two corpus-observed spellings of "apply the generic Universal
+        // Monster Rule" (`dragon_magma`'s row wraps the second in a
+        // redundant extra paren pair; both mean the same thing) -- and,
+        // defensively, `None` (a book whose transcription predates this
+        // field), so a monster this repo has not yet re-transcribed keeps
+        // its prior, already-correct-for-the-bare-HD-population behaviour
+        // rather than silently losing its caster level.
+        Some("HD") | Some("max(TL,1)") | Some("(max(TL,1))") | None => Some(hd),
+        // Every other value is the row's own STATED override -- trust the
+        // corpus over the generic rule. A plain integer parses directly; an
+        // unparseable formula (e.g. `HD*3/4`, `book_of_the_damned_volume_2`'s
+        // Demon (Vermlek)) has no computable value without a formula
+        // interpreter this repo does not have, and returns `None` rather
+        // than a guess -- the same "honest absence" contract this
+        // function's other early returns already keep.
+        Some(raw) => raw.trim().parse::<i32>().ok(),
+    }
 }
 
 /// One `kind=monster` fixture row. Deliberately a different shape from
@@ -339,8 +371,19 @@ fn run_monster_bar_check(repo_root: &Path) -> BarCheckReport {
             not_ingested.insert(fixture.unit_id.clone(), fixture.book.clone());
             continue;
         };
-        let Some(monster) = monster_book.monsters.iter().find(|m| m.name == fixture.record_key)
-        else {
+        // Resolved by `.key` (the corpus `KEY:` identity, == `record_key` ==
+        // `data.corpus_key` in this repo's own `data/corpus/**/monster/*.json`
+        // ingest -- `MonsterBook::monster_resolve`'s own contract), never by
+        // `.name` (SD31-E6-F9-003 fix): the two coincide for every one of
+        // this seam's original 7 fixtures (Demon (Balor) etc., where
+        // `key == name`) but genuinely differ for records like Bestiary 4's
+        // Gremlin (Grimple), whose `key` is `"Gremlin (Grimple)"` and whose
+        // `name` is the bare `"Grimple"` -- matching on `.name` there is a
+        // silent false-negative, not merely a style choice, and it is what
+        // `monster_ingested_provenance` in
+        // `tests/derived_evaluator_fixture_check_monster.rs`'s own
+        // independent guarantee-4b check has always assumed.
+        let Some(monster) = monster_book.monster_resolve(&fixture.record_key) else {
             failures.insert(
                 fixture.unit_id.clone(),
                 format!(
@@ -814,19 +857,23 @@ mod spell_seam_tests {
 mod monster_seam_tests {
     use super::*;
 
+    /// Every pre-existing test in this module (before SD31-E6-F9-003) is
+    /// about the HD-parsing rule over the bare-`HD` `sla_cl_token` shape --
+    /// Balor/Linnorm/Dragon all carry it verbatim in the real corpus -- so
+    /// `stat_block` keeps defaulting to that shape and only the override
+    /// tests below call [`stat_block_full`] directly with a different token.
     fn stat_block(monster_class: Option<&'static str>) -> MonsterStatBlock {
-        stat_block_with_sla(monster_class, true)
+        stat_block_full(monster_class, true, Some("HD"))
     }
 
-    /// [`stat_block`] plus explicit control over
-    /// [`MonsterStatBlock::has_spell_like_abilities`] (SD31-E6-F1-002,
-    /// `OPEN-ISSUES.md` row 44) -- every pre-existing test in this module is
-    /// about the HD-parsing rule, not the presence gate, so `stat_block`
-    /// keeps defaulting to `true` and only the presence-gate test below calls
-    /// this directly with `false`.
-    fn stat_block_with_sla(
+    /// Full control over every field [`spell_like_ability_caster_level`]
+    /// reads: [`MonsterStatBlock::has_spell_like_abilities`] (SD31-E6-F1-002,
+    /// `OPEN-ISSUES.md` row 44) and [`MonsterStatBlock::sla_cl_token`]
+    /// (SD31-E6-F9-003, same row's own forecast follow-on).
+    fn stat_block_full(
         monster_class: Option<&'static str>,
         has_spell_like_abilities: bool,
+        sla_cl_token: Option<&'static str>,
     ) -> MonsterStatBlock {
         MonsterStatBlock {
             key: "test:monster:probe",
@@ -843,6 +890,7 @@ mod monster_seam_tests {
             external_ability_refs: &[],
             stat_adjustments: &[],
             has_spell_like_abilities,
+            sla_cl_token,
             source_file: "test.lst",
             source_line: 1,
         }
@@ -891,13 +939,78 @@ mod monster_seam_tests {
     // HD token, but no `SLA_CL` on the row at all).
     #[test]
     fn a_valid_monster_class_with_no_spell_like_abilities_yields_no_caster_level() {
-        let block = stat_block_with_sla(Some("Construct:3"), false);
+        let block = stat_block_full(Some("Construct:3"), false, None);
         assert_eq!(
             spell_like_ability_caster_level(&block),
             None,
             "a monster with no BONUS:VAR|SLA_CL| token has no spell-like abilities, regardless \
              of HD"
         );
+    }
+
+    // SD31-E6-F9-003 (`OPEN-ISSUES.md` row 44's own follow-on): the real
+    // Couatl worked example (`b1_races.lst:74`) -- `BONUS:VAR|SLA_CL|9`
+    // against `MONSTERCLASS:Couatl Outsider:12`. Before this fix the
+    // function ignored the literal and always answered 12; the corpus's own
+    // stated override is 9, and that is what a player must see.
+    #[test]
+    fn a_literal_sla_cl_override_wins_over_the_generic_hd_rule() {
+        let block = stat_block_full(Some("Couatl Outsider:12"), true, Some("9"));
+        assert_eq!(
+            spell_like_ability_caster_level(&block),
+            Some(9),
+            "the row's own stated SLA_CL override must win over the generic HD rule"
+        );
+    }
+
+    // The real Demon (Glabrezu) worked example (`b1_races.lst:95`) --
+    // `BONUS:VAR|SLA_CL|14` against 12 HD -- a second, independent override
+    // confirming the fix is not a Couatl-specific special case.
+    #[test]
+    fn a_second_literal_sla_cl_override_also_wins_over_hd() {
+        let block = stat_block_full(Some("Outsider (Fort/Will):12"), true, Some("14"));
+        assert_eq!(spell_like_ability_caster_level(&block), Some(14));
+    }
+
+    // `max(TL,1)` is a corpus-observed second spelling of "apply the generic
+    // HD rule", equally valid to bare `HD` -- the real Azata (Ghaele) worked
+    // example (`b1_races.lst:31`, `MONSTERCLASS:Outsider (Fort/Will):13`).
+    #[test]
+    fn max_tl_one_sla_cl_token_still_applies_the_generic_hd_rule() {
+        let block = stat_block_full(Some("Outsider (Fort/Will):13"), true, Some("max(TL,1)"));
+        assert_eq!(spell_like_ability_caster_level(&block), Some(13));
+    }
+
+    // `bestiary_2`'s Dragon (Magma) spells the same rule with a redundant
+    // extra paren pair, `(max(TL,1))` -- the exact-set check must recognise
+    // both spellings, not only the bare one.
+    #[test]
+    fn redundantly_parenthesised_max_tl_one_still_applies_the_generic_hd_rule() {
+        let block = stat_block_full(Some("Dragon:9"), true, Some("(max(TL,1))"));
+        assert_eq!(spell_like_ability_caster_level(&block), Some(9));
+    }
+
+    // An unparseable formula (the real Demon (Vermlek) worked example,
+    // `book_of_the_damned_volume_2`, `BONUS:VAR|SLA_CL|HD*3/4`) has no
+    // computable value without a formula interpreter this repo does not
+    // have -- an honest `None`, never a guess at what `HD*3/4` might round
+    // to.
+    #[test]
+    fn an_unparseable_sla_cl_formula_refuses_rather_than_guesses() {
+        let block = stat_block_full(Some("Outsider:16"), true, Some("HD*3/4"));
+        assert_eq!(spell_like_ability_caster_level(&block), None);
+    }
+
+    // A monster whose row has not been re-transcribed with this field yet
+    // (`sla_cl_token: None`) but whose `has_spell_like_abilities` is `true`
+    // must keep the prior, already-correct-for-the-bare-HD-population
+    // behaviour rather than silently losing its caster level -- a defensive
+    // fallback, not a shape this repo's own registry currently produces
+    // (every book is re-transcribed this same cycle).
+    #[test]
+    fn missing_sla_cl_token_with_the_presence_flag_still_set_falls_back_to_hd() {
+        let block = stat_block_full(Some("Outsider (Fort/Will):20"), true, None);
+        assert_eq!(spell_like_ability_caster_level(&block), Some(20));
     }
 
     #[test]

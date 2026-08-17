@@ -135,35 +135,88 @@ fn reference_derivation_refuses_what_it_cannot_parse() {
     assert_eq!(reference_hd_from_monster_class("Outsider:many"), None);
 }
 
+/// The reference derivation for a fixture's `corpus_field`
+/// (`BONUS:VAR|SLA_CL|<value>`) against its own `monster_class_token`,
+/// written independently of `derived_evaluator_fixture_check.rs`'s
+/// `spell_like_ability_caster_level` -- same two rules (the generic Hit-Dice
+/// rule and the corpus's own literal-override exception), different code,
+/// so the two cannot silently agree on a shared bug.
+///
+/// SD31-E6-F9-003 widened this reference from the bare-`HD` shape alone
+/// (this suite's only committed fixtures until this cycle) to the corpus's
+/// own second axis: `BONUS:VAR|SLA_CL|<value>` states EITHER the generic
+/// "equal to Hit Dice" rule (spelled `HD`, `max(TL,1)`, or the redundantly-
+/// wrapped `(max(TL,1))`) OR a monster-specific literal override (Couatl:
+/// `9` against 12 HD). This function reads `corpus_field`'s own trailing
+/// value and applies whichever the row states.
+fn reference_spell_like_ability_caster_level(
+    corpus_field: &str,
+    monster_class_token: &str,
+) -> Option<i32> {
+    let sla_value = corpus_field.strip_prefix("BONUS:VAR|SLA_CL|")?;
+    let hd = reference_hd_from_monster_class(monster_class_token)?;
+    match sla_value {
+        "HD" | "max(TL,1)" | "(max(TL,1))" => Some(hd),
+        literal => literal.trim().parse::<i32>().ok(),
+    }
+}
+
+#[test]
+fn reference_caster_level_derivation_covers_both_the_generic_rule_and_a_literal_override() {
+    // The generic rule, both corpus-observed spellings.
+    assert_eq!(
+        reference_spell_like_ability_caster_level(
+            "BONUS:VAR|SLA_CL|HD",
+            "Outsider (Fort/Will):20"
+        ),
+        Some(20)
+    );
+    assert_eq!(
+        reference_spell_like_ability_caster_level(
+            "BONUS:VAR|SLA_CL|max(TL,1)",
+            "Outsider (Fort/Will):13"
+        ),
+        Some(13)
+    );
+    // The real Couatl worked example: a literal override wins over HD.
+    assert_eq!(
+        reference_spell_like_ability_caster_level("BONUS:VAR|SLA_CL|9", "Couatl Outsider:12"),
+        Some(9)
+    );
+    // An unparseable formula refuses rather than guesses.
+    assert_eq!(
+        reference_spell_like_ability_caster_level("BONUS:VAR|SLA_CL|HD*3/4", "Outsider:16"),
+        None
+    );
+}
+
 /// Guarantee 3: every committed `monster_entries` row's
 /// `expected.spell_like_ability_caster_level` reproduces exactly from its
-/// own pinned `monster_class_token`, via a reference derivation this file
-/// alone owns.
+/// own pinned `corpus_field`/`monster_class_token` pair, via a reference
+/// derivation this file alone owns.
 #[test]
 fn monster_expected_values_are_re_derivable_from_the_pinned_corpus_field() {
     let fixtures = load_monster_fixtures(&repo_root());
     assert!(!fixtures.is_empty(), "an empty monster_entries would make this suite vacuous");
     for fixture in &fixtures {
-        assert_eq!(
-            fixture.corpus_field, "BONUS:VAR|SLA_CL|HD",
-            "{}: this suite's reference derivation only covers the bare-HD SLA_CL shape; a \
-             different corpus_field needs its own reference case before it is added",
-            fixture.unit_id
-        );
-        let re_derived = reference_hd_from_monster_class(&fixture.monster_class_token)
-            .unwrap_or_else(|| {
-                panic!(
-                    "{}: monster_class_token {:?} does not parse under this file's own \
-                     reference derivation",
-                    fixture.unit_id, fixture.monster_class_token
-                )
-            });
+        let re_derived = reference_spell_like_ability_caster_level(
+            &fixture.corpus_field,
+            &fixture.monster_class_token,
+        )
+        .unwrap_or_else(|| {
+            panic!(
+                "{}: corpus_field {:?} / monster_class_token {:?} does not parse under this \
+                 file's own reference derivation",
+                fixture.unit_id, fixture.corpus_field, fixture.monster_class_token
+            )
+        });
         assert_eq!(
             re_derived, fixture.expected_spell_like_ability_caster_level,
             "{}: fixture states caster level {} but this file's independent re-derivation of \
-             {:?} produces {}",
+             {:?} / {:?} produces {}",
             fixture.unit_id,
             fixture.expected_spell_like_ability_caster_level,
+            fixture.corpus_field,
             fixture.monster_class_token,
             re_derived
         );

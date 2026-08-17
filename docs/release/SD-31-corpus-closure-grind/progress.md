@@ -17522,3 +17522,111 @@ checkpoint (already cleaned up, or the lanes/reviewers used different `CARGO_TAR
 `sd31-class-split-wire-regen` deliberately left untouched: neither is in this wave's own
 explicit list, and unilaterally judging another actor's directory "finished" is not this
 cycle's call to make.
+
+## SD31-E6-F9-003 — `monster` SLA_CL literal-override fix + 70 fixtures; `monster_ability`/`companion` derived-grounded blocker traced (2026-08-17)
+
+**Role:** `sd31-mab-companion` (`RETRO_ACTOR=sd31-mab-companion`) · **Branch:** `sd31/mab-companion-SD31-E6-F9-003` (own worktree, pushed) · **Starting HEAD:** `f8d2dc1d087d3ceeeb71d0f9785d185f65eede46` (`git fetch origin && git reset --hard origin/tranche/11` — package dir was absent, tree was clean at the start of this cycle) · **Oracle SHA:** `7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/pcgen-oracle-pin.env`, re-confirmed via `./scripts/verify.sh --only preflight-oracle` → `PASS preflight-oracle (oracle at pin 7f818006e371188e5717fd18d74d18a420747fc6)`).
+
+### Card scope, re-derived, not transcribed
+
+`python3 -c "... doneness_verdict ..."` (as in the mandate) at HEAD: `monster_ability` 2,951 total — `{'not-started': 1322, 'done': 1366, 'held': 263}`; `companion` 1,696 total — `{'not-started': 774, 'done': 680, 'held': 242}`; `monster` 1,270 total — `{'held': 402, 'done': 840, 'not-started': 28}` — all three match the dispatch brief's figures exactly. Board at start: **10,958 / 38,521 = 28.4468%**.
+
+### End-to-end traces (required before touching anything)
+
+- **`monster_ability`**: `bestiary:monster_ability:barbed_devil_impale` — corpus row `b1_abilities_race.lst:334`, `DESC:...3d8+%1...|STR*1.5`. `wiring_class=derived` (a real formula, not prose), `status=grounded` (owner Barbed Devil modeled), `doneness_verdict('derived','grounded')='held'`. Short of the `derived`→`fixture-verified` rung. Blocked because `STR*1.5` needs the Barbed Devil's own Strength MODIFIER, and this ingest's `stat_adjustments` field is a DELTA from an unstated base (`BONUS:STAT|...` tokens only) — the corpus states no absolute ability score anywhere. Same root cause `SD31-E6-F1-002` already named for `monster`'s own derived population; this cycle confirmed it extends corpus-wide to `monster_ability`/`companion` too (OPEN-ISSUES row 168).
+- **`companion`**: `core_rulebook:companion:crocodile_hold_breath` — `cr_abilities_companion.lst:189`, `BONUS:VAR|HoldBreathRounds|CONSCORE*4`. Same shape, same blocker (`CONSCORE` is an absolute score, not a delta).
+- **`monster`** (the kind this cycle actually moved): `bestiary:monster:couatl` — `b1_races.lst:74`, `MONSTERCLASS:Couatl Outsider:12`, `BONUS:VAR|SLA_CL|9`. `wiring_class=derived`, `status=grounded`, was `held` (the seam's evaluator ignored the row's own literal `9` and always answered `12`, the generic HD rule). Fixed this cycle — now `fixture-verified`/`done`, and the corrected `9` is what the live app renders (DoD-8 below).
+
+### The defect found and fixed (`OPEN-ISSUES.md` row 167)
+
+`spell_like_ability_caster_level()` (`SD31-E6-F11-002`) always applied PF1's generic "caster level = Hit Dice" rule and never read a monster row's own `BONUS:VAR|SLA_CL|<value>` LITERAL when the row stated one. Re-derived corpus-wide by sampling every previously-uncovered `derived`|`grounded` `monster` unit's OWN corpus row (not assumed): of 71 candidates, only **5** carry the bare `HD`/`max(TL,1)`/`(max(TL,1))` spelling the function assumed universally — **66 carry a monster-specific literal override**. Couatl: `SLA_CL 9` against 12 HD. Demon (Glabrezu) (`b1_races.lst:95`): `SLA_CL 14` against 12 HD. Both are corpus fact — PF1's own rule text ("unless otherwise noted") anticipates exactly this, and the shipped desktop UI (`MonsterCatalogScreen.tsx`'s "Spell-like abilities CL N") was serving the WRONG number for the majority, not a minority, of monsters carrying an override.
+
+**Fix**: added `MonsterStatBlock::sla_cl_token: Option<&'static str>` (the row's own trailing `SLA_CL` value, verbatim) to `monster_chassis.rs`; widened `scripts/transcribe_monster_tables.py`'s `parse_sla_cl_token()` to populate it (refuses — leaves `None` — on a row carrying the token more than once, or with a further pipe-gated segment, rather than guessing which of two values is the base rule); re-transcribed all 13 registered monster books. **11 of 13 regenerated cleanly via the full transcriber**; `bestiary`/`bestiary_2` fail the FULL transcriber today on a pre-existing, unrelated `parse_desc` gap (`ce_abilities_race.lst:1955`/`:2043`/`:1359`/`:1363`/`:1516` carry a `DESC:` shape the ability-row parser refuses — `SD31-E6-F9-002` already named this "widen it deliberately", out of this card's scope) — patched those two with a standalone script that reads each cited MONSTER row directly (independent of the ability-table pipeline the bug lives in) and inserts the identical field the transcriber would have produced; verified by diffing the field's own extraction logic against the transcriber's `parse_sla_cl_token()` byte-for-byte (same regex, same refusal rules). `spell_like_ability_caster_level()` widened to prefer the literal override, falling back to the generic HD rule only for the two known-equivalent spellings; an unparseable formula (`HD*3/4`, Demon (Vermlek)) returns `None` — an honest absence, never a guess.
+
+**A second, independent defect found in the same seam, also fixed**: `run_monster_bar_check` resolved a fixture's `record_key` against `MonsterStatBlock.name` rather than `.key` — silently correct for all 7 original fixtures (Demon (Balor) et al., where `key == name`) but a false-negative for a record where they differ (Bestiary 4's Gremlin (Grimple): `key = "Gremlin (Grimple)"`, `name = "Grimple"`) — caught only because this cycle's own widened fixture set included one. `tests/derived_evaluator_fixture_check_monster.rs`'s own independent guarantee-4b provenance check (`monster_ingested_provenance`, keyed on `data.corpus_key`) had always assumed `.key`-based resolution, so the fix aligns `run_monster_bar_check` with `MonsterBook::monster_resolve`'s own established `.key` contract rather than inventing a new one.
+
+### Fixtures — 70 new, hand-derived, mutation-proved
+
+`tests/fixtures/rules_core/derived-evaluator-fixtures.json`'s `monster_entries` grew 7 → 77. Each new entry's `expected.spell_like_ability_caster_level` was hand-read from the cited `.lst` row (script-assisted extraction, then spot-verified against the raw file directly for a stratified sample including Couatl, Demon (Glabrezu), and both `max(TL,1)`-spelling forms). **Excluded, named, not fabricated**: `bestiary:monster:dryad` (its `.key` does not resolve against `MONSTER_BOOKS`'s `beastiary` entry — Dryad is one of the 46 monsters served by the SEPARATE, hand-modelled `beastiary1` table per `decisions.md §58.3`'s ALONGSIDE ruling, unreachable through this seam); `book_of_the_damned_volume_2:monster:demon_vermlek` (`BONUS:VAR|SLA_CL|HD*3/4`, unparseable without a formula interpreter this repo does not have).
+
+All four independent guarantees (`tests/derived_evaluator_fixture_check_monster.rs`) extended and green, 6/6:
+```
+cargo test --locked --test derived_evaluator_fixture_check_monster
+running 6 tests ... test result: ok. 6 passed; 0 failed
+```
+Guarantee 3's own reference derivation (independent of `spell_like_ability_caster_level`) was widened from the bare-`HD` shape alone to the same two-axis rule (generic vs. literal override), written as a SEPARATE parse so the two code paths cannot silently agree on a shared bug — new test `reference_caster_level_derivation_covers_both_the_generic_rule_and_a_literal_override`.
+
+**Live mutation-proof**: corrupted Couatl's committed `expected.spell_like_ability_caster_level` to `99`, ran `run_monster_bar_check_clears_every_committed_monster_fixture`:
+```
+FAILED — "corpus row states BONUS:VAR|SLA_CL|9 (Couatl Outsider:12), expected caster level 99, evaluator produced 9"
+```
+Reverted; confirmed green again.
+
+`cargo test --locked --lib derived_evaluator_fixture_check`: 24/24 green. `cargo test --locked --lib monster`: 73/73 green (every `monster_chassis`/book-module test, unaffected by the new field). Desktop side (`apps/desktop/src-tauri`): `cargo test --locked --bin codex-desktop monster_catalog` → 24/24 green, including the pre-existing `a_monster_with_spell_like_abilities_serves_its_universal_monster_rule_caster_level` DTO test — the field flows through unchanged shape, only corrected values.
+
+### Guarded regen (measured, `docs/work-inventory.json` restored, not committed)
+
+```
+CARGO_TARGET_DIR=.../sd31-mab-companion cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-mab-companion.json
+  corpus-literal-sweep: 24699 records examined of 25576 read, 243320 tokens compared (9 synthesized), 25151 digests checked, 0 findings — CLEAN
+CARGO_TARGET_DIR=.../sd31-mab-companion cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-mab-companion.json
+  1068 of 1069 covered units cleared; 1 failed (pre-existing, unrelated — advanced_players_guide:equipment:spindle_of_perfect_knowledge,
+  "corpus row states BONUS:STAT|INT,WIS,CHA|4|TYPE=Enhancement but the evaluator produced no ability bonus at all" — an `equipment` kind
+  finding; this card touched zero equipment code/data, confirmed pre-existing by `git status --porcelain` showing no equipment-lane files
+  in this cycle's diff)
+CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... cargo run --locked --bin v06_work_inventory
+```
+The lone equipment mismatch above is **not** one of the 94 committed equipment fixtures and does not fail any test: `cargo test --locked --test derived_evaluator_fixture_check` (the dedicated equipment 4-guarantee suite) → **5/5 green**, including `engine_evaluator_output_equals_the_corpus_derived_expected_value`. This diff also touches zero equipment code/data (`git status --porcelain`), so the finding is pre-existing and unrelated to this cycle regardless.
+
+→ board `done` **10,958 → 11,028 (+70)**, **28.4468% → 28.6285%**. Per-kind: `monster` `done` **840 → 910 (+70)**, `held` **402 → 332 (-70)** — matches the 70 landed fixtures exactly, zero cross-kind bleed. `docs/work-inventory.json` reverted via `git checkout --` per the wave rule; not committed.
+
+### DoD item 3 — `v06_corpus_trap_report --audit`
+
+`EXIT=2`, `1 mod-record` / `1225 wiring-class-mismatch` findings — **confirmed NOT worsened**: this cycle touched zero `data/corpus/**/*.json` files (`git status --porcelain` — every changed path is `src/rules_core/rules_tables/*/monster_data.rs` (compiled Rust, not the JSON cache this check reads), `derived_evaluator_fixture_check.rs`, `transcribe_monster_tables.py`, `tests/`, and the fixture JSON), so this stage's finding count is structurally unrelated to and unaffected by anything in this diff.
+
+### DoD item 8 — on-screen verification
+
+`run-desktop`'s `verify-on-screen.sh --family monster --record "Couatl" --expect "Couatl" --expect "Spell-like abilities CL 9"` (`RUN_DESKTOP_AGENT=sd31-mab-companion`, `RUN_DESKTOP_WINDOW_TIMEOUT=300` — the box's system-wide load (many concurrent sibling agents' full gates + desktop builds; `uptime` peaked at load average 44 on 24 cores) killed the first two launch attempts before the window could appear even after the binary itself had already finished building; the third attempt, with the binary now cached and a widened window budget, succeeded). **PASS**:
+```
+rendered lines containing the record/expectations:
+30:CouatlLarge Outsider (Native)
+32:Speed 20 ft., fly 60 ft. · Bestiary 1 p.49 · Hit dice Couatl Outsider:12 · Spell-like abilities CL 9
+```
+Screenshot + report: `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F9-003/dod8-couatl-sla-cl.png` / `.verify.md` (also confirms the failed npm-missing first attempt was this cycle's own setup gap — `apps/desktop/node_modules` did not exist in this fresh worktree; `npm ci` run once, first-time cost, not a defect).
+
+### Findings logged, not fixed (out of file territory / genuinely blocked)
+
+`OPEN-ISSUES.md` row 168 — two structural findings for `monster_ability`/`companion`'s remaining `derived`|`grounded` held populations (223 + 227 units), traced one record deep each before declining to force a fixture:
+
+1. **The SAME ability-score-ingest ceiling `SD31-E6-F1-002` already named for `monster` extends to `monster_ability`/`companion`.** No base-ability-score field exists on `MonsterStatBlock`/`CompanionRecord` — only `stat_adjustments` (deltas, by explicit design, per both structs' own doc comments) — so formulas like `CHA+22`, `CONSCORE*4`, `max(0,STR/2)` cannot be honestly computed without fabricating a base score. Not fixed; would require a multi-book ingest-widening decision, named as a follow-on, not built.
+2. **A likely `wiring_class` misclassification, found while ruling out (1)**: 31 units corpus-wide (`monster_ability` 21, `companion` 10) carry `wiring_class=derived`, `magnitude_token_count=0`, `wiring_class_reason="prose_expr"` — every one hand-sampled this cycle is pure narrative with the "formula" already spelled as a fixed literal in the prose itself (`bestiary_3`'s 9 companion "Spell-Like Abilities" summary rows: `DESC:(CL 6th; concentration +4) Constant-deathwatch...`, no `SPELLS:`/`DEFINE:`/`BONUS:VAR` token anywhere on the row). This is `v06_work_inventory.rs`'s `classify()`/`signals()` territory — explicitly lane 2's file, not touched. Reported with worked examples for the next lane-2/Epic-2 cycle.
+
+### Files touched (all within this card's granted territory)
+
+`src/rules_core/rules_tables/monster_chassis.rs` (new field) · `src/rules_core/derived_evaluator_fixture_check.rs` (evaluator widened, `.key` resolution fix, 7 new/extended unit tests) · `scripts/transcribe_monster_tables.py` (new `parse_sla_cl_token`, emission site) · all 13 registered books' `monster_data.rs` (11 via the transcriber, 2 via a targeted patch script) · `tests/derived_evaluator_fixture_check_monster.rs` (guarantee-3 widened, 1 new unit test) · `tests/fixtures/rules_core/derived-evaluator-fixtures.json` (70 new `monster_entries`, `monster_derivation` doc string updated) · `docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md` (rows 167, 168, appended). **Not touched**: `v06_work_inventory.rs` (lane 2, except reading it to confirm figures), `pilot_compute/**` (lane 1), `companion_catalog.rs`/`monster_catalog.rs` (already fully wired for these fields from prior cycles — `stat_adjustments`/`natural_armor`/`spell_like_ability_caster_level` all confirmed already served and rendered before this cycle touched anything).
+
+### PI screening
+
+No new `data/corpus/**` records written this cycle (only compiled Rust source, already screened at original transcription time, and a widened field carrying only formula-shape strings — `"HD"`, `"max(TL,1)"`, or a bare integer — never a name or description). `declared-pi-audit` (verify.sh stage) — `PASS (clean)`. `pi-sweep` — `PASS (10 hits over src/rules_core/rules_tables, 10 baseline rows)`, unchanged baseline.
+
+### Gate
+
+Full `./scripts/verify.sh`, launched EARLY in the background (`RETRO_ACTOR=sd31-mab-companion CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-mab-companion`), died once without an exit code partway through `pi-sweep` (no `VERIFY_EXIT=` line, process gone from `pgrep`) under the box's extreme concurrent load (many sibling agents' full gates + desktop builds running simultaneously; `uptime` peaked at load average 44 on 24 cores) — relaunched immediately per protocol; the relaunch is the log this receipt reports against.
+
+**One PRE-EXISTING, unrelated stage failure**: `site-dashboard-check` — `FAIL (exit 1)`, `site/dashboard/PF1e-dashboard.json is STALE -- run ./scripts/publish-site-dashboard.sh`. This diff touches zero files under `site/` or `scripts/publish-site-dashboard.sh` (`git status --porcelain`) — the staleness is against the corpus's own forward motion across many intervening waves since the site dashboard was last published, not against this cycle's work, and publishing the public site dashboard is an integration-cycle concern, not a per-card one. Log path: `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F9-003-verify.log`.
+
+Every OTHER stage relevant to this card: `PASS  root-lib  (1955 passed)` · `PASS  root-full  (6882 passed across 565 suites, all 529 tests/*.rs suites executed)` · `PASS  desktop  (457 passed)` · `PASS  reach  (27 passed)` · `PASS  corpus-sweep  (24699 records examined of 25576 read, 0 findings)` · `PASS  supersession-gate  (116 objects, all clean)` · `PASS  frontend-test  (99/99 files)` · `PASS  frontend-typecheck  (tsc --noEmit clean)` · `PASS  clippy  (root:52 desktop:7 warnings, 0 errors)` · `PASS  class-dump  (31/31 computing)`.
+
+**Full SUMMARY**: `passed: 26` (every stage but one) · `FAILED: 1  site-dashboard-check` · `RESULT: FAIL`.
+
+**Clippy ceiling, checked against the mandate's own watch-item** (`root:47, desktop:7`, "wave 9 breached it"): this run measured `root:52 desktop:7`. **Desktop is exactly at ceiling; root is 5 over — but re-derived, this diff contributes ZERO of them**: `grep -n '\-\->' /tmp/codex-verify-nwSaPH/clippy-root.log | grep -iE 'monster|derived_evaluator|transcribe'` → no hits; every one of the 74 root warning lines is in a file this cycle never touched. The ceiling drift is pre-existing (accumulated across intervening waves since the mandate's figures were recorded), not introduced here — `retro.py correction` **not** filed for this one since I did not carry the stale 47/7 figures forward as fact, I re-measured and reported the real number with the attribution evidence in the same breath.
+
+**VERIFY_EXIT — an honest gap, not a fabricated number.** The relaunch command (`nohup env ... ./scripts/verify.sh > log 2>&1 &`) omitted the `; echo "VERIFY_EXIT=$?" >> log` suffix the first launch attempt had — a real process-capture mistake, caught here rather than silently worked around. The literal numeric exit code was never captured directly and the process has since exited, so it cannot be recovered. What IS captured, directly, in the log: `SUMMARY … FAILED: 1  site-dashboard-check` and `RESULT: FAIL` — `scripts/verify.sh`'s own final two lines, corroborating a non-zero exit for exactly the one named, pre-existing, unrelated reason above. **Stated plainly, per the mandate's own instruction**: I did not obtain the literal exit code for this run; I have the script's own printed RESULT/SUMMARY corroborating what that code almost certainly was (non-zero, one failing stage, all others green).
+
+### Retro
+
+`retro.py correction` emitted (subject: `SD31-E6-F11-002`, the `.name`-resolution/HD-only-assumption defect, `--verified-by` the 4-guarantee test suite + live mutation-proof). At least one retro event, satisfied.
+
+### Reclaim
+
+`scripts/reclaim.sh --apply` → `reclaimed: 0 item(s), 0.0B total` — every candidate correctly refused (checked out in a live worktree, or an unmerged branch with upstream present); this cycle's own `CARGO_TARGET_DIR` (`/home/ubuntu/cargo-targets/sd31-mab-companion`) is deleted after this receipt lands and the branch is confirmed pushed.

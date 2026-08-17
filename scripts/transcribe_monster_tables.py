@@ -593,6 +593,35 @@ def parse_has_spell_like_abilities(row: list[str]) -> bool:
     return any("BONUS:VAR|SLA_CL|" in field for field in row)
 
 
+def parse_sla_cl_token(row: list[str]) -> str | None:
+    """The trailing value of the row's own `BONUS:VAR|SLA_CL|<value>` field,
+    verbatim -- `None` when the row carries none (SD31-E6-F9-003).
+
+    A row may state the generic Universal Monster Rule (`HD` or the
+    equivalent `max(TL,1)`/`(max(TL,1))`) or a monster-specific literal
+    override (Couatl: `9`, against 12 Hit Dice) -- both are corpus fact, and
+    this function transcribes whichever the row states without judging
+    between them; `derived_evaluator_fixture_check::spell_like_ability_
+    caster_level` is what applies the rule.
+
+    A field carrying a further pipe segment after the value (e.g.
+    `BONUS:VAR|SLA_CL|2|PREABILITY:...`) is a conditional/feat-granted
+    ADDITION on top of a base value stated elsewhere on the row, not the base
+    rule itself -- excluded, same as a row carrying the token more than once,
+    both left `None` rather than guessed. Neither shape has been observed on
+    any row this script's own book roster carries as of this pass; refusing
+    outright is cheaper than silently picking the wrong one of two numbers if
+    a future book ever does.
+    """
+    tokens = [field for field in row if field.startswith("BONUS:VAR|SLA_CL|")]
+    if len(tokens) != 1:
+        return None
+    value = tokens[0][len("BONUS:VAR|SLA_CL|") :]
+    if "|" in value:
+        return None
+    return value.strip() or None
+
+
 def parse_special_ability_refs(row: list[str]) -> list[str]:
     """Keys named by the row's `ABILITY:Special Ability|AUTOMATIC|…` tokens."""
     refs: list[str] = []
@@ -1428,6 +1457,7 @@ def transcribe(book: str) -> str:
         attacks = parse_natural_attacks(row)
         stat_adjustments = parse_stat_adjustments(row)
         has_spell_like_abilities = parse_has_spell_like_abilities(row)
+        sla_cl_token = parse_sla_cl_token(row)
         out.append("    MonsterStatBlock {")
         out.append(f"        key: {rust_str(key)},")
         out.append(f"        name: {rust_str(unit['name'])},")
@@ -1467,6 +1497,7 @@ def transcribe(book: str) -> str:
         out.append(
             f"        has_spell_like_abilities: {'true' if has_spell_like_abilities else 'false'},"
         )
+        out.append(f"        sla_cl_token: {rust_opt(sla_cl_token)},")
         out.append(f"        source_file: {rust_str(unit['source_file'])},")
         out.append(f"        source_line: {unit['source_line']},")
         out.append("    },")
