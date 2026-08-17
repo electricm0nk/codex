@@ -22941,4 +22941,12 @@ several prior waves' own kanban entries show (`SD31-W*-INTEGRATE-*` attribution)
 
 ### `scripts/reclaim.sh --apply`
 
-TODO run + record reclaimed bytes.
+Own `CARGO_TARGET_DIR`s deleted directly once the gate and DoD-8 were both done and no
+build was still live in either: `/home/ubuntu/cargo-targets/sd31-racetrait6` (32G) and
+`/home/ubuntu/cargo-targets/sd31-racetrait6-desktop` (4.1G) — **~36G reclaimed**. `bash
+scripts/reclaim.sh --apply` run afterward for the remaining categories: **3 item(s), 3.4MB
+total** (3 stale `verify-logs` dirs old enough to clear the script's safety window);
+`cargo-target`/`worktrees`/`branches` all skipped this pass — everything else on this
+heavily-shared box is either still live (other concurrently-running SD-31 cycles' own
+target dirs, worktrees, branches) or too young for the script's own safety window, so none
+of it is this cycle's to reclaim.
