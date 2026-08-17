@@ -1,10 +1,10 @@
 codex verify — mode: full, jobs: 2
 repo:  /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_091c1ff2-4bf-4
-logs:  /tmp/codex-verify-FwayzY
+logs:  /tmp/codex-verify-4OFkVX
 ---------------------------------------------------------------
 ==> preflight-disk — disk budget check before any build starts
-    repo filesystem (/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_091c1ff2-4bf-4, mounted at /): 56% used, 427G available
-    scratch-log filesystem (/tmp/codex-verify-FwayzY, mounted at /): 56% used, 427G available
+    repo filesystem (/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_091c1ff2-4bf-4, mounted at /): 58% used, 411G available
+    scratch-log filesystem (/tmp/codex-verify-4OFkVX, mounted at /): 58% used, 411G available
     PASS  preflight-disk  (disk budget OK)
 ---------------------------------------------------------------
 ==> preflight-oracle — scripts/fetch-pcgen-oracle.sh --check
@@ -20,7 +20,7 @@ logs:  /tmp/codex-verify-FwayzY
     PASS  site-dashboard-selftest  (6 passed, 0 failed)
 ---------------------------------------------------------------
 ==> site-dashboard-check — scripts/publish-site-dashboard.sh --check
-    FAIL  site-dashboard-check  (exit 1 — /tmp/codex-verify-FwayzY/site-dashboard-check.log)
+    FAIL  site-dashboard-check  (exit 1 — /tmp/codex-verify-4OFkVX/site-dashboard-check.log)
 ---------------------------------------------------------------
 ==> reachability-audit-selftest — python3 -m unittest scripts/tests/test_reachability_audit.py
     PASS  reachability-audit-selftest  (11 cases passed)
@@ -60,10 +60,10 @@ logs:  /tmp/codex-verify-FwayzY
     PASS  root-full  (6950 passed across 565 suites, all 529 tests/*.rs suites executed)
 ---------------------------------------------------------------
 ==> desktop — cargo test --locked -j 2  (apps/desktop/src-tauri)
-    FAIL  desktop  (cargo exit 101 — /tmp/codex-verify-FwayzY/desktop.log)
+    PASS  desktop  (459 passed)
 ---------------------------------------------------------------
 ==> reach — cargo test --locked -j 2 reach_gate  (apps/desktop/src-tauri)
-    FAIL  reach  (cargo exit 101 — /tmp/codex-verify-FwayzY/reach.log)
+    PASS  reach  (27 passed)
 ---------------------------------------------------------------
 ==> corpus-sweep — cargo run --locked --bin corpus_literal_sweep  (repo root)
     PASS  corpus-sweep  (25644 records examined of 26524 read, 248829 tokens compared (9 synthesized), 26099 digests checked, 0 findings)
@@ -81,19 +81,18 @@ logs:  /tmp/codex-verify-FwayzY
     PASS  frontend-typecheck  (tsc --noEmit clean)
 ---------------------------------------------------------------
 ==> clippy — cargo clippy --locked --tests -j 2  (BOTH crates)
-    root: 53 warnings exceeds recorded ceiling 52 — /tmp/codex-verify-FwayzY/clippy-root.log
-    FAIL  clippy  (root:53 desktop:7 — logs in /tmp/codex-verify-FwayzY)
+    PASS  clippy  (root:52 desktop:7 warnings, 0 errors)
 ---------------------------------------------------------------
 ==> class-dump — cargo run --locked --bin v06_class_state_dump  (repo root)
     PASS  class-dump  (31/31 computing)
 ---------------------------------------------------------------
 SUMMARY
-  passed:  23  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest site-dashboard-selftest reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full corpus-sweep supersession-gate frontend-install frontend-test frontend-typecheck class-dump
-  FAILED:  4  site-dashboard-check desktop reach clippy
+  passed:  26  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest site-dashboard-selftest reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump
+  FAILED:  1  site-dashboard-check
 
 BASELINE NOTES (not failures — update deliberately):
   - BASELINE_ROOT_LIB_TESTS baseline is stale: 1984 recorded, 1986 measured. Update /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_091c1ff2-4bf-4/scripts/verify-baselines.env.
   - BASELINE_ROOT_FULL_TESTS baseline is stale: 6945 recorded, 6950 measured. Update /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_091c1ff2-4bf-4/scripts/verify-baselines.env.
   - BASELINE_CORPUS_LITERAL_RECORDS=25644 (was 25163)
 
-RESULT: FAIL — logs in /tmp/codex-verify-FwayzY
+RESULT: FAIL — logs in /tmp/codex-verify-4OFkVX

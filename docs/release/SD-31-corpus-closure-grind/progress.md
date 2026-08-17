@@ -20779,3 +20779,282 @@ record are above in this same receipt (§1-§5).
 
 Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
 Claude-Session: https://claude.ai/code/session_012LQjhfcbAEBt6SiquQXEAE
+## Cycle `SD31-E6-F10-004` (`RETRO_ACTOR=sd31-equip-class4`) — 2026-08-17, equipment/class ingest lane
+
+**Role:** sd31-equip-class4 · **Starting HEAD:** `50d36f3b2` (tranche/11 tip after
+`SD31-W11-INTEGRATE-001`; package dir present, `git status --porcelain` empty, HEAD confirmed
+descending from `origin/tranche/11` — no reset needed) · **Oracle SHA:**
+`7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/verify.sh --only preflight-oracle` PASS,
+quoted from `scripts/pcgen-oracle-pin.env`) · **Branch:** `sd31/equip-class4/SD31-E6-F10-004`
+(own worktree, pushed) · **Branch tip:** `63807a0ee` (Step 2 commit; this receipt lands as a
+third commit).
+
+### Mandate re-derivation
+
+```
+python3 -c "import json,collections,sys; sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d=json.load(open('docs/work-inventory.json')); U=[u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+c=collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+print(len(U), dict(c), round(100*c['done']/len(U),4))"
+-> 38521 {'done': 11828, ...} 30.7053
+```
+Matched the mandate's own headline exactly (11,828 / 38,521, 30.71%). Per-kind at start:
+`equipment` 6,208 (558 not-started, 489 held, 144 unmeasurable, 4,754 done, 76.58%) ·
+`equipment_modifier` 1,580 (211 not-started, 402 unmeasurable, 380 done, 24.05%) · `class` 185
+(158 not-started, 27 done, 14.59%) — all matched the dispatch's own figures.
+
+### §1 — `class` kind, re-traced a FOURTH time (mandate item 1)
+
+Re-derived: `185 {'not-ingested': 130, 'not-started': 28, 'grounded': 27}`, exactly unchanged
+since `SD31-E6-F10-001` (row 159), `-002`, `-003` (row 187). Independently re-verified BOTH
+root causes with fresh code line numbers rather than re-citing the prior trace:
+
+- **Bucket 1 (31 units)** — `v06_work_inventory.rs`'s `file_kind()` infers `Kind::Class` from
+  any `_classes`-substring filename with no content check, now at line 257-258 (drifted from
+  row 159's cited 253-255 — the file has moved since). Re-confirmed live:
+  `grep -n "CLASS:Drider" $PCGEN_CORPUS_ROOT/.../bestiary/b1_classes_race.lst` ->
+  `CLASS:Drider ... FACT:ClassType|Monster` — a monster HD/BAB progression table, never a
+  player class, self-declared by the corpus's own `FACT:` token.
+- **Bucket 2 (127 units)** — no chassis exists for the unmodelled class/prestige-class roster.
+  Re-confirmed live: `grep -rn "Psion\b|Cerebremancer|Metamind" src/pilot_compute/*.rs`
+  (excluding tests) -> zero hits.
+
+Both root causes remain outside this card's file grant (`v06_work_inventory.rs` = lane 1,
+`pilot_compute.rs` = lane 2). **Filed `OPEN-ISSUES.md` row 204**: this is the fourth
+consecutive cycle to reproduce the identical, unreachable-from-this-grant finding with zero
+drift — asked the operator to retire `class` kind from this card's dispatch text now, at four,
+rather than let it reach a fifth or sixth queueing (which the mandate's own text explicitly
+forbids without an evidenced answer, already delivered four times over).
+
+### §2 — the growing `equipment_modifier` unmeasurable population (mandate item 2)
+
+Re-derived at cycle START: 402, unchanged since `SD31-E6-F10-003`'s own ending state — the
+"402, up from 389" framing in the dispatch describes growth that had ALREADY happened by the
+prior cycle, not further drift at my own start. Traced one unit ONE LEVEL DEEPER than the
+prior trace, per the mandate's explicit instruction: `bestiary_3:equipment_modifier:bleed`
+(`origin=copy`, `visible=false`, cites `b3_equipmods.lst:15`, the `.COPY=`/`VISIBLE:NO`
+bookkeeping-alias shape) sits alongside `bestiary_3:equipment_modifier:special_ability_bleed_monster`
+(`origin=declared`, `visible=true`, cites the SAME base row at line 8, which genuinely carries
+`SPROP:deals 2d6 points of bleed damage per hit`) — BOTH read `status=unknown`, confirming the
+lane-1 closure computation does not read `SPROP:` as description-bearing content for
+`equipment_modifier`. **Verdict: not a regression** — the same already-diagnosed lane-1 gap
+replaying on newly-onboarded books. `OPEN-ISSUES.md` row 205.
+
+**Post-regen update (§6):** this cycle's OWN 5-book extension surfaced 59 MORE unmeasurable
+`equipment_modifier` candidates (402 -> 461 by the end), all sharing the identical evidence tag.
+Confirmed same pattern, not a new defect. `OPEN-ISSUES.md` row 208.
+
+### §3 — KEPT THE equipment MECHANISM RUNNING (mandate item 3)
+
+Landed the 5 books `SD31-E6-F10-003` deliberately excluded (`OPEN-ISSUES.md` row 186):
+`inner_sea_gods` (+125), `mythic_adventures` (+252, this book's FIRST content of any kind in
+`data/corpus/`), `inner_sea_combat` (+65), `inner_sea_intrigue` (+34),
+`book_of_the_damned_volume_2` (+5) — 481 new equipment/equipment_modifier records.
+
+Built a per-RECORD blacklist pre-filter (`gen_equipment_gap_tables.rs`'s new `blacklist_hit`,
+over the SAME `pi_screening::PI_BLACKLIST_TERMS` list `screen_generated_table`'s existing
+whole-file hard stop already uses, never forked) that excludes a record whose NAME/KEY carries
+a blacklisted term and redacts one whose DESCRIPTION does, instead of hard-stopping the whole
+book generation on any single undeclared blacklist hit anywhere in it. **The whole-file hard
+stop is UNCHANGED and still runs as the backstop** — mutation-proved: stubbed `blacklist_hit`
+to always return `None`, all 3 new tests correctly went RED, restored.
+
+Final generator run: `pi-screening: CLEAN (0 hits over the generated text)`; `declared-pi
+(§53.5): 47 name(s) excluded whole` (up from 12); `blacklist-screen (new, §52.3-equivalent):
+9 name/key hit(s) excluded whole, 28 description(s) redacted`. Re-derived corpus-wide against
+the shipped tables: zero of `PI_BLACKLIST_TERMS`' 57 terms remain in any of `mythic_adventures`'s
+252 shipped rows.
+
+Every record independently re-screened a SECOND, different way at JSON-write time
+(`gen_cache_equipment_gap`'s pre-existing `pi_screening::classify_field`/
+`classify_optional_field_declared`, unmodified this cycle) — 0 of the 481 new records carry
+`license == "PI-REDACTED"` corpus-wide.
+
+All 5 books' `LICENSE.json` `records_processed` restated with a screening-method-note citation
+each (`mythic_adventures`'s created fresh, since the book had no LICENSE.json at all before
+this cycle); `enrich_equipment_raw_tokens.rs`'s book list extended for all 5;
+`v06_work_inventory.rs`'s `equipment_book_slug_for` given the same narrow, additive-only 5-line
+match-arm exception `SD31-E6-F10-003` precedent established. `OPEN-ISSUES.md` row 206.
+
+**Downstream count sweep, two passes.** First pass (root-lib scope): `tests/equipment_gap_tables.rs`
+(total 1190 -> 1671, 5 new `EXPECTED_PER_BOOK` entries), `src/rules_core/equipment_resolver.rs`
+(catalog total 7336 -> 7817; `the_two_lookups_agree`'s pinned collision list grew 16 -> 19 for 3
+new "Feather Token (...)" name/key collisions from `inner_sea_combat`, verified real via direct
+construction, out of this card's file grant to fix the free-form matcher itself).
+
+Second pass, found live by the FULL GATE's `desktop` stage (`apps/desktop` is a separate crate
+`root-lib` never exercises, so this pass could only be found by actually running it, not grepped
+in advance): `apps/desktop/src-tauri/src/reach_gate.rs` — `CORPUS_BOOK_IDS` additive-list gained
+`mythic_adventures`; 5 new `("<book>", "equipment") => equipment_reach(...)` match arms — both
+SANCTIONED shared additive-list exceptions per the loop instructions.
+`apps/desktop/src-tauri/src/equipment_catalog.rs` — category-filter total 1015 -> 1050,
+description-coverage total 4430 -> 4618 with 5 new per-book assertions (ISG 72, MYTHIC 97, ISC
+7, ISI 9, BOTD2 3), cross-book-collision count 212 -> 213 (the collision-SET verification loop,
+the load-bearing check, confirmed the +1 involves a gap row, not a defect).
+`apps/desktop/src-tauri/src/character_hub.rs` — offered-modifier-row count 1683 -> 1831,
+priced-non-CRB count 181 -> 258 (the divergence SET assertion, the load-bearing check, stayed
+unchanged at exactly its prior 3 named rows — no new display-vs-charge divergence).
+`src/bin/gen_equipment_gap_tables.rs` — a real `clippy::collapsible_if` this cycle's own new
+blacklist-redaction branch introduced (root ceiling 52 -> 53 breach), collapsed with a
+let-chain, ceiling restored to 52. All 8 previously-FAILED desktop tests now pass; full
+`apps/desktop/src-tauri` suite re-run clean (459 passed, 0 failed). Landed as a second commit,
+`63807a0ee`.
+
+### §4 — named debt (mandate item 4)
+
+`find_citation` mis-citation, `corpus_literal_sweep`'s `compare_tokens` typed-field gap,
+`parse_equipment_entries::open_record`'s same-name-merge bug — all re-confirmed still RESOLVED
+(`KNOWN_KEY_MISMATCH_DEBT` in `tests/v06_corpus_trap_report.rs` still 0 entries). Not re-fixed,
+nothing to shrink further.
+
+**A NEW debt item found and CLOSED this cycle, not merely characterized:** `corpus_literal_sweep`
+reported 2 genuine `MISMATCH` findings on the first post-regen run (real corpus `DESC:` fields
+ending in a literal trailing space). Root cause: `EquipmentToken::raw_pair` was built from an
+already-trimmed string, breaking its own documented byte-exact contract; `enrich_equipment_raw_tokens.rs`
+shipped the trimmed value. Fixed at the true source (`raw_pair` now preserves the untrimmed
+field); `corpus_literal_sweep`'s own comparator needed NO change (a new test pins that it was
+already correct, per its pre-existing `whitespace_is_not_normalised_away` philosophy). TDD: 1
+new test in `equipment.rs`, 1 new test in `corpus_literal_sweep.rs`, both real corpus text.
+Re-ran `corpus_literal_sweep` post-fix: 0 findings, CLEAN. `OPEN-ISSUES.md` row 207.
+
+### §5 — PI screening (both SD-30 contracts, per the mandate)
+
+Both `gen_equipment_gap_tables`'s two-layer screen (declared-PI + new blacklist pre-filter) AND
+`gen_cache_equipment_gap`'s separate, independent JSON-write-path screen ran clean on all 481
+new records — see §3. `declared-pi-audit` gate stage: PASS, clean (confirmed by the fresh full
+gate). `pi-sweep`: PASS (10/10 baseline, unchanged). `OPEN-ISSUES.md` row 197 (Elysian Shield
+cross-book declared-PI propagation) read and NOT touched, per the mandate's explicit instruction.
+
+### §6 — Guarded regen (measured locally, NOT committed per the wave rule)
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-final-sd31-equip-class4.json
+  -> 25644 records examined of 26524 read, 248829 tokens compared (9 synthesized), 26099 digests checked, 0 findings
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-equip-class4.json
+  -> 1267 of 1268 covered units cleared; 1 pre-existing FAIL (spindle_of_perfect_knowledge,
+     identical to SD31-E6-F10-002/003's own recorded baseline)
+CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... cargo run --locked --bin v06_work_inventory
+  -> no stamp-loss guard message, no panic, exit 0
+```
+Board: **11,828 -> 12,072 done (30.7053% -> 31.3388%)**, net **+244**, zero denominator change
+(38,521 both before and after). Per-kind final: `equipment` 6,208 (4,998 done, 80.51%, +244;
+not-started 558 -> 225, -333) · `equipment_modifier` 1,580 (380 done, unchanged — none of this
+cycle's 481 new Equipmods-category rows reached `done` yet, all landed
+`in-progress`/`unmeasurable`/reduced-`not-started` instead, real but small follow-on, same shape
+`SD31-E6-F10-003` also found) · `class` 185 (unchanged, §1).
+`docs/work-inventory.json` reset to HEAD's version before committing (`git checkout --`), per
+the wave rule — never committed.
+
+### §7 — Full gate
+
+Launched EARLY, in the background, kept alive throughout the cycle. Killed and relaunched
+TWICE, deliberately: the first launch (before any code existed) was trivially stale; the
+second (after the Step 1 commit) caught two real, still-open defects mid-run (`root-full`
+FAILED on a stale `LICENSE.json` count, `corpus_literal_sweep` FAILED with 2 genuine
+`MISMATCH` findings — both fixed and folded into Step 1's own commit before it landed) and was
+killed once those fixes were confirmed green in isolation, per the same judgment call
+`SD31-E6-F10-002`/`-003` made for the identical "stale intermediate state" reason. The THIRD
+launch, after Step 1 landed, surfaced 4 more real failures the `apps/desktop` crate alone
+carries (desktop, reach, clippy, plus the expected site-dashboard-check) — fixed and landed as
+Step 2. The FOURTH and final launch, after Step 2 landed, is the one reported below.
+
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F10-004-verify.log
+./scripts/verify.sh > "$LOG" 2>&1 &   # backgrounded, kept alive, watched via Monitor
+```
+
+**`VERIFY_EXIT=1`, read directly from the log's own SUMMARY block (never through a pipe).
+26 of 27 stages PASS.** `preflight-disk` PASS, `preflight-oracle` PASS, `oracle-pin-selftest`
+PASS, `producer-selftest` PASS, `site-dashboard-selftest` PASS, `reachability-audit-selftest`
+PASS, `reachability-audit` PASS (**98.95%, unchanged**), `groundtruth-guard-selftest` PASS,
+`supersession-gate-selftest` PASS, `pi-sweep` PASS (10/10 baseline, unchanged),
+`declared-pi-audit` PASS (clean), `audit-selftest` PASS, `reclaim-selftest` PASS,
+`driver-selftest` PASS, `corpus-sweep-selftest` PASS, **`root-lib` PASS (1,986 passed)**,
+**`root-full` PASS (6,950 passed across 565 suites, all 529 `tests/*.rs` suites executed)**,
+**`desktop` PASS (459 passed)**, **`reach` PASS (27 passed)**, **`corpus-sweep` PASS (25,644
+examined, 0 findings)**, `supersession-gate` PASS (116 objects, all clean), `frontend-install`
+PASS (node_modules present), `frontend-test` PASS (99/99), `frontend-typecheck` PASS,
+**`clippy` PASS (root:52, desktop:7 — EXACTLY the current
+`BASELINE_CLIPPY_WARNINGS_ROOT`/`_DESKTOP` ceiling, zero new)**, **`class-dump` PASS
+(31/31 computing)**. Three BASELINE NOTES (not failures, left for the integration cycle per
+this package's convention): `BASELINE_ROOT_LIB_TESTS` stale by +2 (1,984 -> 1,986, exactly
+this cycle's own new tests: `raw_pair`/`corpus_literal_sweep` pinning tests);
+`BASELINE_ROOT_FULL_TESTS` stale by +5 (6,945 -> 6,950); `BASELINE_CORPUS_LITERAL_RECORDS`
+grew 25,163 -> 25,644 (the 481 new records now examined). **The one failure:
+`site-dashboard-check`** — the expected, documented, non-regressing worktree-path reason
+(`OPEN-ISSUES.md` row 153), identical to every prior cycle's own recorded reason. Log:
+`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F10-004-verify.log`.
+
+### §8 — DoD-8, on-screen verification
+
+`RUN_DESKTOP_AGENT=sd31equipclass4`, driven directly via `driver.sh` (never
+`verify-on-screen.sh`, per the mandate's own stated exception; never concurrent with
+`scripts/verify.sh`, confirmed via `ps`/`cwd` that the full gate's own process had fully
+exited before launching). `driver.sh launch` (cold build, 3m11s) -> `click` "Browse Equipment
+Catalog" (578,929) -> `screenshot 01-catalog.png` -> `click` search box (970,364) -> `type
+"Read Languages"` -> `screenshot 02-search.png` -> `driver.sh stop`. **PASS.**
+
+**`01-catalog.png`**: the live catalog header states "7817 items across 25 ingested books"
+and its per-book chip row shows, machine-rendered: `ISG (125)`, `MYTHIC (252)`, `ISC (65)`,
+`ISI (34)`, `BOTD2 (5)` — byte-identical to this cycle's own generator stdout and
+`OPEN-ISSUES.md` row 206's figures, proving the total (`7817`) the gate's own pinned-count
+tests assert is genuinely what a player's running app serves.
+
+**`02-search.png`**: searching "Read Languages" returns "Legendary Intelligent Item / Read
+Languages", book `MYTHIC`, `1000 gp`, real description "This item can read script in any
+language regardless of its known languages." — a real record from `mythic_adventures`, the
+book with ZERO content of any kind before this cycle, rendering its real cost/description on
+the exact screen a player uses. Byte-verified against `data/corpus/mythic_adventures/
+equipment/equipmods/legendary_item_intelligent_item_communication_read_language.json` before
+citing it, not assumed from the similarly-named sibling record the same search also returned.
+
+Evidence committed: `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F10-004/item8/
+{00-hub,01-catalog,02-search}.png` + `verify.md`.
+
+### §9 — Trap report (DoD item 3)
+
+```
+cargo run --locked --bin v06_corpus_trap_report -- --audit > /tmp/trap-sd31-equip-class4.log 2>&1
+echo "TRAP_EXIT=$?" >> /tmp/trap-sd31-equip-class4.log   # captured directly, not through a pipe
+-> TRAP_EXIT=2 (pre-existing, per the DoD's own stated baseline)
+```
+`1,225` `wiring-class-mismatch` (unchanged from baseline), `1` `mod-record` (unchanged) —
+`grep -c "wiring-class-mismatch\]"` / `grep -c "mod-record\]"` on the raw log, matching the
+mandate's own stated baseline exactly. Confirmed none of this cycle's own 5 new books'
+`equipment`/`equipment_modifier` records appear in the mismatch list: every hit whose path
+contains `inner_sea_gods`/`mythic_adventures`/`inner_sea_combat`/`inner_sea_intrigue`/
+`book_of_the_damned_volume_2` is a PRE-EXISTING `monster`-kind record citing `isg_races.lst`
+(an earlier monster-lane ingest, unrelated to this cycle's equipment work) — zero `equipment`/
+`equipment_modifier` hits from any of the 5 new books. **Confirmed NOT worsened.**
+
+### §10 — Retro events emitted
+
+- `rework`: `verify.sh` relaunched 3 times across the cycle, each relaunch surfacing a real,
+  previously-undetected defect (never a false positive) — narrated in full in §7 above and in
+  `OPEN-ISSUES.md` row 207. `--avoidable-by` names the concrete lesson: grep for hardcoded
+  totals across `apps/desktop` specifically before the first full-gate launch, not only
+  `root-lib`/`tests`.
+- No `correction` event this cycle — every mandate-quoted figure (11,828/38,521 board start,
+  402 unmeasurable start, 402→389 growth framing) was independently re-derived and matched
+  exactly; nothing stated in the dispatch needed correcting.
+
+### Blockers
+
+None hard-blocking. One genuine cross-lane blocker named precisely: `class` kind (row 204,
+now RULING-NEEDED for a 4th time — needs a dispatch-routing decision, not more re-tracing).
+
+### Reclaim
+
+`scripts/reclaim.sh --apply`: **0 items, 0.0B reclaimed this run** — every other worktree's
+branch is still active (not-yet-merged, upstream present) or checked out; nothing in the
+scavenge scope was eligible this cycle. Own `CARGO_TARGET_DIR`
+(`/home/ubuntu/cargo-targets/sd31-equip-class4`, ~34G) deleted directly at cycle end, after
+this receipt lands.
+
+### Branch tip
+
+`sd31/equip-class4/SD31-E6-F10-004`, pushed to `origin/sd31/equip-class4/SD31-E6-F10-004`.
+Three commits: `c81144824` (Step 1 — equipment/class investigation, 5-book extension,
+raw_pair fix), `63807a0ee` (Step 2 — apps/desktop downstream count/reach/clippy sweep), and
+this receipt's own commit.
+
