@@ -107,8 +107,8 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
+ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
+QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -485,6 +485,54 @@ run_pi_redaction_selftest() {
     fi
 
     stage_pass pi-redaction-selftest "$ran cases passed"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: provenance-selftest
+#
+# Runs `python3 -m unittest scripts/tests/test_provenance.py` -- the
+# self-test for `scripts/observer/provenance.py`, Decision 14's provenance
+# schema (SD31-D14-PROV-001, 2026-08-17 CONFIRMED ruling). Proves each of
+# the six gate invariants both passes on clean data and fails on
+# deliberately broken data: totality, exactly-one-authoritative-pair,
+# denominator = authoritative + variant (mutation-proven against the real
+# anti-gaming shape -- widening DENOMINATOR_STATUSES to also count
+# `duplicate` fails the test), packaging-artifact trending to zero,
+# descoped-structural requiring a signature, and a provenance change moving
+# zero doneness fields. THIS SCHEMA IS NOT APPLIED TO THE MANDATE
+# DENOMINATOR THIS CYCLE (the Supersession Register rebuild has not landed
+# and race attribution is frozen per `§13`'s amendment) -- this stage
+# guards the schema/gate MACHINERY only. Cheap (stdlib unittest, no build,
+# no network) -- placed in BOTH stage sets next to `pi-redaction-selftest`.
+# ---------------------------------------------------------------------------
+
+run_provenance_selftest() {
+    stage_start "provenance-selftest — python3 -m unittest scripts/tests/test_provenance.py"
+    local log="$LOG_DIR/provenance-selftest.log"
+    local script="$REPO_ROOT/scripts/tests/test_provenance.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail provenance-selftest "self-test script missing at scripts/tests/test_provenance.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 -m unittest -v "$script" ) >"$log" 2>&1
+    local status=$?
+
+    local ran
+    ran=$(sed -n 's/^Ran \([0-9]*\) tests\? in .*$/\1/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail provenance-selftest "self-test exit $status${ran:+; ran $ran}  — $log"
+        return
+    fi
+
+    if [[ -z "$ran" || "$ran" -eq 0 ]]; then
+        stage_fail provenance-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass provenance-selftest "$ran cases passed"
 }
 
 # ---------------------------------------------------------------------------
@@ -1612,6 +1660,7 @@ for stage in "${SELECTED[@]}"; do
         oracle-pin-selftest) run_oracle_pin_selftest ;;
         producer-selftest)   run_producer_selftest ;;
         pi-redaction-selftest) run_pi_redaction_selftest ;;
+        provenance-selftest) run_provenance_selftest ;;
         site-dashboard-selftest) run_site_dashboard_selftest ;;
         site-dashboard-check) run_site_dashboard_check ;;
         site-dashboard-pi-gate) run_site_dashboard_pi_gate ;;
