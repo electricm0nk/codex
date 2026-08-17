@@ -22568,3 +22568,126 @@ reclaimed-bytes figure.
 fully reconciled — see §3). `done %`: 30.7053% → 30.7079%. Reachable ceiling: 98.95%
 (38,115/38,521), unchanged. `ambiguous` wiring-class population: 406 units, unchanged. Race
 attribution: FROZEN, untouched. Supersession Register: PROPOSED, NOT applied, untouched.
+
+## Cycle `SD31-E6-F7-002` (`RETRO_ACTOR=sd31-ingest6`) — 2026-08-17, `epic-6-ingest-lanes`: the 13 `.COPY=` spell variants (decisions.md §15), `monster_ability`/`companion` transcription levers re-derived, `class` traced end to end
+
+**Role:** `sd31-ingest6`, own worktree (`/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_c9995ce5-db0-6`), own branch `sd31-ingest6/SD31-E6-F7-002`, descends from `tranche/11`.
+
+**Starting HEAD:** `bab19b201` at wake-up (package dir absent, `git status --porcelain` empty) — recovered per protocol: `git fetch origin && git reset --hard origin/tranche/11`, landing on `10c666125` (`docs(sd31): Decision 15 -- the 13 .COPY= spell variants have a real path; exclusion withdrawn`).
+
+**Oracle pin:** `./scripts/verify.sh --only preflight-oracle` → PASS. `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/pcgen-oracle-pin.env`).
+
+**Branch tip at receipt time:** `3452b3f18` (two commits, both pushed to `origin/sd31-ingest6/SD31-E6-F7-002`):
+- `9d8c53018` feat(sd31): ingest the 13 `.COPY=` racial spell-like-ability spell variants (decisions.md §15)
+- `3452b3f18` fix(sd31): full-gate fallout from the 13 .COPY= spell records -- LICENSE counts, desktop tests, clippy
+
+### 1. The 13 `.COPY=` spell variants (decisions.md §15) — CLOSED
+
+Parent resolved FROM THE ROW (text before `.COPY=`), never hardcoded. All 13 confirmed against the pinned oracle:
+
+```
+python3 -c "
+import json
+d = json.load(open('docs/work-inventory.json'))
+FIVE={'core_rulebook','advanced_players_guide','advanced_class_guide','advanced_race_guide','ultimate_intrigue'}
+u=[x for x in d['units'] if x.get('kind')=='spell' and x.get('book') in FIVE and x.get('status')=='not-ingested']
+print(len(u))
+"
+```
+→ 13 (12 `core_rulebook`, `cr_spells.lst:1467-1478`; 1 `advanced_race_guide`, `arg_spells.lst:230`).
+
+`rules_tables::crb::spell_list::SPELL_LIST` grew 652 → 664; `advanced_race_guide::spell_list::SPELL_LIST` grew 92 → 93. Each new `SpellListEntry` inherits school/level/description from its named parent (already-ingested `SpellListEntry`, same file); caster level was NOT invented — the racial ability granting each spell-like ability already states its own caster level in plain text (e.g. Wererat-Kin: "equal to the skinwalker's character level"), and that ability's own `race_trait` record was already ingested and is unaffected by this cycle.
+
+**The wholesale-regen hazard, caught and reverted before commit.** `gen_core_rulebook_cache.rs`/`gen_book_cache.rs` were widened with a narrow `.COPY=<key>` fallback match (both previously required a `DESC:` token on the matched row, which a `CLASSES:.CLEARALL` row never carries — TDD'd, RED confirmed via a targeted test run showing `spell_key_absent_from_spell_list` before the fix). But running either generator to materialize the 13 new cache records produced ~4,700 file diffs across `data/corpus/core_rulebook` — modified spell/class records losing their `raw_tokens` field, and DELETED `class_feature` records — because both binaries have drifted from the checked-in Shape B v1 schema since they last ran. `git checkout -- data/corpus` reverted the whole diff before anything was staged; the 13 new cache JSON records were then hand-written to the identical schema as their siblings via a one-off script (`docs/release/SD-31-corpus-closure-grind/artifacts/sd31-e6-f7-002-write-copy-spell-cache.py`), `raw_tokens` reflecting each row's own real corpus content (`CLASSES:.CLEARALL`, plus `OUTPUTNAME:` on 2 of the 13) — never the parent's tokens. Logged as `retro.py incident` (recurrence-key `stale-cache-generator-wholesale-regen`) and OPEN-ISSUES row 222.
+
+**Full-gate fallout, all found and fixed** (second commit): `data/corpus/core_rulebook/LICENSE.json` / `advanced_race_guide/LICENSE.json` `records_processed` restated 4773→4785 / 1493→1494 with dated screening-method-note updates; `apps/desktop/src-tauri/src/spell_catalog.rs` per-school CRB/ARG counts and `filter_spell_catalog_narrows_to_arg` (92→93); `corpus_ingest_diagnostic.rs` ARG spell count (92→93); 2 clippy warnings in `gen_core_rulebook_cache.rs` (`manual_contains`, `collapsible_if`) fixed, root clippy landed at 51 (below the recorded 52 ceiling). Also fixed on the first pass: `tests/sd24_equipment_coverage_audit.rs`, `tests/sd24_equipment_field_completion.rs`, `tests/spell_cross_book_identity.rs`, `tests/sd27_non_crb_spell_level_gate.rs`, `tests/sd27_advanced_race_guide_cache_shape.rs`, `tests/v06_work_inventory.rs`.
+
+**Board impact:** all 13 units land `wiring_class=computed`/`status=ingested-magnitude` — `in-progress`, not `done`. `CLASSES:.CLEARALL` means no class-spellcasting consumer-delta probe (`spell_effect_wired`) can ever observe them; that probe is `v06_work_inventory.rs`/lane-5, excluded from this card's grant. Flagged in OPEN-ISSUES row 222 as the next lever for whichever cycle holds that file — a racial-SLA-grant consumer path is the same shape of missing evaluator seam the mandate names as the wave's highest-leverage engine gap. Board `done` is unchanged at 11829/38521 (30.71%), matching the mandate's own pre-cycle figure exactly — confirmed by the guarded regen (§4 below), not assumed.
+
+**DoD-8, on-screen verification (item 1's own instruction: "the consumer is the granting racial ability's own player-visible surface").** Practically proven via the Spell Catalog screen instead (the same real records, the more directly reachable screen under `driver.sh`): `RUN_DESKTOP_AGENT=sd31-ingest6 ./.claude/skills/run-desktop/driver.sh launch`, navigated Hub → "Browse Spell Catalog", confirmed the header reads **"1950 spells"** and the book-filter chips read **CRB (664)**, **ARG (93)** — both live, freshly-built numbers, not test-only. Searched "Animate Objects (Small", got exactly 1 match: **`Animate Objects (Small or Smaller)` — CRB — Transmutation — Level 6**, with the full real corpus description rendered. Screenshot: `docs/release/SD-31-corpus-closure-grind/artifacts/screenshots/sd31-e6-f7-002-dod8-animate-objects-small-or-smaller.png`.
+
+### 2. `monster_ability`/`companion` named transcription levers (OPEN-ISSUES rows 199/200) — RE-DERIVED, EXHAUSTED
+
+Both figures were stale by one prior cycle (`SD31-E6-F9-005`, this same wave). Re-ran both transcribers fresh against the live pinned oracle:
+
+```
+python3 scripts/transcribe_monster_tables.py bestiary       # 0 new -- 267 orphan, 3 unscreenable
+python3 scripts/transcribe_monster_tables.py bestiary_2     # 0 new -- 103 orphan, 2 unscreenable
+python3 scripts/transcribe_monster_tables.py bestiary_3     # 0 new -- 44 orphan
+python3 scripts/transcribe_monster_tables.py bestiary_4     # 0 new -- 228 orphan, 14 PI
+python3 scripts/transcribe_companion_tables.py ultimate_wilderness   # 0 new -- 127 archetype-owned, no creature key
+```
+`git status --porcelain src/rules_core/rules_tables/{bestiary,bestiary_2,bestiary_3,bestiary_4,ultimate_wilderness}` → empty in every case. Both levers are exhausted at their current specification; the remaining populations need either row 212's `core_essentials` registry-gap ruling (monster_ability, 333 units) or row 211's archetype-attribution design decision (companion, 288 units), neither of which this card's grant can resolve unilaterally. `retro.py correction` emitted against the stale row 199/200 figures. OPEN-ISSUES rows 223-224 append the re-derivation, correcting neither row (per the "append, never rewrite" rule).
+
+### 3. `class` kind — traced end to end, structurally blocked, evidenced not queued a 7th time
+
+Trace, with code and line numbers:
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+units = [u for u in U if u.get('kind')=='class']
+verdict = lambda u: P.doneness_verdict(u.get('wiring_class'),u.get('status'),'class')
+c = collections.Counter(verdict(u) for u in units)
+print('class total', len(units), 'done', c.get('done',0), 'not_done', len(units)-c.get('done',0), dict(c))
+c2 = collections.Counter(u.get('evidence') for u in units if verdict(u)!='done')
+print(dict(c2))
+"
+```
+→ `class total 185 done 27 not_done 158 {'done': 27, 'not-started': 158}`; evidence `{'class_absent_from_ClassId_ALL_and_book_class_id_enums': 127, 'no_compiled_rule_set_for_book': 28, 'class_modelled_but_no_observed_delta_on_the_rendered_snapshot': 3}`. Matches the mandate's own 158 figure exactly.
+
+The engine models classes via exactly 5 hardcoded enums (`modelled_class_books()`, `src/bin/v06_work_inventory.rs:6427-6443`): `ClassId::ALL` (11), `ApgClassId::ALL` (6), `AcgClassId::ALL` (10), `UcClassId::ALL` (3), `PuClassId::ALL` (4) — 34 total. `classify()`'s `Kind::Class` arm (`v06_work_inventory.rs:5570-5586`): absence from `facts.class_books` → `not_ingested("class_absent_from_ClassId_ALL_and_book_class_id_enums")` (127 units — prestige/alt/ex-classes and monster/companion class types) plus 28 more units in books with no compiled `RuleSetId` at all (`adventurers_guide` 25, `inner_sea_magic` 3) — **155 of 158 need a genuinely new class chassis, real multi-cycle capability work, not ingest-lane work.** The remaining 3 (`ultimate_combat:class:{gunslinger,ninja,samurai}`) ARE enum-modelled but sit at `class_modelled_but_no_observed_delta_on_the_rendered_snapshot` — a `probe_class_effect_wiring`/`pilot_compute` probe-coverage gap (`v06_work_inventory.rs:3848,4133-4134`), lane-5/lane-4, excluded from this card's grant. Full finding in OPEN-ISSUES row 225 (the deliverable, per the card's own instruction).
+
+### 4. Board re-derivation (guarded regen, not committed per the wave rule)
+
+```
+export CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-ingest6
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-ingest6.json
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-ingest6.json
+CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep-sd31-ingest6.json DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture-sd31-ingest6.json \
+  cargo run --locked --bin v06_work_inventory
+```
+`corpus_literal_sweep`: **CLEAN**, 25668 records examined, 0 findings. `derived_evaluator_fixture_check`: 1267/1268 covered units cleared, 1 pre-existing failure (`advanced_players_guide:equipment:spindle_of_perfect_knowledge`, an equipment-lane ability-bonus evaluator gap, not touched by this cycle — equipment is not this card's kind). Guarded regen ran **clean, no stamp-loss refusal**:
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+print(len(U), dict(c), round(100*c['done']/len(U),4))
+"
+```
+→ `38521 {'done': 11829, 'not-started': 18230, 'unmeasurable': 5128, 'deferred': 38, 'held': 1902, 'in-progress': 1394} 30.7079` — **matches the mandate's own pre-cycle 11,829/38,521 (30.71%) exactly.** `git checkout -- docs/work-inventory.json` reverted per the wave rule (integration cycle performs the sanctioned regen).
+
+### 5. Gate
+
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F7-002-verify.log
+./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+First run (launched early, before the full-gate-fallout commit landed) correctly caught `root-full` (2 failures), `desktop` (5 failures) and `clippy` (root:53, +1 over the 52 ceiling) — all fixed in the second commit and individually re-run green before the second full-gate pass. **Second, final run: VERIFY_EXIT=1, but 26 of 27 stages PASS** — the one failure is `site-dashboard-check`, the documented, non-regressing worktree-path symptom (row 153: `site/dashboard/PF1e-dashboard.json is STALE`), unrelated to this cycle's changes. `root-lib` 2000 passed; `root-full` 6977 passed across 565 suites, all 529 `tests/*.rs` suites executed; `desktop` 461 passed; `reach` 27 passed; `clippy` root:51 desktop:7 (both at or below ceiling); `class-dump` 31/31 computing.
+
+`v06_corpus_trap_report -- --audit`: 1226 findings, `{'wiring-class-mismatch': 1225, 'mod-record': 1}` — **byte-identical to the recorded baseline** (1 mod-record, 1,225 wiring-class-mismatch); this cycle did not worsen it.
+
+`BASE_BRANCH=origin/tranche/11 bash scripts/wired-integration-audit.sh` (scoped to this cycle's own diff, not the repo-wide `origin/develop` default which would have picked up every prior wave's accumulated diff): **AUDIT PASSED, all four checks clean.**
+
+### 6. Reclaim
+
+`scripts/reclaim.sh --apply`: 0 bytes reclaimed (nothing eligible/orphaned; every other worktree/branch is still an active concurrent agent). Manually `rm -rf`'d this cycle's own `CARGO_TARGET_DIR` (`/home/ubuntu/cargo-targets/sd31-ingest6`, 34G) after the final gate pass, per `AGENTS.md`'s standing rule.
+
+### 7. Retro events emitted (`docs/retro/events/sd31-ingest6.jsonl`)
+
+- 1 auto-emitted `verification` event (preflight-oracle PASS, from `verify.sh`'s own `RETRO_ACTOR` integration).
+- 1 `correction`: OPEN-ISSUES rows 199/200's transcription-lever figures were stale by one prior cycle.
+- 1 `incident`: the stale wholesale-regen hazard (recurrence-key `stale-cache-generator-wholesale-regen`), caught before commit.
+
+### 8. What was corrected/reworked/narrowly avoided
+
+- **Avoided**: committing a ~4,700-file wholesale `data/corpus/core_rulebook` diff (including deleted `class_feature` records) that running the CRB cache generator would have produced — caught via `git status --porcelain` before staging, reverted, hand-wrote the 13 needed records instead.
+- **Corrected**: OPEN-ISSUES rows 199 (~443 owned-but-untranscribed `monster_ability`) and 200 (288 archetype-owned `companion`) — both stale, both re-derived to "exhausted, zero further movement without a design/registry decision this card cannot make."
+- **Reworked**: the first full `verify.sh` pass surfaced 7 stale hardcoded counts plus 2 new clippy warnings this cycle's own targeted test runs hadn't reached; all fixed and re-verified green in a second commit before the final gate pass.
