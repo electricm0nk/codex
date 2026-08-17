@@ -351,6 +351,13 @@ const BARBARIAN_CLASS_ID: &str = "class:barbarian";
 const BARBARIAN_RAGE_POWER_CHOICE_ID: &str = "choice:barbarian_rage_power";
 const SUPERSTITION_RAGE_POWER_SELECTION: &str = "rage_power:superstition";
 
+/// SD31-E4-F2-004: the Unchained Barbarian's own, SEPARATE Rage Power
+/// chooser slot -- see the seeding block below (`request.class_id ==
+/// UNCHAINED_BARBARIAN_CLASS_ID`) for why this must never share
+/// `BARBARIAN_RAGE_POWER_CHOICE_ID`'s id (`decisions.md §10` AMENDMENT).
+const UNCHAINED_BARBARIAN_CLASS_ID: &str = "class:unchained_barbarian";
+const UNCHAINED_BARBARIAN_RAGE_POWER_CHOICE_ID: &str = "choice:unchained_barbarian_rage_power";
+
 /// **Why Flight, of the corpus's 53 base Witch hexes.** Verified directly
 /// against the PCGen corpus
 /// (`.../advanced_players_guide/apg_abilities_class.lst:892`):
@@ -916,6 +923,23 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
         // is needed to observe it.
         selected_choices.push(SelectedChoice {
             choice_set_id: BARBARIAN_RAGE_POWER_CHOICE_ID.to_owned(),
+            selection_id: SUPERSTITION_RAGE_POWER_SELECTION.to_owned(),
+        });
+    } else if request.class_id == UNCHAINED_BARBARIAN_CLASS_ID && request.level >= 2 {
+        // SD31-E4-F2-004: the Unchained Barbarian's OWN Rage Power chooser
+        // (`UNCHAINED_BARBARIAN_RAGE_POWER_CHOICE_ID`, `pilot_compute.rs`),
+        // a SEPARATE slot family from `BARBARIAN_RAGE_POWER_CHOICE_ID` above
+        // (`decisions.md §10` AMENDMENT: distinct classes, distinct chooser
+        // slots -- never folded together). Same posture as the base class's
+        // own seed just above: this class already reaches `Computed` without
+        // it, so this exists only to put a real, corpus-verified selection
+        // on-screen for DoD-8. Reuses `SUPERSTITION_RAGE_POWER_SELECTION`'s
+        // own value (`"rage_power:superstition"`) -- both classes' pools
+        // name the identical real corpus slug for the identical real
+        // ability, just under two separate choice-set ids, so no separate
+        // constant is needed for the selection string itself.
+        selected_choices.push(SelectedChoice {
+            choice_set_id: UNCHAINED_BARBARIAN_RAGE_POWER_CHOICE_ID.to_owned(),
             selection_id: SUPERSTITION_RAGE_POWER_SELECTION.to_owned(),
         });
     } else if request.class_id == SUMMONER_CLASS_ID {
@@ -2080,6 +2104,13 @@ mod tests {
     fn barbarian_request_for(character_id: &str, level: u8) -> CreateCharacterRequest {
         CreateCharacterRequest {
             class_id: BARBARIAN_CLASS_ID.to_owned(),
+            ..request_for(character_id, level)
+        }
+    }
+
+    fn unchained_barbarian_request_for(character_id: &str, level: u8) -> CreateCharacterRequest {
+        CreateCharacterRequest {
+            class_id: UNCHAINED_BARBARIAN_CLASS_ID.to_owned(),
             ..request_for(character_id, level)
         }
     }
@@ -3323,6 +3354,47 @@ mod tests {
             ),
             "the engine must emit the real Superstition save-bonus grounding record, proving \
              the seed is resolved rather than merely tolerated: {:?}",
+            receipt.computation.explanations
+        );
+    }
+
+    /// The Unchained Barbarian's own analogue of the test above -- SD31-E4-F2-004.
+    /// A SEPARATE choice-set id from the base class's own seed (verified
+    /// directly, not merely asserted an id string differs): the grounded
+    /// explanation carries the `pu.unchained_barbarian.` namespace, never the
+    /// base class's `class_feature.barbarian.` one.
+    #[test]
+    fn a_composed_level2_unchained_barbarian_gets_the_canonical_superstition_rage_power_and_computes()
+    {
+        let input = compose_character_input(&unchained_barbarian_request_for(
+            "unchained-barbarian-seed",
+            2,
+        ));
+
+        assert!(
+            input.chosen.selected_choices.iter().any(|c| {
+                c.choice_set_id == UNCHAINED_BARBARIAN_RAGE_POWER_CHOICE_ID
+                    && c.selection_id == SUPERSTITION_RAGE_POWER_SELECTION
+            }),
+            "a composed level-2 Unchained Barbarian must carry the canonical Superstition rage \
+             power under its OWN choice-set id: {:?}",
+            input.chosen.selected_choices
+        );
+
+        let receipt = build_pilot_headless_receipt(&input);
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "a composed level-2 Unchained Barbarian must reach Computed: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt.computation.explanations.iter().any(
+                |e| e.id == "class_feature.pu.unchained_barbarian.rage_power.superstition.save_bonus"
+            ),
+            "the engine must emit the real Unchained Superstition save-bonus grounding record, \
+             under its own class-scoped id, proving the seed is resolved rather than merely \
+             tolerated: {:?}",
             receipt.computation.explanations
         );
     }

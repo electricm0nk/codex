@@ -5710,6 +5710,37 @@ fn classify(
                 group,
                 &feature_slug,
             );
+            // SD31-E4-F2-004 (audit finding, `OPEN-ISSUES.md` row 223): a
+            // SEPARATE, STRICTER pass over the same two checks, excluding
+            // every `push_pu_class_feature_records`-style generic roster id
+            // (`class_feature.pu.<class>.corpus_record.<slug>`,
+            // `pilot_compute/mod.rs`). That id is emitted for EVERY granted
+            // Pathfinder Unchained record with `pu_feature_slug` -- the SAME
+            // slugging transform this file's own `feature_slug` uses -- so it
+            // ALWAYS exact-matches its own record's slug, for every one of
+            // the ~256 PU records, regardless of whether any REAL per-feature
+            // magnitude was ever computed for it. Its own value is a flat
+            // `granted_at` level number (a fixed corpus fact, not a computed
+            // magnitude), the identical shape `id_matches_feature_slug_after_
+            // known_magnitude_suffix_strip`'s own doc comment already warns
+            // against for a DIFFERENT catch-all id. Confirmed live:
+            // `Unchained Barbarian ~ Fast Movement` and `~ Rage` both credit
+            // `done` through this roster id ALONE -- their real magnitude
+            // functions (`fast_movement_bonus_feet`, `rage_rounds_per_day`)
+            // emit ids this file's `CLASS_FEATURE_ID_MAGNITUDE_SUFFIXES` list
+            // cannot strip down to the bare slug (`"feet"`/`"per_day"`'s
+            // sibling words are not, or not sufficiently, in that list), so
+            // NEITHER genuinely grounds them; only the roster id's coincident
+            // exact match does. Legitimate for the TEXT-ONLY promotion below
+            // (Decision 7: a zero-magnitude record's only question is whether
+            // the engine HOLDS the exact record, which the roster id
+            // genuinely proves), so this stricter pass gates ONLY the
+            // magnitude-bearing `status: "grounded"` branch, never the
+            // `text-complete` one.
+            let non_roster_ids =
+                || facts.explanation_ids.iter().filter(|id| !id.contains(".corpus_record."));
+            let exact_suffix_grounded_strict =
+                class_feature_exact_suffix_grounded(non_roster_ids(), &owner, group, &feature_slug);
             // SD31-E5-F1-002 (`OPEN-ISSUES.md` row 78): retried ONLY when the
             // exact check already failed, ONLY when this unit's own group
             // prefix IS the bare class name (never an archetype/variant
@@ -5739,11 +5770,28 @@ fn classify(
                             &feature_slug,
                         )
                 });
+            let suffix_stripped_grounded_strict = !exact_suffix_grounded_strict
+                && unit.key.contains(" ~ ")
+                && group.eq_ignore_ascii_case(&class_name_as_group_text(owner.as_str()))
+                && feature_slug != owner
+                && non_roster_ids().any(|id| {
+                    id.contains(&format!(".{owner}."))
+                        && id_matches_feature_slug_after_known_magnitude_suffix_strip(
+                            id,
+                            &feature_slug,
+                        )
+                });
             let grounded = exact_suffix_grounded || suffix_stripped_grounded;
+            let grounded_strict = exact_suffix_grounded_strict || suffix_stripped_grounded_strict;
             if grounded {
                 // SD31-D7-PROSE-003: same promotion as the
                 // `class_feature_effect_wired` branch above, for the sibling
                 // "grounded via an observed explanation id" evidence shape.
+                // Uses the BROAD (unfiltered) check deliberately -- see the
+                // roster-id doc comment above `exact_suffix_grounded_strict`:
+                // for a zero-magnitude record the generic PU roster id
+                // genuinely proves the engine holds this exact record, which
+                // is all Decision 7 asks of a text-only promotion.
                 if text_only
                     && has_real_description
                     && is_display_wiring_class_for_promotion(wc_class)
@@ -5761,16 +5809,27 @@ fn classify(
                         engine_book: engine_book_field,
                     };
                 }
-                return Verdict {
-                    status: "grounded",
-                    evidence: if suffix_stripped_grounded {
-                        "explanation_id_observed_after_known_magnitude_suffix_strip".to_string()
-                    } else {
-                        "explanation_id_observed_in_a_real_computation".to_string()
-                    },
-                    reason: None,
-                    engine_book: engine_book_field,
-                };
+                // Magnitude-bearing branch: the STRICT (roster-excluded)
+                // check gates `done` here, never the broad one -- a record
+                // whose ONLY match is the generic PU roster id has no real
+                // per-feature magnitude behind it (see the doc comment
+                // above), so it must not silently ride to `grounded`/`done`
+                // on that coincidence alone.
+                if grounded_strict {
+                    return Verdict {
+                        status: "grounded",
+                        evidence: if suffix_stripped_grounded_strict {
+                            "explanation_id_observed_after_known_magnitude_suffix_strip".to_string()
+                        } else {
+                            "explanation_id_observed_in_a_real_computation".to_string()
+                        },
+                        reason: None,
+                        engine_book: engine_book_field,
+                    };
+                }
+                return not_ingested(
+                    "class_feature_only_the_generic_pu_roster_id_matched_no_real_magnitude_computed",
+                );
             }
             // The engine's own diagnostics name the specific remaining gaps.
             // Quote one verbatim when it names this feature -- never re-narrate.
@@ -6483,7 +6542,23 @@ fn modelled_class_books() -> BTreeMap<String, &'static str> {
 /// `every_namespaced_pool_uses_a_namespace_the_engine_source_writes`.
 const CLASS_FEATURE_POOLS: &[(&str, &str, &str, &str)] = &[
     ("Rage Power", "barbarian", "choice:barbarian_rage_power", ""),
-    ("Unchained Rage Power", "barbarian", "choice:barbarian_rage_power", ""),
+    // SD31-E4-F2-004: previously mapped to owner `"barbarian"` /
+    // `choice:barbarian_rage_power` (the base class's own slot) -- a
+    // `decisions.md §10` AMENDMENT violation (Unchained classes are DISTINCT,
+    // never folded into the base) that also produced a real, confirmed bug:
+    // `probe_class_feature_effect_wiring` maps EVERY wired key to
+    // `class_books.get(owner)`, so this entry's own `pathfinder_unchained`
+    // corpus records were being mapped to book `core_rulebook` -- a "free
+    // ride" `SD31-E4-F2-003` (wave 12) found live and correctly declined to
+    // credit, because `classify()`'s book-attribution guard
+    // (`facts.class_feature_effect_wired.get(&unit.key) ==
+    // Some(&unit.book.as_str())`) then never matched the record's REAL book.
+    // Now resolves to the class's own separate chooser
+    // (`UNCHAINED_BARBARIAN_RAGE_POWER_SLOTS`, `pilot_compute/mod.rs`),
+    // registered in `modelled_class_books()` via `PuClassId::UnchainedBarbarian`
+    // -> book `pathfinder_unchained`, so a genuine Unchained selection now
+    // attributes to the correct book instead of riding the base class's.
+    ("Unchained Rage Power", "unchained_barbarian", "choice:unchained_barbarian_rage_power", ""),
     ("Discovery", "alchemist", "choice:alchemist_discovery", "discovery:"),
     ("Grand Discovery", "alchemist", "choice:alchemist_discovery", "discovery:"),
     ("Rogue Talent", "rogue", "choice:rogue_talent", "talent:"),
@@ -9872,6 +9947,110 @@ mod class_feature_text_complete_rung_tests {
         assert_eq!(
             verdict.evidence,
             "explanation_id_observed_after_known_magnitude_suffix_strip_and_corpus_record_carries_real_description"
+        );
+    }
+
+    /// SD31-E4-F2-004 audit finding (`OPEN-ISSUES.md` row 223): a
+    /// magnitude-bearing record whose ONLY matching explanation id is the
+    /// generic `push_pu_class_feature_records` roster listing
+    /// (`class_feature.pu.<class>.corpus_record.<slug>`, a flat
+    /// `granted_at`-level fact present for EVERY granted Pathfinder
+    /// Unchained record regardless of any real per-feature computation)
+    /// must NOT ground -- the exact shape live-confirmed for `Unchained
+    /// Barbarian ~ Fast Movement`, whose real magnitude function
+    /// (`fast_movement_bonus_feet`) never satisfied either check under the
+    /// OLD, unfiltered logic either, so only the roster id's coincidental
+    /// slug match was ever doing the work.
+    #[test]
+    fn a_magnitude_bearing_feature_credited_only_by_the_generic_pu_roster_id_does_not_ground() {
+        let mut facts = EngineFacts::default();
+        facts.class_books.insert("unchained_barbarian".to_string(), "pathfinder_unchained");
+        facts
+            .explanation_ids
+            .insert("class_feature.pu.unchained_barbarian.corpus_record.fast_movement".to_string());
+        let unit = class_feature_unit(
+            "pathfinder_unchained",
+            "pu_abilities_class.lst",
+            289,
+            "Unchained Barbarian ~ Fast Movement",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "computed", false);
+        assert_ne!(
+            verdict.status, "grounded",
+            "the generic PU roster id alone must never ground a magnitude-bearing record: \
+             status={} evidence={}",
+            verdict.status, verdict.evidence
+        );
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_only_the_generic_pu_roster_id_matched_no_real_magnitude_computed"
+        );
+    }
+
+    /// Companion proof: a REAL dedicated magnitude id for the SAME record
+    /// still grounds it, even with the generic roster id also present in
+    /// `explanation_ids` (as it always is in production) -- the fix must
+    /// exclude ONLY the roster id, not weaken the check generally.
+    #[test]
+    fn a_magnitude_bearing_feature_with_a_real_dedicated_id_still_grounds_alongside_the_roster_id() {
+        let mut facts = EngineFacts::default();
+        facts.class_books.insert("unchained_barbarian".to_string(), "pathfinder_unchained");
+        facts
+            .explanation_ids
+            .insert("class_feature.pu.unchained_barbarian.corpus_record.damage_reduction".to_string());
+        facts
+            .explanation_ids
+            .insert("class_feature.pu.unchained_barbarian.damage_reduction".to_string());
+        let unit = class_feature_unit(
+            "pathfinder_unchained",
+            "pu_abilities_class.lst",
+            300,
+            "Unchained Barbarian ~ Damage Reduction",
+            1,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "computed", false);
+        assert_eq!(
+            verdict.status, "grounded",
+            "a real dedicated explanation id must still ground the record: status={} evidence={}",
+            verdict.status, verdict.evidence
+        );
+        assert_eq!(verdict.evidence, "explanation_id_observed_in_a_real_computation");
+    }
+
+    /// The text-only promotion path must be UNAFFECTED by the strict/roster
+    /// distinction -- for a zero-magnitude record the roster id genuinely
+    /// proves the engine holds the exact record (Decision 7), so this must
+    /// still reach `text-complete` exactly as
+    /// `a_real_zero_magnitude_explanation_observed_feature_reaches_text_complete_with_real_description`
+    /// already proves for the non-PU shape.
+    #[test]
+    fn a_zero_magnitude_feature_credited_only_by_the_generic_pu_roster_id_still_reaches_text_complete()
+    {
+        let mut facts = EngineFacts::default();
+        facts.class_books.insert("unchained_summoner".to_string(), "pathfinder_unchained");
+        facts
+            .explanation_ids
+            .insert("class_feature.pu.unchained_summoner.corpus_record.aspect".to_string());
+        let unit = class_feature_unit(
+            "pathfinder_unchained",
+            "pu_abilities_class.lst",
+            500,
+            "Unchained Summoner ~ Aspect",
+            0,
+        );
+        // `wc_class = "display"`, matching this population's real production
+        // shape (`docs/work-inventory.json`'s own `Unchained Summoner ~
+        // Aspect` unit carries `wiring_class: "display"`) --
+        // `is_display_wiring_class_for_promotion` gates the text-complete
+        // rung to `display` specifically, unlike the magnitude-bearing tests
+        // above which correctly use `"computed"`.
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(
+            verdict.status, "text-complete",
+            "a zero-magnitude record's roster-id evidence must still promote to text-complete: \
+             status={} evidence={}",
+            verdict.status, verdict.evidence
         );
     }
 }
