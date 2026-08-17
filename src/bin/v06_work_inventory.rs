@@ -4825,9 +4825,9 @@ fn classify(
                     reason: Some(
                         "the feat is in the engine's catalog and its raw corpus closure carries \
                          real DESC: text, but the SERVED description (the compiled value a \
-                         player actually reads) is a placeholder marker -- a PI redaction or \
-                         PCGen's own upstream '[NOT IMPLEMENTED]' editorial marker, not prose -- \
-                         so there is nothing real to show a player either way"
+                         player actually reads) is a marker string, not prose -- a PI redaction \
+                         or PCGen's own upstream '[NOT IMPLEMENTED]' editorial marker -- so \
+                         there is nothing real to show a player either way"
                             .to_string(),
                     ),
                     engine_book: engine_book_field,
