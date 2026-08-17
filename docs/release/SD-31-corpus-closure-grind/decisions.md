@@ -1118,3 +1118,52 @@ the `.pcc` headers' `SOURCEDATE:` — never from memory.
 **Authority:** operator ruling, 2026-08-17, verbatim above. Supersedes `§10`'s direction; `§10`'s
 guards (a shared NAME is not a duplicate; match on `(kind, corpus_key)`; a later VARIANT is not a
 reprint) all stand unchanged and are reinforced by branch 2.
+
+### Decision 13 — AMENDMENT: "not identical" splits into two cases (operator ruling 2026-08-17)
+
+**Ruled, verbatim:**
+
+> "with race - if they are not identical - there are one of two options - a sub/alt race or a rules
+> update where the newest wins. devil is in the details. without examples of what you found, it's
+> hard for me to give a ruling - but just to put it out there, the core rules might have a dwarf.
+> then the arg maybe has something like a grey dwarf. those are two different things and deserve
+> their own records. if it's just a dwarf and it says they can see 60 feet in the dark, and the later
+> book says 90 feet - go with 90 feet. savvy?"
+
+**Decision 13's branch 2 was too coarse.** "Different, therefore both stay" is right for one of the
+two shapes and wrong for the other. The complete test is **three branches**:
+
+| | the two printings are… | outcome |
+|---|---|---|
+| **1** | **IDENTICAL** | duplicate — **the FIRST printing owns it**, the later is superseded |
+| **2** | **A DIFFERENT THING** — a sub-race, alt-race, or otherwise distinct entity (Dwarf vs **Grey Dwarf**) | not a duplicate — **BOTH stay, each with its own record** |
+| **3** | **THE SAME THING WITH CHANGED VALUES** — a rules update or errata (Dwarf darkvision **60 ft → 90 ft**) | one thing — **the NEWEST value wins** |
+
+Branch 3 is where `§10`'s original "newest wins" was genuinely right, and it is narrower than that
+framing implied: it applies to **the value**, on the same object, not to ownership of a distinct
+record.
+
+**Distinguishing 2 from 3 is a content judgement, not a name check.** A different NAME strongly
+suggests branch 2 (Grey Dwarf is not Dwarf), but the reverse does not hold — the same name with
+changed numbers is branch 3, and the same name with genuinely new sub-entries may be branch 2. The
+`§10` guard stands: **a shared name never implies a shared thing, and a different name never by
+itself proves a different thing.** Compare the records.
+
+**Pathfinder Unchained and Mythic Adventures remain branch 2** — Unchained Rogue is a different class,
+not a re-statement of Rogue's values, per `§10`'s amendment and the operator's own earlier ruling.
+
+### THE OPERATOR HAS NOT RULED ON THE RACE CASES, AND IS WAITING ON EVIDENCE
+
+> *"devil is in the details. without examples of what you found, it's hard for me to give a ruling"*
+
+**This is owed work, and it is a dispatchable card.** No race attribution changes until it lands.
+The deliverable is a per-race **worked-example** table — for each race printed in more than one book,
+the actual differing fields side by side (which book, which value, which line), so the operator can
+classify each as branch 1, 2 or 3 by reading real data rather than a summary. The orchestrating
+session has already handed the operator two wrong race figures; this table is the correction for
+that pattern, not another summary.
+
+Race attribution stays **FROZEN**, and the Supersession Register stays **PROPOSED, NOT APPLIED**,
+until the evidence table exists and the operator rules from it.
+
+**Authority:** operator ruling, 2026-08-17, verbatim above.
