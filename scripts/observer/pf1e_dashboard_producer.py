@@ -48,6 +48,14 @@ _spec = importlib.util.spec_from_file_location("observer", _OBSERVER)
 _observer = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(_observer)
 
+# Decision 12 (2026-08-17, `decisions.md`): the declared-PI oracle reader
+# every public-feed name must pass through before it ships. Same
+# resolve-relative-to-__file__ pattern as observer.py above.
+_PI_REDACTION = pathlib.Path(__file__).resolve().parent / "pi_redaction.py"
+_pi_spec = importlib.util.spec_from_file_location("pi_redaction", _PI_REDACTION)
+pi_redaction = importlib.util.module_from_spec(_pi_spec)
+_pi_spec.loader.exec_module(pi_redaction)
+
 
 # ---------------------------------------------------------------------------
 # Paths
@@ -2132,7 +2140,20 @@ def _parse_lst_first_field(path: str) -> list:
                     and not any(name.startswith(p) for p in SKIP_PREFIXES)):
                 if name not in seen:
                     seen.add(name)
-                    names.append(name)
+                    # Decision 12 (2026-08-17): this function reads a real
+                    # PCGen row and is a public roster's ONLY source for
+                    # that row's name (`_book_item_roster`,
+                    # `_prestige_class_roadmap`'s `ag_variants` both feed
+                    # straight from here into `site/dashboard/**`). The row
+                    # itself may declare `NAMEISPI:YES` -- dedup above keys
+                    # on the REAL name (`seen`), so two different
+                    # declared-PI rows still each hold their own slot; only
+                    # the DISPLAYED string is withheld, per "withhold the
+                    # name, keep the row."
+                    name_is_pi, _ = pi_redaction.declared_product_identity(
+                        pi_redaction.parse_row_tokens(line)
+                    )
+                    names.append(pi_redaction.REDACTED_PI_MARKER if name_is_pi else name)
     _LST_CACHE[path] = names
     return names
 
@@ -2685,7 +2706,16 @@ SPELL_SHARD_FIELDS = UNIT_SHARD_FIELDS + ("school",)
 # every prior bump: a schema-gated cache written before this field existed
 # would otherwise keep serving shards with no unmapped-status visibility
 # forever, silently hiding the exact hazard this round fixes.
-SHARD_SCHEMA = 13
+#
+# 13 -> 14 (Decision 12, 2026-08-17): `name` is now screened against the
+# pinned oracle's own declared-PI state (`pi_redacted_names`,
+# `pi_oracle_available`, both new on the top-level index). Same doctrine
+# again, and load-bearing this time: a cache written before this fix would
+# keep serving 261 unredacted PI names indefinitely -- exactly the
+# regression Decision 12 requirement #3's gate exists to catch, so this
+# bump is what makes the FIRST post-fix run actually recompute instead of
+# serving the pre-fix shard back unchanged.
+SHARD_SCHEMA = 14
 WORK_INVENTORY_FULL_DOC = os.environ.get(
     "PF1E_WORK_INVENTORY_DOC",
     os.path.expanduser("~/workspace/repos/codex/docs/work-inventory.json"),
@@ -4095,8 +4125,17 @@ def _category_bucket() -> dict:
 
 
 def build_unit_shards(doc_path: str = WORK_INVENTORY_FULL_DOC,
-                      shard_dir: str = UNIT_SHARD_DIR) -> dict:
+                      shard_dir: str = UNIT_SHARD_DIR,
+                      declared_pi_names: set | None = None) -> dict:
     """Emit per-kind unit shards and return the index the viewer navigates.
+
+    `declared_pi_names` is the full-oracle name index (see the module-level
+    comment on its build site below) -- pass a pre-built one from a caller
+    that also needs it elsewhere in the same run (`main()` reuses one
+    instance for both this function and the top-level document's own
+    blanket sweep, rather than paying the ~2.5s oracle walk twice). `None`
+    (the default, and every existing/test call site) builds it locally so
+    this function stays independently callable.
 
     Returns a dict with `available: False` and a stated reason when the source
     document is absent or unreadable -- never a zeroed index, because a zero
@@ -4150,6 +4189,35 @@ def build_unit_shards(doc_path: str = WORK_INVENTORY_FULL_DOC,
     except OSError as exc:
         return {"available": False, "note": f"could not create {shard_dir}: {exc}"}
 
+    # Decision 12 (2026-08-17): "withhold the name, keep the row." Every
+    # unit's own (book, source_file, source_line) is cross-checked against
+    # the pinned oracle's own NAMEISPI:YES declaration -- built ONCE here
+    # and reused for all ~38k units, not per-unit, since the same
+    # (book, source_file) pair repeats across an entire LST file's worth of
+    # sibling records. `oracle_checker.available` is false only when the
+    # pinned checkout itself could not be found (a machine that never ran
+    # `scripts/fetch-pcgen-oracle.sh`); the shard still ships in that case
+    # -- degrading availability of a PI SCREEN is not degrading to "ship
+    # unscreened," it is reported alongside the shard index below so a
+    # reader can tell the two apart.
+    oracle_checker = pi_redaction.OracleNameChecker()
+    pi_redacted_total = 0
+    # Defense-in-depth (found this cycle, real gap): a `.MOD` row that
+    # merely tags an EXISTING declared-PI record (e.g. inner_sea_world_
+    # guide's PFS-legality `.MOD` rows for races originally declared PI in
+    # a different book) carries no `NAMEISPI:YES` token on its OWN line,
+    # so `oracle_checker.declared()` -- which reads only the unit's exact
+    # cited coordinate -- correctly reports no declaration THERE while the
+    # object is still genuinely PI. A blanket exact-name sweep over the
+    # finished `rows`, using the SAME full-oracle name index
+    # `scripts/site_dashboard_pi_gate.py` scans the committed feed with,
+    # closes that gap without needing every `.MOD` reference resolved
+    # back to its defining row.
+    declared_pi_name_index = (
+        declared_pi_names if declared_pi_names is not None
+        else pi_redaction.build_declared_pi_name_index()
+    )
+
     kinds: dict[str, dict] = {}
     for kind, units in sorted(grouped.items()):
         is_spell = kind == "spell"
@@ -4168,9 +4236,31 @@ def build_unit_shards(doc_path: str = WORK_INVENTORY_FULL_DOC,
                 return u.get("wiring_class") or "ambiguous"
             if f == "school":
                 return schools_by_id.get(u.get("id") or id(u))
+            if f == "name":
+                name_is_pi, _ = oracle_checker.declared(
+                    u.get("book"), u.get("source_file"), u.get("source_line")
+                )
+                if name_is_pi:
+                    nonlocal pi_redacted_total
+                    pi_redacted_total += 1
+                    return pi_redaction.REDACTED_PI_MARKER
+                return u.get(f)
             return u.get(f)
 
         rows = [[_field(u, f) for f in fields] for u in units]
+        # Blanket defense-in-depth sweep (see comment on
+        # `declared_pi_name_index` above): catches a declared-PI name that
+        # the exact-coordinate check above missed (a `.MOD` row citing an
+        # object whose declaration lives on a different line entirely).
+        # Exact-match only (`in declared_pi_name_index`), never a substring
+        # scan -- `redact_declared_pi_names`'s own docstring covers why.
+        name_idx = fields.index("name") if "name" in fields else None
+        if name_idx is not None:
+            for row in rows:
+                val = row[name_idx]
+                if isinstance(val, str) and val != pi_redaction.REDACTED_PI_MARKER and val in declared_pi_name_index:
+                    row[name_idx] = pi_redaction.REDACTED_PI_MARKER
+                    pi_redacted_total += 1
         by_status: dict[str, int] = {}
         # Sub-category rollup (round 20): per-category doneness-verdict
         # counts, computed with the SAME doneness_verdict() every other
@@ -4359,6 +4449,12 @@ def build_unit_shards(doc_path: str = WORK_INVENTORY_FULL_DOC,
         "total_units": sum(k["units"] for k in kinds.values()),
         "proven_units": sum(k["proven"] for k in kinds.values()),
         "doneness_unmapped_seen": doneness_unmapped_seen,
+        # Decision 12: how many unit names were withheld this run and
+        # whether the pinned oracle was even reachable to screen against.
+        # The row itself is never dropped for a name-PI hit (`units` above
+        # already counts it); this reports only the display substitution.
+        "pi_redacted_names": pi_redacted_total,
+        "pi_oracle_available": oracle_checker.available,
         "kinds": kinds,
     }
     if not kinds:
@@ -4390,11 +4486,25 @@ def main() -> int:
     # writes and the orchestrator's SD-27+ channel data across producer runs.
     prior_state = _load_existing_owner_state(args.out)
     data = _merge_owner_state(data, prior_state)
+    # Decision 12 (2026-08-17): one full-oracle declared-PI name sweep,
+    # shared by `build_unit_shards`' own blanket pass below AND the
+    # top-level document's own pass a few lines down -- built once so a
+    # ~2.5s oracle walk is not paid twice in the same run.
+    declared_pi_names = pi_redaction.build_declared_pi_name_index()
     # Written alongside the payload rather than inside it: the shards are the
     # drill-down layer, and inlining 44k units would defeat the point.
     data["unit_index"] = build_unit_shards(
-        shard_dir=os.path.join(os.path.dirname(os.path.abspath(args.out)), "units")
+        shard_dir=os.path.join(os.path.dirname(os.path.abspath(args.out)), "units"),
+        declared_pi_names=declared_pi_names,
     )
+    # Blanket defense-in-depth sweep over the WHOLE top-level document --
+    # catches a declared-PI name surfacing through any field this cycle did
+    # not individually chase (a category label, a future roster), on top of
+    # the two precise, coordinate-based fixes already wired into
+    # `_parse_lst_first_field` and `build_unit_shards`'s own `name` field.
+    # Exact-match only; see `pi_redaction.redact_declared_pi_names`'s
+    # docstring for why a substring scan is the wrong tool here.
+    data = pi_redaction.redact_declared_pi_names(data, declared_pi_names)
     err = _atomic_write_json(args.out, data)
     if err:
         # Leave the previous payload in place rather than publishing a broken

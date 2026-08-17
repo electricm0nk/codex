@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-08-17T15:21:54Z",
+  "generated_at": "2026-08-17T17:18:08Z",
   "generated_by": "pf1e_dashboard_producer",
   "schema_version": 2,
   "usage": {
-    "captured_at": "2026-08-17T15:15:11Z",
-    "session_used_pct": "0",
+    "captured_at": "2026-08-17T17:15:12Z",
+    "session_used_pct": "8",
     "session_reset": "resets Aug 17, 4:09pm (America/New_York)",
-    "week_all_models_used_pct": "82",
+    "week_all_models_used_pct": "84",
     "week_all_models_reset": "resets Aug 19, 4:59am (America/New_York)",
     "fable_used_pct": "7",
     "fable_reset": "?",
@@ -42,7 +42,7 @@
   ],
   "content_state": {
     "available": true,
-    "generated_at": "2026-08-17T15:01:22Z",
+    "generated_at": "2026-08-17T17:10:52Z",
     "generated_by": "v06_content_state_dump",
     "books": [
       {
@@ -613,8 +613,8 @@
         ]
       },
       {
-        "id": "aldori_swordlord",
-        "name": "Aldori Swordlord",
+        "id": "[redacted_pi]",
+        "name": "[redacted PI]",
         "book": "Adventurer's Guide",
         "channel": "SD-30",
         "pre_wire_required": true,
@@ -718,8 +718,8 @@
         ]
       },
       {
-        "id": "aspis_agent",
-        "name": "Aspis Agent",
+        "id": "[redacted_pi]",
+        "name": "[redacted PI]",
         "book": "Adventurer's Guide",
         "channel": "SD-30",
         "pre_wire_required": true,
@@ -753,8 +753,8 @@
         ]
       },
       {
-        "id": "bellflower_tiller",
-        "name": "Bellflower Tiller",
+        "id": "[redacted_pi]",
+        "name": "[redacted PI]",
         "book": "Adventurer's Guide",
         "channel": "SD-30",
         "pre_wire_required": true,
@@ -858,8 +858,8 @@
         ]
       },
       {
-        "id": "golden_legionnaire",
-        "name": "Golden Legionnaire",
+        "id": "[redacted_pi]",
+        "name": "[redacted PI]",
         "book": "Adventurer's Guide",
         "channel": "SD-30",
         "pre_wire_required": true,
@@ -928,8 +928,8 @@
         ]
       },
       {
-        "id": "hellknight",
-        "name": "Hellknight",
+        "id": "[redacted_pi]",
+        "name": "[redacted PI]",
         "book": "Adventurer's Guide",
         "channel": "SD-30",
         "pre_wire_required": true,
@@ -963,8 +963,8 @@
         ]
       },
       {
-        "id": "hellknight_signifer",
-        "name": "Hellknight Signifer",
+        "id": "[redacted_pi]",
+        "name": "[redacted PI]",
         "book": "Adventurer's Guide",
         "channel": "SD-30",
         "pre_wire_required": true,
@@ -998,8 +998,8 @@
         ]
       },
       {
-        "id": "lantern_bearer",
-        "name": "Lantern Bearer",
+        "id": "[redacted_pi]",
+        "name": "[redacted PI]",
         "book": "Adventurer's Guide",
         "channel": "SD-30",
         "pre_wire_required": true,
@@ -1033,8 +1033,8 @@
         ]
       },
       {
-        "id": "magaambyan_arcanist",
-        "name": "Magaambyan Arcanist",
+        "id": "[redacted_pi]",
+        "name": "[redacted PI]",
         "book": "Adventurer's Guide",
         "channel": "SD-30",
         "pre_wire_required": true,
@@ -1103,8 +1103,8 @@
         ]
       },
       {
-        "id": "pathfinder_delver",
-        "name": "Pathfinder Delver",
+        "id": "[redacted_pi]",
+        "name": "[redacted PI]",
         "book": "Adventurer's Guide",
         "channel": "SD-30",
         "pre_wire_required": true,
@@ -1138,8 +1138,8 @@
         ]
       },
       {
-        "id": "pathfinder_savant",
-        "name": "Pathfinder Savant",
+        "id": "[redacted_pi]",
+        "name": "[redacted PI]",
         "book": "Adventurer's Guide",
         "channel": "SD-30",
         "pre_wire_required": true,
@@ -1173,8 +1173,8 @@
         ]
       },
       {
-        "id": "red_mantis_assassin",
-        "name": "Red Mantis Assassin",
+        "id": "[redacted_pi]",
+        "name": "[redacted PI]",
         "book": "Adventurer's Guide",
         "channel": "SD-30",
         "pre_wire_required": true,
@@ -1208,8 +1208,8 @@
         ]
       },
       {
-        "id": "rivethun_emissary",
-        "name": "Rivethun Emissary",
+        "id": "[redacted_pi]",
+        "name": "[redacted PI]",
         "book": "Adventurer's Guide",
         "channel": "SD-30",
         "pre_wire_required": true,
@@ -1278,8 +1278,8 @@
         ]
       },
       {
-        "id": "steel_falcon",
-        "name": "Steel Falcon",
+        "id": "[redacted_pi]",
+        "name": "[redacted PI]",
         "book": "Adventurer's Guide",
         "channel": "SD-30",
         "pre_wire_required": true,
@@ -1313,8 +1313,8 @@
         ]
       },
       {
-        "id": "storm_kindler",
-        "name": "Storm Kindler",
+        "id": "[redacted_pi]",
+        "name": "[redacted PI]",
         "book": "Adventurer's Guide",
         "channel": "SD-30",
         "pre_wire_required": true,
@@ -1383,8 +1383,8 @@
         ]
       },
       {
-        "id": "twilight_talon",
-        "name": "Twilight Talon",
+        "id": "[redacted_pi]",
+        "name": "[redacted PI]",
         "book": "Adventurer's Guide",
         "channel": "SD-30",
         "pre_wire_required": true,
@@ -1418,8 +1418,8 @@
         ]
       },
       {
-        "id": "westcrown_devil",
-        "name": "Westcrown Devil",
+        "id": "[redacted_pi]",
+        "name": "[redacted PI]",
         "book": "Adventurer's Guide",
         "channel": "SD-30",
         "pre_wire_required": true,
@@ -2273,7 +2273,7 @@
         "feats": "X"
       },
       "open_questions": {
-        "feats": "186 feat records ingested and prerequisite-evaluable, but only 45 of them compute a real mechanical effect: adding the other 141 to a character changes no number this engine produces. Measured by running the real compute pipeline with and without each catalog feat over fighter L1, fighter L12, barbarian L1, barbarian L12, monk L1, monk L12, wizard L1, wizard L12, swashbuckler L1, swashbuckler L12 \u2014 a lower bound, since a feat needing an unmodelled context (an opponent, an ally, a combat action) cannot show up as a delta here. [engine content dump 2026-08-17T15:01:22Z]"
+        "feats": "186 feat records ingested and prerequisite-evaluable, but only 45 of them compute a real mechanical effect: adding the other 141 to a character changes no number this engine produces. Measured by running the real compute pipeline with and without each catalog feat over fighter L1, fighter L12, barbarian L1, barbarian L12, monk L1, monk L12, wizard L1, wizard L12, swashbuckler L1, swashbuckler L12 \u2014 a lower bound, since a feat needing an unmodelled context (an opponent, an ally, a combat action) cannot show up as a delta here. [engine content dump 2026-08-17T17:10:52Z]"
       },
       "items": {
         "equipment": [
@@ -5485,8 +5485,8 @@
         "feats": "X"
       },
       "open_questions": {
-        "races": "No race records are ingested for this book. [engine content dump 2026-08-17T15:01:22Z]",
-        "feats": "172 feat records ingested and prerequisite-evaluable, but only 5 of them compute a real mechanical effect: adding the other 167 to a character changes no number this engine produces. Measured by running the real compute pipeline with and without each catalog feat over fighter L1, fighter L12, barbarian L1, barbarian L12, monk L1, monk L12, wizard L1, wizard L12, swashbuckler L1, swashbuckler L12 \u2014 a lower bound, since a feat needing an unmodelled context (an opponent, an ally, a combat action) cannot show up as a delta here. [engine content dump 2026-08-17T15:01:22Z]"
+        "races": "No race records are ingested for this book. [engine content dump 2026-08-17T17:10:52Z]",
+        "feats": "172 feat records ingested and prerequisite-evaluable, but only 5 of them compute a real mechanical effect: adding the other 167 to a character changes no number this engine produces. Measured by running the real compute pipeline with and without each catalog feat over fighter L1, fighter L12, barbarian L1, barbarian L12, monk L1, monk L12, wizard L1, wizard L12, swashbuckler L1, swashbuckler L12 \u2014 a lower bound, since a feat needing an unmodelled context (an opponent, an ally, a combat action) cannot show up as a delta here. [engine content dump 2026-08-17T17:10:52Z]"
       },
       "items": {
         "equipment": [
@@ -6328,8 +6328,8 @@
         "feats": "X"
       },
       "open_questions": {
-        "races": "No race records are ingested for this book. [engine content dump 2026-08-17T15:01:22Z]",
-        "feats": "129 feat records ingested and prerequisite-evaluable, but only 2 of them compute a real mechanical effect: adding the other 127 to a character changes no number this engine produces. Measured by running the real compute pipeline with and without each catalog feat over fighter L1, fighter L12, barbarian L1, barbarian L12, monk L1, monk L12, wizard L1, wizard L12, swashbuckler L1, swashbuckler L12 \u2014 a lower bound, since a feat needing an unmodelled context (an opponent, an ally, a combat action) cannot show up as a delta here. [engine content dump 2026-08-17T15:01:22Z]"
+        "races": "No race records are ingested for this book. [engine content dump 2026-08-17T17:10:52Z]",
+        "feats": "129 feat records ingested and prerequisite-evaluable, but only 2 of them compute a real mechanical effect: adding the other 127 to a character changes no number this engine produces. Measured by running the real compute pipeline with and without each catalog feat over fighter L1, fighter L12, barbarian L1, barbarian L12, monk L1, monk L12, wizard L1, wizard L12, swashbuckler L1, swashbuckler L12 \u2014 a lower bound, since a feat needing an unmodelled context (an opponent, an ally, a combat action) cannot show up as a delta here. [engine content dump 2026-08-17T17:10:52Z]"
       },
       "items": {
         "equipment": [
@@ -6854,10 +6854,10 @@
         "feats": "O"
       },
       "open_questions": {
-        "races": "No race records are ingested for this book. [engine content dump 2026-08-17T15:01:22Z]",
-        "classes": "No class records are ingested for this book. [engine content dump 2026-08-17T15:01:22Z]",
-        "spells": "No spell records are ingested for this book. [engine content dump 2026-08-17T15:01:22Z]",
-        "feats": "No feat records are ingested for this book. [engine content dump 2026-08-17T15:01:22Z]"
+        "races": "No race records are ingested for this book. [engine content dump 2026-08-17T17:10:52Z]",
+        "classes": "No class records are ingested for this book. [engine content dump 2026-08-17T17:10:52Z]",
+        "spells": "No spell records are ingested for this book. [engine content dump 2026-08-17T17:10:52Z]",
+        "feats": "No feat records are ingested for this book. [engine content dump 2026-08-17T17:10:52Z]"
       },
       "items": {
         "equipment": [
@@ -7616,23 +7616,12 @@
       "items": {
         "equipment": [],
         "feats": [
-          "Al-Zabriti-Trained Horse",
+          "[redacted PI]",
           "Forceful Charge",
           "Improved Forceful Charge",
           "Additional Affiliations",
           "Agile Maiden",
-          "Aldori Artistry (Disarm)",
-          "Aldori Artistry (Reposition)",
-          "Aldori Artistry (Steal)",
-          "Aldori Artistry (Sunder)",
-          "Aldori Artistry (Trip)",
-          "Aldori Dueling Disciple",
-          "Aldori Dueling Mastery",
-          "Aldori Style",
-          "Aldori Style Aegis",
-          "Aldori Style Conquest",
           "Armored Rider",
-          "Aspis Partner",
           "Cold Celerity",
           "Cypher Magic",
           "Cypher Script",
@@ -7647,9 +7636,6 @@
           "Extra Spontaneous Spell Mastery",
           "Falcon's Cry",
           "Falling Water Gambit",
-          "Fanged Crown Massacre",
-          "Garen's Discipline",
-          "Gray Maiden Initiate",
           "Horse Whisperer",
           "Improved Horse Whisperer",
           "Improved Mounted Archery",
@@ -7665,7 +7651,6 @@
           "Redistributed Might",
           "Ritual Mask",
           "Rugged Northerner",
-          "Scarlet Rose Devotion",
           "Scholar",
           "Sinister Reputation",
           "Sirian's Masterstroke",
@@ -7682,26 +7667,14 @@
           "Storm-Lashed",
           "Tag-Team Interrogation",
           "Tribal Hunter",
-          "Trlbal Scars (Bearpelt)",
-          "Trlbal Scars (Greattusk)",
-          "Trlbal Scars (Ice Chasm)",
-          "Trlbal Scars (Night Hunt)",
-          "Trlbal Scars (Raptorscale)",
-          "Trlbal Scars (Slothjaw)",
           "Twilight Tattoo",
-          "Unblinking Flame Feint",
-          "Unblinking Flame Fist",
-          "Unbreakable",
-          "Unfolding Wind Rush",
-          "Unfolding Wind Strike",
-          "Untwisting Iron Skin",
-          "Untwisting Iron Strength"
+          "Unbreakable"
         ],
         "spells": [
           "Absorb Rune I",
           "Absorb Rune II",
           "Absorb Rune III",
-          "Aldori Alacrity",
+          "[redacted PI]",
           "Blade of Light",
           "Bone Flense",
           "Brand of Conformity",
@@ -7713,7 +7686,6 @@
           "Contest of Skill",
           "Crimson Breath",
           "Deceptive Redundancy",
-          "Deivon's Parry",
           "Detect Charm",
           "Detoxify",
           "Dirge of the Victorious Knights",
@@ -7731,7 +7703,6 @@
           "Preserve Grace",
           "Rune of Rule",
           "Rune Trace",
-          "Sarzari Shadow Memory",
           "Sawtooth Terrain",
           "Shackle",
           "Slave to Sin",
@@ -7743,7 +7714,6 @@
           "Suppress Charms and Compulsions",
           "Sympathetic Aura",
           "Tactical Adaptation",
-          "Tieldlara's Feint",
           "Wall of Silver",
           "Calm Spirit.COPY=Rivethun Calm Spirit",
           "Darkvision.COPY=Darkvision (self only)",
@@ -7758,30 +7728,15 @@
         "monsters": [],
         "races": [],
         "prestige_classes": [
-          "Aldori Swordlord",
+          "[redacted PI]",
           "Argent Dramaturge",
           "Asavir",
-          "Aspis Agent",
-          "Bellflower Tiller",
           "Cyphermage",
           "Death Slayer",
-          "Golden Legionnaire",
           "Gray Corsair",
-          "Hellknight",
-          "Hellknight Signifer",
-          "Lantern Bearer",
-          "Magaambyan Arcanist",
           "Mammoth Rider",
-          "Pathfinder Delver",
-          "Pathfinder Savant",
-          "Red Mantis Assassin",
-          "Rivethun Emissary",
           "Sanguine Angel",
-          "Steel Falcon",
-          "Storm Kindler",
           "Student of War",
-          "Twilight Talon",
-          "Westcrown Devil",
           "Envy",
           "Gluttony",
           "Greed",
@@ -7850,9 +7805,7 @@
           "Rock (Fine)",
           "Rock (Large)",
           "Skull",
-          "Shobhad Longrifle",
-          "Cicatrix",
-          "Scepter of Shibaxet"
+          "[redacted PI]"
         ],
         "feats": [],
         "spells": [],
@@ -8348,7 +8301,7 @@
           "Cape of Free Will +3",
           "Cape of Free Will +4",
           "Cape of Free Will +5",
-          "Cayden's Cup",
+          "[redacted PI]",
           "Censet of Sanctuary",
           "Chime of Disillusionment",
           "Cloak of Quick Reflexes +1",
@@ -10054,7 +10007,7 @@
           "Invincible Armor",
           "Mail of Malevolence",
           "Morlock Hide",
-          "Otyugh Hide",
+          "[redacted PI]",
           "Prismatic Plate",
           "Scarab Breastplate",
           "Soothsayer's Raiment",
@@ -10074,7 +10027,6 @@
           "Celestial Shield",
           "Collapsible Tower",
           "Dragonslayer's Shield",
-          "Elysian Shield",
           "Force Tower",
           "Living Steel Heavy Shield",
           "Maelstrom Shield",
@@ -11706,28 +11658,21 @@
           "Scroll Shield",
           "Scroll Blade",
           "Spellbook.COPY=Defensive Primer",
-          "Spellbook.COPY=Apprentice Chapbook of Rul Thaven",
+          "[redacted PI]",
           "Spellbook.COPY=Unnamed Journal",
           "Spellbook.COPY=Traveler's Tome",
           "Spellbook.COPY=Book of Harms",
-          "Spellbook.COPY=Lab Journal of Constance Inflix",
           "Spellbook.COPY=Book of the Grave",
           "Spellbook.COPY=Grimoire of Glittering Eyes",
           "Spellbook.COPY=Tome of the Transmuter",
-          "Spellbook.COPY=Journeyman Book of Rul Thaven",
           "Spellbook.COPY=Journal of the Beast Within",
-          "Spellbook.COPY=Manuscript of Jack Were-Son",
           "Spellbook.COPY=Arctic Call",
-          "Spellbook.COPY=Insights of Far-Seeing Taernis",
           "Spellbook.COPY=Quest Eternal",
           "Spellbook.COPY=Grandfather's Legacy",
           "Spellbook.COPY=Chymist's Guidebook",
           "Spellbook.COPY=Guardian Grimoire",
           "Spellbook.COPY=Mysteries of Shadow",
-          "Spellbook.COPY=Master Books of Rul Thaven",
           "Spellbook.COPY=Manual of Binding",
-          "Spellbook.COPY=Library of the Dancer of Skins",
-          "Spellbook.COPY=The Formulae of Master Gebr",
           "Spellbook.COPY=Mastery of Word and Thought"
         ],
         "feats": [
@@ -12564,7 +12509,7 @@
         "rest": "Barbarian, Bard, Cleric, Druid, Fighter, Monk, Paladin, Ranger, Rogue, Sorcerer, Wizard, Alchemist, Cavalier, Inquisitor, Oracle, Summoner, Witch, Arcanist, Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald, Slayer, Swashbuckler, Warpriest.",
         "list": "Barbarian, Bard, Cleric, Druid, Fighter, Monk, Paladin, Ranger, Rogue, Sorcerer, Wizard, Alchemist, Cavalier, Inquisitor, Oracle, Summoner, Witch, Arcanist, Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald, Slayer, Swashbuckler, Warpriest",
         "source": "engine-state-dump",
-        "generated_at": "2026-08-17T15:00:22Z",
+        "generated_at": "2026-08-17T17:10:02Z",
         "input_posture": "tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt with the class swapped to the class under test, swept over levels 1-20, plus the canonical per-class choice/spell seeds compose_character_input applies (pf1_adapter.rs). A class counts as computed only when every level in the sweep reaches HeadlessReceiptStatus::Computed.",
         "excluded": [
           "unchained_barbarian",
@@ -14659,19 +14604,19 @@
   },
   "work_inventory": {
     "available": true,
-    "generated_at": "2026-08-17T14:26:54Z",
+    "generated_at": "2026-08-17T16:36:56Z",
     "generated_by": "cargo run --bin v06_work_inventory",
     "corpus_root": "/home/ubuntu/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game",
     "total_units": 38521,
-    "proven_units": 8057,
+    "proven_units": 7861,
     "by_status": {
       "deferred-with-reason": 38,
-      "grounded": 4605,
-      "ingested-magnitude": 6667,
-      "not-ingested": 17356,
+      "grounded": 4337,
+      "ingested-magnitude": 7251,
+      "not-ingested": 16847,
       "not-started": 1396,
-      "text-complete": 3452,
-      "unknown": 5007
+      "text-complete": 3524,
+      "unknown": 5128
     },
     "by_kind": {
       "class": 185,
@@ -16096,13 +16041,13 @@
         "units": 1578,
         "by_status": {
           "deferred-with-reason": 2,
-          "not-ingested": 631,
+          "not-ingested": 620,
           "unknown": 227,
-          "grounded": 276,
-          "text-complete": 168,
-          "ingested-magnitude": 274
+          "grounded": 180,
+          "ingested-magnitude": 380,
+          "text-complete": 169
         },
-        "proven": 444,
+        "proven": 349,
         "by_wiring_class": {
           "display": 624,
           "computed": 575,
@@ -16236,13 +16181,13 @@
         "engine_rule_set": "bestiary_1",
         "units": 1653,
         "by_status": {
-          "not-ingested": 687,
-          "grounded": 684,
-          "text-complete": 274,
-          "unknown": 4,
-          "ingested-magnitude": 4
+          "not-ingested": 678,
+          "grounded": 613,
+          "ingested-magnitude": 82,
+          "text-complete": 276,
+          "unknown": 4
         },
-        "proven": 958,
+        "proven": 889,
         "by_wiring_class": {
           "computed": 445,
           "display": 556,
@@ -16333,13 +16278,13 @@
         "engine_rule_set": "bestiary_2",
         "units": 1260,
         "by_status": {
-          "not-ingested": 465,
-          "grounded": 604,
-          "text-complete": 184,
-          "ingested-magnitude": 1,
+          "not-ingested": 464,
+          "grounded": 579,
+          "ingested-magnitude": 26,
+          "text-complete": 185,
           "unknown": 6
         },
-        "proven": 788,
+        "proven": 764,
         "by_wiring_class": {
           "static": 220,
           "derived": 311,
@@ -16414,13 +16359,13 @@
         "engine_rule_set": "bestiary_3",
         "units": 1292,
         "by_status": {
-          "grounded": 348,
+          "ingested-magnitude": 30,
           "not-ingested": 864,
           "text-complete": 72,
-          "ingested-magnitude": 1,
-          "unknown": 7
+          "unknown": 7,
+          "grounded": 319
         },
-        "proven": 420,
+        "proven": 391,
         "by_wiring_class": {
           "display": 715,
           "derived": 146,
@@ -16497,11 +16442,11 @@
         "units": 1336,
         "by_status": {
           "not-ingested": 475,
-          "grounded": 462,
+          "ingested-magnitude": 24,
           "text-complete": 394,
-          "ingested-magnitude": 5
+          "grounded": 443
         },
-        "proven": 856,
+        "proven": 837,
         "by_wiring_class": {
           "display": 623,
           "computed": 95,
@@ -16591,10 +16536,11 @@
         "units": 250,
         "by_status": {
           "not-ingested": 186,
-          "grounded": 57,
-          "text-complete": 7
+          "ingested-magnitude": 6,
+          "text-complete": 7,
+          "grounded": 51
         },
-        "proven": 64,
+        "proven": 58,
         "by_wiring_class": {
           "static": 27,
           "display": 93,
@@ -16852,8 +16798,9 @@
         "engine_rule_set": "book_of_the_damned_volume_2",
         "units": 254,
         "by_status": {
-          "not-ingested": 92,
-          "unknown": 141,
+          "not-ingested": 86,
+          "unknown": 142,
+          "ingested-magnitude": 5,
           "grounded": 11,
           "text-complete": 10
         },
@@ -16897,8 +16844,8 @@
             "kind": "feat",
             "corpus_units_total": 1,
             "corpus_units_declared": 1,
-            "engine_records": null,
-            "delta": null
+            "engine_records": 1,
+            "delta": 0
           },
           {
             "kind": "spell",
@@ -17034,14 +16981,14 @@
         "engine_rule_set": "core_rulebook",
         "units": 5223,
         "by_status": {
-          "grounded": 1017,
+          "grounded": 1016,
           "not-ingested": 674,
           "deferred-with-reason": 6,
           "text-complete": 441,
-          "unknown": 802,
-          "ingested-magnitude": 2283
+          "unknown": 801,
+          "ingested-magnitude": 2285
         },
-        "proven": 1458,
+        "proven": 1457,
         "by_wiring_class": {
           "computed": 1430,
           "static": 2426,
@@ -17311,8 +17258,9 @@
         "engine_rule_set": "inner_sea_combat",
         "units": 398,
         "by_status": {
-          "not-ingested": 377,
-          "unknown": 11,
+          "not-ingested": 312,
+          "unknown": 46,
+          "ingested-magnitude": 30,
           "grounded": 9,
           "text-complete": 1
         },
@@ -17398,13 +17346,13 @@
         "engine_rule_set": "inner_sea_gods",
         "units": 477,
         "by_status": {
-          "not-ingested": 269,
-          "ingested-magnitude": 62,
-          "text-complete": 52,
-          "unknown": 26,
+          "not-ingested": 144,
+          "ingested-magnitude": 134,
+          "text-complete": 102,
+          "unknown": 29,
           "grounded": 68
         },
-        "proven": 120,
+        "proven": 170,
         "by_wiring_class": {
           "computed": 70,
           "display": 134,
@@ -17480,12 +17428,13 @@
         "engine_rule_set": "inner_sea_intrigue",
         "units": 256,
         "by_status": {
-          "not-ingested": 206,
-          "unknown": 39,
-          "grounded": 6,
-          "text-complete": 5
+          "not-ingested": 166,
+          "unknown": 42,
+          "text-complete": 10,
+          "ingested-magnitude": 32,
+          "grounded": 6
         },
-        "proven": 11,
+        "proven": 16,
         "by_wiring_class": {
           "computed": 40,
           "display": 100,
@@ -17519,8 +17468,8 @@
             "kind": "feat",
             "corpus_units_total": 6,
             "corpus_units_declared": 6,
-            "engine_records": null,
-            "delta": null
+            "engine_records": 6,
+            "delta": 0
           },
           {
             "kind": "spell",
@@ -17598,13 +17547,13 @@
         "engine_rule_set": "inner_sea_races",
         "units": 315,
         "by_status": {
-          "grounded": 75,
+          "grounded": 59,
+          "ingested-magnitude": 87,
           "not-ingested": 113,
           "text-complete": 52,
-          "unknown": 4,
-          "ingested-magnitude": 71
+          "unknown": 4
         },
-        "proven": 127,
+        "proven": 111,
         "by_wiring_class": {
           "computed": 135,
           "ambiguous": 1,
@@ -17717,11 +17666,11 @@
         "by_status": {
           "not-ingested": 184,
           "unknown": 115,
-          "grounded": 28,
-          "text-complete": 30,
-          "ingested-magnitude": 43
+          "grounded": 25,
+          "ingested-magnitude": 46,
+          "text-complete": 30
         },
-        "proven": 58,
+        "proven": 55,
         "by_wiring_class": {
           "computed": 81,
           "display": 160,
@@ -17828,11 +17777,11 @@
         "by_status": {
           "not-ingested": 70,
           "unknown": 52,
-          "grounded": 19,
-          "text-complete": 26,
-          "ingested-magnitude": 40
+          "grounded": 17,
+          "ingested-magnitude": 42,
+          "text-complete": 26
         },
-        "proven": 45,
+        "proven": 43,
         "by_wiring_class": {
           "derived": 49,
           "static": 52,
@@ -17926,12 +17875,13 @@
         "engine_rule_set": "mythic_adventures",
         "units": 969,
         "by_status": {
-          "not-ingested": 756,
+          "not-ingested": 504,
           "grounded": 31,
-          "text-complete": 92,
-          "unknown": 90
+          "text-complete": 105,
+          "unknown": 170,
+          "ingested-magnitude": 159
         },
-        "proven": 123,
+        "proven": 136,
         "by_wiring_class": {
           "derived": 41,
           "display": 626,
@@ -18807,25 +18757,25 @@
   },
   "retrospective": {
     "available": true,
-    "generated_at": "2026-08-17T15:21:54Z",
+    "generated_at": "2026-08-17T17:18:08Z",
     "generated_by": "scripts/retro.py summary",
     "window": "14d",
-    "total_events": 1165,
+    "total_events": 1169,
     "by_type": {
-      "correction": 379,
+      "correction": 382,
       "deferral": 51,
-      "incident": 192,
-      "near_miss": 42,
-      "note": 49,
+      "incident": 190,
+      "near_miss": 43,
+      "note": 50,
       "rework": 28,
-      "verification": 424
+      "verification": 425
     },
     "by_origin": {
-      "agent": 648,
-      "derived": 517
+      "agent": 650,
+      "derived": 519
     },
     "corrections": {
-      "total": 379,
+      "total": 382,
       "by_subject": {
         "7c86f58a receipt / classify() Kind::ClassFeature owner-found branch": 1,
         "?": 16,
@@ -18909,6 +18859,7 @@
         "SD31-E4-F1-004's own dispatch brief / this cycle's own initial assumption": 1,
         "SD31-E6-F10-001 dispatch brief": 1,
         "SD31-E6-F10-002": 1,
+        "SD31-E6-F10-004 receipt": 1,
         "SD31-E6-F11-001-held-cell-map.md (sd31-e6-heldcells)": 1,
         "SD31-E6-F11-001-held-cell-map.md / this card's own brief": 1,
         "SD31-E6-F11-002 (spell_like_ability_caster_level, wave 4)": 1,
@@ -18918,6 +18869,7 @@
         "SD31-E6-F2-001 spell lane, ingest 2026-08-03": 1,
         "SD31-E6-F2-004's own initial doc-comment draft": 1,
         "SD31-E6-F3-002 (own draft mid-cycle)": 1,
+        "SD31-E6-F4-006 receipt": 1,
         "SD31-E6-F5-001 / SD31-E6-F2-001 equipment+spell lanes": 1,
         "SD31-E6-F5-001 equipment lane": 3,
         "SD31-E6-F5-003 dispatch preamble": 1,
@@ -18929,6 +18881,7 @@
         "SD31-E6-F8-001 receipt": 1,
         "SD31-E6-F9-001 dispatch brief": 1,
         "SD31-E6-F9-002 (OPEN-ISSUES row 157)": 1,
+        "SD31-E6-F9-005 dispatch receipt": 1,
         "SD31-W5-INTEGRATE-001 (OPEN-ISSUES row 90)": 1,
         "SD31-W9-INTEGRATE-001 dispatch prompt": 2,
         "apps/desktop monster catalog challenge-rating guards (two Rust tests and the frontend formatter)": 1,
@@ -19335,6 +19288,7 @@
         "sd31-w1-integrate": 9,
         "sd31-w10-integrate": 6,
         "sd31-w11-integrate": 16,
+        "sd31-w12-integrate": 3,
         "sd31-w2-integrate": 9,
         "sd31-w3-integrate": 16,
         "sd31-w4-integrate": 2,
@@ -19371,14 +19325,14 @@
           "subject": "SD31-W9-INTEGRATE-001 dispatch prompt"
         }
       ],
-      "already_propagated": 205
+      "already_propagated": 206
     },
     "incidents": {
-      "total": 192,
-      "silent": 19,
+      "total": 190,
+      "silent": 17,
       "recurring": [
         {
-          "count": 85,
+          "count": 86,
           "recurrence_key": "disk-full"
         },
         {
@@ -19408,7 +19362,7 @@
       ]
     },
     "near_misses": {
-      "total": 42,
+      "total": 43,
       "escaped": 5,
       "by_gate": {
         "10-word shingle comparison over all 23 uca_feats.lst BENEFIT: rows (re-derivation step, not the brief)": 1,
@@ -19427,6 +19381,7 @@
         "guarded regen's own stamp-preservation refusal (v06_work_inventory --allow-stamp-loss gate)": 1,
         "hand-diffing wiring_class_signals + source_file/source_line for one anomalous unit (advanced_race_guide:race_trait:half_elf_drow_blooded): the SAME id resolved to two different source files across runs (arg_abilities_race.lst:157 vs pfs_arg_abilities_race.lst:10) with no wiring_class.rs change between them -- pre-existing nondeterminism in v06_work_inventory.rs's own unit-to-source-line resolution (likely HashMap iteration order), unrelated to and out of scope for this task": 1,
         "manual code read of recorded_unreached()/UNREACHED_RECORD_FINDINGS before the gate reached the reach stage, cross-checked with a standalone cargo test in a separate target dir": 1,
+        "manual mutation of gen_equipment_gap_tables.rs's screen_record (deleted the real screen, ran cargo test, 2/4 blacklist_screen_tests still passed)": 1,
         "manual spot-check of Amateur Investigator's raw .lst line against the classifier's first-pass bucket assignment before the count was taken": 1,
         "planted 'pub const sd30_leak_marker' in a disposable git worktree/branch (sd30-e1-audit-proof-scratch), ran the audit against origin/develop, confirmed exit 1 with the offending line printed, then discarded the worktree and branch": 1,
         "re-deriving the live declared-PI count over data/corpus/pathfinder_unchained/class_feature/ before writing the assertion (grep -rl NAMEISPI/DESCISPI, 0 hits), per state-goals-and-lessons.md's re-derive-don't-transcribe rule; fixed by stating the zero case explicitly (eprintln) and adding a synthetic self-test (the_leak_detectors_actually_fire...) that proves the detector works independent of live corpus content": 1,
@@ -19492,9 +19447,9 @@
       }
     },
     "verification": {
-      "runs": 424,
-      "failed_runs": 121,
-      "fail_rate": 0.2854,
+      "runs": 425,
+      "failed_runs": 122,
+      "fail_rate": 0.2871,
       "by_failing_stage": {
         "clippy": 33,
         "corpus-sweep": 2,
@@ -19510,19 +19465,19 @@
         "reach": 13,
         "root-full": 51,
         "root-lib": 2,
-        "site-dashboard-check": 29,
+        "site-dashboard-check": 30,
         "supersession-gate": 1
       }
     },
     "git_join": {
       "authors": 1,
       "available": true,
-      "commits": 732,
-      "events_per_commit": 1.5915,
+      "commits": 738,
+      "events_per_commit": 1.584,
       "top_authors": [
         [
           "Todd Hintzmann",
-          732
+          738
         ]
       ]
     },
@@ -19533,9 +19488,9 @@
   },
   "unit_index": {
     "available": true,
-    "schema": 13,
+    "schema": 14,
     "generated_at": "2026-08-17T15:19:21Z",
-    "source_document": "/home/ubuntu/workspace/repos/codex/docs/work-inventory.json",
+    "source_document": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_c9995ce5-db0-1/docs/work-inventory.json",
     "shard_base": "units/",
     "fields": [
       "name",
@@ -19548,6 +19503,8 @@
     "total_units": 38521,
     "proven_units": 6013,
     "doneness_unmapped_seen": false,
+    "pi_redacted_names": 289,
+    "pi_oracle_available": true,
     "kinds": {
       "class": {
         "units": 185,
@@ -19558,7 +19515,7 @@
           "not-started": 28
         },
         "shard": "PF1e-units-class.json",
-        "bytes": 18641,
+        "bytes": 18599,
         "doneness_unmapped": {},
         "categories": {
           "pc": {
@@ -19631,7 +19588,7 @@
           "not-started": 929
         },
         "shard": "PF1e-units-class_feature.json",
-        "bytes": 2343222,
+        "bytes": 2342429,
         "doneness_unmapped": {},
         "categories": {
           "specialquality": {
@@ -25049,7 +25006,7 @@
           "fixture-verified": 11
         },
         "shard": "PF1e-units-equipment.json",
-        "bytes": 834327,
+        "bytes": 833915,
         "doneness_unmapped": {},
         "categories": {
           "magic": {
@@ -26354,7 +26311,7 @@
           "deferred-with-reason": 2
         },
         "shard": "PF1e-units-feat.json",
-        "bytes": 258452,
+        "bytes": 258188,
         "doneness_unmapped": {},
         "categories": {
           "general": {
@@ -26739,7 +26696,7 @@
           "not-ingested": 28
         },
         "shard": "PF1e-units-monster.json",
-        "bytes": 108957,
+        "bytes": 108992,
         "doneness_unmapped": {},
         "categories": {
           "none": {
@@ -26932,7 +26889,7 @@
           "not-started": 3
         },
         "shard": "PF1e-units-race.json",
-        "bytes": 9994,
+        "bytes": 9974,
         "doneness_unmapped": {},
         "categories": {
           "base": {
@@ -30308,7 +30265,7 @@
           "unknown": 26
         },
         "shard": "PF1e-units-spell.json",
-        "bytes": 329158,
+        "bytes": 329026,
         "doneness_unmapped": {},
         "categories": {
           "arcane": {

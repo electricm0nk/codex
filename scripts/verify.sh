@@ -107,8 +107,8 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest site-dashboard-selftest site-dashboard-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest site-dashboard-selftest site-dashboard-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
+ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
+QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -440,6 +440,54 @@ run_producer_selftest() {
 }
 
 # ---------------------------------------------------------------------------
+# Stage: pi-redaction-selftest
+#
+# Runs `python3 -m unittest scripts/tests/test_pi_redaction.py` -- the
+# self-test for `scripts/observer/pi_redaction.py`, Decision 12's declared-PI
+# oracle reader (SD31-D14-PROV-001, 2026-08-17: "withhold the name, keep the
+# row"). Builds scratch pcgen-shaped fixtures (never the real pinned oracle,
+# same posture `groundtruth-guard-selftest` already takes) and mutation-proves
+# the core reader, the ambiguous-name exclusion (a bare word declared PI in
+# one book must not flag an unrelated non-PI record sharing that word
+# elsewhere -- the real false positive this cycle found: an unrelated
+# Spycraft "Teleport" ritual colliding with the Core Rulebook's ordinary
+# "Teleport" spell), and the exact-match leak scanner/redactor
+# `site-dashboard-pi-gate` and the producer both depend on. Cheap (stdlib
+# unittest, no build, no network) -- placed in BOTH stage sets next to
+# `producer-selftest`, same "self-test for a screen that raises on purpose
+# deserves its own gate" reasoning.
+# ---------------------------------------------------------------------------
+
+run_pi_redaction_selftest() {
+    stage_start "pi-redaction-selftest — python3 -m unittest scripts/tests/test_pi_redaction.py"
+    local log="$LOG_DIR/pi-redaction-selftest.log"
+    local script="$REPO_ROOT/scripts/tests/test_pi_redaction.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail pi-redaction-selftest "self-test script missing at scripts/tests/test_pi_redaction.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 -m unittest -v "$script" ) >"$log" 2>&1
+    local status=$?
+
+    local ran
+    ran=$(sed -n 's/^Ran \([0-9]*\) tests\? in .*$/\1/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail pi-redaction-selftest "self-test exit $status${ran:+; ran $ran}  — $log"
+        return
+    fi
+
+    if [[ -z "$ran" || "$ran" -eq 0 ]]; then
+        stage_fail pi-redaction-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass pi-redaction-selftest "$ran cases passed"
+}
+
+# ---------------------------------------------------------------------------
 # Stage: site-dashboard-selftest
 #
 # Runs `bash scripts/tests/test_publish_site_dashboard.sh` -- the detection
@@ -525,6 +573,53 @@ run_site_dashboard_check() {
     fi
 
     stage_pass site-dashboard-check "site/dashboard/PF1e-dashboard.json is current"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: site-dashboard-pi-gate
+#
+# Decision 12 (2026-08-17), binding implementation requirement #3: "A gate,
+# proven able to fail. A verify.sh stage must fail when the committed feed or
+# any shard carries a declared-PI name." Runs
+# `scripts/site_dashboard_pi_gate.py` for real against whatever is actually
+# committed under `site/dashboard/` -- the SAFETY NET behind the producer's
+# own two precise, coordinate-based redactions
+# (`build_unit_shards`'s `name` field, `_parse_lst_first_field`'s roster
+# rows) and its blanket exact-match sweep over the whole assembled document.
+# A hand-edit, a reverted redaction, or a future producer change that forgets
+# to call the reader are all real failure modes a generation-time fix alone
+# cannot catch -- `declared-pi-audit` above is this exact same shape applied
+# to `data/corpus/`; this is that shape's `site/dashboard/` counterpart.
+# Cheap (a ~2.5s Paizo-scoped oracle sweep, no build) -- placed in BOTH stage
+# sets next to `site-dashboard-check`.
+# ---------------------------------------------------------------------------
+
+run_site_dashboard_pi_gate() {
+    stage_start "site-dashboard-pi-gate — declared-PI names vs. what is committed under site/dashboard/"
+    local log="$LOG_DIR/site-dashboard-pi-gate.log"
+    local script="$REPO_ROOT/scripts/site_dashboard_pi_gate.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail site-dashboard-pi-gate "gate script missing at scripts/site_dashboard_pi_gate.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 "$script" ) >"$log" 2>&1
+    local status=$?
+
+    if (( status != 0 )); then
+        stage_fail site-dashboard-pi-gate "declared-PI name found, or the oracle could not be read (exit $status) — $log"
+        return
+    fi
+
+    if ! grep -q '^site-dashboard-pi-gate: CLEAN' "$log"; then
+        stage_fail site-dashboard-pi-gate "exited 0 without reporting CLEAN — $log"
+        return
+    fi
+
+    local summary
+    summary=$(sed -n 's/^site-dashboard-pi-gate: CLEAN — \(.*\)$/\1/p' "$log" | tail -1)
+    stage_pass site-dashboard-pi-gate "${summary:-clean}"
 }
 
 # ---------------------------------------------------------------------------
@@ -1516,8 +1611,10 @@ for stage in "${SELECTED[@]}"; do
         preflight-oracle)    run_preflight_oracle ;;
         oracle-pin-selftest) run_oracle_pin_selftest ;;
         producer-selftest)   run_producer_selftest ;;
+        pi-redaction-selftest) run_pi_redaction_selftest ;;
         site-dashboard-selftest) run_site_dashboard_selftest ;;
         site-dashboard-check) run_site_dashboard_check ;;
+        site-dashboard-pi-gate) run_site_dashboard_pi_gate ;;
         reachability-audit-selftest) run_reachability_audit_selftest ;;
         reachability-audit)  run_reachability_audit ;;
         groundtruth-guard-selftest) run_groundtruth_guard_selftest ;;

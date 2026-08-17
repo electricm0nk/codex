@@ -33,6 +33,7 @@ import json
 import os
 import pathlib
 import tempfile
+import unittest.mock
 import unittest
 
 # producer.py is always this test's sibling-of-a-sibling
@@ -147,6 +148,113 @@ class DonenessVerdictGridTest(unittest.TestCase):
         still raises -- this table must not have quietly become total."""
         with self.assertRaises(ValueError):
             producer.doneness_verdict("ambiguous", "bogus-status-word", "spell")
+
+
+class BuildUnitShardsPiRedactionTest(unittest.TestCase):
+    """Decision 12 (2026-08-17): `build_unit_shards` must withhold a unit's
+    NAME when its own (book, source_file, source_line) row declares
+    `NAMEISPI:YES` in the pinned oracle -- and must keep the row (count,
+    status, wiring_class all unaffected) rather than dropping it. Mutation-
+    proof: a declared-PI unit and a clean unit sit side by side; only the
+    declared one is redacted."""
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self._tmp.cleanup)
+        # Fake pinned-oracle checkout: one book, one LST file, one
+        # NAMEISPI:YES row and one clean row.
+        oracle_root = os.path.join(self._tmp.name, "oracle")
+        book_dir = os.path.join(
+            oracle_root, "pathfinder", "paizo", "roleplaying_game", "ultimate_equipment"
+        )
+        os.makedirs(book_dir)
+        with open(os.path.join(book_dir, "ue_equip.lst"), "w", encoding="utf-8") as f:
+            f.write("Sturdy Rope\tCOST:1\tWT:5\n")
+            f.write("Otyugh Hide\tNAMEISPI:YES\tCOST:1415\n")
+
+        doc = {
+            "generated_at": "2026-08-17T00:00:00Z",
+            "units": [
+                {
+                    "id": "ultimate_equipment:equipment:sturdy_rope",
+                    "book": "ultimate_equipment",
+                    "kind": "equipment",
+                    "name": "Sturdy Rope",
+                    "source_file": "ue_equip.lst",
+                    "source_line": 1,
+                    "status": "grounded",
+                    "wiring_class": "static",
+                },
+                {
+                    "id": "ultimate_equipment:equipment:otyugh_hide",
+                    "book": "ultimate_equipment",
+                    "kind": "equipment",
+                    "name": "Otyugh Hide",
+                    "source_file": "ue_equip.lst",
+                    "source_line": 2,
+                    "status": "grounded",
+                    "wiring_class": "static",
+                },
+            ],
+        }
+        self.doc_path = os.path.join(self._tmp.name, "fab-work-inventory.json")
+        with open(self.doc_path, "w", encoding="utf-8") as f:
+            json.dump(doc, f)
+        self.shard_dir = os.path.join(self._tmp.name, "shards")
+
+        self._env_patch = unittest.mock.patch.dict(
+            os.environ, {"PCGEN_CORPUS_ROOT": oracle_root}
+        )
+        self._env_patch.start()
+        self.addCleanup(self._env_patch.stop)
+
+    def _rows_by_name(self, kind_shard_path):
+        with open(kind_shard_path, encoding="utf-8") as f:
+            shard = json.load(f)
+        idx = shard["fields"].index("name")
+        return [row[idx] for row in shard["rows"]]
+
+    def test_declared_pi_name_is_withheld_but_the_row_survives(self):
+        index = producer.build_unit_shards(doc_path=self.doc_path, shard_dir=self.shard_dir)
+        self.assertTrue(index.get("available"), index.get("note"))
+        self.assertTrue(index.get("pi_oracle_available"), "the fake oracle checkout must be found")
+        self.assertEqual(index.get("pi_redacted_names"), 1)
+
+        equipment = index["kinds"]["equipment"]
+        # The row count is UNCHANGED -- both units still counted.
+        self.assertEqual(equipment["units"], 2)
+
+        shard_path = os.path.join(self.shard_dir, equipment["shard"])
+        names = self._rows_by_name(shard_path)
+        self.assertIn("Sturdy Rope", names, "the clean unit's real name must ship")
+        self.assertNotIn("Otyugh Hide", names, "the declared-PI name must never ship")
+        self.assertIn(
+            producer.pi_redaction.REDACTED_PI_MARKER, names,
+            "the declared-PI row must still be present, with its name withheld",
+        )
+
+
+class ParseLstFirstFieldPiRedactionTest(unittest.TestCase):
+    """`_parse_lst_first_field` feeds `_book_item_roster` (equipment/feats/
+    spells rosters) AND `_prestige_class_roadmap`'s `ag_variants` --
+    Decision 12's row-149 exposure. A declared-PI row's name must be
+    withheld from the returned list while the row still occupies its own
+    slot (dedup keys on the real name, not the redacted marker)."""
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self._tmp.cleanup)
+        self.path = os.path.join(self._tmp.name, "fab_classes.lst")
+        with open(self.path, "w", encoding="utf-8") as f:
+            f.write("Ordinary Fighter\tHD:10\n")
+            f.write("Aldori Swordlord\tNAMEISPI:YES\tHD:10\n")
+
+    def test_declared_pi_row_is_redacted_but_still_present(self):
+        names = producer._parse_lst_first_field(self.path)
+        self.assertIn("Ordinary Fighter", names)
+        self.assertNotIn("Aldori Swordlord", names)
+        self.assertIn(producer.pi_redaction.REDACTED_PI_MARKER, names)
+        self.assertEqual(len(names), 2, "the declared-PI row must not be dropped")
 
 
 if __name__ == "__main__":
