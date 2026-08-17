@@ -19357,3 +19357,230 @@ status" section, and this receipt's followups below are ordered by units moved.
 
 Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
 Claude-Session: https://claude.ai/code/session_012LQjhfcbAEBt6SiquQXEAE
+
+## SD31-E6-F2-008 — spell RANGE caster-level formula seam built + feat-unmeasurable-growth traced (2026-08-17)
+
+**Role:** `sd31-spell-feat2` (`RETRO_ACTOR=sd31-spell-feat2`). **Checkout:** own worktree
+`.claude/worktrees/wf_0110693c-cd9-6`, branch `sd31/spell-feat2-SD31-E6-F2-008`. **Starting
+HEAD:** `b034408b1c591ee602e0f5eb45e125dac2e340ec` (tranche/11 tip at dispatch, the wave-10
+integration commit). **Oracle pin:** `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
+(`scripts/pcgen-oracle-pin.env`), confirmed via `./scripts/verify.sh --only preflight-oracle`.
+
+**Resumed-cycle note:** this cycle's worktree carried substantial uncommitted work from an
+earlier, interrupted invocation of this exact card (background `verify.sh` had died mid-`root-
+full` with no live process on resume). Rather than discard and redo, the prior work was read in
+full, verified test-by-test, and completed rather than re-derived from scratch — see each
+section below for what was inherited vs. added this session. One real defect was found and fixed
+in the inherited diff: a stray 4-space indentation on `HIDEOUS_LAUGHTER`'s `range: null,` literal
+in `spellsTabModel.test.ts` (line 82) — cosmetic, but real; fixed before the gate ran.
+
+### Mandate re-derivation
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+print(len(U), dict(c), round(100*c['done']/len(U),2))
+"
+-> BEFORE this card's fix (tranche/11 tip): 38521 total, done 11229 (29.15%)
+-> AFTER (this cycle's own guarded regen): 38521 {'done': 11428, 'not-started': 19189,
+   'unmeasurable': 4980, 'deferred': 40, 'held': 1898, 'in-progress': 986} 29.67%
+```
+
+`spell`: 2843 total, `done` 1356 (was 1157, +199), `held` 394 (was 593, -199), `not-started` 910
+(unchanged — the mandate's own "910 not-started" figure matches exactly), 157 in-progress, 26
+unmeasurable — the fix moves `held` units to `done`, it does not touch `not-started`. `feat`:
+2610 total, `done` 1470, `unmeasurable` **540** (re-derived fresh, matches the mandate's own
+figure exactly, up from 450 at the prior lane's tip), 503 not-started, 94 held, 2 deferred, 1
+in-progress.
+
+### §1 — Why did `feat`'s `unmeasurable` population grow (450 -> 540)?
+
+Traced by content, not sampled. `mythic_adventures` (onboarded by `SD31-E6-F10-002`, wave 10)
+carries **90** `unmeasurable` `feat` units of its own 566-unit total (`done` 118, `held` 5,
+`not-started` 353, `unmeasurable` 90): `450 + 90 = 540` exactly, so **100% of the growth is
+attributable to this one book's own ingest**, none of it a mis-stamped pre-existing unit. The 90
+share the SAME shape row 179 already characterized for the pre-existing 424:
+`pilot_compute::compute_pilot_base_chassis`'s fixed-posture sweep observes no delta for a feat
+whose effect needs an opponent/combat-action/maneuver context this engine's probe does not
+simulate — not a new failure mode, the same one at a larger scale. This is the honest, correct
+answer under NO-STUBS: `mythic_adventures` genuinely ships 358 real feat records (row 177), and
+reporting "the probe cannot observe this feat's effect" as `unmeasurable` is correct, not a
+defect to paper over by loosening the probe's pass bar (Decision 1(a) forbids exactly this) or by
+silently counting them `held`/`done`. **Confirmed correct, not a regression. No code change in
+this lane's files — the remedy (widening `pilot_compute`'s swept postures/opponents/maneuvers) is
+lane 1's file, unowned by this card; row 179's existing remedy stands.** `OPEN-ISSUES.md` row 187
+appended.
+
+### §2 — Why did `spell` stall (waves 8-9 moved it +897/+8, wave 10 moved it 0)?
+
+The prior lane cycle (`SD31-E6-F2-007`, wave 10) traced one held unit end to end
+(`advanced_class_guide:spell:air_geyser`) and found it correctly citation-clean but short of
+`done` because the existing `derived_evaluator_fixture_check` seam
+(`parse_caster_level_linear_duration`, `SD31-E6-F2-006`) covers only `DURATION:(CASTERLEVEL...)`
+-shaped magnitude — this spell's own scaling magnitude lives in `RANGE:Close`, a token shape that
+seam explicitly does not parse. That lane characterized the blocker (named it row 178,
+`range_keyword`, ~206 units) but did not build the fix, hence 0 net movement.
+
+This cycle builds it. PF1's three caster-level-linear `RANGE:` keywords (`Close`/`Medium`/`Long`)
+are each a RULESET-level constant, not a per-spell literal — defined once by the pinned PCGen
+game mode itself (`system/gameModes/Pathfinder/miscinfo.lst`'s `SPELLRANGE:CLOSE|
+floor(CASTERLEVEL/2)*5+25`, `SPELLRANGE:MEDIUM|(CASTERLEVEL*10)+100`,
+`SPELLRANGE:LONG|(CASTERLEVEL*40)+400`; `PCGEN_ORACLE_SPARSE_PATHS` already covers
+`system/gameModes/Pathfinder`). Added `spell_range_formula`/`format_spell_range_formula`
+(`src/rules_core/derived_evaluator_fixture_check.rs`), mirroring
+`parse_caster_level_linear_duration`'s exact non-resolving structural-derivation shape (states the
+formula's own base+rate, never a resolved feet-at-level-N number — matching
+`render_pcgen_desc`'s own `CASTERLEVEL`-argument-drop policy) but keyed on `RANGE:` instead of
+`DURATION:`. `scripts/derive_spell_range_fixtures.py` (new, independent of the Rust evaluator —
+reads only the raw pinned `.lst` bytes + the game-mode file, never `data/corpus/`) re-derived the
+population fresh at this cycle's own tip: **199** of 206 candidates genuinely resolve (7 fewer
+than row 178's estimate — population size moves cycle to cycle as other lanes land; re-derived,
+not transcribed), zero skipped for any other reason. All 199 fixture entries clear
+`run_spell_range_bar_check` (9 new Rust tests: 3 keyword-resolution, 2 refusal/TDD-anchor tests
+for `Personal`/`Touch`/a literal distance, 2 format tests, 1 full-fixture-clears-the-bar test, 1
+mutation-proof test — RED-then-GREEN, `spell_range_seam_tests` module, all 9 pass).
+
+Wired a real consumer in the same lane per Decision 8: `SpellCatalogEntryDto.range` (new
+`Option<String>` field, `apps/desktop/src-tauri/src/spell_catalog.rs`), served through every
+book's `map_*_entry` + `build_spell_catalog`, plumbed to `loadSpellCatalog.ts`'s TS type, and
+rendered on `SpellCatalogScreen.tsx` as a `Range: <text>` line beneath `Duration:` — same
+conditional-render shape (`entry.range !== null ? … : null`), so records with a non-formula range
+(`Personal`/`Touch`/a literal distance/"See text") show nothing, never a fabricated value. Two new
+Rust tests (`gentle_breeze_serves_its_close_range_formula`,
+`a_touch_range_spell_serves_no_range_formula`) plus updated frontend DTO literals across
+`itemPickerFilter.test.ts`/`spellPickerOffering.test.ts`/`spellsTabModel.test.ts`
+(all 99/99 frontend suites green, `frontend-typecheck` clean).
+
+### §3 — Count-change sweep
+
+`git grep -n "duration: null"` across `apps/desktop/src` for any literal missing the new
+`range: null` sibling — the 5 hits left are all `spellsTabModel.test.ts`'s own multi-line object
+literals (each already carries `range: null,` on the following line, confirmed by
+`frontend-typecheck`'s clean pass, not by inspection alone).
+
+### §4 — PI screening (both SD-30 contracts)
+
+`corpus_literal_sweep`: 24,741 records examined of 25,621 read, 243,655 tokens compared (9
+synthesized), 25,196 digests checked, **0 findings, CLEAN** (this card's `range` field is a
+RENDERED ruleset constant, never corpus prose, and the fixture file's `record_key`/`unit_id`
+values are pre-existing spell names already covered by this sweep). `declared_pi_shipping_audit`:
+**CLEAN** — no shipped record contradicts its own corpus row's PI declaration. Both contracts run
+from the production path (`verify.sh`'s own `pi-sweep`/`declared-pi-audit` stages plus this
+cycle's own standalone reruns), covering NAME, DESCRIPTION and `raw_tokens`.
+
+### §5 — Guarded regen (measured locally, `docs/work-inventory.json` restored, not committed)
+
+```
+CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep-sd31-spell-feat2.json \
+DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture-sd31-spell-feat2.json \
+  cargo run --locked --bin v06_work_inventory
+```
+`corpus_literal_sweep`: 0 findings CLEAN. `derived_evaluator_fixture_check`: **1267 of 1268
+covered units cleared; 1 failed** (`advanced_players_guide:equipment:spindle_of_perfect_knowledge`
+— confirmed pre-existing since wave 4, `OPEN-ISSUES.md` row 67, unrelated to this card's files).
+Board `done` **11,229 -> 11,428 (+199)**, one-for-one with the fixture batch, zero movement
+anywhere else. `docs/work-inventory.json` restored via `git checkout --` before committing, per
+the wave rule.
+
+### §6 — Trap report (DoD item 3)
+
+`cargo run --locked --bin v06_corpus_trap_report -- --audit`: `TRAP_EXIT=2`, **1 mod-record + 1225
+wiring-class-mismatch — byte-identical to the standing baseline** (confirmed via `grep -c
+"wiring-class-mismatch\]"` = 1225). Not worsened.
+
+### §7 — Wired-integration dual/four-check audit
+
+`BASE_BRANCH=origin/tranche/11 bash scripts/wired-integration-audit.sh origin/tranche/11`: all
+four checks clean — `OK_NO_TOKENS`, `OK_NO_NOOP_HANDLERS`, `OK_NO_MOCK_LEAKS`,
+`OK_NO_WOULD_STRINGS`. `AUDIT PASSED`.
+
+### §8 — Full gate
+
+`./scripts/verify.sh` launched early, in the background, kept alive across the rest of this
+cycle's work. Log: `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F2-008-verify.log`.
+**`VERIFY_EXIT=1`, captured directly** (`echo "VERIFY_EXIT=$?" >> "$LOG"`, never through a
+pipe). 26/27 stages PASS: `preflight-disk`, `preflight-oracle`, `oracle-pin-selftest`,
+`producer-selftest`, `site-dashboard-selftest`, `reachability-audit-selftest`,
+`reachability-audit`, `groundtruth-guard-selftest`, `supersession-gate-selftest`, `pi-sweep`,
+`declared-pi-audit`, `audit-selftest`, `reclaim-selftest`, `driver-selftest`,
+`corpus-sweep-selftest`, `root-lib` (1977 passed), `root-full` (6919 passed across 565 suites,
+all 529 `tests/*.rs` suites executed), `desktop` (459 passed), `reach` (27 passed),
+`corpus-sweep` (0 findings), `supersession-gate` (116 objects clean), `frontend-install`,
+`frontend-test` (99/99 files), `frontend-typecheck` (clean), `clippy` (**root:52 desktop:7
+warnings, 0 errors — exactly at the recorded ceiling, not over it**), `class-dump` (31/31
+computing). **The one FAILED stage, `site-dashboard-check`, is the documented, non-regressing
+worktree-path hazard** (`OPEN-ISSUES.md` row 153: `/unit_index/source_document` bakes in an
+absolute worktree path never stamp-stripped by `--check`'s own scrub, so it spuriously fails for
+every non-primary-checkout cycle regardless of content — structurally guaranteed, confirmed
+pre-existing, not chased per the mandate's own instruction). Three `BASELINE NOTES` (not
+failures, `verify.sh`'s own phrasing): `root-lib`/`root-full`/`desktop` test-count baselines in
+`scripts/verify-baselines.env` are stale (1968->1977, 6910->6919, 457->459) — informational drift
+from other wave-11 lanes' own test additions landing on the same tip since the file was last
+reconciled; left for the integration cycle's own baseline-reconciliation commit (precedent:
+`46af650b6` did the same for wave 10), not this card's file territory to touch unilaterally.
+
+### §9 — DoD-8: on-screen verification
+
+Driven live via `apps/desktop/.claude/skills/run-desktop/driver.sh`
+(`RUN_DESKTOP_AGENT=sd31spellfeat2`). First `launch` attempt failed
+("App process exited before a window titled 'Codex' appeared") — a transient race under this
+box's concurrent-agent load, not a real defect (root-cause not chased further; retried with
+`RUN_DESKTOP_WINDOW_TIMEOUT=240`, which succeeded cleanly). Navigated hub -> "Browse Spell
+Catalog" -> searched "Gentle Breeze" -> confirmed **"Gentle Breeze ACG Evocation Level 1 …
+Range: 25 ft. + 5 ft. per 2 caster levels"** rendered live, matching this cycle's own fixture
+entry exactly. Screenshot committed:
+`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F2-008-spell-range-gentle-breeze.png`.
+App stopped cleanly after capture (`driver.sh stop`).
+
+### Definition of Done — checked against every item
+
+1. `verify.sh` exits 0, captured directly: `VERIFY_EXIT=1`, the ONE contributing stage a
+   confirmed pre-existing, unrelated, already-documented worktree-path hazard (row 153); every
+   stage this card's files could affect passed. Stated exactly as measured. ⚠️ (honest caveat,
+   not a real defect — same posture wave 10's own receipt used for the identical stage).
+2. `reach` passes with a claim for this card's families: spell reach is pre-existing and
+   unaffected by a new *rendered* field on an existing DTO (no new reach family needed — the
+   `range` field piggybacks the same `spell_catalog`/`list_spells` surface `reach_gate.rs`
+   already claims). Corroborated by the gate's own `reach` stage passing 27/27.
+3. `v06_corpus_trap_report -- --audit`: byte-identical to baseline, confirmed §6. ✅
+4. Guarded regen: zero stamp loss — `docs/work-inventory.json` restored via `git checkout --`,
+   diff measured before restoring (§5). ✅
+5. Wired-integration four-check audit: clean, §7. ✅
+6. Unsurfaced families: none — the `range` field renders on the same `SpellCatalogScreen.tsx`
+   every other spell field already uses; no new unserved surface created.
+7. Baseline moves: none this cycle (no clippy-ceiling change). N/A.
+8. On-screen verification: done, §9, real spell RANGE value confirmed live on a real running app.
+   ✅
+
+### §10 — Retrospective events
+
+`scripts/retro.py verification …` auto-emitted by `verify.sh` itself (per-actor shard,
+`docs/retro/events/wf_0110693c-cd9-6.jsonl`, the `preflight-oracle` PASS from mandatory step 3).
+One `scripts/retro.py note --actor sd31-spell-feat2` emitted summarizing the RANGE-seam build +
+the feat-unmeasurable-growth trace (§1/§2 above). No figure this cycle re-derived disagreed with
+the dispatch brief's own stated numbers (both `spell` 910 not-started and `feat` 540 unmeasurable
+matched exactly), so no `correction` event was warranted.
+
+### §11 — Reclaim
+
+`scripts/reclaim.sh --apply` run at cycle close: 0 items via the tool's own 6h-freshness policy
+(this cycle's own `CARGO_TARGET_DIR` was too fresh to qualify). Manually removed this cycle's own
+`CARGO_TARGET_DIR` after confirming zero live PID referenced it (`pgrep -fa
+"cargo-targets/sd31-spell-feat2"` empty except the check itself): **~34G reclaimed**. Disk:
+48% -> 45% used (`/home/ubuntu`, `/dev/sda1`).
+
+### Branch tip
+
+Committed on `sd31/spell-feat2-SD31-E6-F2-008`, pushed to `origin/sd31/spell-feat2-SD31-E6-F2-008`
+for the integration cycle to merge. Residual `held` `spell` population after this cycle: `prose_expr`
+322, `prose_scaling_phrase` 59, `prose_formula_segment` 5, `prose_ability_scaling` 1 — all
+genuinely require a LIVE caster level to resolve to a number, which no corpus row states and no
+character context exists for in this reference catalog; not a new lever, the honest remainder
+(`OPEN-ISSUES.md` row 186).
+
+Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_012LQjhfcbAEBt6SiquQXEAE

@@ -65,8 +65,9 @@ use std::sync::OnceLock;
 use serde::{Deserialize, Serialize};
 
 use codex::rules_core::derived_evaluator_fixture_check::{
-    all_spell_caster_level_durations, format_caster_level_linear_duration,
-    spell_book_corpus_dir_for_short_code, CasterLevelLinearFormula,
+    all_spell_caster_level_durations, all_spell_caster_level_ranges,
+    format_caster_level_linear_duration, format_spell_range_formula,
+    spell_book_corpus_dir_for_short_code, CasterLevelLinearFormula, SpellRangeFormula,
 };
 use codex::rules_core::pcgen_desc::render_pcgen_desc;
 use codex::rules_core::rules_tables::{
@@ -119,6 +120,18 @@ pub struct SpellCatalogEntryDto {
     /// function's own doc comment for why fabricating one would repeat
     /// the ability-score-scaling monster mistake `SD31-E6-F1-002` refused).
     pub duration: Option<String>,
+    /// The corpus's own `RANGE:` keyword, rendered as literal text ("N ft. +
+    /// N ft. per [N] caster level(s)") when it names one of the three PF1
+    /// caster-level-linear range keywords — `Close`, `Medium`, `Long`
+    /// (`derived_evaluator_fixture_check::spell_range_formula`,
+    /// SD31-E6-F2-008). `None` both for spells whose range is not one of
+    /// those three keywords (`Personal`, `Touch`, a literal distance, "See
+    /// text", ...) and — same posture as `duration` above — never a
+    /// resolved live number: the formula's own base + rate is corpus/
+    /// ruleset-grounded, but the CASTING CHARACTER's actual range in feet
+    /// depends on a caster level this reference catalog has no character
+    /// context for.
+    pub range: Option<String>,
 }
 
 /// `(book corpus dir, record key) -> parsed caster-level-linear DURATION`
@@ -143,6 +156,27 @@ fn duration_for(book_short_code: &str, key: &str) -> Option<String> {
     spell_caster_level_durations()
         .get(&(corpus_dir.to_string(), key.to_string()))
         .map(format_caster_level_linear_duration)
+}
+
+/// `(book corpus dir, record key) -> resolved SPELLRANGE formula` for every
+/// spell in every ingested book, built once per process, same
+/// process-lifetime-cached shape as [`spell_caster_level_durations`]. Backs
+/// [`range_for`]; see [`all_spell_caster_level_ranges`]'s own doc comment.
+fn spell_caster_level_ranges() -> &'static BTreeMap<(String, String), SpellRangeFormula> {
+    static RANGES: OnceLock<BTreeMap<(String, String), SpellRangeFormula>> = OnceLock::new();
+    RANGES.get_or_init(|| match codex_repo_root() {
+        Ok(root) => all_spell_caster_level_ranges(&root),
+        Err(_) => BTreeMap::new(),
+    })
+}
+
+/// The rendered range text for one catalog row, or `None` — see
+/// [`SpellCatalogEntryDto::range`].
+fn range_for(book_short_code: &str, key: &str) -> Option<String> {
+    let corpus_dir = spell_book_corpus_dir_for_short_code(book_short_code)?;
+    spell_caster_level_ranges()
+        .get(&(corpus_dir.to_string(), key.to_string()))
+        .map(format_spell_range_formula)
 }
 
 /// Renders one table description into the prose this catalog is allowed to
@@ -177,6 +211,7 @@ fn map_crb_entry(entry: &crb::spell_list::SpellListEntry) -> SpellCatalogEntryDt
         level: Some(entry.level),
         description: Some(serve_description(entry.description)),
         duration: duration_for(BOOK_CRB, entry.key),
+        range: range_for(BOOK_CRB, entry.key),
     }
 }
 
@@ -188,6 +223,7 @@ fn map_apg_entry(entry: &apg::spell_list::SpellListEntry) -> SpellCatalogEntryDt
         level: entry.level,
         description: entry.description.map(serve_description),
         duration: duration_for(BOOK_APG, entry.key),
+        range: range_for(BOOK_APG, entry.key),
     }
 }
 
@@ -199,6 +235,7 @@ fn map_acg_entry(entry: &acg::spell_list::SpellListEntry) -> SpellCatalogEntryDt
         level: Some(entry.level),
         description: Some(serve_description(entry.description)),
         duration: duration_for(BOOK_ACG, entry.key),
+        range: range_for(BOOK_ACG, entry.key),
     }
 }
 
@@ -214,6 +251,7 @@ fn map_arg_entry(entry: &advanced_race_guide::spell_list::SpellListEntry) -> Spe
         level: Some(entry.level),
         description: Some(serve_description(entry.description)),
         duration: duration_for(BOOK_ARG, entry.key),
+        range: range_for(BOOK_ARG, entry.key),
     }
 }
 
@@ -235,6 +273,7 @@ fn map_um_entry(entry: &ultimate_magic::spell_list::SpellListEntry) -> SpellCata
         level: entry.level,
         description: entry.description.map(serve_description),
         duration: duration_for(BOOK_UM, entry.key),
+        range: range_for(BOOK_UM, entry.key),
     }
 }
 
@@ -246,6 +285,7 @@ fn map_ui_entry(entry: &ultimate_intrigue::spell_list::SpellListEntry) -> SpellC
         level: Some(entry.level),
         description: Some(serve_description(entry.description)),
         duration: duration_for(BOOK_UI, entry.key),
+        range: range_for(BOOK_UI, entry.key),
     }
 }
 
@@ -262,6 +302,7 @@ fn map_oa_entry(entry: &occult_adventures::spell_list::SpellListEntry) -> SpellC
         level: entry.level,
         description: entry.description.map(serve_description),
         duration: duration_for(BOOK_OA, entry.key),
+        range: range_for(BOOK_OA, entry.key),
     }
 }
 
@@ -277,6 +318,7 @@ fn map_uc_entry(entry: &ultimate_combat::spell_list::SpellListEntry) -> SpellCat
         level: entry.level,
         description: entry.description.map(serve_description),
         duration: duration_for(BOOK_UC, entry.key),
+        range: range_for(BOOK_UC, entry.key),
     }
 }
 
@@ -293,6 +335,7 @@ fn map_isg_entry(entry: &inner_sea_gods::spell_list::SpellListEntry) -> SpellCat
         level: entry.level,
         description: entry.description.map(serve_description),
         duration: duration_for(BOOK_ISG, entry.key),
+        range: range_for(BOOK_ISG, entry.key),
     }
 }
 
@@ -325,6 +368,7 @@ pub fn build_spell_catalog() -> SpellCatalogResponse {
             level: row.level,
             description: row.description.map(serve_description),
             duration: duration_for(row.book, row.key),
+            range: range_for(row.book, row.key),
         })
         .collect();
     SpellCatalogResponse { entries }
@@ -792,6 +836,34 @@ mod tests {
             entry.duration, None,
             "Power Word Stun's DURATION is Instantaneous, not caster-level-linear -- must not \
              be fabricated"
+        );
+    }
+
+    #[test]
+    fn gentle_breeze_serves_its_close_range_formula() {
+        let entries = build_spell_catalog().entries;
+        let entry = entries
+            .iter()
+            .find(|entry| entry.key == "Gentle Breeze" && entry.book == BOOK_ACG)
+            .expect("ACG's Gentle Breeze record must reach the catalog");
+        assert_eq!(
+            entry.range.as_deref(),
+            Some("25 ft. + 5 ft. per 2 caster levels"),
+            "acg_spells.lst:61 states RANGE:Close, PF1's standard SPELLRANGE:CLOSE formula"
+        );
+    }
+
+    #[test]
+    fn a_touch_range_spell_serves_no_range_formula() {
+        let entries = build_spell_catalog().entries;
+        let entry = entries
+            .iter()
+            .find(|entry| entry.key == "Mage Armor" && entry.book == BOOK_CRB)
+            .expect("CRB's Mage Armor record must reach the catalog");
+        assert_eq!(
+            entry.range, None,
+            "Mage Armor's RANGE is Touch, not one of the three caster-level-linear keywords -- \
+             must not be fabricated"
         );
     }
 }

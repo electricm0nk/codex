@@ -284,6 +284,22 @@ export function SpellCatalogScreen(props: { onClose: () => void }) {
                     Duration: {entry.duration}
                   </p>
                 ) : null}
+                {/* Only rendered when the corpus's own RANGE token names one
+                    of the three PF1 caster-level-linear range keywords —
+                    Close/Medium/Long (SD31-E6-F2-008) — most records carry
+                    a flat range (Personal/Touch/a literal distance) and
+                    nothing is shown in its place for those. */}
+                {entry.range !== null ? (
+                  <p
+                    style={{
+                      color: 'var(--color-text-muted)',
+                      fontSize: '0.72rem',
+                      margin: '0.15rem 0 0',
+                    }}
+                  >
+                    Range: {entry.range}
+                  </p>
+                ) : null}
               </div>
             ))}
           </div>
