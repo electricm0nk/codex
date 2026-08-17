@@ -20979,7 +20979,18 @@ GitHub). A second commit follows this receipt (docs-only: verify log + this prog
 
 ### Reclaim
 
-`scripts/reclaim.sh --apply` → see this cycle's own run, appended after this receipt lands.
+`scripts/reclaim.sh --apply` (run twice; each invocation independently scans current state) →
+first run's own retro event (auto-logged, `docs/retro/events/wf_091c1ff2-4bf-5.jsonl`,
+`recurrence_key: disk-full`) is the authoritative record: **reclaimed 1 item, 215.0B total**
+(`/tmp/codex-verify-OWLIDI`, an orphaned verify-log). A second immediate re-run correctly found
+nothing left to reclaim (`0 item(s), 0.0B`) since that one item was already gone. Every other
+candidate (`/tmp/codex-verify-*` logs from this cycle's own and sibling lanes' full gates, dozens
+of unmerged worktree branches) was correctly refused — verify logs as "too young" (this box ran
+many concurrent full gates this cycle, all within the last 6h) and branches as "not merged,
+upstream present" or "checked out in a worktree". Per the standing precedent (`SD-30
+loop-instruction.md` "Concurrency and resource budget"), a near-zero reclaim on a heavily-loaded
+shared box (load average 24 on 24 cores observed this cycle) is the guard correctly refusing live
+targets, not evidence the box is clean.
 
 Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
 Claude-Session: https://claude.ai/code/session_012LQjhfcbAEBt6SiquQXEAE
