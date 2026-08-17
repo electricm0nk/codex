@@ -21,7 +21,15 @@ use codex::rules_core::rules_tables::equipment_gap_tables::equipment_gap_rows;
 /// `not-ingested` `equipment` + `equipment_modifier` unit count in
 /// `docs/work-inventory.json` at the time this lane landed.
 const EXPECTED_PER_BOOK: &[(&str, usize)] = &[
-    ("CRB", 335),
+    // `SD31-E6-F10-002`, `decisions.md §9`: 3 of CRB's original 335 gap
+    // rows (`Rock (Small)`, `Rock (Medium)`, `Poison (Violet Venom)`)
+    // moved to `"B1"` -- both source `.lst` files (under the shared
+    // `core_essentials` library) carry an uncommented `SOURCELONG:Bestiary`
+    // header, so the re-attribution rule Decision 9 already applies to
+    // `monster_ability`/`race_trait`/`race` reaches these 3 equipment rows
+    // too. 332 + 3 = 335, the total is unchanged.
+    ("CRB", 332),
+    ("B1", 3),
     ("APG", 37),
     ("ACG", 50),
     ("ARG", 15),

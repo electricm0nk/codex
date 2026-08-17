@@ -42,12 +42,12 @@ pub struct EquipmentGapRow {
 /// Every recovered row, in book order. The order is load-bearing the same
 /// way `equipment_catalog_rows()`'s is: first match wins for key lookup.
 pub fn equipment_gap_rows() -> impl Iterator<Item = &'static EquipmentGapRow> {
-    [CORE_RULEBOOK_GAP_ROWS, ADVANCED_PLAYERS_GUIDE_GAP_ROWS, ADVANCED_CLASS_GUIDE_GAP_ROWS, ADVANCED_RACE_GUIDE_GAP_ROWS, ULTIMATE_COMBAT_GAP_ROWS, ULTIMATE_INTRIGUE_GAP_ROWS, ULTIMATE_EQUIPMENT_GAP_ROWS, ULTIMATE_PSIONICS_GAP_ROWS, ULTIMATE_WILDERNESS_GAP_ROWS]
+    [CORE_RULEBOOK_GAP_ROWS, BESTIARY_GAP_ROWS, ADVANCED_PLAYERS_GUIDE_GAP_ROWS, ADVANCED_CLASS_GUIDE_GAP_ROWS, ADVANCED_RACE_GUIDE_GAP_ROWS, ULTIMATE_COMBAT_GAP_ROWS, ULTIMATE_INTRIGUE_GAP_ROWS, ULTIMATE_EQUIPMENT_GAP_ROWS, ULTIMATE_PSIONICS_GAP_ROWS, ULTIMATE_WILDERNESS_GAP_ROWS]
         .into_iter()
         .flat_map(|rows| rows.iter())
 }
 
-/// core_rulebook — 335 record(s) the hand-authored `core_rulebook` table does not hold.
+/// core_rulebook — 332 record(s) the hand-authored `core_rulebook` table does not hold.
 pub static CORE_RULEBOOK_GAP_ROWS: &[EquipmentGapRow] = &[
     EquipmentGapRow { book: "CRB", key: "CLOTH", name: "CLOTH", category: "Equipmods", cost_gp: Some(0.0), weight_lbs: None, description: None },
     EquipmentGapRow { book: "CRB", key: "LEATHER", name: "LEATHER", category: "Equipmods", cost_gp: Some(0.0), weight_lbs: None, description: None },
@@ -381,9 +381,13 @@ pub static CORE_RULEBOOK_GAP_ROWS: &[EquipmentGapRow] = &[
     EquipmentGapRow { book: "CRB", key: "PurposePower_CastSixAtWill", name: "PurposePower_CastSixAtWill", category: "Equipmods", cost_gp: Some(132000.0), weight_lbs: None, description: Some("Cast % at will|%LIST") },
     EquipmentGapRow { book: "CRB", key: "PurposePower_CastSevenAtWill", name: "PurposePower_CastSevenAtWill", category: "Equipmods", cost_gp: Some(182000.0), weight_lbs: None, description: Some("Cast % at will|%LIST") },
     EquipmentGapRow { book: "CRB", key: "PurposePower_TrueRes", name: "PurposePower_TrueRes", category: "Equipmods", cost_gp: Some(200000.0), weight_lbs: None, description: Some("Dedicated Power - True resurrection on wielder") },
-    EquipmentGapRow { book: "CRB", key: "Rock (Small)", name: "Rock (Small)", category: "ArmsArmor", cost_gp: Some(0.0), weight_lbs: Some(50.0), description: None },
-    EquipmentGapRow { book: "CRB", key: "Rock (Medium)", name: "Rock (Medium)", category: "ArmsArmor", cost_gp: Some(0.0), weight_lbs: Some(100.0), description: None },
-    EquipmentGapRow { book: "CRB", key: "Poison (Violet Venom)", name: "Poison (Violet Venom)", category: "General", cost_gp: Some(800.0), weight_lbs: Some(0.0), description: Some("Injury; Fort DC 13; Freq. 1 minute (6); Effect 1d2 Str and 1d2 Con damage; Cure 1 save") },
+];
+
+/// bestiary — 3 record(s) the hand-authored `bestiary` table does not hold.
+pub static BESTIARY_GAP_ROWS: &[EquipmentGapRow] = &[
+    EquipmentGapRow { book: "B1", key: "Rock (Small)", name: "Rock (Small)", category: "ArmsArmor", cost_gp: Some(0.0), weight_lbs: Some(50.0), description: None },
+    EquipmentGapRow { book: "B1", key: "Rock (Medium)", name: "Rock (Medium)", category: "ArmsArmor", cost_gp: Some(0.0), weight_lbs: Some(100.0), description: None },
+    EquipmentGapRow { book: "B1", key: "Poison (Violet Venom)", name: "Poison (Violet Venom)", category: "General", cost_gp: Some(800.0), weight_lbs: Some(0.0), description: Some("Injury; Fort DC 13; Freq. 1 minute (6); Effect 1d2 Str and 1d2 Con damage; Cure 1 save") },
 ];
 
 /// advanced_players_guide — 37 record(s) the hand-authored `advanced_players_guide` table does not hold.

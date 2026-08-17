@@ -749,10 +749,13 @@ Potion\tKEY:Potion of Blur\tTYPE:Magic.Potion\tCOST:300
     fn catalog_rows_span_every_ingested_book_with_their_real_counts() {
         let rows = equipment_catalog_rows();
         let count = |book: &str| rows.iter().filter(|row| row.book == book).count();
-        assert_eq!(count(EQUIPMENT_BOOK_CRB), 3312);
+        // `SD31-E6-F10-002`: 3 rows moved CRB -> B1 (`decisions.md §9`
+        // re-attribution; `tests/equipment_gap_tables.rs`'s own doc comment
+        // has the full story). 3312 - 3 = 3309; 4 + 3 = 7.
+        assert_eq!(count(EQUIPMENT_BOOK_CRB), 3309);
         assert_eq!(count(EQUIPMENT_BOOK_APG), 375);
         assert_eq!(count(EQUIPMENT_BOOK_ACG), 319);
-        assert_eq!(count(EQUIPMENT_BOOK_B1), 4);
+        assert_eq!(count(EQUIPMENT_BOOK_B1), 7);
         assert_eq!(count(EQUIPMENT_BOOK_ARG), 215);
         assert_eq!(count(EQUIPMENT_BOOK_PU), 42);
         assert_eq!(count(EQUIPMENT_BOOK_UI), 105);

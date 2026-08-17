@@ -151,6 +151,14 @@ pub struct EquipmentData {
 pub(crate) fn book_routing(short_code: &str) -> Option<(&'static str, &'static str)> {
     match short_code {
         "CRB" => Some(("core_rulebook", "pathfinder/paizo/roleplaying_game/core_rulebook")),
+        // `decisions.md §9`: B1's 3 gap rows cite the shared `core_essentials`
+        // library directory, not a `bestiary`-named directory -- the corpus
+        // carries no such directory. `find_citation` needs the directory the
+        // files physically live in; the `book_id` half (`"bestiary"`) is what
+        // actually names the shipped `data/corpus/` book, independent of
+        // where the source `.lst` lives (`gen_equipment_gap_tables.rs`'s `B1`
+        // `BookInput` doc comment names the same file-vs-attribution split).
+        "B1" => Some(("bestiary", "pathfinder/paizo/roleplaying_game/core_essentials")),
         "APG" => Some(("advanced_players_guide", "pathfinder/paizo/roleplaying_game/advanced_players_guide")),
         "ACG" => Some(("advanced_class_guide", "pathfinder/paizo/roleplaying_game/advanced_class_guide")),
         "ARG" => Some(("advanced_race_guide", "pathfinder/paizo/roleplaying_game/advanced_race_guide")),
@@ -654,9 +662,26 @@ mod tests {
 
     #[test]
     fn book_routing_covers_every_non_ue_gap_book() {
-        for code in ["CRB", "APG", "ACG", "ARG", "UC", "UI", "UPSI", "UW"] {
+        for code in ["CRB", "APG", "ACG", "ARG", "UC", "UI", "UPSI", "UW", "B1"] {
             assert!(book_routing(code).is_some(), "missing routing for {code}");
         }
+    }
+
+    /// `decisions.md §9`: `B1`'s 3 gap rows physically live under the
+    /// shared `core_essentials` directory (there is no `bestiary`-named
+    /// directory in the corpus at all), but the shipped book id must still
+    /// be `"bestiary"` -- the directory a citation is found IN is not
+    /// necessarily the book id the record ships under (`SOURCELONG`
+    /// governs attribution, not file placement). Regression test for the
+    /// exact defect this cycle fixed: before this cycle `B1` had no
+    /// routing at all, so its 3 rows (previously mis-attributed to `"CRB"`,
+    /// whose own directory does not contain them) were never dumped to
+    /// `data/corpus/` under either book.
+    #[test]
+    fn book_routing_b1_ships_under_bestiary_but_reads_core_essentials() {
+        let (book_id, book_dir) = book_routing("B1").expect("B1 must be routed");
+        assert_eq!(book_id, "bestiary");
+        assert_eq!(book_dir, "pathfinder/paizo/roleplaying_game/core_essentials");
     }
 
     #[test]

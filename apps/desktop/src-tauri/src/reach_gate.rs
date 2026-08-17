@@ -571,6 +571,18 @@ const CORPUS_BOOK_IDS: &[(&str, &str)] = &[
     // Pre-existing spelling of the Bestiary 1 directory; `beastiary1` is what
     // the diagnostic and every existing claim call the book.
     ("beastiary", "beastiary1"),
+    // `SD31-E6-F10-002`: `docs/work-inventory.json`'s own book field for
+    // Bestiary 1 equipment (derived from the corpus `.lst`'s own
+    // `SOURCELONG:Bestiary`, `decisions.md §9`) is the correctly-spelled
+    // `"bestiary"`, not the pre-existing `"beastiary"` misspelling above --
+    // a SECOND, previously-empty corpus directory that this cycle's
+    // `cache_gen::equipment_gap` `"B1"` routing populated for the first
+    // time (`equipment_gap.rs::book_routing`). Same book id as the
+    // misspelled directory (`equipment_gap_tables`'s rows already carry
+    // `book: "B1"`, which `equipment_reach`'s existing `("beastiary1",
+    // "equipment")` arm already unions in) so the two directories share
+    // one reach claim rather than needing a second, duplicate arm.
+    ("bestiary", "beastiary1"),
     ("advanced_race_guide", "advanced_race_guide"),
     ("pathfinder_unchained", "pathfinder_unchained"),
     // SD-29 Epic 5 pilot. Directory and book id are spelled the same, like
