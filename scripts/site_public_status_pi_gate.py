@@ -13,21 +13,41 @@ deploys `site/**` on every push to `main` with no build step, so these
 committed files ARE the published artifact -- this gate is the last thing
 standing between a leaked name and a live page.
 
-WHAT THIS SCANS: every committed `.json` file directly under `site/status-
-data/` plus the top-level `site/status-data.json`, walked as a decoded JSON
-document, every string leaf checked against the pinned PCGen oracle's own
-full `NAMEISPI:YES` name index (`scripts/observer/pi_redaction.py
-::build_declared_pi_name_index`) with EXACT string-leaf equality -- same
-exact-match rationale as `site_dashboard_pi_gate.py` (a word-boundary/
-substring scan over ordinary object names false-positives on real non-PI
-names that merely contain a declared-PI word, e.g. "Shackles of
-Compliance"). This is a SAFETY NET, not the primary defense: the primary
-defense is `build_public_status.py`'s own `redact_for_display` (book-scoped
-name check, plus a `type_facet` substring screen -- see that function's own
-docstring for why `type_facet` needs a different, substring-based check).
-This gate exists because a hand-edit, a reverted redaction, or a future
-change to the builder that forgets to call the redaction path are all real
-failure modes a generation-time fix alone cannot catch.
+WHAT THIS SCANS, in TWO passes:
+
+  1. Every committed `.json` file directly under `site/status-data/` plus
+     the top-level `site/status-data.json`, walked as a decoded JSON
+     document, every string leaf checked against the pinned PCGen oracle's
+     own full `NAMEISPI:YES` name index (`scripts/observer/pi_redaction.py
+     ::build_declared_pi_name_index`) with EXACT string-leaf equality --
+     same exact-match rationale as `site_dashboard_pi_gate.py` (a
+     word-boundary/substring scan over ordinary object names
+     false-positives on real non-PI names that merely contain a
+     declared-PI word, e.g. "Shackles of Compliance").
+
+  2. Per-book detail file (`site/status-data/<book_id>.json`), every
+     `kinds[*].items[*].name` checked with a SUBSTRING scan against names
+     declared PI in THAT file's own book (`pi_redaction.
+     build_declared_pi_name_book_index` + `build_book_declared_name_lists`),
+     and every `kinds[*].items[*].type_facet` checked with a SUBSTRING
+     scan against the GLOBAL declared-PI name set. This is
+     SD31-W13-INTEGRATE-001-VERIFY finding 2 closed: pass 1 alone is blind
+     to any name declared PI in a published book but not globally
+     unambiguous (121 such names at time of writing -- every Core Rulebook
+     deity among them). Pass 2 mirrors `build_public_status.py`'s own
+     `redact_for_display` field-for-field (via the SHARED
+     `pi_redaction.value_carries_declared_pi_substring` helper, so the two
+     can never independently drift into checking different things) rather
+     than reimplementing its logic here.
+
+This is a SAFETY NET, not the primary defense: the primary defense is
+`build_public_status.py`'s own `redact_for_display` (book-scoped name
+substring check, plus a `type_facet` substring screen -- see that
+function's own docstring for why `type_facet` needs a different,
+globally-scoped substring check). This gate exists because a hand-edit, a
+reverted redaction, or a future change to the builder that forgets to call
+the redaction path are all real failure modes a generation-time fix alone
+cannot catch.
 
 Exit 0 and print `site-public-status-pi-gate: CLEAN` when no declared-PI
 name is found in any scanned file. Exit 1 and print every hit (file,
@@ -70,6 +90,61 @@ def scanned_files() -> list[str]:
     return sorted(files)
 
 
+def find_status_item_pi_leaks(
+    doc, book_declared: dict, declared_by_length: list[str]
+) -> list[tuple[str, str]]:
+    """Per-book-detail-file leak scan for `build_public_status.py`'s own
+    `{"id": <book_id>, "title": ..., "kinds": [{"items": [{"name": ...,
+    "type_facet": ...}, ...]}, ...]}` shape. A no-op (returns `[]`) on any
+    document not shaped this way -- `find_declared_pi_leaks`'s global,
+    book-blind exact-match scan (pass 1, in `main`) remains the net for
+    everything else, including the top-level overview feed.
+
+    `name`: substring-checked against `book_declared[doc["id"]]` (names
+    declared PI in THIS file's own book). `type_facet`: substring-checked
+    against `declared_by_length` (every declared-PI name globally). Both
+    via the SHARED `pi_redaction.value_carries_declared_pi_substring`, so
+    this can never drift from what `redact_for_display` itself checks."""
+    hits: list[tuple[str, str]] = []
+    if not isinstance(doc, dict):
+        return hits
+    book_id = doc.get("id")
+    kinds = doc.get("kinds")
+    if not isinstance(book_id, str) or not isinstance(kinds, list):
+        return hits
+    own_book_names = book_declared.get(book_id, ())
+    for ki, kind in enumerate(kinds):
+        if not isinstance(kind, dict):
+            continue
+        items = kind.get("items")
+        if not isinstance(items, list):
+            continue
+        for ii, item in enumerate(items):
+            if not isinstance(item, dict):
+                continue
+            name = item.get("name")
+            if (
+                isinstance(name, str)
+                and name != pi_redaction.REDACTED_PI_MARKER
+                and pi_redaction.value_carries_declared_pi_substring(name, own_book_names)
+            ):
+                hits.append((
+                    f"$.kinds[{ki}].items[{ii}].name",
+                    f"{name!r} carries a name declared PI in book {book_id!r}",
+                ))
+            tf = item.get("type_facet")
+            if (
+                isinstance(tf, str)
+                and tf != pi_redaction.REDACTED_PI_MARKER
+                and pi_redaction.value_carries_declared_pi_substring(tf, declared_by_length)
+            ):
+                hits.append((
+                    f"$.kinds[{ki}].items[{ii}].type_facet",
+                    f"{tf!r} carries a declared-PI name",
+                ))
+    return hits
+
+
 def main() -> int:
     corpus_root = pi_redaction.pcgen_corpus_root()
     if not os.path.isdir(corpus_root):
@@ -92,6 +167,10 @@ def main() -> int:
         )
         return 1
 
+    name_to_books = pi_redaction.build_declared_pi_name_book_index(corpus_root)
+    book_declared = pi_redaction.build_book_declared_name_lists(name_to_books)
+    declared_by_length = sorted(declared_names, key=len, reverse=True)
+
     files = scanned_files()
     if not files:
         print(
@@ -110,6 +189,8 @@ def main() -> int:
             return 1
         rel = os.path.relpath(path, str(_REPO_ROOT))
         for json_path, name in pi_redaction.find_declared_pi_leaks(doc, declared_names):
+            all_hits.append((rel, json_path, name))
+        for json_path, name in find_status_item_pi_leaks(doc, book_declared, declared_by_length):
             all_hits.append((rel, json_path, name))
 
     if all_hits:

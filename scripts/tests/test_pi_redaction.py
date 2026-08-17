@@ -343,6 +343,43 @@ class ShardRowBookScanTests(unittest.TestCase):
         self.assertEqual(hits, [])
 
 
+class BuildBookDeclaredNameListsTests(unittest.TestCase):
+    """`build_book_declared_name_lists` -- inverts `name -> {books}` into
+    `book -> [names]` so `value_carries_declared_pi_substring` callers get
+    a fast per-book list instead of re-scanning the whole index per item."""
+
+    def test_inverts_the_name_to_book_index(self):
+        name_to_books = {"Abadar": {"core_rulebook", "inner_sea_gods"}, "Brigh": {"inner_sea_gods"}}
+        by_book = pi_redaction.build_book_declared_name_lists(name_to_books)
+        self.assertEqual(set(by_book["inner_sea_gods"]), {"Abadar", "Brigh"})
+        self.assertEqual(set(by_book["core_rulebook"]), {"Abadar"})
+        self.assertNotIn("Brigh", by_book.get("core_rulebook", []))
+
+
+class ValueCarriesDeclaredPiSubstringTests(unittest.TestCase):
+    """`value_carries_declared_pi_substring` -- the shared substring test
+    behind `build_public_status.py`'s `name` (book-scoped) and
+    `type_facet` (global) screens, and `site_public_status_pi_gate.py`'s
+    mirroring safety-net pass. SD31-W13-INTEGRATE-001-VERIFY finding 1."""
+
+    def test_embedded_declared_name_is_caught(self):
+        self.assertTrue(
+            pi_redaction.value_carries_declared_pi_substring("Abadar's Truthtelling", ["Abadar"])
+        )
+
+    def test_no_declared_name_present_is_clean(self):
+        self.assertFalse(
+            pi_redaction.value_carries_declared_pi_substring("Ordinary Feat", ["Abadar"])
+        )
+
+    def test_caller_controls_scope_by_what_it_passes_in(self):
+        # This function does no book-scoping itself -- callers that need
+        # the "Shackles of Compliance" false-positive class excluded do so
+        # by pre-scoping the list they pass (e.g. to one book), same as
+        # build_public_status.py's redact_for_display does for `name`.
+        self.assertTrue(pi_redaction.value_carries_declared_pi_substring("Shackles of Compliance", ["Shackles"]))
+
+
 class RedactDeclaredPiNamesTests(unittest.TestCase):
     """`redact_declared_pi_names` -- the producer's blanket defense-in-depth
     pass over the whole assembled document."""

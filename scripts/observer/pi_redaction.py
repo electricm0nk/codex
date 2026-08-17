@@ -446,6 +446,49 @@ def find_declared_pi_leaks_in_shard_rows(doc, name_to_books: dict) -> list[tuple
     return hits
 
 
+def build_book_declared_name_lists(name_to_books: dict[str, set[str]]) -> dict[str, list[str]]:
+    """Invert `name_to_books` (`name -> {books it is declared PI in}`,
+    `build_declared_pi_name_book_index`'s own return shape) into
+    `book -> [declared names], longest first` for efficient same-book
+    substring screening. SD31-W13-INTEGRATE-001-VERIFY finding 1/2: a
+    caller that DOES have a book to check a string against (a published
+    item row, a status-data shard) needs "which names are declared PI in
+    THIS book" as a fast per-book lookup, not a re-scan of the whole
+    corpus per item. Longest-first ordering matches the convention
+    `build_public_status.py`'s substring screens already use elsewhere
+    (does not change the boolean result, only scan order)."""
+    by_book: dict[str, list[str]] = {}
+    for name, books in name_to_books.items():
+        for book in books:
+            by_book.setdefault(book, []).append(name)
+    for book in by_book:
+        by_book[book].sort(key=len, reverse=True)
+    return by_book
+
+
+def value_carries_declared_pi_substring(value: str, declared_names_by_length) -> bool:
+    """True if `value` contains any name in `declared_names_by_length` as a
+    case-sensitive substring.
+
+    SHARED on purpose between the producer (`build_public_status.py`'s
+    per-field substring screens: `name`, scoped per-book via
+    `build_book_declared_name_lists`; `type_facet`, scoped globally) and
+    its safety-net gate (`site_public_status_pi_gate.py`) so the two can
+    never drift into checking different things -- exactly the failure mode
+    SD31-W13-INTEGRATE-001-VERIFY finding 1 found (the producer had a
+    substring screen for `type_facet` and not for `name`; nothing forced
+    the two to agree). See `build_public_status.py`'s
+    `redact_for_display`/`_type_facet_carries_declared_pi` docstrings for
+    the substring-vs-exact-match rationale and the false-positive
+    (`"Shackles of Compliance"`) this trades off against -- callers that
+    need that trade-off must pre-scope `declared_names_by_length` (e.g. to
+    one book) themselves; this function does the substring test only."""
+    for name in declared_names_by_length:
+        if name and name in value:
+            return True
+    return False
+
+
 def redact_declared_pi_names(value, declared_names):
     """Recursively return a COPY of `value` with every string leaf that
     EXACTLY equals a declared-PI name replaced by `REDACTED_PI_MARKER`.

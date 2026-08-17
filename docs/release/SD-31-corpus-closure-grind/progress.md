@@ -24720,3 +24720,212 @@ running at receipt time (see log). Clippy: not yet reached; this cycle touches z
 (`git diff cd37d2e65 HEAD -- '*.rs'` is empty, confirmed), so ceiling root:52/desktop:7 cannot have
 moved regardless of this run's outcome.
 
+## SITE-PUBSTATUS-002 -- Public status feed: adversarial-review remediation (2026-08-17)
+
+**Role:** `site-pubstatus-fix` (`RETRO_ACTOR=site-pubstatus-fix`). **Scope:** repair cycle against an
+Opus adversarial review of SITE-PUBSTATUS-001 (`OVERALL: REPAIR`, `pi_verdict: EXPOSED`, 6 CONFIRMED
+findings, 0 REFUTED). Same bounded public-site scope as -001 -- no `docs/work-inventory.json` touch,
+no guarded regen, primary checkout only. Preflight: `PCGEN_ORACLE_SHA=
+7f818006e371188e5717fd18d74d18a420747fc6` confirmed PASS. Starting HEAD `c011c6215`.
+
+### 0. The six CONFIRMED findings, disposed of
+
+| # | Finding | Disposition |
+|---|---|---|
+| 1 | 78 published `name`s carry a declared-PI proper noun as a cleartext substring; 26 same-book | **FIXED** -- §1 |
+| 2 | Gate never called `build_declared_pi_name_book_index`; blind to 121 book-scoped names + all of `type_facet` | **FIXED** -- §2 |
+| 3 | `standing` computed and shipped but never rendered on the public page | **FIXED** -- §3 |
+| 4 | `DONENESS_LABELS` not updated for the 3-bucket vocabulary; `partial` rendered as raw `"partial"` | **FIXED** -- §3 |
+| 5 | -001's own receipt claimed "0 names reaching cleartext today" / "123 was stale" | **CORRECTED** -- §4 |
+| 6 | -001's committed verify log had no `VERIFY_EXIT`; run was still in flight | **CORRECTED** -- §5 (this cycle's own log carries a real exit) |
+
+### 1. `name` field: same-book substring screen added (Finding 1)
+
+`redact_for_display` previously screened `name` with EXACT match only (global unambiguous set, or
+per-book membership of the exact string) -- it had no substring check, even though the sibling
+`type_facet` check had carried one since -001 for the identical failure shape ("a proper noun surfaces
+embedded in an adjectival/compound form a whole-token match would miss").
+
+Added a new shared primitive in `pi_redaction.py`, used by BOTH the producer and its gate so they can
+never independently drift (exactly how they drifted the first time):
+
+- `build_book_declared_name_lists(name_to_books)` -- inverts `name -> {books}` into
+  `book -> [names]`, longest-first.
+- `value_carries_declared_pi_substring(value, declared_names_by_length)` -- the substring test itself;
+  callers decide scope (global for `type_facet`, per-book for `name`) by what list they pass in.
+
+`redact_for_display` now runs, per item: EXACT match against the global set (unchanged safety net) OR
+SUBSTRING match against `book_declared[item.book]` (new). `type_facet` unchanged in behavior (still
+substring, still scoped globally) but now calls the shared helper instead of a private one.
+
+**Re-derived, independently, against the regenerated feed** (own scan, not the gate): 0 exact hits, 0
+same-book substring hits remaining; 184 names now redacted (up from 158 at -001's own HEAD -- the +26
+matches the finding's count exactly) and 33 type_facet redactions (unchanged shape from -001).
+Mutation check: `Brightness Seeker` (core_rulebook) against a scratch-declared `Brigh`
+(inner_sea_gods) stays UNREDACTED (cross-book false positive correctly excluded); `Abadar's
+Truthtelling` (inner_sea_gods) against scratch-declared `Abadar` (inner_sea_gods) IS redacted. Both as
+new unittest cases (`test_name_carrying_a_same_book_declared_pi_name_is_redacted`,
+`test_name_substring_match_from_an_unrelated_book_is_not_redacted`) in
+`test_build_public_status.py`, plus direct coverage of the two new shared primitives in
+`test_pi_redaction.py`. `build-public-status-selftest` now runs 17 cases (was 15); `pi-redaction-selftest`
+gained 5.
+
+### 2. Gate: second, per-book-and-type_facet pass added (Finding 2)
+
+`site_public_status_pi_gate.py` previously called only `build_declared_pi_name_index` +
+`find_declared_pi_leaks` (global, exact-match) -- structurally identical to what the review's mutation
+probe exploited: seed `Desna`/`Zon-Kuthon` (both declared PI in `inner_sea_gods`, neither in the
+global unambiguous set because Core Rulebook prints them too) into `core_rulebook.json` and the old
+gate reported CLEAN, exit 0.
+
+Added `find_status_item_pi_leaks(doc, book_declared, declared_by_length)`, walking each per-book detail
+file's own `{"id", "kinds": [{"items": [{"name","type_facet"}]}]}` shape (the shape
+`find_declared_pi_leaks_in_shard_rows` cannot see -- it is written for the `{"fields","rows"}` shard
+shape, a different surface). Mirrors the producer's own `redact_for_display` field-for-field via the
+same shared `pi_redaction.value_carries_declared_pi_substring` primitive from §1, so gate and producer
+cannot re-diverge. Wired into `main()` as a second pass alongside the existing exact-match scan.
+
+**Re-ran the review's exact mutation probe against the fixed gate**: seeded `Desna` (name),
+`Zon-Kuthon` (name), and `MagaambyanInitiateClassFeatures.SpecialQuality` (type_facet) into
+`core_rulebook.json` --
+```
+site-public-status-pi-gate: FAIL — 3 declared-PI name(s) found across 32 scanned file(s):
+  site/status-data/core_rulebook.json:$.kinds[0].items[959].name carries declared-PI name "'Desna' carries a name declared PI in book 'core_rulebook'"
+  site/status-data/core_rulebook.json:$.kinds[0].items[959].type_facet carries declared-PI name "'MagaambyanInitiateClassFeatures.SpecialQuality' carries a declared-PI name"
+  site/status-data/core_rulebook.json:$.kinds[0].items[960].name carries declared-PI name "'Zon-Kuthon' carries a name declared PI in book 'core_rulebook'"
+```
+-- confirmed red on all three seeds, restored from backup, re-ran: `site-public-status-pi-gate: CLEAN`
+against the real, regenerated feed. **The gate is now proven able to fail on the exact blind spot the
+review found**, not just on the globally-unambiguous class it already caught.
+
+### 3. `site/status.html`: standing rendered, doneness labels fixed (Findings 3, 4)
+
+Kept the existing rendering per the operator's own scope correction -- additive only, no redesign:
+
+- **`DONENESS_LABELS`** replaced with the current 3-value vocabulary (`done`/`partial`/`not-started`);
+  added `DONENESS_PILL_CLASSES` (a new `.status-item-pill-partial` style, distinct from done/pending)
+  and a `humanizeToken()` fallback so a FUTURE vocabulary change degrades to a readable label instead
+  of a raw lowercase token, rather than needing this file edited in lockstep again.
+- **`standing`** now rendered as a second pill on every item row (`.status-item-pill-standing`), next
+  to the doneness pill, labeled via a new `STANDING_LABELS` map covering all nine canonical
+  `provenance.py` statuses plus `unclassified`.
+- **`standing_breakdown` / `excluded_from_percentage`** surfaced as a one-line note
+  (`standingNote()`) under the overall figure, under each book's summary, and under each kind panel's
+  title -- e.g. Core Rulebook now shows "By standing: 4,489 Origin, 734 Unclassified. 734 items not
+  counted toward the percentage above." No layout change; `.status-standing-note:empty` collapses to
+  nothing when a rollup has no breakdown.
+
+`node --check` on the extracted `<script>` block: syntax OK. No `jsdom`/browser available in this
+sandbox to screenshot the drill-down; verified by reading the four call sites
+(`renderBooksPanel`/`renderBookPanel`/`renderKindPanel`/`renderItemList`) against the feed's actual
+JSON shape (`status_breakdown` on every rollup level, confirmed present in the regenerated
+`site/status-data.json` and every `site/status-data/<book>.json`).
+
+### 4. Correcting -001's own receipt (Finding 5)
+
+-001's receipt (`docs/retro/events/site-public-status.jsonl`, `type: correction`) reported **0**
+declared-PI names reaching cleartext at HEAD and read the dispatch brief's 123 as "stale... predates
+the producer's own already-wired primary redaction." Both readings compared -001's OWN OUTPUT against
+itself, not against the pre--001 baseline the brief was describing. Rebuilt the baseline feed from
+`git show cd37d2e65:site/status-data/<book>.json` for all 31 books: 36,156 rows, **0**
+`[redacted PI]` markers, 26,304 distinct cleartext names, of which **123** are in the pinned oracle's
+unambiguous declared-PI set -- exactly the brief's figure. At -001's own HEAD, 158 rows carried
+`[redacted PI]` and 0 remained in the unambiguous set. So -001's own new `redact_for_display` name pass
+withheld ~150 distinct names that were live in cleartext at the baseline commit -- it was not, as the
+receipt claimed, a redundant safety net over an already-redacted surface. This is a receipt-accuracy
+correction, not a new safety defect (the 123 baseline names were never on `main`); filed as a retro
+`correction` event pointing at the earlier `type: correction` event it corrects, so the record does not
+silently overwrite itself.
+
+### 5. Full gate
+
+```
+export RETRO_ACTOR=site-pubstatus-fix
+export CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/site-pubstatus-fix
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SITE-PUBSTATUS-002-verify.log
+./scripts/verify.sh > "$LOG" 2>&1
+```
+Launched early, in the background, before this receipt was drafted. Result: FAIL (1 of 33 stages, pre-existing)
+(`VERIFY_EXIT=1`), full log at the path above -- not a rerun of failed stages only.
+
+```
+SUMMARY
+  passed:  32  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest
+    provenance-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest
+    site-public-status-check site-public-status-pi-gate reachability-audit-selftest reachability-audit
+    groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest
+    reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep
+    supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump
+  FAILED:  1  site-dashboard-selftest
+
+RESULT: FAIL — logs in /tmp/codex-verify-hUmcB8
+VERIFY_EXIT=1
+```
+32 of 33 stages PASS. The single FAIL is `site-dashboard-selftest`
+(`scripts/tests/test_publish_site_dashboard.sh`), the SAME pre-existing, out-of-territory fixture gap
+-001's own receipt reported: its fake-repo fixture provisions `publish-site-dashboard.sh` but never
+`scripts/site/build_public_status.py`, so the real script's own trailing call
+(`python3 "$REPO_ROOT/scripts/site/build_public_status.py"`) hits `No such file or directory` inside
+every fixture scenario that reaches it. Confirmed unrelated to this cycle's diff: `git diff c011c6215
+HEAD -- scripts/tests/test_publish_site_dashboard.sh` is empty. Not fixed here (not in this cycle's
+file territory); the remedy is unchanged from -001's own receipt (seed the fixture with
+`build_public_status.py`'s dependency surface).
+
+**`site-dashboard-check` PASSES this run** (on the primary checkout, after `publish-site-dashboard.sh`
+regenerated `PF1e-dashboard.json` fresh in §6 below) -- confirms the dispatch's own expectation.
+**`site-dashboard-selftest` remains the one pre-existing, unrelated FAIL** carried over from -001
+(`scripts/tests/test_publish_site_dashboard.sh`'s fixture never provisions
+`scripts/site/build_public_status.py`; regression window opens at `a7f8068ca`, an ancestor of this
+cycle's own starting HEAD; not in this cycle's file territory).
+
+### 6. Self-maintaining: one command refreshes everything
+
+```
+./scripts/publish-site-dashboard.sh
+```
+regenerated `site/dashboard/PF1e-dashboard.json`, `site/dashboard/units/*.json`, `site/status-data.json`
+and all 31 `site/status-data/<book>.json` in one call -- confirmed by diffing before/after and by
+`build_public_status.py --check` / `publish-site-dashboard.sh --check` both reporting current
+immediately after. This is the same command the operator asked to be "part of our normal process just
+like it is for our pf1e-dashboard.html" -- no second, separate command needed for the public feed.
+
+### 7. Headline answers, for the operator
+
+- **Names redacted:** 184 item `name`s + 33 `type_facet`s withheld across the 36,156 published rows
+  (up from 158/33 at -001's own HEAD -- the +26 names are exactly Finding 1's same-book substring
+  leaks). Independently re-scanned (own script, not the gate): 0 exact hits, 0 same-book substring
+  hits remain against the pinned oracle's 1,612-name unambiguous set / per-book declared index.
+- **Gate proven able to fail:** yes, on both the class it already caught (globally-unambiguous exact
+  match) and the exact blind spot the review found (book-scoped name + `type_facet` substring) --
+  mutation-tested against the review's own `Desna`/`Zon-Kuthon`/`Magaambyan...` seed this cycle,
+  confirmed red, confirmed restored-clean.
+- **One command refreshes everything:** yes -- `./scripts/publish-site-dashboard.sh` regenerates the
+  internal dashboard feed AND the public status feed in a single invocation; both `--check` variants
+  confirm current immediately after.
+
+### 8. Reclaim
+
+```
+scripts/reclaim.sh --apply
+```
+run after the full gate finished and this receipt landed; then removed the three scratch
+`CARGO_TARGET_DIR`s (`site-public-status`, `site-pubstatus-refute`, `site-pubstatus-fix`) after
+confirming no live PID referenced any of them.
+
+### 9. Retro events emitted
+
+`docs/retro/events/site-pubstatus-fix.jsonl`.
+
+### 10. Addendum: -001's own verify.sh run finally completed (Finding 6, resolved for free)
+
+-001's receipt (§5) recorded that background run as still in flight at receipt time
+(`PIDs 2862503/2862504`, `RETRO_ACTOR=site-public-status`). It kept running through this cycle's own
+work and exited partway through this cycle -- `docs/release/SD-31-corpus-closure-grind/artifacts/
+SITE-PUBSTATUS-001-verify.log` now carries a real `SUMMARY`/`RESULT: FAIL`/`VERIFY_EXIT=1` (2 FAILED:
+`site-dashboard-selftest`, `site-dashboard-check` -- both pre-existing, matching -001's own receipt's
+description of them at that time) instead of ending mid-stage. Not something this cycle ran; a stray
+process from the prior session finishing on its own during this one. Committed as-is (the log is now
+complete and internally consistent, closing Finding 6 without a re-run) alongside a matching
+`docs/retro/events/site-public-status.jsonl` verification event and one `codex.jsonl` line, both
+appended by that same process, neither authored by this cycle.
+

@@ -62,12 +62,6 @@
           "standing": "origin"
         },
         {
-          "name": "Barbed Pentacle Of Asmodeus",
-          "doneness": "not-started",
-          "type_facet": "Magic.Wondrous Item.SLOT_Neck.Amulet",
-          "standing": "origin"
-        },
-        {
           "name": "Bear Pelt Of The Bonebreaker",
           "doneness": "partial",
           "type_facet": "Magic.Wondrous Item.SLOT_Shoulders.Cloak",
@@ -86,25 +80,7 @@
           "standing": "origin"
         },
         {
-          "name": "Besmara's Bicorne",
-          "doneness": "done",
-          "type_facet": "Magic.Wondrous Item.SLOT_Head.Headgear",
-          "standing": "origin"
-        },
-        {
-          "name": "Besmara's Tricorne",
-          "doneness": "done",
-          "type_facet": "Magic.Wondrous Item.SLOT_Head.Headgear",
-          "standing": "origin"
-        },
-        {
           "name": "Black Alibi",
-          "doneness": "done",
-          "type_facet": null,
-          "standing": "origin"
-        },
-        {
-          "name": "Blackfingers Apron",
           "doneness": "done",
           "type_facet": null,
           "standing": "origin"
@@ -374,12 +350,6 @@
           "standing": "origin"
         },
         {
-          "name": "Gray Master's Leathers",
-          "doneness": "done",
-          "type_facet": null,
-          "standing": "origin"
-        },
-        {
           "name": "Great Barghest Hero Cloak",
           "doneness": "done",
           "type_facet": "Magic.Wondrous Item.SLOT_Shoulders.Cloak",
@@ -497,12 +467,6 @@
           "name": "Medal Of The Hero's Heart",
           "doneness": "done",
           "type_facet": "Magic.Wondrous Item.SLOT_Neck.Amulet",
-          "standing": "origin"
-        },
-        {
-          "name": "Milanite Armor",
-          "doneness": "done",
-          "type_facet": null,
           "standing": "origin"
         },
         {
@@ -689,12 +653,6 @@
           "name": "Sea Banshee Coat",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
-        },
-        {
-          "name": "Shad'Gorum Nugget",
-          "doneness": "not-started",
-          "type_facet": "Magic.Wondrous Item.SLOT_Neck.Amulet",
           "standing": "origin"
         },
         {
@@ -934,8 +892,44 @@
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Neck.Amulet",
+          "standing": "origin"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous Item.SLOT_Head.Headgear",
+          "standing": "origin"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous Item.SLOT_Head.Headgear",
+          "standing": "origin"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
           "type_facet": "SLOT_Ring.Ring.Magic",
           "standing": "unclassified"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin"
         },
         {
           "name": "[redacted PI]",
@@ -948,6 +942,12 @@
           "doneness": "not-started",
           "type_facet": "Magic.Wondrous Item.SLOT_None",
           "standing": "unclassified"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Neck.Amulet",
+          "standing": "origin"
         }
       ]
     },
@@ -2317,12 +2317,6 @@
           "standing": "unclassified"
         },
         {
-          "name": "Spawn of Rovagug Traits",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin"
-        },
-        {
           "name": "Speed Burst",
           "doneness": "not-started",
           "type_facet": "ModifyMovement.Extraordinary",
@@ -2363,6 +2357,12 @@
           "doneness": "not-started",
           "type_facet": "Communicate.Supernatural",
           "standing": "unclassified"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin"
         }
       ]
     },
@@ -2379,12 +2379,6 @@
         "origin": 96
       },
       "items": [
-        {
-          "name": "Abadar's Truthtelling",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin"
-        },
         {
           "name": "Abstemiousness",
           "doneness": "done",
@@ -2405,12 +2399,6 @@
         },
         {
           "name": "Aspect of the Nightingale",
-          "doneness": "partial",
-          "type_facet": null,
-          "standing": "origin"
-        },
-        {
-          "name": "Baphomet's Blessing",
           "doneness": "partial",
           "type_facet": null,
           "standing": "origin"
@@ -2574,12 +2562,6 @@
         {
           "name": "Ghoul Hunger",
           "doneness": "partial",
-          "type_facet": null,
-          "standing": "origin"
-        },
-        {
-          "name": "Gozreh's Trident",
-          "doneness": "not-started",
           "type_facet": null,
           "standing": "origin"
         },
@@ -2752,12 +2734,6 @@
           "standing": "origin"
         },
         {
-          "name": "Rovagug's Fury",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin"
-        },
-        {
           "name": "Sadomasochism",
           "doneness": "partial",
           "type_facet": null,
@@ -2890,12 +2866,6 @@
           "standing": "origin"
         },
         {
-          "name": "Sympathy (Shelynite)",
-          "doneness": "not-started",
-          "type_facet": "Divine",
-          "standing": "origin"
-        },
-        {
           "name": "Tap Inner Beauty",
           "doneness": "partial",
           "type_facet": null,
@@ -2952,6 +2922,36 @@
         {
           "name": "Whispering Wind (Gozren)",
           "doneness": "partial",
+          "type_facet": "Divine",
+          "standing": "origin"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "partial",
+          "type_facet": null,
+          "standing": "origin"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
           "type_facet": "Divine",
           "standing": "origin"
         }

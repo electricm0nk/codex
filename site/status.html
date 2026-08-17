@@ -108,6 +108,7 @@
             <div class="progress-bar progress-bar-lg">
               <div class="progress-bar-fill" id="status-overall-bar"></div>
             </div>
+            <p class="section-sub-tight status-standing-note" id="status-overall-standing-note"></p>
           </div>
 
           <p class="section-sub-tight">Select a sourcebook to see what's built, category by category.</p>
@@ -118,12 +119,14 @@
           <button type="button" class="status-back" id="status-book-back">← All books</button>
           <h2 class="section-title" id="status-book-title"></h2>
           <p class="section-sub-tight" id="status-book-sub"></p>
+          <p class="section-sub-tight status-standing-note" id="status-book-standing-note"></p>
           <div class="status-books-grid" id="status-book-kinds" aria-live="polite"></div>
         </div>
 
         <div id="status-panel-kind" hidden>
           <button type="button" class="status-back" id="status-kind-back">← <span id="status-kind-back-label">Back</span></button>
           <h2 class="section-title" id="status-kind-title"></h2>
+          <p class="section-sub-tight status-standing-note" id="status-kind-standing-note"></p>
 
           <div class="status-item-controls">
             <input type="search" id="status-item-search" class="status-item-search" placeholder="Search items…" aria-label="Search items in this category">
@@ -150,14 +153,57 @@
 
   <script>
     (function () {
+      // Public three-bucket doneness vocabulary (build_public_status.py's
+      // own PUBLIC_DONENESS_VALUES). `humanizeToken` below is the fallback
+      // for any value this map doesn't yet know about, so a future
+      // vocabulary change degrades to a readable label instead of a raw
+      // lowercase token, rather than needing this file edited in lockstep.
       var DONENESS_LABELS = {
         'done': 'Done',
-        'held': 'Held',
-        'in-progress': 'In progress',
-        'not-started': 'Not started',
-        'unmeasurable': 'Unmeasurable',
-        'deferred': 'Deferred'
+        'partial': 'Partial',
+        'not-started': 'Not started'
       };
+      var DONENESS_PILL_CLASSES = {
+        'done': 'status-item-pill-done',
+        'partial': 'status-item-pill-partial',
+        'not-started': 'status-item-pill-pending'
+      };
+      // provenance.py's nine canonical statuses plus its `unclassified`
+      // bookkeeping value (Decision 14). Kept here as display labels only
+      // -- membership in the published denominator is decided upstream by
+      // the feed itself (`excluded_from_percentage`/`standing_breakdown`),
+      // never re-derived from this map.
+      var STANDING_LABELS = {
+        'origin': 'Origin',
+        'duplicate': 'Duplicate',
+        'superseded': 'Superseded',
+        'errata-source': 'Errata source',
+        'variant': 'Variant',
+        'descoped-licensing': 'Descoped (licensing)',
+        'descoped-structural': 'Descoped (structural)',
+        'packaging-artifact': 'Packaging artifact',
+        'out-of-roster': 'Out of roster',
+        'unclassified': 'Unclassified'
+      };
+      function humanizeToken(token) {
+        if (!token) return '—';
+        return token.replace(/[-_]/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); });
+      }
+      function standingNote(roll) {
+        if (!roll || !roll.standing_breakdown) return '';
+        var parts = Object.keys(roll.standing_breakdown)
+          .filter(function (s) { return roll.standing_breakdown[s] > 0; })
+          .sort(function (a, b) { return roll.standing_breakdown[b] - roll.standing_breakdown[a]; })
+          .map(function (s) {
+            return roll.standing_breakdown[s].toLocaleString() + ' ' + (STANDING_LABELS[s] || humanizeToken(s));
+          });
+        var note = 'By standing: ' + parts.join(', ') + '.';
+        if (roll.excluded_from_percentage) {
+          note += ' ' + roll.excluded_from_percentage.toLocaleString() + ' item' +
+            (roll.excluded_from_percentage === 1 ? '' : 's') + ' not counted toward the percentage above.';
+        }
+        return note;
+      }
       var PAGE_SIZE = 50;
 
       var note = document.getElementById('status-generated-note');
@@ -219,6 +265,7 @@
         overallPct.textContent = overview.overall.pct + '%';
         overallLabel.textContent = overview.overall.done.toLocaleString() + ' of ' + overview.overall.denominator.toLocaleString() + ' rules-content units built';
         overallBar.style.width = overview.overall.pct + '%';
+        document.getElementById('status-overall-standing-note').textContent = standingNote(overview.overall);
         overall.hidden = false;
 
         booksEl.innerHTML = '';
@@ -241,6 +288,7 @@
         bookSubEl.textContent = summary
           ? summary.done.toLocaleString() + ' of ' + summary.denominator.toLocaleString() + ' built (' + summary.pct + '%) — select a category for details.'
           : 'Select a category for details.';
+        document.getElementById('status-book-standing-note').textContent = standingNote(summary);
 
         bookKindsEl.innerHTML = '';
         detail.kinds.forEach(function (kind) {
@@ -261,6 +309,7 @@
 
         kindTitleEl.textContent = detail.title + ' — ' + kind.label;
         kindBackLabelEl.textContent = detail.title;
+        document.getElementById('status-kind-standing-note').textContent = standingNote(kind);
 
         kindState.items = kind.items;
         kindState.filter = 'all';
@@ -294,12 +343,17 @@
         pageItems.forEach(function (it) {
           var row = document.createElement('div');
           row.className = 'status-item-row';
-          var pillClass = it.doneness === 'done' ? 'status-item-pill-done' : 'status-item-pill-pending';
+          var pillClass = DONENESS_PILL_CLASSES[it.doneness] || 'status-item-pill-pending';
           row.innerHTML =
             '<span class="status-item-name"></span>' +
-            '<span class="status-item-pill ' + pillClass + '"></span>';
+            '<span class="status-item-pills">' +
+              '<span class="status-item-pill status-item-pill-standing"></span>' +
+              '<span class="status-item-pill ' + pillClass + '"></span>' +
+            '</span>';
           row.querySelector('.status-item-name').textContent = it.name;
-          row.querySelector('.status-item-pill').textContent = DONENESS_LABELS[it.doneness] || it.doneness;
+          var pills = row.querySelectorAll('.status-item-pill');
+          pills[0].textContent = STANDING_LABELS[it.standing] || humanizeToken(it.standing);
+          pills[1].textContent = DONENESS_LABELS[it.doneness] || humanizeToken(it.doneness);
           itemListEl.appendChild(row);
         });
 

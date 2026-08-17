@@ -827,6 +827,12 @@ a:focus-visible {
 }
 .status-item-row:nth-child(even) { background: var(--paper-alt); }
 .status-item-name { font-size: 14px; color: var(--ink); }
+.status-item-pills {
+  display: flex;
+  flex-shrink: 0;
+  gap: 6px;
+  align-items: center;
+}
 .status-item-pill {
   flex-shrink: 0;
   font-size: 11px;
@@ -839,11 +845,27 @@ a:focus-visible {
   color: #1c130c;
   background: var(--gold);
 }
+.status-item-pill-partial {
+  color: var(--ink);
+  background: var(--paper-alt);
+  border: 1px solid var(--accent);
+}
 .status-item-pill-pending {
   color: var(--ink-muted);
   background: var(--code-bg);
   border: 1px solid var(--rule);
 }
+.status-item-pill-standing {
+  color: var(--ink-muted);
+  background: transparent;
+  border: 1px solid var(--rule);
+  font-weight: 600;
+}
+.status-standing-note {
+  color: var(--ink-muted);
+  margin-top: 4px;
+}
+.status-standing-note:empty { display: none; }
 
 .status-pagination {
   display: flex;

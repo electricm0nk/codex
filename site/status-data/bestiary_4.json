@@ -6885,18 +6885,6 @@
           "standing": "origin"
         },
         {
-          "name": "Empyreal Lord (Cernunnos) ~ Change Shape",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin"
-        },
-        {
-          "name": "Empyreal Lord (Korada) ~ Change Shape",
-          "doneness": "not-started",
-          "type_facet": null,
-          "standing": "origin"
-        },
-        {
           "name": "Empyreal Lord Traits",
           "doneness": "not-started",
           "type_facet": null,
@@ -7734,6 +7722,18 @@
           "name": "Wyvaran",
           "doneness": "not-started",
           "type_facet": "AdoptiveRace",
+          "standing": "origin"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": null,
           "standing": "origin"
         }
       ]

@@ -206,6 +206,38 @@ class PiRedactionTests(unittest.TestCase):
         bps.redact_for_display(items, self.name_to_books, self.declared_names)
         self.assertEqual(items[0]["type_facet"], "AegisClassFeatures.SpecialQuality.Supernatural")
 
+    def test_name_carrying_a_same_book_declared_pi_name_is_redacted(self):
+        # SD31-W13-INTEGRATE-001-VERIFY finding 1: a declared-PI proper
+        # noun surfacing as an embedded substring of a published item name
+        # (e.g. "Abadar's Truthtelling" carrying the declared-PI deity
+        # name "Abadar") was invisible to the old exact-match-only `name`
+        # check. Same-book substring screening must catch it.
+        self.scratch.write(
+            "pathfinder/paizo/roleplaying_game/core_rulebook/deities.lst",
+            "Abadar\tNAMEISPI:YES\tTYPE:Deity\n",
+        )
+        name_to_books = pi_redaction.build_declared_pi_name_book_index(self.scratch.root)
+        declared_names = pi_redaction.build_declared_pi_name_index(self.scratch.root)
+        items = [item(name="Abadar's Truthtelling", book="core_rulebook")]
+        bps.redact_for_display(items, name_to_books, declared_names)
+        self.assertEqual(items[0]["name"], pi_redaction.REDACTED_PI_MARKER)
+
+    def test_name_substring_match_from_an_unrelated_book_is_not_redacted(self):
+        # The documented "Shackles of Compliance" false-positive class: a
+        # declared-PI word ("Brigh") from one book must not flag an
+        # unrelated, ordinary name ("Brightness Seeker") merely because it
+        # happens to start with the same letters in a DIFFERENT book.
+        # Same-book scoping is what keeps this from over-redacting.
+        self.scratch.write(
+            "pathfinder/paizo/roleplaying_game/inner_sea_gods/deities.lst",
+            "Brigh\tNAMEISPI:YES\tTYPE:Deity\n",
+        )
+        name_to_books = pi_redaction.build_declared_pi_name_book_index(self.scratch.root)
+        declared_names = pi_redaction.build_declared_pi_name_index(self.scratch.root)
+        items = [item(name="Brightness Seeker", book="core_rulebook")]
+        bps.redact_for_display(items, name_to_books, declared_names)
+        self.assertEqual(items[0]["name"], "Brightness Seeker")
+
     def test_standing_uses_the_true_name_not_the_redacted_marker(self):
         # Two DIFFERENT declared-PI objects, each printed once, in
         # different books -- if provenance ran on the redacted marker
