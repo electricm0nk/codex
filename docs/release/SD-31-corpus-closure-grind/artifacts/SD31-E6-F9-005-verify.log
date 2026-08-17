@@ -57,3 +57,6 @@ logs:  /tmp/codex-verify-H0AHkJ
 ---------------------------------------------------------------
 ==> root-full — cargo test --locked --no-fail-fast -j 2  (repo root)
     building ~490 test binaries; this is the slow one
+    PASS  root-full  (6954 passed across 565 suites, all 529 tests/*.rs suites executed)
+---------------------------------------------------------------
+==> desktop — cargo test --locked -j 2  (apps/desktop/src-tauri)
