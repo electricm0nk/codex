@@ -1,11 +1,14 @@
 //! Spell catalog browser — Tauri command adapter over every ingested PF1
-//! spell table: `crb::spell_list` (652 records), `apg::spell_list` (297),
-//! `acg::spell_list` (144), `advanced_race_guide::spell_list` (92),
+//! spell table: `crb::spell_list` (664, since SD31-E6-F7-002 -- 652 base
+//! records + 12 `.COPY=` racial spell-like-ability variants, decisions.md
+//! §15), `apg::spell_list` (297), `acg::spell_list` (144),
+//! `advanced_race_guide::spell_list` (93, since SD31-E6-F7-002 -- 92 base
+//! records + the 13th `.COPY=` variant, `Fins to Feet (self only)`),
 //! `ultimate_intrigue::spell_list` (101), `ultimate_magic::spell_list`
 //! (269, since SD31-E6-F2-002), `occult_adventures::spell_list`
 //! (144, since SD31-E6-F2-003), `ultimate_combat::spell_list` (146, since
 //! SD31-E6-F2-004) and, since SD31-E6-F10-001,
-//! `inner_sea_gods::spell_list` (92) — 1937 in total. This adapter
+//! `inner_sea_gods::spell_list` (92) — 1950 in total. This adapter
 //! never chains a book by hand; it reads `spell_resolver::spell_catalog_rows()`
 //! (see `build_spell_catalog` below), so a book widening that registry
 //! reaches this DTO automatically. The per-book count is still worth
@@ -482,11 +485,11 @@ mod tests {
     #[test]
     fn the_catalog_serves_every_ingested_book_not_only_crb() {
         let response = build_spell_catalog();
-        assert_eq!(response.entries.len(), 1937);
-        assert_eq!(book_entries(BOOK_CRB).len(), 652);
+        assert_eq!(response.entries.len(), 1950);
+        assert_eq!(book_entries(BOOK_CRB).len(), 664);
         assert_eq!(book_entries(BOOK_APG).len(), 297);
         assert_eq!(book_entries(BOOK_ACG).len(), 144);
-        assert_eq!(book_entries(BOOK_ARG).len(), 92);
+        assert_eq!(book_entries(BOOK_ARG).len(), 93);
         assert_eq!(book_entries(BOOK_UI).len(), 101);
         assert_eq!(book_entries(BOOK_UM).len(), 269);
         assert_eq!(book_entries(BOOK_OA).len(), 144);

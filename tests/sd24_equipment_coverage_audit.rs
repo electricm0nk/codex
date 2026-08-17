@@ -216,24 +216,28 @@ fn beastiary1_equipment_is_fully_record_ingested_with_full_description_coverage(
     );
 }
 
-/// CRB's spell list (`cr_spells.lst`) carries 652 of 652 real,
+/// CRB's spell list (`cr_spells.lst`) carries 664 of 664 real,
 /// level-and-school-bearing spell records -- criterion 6.1's original
 /// "675 real / 96.6%" figure was a measurement error (see
 /// `SpellFieldCoverage::records_expected`'s doc comment for the
 /// correction), not a genuine record-coverage gap; this cycle's re-audit
 /// found CRB spell record coverage was already 100%. SD-24 criterion 6.5
-/// (this cycle) additionally replaced every present record's truncated
-/// first-sentence `description` with the fullest text the real corpus
-/// provides -- `full_text_verified` is now 652/652, not the pre-cycle 0.
+/// additionally replaced every present record's truncated first-sentence
+/// `description` with the fullest text the real corpus provides. SD31
+/// decisions.md §15 (2026-08-17) added the 12 `.COPY=` racial
+/// spell-like-ability variant records this book owns (the 13th belongs to
+/// `advanced_race_guide`) as their own distinct entries rather than
+/// merging them into their parent -- the count grew from 652 to 664 for
+/// that reason, not a new coverage gap.
 #[test]
 fn crb_spell_list_is_fully_record_complete_with_full_text_coverage() {
     let report = crb::spell_list::spell_coverage_report();
     assert_eq!(
-        report.records_expected, 652,
-        "real, level-and-school-bearing cr_spells.lst record count (corrected from the \
-         original 675 measurement-error figure)"
+        report.records_expected, 664,
+        "real, level-and-school-bearing cr_spells.lst record count, including the 12 \
+         `.COPY=` racial SLA variants ingested under decisions.md §15"
     );
-    assert_eq!(report.total_records, 652, "current CRB spell list ingest count");
+    assert_eq!(report.total_records, 664, "current CRB spell list ingest count");
     assert_eq!(
         report.records_expected, report.total_records,
         "CRB spell record coverage should be 100% (already fully ingested, criterion 6.1's \

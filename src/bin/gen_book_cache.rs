@@ -412,6 +412,25 @@ fn arg_find_citation_line(index: &ArgLineIndex<'_>, wanted_key: &str) -> Option<
     index.by_key.get(wanted_key).copied().or_else(|| index.by_identity.get(wanted_key).copied())
 }
 
+/// Like `arg_find_citation_line`, but also returns the literal corpus
+/// identity string the matched row actually declares -- for a plain match
+/// that is just `wanted_key`, but for a `.COPY=<wanted_key>` racial
+/// spell-like-ability variant (decisions.md §15, 2026-08-17) it is the
+/// full `<parent>.COPY=<wanted_key>` string, so the record's `source`
+/// cites the row that actually declares it rather than a byte-match that
+/// does not exist on this row.
+fn arg_find_citation_line_with_identity(index: &ArgLineIndex<'_>, wanted_key: &str) -> Option<(u32, String)> {
+    if let Some(line) = arg_find_citation_line(index, wanted_key) {
+        return Some((line, wanted_key.to_string()));
+    }
+    let copy_suffix = format!(".COPY={wanted_key}");
+    index
+        .by_identity
+        .iter()
+        .find(|(identity, _)| identity.ends_with(&copy_suffix))
+        .map(|(identity, line)| (*line, identity.to_string()))
+}
+
 /// Every real `*.json` record under `book_dir`, counted directly from disk
 /// rather than from this run's own in-memory write count.
 ///
@@ -802,8 +821,8 @@ fn gen_advanced_race_guide() {
     let mut spell_unattributed: Vec<String> = Vec::new();
     let mut spell_slugs_used: std::collections::HashSet<String> = std::collections::HashSet::new();
     for entry in advanced_race_guide::spell_list::SPELL_LIST {
-        match arg_find_citation_line(&spells_index, entry.key) {
-            Some(line_no) => {
+        match arg_find_citation_line_with_identity(&spells_index, entry.key) {
+            Some((line_no, record_key)) => {
                 let rendered = render_player_facing_description(entry.key, entry.description);
                 let (license, pi_field, pi_marker, stored_desc) = classify_field("description", &rendered);
                 let data = advanced_race_guide::json_cache::SpellCacheData {
@@ -816,7 +835,7 @@ fn gen_advanced_race_guide() {
                     path: spells_file.relative_path.clone(),
                     sha256: spells_file.sha256.clone(),
                     line: line_no,
-                    record_key: entry.key.to_string(),
+                    record_key,
                 };
                 let (wiring_class, wiring_class_signals) =
                     wiring_class_for_source(&wiring_index, &mut wiring_lines, &source);

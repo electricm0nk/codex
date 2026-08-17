@@ -16,8 +16,11 @@
 //! against (computed directly from the live PCGen corpus this cycle, not
 //! taken from the scoping brief's rough estimate — see each
 //! `rules_tables::advanced_race_guide::*` module's own doc comment for the
-//! full accounting): 92 spells, 200 equipment (28 ArmsArmor + 79 General +
-//! 78 MagicItems + 15 Equipmods), 187 feats (132 General + 52 Combat + 3
+//! full accounting): 93 spells (92 base records + 1 `.COPY=` racial
+//! spell-like-ability variant, `Fins to Feet (self only)`, ingested under
+//! SD31 decisions.md §15, 2026-08-17), 200 equipment (28 ArmsArmor + 79
+//! General + 78 MagicItems + 15 Equipmods), 187 feats (132 General + 52
+//! Combat + 3
 //! Teamwork).
 
 use std::collections::BTreeSet;
@@ -156,7 +159,7 @@ fn assert_shape_b_v1_record(path: &Path, record: &Value) {
 #[test]
 fn spell_cache_has_all_92_real_records() {
     let records = load_all("spell");
-    assert_eq!(records.len(), 92, "real, de-duplicated arg_spells.lst record count (re-measured this cycle directly from the live corpus)");
+    assert_eq!(records.len(), 93, "real, de-duplicated arg_spells.lst record count (92 base + 1 `.COPY=` racial SLA variant, decisions.md §15)");
 
     let mut slugs = BTreeSet::new();
     for (path, record) in &records {
@@ -299,7 +302,9 @@ fn every_v1_record_passes_the_shared_validate_license_gate() {
     }
     // 200 -> 215: SD31-E6-F5-002's equipment_gap_tables ARG addition, see
     // `equipment_cache_has_all_200_real_records_across_4_categories`'s
-    // comment above.
-    assert_eq!(audited, 92 + 215 + 187);
+    // comment above. 92 -> 93: SD31-E6-F7-002's `.COPY=` racial SLA
+    // variant addition (decisions.md §15), see
+    // `spell_cache_has_all_92_real_records`'s comment above.
+    assert_eq!(audited, 93 + 215 + 187);
     let _ = dir;
 }

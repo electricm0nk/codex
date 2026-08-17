@@ -192,11 +192,13 @@ fn arrow_sleep_carries_its_own_real_desc_not_the_clear_sentinel() {
 /// one exists, else the base record's own `DESC:`) instead of the
 /// pre-cycle truncated-to-first-sentence summary. `full_text_verified`
 /// is real: it counts records using the untruncated corpus text, which
-/// is now every present record (652/652) -- not a hand-guessed number.
+/// is now every present record (664/664, including the 12 `.COPY=`
+/// racial spell-like-ability variants ingested under decisions.md §15) --
+/// not a hand-guessed number.
 #[test]
 fn crb_spells_carry_full_untruncated_corpus_text() {
     let report = spell_list::spell_coverage_report();
-    assert_eq!(report.total_records, 652);
+    assert_eq!(report.total_records, 664);
     assert_eq!(
         report.full_text_verified, report.total_records,
         "every present spell should now carry the fullest corpus text available, not a first-sentence truncation"

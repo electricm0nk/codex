@@ -1,0 +1,33 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You make yourself-including clothing, armor, weapons, and equipment-look different. You can seem 1 foot shorter or taller, thin, fat, or in between. You cannot change your creature type [although you can appear as another subtype]. Otherwise, the extent of the apparent change is up to you. You could add or obscure a minor feature or look like an entirely different person or gender. The spell does not provide the abilities or mannerisms of the chosen form, nor does it alter the perceived tactile [touch] or audible [sound] properties of you or your equipment. If you use this spell to create a disguise, you get a +10 bonus on the Disguise check. A creature that interacts with the glamer gets a Will save to recognize it as an illusion.",
+    "key": "Disguise Self (humanoid only)",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CLASSES",
+        "value": ".CLEARALL"
+      }
+    ],
+    "school": "Illusion"
+  },
+  "ingested_at": "2026-08-17T00:00:00Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1469,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "record_key": "Disguise Self.COPY=Disguise Self (humanoid only)",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:spells"
+  ]
+}

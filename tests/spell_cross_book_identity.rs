@@ -92,8 +92,10 @@ fn the_acg_naturalist_summon_natures_ally_records_keep_their_corpus_key_token() 
 #[test]
 fn the_three_ingested_books_carry_their_full_corpus_record_counts() {
     // Counts re-derived from the raw .lst files, excluding `#`-disabled
-    // rows, `.MOD` modifier rows and the `SOURCELONG:` header line.
-    assert_eq!(crb::spell_list::SPELL_LIST.len(), 652, "CRB cr_spells.lst");
+    // rows, `.MOD` modifier rows and the `SOURCELONG:` header line. CRB's
+    // 664 = 652 base records + 12 `.COPY=` racial spell-like-ability
+    // variants ingested under decisions.md §15 (2026-08-17).
+    assert_eq!(crb::spell_list::SPELL_LIST.len(), 664, "CRB cr_spells.lst");
     assert_eq!(apg::spell_list::SPELL_LIST.len(), 297, "APG apg_spells.lst");
     assert_eq!(acg::spell_list::SPELL_LIST.len(), 144, "ACG acg_spells.lst");
 }
