@@ -284,8 +284,11 @@ const BOOK_SOURCES: &[BookSource] = &[
 // Strix, Suli, Wayang) a real chassis, but this binary's roster was never
 // widened to match, so `arg_abilities_race.lst`'s real
 // `###Block: Alternate Racial Traits` rows for those 6 (confirmed non-`.MOD`
-// content by direct inspection of the pinned oracle -- Catfolk 6, Kitsune 7,
-// Ratfolk 4, Strix 6, Suli 5, Wayang 1) sat un-ingested. `race_dir` is now
+// content by direct inspection of the pinned oracle -- Catfolk 6, Kitsune 2,
+// Ratfolk 4, Strix 6, Suli 5, Wayang 1 -- Kitsune corrected 2026-08-17,
+// SD31-W9-INTEGRATE-001: the prior "7" summed in Kitsune's 5 `Favored Class
+// Bonus ~ <Class> ~ Kitsune` rows, a DIFFERENT unit kind every other race's
+// own figure in this list already excludes) sat un-ingested. `race_dir` is now
 // SHARED between the two binaries for these 6 races (both write into
 // `advanced_race_guide/race_trait/<race>/`); see
 // `clear_own_alternate_trait_files`'s doc comment for how that clear no

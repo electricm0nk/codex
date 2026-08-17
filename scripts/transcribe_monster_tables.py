@@ -1530,11 +1530,23 @@ def write_book(book: str) -> str:
     is computed FIRST, in full, into a string; the file on disk is touched
     only after that succeeds, and a raise leaves the existing file exactly as
     it was.
+
+    The write itself is now genuinely atomic too (`SD31-W9-INTEGRATE-001`
+    finding: the word was true of the compute-then-write ordering above but
+    not of the write call itself -- an interruption or disk-full error
+    mid-`handle.write()` could still have left a truncated file on disk,
+    the identical failure mode this docstring's own word promises against).
+    Writes to a same-directory temp file first, then `os.replace()`s it onto
+    the real path -- `os.replace` is a single filesystem rename, so the
+    target either has the OLD complete content or the NEW complete content,
+    never a partial write, on every platform this repo runs on.
     """
     path = f"src/rules_core/rules_tables/{book}/monster_data.rs"
     content = transcribe(book)
-    with open(path, "w", encoding="utf-8") as handle:
+    tmp_path = f"{path}.tmp"
+    with open(tmp_path, "w", encoding="utf-8") as handle:
         handle.write(content)
+    os.replace(tmp_path, path)
     return path
 
 
