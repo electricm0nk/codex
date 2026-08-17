@@ -259,12 +259,25 @@ fn cross_book_feat_key_repeats_are_exactly_the_known_set() {
     //     -> uc_feats.lst:117 AND up_feats.lst:128
     // A genuinely different feat arriving under an existing key still fails
     // here; this pin is widened to the verified set, not relaxed.
+    //
+    // `SD31-E6-F8-002` widened this further with three more pairs, and NONE
+    // is a reprint -- each is two genuinely DIFFERENT feats sharing a
+    // display name, checked against both corpus records' own `DESC:`/
+    // `BENEFIT:` text (`rules_tables::feats_all`'s own
+    // `cross_book_key_collisions_are_exactly_the_known_set` carries the full
+    // per-pair citation; not duplicated here):
+    //   `Returning Throw` (Upsi marksman feat vs Isr goblinoid teamwork feat)
+    //   `Desert Dweller` (Uw desert-terrain feat vs Iswg heat-resistance feat)
+    //   `Strangler` (Uc grapple/sneak-attack feat vs MonsterCodex lasso feat)
     assert_eq!(
         cross_book,
         vec![
             ("Endurance", RuleSetId::Crb, RuleSetId::Pu),
             ("Extended Animal Focus", RuleSetId::Acg, RuleSetId::Uw),
             ("Feral Combat Training", RuleSetId::Uc, RuleSetId::Upsi),
+            ("Returning Throw", RuleSetId::Upsi, RuleSetId::Isr),
+            ("Desert Dweller", RuleSetId::Uw, RuleSetId::Iswg),
+            ("Strangler", RuleSetId::Uc, RuleSetId::MonsterCodex),
         ]
     );
 }
@@ -272,7 +285,7 @@ fn cross_book_feat_key_repeats_are_exactly_the_known_set() {
 #[test]
 fn the_aggregate_catalog_spans_every_ingested_book() {
     let books = all_feat_tables();
-    assert_eq!(books.len(), 12);
+    assert_eq!(books.len(), 17);
 
     let entries_for = |rule_set: RuleSetId| {
         books
@@ -308,9 +321,16 @@ fn the_aggregate_catalog_spans_every_ingested_book() {
     assert_eq!(entries_for(RuleSetId::Um), 156); // 144 + 12
     assert_eq!(entries_for(RuleSetId::Upsi), 222); // 221 + 1
     assert_eq!(entries_for(RuleSetId::Ce), 15); // 0 + 15
+    // `SD31-E6-F8-002` -- five more books already compiled for another kind
+    // that had no feat table at all; every served entry is a gap row.
+    assert_eq!(entries_for(RuleSetId::Ha), 61); // 0 + 61
+    assert_eq!(entries_for(RuleSetId::Isr), 50); // 0 + 50
+    assert_eq!(entries_for(RuleSetId::Oa), 68); // 0 + 68
+    assert_eq!(entries_for(RuleSetId::Iswg), 31); // 0 + 31
+    assert_eq!(entries_for(RuleSetId::MonsterCodex), 32); // 0 + 32
 
     let total: usize = books.iter().map(|b| b.entries.len()).sum();
-    assert_eq!(total, 1661, "186 CRB + 172 APG + 129 ACG + 235 ARG + 17 PU + 23 UCA + 107 UI + 136 UW + 263 UC + 156 UM + 222 UPsi + 15 Ce = 1578 hand-authored + 83 corpus gap rows");
+    assert_eq!(total, 1903, "186 CRB + 172 APG + 129 ACG + 235 ARG + 17 PU + 23 UCA + 107 UI + 136 UW + 263 UC + 156 UM + 222 UPsi + 15 Ce + 61 Ha + 50 Isr + 68 Oa + 31 Iswg + 32 MonsterCodex = 1578 hand-authored + 325 corpus gap rows (SD31-E6-F8-001's 83 + SD31-E6-F8-002's 242)");
 }
 
 #[test]

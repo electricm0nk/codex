@@ -342,6 +342,22 @@ pub const UNMODELLED_KINDS: &[(&str, &str)] = &[
     // exact failure the third `ClauseOutcome` variant exists to prevent.
     ("PREHANDSGTEQ", "the number of a creature's hands is not modelled"),
     ("PRERULE", "PCGen house-rule-flag prerequisites are not modelled"),
+    // Arrived with `SD31-E6-F8-002`'s five-book feat gap lane (2026-08-16).
+    // `PRESIZEEQ` (exact-size match) is a close sibling of the already-
+    // modelled `PRESIZEGTEQ`/`PRESIZELTEQ` (threshold comparisons against
+    // the same size fact), but is left unmodelled rather than folded in on
+    // the same cycle that only widened the feat CATALOG, not the
+    // prerequisite EVALUATOR -- a genuine capability addition belongs to its
+    // own bounded change, TDD'd against the evaluator's own test suite, not
+    // an incidental side effect of an ingest lane discovering a new token.
+    ("PRESIZEEQ", "exact-size prerequisites are not modelled"),
+    // A maximum-LEVEL ceiling, the inverse shape of the already-modelled
+    // `PRELEVEL` floor -- a different comparison direction this evaluator
+    // does not implement.
+    ("PRELEVELMAX", "a maximum-level ceiling prerequisite is not modelled"),
+    // Sibling of the already-unmodelled `PRESPELLSCHOOLSUB`/`PRESPELLTYPE`:
+    // this engine does not model which spell schools a character knows.
+    ("PRESPELLSCHOOL", "spell-school prerequisites are not modelled"),
 ];
 
 /// Evaluates one top-level `PRE`-family token against `facts`.

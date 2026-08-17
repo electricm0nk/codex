@@ -499,12 +499,13 @@ mod prerequisite_tests {
         let facts = character_prereq_facts(&input, 1);
         let reports = evaluate_every_catalog_feat(&facts);
 
-        // 1578 hand-authored records + the 83 corpus gap rows the feat gap
-        // lane joined on. Every gap row's own `PRE`-family tokens are carried
-        // verbatim into `FeatCatalogRecord::prerequisites`, so the new rows
-        // are evaluated by this gate exactly like every other record — they
-        // are not offered unconditionally.
-        assert_eq!(reports.len(), 1661);
+        // 1578 hand-authored records + the 325 corpus gap rows the feat gap
+        // lane joined on (`SD31-E6-F8-001`'s original 83 + `SD31-E6-F8-002`'s
+        // 242). Every gap row's own `PRE`-family tokens are carried verbatim
+        // into `FeatCatalogRecord::prerequisites`, so the new rows are
+        // evaluated by this gate exactly like every other record — they are
+        // not offered unconditionally.
+        assert_eq!(reports.len(), 1903);
         let eligible = reports.iter().filter(|report| report.is_eligible).count();
         // 211 (of the original 690) + all 23 UCA Story Feats: every one of
         // UCA's records carries only a `PRETEXT:` prose prerequisite, which
@@ -525,7 +526,9 @@ mod prerequisite_tests {
         // with a stated reason instead of being offered it under an
         // unverifiable prerequisite. Modelling a token can only ever move
         // this number down, and that direction is the point.
-        assert_eq!(eligible, 552, "a starting Fighter's real eligible-feat count");
+        // +94 with `SD31-E6-F8-002`'s 242 more gap rows joined on
+        // (2026-08-16): re-derived by this same test, not guessed.
+        assert_eq!(eligible, 646, "a starting Fighter's real eligible-feat count");
 
         for report in reports.iter().filter(|report| !report.is_eligible) {
             let reason = report.unavailable_reason().unwrap_or_default();

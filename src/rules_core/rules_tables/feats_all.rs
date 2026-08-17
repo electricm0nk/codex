@@ -952,6 +952,21 @@ pub fn hand_authored_feat_tables() -> &'static [BookFeatTable] {
             // below, which only appends gap rows to a `RuleSetId` already
             // present in this list (`SD31-E6-F8-001`).
             BookFeatTable { rule_set: RuleSetId::Ce, entries: &[] },
+            // Five more books already compiled into `COMPILED_RULE_SETS` for
+            // another kind (race_trait: `Isr`/`Ha`/`Iswg`; monster: `Oa`;
+            // race_trait+monster: `MonsterCodex`) but that never had a feat
+            // table of their own -- same shape as `Ce` immediately above.
+            // Their `feat` units were `not-ingested` with evidence
+            // `feat_key_absent_from_catalog` (a started book with no feat
+            // table), never `no_compiled_rule_set_for_book` (an un-started
+            // book) -- `SD31-E6-F8-002`. Empty hand-authored slices here are
+            // what let `feat_gap_rows_for` join each book's real `*_feats.lst`
+            // rows on via `all_feat_tables()` below.
+            BookFeatTable { rule_set: RuleSetId::Ha, entries: &[] },
+            BookFeatTable { rule_set: RuleSetId::Isr, entries: &[] },
+            BookFeatTable { rule_set: RuleSetId::Oa, entries: &[] },
+            BookFeatTable { rule_set: RuleSetId::Iswg, entries: &[] },
+            BookFeatTable { rule_set: RuleSetId::MonsterCodex, entries: &[] },
         ]
     })
 }
@@ -1005,7 +1020,7 @@ mod tests {
     #[test]
     fn spans_every_ingested_book_with_their_real_counts() {
         let books = hand_authored_feat_tables();
-        assert_eq!(books.len(), 12);
+        assert_eq!(books.len(), 17);
         assert_eq!(books[0].rule_set, RuleSetId::Crb);
         assert_eq!(books[0].entries.len(), 185);
         assert_eq!(books[1].rule_set, RuleSetId::Apg);
@@ -1033,12 +1048,25 @@ mod tests {
         // comment on why an empty entry is still filed here.
         assert_eq!(books[11].rule_set, RuleSetId::Ce);
         assert_eq!(books[11].entries.len(), 0);
+        // `SD31-E6-F8-002` -- five more books, each already compiled for
+        // another kind, given an empty hand-authored feat slice so their real
+        // `*_feats.lst` rows can join via `feat_gap_rows_for` below.
+        assert_eq!(books[12].rule_set, RuleSetId::Ha);
+        assert_eq!(books[12].entries.len(), 0);
+        assert_eq!(books[13].rule_set, RuleSetId::Isr);
+        assert_eq!(books[13].entries.len(), 0);
+        assert_eq!(books[14].rule_set, RuleSetId::Oa);
+        assert_eq!(books[14].entries.len(), 0);
+        assert_eq!(books[15].rule_set, RuleSetId::Iswg);
+        assert_eq!(books[15].entries.len(), 0);
+        assert_eq!(books[16].rule_set, RuleSetId::MonsterCodex);
+        assert_eq!(books[16].entries.len(), 0);
 
         let total: usize = books.iter().map(|book| book.entries.len()).sum();
         assert_eq!(
             total,
             1578,
-            "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA + 104 UI + 135 UW + 261 UC + 144 UM + 221 UPsi + 0 Ce"
+            "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA + 104 UI + 135 UW + 261 UC + 144 UM + 221 UPsi + 0 Ce + 0 Ha + 0 Isr + 0 Oa + 0 Iswg + 0 MonsterCodex"
         );
     }
 
@@ -1062,10 +1090,12 @@ mod tests {
         }
         let total: usize = joined.iter().map(|book| book.entries.len()).sum();
         assert_eq!(
-            total, 1661,
-            "1578 hand-authored + 83 corpus gap rows (1 CRB, 15 core_essentials \
-             (SD31-E6-F8-001, re-bucketed off Crb), 48 ARG, 12 UM, 3 UI, 2 UC, \
-             1 UPsi, 1 UW)"
+            total, 1903,
+            "1578 hand-authored + 325 corpus gap rows: the original 83 \
+             (SD31-E6-F8-001: 1 CRB, 15 core_essentials, 48 ARG, 12 UM, 3 UI, \
+             2 UC, 1 UPsi, 1 UW) + 242 more from five books already compiled \
+             for another kind that had no feat table at all (SD31-E6-F8-002: \
+             61 Ha, 50 Isr, 68 Oa, 31 Iswg, 32 MonsterCodex)"
         );
     }
 
@@ -1185,11 +1215,12 @@ mod tests {
             .count();
         // Over the JOINED catalog, deliberately: this total is the one a
         // prerequisite consumer actually faces. 1429 of the 1578
-        // hand-authored records, plus 63 of the 83 corpus gap rows — the gap
-        // rows carry their own `PRE`-family tokens verbatim, so they are
-        // gated by `feat_prereqs` exactly like every other record rather
-        // than being offered unconditionally.
-        assert_eq!(total, 1492, "1492 of the joined catalog's 1661 records have a prerequisite");
+        // hand-authored records, plus 63 of the original 83 corpus gap rows,
+        // plus 223 of the 242 rows `SD31-E6-F8-002` added — the gap rows
+        // carry their own `PRE`-family tokens verbatim, so they are gated by
+        // `feat_prereqs` exactly like every other record rather than being
+        // offered unconditionally.
+        assert_eq!(total, 1715, "1715 of the joined catalog's 1903 records have a prerequisite");
     }
 
     /// `Some(&[])` must never reach a consumer: an empty slice would read
@@ -1582,14 +1613,41 @@ mod tests {
         //   Hunter animal-focus feat ACG prints; Ultimate Wilderness reprints
         //   it because it is the book that expands animal focus.
         //
-        // Pinned exactly, so a THIRD collision — which might well be two
-        // different feats sharing a name — still fails here.
+        // `SD31-E6-F8-002` adds three more, and NONE of them is a reprint —
+        // each is two genuinely DIFFERENT feats that happen to share a
+        // display name, verified against both corpus records' own `DESC:`/
+        // `BENEFIT:` text (Decision 10's "a shared NAME is not a duplicate"
+        // guard, checked here even though this lane is not the Supersession
+        // Register):
+        //
+        // * `Returning Throw` — `up_feats.lst` (Ultimate Psionics, TYPE
+        //   `Psionic.MarksmanBonus`): "Thrown weapons return to your hand."
+        //   `isr_feats.lst` (Inner Sea Races, TYPE `Combat.Teamwork`,
+        //   `PRERACE:1,RACESUBTYPE=Goblinoid`): a goblinoid-only teamwork
+        //   feat about catching an ally's missed thrown weapon. Different
+        //   mechanics, different prerequisites, different books.
+        // * `Desert Dweller` — `uw_feats.lst` (Ultimate Wilderness,
+        //   `PREABILITY:...Favored Terrain ~ Desert`) vs `iswg_feats.lst`
+        //   (Inner Sea World Guide, `PRESKILL:Survival=1`+`PRESTAT:CON=13`,
+        //   no Favored Terrain requirement at all). Different prerequisite
+        //   structure, different `BENEFIT:` text.
+        // * `Strangler` — `uc_feats.lst` (Ultimate Combat, grapple/sneak-
+        //   attack feat: "spend a swift action to deal your sneak attack
+        //   damage") vs `mc_feats.lst` (Monster Codex, lasso feat: "choke
+        //   foes with a lasso"). Unrelated combat maneuvers.
+        //
+        // Pinned exactly, so a further collision — reprint or coincidence —
+        // still fails here until it too is checked against its own corpus
+        // text.
         assert_eq!(
             collide(all_feat_tables()),
             vec![
                 ("Endurance", RuleSetId::Crb, RuleSetId::Pu),
                 ("Extended Animal Focus", RuleSetId::Acg, RuleSetId::Uw),
                 ("Feral Combat Training", RuleSetId::Uc, RuleSetId::Upsi),
+                ("Returning Throw", RuleSetId::Upsi, RuleSetId::Isr),
+                ("Desert Dweller", RuleSetId::Uw, RuleSetId::Iswg),
+                ("Strangler", RuleSetId::Uc, RuleSetId::MonsterCodex),
             ]
         );
 

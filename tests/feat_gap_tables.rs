@@ -73,6 +73,15 @@ const REPRESENTATIVES: &[(RuleSetId, &str)] = &[
     (RuleSetId::Um, "Skill Focus Intimidate"),
     (RuleSetId::Upsi, "Feral Combat Training"),
     (RuleSetId::Uw, "Extended Animal Focus"),
+    // Five books already compiled for another kind (race_trait/monster) that
+    // never had a feat table at all (`SD31-E6-F8-002`) -- `feat_key_absent_
+    // from_catalog` for every one of their feat units, not `no_compiled_
+    // rule_set_for_book`, because `COMPILED_RULE_SETS` already names them.
+    (RuleSetId::Ha, "Absorb Spirit"),
+    (RuleSetId::Isr, "Alien Mindpaths"),
+    (RuleSetId::Oa, "Alter Binary Mindscape"),
+    (RuleSetId::Iswg, "Altitude Affinity"),
+    (RuleSetId::MonsterCodex, "Angelbane Strike"),
 ];
 
 #[test]
@@ -155,11 +164,12 @@ fn the_gap_rows_are_exactly_the_joined_catalog_minus_the_hand_authored_one() {
     );
     let added = joined.len() - hand.len();
     assert_eq!(
-        added, 83,
-        "the gap lane is 83 rows: the 84 `not-ingested` feat units \
-         `docs/work-inventory.json` reported before it landed, MINUS the one \
-         `.MOD` overlay documented by \
-         `the_one_not_ingested_feat_unit_this_lane_deliberately_does_not_close`"
+        added, 325,
+        "the gap lane is 325 rows: 83 from the original 7-book lane \
+         (`SD31-E6-F8-001`) + 242 from the five books `SD31-E6-F8-002` added \
+         (horror_adventures 61 + inner_sea_races 50 + occult_adventures 68 + \
+         inner_sea_world_guide 31 + monster_codex 32), verbatim from \
+         `gen_feat_gap_tables`'s own stdout at the pinned oracle"
     );
 }
 

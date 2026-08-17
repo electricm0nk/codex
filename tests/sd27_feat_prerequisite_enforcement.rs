@@ -179,48 +179,53 @@ fn every_pre_kind_in_the_catalog_is_either_modelled_or_declared_unmodelled() {
 #[test]
 fn the_pre_kind_census_is_the_real_one() {
     let expected: BTreeMap<String, usize> = [
-        // Full census, re-derived after SD28-E29 added Ultimate Psionics'
-        // 221 feats -- no new PRE kind (checked directly, breaking the
-        // every-book-adds-one streak UC/UM held).
+        // Full census, re-derived after `SD31-E6-F8-002`'s five-book feat
+        // gap lane (2026-08-16) -- 3 new PRE kinds arrived
+        // (`PRELEVELMAX`/`PRESIZEEQ`/`PRESPELLSCHOOL`, all declared
+        // unmodelled in `pre_tokens.rs`), and every existing kind's count
+        // moved with the 242 new gap rows' own `PRE`-family tokens.
         ("!PREABILITY", 35),
         ("!PREALIGN", 6),
-        ("PREABILITY", 1272),
-        ("PREALIGN", 16),
+        ("PREABILITY", 1444),
+        ("PREALIGN", 26),
         ("PRECHECKBASE", 2),
-        ("PRECLASS", 110),
-        ("PREDEITY", 1),
+        ("PRECLASS", 130),
+        ("PREDEITY", 2),
         ("PREDEITYALIGN", 2),
         ("PREDOMAIN", 5),
         ("PREDR", 1),
-        ("PREFACT", 214),
+        ("PREFACT", 243),
         ("PREHANDSGTEQ", 1),
         ("PREHD", 9),
-        ("PRELEVEL", 39),
-        ("PREMOVE", 4),
-        ("PREMULT", 363),
-        ("PREPCLEVEL", 6),
+        ("PRELEVEL", 40),
+        ("PRELEVELMAX", 2),
+        ("PREMOVE", 5),
+        ("PREMULT", 385),
+        ("PREPCLEVEL", 12),
         ("PREPROFWITHARMOR", 5),
         ("PREPROFWITHSHIELD", 9),
-        ("PRERACE", 36),
+        ("PRERACE", 41),
         ("PRERULE", 4),
-        ("PRESIZEGTEQ", 2),
+        ("PRESIZEEQ", 2),
+        ("PRESIZEGTEQ", 3),
         ("PRESIZELTEQ", 7),
-        ("PRESKILL", 288),
-        ("PRESPELL", 34),
-        ("PRESPELLCAST", 4),
+        ("PRESKILL", 336),
+        ("PRESPELL", 38),
+        ("PRESPELLCAST", 12),
         ("PRESPELLDESCRIPTOR", 2),
+        ("PRESPELLSCHOOL", 1),
         ("PRESPELLSCHOOLSUB", 2),
-        ("PRESPELLTYPE", 11),
-        ("PRESTAT", 221),
-        ("PRETEXT", 59),
-        ("PRETOTALAB", 341),
-        ("PREVAREQ", 11),
+        ("PRESPELLTYPE", 12),
+        ("PRESTAT", 242),
+        ("PRETEXT", 146),
+        ("PRETOTALAB", 365),
+        ("PREVAREQ", 12),
         ("PREVARGT", 9),
-        ("PREVARGTEQ", 761),
+        ("PREVARGTEQ", 802),
         ("PREVARLT", 3),
         ("PREVARLTEQ", 1),
         ("PREVISION", 2),
-        ("PREWEAPONPROF", 16),
+        ("PREWEAPONPROF", 19),
     ]
     .into_iter()
     .map(|(kind, count)| (kind.to_owned(), count))
@@ -228,26 +233,27 @@ fn the_pre_kind_census_is_the_real_one() {
 
     assert_eq!(catalog_kind_census(), expected);
 
-    // Prerequisite clauses across 37 distinct kinds (was 3,805/35 before the
-    // corpus feat gap lane's 83 rows; 3,713 of them modelled). `PREHANDSGTEQ` and `PRESIZEGTEQ` are
-    // the two kinds those rows introduced: `PRESIZEGTEQ` is now evaluated by
-    // the same arm as `PRESIZELTEQ` (the size fact was already in hand), and
-    // `PREHANDSGTEQ` is declared unmodelled with its reason rather than
-    // guessed at. The kind-by-kind values above are pinned
-    // as-observed; see `MODELLED_KINDS`/`UNMODELLED_KINDS` for which of
-    // them carry a real evaluation arm versus a named reason for staying
-    // unmodelled, and `pre_tokens.rs`'s own `ClauseOutcome::Informational`
-    // arm for `PRETEXT:`'s own third category. Total computed from the
-    // map itself, not hand-summed (decisions.md §43's own lesson: a
-    // hand-summed total was wrong once already this session).
+    // Prerequisite clauses across 40 distinct kinds (was 37/3,914 with
+    // 3,713 modelled before `SD31-E6-F8-002`'s five-book feat gap lane; that
+    // cycle in turn was 35/3,805 before the original 83-row gap lane).
+    // `PRELEVELMAX`/`PRESIZEEQ`/`PRESPELLSCHOOL` are the three kinds this
+    // cycle introduced, all declared unmodelled with a stated reason rather
+    // than guessed at (`pre_tokens.rs`'s `UNMODELLED_KINDS`). The kind-by-
+    // kind values above are pinned as-observed; see
+    // `MODELLED_KINDS`/`UNMODELLED_KINDS` for which of them carry a real
+    // evaluation arm versus a named reason for staying unmodelled, and
+    // `pre_tokens.rs`'s own `ClauseOutcome::Informational` arm for
+    // `PRETEXT:`'s own third category. Total computed from the map itself,
+    // not hand-summed (decisions.md §43's own lesson: a hand-summed total
+    // was wrong once already this session).
     let total: usize = expected.values().sum();
-    assert_eq!(total, 3914);
+    assert_eq!(total, 4425);
     let modelled: usize = expected
         .iter()
         .filter(|(kind, _)| MODELLED_KINDS.contains(&kind.trim_start_matches('!')))
         .map(|(_, count)| *count)
         .sum();
-    assert_eq!(modelled, 3713);
+    assert_eq!(modelled, 4103);
 }
 
 /// 599 of the catalog's 690 records carry at least one prerequisite -- the
@@ -263,9 +269,10 @@ fn the_number_of_records_carrying_any_prerequisite_is_the_real_one() {
     // `PRETEXT:` prerequisite entry -- see `feats_all::UCA_FEAT_PREREQUISITES`)
     // + 98 of UI's 104 records (real `PRE`-family tokens, gathered directly
     // at ingest -- see `ultimate_intrigue::feat_tables`'s own doc comment).
-    // + 63 of the 83 corpus gap rows, whose `PRE`-family tokens the gap
-    // generator carries verbatim off the corpus record.
-    assert_eq!(with_any, 1492, "of 1661");
+    // + 63 of the original 83 corpus gap rows + 223 of `SD31-E6-F8-002`'s 242
+    // more, whose `PRE`-family tokens the gap generator carries verbatim off
+    // the corpus record.
+    assert_eq!(with_any, 1715, "of 1903");
 }
 
 // ---------------------------------------------------------------------------
@@ -462,7 +469,7 @@ fn every_ineligible_feat_states_a_reason_for_every_build() {
         let level = input.chosen.class_levels[0].level;
         let facts = character_prereq_facts(input, i16::from(level));
         let reports = evaluate_every_catalog_feat(&facts);
-        assert_eq!(reports.len(), 1661);
+        assert_eq!(reports.len(), 1903);
         for report in &reports {
             if report.is_eligible {
                 assert_eq!(report.unavailable_reason(), None);
