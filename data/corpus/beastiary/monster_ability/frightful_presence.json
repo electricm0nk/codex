@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:26:26Z",
+  "data": {
+    "corpus_key": "Frightful Presence",
+    "delivery": "Extraordinary",
+    "description": "Your very presence unsettling to foes. Activating this ability is a free action that is usually part of an attack or charge. Opponents within range who witness the action may become frightened or shaken. The range is %1 feet, and the duration is usually 5d6 rounds. This ability affects only opponents with fewer Hit Dice or levels than the creature has. An affected opponent can resist the effects with a successful Will save (DC %2). On a failed save, the opponent is shaken, or panicked if 4 HD or fewer. An opponent that succeeds on the saving throw is immune to your frightful presence for 24 hours. Frightful presence is a mind-affecting fear effect.",
+    "description_variables": [
+      "FrightfulPresenceRange",
+      "FrightfulPresenceDC"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:frightful_presence",
+    "name": "Frightful Presence",
+    "owners": [
+      "beastiary:monster:tarrasque"
+    ],
+    "source_page": "p.300",
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1378,
+    "record_key": "Frightful Presence"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

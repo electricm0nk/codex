@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:26:26Z",
+  "data": {
+    "corpus_key": "Rock Catching",
+    "delivery": "Extraordinary",
+    "description": "You can catch Small, Medium, or Large rocks (or projectiles of similar shape). Once per round, if you would normally be hit by a rock, you can make a Reflex save to catch it as a free action. The DC is 15 for a Small rock, 20 for a Medium one, and 25 for a Large one. (If the projectile provides a magical bonus on attack rolls, the DC increases by that amount.) You must be aware of the attack in order to make a rock catching attempt.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:rock_catching",
+    "name": "Rock Catching",
+    "owners": [
+      "beastiary:monster:giant_cloud",
+      "beastiary:monster:giant_fire",
+      "beastiary:monster:giant_frost",
+      "beastiary:monster:giant_hill",
+      "beastiary:monster:giant_storm"
+    ],
+    "source_page": "p.303",
+    "traits": [
+      "Defensive"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1509,
+    "record_key": "Rock Catching"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

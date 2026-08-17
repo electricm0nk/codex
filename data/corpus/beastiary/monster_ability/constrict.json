@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:26:26Z",
+  "data": {
+    "corpus_key": "Constrict",
+    "delivery": "Extraordinary",
+    "description": "You can crush an opponent, dealing %1d%2+%3 bludgeoning damage, when you make a successful grapple check (in addition to any other effects caused by a successful check, including additional damage).",
+    "description_variables": [
+      "ConstrictDice",
+      "ConstrictDieSize",
+      "ConstrictBonusDamage"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:constrict",
+    "name": "Constrict",
+    "owners": [
+      "beastiary:monster:azata_lillend",
+      "beastiary:monster:behir",
+      "beastiary:monster:black_pudding",
+      "beastiary:monster:chuul",
+      "beastiary:monster:couatl",
+      "beastiary:monster:crab_giant",
+      "beastiary:monster:crab_giant_king",
+      "beastiary:monster:crab_giant_coconut",
+      "beastiary:monster:crab_giant_rock",
+      "beastiary:monster:crab_giant_shark_eating",
+      "beastiary:monster:crab_giant_reef",
+      "beastiary:monster:crab_giant_shipwrecker",
+      "beastiary:monster:demon_marilith",
+      "beastiary:monster:devil_pit_fiend",
+      "beastiary:monster:froghemoth",
+      "beastiary:monster:gray_ooze",
+      "beastiary:monster:gray_ooze_id_ooze",
+      "beastiary:monster:kraken",
+      "beastiary:monster:linnorm_crag",
+      "beastiary:monster:linnorm_ice",
+      "beastiary:monster:linnorm_tarn",
+      "beastiary:monster:mimic",
+      "beastiary:monster:octopus_giant",
+      "beastiary:monster:otyugh",
+      "beastiary:monster:salamander",
+      "beastiary:monster:scorpion_greensting",
+      "beastiary:monster:scorpion_ghost",
+      "beastiary:monster:scorpion_cave",
+      "beastiary:monster:scorpion_giant",
+      "beastiary:monster:scorpion_deadfall",
+      "beastiary:monster:scorpion_giant_emperor",
+      "beastiary:monster:scorpion_black",
+      "beastiary:monster:sea_serpent",
+      "beastiary:monster:shambling_mound",
+      "beastiary:monster:shoggoth",
+      "beastiary:monster:snake_constrictor",
+      "beastiary:monster:squid_giant"
+    ],
+    "source_page": "p.298",
+    "traits": [
+      "AttackOption"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1339,
+    "record_key": "Constrict"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:26:26Z",
+  "data": {
+    "corpus_key": "Immunity to Cold",
+    "delivery": "Extraordinary",
+    "description": "You never take cold damage.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:immunity_to_cold",
+    "name": "Immunity to Cold",
+    "owners": [
+      "beastiary:monster:demon_shadow",
+      "beastiary:monster:devil_ice",
+      "beastiary:monster:giant_frost",
+      "beastiary:monster:golem_ice",
+      "beastiary:monster:gray_ooze",
+      "beastiary:monster:gray_ooze_crystal_ooze",
+      "beastiary:monster:gray_ooze_id_ooze",
+      "beastiary:monster:kraken",
+      "beastiary:monster:linnorm_ice",
+      "beastiary:monster:night_hag",
+      "beastiary:monster:remorhaz",
+      "beastiary:monster:sea_serpent",
+      "beastiary:monster:shoggoth",
+      "beastiary:monster:xorn"
+    ],
+    "source_page": "p.301",
+    "traits": [
+      "Immunity"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1390,
+    "record_key": "Immunity to Cold"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

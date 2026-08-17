@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:26:26Z",
+  "data": {
+    "corpus_key": "Magical Beast Traits Output",
+    "delivery": "Extraordinary",
+    "description": "Magical beasts breathe, eat, and sleep.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:magical_beast_traits_output",
+    "name": "Magical Beast Traits Output",
+    "owners": [
+      "beastiary:monster:eagle_giant",
+      "beastiary:monster:tarrasque"
+    ],
+    "source_page": "p.308",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1747,
+    "record_key": "Magical Beast Traits Output"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

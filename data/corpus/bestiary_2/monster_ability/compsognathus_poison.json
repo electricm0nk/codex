@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:26:27Z",
+  "data": {
+    "corpus_key": "Compsognathus ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Bite - injury; save Fort DC %1; frequency 1/round for 4 rounds; effect 1d2 Str; cure 1 save.",
+    "description_variables": [
+      "CompsognathusPoisonDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:compsognathus_poison",
+    "name": "Poison",
+    "owners": [
+      "bestiary_2:monster:dinosaur_compsognathus"
+    ],
+    "source_page": "p.90",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 2038,
+    "record_key": "Compsognathus ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

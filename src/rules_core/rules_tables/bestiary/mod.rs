@@ -141,11 +141,19 @@ mod tests {
     use crate::rules_core::rules_tables::{beastiary1, RuleSetId};
 
     /// What ships is the book's complement, less its overlay rows: 280 of 330
-    /// monster rows and 323 of 523 ability rows.
+    /// monster rows and (**corrected `SD31-E6-F9-005`**, was 323) 399 of 523
+    /// ability rows -- the transcriber used to `raise SystemExit` the instant
+    /// it found ANY owned ability row with a `parse_desc`-unmodelled
+    /// multi-`DESC:` shape (3 such rows, `OPEN-ISSUES.md` row 157), crashing
+    /// the WHOLE book's transcription and silently capping this table at 323
+    /// even though 76 MORE owned, cleanly-parseable ability rows existed. The
+    /// fix drops only the 3 ambiguous rows (named in this book's own module
+    /// doc comment above), the same treatment a Product Identity row already
+    /// gets, and the other 76 now ship for real.
     #[test]
     fn the_chassis_ships_the_books_complement() {
         assert_eq!(monsters().len(), 280);
-        assert_eq!(monster_abilities().len(), 323);
+        assert_eq!(monster_abilities().len(), 399);
     }
 
     /// The four `.MOD`-only overlay rows are not records, pinned by the corpus
@@ -162,25 +170,30 @@ mod tests {
         }
     }
 
-    /// The shipped total is the classifier's `reachable remainder` less the
-    /// cross-table-owner class, spelled as the arithmetic rather than as a bare
-    /// `607` so a divergence says which term moved.
+    /// The shipped total, pinned directly rather than re-derived through
+    /// `classify_monster_ability_rows.py`'s own arithmetic.
+    ///
+    /// **CORRECTED `SD31-E6-F9-005`.** The prior version of this test derived
+    /// 603 from `807 (classifier "remaining") - 146 orphans - 54 cross-table
+    /// - 4 .MOD overlays`. Re-deriving that formula against `SD31-E6-F9-005`'s
+    /// own fix (which unblocked 76 more real ability rows, `679` total)
+    /// surfaced a genuine, previously-unknown limitation in the classifier
+    /// script itself: `classify_monster_ability_rows.py` computes its
+    /// `row-named`/`prefix` "reachable" counts purely from a monster's own
+    /// `ABILITY:`/prefix token, with NO awareness of `CROSS_TABLE_MONSTER_
+    /// RECORDS` -- so it counts an ability as reachable even when its
+    /// OWNING monster (e.g. `Ankheg`, one of SD-22's 46 `beastiary1`-served
+    /// monsters) is one this chassis deliberately does not ship
+    /// (`decisions.md §58.3`). Corpus-wide re-check: of the classifier's 135
+    /// `row-named`+`prefix` units for this book, exactly 59 are owned only
+    /// through a cross-table monster and the transcriber correctly does NOT
+    /// ship them (135 - 59 = 76, exactly this fix's own measured delta) --
+    /// `OPEN-ISSUES.md` names the classifier gap as its own follow-up. The
+    /// arithmetic-derivation shape this test used is retired in favor of a
+    /// direct pin, which cannot silently inherit the same blind spot again.
     #[test]
-    fn the_shipped_total_is_the_classifiers_reachable_remainder_less_the_cross_table_class() {
-        // `807 remaining units - 146 orphans`; the classifier's `PI` and
-        // `.COPY=` terms are both 0 for this book and are stated here rather
-        // than written as `- 0`, which `clippy`'s `identity_op` rejects.
-        let classifier_reachable = 807 - 146;
-        // The classifier's monster column already excludes the 46 the other
-        // table holds, so only the 54 abilities they own are subtracted here;
-        // the 4 `.MOD` overlays are its own over-count.
-        let cross_table_abilities = 54;
-        let mod_only_overlays = 4;
-        assert_eq!(
-            monsters().len() + monster_abilities().len(),
-            classifier_reachable - cross_table_abilities - mod_only_overlays
-        );
-        assert_eq!(monsters().len() + monster_abilities().len(), 603);
+    fn the_shipped_total_is_the_books_real_measured_count() {
+        assert_eq!(monsters().len() + monster_abilities().len(), 679);
     }
 
     /// **The ruling, as a test.** Not one creature is served twice. This is the

@@ -1,0 +1,41 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:26:27Z",
+  "data": {
+    "corpus_key": "Magma Elemental ~ Lava Puddle",
+    "delivery": "Supernatural",
+    "description": "Once per day as a full-round action, a magma elemental can vomit forth a puddle of lava (Pathfinder RPG Core Rulebook 444) that fills its space to a depth of 2-3 inches and counts as difficult terrain.  Any creature that moves through this puddle of lava takes 2d6 points of fire damage.  This damage continues for 1d3 rounds after the creature leaves the lava pool, although then it only inflicts 1d6 points of fire damage per round.  The lava puddle solidifies and is safe to touch after %1 rounds.  At the GM's discretion, this puddle of lava could start secondary fires.",
+    "description_variables": [
+      "TL"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:magma_elemental_lava_puddle",
+    "name": "Lava Puddle",
+    "owners": [
+      "bestiary_2:monster:elemental_magma_small",
+      "bestiary_2:monster:elemental_magma_medium",
+      "bestiary_2:monster:elemental_magma_large",
+      "bestiary_2:monster:elemental_magma_huge",
+      "bestiary_2:monster:elemental_magma_greater",
+      "bestiary_2:monster:elemental_magma_elder"
+    ],
+    "source_page": "p.118",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 2134,
+    "record_key": "Magma Elemental ~ Lava Puddle"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

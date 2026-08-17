@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:26:26Z",
+  "data": {
+    "corpus_key": "Light Blindness",
+    "delivery": "Extraordinary",
+    "description": "You are blinded for 1 round if exposed to bright light, such as sunlight or the daylight spell. You are dazzled as long as you remain in areas of bright light.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:light_blindness",
+    "name": "Light Blindness",
+    "owners": [
+      "beastiary:monster:dark_stalker"
+    ],
+    "source_page": "p.301",
+    "traits": [
+      "Weakness"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1444,
+    "record_key": "Light Blindness"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

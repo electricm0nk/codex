@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:26:26Z",
+  "data": {
+    "corpus_key": "Rend",
+    "delivery": "Extraordinary",
+    "description": "If you hit with two or more natural attacks in 1 round, you can cause tremendous damage (%1d%2+%3) by latching onto the opponent's body and tearing flesh. This attack deals an additional amount of damage, but no more than once per round.",
+    "description_variables": [
+      "RendDamageDice",
+      "RendDamageDieSize",
+      "RendBonusDamage"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:rend",
+    "name": "Rend",
+    "owners": [
+      "beastiary:monster:ape_dire",
+      "beastiary:monster:girallon",
+      "beastiary:monster:troll",
+      "beastiary:monster:troll_scrag",
+      "beastiary:monster:yeti"
+    ],
+    "source_page": "p.303",
+    "traits": [
+      "AttackOption"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1492,
+    "record_key": "Rend"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

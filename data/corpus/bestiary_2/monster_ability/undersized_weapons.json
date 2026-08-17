@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:26:27Z",
+  "data": {
+    "corpus_key": "Undersized Weapons",
+    "delivery": "Extraordinary",
+    "description": "The creature uses manufactured weapons as if it were one size category smaller than the creature's actual size.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:undersized_weapons",
+    "name": "Undersized Weapons",
+    "owners": [
+      "bestiary_2:monster:lamia_matriarch",
+      "bestiary_2:monster:scylla"
+    ],
+    "source_page": "p.303",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1960,
+    "record_key": "Undersized Weapons"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

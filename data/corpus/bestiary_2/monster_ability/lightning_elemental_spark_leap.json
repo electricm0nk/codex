@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:26:27Z",
+  "data": {
+    "corpus_key": "Lightning Elemental ~ Spark Leap",
+    "delivery": "Extraordinary",
+    "description": "A lightning elemental gains a +10 bonus on bull rush, disarm, overrun, and trip attacks when it charges a creature against whom its metal mastery ability applies.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:lightning_elemental_spark_leap",
+    "name": "Spark Leap",
+    "owners": [
+      "bestiary_2:monster:elemental_lightning_small",
+      "bestiary_2:monster:elemental_lightning_medium",
+      "bestiary_2:monster:elemental_lightning_large",
+      "bestiary_2:monster:elemental_lightning_huge",
+      "bestiary_2:monster:elemental_lightning_greater",
+      "bestiary_2:monster:elemental_lightning_elder"
+    ],
+    "source_page": "p.116",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 2127,
+    "record_key": "Lightning Elemental ~ Spark Leap"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

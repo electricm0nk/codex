@@ -1,0 +1,42 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:26:26Z",
+  "data": {
+    "corpus_key": "Burn",
+    "delivery": "Extraordinary",
+    "description": "You deal fire damage in addition to damage dealt on a successful hit in melee. Those affected by the burn ability must also succeed on a Reflex (DC %1) save or catch fire, taking %2d%3 damage for an additional 1d4 rounds at the start of its turn. A burning creature can attempt a new save as a full-round action. Dropping and rolling on the ground grants a +4 bonus on this save. Creatures that hit a burning creature with natural weapons or unarmed attacks take fire damage as though hit by the burning creature and must make a Reflex save to avoid catching on fire.",
+    "description_variables": [
+      "BurnDC",
+      "BurnDamageDice",
+      "BurnDamageDieSize"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:burn",
+    "name": "Burn",
+    "owners": [
+      "beastiary:monster:elemental_fire_medium",
+      "beastiary:monster:elemental_fire_large",
+      "beastiary:monster:elemental_fire_huge",
+      "beastiary:monster:elemental_fire_greater",
+      "beastiary:monster:elemental_fire_elder"
+    ],
+    "source_page": "p.298",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1327,
+    "record_key": "Burn"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

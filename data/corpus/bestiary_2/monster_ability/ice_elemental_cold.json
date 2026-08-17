@@ -1,0 +1,41 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:26:27Z",
+  "data": {
+    "corpus_key": "Ice Elemental ~ Cold",
+    "delivery": "Supernatural",
+    "description": "An ice elemental's slam does an additional %1d%2 cold damage.",
+    "description_variables": [
+      "ColdDamageDice",
+      "ColdDamageDieSize"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:ice_elemental_cold",
+    "name": "Cold",
+    "owners": [
+      "bestiary_2:monster:elemental_ice_small",
+      "bestiary_2:monster:elemental_ice_medium",
+      "bestiary_2:monster:elemental_ice_large",
+      "bestiary_2:monster:elemental_ice_huge",
+      "bestiary_2:monster:elemental_ice_greater",
+      "bestiary_2:monster:elemental_ice_elder"
+    ],
+    "source_page": "p.114",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 2122,
+    "record_key": "Ice Elemental ~ Cold"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

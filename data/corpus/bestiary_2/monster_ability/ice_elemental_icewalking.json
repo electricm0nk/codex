@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:26:27Z",
+  "data": {
+    "corpus_key": "Ice Elemental ~ Icewalking",
+    "delivery": "Extraordinary",
+    "description": "This ability works like the spider climb spell, but the surfaces the elemental climbs must be icy.  The elemental can move across icy surfaces without penalty and does not need to make Acrobatics checks to run or charge on ice.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:ice_elemental_icewalking",
+    "name": "Icewalking",
+    "owners": [
+      "bestiary_2:monster:elemental_ice_small",
+      "bestiary_2:monster:elemental_ice_medium",
+      "bestiary_2:monster:elemental_ice_large",
+      "bestiary_2:monster:elemental_ice_huge",
+      "bestiary_2:monster:elemental_ice_greater",
+      "bestiary_2:monster:elemental_ice_elder"
+    ],
+    "source_page": "p.114",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 2119,
+    "record_key": "Ice Elemental ~ Icewalking"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

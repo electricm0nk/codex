@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:26:26Z",
+  "data": {
+    "corpus_key": "Web",
+    "delivery": "Extraordinary",
+    "description": "You can use webs to support yourself and up to one additional creature of the same size. In addition, you can throw a web up to eight times per day. This is similar to an attack with a net but has a maximum range of 50 feet, with a range increment of 10 feet, and is effective against targets up to one size category larger than you. An entangled creature can escape with a successful Escape Artist check (DC %1) or burst the web with a Strength check (DC %1). Attempts to burst a web by those caught in it suffer a -4 penalty. Web spinners can create sheets of sticky webbing up to three times their size. They usually position these sheets to snare flying creatures but can also try to trap prey on the ground. Approaching creatures must succeed on a DC 20 Perception check to notice a web; otherwise they stumble into it and become trapped as though by a successful web attack. Attempts to escape or burst the webbing gain a +5 bonus if the trapped creature has something to walk on or grab while pulling free. A creature can move across its own web at its climb speed and can pinpoint the location of any creature touching its web.",
+    "description_variables": [
+      "WebDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:web",
+    "name": "Web",
+    "owners": [
+      "beastiary:monster:bebilith"
+    ],
+    "source_page": "p.305",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
+    "line": 1549,
+    "record_key": "Web"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}
