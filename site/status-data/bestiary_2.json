@@ -1,0 +1,6360 @@
+{
+  "id": "bestiary_2",
+  "title": "Bestiary 2",
+  "kinds": [
+    {
+      "kind": "companion",
+      "label": "Companions",
+      "done": 4,
+      "denominator": 16,
+      "pct": 25.0,
+      "items": [
+        {
+          "name": "Familiar (Arbiter)",
+          "doneness": "held",
+          "type_facet": "Companion.Familiar.Outsider"
+        },
+        {
+          "name": "Familiar (Brownie)",
+          "doneness": "held",
+          "type_facet": "Companion.Familiar.Fey"
+        },
+        {
+          "name": "Familiar (Cacodaemon)",
+          "doneness": "held",
+          "type_facet": "Companion.Familiar.Outsider"
+        },
+        {
+          "name": "Familiar (Cassisian)",
+          "doneness": "held",
+          "type_facet": "Companion.Familiar.Outsider"
+        },
+        {
+          "name": "Familiar (Compsognathus)",
+          "doneness": "done",
+          "type_facet": "Companion.Familiar.Animal"
+        },
+        {
+          "name": "Familiar (Cythnigot)",
+          "doneness": "done",
+          "type_facet": "Companion.Familiar.Outsider"
+        },
+        {
+          "name": "Familiar (Elemental (Ice/Small))",
+          "doneness": "held",
+          "type_facet": "Companion.Familiar.Outsider"
+        },
+        {
+          "name": "Familiar (Elemental (Lightning/Small))",
+          "doneness": "held",
+          "type_facet": "Companion.Familiar.Outsider"
+        },
+        {
+          "name": "Familiar (Elemental (Magma/Small))",
+          "doneness": "held",
+          "type_facet": "Companion.Familiar.Outsider"
+        },
+        {
+          "name": "Familiar (Elemental (Mud/Small))",
+          "doneness": "held",
+          "type_facet": "Companion.Familiar.Outsider"
+        },
+        {
+          "name": "Familiar (Lyrakien)",
+          "doneness": "held",
+          "type_facet": "Companion.Familiar.Outsider"
+        },
+        {
+          "name": "Familiar (Paracletus)",
+          "doneness": "held",
+          "type_facet": "Companion.Familiar.Outsider"
+        },
+        {
+          "name": "Familiar (Silvanshee)",
+          "doneness": "done",
+          "type_facet": "Companion.Familiar.Outsider"
+        },
+        {
+          "name": "Familiar (Snapping Turtle)",
+          "doneness": "held",
+          "type_facet": "Companion.Familiar.Animal"
+        },
+        {
+          "name": "Familiar (Voidworm)",
+          "doneness": "held",
+          "type_facet": "Companion.Familiar.Outsider"
+        },
+        {
+          "name": "Shell",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        }
+      ]
+    },
+    {
+      "kind": "equipment",
+      "label": "Equipment",
+      "done": 0,
+      "denominator": 8,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "Gaff",
+          "doneness": "not-started",
+          "type_facet": "PFSNotLegal"
+        },
+        {
+          "name": "Leprechaun Shillelagh",
+          "doneness": "not-started",
+          "type_facet": "PFSNotLegal"
+        },
+        {
+          "name": "Maul of the Titans",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Tool.Weapon.Martial.Melee.TwoHanded.Bludgeoning.Specific.Club.Hammer"
+        },
+        {
+          "name": "Maul of the Titans",
+          "doneness": "not-started",
+          "type_facet": "PFSNotLegal"
+        },
+        {
+          "name": "Rhoka Sword",
+          "doneness": "not-started",
+          "type_facet": "PFSNotLegal"
+        },
+        {
+          "name": "Rock (Huge)",
+          "doneness": "not-started",
+          "type_facet": "PFSNotLegal"
+        },
+        {
+          "name": "Rock (Korred)",
+          "doneness": "not-started",
+          "type_facet": "PFSNotLegal"
+        },
+        {
+          "name": "Royal Jelly",
+          "doneness": "not-started",
+          "type_facet": "PFSNotLegal"
+        }
+      ]
+    },
+    {
+      "kind": "monster_ability",
+      "label": "Monster Abilities",
+      "done": 360,
+      "denominator": 598,
+      "pct": 60.2,
+      "items": [
+        {
+          "name": "Ability Drain",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Absorb Flesh",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Abyssal Transformation",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Acid",
+          "doneness": "done",
+          "type_facet": "SpecialAttack"
+        },
+        {
+          "name": "Acid",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Acid",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Acid",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Acid",
+          "doneness": "done",
+          "type_facet": "SpecialAttack"
+        },
+        {
+          "name": "Acid",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Acid",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Acid Bite",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Acid Pellet",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Acid Sting",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Acidic Cloud",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Adamantine Claws",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Adaptive Strike",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Agile Grappler",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Aging Strike",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Air Walk",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.ModifyMovement"
+        },
+        {
+          "name": "Alchemy",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Alignment Variation",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "All-Around Vision",
+          "doneness": "not-started",
+          "type_facet": "Universal Monster Rule.SpecialQuality.Extraordinary.Defensive"
+        },
+        {
+          "name": "Amphibious",
+          "doneness": "not-started",
+          "type_facet": "Universal Monster Rule.SpecialQuality.Special Quality.Extraordinary"
+        },
+        {
+          "name": "Angled Entry",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Animated Hair",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Aquatic Adaptation",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Arcane Sight",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.Sense"
+        },
+        {
+          "name": "Armored Stomach",
+          "doneness": "held",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Attach",
+          "doneness": "not-started",
+          "type_facet": "Universal Monster Rule.SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Augmented Critical",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Aura of Courage/Fear Aura",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Spellike.Aura.EmotiveDuality"
+        },
+        {
+          "name": "Aura of Empathy/Apathy",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Spellike.Aura.EmotiveDuality"
+        },
+        {
+          "name": "Aura of Hope/Despair",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Spellike.Aura.EmotiveDuality"
+        },
+        {
+          "name": "Baleful Shriek",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Ball Lightning Breath",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Bardic Performance",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Belly Grease",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Black Bile",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Black Cloud",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Black Flame Knives",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Blightfire",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Blinding Gaze",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Blink",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Blood Drain",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Blood Drain",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Blood Overdose",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Blood Rage",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Blood Siphon",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Blur",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Bombs",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Boot Stomp",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Brain Collection",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Braincloud",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Bramble Jump",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Breath Weapon",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Breath Weapon",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Breath Weapon",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Breath Weapon",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Breath Weapon",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Breath Weapon",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Breath Weapon",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Breath Weapon",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Breath Weapon",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Breath Weapon",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Breath Weapon",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Breath Weapon",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Breath Weapon",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Breath Weapon",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Breath Weapons",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Breath of Flies",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Burble",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Burning Touch",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Camouflaged Step",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Capsize",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Capsize",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Capsize",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Capsize",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Captivating Cloud",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Captivating Lure",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Caster Link",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Cat's Luck",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Celestial Focus",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Chains",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Chameleon Skin",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Channel Energy",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Charisma Drain",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Chilling Blade",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Chupar",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Cloak of Chaos",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Cloud Breath",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Cloud Form",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Coalesce Chaos",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Cold",
+          "doneness": "held",
+          "type_facet": "SpecialAttack"
+        },
+        {
+          "name": "Cold",
+          "doneness": "held",
+          "type_facet": "SpecialAttack"
+        },
+        {
+          "name": "Cold",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Cold",
+          "doneness": "done",
+          "type_facet": "SpecialAttack"
+        },
+        {
+          "name": "Cold",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Cold",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Cold",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Cold",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Cold",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Cold",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Cold",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Cold",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Cold",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Cold Vigor",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Command Giant",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Companion Favored Terrain",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Compression",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Con Damage",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Con Drain",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Confusion",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Confusion",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Confusion",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Confusion Command",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Confusion Gaze",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Constrict",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Constructed",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Defensive.Extraordinary"
+        },
+        {
+          "name": "Contagion",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Coordinated Swarm",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Corporeal Instability",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Corrosive Blood",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary.Defensive"
+        },
+        {
+          "name": "Create Shadows",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Crippling Bite",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Critical Hits",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Crystalline Dust Form",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Cunning Reflexes",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Daemonic Pact",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Dance of Death",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Darting Charge",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Daylight Door",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Dazzling Brightness",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Dazzling Burst",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Deadly Embrace",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Death Burst",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Death Frenzy",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Death Gaze",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural.Gaze"
+        },
+        {
+          "name": "Death Throes",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Death Throes",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Death's Calling",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Death's Calling",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Death-Stealing Gaze",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Deathwatch",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.Sense"
+        },
+        {
+          "name": "Deformed Hand",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.OgrekinDisadvantageousDeformity"
+        },
+        {
+          "name": "Demon Hunter",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Desiccating Bite",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Destructive Harmonics",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Destructive Strike",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Detect Chaos",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.Sense"
+        },
+        {
+          "name": "Detect Evil",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.Sense"
+        },
+        {
+          "name": "Detect Good",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.Sense"
+        },
+        {
+          "name": "Detect Law",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.Sense"
+        },
+        {
+          "name": "Detect Magic",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.Sense"
+        },
+        {
+          "name": "Detect Poison",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.Sense"
+        },
+        {
+          "name": "Detect Snares and Pits",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.Sense"
+        },
+        {
+          "name": "Detect Thoughts",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.Sense"
+        },
+        {
+          "name": "Devour",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Devour Memories",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Devour Soul",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Dexterity Drain",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Discern Lies",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.Communicate"
+        },
+        {
+          "name": "Discorporate",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Disease",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Disease",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Disease",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Disease",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Disease",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Disease",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Disease",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Disease",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Disease",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Divine Insight",
+          "doneness": "held",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Double Damage Against Objects",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Drain Soul",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Draining Weapon",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Drawn to Service",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Dream Haunting",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Drowning Kiss",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Earth Glide",
+          "doneness": "not-started",
+          "type_facet": "Universal Monster Rule.SpecialQuality.Extraordinary.ModifyMovement"
+        },
+        {
+          "name": "Earth Mastery",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Earthquake",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Electric Slam",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Electrical Burst",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Electrical Jolt",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Electricity",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Electricity",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack"
+        },
+        {
+          "name": "Electricity",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack"
+        },
+        {
+          "name": "Electricity",
+          "doneness": "done",
+          "type_facet": "SpecialAttack"
+        },
+        {
+          "name": "Energy Drain",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Energy Drain",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Energy Drain",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Energy Touch",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Engulf",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Enslave Soul",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Entangling Chains",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Entrap",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Entrap",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Entropic Beams",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Entropic Shield",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Entropic Touch",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Envisaging",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.Communicate"
+        },
+        {
+          "name": "Explosion",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Extending Jaw",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Extension of All",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Eye Rays",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Faceless",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Fascinating Gaze",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Fast Swallow",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Fate Drain",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Fear",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Fear Gaze",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Fear Gaze",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Fiddle",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Find Target",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Fire",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Fire",
+          "doneness": "done",
+          "type_facet": "SpecialAttack"
+        },
+        {
+          "name": "Fire",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Fire Shield",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Fireball Breath",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Fists of Lightning and Thunder",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Fleshdrink",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Floating Disk",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Fluid Form",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Fly",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Flying Charge",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Force Bolt",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Foresight",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Fragile",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.OgrekinDisadvantageousDeformity"
+        },
+        {
+          "name": "Freedom of Movement",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.Defensive"
+        },
+        {
+          "name": "Freeze",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Freezing Mist Breath",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Frightener",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Gaseous",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Ghost Bane",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Glide",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.ModifyMovement.Supernatural"
+        },
+        {
+          "name": "Glow",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Godslayer",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Grab",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Grab",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Grab",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Grab",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.AttackOption"
+        },
+        {
+          "name": "Grab",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.AttackOption"
+        },
+        {
+          "name": "Grab",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.AttackOption"
+        },
+        {
+          "name": "Grab",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.AttackOption"
+        },
+        {
+          "name": "Grab",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.AttackOption"
+        },
+        {
+          "name": "Grab",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Grab",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.AttackOption"
+        },
+        {
+          "name": "Grab",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.AttackOption"
+        },
+        {
+          "name": "Grab",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.AttackOption"
+        },
+        {
+          "name": "Grab",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.AttackOption"
+        },
+        {
+          "name": "Grab",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.AttackOption"
+        },
+        {
+          "name": "Grab",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.AttackOption"
+        },
+        {
+          "name": "Grab",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.AttackOption"
+        },
+        {
+          "name": "Grab",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Grind",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Hallucinatory Spores",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Heat",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Heat Stone",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Heavy Weapons",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Hellfire",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Heroic Strength",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Hibernation",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Hide from Undead",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Hold Breath",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Holy Aura",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.Aura"
+        },
+        {
+          "name": "Horns",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Horrific Appearance",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Horrific Appearance",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Horrific Appearance",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Horrific Appearance",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Horrific Appearance",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Horrific Appearance",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Horrific Appearance",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Horrific Critical",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Howl",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Howl",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Hunger",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Hunker",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Ice Glide",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Icewalking",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Icewalking",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Immunity to Gaze Attacks",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary.Immunity"
+        },
+        {
+          "name": "Immunity to Magic Missile",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.Immunity"
+        },
+        {
+          "name": "Immunity to Sight-Based Attacks",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary.Immunity"
+        },
+        {
+          "name": "Immunity to Visual Effects and Illusions",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary.Immunity"
+        },
+        {
+          "name": "Implant",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Implant Eggs",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Infernal Eye",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Inflict Warpwave",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Ink Cloud",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.Defensive"
+        },
+        {
+          "name": "Item Use",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Jet",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.ModifyMovement"
+        },
+        {
+          "name": "Kneecapper",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Know Direction",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Larva",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Petitioner"
+        },
+        {
+          "name": "Lava Blast",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Lava Body",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Lava Puddle",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Leap",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Leprechaun Magic",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Light Pulse",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Light Sensitive",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.OgrekinDisadvantageousDeformity"
+        },
+        {
+          "name": "Locate Inevitable",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Lure",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Madness",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Mage Armor",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Magic Drain",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Magic Fang",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.SpellLike"
+        },
+        {
+          "name": "Magical Knack",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Magma Breath",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Magma Tomb",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Mark Quarry",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Martial Proficiency",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Master's Bond",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Metal Mastery",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Mind-Warping Gaze",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Misty Form",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Multiweapon Mastery",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Multiweapon Mastery",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Nausea",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Negative Energy",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Negative Energy",
+          "doneness": "done",
+          "type_facet": "SpecialAttack"
+        },
+        {
+          "name": "Negative Level",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Nightmare Curse",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "No Breath",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Nondetection",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Numbing Cold",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Obese",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.OgrekinDisadvantageousDeformity"
+        },
+        {
+          "name": "Obsidian Blade",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Otherworldly Mind",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Oversized Limb",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.OgrekinBeneficialDeformity"
+        },
+        {
+          "name": "Oversized Maw",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.OgrekinBeneficialDeformity"
+        },
+        {
+          "name": "Overwhelming",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Pain",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Painful Strikes",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Paralysis",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Paralysis",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Paralysis",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Paralyzing Gaze",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Paralyzing Gaze",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Pass without Trace",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Pech Magic",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.SpellLike"
+        },
+        {
+          "name": "Perfect Memory",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Perfect Prediction",
+          "doneness": "held",
+          "type_facet": "SpecialQuality.SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Petitioner Traits",
+          "doneness": "done",
+          "type_facet": "SpecialQuality"
+        },
+        {
+          "name": "Pheromones",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Plague Carrier",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Planar Acclimation",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Planar Acclimation",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Planar Acclimation",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Pod Prison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Pod Spawn",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Poison",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Poison",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Poison (Fiendish Bile)",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Poison (Mysterious Blood)",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Poison (Vile Disjunction)",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Poison Breath",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Positive Energy",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Possession",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Powerful Bite",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Pus Burst",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Quick Metabolism",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.OgrekinBeneficialDeformity"
+        },
+        {
+          "name": "Quickness",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Radiant Armor",
+          "doneness": "held",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Rapid Stinging",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Razor Sharp",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Reason to Hate",
+          "doneness": "held",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Red Cap",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Redirect Spell",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Regeneration",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.ModifyHP"
+        },
+        {
+          "name": "Regeneration",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.ModifyHP"
+        },
+        {
+          "name": "Regeneration",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.ModifyHP"
+        },
+        {
+          "name": "Regeneration",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.ModifyHP"
+        },
+        {
+          "name": "Regeneration",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.ModifyHP"
+        },
+        {
+          "name": "Regurgitate",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Rend",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Extraordinary.AttackOption"
+        },
+        {
+          "name": "Rending Claws",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Reshape Reality",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.SpellLike"
+        },
+        {
+          "name": "Resist Energy (one at a time)",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Ripping Gaze",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Ritual Gate",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Roar",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Roar",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Roots",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Rotting Curse",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Runes",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Sand Form",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Savage Bite",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Savage Stingers",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Screech",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Screech",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Searing Ray",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Secret Chest",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "See Invisibility",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.Sense"
+        },
+        {
+          "name": "See in Darkness",
+          "doneness": "not-started",
+          "type_facet": "Universal Monster Rule.SpecialQuality.Supernatural.Sense.Vision"
+        },
+        {
+          "name": "Shadow Breath",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Shadow Mark",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Shape Flesh",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Shard Spike",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Share Defenses",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Shell",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Shift Planes",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Shillelagh",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Shockwave",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Shriek",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Sinful Bite",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Sinkhole",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Siren Song",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Site Bound",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Size Alteration",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Skullface",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Sleep",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Slime",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Smashing Breach",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Smite Chaos",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Smite Evil",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Smite Law",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Smoke Claws",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Smoke Form",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Smothering",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Solid Blow",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Soporific Pollen",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Soul Consumption",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Soul Crush",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Soul Drain",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Soul Focus",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Soul Harvest",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Soul Lock",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Soul Magic",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Soul Siphoning",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Soul-Drained Breath",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Sound Mimicry",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Sound Mimicry",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Spark Leap",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Spark Shower",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Speak with Plants",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.Communicate"
+        },
+        {
+          "name": "Spear and Shield",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Spectral Mist",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Speed Surge",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Speed Surge",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Speed Surge",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Speed Surge",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Speedy Sabotage",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Spell Turning",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Spells",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Sphere of Creation",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Sphere of Oblivion",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Spider Climb",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Spirit Summoning",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Splash",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Splinterspray",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Spore Cough",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Spores",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Spores",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Spriggan Magic",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Spriggan Skills",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Squirming Embrace",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Stability",
+          "doneness": "done",
+          "type_facet": "SpecialQuality"
+        },
+        {
+          "name": "Starflight",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Starlight Blast",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Steal Breath",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Steal Voice",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Stone Knowledge",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.SpellLike"
+        },
+        {
+          "name": "Stone Stride",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Strangle",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Strength Damage",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Strength Drain",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Strong Webs",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Stun",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Stunning Laugh",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Stunted Legs",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.OgrekinDisadvantageousDeformity"
+        },
+        {
+          "name": "Summon Inevitable",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.SpellLike"
+        },
+        {
+          "name": "Summon Mount",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Superheated",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Swallow Whole",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Extraordinary.AttackOption"
+        },
+        {
+          "name": "Swarmwalking",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Swift Claw",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Swift Sundering",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Tail Slap",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Tangling Tentacles",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Telekinesis",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Telepathy",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.Communicate"
+        },
+        {
+          "name": "Telepathy",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.Communicate"
+        },
+        {
+          "name": "Teleporting Burst",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Temporal Strike",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Tenacious",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Tentacle Cage",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Tentacles",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Terror",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "The Chosen",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Petitioner"
+        },
+        {
+          "name": "The Cleansed",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Petitioner"
+        },
+        {
+          "name": "The Damned",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Petitioner"
+        },
+        {
+          "name": "The Dead",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Petitioner"
+        },
+        {
+          "name": "The Elect",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Petitioner"
+        },
+        {
+          "name": "The Hunted",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Petitioner"
+        },
+        {
+          "name": "The Remade",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Petitioner"
+        },
+        {
+          "name": "The Shapeless",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Petitioner"
+        },
+        {
+          "name": "Thick Skin",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.OgrekinBeneficialDeformity"
+        },
+        {
+          "name": "Thunderbolt",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Thundering Bite",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Tinker",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.SpellLike"
+        },
+        {
+          "name": "Tongues",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.Communicate"
+        },
+        {
+          "name": "Transparent",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Transpose Ally",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Traveler's Friend",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Trill",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Trip",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.AttackOption"
+        },
+        {
+          "name": "Trip",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.AttackOption"
+        },
+        {
+          "name": "True Seeing",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.Sense"
+        },
+        {
+          "name": "Truespeech",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Communicate.Supernatural"
+        },
+        {
+          "name": "Umbral Scion",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Undersized Weapons",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Unearthly Grace",
+          "doneness": "held",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Unholy Aura",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.Aura"
+        },
+        {
+          "name": "Unholy Blood",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Unseen Servant",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Venomous Skin",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary.Defensive"
+        },
+        {
+          "name": "Vestigal Limb",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.OgrekinBeneficialDeformity"
+        },
+        {
+          "name": "Vestigal Twin",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.OgrekinBeneficialDeformity"
+        },
+        {
+          "name": "Vines",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Void Bite",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Void Form",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Vortex",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Wail",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Wall of Gears",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Warpwave",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Water Breathing",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Water Dependency",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Water Dependency",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Water Dependency",
+          "doneness": "held",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Water Travel",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Water Walk",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.ModifyMovement"
+        },
+        {
+          "name": "Weak Mind",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.OgrekinDisadvantageousDeformity"
+        },
+        {
+          "name": "Weapon Steep",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Web Weaponry",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Wendigo Psychosis",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Werebear",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropeKind"
+        },
+        {
+          "name": "Wereboar",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropeKind"
+        },
+        {
+          "name": "Weretiger",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LycanthropeKind"
+        },
+        {
+          "name": "Whiffling",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Wind Walk",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.SpellLike"
+        },
+        {
+          "name": "Wisdom Damage",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Wisdom Drain",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Wounding Weapons",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Wreath of Fate",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Wrecking Crew",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        }
+      ]
+    },
+    {
+      "kind": "monster",
+      "label": "Monsters",
+      "done": 136,
+      "denominator": 316,
+      "pct": 43.0,
+      "items": [
+        {
+          "name": "Achaierai",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Aeon (Akhana)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Aeon (Bythos)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Aeon (Paracletus)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Aeon (Pleroma)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Aeon (Theletos)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Agathion (Avoral)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Agathion (Cetaceal)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Agathion (Draconal)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Agathion (Leonal)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Agathion (Silvanshee)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Agathion (Vulpinal)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Akata",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Amoeba (Giant)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Amoeba Swarm",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Amphisbaena",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Angel (Cassisian)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Angel (Monadic Deva)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Angel (Movanic Deva)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Animate Dream",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Aranea",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Archon (Shield)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Archon (Star)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Athach",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Attic Whisperer",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Aurumvorax",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Axiomite",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Azata (Brijidine)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Azata (Lyrakien)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Azer",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Badger",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Badger (Dire)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Banshee",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Bat (Mobat)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Bat (Skaveling)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Bee (Giant Queen)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Bee (Giant)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Beetle (Goliath Stag)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Beetle (Slicer)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Belker",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Blindheim",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Blink Dog",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Bodak",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Brownie",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Bumblebee (Giant)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Bunyip",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Carnivorous Blob",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Catoblepas",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Chaos Beast",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Charda",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Charybdis",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Chupacabra",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Cockroach (Dragonroach)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Cockroach (Giant Hissing)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Cockroach (Giant)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Cockroach (Sawback)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Cockroach (Spitting)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Cockroach (Venomroach)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Cockroach Swarm",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Crawling Hand",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Crawling Hand (Giant)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Crypt Thing",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Crysmal",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "D'ziriak",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Daemon (Astradaemon)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Daemon (Cacodaemon)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Daemon (Ceustodaemon)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Daemon (Ceustodaemon/Greater)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Daemon (Ceustodaemon/Lesser)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Daemon (Derghodaemon)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Daemon (Hydrodaemon)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Daemon (Leukodaemon)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Daemon (Meladaemon)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Daemon (Olethrodaemon)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Daemon (Piscodaemon)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Daemon (Purrodaemon)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Daemon (Thanadaemon)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Dark Slayer",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Death Worm",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Decapus",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Demon (Kalavakus)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Demon (Omox)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Demon (Shemhazian)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Demon (Vrolikai)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Denizen of Leng",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Destrachan",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Devil (Accuser)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Devil (Belier)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Devil (Handmaiden)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Devil (Immolation)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Devilfish",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Dinosaur (Allosaurus)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Dinosaur (Compsognathus)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Dinosaur (Parasaurolophus)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Dinosaur (Tylosaurus)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Dragon (Brine)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Dragon (Cloud)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Dragon (Crystal)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Dragon (Magma)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Dragon (Umbral)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Dragon Horse",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Dragonfly (Giant)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Dragonfly Nymph (Giant)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Drake (Flame)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Drake (Forest)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Drake (Frost)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Drake (Sea)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Draugr",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Draugr Captain",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Dullahan",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Dullahan (Coach of the Silent)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Dust Digger",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Elemental (Ice/Elder)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Elemental (Ice/Greater)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Elemental (Ice/Huge)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Elemental (Ice/Large)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Elemental (Ice/Medium)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Elemental (Ice/Small)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Elemental (Lightning/Elder)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Elemental (Lightning/Greater)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Elemental (Lightning/Huge)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Elemental (Lightning/Large)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Elemental (Lightning/Medium)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Elemental (Lightning/Small)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Elemental (Magma/Elder)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Elemental (Magma/Greater)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Elemental (Magma/Huge)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Elemental (Magma/Large)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Elemental (Magma/Medium)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Elemental (Magma/Small)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Elemental (Mud/Elder)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Elemental (Mud/Greater)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Elemental (Mud/Huge)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Elemental (Mud/Large)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Elemental (Mud/Medium)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Elemental (Mud/Small)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Faceless Stalker",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Fly (Giant)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Forlarren",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Frost Worm",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Fungal Crawler",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Gar",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Gar (Giant)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Giant (Brineborn Marsh)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Giant (Marsh)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Giant (Rune)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Giant (Taiga)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Giant (Wood)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Gloomwing",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Golem (Adamantine)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Golem (Alchemical)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Golem (Carrion)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Golem (Clockwork)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Golem (Glass)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Golem (Mithral)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Gray Render",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Gremlin (Jinkin)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Gremlin (Nuglub)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Gremlin (Pugwampi)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Gremlin (Vexgit)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Grick",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Grig",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Grindylow",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Gryph",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Gug",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Gug Savant",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Hangman Tree",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Hellcat",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Herd Animal (Camel)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Herd Animal (Ram)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Hippocampus",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Hippocampus (Giant)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Hippogriff",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Hippopotamus",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Hippopotamus (Behemoth)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Hound of Tindalos",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Howler",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Inevitable (Arbiter)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Inevitable (Kolyarut)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Inevitable (Lhaksharut)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Inevitable (Marut)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Inevitable (Zelekhut)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Jabberwock",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Jabberwock (Lesser)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Jellyfish (Crimson)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Jellyfish (Death's Head)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Jellyfish (Giant)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Jellyfish (Sapphire)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Jellyfish (Vampire)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Jellyfish (Whaler)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Jellyfish Swarm",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Jyoti",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Kelpie",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Korred",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Krenshar",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Lamia Matriarch",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Leng Spider",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Leprechaun",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Leucrotta",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Leucrotta (Crocotta)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Locathah",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Lurker in Light",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Maggot (Giant)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Magma Ooze",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Magma Ooze (Poisonous)",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Mandragora",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Megafauna (Arsinoitherium)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Megafauna (Gylptodon)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Megafauna (Megaloceros)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Megafauna (Megatherium)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Mercane",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Merrow (Freshwater)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Merrow (Saltwater)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Mihstu",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Mongrelman",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Moonflower",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Mosquito (Giant)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Mosquito Swarm",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Mothman",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Mu Spore",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Necrophidius",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Neh-Thalggu",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Nereid",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Nightshade (Nightcrawler)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Nightshade (Nightwalker)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Nightshade (Nightwave)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Nightshade (Nightwing)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Pech",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Peryton",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Petitioner (Human)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Phycomid",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Poltergeist",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Primate (Baboon)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Primate (Monkey Swarm)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Protean (Imentesh)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Protean (Keketar)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Protean (Naunet)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Protean (Voidworm)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Qlippoth (Augnagar)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Qlippoth (Chernobue)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Qlippoth (Cythnigot)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Qlippoth (Iathavos)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Qlippoth (Nyogoth)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Qlippoth (Shoggti)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Qlippoth (Thulgant)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Quickling",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Quickwood",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Rast",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Ray (Manta)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Ray (Stingray)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Redcap",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Reefclaw",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Revenant",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Sandman",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Sard",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Scarecrow",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Sceaduinar",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Scylla",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Serpentfolk",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Serpentfolk (Degenerate)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Seugathi",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Shantak",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Shining Child",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Sinspawn (Envyspawn)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Sinspawn (Gluttonspawn)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Sinspawn (Greedspawn)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Sinspawn (Lustspawn)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Sinspawn (Pridespawn)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Sinspawn (Slothspawn)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Sinspawn (Wrathspawn)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Siren",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Skulk",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Slime Mold",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Slithering Tracker",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Slurk",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Snake (Emperor Cobra)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Snake (Giant Anaconda)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Solifugid (Albino Cave)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Solifugid (Giant)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Soul Eater",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Soulbound Doll",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Spider (Giant Black Widow)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Spriggan",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Tendriculos",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Tenebrous Worm",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Tentamort",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Thoqqua",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Thrasfyr",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Thunderbird",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Tick (Giant)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Tick Swarm",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Titan (Elysian)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Titan (Thanatotic)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Toad (Giant)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Toad (Glacier)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Totenmaske",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Triton",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Troll (Ice)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Troll (Rock)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Turtle (Giant Snapping)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Turtle (Snapping)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Twigjack",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Urdefhan",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Vampiric Mist",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Vemerak",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Viper Vine",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Water Orm",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Wendigo",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Whale",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Whale (Great White)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Winterwight",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Witchfire",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Witchwyrd",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Xacarba",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Xtabay",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Yrthak",
+          "doneness": "done",
+          "type_facet": null
+        }
+      ]
+    },
+    {
+      "kind": "race_trait",
+      "label": "Race Traits",
+      "done": 56,
+      "denominator": 316,
+      "pct": 17.7,
+      "items": [
+        {
+          "name": "+2 Dexterity, +2 Charisma, -2 Constitution",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Dhampir Racial Trait.Dhampir Racial Default.SpecialQuality.Racial Ability Scores"
+        },
+        {
+          "name": "+2 Dexterity, +2 Charisma, -2 Wisdom",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Fetchling Racial Trait.Fetchling Racial Default.SpecialQuality.Racial Ability Scores"
+        },
+        {
+          "name": "+2 Dexterity, +2 Charisma, -2 Wisdom",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Ifrit Racial Trait.Ifrit Racial Default.SpecialQuality.Racial Ability Scores"
+        },
+        {
+          "name": "+2 Dexterity, +2 Intelligence, -2 Constitution",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Sylph Racial Trait.Sylph Racial Default.SpecialQuality.Racial Ability Scores"
+        },
+        {
+          "name": "+2 Dexterity, +2 Wisdom, -2 Strength",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Grippli Racial Trait.Grippli Racial Default.SpecialQuality.Racial Ability Scores"
+        },
+        {
+          "name": "+2 Dexterity, +2 Wisdom, -2 Strength",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Undine Racial Trait.Undine Racial Default.SpecialQuality.Racial Ability Scores"
+        },
+        {
+          "name": "+2 Strength, +2 Wisdom, -2 Charisma",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Oread Racial Trait.Oread Racial Default.SpecialQuality.Racial Ability Scores"
+        },
+        {
+          "name": "Absorb Force",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Supernatural"
+        },
+        {
+          "name": "Abyssal Strike",
+          "doneness": "not-started",
+          "type_facet": "Extraordinary"
+        },
+        {
+          "name": "Acid Spray",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Supernatural"
+        },
+        {
+          "name": "Aeon Traits",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Agathion Traits",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Agathion ~ Lay on Hands",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Agent of Fate",
+          "doneness": "not-started",
+          "type_facet": "Spelllike"
+        },
+        {
+          "name": "Air Affinity",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Sylph Racial Trait.Sylph Racial Default.SpecialQuality.Special Quality.Special Ability.Extraordinary"
+        },
+        {
+          "name": "Allosaurus ~ Rake",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Amorphous",
+          "doneness": "not-started",
+          "type_facet": "Extraordinary.Defensive"
+        },
+        {
+          "name": "Amorphous",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Extraordinary"
+        },
+        {
+          "name": "Angel ~ Cassisian Traits",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Angel ~ Protective Aura",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Arsinoitherium Companion Natural Attack",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Aura of Cold",
+          "doneness": "not-started",
+          "type_facet": "Aura.Supernatural"
+        },
+        {
+          "name": "Aura of Madness",
+          "doneness": "not-started",
+          "type_facet": "Aura.Supernatural"
+        },
+        {
+          "name": "Aura of Misfortune",
+          "doneness": "not-started",
+          "type_facet": "Aura.Supernatural"
+        },
+        {
+          "name": "Aura of Sobs",
+          "doneness": "not-started",
+          "type_facet": "Aura.Supernatural"
+        },
+        {
+          "name": "Barbed Hairs",
+          "doneness": "not-started",
+          "type_facet": "Defensive.SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Beguiling Aura",
+          "doneness": "not-started",
+          "type_facet": "Aura.Supernatural"
+        },
+        {
+          "name": "Bitter Cold",
+          "doneness": "not-started",
+          "type_facet": "Aura.Supernatural"
+        },
+        {
+          "name": "Black",
+          "doneness": "not-started",
+          "type_facet": "DraconalColor"
+        },
+        {
+          "name": "Blackest Depths",
+          "doneness": "not-started",
+          "type_facet": "Aura.Supernatural"
+        },
+        {
+          "name": "Blend With Light",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Supernatural"
+        },
+        {
+          "name": "Blind",
+          "doneness": "not-started",
+          "type_facet": "Weakness.Extraordinary"
+        },
+        {
+          "name": "Blinding Light",
+          "doneness": "not-started",
+          "type_facet": "Aura.Extraordinary"
+        },
+        {
+          "name": "Blood Rage",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Bonus vs Illusions",
+          "doneness": "not-started",
+          "type_facet": "SaveBonus"
+        },
+        {
+          "name": "Bristles",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Supernatural"
+        },
+        {
+          "name": "Burrow",
+          "doneness": "not-started",
+          "type_facet": "ModifyMovement.Extraordinary"
+        },
+        {
+          "name": "Burrow",
+          "doneness": "not-started",
+          "type_facet": "ModifyMovement"
+        },
+        {
+          "name": "Cacodaemon ~ Change Shape",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Calm Emotions Aura",
+          "doneness": "not-started",
+          "type_facet": "Aura.Supernatural"
+        },
+        {
+          "name": "Camel ~ Spit",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Camouflage",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Grippli Racial Trait.Grippli Racial Default.SpecialQuality"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Change Shape ~ Kelpie",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Change Shape ~ Lama Matriarch",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Change Shape ~ Nereid",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Cling",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttck.Extraordinary"
+        },
+        {
+          "name": "Cold Lethargy",
+          "doneness": "not-started",
+          "type_facet": "Weakness.Extraordinary"
+        },
+        {
+          "name": "Constant Vigilance",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Supernatural"
+        },
+        {
+          "name": "Consumptive Aura",
+          "doneness": "not-started",
+          "type_facet": "Aura.Supernatural"
+        },
+        {
+          "name": "Cowering Fear",
+          "doneness": "not-started",
+          "type_facet": "Aura.Supernatural"
+        },
+        {
+          "name": "Crystal Sense",
+          "doneness": "not-started",
+          "type_facet": "Sense.SpellLike"
+        },
+        {
+          "name": "Daemon Traits",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Dark Folk Traits",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Darksense",
+          "doneness": "not-started",
+          "type_facet": "Sense.Extraordinary"
+        },
+        {
+          "name": "Darkvision",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Fetchling Racial Trait.Fetchling Racial Default.SpecialQuality.Racial Vision"
+        },
+        {
+          "name": "Darkvision",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Grippli Racial Trait.Grippli Racial Default.SpecialQuality.Racial Vision"
+        },
+        {
+          "name": "Darkvision",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Ifrit Racial Trait.Ifrit Racial Default.SpecialQuality.Racial Vision"
+        },
+        {
+          "name": "Darkvision",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Oread Racial Trait.Oread Racial Default.SpecialQuality.Racial Vision"
+        },
+        {
+          "name": "Darkvision",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Sylph Racial Trait.Sylph Racial Default.SpecialQuality.Racial Vision"
+        },
+        {
+          "name": "Darkvision",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Undine Racial Trait.Undine Racial Default.SpecialQuality.Racial Vision"
+        },
+        {
+          "name": "Deaf",
+          "doneness": "not-started",
+          "type_facet": "Weakness.Extraordinary"
+        },
+        {
+          "name": "Death Throes",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Supernatural"
+        },
+        {
+          "name": "Decapus ~ Sound Mimicry",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Derghodaemon ~ Rend",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Desecrating Aura",
+          "doneness": "not-started",
+          "type_facet": "Aura.Supernatural"
+        },
+        {
+          "name": "Detect Thoughts",
+          "doneness": "not-started",
+          "type_facet": "Sense.Spelllike"
+        },
+        {
+          "name": "Dhampir",
+          "doneness": "not-started",
+          "type_facet": "AdoptiveRace"
+        },
+        {
+          "name": "Dhampir",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Dhampir Racial Trait.Dhampir Racial Default.SpecialQuality.Racial Type"
+        },
+        {
+          "name": "Dhampir Traits",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Displacement",
+          "doneness": "not-started",
+          "type_facet": "Defensive.SpellLike"
+        },
+        {
+          "name": "Divine Aversion",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Supernatural"
+        },
+        {
+          "name": "Earth Affinity",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Oread Racial Trait.Oread Racial Default.SpecialQuality.Special Quality.Special Ability.Extraordinary"
+        },
+        {
+          "name": "Earth Glide",
+          "doneness": "not-started",
+          "type_facet": "ModifyMovement.Extraordinary"
+        },
+        {
+          "name": "Earth Glide",
+          "doneness": "not-started",
+          "type_facet": "ModifyMovement.Extraordinary"
+        },
+        {
+          "name": "Electrical Jolt",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Supernatural"
+        },
+        {
+          "name": "Elusive",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Supernatural"
+        },
+        {
+          "name": "Energy Bolt",
+          "doneness": "not-started",
+          "type_facet": "Supernatural"
+        },
+        {
+          "name": "Energy Resistance",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Ifrit Racial Trait.Ifrit Racial Default.SpecialQuality"
+        },
+        {
+          "name": "Energy Resistance",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Oread Racial Trait.Oread Racial Default.SpecialQuality"
+        },
+        {
+          "name": "Energy Resistance",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Sylph Racial Trait.Sylph Racial Default.SpecialQuality"
+        },
+        {
+          "name": "Energy Resistance",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Undine Racial Trait.Undine Racial Default.SpecialQuality"
+        },
+        {
+          "name": "Entrap",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Entropic Flesh",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Extraordinary"
+        },
+        {
+          "name": "Explosive Rebirth",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Supernatural"
+        },
+        {
+          "name": "Fear",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Fear",
+          "doneness": "not-started",
+          "type_facet": "Supernatural.Aura"
+        },
+        {
+          "name": "Fear Aura",
+          "doneness": "not-started",
+          "type_facet": "Aura.Supernatural"
+        },
+        {
+          "name": "Fear of Vorpal Weapons",
+          "doneness": "not-started",
+          "type_facet": "Weakness.Extraordinary"
+        },
+        {
+          "name": "Feeblemind Aura",
+          "doneness": "not-started",
+          "type_facet": "Aura.Supernatural"
+        },
+        {
+          "name": "Fetchling",
+          "doneness": "not-started",
+          "type_facet": "AdoptiveRace"
+        },
+        {
+          "name": "Fire Affinity",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Ifrit Racial Trait.Ifrit Racial Default.SpecialQuality.Special Quality.Special Ability.Extraordinary"
+        },
+        {
+          "name": "Fire Shield (warm)",
+          "doneness": "not-started",
+          "type_facet": "Defensive.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Flaming Body",
+          "doneness": "not-started",
+          "type_facet": "Aura.Supernatural"
+        },
+        {
+          "name": "Forlarren Chill Metal",
+          "doneness": "not-started",
+          "type_facet": "ForlarrenSpelllike"
+        },
+        {
+          "name": "Forlarren Flame Blade",
+          "doneness": "not-started",
+          "type_facet": "ForlarrenSpelllike"
+        },
+        {
+          "name": "Forlarren Flaming Sphere",
+          "doneness": "not-started",
+          "type_facet": "ForlarrenSpelllike"
+        },
+        {
+          "name": "Forlarren Gust of Wind",
+          "doneness": "not-started",
+          "type_facet": "ForlarrenSpelllike"
+        },
+        {
+          "name": "Forlarren Heat Metal",
+          "doneness": "not-started",
+          "type_facet": "ForlarrenSpelllike"
+        },
+        {
+          "name": "Forlarren Summon Swarm",
+          "doneness": "not-started",
+          "type_facet": "ForlarrenSpelllike"
+        },
+        {
+          "name": "Forlarren Warp Wood",
+          "doneness": "not-started",
+          "type_facet": "ForlarrenSpelllike"
+        },
+        {
+          "name": "Foul Stench",
+          "doneness": "not-started",
+          "type_facet": "Aura.Extraordinary"
+        },
+        {
+          "name": "Freedom of Movement",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Supernatural"
+        },
+        {
+          "name": "Giant Creature (Proper Rules)",
+          "doneness": "not-started",
+          "type_facet": "GiantCreatureSelection"
+        },
+        {
+          "name": "Giant Creature (Quick Rules)",
+          "doneness": "not-started",
+          "type_facet": "GiantCreatureSelection.SpecialQuality"
+        },
+        {
+          "name": "Giant Creature (Rebuild Option)",
+          "doneness": "not-started",
+          "type_facet": "GiantCreatureSelection"
+        },
+        {
+          "name": "Grab ~ Werebear",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Grasping Tendrils",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Extraordinary"
+        },
+        {
+          "name": "Green",
+          "doneness": "not-started",
+          "type_facet": "DraconalColor"
+        },
+        {
+          "name": "Grippli",
+          "doneness": "not-started",
+          "type_facet": "AdoptiveRace"
+        },
+        {
+          "name": "Grippli",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Grippli Racial Trait.Grippli Racial Default.SpecialQuality.Racial Type"
+        },
+        {
+          "name": "Grippli Traits",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Gryph ~ Grab",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Gylptodon Companion Natural Attack",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Hangman Tree ~ Pull",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Hear Heartbeat",
+          "doneness": "not-started",
+          "type_facet": "Sense.Extraordinary"
+        },
+        {
+          "name": "Hellcat ~ Rake",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Hippopotamus Companion Natural Attack",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Hot Gases",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Extraordinary"
+        },
+        {
+          "name": "Humanoid (Dhampir)",
+          "doneness": "not-started",
+          "type_facet": "RangerClassFeatures.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption"
+        },
+        {
+          "name": "Humanoid (Grippli)",
+          "doneness": "not-started",
+          "type_facet": "RangerClassFeatures.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption"
+        },
+        {
+          "name": "Hydrodaemon ~ Rake",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Ichor",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Supernatural"
+        },
+        {
+          "name": "Ifrit",
+          "doneness": "not-started",
+          "type_facet": "AdoptiveRace"
+        },
+        {
+          "name": "Immunity to Aging",
+          "doneness": "not-started",
+          "type_facet": "Extraordinary.Immunity"
+        },
+        {
+          "name": "Immunity to Attacks Relying on Sight",
+          "doneness": "not-started",
+          "type_facet": "Extraordinary.Immunity"
+        },
+        {
+          "name": "Immunity to Confusion Effects",
+          "doneness": "not-started",
+          "type_facet": "Extraordinary.Immunity"
+        },
+        {
+          "name": "Immunity to Confusion and Insanity Effects",
+          "doneness": "not-started",
+          "type_facet": "Extraordinary.Immunity"
+        },
+        {
+          "name": "Immunity to Curses",
+          "doneness": "not-started",
+          "type_facet": "Extraordinary.Immunity"
+        },
+        {
+          "name": "Immunity to Enchantment Spells",
+          "doneness": "not-started",
+          "type_facet": "Extraordinary.Immunity"
+        },
+        {
+          "name": "Immunity to Energy Spells",
+          "doneness": "not-started",
+          "type_facet": "Extraordinary.Immunity"
+        },
+        {
+          "name": "Immunity to Gaze Attacks",
+          "doneness": "not-started",
+          "type_facet": "Extraordinary.Immunity"
+        },
+        {
+          "name": "Immunity to Hostile Transformation Effects",
+          "doneness": "not-started",
+          "type_facet": "Extraordinary.Immunity"
+        },
+        {
+          "name": "Immunity to Illusion Spells",
+          "doneness": "not-started",
+          "type_facet": "Extraordinary.Immunity"
+        },
+        {
+          "name": "Immunity to Illusions",
+          "doneness": "not-started",
+          "type_facet": "Extraordinary.Immunity"
+        },
+        {
+          "name": "Immunity to Level Drain",
+          "doneness": "not-started",
+          "type_facet": "Extraordinary.Immunity"
+        },
+        {
+          "name": "Immunity to Magic",
+          "doneness": "not-started",
+          "type_facet": "Immunity.Extraordinary"
+        },
+        {
+          "name": "Immunity to Magic",
+          "doneness": "not-started",
+          "type_facet": "Immunity.Extraordinary"
+        },
+        {
+          "name": "Immunity to Magic",
+          "doneness": "not-started",
+          "type_facet": "Immunity.Extraordinary"
+        },
+        {
+          "name": "Immunity to Magic",
+          "doneness": "not-started",
+          "type_facet": "Immunity.Extraordinary"
+        },
+        {
+          "name": "Immunity to Magic",
+          "doneness": "not-started",
+          "type_facet": "Immunity.Extraordinary"
+        },
+        {
+          "name": "Immunity to Magic",
+          "doneness": "not-started",
+          "type_facet": "Immunity.Extraordinary"
+        },
+        {
+          "name": "Immunity to Polymorph Effects",
+          "doneness": "not-started",
+          "type_facet": "Extraordinary.Immunity"
+        },
+        {
+          "name": "Immunity to Visual Effects",
+          "doneness": "not-started",
+          "type_facet": "Extraordinary.Immunity"
+        },
+        {
+          "name": "Immunity to Waters of the River Styx",
+          "doneness": "not-started",
+          "type_facet": "Extraordinary.Immunity"
+        },
+        {
+          "name": "Indestructible",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Extraordinary"
+        },
+        {
+          "name": "Inevitable Traits",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Infectious Aura",
+          "doneness": "not-started",
+          "type_facet": "Aura.Supernatural"
+        },
+        {
+          "name": "Invisible in Light",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Supernatural"
+        },
+        {
+          "name": "Irreligious",
+          "doneness": "not-started",
+          "type_facet": "Weakness.Extraordinary"
+        },
+        {
+          "name": "Jet",
+          "doneness": "not-started",
+          "type_facet": "ModifyMovement.Extraordinary"
+        },
+        {
+          "name": "Keen Scent",
+          "doneness": "not-started",
+          "type_facet": "Sense.Extraordinary"
+        },
+        {
+          "name": "Know Alignment",
+          "doneness": "not-started",
+          "type_facet": "Sense.Supernatural"
+        },
+        {
+          "name": "Languages",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Dhampir Racial Trait.Dhampir Racial Default.SpecialQuality.Racial Language"
+        },
+        {
+          "name": "Languages",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Fetchling Racial Trait.Fetchling Racial Default.SpecialQuality.Racial Language"
+        },
+        {
+          "name": "Languages",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Grippli Racial Trait.Grippli Racial Default.SpecialQuality.Racial Language"
+        },
+        {
+          "name": "Languages",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Ifrit Racial Trait.Ifrit Racial Default.SpecialQuality.Racial Language"
+        },
+        {
+          "name": "Languages",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Oread Racial Trait.Oread Racial Default.SpecialQuality.Racial Language"
+        },
+        {
+          "name": "Languages",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Sylph Racial Trait.Sylph Racial Default.SpecialQuality.Racial Language"
+        },
+        {
+          "name": "Languages",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Undine Racial Trait.Undine Racial Default.SpecialQuality.Racial Language"
+        },
+        {
+          "name": "Lesser Protective Aura",
+          "doneness": "not-started",
+          "type_facet": "Aura.ModifyAC.Supernatural"
+        },
+        {
+          "name": "Lifesense",
+          "doneness": "not-started",
+          "type_facet": "Sense.Supernatural"
+        },
+        {
+          "name": "Light Aversion",
+          "doneness": "not-started",
+          "type_facet": "Weakness.Extraordinary"
+        },
+        {
+          "name": "Light Sensitivity",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Dhampir Racial Trait.Dhampir Racial Default"
+        },
+        {
+          "name": "Light Vulnerability",
+          "doneness": "not-started",
+          "type_facet": "Weakness.Extraordinary"
+        },
+        {
+          "name": "Liquid Leap",
+          "doneness": "not-started",
+          "type_facet": "ModifyMovement.SpellLike"
+        },
+        {
+          "name": "Low-Light Vision",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Fetchling Racial Trait.Fetchling Racial Default.SpecialQuality.Racial Vision"
+        },
+        {
+          "name": "Magic Circle against Evil",
+          "doneness": "not-started",
+          "type_facet": "Aura.ModifyAC.SpellLike"
+        },
+        {
+          "name": "Manipulative",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Dhampir Racial Trait.Dhampir Racial Default.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Medium",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Dhampir Racial Trait.Dhampir Racial Default.SpecialQuality.Racial Size"
+        },
+        {
+          "name": "Medium",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Fetchling Racial Trait.Fetchling Racial Default.SpecialQuality.Racial Size"
+        },
+        {
+          "name": "Medium",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Ifrit Racial Trait.Ifrit Racial Default.SpecialQuality.Racial Size"
+        },
+        {
+          "name": "Medium",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Oread Racial Trait.Oread Racial Default.SpecialQuality.Racial Size"
+        },
+        {
+          "name": "Medium",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Sylph Racial Trait.Sylph Racial Default.SpecialQuality.Racial Size"
+        },
+        {
+          "name": "Medium",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Undine Racial Trait.Undine Racial Default.SpecialQuality.Racial Size"
+        },
+        {
+          "name": "Mind Blank",
+          "doneness": "not-started",
+          "type_facet": "SaveBonus.SpellLike"
+        },
+        {
+          "name": "Mist Vision",
+          "doneness": "not-started",
+          "type_facet": "Sense.Supernatural"
+        },
+        {
+          "name": "Molten Body",
+          "doneness": "not-started",
+          "type_facet": "Aura.Supernatural"
+        },
+        {
+          "name": "Native Outsider",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Fetchling Racial Trait.Fetchling Racial Default.SpecialQuality.Racial Type"
+        },
+        {
+          "name": "Native Outsider",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Ifrit Racial Trait.Ifrit Racial Default.SpecialQuality.Racial Type"
+        },
+        {
+          "name": "Native Outsider",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Oread Racial Trait.Oread Racial Default.SpecialQuality.Racial Type"
+        },
+        {
+          "name": "Native Outsider",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Sylph Racial Trait.Sylph Racial Default.SpecialQuality.Racial Type"
+        },
+        {
+          "name": "Native Outsider",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Undine Racial Trait.Undine Racial Default.SpecialQuality.Racial Type"
+        },
+        {
+          "name": "Natural Climber",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Grippli Racial Trait.Grippli Racial Default.SpecialQuality"
+        },
+        {
+          "name": "Natural Invisibility",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Extraordinary"
+        },
+        {
+          "name": "Natural Invisibility",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Supernatural"
+        },
+        {
+          "name": "Natural Invisibility",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Supernatural"
+        },
+        {
+          "name": "Nature's Pacifism",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Extraordinary"
+        },
+        {
+          "name": "Negative Energy Affinity",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Dhampir Racial Trait.Dhampir Racial Default"
+        },
+        {
+          "name": "Negative Energy Affinity",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Extraordinary"
+        },
+        {
+          "name": "Never Surprised or Flat-Footed",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Supernatural"
+        },
+        {
+          "name": "Nightshade Traits",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "No Combat Maneuvers",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Normal Speed",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Dhampir Racial Trait.Dhampir Racial Default.SpecialQuality.Racial Speed"
+        },
+        {
+          "name": "Normal Speed",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Fetchling Racial Trait.Fetchling Racial Default.SpecialQuality.Racial Speed"
+        },
+        {
+          "name": "Normal Speed",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Grippli Racial Trait.Grippli Racial Default.SpecialQuality.Racial Speed"
+        },
+        {
+          "name": "Normal Speed",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Ifrit Racial Trait.Ifrit Racial Default.SpecialQuality.Racial Speed"
+        },
+        {
+          "name": "Normal Speed",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Sylph Racial Trait.Sylph Racial Default.SpecialQuality.Racial Speed"
+        },
+        {
+          "name": "Normal Speed",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Undine Racial Trait.Undine Racial Default.SpecialQuality.Racial Speed"
+        },
+        {
+          "name": "Oaksight",
+          "doneness": "not-started",
+          "type_facet": "Sense.Supernatural"
+        },
+        {
+          "name": "Oni Traits",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Ooze Traits",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Oread",
+          "doneness": "not-started",
+          "type_facet": "AdoptiveRace"
+        },
+        {
+          "name": "Pained by Fire",
+          "doneness": "not-started",
+          "type_facet": "Weakness"
+        },
+        {
+          "name": "Paralysis",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Planar Fast Healing",
+          "doneness": "not-started",
+          "type_facet": "ModifyHP.Supernatural"
+        },
+        {
+          "name": "Plant Defenses",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Extraordinary"
+        },
+        {
+          "name": "Poison Save Bonus",
+          "doneness": "not-started",
+          "type_facet": "SaveBonus"
+        },
+        {
+          "name": "Poison Skin",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Extraordinary"
+        },
+        {
+          "name": "Positive Energy Affinity",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Extraordinary"
+        },
+        {
+          "name": "Protean Traits",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Protean ~ Voidworm Traits",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Protected Life Force",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Extraordinary"
+        },
+        {
+          "name": "Protection from Sonics",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Extraordinary"
+        },
+        {
+          "name": "Protective Aura",
+          "doneness": "not-started",
+          "type_facet": "Aura.ModifyAC.Supernatural"
+        },
+        {
+          "name": "Protective Aura",
+          "doneness": "not-started",
+          "type_facet": "Aura.ModifyAC.Supernatural"
+        },
+        {
+          "name": "Protective Aura",
+          "doneness": "not-started",
+          "type_facet": "Aura.ModifyAC.Supernatural"
+        },
+        {
+          "name": "Pull ~ Quickwood",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Push",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Qlippoth Traits",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Qlippoth ~ Cythnigot Traits",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Quill Defense",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Extraordinary"
+        },
+        {
+          "name": "Rake",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Rake",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Ray Reflection",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Extraordinary"
+        },
+        {
+          "name": "Reactive Strike",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Extraordinary"
+        },
+        {
+          "name": "Red",
+          "doneness": "not-started",
+          "type_facet": "DraconalColor"
+        },
+        {
+          "name": "Reflect Spells",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Extraordinary"
+        },
+        {
+          "name": "Rejuvenation",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Supernatural"
+        },
+        {
+          "name": "Remorse",
+          "doneness": "not-started",
+          "type_facet": "Weakness.Extraordinary"
+        },
+        {
+          "name": "Resist Level Drain",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Dhampir Racial Trait.Dhampir Racial Default.SpecialQuality.Defensive"
+        },
+        {
+          "name": "Resistant to Transformation",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Extraordinary"
+        },
+        {
+          "name": "Scintillating Aura",
+          "doneness": "not-started",
+          "type_facet": "Aura.Supernatural"
+        },
+        {
+          "name": "See in Darkness",
+          "doneness": "not-started",
+          "type_facet": "Sense.Supernatural"
+        },
+        {
+          "name": "Self-Loathing",
+          "doneness": "not-started",
+          "type_facet": "Weakness.Extraordinary"
+        },
+        {
+          "name": "Sense Blood",
+          "doneness": "not-started",
+          "type_facet": "Sense.Extraordinary"
+        },
+        {
+          "name": "Sense Murderer",
+          "doneness": "not-started",
+          "type_facet": "Sense.Supernatural"
+        },
+        {
+          "name": "Senses",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Dhampir Racial Trait.Dhampir Racial Default.SpecialQuality.Racial Vision"
+        },
+        {
+          "name": "Shadow Blending",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Fetchling Racial Trait.Fetchling Racial Default.SpecialQuality.Supernatural.Defensive"
+        },
+        {
+          "name": "Shadowy Resistance",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Fetchling Racial Trait.Fetchling Racial Default.SpecialQuality"
+        },
+        {
+          "name": "Shawl",
+          "doneness": "not-started",
+          "type_facet": "Weakness.Extraordinary"
+        },
+        {
+          "name": "Shield of Law",
+          "doneness": "not-started",
+          "type_facet": "Aura.SpellLike"
+        },
+        {
+          "name": "Sin-Scent",
+          "doneness": "not-started",
+          "type_facet": "Sense.Supernatural"
+        },
+        {
+          "name": "Sin-Scent",
+          "doneness": "not-started",
+          "type_facet": "Sense.Supernatural"
+        },
+        {
+          "name": "Sin-Scent",
+          "doneness": "not-started",
+          "type_facet": "Sense.Supernatural"
+        },
+        {
+          "name": "Sin-Scent",
+          "doneness": "not-started",
+          "type_facet": "Sense.Supernatural"
+        },
+        {
+          "name": "Sin-Scent",
+          "doneness": "not-started",
+          "type_facet": "Sense.Supernatural"
+        },
+        {
+          "name": "Sin-Scent",
+          "doneness": "not-started",
+          "type_facet": "Sense.Supernatural"
+        },
+        {
+          "name": "Sin-Scent",
+          "doneness": "not-started",
+          "type_facet": "Sense.Supernatural"
+        },
+        {
+          "name": "Skilled",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Fetchling Racial Trait.Fetchling Racial Default.SpecialQuality"
+        },
+        {
+          "name": "Sleep Aura",
+          "doneness": "not-started",
+          "type_facet": "Aura.Supernatural"
+        },
+        {
+          "name": "Sleep Spittle",
+          "doneness": "not-started",
+          "type_facet": "Supernatural"
+        },
+        {
+          "name": "Slime",
+          "doneness": "not-started",
+          "type_facet": "Supernatural"
+        },
+        {
+          "name": "Slippery",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Extraordinary"
+        },
+        {
+          "name": "Slow Speed",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Oread Racial Trait.Oread Racial Default.SpecialQuality.Racial Speed"
+        },
+        {
+          "name": "Slow Susceptibility",
+          "doneness": "not-started",
+          "type_facet": "Weakness.Extraordinary"
+        },
+        {
+          "name": "Small",
+          "doneness": "held",
+          "type_facet": "RacialTraits.Grippli Racial Trait.Grippli Racial Default.SpecialQuality.Racial Size"
+        },
+        {
+          "name": "Snow Vision",
+          "doneness": "not-started",
+          "type_facet": "Sense.Extraordinary"
+        },
+        {
+          "name": "Snow Vision",
+          "doneness": "not-started",
+          "type_facet": "Sense.Extraordinary"
+        },
+        {
+          "name": "Sonic Lance",
+          "doneness": "not-started",
+          "type_facet": "Extraordinary"
+        },
+        {
+          "name": "Soul Siphon",
+          "doneness": "not-started",
+          "type_facet": "Aura.Supernatural"
+        },
+        {
+          "name": "Soul Ward",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Supernatural"
+        },
+        {
+          "name": "Sound Mimicry ~ Leucrotta",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Sound Mimicry ~ Mongrelman",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Spatial Riptide",
+          "doneness": "not-started",
+          "type_facet": "Aura.Supernatural"
+        },
+        {
+          "name": "Speak with Animals",
+          "doneness": "not-started",
+          "type_facet": "Communicate.Supernatural"
+        },
+        {
+          "name": "Speak with Animals",
+          "doneness": "not-started",
+          "type_facet": "Communicate.SpellLike"
+        },
+        {
+          "name": "Spell Absorption",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Supernatural"
+        },
+        {
+          "name": "Spell-Like Abilities",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Fetchling Racial Trait.Fetchling Racial Default.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Spell-Like Ability",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Dhampir Racial Trait.Dhampir Racial Default.SpecialQuality"
+        },
+        {
+          "name": "Spell-Like Ability",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Ifrit Racial Trait.Ifrit Racial Default.SpecialQuality"
+        },
+        {
+          "name": "Spell-Like Ability",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Oread Racial Trait.Oread Racial Default.SpecialQuality"
+        },
+        {
+          "name": "Spell-Like Ability",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Sylph Racial Trait.Sylph Racial Default.SpecialQuality"
+        },
+        {
+          "name": "Spell-Like Ability",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Undine Racial Trait.Undine Racial Default.SpecialQuality"
+        },
+        {
+          "name": "Spells",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Split",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Supernatural"
+        },
+        {
+          "name": "Split",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Split",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Extraordinary"
+        },
+        {
+          "name": "Split ~ Magma Ooze",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Spore Cloud",
+          "doneness": "not-started",
+          "type_facet": "Aura.Supernatural"
+        },
+        {
+          "name": "Stench",
+          "doneness": "not-started",
+          "type_facet": "Aura.Supernatural"
+        },
+        {
+          "name": "Storm Aura",
+          "doneness": "not-started",
+          "type_facet": "Aura.Supernatural"
+        },
+        {
+          "name": "Stormsight",
+          "doneness": "not-started",
+          "type_facet": "Sense.Extraordinary"
+        },
+        {
+          "name": "Sunlight Petrification",
+          "doneness": "not-started",
+          "type_facet": "Weakness.Extraordinary"
+        },
+        {
+          "name": "Sunlight Powerlessness",
+          "doneness": "not-started",
+          "type_facet": "Weakness.Extraordinary"
+        },
+        {
+          "name": "Supernatural Speed",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Supernatural"
+        },
+        {
+          "name": "Susceptible to Cold",
+          "doneness": "not-started",
+          "type_facet": "Weakness.Extraordinary"
+        },
+        {
+          "name": "Susceptible to Mind-Affecting Effects",
+          "doneness": "not-started",
+          "type_facet": "Weakness.Extraordinary"
+        },
+        {
+          "name": "Swamp Stride",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Grippli Racial Trait.Grippli Racial Default.SpecialQuality.Special Quality.Special Ability.Extraordinary"
+        },
+        {
+          "name": "Sweat",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Extraordinary"
+        },
+        {
+          "name": "Sylph",
+          "doneness": "not-started",
+          "type_facet": "AdoptiveRace"
+        },
+        {
+          "name": "Telepathy ~ Kelpie",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Telepathy ~ Moonflower",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Transparency",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Supernatural"
+        },
+        {
+          "name": "Tremorsense",
+          "doneness": "not-started",
+          "type_facet": "Sense.Extraordinary.SpecialQuality"
+        },
+        {
+          "name": "True Seeing",
+          "doneness": "not-started",
+          "type_facet": "Supernatural"
+        },
+        {
+          "name": "Truespeech",
+          "doneness": "not-started",
+          "type_facet": "Communicate.Supernatural"
+        },
+        {
+          "name": "Undead Resistance",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Dhampir Racial Trait.Dhampir Racial Default.SpecialQuality"
+        },
+        {
+          "name": "Undine",
+          "doneness": "not-started",
+          "type_facet": "AdoptiveRace"
+        },
+        {
+          "name": "Universal Monster Rule ~ Light Sensitivity",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Universal Monster Rule ~ Negative Energy Affinity",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Unluck Aura",
+          "doneness": "not-started",
+          "type_facet": "Aura.Supernatural"
+        },
+        {
+          "name": "Unusual Anatomy",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Extraordinary"
+        },
+        {
+          "name": "Void Child",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Extraordinary"
+        },
+        {
+          "name": "Vulnerability to Sunlight",
+          "doneness": "not-started",
+          "type_facet": "Weakness.Extraordinary"
+        },
+        {
+          "name": "Vulnerability to Water",
+          "doneness": "not-started",
+          "type_facet": "Weakness.Extraordinary"
+        },
+        {
+          "name": "Vulnerable to Salt Water",
+          "doneness": "not-started",
+          "type_facet": "Weakness.Extraordinary"
+        },
+        {
+          "name": "Vulnerable to Smoke",
+          "doneness": "not-started",
+          "type_facet": "Weakness.Extraordinary"
+        },
+        {
+          "name": "Vulnerable to Supernatural Darkness",
+          "doneness": "not-started",
+          "type_facet": "Weakness.Extraordinary"
+        },
+        {
+          "name": "Water Affinity",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Undine Racial Trait.Undine Racial Default.SpecialQuality.Special Quality.Special Ability.Extraordinary"
+        },
+        {
+          "name": "Weapon Familiarity",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Grippli Racial Trait.Grippli Racial Default.SpecialQuality"
+        },
+        {
+          "name": "White",
+          "doneness": "not-started",
+          "type_facet": "DraconalColor"
+        },
+        {
+          "name": "Wind Defense",
+          "doneness": "not-started",
+          "type_facet": "Defensive.Extraordinary"
+        },
+        {
+          "name": "Witchflame",
+          "doneness": "not-started",
+          "type_facet": "Defensive.SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Worm that Walks Traits",
+          "doneness": "not-started",
+          "type_facet": "Defensive"
+        },
+        {
+          "name": "Yellow",
+          "doneness": "not-started",
+          "type_facet": "DraconalColor"
+        }
+      ]
+    },
+    {
+      "kind": "race",
+      "label": "Races",
+      "done": 0,
+      "denominator": 6,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "Chupacabra (Flying)",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Golem (Stained Glass)",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Grick (Jungle)",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Hippocampus (Polar)",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Magma Ooze (Brimstone)",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Magma Ooze (Crystalline)",
+          "doneness": "not-started",
+          "type_facet": null
+        }
+      ]
+    }
+  ]
+}

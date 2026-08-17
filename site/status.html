@@ -3,21 +3,48 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Status — Campaign Codex</title>
-  <meta name="description" content="What is real, working product surface today across the Campaign Codex repo, and what is stubbed, partially wired, or deferred." />
+  <title>Project status — Campaign Codex</title>
+  <meta name="description" content="Real build progress for Campaign Codex's Pathfinder 1st Edition ruleset, plus the other tabletop universes planned for the future." />
   <meta name="author" content="electricm0nk" />
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem('codex-theme') === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      } catch (e) {}
+    })();
+  </script>
   <link rel="stylesheet" href="/styles.css" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ctext y='14' font-size='14'%3E📕%3C/text%3E%3C/svg%3E" />
 </head>
 <body>
   <header class="site-header">
     <div class="wrap">
-      <a class="brand" href="/">Campaign Codex</a>
+      <a class="brand" href="/">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="12" cy="12" rx="10" ry="4" stroke="currentColor" stroke-width="1.4"/>
+            <ellipse cx="12" cy="12" rx="10" ry="4" stroke="currentColor" stroke-width="1.4" transform="rotate(60 12 12)"/>
+            <ellipse cx="12" cy="12" rx="10" ry="4" stroke="currentColor" stroke-width="1.4" transform="rotate(120 12 12)"/>
+            <circle cx="12" cy="12" r="2.2" fill="currentColor"/>
+          </svg>
+        </span>
+        Campaign Codex
+      </a>
       <nav class="site-nav" aria-label="Primary">
         <a href="/">Overview</a>
-        <a href="/status.html">Status</a>
+        <a href="/#why">Why Codex</a>
+        <a href="/#install">Install</a>
         <a href="/releases.html">Releases</a>
         <a href="https://github.com/electricm0nk/codex">GitHub →</a>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle light mode" aria-pressed="false">
+          <span class="theme-toggle-track">
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 14.7A8.5 8.5 0 0 1 9.3 3.5a8.5 8.5 0 1 0 11.2 11.2Z"/></svg>
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <span class="theme-toggle-thumb"></span>
+          </span>
+        </button>
       </nav>
     </div>
   </header>
@@ -25,130 +52,379 @@
   <main>
     <section class="hero compact">
       <div class="wrap">
-        <p class="kicker">Status · as of v0.7 alpha</p>
-        <h1>What works, what doesn't, what's next.</h1>
+        <p class="kicker">Project status</p>
+        <h1>Choose a world to see what's built.</h1>
         <p class="lede">
-          The canonical, closure-updated statement of real-vs-stubbed state lives in
-          <a href="https://github.com/electricm0nk/codex/blob/main/docs/architecture/status.md">docs/architecture/status.md</a>
-          in the repo — and that file supersedes anything written here. This page is a stable
-          public summary suitable for the website; for the per-bundle receipts, read the
-          release notes linked below.
+          Campaign Codex is built to hold more than one tabletop universe. Pathfinder 1st Edition
+          is live — select it to see real build progress. Everything else is planned, not started.
         </p>
       </div>
     </section>
 
     <section class="content">
       <div class="wrap">
-        <h2>Posture</h2>
-        <p>
-          Codex today is a developer proof harness and a buildable desktop workbench, not a
-          finished character-management product. The corpus-ingest pipeline, the deterministic
-          compute chassis, the boundary contract, and every persistence store are real, tested,
-          and exercised end to end.
-        </p>
-        <p>
-          Character coverage is narrow: <strong>single-class Fighter at levels 1-3, for any race,
-          is the only path that reaches a fully <code>Computed</code> receipt today.</strong> Every
-          other class/level combination returns real claim-blocking diagnostics from the engine
-          rather than fabricated output. That honesty is a load-bearing commitment of the project —
-          we say so up front.
-        </p>
-      </div>
-    </section>
-
-    <section class="content alt">
-      <div class="wrap">
-        <h2>Real today</h2>
-        <div class="grid two">
-          <div>
-            <h3>Corpus ingest</h3>
-            <ul>
-              <li>PCGen <code>.pcc</code>/<code>.lst</code> parsing into canonical <code>SourcePackageContent</code></li>
-              <li>Repo-resident JSON corpus cache for seven books (CRB, APG, ACG, Bestiary 1, ARG, Pathfinder Unchained, Bonus Bestiary)</li>
-              <li>Per-domain engines: spellbook (9/9 schools), skill allocation, feat prerequisites (4/4), equipment effects (4/4), damage total, level-up (11/11 classes)</li>
-            </ul>
-          </div>
-          <div>
-            <h3>Compute + boundary</h3>
-            <ul>
-              <li>Pilot compute + boundary contract (<code>compute_pilot_base_chassis</code> → <code>to_pilot_receipt</code>) is deterministic and fail-honest throughout</li>
-              <li>Fighter + Wizard multiclass base-chassis dispatch (SD-24): BAB/save stacking + per-class named-feature explanations, levels 1-10</li>
-              <li>Encounter difficulty and party challenge rating compute</li>
-            </ul>
-          </div>
-          <div>
-            <h3>Desktop workbench (Tauri)</h3>
-            <ul>
-              <li>Character Hub: create, load, clone, portrait upload/load/delete, JSON export, recompute — real engine compute + real persistence</li>
-              <li>Campaign manager (local) with on-disk persistence and nonce-based conflict detection</li>
-              <li>Self-update chain + browser-handoff feedback to GitHub issues</li>
-              <li>Rule-system adapter seam — typed object-safe trait dispatching to <code>Pf1Adapter</code> (real) or a governed <code>StubAdapter</code> (honest "not yet implemented")</li>
-            </ul>
-          </div>
-          <div>
-            <h3>Homebrew + oracle</h3>
-            <ul>
-              <li>Homebrew authoring workbench — Guard Stance proof package's validate/persist/preview round trip</li>
-              <li>PCGen runner scaffolding — <code>scripts/pcgen-run-character.sh</code> drives real headless PCGen Gradle batch-export; <code>oracle_validation::pcgen_runner</code> wraps it in one Rust call</li>
-              <li>Support-state matrix (34-row typed truth ledger, bridged to the desktop tester workbench)</li>
-            </ul>
-          </div>
+        <div class="world-select-grid">
+          <a href="#pf1e-status" class="world-btn world-btn-live">
+            <span class="world-btn-name">Pathfinder 1st Edition<span class="trademark-mark">*</span></span>
+            <span class="world-btn-tag world-btn-tag-live">Live</span>
+          </a>
+          <span class="world-btn world-btn-planned" aria-disabled="true">
+            <span class="world-btn-name">Starfinder 1st Edition<span class="trademark-mark">*</span></span>
+            <span class="world-btn-tag">Planned</span>
+          </span>
+          <span class="world-btn world-btn-planned" aria-disabled="true">
+            <span class="world-btn-name">Traveller<span class="trademark-mark">*</span></span>
+            <span class="world-btn-tag">Planned</span>
+          </span>
+          <span class="world-btn world-btn-planned" aria-disabled="true">
+            <span class="world-btn-name">Cyberpunk Red<span class="trademark-mark">*</span></span>
+            <span class="world-btn-tag">Planned</span>
+          </span>
+          <span class="world-btn world-btn-planned" aria-disabled="true">
+            <span class="world-btn-name">World of Darkness<span class="trademark-mark">*</span></span>
+            <span class="world-btn-tag">Planned</span>
+          </span>
+          <span class="world-btn world-btn-planned" aria-disabled="true">
+            <span class="world-btn-name">Solarus Arcanum</span>
+            <span class="world-btn-tag">Planned</span>
+          </span>
         </div>
+        <p class="section-sub-tight">* Third-party system names are <a href="/#trademarks">trademarks of their respective owners</a>.</p>
       </div>
     </section>
 
-    <section class="content">
+    <section class="content alt" id="pf1e-status">
       <div class="wrap">
-        <h2>Honest structural ceilings</h2>
-        <p>The two structural ceilings this section names are surfaced by recent work and neither fixed by it:</p>
-        <ul>
-          <li>
-            <strong>Race chassis.</strong> The engine models exactly seven races (CRB hardcoded).
-            Most <code>race_trait</code> units across the corpus cannot ground until a real race
-            chassis lands.
-          </li>
-          <li>
-            <strong>Companion kind is unstarted.</strong> All 1,696 <code>companion</code> units are
-            <code>not-ingested</code>/<code>not-started</code>; 0 are grounded. The companion lane
-            never began — its pilot cycle refused at the <code>preflight-disk</code> gate and was
-            left unclaimed rather than falsely marked attempted.
-          </li>
-        </ul>
-        <p>
-          Out of <strong>38,540 units across 38 book directories</strong>, the corpus-wide status
-          (as of SD-29 closure, 2026-08-11) is: <code>grounded</code> 491, <code>text-complete</code>
-          2,402, <code>ingested-magnitude</code> 6,548, <code>not-ingested</code> 14,582,
-          <code>not-started</code> 11,190, <code>unknown</code> 3,291, <code>deferred-with-reason</code>
-          36. The full per-kind breakdown lives in
-          <a href="https://github.com/electricm0nk/codex/blob/main/docs/architecture/status.md">status.md</a>.
+
+        <div id="status-panel-books">
+          <h2 class="section-title">Pathfinder 1st Edition — build status</h2>
+          <p class="section-sub" id="status-generated-note">Loading build data…</p>
+
+          <div class="status-overall" id="status-overall" hidden>
+            <div class="status-overall-figure">
+              <span class="status-overall-pct" id="status-overall-pct">—</span>
+              <span class="status-overall-label" id="status-overall-label">rules content built</span>
+            </div>
+            <div class="progress-bar progress-bar-lg">
+              <div class="progress-bar-fill" id="status-overall-bar"></div>
+            </div>
+          </div>
+
+          <p class="section-sub-tight">Select a sourcebook to see what's built, category by category.</p>
+          <div class="status-books-grid" id="status-books" aria-live="polite"></div>
+        </div>
+
+        <div id="status-panel-book" hidden>
+          <button type="button" class="status-back" id="status-book-back">← All books</button>
+          <h2 class="section-title" id="status-book-title"></h2>
+          <p class="section-sub-tight" id="status-book-sub"></p>
+          <div class="status-books-grid" id="status-book-kinds" aria-live="polite"></div>
+        </div>
+
+        <div id="status-panel-kind" hidden>
+          <button type="button" class="status-back" id="status-kind-back">← <span id="status-kind-back-label">Back</span></button>
+          <h2 class="section-title" id="status-kind-title"></h2>
+
+          <div class="status-item-controls">
+            <input type="search" id="status-item-search" class="status-item-search" placeholder="Search items…" aria-label="Search items in this category">
+            <div class="status-filter-chips" role="group" aria-label="Filter by status">
+              <button type="button" class="status-chip is-active" data-filter="all">All</button>
+              <button type="button" class="status-chip" data-filter="done">Done</button>
+              <button type="button" class="status-chip" data-filter="pending">Pending</button>
+            </div>
+          </div>
+          <p class="section-sub-tight" id="status-item-count"></p>
+          <div class="status-item-list" id="status-item-list" aria-live="polite"></div>
+          <div class="status-pagination" id="status-pagination"></div>
+        </div>
+
+        <p class="section-sub-tight">
+          Figures are generated from the same engine-side tracking used internally, filtered to
+          plain counts only. For full engineering detail, see
+          <a href="https://github.com/electricm0nk/codex/blob/main/docs/architecture/status.md">docs/architecture/status.md</a>
+          in the repo.
         </p>
-      </div>
-    </section>
-
-    <section class="content alt">
-      <div class="wrap">
-        <h2>In flight</h2>
-        <ul>
-          <li>
-            <strong>SD-30 — Class Feature &amp; Archetype Bundle.</strong> 16 books' per-record rollup
-            across archetypes and class features; targeted for the next release cut.
-          </li>
-          <li>
-            <strong>SD-31 — PCGen Character Import.</strong> Building the path for a user to open
-            an existing PCGen character file in Codex. Rule: an import either brings the character
-            across intact, or tells the user exactly what it could not bring and refuses — no silent losses.
-          </li>
-        </ul>
-        <p>Follow the in-flight bundles via the <a href="releases.html">releases index</a> or the <a href="https://github.com/electricm0nk/codex/tree/main/docs/release">docs/release/</a> tree.</p>
       </div>
     </section>
   </main>
 
+  <script>
+    (function () {
+      var DONENESS_LABELS = {
+        'done': 'Done',
+        'held': 'Held',
+        'in-progress': 'In progress',
+        'not-started': 'Not started',
+        'unmeasurable': 'Unmeasurable',
+        'deferred': 'Deferred'
+      };
+      var PAGE_SIZE = 50;
+
+      var note = document.getElementById('status-generated-note');
+      var overall = document.getElementById('status-overall');
+      var overallPct = document.getElementById('status-overall-pct');
+      var overallLabel = document.getElementById('status-overall-label');
+      var overallBar = document.getElementById('status-overall-bar');
+      var booksEl = document.getElementById('status-books');
+
+      var panelBooks = document.getElementById('status-panel-books');
+      var panelBook = document.getElementById('status-panel-book');
+      var panelKind = document.getElementById('status-panel-kind');
+
+      var bookTitleEl = document.getElementById('status-book-title');
+      var bookSubEl = document.getElementById('status-book-sub');
+      var bookKindsEl = document.getElementById('status-book-kinds');
+
+      var kindTitleEl = document.getElementById('status-kind-title');
+      var kindBackLabelEl = document.getElementById('status-kind-back-label');
+      var searchEl = document.getElementById('status-item-search');
+      var chipsEl = document.querySelectorAll('.status-chip');
+      var itemCountEl = document.getElementById('status-item-count');
+      var itemListEl = document.getElementById('status-item-list');
+      var paginationEl = document.getElementById('status-pagination');
+
+      var overview = null;               // parsed status-data.json
+      var bookCache = {};                // book_id -> parsed status-data/<id>.json
+      var kindState = { items: [], filter: 'all', query: '', page: 1 };
+
+      function makeProgressCard(opts) {
+        // opts: { title, pct, onClick }
+        var card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'status-book-card';
+        card.innerHTML =
+          '<div class="status-book-head">' +
+            '<span class="status-book-title"></span>' +
+            '<span class="status-book-pct"></span>' +
+          '</div>' +
+          '<div class="progress-bar"><div class="progress-bar-fill"></div></div>';
+        card.querySelector('.status-book-title').textContent = opts.title;
+        card.querySelector('.status-book-pct').textContent = opts.pct + '%';
+        card.querySelector('.progress-bar-fill').style.width = opts.pct + '%';
+        card.addEventListener('click', opts.onClick);
+        return card;
+      }
+
+      function showPanel(name) {
+        panelBooks.hidden = name !== 'books';
+        panelBook.hidden = name !== 'book';
+        panelKind.hidden = name !== 'kind';
+      }
+
+      function renderBooksPanel() {
+        if (!overview) return;
+        var generated = new Date(overview.generated_at);
+        note.textContent = 'Last updated ' + generated.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }) + '.';
+
+        overallPct.textContent = overview.overall.pct + '%';
+        overallLabel.textContent = overview.overall.done.toLocaleString() + ' of ' + overview.overall.denominator.toLocaleString() + ' rules-content units built';
+        overallBar.style.width = overview.overall.pct + '%';
+        overall.hidden = false;
+
+        booksEl.innerHTML = '';
+        overview.books.forEach(function (book) {
+          booksEl.appendChild(makeProgressCard({
+            title: book.title,
+            pct: book.pct,
+            onClick: function () { location.hash = '#pf1e-status/' + book.id; }
+          }));
+        });
+        showPanel('books');
+      }
+
+      function renderBookPanel(bookId) {
+        var detail = bookCache[bookId];
+        if (!detail) return;
+        var summary = overview.books.filter(function (b) { return b.id === bookId; })[0];
+
+        bookTitleEl.textContent = detail.title;
+        bookSubEl.textContent = summary
+          ? summary.done.toLocaleString() + ' of ' + summary.denominator.toLocaleString() + ' built (' + summary.pct + '%) — select a category for details.'
+          : 'Select a category for details.';
+
+        bookKindsEl.innerHTML = '';
+        detail.kinds.forEach(function (kind) {
+          bookKindsEl.appendChild(makeProgressCard({
+            title: kind.label + ' (' + kind.items.length.toLocaleString() + ')',
+            pct: kind.pct,
+            onClick: function () { location.hash = '#pf1e-status/' + bookId + '/' + kind.kind; }
+          }));
+        });
+        showPanel('book');
+      }
+
+      function renderKindPanel(bookId, kindKey) {
+        var detail = bookCache[bookId];
+        if (!detail) return;
+        var kind = detail.kinds.filter(function (k) { return k.kind === kindKey; })[0];
+        if (!kind) return;
+
+        kindTitleEl.textContent = detail.title + ' — ' + kind.label;
+        kindBackLabelEl.textContent = detail.title;
+
+        kindState.items = kind.items;
+        kindState.filter = 'all';
+        kindState.query = '';
+        kindState.page = 1;
+        searchEl.value = '';
+        chipsEl.forEach(function (c) { c.classList.toggle('is-active', c.dataset.filter === 'all'); });
+
+        renderItemList();
+        showPanel('kind');
+      }
+
+      function renderItemList() {
+        var q = kindState.query.trim().toLowerCase();
+        var filtered = kindState.items.filter(function (it) {
+          if (kindState.filter === 'done' && it.doneness !== 'done') return false;
+          if (kindState.filter === 'pending' && it.doneness === 'done') return false;
+          if (q && it.name.toLowerCase().indexOf(q) === -1) return false;
+          return true;
+        });
+
+        var totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+        if (kindState.page > totalPages) kindState.page = totalPages;
+        var start = (kindState.page - 1) * PAGE_SIZE;
+        var pageItems = filtered.slice(start, start + PAGE_SIZE);
+
+        itemCountEl.textContent = filtered.length.toLocaleString() + (filtered.length === 1 ? ' item' : ' items') +
+          (filtered.length !== kindState.items.length ? ' (of ' + kindState.items.length.toLocaleString() + ')' : '');
+
+        itemListEl.innerHTML = '';
+        pageItems.forEach(function (it) {
+          var row = document.createElement('div');
+          row.className = 'status-item-row';
+          var pillClass = it.doneness === 'done' ? 'status-item-pill-done' : 'status-item-pill-pending';
+          row.innerHTML =
+            '<span class="status-item-name"></span>' +
+            '<span class="status-item-pill ' + pillClass + '"></span>';
+          row.querySelector('.status-item-name').textContent = it.name;
+          row.querySelector('.status-item-pill').textContent = DONENESS_LABELS[it.doneness] || it.doneness;
+          itemListEl.appendChild(row);
+        });
+
+        paginationEl.innerHTML = '';
+        if (totalPages > 1) {
+          var prev = document.createElement('button');
+          prev.type = 'button';
+          prev.className = 'status-page-btn';
+          prev.textContent = '← Prev';
+          prev.disabled = kindState.page <= 1;
+          prev.addEventListener('click', function () { kindState.page--; renderItemList(); });
+
+          var label = document.createElement('span');
+          label.className = 'status-page-label';
+          label.textContent = 'Page ' + kindState.page + ' of ' + totalPages;
+
+          var next = document.createElement('button');
+          next.type = 'button';
+          next.className = 'status-page-btn';
+          next.textContent = 'Next →';
+          next.disabled = kindState.page >= totalPages;
+          next.addEventListener('click', function () { kindState.page++; renderItemList(); });
+
+          paginationEl.appendChild(prev);
+          paginationEl.appendChild(label);
+          paginationEl.appendChild(next);
+        }
+      }
+
+      searchEl.addEventListener('input', function () {
+        kindState.query = searchEl.value;
+        kindState.page = 1;
+        renderItemList();
+      });
+      chipsEl.forEach(function (chip) {
+        chip.addEventListener('click', function () {
+          chipsEl.forEach(function (c) { c.classList.remove('is-active'); });
+          chip.classList.add('is-active');
+          kindState.filter = chip.dataset.filter;
+          kindState.page = 1;
+          renderItemList();
+        });
+      });
+
+      document.getElementById('status-book-back').addEventListener('click', function () {
+        location.hash = '#pf1e-status';
+      });
+      document.getElementById('status-kind-back').addEventListener('click', function () {
+        location.hash = '#pf1e-status/' + currentBookId;
+      });
+
+      var currentBookId = null;
+
+      function route() {
+        var hash = location.hash.replace(/^#/, '');
+        var parts = hash.split('/').filter(Boolean); // e.g. ["pf1e-status", "core_rulebook", "feat"]
+        if (parts[0] !== 'pf1e-status' || parts.length < 2) {
+          currentBookId = null;
+          renderBooksPanel();
+          return;
+        }
+        var bookId = parts[1];
+        currentBookId = bookId;
+
+        var afterBook = function () {
+          if (parts.length >= 3) {
+            renderKindPanel(bookId, parts[2]);
+          } else {
+            renderBookPanel(bookId);
+          }
+        };
+
+        if (bookCache[bookId]) {
+          afterBook();
+          return;
+        }
+        fetch('status-data/' + bookId + '.json')
+          .then(function (res) { if (!res.ok) throw new Error('fetch failed'); return res.json(); })
+          .then(function (detail) {
+            bookCache[bookId] = detail;
+            afterBook();
+          })
+          .catch(function () {
+            location.hash = '#pf1e-status';
+          });
+      }
+
+      fetch('status-data.json')
+        .then(function (res) { if (!res.ok) throw new Error('fetch failed'); return res.json(); })
+        .then(function (data) {
+          overview = data;
+          window.addEventListener('hashchange', route);
+          route();
+        })
+        .catch(function () {
+          note.textContent = 'Build data isn\'t available right now — check back soon.';
+        });
+    })();
+  </script>
+
   <footer class="site-footer">
     <div class="wrap">
-      <p>Campaign Codex is an independent open-source project. Pathfinder and the Pathfinder Compatibility Logo are trademarks of Paizo Inc.</p>
+      <p>Campaign Codex is an independent open-source project, not affiliated with or endorsed by any third-party system publisher. See <a href="/#trademarks">third-party trademarks</a>.</p>
       <p>Source code: MIT. Game rules data: see per-dataset licenses.</p>
     </div>
   </footer>
+
+  <script>
+    (function () {
+      var btn = document.getElementById('theme-toggle');
+      if (!btn) return;
+      function isLight() { return document.documentElement.getAttribute('data-theme') === 'light'; }
+      function sync() { btn.setAttribute('aria-pressed', String(isLight())); }
+      sync();
+      btn.addEventListener('click', function () {
+        if (isLight()) {
+          document.documentElement.removeAttribute('data-theme');
+          try { localStorage.setItem('codex-theme', 'dark'); } catch (e) {}
+        } else {
+          document.documentElement.setAttribute('data-theme', 'light');
+          try { localStorage.setItem('codex-theme', 'light'); } catch (e) {}
+        }
+        sync();
+      });
+    })();
+  </script>
 </body>
 </html>

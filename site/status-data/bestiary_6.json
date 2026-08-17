@@ -1,0 +1,420 @@
+{
+  "id": "bestiary_6",
+  "title": "Bestiary 6",
+  "kinds": [
+    {
+      "kind": "class_feature",
+      "label": "Class Features",
+      "done": 0,
+      "denominator": 13,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "Chastisement",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.DomainPower"
+        },
+        {
+          "name": "Dark Tapestry Subdomain",
+          "doneness": "not-started",
+          "type_facet": "InquisitorDomain"
+        },
+        {
+          "name": "Dragon Subdomain",
+          "doneness": "not-started",
+          "type_facet": "InquisitorDomain"
+        },
+        {
+          "name": "Dragonbreath",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DomainPower"
+        },
+        {
+          "name": "Feed on Fear",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Supernatural.DomainPower"
+        },
+        {
+          "name": "Guarded Mind",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.DomainPower"
+        },
+        {
+          "name": "Hasten the End",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Supernatural.DomainPower"
+        },
+        {
+          "name": "Intense Celebration",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.DomainPower"
+        },
+        {
+          "name": "It Came From Beyond",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DomainPower"
+        },
+        {
+          "name": "Part the Veil",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.DomainPower"
+        },
+        {
+          "name": "Scalykind",
+          "doneness": "not-started",
+          "type_facet": "InquisitorDomain"
+        },
+        {
+          "name": "Serpent Companion",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Extraordinary.DomainPower.Animal Companion"
+        },
+        {
+          "name": "Stars Subdomain",
+          "doneness": "not-started",
+          "type_facet": "InquisitorDomain"
+        },
+        {
+          "name": "The Stars Are Right",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DomainPower"
+        },
+        {
+          "name": "Tyrannical Strike",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Supernatural.DomainPower"
+        },
+        {
+          "name": "Venomous Saliva",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.DomainPower"
+        },
+        {
+          "name": "Venomous Stare",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialAttack.SpellLike.DomainPower"
+        },
+        {
+          "name": "Void",
+          "doneness": "not-started",
+          "type_facet": "InquisitorDomain"
+        }
+      ]
+    },
+    {
+      "kind": "companion",
+      "label": "Companions",
+      "done": 24,
+      "denominator": 26,
+      "pct": 92.3,
+      "items": [
+        {
+          "name": "Companion (Amargasaurus)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Companion (Brontotherium)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Companion (Deinotherium)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Companion (Devil Monkey)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Companion (Dunkleosteus)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Companion (Elasmotherium)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Companion (Giganotosaurus)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Companion (Kentrosaurus)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Companion (Mokele-Mbembe)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Companion (Quetzalcoatlus)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Companion (Raven (Giant))",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Companion (Titanoboa)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Companion Advancement (Amargasaurus)",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement"
+        },
+        {
+          "name": "Companion Advancement (Brontotherium)",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement"
+        },
+        {
+          "name": "Companion Advancement (Deinotherium)",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement"
+        },
+        {
+          "name": "Companion Advancement (Devil Monkey)",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement"
+        },
+        {
+          "name": "Companion Advancement (Dunkleosteus)",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement"
+        },
+        {
+          "name": "Companion Advancement (Elasmotherium)",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement"
+        },
+        {
+          "name": "Companion Advancement (Giganotosaurus)",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement"
+        },
+        {
+          "name": "Companion Advancement (Kentrosaurus)",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement"
+        },
+        {
+          "name": "Companion Advancement (Mokele-Mbembe)",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement"
+        },
+        {
+          "name": "Companion Advancement (Quetzalcoatlus)",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement"
+        },
+        {
+          "name": "Companion Advancement (Raven (Giant))",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement"
+        },
+        {
+          "name": "Companion Advancement (Titanoboa)",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement"
+        },
+        {
+          "name": "Familiar (Coral Capuchin)",
+          "doneness": "held",
+          "type_facet": "Companion.Familiar.Magical Beast"
+        },
+        {
+          "name": "Familiar (Mockingfey)",
+          "doneness": "held",
+          "type_facet": "Companion.Familiar.Fey"
+        }
+      ]
+    },
+    {
+      "kind": "monster_ability",
+      "label": "Monster Abilities",
+      "done": 0,
+      "denominator": 16,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "Cursed Bite",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.CoralCapuchinRacialTrait"
+        },
+        {
+          "name": "Defensive Spikes",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.KentrosaurusRacialTrait"
+        },
+        {
+          "name": "Ferocity",
+          "doneness": "not-started",
+          "type_facet": "Universal Monster Rule.SpecialQuality.Extraordinary.Defensive"
+        },
+        {
+          "name": "Gulp",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.DunkleosteusRacialTrait"
+        },
+        {
+          "name": "Impaling Horn",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.ElasmotheriumRacialTrait"
+        },
+        {
+          "name": "Impaling Strike",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.KentrosaurusRacialTrait"
+        },
+        {
+          "name": "Mock",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.MockingfeyRacialTrait"
+        },
+        {
+          "name": "Moisture Dependency",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.CoralCapuchinRacialTrait"
+        },
+        {
+          "name": "Negative Energy Affinity",
+          "doneness": "not-started",
+          "type_facet": "Universal Monster Rule.SpecialQuality.Extraordinary.Defensive"
+        },
+        {
+          "name": "Puncture Armor",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.DevilMonkeyRacialTrait"
+        },
+        {
+          "name": "Razor-Sharp Beak",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.QuetzalcoatlusRacialTrait"
+        },
+        {
+          "name": "Scavenger",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.GiantRavenRacialTrait"
+        },
+        {
+          "name": "Scent",
+          "doneness": "not-started",
+          "type_facet": "Universal Monster Rule.SpecialQuality.Extraordinary.Sense"
+        },
+        {
+          "name": "Spell-Like Abilities",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.MockingfeyRacialTrait"
+        },
+        {
+          "name": "Sweep",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.DeinotheriumRacialTrait"
+        },
+        {
+          "name": "Whip Tail",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.MokeleMbembeRacialTrait"
+        }
+      ]
+    },
+    {
+      "kind": "race_trait",
+      "label": "Race Traits",
+      "done": 0,
+      "denominator": 9,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "+2 Strength, +2 Wisdom, -2 Intelligence",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Rougarou Racial Trait.Rougarou Racial Default.SpecialQuality.Racial Ability Scores"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Rougarou Racial Trait.Rougarou Racial Default.SpecialQuality.Special Quality.Supernatural"
+        },
+        {
+          "name": "Languages",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Rougarou Racial Trait.Rougarou Racial Default.SpecialQuality.Racial Language"
+        },
+        {
+          "name": "Medium",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Rougarou Racial Trait.Rougarou Racial Default.SpecialQuality.Racial Size"
+        },
+        {
+          "name": "Natural Weapon",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Rougarou Racial Trait.Rougarou Racial Default.SpecialQuality"
+        },
+        {
+          "name": "Normal Speed",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Rougarou Racial Trait.Rougarou Racial Default.SpecialQuality.Racial Speed"
+        },
+        {
+          "name": "Rougarou",
+          "doneness": "not-started",
+          "type_facet": "AdoptiveRace"
+        },
+        {
+          "name": "Senses",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Rougarou Racial Trait.Rougarou Racial Default.SpecialQuality.Racial Vision"
+        },
+        {
+          "name": "Shapechanger",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Rougarou Racial Trait.Rougarou Racial Default.SpecialQuality.Racial Type"
+        }
+      ]
+    },
+    {
+      "kind": "race",
+      "label": "Races",
+      "done": 0,
+      "denominator": 1,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "Rougarou",
+          "doneness": "not-started",
+          "type_facet": "Base.PC"
+        }
+      ]
+    },
+    {
+      "kind": "spell",
+      "label": "Spells",
+      "done": 0,
+      "denominator": 2,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "Animal Growth (Reptiles Only)",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Animal Shapes (Reptiles Only)",
+          "doneness": "not-started",
+          "type_facet": "Divine"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,4385 @@
+{
+  "id": "horror_adventures",
+  "title": "Horror Adventures",
+  "kinds": [
+    {
+      "kind": "class_feature",
+      "label": "Class Features",
+      "done": 0,
+      "denominator": 275,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "Aberration",
+          "doneness": "unmeasurable",
+          "type_facet": "HateMongerFavoredEnemy"
+        },
+        {
+          "name": "Abjuration",
+          "doneness": "unmeasurable",
+          "type_facet": "Haunted Implement School"
+        },
+        {
+          "name": "Additional Spells",
+          "doneness": "unmeasurable",
+          "type_facet": "MesmeristTrick.SpecialQuality"
+        },
+        {
+          "name": "Additional Spells",
+          "doneness": "unmeasurable",
+          "type_facet": "MesmeristTrick.SpecialQuality"
+        },
+        {
+          "name": "Alchemical Circles",
+          "doneness": "not-started",
+          "type_facet": "Alchemist Class Feature.BloodAlchemistClassFeatures.SpecialQuality.Supernatural.SpellLike"
+        },
+        {
+          "name": "Alchemist Discovery",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Alignment",
+          "doneness": "not-started",
+          "type_facet": "Kineticist Class Feature.DarkElementalistClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Alignment",
+          "doneness": "not-started",
+          "type_facet": "Druid Class Feature.LifeChannelerClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Alignment",
+          "doneness": "not-started",
+          "type_facet": "Spiritualist Class Feature.NecrologistClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "All Is Darkness",
+          "doneness": "unmeasurable",
+          "type_facet": "Paladin Class Feature.TorturedCrusaderClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Alone in the Dark",
+          "doneness": "not-started",
+          "type_facet": "Paladin Class Feature.TorturedCrusaderClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Ambush Defenses",
+          "doneness": "not-started",
+          "type_facet": "Investigator Class Feature.CultHunterClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Animal",
+          "doneness": "unmeasurable",
+          "type_facet": "HateMongerFavoredEnemy"
+        },
+        {
+          "name": "Arcane Bond",
+          "doneness": "not-started",
+          "type_facet": "Wizard Class Feature.ElderMythosScholarClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Arcane School",
+          "doneness": "not-started",
+          "type_facet": "Wizard Class Feature.HallowedNecromancerClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Archmage Spirit",
+          "doneness": "not-started",
+          "type_facet": "Haunted Implement Spirit"
+        },
+        {
+          "name": "Aura Mastery",
+          "doneness": "not-started",
+          "type_facet": "Paladin Class Feature.MartyrClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Aura of Health",
+          "doneness": "not-started",
+          "type_facet": "Paladin Class Feature.MartyrClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Aura of Isolation",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.DomainPower"
+        },
+        {
+          "name": "Aversion",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Bear",
+          "doneness": "unmeasurable",
+          "type_facet": "MooncursedAnimalForm"
+        },
+        {
+          "name": "Bladesharp",
+          "doneness": "not-started",
+          "type_facet": "MediumClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Blessed Script",
+          "doneness": "not-started",
+          "type_facet": "Inquisitor Class Feature.LivingGrimoireClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Blood Alchemist",
+          "doneness": "not-started",
+          "type_facet": "Archetype.AlchemistArchetype"
+        },
+        {
+          "name": "Blood Knowledge",
+          "doneness": "not-started",
+          "type_facet": "Alchemist Class Feature.BloodAlchemistClassFeatures.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Blood Sleuth",
+          "doneness": "unmeasurable",
+          "type_facet": "Investigator Class Feature.ProfilerClassFeatures.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Bloodless",
+          "doneness": "not-started",
+          "type_facet": "MediumClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Bloodletter",
+          "doneness": "not-started",
+          "type_facet": "MediumClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Bloodlust",
+          "doneness": "unmeasurable",
+          "type_facet": "Barbarian Class Feature.FearsomeDefenderClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Bloody Jake",
+          "doneness": "not-started",
+          "type_facet": "Archetype.SlayerArchetype"
+        },
+        {
+          "name": "Boar",
+          "doneness": "unmeasurable",
+          "type_facet": "MooncursedAnimalForm"
+        },
+        {
+          "name": "Bonded Manifestation",
+          "doneness": "not-started",
+          "type_facet": "Spiritualist Class Feature.NecrologistClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Bound to Truth",
+          "doneness": "unmeasurable",
+          "type_facet": "Vigilante Class Feature.HangmanClassFeatures.SpecialQuality.Extraordinary.SpellLike"
+        },
+        {
+          "name": "Brew Potion",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Feature.ExperimenterClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Burn the Witch",
+          "doneness": "not-started",
+          "type_facet": "Slayer Class Feature.WitchKillerClassFeatures.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Butcher Spirit",
+          "doneness": "not-started",
+          "type_facet": "MediumClassFeatures.SpecialQuality.MediumSpirit.LegendaryMediumSpirit"
+        },
+        {
+          "name": "Calling Card",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Feature.SerialKillerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Cantrips",
+          "doneness": "not-started",
+          "type_facet": "Witch Class Feature.TatterdemalionClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Cauldron Cook",
+          "doneness": "not-started",
+          "type_facet": "Witch Class Feature.GingerbreadWitchClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Cause Fear",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Champion Spirit",
+          "doneness": "not-started",
+          "type_facet": "Haunted Implement Spirit"
+        },
+        {
+          "name": "Channel Energy",
+          "doneness": "not-started",
+          "type_facet": "Spiritualist Class Feature.NecrologistClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Channel Negative Energy",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Channel the Void",
+          "doneness": "unmeasurable",
+          "type_facet": "Cleric Class Feature.ElderMythosCultistClassFeatures.SpecialAttack.Supernatural.ChannelEnergy.Channel Energy.Channel Energy Negative.Channel Negative Energy"
+        },
+        {
+          "name": "Charming",
+          "doneness": "unmeasurable",
+          "type_facet": "Vigilante Class Feature.SerialKillerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Chokehold",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Feature.HangmanClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Cloak of Dreams",
+          "doneness": "not-started",
+          "type_facet": "BonusDreamstalkerSpell"
+        },
+        {
+          "name": "Command Undead",
+          "doneness": "not-started",
+          "type_facet": "Wizard Class Feature.UndeadMasterClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Compel Hostility",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Confection Conjuring",
+          "doneness": "not-started",
+          "type_facet": "Witch Class Feature.GingerbreadWitchClassFeatures.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Confusion",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Conjuration",
+          "doneness": "unmeasurable",
+          "type_facet": "Haunted Implement School"
+        },
+        {
+          "name": "Conjure Implement",
+          "doneness": "unmeasurable",
+          "type_facet": "InvestigatorTalent.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Conspiracies Patron",
+          "doneness": "not-started",
+          "type_facet": "WitchPatron.SpecialQuality"
+        },
+        {
+          "name": "Construct",
+          "doneness": "unmeasurable",
+          "type_facet": "HateMongerFavoredEnemy"
+        },
+        {
+          "name": "Consummate Cruelty",
+          "doneness": "unmeasurable",
+          "type_facet": "Mesmerist Class Feature.GaslighterClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Corpse Bond",
+          "doneness": "not-started",
+          "type_facet": "Wizard Class Feature.UndeadMasterClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Corrosion of Sanity",
+          "doneness": "not-started",
+          "type_facet": "Mesmerist Class Feature.GaslighterClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Craft Construct",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Feature.ExperimenterClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Create Mindscape",
+          "doneness": "not-started",
+          "type_facet": "BonusDreamstalkerSpell"
+        },
+        {
+          "name": "Crocodile",
+          "doneness": "unmeasurable",
+          "type_facet": "MooncursedAnimalForm"
+        },
+        {
+          "name": "Cruel Trick",
+          "doneness": "unmeasurable",
+          "type_facet": "Slayer Class Feature.BloodyJakeClassFeatures.SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Cruel Tricks",
+          "doneness": "unmeasurable",
+          "type_facet": "Slayer Class Feature.BloodyJakeClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Crushing Despair",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Cult Combat",
+          "doneness": "not-started",
+          "type_facet": "Investigator Class Feature.CultHunterClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Cult Hunter",
+          "doneness": "not-started",
+          "type_facet": "Archetype.InvestigatorArchetype"
+        },
+        {
+          "name": "Cult Strike",
+          "doneness": "not-started",
+          "type_facet": "Investigator Class Feature.CultHunterClassFeatures.SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Cult Totem",
+          "doneness": "not-started",
+          "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Cult Totem, Greater",
+          "doneness": "not-started",
+          "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Cult Totem, Lesser",
+          "doneness": "not-started",
+          "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialQuality.Extraordinary.BarbarianTotemRagePower"
+        },
+        {
+          "name": "Cultic Study",
+          "doneness": "not-started",
+          "type_facet": "Investigator Class Feature.CultHunterClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Cunning Mind",
+          "doneness": "not-started",
+          "type_facet": "Inquisitor Class Feature.HexenhammerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Curse of Disgust",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Daemon Totem",
+          "doneness": "unmeasurable",
+          "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Daemon Totem, Greater",
+          "doneness": "unmeasurable",
+          "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Daemon Totem, Lesser",
+          "doneness": "unmeasurable",
+          "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialQuality.Extraordinary.BarbarianTotemRagePower"
+        },
+        {
+          "name": "Dancing Strings",
+          "doneness": "not-started",
+          "type_facet": "Witch Class Feature.TatterdemalionClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Dark Elementalist",
+          "doneness": "not-started",
+          "type_facet": "Archetype.KineticistArchetype"
+        },
+        {
+          "name": "Dark Studies",
+          "doneness": "unmeasurable",
+          "type_facet": "Kineticist Class Feature.DarkElementalistClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Dark Tapestry Subdomain",
+          "doneness": "not-started",
+          "type_facet": "InquisitorDomain"
+        },
+        {
+          "name": "Dark Trade",
+          "doneness": "not-started",
+          "type_facet": "Inquisitor Class Feature.HexenhammerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Dead Calm",
+          "doneness": "unmeasurable",
+          "type_facet": "Rage.SpecialQuality"
+        },
+        {
+          "name": "Dead Calm",
+          "doneness": "unmeasurable",
+          "type_facet": "Barbarian Class Feature.DreadnoughtClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Death Attack",
+          "doneness": "unmeasurable",
+          "type_facet": "Vigilante Class Feature.SerialKillerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Death Druid",
+          "doneness": "not-started",
+          "type_facet": "Archetype.DruidArchetype"
+        },
+        {
+          "name": "Deathbane",
+          "doneness": "unmeasurable",
+          "type_facet": "Wizard Class Feature.HallowedNecromancerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Decadence Patron",
+          "doneness": "not-started",
+          "type_facet": "WitchPatron.SpecialQuality"
+        },
+        {
+          "name": "Deceiver Spirit",
+          "doneness": "not-started",
+          "type_facet": "MediumClassFeatures.SpecialQuality.MediumSpirit.LegendaryMediumSpirit"
+        },
+        {
+          "name": "Deep Slumber",
+          "doneness": "not-started",
+          "type_facet": "BonusDreamstalkerSpell"
+        },
+        {
+          "name": "Delusional Pride",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Demand Offering",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Deny Death",
+          "doneness": "unmeasurable",
+          "type_facet": "Investigator Class Feature.GravediggerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Detect Mindscape",
+          "doneness": "not-started",
+          "type_facet": "BonusDreamstalkerSpell"
+        },
+        {
+          "name": "Devolution",
+          "doneness": "not-started",
+          "type_facet": "Druid Class Feature.DevolutionistClassFeatures.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Devolutionist",
+          "doneness": "not-started",
+          "type_facet": "Archetype.DruidArchetype"
+        },
+        {
+          "name": "Devolved Companion",
+          "doneness": "unmeasurable",
+          "type_facet": "Druid Class Feature.DevolutionistClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Disrupt Teamwork",
+          "doneness": "not-started",
+          "type_facet": "Slayer Class Feature.FamilyHunterClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Distant Voices",
+          "doneness": "not-started",
+          "type_facet": "Slayer Class Feature.BloodyJakeClassFeatures.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Divination",
+          "doneness": "unmeasurable",
+          "type_facet": "Haunted Implement School"
+        },
+        {
+          "name": "Divination Analysis",
+          "doneness": "unmeasurable",
+          "type_facet": "Investigator Class Feature.ProfilerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Domains",
+          "doneness": "unmeasurable",
+          "type_facet": "Cleric Class Feature.ElderMythosCultistClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Dragon",
+          "doneness": "unmeasurable",
+          "type_facet": "HateMongerFavoredEnemy"
+        },
+        {
+          "name": "Dreadnought",
+          "doneness": "not-started",
+          "type_facet": "Archetype.BarbarianArchetype"
+        },
+        {
+          "name": "Dream",
+          "doneness": "not-started",
+          "type_facet": "BonusDreamstalkerSpell"
+        },
+        {
+          "name": "Dream Council",
+          "doneness": "not-started",
+          "type_facet": "BonusDreamstalkerSpell"
+        },
+        {
+          "name": "Dream Scan",
+          "doneness": "not-started",
+          "type_facet": "BonusDreamstalkerSpell"
+        },
+        {
+          "name": "Dream Travel",
+          "doneness": "not-started",
+          "type_facet": "BonusDreamstalkerSpell"
+        },
+        {
+          "name": "Dreams of Pain",
+          "doneness": "not-started",
+          "type_facet": "Mesmerist Class Feature.DreamstalkerClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Dreamstalker",
+          "doneness": "not-started",
+          "type_facet": "Archetype.MesmeristArchetype"
+        },
+        {
+          "name": "Dreamwalker",
+          "doneness": "unmeasurable",
+          "type_facet": "Mesmerist Class Feature.DreamstalkerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Elder Mythos Cultist",
+          "doneness": "not-started",
+          "type_facet": "Archetype.ClericArchetype"
+        },
+        {
+          "name": "Elder Mythos Scholar",
+          "doneness": "not-started",
+          "type_facet": "Archetype.WizardArchetype"
+        },
+        {
+          "name": "Eldritch Grimoire",
+          "doneness": "not-started",
+          "type_facet": "Wizard Class Feature.ElderMythosScholarClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Eldritch Infusion",
+          "doneness": "unmeasurable",
+          "type_facet": "Wizard Class Feature.ElderMythosScholarClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Eldritch Knowledge",
+          "doneness": "unmeasurable",
+          "type_facet": "Wizard Class Feature.ElderMythosScholarClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Elemental Whispers",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Universal"
+        },
+        {
+          "name": "Elemental Whispers, Greater",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Wild Talent.Utility Wild Talent.Utility Wild Talent Universal"
+        },
+        {
+          "name": "Emotional Intensity",
+          "doneness": "unmeasurable",
+          "type_facet": "Kineticist Class Feature.PsychokineticistClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Emotionless Killer",
+          "doneness": "not-started",
+          "type_facet": "MediumClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Enchantment",
+          "doneness": "unmeasurable",
+          "type_facet": "Haunted Implement School"
+        },
+        {
+          "name": "Entropy Patron",
+          "doneness": "not-started",
+          "type_facet": "WitchPatron.SpecialQuality"
+        },
+        {
+          "name": "Envious Urge",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Eternal Slumber Hex",
+          "doneness": "not-started",
+          "type_facet": "MesmeristTrick.SpecialQuality"
+        },
+        {
+          "name": "Evocation",
+          "doneness": "unmeasurable",
+          "type_facet": "Haunted Implement School"
+        },
+        {
+          "name": "Excitation",
+          "doneness": "not-started",
+          "type_facet": "Spiritualist Class Feature.ExciterClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Exciter",
+          "doneness": "not-started",
+          "type_facet": "Archetype.SpiritualistArchetype"
+        },
+        {
+          "name": "Experimenter",
+          "doneness": "not-started",
+          "type_facet": "Archetype.VigilanteArchetype"
+        },
+        {
+          "name": "Expert Profiler",
+          "doneness": "unmeasurable",
+          "type_facet": "Investigator Class Feature.ProfilerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Extraplanar Expulsion",
+          "doneness": "not-started",
+          "type_facet": "Investigator Class Feature.CultHunterClassFeatures.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Extricate Haunt",
+          "doneness": "unmeasurable",
+          "type_facet": "Occultist Class Feature.HauntCollectorClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Eyebite",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "False Font",
+          "doneness": "not-started",
+          "type_facet": "MediumClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Family Hunter",
+          "doneness": "not-started",
+          "type_facet": "Archetype.SlayerArchetype"
+        },
+        {
+          "name": "Fast Movement",
+          "doneness": "unmeasurable",
+          "type_facet": "Spiritualist Class Feature.ExciterClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Favored Terrain",
+          "doneness": "unmeasurable",
+          "type_facet": "Slayer Class Feature.BloodyJakeClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Fear",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Fearless Killer",
+          "doneness": "not-started",
+          "type_facet": "Barbarian Class Feature.DreadnoughtClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Fearsome Defender",
+          "doneness": "not-started",
+          "type_facet": "Archetype.BarbarianArchetype"
+        },
+        {
+          "name": "Feast on Fear",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Fey",
+          "doneness": "unmeasurable",
+          "type_facet": "HateMongerFavoredEnemy"
+        },
+        {
+          "name": "Fight Response",
+          "doneness": "not-started",
+          "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Find Family",
+          "doneness": "not-started",
+          "type_facet": "Slayer Class Feature.FamilyHunterClassFeatures.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Flesh Mend",
+          "doneness": "unmeasurable",
+          "type_facet": "InvestigatorTalent.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Flesh Rot",
+          "doneness": "unmeasurable",
+          "type_facet": "InvestigatorTalent.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Focus Talent",
+          "doneness": "not-started",
+          "type_facet": "Investigator Class Feature.GravediggerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Foe to Friend",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Forbid Action",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Forbidden Knowledge",
+          "doneness": "unmeasurable",
+          "type_facet": "Cleric Class Feature.ElderMythosCultistClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Forbidden Science",
+          "doneness": "unmeasurable",
+          "type_facet": "Vigilante Class Feature.ExperimenterClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Forgetful Slumber",
+          "doneness": "not-started",
+          "type_facet": "BonusDreamstalkerSpell"
+        },
+        {
+          "name": "Foster Hatred",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Gaslighter",
+          "doneness": "not-started",
+          "type_facet": "Archetype.MesmeristArchetype"
+        },
+        {
+          "name": "Ghostbane",
+          "doneness": "not-started",
+          "type_facet": "Wizard Class Feature.HallowedNecromancerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Gingerbread Familiar",
+          "doneness": "not-started",
+          "type_facet": "Witch Class Feature.GingerbreadWitchClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Gingerbread Witch",
+          "doneness": "not-started",
+          "type_facet": "Archetype.WitchArchetype"
+        },
+        {
+          "name": "Grave Lamp",
+          "doneness": "not-started",
+          "type_facet": "Investigator Class Feature.GravediggerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Grave Magic",
+          "doneness": "unmeasurable",
+          "type_facet": "Investigator Class Feature.GravediggerClassFeatures.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Gravedigger",
+          "doneness": "not-started",
+          "type_facet": "Archetype.InvestigatorArchetype"
+        },
+        {
+          "name": "Greater Create Mindscape",
+          "doneness": "not-started",
+          "type_facet": "BonusDreamstalkerSpell"
+        },
+        {
+          "name": "Greater Forbid Action",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Greater Oneiric Horror",
+          "doneness": "not-started",
+          "type_facet": "BonusDreamstalkerSpell"
+        },
+        {
+          "name": "Greater Rapture",
+          "doneness": "unmeasurable",
+          "type_facet": "Spiritualist Class Feature.ExciterClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Greater Reprieve",
+          "doneness": "not-started",
+          "type_facet": "Paladin Class Feature.SoulSentinelClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Greater Shifting Rage",
+          "doneness": "not-started",
+          "type_facet": "Barbarian Class Feature.MooncursedClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Grisly Murder",
+          "doneness": "unmeasurable",
+          "type_facet": "Vigilante Class Feature.SerialKillerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Gruesome Gobbler",
+          "doneness": "not-started",
+          "type_facet": "Witch Class Feature.GingerbreadWitchClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Guarded Life",
+          "doneness": "not-started",
+          "type_facet": "Wizard Class Feature.HallowedNecromancerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Guarded Mind",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.DomainPower"
+        },
+        {
+          "name": "Guardian Spirit",
+          "doneness": "not-started",
+          "type_facet": "Haunted Implement Spirit"
+        },
+        {
+          "name": "Hallowed Necromancer",
+          "doneness": "not-started",
+          "type_facet": "Archetype.WizardArchetype"
+        },
+        {
+          "name": "Hangman",
+          "doneness": "not-started",
+          "type_facet": "Archetype.VigilanteArchetype"
+        },
+        {
+          "name": "Hangman's Noose",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Feature.HangmanClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Hate-Monger",
+          "doneness": "not-started",
+          "type_facet": "Archetype.MesmeristArchetype"
+        },
+        {
+          "name": "Haunt Collector",
+          "doneness": "not-started",
+          "type_facet": "Archetype.OccultistArchetype"
+        },
+        {
+          "name": "Hauntist",
+          "doneness": "unmeasurable",
+          "type_facet": "Occultist Class Feature.HauntCollectorClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Heresy",
+          "doneness": "not-started",
+          "type_facet": "MediumClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Heretic Spirit",
+          "doneness": "not-started",
+          "type_facet": "MediumClassFeatures.SpecialQuality.MediumSpirit.LegendaryMediumSpirit"
+        },
+        {
+          "name": "Hexcrafter",
+          "doneness": "unmeasurable",
+          "type_facet": "Inquisitor Class Feature.HexenhammerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Hexenhammer",
+          "doneness": "not-started",
+          "type_facet": "Archetype.InquisitorArchetype"
+        },
+        {
+          "name": "Hierophant Spirit",
+          "doneness": "not-started",
+          "type_facet": "Haunted Implement Spirit"
+        },
+        {
+          "name": "Holy Book",
+          "doneness": "unmeasurable",
+          "type_facet": "Inquisitor Class Feature.LivingGrimoireClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Horrible Hunger",
+          "doneness": "not-started",
+          "type_facet": "Witch Class Feature.GingerbreadWitchClassFeatures.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Horrid Mask",
+          "doneness": "unmeasurable",
+          "type_facet": "Mesmerist Class Feature.GaslighterClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Humanoid (Aquatic)",
+          "doneness": "unmeasurable",
+          "type_facet": "HateMongerFavoredEnemy"
+        },
+        {
+          "name": "Humanoid (Dwarf)",
+          "doneness": "unmeasurable",
+          "type_facet": "HateMongerFavoredEnemy"
+        },
+        {
+          "name": "Humanoid (Elf)",
+          "doneness": "unmeasurable",
+          "type_facet": "HateMongerFavoredEnemy"
+        },
+        {
+          "name": "Humanoid (Giant)",
+          "doneness": "unmeasurable",
+          "type_facet": "HateMongerFavoredEnemy"
+        },
+        {
+          "name": "Humanoid (Gnoll)",
+          "doneness": "unmeasurable",
+          "type_facet": "HateMongerFavoredEnemy"
+        },
+        {
+          "name": "Humanoid (Gnome)",
+          "doneness": "unmeasurable",
+          "type_facet": "HateMongerFavoredEnemy"
+        },
+        {
+          "name": "Humanoid (Goblinoid)",
+          "doneness": "unmeasurable",
+          "type_facet": "HateMongerFavoredEnemy"
+        },
+        {
+          "name": "Humanoid (Halfling)",
+          "doneness": "unmeasurable",
+          "type_facet": "HateMongerFavoredEnemy"
+        },
+        {
+          "name": "Humanoid (Human)",
+          "doneness": "unmeasurable",
+          "type_facet": "HateMongerFavoredEnemy"
+        },
+        {
+          "name": "Humanoid (Orc)",
+          "doneness": "unmeasurable",
+          "type_facet": "HateMongerFavoredEnemy"
+        },
+        {
+          "name": "Humanoid (Reptilian)",
+          "doneness": "unmeasurable",
+          "type_facet": "HateMongerFavoredEnemy"
+        },
+        {
+          "name": "Hybrid Rage",
+          "doneness": "not-started",
+          "type_facet": "Barbarian Class Feature.MooncursedClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Illusion",
+          "doneness": "unmeasurable",
+          "type_facet": "Haunted Implement School"
+        },
+        {
+          "name": "Insanity",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Insidious Emotions",
+          "doneness": "unmeasurable",
+          "type_facet": "Mesmerist Class Feature.HateMongerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Insidious Hatred",
+          "doneness": "not-started",
+          "type_facet": "Mesmerist Class Feature.HateMongerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Inspiring Call",
+          "doneness": "not-started",
+          "type_facet": "MediumClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Instant Dispassion",
+          "doneness": "not-started",
+          "type_facet": "Barbarian Class Feature.DreadnoughtClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Instant Enemy",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Instigate Psychic Duel",
+          "doneness": "not-started",
+          "type_facet": "BonusDreamstalkerSpell"
+        },
+        {
+          "name": "Intractable",
+          "doneness": "unmeasurable",
+          "type_facet": "Barbarian Class Feature.FearsomeDefenderClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Isolation Subdomain",
+          "doneness": "not-started",
+          "type_facet": "InquisitorDomain"
+        },
+        {
+          "name": "It Came From Beyond",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DomainPower"
+        },
+        {
+          "name": "Kill the Dead",
+          "doneness": "not-started",
+          "type_facet": "Investigator Class Feature.GravediggerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Kinslayer",
+          "doneness": "not-started",
+          "type_facet": "Slayer Class Feature.FamilyHunterClassFeatures.SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Lace Weaver",
+          "doneness": "unmeasurable",
+          "type_facet": "Witch Class Feature.TatterdemalionClassFeatures.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Last Stand",
+          "doneness": "not-started",
+          "type_facet": "Paladin Class Feature.TorturedCrusaderClassFeatures.SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Lesser Confusion",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Lesser Lichdom",
+          "doneness": "not-started",
+          "type_facet": "MediumClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Lich Spirit",
+          "doneness": "not-started",
+          "type_facet": "MediumClassFeatures.SpecialQuality.MediumSpirit.LegendaryMediumSpirit"
+        },
+        {
+          "name": "Lich-Loved",
+          "doneness": "not-started",
+          "type_facet": "Wizard Class Feature.UndeadMasterClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Life Channeler",
+          "doneness": "not-started",
+          "type_facet": "Archetype.DruidArchetype"
+        },
+        {
+          "name": "Lifeblood",
+          "doneness": "not-started",
+          "type_facet": "Alchemist Class Feature.BloodAlchemistClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Limited Alchemy",
+          "doneness": "not-started",
+          "type_facet": "Investigator Class Feature.GravediggerClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Lingering Thrust",
+          "doneness": "not-started",
+          "type_facet": "Slayer Class Feature.WitchKillerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Living Grimoire",
+          "doneness": "not-started",
+          "type_facet": "Archetype.InquisitorArchetype"
+        },
+        {
+          "name": "Lore Master",
+          "doneness": "unmeasurable",
+          "type_facet": "Vigilante Class Feature.ExperimenterClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Lose Your Way",
+          "doneness": "not-started",
+          "type_facet": "Slayer Class Feature.BloodyJakeClassFeatures.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Mad Genius",
+          "doneness": "not-started",
+          "type_facet": "Alchemist Class Feature.MadScientistClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Mad Mutagen",
+          "doneness": "not-started",
+          "type_facet": "Alchemist Class Feature.MadScientistClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Mad Scientist",
+          "doneness": "not-started",
+          "type_facet": "Archetype.AlchemistArchetype"
+        },
+        {
+          "name": "Maddening Gaze",
+          "doneness": "unmeasurable",
+          "type_facet": "Cleric Class Feature.ElderMythosCultistClassFeatures.SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Magical Beast",
+          "doneness": "unmeasurable",
+          "type_facet": "HateMongerFavoredEnemy"
+        },
+        {
+          "name": "Malicious Spite",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Marshal Spirit",
+          "doneness": "not-started",
+          "type_facet": "Haunted Implement Spirit"
+        },
+        {
+          "name": "Martyr",
+          "doneness": "not-started",
+          "type_facet": "Archetype.PaladinArchetype"
+        },
+        {
+          "name": "Martyr's Mercy",
+          "doneness": "not-started",
+          "type_facet": "Paladin Class Feature.MartyrClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Mental Manipulator",
+          "doneness": "unmeasurable",
+          "type_facet": "Mesmerist Class Feature.HateMongerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Mental Overflow",
+          "doneness": "not-started",
+          "type_facet": "Kineticist Class Feature.PsychokineticistClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Merged Phantom",
+          "doneness": "not-started",
+          "type_facet": "Spiritualist Class Feature.ExciterClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Mighty Shifting Rage",
+          "doneness": "not-started",
+          "type_facet": "Barbarian Class Feature.MooncursedClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Mind Burn",
+          "doneness": "not-started",
+          "type_facet": "Kineticist Class Feature.PsychokineticistClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Mind Fear",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Mind Steed",
+          "doneness": "unmeasurable",
+          "type_facet": "InvestigatorTalent.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Mindscape Door",
+          "doneness": "not-started",
+          "type_facet": "BonusDreamstalkerSpell"
+        },
+        {
+          "name": "Minor Dream",
+          "doneness": "not-started",
+          "type_facet": "BonusDreamstalkerSpell"
+        },
+        {
+          "name": "Modify Memory",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Monstrous Humanoid",
+          "doneness": "unmeasurable",
+          "type_facet": "HateMongerFavoredEnemy"
+        },
+        {
+          "name": "Mooncursed",
+          "doneness": "not-started",
+          "type_facet": "Archetype.BarbarianArchetype"
+        },
+        {
+          "name": "Mooncursed Form (Huge)",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality"
+        },
+        {
+          "name": "Mooncursed Form (Large)",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality"
+        },
+        {
+          "name": "Mooncursed Form (Medium)",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality"
+        },
+        {
+          "name": "Moth-Eaten",
+          "doneness": "not-started",
+          "type_facet": "Witch Class Feature.TatterdemalionClassFeatures.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Murderous Command",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Mutable Mutagen",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Feature.ExperimenterClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Mutagenic Change",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Feature.ExperimenterClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Necrologist",
+          "doneness": "not-started",
+          "type_facet": "Archetype.SpiritualistArchetype"
+        },
+        {
+          "name": "Necromancy",
+          "doneness": "unmeasurable",
+          "type_facet": "Haunted Implement School"
+        },
+        {
+          "name": "Necromantic Arcana",
+          "doneness": "not-started",
+          "type_facet": "MediumClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Necromantic Focus",
+          "doneness": "not-started",
+          "type_facet": "Wizard Class Feature.UndeadMasterClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Necromantic Servant",
+          "doneness": "unmeasurable",
+          "type_facet": "InvestigatorTalent.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Necropolitan",
+          "doneness": "not-started",
+          "type_facet": "Wizard Class Feature.UndeadMasterClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Necropsychic Conduit",
+          "doneness": "not-started",
+          "type_facet": "Spiritualist Class Feature.NecrologistClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Negative Immunity",
+          "doneness": "not-started",
+          "type_facet": "Druid Class Feature.DeathDruidClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Nightmares Hex",
+          "doneness": "not-started",
+          "type_facet": "MesmeristTrick.SpecialQuality"
+        },
+        {
+          "name": "Nightmares Patron",
+          "doneness": "not-started",
+          "type_facet": "WitchPatron.SpecialQuality"
+        },
+        {
+          "name": "No Mercy",
+          "doneness": "not-started",
+          "type_facet": "MediumClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Off the Leash",
+          "doneness": "not-started",
+          "type_facet": "Barbarian Class Feature.FearsomeDefenderClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Oneiric Horror",
+          "doneness": "not-started",
+          "type_facet": "BonusDreamstalkerSpell"
+        },
+        {
+          "name": "Ooze",
+          "doneness": "unmeasurable",
+          "type_facet": "HateMongerFavoredEnemy"
+        },
+        {
+          "name": "Out for Blood",
+          "doneness": "not-started",
+          "type_facet": "Mesmerist Class Feature.HateMongerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Outsider (Air)",
+          "doneness": "unmeasurable",
+          "type_facet": "HateMongerFavoredEnemy"
+        },
+        {
+          "name": "Outsider (Chaotic)",
+          "doneness": "unmeasurable",
+          "type_facet": "HateMongerFavoredEnemy"
+        },
+        {
+          "name": "Outsider (Earth)",
+          "doneness": "unmeasurable",
+          "type_facet": "HateMongerFavoredEnemy"
+        },
+        {
+          "name": "Outsider (Evil)",
+          "doneness": "unmeasurable",
+          "type_facet": "HateMongerFavoredEnemy"
+        },
+        {
+          "name": "Outsider (Fire)",
+          "doneness": "unmeasurable",
+          "type_facet": "HateMongerFavoredEnemy"
+        },
+        {
+          "name": "Outsider (Good)",
+          "doneness": "unmeasurable",
+          "type_facet": "HateMongerFavoredEnemy"
+        },
+        {
+          "name": "Outsider (Lawful)",
+          "doneness": "unmeasurable",
+          "type_facet": "HateMongerFavoredEnemy"
+        },
+        {
+          "name": "Outsider (Native)",
+          "doneness": "unmeasurable",
+          "type_facet": "HateMongerFavoredEnemy"
+        },
+        {
+          "name": "Outsider (Water)",
+          "doneness": "unmeasurable",
+          "type_facet": "HateMongerFavoredEnemy"
+        },
+        {
+          "name": "Overwhelming Excitement",
+          "doneness": "not-started",
+          "type_facet": "Spiritualist Class Feature.ExciterClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Overwhelming Presence",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Pack Psychology",
+          "doneness": "not-started",
+          "type_facet": "Investigator Class Feature.ProfilerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Pain Wave",
+          "doneness": "unmeasurable",
+          "type_facet": "InvestigatorTalent.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Paranoia",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Part the Veil",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.DomainPower"
+        },
+        {
+          "name": "Perfect Passion",
+          "doneness": "not-started",
+          "type_facet": "Spiritualist Class Feature.ExciterClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Phantasmal Foes",
+          "doneness": "not-started",
+          "type_facet": "Mesmerist Class Feature.GaslighterClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Phantasmal Force",
+          "doneness": "unmeasurable",
+          "type_facet": "Mesmerist Class Feature.GaslighterClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Phantom",
+          "doneness": "not-started",
+          "type_facet": "Druid Class Feature.DeathDruidClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Plant",
+          "doneness": "unmeasurable",
+          "type_facet": "HateMongerFavoredEnemy"
+        },
+        {
+          "name": "Plant Preservation",
+          "doneness": "unmeasurable",
+          "type_facet": "Druid Class Feature.LifeChannelerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Poor Study",
+          "doneness": "unmeasurable",
+          "type_facet": "Slayer Class Feature.BloodyJakeClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Positive Touch",
+          "doneness": "unmeasurable",
+          "type_facet": "Wizard Class Feature.HallowedNecromancerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Possessed Possessions",
+          "doneness": "unmeasurable",
+          "type_facet": "Occultist Class Feature.HauntCollectorClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Pride and Penance",
+          "doneness": "not-started",
+          "type_facet": "Inquisitor Class Feature.HexenhammerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Profiler",
+          "doneness": "not-started",
+          "type_facet": "Archetype.InvestigatorArchetype"
+        },
+        {
+          "name": "Psychic Curse",
+          "doneness": "unmeasurable",
+          "type_facet": "InvestigatorTalent.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Psychic Fog",
+          "doneness": "not-started",
+          "type_facet": "InvestigatorTalent.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Psychokineticist",
+          "doneness": "not-started",
+          "type_facet": "Archetype.KineticistArchetype"
+        },
+        {
+          "name": "Purge Corruption",
+          "doneness": "not-started",
+          "type_facet": "InvestigatorTalent.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Purify Body and Mind",
+          "doneness": "not-started",
+          "type_facet": "Investigator Class Feature.CultHunterClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Quiet Death",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Feature.SerialKillerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Rage",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Rage Power",
+          "doneness": "not-started",
+          "type_facet": "SlayerTalent.LesserSlayerTalent.Slayer Class Feature.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Rampant Growth",
+          "doneness": "not-started",
+          "type_facet": "Druid Class Feature.LifeChannelerClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Rapture",
+          "doneness": "unmeasurable",
+          "type_facet": "Spiritualist Class Feature.ExciterClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Rapture (Dex/Cha +4)",
+          "doneness": "unmeasurable",
+          "type_facet": "RaptureSelection"
+        },
+        {
+          "name": "Rapture (Str/Con +4)",
+          "doneness": "unmeasurable",
+          "type_facet": "RaptureSelection"
+        },
+        {
+          "name": "Rapture (Str/Con/Dex/Cha +2)",
+          "doneness": "unmeasurable",
+          "type_facet": "RaptureSelection"
+        },
+        {
+          "name": "Rapturous Rage",
+          "doneness": "unmeasurable",
+          "type_facet": "Spiritualist Class Feature.ExciterClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Read the Bones",
+          "doneness": "not-started",
+          "type_facet": "Investigator Class Feature.GravediggerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Reanimator",
+          "doneness": "not-started",
+          "type_facet": "Wizard Class Feature.UndeadMasterClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Relic Focus",
+          "doneness": "unmeasurable",
+          "type_facet": "Investigator Class Feature.GravediggerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Repress Memory",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Reprieve",
+          "doneness": "not-started",
+          "type_facet": "Paladin Class Feature.SoulSentinelClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Resist Death's Call",
+          "doneness": "not-started",
+          "type_facet": "Druid Class Feature.DeathDruidClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Revenge Patron",
+          "doneness": "not-started",
+          "type_facet": "WitchPatron.SpecialQuality"
+        },
+        {
+          "name": "Sacred Soul",
+          "doneness": "not-started",
+          "type_facet": "Paladin Class Feature.SoulSentinelClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Sacred Word",
+          "doneness": "unmeasurable",
+          "type_facet": "Inquisitor Class Feature.LivingGrimoireClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Sadistic Snare",
+          "doneness": "unmeasurable",
+          "type_facet": "Slayer Class Feature.BloodyJakeClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Scare",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Scent Magic",
+          "doneness": "not-started",
+          "type_facet": "Slayer Class Feature.WitchKillerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Seance Boon",
+          "doneness": "not-started",
+          "type_facet": "MediumClassFeatures.SpecialQuality.Supernatural.SeanceBoon"
+        },
+        {
+          "name": "Seance Boon",
+          "doneness": "not-started",
+          "type_facet": "MediumClassFeatures.SpecialQuality.Supernatural.SeanceBoon"
+        },
+        {
+          "name": "Second Chance",
+          "doneness": "not-started",
+          "type_facet": "Paladin Class Feature.TorturedCrusaderClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "See No Evil, Hear No Evil",
+          "doneness": "not-started",
+          "type_facet": "Paladin Class Feature.MartyrClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Sense Madness",
+          "doneness": "not-started",
+          "type_facet": "Investigator Class Feature.CultHunterClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Serial Killer",
+          "doneness": "not-started",
+          "type_facet": "Archetype.VigilanteArchetype"
+        },
+        {
+          "name": "Servitor",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Shared Consciousness",
+          "doneness": "not-started",
+          "type_facet": "Spiritualist Class Feature.NecrologistClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Shared Talisman",
+          "doneness": "not-started",
+          "type_facet": "Occultist Class Feature.TalismanCrafterClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Shark",
+          "doneness": "unmeasurable",
+          "type_facet": "MooncursedAnimalForm"
+        },
+        {
+          "name": "Shift Blame",
+          "doneness": "not-started",
+          "type_facet": "MediumClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Shifting Rage",
+          "doneness": "unmeasurable",
+          "type_facet": "Barbarian Class Feature.MooncursedClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Side Step",
+          "doneness": "unmeasurable",
+          "type_facet": "InvestigatorTalent.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Silent Threat",
+          "doneness": "unmeasurable",
+          "type_facet": "Barbarian Class Feature.FearsomeDefenderClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Sinister Stitching",
+          "doneness": "unmeasurable",
+          "type_facet": "Witch Class Feature.TatterdemalionClassFeatures.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Skilled Deceiver",
+          "doneness": "not-started",
+          "type_facet": "MediumClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Sleep",
+          "doneness": "not-started",
+          "type_facet": "BonusDreamstalkerSpell"
+        },
+        {
+          "name": "Sleepless",
+          "doneness": "unmeasurable",
+          "type_facet": "Mesmerist Class Feature.DreamstalkerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Sleepwalk",
+          "doneness": "not-started",
+          "type_facet": "BonusDreamstalkerSpell"
+        },
+        {
+          "name": "Sleepwalking Suggestion",
+          "doneness": "not-started",
+          "type_facet": "BonusDreamstalkerSpell"
+        },
+        {
+          "name": "Smug Narcissism",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Something's Not Right",
+          "doneness": "unmeasurable",
+          "type_facet": "Slayer Class Feature.BloodyJakeClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Somnomancer",
+          "doneness": "unmeasurable",
+          "type_facet": "Mesmerist Class Feature.DreamstalkerClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Song of Discord",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Soul Magic",
+          "doneness": "not-started",
+          "type_facet": "Druid Class Feature.DeathDruidClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Soul Power",
+          "doneness": "unmeasurable",
+          "type_facet": "Kineticist Class Feature.DarkElementalistClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Soul Sentinel",
+          "doneness": "not-started",
+          "type_facet": "Archetype.PaladinArchetype"
+        },
+        {
+          "name": "Soulbound Puppet",
+          "doneness": "unmeasurable",
+          "type_facet": "InvestigatorTalent.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Sow Thought",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Space Patron",
+          "doneness": "not-started",
+          "type_facet": "WitchPatron.SpecialQuality"
+        },
+        {
+          "name": "Spellbound Talisman",
+          "doneness": "not-started",
+          "type_facet": "Occultist Class Feature.TalismanCrafterClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Spells",
+          "doneness": "unmeasurable",
+          "type_facet": "Inquisitor Class Feature.LivingGrimoireClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Spirit Bonus",
+          "doneness": "not-started",
+          "type_facet": "MediumClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Spirit Bonus",
+          "doneness": "not-started",
+          "type_facet": "MediumClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Spirit Shroud",
+          "doneness": "unmeasurable",
+          "type_facet": "InvestigatorTalent.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Spirit Speaker",
+          "doneness": "unmeasurable",
+          "type_facet": "Occultist Class Feature.HauntCollectorClassFeatures.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Spite",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Stars Subdomain",
+          "doneness": "not-started",
+          "type_facet": "InquisitorDomain"
+        },
+        {
+          "name": "Steady Gait",
+          "doneness": "unmeasurable",
+          "type_facet": "Barbarian Class Feature.DreadnoughtClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Stigmata",
+          "doneness": "unmeasurable",
+          "type_facet": "Paladin Class Feature.MartyrClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Stolen Grace",
+          "doneness": "not-started",
+          "type_facet": "MediumClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Stored Life",
+          "doneness": "not-started",
+          "type_facet": "Druid Class Feature.LifeChannelerClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Student of the Beyond",
+          "doneness": "not-started",
+          "type_facet": "Investigator Class Feature.CultHunterClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Studied Target",
+          "doneness": "not-started",
+          "type_facet": "Slayer Class Feature.FamilyHunterClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Studied Target",
+          "doneness": "unmeasurable",
+          "type_facet": "Vigilante Class Feature.SerialKillerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Studied Witch",
+          "doneness": "not-started",
+          "type_facet": "Slayer Class Feature.WitchKillerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Suffocation",
+          "doneness": "unmeasurable",
+          "type_facet": "Vigilante Class Feature.HangmanClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Summoning Sense",
+          "doneness": "not-started",
+          "type_facet": "Investigator Class Feature.CultHunterClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Superstitious",
+          "doneness": "not-started",
+          "type_facet": "Slayer Class Feature.WitchKillerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Swift Death",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Feature.SerialKillerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Symbol of Persuasion",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Symbol of Sleep",
+          "doneness": "not-started",
+          "type_facet": "BonusDreamstalkerSpell"
+        },
+        {
+          "name": "Talisman Crafter",
+          "doneness": "not-started",
+          "type_facet": "Archetype.OccultistArchetype"
+        },
+        {
+          "name": "Talisman of Revealing",
+          "doneness": "not-started",
+          "type_facet": "Wizard Class Feature.ElderMythosScholarClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Talismanic Implements",
+          "doneness": "not-started",
+          "type_facet": "Occultist Class Feature.TalismanCrafterClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Tatterdemalion",
+          "doneness": "not-started",
+          "type_facet": "Archetype.WitchArchetype"
+        },
+        {
+          "name": "Terminator Spirit",
+          "doneness": "not-started",
+          "type_facet": "MediumClassFeatures.SpecialQuality.MediumSpirit.LegendaryMediumSpirit"
+        },
+        {
+          "name": "The Stars Are Right",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DomainPower"
+        },
+        {
+          "name": "The Woods Have Eyes",
+          "doneness": "not-started",
+          "type_facet": "Slayer Class Feature.BloodyJakeClassFeatures.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Thwart Pursuit",
+          "doneness": "unmeasurable",
+          "type_facet": "Vigilante Class Feature.SerialKillerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Tiger",
+          "doneness": "unmeasurable",
+          "type_facet": "MooncursedAnimalForm"
+        },
+        {
+          "name": "Tighten the Noose",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Feature.HangmanClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Torment",
+          "doneness": "unmeasurable",
+          "type_facet": "Paladin Class Feature.TorturedCrusaderClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Tortured Crusader",
+          "doneness": "not-started",
+          "type_facet": "Archetype.PaladinArchetype"
+        },
+        {
+          "name": "Touch of Night",
+          "doneness": "not-started",
+          "type_facet": "Mesmerist Class Feature.DreamstalkerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Transmutation",
+          "doneness": "unmeasurable",
+          "type_facet": "Haunted Implement School"
+        },
+        {
+          "name": "Traumatic Spell",
+          "doneness": "not-started",
+          "type_facet": "Mesmerist Class Feature.DreamstalkerClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Trickster Spirit",
+          "doneness": "unmeasurable",
+          "type_facet": "Haunted Implement Spirit"
+        },
+        {
+          "name": "Tricky Treats Hex",
+          "doneness": "not-started",
+          "type_facet": "Witch Class Feature.GingerbreadWitchClassFeatures.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Turn Undead",
+          "doneness": "not-started",
+          "type_facet": "Wizard Class Feature.HallowedNecromancerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Twisted Rope",
+          "doneness": "unmeasurable",
+          "type_facet": "Vigilante Class Feature.HangmanClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Unadulterated Loathing",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Undead",
+          "doneness": "unmeasurable",
+          "type_facet": "HateMongerFavoredEnemy"
+        },
+        {
+          "name": "Undead Master",
+          "doneness": "not-started",
+          "type_facet": "Archetype.WizardArchetype"
+        },
+        {
+          "name": "Undead Phantom",
+          "doneness": "unmeasurable",
+          "type_facet": "Spiritualist Class Feature.NecrologistClassFeatures"
+        },
+        {
+          "name": "Undomesticate",
+          "doneness": "unmeasurable",
+          "type_facet": "Druid Class Feature.DevolutionistClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Unhinged Mind",
+          "doneness": "unmeasurable",
+          "type_facet": "Cleric Class Feature.ElderMythosCultistClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Unravel",
+          "doneness": "not-started",
+          "type_facet": "Witch Class Feature.TatterdemalionClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Unwilling Shield",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Utter Contempt",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Vengeful Outrage",
+          "doneness": "not-started",
+          "type_facet": "BonusHateMongerSpell"
+        },
+        {
+          "name": "Vermin",
+          "doneness": "unmeasurable",
+          "type_facet": "HateMongerFavoredEnemy"
+        },
+        {
+          "name": "Vigilante Specialization",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Feature.HangmanClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Vigilante Specialization",
+          "doneness": "unmeasurable",
+          "type_facet": "Vigilante Class Feature.SerialKillerClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Vision Hex",
+          "doneness": "not-started",
+          "type_facet": "MesmeristTrick.SpecialQuality"
+        },
+        {
+          "name": "Void",
+          "doneness": "not-started",
+          "type_facet": "InquisitorDomain"
+        },
+        {
+          "name": "Warding Seal",
+          "doneness": "not-started",
+          "type_facet": "Occultist Class Feature.TalismanCrafterClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Warmonger Spirit",
+          "doneness": "not-started",
+          "type_facet": "MediumClassFeatures.SpecialQuality.MediumSpirit.LegendaryMediumSpirit"
+        },
+        {
+          "name": "Warmonger's Way",
+          "doneness": "not-started",
+          "type_facet": "MediumClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Waves of Exhaustion",
+          "doneness": "not-started",
+          "type_facet": "BonusDreamstalkerSpell"
+        },
+        {
+          "name": "Waves of Fatigue",
+          "doneness": "not-started",
+          "type_facet": "BonusDreamstalkerSpell"
+        },
+        {
+          "name": "Weapon and Armor Proficiency",
+          "doneness": "not-started",
+          "type_facet": "Investigator Class Feature.GravediggerClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Wicker Talismans",
+          "doneness": "not-started",
+          "type_facet": "Druid Class Feature.LifeChannelerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Witch Hex ~ Lace Weaver",
+          "doneness": "not-started",
+          "type_facet": "Ability Focus"
+        },
+        {
+          "name": "Witch Hex ~ Sinister Stitching",
+          "doneness": "not-started",
+          "type_facet": "Ability Focus"
+        },
+        {
+          "name": "Witch Hex ~ Tricky Treats",
+          "doneness": "not-started",
+          "type_facet": "Ability Focus"
+        },
+        {
+          "name": "Witch Killer",
+          "doneness": "not-started",
+          "type_facet": "Archetype.SlayerArchetype"
+        },
+        {
+          "name": "Witchcraft",
+          "doneness": "not-started",
+          "type_facet": "Inquisitor Class Feature.HexenhammerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Withering Gaze",
+          "doneness": "unmeasurable",
+          "type_facet": "Inquisitor Class Feature.HexenhammerClassFeatures.SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Wolf",
+          "doneness": "unmeasurable",
+          "type_facet": "MooncursedAnimalForm"
+        },
+        {
+          "name": "Woodland Shortcut",
+          "doneness": "not-started",
+          "type_facet": "Slayer Class Feature.BloodyJakeClassFeatures.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Word of God",
+          "doneness": "unmeasurable",
+          "type_facet": "Inquisitor Class Feature.LivingGrimoireClassFeatures.SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Xenophobe",
+          "doneness": "unmeasurable",
+          "type_facet": "Mesmerist Class Feature.HateMongerClassFeatures.SpecialQuality.Extraordinary"
+        }
+      ]
+    },
+    {
+      "kind": "class",
+      "label": "Classes",
+      "done": 0,
+      "denominator": 1,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "Undead Phantom",
+          "doneness": "not-started",
+          "type_facet": null
+        }
+      ]
+    },
+    {
+      "kind": "companion",
+      "label": "Companions",
+      "done": 2,
+      "denominator": 2,
+      "pct": 100.0,
+      "items": [
+        {
+          "name": "Companion (Devolved Humanoid)",
+          "doneness": "done",
+          "type_facet": "Companion.AnimalCompanion"
+        },
+        {
+          "name": "Companion Advancement (Devolved Humanoid)",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement"
+        }
+      ]
+    },
+    {
+      "kind": "equipment",
+      "label": "Equipment",
+      "done": 0,
+      "denominator": 115,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "Black Heart",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous"
+        },
+        {
+          "name": "Blackmarrow Altar",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Altar"
+        },
+        {
+          "name": "Boneshaking Cleaver",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Book of Perilous Journeys",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Cursed.Book"
+        },
+        {
+          "name": "Brilliant Flash Symbol",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Spell Component.Divine Focus.Holy Symbol"
+        },
+        {
+          "name": "Cephalopod Staff",
+          "doneness": "not-started",
+          "type_facet": "Magic.Staff.Weapon.Resizable.Melee.Exotic.OneHanded.Finesseable.Slashing.Flail.Weapon Group Flails"
+        },
+        {
+          "name": "Channel-Thieving Belt",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Belt"
+        },
+        {
+          "name": "Channel-Thieving Belt (Greater)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Belt"
+        },
+        {
+          "name": "Crimson Altar",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Altar"
+        },
+        {
+          "name": "Cup of Forbidden Knowledge",
+          "doneness": "not-started",
+          "type_facet": "Artifact.Minor"
+        },
+        {
+          "name": "Dark Grimoire",
+          "doneness": "not-started",
+          "type_facet": "Artifact.Minor"
+        },
+        {
+          "name": "Dark Lens Altar",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Altar"
+        },
+        {
+          "name": "Elder Sign",
+          "doneness": "not-started",
+          "type_facet": "Artifact.Minor"
+        },
+        {
+          "name": "Eldritch Scholar's Monocle",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Eyegear"
+        },
+        {
+          "name": "Fleshcraft Elixir (Antennae)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Fleshcraft.Elixir.Consumable.Eyegear"
+        },
+        {
+          "name": "Fleshcraft Elixir (Blinding Spittle Glands)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Fleshcraft.Elixir.Consumable.Headgear"
+        },
+        {
+          "name": "Fleshcraft Elixir (Burrowing Claws)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Fleshcraft.Elixir.Consumable.Glove"
+        },
+        {
+          "name": "Fleshcraft Elixir (Camouflage Flesh)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Fleshcraft.Elixir.Consumable.Robe"
+        },
+        {
+          "name": "Fleshcraft Elixir (Carapace)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Fleshcraft.Elixir.Consumable.Robe"
+        },
+        {
+          "name": "Fleshcraft Elixir (Cerebral Husk)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Fleshcraft.Elixir.Consumable.Headband"
+        },
+        {
+          "name": "Fleshcraft Elixir (Claw Gauntlet)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Fleshcraft.Elixir.Consumable.Glove"
+        },
+        {
+          "name": "Fleshcraft Elixir (Darksight Eyes)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Fleshcraft.Elixir.Consumable.Eyegear"
+        },
+        {
+          "name": "Fleshcraft Elixir (Grasping Tendril)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Fleshcraft.Elixir.Consumable"
+        },
+        {
+          "name": "Fleshcraft Elixir (Poison Fangs)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Fleshcraft.Elixir.Consumable.Headgear"
+        },
+        {
+          "name": "Fleshcraft Elixir (Retractable Spines)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Fleshcraft.Elixir.Consumable.Bracer"
+        },
+        {
+          "name": "Fleshcraft Elixir (Shark Gills)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Fleshcraft.Elixir.Consumable.Amulet"
+        },
+        {
+          "name": "Fleshcraft Elixir (Stinging Tail)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Fleshcraft.Elixir.Consumable.Belt"
+        },
+        {
+          "name": "Fleshcraft Elixir (Wings of Darkness)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Fleshcraft.Elixir.Consumable.Cloak"
+        },
+        {
+          "name": "Fleshcraft Graft (Antennae)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Fleshcraft.Graft.Eyegear"
+        },
+        {
+          "name": "Fleshcraft Graft (Blinding Spittle Glands)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Fleshcraft.Graft.Headgear"
+        },
+        {
+          "name": "Fleshcraft Graft (Burrowing Claws)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Fleshcraft.Graft.Glove"
+        },
+        {
+          "name": "Fleshcraft Graft (Camouflage Flesh)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Fleshcraft.Graft.Robe"
+        },
+        {
+          "name": "Fleshcraft Graft (Carapace)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Fleshcraft.Graft.Robe"
+        },
+        {
+          "name": "Fleshcraft Graft (Cerebral Husk)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Fleshcraft.Graft.Headband"
+        },
+        {
+          "name": "Fleshcraft Graft (Claw Gauntlet)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Fleshcraft.Graft.Glove"
+        },
+        {
+          "name": "Fleshcraft Graft (Darksight Eyes)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Fleshcraft.Graft.Eyegear"
+        },
+        {
+          "name": "Fleshcraft Graft (Grasping Tendril)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Fleshcraft.Graft"
+        },
+        {
+          "name": "Fleshcraft Graft (Poison Fangs)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Fleshcraft.Graft.Headgear"
+        },
+        {
+          "name": "Fleshcraft Graft (Retractable Spines)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Fleshcraft.Graft.Bracer"
+        },
+        {
+          "name": "Fleshcraft Graft (Shark Gills)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Fleshcraft.Graft.Amulet"
+        },
+        {
+          "name": "Fleshcraft Graft (Stinging Tail)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Fleshcraft.Graft.Belt"
+        },
+        {
+          "name": "Fleshcraft Graft (Wings of Darkness)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Fleshcraft.Graft.Cloak"
+        },
+        {
+          "name": "Gloves of Feasting",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Glove"
+        },
+        {
+          "name": "Hangman's Noose",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Heavenly Aegis Ring",
+          "doneness": "not-started",
+          "type_facet": "Magic.Ring"
+        },
+        {
+          "name": "Heretic's Fork",
+          "doneness": "not-started",
+          "type_facet": "Goods.Torture"
+        },
+        {
+          "name": "Hooked Massacre",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Hungering Staff",
+          "doneness": "not-started",
+          "type_facet": "Magic.Staff"
+        },
+        {
+          "name": "Iron Maiden",
+          "doneness": "not-started",
+          "type_facet": "Goods.Torture"
+        },
+        {
+          "name": "Kyton Ring",
+          "doneness": "not-started",
+          "type_facet": "Magic.Ring"
+        },
+        {
+          "name": "Living Grimoire Holy Text",
+          "doneness": "not-started",
+          "type_facet": "Weapon.Resizable.Melee.Exotic.Light.Finesseable.Bludgeoning"
+        },
+        {
+          "name": "Lupine Rageskin",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Mantle of Life",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Shoulders.Cloak"
+        },
+        {
+          "name": "Mantle of the Darkest Night",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Shoulders.Cloak"
+        },
+        {
+          "name": "Many-Eyed Staff",
+          "doneness": "not-started",
+          "type_facet": "Magic.Staff"
+        },
+        {
+          "name": "Monster Almanac",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Book"
+        },
+        {
+          "name": "Monster Almanac (Greater)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Book"
+        },
+        {
+          "name": "Moonlight Lantern",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Light Source"
+        },
+        {
+          "name": "Murderer's Machete",
+          "doneness": "not-started",
+          "type_facet": "Slashing"
+        },
+        {
+          "name": "Murderer's Machete, Greater",
+          "doneness": "not-started",
+          "type_facet": "Slashing"
+        },
+        {
+          "name": "Necromancer's Beacon",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Light Source"
+        },
+        {
+          "name": "Needful Doll",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Cursed"
+        },
+        {
+          "name": "Oil of Attraction (Demons)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Potion.Consumable.Combat Gear"
+        },
+        {
+          "name": "Oil of Attraction (Devils)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Potion.Consumable.Combat Gear"
+        },
+        {
+          "name": "Oil of Attraction (Dragons)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Potion.Consumable.Combat Gear"
+        },
+        {
+          "name": "Oil of Attraction (Hags)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Potion.Consumable.Combat Gear"
+        },
+        {
+          "name": "Oil of Attraction (Lycanthropes)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Potion.Consumable.Combat Gear"
+        },
+        {
+          "name": "Oil of Attraction (Vampires)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Potion.Consumable.Combat Gear"
+        },
+        {
+          "name": "Pain Ward of the Ostiarius",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Necklace"
+        },
+        {
+          "name": "Perilous Puzzle Box",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous"
+        },
+        {
+          "name": "Plague Powder (Blinding Sickness)",
+          "doneness": "not-started",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Plague Powder (Bloody End)",
+          "doneness": "not-started",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Plague Powder (Brain Moss)",
+          "doneness": "not-started",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Plague Powder (Bubonic Plague)",
+          "doneness": "not-started",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Plague Powder (Cackle Fever)",
+          "doneness": "not-started",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Plague Powder (Demon Fever)",
+          "doneness": "not-started",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Plague Powder (Devil Chills)",
+          "doneness": "not-started",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Plague Powder (Filth Fever)",
+          "doneness": "not-started",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Plague Powder (Ghoul Distemper)",
+          "doneness": "not-started",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Plague Powder (Gore Worms)",
+          "doneness": "not-started",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Plague Powder (Leprosy)",
+          "doneness": "not-started",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Plague Powder (Mindfire)",
+          "doneness": "not-started",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Plague Powder (Red Ache)",
+          "doneness": "not-started",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Plague Powder (Shakes)",
+          "doneness": "not-started",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Plague Powder (Skin Wastes)",
+          "doneness": "not-started",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Plague Powder (Slimy Doom)",
+          "doneness": "not-started",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Purifying Ointment",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Consumable"
+        },
+        {
+          "name": "Rack",
+          "doneness": "not-started",
+          "type_facet": "Goods.Torture"
+        },
+        {
+          "name": "Rat Cage",
+          "doneness": "not-started",
+          "type_facet": "Goods.Torture"
+        },
+        {
+          "name": "Reanimating Fluid",
+          "doneness": "not-started",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Redemptor's Blessing",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Spell Component.Divine Focus.Holy Symbol"
+        },
+        {
+          "name": "Rings of Alien Geometries",
+          "doneness": "not-started",
+          "type_facet": "Magic.Ring"
+        },
+        {
+          "name": "Sacrificial Dagger",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Screaming Blade",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Silver Nail",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Consumable"
+        },
+        {
+          "name": "Talisman (Greater/Akoben)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Necklace"
+        },
+        {
+          "name": "Talisman (Greater/Ankh)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Necklace"
+        },
+        {
+          "name": "Talisman (Greater/Hamsa)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Necklace"
+        },
+        {
+          "name": "Talisman (Greater/Pentacle)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Necklace"
+        },
+        {
+          "name": "Talisman (Greater/Scarab)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Necklace"
+        },
+        {
+          "name": "Talisman (Greater/Triskelion)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Necklace"
+        },
+        {
+          "name": "Talisman (Lesser/Akoben)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Necklace.Consumable"
+        },
+        {
+          "name": "Talisman (Lesser/Ankh)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Necklace.Consumable"
+        },
+        {
+          "name": "Talisman (Lesser/Hamsa)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Necklace.Consumable"
+        },
+        {
+          "name": "Talisman (Lesser/Pentacle)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Necklace.Consumable"
+        },
+        {
+          "name": "Talisman (Lesser/Scarab)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Necklace.Consumable"
+        },
+        {
+          "name": "Talisman (Lesser/Triskelion)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Necklace.Consumable"
+        },
+        {
+          "name": "Threshold Guardian",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous"
+        },
+        {
+          "name": "Thumbscrew (Common)",
+          "doneness": "not-started",
+          "type_facet": "Goods.Torture"
+        },
+        {
+          "name": "Thumbscrew (Masterwork)",
+          "doneness": "not-started",
+          "type_facet": "Goods.Torture"
+        },
+        {
+          "name": "Trephine",
+          "doneness": "not-started",
+          "type_facet": "Goods.Torture"
+        },
+        {
+          "name": "Urn of Smoldering Shapes",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous"
+        },
+        {
+          "name": "Ursine Rageskin",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Witchlight Lantern",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Light Source"
+        },
+        {
+          "name": "Wolf Caller's Horn",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous"
+        }
+      ]
+    },
+    {
+      "kind": "equipment_modifier",
+      "label": "Equipment Modifiers",
+      "done": 0,
+      "denominator": 2,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "Greater Vampiric",
+          "doneness": "not-started",
+          "type_facet": "Weapon.Melee.Piercing.Slashing"
+        },
+        {
+          "name": "Vampiric",
+          "doneness": "not-started",
+          "type_facet": "Weapon.Melee.Piercing.Slashing"
+        }
+      ]
+    },
+    {
+      "kind": "feat",
+      "label": "Feats",
+      "done": 0,
+      "denominator": 78,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "Absorb Spirit",
+          "doneness": "not-started",
+          "type_facet": "General"
+        },
+        {
+          "name": "Aura Flare",
+          "doneness": "not-started",
+          "type_facet": "General"
+        },
+        {
+          "name": "Blood Feast",
+          "doneness": "not-started",
+          "type_facet": "Combat.Monster"
+        },
+        {
+          "name": "Blood Spurt",
+          "doneness": "not-started",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Bouncing Spell-Like Ability",
+          "doneness": "not-started",
+          "type_facet": "Monster"
+        },
+        {
+          "name": "Brutal Coup de Grace",
+          "doneness": "not-started",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Brute Assault",
+          "doneness": "not-started",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Brute Stomp",
+          "doneness": "not-started",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Brute Style",
+          "doneness": "not-started",
+          "type_facet": "Combat.Style"
+        },
+        {
+          "name": "Bully Breed",
+          "doneness": "not-started",
+          "type_facet": "General"
+        },
+        {
+          "name": "Clarity of Pain",
+          "doneness": "not-started",
+          "type_facet": "General"
+        },
+        {
+          "name": "Consume Essence",
+          "doneness": "not-started",
+          "type_facet": "Combat.Monster"
+        },
+        {
+          "name": "Contagious Spell",
+          "doneness": "not-started",
+          "type_facet": "Metamagic"
+        },
+        {
+          "name": "Deadhand Initiate",
+          "doneness": "not-started",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Deadhand Master",
+          "doneness": "not-started",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Deadhand Style",
+          "doneness": "not-started",
+          "type_facet": "Combat.Style"
+        },
+        {
+          "name": "Disconcerting Knowledge",
+          "doneness": "not-started",
+          "type_facet": "General"
+        },
+        {
+          "name": "Disrupting Fist",
+          "doneness": "not-started",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Disruptive Spell-Like Ability",
+          "doneness": "not-started",
+          "type_facet": "Monster"
+        },
+        {
+          "name": "Enemy Cult",
+          "doneness": "not-started",
+          "type_facet": "Story"
+        },
+        {
+          "name": "Engulf Horror",
+          "doneness": "not-started",
+          "type_facet": "Combat.Monster"
+        },
+        {
+          "name": "Engulf Revulsion",
+          "doneness": "not-started",
+          "type_facet": "Combat.Monster"
+        },
+        {
+          "name": "Exorcising Mutilation",
+          "doneness": "not-started",
+          "type_facet": "General"
+        },
+        {
+          "name": "Exsanguinate",
+          "doneness": "not-started",
+          "type_facet": "Combat.Monster"
+        },
+        {
+          "name": "Fear Eater",
+          "doneness": "not-started",
+          "type_facet": "General"
+        },
+        {
+          "name": "Fearsome Spell-Like Ability",
+          "doneness": "not-started",
+          "type_facet": "Monster"
+        },
+        {
+          "name": "Fleshwarper",
+          "doneness": "not-started",
+          "type_facet": "Item Creation"
+        },
+        {
+          "name": "Ghost Guide",
+          "doneness": "not-started",
+          "type_facet": "Story"
+        },
+        {
+          "name": "Grab",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Grab ~ Bite",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Grab ~ Bite/Claw",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Grab ~ Bite/Tail Slap",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Grab ~ Bite/Tentacle",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Grab ~ Claw",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Grab ~ Claw/Tentacle",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Grab ~ Colossal",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Grab ~ Medium",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Grab ~ One Size Larger",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Grab ~ Slam",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Grab ~ Tail Slap",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Grab ~ Talon",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Grab ~ Tentacle",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Grab ~ Tentacles",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Grab ~ Tongue",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Grab ~ Vine",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Gruesome Shapechanger",
+          "doneness": "not-started",
+          "type_facet": "Monster"
+        },
+        {
+          "name": "Horrific Gorging",
+          "doneness": "not-started",
+          "type_facet": "Combat.Monster"
+        },
+        {
+          "name": "Incorporeal Intuition",
+          "doneness": "not-started",
+          "type_facet": "General"
+        },
+        {
+          "name": "Intensified Spell-Like Ability",
+          "doneness": "not-started",
+          "type_facet": "Monster"
+        },
+        {
+          "name": "Kyton Cut",
+          "doneness": "not-started",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Kyton Shield",
+          "doneness": "not-started",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Kyton Style",
+          "doneness": "not-started",
+          "type_facet": "Combat.Style"
+        },
+        {
+          "name": "Latching Horror",
+          "doneness": "not-started",
+          "type_facet": "Combat.Monster"
+        },
+        {
+          "name": "Lifeless Gaze",
+          "doneness": "not-started",
+          "type_facet": "General"
+        },
+        {
+          "name": "Lingering Spell-Like Ability",
+          "doneness": "not-started",
+          "type_facet": "Monster"
+        },
+        {
+          "name": "Maddening Obliteration",
+          "doneness": "not-started",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Maddening Strike",
+          "doneness": "not-started",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Maddening Style",
+          "doneness": "not-started",
+          "type_facet": "Combat.Style"
+        },
+        {
+          "name": "Mutilating Ritualist",
+          "doneness": "not-started",
+          "type_facet": "General"
+        },
+        {
+          "name": "Profane Studies",
+          "doneness": "not-started",
+          "type_facet": "General"
+        },
+        {
+          "name": "Protector of the People",
+          "doneness": "not-started",
+          "type_facet": "Story"
+        },
+        {
+          "name": "Purging Emesis",
+          "doneness": "not-started",
+          "type_facet": "General"
+        },
+        {
+          "name": "Putrid Summons",
+          "doneness": "not-started",
+          "type_facet": "General"
+        },
+        {
+          "name": "Reach Spell-Like Ability",
+          "doneness": "not-started",
+          "type_facet": "Monster"
+        },
+        {
+          "name": "Sacrificial Adept",
+          "doneness": "not-started",
+          "type_facet": "General"
+        },
+        {
+          "name": "Sacrificial Ritualist",
+          "doneness": "not-started",
+          "type_facet": "General"
+        },
+        {
+          "name": "Scarring Spell-Like Ability",
+          "doneness": "not-started",
+          "type_facet": "Monster"
+        },
+        {
+          "name": "Shatter Control",
+          "doneness": "not-started",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Sickening Spell-Like Ability",
+          "doneness": "not-started",
+          "type_facet": "Monster"
+        },
+        {
+          "name": "Skin Suit",
+          "doneness": "not-started",
+          "type_facet": "Monster"
+        },
+        {
+          "name": "Spawnlink",
+          "doneness": "not-started",
+          "type_facet": "Monster"
+        },
+        {
+          "name": "Spirit Speaker",
+          "doneness": "not-started",
+          "type_facet": "General"
+        },
+        {
+          "name": "Stubborn Curse",
+          "doneness": "not-started",
+          "type_facet": "General"
+        },
+        {
+          "name": "Touch of Evil",
+          "doneness": "not-started",
+          "type_facet": "General"
+        },
+        {
+          "name": "Traumatic Spell-Like Ability",
+          "doneness": "not-started",
+          "type_facet": "Monster"
+        },
+        {
+          "name": "Twisted Love",
+          "doneness": "not-started",
+          "type_facet": "Story"
+        },
+        {
+          "name": "Unyielding Ferocity",
+          "doneness": "not-started",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Zealous Mind",
+          "doneness": "not-started",
+          "type_facet": "General"
+        }
+      ]
+    },
+    {
+      "kind": "monster_ability",
+      "label": "Monster Abilities",
+      "done": 3,
+      "denominator": 71,
+      "pct": 4.2,
+      "items": [
+        {
+          "name": "Acid Spit",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Extraordinary.HiveWarrior"
+        },
+        {
+          "name": "Agonizing Prayer",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural.ApostleKyton"
+        },
+        {
+          "name": "All-Seeing",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.DreadLordSpecialPower"
+        },
+        {
+          "name": "Armor Class",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.TrompeLOeil"
+        },
+        {
+          "name": "Assume Likeness",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.UnknownTemplate"
+        },
+        {
+          "name": "Attacks",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.TrompeLOeil"
+        },
+        {
+          "name": "Autotelic",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.TrompeLOeil"
+        },
+        {
+          "name": "Bleeding Touch",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural.ApostleKyton"
+        },
+        {
+          "name": "Blind",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.BestialWerewolf"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.LycanthropicCreature"
+        },
+        {
+          "name": "Channel Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Cling of the Grave",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Contract Bound",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.HellboundCreature"
+        },
+        {
+          "name": "Corrosive Blood",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Cursed",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural.AccursedCreature"
+        },
+        {
+          "name": "Death Throes",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Deep One Traits",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Dream Dominion",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural.DreadLordSpecialPower"
+        },
+        {
+          "name": "Dream Movements",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.UnknownTemplate"
+        },
+        {
+          "name": "Egg Layer",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary.HiveQueen"
+        },
+        {
+          "name": "Enter Painting",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.TrompeLOeil"
+        },
+        {
+          "name": "Familial Possession",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.FamilialLich"
+        },
+        {
+          "name": "Fear Aura",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural.DreadLordSpecialPower.Aura"
+        },
+        {
+          "name": "Fear Aura",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural.ImplacableStalker.Aura"
+        },
+        {
+          "name": "Feral Counter",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.BestialWerewolf"
+        },
+        {
+          "name": "Gory Display",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.ImplacableStalker"
+        },
+        {
+          "name": "Hallucinatory Camouflage",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.UnknownTemplate"
+        },
+        {
+          "name": "Heat Adaptability",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Hellbound Summon",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.HellboundCreature"
+        },
+        {
+          "name": "Hive Mind",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Hive Traits",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Immortal Curse",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.CursedLord"
+        },
+        {
+          "name": "Infest",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Extraordinary.HiveLarvaSwarm"
+        },
+        {
+          "name": "Landlocked",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.DreadLord"
+        },
+        {
+          "name": "Lifedrinker",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Magical Mastery",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.DreadLordSpecialPower"
+        },
+        {
+          "name": "Master of the Four Winds",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.DreadLordSpecialPower"
+        },
+        {
+          "name": "Moonbound",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.MoonboundWerewolf"
+        },
+        {
+          "name": "Moonbound (Full Moon)",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.MoonboundWerewolf"
+        },
+        {
+          "name": "Moonbound (Near Full Moon)",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.MoonboundWerewolf"
+        },
+        {
+          "name": "Moonbound (New Moon)",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.MoonboundWerewolf"
+        },
+        {
+          "name": "Moonbound (Other Moon)",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.MoonboundWerewolf"
+        },
+        {
+          "name": "Nightmare Resurrection",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.ImplacableStalker"
+        },
+        {
+          "name": "One with the Land",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.DreadLord"
+        },
+        {
+          "name": "Physical Mastery",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.DreadLordSpecialPower"
+        },
+        {
+          "name": "Plant Affinity",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.DreadLordSpecialPower"
+        },
+        {
+          "name": "Poison",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Extraordinary.HiveLarvaSwarm"
+        },
+        {
+          "name": "Promethean Metabolism",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.PrometheanCreature"
+        },
+        {
+          "name": "Psyche Erosion",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural.UnknownTemplate"
+        },
+        {
+          "name": "Refuge in Pain",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.ShadowboundCreature"
+        },
+        {
+          "name": "Regretful Gaze",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.ShadowboundCreature"
+        },
+        {
+          "name": "Rejuvenation",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.TrompeLOeil"
+        },
+        {
+          "name": "Rending Mandibles",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary.HiveWarrior"
+        },
+        {
+          "name": "Right Behind You",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.ImplacableStalker"
+        },
+        {
+          "name": "Seductive Oration",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural.ApostleKyton"
+        },
+        {
+          "name": "Sense Fear",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.ImplacableStalker.Senses"
+        },
+        {
+          "name": "Shadow Traveler",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.ApostleKyton"
+        },
+        {
+          "name": "Skills",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.TrompeLOeil"
+        },
+        {
+          "name": "Spell-Like Abilities",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.SpellLike.ApostleKyton"
+        },
+        {
+          "name": "Spell-Like Abilities",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.UnknownTemplate"
+        },
+        {
+          "name": "Telepathy",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural.HiveQueen"
+        },
+        {
+          "name": "Terrifying Inevitability",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.ImplacableStalker"
+        },
+        {
+          "name": "Touch Attack",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural.LichCreature"
+        },
+        {
+          "name": "Trapped",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.CursedLord"
+        },
+        {
+          "name": "Two Minds",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.PossessedCreature"
+        },
+        {
+          "name": "Unnatural Aura",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Unnerving Gaze",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural.ApostleKyton"
+        },
+        {
+          "name": "Unquestioned Ruler",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.DreadLordSpecialPower"
+        },
+        {
+          "name": "Victimize",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural.UnknownTemplate"
+        },
+        {
+          "name": "Weaver of Lies",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.ShadowboundCreature"
+        }
+      ]
+    },
+    {
+      "kind": "monster",
+      "label": "Monsters",
+      "done": 2,
+      "denominator": 3,
+      "pct": 66.7,
+      "items": [
+        {
+          "name": "Hive Larva Swarm",
+          "doneness": "held",
+          "type_facet": "Aberration"
+        },
+        {
+          "name": "Hive Queen",
+          "doneness": "done",
+          "type_facet": "Aberration"
+        },
+        {
+          "name": "Hive Warrior",
+          "doneness": "done",
+          "type_facet": "Aberration"
+        }
+      ]
+    },
+    {
+      "kind": "race_trait",
+      "label": "Race Traits",
+      "done": 43,
+      "denominator": 92,
+      "pct": 46.7,
+      "items": [
+        {
+          "name": "Aberration",
+          "doneness": "not-started",
+          "type_facet": "DwarfPaladinFCB_HA"
+        },
+        {
+          "name": "Acquisitive",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Halfling Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+        },
+        {
+          "name": "Animal",
+          "doneness": "not-started",
+          "type_facet": "DwarfPaladinFCB_HA"
+        },
+        {
+          "name": "Aquatic Ancestry",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Human Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+        },
+        {
+          "name": "Attentive",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Halfling Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+        },
+        {
+          "name": "Barrow Scholar",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Dwarf Racial Trait.SpecialQuality.Special Quality"
+        },
+        {
+          "name": "Barrow Warden",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Dwarf Racial Trait.SpecialAttack.Special Attack.Defensive"
+        },
+        {
+          "name": "Blessed",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Halfling Racial Trait.SpecialQuality.Special Quality"
+        },
+        {
+          "name": "Blightborn",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Elf Racial Trait.SpecialQuality.Special Quality"
+        },
+        {
+          "name": "Cold",
+          "doneness": "not-started",
+          "type_facet": "ElfSorcererFCB_HA"
+        },
+        {
+          "name": "Construct",
+          "doneness": "not-started",
+          "type_facet": "DwarfPaladinFCB_HA"
+        },
+        {
+          "name": "Creepy",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Elf Racial Trait.SpecialQuality.Special Quality.Elven Magic"
+        },
+        {
+          "name": "Creepy Doll",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Halfling Racial Trait.SpecialQuality.Special Quality"
+        },
+        {
+          "name": "Deep Jungle",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Halfling Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+        },
+        {
+          "name": "Deep One Traits",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Desert",
+          "doneness": "not-started",
+          "type_facet": "ElfSorcererFCB_HA"
+        },
+        {
+          "name": "Dragon",
+          "doneness": "not-started",
+          "type_facet": "DwarfPaladinFCB_HA"
+        },
+        {
+          "name": "Dreamer",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Half-Elf Racial Trait.SpecialQuality.Special Quality"
+        },
+        {
+          "name": "Fairy Catcher",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Gnome Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+        },
+        {
+          "name": "Fey",
+          "doneness": "not-started",
+          "type_facet": "DwarfPaladinFCB_HA"
+        },
+        {
+          "name": "Forest",
+          "doneness": "not-started",
+          "type_facet": "ElfSorcererFCB_HA"
+        },
+        {
+          "name": "Ghoulish Creature Paralysis",
+          "doneness": "not-started",
+          "type_facet": "GhoulishCreature"
+        },
+        {
+          "name": "Giant Ancestry",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Human Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+        },
+        {
+          "name": "Healthy",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Dwarf Racial Trait.SpecialQuality.Special Quality"
+        },
+        {
+          "name": "Hive Traits",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Humanoid (Aquatic)",
+          "doneness": "not-started",
+          "type_facet": "DwarfPaladinFCB_HA"
+        },
+        {
+          "name": "Humanoid (Dwarf)",
+          "doneness": "not-started",
+          "type_facet": "DwarfPaladinFCB_HA"
+        },
+        {
+          "name": "Humanoid (Elf)",
+          "doneness": "not-started",
+          "type_facet": "DwarfPaladinFCB_HA"
+        },
+        {
+          "name": "Humanoid (Giant)",
+          "doneness": "not-started",
+          "type_facet": "DwarfPaladinFCB_HA"
+        },
+        {
+          "name": "Humanoid (Gnoll)",
+          "doneness": "not-started",
+          "type_facet": "DwarfPaladinFCB_HA"
+        },
+        {
+          "name": "Humanoid (Gnome)",
+          "doneness": "not-started",
+          "type_facet": "DwarfPaladinFCB_HA"
+        },
+        {
+          "name": "Humanoid (Goblinoid)",
+          "doneness": "not-started",
+          "type_facet": "DwarfPaladinFCB_HA"
+        },
+        {
+          "name": "Humanoid (Halfling)",
+          "doneness": "not-started",
+          "type_facet": "DwarfPaladinFCB_HA"
+        },
+        {
+          "name": "Humanoid (Human)",
+          "doneness": "not-started",
+          "type_facet": "DwarfPaladinFCB_HA"
+        },
+        {
+          "name": "Humanoid (Orc)",
+          "doneness": "not-started",
+          "type_facet": "DwarfPaladinFCB_HA"
+        },
+        {
+          "name": "Humanoid (Reptilian)",
+          "doneness": "not-started",
+          "type_facet": "DwarfPaladinFCB_HA"
+        },
+        {
+          "name": "Inquisitive",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Gnome Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+        },
+        {
+          "name": "Inured",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Half-Orc Racial Trait.SpecialQuality.Special Quality"
+        },
+        {
+          "name": "Irrepressible",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Halfling Racial Trait.SpecialQuality.Special Quality"
+        },
+        {
+          "name": "Jungle",
+          "doneness": "not-started",
+          "type_facet": "ElfSorcererFCB_HA"
+        },
+        {
+          "name": "Keeper of Secrets",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Elf Racial Trait.SpecialQuality.Special Quality.Elven Magic"
+        },
+        {
+          "name": "Languages",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Halfling Racial Trait.SpecialQuality.Racial Language"
+        },
+        {
+          "name": "Lich ~ Rejuvenation",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Light against Darkness",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Elf Racial Trait.SpecialAttack.Special Attack.Elven Magic"
+        },
+        {
+          "name": "Long-Limbed",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Elf Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+        },
+        {
+          "name": "Lycanthrope ~ Change Shape",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Magical Beast",
+          "doneness": "not-started",
+          "type_facet": "DwarfPaladinFCB_HA"
+        },
+        {
+          "name": "Mismatched",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Half-Elf Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+        },
+        {
+          "name": "Monstrous Humanoid",
+          "doneness": "not-started",
+          "type_facet": "DwarfPaladinFCB_HA"
+        },
+        {
+          "name": "Monstrous Sympathy",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Half-Orc Racial Trait.SpecialQuality.Special Quality"
+        },
+        {
+          "name": "Mountain",
+          "doneness": "not-started",
+          "type_facet": "ElfSorcererFCB_HA"
+        },
+        {
+          "name": "Multidisciplined",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Half-Elf Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+        },
+        {
+          "name": "Ooze",
+          "doneness": "not-started",
+          "type_facet": "DwarfPaladinFCB_HA"
+        },
+        {
+          "name": "Outsider (Air)",
+          "doneness": "not-started",
+          "type_facet": "DwarfPaladinFCB_HA"
+        },
+        {
+          "name": "Outsider (Chaotic)",
+          "doneness": "not-started",
+          "type_facet": "DwarfPaladinFCB_HA"
+        },
+        {
+          "name": "Outsider (Earth)",
+          "doneness": "not-started",
+          "type_facet": "DwarfPaladinFCB_HA"
+        },
+        {
+          "name": "Outsider (Evil)",
+          "doneness": "not-started",
+          "type_facet": "DwarfPaladinFCB_HA"
+        },
+        {
+          "name": "Outsider (Fire)",
+          "doneness": "not-started",
+          "type_facet": "DwarfPaladinFCB_HA"
+        },
+        {
+          "name": "Outsider (Good)",
+          "doneness": "not-started",
+          "type_facet": "DwarfPaladinFCB_HA"
+        },
+        {
+          "name": "Outsider (Lawful)",
+          "doneness": "not-started",
+          "type_facet": "DwarfPaladinFCB_HA"
+        },
+        {
+          "name": "Outsider (Native)",
+          "doneness": "not-started",
+          "type_facet": "DwarfPaladinFCB_HA"
+        },
+        {
+          "name": "Outsider (Water)",
+          "doneness": "not-started",
+          "type_facet": "DwarfPaladinFCB_HA"
+        },
+        {
+          "name": "Pain Tolerance",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Half-Orc Racial Trait.SpecialQuality.Special Quality"
+        },
+        {
+          "name": "Perfect",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Elf Racial Trait.SpecialQuality.Special Quality"
+        },
+        {
+          "name": "Piety",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Human Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+        },
+        {
+          "name": "Plains",
+          "doneness": "not-started",
+          "type_facet": "ElfSorcererFCB_HA"
+        },
+        {
+          "name": "Plane",
+          "doneness": "not-started",
+          "type_facet": "ElfSorcererFCB_HA"
+        },
+        {
+          "name": "Plant",
+          "doneness": "not-started",
+          "type_facet": "DwarfPaladinFCB_HA"
+        },
+        {
+          "name": "Poison Use",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Halfling Racial Trait.SpecialQuality.Special Quality.Poison Use"
+        },
+        {
+          "name": "Projection",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Half-Orc Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+        },
+        {
+          "name": "Psychic Defense",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Human Racial Trait.SpecialQuality.Special Quality"
+        },
+        {
+          "name": "Rationalize",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Human Racial Trait.SpecialQuality.Special Quality"
+        },
+        {
+          "name": "Reptilian Ancestry",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Human Racial Trait.SpecialQuality.Special Quality"
+        },
+        {
+          "name": "Resourceful",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Halfling Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+        },
+        {
+          "name": "Round Ears",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Half-Elf Racial Trait.SpecialQuality.Special Quality"
+        },
+        {
+          "name": "Sense Aberration",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Dwarf Racial Trait.SpecialQuality.Special Quality"
+        },
+        {
+          "name": "Shadow Dodger",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Gnome Racial Trait.SpecialQuality.Defensive"
+        },
+        {
+          "name": "Shadow Foe",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Gnome Racial Trait.SpecialAttack.Special Attack.Defensive"
+        },
+        {
+          "name": "Slender",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Elf Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+        },
+        {
+          "name": "Smog Sight",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Half-Orc Racial Trait.SpecialQuality.Special Quality.Racial Vision"
+        },
+        {
+          "name": "Stalker",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Gnome Racial Trait.SpecialAttack.Special Attack"
+        },
+        {
+          "name": "Starchild",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Half-Elf Racial Trait.SpecialQuality.Special Quality"
+        },
+        {
+          "name": "Stoic",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Half-Orc Racial Trait.SpecialQuality.Special Quality"
+        },
+        {
+          "name": "Swamp",
+          "doneness": "not-started",
+          "type_facet": "ElfSorcererFCB_HA"
+        },
+        {
+          "name": "Tightfisted",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Dwarf Racial Trait.SpecialQuality.Special Quality"
+        },
+        {
+          "name": "Undead",
+          "doneness": "not-started",
+          "type_facet": "DwarfPaladinFCB_HA"
+        },
+        {
+          "name": "Underground",
+          "doneness": "not-started",
+          "type_facet": "ElfSorcererFCB_HA"
+        },
+        {
+          "name": "Urban",
+          "doneness": "not-started",
+          "type_facet": "ElfSorcererFCB_HA"
+        },
+        {
+          "name": "Vampiric Creature Energy Drain",
+          "doneness": "not-started",
+          "type_facet": "VampiricCreature"
+        },
+        {
+          "name": "Vermin",
+          "doneness": "not-started",
+          "type_facet": "DwarfPaladinFCB_HA"
+        },
+        {
+          "name": "Viscous Blood",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Dwarf Racial Trait.SpecialQuality.Special Quality"
+        },
+        {
+          "name": "Water",
+          "doneness": "not-started",
+          "type_facet": "ElfSorcererFCB_HA"
+        }
+      ]
+    },
+    {
+      "kind": "race",
+      "label": "Races",
+      "done": 0,
+      "denominator": 1,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "Undead Phantom",
+          "doneness": "not-started",
+          "type_facet": "Undead"
+        }
+      ]
+    },
+    {
+      "kind": "spell",
+      "label": "Spells",
+      "done": 0,
+      "denominator": 72,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "Absurdity",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Alleviate Corruption",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Appearance of Life",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Assume Appearance",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Assume Appearance (Greater)",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Ban Corruption",
+          "doneness": "not-started",
+          "type_facet": "Divine.Psychic"
+        },
+        {
+          "name": "Barbed Chains",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Blood Ties",
+          "doneness": "not-started",
+          "type_facet": "Divine.Psychic"
+        },
+        {
+          "name": "Bloodbath",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Boneshaker",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Borrow Corruption",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Charnel House",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Compelling Rant",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Contact Entity I",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Contact Entity II",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Contact Entity III",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Contact Entity IV",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Cruel Jaunt",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Curse Terrain",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Curse Terrain (Greater)",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Curse Terrain (Lesser)",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Curse Terrain (Supreme)",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Curse of Fell Seasons",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Curse of Night",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Damnation",
+          "doneness": "not-started",
+          "type_facet": "Divine"
+        },
+        {
+          "name": "Death Clutch",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Decapitate",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Decollate",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Dreadscape",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Flesh Puppet",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Flesh Puppet Horde",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Flesh Wall",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Flickering Lights",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Grasping Corpse",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Green Caress",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Hedging Weapons",
+          "doneness": "not-started",
+          "type_facet": "Divine"
+        },
+        {
+          "name": "Holy Javelin",
+          "doneness": "not-started",
+          "type_facet": "Divine"
+        },
+        {
+          "name": "Horrific Doubles",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Hunger for Flesh",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Hunger for Flesh (Mass)",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Impossible Angles",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Life Blast",
+          "doneness": "not-started",
+          "type_facet": "Divine"
+        },
+        {
+          "name": "Locate Gate",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Mad Sultan's Melody",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Massacre",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Maze of Madness and Suffering",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Night Terrors",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Pessimism",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Phantasmal Asphyxiation",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Phantasmal Putrefaction",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Phobia",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Plundered Power",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Profane Nimbus",
+          "doneness": "not-started",
+          "type_facet": "Divine"
+        },
+        {
+          "name": "Pyrotechnic Eruption",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Quick Change",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Rigor Mortis",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Sacramental Seal",
+          "doneness": "not-started",
+          "type_facet": "Divine"
+        },
+        {
+          "name": "Sacred Nimbus",
+          "doneness": "not-started",
+          "type_facet": "Divine"
+        },
+        {
+          "name": "Screaming Flames",
+          "doneness": "not-started",
+          "type_facet": "Divine"
+        },
+        {
+          "name": "Sense Fear",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Sense Madness",
+          "doneness": "not-started",
+          "type_facet": "Divine.Psychic"
+        },
+        {
+          "name": "Sleepwalking Suggestion",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Slough",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Stave Off Corruption",
+          "doneness": "not-started",
+          "type_facet": "Divine"
+        },
+        {
+          "name": "Straitjacket",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Symbol of Exsanguination",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Temporary Graft",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Torpid Reanimation",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Verminous Transformation",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Vile Dog Transformation",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Waves of Blood",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Wither Limb",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine.Psychic"
+        }
+      ]
+    }
+  ]
+}

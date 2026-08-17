@@ -143,7 +143,20 @@ PY
         echo "site/dashboard/PF1e-dashboard.json is STALE -- run ./scripts/publish-site-dashboard.sh" >&2
         exit 1
     fi
+
+    # The public status page (site/status.html) never reads this feed or its
+    # `usage`/`channels.*.agents`/session-prose content directly -- it fetches
+    # site/status-data.json and site/status-data/<book>.json, a narrow
+    # allow-listed projection computed straight from site/dashboard/units/*.json
+    # by scripts/site/build_public_status.py (see that script's module
+    # docstring, and this repo's "What is in the feed" note in
+    # site/dashboard/README.md, for why the projection reads the unit ledgers
+    # rather than this file). Check that projection is current too.
+    python3 "$REPO_ROOT/scripts/site/build_public_status.py" --check
 else
     python3 "$PRODUCER" --out "$OUT" >/dev/null
     echo "wrote $OUT"
+
+    echo "==> Regenerating public status projection (site/status-data.json + site/status-data/*.json)"
+    python3 "$REPO_ROOT/scripts/site/build_public_status.py"
 fi

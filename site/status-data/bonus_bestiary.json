@@ -1,0 +1,203 @@
+{
+  "id": "bonus_bestiary",
+  "title": "Bonus Bestiary",
+  "kinds": [
+    {
+      "kind": "class",
+      "label": "Classes",
+      "done": 0,
+      "denominator": 3,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "Faerie Dragon",
+          "doneness": "not-started",
+          "type_facet": "Monster"
+        },
+        {
+          "name": "Lammasu",
+          "doneness": "not-started",
+          "type_facet": "Monster"
+        },
+        {
+          "name": "Water Naga",
+          "doneness": "not-started",
+          "type_facet": "Monster"
+        }
+      ]
+    },
+    {
+      "kind": "monster_ability",
+      "label": "Monster Abilities",
+      "done": 11,
+      "denominator": 17,
+      "pct": 64.7,
+      "items": [
+        {
+          "name": "Babble",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Supernatural.Aura"
+        },
+        {
+          "name": "Bay",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Breath Weapon",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Disease",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Faithless",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural.Aura"
+        },
+        {
+          "name": "Immunity to Magic",
+          "doneness": "held",
+          "type_facet": "SpecialQuality.Extraordinary.Immunity"
+        },
+        {
+          "name": "Madness",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Magic Circle against Evil",
+          "doneness": "held",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Poison",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Roar",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Sand Trap",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Shadow Blend",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Shatter Weapons",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Spores",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Statue",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Sudden Charge",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Touch of Insanity",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        }
+      ]
+    },
+    {
+      "kind": "monster",
+      "label": "Monsters",
+      "done": 10,
+      "denominator": 14,
+      "pct": 71.4,
+      "items": [
+        {
+          "name": "Allip",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Ant Lion (Giant)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Ant Lion (Mature)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Ascomoid",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Axe Beak",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Caryatid Column",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Dragon (Faerie)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Dragonne",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Hag (Annis)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Huecuva",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Lammasu",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Naga (Water)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Nixie",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Shadow Mastiff",
+          "doneness": "done",
+          "type_facet": null
+        }
+      ]
+    }
+  ]
+}
