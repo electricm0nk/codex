@@ -17522,3 +17522,182 @@ checkpoint (already cleaned up, or the lanes/reviewers used different `CARGO_TAR
 `sd31-class-split-wire-regen` deliberately left untouched: neither is in this wave's own
 explicit list, and unilaterally judging another actor's directory "finished" is not this
 cycle's call to make.
+
+## Cycle `SD31-E5-F1-003` (`RETRO_ACTOR=sd31-inventory-gaps`) — 2026-08-17, `class_feature` inventory-side gaps (owner registry + diagnostic matching)
+
+**Role:** `sd31-inventory-gaps`, own worktree (`/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_800ec009-61e-2`), own branch `sd31/e5-f1-003-inventory-gaps`, cut from `tranche/11`.
+
+**Starting HEAD:** `f8d2dc1d087d3ceeeb71d0f9785d185f65eede46` (`docs(sd31): trailing auto-appended retro events (verify.sh/reclaim.sh self-instrumentation)`), `SD31-W9-INTEGRATE-001`'s own tip — descends from `tranche/11`; package dir present; tree clean at start (`git fetch origin && git reset --hard origin/tranche/11`, per the wave rule for an absent worktree package dir).
+
+**Oracle pin:** `./scripts/verify.sh --only preflight-oracle` → PASS. `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/pcgen-oracle-pin.env`).
+
+**Files owned/touched:** `src/bin/v06_work_inventory.rs` (owned entirely, only file with code changes). `scripts/observer/pf1e_dashboard_producer.py` and `src/rules_core/cache_gen/class_feature.rs` were read (to confirm `doneness_verdict`'s status→bucket mapping needed no change, and that the cache generator needs no touch since PU already ships hand-curated corpus records) and left unmodified.
+
+### The mandate, restated
+
+Wave 9's cause-breakdown (`artifacts/SD31-E5-F1-002-class-feature-not-started-breakdown.md`) put ~5,955 `class_feature` units behind two inventory-side causes in my file: ~3,803 "owner-matched, no id match" and ~2,152 "unmodelled class". My job: widen `modelled_class_books()` honestly (proven-per-class, never merely to admit units), close the id-match gap where provably correct, trace whether the 929 "no compiled rule set" units are mine or an ingest lane's, and verify the 3,917 `unmeasurable` characterization.
+
+### §1 — `modelled_class_books()`: only one honest widening exists, and closing it required two bug fixes
+
+Re-derived wave 9's own class measurement directly: `grep -rlEi 'occultist|spiritualist|medium|mesmerist|kineticist|psychic|antipaladin|vigilante|magus|shifter|aegis|cryptic|dread|marksman|psion|soulknife|tactician|vitalist|wilder' src/rules_core/pilot_compute/` returns only `class_ultimate_combat.rs`, `class_slayer.rs`, `mod.rs` — none of the 23 remaining supersession-shape classes (confirmed by direct source read, not proxy) carry any real chassis wiring. `SD31-E3-F1-001`'s "23 of 24 show 0 wired-able" stands. **Only 5 `ClassId`-shaped enums exist at all in this engine** (`ClassId`, `ApgClassId`, `AcgClassId`, `UcClassId`, `PuClassId`) and the first four were already registered by wave 9. `PuClassId` (Pathfinder Unchained: Unchained Barbarian/Monk/Rogue/Summoner) was the one remaining honest lever, deliberately withheld by wave 9 for a real, correctly-identified reason (its multi-word underscored names could not safely match the corpus's space-separated group text without a matching-logic rework).
+
+**Evidence PU genuinely computes** (direct source read, `src/rules_core/pilot_compute/mod.rs`): `compute_class_chassis` dispatches any single-class `class_id` matching `PuClassId::from_class_id_str` to `compute_pu_class_chassis`, which calls four real grounding functions (`ground_unchained_barbarian_class_features`, `_monk_`, `_rogue_`, `_summoner_class_features`) — e.g. `ground_unchained_rogue_class_features` alone pushes 10 real `ComputationExplanation`s (`sneak_attack_dice`, `trapfinding_bonus`, `danger_sense_bonus`, `rogue_talents_known`, `finesse_training_weapon_choices`, `rogues_edge_skill_unlocks`, `master_strike_dc`, `uncanny_dodge_flanking_level`, `uncanny_dodge_tracker_steps`, `debilitating_injury_penalty`, `class_skill_count`). `class_sweep_input`'s existing sweep loop reaches this path automatically the moment the four names are registered — no separate wiring needed.
+
+**Two real bugs the registration exposed, both fixed, neither deferred:**
+
+1. **`class_feature_owner`'s multi-word/underscore gap.** `group == *class` compared the corpus's space-separated group text (`"unchained rogue"`) against the engine's underscored `class_id` convention (`"unchained_rogue"`) — they can never be equal. Worse, the OLD substring fallback (`group.ends_with(" {class}")`) already matched `"Unchained Rogue"` to the SHORTER, unrelated base class `"rogue"` (a `decisions.md §10` AMENDMENT hazard, exactly as wave 9's own doc comment predicted). Fixed with a new `class_name_as_group_text()` normalization (`class.replace('_', " ")`), applied identically in `class_feature_owner`, `class_feature_exact_suffix_grounded`, and `classify()`'s own inline suffix-strip guard — the existing longest-match tie-break then correctly prefers the longer, correctly-registered `"unchained_rogue"` over the shorter `"rogue"` collision.
+2. **The diagnostic-quote branch's prefix collision.** Registering PU exposed a SEPARATE, pre-existing latent defect: `id.contains(&feature_slug)` on the WHOLE diagnostic id false-matched `"Unchained Rogue Talent ~ Feat"` (`feature_slug == "feat"`) to an unrelated diagnostic about Improved Uncanny Dodge, purely because every id in this engine begins with the literal token `"class_feature"`, which contains `"feat"` as a substring of `"feature"` itself — `BTreeMap` alphabetical iteration then picked the wrong diagnostic over the class's own real catch-all by sort accident. Fixed via a new `diagnostic_id_names_feature()` that strips only that fixed prefix token before searching — narrower than an exact-segment match, which would have regressed established matches (`"Bloodrager ~ Bloodrage"` legitimately matches its class's catch-all only because `"bloodrage"` is a substring of the OWNER token `"bloodrager"` itself; `"Slayer Talent ~ Feat"`/`"Ninja Trick ~ Feat"` legitimately match because `"features"` genuinely contains `"feat"` — neither lives inside the stripped prefix).
+
+**Checked the fix against all 35 pre-existing `class_feature` `deferred-with-reason` units, not assumed clean:** 34 unaffected, **one genuine, disclosed regression** — `"Phrenic Slayer ~ AS"` loses its match, because its old match was the IDENTICAL spurious-substring shape (`"as"` is a substring of `"class"`, `cl-AS-s`), and `"Phrenic Slayer"` is itself archetype-qualified (the diagnostic-quote branch has no `group == owner` guard at all — a separate, wider, NOT fixed this cycle gap, named in `OPEN-ISSUES.md` row 167). Reported, not rounded into "zero regressions."
+
+**TDD:** 23 new/extended tests (`class_feature_owner_multi_word_owner_tests` — 4 new; `class_feature_exact_suffix_grounded_tests` — 2 new; `diagnostic_id_names_feature_tests` — 6 new; `modelled_class_books_registry_tests` — 1 new). `cargo test --locked --bin v06_work_inventory` → **234/234** (was 211/211). Zero regressions.
+
+### §2 — `no_compiled_rule_set_for_book` (929): confirmed out of territory
+
+Re-derived: `929` (`adventurers_guide` 700, `inner_sea_magic` 218, `inner_sea_taverns` 11) — exact match to wave 9's figure. Confirmed by direct search (`grep -n 'inner_sea_magic\|inner_sea_taverns\|adventurers_guide' src/rules_core/rules_tables/mod.rs`, zero hits): **no `RuleSetId` variant and no `corpus_dir_for` mapping exists for any of these three books at all.** `COMPILED_RULE_SETS`/`RuleSetId` live in `src/rules_core/rules_tables/mod.rs`, not `v06_work_inventory.rs` — building three whole new class-mechanism modules is lane 1's territory (or a fresh book-onboarding cycle), confirmed precisely rather than transcribed, not attempted here.
+
+### §3 — The 3,917 `unmeasurable`: re-verified, and 22 units moved for a genuine inventory-side reason
+
+Re-derived: all 3,917 shared exactly one evidence reason (`class_feature_group_names_no_class_at_all`) before this cycle — confirmed, matching wave 9's characterization exactly. After the `PuClassId` registration + normalization fix, **22 of them (all `pathfinder_unchained`) newly resolve an owner** via the class-name PREFIX match (`"Unchained Rogue Talent ~ X"` starts with `"unchained rogue "`) — a genuine inventory-side status-stamping gap (the registry simply didn't know the owning class existed), not a reclassification: they move to their HONEST status (`not-ingested`/`deferred-with-reason`), never to `done` — the `group == owner` EXACT-match guard (unaffected by this fix) still correctly blocks these option-pool/archetype-qualified groups from grounding, per `decisions.md §10`. Remaining **3,895** re-confirmed to carry the identical single evidence reason and the identical option-pool-shape characterization wave 9 already built (191 touch an already-wired `CLASS_FEATURE_POOLS` slot, ~3,700+ touch none) — characterization only, no unit reclassified by this section.
+
+### §4 — Guarded regen, both directions, every unit individually diffed
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out ...
+  → 24699 records examined of 25576 read, 243320 tokens compared (9 synthesized), 25151 digests checked, 0 findings, CLEAN
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out ...
+  → 998 of 999 covered units cleared; 1 pre-existing failure (advanced_players_guide:equipment:
+    spindle_of_perfect_knowledge, the same one every prior wave names)
+CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... cargo run --locked --bin v06_work_inventory
+```
+
+**Zero stamp loss:** 38,540 total units both before and after.
+
+**Board (producer's own `doneness_verdict`, re-derived live):**
+
+| | before | after | delta |
+|---|---:|---:|---:|
+| board `done` | 10,958 | 11,004 | **+46 (28.4468% → 28.5662%)** |
+| `class_feature` `unmeasurable` | 3,917 | 3,895 | **−22** |
+
+**85 total moves, ALL `class_feature`, zero moves in any other `kind`** (board-wide regression scan run both directions across every id in both files: 0 found outside `class_feature`):
+
+| direction | count |
+|---|---:|
+| `not-started` → `done` | 45 |
+| `unmeasurable` → `not-started` | 21 |
+| `not-started` → `held` | 12 |
+| `not-started` → `deferred` | 4 |
+| `unmeasurable` → `deferred` | 1 (`Unchained Rogue Talent ~ Feat`, now correctly citing its own class's catch-all) |
+| `deferred` → `done` | 1 |
+| `deferred` → `not-started` | 1 (`Phrenic Slayer ~ AS`, the disclosed regression, §1) |
+
+`docs/work-inventory.json` restored per the wave rule: `git checkout -- docs/work-inventory.json`; confirmed clean.
+
+### §5 — What's NOT mine, reported for lane 1 / a future cycle
+
+- §2's 929 `no_compiled_rule_set_for_book` units — needs new class-mechanism modules in `src/rules_core/rules_tables/mod.rs`, lane 1's territory.
+- The diagnostic-quote branch's total absence of a `group == owner` guard (the mechanism behind the `Phrenic Slayer ~ AS` regression) — a real, separate, unfixed gap; `OPEN-ISSUES.md` row 167.
+- §3's remaining 3,895 `unmeasurable` + the zero-magnitude option-pool population: Epic 4-F2's chooser-interaction primitive, already sized by wave 9 (1,847 distinct pool names), unchanged by this cycle.
+- The 2,032-unit genuinely-zero-chassis class population (81 classes) and the 3,744-unit "no explanation id even with generous stripping" population: both independently re-confirmed this cycle (§1), unchanged.
+
+One row appended: 167 (NOTE, full derivation).
+
+### §6 — Gate
+
+Launched early, in the background, kept alive; relaunched once, cleanly, after a self-caught
+clippy-ceiling breach (below) — the first launch predated that fix and would have graded stale code.
+
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E5-F1-003-verify-final2.log
+./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+
+**Self-caught, self-fixed incident: a clippy-ceiling breach from my own new tests.** The first
+complete gate run (`SD31-E5-F1-003-verify-final.log`) found `root: 54 warnings exceeds recorded
+ceiling 52` (`scripts/verify-baselines.env`'s `BASELINE_CLIPPY_WARNINGS_ROOT=52`). Traced to exactly
+2 new `clippy::useless_vec` warnings this cycle's own new tests introduced (single-element
+`vec!["...".to_string()]` where an array literal is idiomatic) — confirmed by line number against
+the diff, not assumed: the other 5 `useless_vec` warnings clippy reports in the same test module are
+PRE-EXISTING (wave 9's own tests, already counted in the 52 baseline; unaffected by this cycle).
+Fixed by switching my 2 new instances to array literals (`["...".to_string()]`), matching clippy's
+own suggested fix exactly. `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E5-F1-003-verify-final.log`
+kept as the record of the caught defect, not deleted.
+
+**Second, final gate run** (this section's own command, log `SD31-E5-F1-003-verify-final2.log`,
+auto-instrumented retro event `duration_seconds: 934`): **RESULT: FAIL — 26 of 27 stages PASS**,
+sole failure `site-dashboard-check`; by this program's own convention that is `VERIFY_EXIT=1`
+(non-zero because a stage failed; not captured through a pipe — read directly from the process's
+own summary line and its self-instrumented retro event, since the run was dispatched to the
+background per this card's own instruction and the exact `$?` could not be intercepted synchronously
+across tool-call boundaries — stated exactly, not rounded up to "exit 0"). `root-lib` 1949 passed;
+`root-full` **6888 passed across 565 suites, all 529 `tests/*.rs` suites executed** (was 6882 at
+this cycle's own starting tip; the +6 is exactly `diagnostic_id_names_feature_tests`'s own new
+tests); `desktop` 457 passed; `reach` 27 passed (no new consumer surface — this cycle is
+classifier-side only); `corpus-sweep` 24699 examined of 25576 read, 243320 tokens compared,
+**0 findings, CLEAN**; `supersession-gate` 116 objects, all clean; `frontend-test` 99/99 files;
+`frontend-typecheck` clean; **`clippy` `root:52 desktop:7 warnings, 0 errors` — exactly at the
+recorded ceiling** (confirms the self-catch/self-fix above actually worked, not merely asserted);
+`class-dump` 31/31 computing. **The sole failure:** `site-dashboard-check` — pre-existing,
+confirmed unrelated to this cycle (`OPEN-ISSUES.md` row 153: the stage spuriously fails from any
+worktree whose checkout path differs from the one that last published
+`site/dashboard/PF1e-dashboard.json`, since `unit_index.source_document` bakes in an unstripped
+absolute path; reproduced independently this cycle by running `bash scripts/publish-site-dashboard.sh
+--check` directly against the UNMODIFIED, git-committed `docs/work-inventory.json`, before any of
+this cycle's own regen work ever touched the file — identical failure, confirming it is not this
+cycle's doing). **Baseline drift noted, not fixed** (out of file territory, `scripts/verify-
+baselines.env`): the gate's own "BASELINE NOTES" flagged `BASELINE_ROOT_FULL_TESTS` as stale (6875
+recorded vs 6888 measured) — this drift pre-dates this cycle (6882 already exceeded 6875 at this
+cycle's own starting tip, before any of this cycle's own tests existed), so it is reported, not
+corrected, per the wave rule that baseline updates are a separate, deliberate commit.
+
+### §7 — DoD, checked against every item
+
+1. `verify.sh`'s own exit is captured directly, stated exactly as measured: **FAIL, 26/27 stages
+   PASS**, sole failure `site-dashboard-check` — pre-existing, confirmed unrelated (§6). Not rounded
+   up to "exit 0"; the clippy self-catch/self-fix that could otherwise have caused a real failure is
+   disclosed above, not silently absorbed.
+2. `reach` — 27 passed, unchanged by this cycle: no new consumer surface was added, only an existing
+   classifier's owner-matching and diagnostic-matching correctness was widened.
+3. `v06_corpus_trap_report -- --audit`: **`1 mod-record, 1225 wiring-class-mismatch`, TRAP_EXIT=2
+   (findings present, as expected) — byte-identical to the package's own recorded baseline every
+   prior wave names.** Predicted and confirmed: this cycle never touches `wiring_class.rs`/
+   `pcgen_desc.rs` (the files that drive that count), so zero movement is the correct, verified
+   outcome, not an unchecked assumption.
+4. Guarded regen: zero stamp loss, confirmed §4.
+5. Wired-integration four-check audit: N/A in the stub sense — no new render surface; the newly
+   `done`/`grounded`/`text-complete` PU units render through the ALREADY-shipped
+   `classFeaturesModel.ts` Chassis-gutter surface, proven live in §8 below.
+6. Unsurfaced families: none new.
+7. Baseline moves: none this cycle (`scripts/verify-baselines.env` untouched by the source fix
+   itself — the clippy-ceiling incident was a same-cycle self-catch that never shipped, so no
+   baseline bump was needed or made).
+8. **On-screen verification — real, live.** Full narrative:
+   `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E5-F1-003/verify.md`. Created a real
+   Dwarf Unchained Rogue 5 character through the real character-creation form, loaded its full
+   character sheet via the real Load Character flow, opened the Actions tab, and confirmed
+   **Sneak Attack Dice 3** ("Unchained Rogue level 5 Sneak Attack: 3d6 ((level + 1) / 2).") rendering
+   live alongside 7 further newly-grounded Unchained Rogue features (Trapfinding Bonus, Danger Sense
+   Bonus, Rogue Talents Known, Finesse Training Weapon Choices, Rogues Edge Skill Unlocks, Uncanny
+   Dodge Flanking Level, Uncanny Dodge Tracker Steps, Debilitating Injury Penalty) — screenshots
+   committed at `artifacts/SD31-E5-F1-003/{unchained-rogue-actions-tab,unchained-rogue-sheet-overview}.png`.
+
+### Blockers
+
+None. §5's four items are named, reported, and correctly left to lane 1 / a future cycle rather than
+worked around.
+
+### Branch tip
+
+This cycle's own single commit on `sd31/e5-f1-003-inventory-gaps` (branched from starting HEAD
+`f8d2dc1d0`), pushed to `origin/sd31/e5-f1-003-inventory-gaps` — a separate branch on this cycle's
+own worktree, per this cycle's dispatch (own worktree, own branch; the integration cycle merges it,
+not this cycle). Exact SHA: see `git log -1 sd31/e5-f1-003-inventory-gaps` / the PR/branch the
+integration cycle picks up.
+
+### Reclaim
+
+`scripts/reclaim.sh --apply` run at cycle end. Own `CARGO_TARGET_DIR`
+(`/home/ubuntu/cargo-targets/sd31-inventory-gaps`) left in place for the integration cycle's own
+possible reuse rather than deleted mid-report; see the retro event / follow-up note for the actual
+reclaim figures if the directory was removed after this receipt was written.
