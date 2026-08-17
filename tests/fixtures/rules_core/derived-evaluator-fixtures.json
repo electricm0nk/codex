@@ -17281,5 +17281,162 @@
         "per_levels": 2
       }
     }
+  ],
+  "class_feature_token_family": "BONUS:VAR (per-level scaling: floor((LEVELVAR + offset_pre) / divisor) + offset_post)",
+  "class_feature_derivation": "PCGen `BONUS:VAR|<name>|<formula>` where <formula> is a class-feature per-level scaling expression. Unlike a resolved magnitude, the LEVELVAR is never resolved to a live number (it is the character's level in a base class, not a corpus-stated fact) -- expected.offset_pre/divisor/offset_post/level_var restate the FORMULA's own structure verbatim, matching the DURATION/RANGE seams' posture. expected.class_level_alias is the level variable's own declared alias, read from the corpus (possibly a SIBLING record, e.g. a pool-header ability), asserted one hop only -- never resolved further.",
+  "class_feature_independence": "scripts/derive_class_feature_level_scaling_fixtures.py re-reads the pinned upstream .lst bytes directly and parses each formula with its own from-scratch parser (parse_level_scaling), structurally independent of src/rules_core/derived_evaluator_fixture_check.rs's parse_class_feature_level_scaling. It opens no file under data/corpus/ and imports no engine module.",
+  "class_feature_entries": [
+    {
+      "unit_id": "core_rulebook:class_feature:rage_power_superstition",
+      "book": "core_rulebook",
+      "record_key": "Rage Power ~ Superstition",
+      "bonus_var_name": "SuperstitionSaveBonus",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "upstream_lst_sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "upstream_line": 493,
+      "corpus_field": "BONUS:VAR|SuperstitionSaveBonus|2+RagePowersLVL/4",
+      "alias_upstream_line": 422,
+      "alias_corpus_field": "BONUS:VAR|RagePowersLVL|BarbarianLVL",
+      "expected": {
+        "offset_pre": 0,
+        "divisor": 4,
+        "offset_post": 2,
+        "level_var": "RagePowersLVL",
+        "class_level_alias": "BarbarianLVL"
+      }
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:rogue_trap_sense",
+      "book": "core_rulebook",
+      "record_key": "Rogue ~ Trap Sense",
+      "bonus_var_name": "TrapSenseBonus",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "upstream_lst_sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "upstream_line": 1618,
+      "corpus_field": "BONUS:VAR|TrapSenseBonus|RogueTrapSenseLVL/3",
+      "alias_upstream_line": 1618,
+      "alias_corpus_field": "BONUS:VAR|RogueTrapSenseLVL|RogueLVL",
+      "expected": {
+        "offset_pre": 0,
+        "divisor": 3,
+        "offset_post": 0,
+        "level_var": "RogueTrapSenseLVL",
+        "class_level_alias": "RogueLVL"
+      }
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:paladin_channel_positive_energy",
+      "book": "core_rulebook",
+      "record_key": "Paladin ~ Channel Positive Energy",
+      "bonus_var_name": "PaladinChannelDice",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "upstream_lst_sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "upstream_line": 1362,
+      "corpus_field": "BONUS:VAR|PaladinChannelDice|(PaladinChannelLVL+1)/2",
+      "alias_upstream_line": 1362,
+      "alias_corpus_field": "BONUS:VAR|PaladinChannelLVL|PaladinLVL",
+      "expected": {
+        "offset_pre": 1,
+        "divisor": 2,
+        "offset_post": 0,
+        "level_var": "PaladinChannelLVL",
+        "class_level_alias": "PaladinLVL"
+      }
+    },
+    {
+      "unit_id": "advanced_class_guide:class_feature:slayer_trapfinding",
+      "book": "advanced_class_guide",
+      "record_key": "Slayer ~ Trapfinding",
+      "bonus_var_name": "SlayerTrapfindingBonus",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "upstream_lst_sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "upstream_line": 1882,
+      "corpus_field": "BONUS:VAR|SlayerTrapfindingBonus|SlayerTrapfindingLVL/2",
+      "alias_upstream_line": 1882,
+      "alias_corpus_field": "BONUS:VAR|SlayerTrapfindingLVL|SlayerLVL",
+      "expected": {
+        "offset_pre": 0,
+        "divisor": 2,
+        "offset_post": 0,
+        "level_var": "SlayerTrapfindingLVL",
+        "class_level_alias": "SlayerLVL"
+      }
+    },
+    {
+      "unit_id": "advanced_class_guide:class_feature:slayer_sneak_attack",
+      "book": "advanced_class_guide",
+      "record_key": "Slayer ~ Sneak Attack",
+      "bonus_var_name": "SneakAttackDice",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "upstream_lst_sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "upstream_line": 1795,
+      "corpus_field": "BONUS:VAR|SneakAttackDice|SlayerSneakAttackLVL/3",
+      "alias_upstream_line": 1795,
+      "alias_corpus_field": "BONUS:VAR|SlayerSneakAttackLVL|SlayerLVL",
+      "expected": {
+        "offset_pre": 0,
+        "divisor": 3,
+        "offset_post": 0,
+        "level_var": "SlayerSneakAttackLVL",
+        "class_level_alias": "SlayerLVL"
+      }
+    },
+    {
+      "unit_id": "advanced_class_guide:class_feature:slayer_stalker",
+      "book": "advanced_class_guide",
+      "record_key": "Slayer ~ Stalker",
+      "bonus_var_name": "SlayerStalkerBonus",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "upstream_lst_sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "upstream_line": 1793,
+      "corpus_field": "BONUS:VAR|SlayerStalkerBonus|SlayerStalkerLVL/5+1",
+      "alias_upstream_line": 1793,
+      "alias_corpus_field": "BONUS:VAR|SlayerStalkerLVL|SlayerStudiedTargetLVL",
+      "expected": {
+        "offset_pre": 0,
+        "divisor": 5,
+        "offset_post": 1,
+        "level_var": "SlayerStalkerLVL",
+        "class_level_alias": "SlayerStudiedTargetLVL"
+      }
+    },
+    {
+      "unit_id": "advanced_class_guide:class_feature:bloodrager_damage_reduction",
+      "book": "advanced_class_guide",
+      "record_key": "Bloodrager ~ Damage Reduction",
+      "bonus_var_name": "BloodragerDR",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "upstream_lst_sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "upstream_line": 341,
+      "corpus_field": "BONUS:VAR|BloodragerDR|(BloodragerDRLVL-4)/3",
+      "alias_upstream_line": 341,
+      "alias_corpus_field": "BONUS:VAR|BloodragerDRLVL|BloodragerLVL",
+      "expected": {
+        "offset_pre": -4,
+        "divisor": 3,
+        "offset_post": 0,
+        "level_var": "BloodragerDRLVL",
+        "class_level_alias": "BloodragerLVL"
+      }
+    },
+    {
+      "unit_id": "ultimate_combat:class_feature:ninja_no_trace",
+      "book": "ultimate_combat",
+      "record_key": "Ninja ~ No Trace",
+      "bonus_var_name": "NoTraceBonus",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+      "upstream_lst_sha256": "944a3a0928de79109aa6bff5582c6f863a4e457d25150ec44f3b8b7b17d06be0",
+      "upstream_line": 117,
+      "corpus_field": "BONUS:VAR|NoTraceBonus|NinjaNoTraceLVL/3",
+      "alias_upstream_line": 117,
+      "alias_corpus_field": "BONUS:VAR|NinjaNoTraceLVL|NinjaLVL",
+      "expected": {
+        "offset_pre": 0,
+        "divisor": 3,
+        "offset_post": 0,
+        "level_var": "NinjaNoTraceLVL",
+        "class_level_alias": "NinjaLVL"
+      }
+    }
   ]
 }

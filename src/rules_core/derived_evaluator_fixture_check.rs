@@ -108,18 +108,22 @@ pub fn run_bar_check(repo_root: &Path) -> BarCheckReport {
     let monster = run_monster_bar_check(repo_root);
     let spell = run_spell_bar_check(repo_root);
     let spell_range = run_spell_range_bar_check(repo_root);
+    let class_feature = run_class_feature_bar_check(repo_root);
     let mut cleared = equipment.cleared;
     cleared.extend(monster.cleared);
     cleared.extend(spell.cleared);
     cleared.extend(spell_range.cleared);
+    cleared.extend(class_feature.cleared);
     let mut failures = equipment.failures;
     failures.extend(monster.failures);
     failures.extend(spell.failures);
     failures.extend(spell_range.failures);
+    failures.extend(class_feature.failures);
     let mut not_ingested = equipment.not_ingested;
     not_ingested.extend(monster.not_ingested);
     not_ingested.extend(spell.not_ingested);
     not_ingested.extend(spell_range.not_ingested);
+    not_ingested.extend(class_feature.not_ingested);
     BarCheckReport {
         cleared,
         failures,
@@ -127,7 +131,8 @@ pub fn run_bar_check(repo_root: &Path) -> BarCheckReport {
         fixtures_total: equipment.fixtures_total
             + monster.fixtures_total
             + spell.fixtures_total
-            + spell_range.fixtures_total,
+            + spell_range.fixtures_total
+            + class_feature.fixtures_total,
     }
 }
 
@@ -992,6 +997,782 @@ fn run_spell_range_bar_check(repo_root: &Path) -> BarCheckReport {
     BarCheckReport { cleared, failures, not_ingested, fixtures_total }
 }
 
+// ---------------------------------------------------------------------------
+// `kind = class_feature` — the missing evaluator seam this cycle
+// (SD31-E6-F11-003) builds. Everything below is new; nothing above this line
+// changed shape.
+//
+// This is the seam `decisions.md`'s wave-12 finding named directly: Barbarian
+// Superstition (`SD31-E4-F2-003`) was wired as a real production consumer
+// (`pilot_compute::barbarian_superstition_save_bonus`) and still could not
+// reach `done` -- it lands `derived`+`grounded`, and `doneness_verdict()`
+// caps that at `held` without a `fixture-verified` stamp, which nothing
+// before this seam could produce for `kind=class_feature`.
+//
+// The corpus states these formulas as PCGen `BONUS:VAR` arithmetic over a
+// class-level variable this repo's `data/corpus/` ingest does NOT resolve to
+// a literal number (it is the LIVE character's level in a base class, not a
+// corpus-stated fact) -- so, exactly like `CasterLevelLinearFormula` and
+// `SpellRangeFormula` above, this seam verifies the formula's own STRUCTURAL
+// PARAMETERS (a floor-division coefficient and two additive offsets) against
+// a hand-derived expectation, never a resolved live value.
+// ---------------------------------------------------------------------------
+
+/// A PF1 class-feature per-level scaling formula of the shape
+/// `floor((LEVELVAR + offset_pre) / divisor) + offset_post`, re-derived
+/// corpus-wide 2026-08-17 (`data/corpus/*/class_feature/**/*.json`'s
+/// `BONUS:VAR` tokens, 23 corpus-wide records match this exact shape) as the
+/// dominant scaling-formula family this kind's `derived`+`grounded` held
+/// population carries. Every corpus-observed spelling reduces to these three
+/// integers:
+///
+/// * `2+RagePowersLVL/4` (Rage Power ~ Superstition) → division binds
+///   tighter than addition, so this is `offset_pre=0, divisor=4,
+///   offset_post=2` -- the paren-free shape only ever adds AFTER the divide.
+/// * `RogueTrapSenseLVL/3` (Rogue ~ Trap Sense) → no offset at all:
+///   `offset_pre=0, divisor=3, offset_post=0`.
+/// * `(RangerFavoredTerrainLVL+2)/5` (Ranger ~ Favored Terrain) → the parens
+///   force the addition BEFORE the divide: `offset_pre=2, divisor=5,
+///   offset_post=0`.
+/// * `(BloodragerDRLVL-4)/3` (Bloodrager ~ Damage Reduction) → same
+///   paren-before-divide shape with a negative pre-offset: `offset_pre=-4,
+///   divisor=3, offset_post=0`.
+/// * `SlayerStalkerLVL/5+1` (Slayer ~ Stalker) → the paren-free
+///   divide-then-add shape again, offset written after the divide this time:
+///   `offset_pre=0, divisor=5, offset_post=1`.
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub struct ClassFeatureLevelScalingFormula {
+    pub offset_pre: i32,
+    pub divisor: i32,
+    pub offset_post: i32,
+}
+
+/// Parses a corpus `BONUS:VAR|<name>|<formula>` token's formula half (the
+/// text after the second `|`) for the shape
+/// [`ClassFeatureLevelScalingFormula`] states. Returns the level-variable
+/// NAME the formula divides (never resolved further -- see the module
+/// section doc) alongside the parsed formula. Refuses (`None`) on anything
+/// else: a `max(...)`/`min(...)` wrap, an ability-score term, or a formula
+/// with no `/` at all are real corpus shapes this seam does not attempt
+/// (`OPEN-ISSUES.md` follow-up), never guessed at.
+pub fn parse_class_feature_level_scaling(
+    raw: &str,
+) -> Option<(String, ClassFeatureLevelScalingFormula)> {
+    let raw = raw.trim();
+
+    // `(<VAR><+|-><N>)/<D>` -- the parenthesised, divide-the-sum shape.
+    if let Some(rest) = raw.strip_prefix('(') {
+        let close = rest.find(')')?;
+        let inner = &rest[..close];
+        let after_paren = rest[close + 1..].trim();
+        let divisor: i32 = after_paren.strip_prefix('/')?.trim().parse().ok()?;
+        if divisor == 0 {
+            return None;
+        }
+        let split_at = inner.rfind(['+', '-'])?;
+        if split_at == 0 {
+            return None; // a leading sign belongs to the variable, not an operator
+        }
+        let var = &inner[..split_at];
+        let offset: i32 = inner[split_at..].parse().ok()?;
+        if var.is_empty() || !is_valid_var_name(var) {
+            return None;
+        }
+        return Some((
+            var.to_string(),
+            ClassFeatureLevelScalingFormula { offset_pre: offset, divisor, offset_post: 0 },
+        ));
+    }
+
+    // `<N>+<VAR>/<D>` -- a bare leading integer added AFTER the divide
+    // (division binds tighter than `+` with no parens present).
+    if let Some(plus_idx) = raw.find('+') {
+        let before = raw[..plus_idx].trim();
+        let after = raw[plus_idx + 1..].trim();
+        if let Ok(n) = before.parse::<i32>() {
+            let (var, divisor) = parse_var_slash_int(after)?;
+            return Some((
+                var,
+                ClassFeatureLevelScalingFormula { offset_pre: 0, divisor, offset_post: n },
+            ));
+        }
+    }
+
+    // `<VAR>/<D>` or `<VAR>/<D>+<N>` -- the plain and divide-then-add shapes.
+    let slash_idx = raw.find('/')?;
+    let var = raw[..slash_idx].trim();
+    if var.is_empty() || !is_valid_var_name(var) {
+        return None;
+    }
+    let rest = raw[slash_idx + 1..].trim();
+    if let Some(plus_idx) = rest.find('+') {
+        let divisor: i32 = rest[..plus_idx].trim().parse().ok()?;
+        let offset_post: i32 = rest[plus_idx + 1..].trim().parse().ok()?;
+        if divisor == 0 {
+            return None;
+        }
+        return Some((
+            var.to_string(),
+            ClassFeatureLevelScalingFormula { offset_pre: 0, divisor, offset_post },
+        ));
+    }
+    let divisor: i32 = rest.parse().ok()?;
+    if divisor == 0 {
+        return None;
+    }
+    Some((var.to_string(), ClassFeatureLevelScalingFormula { offset_pre: 0, divisor, offset_post: 0 }))
+}
+
+fn parse_var_slash_int(s: &str) -> Option<(String, i32)> {
+    let slash_idx = s.find('/')?;
+    let var = s[..slash_idx].trim();
+    let divisor: i32 = s[slash_idx + 1..].trim().parse().ok()?;
+    if var.is_empty() || !is_valid_var_name(var) || divisor == 0 {
+        return None;
+    }
+    Some((var.to_string(), divisor))
+}
+
+/// A PCGen `VAR` name: letters, digits, underscore only. Guards every branch
+/// above against silently accepting a fragment of a formula shape this seam
+/// does not understand (a stray operator, a function call) as if it were a
+/// bare variable name.
+fn is_valid_var_name(s: &str) -> bool {
+    !s.is_empty() && s.chars().all(|c| c.is_ascii_alphanumeric() || c == '_')
+}
+
+/// One `kind=class_feature` fixture row. `class_level_alias` is the
+/// declared-in-the-corpus RHS of a SIBLING `BONUS:VAR|<level_var>|<alias>`
+/// token -- resolved by [`run_class_feature_bar_check`] by searching every
+/// record in the SAME book (the level-variable's own definition is not
+/// always on the same record as the formula that consumes it: `RagePowersLVL`
+/// is defined on the `Barbarian ~ Rage Powers` pool-header ability and
+/// consumed by `Rage Power ~ Superstition`, a sibling record -- the same
+/// "follow the reference one hop further" lesson `decisions.md §15` names).
+/// `class_level_alias` is asserted VERBATIM as the corpus states it, never
+/// resolved past that one hop (e.g. Slayer ~ Stalker's `SlayerStalkerLVL`
+/// aliases to `SlayerStudiedTargetLVL`, not further to `SlayerLVL`) -- the
+/// same "never resolve a live value" posture the DURATION/RANGE seams keep.
+#[derive(Debug, Clone)]
+pub struct ClassFeatureFixture {
+    pub unit_id: String,
+    pub book: String,
+    pub record_key: String,
+    pub bonus_var_name: String,
+    pub upstream_lst: String,
+    pub upstream_lst_sha256: String,
+    pub upstream_line: u64,
+    pub corpus_field: String,
+    pub alias_upstream_line: u64,
+    pub alias_corpus_field: String,
+    pub expected_offset_pre: i32,
+    pub expected_divisor: i32,
+    pub expected_offset_post: i32,
+    pub expected_level_var: String,
+    pub expected_class_level_alias: String,
+}
+
+/// Reads the `class_feature_entries` array of the committed fixture file.
+pub fn load_class_feature_fixtures(repo_root: &Path) -> Vec<ClassFeatureFixture> {
+    let path = repo_root.join(FIXTURE_RELATIVE_PATH);
+    let text = std::fs::read_to_string(&path)
+        .unwrap_or_else(|e| panic!("the committed fixture must be readable at {path:?}: {e}"));
+    let doc: serde_json::Value =
+        serde_json::from_str(&text).expect("the committed fixture must be valid JSON");
+    let Some(entries) = doc.get("class_feature_entries").and_then(|v| v.as_array()) else {
+        return Vec::new();
+    };
+    entries
+        .iter()
+        .map(|e| {
+            let expected = &e["expected"];
+            ClassFeatureFixture {
+                unit_id: e["unit_id"].as_str().expect("unit_id").to_string(),
+                book: e["book"].as_str().expect("book").to_string(),
+                record_key: e["record_key"].as_str().expect("record_key").to_string(),
+                bonus_var_name: e["bonus_var_name"].as_str().expect("bonus_var_name").to_string(),
+                upstream_lst: e["upstream_lst"].as_str().expect("upstream_lst").to_string(),
+                upstream_lst_sha256: e["upstream_lst_sha256"]
+                    .as_str()
+                    .expect("upstream_lst_sha256")
+                    .to_string(),
+                upstream_line: e["upstream_line"].as_u64().expect("upstream_line"),
+                corpus_field: e["corpus_field"].as_str().expect("corpus_field").to_string(),
+                alias_upstream_line: e["alias_upstream_line"]
+                    .as_u64()
+                    .expect("alias_upstream_line"),
+                alias_corpus_field: e["alias_corpus_field"]
+                    .as_str()
+                    .expect("alias_corpus_field")
+                    .to_string(),
+                expected_offset_pre: i32::try_from(
+                    expected["offset_pre"].as_i64().expect("expected.offset_pre"),
+                )
+                .expect("offset_pre fits in i32"),
+                expected_divisor: i32::try_from(
+                    expected["divisor"].as_i64().expect("expected.divisor"),
+                )
+                .expect("divisor fits in i32"),
+                expected_offset_post: i32::try_from(
+                    expected["offset_post"].as_i64().expect("expected.offset_post"),
+                )
+                .expect("offset_post fits in i32"),
+                expected_level_var: expected["level_var"]
+                    .as_str()
+                    .expect("expected.level_var")
+                    .to_string(),
+                expected_class_level_alias: expected["class_level_alias"]
+                    .as_str()
+                    .expect("expected.class_level_alias")
+                    .to_string(),
+            }
+        })
+        .collect()
+}
+
+/// Where this repo's own ingest of `book`'s `class_feature` kind lives, and
+/// whether it exists -- the `class_feature` sibling of
+/// [`ingested_equipment_dir`]/[`spell_corpus_dir_exists`].
+fn class_feature_corpus_dir_exists(repo_root: &Path, book: &str) -> Option<PathBuf> {
+    let dir = repo_root.join("data").join("corpus").join(book);
+    dir.join("class_feature").is_dir().then_some(dir)
+}
+
+/// Walks `data/corpus/<book>/class_feature/` once (nested by class/ability
+/// slug) and returns every record's `BONUS:VAR|<name>|<formula>` tokens,
+/// keyed by the record's own `data.key` -- the `class_feature` sibling of
+/// [`load_spell_durations`]/[`load_spell_ranges`]'s recursive walk, carrying
+/// every `VAR` token (not just one field) because a class-feature bar check
+/// needs BOTH the headline formula token and, potentially on a DIFFERENT
+/// record in the same walk, the level-variable's own alias definition.
+fn load_class_feature_bonus_vars(
+    class_feature_dir: &Path,
+) -> BTreeMap<String, Vec<(String, String)>> {
+    let mut out: BTreeMap<String, Vec<(String, String)>> = BTreeMap::new();
+    let mut stack = vec![class_feature_dir.to_path_buf()];
+    while let Some(dir) = stack.pop() {
+        let Ok(read_dir) = std::fs::read_dir(&dir) else { continue };
+        for entry in read_dir.flatten() {
+            let path = entry.path();
+            if path.is_dir() {
+                stack.push(path);
+                continue;
+            }
+            if path.extension().and_then(|e| e.to_str()) != Some("json") {
+                continue;
+            }
+            let Ok(text) = std::fs::read_to_string(&path) else { continue };
+            let Ok(doc) = serde_json::from_str::<serde_json::Value>(&text) else { continue };
+            let Some(key) = doc["data"]["key"].as_str() else { continue };
+            let Some(tokens) = doc["data"]["raw_tokens"].as_array() else { continue };
+            let mut vars = Vec::new();
+            for t in tokens {
+                if t["key"].as_str() != Some("BONUS") {
+                    continue;
+                }
+                let Some(v) = t["value"].as_str() else { continue };
+                let Some(rest) = v.strip_prefix("VAR|") else { continue };
+                let Some((name, formula)) = rest.split_once('|') else { continue };
+                vars.push((name.to_string(), formula.to_string()));
+            }
+            if !vars.is_empty() {
+                out.entry(key.to_string()).or_default().extend(vars);
+            }
+        }
+    }
+    out
+}
+
+/// Searches every record's `BONUS:VAR` tokens `bonus_vars` carries (the
+/// WHOLE book, not one record -- see [`ClassFeatureFixture`]'s doc comment
+/// on why the alias may live on a sibling record) for a token whose NAME is
+/// `level_var`, and returns its formula text verbatim (the declared alias,
+/// e.g. `"BarbarianLVL"` or, one hop short of a base class,
+/// `"SlayerStudiedTargetLVL"`) -- `None` if no record in the book defines it.
+fn find_level_var_alias(
+    bonus_vars: &BTreeMap<String, Vec<(String, String)>>,
+    level_var: &str,
+) -> Option<String> {
+    bonus_vars.values().flatten().find(|(name, _)| name == level_var).map(|(_, v)| v.clone())
+}
+
+/// The `kind=class_feature` half of [`run_bar_check`].
+fn run_class_feature_bar_check(repo_root: &Path) -> BarCheckReport {
+    let fixtures = load_class_feature_fixtures(repo_root);
+    let fixtures_total = fixtures.len();
+    let books: BTreeSet<String> = fixtures.iter().map(|f| f.book.clone()).collect();
+
+    let mut cleared = BTreeSet::new();
+    let mut failures: BTreeMap<String, String> = BTreeMap::new();
+    let mut not_ingested: BTreeMap<String, String> = BTreeMap::new();
+
+    for book in &books {
+        let Some(dir) = class_feature_corpus_dir_exists(repo_root, book) else {
+            for f in fixtures.iter().filter(|f| &f.book == book) {
+                not_ingested.insert(f.unit_id.clone(), book.clone());
+            }
+            continue;
+        };
+        let bonus_vars = load_class_feature_bonus_vars(&dir.join("class_feature"));
+
+        for fixture in fixtures.iter().filter(|f| &f.book == book) {
+            let Some(record_vars) = bonus_vars.get(&fixture.record_key) else {
+                failures.insert(
+                    fixture.unit_id.clone(),
+                    format!(
+                        "{:?} does not resolve against {book}'s ingested class_feature cache",
+                        fixture.record_key
+                    ),
+                );
+                continue;
+            };
+            let Some((_, raw_formula)) =
+                record_vars.iter().find(|(name, _)| name == &fixture.bonus_var_name)
+            else {
+                failures.insert(
+                    fixture.unit_id.clone(),
+                    format!(
+                        "corpus row states {} but carries no BONUS:VAR|{}| token at all",
+                        fixture.corpus_field, fixture.bonus_var_name
+                    ),
+                );
+                continue;
+            };
+            let Some((level_var, formula)) = parse_class_feature_level_scaling(raw_formula)
+            else {
+                failures.insert(
+                    fixture.unit_id.clone(),
+                    format!(
+                        "corpus row states {} but the evaluator could not parse a level-scaling \
+                         formula from {raw_formula:?}",
+                        fixture.corpus_field
+                    ),
+                );
+                continue;
+            };
+            if level_var != fixture.expected_level_var
+                || formula.offset_pre != fixture.expected_offset_pre
+                || formula.divisor != fixture.expected_divisor
+                || formula.offset_post != fixture.expected_offset_post
+            {
+                failures.insert(
+                    fixture.unit_id.clone(),
+                    format!(
+                        "corpus row {:?} states level_var {:?} offset_pre {} divisor {} \
+                         offset_post {}, evaluator produced level_var {:?} offset_pre {} \
+                         divisor {} offset_post {}",
+                        fixture.corpus_field,
+                        fixture.expected_level_var,
+                        fixture.expected_offset_pre,
+                        fixture.expected_divisor,
+                        fixture.expected_offset_post,
+                        level_var,
+                        formula.offset_pre,
+                        formula.divisor,
+                        formula.offset_post
+                    ),
+                );
+                continue;
+            }
+            match find_level_var_alias(&bonus_vars, &level_var) {
+                Some(alias) if alias == fixture.expected_class_level_alias => {
+                    cleared.insert(fixture.unit_id.clone());
+                }
+                Some(alias) => {
+                    failures.insert(
+                        fixture.unit_id.clone(),
+                        format!(
+                            "level_var {level_var:?} aliases {alias:?} in {book}'s own class_feature \
+                             corpus, fixture expected {:?}",
+                            fixture.expected_class_level_alias
+                        ),
+                    );
+                }
+                None => {
+                    failures.insert(
+                        fixture.unit_id.clone(),
+                        format!(
+                            "no record in {book}'s class_feature corpus defines BONUS:VAR|{level_var}|, \
+                             so the fixture's expected alias {:?} cannot be confirmed",
+                            fixture.expected_class_level_alias
+                        ),
+                    );
+                }
+            }
+        }
+    }
+
+    BarCheckReport { cleared, failures, not_ingested, fixtures_total }
+}
+
+#[cfg(test)]
+mod class_feature_seam_tests {
+    use super::*;
+
+    // --- parser unit tests: one TDD red/green anchor per corpus-observed shape ---
+
+    #[test]
+    fn n_plus_var_slash_d_parses_as_offset_post() {
+        // Rage Power ~ Superstition, `BONUS:VAR|SuperstitionSaveBonus|2+RagePowersLVL/4`
+        // (`core_rulebook/cr_abilities_class.lst:493`). Division binds tighter
+        // than `+` with no parens present, so the `2` is added AFTER the
+        // divide, not before it.
+        assert_eq!(
+            parse_class_feature_level_scaling("2+RagePowersLVL/4"),
+            Some((
+                "RagePowersLVL".to_string(),
+                ClassFeatureLevelScalingFormula { offset_pre: 0, divisor: 4, offset_post: 2 }
+            ))
+        );
+    }
+
+    #[test]
+    fn bare_var_slash_d_parses_with_no_offset() {
+        // Rogue ~ Trap Sense, `BONUS:VAR|TrapSenseBonus|RogueTrapSenseLVL/3`
+        // (`core_rulebook/cr_abilities_class.lst:1618`).
+        assert_eq!(
+            parse_class_feature_level_scaling("RogueTrapSenseLVL/3"),
+            Some((
+                "RogueTrapSenseLVL".to_string(),
+                ClassFeatureLevelScalingFormula { offset_pre: 0, divisor: 3, offset_post: 0 }
+            ))
+        );
+    }
+
+    #[test]
+    fn parenthesised_var_plus_n_slash_d_parses_as_offset_pre() {
+        // Ranger ~ Favored Terrain,
+        // `BONUS:VAR|FavoredTerrainPool|(RangerFavoredTerrainLVL+2)/5`
+        // (`core_rulebook/cr_abilities_class.lst:1445`). The parens force the
+        // `+2` BEFORE the divide, unlike the paren-free shape above.
+        assert_eq!(
+            parse_class_feature_level_scaling("(RangerFavoredTerrainLVL+2)/5"),
+            Some((
+                "RangerFavoredTerrainLVL".to_string(),
+                ClassFeatureLevelScalingFormula { offset_pre: 2, divisor: 5, offset_post: 0 }
+            ))
+        );
+    }
+
+    #[test]
+    fn parenthesised_var_minus_n_slash_d_parses_with_a_negative_offset_pre() {
+        // Bloodrager ~ Damage Reduction,
+        // `BONUS:VAR|BloodragerDR|(BloodragerDRLVL-4)/3`
+        // (`advanced_class_guide/acg_abilities_class.lst:341`).
+        assert_eq!(
+            parse_class_feature_level_scaling("(BloodragerDRLVL-4)/3"),
+            Some((
+                "BloodragerDRLVL".to_string(),
+                ClassFeatureLevelScalingFormula { offset_pre: -4, divisor: 3, offset_post: 0 }
+            ))
+        );
+    }
+
+    #[test]
+    fn var_slash_d_plus_n_parses_as_offset_post() {
+        // Slayer ~ Stalker, `BONUS:VAR|SlayerStalkerBonus|SlayerStalkerLVL/5+1`
+        // (`advanced_class_guide/acg_abilities_class.lst:1793`) -- the
+        // paren-free shape again, this time with the `+1` written after the
+        // divide rather than before it (`n_plus_var_slash_d` above).
+        assert_eq!(
+            parse_class_feature_level_scaling("SlayerStalkerLVL/5+1"),
+            Some((
+                "SlayerStalkerLVL".to_string(),
+                ClassFeatureLevelScalingFormula { offset_pre: 0, divisor: 5, offset_post: 1 }
+            ))
+        );
+    }
+
+    // TDD red/green anchors: shapes this seam deliberately refuses rather
+    // than guesses at.
+    #[test]
+    fn a_max_wrapped_formula_refuses_rather_than_guesses() {
+        // Bard ~ Bardic Knowledge, `max(1,BardicKnowledgeLVL/2)` -- a real
+        // corpus shape this seam does not attempt.
+        assert_eq!(parse_class_feature_level_scaling("max(1,BardicKnowledgeLVL/2)"), None);
+    }
+
+    #[test]
+    fn an_ability_score_term_refuses_rather_than_guesses() {
+        // Paladin ~ Divine Grace, `max(CHA,0)` -- no `/` at all, and `CHA` is
+        // an ability score, not a level variable.
+        assert_eq!(parse_class_feature_level_scaling("max(CHA,0)"), None);
+    }
+
+    #[test]
+    fn a_zero_divisor_refuses_rather_than_dividing_by_zero() {
+        assert_eq!(parse_class_feature_level_scaling("SomeLVL/0"), None);
+        assert_eq!(parse_class_feature_level_scaling("(SomeLVL+1)/0"), None);
+    }
+
+    #[test]
+    fn a_bare_formula_with_no_slash_refuses() {
+        assert_eq!(parse_class_feature_level_scaling("SomeLVL"), None);
+        assert_eq!(parse_class_feature_level_scaling("3+SomeLVL"), None);
+    }
+
+    #[test]
+    fn run_class_feature_bar_check_clears_every_committed_class_feature_fixture() {
+        let repo_root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+        let report = run_class_feature_bar_check(&repo_root);
+        assert!(
+            report.fixtures_total > 0,
+            "the committed fixture must carry at least one class_feature_entries row"
+        );
+        assert!(
+            report.not_ingested.is_empty(),
+            "every committed class_feature fixture's book must be ingested, got: {:?}",
+            report.not_ingested
+        );
+        assert!(
+            report.failures.is_empty(),
+            "every committed class_feature fixture must clear the bar, got {} failures, first \
+             few: {:?}",
+            report.failures.len(),
+            report.failures.iter().take(5).collect::<Vec<_>>()
+        );
+        assert_eq!(report.cleared.len(), report.fixtures_total);
+    }
+
+    /// A synthetic `repo_root` carrying one `class_feature` corpus record
+    /// (`Rage Power ~ Superstition`-shaped: `2+ProbeLVL/4`, plus a sibling
+    /// record defining `ProbeLVL`'s own alias) plus one fixture the caller
+    /// corrupts -- same `ScratchRangeRoot`/`ScratchDurationRoot` pattern the
+    /// spell seams above use, so a test can drive the REAL
+    /// `run_class_feature_bar_check(&root)` end to end without touching the
+    /// committed fixture.
+    struct ScratchClassFeatureRoot {
+        root: PathBuf,
+    }
+
+    impl ScratchClassFeatureRoot {
+        /// The real corpus formula is fixed (`2+ProbeLVL/4`, offset_pre=0
+        /// under `parse_class_feature_level_scaling`'s own N+VAR/D shape);
+        /// every parameter here is what the FIXTURE claims via `expected`,
+        /// so a caller can independently mutate any one of the four
+        /// compared fields away from truth and prove `run_class_feature_
+        /// bar_check` catches that specific mismatch (SD31-W13-INTEGRATE-001:
+        /// `offset_pre` and `level_var` were previously never mutated at
+        /// all -- `offset_pre` had in fact been dropped from this
+        /// constructor's own parameter list, `let _ = expected_offset_pre;`
+        /// dead code, one commit prior).
+        fn new_full(
+            name: &str,
+            expected_offset_pre: i32,
+            expected_divisor: i32,
+            expected_offset_post: i32,
+            expected_level_var: &str,
+        ) -> Self {
+            let root = std::env::temp_dir().join(format!(
+                "codex_class_feature_mutation_proof_{name}_{}",
+                std::process::id()
+            ));
+            let _ = std::fs::remove_dir_all(&root);
+            let cf_dir = root.join("data/corpus/core_rulebook/class_feature");
+            std::fs::create_dir_all(&cf_dir).unwrap();
+            std::fs::write(
+                cf_dir.join("scratch_power.json"),
+                r#"{"data":{"key":"Probe ~ Scratch Power","raw_tokens":[
+                    {"key":"BONUS","value":"VAR|ScratchPowerBonus|2+ProbeLVL/4"}
+                ]}}"#,
+            )
+            .unwrap();
+            std::fs::write(
+                cf_dir.join("scratch_pool_header.json"),
+                r#"{"data":{"key":"Probe ~ Scratch Powers","raw_tokens":[
+                    {"key":"BONUS","value":"VAR|ProbeLVL|ProbeClassLVL"}
+                ]}}"#,
+            )
+            .unwrap();
+            let fixture_dir = root.join("tests/fixtures/rules_core");
+            std::fs::create_dir_all(&fixture_dir).unwrap();
+            std::fs::write(
+                fixture_dir.join("derived-evaluator-fixtures.json"),
+                format!(
+                    r#"{{"class_feature_entries":[{{
+                        "unit_id":"scratch:class_feature:scratch_power",
+                        "book":"core_rulebook",
+                        "record_key":"Probe ~ Scratch Power",
+                        "bonus_var_name":"ScratchPowerBonus",
+                        "upstream_lst":"scratch.lst",
+                        "upstream_lst_sha256":"0",
+                        "upstream_line":1,
+                        "corpus_field":"BONUS:VAR|ScratchPowerBonus|2+ProbeLVL/4",
+                        "alias_upstream_line":1,
+                        "alias_corpus_field":"BONUS:VAR|ProbeLVL|ProbeClassLVL",
+                        "expected":{{
+                            "offset_pre":{expected_offset_pre},
+                            "divisor":{expected_divisor},
+                            "offset_post":{expected_offset_post},
+                            "level_var":"{expected_level_var}",
+                            "class_level_alias":"ProbeClassLVL"
+                        }}
+                    }}]}}"#
+                ),
+            )
+            .unwrap();
+            ScratchClassFeatureRoot { root }
+        }
+
+        fn new(name: &str, expected_divisor: i32, expected_offset_post: i32) -> Self {
+            Self::new_full(name, 0, expected_divisor, expected_offset_post, "ProbeLVL")
+        }
+    }
+
+    impl Drop for ScratchClassFeatureRoot {
+        fn drop(&mut self) {
+            let _ = std::fs::remove_dir_all(&self.root);
+        }
+    }
+
+    // MUTATION PROOF: a fixture whose `expected.divisor` is deliberately
+    // wrong must make the REAL `run_class_feature_bar_check` report a
+    // failure, not silently pass.
+    #[test]
+    fn a_wrong_expected_divisor_makes_run_class_feature_bar_check_report_a_failure() {
+        let (_, real) = parse_class_feature_level_scaling("2+ProbeLVL/4").unwrap();
+        let wrong_divisor = real.divisor + 1;
+        let scratch = ScratchClassFeatureRoot::new("wrong_divisor", wrong_divisor, real.offset_post);
+        let report = run_class_feature_bar_check(&scratch.root);
+
+        assert!(
+            report.cleared.is_empty(),
+            "a fixture asserting a wrong expected divisor must never clear the bar, got {:?}",
+            report.cleared
+        );
+        assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
+        assert!(report.failures.contains_key("scratch:class_feature:scratch_power"));
+    }
+
+    // MUTATION PROOF (SD31-W13-INTEGRATE-001, was missing entirely): a
+    // fixture whose `expected.offset_pre` is deliberately wrong must also
+    // make the real check fail. The real formula (`2+ProbeLVL/4`) has
+    // offset_pre=0; asserting 1 must not clear the bar.
+    #[test]
+    fn a_wrong_expected_offset_pre_makes_run_class_feature_bar_check_report_a_failure() {
+        let (_, real) = parse_class_feature_level_scaling("2+ProbeLVL/4").unwrap();
+        assert_eq!(real.offset_pre, 0, "test assumption: real offset_pre is 0");
+        let scratch =
+            ScratchClassFeatureRoot::new_full("wrong_offset_pre", 1, real.divisor, real.offset_post, "ProbeLVL");
+        let report = run_class_feature_bar_check(&scratch.root);
+
+        assert!(report.cleared.is_empty(), "cleared: {:?}", report.cleared);
+        assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
+        assert!(report.failures.contains_key("scratch:class_feature:scratch_power"));
+    }
+
+    // MUTATION PROOF (SD31-W13-INTEGRATE-001, was missing entirely): a
+    // fixture whose `expected.offset_post` is deliberately wrong must also
+    // make the real check fail.
+    #[test]
+    fn a_wrong_expected_offset_post_makes_run_class_feature_bar_check_report_a_failure() {
+        let (_, real) = parse_class_feature_level_scaling("2+ProbeLVL/4").unwrap();
+        let wrong_offset_post = real.offset_post + 1;
+        let scratch =
+            ScratchClassFeatureRoot::new_full("wrong_offset_post", 0, real.divisor, wrong_offset_post, "ProbeLVL");
+        let report = run_class_feature_bar_check(&scratch.root);
+
+        assert!(report.cleared.is_empty(), "cleared: {:?}", report.cleared);
+        assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
+        assert!(report.failures.contains_key("scratch:class_feature:scratch_power"));
+    }
+
+    // MUTATION PROOF (SD31-W13-INTEGRATE-001, was missing entirely): a
+    // fixture whose `expected.level_var` names the WRONG variable must also
+    // make the real check fail -- distinct from the class_level_alias proof
+    // below, which mutates the alias the level_var resolves TO, not the
+    // level_var name itself.
+    #[test]
+    fn a_wrong_expected_level_var_makes_run_class_feature_bar_check_report_a_failure() {
+        let (_, real) = parse_class_feature_level_scaling("2+ProbeLVL/4").unwrap();
+        let scratch = ScratchClassFeatureRoot::new_full(
+            "wrong_level_var",
+            0,
+            real.divisor,
+            real.offset_post,
+            "TotallyTheWrongLevelVar",
+        );
+        let report = run_class_feature_bar_check(&scratch.root);
+
+        assert!(report.cleared.is_empty(), "cleared: {:?}", report.cleared);
+        assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
+        assert!(report.failures.contains_key("scratch:class_feature:scratch_power"));
+    }
+
+    // The same proof for `expected.class_level_alias`: a fixture claiming
+    // the WRONG owning class for the level variable must also fail, not just
+    // a wrong numeric coefficient -- this is the check that would have
+    // caught a level-scaling formula silently pointing at the wrong class.
+    #[test]
+    fn a_wrong_expected_class_level_alias_makes_run_class_feature_bar_check_report_a_failure() {
+        let root = std::env::temp_dir()
+            .join(format!("codex_class_feature_mutation_proof_wrong_alias_{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&root);
+        let cf_dir = root.join("data/corpus/core_rulebook/class_feature");
+        std::fs::create_dir_all(&cf_dir).unwrap();
+        std::fs::write(
+            cf_dir.join("scratch_power.json"),
+            r#"{"data":{"key":"Probe ~ Scratch Power","raw_tokens":[
+                {"key":"BONUS","value":"VAR|ScratchPowerBonus|2+ProbeLVL/4"}
+            ]}}"#,
+        )
+        .unwrap();
+        std::fs::write(
+            cf_dir.join("scratch_pool_header.json"),
+            r#"{"data":{"key":"Probe ~ Scratch Powers","raw_tokens":[
+                {"key":"BONUS","value":"VAR|ProbeLVL|ProbeClassLVL"}
+            ]}}"#,
+        )
+        .unwrap();
+        let fixture_dir = root.join("tests/fixtures/rules_core");
+        std::fs::create_dir_all(&fixture_dir).unwrap();
+        std::fs::write(
+            fixture_dir.join("derived-evaluator-fixtures.json"),
+            r#"{"class_feature_entries":[{
+                "unit_id":"scratch:class_feature:scratch_power",
+                "book":"core_rulebook",
+                "record_key":"Probe ~ Scratch Power",
+                "bonus_var_name":"ScratchPowerBonus",
+                "upstream_lst":"scratch.lst",
+                "upstream_lst_sha256":"0",
+                "upstream_line":1,
+                "corpus_field":"BONUS:VAR|ScratchPowerBonus|2+ProbeLVL/4",
+                "alias_upstream_line":1,
+                "alias_corpus_field":"BONUS:VAR|ProbeLVL|ProbeClassLVL",
+                "expected":{
+                    "offset_pre":0,
+                    "divisor":4,
+                    "offset_post":2,
+                    "level_var":"ProbeLVL",
+                    "class_level_alias":"TotallyTheWrongClassLVL"
+                }
+            }]}"#,
+        )
+        .unwrap();
+
+        let report = run_class_feature_bar_check(&root);
+        assert!(report.cleared.is_empty(), "cleared: {:?}", report.cleared);
+        assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
+        let _ = std::fs::remove_dir_all(&root);
+    }
+
+    // The positive control for both mutation-proof tests above: a fixture
+    // whose `expected` matches the real corpus row EXACTLY (divisor and
+    // alias both correct) must clear the bar -- proving the two tests above
+    // fail because the asserted value is wrong, not because the synthetic
+    // harness always reports a failure.
+    #[test]
+    fn a_correct_expected_class_feature_formula_clears_run_class_feature_bar_check() {
+        let (_, real) = parse_class_feature_level_scaling("2+ProbeLVL/4").unwrap();
+        let scratch = ScratchClassFeatureRoot::new("correct", real.divisor, real.offset_post);
+        let report = run_class_feature_bar_check(&scratch.root);
+
+        assert!(report.failures.is_empty(), "failures: {:?}", report.failures);
+        assert_eq!(report.cleared.len(), 1);
+        assert!(report.cleared.contains("scratch:class_feature:scratch_power"));
+    }
+}
+
 #[cfg(test)]
 mod spell_range_seam_tests {
     use super::*;
@@ -1584,5 +2365,91 @@ mod monster_seam_tests {
             report.not_ingested
         );
         assert_eq!(report.cleared.len(), report.fixtures_total);
+    }
+
+    /// A scratch `repo_root` carrying ONLY a custom `monster_entries`
+    /// fixture row -- unlike the equipment/spell seams, `run_monster_bar_check`
+    /// resolves records through the compiled `monster_chassis::MONSTER_BOOKS`
+    /// static registry, never the filesystem, so `repo_root` only ever
+    /// controls which FIXTURE file is read; the real Demon (Balor) stat
+    /// block still resolves regardless of which scratch root is passed.
+    struct ScratchMonsterFixtureRoot {
+        root: PathBuf,
+    }
+
+    impl ScratchMonsterFixtureRoot {
+        fn new(name: &str, expected_caster_level: i32) -> Self {
+            let root = std::env::temp_dir()
+                .join(format!("codex_monster_mutation_proof_{name}_{}", std::process::id()));
+            let _ = std::fs::remove_dir_all(&root);
+            let fixture_dir = root.join("tests/fixtures/rules_core");
+            std::fs::create_dir_all(&fixture_dir).unwrap();
+            std::fs::write(
+                fixture_dir.join("derived-evaluator-fixtures.json"),
+                format!(
+                    r#"{{"monster_entries":[{{
+                        "unit_id":"scratch:monster:demon_balor",
+                        "book":"bestiary",
+                        "record_key":"Demon (Balor)",
+                        "upstream_lst":"scratch.lst",
+                        "upstream_lst_sha256":"0",
+                        "upstream_line":1,
+                        "corpus_field":"BONUS:VAR|SLA_CL|HD",
+                        "monster_class_token":"Outsider (Fort/Will):20",
+                        "expected":{{"spell_like_ability_caster_level":{expected_caster_level}}}
+                    }}]}}"#
+                ),
+            )
+            .unwrap();
+            ScratchMonsterFixtureRoot { root }
+        }
+    }
+
+    impl Drop for ScratchMonsterFixtureRoot {
+        fn drop(&mut self) {
+            let _ = std::fs::remove_dir_all(&self.root);
+        }
+    }
+
+    // MUTATION PROOF, made real, driving `run_monster_bar_check` end to end
+    // (the same shape wave 11's fix applied to the spell RANGE seam,
+    // `OPEN-ISSUES.md` row 201 -- checked for and fixed here per this
+    // card's own instruction): the OLD test
+    // (`a_wrong_expected_caster_level_makes_the_bar_check_fail`, still above,
+    // kept as a cheap red/green anchor on the evaluator alone) never called
+    // `run_monster_bar_check` itself, only the bare evaluator function --
+    // the production COMPARISON logic (`Some(cl) if cl == expected`) was
+    // never actually exercised by any test. This one drives the real
+    // function against a scratch fixture pointing at the real, resolved
+    // Demon (Balor) with a deliberately wrong expected caster level (21 vs
+    // the true 20) and confirms it reports a failure, not a vacuous pass.
+    #[test]
+    fn a_wrong_expected_caster_level_makes_run_monster_bar_check_report_a_failure() {
+        let wrong_expected = 21;
+        let scratch = ScratchMonsterFixtureRoot::new("wrong", wrong_expected);
+        let report = run_monster_bar_check(&scratch.root);
+
+        assert!(
+            report.cleared.is_empty(),
+            "a fixture asserting a wrong expected caster level must never clear the bar, got {:?}",
+            report.cleared
+        );
+        assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
+        assert!(report.failures.contains_key("scratch:monster:demon_balor"));
+    }
+
+    // The positive control: a fixture whose `expected` matches the real,
+    // resolved Demon (Balor) EXACTLY (caster level 20) must clear the bar --
+    // proving the mutation-proof test above fails because the asserted
+    // value is wrong, not because the synthetic harness always reports a
+    // failure.
+    #[test]
+    fn a_correct_expected_caster_level_clears_run_monster_bar_check() {
+        let scratch = ScratchMonsterFixtureRoot::new("correct", 20);
+        let report = run_monster_bar_check(&scratch.root);
+
+        assert!(report.failures.is_empty(), "failures: {:?}", report.failures);
+        assert_eq!(report.cleared.len(), 1);
+        assert!(report.cleared.contains("scratch:monster:demon_balor"));
     }
 }
