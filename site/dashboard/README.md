@@ -1,8 +1,22 @@
-# Public project-status dashboard
+# Internal operator dashboard (not the public status page)
 
-`index.html` renders `PF1e-dashboard.json`. Both files live here together because the viewer fetches
-its data by **relative** URL (`const JSON_URL = "PF1e-dashboard.json"`), so the page and its feed
-must sit in the same directory.
+`index.html` renders `PF1e-dashboard.json` here for the internal operator viewer. Both files live
+together because the viewer fetches its data by **relative** URL (`const JSON_URL =
+"PF1e-dashboard.json"`), so the page and its feed must sit in the same directory.
+
+**The public status page is `site/status.html`, and it does not read anything in this
+directory at request time.** It fetches `site/status-data.json` and
+`site/status-data/<book_id>.json` — the narrow, allow-listed projection this README asked
+for below, now built as `scripts/site/build_public_status.py`. That script reads
+`site/dashboard/units/*.json` (the per-kind unit ledgers — name/book/status/wiring_class only,
+regenerated locally by `publish-site-dashboard.sh` and not committed) and a curated
+book-title/kind-label allow-list, and computes every figure with the producer's own
+`doneness_verdict()`. It never reads `PF1e-dashboard.json` itself, so nothing in the "What is
+in the feed" section below — agent snippets, decisions, session prose, `usage` — can reach the
+public page structurally, regardless of what ends up in this file.
+
+`./scripts/publish-site-dashboard.sh` (no flags) now regenerates both: the internal feed below,
+and the public projection, in one run. `--check` verifies both are current.
 
 ## Refreshing the data
 
@@ -22,10 +36,10 @@ the producer's own `doneness_verdict()`.
 
 ## `index.html`
 
-A verbatim copy of `scripts/observer/PF1e-dashboard.html`, the internal operator viewer, placed here
-as a **starting point**. It is dense and built for operators rather than for the public, and is
-expected to be replaced with a public-facing page. The only thing a replacement must preserve is the
-data contract: read `PF1e-dashboard.json` from the same directory.
+A verbatim copy of `scripts/observer/PF1e-dashboard.html`, the internal operator viewer. It is
+dense and built for operators, not the public — kept here for operator use, not linked from the
+public site. `site/status.html` is the public-facing replacement referenced below; it does not
+share code or a data contract with this viewer.
 
 ## What is in the feed — read this before treating it as public-safe
 

@@ -1,0 +1,227 @@
+{
+  "generated_at": "2026-08-17T20:12:50Z",
+  "overall": {
+    "done": 10759,
+    "denominator": 38521,
+    "pct": 27.9
+  },
+  "books": [
+    {
+      "id": "core_rulebook",
+      "title": "Core Rulebook",
+      "done": 2904,
+      "denominator": 4414,
+      "pct": 65.8
+    },
+    {
+      "id": "advanced_players_guide",
+      "title": "Advanced Player's Guide",
+      "done": 358,
+      "denominator": 2691,
+      "pct": 13.3
+    },
+    {
+      "id": "advanced_class_guide",
+      "title": "Advanced Class Guide",
+      "done": 427,
+      "denominator": 2478,
+      "pct": 17.2
+    },
+    {
+      "id": "ultimate_psionics",
+      "title": "Ultimate Psionics",
+      "done": 501,
+      "denominator": 1903,
+      "pct": 26.3
+    },
+    {
+      "id": "ultimate_combat",
+      "title": "Ultimate Combat",
+      "done": 522,
+      "denominator": 1865,
+      "pct": 28.0
+    },
+    {
+      "id": "occult_adventures",
+      "title": "Occult Adventures",
+      "done": 107,
+      "denominator": 1661,
+      "pct": 6.4
+    },
+    {
+      "id": "bestiary",
+      "title": "Bestiary",
+      "done": 764,
+      "denominator": 1649,
+      "pct": 46.3
+    },
+    {
+      "id": "ultimate_wilderness",
+      "title": "Ultimate Wilderness",
+      "done": 415,
+      "denominator": 1576,
+      "pct": 26.3
+    },
+    {
+      "id": "ultimate_equipment",
+      "title": "Ultimate Equipment",
+      "done": 1351,
+      "denominator": 1524,
+      "pct": 88.6
+    },
+    {
+      "id": "advanced_race_guide",
+      "title": "Advanced Race Guide",
+      "done": 569,
+      "denominator": 1349,
+      "pct": 42.2
+    },
+    {
+      "id": "bestiary_4",
+      "title": "Bestiary 4",
+      "done": 644,
+      "denominator": 1336,
+      "pct": 48.2
+    },
+    {
+      "id": "bestiary_3",
+      "title": "Bestiary 3",
+      "done": 379,
+      "denominator": 1292,
+      "pct": 29.3
+    },
+    {
+      "id": "bestiary_2",
+      "title": "Bestiary 2",
+      "done": 556,
+      "denominator": 1260,
+      "pct": 44.1
+    },
+    {
+      "id": "ultimate_magic",
+      "title": "Ultimate Magic",
+      "done": 320,
+      "denominator": 1211,
+      "pct": 26.4
+    },
+    {
+      "id": "ultimate_intrigue",
+      "title": "Ultimate Intrigue",
+      "done": 252,
+      "denominator": 817,
+      "pct": 30.8
+    },
+    {
+      "id": "pathfinder_unchained",
+      "title": "Pathfinder Unchained",
+      "done": 37,
+      "denominator": 746,
+      "pct": 5.0
+    },
+    {
+      "id": "horror_adventures",
+      "title": "Horror Adventures",
+      "done": 50,
+      "denominator": 712,
+      "pct": 7.0
+    },
+    {
+      "id": "inner_sea_gods",
+      "title": "Inner Sea Gods",
+      "done": 109,
+      "denominator": 477,
+      "pct": 22.9
+    },
+    {
+      "id": "inner_sea_combat",
+      "title": "Inner Sea Combat",
+      "done": 9,
+      "denominator": 387,
+      "pct": 2.3
+    },
+    {
+      "id": "inner_sea_races",
+      "title": "Inner Sea Races",
+      "done": 81,
+      "denominator": 315,
+      "pct": 25.7
+    },
+    {
+      "id": "inner_sea_world_guide",
+      "title": "Inner Sea World Guide",
+      "done": 24,
+      "denominator": 304,
+      "pct": 7.9
+    },
+    {
+      "id": "bestiary_5",
+      "title": "Bestiary 5",
+      "done": 49,
+      "denominator": 250,
+      "pct": 19.6
+    },
+    {
+      "id": "inner_sea_bestiary",
+      "title": "Inner Sea Bestiary",
+      "done": 181,
+      "denominator": 234,
+      "pct": 77.4
+    },
+    {
+      "id": "inner_sea_intrigue",
+      "title": "Inner Sea Intrigue",
+      "done": 8,
+      "denominator": 216,
+      "pct": 3.7
+    },
+    {
+      "id": "monster_codex",
+      "title": "Monster Codex",
+      "done": 22,
+      "denominator": 175,
+      "pct": 12.6
+    },
+    {
+      "id": "core_essentials",
+      "title": "Core Essentials",
+      "done": 0,
+      "denominator": 128,
+      "pct": 0.0
+    },
+    {
+      "id": "book_of_the_damned_volume_2",
+      "title": "Book of the Damned, Vol. 2",
+      "done": 20,
+      "denominator": 113,
+      "pct": 17.7
+    },
+    {
+      "id": "book_of_the_damned_volume_1",
+      "title": "Book of the Damned, Vol. 1",
+      "done": 40,
+      "denominator": 90,
+      "pct": 44.4
+    },
+    {
+      "id": "bestiary_6",
+      "title": "Bestiary 6",
+      "done": 24,
+      "denominator": 67,
+      "pct": 35.8
+    },
+    {
+      "id": "bonus_bestiary",
+      "title": "Bonus Bestiary",
+      "done": 21,
+      "denominator": 34,
+      "pct": 61.8
+    },
+    {
+      "id": "ultimate_campaign",
+      "title": "Ultimate Campaign",
+      "done": 15,
+      "denominator": 21,
+      "pct": 71.4
+    }
+  ]
+}

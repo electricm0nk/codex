@@ -1,0 +1,1348 @@
+{
+  "id": "book_of_the_damned_volume_2",
+  "title": "Book of the Damned, Vol. 2",
+  "kinds": [
+    {
+      "kind": "class_feature",
+      "label": "Class Features",
+      "done": 0,
+      "denominator": 71,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "Advanced Apply",
+          "doneness": "not-started",
+          "type_facet": "Internal"
+        },
+        {
+          "name": "Afflicted Lycanthrope",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Andirifkhu's Kiss",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Awaken Flames",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Binding Touch",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Blessing of the Worm",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Blood is Life",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "CCCold",
+          "doneness": "unmeasurable",
+          "type_facet": "Internal"
+        },
+        {
+          "name": "CCFire",
+          "doneness": "unmeasurable",
+          "type_facet": "Internal"
+        },
+        {
+          "name": "Call Forth the Spawn",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Call the Dead",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Children of the Caves",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Cold's Caress",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Compelling Voice",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Conqueror Worm",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Conspirator's Whisper",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Create Portal",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Curse of Brittle Bones",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Damned",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Death-Stealing Gaze",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Deeper Cuts",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Dehydrating Strike",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Demonic Form (Bite)",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Extraordinary.DemoniacForm"
+        },
+        {
+          "name": "Demonic Form (Claw)",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Extraordinary.DemoniacForm"
+        },
+        {
+          "name": "Demonic Form (Gills)",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Extraordinary.DemoniacForm"
+        },
+        {
+          "name": "Demonic Form (Gore)",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Extraordinary.DemoniacForm"
+        },
+        {
+          "name": "Demonic Form (Slam)",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Extraordinary.DemoniacForm"
+        },
+        {
+          "name": "Demonic Form (Sting)",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Extraordinary.DemoniacForm"
+        },
+        {
+          "name": "Demonic Form (Wings)",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Extraordinary.DemoniacForm"
+        },
+        {
+          "name": "Demonic Mark",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "unmeasurable",
+          "type_facet": "Internal"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.DemonicObedience"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.DemonicObedience"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DemonicObedience.SaveBonus"
+        },
+        {
+          "name": "Desert's Embrace",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Desert's Wrath",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Desiccating Pulse",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Dominate Thrall",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Earthshaker",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Elder's Grace",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Energumen",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Energumen (Cha)",
+          "doneness": "unmeasurable",
+          "type_facet": "SaveBonus"
+        },
+        {
+          "name": "Energumen (Con)",
+          "doneness": "unmeasurable",
+          "type_facet": "SaveBonus"
+        },
+        {
+          "name": "Energumen (Dex)",
+          "doneness": "unmeasurable",
+          "type_facet": "SaveBonus"
+        },
+        {
+          "name": "Energumen (Int)",
+          "doneness": "unmeasurable",
+          "type_facet": "SaveBonus"
+        },
+        {
+          "name": "Energumen (Str)",
+          "doneness": "unmeasurable",
+          "type_facet": "SaveBonus"
+        },
+        {
+          "name": "Energumen (Wis)",
+          "doneness": "unmeasurable",
+          "type_facet": "SaveBonus"
+        },
+        {
+          "name": "Extra Swim Speed",
+          "doneness": "unmeasurable",
+          "type_facet": "Internal.DagonSecondOath"
+        },
+        {
+          "name": "FCCold",
+          "doneness": "unmeasurable",
+          "type_facet": "Internal"
+        },
+        {
+          "name": "FCFire",
+          "doneness": "unmeasurable",
+          "type_facet": "Internal"
+        },
+        {
+          "name": "Fire's Harlot",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "First Boon",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "First Boon",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "First Boon",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "First Boon",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "First Boon",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "First Boon",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "First Boon",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "First Boon",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "First Boon",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "First Boon",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "First Oath",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Flame's Consort",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Frozen Wrath",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Fungal Ruin",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Gain Lycanthropy",
+          "doneness": "not-started",
+          "type_facet": "Internal.JezeldaAfflicted"
+        },
+        {
+          "name": "Gain Swim Speed",
+          "doneness": "not-started",
+          "type_facet": "Internal.DagonSecondOath"
+        },
+        {
+          "name": "Gargoyle's Gift",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Ghoulish Apotheosis",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Gift of the Moon",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Glutton's Feast",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Heresy",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Heretic's Hiss",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Heretical Revelation",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Instant Blindness",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Invoke Death",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Invoke the True Storm",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Jungle's Might",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Jungle's Wrath",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Killer's Finesse",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Kiss of the Grave",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Life in Blood",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Lunatic's Gift",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Maiden's Cry",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Mass Suicide",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Master of Shapes",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Maze of Madness",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Mazmezz's Embrace",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Minotaur Form",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Murderer's Wrath",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Necromancer's Secrets",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Nurgal's Breath",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Obedience",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Parasitic Link",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Penultimate Incantation",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Poisonous Touch",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Portal Jump",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Possession",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Primeval Might",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Raise Scorpion",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Sadist's Trick",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Second Boon",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Second Boon",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Second Boon",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Second Boon",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Second Boon",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Second Boon",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Second Boon",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Second Boon",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Second Boon",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Second Boon",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Second Oath",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Secret Lore",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Shriek of the Damned",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Sickness Within",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Sign of the Faceless Lord",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Sins of the Flesh",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Sphinx's Secret",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Spider's Blessing",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Stat Bonus",
+          "doneness": "unmeasurable",
+          "type_facet": "Internal.JezeldaAfflicted"
+        },
+        {
+          "name": "Stat Bonus",
+          "doneness": "unmeasurable",
+          "type_facet": "Internal.JezeldaTrue"
+        },
+        {
+          "name": "Storm Breath",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Summon Child of Angazhan",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Summon Demon I",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Summon Demon II",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Summon Froghemoth",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Swamper's Boon",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Swarm Master",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Swarm Walker",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Swarming Sussurrus",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Temporal Web",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Teratoma",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Teratoma (Bite)",
+          "doneness": "not-started",
+          "type_facet": "LamashtuTeratomaType"
+        },
+        {
+          "name": "Teratoma (Bleed)",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LamashtuTeratomaAbility"
+        },
+        {
+          "name": "Teratoma (Claw)",
+          "doneness": "not-started",
+          "type_facet": "LamashtuTeratomaType"
+        },
+        {
+          "name": "Teratoma (Grab)",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LamashtuTeratomaAbility"
+        },
+        {
+          "name": "Teratoma (Reach)",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LamashtuTeratomaAbility"
+        },
+        {
+          "name": "Teratoma (Tail)",
+          "doneness": "not-started",
+          "type_facet": "LamashtuTeratomaType"
+        },
+        {
+          "name": "Teratoma (Tentacle)",
+          "doneness": "not-started",
+          "type_facet": "LamashtuTeratomaType"
+        },
+        {
+          "name": "Teratoma (Trip)",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.LamashtuTeratomaAbility"
+        },
+        {
+          "name": "The Lady's Charms",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Third Boon",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Third Boon",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Third Boon",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Third Boon",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Third Boon",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Third Boon",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Third Boon",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Third Boon",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Third Boon",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Third Boon",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Third Eye",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Supernatural.CheckList"
+        },
+        {
+          "name": "Third Oath",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Transformation",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "True Lycanthrope",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "True Lycanthrope",
+          "doneness": "not-started",
+          "type_facet": "Internal.JezeldaAfflicted"
+        },
+        {
+          "name": "True Lycanthrope",
+          "doneness": "not-started",
+          "type_facet": "Internal.JezeldaTrue"
+        },
+        {
+          "name": "True Temptation",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Truth in the Flesh",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Truth in the Flesh",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Undead Minion",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Unwind the Clock",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Vampire Apply",
+          "doneness": "not-started",
+          "type_facet": "Internal"
+        },
+        {
+          "name": "Vampirism",
+          "doneness": "unmeasurable",
+          "type_facet": "Internal"
+        },
+        {
+          "name": "Vampirism",
+          "doneness": "unmeasurable",
+          "type_facet": "Internal"
+        },
+        {
+          "name": "Vampirism",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Warty Skin",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Weapon Proficiencies",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Whispers on the Wind",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Witch's Trick",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Wrath of Frost",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Zevgavizeb's Blessing",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Zura's Favor",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SpellLike"
+        }
+      ]
+    },
+    {
+      "kind": "class",
+      "label": "Classes",
+      "done": 0,
+      "denominator": 1,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "Demoniac",
+          "doneness": "not-started",
+          "type_facet": "PC.Prestige"
+        }
+      ]
+    },
+    {
+      "kind": "equipment",
+      "label": "Equipment",
+      "done": 0,
+      "denominator": 6,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "Amulet of the Abyss",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Amulet"
+        },
+        {
+          "name": "Amulet of the Abyss (Lamashtu)",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Amulet"
+        },
+        {
+          "name": "Book of the Damned (Demonic)",
+          "doneness": "not-started",
+          "type_facet": "Artifact.Major"
+        },
+        {
+          "name": "Demon Blood",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Implant.Consumable"
+        },
+        {
+          "name": "Demon Senses",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Implant"
+        },
+        {
+          "name": "Demon Talon",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Implant"
+        }
+      ]
+    },
+    {
+      "kind": "feat",
+      "label": "Feats",
+      "done": 0,
+      "denominator": 1,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "Demonic Obedience",
+          "doneness": "not-started",
+          "type_facet": "General"
+        }
+      ]
+    },
+    {
+      "kind": "monster_ability",
+      "label": "Monster Abilities",
+      "done": 17,
+      "denominator": 17,
+      "pct": 100.0,
+      "items": [
+        {
+          "name": "Abandon Flesh",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural.Defensive"
+        },
+        {
+          "name": "Bloodless",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary.Defensive"
+        },
+        {
+          "name": "Boiling Blood",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural.Defensive"
+        },
+        {
+          "name": "Breath Weapon",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Breath Weapon",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Burning Hooves",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Compelling Domination",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Flaming Weapon",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Flesh Armor",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural.Defensive"
+        },
+        {
+          "name": "Gaze of Despair",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural.Aura"
+        },
+        {
+          "name": "Grab",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Inhabit Body",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Negative Energy Affinity",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary.Defensive"
+        },
+        {
+          "name": "Ravenous Embrace",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Smoke Breath",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural.Aura"
+        },
+        {
+          "name": "Smoking Wound",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Stun",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        }
+      ]
+    },
+    {
+      "kind": "monster",
+      "label": "Monsters",
+      "done": 3,
+      "denominator": 4,
+      "pct": 75.0,
+      "items": [
+        {
+          "name": "Demon (Brimorak)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Demon (Seraptis)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Demon (Vavakia)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Demon (Vermlek)",
+          "doneness": "held",
+          "type_facet": null
+        }
+      ]
+    },
+    {
+      "kind": "race_trait",
+      "label": "Race Traits",
+      "done": 0,
+      "denominator": 1,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "Smoking Wound",
+          "doneness": "not-started",
+          "type_facet": "Ability Focus"
+        }
+      ]
+    },
+    {
+      "kind": "spell",
+      "label": "Spells",
+      "done": 0,
+      "denominator": 12,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "Disfiguring Touch",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Portal Jump",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Rift of Ruin",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Summon Demons (Nascent Demon Lord)",
+          "doneness": "not-started",
+          "type_facet": "Divine"
+        },
+        {
+          "name": "Summon Monster II (Vermlek)",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Summon Monster III (Brimorak)",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Summon Monster V (Seraptis)",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Summon Monster VI (Demoniac)",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Summon Monster VI (Vavakia)",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Summon Monster VIII (Demoniac)",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Vermin Shape I",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Vermin Shape II",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        }
+      ]
+    }
+  ]
+}

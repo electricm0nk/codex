@@ -1,0 +1,5588 @@
+{
+  "id": "ultimate_intrigue",
+  "title": "Ultimate Intrigue",
+  "kinds": [
+    {
+      "kind": "class_feature",
+      "label": "Class Features",
+      "done": 0,
+      "denominator": 512,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "Absentia",
+          "doneness": "not-started",
+          "type_facet": "Mesmerist Class Features.EnigmaClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Abundant Step",
+          "doneness": "not-started",
+          "type_facet": "Forbidden Ki Power"
+        },
+        {
+          "name": "Acrobatics",
+          "doneness": "unmeasurable",
+          "type_facet": "RefinedEducationUnlock"
+        },
+        {
+          "name": "Acrobatics",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Adaptive Physiology",
+          "doneness": "not-started",
+          "type_facet": "Alchemist Class Feature.MetamorphClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Aides-de-Camp",
+          "doneness": "unmeasurable",
+          "type_facet": "Cavalier Class Features.DaringGeneralClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Alchemical Sapper",
+          "doneness": "not-started",
+          "type_facet": "Archetype.AlchemistArchetype"
+        },
+        {
+          "name": "Alignment",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.ZealotClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Alley Ghost",
+          "doneness": "not-started",
+          "type_facet": "Hunter Class Features.RoofRunnerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Alternate Form",
+          "doneness": "not-started",
+          "type_facet": "Hunter Class Features.CourtlyHunterClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Always Wary",
+          "doneness": "not-started",
+          "type_facet": "Inquisitor Class Features.CloakedWolfClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Ancestral Aspirant",
+          "doneness": "not-started",
+          "type_facet": "Archetype.OccultistArchetype"
+        },
+        {
+          "name": "Animal Guide",
+          "doneness": "unmeasurable",
+          "type_facet": "Vigilante Class Features.MagicalChildClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Another Day",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary.Supernatural"
+        },
+        {
+          "name": "Any Guise",
+          "doneness": "not-started",
+          "type_facet": "Social Talent.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Appraise",
+          "doneness": "unmeasurable",
+          "type_facet": "RefinedEducationUnlock"
+        },
+        {
+          "name": "Appraise",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Arachnid",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.WildsoulNaturalCourse"
+        },
+        {
+          "name": "Arcane Striker",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Archetype Vigilante",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Archetype"
+        },
+        {
+          "name": "Aristocratic Discipline",
+          "doneness": "unmeasurable",
+          "type_facet": "Swashbuckler Class Features.NobleFencerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Armor Proficiencies",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.WarlockClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Armor Skin",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Assume Identity",
+          "doneness": "not-started",
+          "type_facet": "Mesmerist Class Features.ThoughtEaterClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Assume Knowledge",
+          "doneness": "not-started",
+          "type_facet": "Mesmerist Class Features.ThoughtEaterClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Assume Morality",
+          "doneness": "not-started",
+          "type_facet": "Mesmerist Class Features.ThoughtEaterClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Assumed Form",
+          "doneness": "not-started",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.IntrigueRevelation.SpellLike"
+        },
+        {
+          "name": "Audacious Overconfidence",
+          "doneness": "not-started",
+          "type_facet": "Rogue Class Features.SharperClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Aura",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.ZealotClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Aura of Subtlety",
+          "doneness": "not-started",
+          "type_facet": "Paladin Class Features.GrayPaladinClassFeatures.SpecialQuality.SpellLike.Supernatural"
+        },
+        {
+          "name": "Avenger",
+          "doneness": "not-started",
+          "type_facet": "VigilanteSpecialization.SpecialQuality"
+        },
+        {
+          "name": "Awesome Blow",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Battle Acumen",
+          "doneness": "unmeasurable",
+          "type_facet": "Inquisitor Class Features.TacticalLeaderClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Battle Prowess",
+          "doneness": "not-started",
+          "type_facet": "Skald Class Features.BattleScionClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Battle Scion",
+          "doneness": "not-started",
+          "type_facet": "Archetype.SkaldArchetype"
+        },
+        {
+          "name": "Bear Form",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Bear Jaws",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Beaver",
+          "doneness": "not-started",
+          "type_facet": "CourtlyHunterAnimalFocusAbility"
+        },
+        {
+          "name": "Black Asp",
+          "doneness": "not-started",
+          "type_facet": "Archetype.MonkArchetype"
+        },
+        {
+          "name": "Black Asp",
+          "doneness": "unmeasurable",
+          "type_facet": "Archetype.Unchained Monk Archetype"
+        },
+        {
+          "name": "Black Asp Venom",
+          "doneness": "unmeasurable",
+          "type_facet": "Unchained Ki Power.Forbidden Ki Power.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Black Asp's Path",
+          "doneness": "not-started",
+          "type_facet": "Monk Class Features.BlackAspClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Blind Spot",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Blood Lore",
+          "doneness": "not-started",
+          "type_facet": "Investigator Class Features.ForensicPhysicianClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Bloodbound Spell",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.CabalistClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Bloody Horror",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.CabalistClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Bluff",
+          "doneness": "unmeasurable",
+          "type_facet": "RefinedEducationUnlock"
+        },
+        {
+          "name": "Bluff",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Bold Schemer",
+          "doneness": "not-started",
+          "type_facet": "Archetype.SkaldArchetype"
+        },
+        {
+          "name": "Bold Strategy",
+          "doneness": "not-started",
+          "type_facet": "Skald Class Features.BoldSchemerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Bolster the Wounded",
+          "doneness": "not-started",
+          "type_facet": "Inquisitor Class Features.UmbralStalkerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Bond of Blood",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Supernatural.SpellLike"
+        },
+        {
+          "name": "Bonus Feats",
+          "doneness": "not-started",
+          "type_facet": "Rogue Class Features.ConsigliereClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Broad Education",
+          "doneness": "not-started",
+          "type_facet": "Rogue Class Features.PhantomThiefClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Broker Secrets",
+          "doneness": "not-started",
+          "type_facet": "Occultist Class Features.SecretBrokerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Brute",
+          "doneness": "not-started",
+          "type_facet": "Archetype.VigilanteArchetype"
+        },
+        {
+          "name": "Brute Form",
+          "doneness": "unmeasurable",
+          "type_facet": "Vigilante Class Features.BruteClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Cabalist",
+          "doneness": "not-started",
+          "type_facet": "Archetype.VigilanteArchetype"
+        },
+        {
+          "name": "Camouflage Bomb",
+          "doneness": "unmeasurable",
+          "type_facet": "Alchemist Class Feature.AlchemicalSapperClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Cardinal",
+          "doneness": "not-started",
+          "type_facet": "Archetype.ClericArchetype"
+        },
+        {
+          "name": "Case the Joint",
+          "doneness": "not-started",
+          "type_facet": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Case the Joint",
+          "doneness": "not-started",
+          "type_facet": "Social Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Cause or Cure Blindness",
+          "doneness": "not-started",
+          "type_facet": "Mesmerist Class Features.EyebiterClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Celebrity Discount",
+          "doneness": "not-started",
+          "type_facet": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Celebrity Discount",
+          "doneness": "unmeasurable",
+          "type_facet": "Social Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Celebrity Perks",
+          "doneness": "not-started",
+          "type_facet": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Celebrity Perks",
+          "doneness": "unmeasurable",
+          "type_facet": "Social Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Chameleon",
+          "doneness": "not-started",
+          "type_facet": "CourtlyHunterAnimalFocusAbility"
+        },
+        {
+          "name": "Channel Energy",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Chant of Perfect Recall",
+          "doneness": "unmeasurable",
+          "type_facet": "ImperviousMessengerClassFeatures.SpecialQuality.Supernatural.BardicPerformance.Bardic Performance"
+        },
+        {
+          "name": "Chaotic Vigilante",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.BruteClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Chaotic, Evil, Good, and Lawful Spells",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.ZealotClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Charmed Guardian",
+          "doneness": "not-started",
+          "type_facet": "Swashbuckler Class Features.GuidingBladeClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Charming",
+          "doneness": "not-started",
+          "type_facet": "InterrogatorSerum.AlchemistDiscovery"
+        },
+        {
+          "name": "Chase Master",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Cipher",
+          "doneness": "not-started",
+          "type_facet": "Archetype.InvestigatorArchetype"
+        },
+        {
+          "name": "Class Skills",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Feature.SpecialQuality"
+        },
+        {
+          "name": "Climb",
+          "doneness": "unmeasurable",
+          "type_facet": "RefinedEducationUnlock"
+        },
+        {
+          "name": "Climb",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Cloaked Wolf",
+          "doneness": "not-started",
+          "type_facet": "Archetype.InquisitorArchetype"
+        },
+        {
+          "name": "Close the Gap",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Closed Book",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Clouded Vision",
+          "doneness": "not-started",
+          "type_facet": "Mesmerist Class Features.EyebiterClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Code Runner",
+          "doneness": "not-started",
+          "type_facet": "Archetype.RangerArchetype"
+        },
+        {
+          "name": "Code of Conduct",
+          "doneness": "not-started",
+          "type_facet": "Paladin Class Features.GrayPaladinClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Combat Advisor",
+          "doneness": "unmeasurable",
+          "type_facet": "Rogue Class Features.ConsigliereClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Combat Expertise",
+          "doneness": "not-started",
+          "type_facet": "RangerBonusFeat"
+        },
+        {
+          "name": "Combat Feat",
+          "doneness": "unmeasurable",
+          "type_facet": "Skald Class Feature.Rage Power.RagePower.SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Combat Skill",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Combat Trick",
+          "doneness": "not-started",
+          "type_facet": "RogueClassFeatures.SpecialQuality.Extraordinary.RogueTalent"
+        },
+        {
+          "name": "Compelling Voice",
+          "doneness": "not-started",
+          "type_facet": "Mesmerist Class Features.VoxClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Compliance",
+          "doneness": "not-started",
+          "type_facet": "InterrogatorSerum.AlchemistDiscovery"
+        },
+        {
+          "name": "Conceal Evidence",
+          "doneness": "unmeasurable",
+          "type_facet": "Inquisitor Class Features.TracelessOperativeClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Confusion",
+          "doneness": "not-started",
+          "type_facet": "InterrogatorSerum.AlchemistDiscovery"
+        },
+        {
+          "name": "Consigliere",
+          "doneness": "not-started",
+          "type_facet": "Archetype.RogueArchetype"
+        },
+        {
+          "name": "Consigliere",
+          "doneness": "not-started",
+          "type_facet": "Archetype.RogueArchetype"
+        },
+        {
+          "name": "Consigliere Teamwork Feat",
+          "doneness": "not-started",
+          "type_facet": "RogueClassFeatures.SpecialQuality.Extraordinary.RogueTalent"
+        },
+        {
+          "name": "Consigliere Teamwork Feat",
+          "doneness": "not-started",
+          "type_facet": "RogueClassFeatures.SpecialQuality.Extraordinary.RogueTalent"
+        },
+        {
+          "name": "Conspirator",
+          "doneness": "not-started",
+          "type_facet": "Archetype.InvestigatorArchetype"
+        },
+        {
+          "name": "Conspirator Expanded Inspiration",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.InvestigatorTalent"
+        },
+        {
+          "name": "Consume Identity",
+          "doneness": "not-started",
+          "type_facet": "Mesmerist Class Features.ThoughtEaterClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Consummate Actor",
+          "doneness": "unmeasurable",
+          "type_facet": "Rogue Class Features.MasterOfDisguiseClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Convincing Attitude",
+          "doneness": "not-started",
+          "type_facet": "Rogue Class Features.ConsigliereClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Convincing Attitude",
+          "doneness": "not-started",
+          "type_facet": "Rogue Class Features.ConsigliereClassFeatures.Extraordinary"
+        },
+        {
+          "name": "Counterargument",
+          "doneness": "not-started",
+          "type_facet": "Bard Class Features.WitClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Courtly Companion",
+          "doneness": "not-started",
+          "type_facet": "Hunter Class Features.CourtlyHunterClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Courtly Contacts",
+          "doneness": "unmeasurable",
+          "type_facet": "Occultist Class Features.AncestralAspirantClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Courtly Graces",
+          "doneness": "unmeasurable",
+          "type_facet": "Slayer Class Features.VelvetBladeClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Courtly Hunter",
+          "doneness": "not-started",
+          "type_facet": "Archetype.HunterArchetype"
+        },
+        {
+          "name": "Courtly Knight",
+          "doneness": "not-started",
+          "type_facet": "Archetype.CavalierArchetype"
+        },
+        {
+          "name": "Courtly Presence",
+          "doneness": "unmeasurable",
+          "type_facet": "Skald Class Features.BattleScionClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Craft",
+          "doneness": "unmeasurable",
+          "type_facet": "RefinedEducationUnlock"
+        },
+        {
+          "name": "Craft (Alchemy)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Craft (Armor)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Craft (Baskets)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Craft (Blacksmithing)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Craft (Books)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Craft (Bows)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Craft (Calligraphy)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Craft (Carpentry)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Craft (Cloth)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Craft (Clothing)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Craft (Gemcutting)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Craft (Glass)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Craft (Jewelry)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Craft (Leather)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Craft (Locks)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Craft (Paintings)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Craft (Pottery)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Craft (Sculptures)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Craft (Ships)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Craft (Shoes)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Craft (Stonemasonry)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Craft (Traps)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Craft (Weapons)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Crime Inquisition",
+          "doneness": "unmeasurable",
+          "type_facet": "InquisitorDomain.Inquisition"
+        },
+        {
+          "name": "Criminal Mastermind",
+          "doneness": "not-started",
+          "type_facet": "Rogue Class Features.GuildAgentClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Criminal Minds",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Crowd Stride",
+          "doneness": "not-started",
+          "type_facet": "Ranger Class Features.GuildbreakerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Cryptic Whisper",
+          "doneness": "unmeasurable",
+          "type_facet": "Bard Class Features.ImperviousMessengerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Cunning Feint",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Cunning Fist",
+          "doneness": "unmeasurable",
+          "type_facet": "Monk Class Features.SageCounselorClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Cutting Remark",
+          "doneness": "unmeasurable",
+          "type_facet": "WitClassFeatures.SpecialQuality.Supernatural.BardicPerformance.Bardic Performance"
+        },
+        {
+          "name": "Dandy",
+          "doneness": "not-started",
+          "type_facet": "Archetype.RangerArchetype"
+        },
+        {
+          "name": "Dandy Spells",
+          "doneness": "not-started",
+          "type_facet": "Ranger Class Features.DandyClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Daring General",
+          "doneness": "not-started",
+          "type_facet": "Archetype.CavalierArchetype"
+        },
+        {
+          "name": "Daring General Followers",
+          "doneness": "not-started",
+          "type_facet": "Cavalier Class Features.DaringGeneralClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Daring Teamwork",
+          "doneness": "unmeasurable",
+          "type_facet": "Swashbuckler Class Features.GuidingBladeClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Dark Descent",
+          "doneness": "unmeasurable",
+          "type_facet": "Inquisitor Class Features.UmbralStalkerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Darkness Denied",
+          "doneness": "not-started",
+          "type_facet": "Bard Class Features.SorrowsoulClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Dazzling Display",
+          "doneness": "not-started",
+          "type_facet": "RangerBonusFeat"
+        },
+        {
+          "name": "Deadeye",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Deadly Claws",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Deadly Dive",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Deadly Efficiency",
+          "doneness": "not-started",
+          "type_facet": "Inquisitor Class Features.UmbralStalkerClassFeatures.SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Death's Shot",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Deceptive",
+          "doneness": "not-started",
+          "type_facet": "RangerCombatStyle"
+        },
+        {
+          "name": "Deceptive Ki",
+          "doneness": "not-started",
+          "type_facet": "Monk Class Features.SageCounselorClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Deep Cover",
+          "doneness": "not-started",
+          "type_facet": "Ranger Class Features.GuildbreakerClassFeatures.SpecialQuality.Extraordinary.Supernatural"
+        },
+        {
+          "name": "Delayed Bomb",
+          "doneness": "not-started",
+          "type_facet": "Alchemist Class Feature.AlchemicalSapperClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Delegate",
+          "doneness": "unmeasurable",
+          "type_facet": "Investigator Class Features.MajordomoClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Demolition Bomb",
+          "doneness": "unmeasurable",
+          "type_facet": "Alchemist Class Feature.AlchemicalSapperClassFeatures.SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Desire Sight",
+          "doneness": "unmeasurable",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.IntrigueRevelation.SpellLike.PerDayOracleRevelation.RevelationTargetOneOnly"
+        },
+        {
+          "name": "Detect Mind",
+          "doneness": "unmeasurable",
+          "type_facet": "Inquisitor Class Features.SecretSeekerClassFeatures.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Detect Secrets",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Detection Void",
+          "doneness": "unmeasurable",
+          "type_facet": "Mesmerist Class Features.EnigmaClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Diabolic Boon",
+          "doneness": "not-started",
+          "type_facet": "Antipaladin Class Features.TyrantClassFeatures.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Diamond Body",
+          "doneness": "not-started",
+          "type_facet": "Forbidden Ki Power"
+        },
+        {
+          "name": "Diamond Soul",
+          "doneness": "not-started",
+          "type_facet": "Forbidden Ki Power"
+        },
+        {
+          "name": "Diminished Alchemy",
+          "doneness": "unmeasurable",
+          "type_facet": "Alchemist Class Feature.AlchemicalSapperClassFeatures.SpecialAttack"
+        },
+        {
+          "name": "Diplomacy",
+          "doneness": "unmeasurable",
+          "type_facet": "RefinedEducationUnlock"
+        },
+        {
+          "name": "Diplomacy",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Disable Device",
+          "doneness": "unmeasurable",
+          "type_facet": "RefinedEducationUnlock"
+        },
+        {
+          "name": "Disable Device",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Discern Lies",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Disease Lore",
+          "doneness": "unmeasurable",
+          "type_facet": "Investigator Class Features.ForensicPhysicianClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Disengaging Feint",
+          "doneness": "not-started",
+          "type_facet": "RangerBonusFeat"
+        },
+        {
+          "name": "Disengaging Shot",
+          "doneness": "not-started",
+          "type_facet": "RangerBonusFeat"
+        },
+        {
+          "name": "Disguise",
+          "doneness": "unmeasurable",
+          "type_facet": "RefinedEducationUnlock"
+        },
+        {
+          "name": "Disguise",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Dodge",
+          "doneness": "not-started",
+          "type_facet": "RangerBonusFeat"
+        },
+        {
+          "name": "Double Time",
+          "doneness": "not-started",
+          "type_facet": "Social Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Dreadful Carnage",
+          "doneness": "not-started",
+          "type_facet": "RangerBonusFeat"
+        },
+        {
+          "name": "Drug Lore",
+          "doneness": "not-started",
+          "type_facet": "Investigator Class Features.HallucinistClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Drug Resistance",
+          "doneness": "unmeasurable",
+          "type_facet": "Investigator Class Features.HallucinistClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Dual Identity",
+          "doneness": "not-started",
+          "type_facet": "Bard Class Features.MaskedPerformerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Dual Identity",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Feature.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Duel Master",
+          "doneness": "not-started",
+          "type_facet": "Bard Class Features.WitClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Eagle",
+          "doneness": "not-started",
+          "type_facet": "CourtlyHunterAnimalFocusAbility"
+        },
+        {
+          "name": "Eagle Eye",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Earthmeld",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Wild Talent.Utility Wild Talent"
+        },
+        {
+          "name": "Eidetic Recollection",
+          "doneness": "not-started",
+          "type_facet": "RogueClassFeatures.RogueTalent.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Elemental Armor",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Emotional Reading",
+          "doneness": "not-started",
+          "type_facet": "Occultist Class Features.AncestralAspirantClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Emotionless",
+          "doneness": "not-started",
+          "type_facet": "Spiritualist Class Features.ShadowCallerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Empathy",
+          "doneness": "unmeasurable",
+          "type_facet": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary.Supernatural"
+        },
+        {
+          "name": "Empower Symbol",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Empty Body",
+          "doneness": "not-started",
+          "type_facet": "Forbidden Ki Power"
+        },
+        {
+          "name": "Empty Mind",
+          "doneness": "not-started",
+          "type_facet": "Unchained Ki Power.Forbidden Ki Power.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Enemy Revealed",
+          "doneness": "not-started",
+          "type_facet": "Inquisitor Class Features.FaithHunterClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Enforcer",
+          "doneness": "not-started",
+          "type_facet": "RangerBonusFeat"
+        },
+        {
+          "name": "Enhanced Health",
+          "doneness": "not-started",
+          "type_facet": "Paladin Class Features.GrayPaladinClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Enigma",
+          "doneness": "not-started",
+          "type_facet": "Archetype.MesmeristArchetype"
+        },
+        {
+          "name": "Enigmatic Stare",
+          "doneness": "unmeasurable",
+          "type_facet": "Mesmerist Class Features.EnigmaClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Environment Weapon",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Environment Weapon (Cold)",
+          "doneness": "not-started",
+          "type_facet": "EnvironmentWeaponTerrain"
+        },
+        {
+          "name": "Environment Weapon (Desert)",
+          "doneness": "not-started",
+          "type_facet": "EnvironmentWeaponTerrain"
+        },
+        {
+          "name": "Environment Weapon (Forest)",
+          "doneness": "not-started",
+          "type_facet": "EnvironmentWeaponTerrain"
+        },
+        {
+          "name": "Environment Weapon (Jungle)",
+          "doneness": "not-started",
+          "type_facet": "EnvironmentWeaponTerrain"
+        },
+        {
+          "name": "Environment Weapon (Mountain)",
+          "doneness": "not-started",
+          "type_facet": "EnvironmentWeaponTerrain"
+        },
+        {
+          "name": "Environment Weapon (Plains)",
+          "doneness": "not-started",
+          "type_facet": "EnvironmentWeaponTerrain"
+        },
+        {
+          "name": "Environment Weapon (Planes)",
+          "doneness": "not-started",
+          "type_facet": "EnvironmentWeaponTerrain"
+        },
+        {
+          "name": "Environment Weapon (Swamp)",
+          "doneness": "not-started",
+          "type_facet": "EnvironmentWeaponTerrain"
+        },
+        {
+          "name": "Environment Weapon (Underground)",
+          "doneness": "not-started",
+          "type_facet": "EnvironmentWeaponTerrain"
+        },
+        {
+          "name": "Environment Weapon (Urban)",
+          "doneness": "not-started",
+          "type_facet": "EnvironmentWeaponTerrain"
+        },
+        {
+          "name": "Environment Weapon (Water)",
+          "doneness": "not-started",
+          "type_facet": "EnvironmentWeaponTerrain"
+        },
+        {
+          "name": "Erase Secret",
+          "doneness": "not-started",
+          "type_facet": "Occultist Class Features.SecretBrokerClassFeatures.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Escape Artist",
+          "doneness": "unmeasurable",
+          "type_facet": "RefinedEducationUnlock"
+        },
+        {
+          "name": "Escape Artist",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Evasive",
+          "doneness": "not-started",
+          "type_facet": "Investigator Class Features.CipherClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Evasive",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Everyman",
+          "doneness": "not-started",
+          "type_facet": "Social Talent.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Evil Cult",
+          "doneness": "unmeasurable",
+          "type_facet": "RangerClassFeatures.FavoredEnemyBonus"
+        },
+        {
+          "name": "Evil Cult",
+          "doneness": "unmeasurable",
+          "type_facet": "RangerClassFeatures.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption"
+        },
+        {
+          "name": "Exaggerated Pose",
+          "doneness": "unmeasurable",
+          "type_facet": "MaskedPerformerClassFeatures.SpecialQuality.Supernatural.BardicPerformance.Bardic Performance"
+        },
+        {
+          "name": "Expose Weakness",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Eyeball Familiar",
+          "doneness": "not-started",
+          "type_facet": "Mesmerist Class Features.EyebiterClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Eyebiter",
+          "doneness": "not-started",
+          "type_facet": "Archetype.MesmeristArchetype"
+        },
+        {
+          "name": "Eyeless Horror",
+          "doneness": "not-started",
+          "type_facet": "Mesmerist Class Features.EyebiterClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Faith Hunter",
+          "doneness": "not-started",
+          "type_facet": "Archetype.InquisitorArchetype"
+        },
+        {
+          "name": "Falconine",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.WildsoulNaturalCourse"
+        },
+        {
+          "name": "Familiar",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Family Jewels",
+          "doneness": "not-started",
+          "type_facet": "Occultist Class Features.AncestralAspirantClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Fast Mount",
+          "doneness": "unmeasurable",
+          "type_facet": "Cavalier Class Features.HussarClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Favored Maneuver",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Favored Maneuver (Bull Rush)",
+          "doneness": "not-started",
+          "type_facet": "VigilanteFavoredManeuver"
+        },
+        {
+          "name": "Favored Maneuver (Dirty Trick)",
+          "doneness": "not-started",
+          "type_facet": "VigilanteFavoredManeuver"
+        },
+        {
+          "name": "Favored Maneuver (Disarm)",
+          "doneness": "not-started",
+          "type_facet": "VigilanteFavoredManeuver"
+        },
+        {
+          "name": "Favored Maneuver (Drag)",
+          "doneness": "not-started",
+          "type_facet": "VigilanteFavoredManeuver"
+        },
+        {
+          "name": "Favored Maneuver (Grapple)",
+          "doneness": "not-started",
+          "type_facet": "VigilanteFavoredManeuver"
+        },
+        {
+          "name": "Favored Maneuver (Overrun)",
+          "doneness": "not-started",
+          "type_facet": "VigilanteFavoredManeuver"
+        },
+        {
+          "name": "Favored Maneuver (Reposition)",
+          "doneness": "not-started",
+          "type_facet": "VigilanteFavoredManeuver"
+        },
+        {
+          "name": "Favored Maneuver (Steal)",
+          "doneness": "not-started",
+          "type_facet": "VigilanteFavoredManeuver"
+        },
+        {
+          "name": "Favored Maneuver (Trip)",
+          "doneness": "not-started",
+          "type_facet": "VigilanteFavoredManeuver"
+        },
+        {
+          "name": "Favored Nation",
+          "doneness": "not-started",
+          "type_facet": "Ranger Class Features.DandyClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Favored Organization",
+          "doneness": "not-started",
+          "type_facet": "Ranger Class Features.GuildbreakerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Favored Terrain",
+          "doneness": "unmeasurable",
+          "type_facet": "Ranger Class Features.DandyClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Fear Me",
+          "doneness": "not-started",
+          "type_facet": "Skald Class Features.WarlordClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Feign Innocence",
+          "doneness": "not-started",
+          "type_facet": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Feign Innocence",
+          "doneness": "not-started",
+          "type_facet": "Social Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Feinting Flurry",
+          "doneness": "not-started",
+          "type_facet": "Monk Class Features.SageCounselorClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Ferret's Grace",
+          "doneness": "not-started",
+          "type_facet": "Rogue Class Features.HeisterClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Fey Caller",
+          "doneness": "unmeasurable",
+          "type_facet": "Archetype.SummonerArchetype"
+        },
+        {
+          "name": "Fey Eidolon",
+          "doneness": "not-started",
+          "type_facet": "Summoner Class Feature.FeyCallerClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Fey Magic",
+          "doneness": "unmeasurable",
+          "type_facet": "Druid Class Features.FeyspeakerClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Fey Speech",
+          "doneness": "unmeasurable",
+          "type_facet": "Druid Class Features.FeyspeakerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Fey Trickster",
+          "doneness": "not-started",
+          "type_facet": "Archetype.MesmeristArchetype"
+        },
+        {
+          "name": "Fey Veil",
+          "doneness": "not-started",
+          "type_facet": "Mesmerist Class Features.FeyTricksterClassFeatures.SpecialQuality.Supernatural.SpellLike"
+        },
+        {
+          "name": "Feyspeaker",
+          "doneness": "not-started",
+          "type_facet": "Archetype.DruidArchetype"
+        },
+        {
+          "name": "Feytouched",
+          "doneness": "not-started",
+          "type_facet": "Mesmerist Class Features.FeyTricksterClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Field Boss",
+          "doneness": "unmeasurable",
+          "type_facet": "Rogue Class Features.ConsigliereClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Final Revelation",
+          "doneness": "not-started",
+          "type_facet": "OracleClassFeatures.SpecialQuality.FinalRevelation"
+        },
+        {
+          "name": "Fist Fighter",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeedsLVL1.Extraordinary"
+        },
+        {
+          "name": "Fist of the Avenger",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Flame Trap",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Wild Talent.Utility Wild Talent"
+        },
+        {
+          "name": "Flashmorph",
+          "doneness": "not-started",
+          "type_facet": "Druid Class Features.SkinshaperClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Foe Collision*",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Follow Along",
+          "doneness": "not-started",
+          "type_facet": "RogueClassFeatures.SpecialQuality.Extraordinary.RogueTalent.Unchained Rogue Talent"
+        },
+        {
+          "name": "Footman",
+          "doneness": "not-started",
+          "type_facet": "Cavalier Class Features.DaringGeneralClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Forbidden Powers",
+          "doneness": "unmeasurable",
+          "type_facet": "Monk Class Features.BlackAspClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Forbidden Powers",
+          "doneness": "unmeasurable",
+          "type_facet": "Monk Class Features.BlackAspClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Forensic Physician",
+          "doneness": "not-started",
+          "type_facet": "Archetype.InvestigatorArchetype"
+        },
+        {
+          "name": "Forgotten Presence",
+          "doneness": "unmeasurable",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.IntrigueRevelation.SpellLike.PerDayOracleRevelation.RevelationTargetOneOnly"
+        },
+        {
+          "name": "Fox",
+          "doneness": "not-started",
+          "type_facet": "CourtlyHunterAnimalFocusAbility"
+        },
+        {
+          "name": "Frightening Appearance",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Feature.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Frilled Lizard",
+          "doneness": "not-started",
+          "type_facet": "CourtlyHunterAnimalFocusAbility"
+        },
+        {
+          "name": "Furious Charge",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.MountedFuryClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Gory Finish",
+          "doneness": "not-started",
+          "type_facet": "RangerBonusFeat"
+        },
+        {
+          "name": "Gossip Collector",
+          "doneness": "not-started",
+          "type_facet": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Gossip Collector",
+          "doneness": "not-started",
+          "type_facet": "Social Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Gossip Guru",
+          "doneness": "unmeasurable",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.IntrigueRevelation.SpellLike.PerDayOracleRevelation"
+        },
+        {
+          "name": "Grand Boast",
+          "doneness": "not-started",
+          "type_facet": "Cavalier Class Features.CourtlyKnightClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Grandmaster of Disguise",
+          "doneness": "not-started",
+          "type_facet": "Rogue Class Features.MasterOfDisguiseClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Gray Paladin",
+          "doneness": "not-started",
+          "type_facet": "Archetype.PaladinArchetype"
+        },
+        {
+          "name": "Great Renown",
+          "doneness": "not-started",
+          "type_facet": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Great Renown",
+          "doneness": "unmeasurable",
+          "type_facet": "Social Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Greater Dirty Trick",
+          "doneness": "not-started",
+          "type_facet": "RangerBonusFeat"
+        },
+        {
+          "name": "Greater Feint",
+          "doneness": "not-started",
+          "type_facet": "RangerBonusFeat"
+        },
+        {
+          "name": "Greater Hidden Magic",
+          "doneness": "not-started",
+          "type_facet": "Unchained Ki Power.Forbidden Ki Power.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Greater Steal",
+          "doneness": "not-started",
+          "type_facet": "RangerBonusFeat"
+        },
+        {
+          "name": "Groom",
+          "doneness": "not-started",
+          "type_facet": "Cavalier Class Features.DaringGeneralClassFeatures.SpecialQuality.DaringGeneralCohort"
+        },
+        {
+          "name": "Guiding Blade",
+          "doneness": "not-started",
+          "type_facet": "Archetype.SwashbucklerArchetype"
+        },
+        {
+          "name": "Guild Agent",
+          "doneness": "not-started",
+          "type_facet": "Archetype.RogueArchetype"
+        },
+        {
+          "name": "Guild Connections",
+          "doneness": "not-started",
+          "type_facet": "Rogue Class Features.GuildAgentClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Guildbreaker",
+          "doneness": "not-started",
+          "type_facet": "Archetype.RangerArchetype"
+        },
+        {
+          "name": "Gun Twirl",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.DeedsLVL1.Extraordinary"
+        },
+        {
+          "name": "Gunmaster",
+          "doneness": "unmeasurable",
+          "type_facet": "Vigilante Class Features.GunmasterClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Gunmaster",
+          "doneness": "not-started",
+          "type_facet": "Archetype.VigilanteArchetype"
+        },
+        {
+          "name": "Gunmaster Initiative",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Hallucinist",
+          "doneness": "not-started",
+          "type_facet": "Archetype.InvestigatorArchetype"
+        },
+        {
+          "name": "Handle Animal",
+          "doneness": "unmeasurable",
+          "type_facet": "RefinedEducationUnlock"
+        },
+        {
+          "name": "Handle Animal",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Hateful Bane",
+          "doneness": "not-started",
+          "type_facet": "Inquisitor Class Features.FaithHunterClassFeatures.SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Heal",
+          "doneness": "unmeasurable",
+          "type_facet": "RefinedEducationUnlock"
+        },
+        {
+          "name": "Heal",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Heavy Punches",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Heavy Training",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Heightened Senses",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Heister",
+          "doneness": "not-started",
+          "type_facet": "Archetype.RogueArchetype"
+        },
+        {
+          "name": "Hidden Agendas",
+          "doneness": "not-started",
+          "type_facet": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Hidden Blade",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SwashbucklerDeedsLVL3.Extraordinary"
+        },
+        {
+          "name": "Hidden Magic",
+          "doneness": "not-started",
+          "type_facet": "Unchained Ki Power.Forbidden Ki Power.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Hidden Magic",
+          "doneness": "not-started",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.IntrigueRevelation.Supernatural"
+        },
+        {
+          "name": "Hidden Mind",
+          "doneness": "not-started",
+          "type_facet": "RogueClassFeatures.SpecialQuality.Extraordinary.RogueAdvancedTalent.Unchained Rogue Advanced Talent"
+        },
+        {
+          "name": "Hidden Plans",
+          "doneness": "not-started",
+          "type_facet": "Bard Class Features.RingleaderClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Hide in Plain Sight",
+          "doneness": "not-started",
+          "type_facet": "Investigator Class Features.CipherClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Hide in Plain Sight",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Hideaway",
+          "doneness": "not-started",
+          "type_facet": "Ranger Class Features.TransporterClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "High Jump",
+          "doneness": "not-started",
+          "type_facet": "Forbidden Ki Power"
+        },
+        {
+          "name": "Hobnob",
+          "doneness": "not-started",
+          "type_facet": "Ranger Class Features.DandyClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Honor Among Thieves",
+          "doneness": "not-started",
+          "type_facet": "Rogue Class Features.GuildAgentClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Honor Guard",
+          "doneness": "not-started",
+          "type_facet": "Cavalier Class Features.DaringGeneralClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Hussar",
+          "doneness": "not-started",
+          "type_facet": "Archetype.CavalierArchetype"
+        },
+        {
+          "name": "Hypnosis",
+          "doneness": "not-started",
+          "type_facet": "InterrogatorSerum.AlchemistDiscovery"
+        },
+        {
+          "name": "Immediate Change",
+          "doneness": "not-started",
+          "type_facet": "Social Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Imperious Attitude",
+          "doneness": "not-started",
+          "type_facet": "Cavalier Class Features.CourtlyKnightClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Impervious Messenger",
+          "doneness": "not-started",
+          "type_facet": "Archetype.BardArchetype"
+        },
+        {
+          "name": "Implements and Focus Powers",
+          "doneness": "not-started",
+          "type_facet": "Occultist Class Features.PsychometristClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Improved Critical",
+          "doneness": "not-started",
+          "type_facet": "RangerBonusFeat"
+        },
+        {
+          "name": "Improved Dirty Trick",
+          "doneness": "not-started",
+          "type_facet": "RangerBonusFeat"
+        },
+        {
+          "name": "Improved Feint",
+          "doneness": "not-started",
+          "type_facet": "RangerBonusFeat"
+        },
+        {
+          "name": "Improved Sense Intruder",
+          "doneness": "not-started",
+          "type_facet": "RangerBonusFeat"
+        },
+        {
+          "name": "Improved Steal",
+          "doneness": "not-started",
+          "type_facet": "RangerBonusFeat"
+        },
+        {
+          "name": "Improved Uncanny Dodge",
+          "doneness": "unmeasurable",
+          "type_facet": "Inquisitor Class Features.TracelessOperativeClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "In Vogue",
+          "doneness": "not-started",
+          "type_facet": "Social Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Inattention Blindness",
+          "doneness": "unmeasurable",
+          "type_facet": "Investigator Class Features.CipherClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Incredible Aspirations",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SwashbucklerDeedsLVL7.Extraordinary"
+        },
+        {
+          "name": "Incredible Renown",
+          "doneness": "not-started",
+          "type_facet": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Incredible Renown",
+          "doneness": "unmeasurable",
+          "type_facet": "Social Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Inhabit Shadow",
+          "doneness": "not-started",
+          "type_facet": "Spiritualist Class Features.ShadowCallerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Injections",
+          "doneness": "unmeasurable",
+          "type_facet": "Alchemist Class Feature.AlchemicalSapperClassFeatures.SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Inquisition",
+          "doneness": "unmeasurable",
+          "type_facet": "Vigilante Class Features.ZealotClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Insidious Influence",
+          "doneness": "not-started",
+          "type_facet": "Mesmerist Class Features.VizierClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Inspiration",
+          "doneness": "unmeasurable",
+          "type_facet": "Rogue Class Features.SnoopClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Inspire Competence",
+          "doneness": "not-started",
+          "type_facet": "RingleaderClassFeatures.SpecialQuality.Supernatural.BardicPerformance.Bardic Performance"
+        },
+        {
+          "name": "Inspired Alertness",
+          "doneness": "not-started",
+          "type_facet": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Inspired Intimidator",
+          "doneness": "not-started",
+          "type_facet": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Inspired Manager",
+          "doneness": "unmeasurable",
+          "type_facet": "Investigator Class Features.MajordomoClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Inspired Plan",
+          "doneness": "not-started",
+          "type_facet": "Bard Class Features.RingleaderClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Inspired Vigilante",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Instant Recognition",
+          "doneness": "not-started",
+          "type_facet": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Instant Recognition",
+          "doneness": "not-started",
+          "type_facet": "Social Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Instant Unveil",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SwashbucklerDeedsLVL7.Extraordinary"
+        },
+        {
+          "name": "Instigator",
+          "doneness": "not-started",
+          "type_facet": "Archetype.SkaldArchetype"
+        },
+        {
+          "name": "Interfering Blade",
+          "doneness": "unmeasurable",
+          "type_facet": "Swashbuckler Class Features.GuidingBladeClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Interrogator",
+          "doneness": "not-started",
+          "type_facet": "Archetype.AlchemistArchetype"
+        },
+        {
+          "name": "Intimidate",
+          "doneness": "unmeasurable",
+          "type_facet": "RefinedEducationUnlock"
+        },
+        {
+          "name": "Intimidate",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Intimidated Push",
+          "doneness": "not-started",
+          "type_facet": "Skald Class Features.WarlordClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Intimidating Prowess",
+          "doneness": "not-started",
+          "type_facet": "RangerBonusFeat"
+        },
+        {
+          "name": "Intimidating Prowess",
+          "doneness": "not-started",
+          "type_facet": "Skald Class Features.WarlordClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Intrigue Mysteries",
+          "doneness": "not-started",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleMystery"
+        },
+        {
+          "name": "Investigator Talents",
+          "doneness": "unmeasurable",
+          "type_facet": "Rogue Class Features.SnoopClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Item Lore",
+          "doneness": "not-started",
+          "type_facet": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Judgment",
+          "doneness": "not-started",
+          "type_facet": "Inquisitor Class Features.UmbralStalkerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Judgment / Stalking",
+          "doneness": "unmeasurable",
+          "type_facet": "InquisitorClassFeatures.InquisitorJudgmentNeither.SpecialAttack"
+        },
+        {
+          "name": "Knowledge",
+          "doneness": "unmeasurable",
+          "type_facet": "RefinedEducationUnlock"
+        },
+        {
+          "name": "Knowledge (Arcana)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Knowledge (Dungeoneering)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Knowledge (Engineering)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Knowledge (Geography)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Knowledge (History)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Knowledge (Local)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Knowledge (Nature)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Knowledge (Nobility)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Knowledge (Planes)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Knowledge (Religion)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Knowledge Is Power",
+          "doneness": "not-started",
+          "type_facet": "Occultist Class Features.SecretBrokerClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Leader's Words",
+          "doneness": "unmeasurable",
+          "type_facet": "Inquisitor Class Features.TacticalLeaderClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Leave an Opening*",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Lethal Grace",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Lightning Reload",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Linguistics",
+          "doneness": "unmeasurable",
+          "type_facet": "RefinedEducationUnlock"
+        },
+        {
+          "name": "Linguistics",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Living Darkness",
+          "doneness": "unmeasurable",
+          "type_facet": "Spiritualist Class Features.ShadowCallerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Living Shadow",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Living Shield",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Loyal Aid",
+          "doneness": "not-started",
+          "type_facet": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Loyal Aid",
+          "doneness": "unmeasurable",
+          "type_facet": "Social Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Lucky Save",
+          "doneness": "unmeasurable",
+          "type_facet": "Rogue Class Features.SharperClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Lure Prey",
+          "doneness": "unmeasurable",
+          "type_facet": "Inquisitor Class Features.CloakedWolfClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Lyric Sorrow",
+          "doneness": "unmeasurable",
+          "type_facet": "Bard Class Features.SorrowsoulClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Mad Rush",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Magical Child",
+          "doneness": "not-started",
+          "type_facet": "Archetype.VigilanteArchetype"
+        },
+        {
+          "name": "Major Magic",
+          "doneness": "not-started",
+          "type_facet": "RogueClassFeatures.SpecialQuality.SpellLike.RogueTalent"
+        },
+        {
+          "name": "Majordomo",
+          "doneness": "not-started",
+          "type_facet": "Archetype.InvestigatorArchetype"
+        },
+        {
+          "name": "Maneuverable Mount",
+          "doneness": "not-started",
+          "type_facet": "Cavalier Class Features.HussarClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Many Guises",
+          "doneness": "not-started",
+          "type_facet": "Social Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Martial Dominance",
+          "doneness": "not-started",
+          "type_facet": "RangerBonusFeat"
+        },
+        {
+          "name": "Masked Performer",
+          "doneness": "not-started",
+          "type_facet": "Archetype.BardArchetype"
+        },
+        {
+          "name": "Masked Talents",
+          "doneness": "unmeasurable",
+          "type_facet": "Bard Class Features.MaskedPerformerClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Master Climber",
+          "doneness": "not-started",
+          "type_facet": "Hunter Class Features.RoofRunnerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Master Engineer",
+          "doneness": "unmeasurable",
+          "type_facet": "Alchemist Class Feature.AlchemicalSapperClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Master of All",
+          "doneness": "not-started",
+          "type_facet": "Rogue Class Features.PhantomThiefClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Master of Disguise",
+          "doneness": "not-started",
+          "type_facet": "Archetype.RogueArchetype"
+        },
+        {
+          "name": "Master of Whispers",
+          "doneness": "not-started",
+          "type_facet": "Rogue Class Features.SnoopClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Maverick",
+          "doneness": "not-started",
+          "type_facet": "Archetype.GunslingerArchetype"
+        },
+        {
+          "name": "Medical Expertise",
+          "doneness": "unmeasurable",
+          "type_facet": "Investigator Class Features.ForensicPhysicianClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Memory Modification",
+          "doneness": "not-started",
+          "type_facet": "InterrogatorSerum.AlchemistDiscovery"
+        },
+        {
+          "name": "Menacing",
+          "doneness": "not-started",
+          "type_facet": "RangerCombatStyle"
+        },
+        {
+          "name": "Mental Focus",
+          "doneness": "unmeasurable",
+          "type_facet": "Occultist Class Features.PsychometristClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Metamorph",
+          "doneness": "not-started",
+          "type_facet": "Archetype.AlchemistArchetype"
+        },
+        {
+          "name": "Midnight Shroud",
+          "doneness": "not-started",
+          "type_facet": "Spiritualist Class Features.ShadowCallerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Mighty Ambush*",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Mighty Charge",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.MountedFuryClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Minions",
+          "doneness": "not-started",
+          "type_facet": "Skald Class Features.WarlordClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Minor Magic",
+          "doneness": "not-started",
+          "type_facet": "RogueClassFeatures.SpecialQuality.SpellLike.RogueTalent"
+        },
+        {
+          "name": "Mirrored Retreat",
+          "doneness": "unmeasurable",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.IntrigueRevelation.Supernatural.PerDayOracleRevelation"
+        },
+        {
+          "name": "Misdirection Tactics",
+          "doneness": "not-started",
+          "type_facet": "RangerBonusFeat"
+        },
+        {
+          "name": "Mnemonic Genius",
+          "doneness": "not-started",
+          "type_facet": "Ranger Class Features.CodeRunnerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Mockingbird",
+          "doneness": "not-started",
+          "type_facet": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Mockingbird",
+          "doneness": "not-started",
+          "type_facet": "Social Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Mount",
+          "doneness": "unmeasurable",
+          "type_facet": "Vigilante Class Features.MountedFuryClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Mounted Fury",
+          "doneness": "not-started",
+          "type_facet": "Archetype.VigilanteArchetype"
+        },
+        {
+          "name": "Mugshot",
+          "doneness": "not-started",
+          "type_facet": "Ranger Class Features.SentinelClassFeatures.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Mugshot Quarry",
+          "doneness": "not-started",
+          "type_facet": "Ranger Class Features.SentinelClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Multiplicity of Masks",
+          "doneness": "unmeasurable",
+          "type_facet": "MaskedPerformerClassFeatures.SpecialQuality.Supernatural.BardicPerformance.Bardic Performance"
+        },
+        {
+          "name": "Mutagen",
+          "doneness": "not-started",
+          "type_facet": "Alchemist Class Feature.MetamorphClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Mystic Bolts",
+          "doneness": "unmeasurable",
+          "type_facet": "Vigilante Class Features.WarlockClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Natural Course",
+          "doneness": "unmeasurable",
+          "type_facet": "Vigilante Class Features.WildsoulClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Natural Leaper",
+          "doneness": "unmeasurable",
+          "type_facet": "Hunter Class Features.RoofRunnerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Nature's Call",
+          "doneness": "not-started",
+          "type_facet": "Summoner Class Feature.FeyCallerClassFeatures.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Nature's Lure",
+          "doneness": "not-started",
+          "type_facet": "Mesmerist Class Features.FeyTricksterClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Necromantic Focus",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Nimble",
+          "doneness": "unmeasurable",
+          "type_facet": "Vigilante Class Features.GunmasterClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Noble Fencer",
+          "doneness": "not-started",
+          "type_facet": "Archetype.SwashbucklerArchetype"
+        },
+        {
+          "name": "Nothing Can Stop Me",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Null Aura",
+          "doneness": "not-started",
+          "type_facet": "Investigator Class Features.CipherClassFeatures.SpecialQuality.SpellLike.Supernatural"
+        },
+        {
+          "name": "Object Reading",
+          "doneness": "not-started",
+          "type_facet": "Occultist Class Features.PsychometristClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Occult Lore",
+          "doneness": "not-started",
+          "type_facet": "Inquisitor Class Features.SecretSeekerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Octopus",
+          "doneness": "not-started",
+          "type_facet": "CourtlyHunterAnimalFocusAbility"
+        },
+        {
+          "name": "Ocular Occlusion",
+          "doneness": "unmeasurable",
+          "type_facet": "Mesmerist Class Features.EyebiterClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Omnivisual",
+          "doneness": "not-started",
+          "type_facet": "Mesmerist Class Features.EyebiterClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "On the Ball",
+          "doneness": "unmeasurable",
+          "type_facet": "Bard Class Features.WitClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Once and Future Scion",
+          "doneness": "not-started",
+          "type_facet": "Skald Class Features.BattleScionClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "One with the Fey",
+          "doneness": "not-started",
+          "type_facet": "Mesmerist Class Features.FeyTricksterClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Opportune Redirection and Riposte",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SwashbucklerDeedsLVL3.Extraordinary"
+        },
+        {
+          "name": "Organization",
+          "doneness": "unmeasurable",
+          "type_facet": "RangerClassFeatures.FavoredEnemyBonus"
+        },
+        {
+          "name": "Organization",
+          "doneness": "unmeasurable",
+          "type_facet": "RangerClassFeatures.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption"
+        },
+        {
+          "name": "Paladin Alternate Alignment",
+          "doneness": "not-started",
+          "type_facet": "Archetype.PaladinArchetype"
+        },
+        {
+          "name": "Paper Trail",
+          "doneness": "unmeasurable",
+          "type_facet": "Investigator Class Features.MajordomoClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Paralytic",
+          "doneness": "not-started",
+          "type_facet": "InterrogatorSerum.AlchemistDiscovery"
+        },
+        {
+          "name": "Party Crasher",
+          "doneness": "not-started",
+          "type_facet": "Ranger Class Features.DandyClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Passing Trick",
+          "doneness": "not-started",
+          "type_facet": "RangerBonusFeat"
+        },
+        {
+          "name": "Perception",
+          "doneness": "unmeasurable",
+          "type_facet": "RefinedEducationUnlock"
+        },
+        {
+          "name": "Perception",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Perfect Fall",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Perfect Vulnerability",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Perform",
+          "doneness": "unmeasurable",
+          "type_facet": "RefinedEducationUnlock"
+        },
+        {
+          "name": "Perform (Act)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Perform (Comedy)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Perform (Dance)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Perform (Keyboard Instruments)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Perform (Oratory)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Perform (Percussion Instruments)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Perform (Sing)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Perform (String Instruments)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Perform (Wind Instruments)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Phantom Thief",
+          "doneness": "not-started",
+          "type_facet": "Archetype.RogueArchetype"
+        },
+        {
+          "name": "Phantom Thief",
+          "doneness": "not-started",
+          "type_facet": "Archetype.RogueArchetype"
+        },
+        {
+          "name": "Piercing Bolts",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.WarlockClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Plot Course",
+          "doneness": "not-started",
+          "type_facet": "Ranger Class Features.TransporterClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Poetic Vengeance",
+          "doneness": "unmeasurable",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.IntrigueRevelation.Supernatural.PerDayOracleRevelation"
+        },
+        {
+          "name": "Power Behind the Throne",
+          "doneness": "unmeasurable",
+          "type_facet": "Mesmerist Class Features.VizierClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Prepared",
+          "doneness": "unmeasurable",
+          "type_facet": "Bard Class Features.RingleaderClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Profession",
+          "doneness": "unmeasurable",
+          "type_facet": "RefinedEducationUnlock"
+        },
+        {
+          "name": "Profession (Architect)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Profession (Baker)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Profession (Barrister)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Profession (Brewer)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Profession (Butcher)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Profession (Clerk)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Profession (Cook)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Profession (Courtesan)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Profession (Driver)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Profession (Engineer)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Profession (Farmer)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Profession (Fisherman)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Profession (Gambler)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Profession (Gardener)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Profession (Herbalist)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Profession (Innkeeper)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Profession (Librarian)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Profession (Merchant)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Profession (Midwife)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Profession (Miller)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Profession (Miner)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Profession (Porter)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Profession (Sailor)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Profession (Scribe)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Profession (Shepherd)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Profession (Soldier)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Profession (Soothsayer)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Profession (Stable Master)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Profession (Tanner)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Profession (Trapper)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Profession (Woodcutter)",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Protect the Faithful",
+          "doneness": "unmeasurable",
+          "type_facet": "Inquisitor Class Features.UmbralStalkerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Psychedelic Perception",
+          "doneness": "unmeasurable",
+          "type_facet": "Investigator Class Features.HallucinistClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Psychometric Strike",
+          "doneness": "not-started",
+          "type_facet": "Occultist Class Features.PsychometristClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Psychometrist",
+          "doneness": "not-started",
+          "type_facet": "Archetype.VigilanteArchetype"
+        },
+        {
+          "name": "Pull Rank",
+          "doneness": "not-started",
+          "type_facet": "Rogue Class Features.GuildAgentClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Pull into the Shadows",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Purge Secret",
+          "doneness": "not-started",
+          "type_facet": "Occultist Class Features.SecretBrokerClassFeatures.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Quick Change",
+          "doneness": "not-started",
+          "type_facet": "Social Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Quick Clear",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Quick Dirty Trick",
+          "doneness": "not-started",
+          "type_facet": "RangerBonusFeat"
+        },
+        {
+          "name": "Quick Draw",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SwashbucklerDeedsLVL1.Extraordinary"
+        },
+        {
+          "name": "Quick Steal",
+          "doneness": "not-started",
+          "type_facet": "RangerBonusFeat"
+        },
+        {
+          "name": "Quick Witted",
+          "doneness": "unmeasurable",
+          "type_facet": "Bard Class Features.WitClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Quivering Palm",
+          "doneness": "not-started",
+          "type_facet": "Forbidden Ki Power"
+        },
+        {
+          "name": "Raccoon",
+          "doneness": "not-started",
+          "type_facet": "CourtlyHunterAnimalFocusAbility"
+        },
+        {
+          "name": "Ranged Feint",
+          "doneness": "not-started",
+          "type_facet": "RangerBonusFeat"
+        },
+        {
+          "name": "Read the City",
+          "doneness": "not-started",
+          "type_facet": "Ranger Class Features.GuildbreakerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Refined Education",
+          "doneness": "not-started",
+          "type_facet": "Rogue Class Features.PhantomThiefClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Refined Education",
+          "doneness": "unmeasurable",
+          "type_facet": "Rogue Class Features.PhantomThiefClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Refined Focus",
+          "doneness": "not-started",
+          "type_facet": "Hunter Class Features.CourtlyHunterClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Renown",
+          "doneness": "not-started",
+          "type_facet": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Renown",
+          "doneness": "unmeasurable",
+          "type_facet": "Social Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Resist Interrogation",
+          "doneness": "unmeasurable",
+          "type_facet": "Ranger Class Features.CodeRunnerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Returning Weapon",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Revolutionary Heart",
+          "doneness": "not-started",
+          "type_facet": "Skald Class Features.InstigatorClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Ride",
+          "doneness": "unmeasurable",
+          "type_facet": "RefinedEducationUnlock"
+        },
+        {
+          "name": "Ride",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Ringleader",
+          "doneness": "not-started",
+          "type_facet": "Archetype.BardArchetype"
+        },
+        {
+          "name": "Rogue Talent",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Roof Runner",
+          "doneness": "not-started",
+          "type_facet": "Archetype.HunterArchetype"
+        },
+        {
+          "name": "Rooftop Infiltrator",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Rum Dubber",
+          "doneness": "not-started",
+          "type_facet": "Rogue Class Features.HeisterClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Rumor Empathy",
+          "doneness": "not-started",
+          "type_facet": "Ranger Class Features.DandyClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Safe House",
+          "doneness": "not-started",
+          "type_facet": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Safe House",
+          "doneness": "unmeasurable",
+          "type_facet": "Social Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Sage Counselor",
+          "doneness": "not-started",
+          "type_facet": "Archetype.MonkArchetype"
+        },
+        {
+          "name": "Sage Counselor",
+          "doneness": "unmeasurable",
+          "type_facet": "Archetype.Unchained Monk Archetype"
+        },
+        {
+          "name": "Scale Surroundings",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Scam Artist",
+          "doneness": "unmeasurable",
+          "type_facet": "Rogue Class Features.SharperClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Seamless Guise",
+          "doneness": "not-started",
+          "type_facet": "MaskedPerformerClassFeatures.SpecialQuality.Extraordinary.BardicPerformance.Bardic Performance"
+        },
+        {
+          "name": "Seamless Guise",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Feature.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Secret Broker",
+          "doneness": "not-started",
+          "type_facet": "Archetype.OccultistArchetype"
+        },
+        {
+          "name": "Secret Seeker",
+          "doneness": "not-started",
+          "type_facet": "Archetype.InquisitorArchetype"
+        },
+        {
+          "name": "Secrets Inquisition",
+          "doneness": "unmeasurable",
+          "type_facet": "InquisitorDomain.Inquisition"
+        },
+        {
+          "name": "See in Darkness",
+          "doneness": "not-started",
+          "type_facet": "Spiritualist Class Features.ShadowCallerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Seek Mind",
+          "doneness": "not-started",
+          "type_facet": "Inquisitor Class Features.SecretSeekerClassFeatures.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Selective Detonation",
+          "doneness": "unmeasurable",
+          "type_facet": "Alchemist Class Feature.AlchemicalSapperClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Sense Intruder",
+          "doneness": "not-started",
+          "type_facet": "Ranger Class Features.SentinelClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Sense Motive",
+          "doneness": "unmeasurable",
+          "type_facet": "RefinedEducationUnlock"
+        },
+        {
+          "name": "Sense Motive",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Sentinel",
+          "doneness": "not-started",
+          "type_facet": "Archetype.RangerArchetype"
+        },
+        {
+          "name": "Serums",
+          "doneness": "unmeasurable",
+          "type_facet": "Alchemist Class Feature.AlchemicalSapperClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Settlement Aspect",
+          "doneness": "not-started",
+          "type_facet": "Spiritualist Class Features.ZeitgeistBinderClassFeatures.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Settlement Avatar",
+          "doneness": "not-started",
+          "type_facet": "Spiritualist Class Features.ZeitgeistBinderClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Shade",
+          "doneness": "not-started",
+          "type_facet": "Spiritualist Class Features.ShadowCallerClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Shades of Gray",
+          "doneness": "not-started",
+          "type_facet": "RogueClassFeatures.SpecialQuality.Extraordinary.RogueTalent.Unchained Rogue Talent"
+        },
+        {
+          "name": "Shadow Bound",
+          "doneness": "not-started",
+          "type_facet": "Spiritualist Class Features.ShadowCallerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Shadow Caller",
+          "doneness": "not-started",
+          "type_facet": "Archetype.SpiritualistArchetype"
+        },
+        {
+          "name": "Shadow Caster",
+          "doneness": "not-started",
+          "type_facet": "Spiritualist Class Features.ShadowCallerClassFeatures.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Shadow Jump",
+          "doneness": "not-started",
+          "type_facet": "Spiritualist Class Features.ShadowCallerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Shadow Jump",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Shadow's Sight",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Shadow's Speed",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Shadowcaster",
+          "doneness": "not-started",
+          "type_facet": "Spiritualist Class Features.ShadowCallerClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Shadowy Appearance",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.CabalistClassFeatures.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Shapechanger",
+          "doneness": "not-started",
+          "type_facet": "Alchemist Class Feature.MetamorphClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Share Memory",
+          "doneness": "unmeasurable",
+          "type_facet": "Occultist Class Features.SecretBrokerClassFeatures.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Shared Challenge",
+          "doneness": "not-started",
+          "type_facet": "Cavalier Class Features.DaringGeneralClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Shared Hallucinations",
+          "doneness": "unmeasurable",
+          "type_facet": "Investigator Class Features.HallucinistClassFeatures.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Shared Judgments",
+          "doneness": "not-started",
+          "type_facet": "Inquisitor Class Features.UmbralStalkerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Sharper",
+          "doneness": "not-started",
+          "type_facet": "Archetype.RogueArchetype"
+        },
+        {
+          "name": "Shatter Defenses",
+          "doneness": "not-started",
+          "type_facet": "RangerBonusFeat"
+        },
+        {
+          "name": "Shield of Blades",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Shield of Fury",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Shifting Form",
+          "doneness": "not-started",
+          "type_facet": "Unchained Ki Power.Forbidden Ki Power.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Shingle Stride",
+          "doneness": "not-started",
+          "type_facet": "Hunter Class Features.RoofRunnerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Shoot Webs",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Signature Weapon",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Silent Dispatch",
+          "doneness": "not-started",
+          "type_facet": "Slayer Class Features.VelvetBladeClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Silent Dispatch",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Simultaneous Study",
+          "doneness": "not-started",
+          "type_facet": "Investigator Class Features.HallucinistClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Sizing Equipment",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Skald of Twists and Turns",
+          "doneness": "unmeasurable",
+          "type_facet": "Skald Class Features.BoldSchemerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Skill Bond",
+          "doneness": "not-started",
+          "type_facet": "Hunter Class Features.CourtlyHunterClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Skill Focus",
+          "doneness": "not-started",
+          "type_facet": "RogueClassFeatures.SpecialQuality.Extraordinary.RogueTalent"
+        },
+        {
+          "name": "Skillful Rider",
+          "doneness": "unmeasurable",
+          "type_facet": "Cavalier Class Features.HussarClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Skills",
+          "doneness": "unmeasurable",
+          "type_facet": "Skald Class Features.BoldSchemerClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Skinshaper",
+          "doneness": "not-started",
+          "type_facet": "Archetype.DruidArchetype"
+        },
+        {
+          "name": "Skinshaping",
+          "doneness": "unmeasurable",
+          "type_facet": "Druid Class Features.SkinshaperClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Sleight Of Hand",
+          "doneness": "unmeasurable",
+          "type_facet": "RefinedEducationUnlock"
+        },
+        {
+          "name": "Sleight of Hand",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Slow Fall",
+          "doneness": "not-started",
+          "type_facet": "Forbidden Ki Power"
+        },
+        {
+          "name": "Smite Foe",
+          "doneness": "not-started",
+          "type_facet": "Paladin Class Features.GrayPaladinClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Smuggler's Bond",
+          "doneness": "not-started",
+          "type_facet": "Ranger Class Features.TransporterClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Sneak Attack",
+          "doneness": "unmeasurable",
+          "type_facet": "Mesmerist Class Features.EnigmaClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Sniper",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Snoop",
+          "doneness": "not-started",
+          "type_facet": "Archetype.RogueArchetype"
+        },
+        {
+          "name": "Social Grace",
+          "doneness": "unmeasurable",
+          "type_facet": "Bard Class Features.MaskedPerformerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Social Grace",
+          "doneness": "unmeasurable",
+          "type_facet": "Social Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Social Panache",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.SwashbucklerDeedsLVL1.Extraordinary"
+        },
+        {
+          "name": "Social Presence",
+          "doneness": "unmeasurable",
+          "type_facet": "Cavalier Class Features.CourtlyKnightClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Social Sense",
+          "doneness": "not-started",
+          "type_facet": "Rogue Class Features.PhantomThiefClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Social Simulacrum",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Social Talent",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Feature.SpecialQuality"
+        },
+        {
+          "name": "Soft Landing",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Solipsism",
+          "doneness": "not-started",
+          "type_facet": "Mesmerist Class Features.EnigmaClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Song of Questing",
+          "doneness": "not-started",
+          "type_facet": "Skald Class Features.BattleScionClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Song of Rabble-Rousing",
+          "doneness": "not-started",
+          "type_facet": "Skald Class Features.InstigatorClassFeatures.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Song of Riot",
+          "doneness": "not-started",
+          "type_facet": "Skald Class Features.InstigatorClassFeatures.SpecialQuality.Supernatural.SpellLike"
+        },
+        {
+          "name": "Song of Subterfuge",
+          "doneness": "unmeasurable",
+          "type_facet": "ImperviousMessengerClassFeatures.SpecialQuality.Supernatural.BardicPerformance.Bardic Performance"
+        },
+        {
+          "name": "Songbird",
+          "doneness": "not-started",
+          "type_facet": "CourtlyHunterAnimalFocusAbility"
+        },
+        {
+          "name": "Sorrowsoul",
+          "doneness": "not-started",
+          "type_facet": "Archetype.BardArchetype"
+        },
+        {
+          "name": "Soul Veil",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SwashbucklerDeedsLVL15.SpellLike"
+        },
+        {
+          "name": "Spellblight",
+          "doneness": "not-started",
+          "type_facet": "Mesmerist Class Features.EyebiterClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Spellbook",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.CabalistClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Spellbook",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.WarlockClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Spellcasting",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.CabalistClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Spellcasting",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.MagicalChildClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Spellcasting",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.WarlockClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Spellcasting",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.ZealotClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Spellcraft",
+          "doneness": "unmeasurable",
+          "type_facet": "RefinedEducationUnlock"
+        },
+        {
+          "name": "Spellcraft",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Spells",
+          "doneness": "not-started",
+          "type_facet": "Mesmerist Class Features.VoxClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Spill Blood",
+          "doneness": "unmeasurable",
+          "type_facet": "Vigilante Class Features.CabalistClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Spurn Harm",
+          "doneness": "unmeasurable",
+          "type_facet": "Bard Class Features.SorrowsoulClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Spy Ring",
+          "doneness": "unmeasurable",
+          "type_facet": "RangerClassFeatures.FavoredEnemyBonus"
+        },
+        {
+          "name": "Spy Ring",
+          "doneness": "unmeasurable",
+          "type_facet": "RangerClassFeatures.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption"
+        },
+        {
+          "name": "Squire",
+          "doneness": "not-started",
+          "type_facet": "Cavalier Class Features.DaringGeneralClassFeatures.SpecialQuality.DaringGeneralCohort"
+        },
+        {
+          "name": "Stacked Deck",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.DeedsLVL1.DeedHasCost.Extraordinary"
+        },
+        {
+          "name": "Stage Combat",
+          "doneness": "not-started",
+          "type_facet": "MaskedPerformerClassFeatures.SpecialQuality.Supernatural.BardicPerformance.Bardic Performance"
+        },
+        {
+          "name": "Stalker",
+          "doneness": "not-started",
+          "type_facet": "VigilanteSpecialization.SpecialQuality"
+        },
+        {
+          "name": "Stalker Sense",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Stalker Talent",
+          "doneness": "not-started",
+          "type_facet": "RogueClassFeatures.SpecialQuality.RogueAdvancedTalent.Unchained Rogue Advanced Talent"
+        },
+        {
+          "name": "Stalwart",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Standard Bearer",
+          "doneness": "not-started",
+          "type_facet": "Cavalier Class Features.DaringGeneralClassFeatures.SpecialQuality.DaringGeneralCohort"
+        },
+        {
+          "name": "Staring Eye",
+          "doneness": "not-started",
+          "type_facet": "Mesmerist Class Features.EyebiterClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Startling Appearance",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Feature.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Staunch Ally",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.MagicalChildClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Steal Secret",
+          "doneness": "not-started",
+          "type_facet": "Occultist Class Features.SecretBrokerClassFeatures.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Stealth",
+          "doneness": "unmeasurable",
+          "type_facet": "RefinedEducationUnlock"
+        },
+        {
+          "name": "Stealth",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Stern Gaze",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Sticky Fingers",
+          "doneness": "not-started",
+          "type_facet": "Rogue Class Features.SharperClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Strike the Unseen",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Studied Socialite",
+          "doneness": "not-started",
+          "type_facet": "Slayer Class Features.VelvetBladeClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Stunning Appearance",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Feature.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Subjective Truth",
+          "doneness": "not-started",
+          "type_facet": "Social Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Subsonic Strike",
+          "doneness": "unmeasurable",
+          "type_facet": "Mesmerist Class Features.VoxClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Subtle Companion",
+          "doneness": "not-started",
+          "type_facet": "Hunter Class Features.CourtlyHunterClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Sucker-Punch",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Sudden Swerve",
+          "doneness": "not-started",
+          "type_facet": "Cavalier Class Features.HussarClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Supreme Tactician",
+          "doneness": "not-started",
+          "type_facet": "Cavalier Class Features.DaringGeneralClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Sure-Footed",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Surprise Strike",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Survival",
+          "doneness": "unmeasurable",
+          "type_facet": "RefinedEducationUnlock"
+        },
+        {
+          "name": "Survival",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Swift and Silent",
+          "doneness": "unmeasurable",
+          "type_facet": "Inquisitor Class Features.UmbralStalkerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Swim",
+          "doneness": "unmeasurable",
+          "type_facet": "RefinedEducationUnlock"
+        },
+        {
+          "name": "Swim",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Sworn Enemy",
+          "doneness": "not-started",
+          "type_facet": "Inquisitor Class Features.FaithHunterClassFeatures.SpecialQuality.SpellLike.Supernatural"
+        },
+        {
+          "name": "Sworn Enemy (Chaotic Evil)",
+          "doneness": "not-started",
+          "type_facet": "FaithHunterSwornEnemy"
+        },
+        {
+          "name": "Sworn Enemy (Chaotic Good)",
+          "doneness": "not-started",
+          "type_facet": "FaithHunterSwornEnemy"
+        },
+        {
+          "name": "Sworn Enemy (Chaotic Neutral)",
+          "doneness": "not-started",
+          "type_facet": "FaithHunterSwornEnemy"
+        },
+        {
+          "name": "Sworn Enemy (Lawful Evil)",
+          "doneness": "not-started",
+          "type_facet": "FaithHunterSwornEnemy"
+        },
+        {
+          "name": "Sworn Enemy (Lawful Good)",
+          "doneness": "not-started",
+          "type_facet": "FaithHunterSwornEnemy"
+        },
+        {
+          "name": "Sworn Enemy (Lawful Neutral)",
+          "doneness": "not-started",
+          "type_facet": "FaithHunterSwornEnemy"
+        },
+        {
+          "name": "Sworn Enemy (Neutral Evil)",
+          "doneness": "not-started",
+          "type_facet": "FaithHunterSwornEnemy"
+        },
+        {
+          "name": "Sworn Enemy (Neutral Good)",
+          "doneness": "not-started",
+          "type_facet": "FaithHunterSwornEnemy"
+        },
+        {
+          "name": "Tactical Leader",
+          "doneness": "not-started",
+          "type_facet": "Archetype.InquisitorArchetype"
+        },
+        {
+          "name": "Tactician",
+          "doneness": "unmeasurable",
+          "type_facet": "Inquisitor Class Features.TacticalLeaderClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Take to the Air",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Tattoo Chamber",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Teamwork Feat",
+          "doneness": "unmeasurable",
+          "type_facet": "Skald Class Feature.Rage Power.RagePower.SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Teamwork Feats",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Tear Them Apart",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.BruteClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Tenuous Threat",
+          "doneness": "unmeasurable",
+          "type_facet": "Investigator Class Features.CipherClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Thick Hide",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Thief's Soul",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Thieves' Guild",
+          "doneness": "unmeasurable",
+          "type_facet": "RangerClassFeatures.FavoredEnemyBonus"
+        },
+        {
+          "name": "Thieves' Guild",
+          "doneness": "unmeasurable",
+          "type_facet": "RangerClassFeatures.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption"
+        },
+        {
+          "name": "Thorough Change",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.MountedFuryClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Thought Eater",
+          "doneness": "not-started",
+          "type_facet": "Archetype.MesmeristArchetype"
+        },
+        {
+          "name": "Throat Jab*",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Tongue of the Sun and Moon",
+          "doneness": "not-started",
+          "type_facet": "Forbidden Ki Power"
+        },
+        {
+          "name": "Tongue of the Sun and Moon",
+          "doneness": "not-started",
+          "type_facet": "Unchained Ki Power"
+        },
+        {
+          "name": "Total Destruction",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Touchsight, Spying",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Wild Talent.Utility Wild Talent"
+        },
+        {
+          "name": "Toxic Secretions",
+          "doneness": "unmeasurable",
+          "type_facet": "Druid Class Features.UrushiolClassFeatures.SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Traceless Operative",
+          "doneness": "not-started",
+          "type_facet": "Archetype.InquisitorArchetype"
+        },
+        {
+          "name": "Tracer Touch",
+          "doneness": "not-started",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.IntrigueRevelation.SpellLike.PerDayOracleRevelation.RevelationTargetOneOnly"
+        },
+        {
+          "name": "Trackless",
+          "doneness": "not-started",
+          "type_facet": "Inquisitor Class Features.TracelessOperativeClassFeatures.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Trade Guild",
+          "doneness": "unmeasurable",
+          "type_facet": "RangerClassFeatures.FavoredEnemyBonus"
+        },
+        {
+          "name": "Trade Guild",
+          "doneness": "unmeasurable",
+          "type_facet": "RangerClassFeatures.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption"
+        },
+        {
+          "name": "Trailbreaker",
+          "doneness": "unmeasurable",
+          "type_facet": "Ranger Class Features.TransporterClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Transfer Affliction",
+          "doneness": "unmeasurable",
+          "type_facet": "Mesmerist Class Features.EnigmaClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Transformation Sequence",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.MagicalChildClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Transporter",
+          "doneness": "not-started",
+          "type_facet": "Archetype.RangerArchetype"
+        },
+        {
+          "name": "Treacherous Blade",
+          "doneness": "unmeasurable",
+          "type_facet": "Slayer Class Features.VelvetBladeClassFeatures.SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Trip Mine",
+          "doneness": "unmeasurable",
+          "type_facet": "Alchemist Class Feature.AlchemicalSapperClassFeatures.SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Triumphant Return",
+          "doneness": "not-started",
+          "type_facet": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Triumphant Return",
+          "doneness": "not-started",
+          "type_facet": "Social Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "True Vengeance",
+          "doneness": "not-started",
+          "type_facet": "Inquisitor Class Features.UmbralStalkerClassFeatures.SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Truth",
+          "doneness": "unmeasurable",
+          "type_facet": "InterrogatorSerum.AlchemistDiscovery"
+        },
+        {
+          "name": "Twisting Fear",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Two-Weapon Feint",
+          "doneness": "not-started",
+          "type_facet": "RangerBonusFeat"
+        },
+        {
+          "name": "Tyrant",
+          "doneness": "not-started",
+          "type_facet": "Archetype.AntipaladinArchetype"
+        },
+        {
+          "name": "Tyrant's Code",
+          "doneness": "not-started",
+          "type_facet": "Antipaladin Class Features.TyrantClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Umbral Aura",
+          "doneness": "not-started",
+          "type_facet": "Spiritualist Class Features.ShadowCallerClassFeatures.SpecialQuality.Supernatural.SpellLike"
+        },
+        {
+          "name": "Umbral Shroud",
+          "doneness": "not-started",
+          "type_facet": "Spiritualist Class Features.ShadowCallerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Umbral Stalker",
+          "doneness": "not-started",
+          "type_facet": "Archetype.InquisitorArchetype"
+        },
+        {
+          "name": "Unassuming",
+          "doneness": "not-started",
+          "type_facet": "Investigator Class Features.CipherClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Unbroken Stride",
+          "doneness": "unmeasurable",
+          "type_facet": "ImperviousMessengerClassFeatures.SpecialQuality.Supernatural.BardicPerformance.Bardic Performance"
+        },
+        {
+          "name": "Uncanny Alertness",
+          "doneness": "not-started",
+          "type_facet": "Ranger Class Features.SentinelClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Uncanny Dodge",
+          "doneness": "unmeasurable",
+          "type_facet": "Inquisitor Class Features.TracelessOperativeClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Uncanny Snoop",
+          "doneness": "unmeasurable",
+          "type_facet": "Rogue Class Features.SnoopClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Underhanded",
+          "doneness": "unmeasurable",
+          "type_facet": "Investigator Class Features.ConspiratorClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Underhanded",
+          "doneness": "not-started",
+          "type_facet": "RangerCombatStyle"
+        },
+        {
+          "name": "Underworld Inspiration",
+          "doneness": "not-started",
+          "type_facet": "RogueClassFeatures.RogueTalent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Unexpected Strike",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Unkillable",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Unleashed Fury",
+          "doneness": "unmeasurable",
+          "type_facet": "Inquisitor Class Features.CloakedWolfClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Unseen",
+          "doneness": "not-started",
+          "type_facet": "Rogue Class Features.HeisterClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Unshakable",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Feature.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Unshakable",
+          "doneness": "not-started",
+          "type_facet": "Skald Class Features.WarlordClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Unshakable Presence",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SwashbucklerDeedsLVL11.Extraordinary"
+        },
+        {
+          "name": "Up Close and Personal",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Ursine",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.WildsoulNaturalCourse"
+        },
+        {
+          "name": "Urushiol",
+          "doneness": "not-started",
+          "type_facet": "Archetype.DruidArchetype"
+        },
+        {
+          "name": "Use Magic Device",
+          "doneness": "unmeasurable",
+          "type_facet": "RefinedEducationUnlock"
+        },
+        {
+          "name": "Use Magic Device",
+          "doneness": "unmeasurable",
+          "type_facet": "Refined Education Selection"
+        },
+        {
+          "name": "Veiled Blade",
+          "doneness": "not-started",
+          "type_facet": "Archetype.SwashbucklerArchetype"
+        },
+        {
+          "name": "Veiled Steps",
+          "doneness": "unmeasurable",
+          "type_facet": "Mesmerist Class Features.EnigmaClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Veiled Venom",
+          "doneness": "not-started",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.IntrigueRevelation.SpellLike"
+        },
+        {
+          "name": "Velvet Blade",
+          "doneness": "not-started",
+          "type_facet": "Archetype.SlayerArchetype"
+        },
+        {
+          "name": "Vengeance Strike",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.MountedFuryClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Vengeance Strike",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Feature.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Venom Immunity",
+          "doneness": "not-started",
+          "type_facet": "Druid Class Features.UrushiolClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Vigilant Defender",
+          "doneness": "not-started",
+          "type_facet": "Archetype.InquisitorArchetype"
+        },
+        {
+          "name": "Vigilante",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Vigilante Specialization",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Feature.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Vigilante Talent",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Feature.SpecialQuality"
+        },
+        {
+          "name": "Vital Punishment",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Vizier",
+          "doneness": "not-started",
+          "type_facet": "Archetype.MesmeristArchetype"
+        },
+        {
+          "name": "Voice of the Wind, Greater",
+          "doneness": "unmeasurable",
+          "type_facet": "SpecialQuality.Wild Talent.Utility Wild Talent"
+        },
+        {
+          "name": "Vox",
+          "doneness": "not-started",
+          "type_facet": "Archetype.MesmeristArchetype"
+        },
+        {
+          "name": "Warlock",
+          "doneness": "not-started",
+          "type_facet": "Archetype.VigilanteArchetype"
+        },
+        {
+          "name": "Warlord",
+          "doneness": "not-started",
+          "type_facet": "Archetype.SkaldArchetype"
+        },
+        {
+          "name": "Watcher Sense",
+          "doneness": "unmeasurable",
+          "type_facet": "Investigator Class Features.ConspiratorClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Watersense, Greater",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Wild Talent.Utility Wild Talent"
+        },
+        {
+          "name": "Way with Words",
+          "doneness": "unmeasurable",
+          "type_facet": "Bard Class Features.WitClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Weakened Grace",
+          "doneness": "not-started",
+          "type_facet": "Paladin Class Features.GrayPaladinClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Weakening Touch",
+          "doneness": "not-started",
+          "type_facet": "Spiritualist Class Features.ShadowCallerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Weapon Proficiencies",
+          "doneness": "unmeasurable",
+          "type_facet": "Vigilante Class Features.ZealotClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Weapon and Armor Proficiencies",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.CabalistClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Weapon and Armor Proficiencies",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.GunmasterClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Weapon and Armor Proficiencies",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.MagicalChildClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Weapon and Armor Proficiencies",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Feature.SpecialQuality"
+        },
+        {
+          "name": "Weapon and Armor Proficiency",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Class Features.BruteClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Web Master",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Web Specialist",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Whispered Glimpses",
+          "doneness": "unmeasurable",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.IntrigueRevelation.Supernatural"
+        },
+        {
+          "name": "Wholeness of Body",
+          "doneness": "not-started",
+          "type_facet": "Forbidden Ki Power"
+        },
+        {
+          "name": "Wild Mischief",
+          "doneness": "not-started",
+          "type_facet": "Druid Class Features.FeyspeakerClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Wildsoul",
+          "doneness": "not-started",
+          "type_facet": "Archetype.VigilanteArchetype"
+        },
+        {
+          "name": "Wit",
+          "doneness": "not-started",
+          "type_facet": "Archetype.BardArchetype"
+        },
+        {
+          "name": "Wounding Words",
+          "doneness": "unmeasurable",
+          "type_facet": "Mesmerist Class Features.VoxClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Zealot",
+          "doneness": "not-started",
+          "type_facet": "Archetype.VigilanteArchetype"
+        },
+        {
+          "name": "Zealot Smite",
+          "doneness": "not-started",
+          "type_facet": "Vigilante Talent.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Zeitgeist",
+          "doneness": "not-started",
+          "type_facet": "Spiritualist Class Features.ZeitgeistBinderClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Zeitgeist Binder",
+          "doneness": "not-started",
+          "type_facet": "Archetype.SpiritualistArchetype"
+        }
+      ]
+    },
+    {
+      "kind": "class",
+      "label": "Classes",
+      "done": 0,
+      "denominator": 3,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "VCabalist",
+          "doneness": "not-started",
+          "type_facet": "Support"
+        },
+        {
+          "name": "VWarlock",
+          "doneness": "not-started",
+          "type_facet": "Support"
+        },
+        {
+          "name": "Vigilante",
+          "doneness": "not-started",
+          "type_facet": "Base.PC"
+        }
+      ]
+    },
+    {
+      "kind": "equipment",
+      "label": "Equipment",
+      "done": 89,
+      "denominator": 91,
+      "pct": 97.8,
+      "items": [
+        {
+          "name": "Accent Pill",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Consumable.LeastMinor"
+        },
+        {
+          "name": "Accuracy Lozenge",
+          "doneness": "done",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Age Ointment",
+          "doneness": "done",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Alchemical Dye Kit",
+          "doneness": "done",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Best Friend Pendant",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Amulet.GreaterMinor"
+        },
+        {
+          "name": "Best Friend Pendant (Greater)",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Amulet.LesserMedium"
+        },
+        {
+          "name": "Black Marketeer's Bag",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.GreaterMinor"
+        },
+        {
+          "name": "Boar's Bellow",
+          "doneness": "done",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Brilliant Plan Encumberance",
+          "doneness": "done",
+          "type_facet": "Goods.Tools.General"
+        },
+        {
+          "name": "Candle of Comity",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Consumable.LesserMinor"
+        },
+        {
+          "name": "Candle of Drowsiness",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Consumable.LesserMinor"
+        },
+        {
+          "name": "Coat of Pockets",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Shirt.LesserMinor"
+        },
+        {
+          "name": "Coat of the Undercity",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Shirt.GreaterMinor"
+        },
+        {
+          "name": "Coat of the Undercity (Greater)",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Shirt.LesserMajor"
+        },
+        {
+          "name": "Code Rod",
+          "doneness": "done",
+          "type_facet": "Goods.Tools"
+        },
+        {
+          "name": "Codex of Conversations",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.LesserMedium"
+        },
+        {
+          "name": "Communique Ring",
+          "doneness": "done",
+          "type_facet": "Magic.Ring.GreaterMinor"
+        },
+        {
+          "name": "Concealment Coin",
+          "doneness": "done",
+          "type_facet": "Goods.General"
+        },
+        {
+          "name": "Costume Bureau",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.GreaterMinor"
+        },
+        {
+          "name": "Courier's Secure Pouch",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.LesserMinor"
+        },
+        {
+          "name": "Courtesan's Ire",
+          "doneness": "done",
+          "type_facet": "Weapon.Magic.Resizable.Specific.EasternWeapon.Eastern.Melee.Light.Finesseable.Exotic.Piercing.Monk.LesserMedium"
+        },
+        {
+          "name": "Dart of Recovery",
+          "doneness": "done",
+          "type_facet": "Ammunition.Magic.Resizable.Specific.Dart.Individual.LesserMinor"
+        },
+        {
+          "name": "Darts, Featherweight (10)",
+          "doneness": "done",
+          "type_facet": "Ammunition.Resizable.Standard.Dart"
+        },
+        {
+          "name": "Deadened Shadows Cloak",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Cloak.GreaterMajor"
+        },
+        {
+          "name": "Deck of Doors",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.LesserMedium"
+        },
+        {
+          "name": "Diviner's Blight",
+          "doneness": "done",
+          "type_facet": "Armor.Magic.ArmorProfLight.Light.Suit.Specific.Nonmetal.GreaterMajor"
+        },
+        {
+          "name": "Efreeti Cord",
+          "doneness": "done",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Efreeti Switch",
+          "doneness": "done",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Esquire Attache Case",
+          "doneness": "done",
+          "type_facet": "Goods.General"
+        },
+        {
+          "name": "Falsehood Fizz",
+          "doneness": "done",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Fan of Flirting",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.LesserMinor"
+        },
+        {
+          "name": "Fellowship Film",
+          "doneness": "done",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Flash Seeds",
+          "doneness": "done",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Ghost Needle",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Consumable.LesserMinor"
+        },
+        {
+          "name": "Glass of Veils",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.GreaterMajor"
+        },
+        {
+          "name": "Glittering Trinket (Belt Buckle)",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Belt.LeastMinor"
+        },
+        {
+          "name": "Glittering Trinket (Bracelet)",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Bracer.LeastMinor"
+        },
+        {
+          "name": "Glittering Trinket (Necklace)",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Amulet.LeastMinor"
+        },
+        {
+          "name": "Glittering Trinket (Ring)",
+          "doneness": "done",
+          "type_facet": "Magic.Ring.LeastMinor"
+        },
+        {
+          "name": "Gloves of Unexpected Violence",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Glove.LesserMedium"
+        },
+        {
+          "name": "Gloves of Unexpected Violence (Expert)",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Glove.LesserMajor"
+        },
+        {
+          "name": "Hollow Book",
+          "doneness": "done",
+          "type_facet": "Goods.General"
+        },
+        {
+          "name": "Ink of Mimicry",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Consumable.LesserMinor"
+        },
+        {
+          "name": "Intuition Serum",
+          "doneness": "done",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Launcher of Distraction",
+          "doneness": "done",
+          "type_facet": "Weapon.Magic.Resizable.Exotic.Ranged.Specific.Piercing.Container.Projectile.Crossbow.LesserMedium"
+        },
+        {
+          "name": "Lockpick Shield",
+          "doneness": "done",
+          "type_facet": "Shield.Magic.Specific.LesserMedium.Light"
+        },
+        {
+          "name": "Magnificent Map",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.GreaterMinor"
+        },
+        {
+          "name": "Mask of Stolen Mien",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Headgear.LesserMedium"
+        },
+        {
+          "name": "Memory Box",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.LesserMajor"
+        },
+        {
+          "name": "Mind's Eye Blade",
+          "doneness": "done",
+          "type_facet": "Weapon.Magic.Resizable.Melee.Light.Finesseable.Ranged.Thrown.Simple.Specific.Piercing.Slashing.Dagger.BladeLight.GreaterMajor"
+        },
+        {
+          "name": "Monocle of Flawlessness",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Eyegear.LesserMedium"
+        },
+        {
+          "name": "Murderer's Silence",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Consumable.LeastMinor"
+        },
+        {
+          "name": "Mystic Bolts",
+          "doneness": "held",
+          "type_facet": "Weapon.Resizable.Melee.Light.Ranged.Thrown.OneHanded"
+        },
+        {
+          "name": "Night Stalker's Tonic",
+          "doneness": "done",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Parley Ward",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.GreaterMajor"
+        },
+        {
+          "name": "Perfume Kit",
+          "doneness": "done",
+          "type_facet": "Goods.General.Consumable"
+        },
+        {
+          "name": "Pipe of Revealing Mists",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.LesserMinor"
+        },
+        {
+          "name": "Planar Parchment",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Consumable.GreaterMedium"
+        },
+        {
+          "name": "Poison Lip Paint",
+          "doneness": "done",
+          "type_facet": "Goods.General.Consumable"
+        },
+        {
+          "name": "Polish of Inconspicuous Armor",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Consumable.LeastMinor"
+        },
+        {
+          "name": "Private Palanquin",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.GreaterMajor"
+        },
+        {
+          "name": "Prying Star",
+          "doneness": "done",
+          "type_facet": "Weapon.Magic.Resizable.Exotic.Ranged.Specific.Piercing.Thrown.Consumable.Shuriken.Ammunition.LesserMinor"
+        },
+        {
+          "name": "Puzzle Heel (3 steps)",
+          "doneness": "done",
+          "type_facet": "Goods.Clothing.Resizable.Boot"
+        },
+        {
+          "name": "Puzzle Heel (4 steps)",
+          "doneness": "done",
+          "type_facet": "Goods.Clothing.Resizable.Boot"
+        },
+        {
+          "name": "Puzzle Heel (5 steps)",
+          "doneness": "done",
+          "type_facet": "Goods.Clothing.Resizable.Boot"
+        },
+        {
+          "name": "Quick-Change Mask",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Consumable.Headgear.LeastMinor"
+        },
+        {
+          "name": "Quick-Change Outfit",
+          "doneness": "done",
+          "type_facet": "Goods.Clothing.Resizable"
+        },
+        {
+          "name": "Rake's Friend",
+          "doneness": "done",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Raucous Canard",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Consumable.LeastMinor"
+        },
+        {
+          "name": "Ring of the Shadow Victim",
+          "doneness": "done",
+          "type_facet": "Magic.Ring.GreaterMajor"
+        },
+        {
+          "name": "Rings of Bondage",
+          "doneness": "done",
+          "type_facet": "Magic.Ring.GreaterMedium"
+        },
+        {
+          "name": "Rings of Bondage (Greater)",
+          "doneness": "done",
+          "type_facet": "Magic.Ring.LesserMajor"
+        },
+        {
+          "name": "Scroll Belt",
+          "doneness": "done",
+          "type_facet": "Goods.Clothing.Resizable"
+        },
+        {
+          "name": "Sentry Seeds",
+          "doneness": "done",
+          "type_facet": "Goods.General.Consumable"
+        },
+        {
+          "name": "Serpent's Fang",
+          "doneness": "done",
+          "type_facet": "Weapon.Magic.Resizable.Melee.Light.Finesseable.Ranged.Thrown.Simple.Specific.Piercing.Slashing.Dagger.BladeLight.LesserMedium"
+        },
+        {
+          "name": "Shadow Hand Smoke Pellet",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Consumable.LeastMinor"
+        },
+        {
+          "name": "Silent Sentry Crossbow",
+          "doneness": "done",
+          "type_facet": "Weapon.Magic.Resizable.Simple.Ranged.Specific.Piercing.Container.Projectile.Crossbow.GreaterMajor"
+        },
+        {
+          "name": "Singer's Solution",
+          "doneness": "done",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Speech Resin",
+          "doneness": "done",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Spring Blade",
+          "doneness": "done",
+          "type_facet": "Weapon.Resizable.Melee.Light.Finesseable.Ranged.Thrown.Simple.Standard.Piercing.Slashing.Dagger.BladeLight"
+        },
+        {
+          "name": "Subversive Vest",
+          "doneness": "done",
+          "type_facet": "Goods.Clothing.Resizable"
+        },
+        {
+          "name": "Subversive Vestment",
+          "doneness": "done",
+          "type_facet": "Goods.Clothing.Resizable"
+        },
+        {
+          "name": "Swarmwalker's Ring",
+          "doneness": "done",
+          "type_facet": "Magic.Ring.GreaterMedium"
+        },
+        {
+          "name": "Swift Hands Tonic",
+          "doneness": "done",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Thieves' Tools (Concealable)",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Time Bomb",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Consumable.LesserMinor"
+        },
+        {
+          "name": "Time Bomb (Greater)",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Consumable.GreaterMinor"
+        },
+        {
+          "name": "Vestments of False Faith",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Robe.GreaterMedium"
+        },
+        {
+          "name": "Vigilante's Kit",
+          "doneness": "done",
+          "type_facet": "Kit"
+        },
+        {
+          "name": "Wrist Launcher",
+          "doneness": "done",
+          "type_facet": "Weapon.Resizable.Exotic.Ranged.Standard.Piercing.Container.Projectile.Blowgun"
+        },
+        {
+          "name": "Wrist Launcher, Heavy",
+          "doneness": "done",
+          "type_facet": "Weapon.Resizable.Exotic.Ranged.Standard.Piercing.Container.Projectile.Crossbow"
+        }
+      ]
+    },
+    {
+      "kind": "equipment_modifier",
+      "label": "Equipment Modifiers",
+      "done": 7,
+      "denominator": 7,
+      "pct": 100.0,
+      "items": [
+        {
+          "name": "LIBERATING",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Liberating",
+          "doneness": "unmeasurable",
+          "type_facet": "Weapon.Melee"
+        },
+        {
+          "name": "PEACEFUL",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Peaceful",
+          "doneness": "unmeasurable",
+          "type_facet": "Ammunition.Weapon.Melee.Ranged"
+        },
+        {
+          "name": "SILENCING",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "SLITHERING",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Silencing",
+          "doneness": "unmeasurable",
+          "type_facet": "Ammunition.Weapon.Melee.Ranged"
+        },
+        {
+          "name": "Slithering",
+          "doneness": "unmeasurable",
+          "type_facet": "Weapon.Melee"
+        },
+        {
+          "name": "TRUTHFUL",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Truthful",
+          "doneness": "unmeasurable",
+          "type_facet": "Weapon.Melee"
+        },
+        {
+          "name": "UMBRAL",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "UNSEEN",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Umbral",
+          "doneness": "unmeasurable",
+          "type_facet": "Weapon.Melee"
+        },
+        {
+          "name": "Unseen",
+          "doneness": "unmeasurable",
+          "type_facet": "Weapon.Melee"
+        }
+      ]
+    },
+    {
+      "kind": "feat",
+      "label": "Feats",
+      "done": 92,
+      "denominator": 94,
+      "pct": 97.9,
+      "items": [
+        {
+          "name": "Acrobatic Spellcaster",
+          "doneness": "done",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Agent of Fear",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Betrayal Sense",
+          "doneness": "unmeasurable",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Blustering Bluff",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Brilliant Planner",
+          "doneness": "unmeasurable",
+          "type_facet": "General"
+        },
+        {
+          "name": "Brilliant Spell Preparation",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "But a Scratch",
+          "doneness": "done",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Call Truce",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Careful Flyer",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Careful Sneak",
+          "doneness": "unmeasurable",
+          "type_facet": "General"
+        },
+        {
+          "name": "Cartogramancer",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Cat and Mouse",
+          "doneness": "done",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Cat's Fall",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Circuitous Shot",
+          "doneness": "done",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "City Sprinter",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Clambering Escape",
+          "doneness": "done",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Conceal Spell",
+          "doneness": "unmeasurable",
+          "type_facet": "General"
+        },
+        {
+          "name": "Confabulist",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Cooperative Disabling",
+          "doneness": "done",
+          "type_facet": "Teamwork"
+        },
+        {
+          "name": "Criminal Reputation",
+          "doneness": "unmeasurable",
+          "type_facet": "General"
+        },
+        {
+          "name": "Cunning Intuition",
+          "doneness": "done",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Cutting Humiliation",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Darkness Trick",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Deft Catcher",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Drunkard's Recovery",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Enrage Opponent",
+          "doneness": "done",
+          "type_facet": "Combat.Panache"
+        },
+        {
+          "name": "Entreating Critical",
+          "doneness": "done",
+          "type_facet": "Combat.Critical"
+        },
+        {
+          "name": "Expeditious Sleuth",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Exquisite Sneak",
+          "doneness": "unmeasurable",
+          "type_facet": "General"
+        },
+        {
+          "name": "Extra Contingency",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Eye for Ingredients",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Feign Curse",
+          "doneness": "unmeasurable",
+          "type_facet": "General"
+        },
+        {
+          "name": "Fencing Grace",
+          "doneness": "unmeasurable",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Fey Spell Lore",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Fey Spell Versatility",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Fleeting Spell",
+          "doneness": "done",
+          "type_facet": "Metamagic"
+        },
+        {
+          "name": "Fool Magic",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Fox Insight",
+          "doneness": "done",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Fox Style",
+          "doneness": "held",
+          "type_facet": "Combat.Style"
+        },
+        {
+          "name": "Fox Trickery",
+          "doneness": "done",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Gaze Reflection",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Graceful Steal",
+          "doneness": "done",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Improved Bravery",
+          "doneness": "done",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Improved Conceal Spell",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Improved Legendary Influence",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Improved Sabotaging Sunder",
+          "doneness": "done",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Incite Paranoia",
+          "doneness": "done",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Insightful Advice",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Inspiring Bravery",
+          "doneness": "done",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Inspiring Mentor",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Intoxicating Flattery",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Ironclad Logic",
+          "doneness": "held",
+          "type_facet": "General"
+        },
+        {
+          "name": "Legendary Influence",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Lightning Draw",
+          "doneness": "done",
+          "type_facet": "Combat.Panache"
+        },
+        {
+          "name": "Manipulative Agility",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Martial Dominance",
+          "doneness": "done",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Measure Foe",
+          "doneness": "done",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Misdirection Attack",
+          "doneness": "done",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Misdirection Redirection",
+          "doneness": "done",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Misdirection Tactics",
+          "doneness": "done",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "My Blade Is Yours",
+          "doneness": "done",
+          "type_facet": "Combat.Teamwork"
+        },
+        {
+          "name": "Nerve-Racking Negotiator",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Notorious Vigilante",
+          "doneness": "done",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Omnipresent Mentor",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Ostentatious Rager",
+          "doneness": "done",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Owl Dive",
+          "doneness": "done",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Owl Style",
+          "doneness": "done",
+          "type_facet": "Combat.Style"
+        },
+        {
+          "name": "Owl Swoop",
+          "doneness": "done",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Persuasive Bribery",
+          "doneness": "unmeasurable",
+          "type_facet": "General"
+        },
+        {
+          "name": "Piercing Grapple",
+          "doneness": "done",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Planar Wanderer",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Play to the Crowd",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Quick Favor",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Quick Study",
+          "doneness": "done",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Quiet Death",
+          "doneness": "done",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Ranged Disable",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Ranged Feint",
+          "doneness": "done",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Read Spell Traces",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Ready for Anything",
+          "doneness": "done",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Sabotage Magic Item",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Sabotage Specialist",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Sabotaging Sunder",
+          "doneness": "done",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Sense Assumptions",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Sense Relationships",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Shadows of Fear",
+          "doneness": "done",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Sliding Dash",
+          "doneness": "done",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Social Bravery",
+          "doneness": "done",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Starry Grace",
+          "doneness": "unmeasurable",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Startling Getaway",
+          "doneness": "done",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Street Carnage",
+          "doneness": "done",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Street Smarts",
+          "doneness": "unmeasurable",
+          "type_facet": "General"
+        },
+        {
+          "name": "Street Style",
+          "doneness": "done",
+          "type_facet": "Combat.Style"
+        },
+        {
+          "name": "Street Sweep",
+          "doneness": "unmeasurable",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Structural Strike",
+          "doneness": "done",
+          "type_facet": "Combat.Panache"
+        },
+        {
+          "name": "Studied Spell",
+          "doneness": "done",
+          "type_facet": "Metamagic"
+        },
+        {
+          "name": "Stylized Spell",
+          "doneness": "done",
+          "type_facet": "Metamagic"
+        },
+        {
+          "name": "Subtle Enchantments",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Superior Scryer",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Swipe and Stash",
+          "doneness": "done",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Telepathy Tap",
+          "doneness": "unmeasurable",
+          "type_facet": "General"
+        },
+        {
+          "name": "Tenacious Spell",
+          "doneness": "done",
+          "type_facet": "Metamagic"
+        },
+        {
+          "name": "Threatening Negotiator",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Timely Coordination",
+          "doneness": "done",
+          "type_facet": "Teamwork"
+        },
+        {
+          "name": "True Deception",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Unimpeachable Honor",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Walking Sleight",
+          "doneness": "done",
+          "type_facet": "General"
+        },
+        {
+          "name": "Willing Accomplice",
+          "doneness": "done",
+          "type_facet": "General"
+        }
+      ]
+    },
+    {
+      "kind": "monster_ability",
+      "label": "Monster Abilities",
+      "done": 0,
+      "denominator": 6,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "Eidolon Progession Lv.1",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.FeyLVL1"
+        },
+        {
+          "name": "Eidolon Progession Lv.12",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.FeyLVL12"
+        },
+        {
+          "name": "Eidolon Progession Lv.16",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.FeyLVL16"
+        },
+        {
+          "name": "Eidolon Progession Lv.20",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.FeyLVL20"
+        },
+        {
+          "name": "Eidolon Progession Lv.4",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.FeyLVL4"
+        },
+        {
+          "name": "Eidolon Progession Lv.8",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.FeyLVL8"
+        }
+      ]
+    },
+    {
+      "kind": "race_trait",
+      "label": "Race Traits",
+      "done": 0,
+      "denominator": 3,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "Fey",
+          "doneness": "not-started",
+          "type_facet": "Unchained Eidolon Subtype Selection"
+        },
+        {
+          "name": "Fey Base Form ~ Biped",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Low-Light Vision",
+          "doneness": "not-started",
+          "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary"
+        }
+      ]
+    },
+    {
+      "kind": "spell",
+      "label": "Spells",
+      "done": 64,
+      "denominator": 101,
+      "pct": 63.4,
+      "items": [
+        {
+          "name": "Absolution",
+          "doneness": "held",
+          "type_facet": "Divine"
+        },
+        {
+          "name": "Aerial Tracks",
+          "doneness": "done",
+          "type_facet": "Divine"
+        },
+        {
+          "name": "Animal Ambassador",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Aphasia",
+          "doneness": "done",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Audiovisual Hallucination",
+          "doneness": "held",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Auditory Hallucination",
+          "doneness": "held",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Aura of the Unremarkable",
+          "doneness": "done",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Bountiful Banquet",
+          "doneness": "held",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Break (Greater)",
+          "doneness": "done",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Build Trust",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Charm Person (Mass)",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Codespeak",
+          "doneness": "done",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Complex Hallucination",
+          "doneness": "held",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Compulsive Liar",
+          "doneness": "done",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Conditional Curse",
+          "doneness": "held",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Conditional Favor",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Conjuration Foil",
+          "doneness": "held",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Conjure Carriage",
+          "doneness": "done",
+          "type_facet": "Arcane"
+        },
+        {
+          "name": "Contingent Venom",
+          "doneness": "held",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Controlled Fireball",
+          "doneness": "in-progress",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Crime Wave",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Crime of Opportunity",
+          "doneness": "held",
+          "type_facet": "Divine.Psychic"
+        },
+        {
+          "name": "Cultural Adaptation",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Curse of the Outcast",
+          "doneness": "held",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Dark Whispers",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Deadman's Contingency",
+          "doneness": "held",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Deceitful Veneer",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Deflect Blame",
+          "doneness": "held",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Demanding Message",
+          "doneness": "held",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Demanding Message (Mass)",
+          "doneness": "held",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Desperate Weapon",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Detect Anxieties",
+          "doneness": "held",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Detect Desires",
+          "doneness": "held",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Detect Magic (Greater)",
+          "doneness": "held",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Detect the Faithful",
+          "doneness": "held",
+          "type_facet": "Divine"
+        },
+        {
+          "name": "Disrupt Silence",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Dress Corpse",
+          "doneness": "held",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Entice Fey",
+          "doneness": "held",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Entice Fey (Greater)",
+          "doneness": "held",
+          "type_facet": "Divine"
+        },
+        {
+          "name": "Entice Fey (Lesser)",
+          "doneness": "held",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Fabricate Disguise",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "False Belief",
+          "doneness": "done",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "False Future",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "False Resurrection",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "False Resurrection (Greater)",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "False Vision (Greater)",
+          "doneness": "done",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Ghost Brand",
+          "doneness": "done",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Glimpse of Truth",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Handy Grapnel",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Hidden Presence",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Hollow Heroism",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Hollow Heroism (Greater)",
+          "doneness": "done",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Illusion of Treachery",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Illusion of Treachery (Greater)",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Insect Spies",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Insect Spies (Greater)",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Instant Fake",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Instant Summons (Greater)",
+          "doneness": "held",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Know Peerage",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Languid Venom",
+          "doneness": "held",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Life of Crime",
+          "doneness": "held",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Mage's Decree",
+          "doneness": "held",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Magic Aura (Greater)",
+          "doneness": "done",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Majestic Image",
+          "doneness": "held",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Matchmaker",
+          "doneness": "done",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Meticulous Match",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Obscure Poison",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Open Book",
+          "doneness": "held",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Open and Shut",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Overwhelming Poison",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Pack Empathy",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Peacebond (Greater)",
+          "doneness": "done",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Permanent Hallucination",
+          "doneness": "held",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Phantasmal Affliction",
+          "doneness": "held",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Pocketful of Vipers",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Poisonous Balm",
+          "doneness": "held",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Pox of Rumors",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Prognostication",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Quieting Weapons",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Red Hand of the Killer",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Reincarnate Spy",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Resplendent Mansion",
+          "doneness": "done",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Rumormonger",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Scripted Hallucination",
+          "doneness": "done",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Selective Alarm",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Shamefully Overdressed",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Shifted Steps",
+          "doneness": "held",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Swallow Poison",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "They Know",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Trace Teleport",
+          "doneness": "done",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Trade Items",
+          "doneness": "held",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Treacherous Teleport",
+          "doneness": "done",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Triggered Hallucination",
+          "doneness": "held",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "True Prognostication",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Underbrush Decoy",
+          "doneness": "held",
+          "type_facet": "Divine"
+        },
+        {
+          "name": "Undetectable Trap",
+          "doneness": "done",
+          "type_facet": "Divine.Psychic"
+        },
+        {
+          "name": "Unerring Tracker",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Urban Step",
+          "doneness": "held",
+          "type_facet": "Arcane.Psychic"
+        },
+        {
+          "name": "Vicarious View",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Voluminous Vocabulary",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic"
+        },
+        {
+          "name": "Wizened Appearance",
+          "doneness": "done",
+          "type_facet": "Arcane.Psychic"
+        }
+      ]
+    }
+  ]
+}
