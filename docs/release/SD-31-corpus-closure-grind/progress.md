@@ -24193,3 +24193,292 @@ First run (launched early, before the full-gate-fallout commit landed) correctly
 - **Avoided**: committing a ~4,700-file wholesale `data/corpus/core_rulebook` diff (including deleted `class_feature` records) that running the CRB cache generator would have produced — caught via `git status --porcelain` before staging, reverted, hand-wrote the 13 needed records instead.
 - **Corrected**: OPEN-ISSUES rows 199 (~443 owned-but-untranscribed `monster_ability`) and 200 (288 archetype-owned `companion`) — both stale, both re-derived to "exhausted, zero further movement without a design/registry decision this card cannot make."
 - **Reworked**: the first full `verify.sh` pass surfaced 7 stale hardcoded counts plus 2 new clippy warnings this cycle's own targeted test runs hadn't reached; all fixed and re-verified green in a second commit before the final gate pass.
+
+
+---
+
+## Cycle `SD31-W13-INTEGRATE-001` (`RETRO_ACTOR=sd31-w13-integrate`) -- 2026-08-17, wave-13 six-lane integration
+
+**Starting HEAD**: `10c666125` (tranche/11 tip). **Oracle SHA**: `7f818006e371188e5717fd18d74d18a420747fc6`
+(quoted from `scripts/pcgen-oracle-pin.env`, confirmed live via `verify.sh --only preflight-oracle`).
+**Branch**: `tranche/11`, primary checkout. **HEAD at end of cycle**: see final commit below.
+
+### 1. Six-lane merge
+
+All six named branches were non-null, verified by content (`git log --oneline origin/tranche/11..<branch>`
+before merging, every one non-empty) and merged in the mandated governance-first order:
+
+1. provenance+PI (`sd31-provenance/D14-PROV-001`, `61655d162`) -- fast-forward, clean.
+2. register+race (`sd31/register-race-SD31-D13-REG-001`, `3025e5470`) -- 1 conflict (`progress.md`,
+   pure append both sides).
+3. fixture-seam (`sd31-fixture-seam-SD31-E6-F11-003`, `fe73ab587`) -- 2 conflicts (`OPEN-ISSUES.md`
+   row-222 collision, `progress.md` append).
+4. race_trait (`sd31/racetrait6/SD31-E6-F4-007`, `c69c3fe2b`) -- 2 conflicts (same shapes).
+5. cf-pools (`sd31/cf-pools-wave13`, `70d5008fb`) -- 3 conflicts (adds `scripts/verify-baselines.env`
+   floor reconciliation, see below).
+6. ingest6 (`sd31-ingest6/SD31-E6-F7-002`, `4a7fee922dcacdd6eaaae9ecd0be2289e3c1fef9`) -- 3 conflicts
+   (adds `data/corpus/advanced_race_guide/LICENSE.json` count reconciliation, see below).
+
+Every OPEN-ISSUES.md row-number collision (five lanes each independently numbered their first new row
+`222`, since all five branched from the same `10c666125` base) was resolved by KEEPING every lane's row
+and renumbering sequentially: provenance=222 (unchanged, merged first), register-race 222->223,
+fixture-seam 222->224, race_trait 222/223->226/227, cf-pools 222/223->228/229, ingest6
+222/223/224/225->230/231/232/233. Verified zero duplicate row numbers in the main table after each
+merge (`grep -oE '^\| [0-9]+ \|' ... | sort | uniq -c | awk '$1>1'`).
+
+`scripts/verify-baselines.env` (cf-pools merge): both sides raised different floors from the same base
+(lib 2000->2007 vs full 6977->6987 vs desktop 461->462 vs corpus-literal 25655->25675); kept both
+historical comment blocks, consolidated to ONE active assignment set using max() per key, marked
+provisional pending this wave's own final `--show-actuals` commit (below).
+
+`data/corpus/advanced_race_guide/LICENSE.json` (ingest6 merge): both racetrait6 (1513) and ingest6
+(1494) wrote this book's LICENSE.json from the same base counting only their own addition. Concatenated
+both `screening_method_note` histories and re-derived `records_processed` from disk at the ACTUAL
+merged tip: `find data/corpus/advanced_race_guide -mindepth 2 -name '*.json' ! -name LICENSE.json -not
+-path '*/_parity/*' | wc -l` = **1514**, confirmed after staging every file both lanes add. A test
+(`tests/sd27_book_license_record_counts.rs::the_screening_note_quotes_the_same_count_the_field_states`)
+caught that my first pass set the number correctly but never updated the note text to mention it --
+fixed with a RECONCILED addendum explaining both lanes' additions, verified green on rerun.
+
+### 2. CONFIRMED findings fixed this cycle (see receipt-attached refute reports' full text for evidence)
+
+**PI, precedence 1** -- findings 1/2/4 against `SD31-D14-PROV-001`:
+- Finding 1 (the blocking one): three declared-PI names (`Bow of Erastil`, `Legendsbane`, `Witherfang`)
+  shipped verbatim in the committed `site/dashboard/units/PF1e-units-equipment.json`, because
+  `clean_first_field()` stripped `CLASS:`/`SUBCLASS:` PREFIXES but never a `.MOD` SUFFIX or resolved
+  `.COPY=` to its right-hand side. Fixed `clean_first_field()` to normalise PCGen row-operator syntax
+  and stopped a bare `.MOD`/`.COPY=` reference row's SILENCE from being read as "this name is non-PI"
+  (the actual leak mechanism). Mutation-proven: reintroduced the literal leak into the committed shard
+  -> gate FAILED naming the exact row and book; reverted -> CLEAN again.
+- Finding 2 (the 266-name blind spot): the flat `pi_names - non_pi_names` index drops any name PI in
+  one book and non-PI in a different, unrelated object elsewhere (correct for Teleport/Shield) -- but
+  also drops a name that is the SAME object, PI in one book, not in another (`Weapon and Armor
+  Proficiency`). Added `build_declared_pi_name_book_index()` (name -> {books}) and a second, book-scoped
+  redaction/gate pass wherever book context exists (shard rows carry `book`).
+- Finding 4 (docstring/README accuracy): corrected claims of "word-boundary matching" the code never
+  performed; restated as exact string-leaf equality plus the new per-book pass, and named the specific
+  3-name mutation proof.
+- Findings 3 (embedded-name residue) and 5 (1,482 unresolved-coordinate units) are real, NOT fixed
+  (logged OPEN-ISSUES row 234, remedy attached) -- scope-bounded to keep the fix narrow and
+  mutation-testable under this wave's time budget.
+
+Regenerated the feed from scratch (`rm -rf site/dashboard/units` first -- the producer's own mtime
+cache would otherwise have silently served the stale, still-leaking shards) and re-ran the gate: it
+found and redacted **20 additional real leaks** beyond the original 3 (Eagle Knight Dress Uniform,
+Rostland Edge, 6 `ultimate_magic` library items, 2 `inner_sea_magic` class-feature rows, 2 `bestiary_4`
+monsters, 2 `inner_sea_world_guide` races) -- all now `[redacted PI]` in the committed shards.
+
+**Units credited on evidence that does not support them, precedence 2**:
+- WITHDRAWN `core_rulebook:class_feature:ranger_favored_terrain` from
+  `derive_class_feature_level_scaling_fixtures.py`'s TARGETS: its `grounded` evidence
+  (`class_feature.ranger.favored_terrain`) computes the flat SKILL bonus; its fixtured token
+  (`FavoredTerrainPool|(RangerFavoredTerrainLVL+2)/5`) is the NUMBER OF FAVORED TERRAINS -- a quantity
+  computed nowhere in the engine (`grep -c 'FavoredTerrainPool|favored_terrain_pool'
+  src/rules_core/pilot_compute/mod.rs` = 0). Re-derived from the pinned oracle: 8 entries, byte-identical
+  to the committed fixture on the other 8.
+- Corrected OPEN-ISSUES row 224's corpus-wide census (re-ran its own four regexes): **265 matching
+  records, not 23**; struck the "buys zero board units" conclusion (false for at least 4 named
+  zero-code-fixturable records) -- logged as row 225 (append, not rewrite).
+- Added the 3 mutation-proof tests `run_class_feature_bar_check`'s own suite was missing entirely
+  (`offset_pre`, `offset_post`, `level_var`); `offset_pre` had been dropped from the scratch-root
+  constructor's parameters as dead code one commit prior, making it structurally unmutatable.
+- Renamed the cf-pools lane's demotion evidence string
+  (`class_feature_only_the_generic_pu_roster_id_matched_no_real_magnitude_computed` ->
+  `class_feature_no_dedicated_magnitude_id_matched_the_record_slug`): the old string was factually
+  false for at least 3 of the 15 demoted units (`Unchained Barbarian ~ Fast Movement`/`~ Rage`/
+  `~ Rage Powers` all have REAL dedicated production magnitude functions the demoted unit's own
+  committed screenshot shows rendering live) -- the true cause is the suffix-stripping matcher's
+  table not covering their id shape, not "no magnitude exists." STRING-ONLY fix: the doneness verdict
+  for all 24 units is unchanged (still correctly held below `done`) -- extending the matcher to
+  actually ground them is real follow-on work, not attempted here.
+- Fixed a real corpus-fidelity defect: 2 of ingest6's 13 hand-written `.COPY=` spell records mangled
+  the oracle's `[5d%%]` to `[5d%]` (typed into a Python string literal instead of read from the
+  parent). Fixed both corpus records and the writer script's own hardcoded constant so a future rerun
+  would not reintroduce it.
+- Corrected `RACE-EVIDENCE-D13.md` §2's Dwarf-darkvision citation (`:15`, a blank line -> `:21`, the
+  real row -- content quoted was already verbatim correct, only the coordinate was wrong).
+- Corrected `supersession_register_build.py`'s `numerator_impact.note`, which hardcoded "downward pull
+  on the headline" -- true under Decision 10's original direction, false since Decision 13 flipped
+  survivor-selection (the register's own adjacent fields already read 30.7079 -> 30.7161, UP). Note
+  now derives its direction word from the two `mandate_pct` fields instead of a literal string.
+  Regenerated `SUPERSESSION-REGISTER.json`; gate + its 16-test self-test both still pass (116 objects,
+  OK).
+
+**Not fixed, logged** (OPEN-ISSUES row 234, remedy attached to each): PI finding 3 (embedded-name
+residue) and 5 (unresolved-coordinate count); provenance receipt's undisclosed 128 UNOWNED invariant-2
+violations; `find_level_var_alias`'s book-wide-first-match ambiguity (two live multi-definition
+collisions named); `.COPY=` description-fidelity gate gap (`corpus_literal_sweep` has zero coverage on
+a `.COPY=` row's `description` field, the exact gap that let the `[5d%]` typo ship undetected).
+
+### 3. The one guarded regen
+
+Commands (mandate-specified):
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-w13-integrate.json
+  -> clean: true, records_examined: 25688
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-w13-integrate.json
+  -> 1275 of 1276 covered units cleared; 1 failed (advanced_players_guide:equipment:
+     spindle_of_perfect_knowledge, pre-existing, unchanged); 0 not ingested
+CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... cargo run --locked --bin v06_work_inventory
+```
+
+**Stamp loss, traced one record deep**: first attempt refused, "would drop 4 of 7311 verification
+stamps": `pathfinder_unchained:class_feature:{unchained_barbarian_rage, unchained_monk_ac_bonus,
+unchained_monk_ki_pool, unchained_summoner_spells}`. Traced: all 4 still cite the identical
+`(book, source_file, source_line)` the sweep verifies clean -- not a sweep/report-wiring bug. It is a
+direct, legitimate consequence of cf-pools' own PU roster-id audit (merged this wave) demoting 24 units
+whose only grounding evidence was the generic roster id. `unchained_barbarian_rage` (corpus key
+"Unchained Barbarian ~ Rage") is literally one of the 3 units this wave's own refute pass named as
+correctly-demoted-but-mis-worded (fixed above); the other 3 are same-shaped PU siblings caught by the
+identical mechanism. Re-ran with `--allow-stamp-loss` after confirming the trace -- recovering these 4
+stamps would BE the weakening the mandate warns against, not a fix.
+
+**Second-run stability confirmed**: re-ran the regen a second time (no `--allow-stamp-loss` needed, the
+committed file already reflects the demotion) -- diff against the first run is EMPTY except
+`generated_at` (0 of 38,540 units differ).
+
+### 4. Board headline (producer's own `doneness_verdict()`, `EXCLUDED_BOOKS = {beginner_box}`)
+
+```
+python3 -c "import json,sys,collections; sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P; d=json.load(open('docs/work-inventory.json')); U=[u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]; c=collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U); print(len(U), dict(c), round(100*c['done']/len(U),4))"
+-> 38521 {'done': 11829, 'not-started': 18236, 'unmeasurable': 5127, 'deferred': 38, 'held': 1886, 'in-progress': 1405} 30.7079
+```
+
+**Denominator: 38,521 -- unchanged.** **Done: 11,829 -- UNCHANGED from the pre-cycle baseline**, a
+genuine net-zero reconciliation, not an absence of movement:
+
+| Movement | Kind | Delta | Verified |
+|---|---|---|---|
+| Fixture seam (real new work: 8 of 9 fixtures survive ranger's withdrawal) | class_feature | +8 | 8 units carry `wiring_class=derived, status=fixture-verified` in the committed inventory |
+| Race chassis (real new work: Changeling/Samsaran) | race_trait | +7 | Exactly `changeling_{claws,size,type}` + `samsaran_{languages,samsaran_magic,size,type}` = 7 `done` under `bestiary_4` |
+| PU roster-id audit (correction: demote units grounded only on the generic roster id) | class_feature | -15 | Of 24 units carrying the new demotion evidence string, exactly 15 were `done` in the pre-merge (`10c666125`) inventory |
+| Everything else (ingest6, register-race, provenance/PI) | -- | 0 | No doneness-verdict-affecting change in any of these three lanes |
+| **Net** | | **0** | 8 + 7 - 15 = 0 |
+
+Per-kind table:
+
+| kind | total | done | % |
+|---|---:|---:|---:|
+| class | 185 | 27 | 14.59% |
+| class_feature | 15472 | 130 | 0.84% |
+| companion | 1696 | 680 | 40.09% |
+| equipment | 6208 | 4998 | 80.51% |
+| equipment_modifier | 1580 | 380 | 24.05% |
+| feat | 2610 | 1475 | 56.51% |
+| monster | 1270 | 910 | 71.65% |
+| monster_ability | 2951 | 1369 | 46.39% |
+| race | 103 | 7 | 6.80% |
+| race_trait | 3603 | 497 | 13.79% |
+| spell | 2843 | 1356 | 47.70% |
+| **TOTAL** | **38521** | **11829** | **30.71%** |
+
+**THE FIXTURE SEAM NOW LETS A DERIVED UNIT REACH `done` -- the plain answer the mandate asked for.**
+8 class_feature units carry `wiring_class=derived, status=fixture-verified` in the committed inventory
+today: `rage_power_superstition`, `rogue_trap_sense`, `paladin_channel_positive_energy`,
+`slayer_trapfinding`, `slayer_sneak_attack`, `slayer_stalker`, `bloodrager_damage_reduction`,
+`ninja_no_trace`. `doneness_verdict()`'s `derived + fixture-verified -> done` branch -- the mandate's
+own named highest-leverage gap ("wave 12 wired a real pool... it still could not reach done... no
+evaluator seam exists for that formula shape") -- is now real and exercised, not theoretical. Row 225
+re-derives the remaining corpus-wide population at 265 matching `BONUS:VAR` formulas (not the earlier
+23-record undercount); most are still uncovered, a real follow-on for the next class_feature cycle.
+
+Reachability audit re-run fresh at this tip (`python3 scripts/reachability_audit.py`): **98.95% ceiling
+(38115/38521)**, same 9 `ambiguous|*` dead-end cells, unchanged from the pre-cycle baseline.
+
+`v06_corpus_trap_report -- --audit`: **1 mod-record, 1,225 wiring-class-mismatch** -- byte-identical to
+the recorded baseline; this cycle did not worsen it.
+
+Public feed refreshed (`./scripts/publish-site-dashboard.sh` from scratch, `rm -rf site/dashboard/units`
+first): `site-dashboard-pi-gate` **CLEAN -- 13 file(s) scanned against 1,612 declared-PI name(s), zero
+leaked**. §12's redaction IS in force on this checkout's committed feed; `main` has no `site/dashboard/`
+yet, so the exposure this closes is real-if-ever-deployed, not live today.
+
+### 5. Gate
+
+Launched in the background early, kept alive throughout. First run started before this cycle's
+LICENSE.json note-reconciliation fix landed and correctly caught it as a real `root-full` failure
+(the_screening_note_quotes_the_same_count_the_field_states) -- a genuine, honest catch by the gate
+against a mid-flight tree, not a false positive; fixed, re-verified green in isolation, then a
+SECOND, truly-final full run launched (per the mandate's own rule that a re-run of only the failed
+stage is not a green gate).
+
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-W13-INTEGRATE-001-verify-final.log
+./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+
+**Final run: VERIFY_EXIT=1, 29 of 30 stages PASS** -- the one failure is `site-dashboard-check`, the
+documented, non-regressing worktree-path symptom (row 153), unrelated to this cycle's changes.
+`root-lib` 2025 passed; `root-full` 7016 passed across 566 suites, all 530 `tests/*.rs` suites
+executed; `desktop` 462 passed; `reach` 27 passed; `corpus-sweep` 25688 records examined, 0 findings;
+`supersession-gate` 116 objects, all clean; `frontend-test` 99/99 files; `frontend-typecheck` clean;
+`clippy` root:51 desktop:7 (0 errors, root PAID DOWN from the 52 ceiling); `class-dump` 31/31
+computing.
+
+`v06_corpus_trap_report -- --audit` (re-run fresh this cycle): 1226 findings, `{'wiring-class-mismatch':
+1225, 'mod-record': 1}` -- byte-identical to the recorded baseline; this cycle did not worsen it.
+
+`scripts/verify-baselines.env` reconciled in a separate commit (`b7cf9f771`) with `--show-actuals`:
+ROOT_LIB_TESTS 2007->2025, ROOT_FULL_TESTS 6987->7016, ROOT_TEST_BINARIES 565->566,
+CORPUS_LITERAL_RECORDS 25675->25688 (all floors, all raised); CLIPPY_WARNINGS_ROOT ceiling lowered
+52->51 (paid down); DESKTOP_TESTS/FRONTEND_TEST_FILES/CLIPPY_WARNINGS_DESKTOP/COMPUTED_CLASSES
+unchanged.
+
+
+### 6. Retro events emitted (`docs/retro/events/sd31-w13-integrate.jsonl`)
+
+7 events: 6 `correction` (the 3 confirmed PI/fixture-seam/census findings, the evidence-string rename,
+the [5d%%] typo, and this cycle's own self-caught LICENSE.json note-vs-field contradiction) + 1
+auto-emitted `verification` (preflight-oracle PASS).
+
+### 7. What was corrected/reworked/narrowly avoided this cycle
+
+- **Corrected** (PI, precedence 1): `.MOD`/`.COPY=` row-operator syntax was never normalised before
+  indexing declared-PI names, letting 3 real leaks (`Bow of Erastil`/`Legendsbane`/`Witherfang`) ship
+  past a gate whose own comment said it existed for exactly this case; found and fixed 20 more real
+  leaks by the same fix.
+- **Corrected** (units credited on insufficient evidence, precedence 2): withdrew
+  `ranger_favored_terrain`'s fabricated `done` credit (two disjoint quantities on one record); demoted
+  0 additional units beyond what cf-pools' own audit already demoted (net class_feature demotion this
+  wave is entirely the cf-pools lane's own, correctly landed).
+- **Corrected**: OPEN-ISSUES row 224's class_feature census (23 -> 265 matching records), the
+  advanced_race_guide LICENSE.json note-vs-field self-contradiction (caught by this cycle's own first
+  full gate run), a wrong file:line citation in `RACE-EVIDENCE-D13.md` (`:15` -> `:21`, a blank-line
+  coordinate), and a sign-flipped hardcoded string in `SUPERSESSION-REGISTER.json`'s
+  `numerator_impact.note`.
+- **Reworked**: the demotion evidence string for 24 PU class_feature units, from a claim that no
+  dedicated magnitude exists (false for at least 3) to a claim about what the matcher's suffix table
+  covers (true) -- the doneness verdict for all 24 is unchanged; this is a string-accuracy fix, not a
+  board-movement fix.
+- **Narrowly avoided**: reading `build_declared_pi_name_index()`'s FIRST regen attempt's silent-CLEAN
+  result as proof of safety before mutation-testing it myself -- the earlier lane's own mutation tests
+  passed on the SAME bugs this cycle found, because they never seeded a `.MOD`-declared name whose
+  `.COPY=` creation row cited a different line.
+- **Left deferred, logged, not fixed**: PI findings 3/5 (embedded-name blind spot, unresolved-coordinate
+  count), the provenance receipt's undisclosed 128 UNOWNED invariant-2 violations, `find_level_var_
+  alias`'s book-wide-first-match ambiguity, and the `.COPY=` description-fidelity gate gap -- all logged
+  OPEN-ISSUES row 234 with a named remedy and owning lane, none silently dropped.
+
+### 8. Followups, ordered by units they would move
+
+1. **class_feature per-level-scaling formulas, ~257 records uncovered** (row 225) -- `parse_class_
+   feature_level_scaling`'s `max`/`min`-clamp widening (10 named records) + `find_level_var_alias`'s
+   own-record-first scoping fix (closes the 2 named ambiguity collisions) + the 4 zero-code
+   one-hop-alias fixtures named in row 225. File territory: `src/rules_core/derived_evaluator_fixture_
+   check.rs`, `scripts/derive_class_feature_level_scaling_fixtures.py`, `tests/fixtures/rules_core/
+   derived-evaluator-fixtures.json`.
+2. **PU roster-id matcher widening, 3+ units immediately, more likely corpus-wide** (this wave's own
+   finding) -- extend `CLASS_FEATURE_ID_MAGNITUDE_SUFFIXES` (or a slug-exact alias) so `Unchained
+   Barbarian ~ Fast Movement`/`~ Rage`/`~ Rage Powers` ground on their real, already-existing production
+   magnitude functions. File territory: `src/bin/v06_work_inventory.rs`.
+4. **`mod_only_rescue` 249-unit feat-kind phantom-duplicate population** (row 205, RULING-NEEDED) --
+   awaiting operator ruling on whether this is a Decision-9/10-style denominator correction; would move
+   `feat` 2,610 -> ~2,361 and the board denominator 38,521 -> ~38,272.
+5. **Race-branch attribution ruling** (row 140, evidence delivered this wave at
+   `RACE-EVIDENCE-D13.md`) -- 16 races' book attribution awaiting the operator's confirm/reject; no unit
+   count moves without the ruling (provenance/denominator stay frozen either way, per §14).
+6. **`race` kind, still 7/103** -- `RaceId::ALL` widening is barred by Decision 1(a) without a genuine
+   per-race consumer; no safe lever identified this wave.
+7. **PI gate residuals, ~23 embedded-name hits + 1,482 unresolved coordinates** (row 234 items 1-2) --
+   lower urgency (both pre-existing, neither this wave's regression), but real and counted now.
+
