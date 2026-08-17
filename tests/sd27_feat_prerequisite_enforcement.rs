@@ -184,13 +184,19 @@ fn the_pre_kind_census_is_the_real_one() {
         // (`PRELEVELMAX`/`PRESIZEEQ`/`PRESPELLSCHOOL`, all declared
         // unmodelled in `pre_tokens.rs`), and every existing kind's count
         // moved with the 242 new gap rows' own `PRE`-family tokens.
+        // `SD31-E6-F8-003` adds 7 more gap rows (inner_sea_intrigue 6 +
+        // book_of_the_damned_volume_2 1), moving 6 kinds: PREABILITY +4
+        // (2 top-level + 2 nested inside a `PREMULT` bracket clause),
+        // PREDEITY +1, PREMULT +2, PRESKILL +7 (5 top-level + 2 nested),
+        // PRETEXT +6, PREVARGTEQ +1 -- re-derived directly against each of
+        // the 7 raw `.lst` rows, not guessed from the delta alone.
         ("!PREABILITY", 35),
         ("!PREALIGN", 6),
-        ("PREABILITY", 1598),
+        ("PREABILITY", 1602),
         ("PREALIGN", 26),
         ("PRECHECKBASE", 2),
         ("PRECLASS", 130),
-        ("PREDEITY", 2),
+        ("PREDEITY", 3),
         ("PREDEITYALIGN", 2),
         ("PREDOMAIN", 5),
         ("PREDR", 1),
@@ -200,7 +206,7 @@ fn the_pre_kind_census_is_the_real_one() {
         ("PRELEVEL", 40),
         ("PRELEVELMAX", 2),
         ("PREMOVE", 5),
-        ("PREMULT", 385),
+        ("PREMULT", 387),
         ("PREPCLEVEL", 12),
         ("PREPROFWITHARMOR", 5),
         ("PREPROFWITHSHIELD", 9),
@@ -209,7 +215,7 @@ fn the_pre_kind_census_is_the_real_one() {
         ("PRESIZEEQ", 2),
         ("PRESIZEGTEQ", 3),
         ("PRESIZELTEQ", 7),
-        ("PRESKILL", 337),
+        ("PRESKILL", 344),
         ("PRESPELL", 38),
         ("PRESPELLCAST", 13),
         ("PRESPELLDESCRIPTOR", 2),
@@ -218,11 +224,11 @@ fn the_pre_kind_census_is_the_real_one() {
         ("PRESPELLTYPE", 12),
         ("PRESTAT", 244),
         ("PRETEMPLATE", 34),
-        ("PRETEXT", 146),
+        ("PRETEXT", 152),
         ("PRETOTALAB", 368),
         ("PREVAREQ", 12),
         ("PREVARGT", 9),
-        ("PREVARGTEQ", 961),
+        ("PREVARGTEQ", 962),
         ("PREVARLT", 4),
         ("PREVARLTEQ", 2),
         ("PREVISION", 2),
@@ -250,14 +256,18 @@ fn the_pre_kind_census_is_the_real_one() {
     // arm for `PRETEXT:`'s own third category. Total computed from the map
     // itself, not hand-summed (decisions.md §43's own lesson: a hand-summed
     // total was wrong once already this session).
+    // `SD31-E6-F8-003`'s 7 new gap rows add 21 total clauses (PREABILITY
+    // +4, PREDEITY +1, PREMULT +2, PRESKILL +7, PRETEXT +6, PREVARGTEQ +1),
+    // 14 of which are modelled (all but PREDEITY's +1 and PRETEXT's +6,
+    // neither in `MODELLED_KINDS`).
     let total: usize = expected.values().sum();
-    assert_eq!(total, 4781);
+    assert_eq!(total, 4802);
     let modelled: usize = expected
         .iter()
         .filter(|(kind, _)| MODELLED_KINDS.contains(&kind.trim_start_matches('!')))
         .map(|(_, count)| *count)
         .sum();
-    assert_eq!(modelled, 4422);
+    assert_eq!(modelled, 4436);
 }
 
 /// 599 of the catalog's 690 records carry at least one prerequisite -- the
@@ -279,7 +289,10 @@ fn the_number_of_records_carrying_any_prerequisite_is_the_real_one() {
     // record. Unchanged by SD31-W10-INTEGRATE-001's exclusion of 159
     // VISIBLE:EXPORT twins -- every one of them carried zero `PRE` tokens,
     // so none was ever in this numerator; only the denominator moved.
-    assert_eq!(with_any, 1910, "of 2102");
+    // + 7 of `SD31-E6-F8-003`'s 7 more gap rows (inner_sea_intrigue 6 +
+    // book_of_the_damned_volume_2 1) -- all 7 carry a real `PRE`-family
+    // token.
+    assert_eq!(with_any, 1917, "of 2109");
 }
 
 // ---------------------------------------------------------------------------
@@ -476,7 +489,7 @@ fn every_ineligible_feat_states_a_reason_for_every_build() {
         let level = input.chosen.class_levels[0].level;
         let facts = character_prereq_facts(input, i16::from(level));
         let reports = evaluate_every_catalog_feat(&facts);
-        assert_eq!(reports.len(), 2102);
+        assert_eq!(reports.len(), 2109);
         for report in &reports {
             if report.is_eligible {
                 assert_eq!(report.unavailable_reason(), None);

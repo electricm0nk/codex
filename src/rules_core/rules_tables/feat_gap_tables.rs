@@ -18,7 +18,7 @@
 //! table to take a variant from, and mapping the corpus facet onto some
 //! book's enum would invent a classification the corpus never made.
 //!
-//! Total: 524 rows.
+//! Total: 531 rows.
 
 use super::feats_all::FeatCatalogRecord;
 use super::RuleSetId;
@@ -43,6 +43,8 @@ pub fn feat_gap_rows_for(rule_set: RuleSetId) -> &'static [FeatCatalogRecord] {
         RuleSetId::Iswg => INNER_SEA_WORLD_GUIDE_FEAT_GAP_ROWS,
         RuleSetId::MonsterCodex => MONSTER_CODEX_FEAT_GAP_ROWS,
         RuleSetId::Mythic => MYTHIC_ADVENTURES_FEAT_GAP_ROWS,
+        RuleSetId::Isi => INNER_SEA_INTRIGUE_FEAT_GAP_ROWS,
+        RuleSetId::Botd2 => BOOK_OF_THE_DAMNED_VOLUME_2_FEAT_GAP_ROWS,
         _ => &[],
     }
 }
@@ -625,4 +627,19 @@ pub static MYTHIC_ADVENTURES_FEAT_GAP_ROWS: &[FeatCatalogRecord] = &[
     FeatCatalogRecord { key: "Triaxian", category: "Mythic Racial Heritage", name: "Triaxian", description: None, prerequisites: Some(&["PRETEMPLATE:1,Racial Heritage ~ Triaxian"]) },
     FeatCatalogRecord { key: "Vanara", category: "Mythic Racial Heritage", name: "Vanara", description: None, prerequisites: Some(&["PRETEMPLATE:1,Racial Heritage ~ Vanara"]) },
     FeatCatalogRecord { key: "Wayang", category: "Mythic Racial Heritage", name: "Wayang", description: None, prerequisites: Some(&["PRETEMPLATE:1,Racial Heritage ~ Wayang"]) },
+];
+
+/// inner_sea_intrigue — 6 record(s) the hand-authored `inner_sea_intrigue` feat table does not hold.
+pub static INNER_SEA_INTRIGUE_FEAT_GAP_ROWS: &[FeatCatalogRecord] = &[
+    FeatCatalogRecord { key: "Convincing Persona", category: "General", name: "Convincing Persona", description: Some("People seem almost willfully ignorant of the connection between your masked persona and your real identity. Your dual identity is never considered publicly compromised barring some massive, public unmasking, allowing you to benefit from your dual identity or masked persona regardless of how many people know your true identity. You gain a +5 circumstance bonus on Bluff skill checks to convince people your masked persona and your true identity are entirely different people, and on Disguise checks to maintain your masked persona."), prerequisites: Some(&["PREMULT:1,[PRESKILL:2,Bluff=5,Perform (act)=5],[PREABILITY:1,CATEGORY=Special Ability,Vigilante ~ Dual Identity]", "PRETEXT:Bluff 5 ranks, Perform (act) 5 ranks, or dual identity class feature."]) },
+    FeatCatalogRecord { key: "Greater Stylized Spell", category: "General", name: "Greater Stylized Spell", description: Some("You can modify your spell's superficial qualities in a greater variety of ways. When you modify a spell with Stylized Spell, you can apply one of the stylized magic options (see Stylized Magic on page 16) without reducing the DC of the check to identify the spell. In addition, you can apply up to two additional stylized magic options, reducing the DC of checks to identify the spell by 5 per option as normal."), prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Stylized Spell", "PRESKILL:2,Bluff=10,Spellcraft=10", "PRETEXT:Stylized Spell, Bluff 10 ranks, Spellcraft 10 ranks."]) },
+    FeatCatalogRecord { key: "Masked Renown", category: "General", name: "Masked Renown", description: Some("Your masked persona is especially well known. You gain the vigilante's renown social talent (Ultimate Intrigue 12), allowing you to gather and maintain a reputation in a community. [Special] Beginning at 9th level, you can select this feat a second time to gain the great renown vigilante social talent."), prerequisites: Some(&["PRESKILL:1,Disguise=2", "PRETEXT:Cha 13, Disguise 2 ranks.", "PREVARGTEQ:PreStatScore_CHA,13"]) },
+    FeatCatalogRecord { key: "Masked Symbol", category: "General", name: "Masked Symbol", description: Some("Your alternate identity exists as a nearly inhuman avatar of a mood or cause. Your masked persona represents a particular concept, granting you a benefit while in your masked persona or vigilante identity. Each time you gain a new character level, you can choose to embody a different symbol, forgoing your previous bonus and gaining a new one. [Faith] +2 circumstance bonus on Diplomacy checks against creatures of your faith; +2 circumstance bonus on Intimidate checks against enemies of your faith. [Fear] +3 circumstance bonus on Intimidate checks. [Hope] +3 circumstance bonus on Diplomacy checks. [Leadership] +2 bonus to your Leadership score. [Mystery] +2 circumstance bonus on Disguise checks to conceal your true identity; +2 circumstance bonus on Stealth checks to enter or escape unseen. [The People] +2 circumstance bonus on checks to influence crowds. [Trust] +2 circumstance bonus on Bluff checks to lie and Diplomacy checks to make requests."), prerequisites: Some(&["PREMULT:1,[PRESKILL:1,Disguise=1],[PREABILITY:1,CATEGORY=Special Ability,Vigilante ~ Dual Identity]", "PRETEXT:Disguise 1 rank or dual identity class feature."]) },
+    FeatCatalogRecord { key: "Stylized Spell Mastery", category: "General", name: "Stylized Spell Mastery", description: Some("You have altered your understanding of a select number of spells. You do not modify the spell slot used when applying the Stylized Spell metamagic feat to any spell you have mastered with Spell Mastery. [Normal] A stylized spell uses up a spell slot 1 higher than the spell's actual level."), prerequisites: Some(&["PREABILITY:2,CATEGORY=FEAT,Spell Mastery,Stylized Spell", "PRESKILL:2,Bluff=5,Spellcraft=5", "PRETEXT:Spell Mastery, Stylized Spell, Bluff 5 ranks, Spellcraft 5 ranks."]) },
+    FeatCatalogRecord { key: "Stylized Spontaneity", category: "General", name: "Stylized Spontaneity", description: Some("You can modify your spells' apparent components and characteristics at a moment's notice. When you cast a spell, you can apply any number of the stylized magic modifications; however, you must succeed at a caster level check (DC = 5 + twice the spell's level + 5 per modification) or the magic is too badly warped to function and the spell is wasted with no effect."), prerequisites: Some(&["PRESKILL:2,Bluff=5,Spellcraft=5", "PRETEXT:Bluff 5 ranks, Spellcraft 5 ranks."]) },
+];
+
+/// book_of_the_damned_volume_2 — 1 record(s) the hand-authored `book_of_the_damned_volume_2` feat table does not hold.
+pub static BOOK_OF_THE_DAMNED_VOLUME_2_FEAT_GAP_ROWS: &[FeatCatalogRecord] = &[
+    FeatCatalogRecord { key: "Demonic Obedience", category: "General", name: "Demonic Obedience", description: Some("You physically defile yourself, others, or holy objects in order to prove your blasphemous devotion to a demon lord and gain special boons. Once you spend an hour performing the required obedience of your demon lord, you gain the associated benefits. If you ever fail to perform a daily obedience, you lose all benefits granted by this feat until you next perform the obedience."), prerequisites: Some(&["PREDEITY:1,PANTHEON.Demon Lords", "PRESKILL:1,Knowledge (Planes)=3"]) },
 ];

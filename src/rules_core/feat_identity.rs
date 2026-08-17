@@ -188,13 +188,15 @@ mod tests {
                 }
             }
         }
-        // 1578 hand-authored records + the 524 corpus gap rows the feat gap
+        // 1578 hand-authored records + the 531 corpus gap rows the feat gap
         // lane joined on (`rules_tables::feat_gap_tables`: `SD31-E6-F8-001`'s
         // original 83 + `SD31-E6-F8-002`'s 242 + `SD31-E6-F2-007`'s 199
         // Mythic Adventures rows -- SD31-W10-INTEGRATE-001 excluded 159
-        // VISIBLE:EXPORT display-plumbing twins from the original 358).
-        // Re-derived from the live catalog, not incremented on faith.
-        assert_eq!(checked, 2102, "the whole ingested feat catalog must be checked");
+        // VISIBLE:EXPORT display-plumbing twins from the original 358 --
+        // + `SD31-E6-F8-003`'s 7 (inner_sea_intrigue 6 + book_of_the_
+        // damned_volume_2 1)). Re-derived from the live catalog, not
+        // incremented on faith.
+        assert_eq!(checked, 2109, "the whole ingested feat catalog must be checked");
     }
 
     /// A longer feat whose name merely begins with a grounded key must not

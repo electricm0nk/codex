@@ -973,6 +973,14 @@ pub fn hand_authored_feat_tables() -> &'static [BookFeatTable] {
             // `feat_gap_rows_for(RuleSetId::Mythic)`'s rows (all of
             // `ma_feats.lst`'s non-`.MOD` declarations) join on below.
             BookFeatTable { rule_set: RuleSetId::Mythic, entries: &[] },
+            // `SD31-E6-F8-003` -- two more books already compiled into
+            // `COMPILED_RULE_SETS` for another kind (`Isi`: familiars +
+            // abilities, `Botd2`: monsters) that never had a feat table of
+            // their own. Same shape as the six books above: no hand-authored
+            // table, an empty slice here so `feat_gap_rows_for(RuleSetId::Isi
+            // /Botd2)`'s rows join on below.
+            BookFeatTable { rule_set: RuleSetId::Isi, entries: &[] },
+            BookFeatTable { rule_set: RuleSetId::Botd2, entries: &[] },
         ]
     })
 }
@@ -1026,7 +1034,7 @@ mod tests {
     #[test]
     fn spans_every_ingested_book_with_their_real_counts() {
         let books = hand_authored_feat_tables();
-        assert_eq!(books.len(), 18);
+        assert_eq!(books.len(), 20);
         assert_eq!(books[0].rule_set, RuleSetId::Crb);
         assert_eq!(books[0].entries.len(), 185);
         assert_eq!(books[1].rule_set, RuleSetId::Apg);
@@ -1071,12 +1079,19 @@ mod tests {
         // any kind, same empty-hand-authored-slice shape as the five above.
         assert_eq!(books[17].rule_set, RuleSetId::Mythic);
         assert_eq!(books[17].entries.len(), 0);
+        // `SD31-E6-F8-003` -- two more books, each already compiled for
+        // another kind, given an empty hand-authored feat slice so their
+        // real `*_feats.lst` rows can join via `feat_gap_rows_for` below.
+        assert_eq!(books[18].rule_set, RuleSetId::Isi);
+        assert_eq!(books[18].entries.len(), 0);
+        assert_eq!(books[19].rule_set, RuleSetId::Botd2);
+        assert_eq!(books[19].entries.len(), 0);
 
         let total: usize = books.iter().map(|book| book.entries.len()).sum();
         assert_eq!(
             total,
             1578,
-            "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA + 104 UI + 135 UW + 261 UC + 144 UM + 221 UPsi + 0 Ce + 0 Ha + 0 Isr + 0 Oa + 0 Iswg + 0 MonsterCodex + 0 Mythic"
+            "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA + 104 UI + 135 UW + 261 UC + 144 UM + 221 UPsi + 0 Ce + 0 Ha + 0 Isr + 0 Oa + 0 Iswg + 0 MonsterCodex + 0 Mythic + 0 Isi + 0 Botd2"
         );
     }
 
@@ -1100,14 +1115,15 @@ mod tests {
         }
         let total: usize = joined.iter().map(|book| book.entries.len()).sum();
         assert_eq!(
-            total, 2102,
-            "1578 hand-authored + 524 corpus gap rows: the original 325 \
+            total, 2109,
+            "1578 hand-authored + 531 corpus gap rows: the original 325 \
              (SD31-E6-F8-001's 83: 1 CRB, 15 core_essentials, 48 ARG, 12 UM, 3 UI, \
              2 UC, 1 UPsi, 1 UW; SD31-E6-F8-002's 242: 61 Ha, 50 Isr, 68 Oa, 31 Iswg, \
              32 MonsterCodex) + 199 more from Mythic Adventures' first-ever compiled \
              rule set (SD31-E6-F2-007, `ma_feats.lst`'s non-`.MOD` declarations -- \
              SD31-W10-INTEGRATE-001 excluded 159 VISIBLE:EXPORT display-plumbing \
-             twins from the original 358)"
+             twins from the original 358) + 7 more from two more already-compiled \
+             books (SD31-E6-F8-003: inner_sea_intrigue 6 + book_of_the_damned_volume_2 1)"
         );
     }
 
@@ -1239,7 +1255,11 @@ mod tests {
         // INTEGRATE-001's exclusion of 159 VISIBLE:EXPORT twins: every one
         // of them carried zero `PRE` tokens, so none was ever in this
         // numerator -- only the denominator (2261 -> 2102) moved.
-        assert_eq!(total, 1910, "1910 of the joined catalog's 2102 records have a prerequisite");
+        // SD31-E6-F8-003 adds 7 more (inner_sea_intrigue 6 + book_of_the_
+        // damned_volume_2 1) -- all 7 carry at least one real `PRE`-family
+        // token (verified by direct read of both `.lst` files), so the
+        // numerator and denominator both move by exactly +7.
+        assert_eq!(total, 1917, "1917 of the joined catalog's 2109 records have a prerequisite");
     }
 
     /// `Some(&[])` must never reach a consumer: an empty slice would read
