@@ -1167,3 +1167,83 @@ Race attribution stays **FROZEN**, and the Supersession Register stays **PROPOSE
 until the evidence table exists and the operator rules from it.
 
 **Authority:** operator ruling, 2026-08-17, verbatim above.
+
+## Decision 14 (PROPOSED — awaiting operator) — Provenance status: one fixed classification per (object, book)
+
+**Operator direction, verbatim:**
+
+> "i think each object per book needs a fixed set of status. Origin, Superceded, Duplicate,
+> Descoped-Licensing, perhaps a few more. We should get a well defined set of rules to classify
+> everything"
+
+**This is a NEW AXIS, and keeping it separate from the existing one is the whole safety property.**
+The board already has a *doneness* axis (`wiring_class` × `status` → `not-started` / `held` / `done`,
+`§7`). Provenance answers a different question: **does this (object, book) pair belong in the mandate
+denominator at all, and which book owns it?** Conflating the two would let a provenance edit silently
+move the `done` percentage, which is precisely the Decision 1(a) violation this package forbids.
+**Provenance decides denominator MEMBERSHIP. Doneness measures progress WITHIN it. Neither may be
+derived from the other.**
+
+Recorded as **PROPOSED**. It supersedes nothing until the operator confirms the set.
+
+### The proposed status set
+
+Every `(object, book)` pair gets exactly one:
+
+| status | meaning | in denominator? |
+|---|---|---|
+| **`origin`** | this book is where the object is defined; the owning printing | **YES** |
+| **`duplicate`** | an identical reprint in a later book (`§13` branch 1) | no |
+| **`superseded`** | the same object's values were changed by a later printing (`§13` branch 3) — this pair holds the outdated values | no |
+| **`errata-source`** | the later printing whose changed values win under `§13` branch 3 | *see OPEN QUESTION* |
+| **`variant`** | a distinct derived object sharing a lineage — sub-race, Unchained, Mythic (`§13` branch 2, `§10` amendment). **Its own record; it is an `origin` in its own right and this status records only the lineage.** | **YES** |
+| **`descoped-licensing`** | cannot be shipped for licensing / declared-PI reasons | no |
+| **`descoped-structural`** | the `§3` Structural Exclusion Register — finishing is genuinely impossible, operator-signed | no |
+| **`packaging-artifact`** | the pair names a PCGen packaging directory, not a real book (`§9`, `core_essentials`) — **must be re-attributed, never left** | no (and must reach zero) |
+| **`out-of-roster`** | resolves to a real book outside the 37-book mandate roster (`Ironfang Invasion`, `Blood of the Moon`, `Universal Rules` appeared in `§9`'s census) — **a scope question, not a deletion** | no, pending operator |
+
+### Invariants a gate must enforce, each proven able to fail
+
+1. **Totality.** Every `(object, book)` pair carries exactly one status. No default, no absent value.
+2. **Exactly one `origin` per object.** Zero origins means the object is unowned; two means the
+   supersession test was never applied. Both are gate failures.
+3. **`denominator = origin + variant`**, and nothing else. The published denominator is derived from
+   provenance, never hand-maintained.
+4. **`packaging-artifact` must trend to zero** and is a hard failure once `§9`'s re-attribution
+   completes. It is a transitional state, not a resting place.
+5. **`descoped-structural` requires an operator signature** per `§3`; a cycle may only propose.
+   `descoped-licensing` does not require a signature but requires the declared-PI evidence.
+6. **A provenance change must NEVER change a unit's doneness fields**, and vice versa. Assert it: a
+   provenance-only commit shows zero `doneness_verdict` movement for units that remain in the
+   denominator.
+7. **Any denominator change is reported as its own number** with the count per status — `§5` defines
+   the denominator and a change to it is never incidental.
+
+### OPEN QUESTION — the one thing the operator must settle
+
+**Under `§13` branch 3 (same object, values updated by a later book — darkvision 60 ft → 90 ft),
+which book is `origin`?**
+
+* **(a) `origin` stays with the FIRST printing**, and the later book is `errata-source` supplying the
+  winning values. Keeps "origin = where it was defined", and a book never loses its content to a later
+  errata. The object's live values then come from two pairs, so the value-resolution order must be
+  explicit.
+* **(b) `origin` MOVES to the book holding the current authoritative values**, and the earlier pair
+  becomes `superseded`. One pair is the single source of truth for the object, which is simpler to
+  compute — but the Core Rulebook would stop being the origin of anything later errata touched, which
+  is the shape that produced the `core_rulebook` = 0 races complaint in the first place.
+
+**Recommendation: (a).** It matches the operator's own framing — *"first print owns it"* was stated
+about ownership, while *"go with 90 feet"* was stated about the value. Separating ownership from
+value-resolution honours both sentences without a carve-out, and it keeps `errata-source` from
+hollowing out early books.
+
+### Not yet decided by this proposal
+
+The per-race branch-1/2/3 classification itself. `§13`'s amendment records that the operator is
+waiting on a worked-example evidence table before ruling on the race cases; **this schema is the
+vocabulary for that ruling, not a substitute for it.**
+
+**Status:** PROPOSED 2026-08-17 from operator direction. Race attribution stays FROZEN and the
+Supersession Register stays PROPOSED, NOT APPLIED, until this set is confirmed and the race evidence
+table is ruled on.
