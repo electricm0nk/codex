@@ -20779,3 +20779,208 @@ record are above in this same receipt (§1-§5).
 
 Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
 Claude-Session: https://claude.ai/code/session_012LQjhfcbAEBt6SiquQXEAE
+
+## SD31-E4-F2-003 — epic-4-mechanism: Barbarian Superstition rage power grounded as a real class_feature consumer delta (2026-08-17)
+
+**Role:** `sd31-pool-consumers`. **Starting HEAD:** `50d36f3b2d8d2ec9f4f4793a2f6d60dbcd9d24b4`
+(`docs(sd31): SD31-W11-INTEGRATE-001 wave receipt, kanban, orchestrator log, DoD-8 screenshot`),
+confirmed a descendant of `origin/tranche/11`'s tip at cycle start (`git fetch origin && git reset
+--hard origin/tranche/11` — the worktree's package dir was absent with a clean tree at cycle
+start, per the mandatory branch-state protocol; `git status --porcelain` was empty). **Branch:**
+`sd31/pool-consumers/SD31-E4-F2-003`, pushed to origin (2 commits: `e223c0870`, `3026b855d`).
+**Oracle SHA:** `7f818006e371188e5717fd18d74d18a420747fc6`
+(`scripts/verify.sh --only preflight-oracle` PASS at cycle start).
+
+### §1 — What this cycle did
+
+Row 186 (`OPEN-ISSUES.md`) named the standing gap precisely: wave 11's pool-matcher fix widened
+recognition to 249 corpus groups, but only 3 (Shaman Spirit/Wandering Spirit, Witch Hex, 2
+Sorcerer Bloodlines) produced an attributable consumer delta on the sheet — recognition and
+grounding are different bars.
+
+Re-derived the ranking directly with `cargo run --locked --bin v06_work_inventory --
+--class-feature-probe` at cycle start (not trusted from the dispatch brief, which itself was
+already stale — the probe showed **19 wired**, not the brief's "5 wired pools"):
+
+```
+keys examined: 15225
+  delta_not_attributable_to_the_record     819
+  no_choice_slot_offers_it               13336
+  no_consumer_delta                        1024
+  no_sibling_to_control_against              27
+  wired                                      19
+declined as not-attributable, by pool (top): Rage Power 169, Rogue Talent 130 (already
+  has a representative, Resiliency), Unchained Rage Power 54, Favored Enemy 36,
+  Sorcerer Bloodline 30, Favored Terrain 18, Mercy 15, plus ~50 individually-named
+  Bloodline flavors at 9/4/3 units each
+```
+
+**Wired Superstition as the `Rage Power` pool's first real representative** (`src/rules_core/
+pilot_compute/mod.rs`, this card's own file), mirroring the standing "ground one representative
+option per pool honestly rather than faking breadth" ruling:
+
+- `CORE_RULEBOOK_RAGE_POWER_POOL` — all 28 real, corpus-verified Core Rulebook Rage Power names
+  (`grep -oP '(?<=KEY:Rage Power ~ )[^\t]+' cr_abilities_class.lst | sort -u`), transcribed
+  verbatim.
+- `barbarian_selected_rage_power` — composes `archetype_resolver::chooser_option_selected`
+  across all ten numbered `BARBARIAN_RAGE_POWER_SLOTS`, since a Rage Power can land in any slot
+  depending on the level it was picked, then validates against the real pool.
+- `barbarian_superstition_save_bonus` — `2 + BarbarianLVL/4`, transcribed directly from
+  `BONUS:VAR|SuperstitionSaveBonus|2+RagePowersLVL/4` (`RagePowersLVL = BarbarianLVL` on the
+  base class, confirmed via `BONUS:VAR|RagePowersLVL|BarbarianLVL` on the class's own internal
+  `Rage Powers` record). Superstition's own `BONUS:VAR` token carries **no** `Raging`-state gate
+  anywhere on its raw row (checked field by field, unlike Raging Climber/Swimmer's or Witch's
+  Ward hex's own explicit gates), so the grounded value applies once selected, not only while
+  actively raging — followed the corpus literally rather than assuming a gate that is not there.
+
+**Six new tests, TDD** (confirmed RED first — the const didn't exist, compile failure for the
+right reason): grounding at slot 1 (level 5, value 3) and a LATER numbered slot (level 9,
+`choice:barbarian_rage_power_4`, value 4, proving the check spans every slot); a no-selection
+control; **two mutation-proof negative controls** (an invented id; a DIFFERENT real Rage Power,
+Surprise Accuracy, mirroring the exact same-class/different-option collision shape wave 11's own
+regression guarded against for the pool-name matcher); and a reachability proof through the real
+`build_pilot_headless_receipt` entry point (`Computed`, not `Blocked`), per this card's own
+dispatch ("never a resolver unit test").
+
+**Mutation-tested for real** (per the wave-11 caution that a gate which cannot fail is worse than
+no gate): manually bypassed `barbarian_selected_rage_power`'s own gate
+(`if true || barbarian_selected_rage_power(...)`), re-ran the two negative-control tests,
+confirmed BOTH went red for the expected reason, then reverted before committing.
+
+### §2 — DoD-8 found a real save-time defect a green code gate could not
+
+Driving the actual desktop app (`RUN_DESKTOP_AGENT=sd31-pool-consumers`) to create a Barbarian
+with Superstition selected failed outright: **"Failed to create character: selected choice
+selection_id 'superstition' must have at least two colon-segments to round-trip through the
+fixture grammar."** Traced to `saved_character::local_store::validate_character_input` (out of
+this card's file territory, read-only): it requires every `selected_choices` entry to carry at
+least one colon — the exact shape the PRE-EXISTING `EMPOWER_SPELL_METAMAGIC_SELECTION` doc
+comment in `pf1_adapter.rs` already documents for Arcanist ("a real feat name has none... a
+real bug found and fixed 2026-07-25"). But `v06_work_inventory.rs`'s `CLASS_FEATURE_POOLS`
+registry (lane 6's file, read-only) declares Rage Power's own namespace EMPTY, so the board's own
+`--class-feature-probe` generates the BARE form — the two consumers wanted opposite conventions.
+
+**Fixed by de-namespacing, not by picking a winner:** `pf1_adapter.rs`'s Path A seed now persists
+`"rage_power:superstition"` (satisfies the save-time colon requirement, same pattern the Arcanist
+fix already established); `pilot_compute.rs`'s `barbarian_selected_rage_power` strips a
+`"rage_power:"` prefix before validating the selection against `CORE_RULEBOOK_RAGE_POWER_POOL`, so
+both the namespaced (app-persisted) and bare (probe-generated) forms of the SAME real value ground
+identically. One new test (`a_namespaced_seed_selection_also_grounds_the_real_save_bonus`), TDD,
+confirmed RED first.
+
+**A first DoD-8 attempt also hit a testing mistake of my own, not a code defect:** created a Dwarf
+Barbarian, and the Actions tab showed no Rage Power records at all. Traced to the PRE-EXISTING
+`explain_barbarian_level1_chassis`'s own `if input.chosen.race_id != HUMAN_RACE_ID { return; }`
+gate — the whole Rage Power recognition loop (and my new grounding, appended after it) was already
+Human-only before this cycle touched anything. Recreated as Human; resolved.
+
+**DoD-8, driven for real via `driver.sh`:** created "Krogar Stonefi," a Human Barbarian 2, through
+the app's own Create Character form (typed name, selected Race=Human/Class=Barbarian via keyboard
+type-ahead on the native `<select>`, set Level=2, allocated the 2 floating ability points, clicked
+Create). Loaded the saved character (Load Character list, not a hand-authored fixture). Actions
+tab renders, live: **"Rage Power Choice 0"** (the recognition record) immediately followed by
+**"Rage Power Superstition Save Bonus 2"** with the full corpus-cited derivation text. Screenshot
+committed at `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E4-F2-003/
+barbarian-superstition-actions-tab.png`. `driver.sh stop` run before the final gate.
+
+### §3 — Board-facing re-derivation, per the mandated diagnostic and the guarded regen
+
+`--class-feature-probe`, re-run after landing: **wired keys 19 → 21**
+(`Rage Power ~ Superstition` and `Unchained Rage Power ~ Superstition` — the second a free ride,
+since both corpus groups share the SAME `choice:barbarian_rage_power` `choice_set_id`/`barbarian`
+owner in `CLASS_FEATURE_POOLS`). Declined `Rage Power` 169 → 168, `Unchained Rage Power` 54 → 53.
+
+**Guarded regen** (`corpus_literal_sweep` CLEAN, 25163 examined 0 findings;
+`derived_evaluator_fixture_check` 1267/1268 covered units cleared, the 1 pre-existing failure
+being `advanced_players_guide:equipment:spindle_of_perfect_knowledge` — confirmed named in prior
+waves' own artifacts, unrelated to this card; `v06_work_inventory` ran clean, zero stamp loss):
+
+- `core_rulebook:class_feature:rage_power_superstition` moved `unknown` → `grounded`, evidence
+  `class_feature_probe_observed_a_delta_attributable_to_this_record` — the probe genuinely feeds
+  `classify()`'s own evidence for this record shape.
+- `pathfinder_unchained:class_feature:unchained_rage_power_superstition` did **NOT** move — stuck
+  at `unknown`/`class_feature_group_names_no_class_at_all` (the classify() owner-matching gate
+  for "Unchained Barbarian" doesn't resolve to a modelled class at all; a DIFFERENT, pre-existing
+  gap than the one this card fixed, out of file territory to chase further).
+- **Board `done` verdict: unchanged, 11828/38521 (30.71%) — re-derived with the producer's own
+  `doneness_verdict()` function, zero movement.** The Superstition unit's `wiring_class` is
+  `derived`; `doneness_verdict` caps `derived`+`grounded` at `held`, not `done`, without a
+  `fixture-verified` stamp from `derived_evaluator_fixture_check.rs` — the identical structural
+  gap `OPEN-ISSUES.md` row 76 already documented for 91% of the `spell` `held` population. This
+  unit genuinely moved `unmeasurable` → `held` (1 fewer `unknown`, 1 more `grounded` raw status),
+  real forward motion, but crossing into `done` needs a NEW derived-evaluator seam for this
+  formula shape — out of this card's scope (a capability gap, not a wiring gap).
+- `docs/work-inventory.json` measured, then `git checkout --`'d before committing, per the wave
+  rule — this cycle does not carry the regenerated file.
+
+**Did NOT mark any unit `done`** — that is lane 6's (`v06_work_inventory.rs`) file, out of this
+card's territory. Reported the honest board effect (0 `done` movement) rather than either
+overclaiming from the probe's "wired" verdict or omitting the guarded-regen check that would have
+caught the overclaim.
+
+### §4 — Second pool: traced and honestly declined, not faked
+
+Checked two further candidates named by the dispatch's own ranking before committing remaining
+budget, and declined both rather than force a fabricated distinguishing magnitude (Decision 1(a)):
+
+- **Favored Enemy / Favored Terrain** (36 + 18 declined): the existing chooser already grounds a
+  real flat magnitude, but PF1 RAW's own bonus is IDENTICAL regardless of which real enemy
+  type/terrain is chosen — there is no genuine per-option magnitude difference in the corpus to
+  ground. The probe's `DeltaNotAttributableToTheRecord` verdict here is correctly reporting a true
+  fact about the rules, not a wiring gap.
+- **A third Sorcerer Bloodline flavor**: every unwired `Bloodline Arcana` record checked (Aquatic,
+  Boreal, Dreamspun, Protean, Serpentine, Shadow, Starsoul, Stormborn, Verdant) is a CONDITIONAL,
+  spell-cast-triggered modifier under Decision 7 REFINED ("Whenever you cast a spell of the water
+  type…"), not a universal one this card's chooser-wiring mandate should compute — that belongs to
+  the prose-done-bar card, not this one. No genuinely universal, un-fabricated next Bloodline
+  representative was found in the time available.
+
+`retro.py deferral` emitted naming both, rather than left silent.
+
+### §5 — Definition-of-done checklist
+
+1. **`verify.sh` exits 0, captured directly? NO — `VERIFY_EXIT=1`, sole failure
+   `site-dashboard-check`** (`docs/release/SD-31-corpus-closure-grind/artifacts/
+   SD31-E4-F2-003-verify-final.log`), the documented, non-regressing, worktree-path-dependent
+   failure named at `OPEN-ISSUES.md` row 153 — not chased, per the mandate's own instruction.
+   26/27 stages PASS: `preflight-disk` `preflight-oracle` `oracle-pin-selftest`
+   `producer-selftest` `site-dashboard-selftest` `reachability-audit-selftest`
+   `reachability-audit` `groundtruth-guard-selftest` `supersession-gate-selftest` `pi-sweep`
+   `declared-pi-audit` `audit-selftest` `reclaim-selftest` `driver-selftest`
+   `corpus-sweep-selftest` `root-lib` (1991 passed) `root-full` (6952 passed across 565 suites,
+   all 529 `tests/*.rs` suites executed) `desktop` (461 passed) `reach` (27 passed)
+   `corpus-sweep` (25163 examined, 0 findings) `supersession-gate` (116 objects clean)
+   `frontend-install` `frontend-test` (99/99) `frontend-typecheck` (clean) **`clippy`
+   `root:52 desktop:7 warnings, 0 errors` — exactly at the recorded ceiling** `class-dump`
+   (31/31 computing).
+2. **Reach passes with a claim for the touched families?** No new family, book, or `reach_gate.rs`
+   claim was added or needed — this card grounds an EXISTING class_feature record's magnitude,
+   not a new ingest surface. `reach` stage PASS (27 passed) unchanged.
+3. **`v06_corpus_trap_report -- --audit`**: `AUDIT_EXIT=2`, RED for the pre-existing, documented
+   reason — `1 0 mod-record` / `0 1225 wiring-class-mismatch`, **exactly matching the baseline**
+   (1 mod-record, 1,225 wiring-class-mismatch), zero drift confirmed by direct count.
+4. **Guarded regen reports ZERO stamp loss?** Yes — measured via
+   `corpus_literal_sweep`/`derived_evaluator_fixture_check`/`v06_work_inventory`, board effect
+   named in §3, `docs/work-inventory.json` reverted (`git checkout --`) before committing.
+5. **Four-check wired-integration audit clean?** Yes —
+   `BASE_BRANCH=origin/tranche/11 bash scripts/wired-integration-audit.sh`: all four checks
+   (forbidden tokens, empty event handlers, mock-library leaks, "Would…" stub strings) PASS
+   clean over this branch's 2-commit diff.
+6. **Unsurfaced families get an OPEN_FINDINGS entry?** N/A — no new family surfaced this cycle.
+7. **Baseline moves are a SEPARATE commit with `--show-actuals`?** N/A — no baseline figures
+   (`BASELINE_ROOT_LIB_TESTS` etc.) touched; `verify.sh`'s own "BASELINE NOTES" block flags 3
+   stale baselines (1984→1991, 6945→6952, 459→461) that pre-date and are unrelated to this card's
+   own delta (matches the count this cycle's own new tests add: +1 root-lib, +1 root-full net of
+   the desktop-crate split, +2 desktop) — reported, not silently updated, per the wave rule that
+   baseline updates are the integration cycle's own deliberate act.
+8. **On-screen verification (§7 condition 3)?** Yes — §2 above, screenshot committed.
+
+### §6 — Reclaim
+
+`scripts/reclaim.sh --apply`: `reclaimed: 0 item(s), 0.0B total` — nothing orphaned in this
+worktree (all this cycle's own branches un-merged with a live upstream, correctly skipped).
+`CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-pool-consumers` (34G) deleted at cycle end,
+per the standing "delete your CARGO_TARGET_DIR when you finish" rule.
+
+Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_012LQjhfcbAEBt6SiquQXEAE
