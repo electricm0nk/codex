@@ -1305,3 +1305,80 @@ be re-confirmed against the first real worked example the race evidence table pr
 **Authority:** operator ruling, 2026-08-17, verbatim above. Decision 14 moves from PROPOSED to
 CONFIRMED with these mechanics. Race attribution stays FROZEN and the Supersession Register stays
 PROPOSED, NOT APPLIED, until the race evidence table exists and is ruled on.
+
+## Decision 15 — The 13 `.COPY=` spell variants: exclusion WITHDRAWN, a real path exists (2026-08-17)
+
+**Operator direction:** *"As for the spells, they stay - i'll look them up for you. i need a list"*,
+then, after the list: *"i understand now why you had problems with those 13 spells. See if you can
+find the path back on those to the parent spell that they copy"*.
+
+**The path exists, it is short, and the exclusion proposal (`OPEN-ISSUES` row 55) is WITHDRAWN.**
+No signature is needed and no unit leaves the denominator.
+
+### The parent is named in the row itself
+
+PCGen's `.COPY=` syntax is `<parent>.COPY=<new name>`, so the parent is the text **before** `.COPY=`:
+
+```
+Speak with Animals.COPY=Speak with Animals (rodents only)   CLASSES:.CLEARALL
+^^^^^^^^^^^^^^^^^^ the parent
+```
+
+All 13 parents were located in the same file as their copy, each carrying real class levels
+(re-derived 2026-08-17 against the pinned oracle):
+
+| copy | parent | parent's levels |
+|---|---|---|
+| Animate Objects (Small or Smaller) | Animate Objects | Bard, Cleric = 6 |
+| Charm Animal (aquatic animals only) | Charm Animal | Druid, Ranger = 1 |
+| Disguise Self (humanoid only) | Disguise Self | Bard, Sorcerer, Wizard = 1 |
+| Nondetection (self only) | Nondetection | Ranger, Sorcerer, Wizard = 3 |
+| Plane Shift (×2 variants) | Plane Shift | Cleric = 5 \| Sorcerer, Wizard = 7 |
+| Speak with Animals (×4 variants) | Speak with Animals | Druid, Ranger = 1 \| Bard = 3 |
+| Summon Monster III (lantern archon only) | Summon Monster III | Bard, Cleric, Sorcerer, Wizard = 3 |
+| Summon Nature's Ally I (dolphins only) | Summon Nature's Ally I | Druid, Ranger = 1 |
+| Fins to Feet (self only) | Fins to Feet | Druid, Sorcerer, Witch, Wizard = 3 |
+
+### `CLASSES:.CLEARALL` is a correct statement, not missing data
+
+Row 55 read the cleared class list as "PCGen declaring this variant has no class, therefore no level
+exists, therefore ingest is impossible". **That reading was wrong.** Every one of the 13 is
+referenced from a `*_abilities_race.lst` file: these are **racial spell-like abilities**, and the
+class list is cleared precisely because *no class grants them* — a race does. Verbatim from the
+corpus:
+
+```
+KEY:Wererat-Kin ~ Spell-Like Ability
+DESC:A nightskulk skinwalker with a Wisdom score of 11 or higher can use speak with animals
+     (rodents only) three times per day as a spell-like ability, using his Wisdom modifier to
+     determine his concentration checks. The caster level for this ability is equal to the
+     skinwalker's character level.
+```
+
+Others confirmed the same way: Fetchling grants *Disguise Self (humanoid only)* and *Plane Shift (to
+Shadow or Material Plane)*; Inner Sea Races grants *Fins to Feet (self only)* and *Summon Nature's
+Ally I (dolphins only)*; Skinwalker/Bestiary 4 races grant the *Speak with Animals* variants.
+
+### The ingest shape
+
+* **Spell properties** (school, range, duration, description) — inherit from the parent record.
+* **Spell level** — the parent's. It is real and present.
+* **Caster level** — from the granting racial ability, which states it in plain text ("equal to the
+  skinwalker's character level").
+* **The consumer** — the race ability that grants it, a genuine player-visible surface, so DoD-8 is
+  achievable rather than blocked.
+
+This is ordinary ingest work under `epic-6-ingest-lanes`, not an exclusion. Any cycle claiming it
+must resolve the parent from the row rather than hardcoding a mapping, and must NOT invent a caster
+level where the granting ability does not state one.
+
+### The lesson, which is this package's most-repeated one
+
+Row 55 did everything the process asks — it re-derived its figure, read the record one level deep,
+and wrote all four `§3` items honestly. It still reached the wrong conclusion, because it read the
+copy and never followed `.COPY=` back to the parent. **The data was complete; the reader stopped one
+hop short.** Same shape as `core_essentials` (`§9`), the corpus-row path join (wave 2), and the pool
+name matcher (wave 11). `retro.py correction` emitted against row 55's "impossible" claim.
+
+**Authority:** operator direction 2026-08-17; finding derived and verified by the orchestrating
+session against the pinned oracle `7f818006e371188e5717fd18d74d18a420747fc6`.
