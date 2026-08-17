@@ -7823,6 +7823,8 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     );
 
     explain_halfling_race_seam(input, &mut explanations, &mut diagnostics);
+    explain_size_only_race_trait_bundle(input, &mut explanations);
+
 
     explain_selected_alternate_racial_traits(input, &mut explanations, &mut diagnostics);
 
@@ -9648,6 +9650,177 @@ fn explain_halfling_race_seam(
             .to_owned(),
         claim_blocking: false,
     });
+}
+
+/// SD31-E4-F1-005 (§8, "wire it, don't retract"): all 6 of Wave 8's demoted
+/// `race_trait` Small-size units (`kobold_size`, `svirfneblin_size`,
+/// `goblin_size`, `grippli_size` here; `gnome_size`/`halfling_size` already
+/// corrected by `SD31-E4-F1-004`) had, or now have, a
+/// `race.<x>.trait_bundle.size` explanation citing the real mechanism.
+/// Kobold, Svirfneblin, Goblin and Grippli have no dedicated
+/// `explain_<race>_race_seam` (no ability-score adjustments are transcribed
+/// for them anywhere in this engine, so this function deliberately claims
+/// only creature size, nothing wider) -- confirmed empirically before
+/// writing this: `race:grippli` reaches `compute_pilot_base_chassis` today
+/// with ZERO claim-blocking diagnostics and `baseline_armor_class == 18`
+/// (17 Medium baseline + the real +1 Small bonus), the same as the other
+/// three, via only a non-blocking `race.semantics.unverified` note -- so
+/// Grippli belongs in this table exactly like the other three, not left out
+/// as a boundary.
+///
+/// `combat_size_modifiers` (`race_size_for_race_token`) already applies the
+/// real PF1 AC/attack/CMB/CMD size term to ANY race string it resolves,
+/// unconditionally, inside `compute_combat_baseline` -- proven for Kobold,
+/// Svirfneblin and Goblin by `tests/sd27_size_modifiers_to_armor_class.rs`
+/// and `tests/sd27_size_modifiers_to_touch_cmb_cmd_and_attack.rs` (`RACES`
+/// tables in both), and for Grippli by this module's own
+/// `size_only_race_trait_bundle_tests`. What was still missing was
+/// record-level provability: each of these four characters' sheet showed
+/// the correct total but had no explanation row saying why, one corpus
+/// record deep. This closes that gap the same way `SD31-E4-F1-004` closed
+/// it for Gnome/Halfling.
+///
+/// # Sourcing, verified against the pinned oracle directly, not inferred
+///
+/// Each of the four races' own `<race>_abilities_race.lst`
+/// (`core_essentials/races/<race>/`, line 16 in every case) carries an
+/// identically-shaped `KEY:<Race> ~ Size` record: `TEMPLATE:SIZE_S`,
+/// `CATEGORY:Special Ability`, and a `DESC:` stating the same PF1 Table 8-1
+/// Small-size shape verbatim ("+1 size bonus to their AC, a +1 size bonus
+/// on attack rolls, a -1 penalty on combat maneuver checks and to their
+/// Combat Maneuver Defense, and a +4 size bonus on Stealth checks") --
+/// re-derived directly from `data/corpus/beastiary/race_trait/{kobold,
+/// svirfneblin,goblin}/*_size.json` and `data/corpus/bestiary_2/race_trait/
+/// grippli/grippli_size.json`'s own `description` field, not transcribed
+/// from memory.
+const SIZE_ONLY_RACE_TRAIT_BUNDLE: &[(&str, &str, &str)] = &[
+    ("race:kobold", "Kobold", "kobold_abilities_race.lst"),
+    ("race:svirfneblin", "Svirfneblin", "svirfneblin_abilities_race.lst"),
+    ("race:goblin", "Goblin", "goblin_abilities_race.lst"),
+    ("race:grippli", "Grippli", "grippli_abilities_race.lst"),
+];
+
+fn explain_size_only_race_trait_bundle(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some((_, race_label, source_file)) = SIZE_ONLY_RACE_TRAIT_BUNDLE
+        .iter()
+        .find(|(race_id, _, _)| *race_id == input.chosen.race_id)
+    else {
+        return;
+    };
+    let slug = race_label.to_lowercase();
+    explanations.push(ComputationExplanation {
+        id: format!("race.{slug}.trait_bundle.size"),
+        value: 0,
+        detail: format!(
+            "{race_label} racial trait bundle — size: PF1 {race_label} is Small size \
+             (core_essentials/races/{slug}/{source_file}'s `KEY:{race_label} ~ Size` record, \
+             `TEMPLATE:SIZE_S`). This is a bounded recognition record naming the {race_label} \
+             size category; it performs no arithmetic of its own (+0) so it does not \
+             double-count the real PF1 Small-size effect (+1 AC, +1 attack rolls, -1 CMB/CMD, \
+             and +4 Stealth). SD-27 (decisions.md §28 defect 1) wired the AC/attack/CMB/CMD \
+             portion into this engine's general combat baseline (`combat_size_modifiers`, keyed \
+             off `race_size_for_race_token`, which resolves {race_label} to Small \
+             unconditionally): any {race_label} character who reaches \
+             `compute_combat_baseline`'s supported posture gets the real +1 AC/attack and \
+             -1 CMB/CMD from that shared term, not from this record. The +4 Stealth portion is \
+             still not applied anywhere: no Stealth skill total exists in this engine yet \
+             (`compute_selected_skill_modifiers` supports only Climb, Intimidate and Swim). \
+             {race_label} has no other racial ability-score, speed, or sense adjustment \
+             transcribed on this deterministic pilot seam; only its creature size is grounded \
+             here"
+        ),
+    });
+}
+
+#[cfg(test)]
+mod size_only_race_trait_bundle_tests {
+    use super::compute_pilot_base_chassis;
+    use crate::rules_core::character_input::{load_character_input_fixture, CharacterInput};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn input_for_race(slug: &str) -> CharacterInput {
+        let text = FIGHTER_LEVEL_1_FIXTURE
+            .replace("race_id=race:human", &format!("race_id=race:{slug}"));
+        let loaded = load_character_input_fixture(&text);
+        assert!(
+            loaded.diagnostics.is_empty(),
+            "{slug} fixture should load cleanly: {:?}",
+            loaded.diagnostics
+        );
+        loaded.character_input.expect("valid fixture should produce a character input record")
+    }
+
+    /// Each of the three races gets its own real `race.<slug>.trait_bundle.size`
+    /// explanation record, citing the real mechanism, not a stub or a copy-
+    /// pasted placeholder -- and none of the three collide with each other's id.
+    #[test]
+    fn each_race_gets_its_own_named_size_explanation_citing_the_real_mechanism() {
+        for slug in ["kobold", "svirfneblin", "goblin", "grippli"] {
+            let computation = compute_pilot_base_chassis(&input_for_race(slug));
+            let id = format!("race.{slug}.trait_bundle.size");
+            let record = computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("{slug} must produce a {id} explanation"));
+            assert_eq!(record.value, 0, "{slug}: a bounded recognition record, no arithmetic performed");
+            assert!(
+                record.detail.contains("Small"),
+                "{slug}: size record must name the Small size category: {}",
+                record.detail
+            );
+            assert!(
+                record.detail.contains("combat_size_modifiers"),
+                "{slug}: record must cite the real mechanism that applies AC/attack/CMB/CMD, \
+                 not just describe the rule in the abstract: {}",
+                record.detail
+            );
+            assert!(
+                record.detail.contains("Stealth skill total exists"),
+                "{slug}: record must still name the one genuinely unapplied piece (Stealth) \
+                 honestly rather than implying full coverage: {}",
+                record.detail
+            );
+        }
+    }
+
+    /// The new explanation must not shadow or duplicate `combat_size_modifiers`'s
+    /// own real AC number -- the +1 must still land on `defense.baseline_armor_class`
+    /// exactly as `tests/sd27_size_modifiers_to_armor_class.rs` already proves,
+    /// unaffected by this cycle's own addition.
+    #[test]
+    fn the_new_explanation_does_not_change_the_real_armor_class_total() {
+        for (slug, expected_ac) in
+            [("kobold", 18), ("svirfneblin", 18), ("goblin", 18), ("grippli", 18)]
+        {
+            let computation = compute_pilot_base_chassis(&input_for_race(slug));
+            assert_eq!(
+                computation.baseline_armor_class, expected_ac,
+                "{slug}: Small-size Armor Class (17 Medium baseline + 1) must be unaffected by \
+                 the new record-level explanation this cycle adds"
+            );
+        }
+    }
+
+    /// A race outside the three-entry table (Human, the fixture's own default)
+    /// gets no `trait_bundle.size` record from this function at all -- it must
+    /// not fire generically for every race.
+    #[test]
+    fn a_race_outside_the_table_gets_no_record_from_this_function() {
+        let computation = compute_pilot_base_chassis(&input_for_race("human"));
+        assert!(
+            !computation.explanations.iter().any(|e| e.id.starts_with("race.")
+                && e.id.ends_with(".trait_bundle.size")
+                && e.id != "race.human.trait_bundle.size"),
+            "no stray size-only trait_bundle record should appear for Human"
+        );
+    }
 }
 
 /// SD13-E6-F3a Human racial trait bundle explanation seam.
