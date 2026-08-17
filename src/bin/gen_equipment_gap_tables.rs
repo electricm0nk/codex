@@ -810,11 +810,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     blacklist_name_excluded += 1;
                     continue;
                 }
-                if let Some(desc) = &record.description {
-                    if blacklist_hit(desc).is_some() {
-                        blacklist_description_redacted += 1;
-                        record.description = Some(REDACTED_PI_MARKER.to_string());
-                    }
+                if let Some(desc) = &record.description
+                    && blacklist_hit(desc).is_some()
+                {
+                    blacklist_description_redacted += 1;
+                    record.description = Some(REDACTED_PI_MARKER.to_string());
                 }
                 rows.push(record);
             }

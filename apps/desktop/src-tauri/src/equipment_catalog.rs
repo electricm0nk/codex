@@ -760,9 +760,20 @@ mod tests {
         // own fix in `gen_equipment_gap_tables.rs` redacts/excludes 4 fewer
         // than the earlier, pre-fix intermediate count -- re-derived fresh,
         // not hand-adjusted, after that fix landed).
+        // `SD31-E6-F10-004`: 5 further already-compiled books extended into
+        // the corpus gap lane -- same shape. Per-book, re-derived fresh from
+        // the built catalog: `ISG` 72/125, `MYTHIC` 97/252 (most mythic
+        // items are `.MOD`/`NAMEISPI` rows or bare stat-boost items with no
+        // `DESC:`/`SPROP:` token), `ISC` 7/65, `ISI` 9/34, `BOTD2` 3/5.
+        assert_eq!(with_description("ISG"), 72);
+        assert_eq!(with_description("MYTHIC"), 97);
+        assert_eq!(with_description("ISC"), 7);
+        assert_eq!(with_description("ISI"), 9);
+        assert_eq!(with_description("BOTD2"), 3);
+        // 4430 + 188 (72 + 97 + 7 + 9 + 3) = 4618.
         assert_eq!(
             response.entries.iter().filter(|e| e.description.is_some()).count(),
-            4430
+            4618
         );
     }
 
@@ -1192,7 +1203,13 @@ mod tests {
         // extension) was one of the 12 new cross-book collisions; the
         // `bestiary_3` `Ranged Cannon` removal did not change this count
         // (it never collided with another book's key).
-        assert_eq!(cross_book.len(), 212);
+        // `SD31-E6-F10-004`: 212 -> 213, +1 new cross-book collision from
+        // the 5 newly-extended gap-lane books (`inner_sea_gods`/
+        // `mythic_adventures`/`inner_sea_combat`/`inner_sea_intrigue`/
+        // `book_of_the_damned_volume_2`), verified below (the loop over
+        // `cross_book.difference(&expected_cross_book)`) to involve a gap
+        // row, same discipline as every prior growth of this count.
+        assert_eq!(cross_book.len(), 213);
         for key in cross_book.difference(&expected_cross_book) {
             assert!(
                 gap_pairs.iter().any(|(_, gap_key)| gap_key == key),
@@ -1269,7 +1286,10 @@ mod tests {
         // 1017 -> 1015: both removed PFS legality overlay rows
         // (`bestiary_2`'s `Maul of the Titans`, `bestiary_3`'s `Ranged
         // Cannon`) were `ArmsArmor` category.
-        assert_eq!(response.entries.len(), 1015);
+        // `SD31-E6-F10-004`: +35 ArmsArmor rows across the 5 newly-extended
+        // gap-lane books (1015 -> 1050), re-derived fresh from the built
+        // catalog, not adjusted by a hand count.
+        assert_eq!(response.entries.len(), 1050);
         for entry in &response.entries {
             assert_eq!(entry.category, "ArmsArmor");
         }
