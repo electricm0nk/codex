@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 14,
-  "generated_at": "2026-08-17T15:19:21Z",
+  "generated_at": "2026-08-17T20:06:22Z",
   "source_document": "/home/ubuntu/workspace/repos/codex/docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 38521,
-  "proven_units": 6013,
+  "proven_units": 5993,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 306,
   "pi_oracle_available": true,
@@ -89,18 +89,19 @@
     },
     "class_feature": {
       "units": 15472,
-      "proven": 177,
+      "proven": 150,
       "by_status": {
-        "unknown": 3894,
-        "not-ingested": 10415,
+        "unknown": 3893,
+        "not-ingested": 10439,
         "deferred-with-reason": 36,
-        "grounded": 122,
+        "grounded": 95,
         "text-complete": 55,
-        "literal-verified": 21,
+        "fixture-verified": 8,
+        "literal-verified": 17,
         "not-started": 929
       },
       "shard": "PF1e-units-class_feature.json",
-      "bytes": 2342399,
+      "bytes": 2342528,
       "doneness_unmapped": {},
       "categories": {
         "specialquality": {
@@ -114,8 +115,8 @@
         },
         "classfeatures": {
           "label": "Class Features",
-          "done": 9,
-          "held": 2,
+          "done": 10,
+          "held": 1,
           "in-progress": 0,
           "not-started": 999,
           "unmeasurable": 311,
@@ -258,8 +259,8 @@
         },
         "paladinclassfeatures": {
           "label": "Paladin Class Features",
-          "done": 5,
-          "held": 3,
+          "done": 6,
+          "held": 2,
           "in-progress": 0,
           "not-started": 134,
           "unmeasurable": 29,
@@ -267,8 +268,8 @@
         },
         "barbarianclassfeatures": {
           "label": "Barbarian Class Features",
-          "done": 6,
-          "held": 2,
+          "done": 7,
+          "held": 1,
           "in-progress": 0,
           "not-started": 102,
           "unmeasurable": 59,
@@ -294,8 +295,8 @@
         },
         "internal": {
           "label": "Internal",
-          "done": 1,
-          "held": 3,
+          "done": 3,
+          "held": 1,
           "in-progress": 0,
           "not-started": 101,
           "unmeasurable": 53,
@@ -555,8 +556,8 @@
         },
         "ninjaclassfeatures": {
           "label": "Ninja Class Features",
-          "done": 2,
-          "held": 2,
+          "done": 3,
+          "held": 1,
           "in-progress": 0,
           "not-started": 50,
           "unmeasurable": 1,
@@ -574,10 +575,10 @@
         "unchainedragepower": {
           "label": "Unchained Rage Power",
           "done": 0,
-          "held": 0,
+          "held": 1,
           "in-progress": 0,
           "not-started": 30,
-          "unmeasurable": 24,
+          "unmeasurable": 23,
           "deferred": 0
         },
         "ragepower": {
@@ -600,8 +601,8 @@
         },
         "slayerclassfeatures": {
           "label": "Slayer Class Feature",
-          "done": 2,
-          "held": 4,
+          "done": 4,
+          "held": 2,
           "in-progress": 0,
           "not-started": 28,
           "unmeasurable": 17,
@@ -1104,10 +1105,10 @@
         },
         "unchainedmonkclassfeature": {
           "label": "Unchained Monk Class Feature",
-          "done": 14,
-          "held": 4,
+          "done": 10,
+          "held": 0,
           "in-progress": 0,
-          "not-started": 0,
+          "not-started": 8,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -1167,10 +1168,10 @@
         },
         "unchainedsummonerclassfeature": {
           "label": "Unchained Summoner Class Feature",
-          "done": 16,
-          "held": 1,
+          "done": 13,
+          "held": 0,
           "in-progress": 0,
-          "not-started": 0,
+          "not-started": 4,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -1329,10 +1330,10 @@
         },
         "unchainedrogueclassfeature": {
           "label": "Unchained Rogue Class Feature",
-          "done": 8,
-          "held": 5,
+          "done": 4,
+          "held": 3,
           "in-progress": 0,
-          "not-started": 0,
+          "not-started": 6,
           "unmeasurable": 0,
           "deferred": 2
         },
@@ -1401,10 +1402,10 @@
         },
         "unchainedbarbarianclassfeature": {
           "label": "Unchained Barbarian Class Feature",
-          "done": 9,
-          "held": 2,
+          "done": 5,
+          "held": 0,
           "in-progress": 0,
-          "not-started": 0,
+          "not-started": 6,
           "unmeasurable": 1,
           "deferred": 2
         },
@@ -7490,24 +7491,24 @@
     },
     "race_trait": {
       "units": 3603,
-      "proven": 477,
+      "proven": 484,
       "by_status": {
-        "not-ingested": 2837,
+        "not-ingested": 2819,
         "grounded": 303,
-        "ingested-magnitude": 276,
-        "text-complete": 174,
+        "ingested-magnitude": 287,
+        "text-complete": 181,
         "literal-verified": 13
       },
       "shard": "PF1e-units-race_trait.json",
-      "bytes": 520098,
+      "bytes": 520171,
       "doneness_unmapped": {},
       "categories": {
         "racialtraits": {
           "label": "Racial Traits",
-          "done": 479,
+          "done": 486,
           "held": 1,
-          "in-progress": 268,
-          "not-started": 541,
+          "in-progress": 279,
+          "not-started": 523,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -10768,16 +10769,16 @@
       "proven": 230,
       "by_status": {
         "fixture-verified": 1097,
-        "ingested-magnitude": 369,
+        "ingested-magnitude": 382,
         "literal-verified": 211,
         "text-complete": 33,
-        "not-ingested": 798,
         "not-started": 112,
+        "not-ingested": 785,
         "grounded": 197,
         "unknown": 26
       },
       "shard": "PF1e-units-spell.json",
-      "bytes": 329026,
+      "bytes": 329104,
       "doneness_unmapped": {},
       "categories": {
         "arcane": {
@@ -10792,9 +10793,9 @@
         "none": {
           "label": "Uncategorised",
           "done": 427,
-          "held": 134,
-          "in-progress": 62,
-          "not-started": 414,
+          "held": 135,
+          "in-progress": 74,
+          "not-started": 401,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -10831,9 +10832,9 @@
         "n/a": {
           "label": "n/a",
           "done": 2,
-          "held": 0,
-          "in-progress": 24,
-          "not-started": 471,
+          "held": 1,
+          "in-progress": 36,
+          "not-started": 458,
           "unmeasurable": 0,
           "deferred": 0
         },
