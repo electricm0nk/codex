@@ -112,10 +112,10 @@ use codex::rules_core::rules_tables::crb::race_tables::RaceId;
 use codex::rules_core::rules_tables::feats_all::all_feat_tables;
 use codex::rules_core::rules_tables::pathfinder_unchained::class_chassis::PuClassId;
 use codex::rules_core::rules_tables::{
-    acg, advanced_race_guide as arg, apg, beastiary1, crb, occult_adventures as oa,
-    pathfinder_unchained as pu, ultimate_combat as uc, ultimate_equipment as ue,
-    ultimate_intrigue as ui, ultimate_magic as um, ultimate_psionics as upsi,
-    ultimate_wilderness as uw, RuleSetId,
+    acg, advanced_race_guide as arg, apg, beastiary1, crb, inner_sea_gods as isg,
+    occult_adventures as oa, pathfinder_unchained as pu, ultimate_combat as uc,
+    ultimate_equipment as ue, ultimate_intrigue as ui, ultimate_magic as um,
+    ultimate_psionics as upsi, ultimate_wilderness as uw, RuleSetId,
 };
 
 use crate::corpus_ingest_diagnostic::build_corpus_ingest_diagnostic;
@@ -976,6 +976,27 @@ fn reach_of(family: &Family) -> Option<Reach> {
         ("ultimate_combat", "spells") => Some(spells_reach(
             "UC",
             uc::spell_list::SPELL_LIST
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
+        // SD31-E6-F10-001: ISG joins `spell_resolver::spell_catalog_rows()`
+        // as the catalog's 9th book, the same `build_spell_catalog`/"All
+        // books" render path UM/OA/UC use -- proven live, not merely
+        // asserted, by a DoD-8 on-screen capture of "Blade Snare" rendering
+        // its real corpus prose under the "ISG" book badge
+        // (`docs/release/SD-31-corpus-closure-grind/artifacts/
+        // SD31-E6-F10-001/item8/spell-blade-snare.png`). 31 of its 92
+        // records carry no `CLASSES:`/`DOMAINS:` level (mostly deity-boon
+        // variant spells whose base entry lives elsewhere), but every
+        // shipped record still carries a real `key` plus at least one of
+        // `school`/`level`/`description`, so `has_payload` is satisfied
+        // for all 92, proven by this gate's own
+        // `bare_records_are_exactly_the_recorded_findings` check below
+        // rather than assumed.
+        ("inner_sea_gods", "spells") => Some(spells_reach(
+            "ISG",
+            isg::spell_list::SPELL_LIST
                 .iter()
                 .map(|entry| entry.key.to_owned())
                 .collect(),

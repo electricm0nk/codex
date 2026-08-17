@@ -18,8 +18,8 @@ use crate::rules_core::pilot_compute_corpus::TableCellRef;
 use crate::rules_core::rules_tables::crb::spell_list::SPELL_LIST;
 use crate::rules_core::rules_tables::RuleSetId;
 use crate::rules_core::rules_tables::{
-    acg, advanced_race_guide, apg, crb, occult_adventures, ultimate_combat, ultimate_intrigue,
-    ultimate_magic,
+    acg, advanced_race_guide, apg, crb, inner_sea_gods, occult_adventures, ultimate_combat,
+    ultimate_intrigue, ultimate_magic,
 };
 use crate::rules_core::source_content::{SourceContentKind, SourcePackageContent};
 
@@ -42,6 +42,15 @@ pub const SPELL_BOOK_OA: &str = "OA";
 /// remaining not-started `spell` book after Occult Adventures, re-derived
 /// fresh off `docs/work-inventory.json` at this cycle's own tip.
 pub const SPELL_BOOK_UC: &str = "UC";
+/// SD31-E6-F10-001: Inner Sea Gods, the ninth book -- the largest
+/// `not-ingested` `spell` book (96 units) with BOTH a compiled `RuleSetId`
+/// (`RuleSetId::Isg`, from SD-29's monster lane) AND a real, dedicated
+/// `isg_spells.lst` corpus file, re-derived fresh off
+/// `docs/work-inventory.json` at this cycle's own tip. (`bestiary`'s 109 and
+/// `bestiary_4`'s 56 are larger by unit count but have NO dedicated spell
+/// `.lst` file of their own -- their residual is monster-intrinsic
+/// spell-like-ability data, a different shape, not a book-chaining gap.)
+pub const SPELL_BOOK_ISG: &str = "ISG";
 
 /// One ingested spell record, normalized across every book's own
 /// `spell_list` table.
@@ -174,6 +183,13 @@ pub fn spell_catalog_rows() -> &'static [SpellCatalogRow] {
             level: entry.level,
             description: entry.description,
         });
+        let isg_rows = inner_sea_gods::spell_list::SPELL_LIST.iter().map(|entry| SpellCatalogRow {
+            book: SPELL_BOOK_ISG,
+            key: entry.key,
+            school: entry.school.map(|school| format!("{school:?}")),
+            level: entry.level,
+            description: entry.description,
+        });
         crb_rows
             .chain(apg_rows)
             .chain(acg_rows)
@@ -182,6 +198,7 @@ pub fn spell_catalog_rows() -> &'static [SpellCatalogRow] {
             .chain(um_rows)
             .chain(oa_rows)
             .chain(uc_rows)
+            .chain(isg_rows)
             .collect()
     })
 }
@@ -213,6 +230,46 @@ pub fn spell_id_resolve<'a>(
 #[cfg(test)]
 mod spell_catalog_rows_tests {
     use super::*;
+
+    /// SD31-E6-F10-001: Inner Sea Gods is the ninth book chained into
+    /// `spell_catalog_rows()`. A real, non-empty row set proves the chain
+    /// actually wired the new book in, not merely that the constant
+    /// compiles.
+    #[test]
+    fn inner_sea_gods_is_chained_into_the_catalog() {
+        let isg_rows: Vec<&SpellCatalogRow> =
+            spell_catalog_rows().iter().filter(|row| row.book == SPELL_BOOK_ISG).collect();
+        assert!(!isg_rows.is_empty(), "expected at least one Inner Sea Gods spell row");
+        assert!(
+            isg_rows.iter().any(|row| row.key == "Blade Snare"),
+            "expected the real corpus row \"Blade Snare\" (isg_spells.lst) among Inner Sea \
+             Gods rows: {isg_rows:?}"
+        );
+    }
+
+    /// PI screening at ingest time must have actually run, not merely
+    /// compiled: none of the 4 deity-name-blacklisted records
+    /// (`ingest_inner_sea_gods_spells`'s own run output) may appear in the
+    /// shipped catalog.
+    #[test]
+    fn inner_sea_gods_drops_the_deity_name_blacklisted_records() {
+        let isg_keys: Vec<&str> = spell_catalog_rows()
+            .iter()
+            .filter(|row| row.book == SPELL_BOOK_ISG)
+            .map(|row| row.key)
+            .collect();
+        for dropped in [
+            "Abadar's Truthtelling",
+            "Gozreh's Trident",
+            "Rovagug's Fury",
+            "Sympathy (Shelynite)",
+        ] {
+            assert!(
+                !isg_keys.contains(&dropped),
+                "{dropped} carries a blacklisted deity name and must not ship: {isg_keys:?}"
+            );
+        }
+    }
 
     /// SD31-E6-F2-002: Ultimate Magic is the sixth book chained into
     /// `spell_catalog_rows()`, the widening this cycle's own dispatch names

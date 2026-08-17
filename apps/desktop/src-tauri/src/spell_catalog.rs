@@ -3,8 +3,9 @@
 //! `acg::spell_list` (144), `advanced_race_guide::spell_list` (92),
 //! `ultimate_intrigue::spell_list` (101), `ultimate_magic::spell_list`
 //! (269, since SD31-E6-F2-002), `occult_adventures::spell_list`
-//! (144, since SD31-E6-F2-003) and, since SD31-E6-F2-004,
-//! `ultimate_combat::spell_list` (146) — 1845 in total. This adapter
+//! (144, since SD31-E6-F2-003), `ultimate_combat::spell_list` (146, since
+//! SD31-E6-F2-004) and, since SD31-E6-F10-001,
+//! `inner_sea_gods::spell_list` (92) — 1937 in total. This adapter
 //! never chains a book by hand; it reads `spell_resolver::spell_catalog_rows()`
 //! (see `build_spell_catalog` below), so a book widening that registry
 //! reaches this DTO automatically. The per-book count is still worth
@@ -69,8 +70,8 @@ use codex::rules_core::derived_evaluator_fixture_check::{
 };
 use codex::rules_core::pcgen_desc::render_pcgen_desc;
 use codex::rules_core::rules_tables::{
-    acg, advanced_race_guide, apg, crb, occult_adventures, ultimate_combat, ultimate_intrigue,
-    ultimate_magic,
+    acg, advanced_race_guide, apg, crb, inner_sea_gods, occult_adventures, ultimate_combat,
+    ultimate_intrigue, ultimate_magic,
 };
 use codex::rules_core::spell_resolver;
 
@@ -86,6 +87,7 @@ const BOOK_UI: &str = "UI";
 const BOOK_UM: &str = "UM";
 const BOOK_OA: &str = "OA";
 const BOOK_UC: &str = "UC";
+const BOOK_ISG: &str = "ISG";
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -278,6 +280,22 @@ fn map_uc_entry(entry: &ultimate_combat::spell_list::SpellListEntry) -> SpellCat
     }
 }
 
+/// ISG's table types `school`, `level` and `description` optionally, like
+/// UC's -- the real corpus gap this cycle's own ingest found and named
+/// (`SD31-E6-F10-001`: 31 of 92 records carry no `CLASSES:`/`DOMAINS:`
+/// token of their own, mostly deity-boon variant spells whose base entry
+/// lives in another book), never fabricated.
+fn map_isg_entry(entry: &inner_sea_gods::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_ISG.to_string(),
+        school: entry.school.map(|school| format!("{school:?}")),
+        level: entry.level,
+        description: entry.description.map(serve_description),
+        duration: duration_for(BOOK_ISG, entry.key),
+    }
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SpellCatalogResponse {
@@ -404,6 +422,7 @@ mod tests {
             .chain(ultimate_magic::spell_list::SPELL_LIST.iter().map(map_um_entry))
             .chain(occult_adventures::spell_list::SPELL_LIST.iter().map(map_oa_entry))
             .chain(ultimate_combat::spell_list::SPELL_LIST.iter().map(map_uc_entry))
+            .chain(inner_sea_gods::spell_list::SPELL_LIST.iter().map(map_isg_entry))
             .collect();
         let actual = build_spell_catalog().entries;
         assert_eq!(actual.len(), expected.len());
@@ -419,7 +438,7 @@ mod tests {
     #[test]
     fn the_catalog_serves_every_ingested_book_not_only_crb() {
         let response = build_spell_catalog();
-        assert_eq!(response.entries.len(), 1845);
+        assert_eq!(response.entries.len(), 1937);
         assert_eq!(book_entries(BOOK_CRB).len(), 652);
         assert_eq!(book_entries(BOOK_APG).len(), 297);
         assert_eq!(book_entries(BOOK_ACG).len(), 144);
@@ -428,6 +447,7 @@ mod tests {
         assert_eq!(book_entries(BOOK_UM).len(), 269);
         assert_eq!(book_entries(BOOK_OA).len(), 144);
         assert_eq!(book_entries(BOOK_UC).len(), 146);
+        assert_eq!(book_entries(BOOK_ISG).len(), 92);
     }
 
     #[test]
@@ -454,8 +474,11 @@ mod tests {
         for entry in &build_spell_catalog().entries {
             assert!(!entry.key.is_empty());
             assert!(
-                [BOOK_CRB, BOOK_APG, BOOK_ACG, BOOK_ARG, BOOK_UI, BOOK_UM, BOOK_OA, BOOK_UC]
-                    .contains(&entry.book.as_str())
+                [
+                    BOOK_CRB, BOOK_APG, BOOK_ACG, BOOK_ARG, BOOK_UI, BOOK_UM, BOOK_OA, BOOK_UC,
+                    BOOK_ISG
+                ]
+                .contains(&entry.book.as_str())
             );
         }
     }

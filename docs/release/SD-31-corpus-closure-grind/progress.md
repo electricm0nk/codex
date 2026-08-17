@@ -15782,6 +15782,13 @@ past the last integration wave.
 full cycle receipt`), reached via `git fetch origin && git reset --hard origin/tranche/11` (package
 directory was absent at the worktree's initial checkout — `bab19b201`, `origin/main`'s tip — and
 `git status --porcelain` was empty, so the recovery step fired per protocol). Branched off cleanly.
+## Cycle `SD31-E6-F10-001` (`RETRO_ACTOR=sd31-equip-class`) — 2026-08-17, `epic-6-ingest-lanes` F10/F5/F2, corpus_literal_sweep debt
+
+**Role:** `sd31-equip-class`, own worktree, own branch `sd31/equip-class-SD31-E6-F10-001`, pushed to origin.
+
+**HEAD at start:** the package dir was absent and `git status --porcelain` was clean, so per the
+mandatory recovery step: `git fetch origin && git reset --hard origin/tranche/11` →
+`a9426b760014004b4b3c42cf47fa927725139675` (`docs(sd31): SD31-W8-INTEGRATE-001 full cycle receipt`).
 
 **Oracle pin:** `./scripts/verify.sh --only preflight-oracle` → PASS.
 `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/pcgen-oracle-pin.env`).
@@ -16919,3 +16926,259 @@ None hard-blocking. Two genuine, precisely-sized follow-on levers named (§3, `O
 ### Branch tip
 
 Recorded in the handoff below (`branch`/`head_end`).
+### §1 — `class` kind, traced first per the mandate
+
+158 not-started (`class` 27/185 done, unchanged since the wave-8 tip; re-derived:
+`python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json')); u=[x for x in
+d['units'] if x.get('kind')=='class']; print(len(u), collections.Counter(x.get('status') for x in
+u))"` → `185 {'not-ingested': 130, 'not-started': 28, 'grounded': 27}`). Traced one grounded unit
+(Fighter: `data/corpus/core_rulebook/class/fighter.json` → `ClassId::Fighter` → SD-30's
+consumer-delta probe → `evidence: class_probe_observed_computed_delta_on_the_rendered_snapshot` →
+`grounded`) and one not-done unit end to end, then bucketed the full 158.
+
+**Bucket 1 (31 units) is corpus-classification noise, not player classes.** `v06_work_inventory.rs`'s
+`file_kind()` infers `Kind::Class` from any filename containing `_classes` with no content check —
+`bestiary/b1_classes_race.lst` and its `bonus_bestiary` sibling are PCGen's internal monster
+HD/BAB/save-progression tables (`grep -n "CLASS:Drider" b1_classes_race.lst` →
+`CLASS:Drider OUTPUTNAME:Aberration ... FACT:ClassType|Monster` — the corpus's own
+self-declaration that this is `TYPE:Monster`, never a player class).
+
+**Bucket 2 (127 units) is genuine class/prestige-class/NPC-class content the engine's chassis does
+not model** — CRB NPC classes + prestige classes + Ex-Barbarian/Ex-Paladin (17), APG prestige
+classes (12), ACG's Ex-Warpriest (1), `pathfinder_unchained`'s 4 real variant classes (Decision 10
+amendment, in scope, unmodelled), `ultimate_psionics`'s whole Dreamscarred Press roster (37),
+`adventurers_guide`'s prestige-class roster (25), `occult_adventures`'s Kineticist/Medium/
+Mesmerist/Occultist/Psychic/Spiritualist family (9), and 19 more spread across 12 other books.
+
+**Neither bucket closes from this card's file grant.** Bucket 1 needs a `file_kind()` fix in
+`v06_work_inventory.rs` (lane 2). Bucket 2 needs 20+ new class chassis builds in `pilot_compute.rs`
+(lane 1) — real, multi-cycle capability work, the largest single remaining gap this package has
+found for any kind. Logged with the full bucket breakdown and proving commands:
+`OPEN-ISSUES.md` row 150. Per the mandate's own instruction, this finding is the deliverable for
+`class` this cycle — not a partial ingest that could not close either bucket.
+
+### §2 — Named debt: already resolved, re-verified not re-opened
+
+`equipment_gap.rs`'s `find_citation` mis-citation (rows 90), `corpus_literal_sweep`'s
+`compare_tokens` typed-field gap (row 91), `parse_equipment_entries::open_record`'s same-name-merge
+bug (row 61) were all closed by `SD31-E6-F5-003`/`SD31-E6-F5-004` before this cycle (row 102).
+Re-verified live rather than trusted: `corpus_literal_sweep` CLEAN at cycle start (0 findings,
+24583 examined), `KNOWN_KEY_MISMATCH_DEBT` in `tests/v06_corpus_trap_report.rs` empty. Nothing to
+shrink further this cycle on that specific debt; the sanctioned-debt list is unchanged.
+
+### §3 — The grind: Inner Sea Gods spell book, the 9th book chained
+
+Re-derived the real not-ingested-by-book spell split before picking a target (`python3` one-liner
+over `docs/work-inventory.json`): of the not-ingested population, only books with BOTH a compiled
+`RuleSetId` AND a real, dedicated `<book>_spells.lst` file are book-chaining candidates — most of
+the raw "1,002 not-started" figure the dispatch quoted is actually 881 `not-ingested` (corrected,
+retro correction below) spread across many books, and the majority of those (`bestiary` 109,
+`bestiary_4` 56) have NO dedicated spell file at all (monster-intrinsic spell-like-ability rows, a
+different shape). `inner_sea_gods` (96 not-ingested, `RuleSetId::Isg` already compiled from SD-29's
+monster lane, real `isg_spells.lst`) was the largest genuine candidate.
+
+**Built `src/bin/ingest_inner_sea_gods_spells.rs`** (TDD, 15 tests), mirroring
+`ingest_ultimate_magic_spells.rs`'s established shape exactly: reuses the tested
+`pcgen_import::lst_parser::spell::parse_lst_spell_file` parser, derives `level` as the min across
+`CLASSES:`/`DOMAINS:` tokens, screens every record's NAME and DESCRIPTION with BOTH SD-30 PI
+contracts (`§52.3` blacklist sweep, `§53.5` declared-PI reader) before writing anything. Ran against
+the real pinned oracle: **92 of 96 base declarations shipped** (4 correctly dropped for a
+NAME-blacklist deity-name hit: `Abadar's Truthtelling`, `Gozreh's Trident`, `Rovagug's Fury`,
+`Sympathy (Shelynite)` — verified absent from the shipped corpus by direct grep, 0 hits). 31 of the
+92 carry no `CLASSES:`/`DOMAINS:` level (mostly deity-boon variant spells) — kept, `level: None`,
+never fabricated. Per-book PI-gate citation: `data/corpus/inner_sea_gods/LICENSE.json`,
+`classified_by_cycle: SD29-E5-F2-010`, 0 `NAMEISPI:`/`DESCISPI:` tokens in `isg_spells.lst` itself.
+
+**A real citation defect found and fixed mid-cycle**, before it shipped wrong: `isg_spells.lst` is
+the FIRST spell book of the nine chained into this catalog to use `KEY:` tokens at all (`grep -c
+'\tKEY:' um_spells.lst/oa_spells.lst/uc_spells.lst` → `0 0 0`; `isg_spells.lst` → `65`). 2 of those
+65 declare a `KEY:` genuinely different from their display name (`"Lighten Object, Mass"` declares
+`KEY:Lighten Object (Mass)`; `"Shield of the Dawnflower, Greater"` similarly) — `LstSpellRecord` has
+no `key` field, so the first draft shipped both under their display-text identity. Caught by
+`v06_corpus_trap_report --audit`'s own `key-differs-from-name` check (2 findings, not a hypothetical
+— the gate actually fired). Fixed with a `key_field()` helper reading `KEY:` off the raw row
+(mirroring `domains_field`'s own convention), wired into the main loop, plus a matching widening of
+`cache_gen::spell_lane_dump::base_declaration_lines()` (indexes a declared `KEY:` value in ADDITION
+to the display name, so the corrected compiled-table identity still resolves its citation line) —
+4 new tests total. Re-derived after: `key-differs-from-name` 2 → 0, `wiring-class-mismatch`
+unchanged at 1,225 (the pre-existing baseline).
+
+**Wired into the real catalog, not left inert:** `SPELL_BOOK_ISG` + `isg_rows` chained into
+`spell_resolver::spell_catalog_rows()` (2 new tests, one proving the 4 deity-name-blacklisted
+records genuinely do not ship). `apps/desktop/src-tauri/src/spell_catalog.rs`'s
+`build_spell_catalog()` reads `spell_catalog_rows()` directly (never chains a book by hand), so the
+desktop Tauri command served the new book with ZERO further backend wiring — confirmed by the
+`mapping_helpers_agree_with_the_registry`/`the_catalog_serves_every_ingested_book_not_only_crb`
+tests, both updated (1845→1937, +ISG assertion) and green (21/21 `spell_catalog::` tests).
+`SpellCatalogScreen.tsx`'s `BOOK_ORDER`/`BOOK_LABELS` + its own test's independent `CHAINED_BOOK_CODES`
+oracle updated (the count-change-needs-a-sweep rule; 99/99 frontend test files green, including
+the fix to `SpellCatalogScreen.test.ts`'s own hardcoded prose-list assertion). `reach_gate.rs`
+(shared additive-list exception) gained the `("inner_sea_gods", "spells")` claim — omitting it
+failed `every_ingested_family_is_accounted_for`/`unsurfaced_families_are_exactly_the_recorded_findings`
+directly (reproduced the panic before fixing); 27/27 `reach_gate::` tests green after.
+`tests/sd27_known_spells_must_be_on_the_class_spell_list.rs`'s own independent oracle chain updated
+(1845→1937 catalog rows, 1203→1295 off-the-wizard-list — both re-derived by running the test, not
+guessed) — 6/6 green.
+
+**A minimal, flagged exception to this card's own file territory:** `v06_work_inventory.rs`'s
+`spell_book_slug_for` (lane 2, explicitly excluded) needed one additive match arm
+(`"ISG" => "inner_sea_gods"`) — its own dedicated test iterates every book code
+`spell_catalog_rows()` carries and panics on an unmapped one; reproduced the panic, added the
+single line (the same shape the three prior spell-lane cycles' UM/OA/UC additions used), touched
+nothing else in that file. Logged transparently: `OPEN-ISSUES.md` row 153.
+
+**Two real defects in shared spell-lane infrastructure found and fixed** (both `corpus_literal_sweep.rs`
+territory or its direct sibling `cache_gen::spell_lane_dump`, both mine):
+1. `corpus_literal_sweep::compare_tokens`'s DESC-only PI-redaction exemption did not cover a
+   redacted NON-`DESC` token — `enrich_spell_raw_tokens.rs` redacts ANY blacklisted token, one field
+   at a time, and Inner Sea Gods (a book about deities) is the first book to hit a real
+   `FACTSET:Deity|<name>`-shaped redaction at volume: 51 records `MISMATCH`ed on a legitimate
+   redaction. Fixed with a SECOND exemption that re-screens the real corpus row's own same-key value
+   through the identical blacklist scan before exempting — never a blanket "trust the marker" rule.
+   Mutation-proved: wrote a naive blind-trust version, confirmed it makes the sibling
+   coincidental-marker test go RED, reverted to the real re-screening fix. 2 new tests.
+2. `cache_gen::spell_lane_dump::generate()` re-screened an ALREADY-redacted compiled-table
+   `description` (every `ingest_*_spells.rs` binary redacts a blacklisted description into the
+   literal marker at ingest time) as if it were raw prose, finding no blacklist term in the marker
+   itself and shipping `description: "[redacted PI]"` under `license: "OGL"` — an impossible
+   combination (4 real records). Fixed with a `description_classification()` helper recognizing an
+   already-marker-equal value. 3 new tests, one proving the fix does not disable the genuine
+   re-screen for real undeclared prose. `corpus_literal_sweep`: 55 findings → 4 → 0 (CLEAN).
+
+Both OPEN-ISSUES.md rows 151 (the two PI-exemption fixes) and 152 (a related, NOT-fixed hazard:
+`gen_cache_spell_lane_dump` is destructive per-run across every book it covers, not additive —
+caught this cycle's own near-miss before committing, see the `rework` retro event below; a scoped
+follow-up, not fixed this cycle).
+
+**PI screening, corpus-wide, both contracts, verified:** `declared_pi_shipping_audit` CLEAN before
+and after every regen. `data/corpus/inner_sea_gods/LICENSE.json` restated (`records_processed`
+116→208, `records_redacted` 0→4, both re-derived from the shipped files, not carried forward) —
+`tests/sd27_book_license_record_counts.rs`'s drift guard was RED before this fix (the artifact
+undercounted the real on-disk corpus by exactly the 92 new records) and is green after (6/6).
+
+### §4 — Guarded regen (measured locally, NOT committed per the wave rule)
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-equip-class-final.json
+  → 24675 examined, 0 findings, CLEAN
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-...json
+  → 998/999 cleared, 1 pre-existing unrelated FAIL (advanced_players_guide:equipment:
+    spindle_of_perfect_knowledge — no file this cycle touches has anything to do with it)
+CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... cargo run --locked --bin v06_work_inventory
+```
+
+**Baseline, re-derived from the committed tip, not transcribed** (`git show a9426b760:docs/
+work-inventory.json`, producer's own `doneness_verdict`): **10,759/38,521 (27.9302%)** — matches
+the dispatch's own headline exactly.
+
+**After this cycle:** **10,767/38,521 (27.951%), +8.** `spell` kind: 96 Inner Sea Gods units move
+`not-ingested` → `held` (58, real magnitude ingested but not yet consumer-wired to `grounded`),
+`done` (8, `static`+`literal-verified`), `unmeasurable` (26, genuine corpus gap — no level and no
+usable description), `not-ingested` (4, unresolved edge cases). The modest `done` delta is honest,
+not disappointing: this cycle built the catalog INGEST infrastructure for a new book (the
+structural prerequisite), which is a real, necessary, and now-complete step — full `done` for the
+remaining 58 `held` units needs a SEPARATE consumer-delta wiring lever (class-spell-list
+membership / `spell_effect_wired`), correctly out of this cycle's bounded scope, not attempted
+under time pressure.
+
+**Zero stamp loss**: 38,540 total units both before and after (`python3` diff of the two files'
+`len(d['units'])`) — identical.
+
+### §5 — Trap report (DoD item 3)
+
+`cargo run --locked --bin v06_corpus_trap_report -- --audit` → `TRAP_EXIT=2` (pre-existing red, the
+package's own recorded baseline — not a gate failure). `1 mod-record, 1225 wiring-class-mismatch` —
+**exactly the SD31-W8-INTEGRATE-001 baseline, unchanged.** The `key-differs-from-name` category this
+cycle's own first-draft ingest introduced (2 findings) was fixed before landing (§3) and confirmed
+back to 0.
+
+### §6 — Full gate
+
+Launched early, in the background, kept alive through two rounds of self-caught fixes (a clippy
+`collapsible_if` in `spell_lane_dump.rs`'s new `base_declaration_lines` widening, +1 over the 47
+ceiling, fixed with a let-chain; the reach_gate claim; the LICENSE.json restatement) before the
+final, clean run:
+
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F10-001-verify.log
+./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+
+**`VERIFY_EXIT=1`, captured directly, 26/27 stages PASS.** The one failure:
+`site-dashboard-check` (`scripts/publish-site-dashboard.sh --check`) — `site/dashboard/
+PF1e-dashboard.json is STALE`, the expected, universal consequence of ANY cycle moving the board
+state without also running the real (non-`--check`) publish + committing the regenerated file, a
+step this package's own convention reserves for the INTEGRATION cycle (`SD31-W7`/`W8-INTEGRATE-001`
+both ran it as part of their own mandated work; no individual `epic-6-ingest-lanes` F-card cycle in
+this package's history has run it). Deliberately NOT run this cycle: `OPEN-ISSUES.md` row 149 has a
+live, unresolved PRECEDENCE-1 PI-exposure ruling pending on exactly this file's `manifests`/roadmap
+content, and running a fresh publish under that open ruling risks re-shipping or worsening the
+exposure it names — a judgment call for the integration cycle that owns that file's write path, not
+a bounded ingest-lane cycle. Every other stage green: `root-lib` 1944, `root-full` 6845 across 565
+suites (all 529 `tests/*.rs` suites executed), `desktop` 457, `reach` 27 (with the new
+`("inner_sea_gods", "spells")` claim), `corpus-sweep` CLEAN, `clippy` root:47/desktop:7 (exactly the
+recorded ceiling), `frontend-test` 99/99, `class-dump` 31/31.
+Log: `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F10-001-verify.log`.
+
+### §7 — Equipment grind: not attempted this cycle, named precisely rather than rushed
+
+Re-checked `OPEN-ISSUES.md` row 103 (already resolved) before picking anything: `equipment_gap_tables.rs`
+has rows for only the 9 already-routed books; extending `book_routing`'s match arms alone is a
+documented no-op for the 11 remaining not-started books (none has ANY `rules_tables/<book>/equipment*.rs`
+module). The real remaining lever — a genuine new per-book hand-transcription ingest, e.g.
+`inner_sea_gods` (150 not-started) or another top book — needs the SAME PI-screening rigor the spell
+lane above required, and this cycle's time went to closing the spell lane's two real defects (§3) plus
+the `class`-kind investigation (§1) instead of opening a second, larger, unfinished front. Not silently
+dropped: named here so the next `epic-6-ingest-lanes` F5 cycle can act on row 103's own remedy
+immediately.
+
+### §8 — DoD-8, on-screen verification
+
+`run-desktop/verify-on-screen.sh --family spell --record "Blade Snare" --expect "invisible magic
+field" --expect "Abjuration"` → **PASS**. `RUN_DESKTOP_AGENT=sd31equipclass`. Evidence:
+`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F10-001/item8/spell-blade-snare.png` +
+`.verify.md`. Rendered text confirms `Blade SnareISGAbjuration` (the "ISG" book badge, proving
+correct book attribution on screen) followed by the real corpus description. A first attempt with
+`--expect "Druid"` (the spell's class list) correctly FAILED — the class list is not rendered on
+this screen — left as `spell-blade-snare.FAILED.png`/`.FAILED.verify.md`, evidence not discarded,
+per this program's standing convention.
+
+### §9 — Definition of done
+
+1. `verify.sh` exit captured directly, never through a pipe: `VERIFY_EXIT=1`, 26/27 stages PASS,
+   the one failure (`site-dashboard-check`) named and attributed precisely in §6 — an
+   integration-cycle-owned step with a live, unrelated PI ruling pending on the same file
+   (`OPEN-ISSUES.md` row 149), not caused by nor safely fixable within this card's bounded scope.
+2. `reach` — PASS, 27/27, including the new `("inner_sea_gods", "spells")` claim.
+3. `v06_corpus_trap_report -- --audit` — RED for the pre-existing baseline reason only (1
+   mod-record, 1225 wiring-class-mismatch, byte-identical to `SD31-W8-INTEGRATE-001`'s own
+   baseline); this cycle's own `key-differs-from-name` regression was caught and fixed before
+   landing, confirmed back to 0.
+4. Guarded regen: zero stamp loss (38,540 total units, both before and after).
+5. Wired-integration four-check audit: the new book is served over the REAL `list_spell_catalog`
+   Tauri command (not a stub), proven on-screen (§8), with a real `reach_gate.rs` claim (item 2) —
+   not detection-only, not left unwired.
+6. Unsurfaced families: none left unclaimed — `("inner_sea_gods", "spells")` has a real
+   `reach_gate.rs` entry, not an `OPEN_FINDINGS` placeholder.
+7. Baseline moves: `BASELINE_CORPUS_LITERAL_RECORDS` moved 24519→24675 (verify.sh's own
+   auto-detected note) as a direct, expected consequence of the 92+65-ish new enriched spell
+   records reaching the sweep's population; left for the integration cycle to restate in
+   `scripts/verify-baselines.env` per this package's own convention (baseline moves are a
+   SEPARATE commit — not made in this cycle's own commit).
+8. On-screen verification — §8, PASS.
+
+### §10 — Retro events emitted
+
+- `correction`: the dispatch brief's "spell ~1,002 not-started" figure corrected to 121 not-started
+  + 881 not-ingested (two different states), re-derived from `docs/work-inventory.json` directly.
+- `rework`: `gen_cache_spell_lane_dump`'s destructive per-run rewrite wiped `raw_tokens` from 660
+  already-enriched records across 4 pre-existing books; caught via `git status --porcelain` before
+  committing, recovered via revert + re-`enrich_spell_raw_tokens` (idempotent skip-already-enriched),
+  verified byte-identical to pre-regen content (except `ingested_at`) by direct field diff. Logged
+  as `OPEN-ISSUES.md` row 152 for the real fix (make the generator additive, or chain the two tools
+  together with a round-trip test).
+
+### Branch tip
+
+Final tip after landing this receipt and pushing is recorded in the handoff below.
+

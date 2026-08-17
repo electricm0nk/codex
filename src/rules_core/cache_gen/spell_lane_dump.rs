@@ -60,7 +60,10 @@ use crate::rules_core::cache_gen::WiringClassIndex;
 use crate::rules_core::pi_screening::{
     self, classify_optional_field_declared, declared_product_identity,
 };
-use crate::rules_core::rules_tables::{occult_adventures, ultimate_combat, ultimate_intrigue, ultimate_magic};
+use crate::rules_core::shape_b_v1::{License, PI_MARKER_REDACTED, REDACTED_PI_MARKER};
+use crate::rules_core::rules_tables::{
+    inner_sea_gods, occult_adventures, ultimate_combat, ultimate_intrigue, ultimate_magic,
+};
 
 // ---------------------------------------------------------------------
 // Shape B schema -- own local types (per-book/per-lane generators stay
@@ -193,6 +196,25 @@ fn book_specs() -> Vec<BookSpec> {
                 })
                 .collect(),
         },
+        // SD31-E6-F10-001: Inner Sea Gods, the 9th spell book chained into
+        // `spell_resolver::spell_catalog_rows()`. Unlike the four books
+        // above, this one is a `campaign_setting/` book, not
+        // `roleplaying_game/` -- `dir` is generic per-`BookSpec`, so this
+        // is a plain data addition, no path-shape change to `generate()`.
+        BookSpec {
+            book_id: "inner_sea_gods",
+            dir: "pathfinder/paizo/campaign_setting/inner_sea_gods",
+            spell_file: "isg_spells.lst",
+            entries: inner_sea_gods::spell_list::SPELL_LIST
+                .iter()
+                .map(|e| NormalizedEntry {
+                    key: e.key,
+                    school: e.school.map(|s| format!("{s:?}")),
+                    level: e.level,
+                    description: e.description,
+                })
+                .collect(),
+        },
     ]
 }
 
@@ -223,14 +245,64 @@ fn sha256_file(path: &Path) -> std::io::Result<String> {
 fn base_declaration_lines(lst_path: &Path) -> std::io::Result<BTreeMap<String, u32>> {
     let parsed = parse_lst_spell_file(lst_path)
         .map_err(|e| std::io::Error::other(format!("failed to parse {lst_path:?}: {e:?}")))?;
+    let raw_text = std::fs::read_to_string(lst_path)?;
+    let raw_lines: Vec<&str> = raw_text.split('\n').collect();
     let mut out = BTreeMap::new();
     for record in &parsed.records {
         if record.name.ends_with(".MOD") || record.name.contains(".COPY=") {
             continue;
         }
         out.entry(record.name.clone()).or_insert(record.line_number as u32);
+        // A declared `KEY:` token is a record's real identity, distinct
+        // from its display name -- `ingest_inner_sea_gods_spells.rs`'s own
+        // `key_field` reads the identical token for the identical reason
+        // (`SD31-E6-F10-001`, `v06_corpus_trap_report`'s `key-differs-
+        // from-name` finding). Indexed under BOTH the display name (above,
+        // unchanged for every pre-existing book) and the declared key
+        // (here, additive) so a compiled `SpellListEntry.key` that already
+        // resolved to the `KEY:` value still finds its real citation line.
+        if let Some(raw_line) = raw_lines.get(record.line_number - 1)
+            && let Some(declared_key) =
+                raw_line.split('\t').skip(1).find_map(|col| col.trim().strip_prefix("KEY:"))
+        {
+            out.entry(declared_key.to_string()).or_insert(record.line_number as u32);
+        }
     }
     Ok(out)
+}
+
+/// Classifies a `SpellListEntry.description` for storage -- the ONE place
+/// this generator's own re-screen must recognize an already-redacted
+/// compiled-table value rather than re-classifying it as if it were raw
+/// prose (`SD31-E6-F10-001`).
+///
+/// **The defect this closes.** Every `ingest_*_spells.rs` binary already
+/// screens `description` with both SD-30 PI contracts at ingest time,
+/// storing [`REDACTED_PI_MARKER`] into the COMPILED table when the real
+/// prose hits the blacklist. This generator's own re-screen (defense in
+/// depth, per its own module doc comment) then ran `classify_field` on
+/// THAT marker string -- which of course contains no blacklisted term --
+/// and classified it `License::Ogl`, producing shipped records reading
+/// `description: "[redacted PI]"` under `license: "OGL"`. Found live: 4
+/// Inner Sea Gods records (`Spawn Calling`, `Early Judgment`, `Fairness`,
+/// `Deadeye's Arrow`) shipped exactly this impossible combination, and
+/// `corpus_literal_sweep`'s DESC exemption -- gated on
+/// `license == "PI-REDACTED"` -- could never recognize them, so they
+/// `MISMATCH`ed on every sweep run for a redaction that is legitimate, not
+/// a transcription defect.
+fn description_classification(
+    entry_description: Option<&str>,
+    declared_description: bool,
+) -> (License, Option<String>, Option<String>, Option<String>) {
+    if entry_description == Some(REDACTED_PI_MARKER) {
+        return (
+            License::PiRedacted,
+            Some("description".to_string()),
+            Some(PI_MARKER_REDACTED.to_string()),
+            Some(REDACTED_PI_MARKER.to_string()),
+        );
+    }
+    classify_optional_field_declared("description", entry_description, declared_description)
 }
 
 /// [`pi_screening::DeclaredProductIdentity`], read off the real corpus line
@@ -340,7 +412,7 @@ pub fn generate(
             }
 
             let (license, pi_field, pi_marker, stored_description) =
-                classify_optional_field_declared("description", entry.description, declared.description);
+                description_classification(entry.description, declared.description);
 
             let (wiring_class, wiring_class_signals) =
                 wiring_index.wiring_class_for(&mut wiring_lines, spec.spell_file, line, entry.key, entry.key);
@@ -471,6 +543,38 @@ mod tests {
     }
 
     #[test]
+    fn description_classification_recognizes_an_already_redacted_compiled_table_value() {
+        let (license, pi_field, pi_marker, stored) =
+            description_classification(Some(REDACTED_PI_MARKER), false);
+        assert_eq!(license, License::PiRedacted);
+        assert_eq!(pi_field.as_deref(), Some("description"));
+        assert_eq!(pi_marker.as_deref(), Some(PI_MARKER_REDACTED));
+        assert_eq!(stored.as_deref(), Some(REDACTED_PI_MARKER));
+    }
+
+    #[test]
+    fn description_classification_still_re_screens_ordinary_clean_prose() {
+        let (license, pi_field, pi_marker, stored) =
+            description_classification(Some("Ordinary spell prose."), false);
+        assert_eq!(license, License::Ogl);
+        assert_eq!(pi_field, None);
+        assert_eq!(pi_marker, None);
+        assert_eq!(stored.as_deref(), Some("Ordinary spell prose."));
+    }
+
+    #[test]
+    fn description_classification_still_redacts_a_genuinely_undeclared_blacklist_hit() {
+        // Proves the fix did not disable the pre-existing re-screen: real,
+        // UNREDACTED prose naming a deity must still redact through the
+        // ordinary `classify_field` path, not merely the marker-equality
+        // shortcut.
+        let (license, pi_field, ..) =
+            description_classification(Some("As per Iomedae's blessing, you gain a +2 bonus."), false);
+        assert_eq!(license, License::PiRedacted);
+        assert_eq!(pi_field.as_deref(), Some("description"));
+    }
+
+    #[test]
     fn slugify_disambiguates_repeated_names() {
         let mut used = std::collections::BTreeSet::new();
         assert_eq!(slugify("Akashic Form", &mut used), "akashic_form");
@@ -494,6 +598,34 @@ mod tests {
         let lines = base_declaration_lines(&f).unwrap();
         assert_eq!(lines.get("Real Spell"), Some(&1));
         assert!(!lines.contains_key("Real Spell.MOD"));
+        std::fs::remove_dir_all(&tmp).ok();
+    }
+
+    /// `SD31-E6-F10-001`: a record whose row declares a `KEY:` different
+    /// from its own display name must resolve under BOTH, so a compiled
+    /// `SpellListEntry.key` already corrected to the declared `KEY:` value
+    /// (`ingest_inner_sea_gods_spells.rs`'s own fix for the same corpus
+    /// shape) still finds its real citation line.
+    #[test]
+    fn base_declaration_lines_also_indexes_a_declared_key_distinct_from_the_display_name() {
+        let tmp = std::env::temp_dir().join(format!(
+            "spell_lane_dump_declared_key_test_{}",
+            std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_nanos()
+        ));
+        std::fs::create_dir_all(&tmp).unwrap();
+        let f = tmp.join("t_spells.lst");
+        std::fs::write(
+            &f,
+            "Lighten Object, Mass\tKEY:Lighten Object (Mass)\tCLASSES:Wizard=5\tSCHOOL:Transmutation\tDESC:a mass version\n",
+        )
+        .unwrap();
+        let lines = base_declaration_lines(&f).unwrap();
+        assert_eq!(lines.get("Lighten Object, Mass"), Some(&1), "display name still resolves");
+        assert_eq!(
+            lines.get("Lighten Object (Mass)"),
+            Some(&1),
+            "the declared KEY: value must ALSO resolve to the same line"
+        );
         std::fs::remove_dir_all(&tmp).ok();
     }
 }

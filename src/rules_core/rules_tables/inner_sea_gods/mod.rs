@@ -123,6 +123,7 @@
 //! every other book in this registry.
 
 mod monster_data;
+pub mod spell_list;
 
 pub use super::monster_chassis::{
     MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock,

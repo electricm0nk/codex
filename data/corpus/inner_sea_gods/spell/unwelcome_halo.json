@@ -1,0 +1,84 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "This spell causes the target to glow as if surrounded by a halo of light. This halo sheds normal light in a 20-foot radius from the creature, and increases the light level by one step for an additional 20 feet. This halo makes it impossible for the creature to gain concealment in nonmagical darkness, and in dim or darker conditions, the creature's glow can be seen even if it is not within direct line of sight. If unwelcome halo is brought into an area of magical darkness (or vice versa), the effects of both spells are temporarily negated, so that the otherwise prevailing light conditions exist within the overlapping fields of effect.",
+    "key": "Unwelcome Halo",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Cleric,Paladin,Sorcerer,Wizard=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "V, S"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell causes the target to glow as if surrounded by a halo of light. This halo sheds normal light in a 20-foot radius from the creature, and increases the light level by one step for an additional 20 feet. This halo makes it impossible for the creature to gain concealment in nonmagical darkness, and in dim or darker conditions, the creature's glow can be seen even if it is not within direct line of sight. If unwelcome halo is brought into an area of magical darkness (or vice versa), the effects of both spells are temporarily negated, so that the otherwise prevailing light conditions exist within the overlapping fields of effect."
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Light"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes"
+      },
+      {
+        "key": "FACTSET",
+        "value": "[redacted PI]"
+      },
+      {
+        "key": "KEY",
+        "value": "Unwelcome Halo"
+      },
+      {
+        "key": "RANGE",
+        "value": "Medium"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.244"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "One nongood creature"
+      }
+    ],
+    "school": "Evocation"
+  },
+  "ingested_at": "2026-08-17T01:45:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 68,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_spells.lst",
+    "record_key": "Unwelcome Halo",
+    "sha256": "48bcb314dbdf8369982b3bc68d10dbe11baa5fe748d4121d6e197ab414406e68"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

@@ -65,6 +65,12 @@ use std::collections::{BTreeMap, BTreeSet};
 /// Widened 5 -> 8 by `SD31-E6-F2-005`: `ultimate_magic`/`occult_adventures`/
 /// `ultimate_combat` now have a `data/corpus/<book>/spell/*.json` cache
 /// (`cache_gen::spell_lane_dump`, same cycle) for this tool to enrich.
+/// Widened 8 -> 9 by `SD31-E6-F10-001`: `inner_sea_gods` joins the same
+/// `cache_gen::spell_lane_dump` cache (a `campaign_setting/` book, not
+/// `roleplaying_game/` -- no special-casing needed here, since every path
+/// this tool follows is read from the JSON record's own `source.path`
+/// field, never assembled from a hardcoded `roleplaying_game/<book>`
+/// prefix).
 const TARGET_BOOKS: &[&str] = &[
     "core_rulebook",
     "advanced_players_guide",
@@ -74,6 +80,7 @@ const TARGET_BOOKS: &[&str] = &[
     "ultimate_magic",
     "occult_adventures",
     "ultimate_combat",
+    "inner_sea_gods",
 ];
 
 fn pcgen_data_root() -> PathBuf {
