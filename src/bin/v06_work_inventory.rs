@@ -4228,12 +4228,92 @@ const CLASS_FEATURE_ID_MAGNITUDE_SUFFIXES: &[&str] = &[
 /// ... exact-suffix to a scoped-but-looser check ... is this card's owner's
 /// decision, not this cycle's"). Single-word-only keeps the false-positive
 /// surface to what row 78's own regex already named and hand-verified.
+///
+/// Iterates the suffix list directly (rather than `id.rsplit_once('_')`,
+/// which only ever recovers the LAST underscore-delimited word) so a
+/// multi-word suffix entry like `"per_day"` -- reused verbatim from row
+/// 78's own regex -- is reachable: `rsplit_once('_')` on `"...uses_per_day"`
+/// yields `last_word = "day"`, which is not itself in the list, so the
+/// original single-split form silently could never select `"per_day"`,
+/// contradicting this constant's own doc comment (`SD31-W9-INTEGRATE-001`
+/// finding; confirmed zero board-`done` movement from this fix at the tip
+/// it was measured against, so this closes a latent no-op, not a widened
+/// bucket the board has ever relied on).
+///
+/// After stripping, requires the stripped id's OWN trailing dot-segment to
+/// EQUAL `feature_slug` (matching `class_feature_exact_suffix_grounded`'s
+/// own fix, same `SD31-W9-INTEGRATE-001` finding) rather than merely
+/// `stripped.ends_with(feature_slug)`. The looser form let a longer
+/// compound word's own suffix satisfy an unrelated, shorter feature:
+/// `Hunter ~ Animal Focus`'s magnitude is its own `uses_per_day` count, but
+/// `"class_feature.acg.hunter.simultaneous_animal_focus_count"` minus
+/// `"_count"` is `"...simultaneous_animal_focus"`, which
+/// `ends_with("animal_focus")` even though `simultaneous_animal_focus` is a
+/// DIFFERENT engine quantity (the second-animal-focus/master-hunter shared
+/// pool counter, `pilot_compute.rs`'s own doc comment states the two must
+/// not be confused) -- closed by requiring the trailing dot-segment,
+/// `"simultaneous_animal_focus"`, to equal `feature_slug`,
+/// `"animal_focus"`, which it does not.
 fn id_matches_feature_slug_after_known_magnitude_suffix_strip(id: &str, feature_slug: &str) -> bool {
     if id.ends_with(feature_slug) {
         return false;
     }
-    let Some((stripped, last_word)) = id.rsplit_once('_') else { return false };
-    CLASS_FEATURE_ID_MAGNITUDE_SUFFIXES.contains(&last_word) && stripped.ends_with(feature_slug)
+    CLASS_FEATURE_ID_MAGNITUDE_SUFFIXES.iter().any(|suffix| {
+        id.ends_with(&format!("_{suffix}")) && {
+            let stripped = &id[..id.len() - suffix.len() - 1];
+            stripped.rsplit('.').next() == Some(feature_slug)
+        }
+    })
+}
+
+/// Whether `feature_slug` genuinely grounds via an EXACT explanation-id
+/// match in `explanation_ids` under `.{owner}.` -- the replacement for a
+/// bare `id.ends_with(&feature_slug)` scan, closing a `SD31-W9-INTEGRATE-001`
+/// adversarial-review finding that the original scan had no `group == owner`
+/// guard and only checked a trailing SUBSTRING, not a trailing dot-SEGMENT.
+///
+/// Two guards, both required:
+///
+/// 1. **`group.eq_ignore_ascii_case(owner)`** -- the same `decisions.md §10`
+///    AMENDMENT guard `id_matches_feature_slug_after_known_magnitude_suffix_strip`'s
+///    own caller already applies to the fallback branch, now applied to the
+///    exact branch too. Without it, an archetype/variant-qualified unit
+///    (`"Unchained Monk ~ Evasion"`, `group = "Unchained Monk"`,
+///    `owner = "monk"` via `class_feature_owner`'s substring fallback) could
+///    ground off a DIFFERENT base-class object's explanation id
+///    (`class_feature.monk.evasion`) -- exactly the cross-variant
+///    conflation the operator's own worked example forbids ("rogue and
+///    unchained rogue are two completely different classes"). Confirmed
+///    live in the corpus before this fix: 16 archetype/Unchained-variant
+///    `class_feature` units were credited `done` this way (Unchained
+///    Monk/Rogue/Barbarian, Ironskin Monk, Stygian/Skulking Slayer, Fighter
+///    Archer/Crossbowman/Polearm Master, Jungle/Urban Druid, Unarmed
+///    Fighter), all pre-existing (present at `docs/work-inventory.json`
+///    commit `70da6356b`, wave 8), none introduced by this fix.
+///
+/// 2. **`id.rsplit('.').next() == Some(feature_slug)`** in place of
+///    `id.ends_with(feature_slug)` -- a trailing-SUBSTRING check lets a
+///    longer sibling explanation's own trailing dot-segment satisfy a
+///    SHORTER, unrelated feature's slug (`class_feature.monk.
+///    improved_evasion` incorrectly `ends_with("evasion")`), and lets a
+///    NEGATION explanation ground an "actively doing X" record
+///    (`class_feature.acg.bloodrager.bloodrage_execution.not_raging`
+///    incorrectly `ends_with("raging")`, crediting `Bloodrager ~ Raging`
+///    off a `value: 0`, "is NOT currently bloodraging" explanation).
+///    Requiring the matched id's own trailing dot-segment to EQUAL
+///    `feature_slug` closes both without touching the (correct, unrelated)
+///    magnitude-suffix fallback's own separate underscore-stripping logic.
+fn class_feature_exact_suffix_grounded<'a>(
+    explanation_ids: impl Iterator<Item = &'a String>,
+    owner: &str,
+    group: &str,
+    feature_slug: &str,
+) -> bool {
+    if !group.eq_ignore_ascii_case(owner) {
+        return false;
+    }
+    let needle = format!(".{owner}.");
+    explanation_ids.into_iter().any(|id| id.contains(&needle) && id.rsplit('.').next() == Some(feature_slug))
 }
 
 /// Resolve one corpus unit against the engine.
@@ -5269,10 +5349,12 @@ fn classify(
             };
             let feature = unit.key.split(" ~ ").nth(1).unwrap_or(&unit.name);
             let feature_slug = slug(feature);
-            let exact_suffix_grounded = facts
-                .explanation_ids
-                .iter()
-                .any(|id| id.contains(&format!(".{owner}.")) && id.ends_with(&feature_slug));
+            let exact_suffix_grounded = class_feature_exact_suffix_grounded(
+                facts.explanation_ids.iter(),
+                &owner,
+                group,
+                &feature_slug,
+            );
             // SD31-E5-F1-002 (`OPEN-ISSUES.md` row 78): retried ONLY when the
             // exact check already failed, ONLY when this unit's own group
             // prefix IS the bare class name (never an archetype/variant
@@ -9218,6 +9300,112 @@ mod class_feature_id_magnitude_suffix_strip_tests {
         assert!(!id_matches_feature_slug_after_known_magnitude_suffix_strip(
             "classfeatureacgslayertrackbonus",
             "track"
+        ));
+    }
+
+    #[test]
+    fn strips_the_multi_word_per_day_suffix() {
+        // Regression for the dead-code finding: `rsplit_once('_')` alone can
+        // never recover "per_day" (it only ever returns the LAST word,
+        // "day", which is not itself in the suffix list). 36 real engine
+        // ids end `_per_day` (e.g. `class_feature.acg.slayer.
+        // advance_uses_per_day`); this must now match.
+        assert!(id_matches_feature_slug_after_known_magnitude_suffix_strip(
+            "class_feature.acg.slayer.advance_uses_per_day",
+            "advance_uses"
+        ));
+    }
+
+    #[test]
+    fn refuses_a_longer_compound_word_whose_trailing_substring_happens_to_match() {
+        // `Hunter ~ Animal Focus` regression (`SD31-W9-INTEGRATE-001`
+        // finding): "simultaneous_animal_focus_count" strips to
+        // "simultaneous_animal_focus", which `ends_with("animal_focus")`
+        // but is NOT the same quantity -- its trailing dot-segment must
+        // equal feature_slug exactly, and it does not.
+        assert!(!id_matches_feature_slug_after_known_magnitude_suffix_strip(
+            "class_feature.acg.hunter.simultaneous_animal_focus_count",
+            "animal_focus"
+        ));
+    }
+}
+
+/// Unit coverage for `class_feature_exact_suffix_grounded`, the
+/// `SD31-W9-INTEGRATE-001` fix closing a `decisions.md §10` AMENDMENT gap
+/// (missing `group == owner` guard) and a trailing-substring-vs-segment
+/// bug (letting a longer sibling id or a negation explanation credit an
+/// unrelated feature) in the ORIGINAL bare `id.ends_with(&feature_slug)`
+/// exact-match branch.
+#[cfg(test)]
+mod class_feature_exact_suffix_grounded_tests {
+    use super::*;
+
+    #[test]
+    fn a_genuine_base_class_exact_match_still_grounds() {
+        let ids = vec!["class_feature.rogue.uncanny_dodge".to_string()];
+        assert!(class_feature_exact_suffix_grounded(
+            ids.iter(),
+            "rogue",
+            "Rogue",
+            "uncanny_dodge",
+        ));
+    }
+
+    #[test]
+    fn an_archetype_qualified_group_cannot_ground_off_the_base_class_id() {
+        // The operator's own worked example: "rogue and unchained rogue are
+        // two completely different classes." `owner` resolves to "rogue"
+        // via `class_feature_owner`'s substring fallback even though the
+        // unit's own `group` is "Unchained Rogue" -- the group/owner
+        // mismatch is exactly what must block the credit.
+        let ids = vec!["class_feature.rogue.uncanny_dodge".to_string()];
+        assert!(!class_feature_exact_suffix_grounded(
+            ids.iter(),
+            "rogue",
+            "Unchained Rogue",
+            "uncanny_dodge",
+        ));
+    }
+
+    #[test]
+    fn a_longer_sibling_id_cannot_credit_a_shorter_feature_via_trailing_substring() {
+        // `class_feature.monk.improved_evasion` must NOT satisfy
+        // feature_slug = "evasion" merely because the id ends with the
+        // substring "evasion" -- its trailing DOT-SEGMENT is
+        // "improved_evasion", not "evasion".
+        let ids = vec!["class_feature.monk.improved_evasion".to_string()];
+        assert!(!class_feature_exact_suffix_grounded(
+            ids.iter(),
+            "monk",
+            "Monk",
+            "evasion",
+        ));
+    }
+
+    #[test]
+    fn a_negation_explanation_cannot_ground_an_active_state_record() {
+        // `Bloodrager ~ Raging` must NOT ground off
+        // `bloodrage_execution.not_raging` (a `value: 0`, "is NOT currently
+        // bloodraging" explanation) merely because it ends with the
+        // substring "raging" -- its trailing dot-segment is "not_raging".
+        let ids =
+            vec!["class_feature.acg.bloodrager.bloodrage_execution.not_raging".to_string()];
+        assert!(!class_feature_exact_suffix_grounded(
+            ids.iter(),
+            "bloodrager",
+            "Bloodrager",
+            "raging",
+        ));
+    }
+
+    #[test]
+    fn an_id_with_the_exact_trailing_segment_still_grounds_even_when_nested() {
+        let ids = vec!["class_feature.acg.bloodrager.bloodrage_execution.active".to_string()];
+        assert!(class_feature_exact_suffix_grounded(
+            ids.iter(),
+            "bloodrager",
+            "Bloodrager",
+            "active",
         ));
     }
 }
