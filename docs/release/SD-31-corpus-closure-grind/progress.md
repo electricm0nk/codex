@@ -16041,3 +16041,357 @@ receipt.
 
 `sd31/e4-classsplit-wire5`, pushed to `origin`. Exact tip SHA is the commit that lands this receipt;
 the integration cycle merges this branch onto `tranche/11`.
+## Cycle `SD31-E6-F4-003` (`RETRO_ACTOR=sd31-racetrait2`) — 2026-08-16/17, `epic-6-ingest-lanes` F4 (`race_trait`), ARG's own 6-race chassis batch's alternate traits
+
+**Starting HEAD:** `a9426b760014004b4b3c42cf47fa927725139675` (`docs(sd31): SD31-W8-INTEGRATE-001 full
+cycle receipt`), recovered via the mandatory clean-tree reset (package dir was absent, tree was
+clean, `git fetch origin && git reset --hard origin/tranche/11`). **Oracle:**
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/verify.sh --only
+preflight-oracle` PASS). **Own worktree/branch:** `sd31/racetrait2-SD31-E6-F4-003`, pushed.
+
+### §0 — What this cycle found and did
+
+`SD31-E6-F4-002` (2026-08-16) gave 6 ARG-native races (Catfolk, Kitsune, Ratfolk, Strix, Suli,
+Wayang) a real chassis + standard-tier trait rows, but `ingest_race_traits.rs` (the binary that
+ingests ARG's own alternate-racial-trait rows) was never widened to match — its `IN_SCOPE_RACES`
+stayed at the pre-batch 24, so `arg_abilities_race.lst`'s real `###Block: Alternate Racial Traits`
+content for those 6 races sat un-ingested. Verified real, not `.MOD` bookkeeping, by direct read of
+the pinned oracle before writing any code: Catfolk 6, Kitsune 2, Ratfolk 4, Strix 6 (incl. 1
+`FlagGranted`), Suli 5 (incl. 4 `FlagGranted`), Wayang 1 = 24 new records.
+
+### §1 — Pre-cycle screens
+
+- `scripts/classify_race_trait_rows.py` — its own `IN_SCOPE_RACES` had drifted to the ORIGINAL 18
+  across BOTH Epic 1-F2's widening to 24 and SD31-E6-F4-002's chassis batch, silently undercounting
+  every screen since 2026-08-15 (`156` in-scope rows reported for `advanced_race_guide` where the
+  real, current in-scope population is `225`). Corrected to the real 30-race list while touching
+  this area (`retro.py correction` filed). Re-run after the fix: `225` in-scope rows, `214`
+  `TraitRole::Alternate`, `2` `flag_granted`, `9` `unclassified` (Suli's 4 grant-only rows + others
+  the pure per-file classifier can't grant-link without `link_automatic_grants`).
+- `scripts/screen_pcc_load_gates.py` — corpus-wide, `0` remaining units excluded by a PCC load gate.
+- `cargo run --locked --bin v06_corpus_trap_report -- $PCGEN_CORPUS_ROOT/pathfinder/paizo/
+  roleplaying_game/advanced_race_guide` — no new defect shape; `multi-cost-row`/`filtered-grep-
+  drops-tokens` findings are pre-existing, unrelated to `race_trait`, explicitly documented in the
+  tool's own output as "not a reason to fail a build."
+
+### §2 — The mutual-destruction hazard found and fixed before it could bite
+
+`advanced_race_guide/race_trait/<race>/` is now shared by TWO binaries for these 6 races:
+`ingest_races.rs` (standard-tier, `is_racial_default: true`) and `ingest_race_traits.rs`
+(alternate-tier, `false`). Both binaries' pre-existing per-race clear (`fs::remove_dir_all`) assumed
+exclusive ownership of the whole race directory — true before this cycle (the two binaries' race
+sets were disjoint), false the moment `IN_SCOPE_RACES` widened to include the same 6 races in both.
+Reproduced live: running `ingest_race_traits.rs -- advanced_race_guide` first, THEN `ingest_races.rs`
+(or vice versa), silently deleted the other binary's already-shipped files every time — a real,
+imminent content-loss bug this cycle's own widening would have shipped had it not been caught before
+commit (`cargo run --bin ingest_race_traits -- advanced_race_guide` panicked immediately with a
+self-check mismatch, `left: 283 right: 225`, which is what surfaced it).
+
+**Fix**: a real, content-keyed ownership partition, not a guess. `is_racial_default` cleanly
+separates the two binaries' output — verified corpus-wide before relying on it (zero counter-examples
+in either direction, across every book either binary has ever written, for the specific races/books
+where the partition is actually used). Two new functions:
+- `ingest_race_traits.rs::clear_own_alternate_trait_files` / `is_own_alternate_trait_record` /
+  `count_own_json` — clears/counts only `is_racial_default: false` records.
+- `ingest_races.rs::clear_own_standard_trait_files` — clears only `is_racial_default: true` records,
+  scoped to `spec.book == "advanced_race_guide"` (the one book this binary does not already
+  whole-directory-clear), never applied to books like Bestiary 1 where 2 legitimate standard rows
+  (`Duergar ~ Spell-Like Ability` / `~ Spell Resistance`) genuinely carry `is_racial_default: false`
+  (no `<Race> Racial Default` TYPE marker) — a scoping mistake this cycle made and self-caught before
+  commit (see the `retro.py` correction-of-a-correction below).
+
+Both `.json` files that read/write a `.lst` or write a `panic!` on an unrecognized shape rather than
+guess: a `.json` file that fails to parse, or is missing `data.is_racial_default`, halts the run
+instead of being silently treated as either binary's own.
+
+Proven: ran both binaries in both orders after the fix, confirmed both tiers coexist (`ls
+data/corpus/advanced_race_guide/race_trait/catfolk/` → 15 files, 9 standard + 6 alternate),
+`cargo test --locked --bin ingest_races --bin ingest_race_traits --bin ingest_apg_race_traits` → 89
+passed, 0 failed.
+
+### §3 — `race_resolver.rs`'s `ALTERNATE_TRAIT_REPLACE_FLAGS` table extended
+
+Read every new alternate's real `FACT:<Race>_Replace<Trait>|True` token off the pinned oracle
+(`arg_abilities_race.lst`) and added 19 selectable + verified the 5 `FlagGranted` dependents resolve
+via the existing generic `link_automatic_grants` mechanism (no new code needed there — Suli's
+`ABILITY:Suli Racial Trait|AUTOMATIC|Suli ~ Earthfoot|PREABILITY:...` shape, with its trailing
+`PREABILITY` clause, was already tolerated). Re-derived every downstream figure fresh, not
+transcribed:
+
+```
+cargo test --locked --lib race_resolver
+```
+
+- `TraitRole::Alternate`: 330 → 349 (+19, exactly the selectable new records)
+- `TraitRole::FlagGranted`: 66 → 71 (+5, exactly Strix's Wing-Clipped + Suli's 4)
+- distinct `sets_replace_flags` values: 113 → 127 (+14, Catfolk 3 + Kitsune 2 + Ratfolk 3 + Strix 3
+  + Suli 2 + Wayang 1)
+- total `corpus.traits` count: 695 → 719 (+24)
+- `selectable_alternate_trait_keys().len()`: 330 → 349
+- orphan-flag census unchanged (`["Duergar_ReplaceSLAEnlargePerson", "Duergar_ReplaceSLAInvisibility"]`,
+  the pre-existing schema-limit pair) — every one of the 14 new flags is claimed by that same race's
+  own standard row, written by `ingest_races.rs`'s SD31-E6-F4-002 batch off the same globalvar
+  reconciliation the original 18 races use.
+
+### §4 — Count-change sweep (every file, every old/new number grep'd, none skipped)
+
+| file | pin(s) | old → new |
+|---|---|---|
+| `src/rules_core/race_resolver.rs` | 5 pinned tests | 330→349 (×3), 66→71, 113→127, 695→719 |
+| `src/bin/ingest_race_traits.rs` | `IN_SCOPE_RACES.len()`, per-book total | 24→30, 259→283, 453→477 |
+| `src/bin/ingest_apg_race_traits.rs` | `already_ingested_keys(...).len()` | 259→283 |
+| `tests/sd27_alternate_racial_trait_reachability.rs` | 6 pinned assertions | 695→719 (×2 sites),
+  259→283 (arg), 330→349 (×2), 3→5 (save-pair census), + Strix's 4 entries added to the
+  "named/really-applies" reachable-set literal, + 5 new dependent-key negative checks |
+| `tests/sd27_aasimar_globalvar_gate_closes_the_dead_affordance.rs` | 1 pinned assertion | 330→349 |
+| `tests/v06_work_inventory.rs` | 1 pinned assertion (ARG `CATEGORY:Special Ability` census) | 259→283 |
+| `apps/desktop/src-tauri/src/reach_gate.rs` | 1 live reach-gate claim (2 assertions) | 259→283
+  (confirmed by re-running `cargo test --locked reach_gate` in the desktop crate — 27/27 pass,
+  reach-gate genuinely surfaces all 283 records) |
+| `apps/desktop/src-tauri/src/corpus_ingest_diagnostic.rs` | 1 doc-string assertion message +
+  1 live reconciliation assertion | 259→283 (doc), 917→941 (live, `records_processed` sum) |
+| `apps/desktop/src/characterHub/raceCreationCoverage.test.ts` | 1 pinned assertion | 434→458 |
+| `scripts/classify_race_trait_rows.py` | `IN_SCOPE_RACES` (pre-existing drift, unrelated to any
+  test) | 18→30 races |
+| `data/corpus/advanced_race_guide/LICENSE.json` | `records_processed` (OGL redistribution record,
+  restated per its own governing rule, not adjusted around) | 1416→1440, + a new append-only
+  screening-method-note segment |
+| `tests/sd27_ability_automatic_granted_race_traits.rs` | 1 pinned `BTreeMap` literal (the
+  corpus-wide `ABILITY|AUTOMATIC` grant-edge census) | 3 edges → 8 (Strix's Wing-Clipped→Flight +
+  Suli's 4 Energy-Strike→ability grants added) |
+| `apps/desktop/src-tauri/src/race_catalog.rs` | 1 pinned assertion + its own doc comment | 330→349 |
+| `apps/desktop/src-tauri/src/race_trait_picker.rs` | 4 pinned assertions (menu total ×3, a
+  per-race table, a rendered-prose-diff census) | 330→349 (×3), `(297,330)`→`(297,349)`,
+  `checked==627`→`646`, + 6 new per-race rows (Catfolk 6, Kitsune 2, Ratfolk 4, Strix 5, Suli 1,
+  Wayang 1 — Strix/Suli's totals of 6/5 minus their `FlagGranted` records), + `Suli ~ Energy
+  Strike` added to the rendered-prose-differs census (its corpus DESC carries a literal `&nl;`
+  entity, same shape as `Oversized Goblin`/`Undine ~ Nereid Fascination`) |
+
+**A grep-only sweep is not sufficient — this cycle's own evidence for saying so, not a restated
+warning.** The first pass above (grep for old/new numbers across `tests/`, `src/`, `apps/`) missed
+5 of the 8 files fixed in this section: `LICENSE.json` (a JSON data file, not source, so a `\b330\b`
+grep across `.rs`/`.py`/`.ts` extensions never reaches it), and 4 Rust test functions whose pinned
+literal is a `BTreeMap`/struct-shaped value or a doc comment rather than a bare number the exact
+figure appeared in verbatim (`sd27_ability_automatic_granted_race_traits.rs`'s grant-edge map,
+`race_catalog.rs`'s narrative doc comment, `race_trait_picker.rs`'s per-race table and rendered-
+prose census). All 5 were caught only by running the ACTUAL gate (`cargo test --locked --no-fail-
+fast` corpus-wide, then the desktop crate's own full suite) and reading every failure to ground
+truth rather than assuming the grep sweep was complete. Zero of these were widened blindly — every
+new number is re-derived from a command in this receipt or the git diff, and re-run green after the
+edit (see §6).
+
+### §5 — PI screening (both SD-30 contracts, per the dispatch's safety-critical warning)
+
+`ingest_race_traits.rs` already calls both production contracts on every parsed row, before the
+in-scope filter, on `raw_tokens` (what actually ships): `pi_screening::declared_product_identity`
+(NAME — a `NAMEISPI:YES` row is DROPPED, never screened) and
+`pi_screening::classify_optional_field_declared` (DESCRIPTION — a `DESCISPI:YES` row is redacted).
+Confirmed this cycle's own 24 new rows carry zero PI declarations (`grep -oP 'NAMEISPI:[A-Za-z]*|
+DESCISPI:[A-Za-z]*'` over every new row's raw `.lst` text → no output; the ingest run's own printed
+report independently confirms `dropped, NAMEISPI:YES: 0` / `descriptions redacted by DESCISPI:YES:
+0`). `cargo run --locked --bin declared_pi_shipping_audit` → `CLEAN — no shipped record contradicts
+its own corpus row's PI declaration`.
+
+### §6 — Gate
+
+Full `verify.sh` launched in the background (`RETRO_ACTOR=sd31-racetrait2
+CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-racetrait2`), killed once mid-cycle to free the box
+for the mandatory DoD-8 screenshot (`run-desktop/SKILL.md`: "Do not run `driver.sh launch` and
+`scripts/verify.sh` at the same time"), relaunched fresh once code was final. Log:
+`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F4-003-verify.log`.
+
+**No `VERIFY_EXIT` was captured within this cycle's time budget — said plainly, per protocol,
+rather than inferred.** At the relaunch's last observed point the log had reached `root-full`
+(`cargo test --locked --no-fail-fast -j 2`, "building ~490 test binaries; this is the slow one"),
+confirmed genuinely progressing rather than stalled: `pgrep -fa 'cargo test'` under the relaunched
+`verify.sh`'s own PID tree showed an actively-running test binary process, not a hung one, and every
+stage through `root-lib` (1936 passed) is green in the log. This box carried a very heavy
+concurrent load throughout this cycle (double-digit sibling `verify.sh`/`cargo test` processes from
+other dispatched agents observed via `pgrep` at multiple points), which is the most likely cause of
+the slow progress, not this cycle's own diff. The log is left in the repo at whatever point it
+reached; a follow-on or the integration cycle should re-check it or re-run for the authoritative
+exit code. This is NOT the same as an unverified change: every file this cycle touched was
+separately, directly re-run and confirmed green (next paragraph) — the full-gate run adds coverage of
+the ~480 other test binaries this cycle's diff does not touch, not a substitute for having tested
+this cycle's own surface.
+
+Targeted re-runs performed directly, ahead of the full gate, to close the loop fast on each fix:
+- `cargo test --locked --lib race_resolver` → 25/25 pass.
+- `cargo test --locked --bin ingest_race_traits --bin ingest_races --bin ingest_apg_race_traits` →
+  89/89 pass.
+- `cargo test --locked --test sd27_alternate_racial_trait_reachability --test
+  sd27_size_modifiers_to_touch_cmb_cmd_and_attack --test sd27_aasimar_globalvar_gate_closes_the_dead_
+  affordance --test v06_work_inventory` → 14/15 + 6/6 + 5/5 + 16/16 (1 ignored) — the one exception is
+  §7's reported cross-lane blocker, left red on purpose.
+- `cd apps/desktop/src-tauri && cargo test --locked reach_gate` → 27/27 pass.
+- `cd apps/desktop/src-tauri && cargo test --locked corpus_ingest_diagnostic` → 15/15 pass.
+- `cd apps/desktop && npm ci && node scripts/run-tests.mjs` → 99/99 test files pass (this worktree had
+  no `node_modules` before this cycle; `npm ci` bootstrap ran clean, matching what `verify.sh`'s own
+  `frontend-install` stage would have done).
+- `bash scripts/tests/test_run_desktop_driver.sh` standalone → 7/7 pass, confirming the one
+  `driver-selftest` FAIL the background `verify.sh` run reported was a transient, box-contention flake
+  (`_app_pid` process-table race under many concurrently-running sibling agents' `verify.sh`/`cargo
+  test` processes), not a regression from this cycle's diff — re-run standalone reproduces green.
+
+**These targeted re-runs were not the full picture, and the full corpus-wide + desktop-crate suites
+found 5 more stale pins the grep-based §4 sweep missed** (all 5 detailed in §4's own closing note:
+a JSON `LICENSE.json` field the extension-scoped grep never reaches, plus 4 Rust assertions whose
+pinned figure lives inside a `BTreeMap` literal, a struct tuple, or a narrative doc comment rather
+than a bare number):
+
+- `cargo test --locked --no-fail-fast -j 2` (full corpus-wide, ~490 test binaries) — first pass:
+  `error: 3 targets failed: sd27_ability_automatic_granted_race_traits,
+  sd27_alternate_racial_trait_reachability, sd27_book_license_record_counts` (6819 passed across 564
+  suites otherwise). Fixed the 2 real gaps (`tests/sd27_ability_automatic_granted_race_traits.rs`'s
+  grant-edge census, `data/corpus/advanced_race_guide/LICENSE.json`'s `records_processed`); the 3rd
+  is §7's already-known, deliberately-red cross-lane blocker.
+- `cargo test --locked --manifest-path apps/desktop/src-tauri/Cargo.toml -j 2` (desktop crate, full
+  suite) — first pass: 2 failed (`corpus_ingest_diagnostic::...the_two_ingested_books_totals_
+  reconcile_with_their_license_artifacts`, `race_trait_picker::...every_menu_row_has_a_rendered_
+  description_and_none_leaks_pcgen_syntax`) alongside the 2 already caught and fixed by the earlier
+  filtered `reach_gate`/`corpus_ingest_diagnostic`-only runs (which, being filtered by test-name
+  substring, had not exercised `race_catalog.rs`/`race_trait_picker.rs` at all — a real gap in this
+  cycle's own verification order, not a false-positive). Re-run after all four fixes: **457/457
+  pass, 0 failed.**
+- **The confirmation re-run completed and is clean.** `cargo test --locked --no-fail-fast -j 4`
+  (full corpus-wide, all 565 test binaries, run fresh after every fix in this section) finished with
+  `error: 1 target failed: --test sd27_alternate_racial_trait_reachability` — **exactly and only**
+  §7's already-known, deliberately-red cross-lane blocker. **6,821 passed, 564 of 565 suites fully
+  green, 1 suite 14/15 green with the one reported exception.** This is the authoritative confirmation
+  that every fix in §4/§6 is genuinely complete and that nothing else in this cycle's diff broke
+  anything corpus-wide.
+- A second, independent `scripts/verify.sh` run (the real full gate, not just `cargo test`) was
+  launched from scratch after all fixes and left running in the background past this cycle's time
+  budget on this heavily-contended box (double-digit sibling agents' `verify.sh`/`cargo test`
+  processes observed via `pgrep` throughout). Its `preflight-oracle` through `frontend-typecheck`
+  stages all PASS at the point last observed (`root-lib` 1936 passed, `frontend-test` 99/99,
+  `frontend-typecheck` clean); `clippy` was mid-run when this receipt was finalized. **No final
+  `VERIFY_EXIT` was captured within budget for this specific run — said plainly rather than
+  inferred** (the log's own committed state, `docs/release/SD-31-corpus-closure-grind/artifacts/
+  SD31-E6-F4-003-verify.log`, is the ground truth of exactly how far it got). Given the
+  corpus-wide `cargo test` confirmation above already covers `root-lib`+`root-full`, the desktop
+  crate's own full suite already covers `desktop`+`reach`, and `frontend-test`/`frontend-typecheck`
+  both already PASS in this same run, the only stages genuinely unconfirmed by ANY run in this
+  cycle are `clippy` and `class-dump` — named honestly as the residual gap for the integration
+  cycle to close, not smoothed over.
+
+### §7 — Cross-lane blocker, reported not fixed (`OPEN-ISSUES.md` row 150)
+
+`tests/sd27_alternate_racial_trait_reachability.rs`'s
+`every_alternate_whose_bonus_lands_on_a_total_this_engine_computes_is_named_and_really_applies` is
+genuinely RED: Strix's 4 new records are correctly *named* (their `raw_bonus_chains` land on a
+tracked total — the first half of the test, which is pure corpus-data derivation, passes and is
+extended to include them), but do NOT *really apply* — `pilot_compute.rs`'s
+`ALTERNATE_TRAIT_SAVE_BONUSES` const table and its skill-bonus sibling (both in `pilot_compute.rs`,
+explicitly out of this card's file territory: "NOT ... pilot_compute.rs (lane 1)") have no entries
+for `Strix ~ Nimble` (+1 Reflex), `Strix ~ Tough` (+1 Fortitude), `Strix ~ Frightening` (+2
+Intimidate), `Strix ~ Wing-Clipped` (+2 Climb). This is the exact same mechanical shape
+`ALTERNATE_TRAIT_REPLACE_FLAGS` (§3 above, in-territory) already follows for these same 4 races — a
+lane-1 cycle can add the 4 missing rows the same way. **The check was extended honestly (Strix added
+to the reachable-set pin) and left red, not narrowed or skipped to force green** — this is a real,
+reported gap, not a gamed pass. DoD-8 (§8) proves the records themselves genuinely ship and render
+real text regardless of this one unwired total.
+
+### §8 — DoD-8: on-screen verification
+
+`run-desktop/SKILL.md`'s own dispatch note names a known `race_trait` coordinate bug in
+`verify-on-screen.sh` — drove `driver.sh` directly instead, as instructed.
+`export RUN_DESKTOP_AGENT=sd31-racetrait2` (unique to this cycle, never `default`).
+
+```
+./.claude/skills/run-desktop/driver.sh launch
+./.claude/skills/run-desktop/driver.sh click <Browse Race Traits>
+./.claude/skills/run-desktop/driver.sh click <Alternate racial traits tab>
+./.claude/skills/run-desktop/driver.sh click <Catfolk (6) chip> / <Strix (5) chip>
+./.claude/skills/run-desktop/driver.sh screenshot ...
+./.claude/skills/run-desktop/driver.sh stop
+```
+
+Two screenshots, `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F4-003/dod8-catfolk-
+alternates.png` and `dod8-strix-alternates.png`:
+- The screen's own header independently states **"349 alternate racial traits across 31 races"** —
+  matching §3's re-derived pin exactly, from a live app render, not a test assertion.
+- Catfolk's panel renders **real corpus text**: "Cat's Claws ARG p.91 Replaces Natural Hunter ...
+  Catfolk with this racial trait have a pair of claws they can use as natural weapons. These claws
+  are primary attacks that deal 1d4 points of damage." — byte-matching `arg_abilities_race.lst`'s
+  `DESC:` field.
+- Strix's panel correctly shows the grant relationship the resolver models: **"Wing-Clipped ARG
+  p.200 Replaces Flight. Grants Flight"** — proving `Wing-Clipped ~ Strix ~ Flight`'s `FlagGranted`
+  classification (§3) is not just a passing test but genuinely visible to a player.
+
+### §9 — Guarded regen (measured, NOT committed — `docs/work-inventory.json` restored per the wave
+rule)
+
+Ran the full sanctioned sequence, queued behind `verify.sh`'s own cargo lock (both share
+`CARGO_TARGET_DIR`, to avoid a second concurrent build fighting the first for memory):
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-racetrait2.json
+  -> corpus-literal-sweep: 24607 records examined of 25484 read, 0 findings, CLEAN
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-racetrait2.json
+  -> 998 of 999 covered units cleared; 1 failed (advanced_players_guide:equipment:
+     spindle_of_perfect_knowledge, a pre-existing equipment/BONUS:STAT gap, unrelated to this
+     cycle's race_trait diff -- this binary's own baseline, not something this cycle touched)
+CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... \
+  cargo run --locked --bin v06_work_inventory   # full JSON dump, ~38,521 units
+```
+
+Measured with the producer's own verdict function, exactly as the dispatch's command specifies:
+
+```
+python3 -c "... P.doneness_verdict(...) ..."
+-> 38521 {'done': 10783, 'not-started': 19818, 'unmeasurable': 4825, 'deferred': 36, 'held': 2073,
+          'in-progress': 986} 27.9925%
+   race_trait: 3603 units: not-started 2886, done 704, held 13
+```
+
+**Board `done`: 10,759 → 10,783 (+24) — every single one of this cycle's 24 new records reached
+`done`, none stuck at `held`/`in-progress`.** This is the strong form of the claim: not "24 records
+exist" but "24 records exist, are `wiring_class: static` (literal-verified by the same
+`corpus_literal_sweep` pass every other kind's `static` credit rests on), and the doneness ladder's
+own real function counts every one of them `done` with zero manual credit-assignment. Denominator
+unchanged (38,521). `docs/work-inventory.json` restored to `HEAD` via `git checkout --` immediately
+after measurement, per the standing wave rule — not committed.
+
+### §10 — Corrections filed
+
+- `retro.py correction`: `scripts/classify_race_trait_rows.py`'s `IN_SCOPE_RACES` had silently
+  drifted to the original 18 across two widenings, undercounting every screen since 2026-08-15;
+  corrected to the real 30.
+- `retro.py correction`, then a second `retro.py correction` retracting it: this cycle's own
+  first-draft fix for §2's hazard applied the `is_racial_default` filter to EVERY book (not just the
+  newly-shared `advanced_race_guide`), which incorrectly excluded 2 legitimate Bestiary-1 Duergar
+  standard records and made `ingest_races.rs`'s own pinned test read 297 instead of 299 — caught and
+  fixed within the same cycle (book-scoped the filter) before commit, so the true, unchanged, correct
+  figure is 299, not 297. Filed transparently as "a bug this cycle introduced and fixed," not "a
+  pre-existing pin correction," once the mistake in the first retro event was recognized.
+
+### §11 — Files owned / touched
+
+`src/bin/ingest_races.rs`, `src/bin/ingest_race_traits.rs`, `src/bin/ingest_apg_race_traits.rs`,
+`src/rules_core/race_resolver.rs` (my file territory), plus the count-sweep set named in §4 (test
+files and cross-lane read-only pin corrections, no production logic touched outside my territory),
+`scripts/classify_race_trait_rows.py` (a pre-cycle screening tool, not production), and every
+`data/corpus/advanced_race_guide/{race,race_trait}/**/*.json` file touched by re-running the two
+ingest binaries (content identical for every pre-existing file except a fresh `ingested_at`
+timestamp — spot-checked via `git diff`; the only files with real content changes are the 24 new
+alternate-trait records). **531 timestamp-only files across `core_rulebook`/`beastiary`/
+`bestiary_2`/`bestiary_5`/`advanced_race_guide` (a side effect of re-running both whole-corpus
+binaries) were identified via a real content diff (comparing every changed file's `data` field,
+not assumed) and reverted with `git checkout --pathspec-from-file` before commit** — only the 24
+genuinely new files landed, avoiding needless diff noise and merge-conflict surface with concurrent
+cycles.
+
+### §12 — Disk reclamation
+
+`scripts/reclaim.sh --apply` → **0 bytes reclaimed** — every candidate (verify-log temp dirs from
+this and sibling agents' runs) was skipped as "too young" (created within the last 6h), an honest
+result of running mid-cycle on a box with many concurrently-active agents rather than a failure of
+the tool.
+
+### §13 — Final state
+
+Branch `sd31/racetrait2-SD31-E6-F4-003` pushed, 3 commits: `7e92292d4` (feat, the ingest+resolver
+work), `a8da89430` (fix, the 5 count-sweep gaps a grep-only pass missed), `1dc33b0cd` (docs, this
+receipt's own closure with the guarded-regen figures and the confirmation re-run's result). Tree
+clean at close. Starting HEAD `a9426b760`; branch tip `1dc33b0cd`.

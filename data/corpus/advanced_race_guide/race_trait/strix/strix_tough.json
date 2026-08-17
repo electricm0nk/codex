@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T00:37:23Z",
+  "data": {
+    "key": "Strix ~ Tough",
+    "name": "Tough",
+    "race_key": "Strix",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Strix Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Strix_ReplaceSuspicious"
+    ],
+    "description": "The strix receives a +1 racial bonus on Fortitude saves. This racial trait replaces suspicious.",
+    "source_page": "p.200",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Strix ~ Tough"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Strix Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Strix ~ Tough],[!PREFACT:1,ABILITIES,Strix_ReplaceSuspicious=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "The strix receives a +1 racial bonus on Fortitude saves."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces suspicious.|!PREABILITY:1,CATEGORY=Special Ability,Strix ~ Tough"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.200"
+      },
+      {
+        "key": "FACT",
+        "value": "Strix_ReplaceSuspicious|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SAVE",
+          "Fortitude",
+          "1",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 1152,
+    "record_key": "Strix ~ Tough"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

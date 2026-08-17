@@ -180,6 +180,19 @@ fn the_ability_automatic_grant_shape_is_exactly_two_records_corpus_wide() {
         ("Feral ~ Languages", "Orc ~ Feral"),
         ("Saltbeard ~ Dwarf ~ Greed", "Dwarf ~ Saltbeard"),
         ("Scion of Humanity ~ Languages", "Aasimar ~ Scion of Humanity"),
+        // SD-31-E6-F4-003 (2026-08-16): ARG's own 6-race chassis batch's real
+        // alternate-trait rows. Strix's `Wing-Clipped` grants its own
+        // weaker-flight replacement row the same way `Dwarf ~ Saltbeard`
+        // does above; Suli's `Energy Strike` grants all 4 of its
+        // element-flavored follow-on abilities (`CHOOSE:STRING` sub-choices
+        // this engine does not separately model, so all 4 arrive together
+        // rather than only the chosen one -- a corpus-shape limit, not a
+        // resolver bug, named here rather than silently narrowed).
+        ("Wing-Clipped ~ Strix ~ Flight", "Strix ~ Wing-Clipped"),
+        ("Suli ~ Earthfoot", "Suli ~ Energy Strike"),
+        ("Suli ~ Firehand", "Suli ~ Energy Strike"),
+        ("Suli ~ Icewalk", "Suli ~ Energy Strike"),
+        ("Suli ~ Shockshield", "Suli ~ Energy Strike"),
     ]
     .into_iter()
     .map(|(a, b)| (a.to_owned(), b.to_owned()))

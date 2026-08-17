@@ -1,0 +1,97 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T00:37:23Z",
+  "data": {
+    "key": "Catfolk ~ Curiosity",
+    "name": "Curiosity",
+    "race_key": "Catfolk",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Catfolk Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Catfolk_ReplaceNaturalHunter"
+    ],
+    "description": "Catfolk are naturally inquisitive about the world around them, though some are more curious than others. Such catfolk gain a +4 bonus on Diplomacy checks to gather information, and Knowledge (history) and Knowledge (local) are always class skills for them. If they choose a class that has either of these Knowledge skills as class skills, they gain a +2 racial bonus on those skills instead. This racial trait replaces natural hunter.",
+    "source_page": "p.91",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Catfolk ~ Curiosity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Catfolk Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Catfolk ~ Curiosity],[!PREFACT:1,ABILITIES,Catfolk_ReplaceNaturalHunter=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Catfolk are naturally inquisitive about the world around them, though some are more curious than others. Such catfolk gain a +4 bonus on Diplomacy checks to gather information, and Knowledge (history) and Knowledge (local) are always class skills for them. If they choose a class that has either of these Knowledge skills as class skills, they gain a +2 racial bonus on those skills instead."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces natural hunter.|!PREABILITY:1,CATEGORY=Special Ability,Catfolk ~ Curiosity"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.91"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+4 Diplomacy to gather information"
+      },
+      {
+        "key": "FACT",
+        "value": "Catfolk_ReplaceNaturalHunter|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Catfolk Curiosity",
+          "1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Diplomacy=gather information",
+          "4"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 362,
+    "record_key": "Catfolk ~ Curiosity"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

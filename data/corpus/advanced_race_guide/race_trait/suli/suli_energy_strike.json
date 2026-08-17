@@ -1,0 +1,139 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T00:37:23Z",
+  "data": {
+    "key": "Suli ~ Energy Strike",
+    "name": "Energy Strike",
+    "race_key": "Suli",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Suli Racial Trait",
+      "SpecialAttack",
+      "Special Attack",
+      "Special Ability",
+      "Supernatural"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Suli_ReplaceElementalAssault",
+      "Suli_ReplaceEnergyResistance"
+    ],
+    "description": "A suli with this racial trait has a stronger connection to one energy type than to the other three used by sulis. Choose one energy type: acid, cold, electricity, or fire. The suli's elemental assault ability can only deal energy damage of this type. The suli has resistance 5 to this energy type and no racial resistance to the other three types. While her elemental assault is active, the suli gains an additional ability based on the chosen energy type. This racial trait otherwise works like and replaces elemental assault. &nl;Once per day as a swift action, a suli can shroud her arms in the chosen energy type. This effect lasts for rounds (1 round per level) and can be dismissed as a free action. Unarmed strikes with her arms or hands (or attacks with weapons held in those hands) deal +1d6 points of damage of the chosen energy type.",
+    "source_page": "p.258",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Suli ~ Energy Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Suli Racial Trait.SpecialAttack.Special Attack.Special Ability.Supernatural"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Suli ~ Energy Strike],[!PREFACT:1,ABILITIES,Suli_ReplaceElementalAssault=True,Suli_ReplaceEnergyResistance=True]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Suli_ElementalAssault_Duration|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A suli with this racial trait has a stronger connection to one energy type than to the other three used by sulis. Choose one energy type: acid, cold, electricity, or fire. The suli's elemental assault ability can only deal energy damage of this type. The suli has resistance 5 to this energy type and no racial resistance to the other three types. While her elemental assault is active, the suli gains an additional ability based on the chosen energy type."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait otherwise works like and replaces elemental assault.|!PREABILITY:1,CATEGORY=Special Ability,Suli ~ Energy Strike"
+      },
+      {
+        "key": "DESC",
+        "value": "&nl;Once per day as a swift action, a suli can shroud her arms in the chosen energy type. This effect lasts for %1 rounds (1 round per level) and can be dismissed as a free action. Unarmed strikes with her arms or hands (or attacks with weapons held in those hands) deal +1d6 points of damage of the chosen energy type.|Suli_ElementalAssault_Duration"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "STRING|Acid|Cold|Electricity|Fire"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Suli Racial Trait|AUTOMATIC|Suli ~ Earthfoot|PREABILITY:1,CATEGORY=Special Ability,Suli ~ Energy Strike (Acid)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Suli Racial Trait|AUTOMATIC|Suli ~ Firehand|PREABILITY:1,CATEGORY=Special Ability,Suli ~ Energy Strike (Fire)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Suli Racial Trait|AUTOMATIC|Suli ~ Icewalk|PREABILITY:1,CATEGORY=Special Ability,Suli ~ Energy Strike (Cold)"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Suli Racial Trait|AUTOMATIC|Suli ~ Shockshield|PREABILITY:1,CATEGORY=Special Ability,Suli ~ Energy Strike (Electricity)"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.258"
+      },
+      {
+        "key": "ASPECT",
+        "value": "MasterAbility|Suli ~ Energy Strike"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckType|Uses per Day"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CheckCount|%1|1"
+      },
+      {
+        "key": "FACT",
+        "value": "Suli_ReplaceElementalAssault|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Suli_ReplaceEnergyResistance|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "Suli_ElementalAssault_Duration",
+          "TL"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 1179,
+    "record_key": "Suli ~ Energy Strike"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:choice",
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

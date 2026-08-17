@@ -278,7 +278,19 @@ const BOOK_SOURCES: &[BookSource] = &[
 // so a race added only here and not there would collect alternate-trait
 // rows into a `race_trait/<race>/` directory `RaceCorpus::chassis()` never
 // populates -- loaded but permanently unreachable, not merely incomplete.
-const IN_SCOPE_RACES: [&str; 24] = [
+//
+// Widened 24 -> 30 by SD-31-E6-F4-003 (2026-08-16): `ingest_races.rs`'s own
+// SD-31-E6-F4-002 batch gave 6 ARG-native races (Catfolk, Kitsune, Ratfolk,
+// Strix, Suli, Wayang) a real chassis, but this binary's roster was never
+// widened to match, so `arg_abilities_race.lst`'s real
+// `###Block: Alternate Racial Traits` rows for those 6 (confirmed non-`.MOD`
+// content by direct inspection of the pinned oracle -- Catfolk 6, Kitsune 7,
+// Ratfolk 4, Strix 6, Suli 5, Wayang 1) sat un-ingested. `race_dir` is now
+// SHARED between the two binaries for these 6 races (both write into
+// `advanced_race_guide/race_trait/<race>/`); see
+// `clear_own_alternate_trait_files`'s doc comment for how that clear no
+// longer destroys the sibling binary's files.
+const IN_SCOPE_RACES: [&str; 30] = [
     // Core Rulebook (7)
     "Dwarf",
     "Elf",
@@ -306,6 +318,13 @@ const IN_SCOPE_RACES: [&str; 24] = [
     "Oread",
     "Sylph",
     "Undine",
+    // Advanced Race Guide native chassis (6), SD-31-E6-F4-002/003
+    "Catfolk",
+    "Kitsune",
+    "Ratfolk",
+    "Strix",
+    "Suli",
+    "Wayang",
 ];
 
 const RACIAL_TRAIT_TYPE_SUFFIX: &str = " Racial Trait";
@@ -320,6 +339,79 @@ fn sha256_hex(bytes: &[u8]) -> String {
     let mut hasher = Sha256::new();
     hasher.update(bytes);
     hasher.finalize().iter().map(|b| format!("{b:02x}")).collect()
+}
+
+/// `true` when `path` is a record THIS binary could itself have written --
+/// i.e. its stored `data.is_racial_default` is `false`. Shared by the
+/// scoped clear and the scoped on-disk count below, both of which need the
+/// identical ownership test. See [`clear_own_alternate_trait_files`]'s doc
+/// comment for why this partition is exact, not a guess.
+fn is_own_alternate_trait_record(path: &Path) -> bool {
+    let text = fs::read_to_string(path).unwrap_or_else(|e| panic!("failed to read {path:?} to decide ownership: {e}"));
+    let parsed: serde_json::Value =
+        serde_json::from_str(&text).unwrap_or_else(|e| panic!("{path:?} is not valid JSON, cannot decide ownership safely: {e}"));
+    let is_racial_default = parsed
+        .get("data")
+        .and_then(|d| d.get("is_racial_default"))
+        .and_then(|v| v.as_bool())
+        .unwrap_or_else(|| {
+            panic!(
+                "{path:?} has no boolean data.is_racial_default -- cannot tell whether this \
+                 binary or `ingest_races.rs` wrote it, so ownership refuses to guess"
+            )
+        });
+    !is_racial_default
+}
+
+/// Clears exactly the `.json` files in `race_dir` that THIS binary could
+/// itself have written on a prior run, and leaves every other file alone --
+/// the fix for the mutual-destruction hazard `ingest_book`'s clear-loop doc
+/// comment describes (`SD-31-E6-F4-003`, `advanced_race_guide`'s shared
+/// Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang directories).
+///
+/// This binary never writes an `is_racial_default: true` record (verified
+/// corpus-wide: zero counter-examples across every book it has ever
+/// ingested); `ingest_races.rs` never writes an `is_racial_default: false`
+/// one for these 6 races (see `ingest_races.rs`'s own
+/// `clear_own_standard_trait_files` doc comment). A `.json` file that does
+/// not parse, or is missing that field, belongs to neither binary's known
+/// shape -- refused rather than guessed at, per this repo's no-stub
+/// discipline: a silent guess here is exactly how a sibling binary's real
+/// content gets deleted.
+fn clear_own_alternate_trait_files(race_dir: &Path) {
+    let entries = fs::read_dir(race_dir)
+        .unwrap_or_else(|e| panic!("failed to list {race_dir:?} for a scoped clear: {e}"));
+    for entry in entries {
+        let entry = entry.unwrap_or_else(|e| panic!("failed to read a directory entry under {race_dir:?}: {e}"));
+        let path = entry.path();
+        if path.extension().and_then(|e| e.to_str()) != Some("json") {
+            continue;
+        }
+        if is_own_alternate_trait_record(&path) {
+            fs::remove_file(&path).unwrap_or_else(|e| panic!("failed to remove {path:?} during a scoped clear: {e}"));
+        }
+    }
+}
+
+/// A recursive `.json`-file count, filtered to records this binary could
+/// itself have written (`is_own_alternate_trait_record`). Needed wherever
+/// `advanced_race_guide/race_trait/<race>/` is shared with
+/// `ingest_races.rs` (Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang,
+/// `SD-31-E6-F4-003`): an unfiltered count there would count that sibling
+/// binary's preserved files too, turning a correct run into a false
+/// self-check mismatch.
+fn count_own_json(dir: &Path) -> usize {
+    let mut n = 0;
+    for entry in fs::read_dir(dir).unwrap_or_else(|e| panic!("failed to read {dir:?}: {e}")) {
+        let entry = entry.expect("readable dir entry");
+        let path = entry.path();
+        if path.is_dir() {
+            n += count_own_json(&path);
+        } else if path.extension().is_some_and(|e| e == "json") && is_own_alternate_trait_record(&path) {
+            n += 1;
+        }
+    }
+    n
 }
 
 fn ingested_at_now() -> String {
@@ -1185,24 +1277,31 @@ fn ingest_book(book: &BookSource) {
     // `advanced_race_guide` is now ALSO written by `ingest_races.rs`, which
     // filed 6 new races' (Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang)
     // chassis + standard-tier traits into this same `out_root` for the
-    // first time. None of those 6 are in this binary's own
-    // `IN_SCOPE_RACES` (they carry no alternate-trait content this binary
-    // handles), so a whole-directory `remove_dir_all` here would silently
-    // delete that sibling binary's already-committed files every time this
-    // one runs -- the exact hazard `ingest_races.rs`'s own trait_dir clear
-    // comment names in reverse. Clearing by declared-in-scope race slug
-    // instead preserves the original safety property (a race REMOVED from
-    // `IN_SCOPE_RACES` between two runs cannot leave a stale file behind --
-    // its slug's own subdirectory is still removed) while never touching a
-    // slug this binary has never owned. For every book besides
-    // `advanced_race_guide` this is behaviourally identical to the old
-    // whole-directory clear: no other book currently holds a subdirectory
-    // outside `IN_SCOPE_RACES`.
+    // first time.
+    //
+    // **Widened again, SD-31-E6-F4-003 (2026-08-16): those same 6 races now
+    // carry real ARG alternate-trait content this binary DOES ingest**
+    // (`arg_abilities_race.lst`'s `###Block: Alternate Racial Traits` rows
+    // for Catfolk/Ratfolk/Kitsune/Strix/Suli/Wayang -- confirmed real,
+    // not `.MOD` bookkeeping, by direct inspection of the pinned oracle),
+    // so their race slugs are now IN `IN_SCOPE_RACES` too and a per-slug
+    // `remove_dir_all` on `catfolk/` etc. would delete `ingest_races.rs`'s
+    // already-shipped standard-tier files in the SAME directory every time
+    // this binary runs -- the mutual-destruction hazard the SD-31-E6-F4-002
+    // comment above only avoided by having disjoint race sets, which is no
+    // longer true. The two binaries' records are still disjoint by
+    // *content*, though: `ingest_races.rs` writes only
+    // `is_racial_default: true` (chassis/standard) records and this binary
+    // writes only `is_racial_default: false` ones -- confirmed by scanning
+    // every file either binary has ever shipped (zero counter-examples in
+    // either direction). [`clear_own_alternate_trait_files`] clears by that
+    // real, already-shipped field instead of by directory, so each binary's
+    // rebuild only ever removes files it could itself have written.
     if out_root.exists() {
         for race_name in IN_SCOPE_RACES {
             let race_dir = out_root.join(slugify(race_name));
             if race_dir.exists() {
-                fs::remove_dir_all(&race_dir).unwrap_or_else(|e| panic!("failed to clear {race_dir:?}: {e}"));
+                clear_own_alternate_trait_files(&race_dir);
             }
         }
     }
@@ -1366,18 +1465,19 @@ fn ingest_book(book: &BookSource) {
     // scoped (SD-31-E6-F4-002, 2026-08-16). `advanced_race_guide/
     // race_trait/` now also holds `ingest_races.rs`'s 6-race batch
     // (Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang), which a whole-directory
-    // `count_json` would count as though this run had written them too,
-    // masking a real under-write with a false-positive match (or, as
-    // caught here, flagging a false mismatch against a correct run).
-    // A given book only ever touches a subset of the 24 in-scope races
-    // (e.g. `monster_codex` writes for a handful, not all 24), so a race
+    // `count_json` would count as though this run had written them too --
+    // `count_own_json` (SD-31-E6-F4-003) filters those out by the same
+    // ownership test the scoped clear above uses, so the two figures being
+    // compared are both "this binary's own records" on both sides.
+    // A given book only ever touches a subset of the 30 in-scope races
+    // (e.g. `monster_codex` writes for a handful, not all 30), so a race
     // this book's rows never mentioned has no subdirectory here at all --
     // that is 0 records, not a missing-directory error.
     let on_disk: usize = IN_SCOPE_RACES
         .iter()
         .map(|race_name| {
             let race_dir = out_root.join(slugify(race_name));
-            if race_dir.exists() { count_json(&race_dir) } else { 0 }
+            if race_dir.exists() { count_own_json(&race_dir) } else { 0 }
         })
         .sum();
     assert_eq!(on_disk, written, "records written to disk must match records emitted");
@@ -1392,19 +1492,6 @@ fn ingest_book(book: &BookSource) {
     }
 }
 
-fn count_json(dir: &Path) -> usize {
-    let mut n = 0;
-    for entry in fs::read_dir(dir).unwrap_or_else(|e| panic!("failed to read {dir:?}: {e}")) {
-        let entry = entry.expect("readable dir entry");
-        let path = entry.path();
-        if path.is_dir() {
-            n += count_json(&path);
-        } else if path.extension().is_some_and(|e| e == "json") {
-            n += 1;
-        }
-    }
-    n
-}
 
 #[cfg(test)]
 mod tests {
@@ -1767,13 +1854,20 @@ mod tests {
         // Wayang) into this SAME book directory for the first time -- this
         // test deliberately walks the whole `advanced_race_guide/race_trait/`
         // tree (a real corpus-wide leak check, not an ownership-scoped
-        // count), so it is supposed to see both binaries' output. Re-derived
-        // on disk, not transcribed: `find data/corpus/advanced_race_guide/
-        // race_trait -name '*.json' | wc -l` -> 259; same for
+        // count), so it is supposed to see both binaries' output.
+        // ARG 259->283: SD-31-E6-F4-003 (2026-08-16) widened `IN_SCOPE_RACES`
+        // 24->30 (Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang), so THIS
+        // binary's own real `arg_abilities_race.lst` alternate-trait rows
+        // for those 6 races (Catfolk 6, Kitsune 2, Ratfolk 4, Strix 6,
+        // Suli 5, Wayang 1 = 24) now pass the in-scope filter for the first
+        // time too, alongside `ingest_races.rs`'s already-shipped 58
+        // standard-tier records in the same directories. Re-derived on
+        // disk, not transcribed: `find data/corpus/advanced_race_guide/
+        // race_trait -name '*.json' | wc -l` -> 283; same for
         // `inner_sea_races` -> 82.
         let expected: BTreeMap<&str, usize> =
             [
-                ("advanced_race_guide", 259usize),
+                ("advanced_race_guide", 283usize),
                 ("monster_codex", 5),
                 ("inner_sea_races", 82),
                 ("horror_adventures", 43),
@@ -1845,9 +1939,11 @@ mod tests {
         }
         assert_eq!(
             total,
-            453,
-            "259 ARG (of which 58 are `ingest_races.rs`'s own Catfolk/Kitsune/Ratfolk/Strix/Suli/\
-             Wayang batch, SD-31-E6-F4-002, 2026-08-16) + 5 Monster Codex + 82 Inner Sea Races + \
+            477,
+            "283 ARG (of which 58 are `ingest_races.rs`'s own Catfolk/Kitsune/Ratfolk/Strix/Suli/\
+             Wayang standard-tier batch, SD-31-E6-F4-002, plus this binary's own 24-record \
+             alternate-tier batch for those same 6 races, SD-31-E6-F4-003, both 2026-08-16) + \
+             5 Monster Codex + 82 Inner Sea Races + \
              43 Horror Adventures + 64 Core \
              Essentials heritage records (ARG/ISR moved from 156/71 by SD-31 Epic 1-F2, \
              2026-08-15). Advanced Player's Guide was investigated (SD-31 Epic 6-F4,
@@ -1871,33 +1967,32 @@ mod tests {
     }
 
     #[test]
-    fn in_scope_roster_is_exactly_the_24_races_sd31_epic1_f2_names() {
-        // Widened 18 -> 24 by SD-31 Epic 1-F2 (2026-08-15); see this
-        // constant's own doc comment and `ingest_races.rs`'s matching
-        // `IN_SCOPE_RACES` table.
-        assert_eq!(IN_SCOPE_RACES.len(), 24);
+    fn in_scope_roster_is_exactly_the_30_races_sd31_e6_f4_003_names() {
+        // Widened 18 -> 24 by SD-31 Epic 1-F2 (2026-08-15), then 24 -> 30 by
+        // SD-31-E6-F4-003 (2026-08-16); see this constant's own doc comment
+        // and `ingest_races.rs`'s matching `IN_SCOPE_RACES` table.
+        assert_eq!(IN_SCOPE_RACES.len(), 30);
         let unique: BTreeSet<&str> = IN_SCOPE_RACES.into_iter().collect();
-        assert_eq!(unique.len(), 24, "roster must not repeat a race");
-        // The 6 Bestiary 2 races this batch added must actually be present.
+        assert_eq!(unique.len(), 30, "roster must not repeat a race");
+        // The 6 Bestiary 2 races Epic 1-F2 added must actually be present.
         for added in ["Fetchling", "Grippli", "Ifrit", "Oread", "Sylph", "Undine"] {
             assert!(unique.contains(added), "{added} is SD-31 Epic 1-F2's batch and must be in scope");
         }
+        // The 6 ARG-native races this cycle added must actually be present.
+        for added in ["Catfolk", "Kitsune", "Ratfolk", "Strix", "Suli", "Wayang"] {
+            assert!(unique.contains(added), "{added} is SD-31-E6-F4-003's batch and must be in scope");
+        }
         // Still-out-of-scope races (`decisions.md §25.3`'s original deferral,
-        // minus the 6 this batch moved into scope) must not have crept in.
+        // minus the 12 these two batches moved into scope) must not have
+        // crept in.
         for deferred in [
             "Dhampir",
-            "Catfolk",
-            "Ratfolk",
-            "Suli",
             "Vanara",
             "Vishkanya",
             "Changeling",
-            "Kitsune",
             "Nagaji",
             "Samsaran",
-            "Wayang",
             "Gillman",
-            "Strix",
         ] {
             assert!(!unique.contains(deferred), "{deferred} is still deferred and must not be in scope");
         }

@@ -215,8 +215,8 @@ fn the_pure_flag_table_agrees_with_the_disk_backed_resolver_for_every_alternate(
             checked += 1;
         }
     }
-    assert_eq!(checked, 330, "153 ARG + 4 Monster Codex + 1 APG + 67 Inner Sea Races + 41 Horror Adventures + 16 Core Essentials heritages (round 4; the book's other 48 records are the replacement rows those heritages grant and are never selectable). The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 47)");
-    assert_eq!(selectable_alternate_trait_keys().len(), 330, "153 ARG + 4 Monster Codex + 1 APG + 67 Inner Sea Races + 41 Horror Adventures + 16 Core Essentials heritages (round 4; the book's other 48 records are the replacement rows those heritages grant and are never selectable). The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 47)");
+    assert_eq!(checked, 349, "153 ARG + 4 Monster Codex + 1 APG + 67 Inner Sea Races + 41 Horror Adventures + 16 Core Essentials heritages + SD-31-E6-F4-003's 19 (round 5; the book's other 5 new records -- Strix's Wing-Clipped-granted Flight plus Suli's Energy-Strike-granted Earthfoot/Firehand/Icewalk/Shockshield -- are never selectable, same as the prior rounds' dependent rows). The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 47)");
+    assert_eq!(selectable_alternate_trait_keys().len(), 349, "153 ARG + 4 Monster Codex + 1 APG + 67 Inner Sea Races + 41 Horror Adventures + 16 Core Essentials heritages + SD-31-E6-F4-003's 19 (round 5; the book's other 5 new records -- Strix's Wing-Clipped-granted Flight plus Suli's Energy-Strike-granted Earthfoot/Firehand/Icewalk/Shockshield -- are never selectable, same as the prior rounds' dependent rows). The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 47)");
 }
 
 /// The three dependent rows named in this cycle's brief, confirmed by reading
@@ -248,24 +248,35 @@ fn the_three_dependent_rows_are_not_offered_as_choices_and_the_menu_is_exactly_t
         .count();
     assert_eq!(
         all,
-        695,
+        719,
         "175 standard + 156 ARG + 5 Monster Codex + 1 APG + 71 Inner Sea Races \
          + 43 Horror Adventures + 64 Core Essentials heritage rows + SD-31 Epic 1-F2's \
          113 (57 standard + 42 ARG + 6 Inner Sea Races + 8 grant-linked, 2026-08-15) + the \
          Skinwalker follow-on batch's 9 standard rows + SD-31-E6-F4-002's Advanced Race \
          Guide batch of 58 standard rows (2026-08-16: Catfolk, Kitsune, Ratfolk, Strix, \
-         Suli, Wayang; 637 -> 695)"
+         Suli, Wayang; 637 -> 695) + SD-31-E6-F4-003's own 24-record alternate-trait batch \
+         for those same 6 races (2026-08-16: 695 -> 719)"
     );
     assert_eq!(
         arg,
-        259,
-        "ARG's 259 ingested race-trait records (156 -> 201 by SD-31 Epic 1-F2; 201 -> 259 \
-         by SD-31-E6-F4-002's own 6-race chassis batch, 2026-08-16)"
+        283,
+        "ARG's 283 ingested race-trait records (156 -> 201 by SD-31 Epic 1-F2; 201 -> 259 \
+         by SD-31-E6-F4-002's own 6-race chassis batch; 259 -> 283 by SD-31-E6-F4-003's own \
+         alternate-trait batch for those same 6 races, both 2026-08-16)"
     );
 
     let selectable: BTreeSet<&str> = selectable_alternate_trait_keys().into_iter().collect();
-    assert_eq!(selectable.len(), 330, "153 ARG + 4 Monster Codex + 1 APG + 67 Inner Sea Races + 41 Horror Adventures + 16 Core Essentials heritages (round 4; the book's other 48 records are the replacement rows those heritages grant and are never selectable). The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 47)");
-    for dependent in ["Feral ~ Languages", "Scion of Humanity ~ Languages", "Saltbeard ~ Dwarf ~ Greed"] {
+    assert_eq!(selectable.len(), 349, "153 ARG + 4 Monster Codex + 1 APG + 67 Inner Sea Races + 41 Horror Adventures + 16 Core Essentials heritages + SD-31-E6-F4-003's 19 (round 5; the book's other 5 new records -- Strix's Wing-Clipped-granted Flight plus Suli's Energy-Strike-granted Earthfoot/Firehand/Icewalk/Shockshield -- are never selectable, same as the prior rounds' dependent rows). The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 47)");
+    for dependent in [
+        "Feral ~ Languages",
+        "Scion of Humanity ~ Languages",
+        "Saltbeard ~ Dwarf ~ Greed",
+        "Wing-Clipped ~ Strix ~ Flight",
+        "Suli ~ Earthfoot",
+        "Suli ~ Firehand",
+        "Suli ~ Icewalk",
+        "Suli ~ Shockshield",
+    ] {
         assert!(!selectable.contains(dependent), "{dependent} must not be a menu item");
     }
 
@@ -313,9 +324,10 @@ fn no_ingested_race_trait_key_contains_a_colon_so_the_storage_namespace_is_lossl
     }
     assert_eq!(
         checked,
-        695,
+        719,
         "515 -> 628 by SD-31 Epic 1-F2 (2026-08-15); 628 -> 637 by the Skinwalker follow-on \
-         batch; 637 -> 695 by SD-31-E6-F4-002's Advanced Race Guide batch (2026-08-16)"
+         batch; 637 -> 695 by SD-31-E6-F4-002's Advanced Race Guide batch; 695 -> 719 by \
+         SD-31-E6-F4-003's own alternate-trait batch for the same 6 races (2026-08-16)"
     );
 }
 
@@ -509,7 +521,7 @@ fn every_alternate_computes_on_its_own_race_without_an_unknown_key_diagnostic() 
             computed += 1;
         }
     }
-    assert_eq!(computed, 330, "153 ARG + 4 Monster Codex + 1 APG + 67 Inner Sea Races + 41 Horror Adventures + 16 Core Essentials heritages (round 4; the book's other 48 records are the replacement rows those heritages grant and are never selectable). The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 47)");
+    assert_eq!(computed, 349, "153 ARG + 4 Monster Codex + 1 APG + 67 Inner Sea Races + 41 Horror Adventures + 16 Core Essentials heritages + SD-31-E6-F4-003's 19 (round 5; the book's other 5 new records -- Strix's Wing-Clipped-granted Flight plus Suli's Energy-Strike-granted Earthfoot/Firehand/Icewalk/Shockshield -- are never selectable, same as the prior rounds' dependent rows). The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 47)");
 }
 
 /// **The measurement behind this cycle's honesty claim**, re-derived rather
@@ -614,10 +626,18 @@ fn every_alternate_whose_bonus_lands_on_a_total_this_engine_computes_is_named_an
             ("Hobgoblin ~ Fearsome", vec!["selected_skill_modifiers.intimidate +4"]),
             ("Human ~ Heart of the Mountain", vec!["selected_skill_modifiers.climb +2"]),
             ("Human ~ Heart of the Sea", vec!["selected_skill_modifiers.swim +2"]),
+            // SD-31-E6-F4-003 (2026-08-16), ARG's own 6-race chassis batch's
+            // contribution: Strix is the only one of the 6 with a `BONUS:SAVE`
+            // or `BONUS:SKILL` chain landing on a tracked total.
+            ("Strix ~ Frightening", vec!["selected_skill_modifiers.intimidate +2"]),
+            ("Strix ~ Nimble", vec!["total_saves.reflex +1"]),
+            ("Strix ~ Tough", vec!["total_saves.fortitude +1"]),
+            ("Strix ~ Wing-Clipped", vec!["selected_skill_modifiers.climb +2"]),
         ],
         "the reachable set is a measurement of today's engine; a change here is a real change. \
          Round 2 added ISR's 4 without moving this list, so it was RED on the branch; round 3 \
-         moved it and added HA's 1 (SD-29 decisions.md 47)"
+         moved it and added HA's 1 (SD-29 decisions.md 47); round 5 (SD-31-E6-F4-003) added \
+         Strix's 4, 2026-08-16"
     );
 
     // Every one of them is genuinely wired: the engine's own before/after
@@ -709,9 +729,11 @@ fn no_race_contributes_two_alternate_trait_bonuses_to_one_save() {
     // The scan must find something, or it proves nothing.
     assert_eq!(
         per_race_save.len(),
-        3,
+        5,
         "Half-Elf/Will (ARG Dual Minded), Dwarf/Fortitude (ISR Unstoppable), Half-Elf/Reflex \
-         (HA Mismatched) -- the three (race, save) pairs any alternate moves"
+         (HA Mismatched), Strix/Reflex (ARG Nimble), Strix/Fortitude (ARG Tough) -- the five \
+         (race, save) pairs any alternate moves (SD-31-E6-F4-003 added the last two, \
+         2026-08-16)"
     );
 }
 

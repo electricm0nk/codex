@@ -1102,9 +1102,10 @@ mod tests {
         // reader has to infer from an absence.
         assert!(
             !arg_book.content_kind_counts.contains_key("race_traits"),
-            "ARG's 259 racial-trait records (156 -> 201 by SD-31 Epic 1-F2, 2026-08-15; \
-             201 -> 259 by SD-31-E6-F4-002, 2026-08-16) are corpus-JSON-only; see the module \
-             doc for why they are accounted for in LICENSE.json rather than here"
+            "ARG's 283 racial-trait records (156 -> 201 by SD-31 Epic 1-F2, 2026-08-15; \
+             201 -> 259 by SD-31-E6-F4-002; 259 -> 283 by SD-31-E6-F4-003, both 2026-08-16) \
+             are corpus-JSON-only; see the module doc for why they are accounted for in \
+             LICENSE.json rather than here"
         );
     }
 
@@ -1179,7 +1180,11 @@ mod tests {
             // `race_counts_by_diagnostic_book()` already merges into every
             // book's `content_kind_counts` (ARG's `races` row moved
             // `None` -> `Some(6)` this cycle, see the dedicated test above).
-            ("advanced_race_guide", "advanced_race_guide", 917u32),
+            // 917 -> 941 by SD-31-E6-F4-003 (2026-08-16): `ingest_race_traits
+            // .rs`'s own 24-record alternate-trait batch for those same 6
+            // races (Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang) -- also
+            // corpus-JSON-only race_trait content, same shape as above.
+            ("advanced_race_guide", "advanced_race_guide", 941u32),
             ("pathfinder_unchained", "pathfinder_unchained", 0),
         ] {
             let response = build_corpus_ingest_diagnostic();

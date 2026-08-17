@@ -882,6 +882,58 @@ fn sha256_hex(bytes: &[u8]) -> String {
     hasher.finalize().iter().map(|b| format!("{b:02x}")).collect()
 }
 
+/// Clears exactly the `.json` files under `trait_dir` that THIS binary
+/// could itself have written on a prior run, leaving every other file
+/// alone -- the fix for the mutual-destruction hazard this file's own
+/// `trait_dir` clear comment names (`SD-31-E6-F4-003`,
+/// `advanced_race_guide`'s shared Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang
+/// directories, now also carrying `ingest_race_traits.rs`'s alternate-trait
+/// records in the same directory).
+///
+/// Only called for `advanced_race_guide` race specs (the one book this
+/// binary does not whole-directory-clear above) -- Aasimar/Tiefling-style
+/// non-default subrace rows this binary itself also writes live under
+/// `core_rulebook`/`beastiary`/`bestiary_2`/`bestiary_5`, which the whole-
+/// directory clear already handles, so they never reach this function. For
+/// every race spec that DOES reach here (Catfolk/Kitsune/Ratfolk/Strix/
+/// Suli/Wayang today), this binary's own `<race>_abilities_race.lst` read
+/// carries no non-default row at all -- verified by inspecting every file
+/// currently shipped for those 6 races, zero counter-examples -- so every
+/// record this binary could write here has `is_racial_default: true`, and
+/// every record `ingest_race_traits.rs` writes here has it `false`. A file
+/// is therefore this binary's own iff its stored `data.is_racial_default`
+/// is `true`. A `.json` file that does not parse, or is missing that
+/// field, belongs to neither binary's known shape -- refused rather than
+/// guessed at, per this repo's no-stub discipline: a silent guess here is
+/// exactly how a sibling binary's real content gets deleted.
+fn clear_own_standard_trait_files(trait_dir: &Path) {
+    let entries = fs::read_dir(trait_dir)
+        .unwrap_or_else(|e| panic!("failed to list {trait_dir:?} for a scoped clear: {e}"));
+    for entry in entries {
+        let entry = entry.unwrap_or_else(|e| panic!("failed to read a directory entry under {trait_dir:?}: {e}"));
+        let path = entry.path();
+        if path.extension().and_then(|e| e.to_str()) != Some("json") {
+            continue;
+        }
+        let text = fs::read_to_string(&path).unwrap_or_else(|e| panic!("failed to read {path:?} for a scoped clear: {e}"));
+        let parsed: serde_json::Value = serde_json::from_str(&text)
+            .unwrap_or_else(|e| panic!("{path:?} is not valid JSON, cannot decide clear ownership safely: {e}"));
+        let is_racial_default = parsed
+            .get("data")
+            .and_then(|d| d.get("is_racial_default"))
+            .and_then(|v| v.as_bool())
+            .unwrap_or_else(|| {
+                panic!(
+                    "{path:?} has no boolean data.is_racial_default -- cannot tell whether this \
+                     binary or `ingest_race_traits.rs` wrote it, so a scoped clear refuses to guess"
+                )
+            });
+        if is_racial_default {
+            fs::remove_file(&path).unwrap_or_else(|e| panic!("failed to remove {path:?} during a scoped clear: {e}"));
+        }
+    }
+}
+
 /// Lowercase ASCII slug, identical in behaviour to
 /// `src/bin/gen_book_cache.rs::slugify` so race records file the
 /// same way every other corpus record already does.
@@ -1142,8 +1194,16 @@ fn main() {
         // `ingest_race_traits.rs`), clear just this one race's own
         // subdirectory -- catches a stale trait from a prior run of THIS
         // batch without touching a sibling race slug the other binary owns.
+        // **SD-31-E6-F4-003:** as of that cycle the directory itself can
+        // also be shared for the SAME race slug (`ingest_race_traits.rs`
+        // now ingests these 6 races' real ARG alternate-trait content into
+        // this same `race_trait/<race>/` directory), so a whole-directory
+        // `remove_dir_all` would delete that sibling binary's files every
+        // time this one runs. `clear_own_standard_trait_files` clears only
+        // the records this binary could itself have written; see its own
+        // doc comment for why that is safe and exact, not a guess.
         if !matches!(spec.book, "core_rulebook" | "beastiary" | "bestiary_2" | "bestiary_5") && trait_dir.exists() {
-            fs::remove_dir_all(&trait_dir).unwrap_or_else(|e| panic!("failed to clear {trait_dir:?}: {e}"));
+            clear_own_standard_trait_files(&trait_dir);
         }
         let mut seen_slugs: BTreeMap<String, String> = BTreeMap::new();
         let mut trait_count = 0usize;
@@ -1806,6 +1866,23 @@ mod tests {
                 let text = fs::read_to_string(&path).unwrap();
                 let record: CorpusRecordV1<RaceTraitCacheData> = serde_json::from_str(&text)
                     .unwrap_or_else(|e| panic!("{path:?} is not a valid race-trait record: {e}"));
+                // SD-31-E6-F4-003 (2026-08-16): `advanced_race_guide/
+                // race_trait/<race>/` is now shared with
+                // `ingest_race_traits.rs` for THIS binary's own 6-race ARG
+                // batch too (Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang), the
+                // same way it already was for the whole-book directory (see
+                // this test's own comment above). Scoped to that one book,
+                // not to `is_racial_default` in general: Bestiary 1's own
+                // `Duergar ~ Spell-Like Abilities`/`Duergar ~ Spell
+                // Resistance` are standard, `ingest_races.rs`-written rows
+                // that legitimately carry `is_racial_default: false` (their
+                // corpus row has no `<Race> Racial Default` TYPE marker —
+                // the pre-existing gap `raceCreationCoverage.test.ts`'s
+                // "173, not 175" comment names), and a blanket filter on the
+                // flag alone would wrongly skip them here too.
+                if spec.book == "advanced_race_guide" && !record.data.is_racial_default {
+                    continue;
+                }
                 validate_license(&record).unwrap_or_else(|e| panic!("{path:?}: {e}"));
                 assert!(record.data.sets_replace_flags.is_empty(), "{path:?}: a standard trait sets no replace flags");
                 assert_ne!(
