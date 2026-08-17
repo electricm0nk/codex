@@ -340,3 +340,88 @@ Per-epic landing, named honestly:
 
 Full command-level detail, every figure's derivation, and the complete finding-by-finding fix record
 are in `progress.md`'s `SD31-W8-INTEGRATE-001` receipt.
+
+## Wave 10 integration status (`SD31-W10-INTEGRATE-001`, 2026-08-17)
+
+Six worktree branches merged onto `tranche/11` in the dispatched order (chooser primitive first,
+then inventory gaps, then race_trait, monster+companion, equipment+class, spell+feat), all confirmed
+content-present by `git log --oneline origin/tranche/11..<branch>` before merge and by direct diff
+inspection after. Board re-derived at the merged, fixed, guarded-regen tip: **10,958 → 11,229 `done`
+/ 38,521 (28.4468% → 29.1503%)**, denominator UNCHANGED all wave, reachable ceiling **98.95%
+(38,115/38,521), unchanged**. Zero stamp loss (38,540 raw ids identical before/after, traced by full
+id-set diff, not a count). See `progress.md`'s `SD31-W10-INTEGRATE-001` receipt for the full
+per-kind, per-move table (406 id-level moves, all traced).
+
+**Two CONFIRMED review findings fixed before the regen ran, not merged around**:
+1. **Fabricated magnitude** (chooser lane): Battlecry's duration grounded the raw Charisma SCORE
+   (18) where the corpus token means the MODIFIER (4) — a 4.5x overstatement, caught before any
+   board unit could pay out on it (the inventory-gaps lane's own fix is what makes the unit
+   probe-reachable; sequenced so the fix landed first). Fixed, tests corrected, 6/6 green.
+2. **Bulk-admits-units-on-a-lie** (spell+feat lane): 159 of Mythic Adventures' 358 ingested feat
+   rows were PCGen `VISIBLE:EXPORT` display-plumbing twins served as independently selectable,
+   ungated duplicate feats in the player-facing Add Feat picker — 142 of them had reached `done`,
+   40% of the whole wave's original headline movement. Fixed at the generator
+   (`gen_feat_gap_tables.rs::parse_lst` now skips `VISIBLE:EXPORT` rows), regenerated against the
+   pinned oracle (358 → 199, exactly 159 removed), and every downstream count this touches was
+   swept and re-verified by real `cargo test` runs across 6 files, not asserted.
+
+**The chooser primitive — is it real, and what did it unlock?** Yes, it is real: `archetype_resolver::
+chooser_option_selected` has genuine, non-test production callers on a live path
+(`build_pilot_headless_receipt` → `pf1_adapter.rs`'s desktop entry point, confirmed non-`#[cfg(test)]`),
+and both its corpus option pools (`ORACLE_MYSTERY_POOL`, `ORACLE_BATTLE_MYSTERY_REVELATION_POOL`)
+transcribe the pinned oracle exactly with zero invented entries. What it unlocked THIS wave is one
+real consumer, Oracle's Battle Mystery/Battlecry revelation, now correctly grounding a Charisma-
+modifier-scaled duration. What it did NOT yet unlock, honestly: its advertised corpus-pool
+membership guard is statically unreachable at both current call sites (both pass compile-time
+constants that are always members of themselves — a real structural weakness, not a fabrication,
+logged `OPEN-ISSUES.md` row 180), and no player-facing Mystery picker exists yet, so DoD-8 could not
+be driven for this specific unit (blocked one level earlier, in `pf1_adapter.rs`'s canonical-seed
+table — a Path A followup, same shape as the Sorcerer/Cleric/Druid precedent). The primitive itself
+is the right foundation for the ~4,520-unit option-pool-with-no-chooser gap the mandate names as the
+single largest `class_feature` cause; this wave used it for exactly one pool as a proof, and 4 more
+Oracle mysteries plus Sorcerer's/Arcanist's own bloodlines/exploits remain unwired through it.
+
+Per-epic landing, named honestly:
+
+- **`epic-1-race-chassis`** — 4 more race chassis landed this wave (Gillman, Nagaji, Vanara,
+  Vishkanya; `sd31/racetrait3-SD31-E6-F4-004`), `race_trait` net +37, `race` unchanged at 7/103
+  (structurally frozen on the 18-years-obsolete `RaceId::ALL` enum, `OPEN-ISSUES.md` row 170,
+  `RULING-NEEDED`-shaped dispatch decision, not an operator ruling — up to ~28 units could move on
+  a single lane-2 fix). Book attribution for the 38 new standard-trait records + `nagaji.json` is
+  characterized as mis-filed (should sit under `bestiary_3`/`bestiary_4`/`inner_sea_world_guide`,
+  not `advanced_race_guide`) but NOT refiled — race attribution stays FROZEN pending row 140's
+  operator ruling (`OPEN-ISSUES.md` row 183).
+- **`epic-4-mechanism`** — the chooser primitive (above) landed for Oracle Battle Mystery, the
+  first `class_feature` unit grounded through it rather than the hand-rolled
+  `oracle_level_with_revelation` shape. Board-verdict impact of the primitive alone this wave: 0
+  (the unit's own inventory record never reached the probe until the inventory-gaps lane's
+  companion fix landed) — see row 168/`OPEN-ISSUES.md` for the traced cause.
+- **`epic-6-ingest-lanes`** — `class_feature` registry widening (Pathfinder Unchained's 4 classes,
+  `sd31/e5-f1-003-inventory-gaps`, +46 done), `monster` SLA_CL literal-override fix (+70 done,
+  1,196/1,196 values independently re-derived against the pinned oracle, zero mismatches),
+  `equipment`+`class` ingest lane (0 board movement this wave — traced, not fabricated; the 389
+  `equipment_modifier` unmeasurable population and a `class` structural blocker were both sized,
+  not closed), Mythic Adventures onboarded as the feat catalog's first new book (+118 real `feat`
+  done after the VISIBLE:EXPORT fix above, +90 to `unmeasurable` for genuinely description-less
+  records). `spell`/`feat` held-mass traces named two real, sized, unbuilt levers: `spell`'s
+  `range_keyword` shape (206 units, the single largest remaining lever on `spell`'s `held` bucket)
+  and `feat`'s 424-unit probe-coverage gap in the feat-effect probe's swept postures.
+- **Decision 9/10** — untouched this wave; no register or `core_essentials` mechanism changes in
+  any of the six merged branches or this integration cycle's own commits. The Supersession Register
+  stays PROPOSED, NOT applied; race attribution stays FROZEN.
+- **`epic-9-closure`** — not reached. Reachable ceiling still 98.95%, not 100%; same 9
+  `ambiguous|*` dead-end cells, all Epic-2-owned.
+
+**Shortfalls named on open cards, honestly:**
+- `race` (epic-1) — frozen at 7/103 by an obsolete instrument, not a chassis gap; the highest-
+  leverage single lever this wave found (`OPEN-ISSUES.md` row 170).
+- `class_feature`'s option-pool-with-no-chooser population (epic-4) — this wave wired exactly 1 of
+  the ~1,847 distinct pool names named in the mandate; 4 more Oracle mysteries alone are a same-
+  shape, same-file next step.
+- `class` (epic-6-F10) — 158/185 not-started, still never successfully worked; this wave's own
+  equipment+class lane confirmed 0 board movement is the honest, traced outcome, not an omission.
+- `equipment_modifier` (epic-6-F6) — 389 `unmeasurable` units traced end to end, characterized not
+  closed (`OPEN-ISSUES.md` row 173).
+
+Full command-level detail, every figure's derivation, the complete finding-by-finding fix record, and
+the full gate log are in `progress.md`'s `SD31-W10-INTEGRATE-001` receipt.
