@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:15:19Z",
+  "data": {
+    "key": "Tree Stranger ~ Vanara ~ Speed",
+    "name": "Normal Speed",
+    "race_key": "Vanara",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Vanara Racial Trait",
+      "SpecialQuality",
+      "Racial Speed"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [],
+    "description": "Tree stranger vanaras have a base speed of 30 feet.",
+    "source_page": "p.206",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tree Stranger ~ Vanara ~ Speed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Vanara Racial Trait.SpecialQuality.Racial Speed"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,ABILITIES,Vanara_ReplaceSpeed=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Tree stranger vanaras have a base speed of 30 feet."
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.206"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 1241,
+    "record_key": "Tree Stranger ~ Vanara ~ Speed"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

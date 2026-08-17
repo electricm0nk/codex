@@ -449,13 +449,14 @@ fn arg_race_file_carries_favored_class_bonus_and_choice_suboption_rows_not_trait
     }
     assert_eq!(
         checked,
-        321,
-        "321 already-ingested ARG race_trait records (156 -> 201 by SD-31 Epic 1-F2, \
+        332,
+        "332 already-ingested ARG race_trait records (156 -> 201 by SD-31 Epic 1-F2, \
          2026-08-15; 201 -> 259 by SD-31-E6-F4-002's own 6-race chassis batch; 259 -> 283 by \
          SD-31-E6-F4-003's own alternate-trait batch for the same 6 races, both 2026-08-16; \
-         283 -> 321 by SD31-E6-F4-004's own 4-race chassis batch, 2026-08-17 -- every new \
-         record also carries CATEGORY:Special Ability, same as every alternate this \
-         directory already held)"
+         283 -> 321 by SD31-E6-F4-004's own 4-race chassis batch, 2026-08-17; 321 -> 332 by \
+         SD31-E6-F4-006's own alternate-trait batch for the same 4 races, 2026-08-17 -- \
+         every new record also carries CATEGORY:Special Ability, same as every alternate \
+         this directory already held)"
     );
 }
 

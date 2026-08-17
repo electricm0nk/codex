@@ -293,7 +293,7 @@ const BOOK_SOURCES: &[BookSource] = &[
 // `advanced_race_guide/race_trait/<race>/`); see
 // `clear_own_alternate_trait_files`'s doc comment for how that clear no
 // longer destroys the sibling binary's files.
-const IN_SCOPE_RACES: [&str; 30] = [
+const IN_SCOPE_RACES: [&str; 34] = [
     // Core Rulebook (7)
     "Dwarf",
     "Elf",
@@ -328,6 +328,14 @@ const IN_SCOPE_RACES: [&str; 30] = [
     "Strix",
     "Suli",
     "Wayang",
+    // Advanced Race Guide follow-on chassis (4), SD31-E6-F4-006 -- standard
+    // tier already ingested by `ingest_races.rs`'s SD31-E6-F4-004 batch;
+    // this widens THIS binary's roster so their real alternate racial
+    // trait rows in `arg_abilities_race.lst` pass the in-scope filter too.
+    "Gillman",
+    "Nagaji",
+    "Vanara",
+    "Vishkanya",
 ];
 
 const RACIAL_TRAIT_TYPE_SUFFIX: &str = " Racial Trait";
@@ -1868,9 +1876,18 @@ mod tests {
         // disk, not transcribed: `find data/corpus/advanced_race_guide/
         // race_trait -name '*.json' | wc -l` -> 283; same for
         // `inner_sea_races` -> 82.
+        // ARG 321->332: SD31-E6-F4-006 (2026-08-17) widened `IN_SCOPE_RACES`
+        // 30->34 (Gillman/Nagaji/Vanara/Vishkanya) -- their real
+        // `arg_abilities_race.lst` alternate-trait rows (Gillman 5:
+        // Riverfolk/Slime Hunter/Throwback + 2 flag-granted replacement
+        // rows, Nagaji 1: Hypnotic Gaze, Vanara 3: Tree Stranger/Whitecape +
+        // 1 flag-granted replacement row, Vishkanya 2: Sensual/Subtle
+        // Appearance = 11) now pass the in-scope filter for the first time.
+        // Re-derived on disk: `find data/corpus/advanced_race_guide/
+        // race_trait -name '*.json' | wc -l` -> 332.
         let expected: BTreeMap<&str, usize> =
             [
-                ("advanced_race_guide", 321usize),
+                ("advanced_race_guide", 332usize),
                 ("monster_codex", 5),
                 ("inner_sea_races", 82),
                 ("horror_adventures", 43),
@@ -1942,12 +1959,13 @@ mod tests {
         }
         assert_eq!(
             total,
-            515,
-            "321 ARG (of which 96 are `ingest_races.rs`'s own standard-tier batches: \
+            526,
+            "332 ARG (of which 96 are `ingest_races.rs`'s own standard-tier batches: \
              58 from Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang, SD-31-E6-F4-002, plus 38 \
-             from Gillman/Nagaji/Vanara/Vishkanya, SD31-E6-F4-004; the remaining 225 are \
+             from Gillman/Nagaji/Vanara/Vishkanya, SD31-E6-F4-004; the remaining 236 are \
              this binary's own alternate-tier batches: 201 pre-existing + 24 for the first \
-             6-race batch, SD-31-E6-F4-003, both 2026-08-16) + \
+             6-race batch, SD-31-E6-F4-003, 2026-08-16, plus 11 for the second 4-race \
+             follow-on batch, SD31-E6-F4-006, 2026-08-17) + \
              5 Monster Codex + 82 Inner Sea Races + \
              43 Horror Adventures + 64 Core \
              Essentials heritage records (ARG/ISR moved from 156/71 by SD-31 Epic 1-F2, \
@@ -1957,9 +1975,9 @@ mod tests {
              byte-mechanically-identical, via `advanced_race_guide`'s own reprint of them. \
              This total sits alongside the per-book map above and must move with it; round \
              3 moved the map first and this pin caught the omission, round 4 did the same, \
-             the companion lane hit it a third time in one cycle, this batch a fourth, and \
-             SD31-E6-F4-004 a fifth -- fixing one assertion reveals the next one below it, \
-             which is the whole reason the test states both"
+             the companion lane hit it a third time in one cycle, batch four a fourth, and \
+             SD31-E6-F4-004 a fifth, SD31-E6-F4-006 a sixth -- fixing one assertion reveals \
+             the next one below it, which is the whole reason the test states both"
         );
     }
 
@@ -1972,33 +1990,38 @@ mod tests {
     }
 
     #[test]
-    fn in_scope_roster_is_exactly_the_30_races_sd31_e6_f4_003_names() {
-        // Widened 18 -> 24 by SD-31 Epic 1-F2 (2026-08-15), then 24 -> 30 by
-        // SD-31-E6-F4-003 (2026-08-16); see this constant's own doc comment
-        // and `ingest_races.rs`'s matching `IN_SCOPE_RACES` table.
-        assert_eq!(IN_SCOPE_RACES.len(), 30);
+    fn in_scope_roster_is_exactly_the_34_races_sd31_e6_f4_006_names() {
+        // Widened 18 -> 24 by SD-31 Epic 1-F2 (2026-08-15), 24 -> 30 by
+        // SD-31-E6-F4-003 (2026-08-16), then 30 -> 34 by SD31-E6-F4-006
+        // (2026-08-17: `ingest_races.rs`'s SD31-E6-F4-004 standard-tier
+        // chassis batch already ingested Gillman/Nagaji/Vanara/Vishkanya's
+        // `~ Ability Scores`/`~ Speed`/`~ Vision`/etc rows; this cycle widens
+        // THIS binary's roster so their real ALTERNATE racial trait rows
+        // (`arg_abilities_race.lst`'s `Riverfolk`/`Slime Hunter`/`Throwback`
+        // for Gillman, `Hypnotic Gaze` for Nagaji, `Tree Stranger`/
+        // `Whitecape` for Vanara, `Sensual`/`Subtle Appearance` for
+        // Vishkanya) pass the in-scope filter for the first time too); see
+        // this constant's own doc comment and `ingest_races.rs`'s matching
+        // `IN_SCOPE_RACES` table.
+        assert_eq!(IN_SCOPE_RACES.len(), 34);
         let unique: BTreeSet<&str> = IN_SCOPE_RACES.into_iter().collect();
-        assert_eq!(unique.len(), 30, "roster must not repeat a race");
+        assert_eq!(unique.len(), 34, "roster must not repeat a race");
         // The 6 Bestiary 2 races Epic 1-F2 added must actually be present.
         for added in ["Fetchling", "Grippli", "Ifrit", "Oread", "Sylph", "Undine"] {
             assert!(unique.contains(added), "{added} is SD-31 Epic 1-F2's batch and must be in scope");
         }
-        // The 6 ARG-native races this cycle added must actually be present.
+        // The 6 ARG-native races SD-31-E6-F4-003 added must actually be present.
         for added in ["Catfolk", "Kitsune", "Ratfolk", "Strix", "Suli", "Wayang"] {
             assert!(unique.contains(added), "{added} is SD-31-E6-F4-003's batch and must be in scope");
         }
+        // The 4 ARG-follow-on races this cycle added must actually be present.
+        for added in ["Gillman", "Nagaji", "Vanara", "Vishkanya"] {
+            assert!(unique.contains(added), "{added} is SD31-E6-F4-006's batch and must be in scope");
+        }
         // Still-out-of-scope races (`decisions.md §25.3`'s original deferral,
-        // minus the 12 these two batches moved into scope) must not have
+        // minus the 16 these three batches moved into scope) must not have
         // crept in.
-        for deferred in [
-            "Dhampir",
-            "Vanara",
-            "Vishkanya",
-            "Changeling",
-            "Nagaji",
-            "Samsaran",
-            "Gillman",
-        ] {
+        for deferred in ["Dhampir", "Changeling", "Samsaran"] {
             assert!(!unique.contains(deferred), "{deferred} is still deferred and must not be in scope");
         }
     }

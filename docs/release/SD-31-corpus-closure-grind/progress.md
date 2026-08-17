@@ -21143,6 +21143,19 @@ already-characterized `OPEN-ISSUES.md` row 191 defect, not this cycle's file ter
 identical before and after, 0 added, 0 removed**.
 
 **Board, re-derived with the producer's own `doneness_verdict`:**
+## SD31-E6-F4-006 — race_trait audit + Gillman/Nagaji/Vanara/Vishkanya alternate traits (2026-08-17)
+
+**Role:** `sd31-racetrait5` (`RETRO_ACTOR=sd31-racetrait5`). **Starting HEAD:** `50d36f3b2` (wave-11 integrate
+tip, `tranche/11`), confirmed via `git rev-parse HEAD` + `git log --oneline -1` + `git branch --show-current`
+before any read, per mandatory first actions — package dir was absent on the fresh worktree with a clean
+tree, so `git fetch origin && git reset --hard origin/tranche/11` recovered it (recorded per the "silent
+recovery" rule). **PCGen oracle:** `scripts/verify.sh --only preflight-oracle` PASS, `PCGEN_ORACLE_SHA
+7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/pcgen-oracle-pin.env`). **Branch:** own worktree,
+`sd31/racetrait5-SD31-E6-F4-006`, pushed incrementally (two commits landed and pushed before the gate
+finished, per the mandate's "land work incrementally" instruction after a predecessor lane lost an entire
+wave to a mid-response API error).
+
+### 1. Re-derived the mandate's own board figures before touching anything
 
 ```
 python3 -c "
@@ -21317,6 +21330,280 @@ reclaimed**: `df -B1G /` 557G used (58%) -> 517G used (54%).
 
 Committed on `sd31/feat-matcher-SD31-E6-F8-003`, cut from `tranche/11` at `50d36f3b2`, pushed to
 origin. Integration cycle merges it.
+→ **38,521 in scope, done 11,828 (30.7053%)** — matches the mandate's own stated figure exactly.
+`race_trait`: 3,603 total, **741 done, 2,848 not-started, 14 held**. `race`: 103 total, **7 done, 96
+not-started** — both match the mandate table exactly, re-derived rather than trusted.
+
+### 2. THE AUDIT FIRST — the load-only race_trait grounding defect, traced code-path-deep and corpus-wide
+
+Per OPEN-ISSUES rows 165/203's own instruction ("that audit, not another ingest batch, is what lane A owes
+next"), audited every `wiring_class:computed` `race_trait` credited `done` before ingesting a single new
+record.
+
+**Root cause confirmed one code path deep, not one sample record.** `v06_work_inventory.rs`'s
+`probe_race_trait_corpus` grounds a race_trait as `race_trait_applied_by_the_race_corpus_the_app_loads` the
+moment `RaceCorpus::resolve` includes the record (`TraitRole != Unclassified`) — i.e. the record is LOADED
+and APPLIES to the trait bundle. It does not check that the record's numeric magnitude is actually READ by
+any consumer downstream. `race_resolver::ResolvedTrait`'s own doc comment states this explicitly:
+`declared_bonus_magnitudes()` "does not decide what the number bonuses, does not sum anything."
+
+Traced every real consumer surface exhaustively (`grep`, not sampled):
+1. `character_hub.rs`'s `race_creation_chassis`/`RaceCreationChassisDto` — generic across ALL races, but
+   covers ONLY `size`/`vision`/`base_speed_ft`/`ability_adjustments` (confirmed by reading
+   `race_resolver::ResolvedRace`'s own fields and `declared_walk_speed_ft`).
+2. `pilot_compute/mod.rs`'s 7 `explain_<race>_race_seam` functions — CRB's Human/Dwarf/Elf/Gnome/
+   Half-Elf/Half-Orc/Halfling ONLY (confirmed: zero non-CRB race names appear anywhere in
+   `pilot_compute/mod.rs` outside two size-quirk doc comments).
+3. `pilot_compute/mod.rs`'s `ALTERNATE_TRAIT_SAVE_BONUSES`/`ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES` — 21
+   hand-pinned `TraitRole::Alternate` keys, self-verified by `tests/sd27_alternate_racial_trait_reachability.rs`.
+
+Nothing else consumes a race_trait's magnitude anywhere in `src/` or `apps/desktop/src-tauri/src/`.
+
+**Quantified corpus-wide** (`docs/work-inventory.json`, `wiring_class=='computed'` AND
+`doneness_verdict()=='done'` AND `kind=='race_trait'`): **555 units total** — 46 `core_rulebook`
+(seam-backed by construction; race_tables.rs's own doc comment states its `RACE_TRAITS` table is
+"transcribed verbatim from the already-grounded per-race explanation seams", not independently re-verified
+this cycle), 99 non-CRB covered by mechanism (1), 21 covered by mechanism (3), and **389 (70%) with NO
+consumer anywhere** — e.g. every `~ Skilled` record (21, a flat unconditional skill bonus, the
+Decision-7-REFINED paradigm UNIVERSAL case, `size bonus`-shaped, not conditional), every Aasimar
+Celestial-Crusader-family heritage special ability (10), Catfolk's 5 non-skill alternates, and 373 more
+one-or-two-per-race special abilities.
+
+Hand-verified 3 one record deep (per the mandate's own instruction): `bestiary:race_trait:goblin_skilled`
+(no consumer — false credit, confirmed), `bestiary:race_trait:duergar_ability_scores` (mechanism (1) —
+GENUINE, confirmed via `character_hub.rs::racial_ability_scores_trait`), `advanced_race_guide:race_trait:
+catfolk_climber` (no consumer — false credit, confirmed).
+
+**Could not demote or wire.** The fix requires editing `v06_work_inventory.rs` (lane 6, explicitly excluded
+from this card's file territory) to add a real consumer-delta observation to `probe_race_trait_corpus`,
+and/or `pilot_compute/mod.rs` (lane 1, explicitly excluded) to wire the 389 units' magnitudes for real per
+Decision 8 ("wire it, don't retract"). Neither file is this card's to edit. **Reported, did not touch
+either file, did not demote unilaterally** — full trace + exact 389-unit population appended to
+`OPEN-ISSUES.md` row 204, routing the fix to lane 6 (probe) and/or lane 1 (wiring).
+
+### 3. `race` kind — re-traced the 7/103 stall one unit deep (row 170), confirmed still current, and
+### confirmed the obvious fix would be gaming
+
+`v06_work_inventory.rs`'s `Kind::Race` verdict checks `facts.race_names`, built as
+`RaceId::ALL.iter().map(race_name)` — the ORIGINAL 7-variant CRB-only enum
+(`src/rules_core/rules_tables/crb/race_tables.rs:46-64`). Every non-CRB `race` unit (96 of 103) verdicts
+`race_absent_from_RaceId_ALL` regardless of the 34 races this program's own `RaceCorpus`/`ingest_races.rs`
+mechanism has since modelled and DoD-8-verified on-screen.
+
+Traced whether this card's OWN territory could close the gap: it CANNOT, without committing the exact
+anti-gaming shape row 2's audit just found. Widening `RaceId::ALL` (`race_tables.rs`, arguably this card's
+"rules_tables" territory) would flow into `v06_work_inventory.rs`'s `race_names` for free — but
+`RaceId::ALL`'s only real consumers are `pilot_compute/mod.rs`'s 7 CRB-only seams (confirmed by `grep`:
+zero non-CRB race names anywhere in that file outside doc comments) and `race_tables.rs`'s own
+`RACE_TRAITS` table, itself seam-derived. Adding a `RaceId` variant with no matching seam would be an
+ENUM-PRESENCE credit with zero real computation behind it — the SAME load-only shape §2 just found, and
+`pilot_compute.rs` is lane 1's exclusive territory this card cannot touch. **Did not widen it.**
+
+Appended `OPEN-ISSUES.md` row 205: a precise, one-unit-deep-traced reason `race` cannot move in this
+lane, and — since row 170 already correctly identified the RIGHT fix (a reachability check via the
+corpus-driven `RaceCorpus` mechanism `reach_gate.rs`'s `races_reach()` already proves reaches a player for
+all 34 in-scope races, requiring ONLY lane 6 work, no lane 1 seam-building) — this cycle's contribution is
+confirming that fix path and rejecting the WRONG one (enum-widening) a less careful cycle might have taken.
+
+### 4. THEN INGEST — Gillman/Nagaji/Vanara/Vishkanya's real ALTERNATE racial traits
+
+Pre-cycle screens: `scripts/classify_race_trait_rows.py` over `arg_abilities_race.lst` (225 in-scope rows
+under the pre-cycle 30-race roster; the 4 target races' rows are counted in "out-of-scope races 18" and
+were not visible to the classifier's own verbose per-row listing, which only names Unclassified/
+FlagGranted rows — direct `grep -in 'gillman|nagaji|vanara|vishkanya'` against the raw `.lst` confirmed 11
+real, genuine `TraitRole::Alternate`/`FlagGranted` rows exist: Gillman 3 alternates (Riverfolk, Slime
+Hunter, Throwback) + 2 flag-granted replacement rows; Nagaji 1 (Hypnotic Gaze); Vanara 2 (Tree Stranger,
+Whitecape) + 1 flag-granted replacement row; Vishkanya 2 (Sensual, Subtle Appearance)).
+`v06_corpus_trap_report -- advanced_race_guide` implicitly covered by the standing `--audit` run below
+(baseline unchanged, see §6).
+
+**TDD, red first.** Renamed+widened `in_scope_roster_is_exactly_the_30_races_sd31_e6_f4_003_names` to
+require 34 races including the 4 new ones — ran RED (`left: 30, right: 34`) before touching
+`IN_SCOPE_RACES` itself, confirmed the failure was for the right reason, then widened the array to 34 and
+re-ran GREEN.
+
+**Ran the real ingest** (`cargo run --locked --bin ingest_race_traits -- advanced_race_guide`,
+`PCGEN_CORPUS_ROOT` pinned): 11 new records written, matching the hand-derived count exactly. ARG
+race_trait alternate-tier records emitted 225 → 236 (+11); on-disk directory count 321 → 332 (+11),
+verified by `find data/corpus/advanced_race_guide/race_trait -name '*.json' | wc -l`. The whole book's 321
+pre-existing records were rewritten with a fresh `ingested_at` (this binary's standing, pre-existing
+behavior — every prior ARG batch's commits show the same whole-directory touch); diffed a sample
+(`aasimar_celestial_crusader.json`) and confirmed content byte-identical, only the timestamp moved.
+
+**The TDD-surfaced correctness fix — not merely a count pin.** `every_alternate_the_app_offers_is_one_the_
+engine_can_place` (`race_resolver.rs`) went RED the instant the 11 new records existed: the picker would
+have OFFERED these 8 new alternates while `pilot_compute` refused every selection with a claim-blocking
+`race.alternate_trait.unknown` diagnostic — the exact broken-selection shape `ALTERNATE_TRAIT_REPLACE_
+FLAGS` exists to prevent (its own doc comment names the historical incident this table was built to close).
+Fixed by adding the 8 new alternates to `ALTERNATE_TRAIT_REPLACE_FLAGS` with their real
+`sets_replace_flags`, read verbatim off the written corpus records (this table does NOT touch
+`pilot_compute.rs`; it lives entirely in `race_resolver.rs`, this card's own `RaceCorpus` territory).
+
+**Count sweep — two passes, both landed.** First pass (grep for the literal `349`/`757` substrings) fixed
+6 assertions across `race_resolver.rs` (5) and `tests/sd27_alternate_racial_trait_reachability.rs` (4,
+counting the shared replace_all) plus the 3 mirrored ARG-321 pins in `ingest_apg_race_traits.rs`,
+`tests/v06_work_inventory.rs` and `reach_gate.rs`. **The full gate's own `root-full`/`desktop` stages then
+caught a second wave the grep-only pass missed** (different literal shapes — `checked, 349` and a tuple
+`(335, 349)`): `tests/sd27_aasimar_globalvar_gate_closes_the_dead_affordance.rs`,
+`tests/sd27_ability_automatic_granted_race_traits.rs` (+3 grant-edge entries), and THREE separate 349-pins
+plus one real content divergence inside `apps/desktop/src-tauri/src/race_trait_picker.rs` (`Nagaji ~
+Hypnotic Gaze`'s rendered description differs from its stored ingest-time collapse — two unresolved `%N`
+DESC args, the identical shape `Halfling ~ Adaptable Luck` already establishes, correctly added to that
+test's own expected-divergence list, not suppressed), plus `race_catalog.rs`'s alternate-count pin and
+`corpus_ingest_diagnostic.rs`'s LICENSE.json reconciliation pin (979 → 990). Every single new value taken
+from the failing test's own reported `left`, never hand-computed. Landed as a second commit, both pushed.
+
+Every number, both count-sweep waves: `TraitRole::Alternate` 349→357, `::FlagGranted` 71→74, whole-corpus
+trait total 757→768, `selectable_alternate_trait_keys().len()` 349→357, the picker menu total/per-race
+table/unmatched-flag scan (3 separate 349s)→357, `(standard, alternates)` (335,349)→(335,357) and its
+`checked` sum 684→692, ARG race_trait directory 321→332 (four independent pins: `ingest_apg_race_traits.rs`,
+`tests/v06_work_inventory.rs`, `reach_gate.rs`, `race_catalog.rs`'s own alternates-loaded count), and
+`corpus_ingest_diagnostic.rs`'s LICENSE.json reconciliation 979→990.
+
+### 5. PI screening — both SD-30 contracts, on NAME, DESCRIPTION and `raw_tokens`
+
+`declared_product_identity_of()` (§53.5) already runs inside `ingest_race_traits.rs`'s production path for
+every row, before the in-scope filter — this cycle's own ingest run reported `dropped, NAMEISPI:YES: 0` /
+`descriptions redacted by DESCISPI:YES: 0` for the whole ARG re-run (236 records, includes the 11 new).
+Re-verified independently: `grep -n 'NAMEISPI|DESCISPI' arg_abilities_race.lst | grep -iE
+'gillman|nagaji|vanara|vishkanya'` → 0 hits. Every one of the 11 new records' `pi_field`/`pi_marker`
+inspected on disk: null on all 11. `cargo run --locked --bin declared_pi_shipping_audit` → CLEAN.
+`cargo test --locked --test pi_table_sweep` (§52.3, over the new `ALTERNATE_TRAIT_REPLACE_FLAGS` table
+content in `race_resolver.rs`) → 8/8 passed, including
+`rules_tables_carry_no_unbaselined_product_identity_hits`. `data/corpus/advanced_race_guide/LICENSE.json`:
+`records_processed` 1482 → 1493 (re-derived from disk, `find ... | wc -l` = 1493), a new
+`screening_method_note` PASS entry appended for `SD31-E6-F4-006` in the same append-only pattern every
+prior batch used.
+
+### 6. Guarded regen — measured, not committed
+
+```
+CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep-sd31-racetrait5.json \
+DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture-sd31-racetrait5.json \
+  cargo run --locked --bin v06_work_inventory
+```
+`corpus-literal-sweep`: 25,174 examined (25,163 wave-11 baseline +11), 0 findings, CLEAN.
+`derived-evaluator-fixture-check`: 1,267/1,268 cleared, the 1 failure is the pre-existing,
+previously-characterized `web_second_source` defect (OPEN-ISSUES row 191), not new, not this card's
+territory.
+
+**Zero stamp loss, proven by full id-set diff, not a count comparison:** `docs/work-inventory.json`'s
+38,540 raw unit ids identical before and after (`diff` of two sorted id lists, `0` lines either direction).
+**Board, re-derived with the producer's own `doneness_verdict`:**
+
+BEFORE (this cycle's own starting tip): 38,521 in scope, `done` **11,828 (30.7053%)**.
+AFTER (measured, not committed): 38,521 in scope, `done` **11,839 (30.7339%)**. **Delta: +11 units
+(+0.0286 pp).** Denominator unchanged.
+
+Movement traced id-by-id: `race_trait` not-started → done, **+11**, exactly the 11 new records, zero
+elsewhere. `race` kind unchanged at 7/103 (confirmed — this cycle did not touch race chassis/RaceId::ALL).
+Every other kind's `not-started`/`done` count reproduces the mandate's own stated wave-11 table exactly
+(class_feature 11,344/137, monster_ability 1,322/1,366, spell 910/1,356, companion 774/680, equipment
+558/4,754, feat 503/1,470, equipment_modifier 211/380, class 158/27) — re-verified, zero collision with
+any concurrent lane's work.
+
+**`git checkout -- docs/work-inventory.json` run immediately after measuring**, per the wave rule — not
+committed.
+
+### 7. Standing audit
+
+```
+cargo run --locked --bin v06_corpus_trap_report -- --audit
+```
+Exit 2, **1 mod-record + 1,225 wiring-class-mismatch — bit-identical to the recorded baseline, not
+worsened.**
+
+### 8. Full gate
+
+`LOG` (worktree-local path, this card's own repo checkout does not touch the primary):
+`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F4-006-verify.log`. Launched early, in the
+background, kept alive through the whole cycle per protocol. First launch caught the second-wave count-sweep
+gap (§4) via its own `root-full`/`desktop` stages — killed by PID (never a shared pattern) once both
+failures reproduced and the fix was in hand, fixed, committed, pushed, **relaunched fresh** rather than
+patching the stale log.
+
+First launch (log `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F4-006-verify.log`, its own
+auto-emitted retro event `1786971909094-sd31-racetrait5-356fa1`) caught `root-full`/`desktop` red on
+exactly the two extra count-pinning test files §4 names — killed by PID (`396365`/`396433`/`767587`,
+never a shared pattern) once the fix was in hand, per "a re-run of only the failed stages is NOT a green
+gate." **Relaunched fresh** rather than patching the stale log.
+
+**Second (final) launch — `VERIFY_EXIT=1`, 26/27 stages PASS, the one failure is the documented,
+pre-existing, non-regressing gap:**
+
+```
+passed: 26  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest site-dashboard-selftest
+            reachability-audit-selftest reachability-audit groundtruth-guard-selftest
+            supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest
+            driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep
+            supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump
+FAILED:  1  site-dashboard-check
+```
+
+`root-lib` 1,984 passed. `root-full` 6,945 passed across 565 suites, all 529 `tests/*.rs` suites executed
+— matches the wave-11 baseline exactly, zero regression anywhere outside the two files this cycle itself
+fixed. `desktop` 459 passed. `reach` 27 passed. `corpus-sweep` 25,174 examined, 0 findings (matches §6's
+standalone measurement exactly). `frontend-test` 99/99 files. `frontend-typecheck` clean. **`clippy`
+root:52 desktop:7 warnings, 0 errors — AT ceiling, unchanged, zero new warnings from this cycle's own
+diff.** `class-dump` 31/31 computing.
+
+**Note on `site-dashboard-check`:** fails from a worktree for the documented, non-regressing path reason
+(`OPEN-ISSUES.md` row 153) — noted, not chased, per this package's own standing instruction.
+
+### DoD-8 — on-screen verification
+
+Drove the real desktop app via `apps/desktop/.claude/skills/run-desktop/driver.sh`
+(`RUN_DESKTOP_AGENT=sd31-racetrait5`, launched directly). Sequence: landing page → "Browse Race Traits" →
+"Alternate racial traits" tab → "Gillman (3)" filter pill.
+
+**What the screenshot proves, directly targeted at this cycle's own ingest (not a generic smoke test):**
+the header reads **"357 alternate racial traits across 35 races"** — the exact `ALTERNATE_TRAIT_REPLACE_
+FLAGS`/`selectable_alternate_trait_keys().len()` figure this cycle's fix landed, live on the real running
+app, not just in a test assertion. The race-pill row shows **"Gillman (3)", "Vishkanya (2)", "Vanara (2)",
+"Nagaji (1)"** — the exact per-race counts this cycle ingested. Clicking "Gillman (3)" renders all three
+real alternates with their real corpus prose: **"Riverfolk" (ARG p.188, "Replaces Water Dependent")**,
+**"Slime Hunter" (ARG p.188, "Replaces Enchantment Resistance", the +2-vs-aboleth-spells save bonus text)**,
+and — the strongest single proof, since it exercises exactly the `ALTERNATE_TRAIT_REPLACE_FLAGS` fix this
+cycle's TDD surfaced — **"Throwback" (ARG p.188, "Replaces Aquatic, Normal Speed, Amphibious, Water
+Dependent. Grants Human, Normal Speed")**: the multi-flag replace AND the two-row `FlagGranted` chain
+(`Throwback ~ Gillman ~ Type`/`~ Speed`) both resolve and render correctly on screen, the real player-facing
+manifestation of the picker/pilot_compute agreement `every_alternate_the_app_offers_is_one_the_engine_
+can_place` now enforces for these 8 units. Screenshot committed at
+`artifacts/SD31-E6-F4-006/gillman-alternate-traits.png`.
+
+### 9. Baseline movements
+
+None this cycle — `scripts/verify-baselines.env` unchanged (root-lib 1984 both before and after, matching
+the wave-11 committed baseline; no new test file added, only assertion values changed within existing test
+functions).
+
+### 10. Disk reclaim
+
+`scripts/reclaim.sh --apply`, run twice at cycle close (the tool's own auto-emitted retro event is the
+authority, not this receipt's first hand-read of the second run's tail): first run reclaimed **1 item,
+1.1MB** (one aged-out `/tmp/codex-verify-*` log); the immediate second run reclaimed **0 item(s), 0.0B**
+— nothing left to reclaim a few seconds later. 203 items skipped on the second run, all correctly (other
+agents' live target dirs, unpushed worktrees, verify-logs under the age floor). Not concerning either way:
+`df -B1G /` shows 420G+ free / 57% used, well clear of `preflight-disk`'s 90%/20G floor — the real
+reclaim this cycle was the ~38GB of its own `CARGO_TARGET_DIR`s removed manually at cycle end (§ below).
+This box carries many concurrent SD-31 agents right now (`sd31-spell3`, `sd31-feat-matcher`, `sd31-transcribe`,
+`sd31-equip-class4` all observed running in their own worktrees during this cycle), which is exactly why
+the guard correctly refuses to touch anything.
+
+### Followups (not this card's to close)
+
+1. **`race_trait`'s load-only grounding, 389 units** (§2, `OPEN-ISSUES` row 204) — needs a consumer-delta
+   check added to `v06_work_inventory.rs`'s `probe_race_trait_corpus` (lane 6) and/or wiring in
+   `pilot_compute/mod.rs` (lane 1). Single largest remaining lever this cycle's own investigation surfaced
+   for this kind — `~ Skilled`'s 21 records share one shape and could all move in one pass, the same shape
+   `ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES` already proves out.
+2. **`race` kind's 7/103 stall** (§3, `OPEN-ISSUES` row 205) — the real fix is entirely lane 6's:
+   `Kind::Race`'s verdict should check reachability via the corpus-driven `RaceCorpus` mechanism
+   (`reach_gate.rs`'s `races_reach()` already proves it for all 34 in-scope races), not the legacy 7-race
+   `RaceId::ALL` enum. No lane-1 work required for this specific fix.
+3. **Dhampir, Changeling, Samsaran** remain fully deferred (no chassis at all) — `ingest_races.rs`'s
+   `IN_SCOPE_RACES` doc comment already names why (heritage/subrace shape, `BONUS:ABILITYPOOL` gate the
+   existing globalvar reader does not parse).
 
 Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
 Claude-Session: https://claude.ai/code/session_012LQjhfcbAEBt6SiquQXEAE

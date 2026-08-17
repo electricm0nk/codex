@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T12:15:19Z",
+  "data": {
+    "key": "Gillman ~ Riverfolk",
+    "name": "Riverfolk",
+    "race_key": "Gillman",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Gillman Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Gillman_ReplaceWaterDependent"
+    ],
+    "description": "Some gillmen groups live in colonies along vast riverways, and have adapted to living on land for much longer periods. Gillmen with this trait have a thin coating of natural oil that keeps their skin from cracking even without water. However, this natural oil also makes such gillmen particularly susceptible to flames, and they gain vulnerability to fire. This racial trait replaces water dependent.",
+    "source_page": "p.188",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gillman ~ Riverfolk"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Gillman Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Gillman ~ Riverfolk],[!PREFACT:1,ABILITIES,Gillman_ReplaceWaterDependent=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some gillmen groups live in colonies along vast riverways, and have adapted to living on land for much longer periods. Gillmen with this trait have a thin coating of natural oil that keeps their skin from cracking even without water. However, this natural oil also makes such gillmen particularly susceptible to flames, and they gain vulnerability to fire."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces water dependent.|!PREABILITY:1,CATEGORY=Special Ability,Gillman ~ Riverfolk"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Vulnerability to Fire"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.188"
+      },
+      {
+        "key": "FACT",
+        "value": "Gillman_ReplaceWaterDependent|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 874,
+    "record_key": "Gillman ~ Riverfolk"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

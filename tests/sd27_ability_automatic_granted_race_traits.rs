@@ -193,6 +193,14 @@ fn the_ability_automatic_grant_shape_is_exactly_two_records_corpus_wide() {
         ("Suli ~ Firehand", "Suli ~ Energy Strike"),
         ("Suli ~ Icewalk", "Suli ~ Energy Strike"),
         ("Suli ~ Shockshield", "Suli ~ Energy Strike"),
+        // SD31-E6-F4-006 (2026-08-17): ARG's own follow-on 4-race chassis
+        // batch's real alternate-trait rows. Gillman's `Throwback` grants
+        // both its replacement rows the same way (one `ABILITY:...
+        // |AUTOMATIC|` token naming two keys), and Vanara's `Tree Stranger`
+        // grants its own speed-replacement row the same way.
+        ("Throwback ~ Gillman ~ Type", "Gillman ~ Throwback"),
+        ("Throwback ~ Gillman ~ Speed", "Gillman ~ Throwback"),
+        ("Tree Stranger ~ Vanara ~ Speed", "Vanara ~ Tree Stranger"),
     ]
     .into_iter()
     .map(|(a, b)| (a.to_owned(), b.to_owned()))

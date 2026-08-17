@@ -686,7 +686,7 @@ mod tests {
         let alternates: usize =
             corpus.race_keys().iter().map(|key| corpus.alternate_traits(key).len()).sum();
         assert_eq!(
-            alternates, 349,
+            alternates, 357,
             "alternate racial traits loaded but contributing no catalog row: ARG's 153 + Monster \
              Codex's 4 (SD-29 decisions.md §43) + APG's 1 (`Half-Orc ~ Plagueborn`) + Inner Sea \
              Races' 68 (§45) + Horror Adventures' 41 (§47) + Core Essentials' 16 heritages \
@@ -696,7 +696,8 @@ mod tests {
              -- ARG 3, Inner Sea Races 5) + SD-31-E6-F4-003's 19 (2026-08-16, ARG's own 6-race \
              chassis batch's real alternate-trait rows, minus Strix's Wing-Clipped-granted \
              Flight and Suli's Energy-Strike-granted Earthfoot/Firehand/Icewalk/Shockshield, \
-             which are `FlagGranted` not `Alternate`). \
+             which are `FlagGranted` not `Alternate`) + SD31-E6-F4-006's 8 (2026-08-17, ARG's \
+             own follow-on 4-race chassis batch's real alternate-trait rows). \
              Two loaded records are not \
              alternates at all and are correctly \
              outside this count: Monster Codex's `Oversized Goblin` and Inner Sea Races' \
