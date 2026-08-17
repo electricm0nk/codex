@@ -26,19 +26,23 @@ WHAT THIS SCANS, in TWO passes:
      declared-PI word, e.g. "Shackles of Compliance").
 
   2. Per-book detail file (`site/status-data/<book_id>.json`), every
-     `kinds[*].items[*].name` checked with a SUBSTRING scan against names
-     declared PI in THAT file's own book (`pi_redaction.
-     build_declared_pi_name_book_index` + `build_book_declared_name_lists`),
-     and every `kinds[*].items[*].type_facet` checked with a SUBSTRING
-     scan against the GLOBAL declared-PI name set. This is
-     SD31-W13-INTEGRATE-001-VERIFY finding 2 closed: pass 1 alone is blind
-     to any name declared PI in a published book but not globally
-     unambiguous (121 such names at time of writing -- every Core Rulebook
-     deity among them). Pass 2 mirrors `build_public_status.py`'s own
-     `redact_for_display` field-for-field (via the SHARED
-     `pi_redaction.value_carries_declared_pi_substring` helper, so the two
-     can never independently drift into checking different things) rather
-     than reimplementing its logic here.
+     `kinds[*].items[*].name` checked with a WORD-BOUNDARY scan
+     (`pi_redaction.find_declared_pi_word_matches`) against declared-PI
+     names FROM THIS FILE'S OWN BOOK union the GLOBAL unambiguous
+     declared-PI set, MINUS whatever the reviewed
+     `scripts/site/pi_substring_allowlist.py` covers for this exact
+     (name, book) pair, and every `kinds[*].items[*].type_facet` checked
+     with a plain SUBSTRING scan against the GLOBAL declared-PI name set.
+     This is SD31-W13-INTEGRATE-001-VERIFY finding 2 closed (pass 1 alone
+     is blind to any name declared PI in a published book but not globally
+     unambiguous) AND SITE-PI-ALLOWLIST-001's own finding closed (a
+     book-scoped substring scan alone missed the cross-book
+     `"Death (Pharasma)"` embed -- see `pi_redaction.
+     find_declared_pi_word_matches`'s docstring for the full history).
+     Pass 2 mirrors `build_public_status.py`'s own `redact_for_display`
+     field-for-field (via the SAME SHARED `pi_redaction` helpers and the
+     SAME allow-list module, so the two can never independently drift into
+     checking different things) rather than reimplementing its logic here.
 
 This is a SAFETY NET, not the primary defense: the primary defense is
 `build_public_status.py`'s own `redact_for_display` (book-scoped name
@@ -76,6 +80,11 @@ _spec = importlib.util.spec_from_file_location("pi_redaction", _PI_REDACTION)
 pi_redaction = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(pi_redaction)
 
+_PI_ALLOWLIST = _REPO_ROOT / "scripts" / "site" / "pi_substring_allowlist.py"
+_spec2 = importlib.util.spec_from_file_location("pi_substring_allowlist", _PI_ALLOWLIST)
+pi_substring_allowlist = importlib.util.module_from_spec(_spec2)
+_spec2.loader.exec_module(pi_substring_allowlist)
+
 STATUS_DATA_TOP = _REPO_ROOT / "site" / "status-data.json"
 STATUS_DATA_DIR = _REPO_ROOT / "site" / "status-data"
 
@@ -91,7 +100,7 @@ def scanned_files() -> list[str]:
 
 
 def find_status_item_pi_leaks(
-    doc, book_declared: dict, declared_by_length: list[str]
+    doc, declared_by_length: list[str], book_declared: dict, allowlist_index: dict
 ) -> list[tuple[str, str]]:
     """Per-book-detail-file leak scan for `build_public_status.py`'s own
     `{"id": <book_id>, "title": ..., "kinds": [{"items": [{"name": ...,
@@ -100,11 +109,22 @@ def find_status_item_pi_leaks(
     book-blind exact-match scan (pass 1, in `main`) remains the net for
     everything else, including the top-level overview feed.
 
-    `name`: substring-checked against `book_declared[doc["id"]]` (names
-    declared PI in THIS file's own book). `type_facet`: substring-checked
-    against `declared_by_length` (every declared-PI name globally). Both
-    via the SHARED `pi_redaction.value_carries_declared_pi_substring`, so
-    this can never drift from what `redact_for_display` itself checks."""
+    `name`: WORD-BOUNDARY match (`pi_redaction.find_declared_pi_word_matches`)
+    against declared-PI names FROM THIS FILE'S OWN BOOK (`book_declared`)
+    UNION the GLOBAL unambiguous declared-PI set (`declared_by_length`),
+    with a hit suppressed only when `(name, doc["id"])` is covered by the
+    reviewed `pi_substring_allowlist`. See `build_public_status.py`'s
+    `redact_for_display` docstring for why BOTH sources are required (the
+    book-scoped source alone misses a cross-book embed like
+    `"Death (Pharasma)"`; the global-unambiguous source alone misses a
+    same-book embed of a name that ALSO has an unrelated row elsewhere in
+    the wider Paizo-scoped oracle tree with no NAMEISPI token of its own,
+    e.g. `"Baphomet's Blessing"`).
+
+    `type_facet`: plain substring-checked against `declared_by_length`.
+    All via the SAME SHARED `pi_redaction` helpers and the SAME allow-list
+    module `redact_for_display` itself uses, so this can never drift from
+    what the producer checks."""
     hits: list[tuple[str, str]] = []
     if not isinstance(doc, dict):
         return hits
@@ -112,7 +132,7 @@ def find_status_item_pi_leaks(
     kinds = doc.get("kinds")
     if not isinstance(book_id, str) or not isinstance(kinds, list):
         return hits
-    own_book_names = book_declared.get(book_id, ())
+    own_book_by_length = book_declared.get(book_id, ())
     for ki, kind in enumerate(kinds):
         if not isinstance(kind, dict):
             continue
@@ -123,15 +143,15 @@ def find_status_item_pi_leaks(
             if not isinstance(item, dict):
                 continue
             name = item.get("name")
-            if (
-                isinstance(name, str)
-                and name != pi_redaction.REDACTED_PI_MARKER
-                and pi_redaction.value_carries_declared_pi_substring(name, own_book_names)
-            ):
-                hits.append((
-                    f"$.kinds[{ki}].items[{ii}].name",
-                    f"{name!r} carries a name declared PI in book {book_id!r}",
-                ))
+            if isinstance(name, str) and name != pi_redaction.REDACTED_PI_MARKER:
+                matches = set(pi_redaction.find_declared_pi_word_matches(name, own_book_by_length))
+                matches.update(pi_redaction.find_declared_pi_word_matches(name, declared_by_length))
+                if matches and not pi_substring_allowlist.is_allowlisted(name, book_id, allowlist_index):
+                    hits.append((
+                        f"$.kinds[{ki}].items[{ii}].name",
+                        f"{name!r} carries declared-PI word(s) {sorted(matches)!r} in book {book_id!r}, "
+                        "not on the reviewed allow-list for this (name, book)",
+                    ))
             tf = item.get("type_facet")
             if (
                 isinstance(tf, str)
@@ -167,9 +187,10 @@ def main() -> int:
         )
         return 1
 
+    declared_by_length = sorted(declared_names, key=len, reverse=True)
     name_to_books = pi_redaction.build_declared_pi_name_book_index(corpus_root)
     book_declared = pi_redaction.build_book_declared_name_lists(name_to_books)
-    declared_by_length = sorted(declared_names, key=len, reverse=True)
+    allowlist_index = pi_substring_allowlist.build_allowlist_index()
 
     files = scanned_files()
     if not files:
@@ -190,7 +211,7 @@ def main() -> int:
         rel = os.path.relpath(path, str(_REPO_ROOT))
         for json_path, name in pi_redaction.find_declared_pi_leaks(doc, declared_names):
             all_hits.append((rel, json_path, name))
-        for json_path, name in find_status_item_pi_leaks(doc, book_declared, declared_by_length):
+        for json_path, name in find_status_item_pi_leaks(doc, declared_by_length, book_declared, allowlist_index):
             all_hits.append((rel, json_path, name))
 
     if all_hits:

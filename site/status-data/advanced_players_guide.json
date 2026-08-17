@@ -2765,12 +2765,6 @@
           "standing": "unclassified"
         },
         {
-          "name": "Death (Pharasma)",
-          "doneness": "not-started",
-          "type_facet": "InquisitorDomain",
-          "standing": "origin"
-        },
-        {
           "name": "Death Attack",
           "doneness": "not-started",
           "type_facet": "ClassFeatures.Master SpyClassFeatures.SpecialQuality.Extraordinary",
@@ -12344,6 +12338,12 @@
           "name": "Zen Archery",
           "doneness": "not-started",
           "type_facet": "ClassFeatures.MonkClassFeatures.SpecialQuality.Extraordinary.MonkManeuverTraining",
+          "standing": "origin"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "not-started",
+          "type_facet": "InquisitorDomain",
           "standing": "origin"
         }
       ]

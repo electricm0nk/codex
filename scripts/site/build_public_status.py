@@ -73,9 +73,15 @@ BOOK_DETAIL_DIR = REPO_ROOT / "site" / "status-data"
 # than re-deriving a simplified version here, so this script's numbers can
 # never quietly disagree with the engineering-side doneness definition.
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "observer"))
+# This module's own directory -- inserted explicitly (not relied on as
+# sys.path[0]) because test_build_public_status.py loads this file via
+# importlib.util.spec_from_file_location, which does NOT put the module's
+# own directory on sys.path the way running it as a script does.
+sys.path.insert(0, str(REPO_ROOT / "scripts" / "site"))
 import pf1e_dashboard_producer as producer  # noqa: E402
 import pi_redaction  # noqa: E402
 import provenance  # noqa: E402
+import pi_substring_allowlist  # noqa: E402
 
 REDACTED_PI_MARKER = pi_redaction.REDACTED_PI_MARKER
 
@@ -266,40 +272,40 @@ def attach_standing_and_public_doneness(all_items, standing_by_pair):
 # type_facet substring rationale (kept here, not just in pi_redaction.py,
 # because the false-positive trade-off is specific to THIS field's shape):
 #
-# WHY SUBSTRING, WHEN pi_redaction'S OWN DOCTRINE PREFERS EXACT MATCH:
-# `type_facet` is not a natural-language object name (where a substring
-# scan false-positived on "Shackles of Compliance" containing "Shackles" —
-# see pi_redaction.find_declared_pi_leaks's own docstring); it is a
-# compound, PCGen-TYPE-derived identifier
-# (`MagaambyanInitiateClassFeatures.SpecialQuality.Supernatural`), and a
-# proper noun surfaces there embedded in an adjectival/compound form a
-# whole-token match would miss ("Magaambyan" contains, but does not equal,
-# the declared name "Magaambya"). PROVEN against the live corpus this
-# cycle (SITE-PUBSTATUS-001): a substring sweep over every distinct
-# type_facet in the shipped ledger found exactly 30 genuine hits
-# (Magaambya, Talmandor, Rivethun, Qadira/Qadiran, Varisia, Signifer,
-# Jezelda, Ulfen, Galt, Keleshite, Nex/Nexian, Hermea — all real Golarion
-# proper nouns) and ZERO coincidental short-name collisions, so the
-# false-positive risk that motivated the exact-match rule for object NAMES
-# does not carry over to this different-shaped field. Scoped GLOBALLY
-# (every declared-PI name anywhere in the oracle, not just this item's own
-# book) because a type_facet is a shared PCGen TYPE token, not a
+# WHY PLAIN SUBSTRING, WHEN `name` BELOW USES WORD-BOUNDARY:
+# `type_facet` is not a natural-language object name; it is a compound,
+# PCGen-TYPE-derived identifier
+# (`MagaambyanInitiateClassFeatures.SpecialQuality.Supernatural`) with no
+# real word boundaries to check — a proper noun surfaces there embedded in
+# an adjectival/compound form (`"Magaambyan"` fused onto
+# `"InitiateClassFeatures"` with no delimiter at all) that a boundary-aware
+# match would miss entirely. PROVEN against the live corpus this cycle
+# (SITE-PUBSTATUS-001): a substring sweep over every distinct type_facet in
+# the shipped ledger found exactly 30 genuine hits (Magaambya, Talmandor,
+# Rivethun, Qadira/Qadiran, Varisia, Signifer, Jezelda, Ulfen, Galt,
+# Keleshite, Nex/Nexian, Hermea — all real Golarion proper nouns) and ZERO
+# coincidental short-name collisions, so the false-positive risk that
+# motivates boundary-checking for `name` does not carry over to this
+# different-shaped field. Scoped GLOBALLY (every declared-PI name anywhere
+# in the oracle) because a type_facet is a shared PCGen TYPE token, not a
 # book-scoped object identity — the same token can legitimately surface
 # under any book.
 #
-# `name`, by contrast, IS the natural-language object name the
-# "Shackles of Compliance" false positive is about — so its substring
-# screen is scoped to declared-PI names FROM THE ITEM'S OWN BOOK ONLY
-# (SD31-W13-INTEGRATE-001-VERIFY finding 1). Mutation-tested against the
-# live corpus this cycle (SITE-PUBSTATUS-002): an unscoped, whole-oracle
-# substring sweep over every published name found 78 hits, 52 of them the
-# "Brigh"-in-"Bright"/"Skald"-in-"..."/"Shackles"-in-"Shackles of
-# Compliance" false-positive class (a declared-PI word from an unrelated
-# book coincidentally substring-matching an ordinary name in THIS book);
-# restricting the sweep to names declared PI in the item's OWN book
-# removes all 52 and leaves exactly the 26 genuine same-book leaks
-# (`Abadar's Truthtelling`, `Rovagug's Fury`, `Sandpoint Devil ~ Kick`,
-# etc.) with zero remaining noise.
+# `name` IS natural-language prose, so it uses
+# `pi_redaction.find_declared_pi_word_matches` — a GLOBAL (not book-scoped)
+# freestanding-WORD match, gated by the reviewed
+# `pi_substring_allowlist` (SITE-PI-ALLOWLIST-001, 2026-08-17 operator
+# ruling). See that function's own docstring for the full history: an
+# earlier GLOBAL PLAIN-substring scan over `name` found 78 hits, 52 of them
+# same-word fusions (`"Brigh"`-in-`"Brightness"`) rather than genuine
+# embeds; a BOOK-SCOPED substring scan fixed those 52 but then missed
+# `"Death (Pharasma)"` — a genuine, word-bounded, but CROSS-BOOK deity
+# embed. Word-boundary matching (this pass) clears the 52 without any
+# book-scoping and without missing Pharasma, leaving exactly the reviewed,
+# allow-listed 11 mundane whole-word embeds (`"Shackles of Compliance"`
+# etc.) as the only thing standing between "found a hit" and "published
+# anyway" — and those 11 are now an explicit, reasoned, tested list rather
+# than an implicit gap in the screen.
 
 
 def redact_for_display(all_items, name_to_books, declared_names):
@@ -314,16 +320,36 @@ def redact_for_display(all_items, name_to_books, declared_names):
       - `name`, EXACT match against `declared_names` (global unambiguous
         safety net, in case a ledger `book` id and an oracle directory
         basename ever disagree);
-      - `name`, SUBSTRING match against declared-PI names FROM THE ITEM'S
-        OWN BOOK (`book_declared`, see the module-level comment above for
-        why this is book-scoped and why substring is safe here);
-      - `type_facet`, SUBSTRING match against the GLOBAL declared-PI name
-        set (see the module-level comment above for why this field is
-        scoped globally, not per-book)."""
+      - `name`, WORD-BOUNDARY match against declared-PI names FROM THE
+        ITEM'S OWN BOOK (`name_to_books`, via `build_book_declared_name_lists`
+        -- NOT filtered for global ambiguity) UNION the GLOBAL unambiguous
+        declared-PI set (`declared_names`), minus anything covered by the
+        reviewed `pi_substring_allowlist` for this exact (name, book).
+        BOTH sources are needed, not just one: the book-scoped source alone
+        misses a genuine cross-book embed like `"Death (Pharasma)"`
+        (Pharasma is declared PI under `inner_sea_gods`, not
+        `advanced_players_guide`); the global-unambiguous source alone
+        misses a genuine SAME-book embed of a name that ALSO has a second,
+        unrelated row elsewhere in the wider Paizo-scoped oracle tree that
+        carries no `NAMEISPI:YES` token at all, making the bare name
+        globally ambiguous per `build_declared_pi_name_index`'s own
+        conservative "unambiguous everywhere" rule (`"Baphomet's Blessing"`
+        in `inner_sea_gods`: Baphomet is genuinely declared PI there, but a
+        PFS-legality-override row for the same deity in a DIFFERENT book
+        carries no NAMEISPI token of its own). Mutation-tested
+        (SITE-PI-ALLOWLIST-001): using the global set alone silently
+        un-redacted 12 previously-caught genuine leaks;
+      - `type_facet`, plain SUBSTRING match against the GLOBAL declared-PI
+        name set (see the module-level comment above for why this field
+        stays plain-substring, not word-boundary)."""
     declared_by_length = sorted(declared_names, key=len, reverse=True)
+    # `build_book_declared_name_lists` already sorts each book's own list
+    # longest-first (see its own docstring) -- reused directly, no
+    # per-item re-sort.
     book_declared = pi_redaction.build_book_declared_name_lists(name_to_books)
+    allowlist_index = pi_substring_allowlist.build_allowlist_index()
     facet_cache: dict[str, bool] = {}
-    name_cache: dict[tuple[str, str], bool] = {}
+    name_cache: dict[tuple[str, str], list[str]] = {}
 
     for it in all_items:
         name = it["name"]
@@ -333,10 +359,10 @@ def redact_for_display(all_items, name_to_books, declared_names):
         else:
             key = (book, name)
             if key not in name_cache:
-                name_cache[key] = pi_redaction.value_carries_declared_pi_substring(
-                    name, book_declared.get(book, ())
-                )
-            if name_cache[key]:
+                matches = set(pi_redaction.find_declared_pi_word_matches(name, book_declared.get(book, ())))
+                matches.update(pi_redaction.find_declared_pi_word_matches(name, declared_by_length))
+                name_cache[key] = sorted(matches)
+            if name_cache[key] and not pi_substring_allowlist.is_allowlisted(name, book, allowlist_index):
                 it["name"] = REDACTED_PI_MARKER
 
         tf = it["type_facet"]

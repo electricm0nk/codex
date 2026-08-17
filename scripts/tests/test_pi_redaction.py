@@ -403,5 +403,64 @@ class RedactDeclaredPiNamesTests(unittest.TestCase):
         self.assertEqual(doc["name"], "Aldori Swordlord")
 
 
+class FindDeclaredPiWordMatchesTests(unittest.TestCase):
+    """`find_declared_pi_word_matches` -- word-boundary (not plain-substring)
+    matching for natural-language `name` fields (SITE-PI-ALLOWLIST-001)."""
+
+    def test_a_freestanding_word_is_a_match(self):
+        # "Pharasma" bounded by "(" and ")" -- the genuine leak this
+        # mechanism exists to catch.
+        hits = pi_redaction.find_declared_pi_word_matches("Death (Pharasma)", ["Pharasma"])
+        self.assertEqual(hits, ["Pharasma"])
+
+    def test_a_prefix_fused_into_a_longer_word_is_not_a_match(self):
+        # The "Brigh"-in-"Brightness" false-positive class: "Brigh" is
+        # immediately followed by an alphanumeric character ("t"), so it is
+        # not a word of its own.
+        hits = pi_redaction.find_declared_pi_word_matches("Brightness Seeker", ["Brigh"])
+        self.assertEqual(hits, [])
+
+    def test_a_grammatical_derivative_is_not_a_match(self):
+        # "Razmir" + "i" ("Razmiri") is an adjectival derivative, not the
+        # bare declared name -- same fusion logic as the Brigh case, just
+        # a genuine (not coincidental) etymological relationship. This
+        # function only answers "is the bare declared string embedded as
+        # its own word," not "is this thematically related."
+        for value, term in (
+            ("Razmiri Aversion", "Razmir"),
+            ("Numerian Resistance Plate", "Numeria"),
+            ("Druman Blackjacket", "Druma"),
+            ("Vargouille", "Varg"),
+            ("Discern Next of Kin", "Nex"),
+        ):
+            with self.subTest(value=value, term=term):
+                self.assertEqual(pi_redaction.find_declared_pi_word_matches(value, [term]), [])
+
+    def test_apostrophe_boundary_still_counts_as_a_word(self):
+        # "Abadar's" -- the declared name is bounded by an apostrophe, a
+        # non-alphanumeric character, so it is still a freestanding word.
+        hits = pi_redaction.find_declared_pi_word_matches("Abadar's Truthtelling", ["Abadar"])
+        self.assertEqual(hits, ["Abadar"])
+
+    def test_a_whole_word_mundane_homonym_still_matches(self):
+        # This function does not judge intent -- "Shackles" bounded by
+        # ordinary words on both sides is still a freestanding-word match;
+        # a caller decides whether that specific (name, book) is mundane
+        # via a reviewed allow-list (scripts/site/pi_substring_allowlist.py),
+        # never by weakening this primitive.
+        hits = pi_redaction.find_declared_pi_word_matches("Shackles of Compliance", ["Shackles"])
+        self.assertEqual(hits, ["Shackles"])
+
+    def test_returns_every_matching_name_not_just_the_first(self):
+        hits = pi_redaction.find_declared_pi_word_matches(
+            "Lastwall Shackles Set", ["Lastwall", "Shackles", "Nex"]
+        )
+        self.assertEqual(sorted(hits), ["Lastwall", "Shackles"])
+
+    def test_value_carries_declared_pi_word_mirrors_the_boolean(self):
+        self.assertTrue(pi_redaction.value_carries_declared_pi_word("Death (Pharasma)", ["Pharasma"]))
+        self.assertFalse(pi_redaction.value_carries_declared_pi_word("Brightness Seeker", ["Brigh"]))
+
+
 if __name__ == "__main__":
     unittest.main()

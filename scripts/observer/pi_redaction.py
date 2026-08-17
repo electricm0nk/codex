@@ -489,6 +489,96 @@ def value_carries_declared_pi_substring(value: str, declared_names_by_length) ->
     return False
 
 
+def _is_word_char(ch: str) -> bool:
+    """True for characters `find_declared_pi_word_matches` treats as part of
+    a token (so a match immediately touching one on either side is a
+    same-word fusion, not a freestanding embed)."""
+    return ch.isalnum()
+
+
+def find_declared_pi_word_matches(value: str, declared_names_by_length) -> list[str]:
+    """Every name in `declared_names_by_length` that appears in `value` as a
+    freestanding WORD -- immediately bounded by a non-alphanumeric character
+    (or the start/end of the string) on BOTH sides -- rather than merely
+    fused as a same-word stem/prefix inside a longer, differently-spelled
+    word. Case-sensitive, same convention as `value_carries_declared_pi_substring`.
+
+    WHY WORD-BOUNDARY, NOT PLAIN SUBSTRING, FOR A NATURAL-LANGUAGE NAME:
+    `redact_for_display`'s own `name` field is prose (an object's title),
+    not a compound machine identifier like `type_facet` -- so unlike that
+    field (see `value_carries_declared_pi_substring`'s own docstring for why
+    IT stays plain-substring), a name field has real word boundaries to
+    check, and doing so resolves the exact tension this module has hit
+    twice now:
+
+      * A GLOBAL plain-substring scan over every published `name`
+        (SITE-PUBSTATUS-002's own history, this docstring's sibling in
+        `build_public_status.py`) flags `"Brightness Seeker"` purely
+        because the declared-PI deity word `"Brigh"` happens to be its
+        first five letters -- `"Brigh"` is FUSED into `"Brightness"`
+        (immediately followed by `t`, an alphanumeric character), not a
+        word of its own.
+      * A BOOK-SCOPED substring scan (this module's prior fix for that)
+        stops the false positive, but at the cost of a real miss: a
+        declared-PI deity or region name is very often declared PI in a
+        DIFFERENT book than the one publishing an item that embeds it
+        verbatim (`"Death (Pharasma)"`, published in
+        `advanced_players_guide`, embeds the deity name `"Pharasma"`,
+        declared PI under `inner_sea_gods`/`inner_sea_world_guide`) --
+        book-scoping never even looks there.
+
+    WORD-BOUNDARY matching resolves both at once, with no book-scoping and
+    no per-name hardcoding: `"Pharasma"` in `"Death (Pharasma)"` is bounded
+    by `(`/`)` on both sides -- a genuine embed, caught GLOBALLY regardless
+    of book. `"Brigh"` in `"Brightness Seeker"` is followed by `t` -- fused,
+    never even a candidate. The same test also naturally clears every
+    grammatically-INFLECTED derivative of a declared-PI region/ethnicity
+    word (`"Numerian"` from `"Numeria"`, `"Druman"` from `"Druma"`,
+    `"Razmiri"` from `"Razmir"`, `"Ulfen's"` would still bound-match --
+    apostrophe is non-alphanumeric -- but `"Vargouille"` from `"Varg"` and
+    `"Next"` from `"Nex"` do not) WITHOUT needing an allow-list entry for
+    any of them: the fusion itself is the evidence they are not the
+    declared word.
+
+    A whole-word embed CAN still be an intentional, mundane, non-PI use
+    (`"Shackles of Compliance"` -- "Shackles" bounded by nothing but
+    ordinary English on both sides, meaning literal manacles, not the
+    pirate-isle region) -- this function only ANSWERS "is there a
+    freestanding embed," it does not judge intent. A caller that must
+    publish some of those anyway consults a reviewed, per-name allow-list
+    on top of this result (see `scripts/site/pi_substring_allowlist.py`);
+    this function itself carries no such list and never should.
+
+    Returns every declared name that matches (there can be more than one --
+    an item could embed two different region words), not just the first,
+    so a caller can report exactly which term(s) triggered."""
+    hits: list[str] = []
+    n = len(value)
+    for name in declared_names_by_length:
+        if not name:
+            continue
+        start = 0
+        while True:
+            idx = value.find(name, start)
+            if idx == -1:
+                break
+            before_ok = idx == 0 or not _is_word_char(value[idx - 1])
+            end = idx + len(name)
+            after_ok = end == n or not _is_word_char(value[end])
+            if before_ok and after_ok:
+                hits.append(name)
+                break
+            start = idx + 1
+    return hits
+
+
+def value_carries_declared_pi_word(value: str, declared_names_by_length) -> bool:
+    """True if `value` embeds any name in `declared_names_by_length` as a
+    freestanding word (see `find_declared_pi_word_matches`'s own
+    docstring for the full rationale)."""
+    return bool(find_declared_pi_word_matches(value, declared_names_by_length))
+
+
 def redact_declared_pi_names(value, declared_names):
     """Recursively return a COPY of `value` with every string leaf that
     EXACTLY equals a declared-PI name replaced by `REDACTED_PI_MARKER`.

@@ -24929,3 +24929,152 @@ complete and internally consistent, closing Finding 6 without a re-run) alongsid
 `docs/retro/events/site-public-status.jsonl` verification event and one `codex.jsonl` line, both
 appended by that same process, neither authored by this cycle.
 
+## SITE-PI-ALLOWLIST-001 -- Public status feed: cross-book substring redaction + reviewed allow-list (2026-08-17)
+
+Bounded PUBLIC-SITE task, SD-31 grind itself untouched (`docs/work-inventory.json` not read or
+written; no regen guard invoked). `PCGEN_ORACLE_SHA` at pin `7f818006e371188e5717fd18d74d18a420747fc6`
+(`./scripts/verify.sh --only preflight-oracle`).
+
+### 1. Re-derived the leak set myself, not from the brief's list
+
+The brief's own honesty requirement was to re-derive, not trust, the orchestrator's 12-hit list. A
+direct global-substring sweep over every currently-published `name` in `site/status-data/*.json`
+against the pinned oracle's declared-PI names found **17**, not 12: the same 1 genuine leak
+(`Death (Pharasma)`, `advanced_players_guide`) and the same 11 mundane items the brief listed, PLUS
+**5 more**: `Discern Next of Kin` (advanced_class_guide, embeds "Nex"), `Vargouille` (bestiary,
+embeds "Varg"), `Razmiri Aversion` (inner_sea_bestiary, embeds "Razmir"), `Druman Blackjacket`
+(inner_sea_combat, embeds "Druma"), `Numerian Resistance Plate` (inner_sea_combat, embeds "Numeria").
+Read each record: all 5 are the declared-PI word's own name/place with a grammatical suffix FUSED
+onto it into one different word (`Nex`+`t`, `Varg`+`ouille`, `Razmir`+`i`, `Druma`+`n`, `Numeria`+`n`)
+-- not the bare declared string. `Razmiri Aversion`'s own DESC is substantively about a religious
+cult ("Razmiri priest"), the closest of the 5 to a real judgment call; treated it consistently with
+the operator's own `Ulfen Guard` precedent (a fused ethnicity/nationality/cult adjective, not the
+bare name) rather than carving out an exception. None of the 11 originally-listed mundane items
+changed classification on reading their corpus rows.
+
+### 2. Mechanism: word-boundary, not a second screening implementation
+
+`pi_redaction.find_declared_pi_word_matches` (new, `scripts/observer/pi_redaction.py`) -- the exact
+same declared-PI name SET the existing primitives already produce (`build_declared_pi_name_index`,
+`build_declared_pi_name_book_index`), just matched as a freestanding WORD (bounded by a
+non-alphanumeric character or string start/end on both sides) instead of a raw substring. This one
+change resolves the false-positive/false-negative tension in a single principled test, with no
+per-name hardcoding and no second declared-PI lookup:
+
+- `"Pharasma"` in `"Death (Pharasma)"` -- bounded by `(`/`)` -- a genuine embed, caught GLOBALLY
+  (Pharasma is declared PI under `inner_sea_gods`/`core_rulebook`, not `advanced_players_guide`
+  itself -- book-scoping alone was blind to it, which is *why* this leak existed).
+- `"Brigh"` in `"Brightness Seeker"` -- fused (followed by `t`) -- never a candidate, no book-scoping
+  needed to suppress it.
+- `"Razmir"`/`"Numeria"`/`"Druma"`/`"Varg"`/`"Nex"` in the 5 extra hits above -- all fused derivatives
+  -- never candidates either, so none of the 5 needed an allow-list entry at all.
+
+**Mutation finding during development, caught before it ever reached committed data:** an
+intermediate version of this fix used the GLOBAL unambiguous declared-name set alone (the same set
+`type_facet` already used) and silently un-redacted **12** names that the OLD book-scoped plain
+substring check had correctly caught (`Baphomet's Blessing`, `Besmara's Bicorne`/`Tricorne`,
+`Gozreh's Trident`, `Shad'Gorum Nugget`, `Continual Flame (Lantern Bearer)`, `Rod (Storm Kindler's)`,
+3 `Treerazer ~ *` abilities) -- because `build_declared_pi_name_index`'s own "unambiguous everywhere"
+rule drops a name (e.g. `Baphomet`) that has a SECOND, unrelated row elsewhere in the Paizo-scoped
+oracle tree with no `NAMEISPI:YES` token of its own (a PFS-legality-override row, not a
+"non-PI record" in the sense that matters here). Fix: `redact_for_display`/`find_status_item_pi_leaks`
+now word-match against the UNION of (declared-PI names FROM THE ITEM'S OWN BOOK, unfiltered for
+global ambiguity) and (the GLOBAL unambiguous set) -- book-scoped catches same-book cases the global
+set drops, global catches cross-book cases like Pharasma that book-scoping drops. Regression-tested:
+all 12 recovered. Two of the twelve, `Milanite Armor` and `Sympathy (Shelynite)`, do NOT recover
+under word-boundary matching even from the book-scoped source, because `Milani`/`Shelyn` are fused
+into `Milanite`/`Shelynite` the same way `Razmir` fuses into `Razmiri` -- read both records, judged
+them the same fused-adjective class as the 5 extra false positives above, and left them published
+(not added to the allow-list -- the mechanism itself never flags them, so there is nothing to
+allow-list). Net effect on the committed feed vs. this cycle's HEAD: **-1** name redacted overall
+(184 -> 183): +1 (`Death (Pharasma)`, the fix) and -2 (`Milanite Armor`, `Sympathy (Shelynite)`, the
+considered un-redaction) -- the other 10 were already correctly redacted at HEAD by the old
+book-scoped check and are unaffected in the final diff (only 2 status-data files actually changed:
+`advanced_players_guide.json`, `inner_sea_gods.json`).
+
+### 3. The allow-list (`scripts/site/pi_substring_allowlist.py`, new)
+
+10 entries covering the 11 originally-listed mundane rows (`Shackles of Durance Vile` carries 2
+books in one entry). Keyed on the exact full `name` string + explicit `books` list, never on the
+embedded term -- `is_allowlisted(name, book)` requires BOTH to match. Every entry carries a
+checkable one-line reason read off the actual corpus row (armor/weapon mechanics, spell effect,
+class prerequisite), not the name in isolation. `build_allowlist_index()` raises `ValueError` at
+load time if any entry is missing a name, a non-empty `books` list, or a non-blank reason, or
+duplicates another entry's name -- enforced by
+`PiSubstringAllowlistTests` in `test_build_public_status.py`, not just documented. A companion test
+asserts the list stays <= 20 entries (currently 10) as a loud tripwire against silent growth. A note
+on the guard-against-hiding-place risk is in both the module's own docstring and
+`.claude/skills/publish-site/SKILL.md`.
+
+### 4. Mutation-proof, against the real committed gate + real committed data
+
+- **(a) seed a brand-new unlisted leak -> RED.** Appended `{"name": "Shrine of Iomedae Replica", ...}`
+  to the committed `site/status-data/core_rulebook.json`, ran `scripts/site_public_status_pi_gate.py`
+  for real: `FAIL -- 1 declared-PI name(s) found ... 'Shrine of Iomedae Replica' carries declared-PI
+  word(s) ['Iomedae'] ... not on the reviewed allow-list`, exit 1. A second seed (`Ulfen Guard` --
+  itself a real allow-list entry -- republished under `ultimate_magic`, a book its entry does NOT
+  cover) also failed the gate, exit 1: proves the allow-list is genuinely keyed on (name, book), not
+  the name alone. Both seeds reverted; `git status --porcelain site/status-data/core_rulebook.json`
+  confirmed empty before proceeding.
+- **(b) the 11 listed names -> CLEAN.** Confirmed individually via a direct grep sweep against the
+  regenerated `site/status-data/*.json` (all 11 present in cleartext, all in their reviewed books)
+  and via the real gate: `site-public-status-pi-gate: CLEAN -- 32 file(s) scanned against 1612
+  declared-PI name(s), zero leaked`.
+- **(c) `Death (Pharasma)` redacted in the regenerated output.** `advanced_players_guide.json`:
+  0 cleartext occurrences of "Pharasma" in any `name` field, 1 `[redacted PI]` marker at that row;
+  standing/doneness/counts on the row unaffected (Decision 12: "the row survives").
+
+### 5. Regenerate + commit
+
+`python3 scripts/site/build_public_status.py` (with `PCGEN_CORPUS_ROOT` pointed at the pinned
+checkout) regenerated `site/status-data.json` and all 31 `site/status-data/<book>.json`;
+`--check` reports current immediately after. Real diff against HEAD: only
+`advanced_players_guide.json` (+1 redaction) and `inner_sea_gods.json` (-2 redactions, net) plus the
+`generated_at` timestamp in the top-level overview -- no other book, no count, no percentage moved.
+
+### 6. Headline answers, for the operator
+
+- **Names redacted:** 183 item `name`s + 33 `type_facet`s withheld across the 36,156 published rows
+  (184 at this cycle's HEAD; net -1, see §2 for the +1/-2 breakdown). 0 exact-match leaks. 0
+  un-allowlisted word-boundary substring hits remain (re-swept independently, own script, not the
+  gate, against the pinned oracle's 1,612-name unambiguous set unioned with each item's own-book
+  declared index).
+- **Allow-list:** 10 entries / 11 covered rows, every entry keyed on (exact name, book list) with a
+  checkable reason, enforced at load time, tripwired at 20 entries.
+- **Reclassified from the brief's "almost certainly false positive" framing:** none of the 11 --
+  reading each corpus row confirmed the mundane classification. `Razmiri Aversion` (not in the
+  brief's 12 at all -- found via my own re-derivation) was the closest call and was resolved by
+  applying the SAME fused-adjective test the operator's own `Ulfen Guard` ruling already established,
+  not a new, one-off judgment.
+- **Gate proven able to fail:** yes, on both an entirely new unlisted leak and an allow-listed name
+  republished outside its reviewed book -- both seeded against the real committed files, both
+  confirmed red, both reverted, `git status` confirmed clean before the real regeneration.
+
+### 7. Full gate
+
+Launched early, exit captured directly (not through a pipe) to `docs/release/SD-31-corpus-closure-grind/artifacts/SITE-PI-ALLOWLIST-verify.log`.
+`RESULT: FAIL` -- **32 passed, 1 FAILED**. The one failure is `site-dashboard-selftest` (2 passed,
+4 failed), the documented pre-existing fixture gap (its fake-repo fixture never provisions
+`scripts/site/build_public_status.py`) -- present, unchanged in shape, and not chased, per the
+brief. Everything this cycle actually touched passed: `pi-redaction-selftest` 45 cases (12 new, for
+`find_declared_pi_word_matches`), `build-public-status-selftest` 28 cases (11 new, for the
+union-scoped `name` screen and the allow-list guard), `site-dashboard-check`, `site-dashboard-pi-gate`,
+`site-public-status-check`, `site-public-status-pi-gate` (`CLEAN -- 32 file(s) ... zero leaked`).
+No Rust touched: `clippy` root:51 desktop:7 (0 errors, both at/below the 52/7 ceiling), `root-lib`
+2025 passed, `root-full` 7016 passed/566 suites/all 530 `tests/*.rs` executed, `desktop` passed,
+`reach` 27 passed, `class-dump` 31/31 computing. A dedicated
+`scripts/tests/test_site_public_status_pi_gate.py` (7 cases, fixture-based) covers the gate's own
+`find_status_item_pi_leaks` directly -- not wired into a `verify.sh` stage (`verify.sh` is outside
+this package's write scope), run manually and documented as such in its own module docstring.
+
+### 8. Retro event emitted
+
+`docs/retro/events/site-pi-allowlist.jsonl` (`RETRO_ACTOR=site-pi-allowlist`, auto-appended by
+`verify.sh` itself): `result: FAIL`, `stages_failed: [site-dashboard-selftest]`, all 32 others in
+`stages_passed`, `duration_seconds: 1875`.
+
+### 9. Out of scope, left alone
+
+`docs/work-inventory.json` (not read or written), the guarded regen, `site/dashboard/**`, Rust,
+`site/status.html` styling, `docs/governance/third-party-tier-licensing-survey.md` (another
+session's file, untouched).

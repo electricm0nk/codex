@@ -31,6 +31,7 @@ _spec.loader.exec_module(bps)
 
 import pi_redaction  # noqa: E402
 import provenance  # noqa: E402
+import pi_substring_allowlist as pi_allowlist  # noqa: E402
 
 
 class Scratch:
@@ -211,7 +212,7 @@ class PiRedactionTests(unittest.TestCase):
         # noun surfacing as an embedded substring of a published item name
         # (e.g. "Abadar's Truthtelling" carrying the declared-PI deity
         # name "Abadar") was invisible to the old exact-match-only `name`
-        # check. Same-book substring screening must catch it.
+        # check. Same-book word-boundary screening must catch it.
         self.scratch.write(
             "pathfinder/paizo/roleplaying_game/core_rulebook/deities.lst",
             "Abadar\tNAMEISPI:YES\tTYPE:Deity\n",
@@ -222,12 +223,14 @@ class PiRedactionTests(unittest.TestCase):
         bps.redact_for_display(items, name_to_books, declared_names)
         self.assertEqual(items[0]["name"], pi_redaction.REDACTED_PI_MARKER)
 
-    def test_name_substring_match_from_an_unrelated_book_is_not_redacted(self):
-        # The documented "Shackles of Compliance" false-positive class: a
-        # declared-PI word ("Brigh") from one book must not flag an
+    def test_name_word_match_from_an_unrelated_book_is_not_redacted(self):
+        # The documented "Brigh"-in-"Brightness" false-positive class: a
+        # declared-PI word ("Brigh") from a DIFFERENT book must not flag an
         # unrelated, ordinary name ("Brightness Seeker") merely because it
-        # happens to start with the same letters in a DIFFERENT book.
-        # Same-book scoping is what keeps this from over-redacting.
+        # happens to start with the same letters -- WORD-BOUNDARY matching
+        # (not book-scoping) is what keeps this from over-redacting: "Brigh"
+        # is fused into "Brightness" (followed by "t"), never a candidate
+        # regardless of which book declared it.
         self.scratch.write(
             "pathfinder/paizo/roleplaying_game/inner_sea_gods/deities.lst",
             "Brigh\tNAMEISPI:YES\tTYPE:Deity\n",
@@ -237,6 +240,93 @@ class PiRedactionTests(unittest.TestCase):
         items = [item(name="Brightness Seeker", book="core_rulebook")]
         bps.redact_for_display(items, name_to_books, declared_names)
         self.assertEqual(items[0]["name"], "Brightness Seeker")
+
+    def test_name_carrying_a_CROSS_book_declared_pi_name_is_redacted(self):
+        # SITE-PI-ALLOWLIST-001's own finding: "Death (Pharasma)", published
+        # in advanced_players_guide, embeds the deity name "Pharasma" --
+        # declared PI under a COMPLETELY DIFFERENT book directory
+        # (inner_sea_gods in the real corpus). Book-scoped-only matching is
+        # blind to this; the GLOBAL unambiguous pass must still catch it.
+        self.scratch.write(
+            "pathfinder/paizo/campaign_setting/inner_sea_gods/deities.lst",
+            "Pharasma\tNAMEISPI:YES\tTYPE:Deity\n",
+        )
+        name_to_books = pi_redaction.build_declared_pi_name_book_index(self.scratch.root)
+        declared_names = pi_redaction.build_declared_pi_name_index(self.scratch.root)
+        items = [item(name="Death (Pharasma)", book="advanced_players_guide")]
+        bps.redact_for_display(items, name_to_books, declared_names)
+        self.assertEqual(items[0]["name"], pi_redaction.REDACTED_PI_MARKER)
+
+    def test_name_declared_pi_in_own_book_but_globally_ambiguous_is_still_redacted(self):
+        # SITE-PI-ALLOWLIST-001 mutation finding: the GLOBAL unambiguous
+        # set (build_declared_pi_name_index) drops any name that ALSO
+        # appears, non-PI, in an unrelated third-party/SRD book anywhere in
+        # the wider oracle checkout -- e.g. the real "Baphomet" is declared
+        # PI in inner_sea_gods but ALSO has a second, unrelated row
+        # elsewhere under the scanned Paizo tree (a PFS-legality-override
+        # row, matching the real corpus's actual "Baphomet" shape) that
+        # carries no NAMEISPI token at all -- build_declared_pi_name_index's
+        # pi_names-minus-non_pi_names subtraction (see its own "UNAMBIGUOUS
+        # is load-bearing" docstring) then drops the bare name from the
+        # GLOBAL set even though it is genuinely, unambiguously declared PI
+        # in inner_sea_gods specifically. Using ONLY the global set would
+        # silently un-redact a genuine same-book leak; the per-book source
+        # (name_to_books) must still be checked.
+        self.scratch.write(
+            "pathfinder/paizo/campaign_setting/inner_sea_gods/deities.lst",
+            "Baphomet\tNAMEISPI:YES\tTYPE:Deity\n",
+        )
+        self.scratch.write(
+            "pathfinder/paizo/player_companion/faiths_of_corruption/_pfs/pfs_foc_deities.lst",
+            "Baphomet\t!PRECHARACTERTYPE:1,PC\tTYPE:PFSNotLegal\n",  # no NAMEISPI token -- ambiguity source
+        )
+        name_to_books = pi_redaction.build_declared_pi_name_book_index(self.scratch.root)
+        declared_names = pi_redaction.build_declared_pi_name_index(self.scratch.root)
+        # Confirm the ambiguity actually landed as intended before relying on it.
+        self.assertNotIn("Baphomet", declared_names)
+        items = [item(name="Baphomet's Blessing", book="inner_sea_gods")]
+        bps.redact_for_display(items, name_to_books, declared_names)
+        self.assertEqual(items[0]["name"], pi_redaction.REDACTED_PI_MARKER)
+
+    def test_allowlisted_name_and_book_is_published_despite_a_word_match(self):
+        self.scratch.write(
+            "pathfinder/paizo/campaign_setting/inner_sea_world_guide/regions.lst",
+            "Shackles\tNAMEISPI:YES\tTYPE:Region\n",
+        )
+        name_to_books = pi_redaction.build_declared_pi_name_book_index(self.scratch.root)
+        declared_names = pi_redaction.build_declared_pi_name_index(self.scratch.root)
+        # "Dimensional Shackles" / core_rulebook is a real allow-list entry.
+        items = [item(name="Dimensional Shackles", book="core_rulebook")]
+        bps.redact_for_display(items, name_to_books, declared_names)
+        self.assertEqual(items[0]["name"], "Dimensional Shackles")
+
+    def test_allowlisted_name_in_an_UNLISTED_book_is_still_redacted(self):
+        # The allow-list is keyed on (name, book) together, never on the
+        # name alone -- publishing the exact same name string under a book
+        # the review never covered must not silently inherit clearance.
+        self.scratch.write(
+            "pathfinder/paizo/campaign_setting/inner_sea_world_guide/regions.lst",
+            "Shackles\tNAMEISPI:YES\tTYPE:Region\n",
+        )
+        name_to_books = pi_redaction.build_declared_pi_name_book_index(self.scratch.root)
+        declared_names = pi_redaction.build_declared_pi_name_index(self.scratch.root)
+        items = [item(name="Dimensional Shackles", book="ultimate_magic")]
+        bps.redact_for_display(items, name_to_books, declared_names)
+        self.assertEqual(items[0]["name"], pi_redaction.REDACTED_PI_MARKER)
+
+    def test_a_brand_new_unlisted_word_match_is_redacted(self):
+        # Mutation-proof (b)/(a) analogue at the producer layer: a name
+        # never reviewed onto the allow-list is redacted, not published,
+        # the moment it embeds a declared-PI word as a whole word.
+        self.scratch.write(
+            "pathfinder/paizo/campaign_setting/inner_sea_gods/deities.lst",
+            "Iomedae\tNAMEISPI:YES\tTYPE:Deity\n",
+        )
+        name_to_books = pi_redaction.build_declared_pi_name_book_index(self.scratch.root)
+        declared_names = pi_redaction.build_declared_pi_name_index(self.scratch.root)
+        items = [item(name="Shrine of Iomedae Replica", book="core_rulebook")]
+        bps.redact_for_display(items, name_to_books, declared_names)
+        self.assertEqual(items[0]["name"], pi_redaction.REDACTED_PI_MARKER)
 
     def test_standing_uses_the_true_name_not_the_redacted_marker(self):
         # Two DIFFERENT declared-PI objects, each printed once, in
@@ -259,6 +349,71 @@ class PiRedactionTests(unittest.TestCase):
         for it in items:
             self.assertEqual(it["name"], pi_redaction.REDACTED_PI_MARKER)
             self.assertEqual(it["standing"], provenance.ORIGIN)
+
+
+class PiSubstringAllowlistTests(unittest.TestCase):
+    """SITE-PI-ALLOWLIST-001 requirement #4: the allow-list must stay a
+    reviewed, checkable list, not a silent hiding place."""
+
+    def test_the_real_allowlist_loads_and_every_entry_has_a_reason(self):
+        index = pi_allowlist.build_allowlist_index()
+        self.assertGreater(len(index), 0)
+        for name, entry in index.items():
+            with self.subTest(name=name):
+                self.assertTrue(entry["reason"].strip(), f"{name!r} has a blank reason")
+                self.assertTrue(entry["books"], f"{name!r} has no books")
+
+    def test_the_real_allowlist_stays_short(self):
+        # Not a hard ceiling -- a documented, deliberate exception -- but a
+        # loud tripwire: this list growing past a small, hand-reviewable
+        # size unnoticed is exactly the "hiding place" risk the operator
+        # flagged. Bump this only alongside a real re-read of every entry.
+        self.assertLessEqual(
+            len(pi_allowlist.ALLOWLIST), 20,
+            "pi_substring_allowlist.ALLOWLIST has grown past 20 entries -- "
+            "re-read every entry (see the file's own module docstring) "
+            "before raising this ceiling, not just the new one",
+        )
+
+    def test_an_entry_missing_a_reason_fails_to_load(self):
+        original = pi_allowlist.ALLOWLIST
+        try:
+            pi_allowlist.ALLOWLIST = [
+                {"name": "Test Name", "term": "Test", "books": ["core_rulebook"], "reason": "   "},
+            ]
+            with self.assertRaises(ValueError):
+                pi_allowlist.build_allowlist_index()
+        finally:
+            pi_allowlist.ALLOWLIST = original
+
+    def test_an_entry_missing_books_fails_to_load(self):
+        original = pi_allowlist.ALLOWLIST
+        try:
+            pi_allowlist.ALLOWLIST = [
+                {"name": "Test Name", "term": "Test", "books": [], "reason": "A real reason."},
+            ]
+            with self.assertRaises(ValueError):
+                pi_allowlist.build_allowlist_index()
+        finally:
+            pi_allowlist.ALLOWLIST = original
+
+    def test_a_duplicate_name_fails_to_load(self):
+        original = pi_allowlist.ALLOWLIST
+        try:
+            pi_allowlist.ALLOWLIST = [
+                {"name": "Test Name", "term": "Test", "books": ["a"], "reason": "First."},
+                {"name": "Test Name", "term": "Test", "books": ["b"], "reason": "Second."},
+            ]
+            with self.assertRaises(ValueError):
+                pi_allowlist.build_allowlist_index()
+        finally:
+            pi_allowlist.ALLOWLIST = original
+
+    def test_is_allowlisted_requires_both_name_and_book(self):
+        index = {"Widget": {"name": "Widget", "term": "Wid", "books": ["core_rulebook"], "reason": "x"}}
+        self.assertTrue(pi_allowlist.is_allowlisted("Widget", "core_rulebook", index))
+        self.assertFalse(pi_allowlist.is_allowlisted("Widget", "ultimate_magic", index))
+        self.assertFalse(pi_allowlist.is_allowlisted("Other Widget", "core_rulebook", index))
 
 
 class LoadUnitsByKindTests(unittest.TestCase):

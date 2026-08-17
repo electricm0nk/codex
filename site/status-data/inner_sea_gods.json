@@ -470,6 +470,12 @@
           "standing": "origin"
         },
         {
+          "name": "Milanite Armor",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin"
+        },
+        {
           "name": "Nail Of The Princess",
           "doneness": "done",
           "type_facet": null,
@@ -918,12 +924,6 @@
           "doneness": "not-started",
           "type_facet": "SLOT_Ring.Ring.Magic",
           "standing": "unclassified"
-        },
-        {
-          "name": "[redacted PI]",
-          "doneness": "done",
-          "type_facet": null,
-          "standing": "origin"
         },
         {
           "name": "[redacted PI]",
@@ -2866,6 +2866,12 @@
           "standing": "origin"
         },
         {
+          "name": "Sympathy (Shelynite)",
+          "doneness": "not-started",
+          "type_facet": "Divine",
+          "standing": "origin"
+        },
+        {
           "name": "Tap Inner Beauty",
           "doneness": "partial",
           "type_facet": null,
@@ -2947,12 +2953,6 @@
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
-        },
-        {
-          "name": "[redacted PI]",
-          "doneness": "not-started",
-          "type_facet": "Divine",
           "standing": "origin"
         }
       ]

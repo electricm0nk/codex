@@ -79,6 +79,28 @@ The script's gates are necessary, not sufficient. Add these:
 - **Say what is going.** Report the file count, the redaction count, and the gate results
   before the operator merges. They are deciding, not rubber-stamping.
 
+## The reviewed substring allow-list
+
+`scripts/site/pi_substring_allowlist.py` is a short, hand-reviewed list of exact `(name,
+book)` pairs that DO embed a declared-PI word (`Ulfen Guard`, `Shackles of Compliance`) but
+were read, one at a time, and judged mundane rather than a genuine PI disclosure — see the
+file's own module docstring for the full rationale (SITE-PI-ALLOWLIST-001, 2026-08-17
+operator ruling).
+
+**It must stay short.** Every entry is a place a real leak could hide behind "we looked at
+that once" — the operator's own words when accepting this design. Before it grows:
+
+- Read the actual corpus row, not just the name. A description that is substantively *about*
+  the declared-PI thing (a deity's clergy, specific setting lore) is a redaction, not an
+  allow-list entry — see `Death (Pharasma)`, the one name this design redacts rather than
+  excuses.
+- Every entry needs a reason a reviewer with no other context can check; `test_build_public_status.py`
+  fails the build if one is blank.
+- Re-read the EXISTING entries whenever you add a new one, not just the new one.
+
+If a publish's PI sweep finds a fresh hit, the fix is almost never "add it to the allow-list
+and move on" — read the row first.
+
 ## Keeping it self-maintaining
 
 The published data must be **generated, never hand-maintained** — a hand-edit is silently
