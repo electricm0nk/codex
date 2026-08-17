@@ -14153,7 +14153,15 @@ fn ground_oracle_tier_one_revelations(
     // is a separate function rather than a rewrite of the shared helper.
     if let Some(oracle_level) = oracle_level_with_battlecry_revelation(input) {
         let bonus = oracle_battlecry_bonus(oracle_level);
-        let duration_rounds = input.chosen.ability_scores.charisma;
+        // `BONUS:VAR|OracleBattlecryDuration|CHA` -- PCGen's bare stat
+        // abbreviation (`CHA`) is the ability MODIFIER, not the score
+        // (`CHASCORE`); see the game system's own stat definition,
+        // `STATNAME:Charisma ABB:CHA STATMOD:floor(SCORE/2)-5`, and the
+        // sibling `OracleRevelationDC|10+classlevel("Oracle")/2+CHA` token
+        // in the same corpus record block, which is unambiguously the
+        // Cha-modifier-based revelation DC rule. `charisma` here is
+        // already the modifier (bound above from `ability_modifiers`).
+        let duration_rounds = charisma;
         let times_per_day = oracle_battlecry_times_per_day(oracle_level);
         explanations.push(ComputationExplanation {
             id: "class_feature.apg.oracle.battle_mystery.battlecry_bonus".to_owned(),
@@ -14173,10 +14181,13 @@ fn ground_oracle_tier_one_revelations(
             value: duration_rounds,
             detail: format!(
                 "Oracle level {oracle_level} Battle Mystery Battlecry's morale bonus lasts a \
-                 number of rounds equal to the Oracle's Charisma SCORE, not modifier \
-                 (`BONUS:VAR|OracleBattlecryDuration|CHA`). At Charisma {duration_rounds} this \
-                 is {duration_rounds} rounds. This engine tracks no round-by-round duration \
-                 state, so this grounds as a standalone flat magnitude"
+                 number of rounds equal to the Oracle's Charisma MODIFIER \
+                 (`BONUS:VAR|OracleBattlecryDuration|CHA`; PCGen's bare `CHA` token is the \
+                 ability modifier, not the score -- confirmed against the game system's own \
+                 `STATMOD:floor(SCORE/2)-5` definition and the sibling revelation-DC token in \
+                 the same corpus record). At a Charisma modifier of {duration_rounds:+} this is \
+                 {duration_rounds} rounds. This engine tracks no round-by-round duration state, \
+                 so this grounds as a standalone flat magnitude"
             ),
         });
         explanations.push(ComputationExplanation {
@@ -57897,9 +57908,11 @@ mod oracle_dispatch_widening_safety_tests {
     /// grounded through `archetype_resolver::chooser_option_selected`
     /// rather than the shared `oracle_level_with_revelation` helper.
     /// Charisma raised to 18 (fixture default via `oracle_with_revelation`)
-    /// so the duration magnitude (= Charisma SCORE) is non-trivial. At
-    /// Oracle level 1 (below the level-10 upgrade): bonus 1, duration 18,
-    /// uses per day 1 + 1/5 = 1.
+    /// -- ability MODIFIER floor((18-10)/2) = 4 -- so the duration
+    /// magnitude (`BONUS:VAR|OracleBattlecryDuration|CHA`, PCGen's bare
+    /// `CHA` = the modifier, not `CHASCORE`) is non-trivial and
+    /// distinguishable from the score. At Oracle level 1 (below the
+    /// level-10 upgrade): bonus 1, duration 4, uses per day 1 + 1/5 = 1.
     #[test]
     fn battlecry_grounds_its_bonus_duration_and_uses_per_day_at_level_one() {
         let receipt = build_pilot_headless_receipt(&oracle_with_revelation(
@@ -57909,7 +57922,7 @@ mod oracle_dispatch_widening_safety_tests {
         ));
         for (id, expected) in [
             ("class_feature.apg.oracle.battle_mystery.battlecry_bonus", 1),
-            ("class_feature.apg.oracle.battle_mystery.battlecry_duration_rounds", 18),
+            ("class_feature.apg.oracle.battle_mystery.battlecry_duration_rounds", 4),
             ("class_feature.apg.oracle.battle_mystery.battlecry_uses_per_day", 1),
         ] {
             let record = receipt
@@ -57920,6 +57933,39 @@ mod oracle_dispatch_widening_safety_tests {
                 .unwrap_or_else(|| panic!("{id} must ground: {:?}", receipt.computation.diagnostics));
             assert_eq!(record.value, expected, "{id}: {record:?}");
         }
+    }
+
+    /// SD31-W10-INTEGRATE-001 fix for a CONFIRMED fabricated-magnitude
+    /// finding: the original grounding read the raw Charisma SCORE where
+    /// the corpus token means the MODIFIER, and the only prior test used
+    /// the shared fixture's fixed Charisma 18, under which score and a
+    /// stale-modifier bug could both plausibly produce a passing number.
+    /// This test picks a DIFFERENT Charisma (14 -> modifier +2, not the
+    /// fixture's 18 -> +4) and a different level, so the duration cannot
+    /// be satisfied by any constant or by reading the score.
+    #[test]
+    fn battlecry_duration_tracks_charisma_modifier_not_score_at_a_different_charisma() {
+        let mut input = human_oracle_input(10);
+        input.chosen.ability_scores.charisma = 14;
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ORACLE_MYSTERY_CHOICE_ID.to_owned(),
+            selection_id: BATTLE_MYSTERY_SELECTION.to_owned(),
+        });
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ORACLE_REVELATION_CHOICE_ID.to_owned(),
+            selection_id: ORACLE_BATTLECRY_REVELATION.to_owned(),
+        });
+        let receipt = build_pilot_headless_receipt(&input);
+        let duration = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.oracle.battle_mystery.battlecry_duration_rounds")
+            .expect("Battlecry duration must ground");
+        assert_eq!(
+            duration.value, 2,
+            "Charisma 14 -> modifier +2 (floor((14-10)/2)); NOT the score 14: {duration:?}"
+        );
     }
 
     /// The bonus steps from +1 to +2 at Oracle level 10
