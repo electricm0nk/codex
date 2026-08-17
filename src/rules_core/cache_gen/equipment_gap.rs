@@ -167,6 +167,24 @@ pub(crate) fn book_routing(short_code: &str) -> Option<(&'static str, &'static s
         "UM" => Some(("ultimate_magic", "pathfinder/paizo/roleplaying_game/ultimate_magic")),
         "UPSI" => Some(("ultimate_psionics", "pathfinder/dreamscarred_press/ultimate_psionics")),
         "UW" => Some(("ultimate_wilderness", "pathfinder/paizo/roleplaying_game/ultimate_wilderness")),
+        // SD31-E6-F10-003: 13 further already-compiled books, same shape as
+        // `UW` above -- each carries its own real equipment `.lst` files
+        // directly in its own corpus directory (no shared-library `B1`-style
+        // host-discovery hazard), confirmed against `v06_work_inventory.rs`'s
+        // `COMPILED_RULE_SETS` before routing.
+        "ISG" => Some(("inner_sea_gods", "pathfinder/paizo/campaign_setting/inner_sea_gods")),
+        "OA" => Some(("occult_adventures", "pathfinder/paizo/roleplaying_game/occult_adventures")),
+        "HA" => Some(("horror_adventures", "pathfinder/paizo/roleplaying_game/horror_adventures")),
+        "MYTHIC" => Some(("mythic_adventures", "pathfinder/paizo/roleplaying_game/mythic_adventures")),
+        "ISC" => Some(("inner_sea_combat", "pathfinder/paizo/campaign_setting/inner_sea_combat")),
+        "ISR" => Some(("inner_sea_races", "pathfinder/paizo/campaign_setting/inner_sea_races")),
+        "ISWG" => Some(("inner_sea_world_guide", "pathfinder/paizo/campaign_setting/inner_sea_world_guide")),
+        "MC" => Some(("monster_codex", "pathfinder/paizo/roleplaying_game/monster_codex")),
+        "ISI" => Some(("inner_sea_intrigue", "pathfinder/paizo/campaign_setting/inner_sea_intrigue")),
+        "B2" => Some(("bestiary_2", "pathfinder/paizo/roleplaying_game/bestiary_2")),
+        "B3" => Some(("bestiary_3", "pathfinder/paizo/roleplaying_game/bestiary_3")),
+        "B4" => Some(("bestiary_4", "pathfinder/paizo/roleplaying_game/bestiary_4")),
+        "BOTD2" => Some(("book_of_the_damned_volume_2", "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2")),
         _ => None,
     }
 }

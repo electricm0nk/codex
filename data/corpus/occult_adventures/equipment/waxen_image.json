@@ -1,0 +1,50 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "General",
+    "cost_gp": 500.0,
+    "description": null,
+    "key": "Waxen image",
+    "name": "Waxen Image",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Waxen image"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Lesser Minor Wondrous Item"
+      },
+      {
+        "key": "COST",
+        "value": "500"
+      },
+      {
+        "key": "WT",
+        "value": ".5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.265"
+      }
+    ],
+    "weight_lbs": 0.5
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 127,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst",
+    "record_key": "Waxen image",
+    "sha256": "48877b9621bd36c3812d91cc603838c92eda6199fd2bd116d16d47523cbc1cbc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

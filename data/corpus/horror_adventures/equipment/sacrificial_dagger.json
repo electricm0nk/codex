@@ -1,0 +1,75 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": null,
+    "description": "The serrated blade of this +1 dagger is set in a hilt made of human bone carved in the shape of a scorpion’s tail. Once per day when the wielder delivers a coup de grace with the sacrificial dagger and the target dies as a result of the attack, the dagger traps the dead creature’s life energy for 10 minutes per Hit Die of the creature. A dark mist visibly seeps from the dagger during this time, and anyone wielding the dagger gains the benefits of death knell. Determine the number of temporary hit points granted when the target dies. The temporary hit points stem from the dagger, so if another creature wields the dagger, that creature gains the remaining temporary hit points (if any) and the previous wielder loses them.&nl;If, while the death knell effect is active, the wielder casts a spell that requires sacrificing a creature, she can expend the life energy stored in the dagger. For the purpose of fulfilling the spell’s requirements, the life energy counts as the creature did when it was alive (including Hit Dice and whether or not it was sentient). Expending the trapped life energy ends the death knell effect immediately, before the casting of the sacrificial spell is complete, so the death knell effect doesn’t increase the wielder’s caster level for that spell. Sacrificing another creature dissipates the life energy of any previous sacrifice already held in the dagger. 1/day, killing a creature with a coup de grace grants wielder effects of death knell for 10 min/HD of slain creature",
+    "key": "Sacrificial Dagger",
+    "name": "Sacrificial Dagger",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "SORTKEY",
+        "value": "Sacrificial Dagger"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel.Special Ability ~ +1 ~ Weapon.Special Ability ~ Enhancement Cost|5000"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint necromancy [evil]"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|3rd"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|3,802 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Magic Items and Armor, death knell"
+      },
+      {
+        "key": "SPROP",
+        "value": "1/day, killing a creature with a coup de grace grants wielder effects of death knell for 10 min/HD of slain creature"
+      },
+      {
+        "key": "DESC",
+        "value": ".CLEAR"
+      },
+      {
+        "key": "DESC",
+        "value": "The serrated blade of this +1 dagger is set in a hilt made of human bone carved in the shape of a scorpion’s tail. Once per day when the wielder delivers a coup de grace with the sacrificial dagger and the target dies as a result of the attack, the dagger traps the dead creature’s life energy for 10 minutes per Hit Die of the creature. A dark mist visibly seeps from the dagger during this time, and anyone wielding the dagger gains the benefits of death knell. Determine the number of temporary hit points granted when the target dies. The temporary hit points stem from the dagger, so if another creature wields the dagger, that creature gains the remaining temporary hit points (if any) and the previous wielder loses them.&nl;If, while the death knell effect is active, the wielder casts a spell that requires sacrificing a creature, she can expend the life energy stored in the dagger. For the purpose of fulfilling the spell’s requirements, the life energy counts as the creature did when it was alive (including Hit Dice and whether or not it was sentient). Expending the trapped life energy ends the death knell effect immediately, before the casting of the sacrificial spell is complete, so the death knell effect doesn’t increase the wielder’s caster level for that spell. Sacrificing another creature dissipates the life energy of any previous sacrifice already held in the dagger."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 23,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_equip_arms_armor.lst",
+    "record_key": "Sacrificial Dagger",
+    "sha256": "daa97d61fd7d37ff29702c8b6aeccdd05a6669ded9a95146ff1923072284ee7a"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ]
+}

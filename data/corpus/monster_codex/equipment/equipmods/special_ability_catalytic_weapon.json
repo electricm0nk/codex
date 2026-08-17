@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "Creatures struck must save or take acid damage for 1d4 additional rounds",
+    "key": "Special Ability ~ Catalytic ~ Weapon",
+    "name": "Catalytic",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Catalytic ~ Weapon"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Ammunition"
+      },
+      {
+        "key": "PLUS",
+        "value": "1"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.177"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,EQMOD=Special Ability ~ Corrosive ~ Weapon,EQMOD=Special Ability ~ Corrosive Burst ~ Weapon"
+      },
+      {
+        "key": "SPROP",
+        "value": "Creatures struck must save or take acid damage for 1d4 additional rounds"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_equipmods.lst",
+    "record_key": "Special Ability ~ Catalytic ~ Weapon",
+    "sha256": "a328e9b5d3ffc3745d8ad0f1052eba94cc1acbbfa7a3d2200e1b3ea065d30e78"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

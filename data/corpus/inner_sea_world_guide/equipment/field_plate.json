@@ -1,0 +1,75 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 1200.0,
+    "description": null,
+    "key": "Field Plate",
+    "name": "Field Plate",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "7",
+          "TYPE=Armor"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Full Plate"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Heavy.ArmorProfHeavy.Suit.Standard"
+      },
+      {
+        "key": "COST",
+        "value": "1200"
+      },
+      {
+        "key": "WT",
+        "value": "50"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "-5"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.291"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "35"
+      }
+    ],
+    "weight_lbs": 50.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 21,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_equip_arms_armor.lst",
+    "record_key": "Field Plate",
+    "sha256": "552092581f8480ce2a536d5358ebd3049ccb2f93a7e65a10a6287acbff6e50fa"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

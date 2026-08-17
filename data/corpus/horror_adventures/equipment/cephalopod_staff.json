@@ -1,0 +1,82 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 22500.0,
+    "description": "Swift action allows user to use staff acts as a masterwork whip until end of turn.",
+    "key": "Cephalopod Staff",
+    "name": "Cephalopod Staff",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Staff.Weapon.Resizable.Melee.Exotic.OneHanded.Finesseable.Slashing.Flail.Weapon Group Flails"
+      },
+      {
+        "key": "COST",
+        "value": "22500"
+      },
+      {
+        "key": "WT",
+        "value": "4"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Staff Charges|CHARGES[10].Special Quality ~ Disarm.Special Quality ~ Nonlethal.Special Quality ~ Reach.Special Quality ~ Trip.Special Quality ~ Masterwork ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.217"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Staff|TIMES=1|TIMEUNIT=Charge|CASTERLEVEL=11|Summon Monster II (octopus or squid only)"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Staff|TIMES=3|TIMEUNIT=Charges|CASTERLEVEL=11|Black Tentacles"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Staff|TIMES=5|TIMEUNIT=Charges|CASTERLEVEL=11|Summon Monster VI (giant octopus only)"
+      },
+      {
+        "key": "SPROP",
+        "value": "Swift action allows user to use staff acts as a masterwork whip until end of turn."
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Whip"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d3"
+      }
+    ],
+    "weight_lbs": 4.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 57,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_equip_magic_items.lst",
+    "record_key": "Cephalopod Staff",
+    "sha256": "500c71ebdeab1408dd9550ead46f2fe0298a9874b4bf47743641ab05a6e932b8"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

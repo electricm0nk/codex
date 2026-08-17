@@ -1,0 +1,50 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "General",
+    "cost_gp": 48000.0,
+    "description": null,
+    "key": "Orgone Accumulator",
+    "name": "Orgone Accumulator",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Orgone Accumulator"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.LesserMajor"
+      },
+      {
+        "key": "COST",
+        "value": "48000"
+      },
+      {
+        "key": "WT",
+        "value": "150"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.261"
+      }
+    ],
+    "weight_lbs": 150.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 97,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst",
+    "record_key": "Orgone Accumulator",
+    "sha256": "48877b9621bd36c3812d91cc603838c92eda6199fd2bd116d16d47523cbc1cbc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

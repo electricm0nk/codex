@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 35.0,
+    "description": "includes a backpack, a bedroll, a belt pouch, an entertainer's outfit, flint and steel, a hypnotist's locket, ink (1 ounce), an inkpen, an iron pot, stationery UE , torches (10), trail rations (5 days), and a waterskin.",
+    "key": "Mesmerist's Kit",
+    "name": "Mesmerist's Kit",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Kit"
+      },
+      {
+        "key": "COST",
+        "value": "35"
+      },
+      {
+        "key": "WT",
+        "value": "26.5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.249"
+      },
+      {
+        "key": "SPROP",
+        "value": "includes a backpack, a bedroll, a belt pouch, an entertainer's outfit, flint and steel, a hypnotist's locket, ink (1 ounce), an inkpen, an iron pot, stationery UE , torches (10), trail rations (5 days), and a waterskin."
+      }
+    ],
+    "weight_lbs": 26.5
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 19,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst",
+    "record_key": "Mesmerist's Kit",
+    "sha256": "48877b9621bd36c3812d91cc603838c92eda6199fd2bd116d16d47523cbc1cbc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

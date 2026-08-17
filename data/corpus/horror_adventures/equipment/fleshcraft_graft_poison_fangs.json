@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 12000.0,
+    "description": "Gain a bite natural attack that deals 1d4 points of damage (1d3 points if Small), can attempt to use poison three times per day [Penalty] -2 penalty on all Charisma-based skill checks except Intimidate checks",
+    "key": "Fleshcraft Graft (Poison Fangs)",
+    "name": "Fleshcraft Graft (Poison Fangs)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME] Fleshcraft Graft"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Fleshcraft.Graft.Headgear"
+      },
+      {
+        "key": "COST",
+        "value": "12000"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.168"
+      },
+      {
+        "key": "SPROP",
+        "value": "Gain a bite natural attack that deals 1d4 points of damage (1d3 points if Small), can attempt to use poison three times per day [Penalty] -2 penalty on all Charisma-based skill checks except Intimidate checks"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 70,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_equip_magic_items.lst",
+    "record_key": "Fleshcraft Graft (Poison Fangs)",
+    "sha256": "500c71ebdeab1408dd9550ead46f2fe0298a9874b4bf47743641ab05a6e932b8"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

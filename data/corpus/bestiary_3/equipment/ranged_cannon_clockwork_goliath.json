@@ -1,0 +1,62 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 0.0,
+    "description": null,
+    "key": "Ranged Cannon ~ Clockwork Goliath",
+    "name": "Cannon",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ranged Cannon ~ Clockwork Goliath"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Cannon"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Ranged.SiegeWeapon.SiegeFirearm.Exotic.Bludgeoning.Piercing"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "PRERACE",
+        "value": "1,Clockwork Goliath"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x4"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "6d6"
+      },
+      {
+        "key": "RANGE",
+        "value": "100"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 15,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_equip_arms_armor.lst",
+    "record_key": "Ranged Cannon ~ Clockwork Goliath",
+    "sha256": "4db3d75b88a99249c99779042a6f207d5d8f5d9c30590bd6ee9845d75b853edf"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

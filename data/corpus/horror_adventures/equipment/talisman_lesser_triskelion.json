@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 600.0,
+    "description": "If wearer fails a save against an effect that causes him to become entangled, paralyzed, or slowed, he gets a second save; if he successful at the second saving throw, he gains the benefits of longstrider for 5 rounds. Crumbles after use. Up to 3 talismans may be worn at one time.",
+    "key": "Talisman (Lesser/Triskelion)",
+    "name": "Talisman (Lesser/Triskelion)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Lesser Talisman (Triskelion)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Necklace.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "600"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.224"
+      },
+      {
+        "key": "SPROP",
+        "value": "If wearer fails a save against an effect that causes him to become entangled, paralyzed, or slowed, he gets a second save; if he successful at the second saving throw, he gains the benefits of longstrider for 5 rounds. Crumbles after use. Up to 3 talismans may be worn at one time."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 44,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_equip_magic_items.lst",
+    "record_key": "Talisman (Lesser/Triskelion)",
+    "sha256": "500c71ebdeab1408dd9550ead46f2fe0298a9874b4bf47743641ab05a6e932b8"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 160000.0,
+    "description": "The wearer's soul instantly enters the ring upon the wearer's death, even if her body is utterly destroyed.",
+    "key": "Ring of the Hidden Psyche",
+    "name": "Ring of the Hidden Psyche",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Ring"
+      },
+      {
+        "key": "COST",
+        "value": "160000"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.252"
+      },
+      {
+        "key": "SPROP",
+        "value": "The wearer's soul instantly enters the ring upon the wearer's death, even if her body is utterly destroyed."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 46,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst",
+    "record_key": "Ring of the Hidden Psyche",
+    "sha256": "48877b9621bd36c3812d91cc603838c92eda6199fd2bd116d16d47523cbc1cbc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -35,9 +35,38 @@ const EXPECTED_PER_BOOK: &[(&str, usize)] = &[
     ("ARG", 15),
     ("UC", 20),
     ("UI", 7),
-    ("UE", 65),
+    // `SD31-E6-F10-003`: 65 -> 64. Extending this generator's own
+    // `declared_pi_at` check over the full compiled table (built for the 8
+    // new books below) caught a genuine, pre-existing PI leak this cycle
+    // did not introduce: `ultimate_equipment:"Elysian Shield"` declares
+    // `NAMEISPI:YES` in the real corpus and was shipping unscreened here.
+    ("UE", 64),
     ("UPSI", 113),
     ("UW", 127),
+    // `SD31-E6-F10-003`: 8 further already-compiled books extended into the
+    // gap lane, same "no hand-authored table" shape as `UW` above. Each
+    // figure is that book's `not-ingested` `equipment` + `equipment_
+    // modifier` population net of its own declared-PI exclusions (12
+    // corpus-wide this cycle; `inner_sea_races` -1, `inner_sea_world_guide`
+    // -7, `bestiary_4` -3, `ultimate_equipment` -1 above) and, for `B2`/
+    // `B3`, net of 1 bare PFS organized-play legality OVERLAY row each
+    // (`is_non_record_line`'s `PFSNotLegal` extension): `bestiary_2/_pfs/
+    // pfs_b2_equip_arms_armor.lst`'s bare `Maul of the Titans` row (no
+    // `KEY:` of its own) and `bestiary_3/_pfs/pfs_b3_equip_arms_armor.lst`'s
+    // bare `Ranged Cannon` row were each shipping as a spurious SECOND
+    // catalog entry citing the SAME book's real, differently-`KEY:`-ed
+    // declaration (`Elysian Maul of the Titans`, `Ranged Cannon ~
+    // Clockwork Goliath`) -- a genuine `record_key`/cited-line mismatch
+    // `tests/v06_corpus_trap_report.rs`'s
+    // `ingested_record_keys_match_their_cited_line` caught.
+    ("OA", 119),
+    ("HA", 117),
+    ("ISR", 71),
+    ("ISWG", 46),
+    ("MC", 49),
+    ("B2", 7),
+    ("B3", 8),
+    ("B4", 5),
 ];
 
 #[test]
@@ -49,7 +78,11 @@ fn the_gap_lane_carries_one_row_per_previously_not_ingested_unit() {
         "gap row count moved; regenerate with `cargo run --bin gen_equipment_gap_tables` and \
          re-derive the per-book figures from docs/work-inventory.json before changing them"
     );
-    assert_eq!(total, 769, "769 is the inventory's own not-ingested equipment population");
+    assert_eq!(
+        total, 1190,
+        "1190 = 769 + 435 new (8 books, `SD31-E6-F10-003`) - 12 declared-PI exclusions - \
+         2 bare PFS legality overlay rows"
+    );
 }
 
 #[test]

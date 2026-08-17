@@ -1,0 +1,55 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 10000.0,
+    "description": null,
+    "key": "Hunter's Nose Ring",
+    "name": "Hunter's Nose Ring",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Survival=Track by scent,Perception=Scent-based",
+          "4",
+          "TYPE=Competence"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Headgear"
+      },
+      {
+        "key": "COST",
+        "value": "10000"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "93"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Scent"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 18,
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_equip_magic_items.lst",
+    "record_key": "Hunter's Nose Ring",
+    "sha256": "4d003130ab6779fb9fb6cc9afbf04b88e568e0eb61fdd5886320c182aea374d9"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}
