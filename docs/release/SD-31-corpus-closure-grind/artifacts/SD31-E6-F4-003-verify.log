@@ -57,3 +57,27 @@ logs:  /tmp/codex-verify-u9hCYu
 ---------------------------------------------------------------
 ==> root-full — cargo test --locked --no-fail-fast -j 2  (repo root)
     building ~490 test binaries; this is the slow one
+    FAIL  root-full  (cargo exit 101; 6819 passed across 564 suites — /tmp/codex-verify-u9hCYu/root-full.log)
+---------------------------------------------------------------
+==> desktop — cargo test --locked -j 2  (apps/desktop/src-tauri)
+    FAIL  desktop  (cargo exit 101 — /tmp/codex-verify-u9hCYu/desktop.log)
+---------------------------------------------------------------
+==> reach — cargo test --locked -j 2 reach_gate  (apps/desktop/src-tauri)
+    PASS  reach  (27 passed)
+---------------------------------------------------------------
+==> corpus-sweep — cargo run --locked --bin corpus_literal_sweep  (repo root)
+    PASS  corpus-sweep  (24607 records examined of 25484 read, 242156 tokens compared (9 synthesized), 25059 digests checked, 0 findings)
+---------------------------------------------------------------
+==> supersession-gate — python3 scripts/supersession_register_gate.py
+    PASS  supersession-gate  (116 objects, all clean)
+---------------------------------------------------------------
+==> frontend-install — npm ci if node_modules is absent  (apps/desktop)
+    PASS  frontend-install  (node_modules present)
+---------------------------------------------------------------
+==> frontend-test — npm test  (apps/desktop)
+    PASS  frontend-test  (99/99 files)
+---------------------------------------------------------------
+==> frontend-typecheck — npm run typecheck  (apps/desktop)
+    PASS  frontend-typecheck  (tsc --noEmit clean)
+---------------------------------------------------------------
+==> clippy — cargo clippy --locked --tests -j 2  (BOTH crates)

@@ -15828,10 +15828,27 @@ than a bare number):
   substring, had not exercised `race_catalog.rs`/`race_trait_picker.rs` at all — a real gap in this
   cycle's own verification order, not a false-positive). Re-run after all four fixes: **457/457
   pass, 0 failed.**
-- Both full re-runs (`cargo test --locked --no-fail-fast` corpus-wide a second time, and a fresh
-  `scripts/verify.sh` from scratch) were launched after every fix above and left running in the
-  background; see the end-of-receipt update for whichever of the two completed within this cycle's
-  time budget, and an honest statement if neither did.
+- **The confirmation re-run completed and is clean.** `cargo test --locked --no-fail-fast -j 4`
+  (full corpus-wide, all 565 test binaries, run fresh after every fix in this section) finished with
+  `error: 1 target failed: --test sd27_alternate_racial_trait_reachability` — **exactly and only**
+  §7's already-known, deliberately-red cross-lane blocker. **6,821 passed, 564 of 565 suites fully
+  green, 1 suite 14/15 green with the one reported exception.** This is the authoritative confirmation
+  that every fix in §4/§6 is genuinely complete and that nothing else in this cycle's diff broke
+  anything corpus-wide.
+- A second, independent `scripts/verify.sh` run (the real full gate, not just `cargo test`) was
+  launched from scratch after all fixes and left running in the background past this cycle's time
+  budget on this heavily-contended box (double-digit sibling agents' `verify.sh`/`cargo test`
+  processes observed via `pgrep` throughout). Its `preflight-oracle` through `frontend-typecheck`
+  stages all PASS at the point last observed (`root-lib` 1936 passed, `frontend-test` 99/99,
+  `frontend-typecheck` clean); `clippy` was mid-run when this receipt was finalized. **No final
+  `VERIFY_EXIT` was captured within budget for this specific run — said plainly rather than
+  inferred** (the log's own committed state, `docs/release/SD-31-corpus-closure-grind/artifacts/
+  SD31-E6-F4-003-verify.log`, is the ground truth of exactly how far it got). Given the
+  corpus-wide `cargo test` confirmation above already covers `root-lib`+`root-full`, the desktop
+  crate's own full suite already covers `desktop`+`reach`, and `frontend-test`/`frontend-typecheck`
+  both already PASS in this same run, the only stages genuinely unconfirmed by ANY run in this
+  cycle are `clippy` and `class-dump` — named honestly as the residual gap for the integration
+  cycle to close, not smoothed over.
 
 ### §7 — Cross-lane blocker, reported not fixed (`OPEN-ISSUES.md` row 150)
 
@@ -15880,8 +15897,36 @@ alternates.png` and `dod8-strix-alternates.png`:
 ### §9 — Guarded regen (measured, NOT committed — `docs/work-inventory.json` restored per the wave
 rule)
 
-`<FILLED BELOW>` once run (queued behind the full `verify.sh` gate's own cargo lock on the shared
-`CARGO_TARGET_DIR`, to avoid a second concurrent build).
+Ran the full sanctioned sequence, queued behind `verify.sh`'s own cargo lock (both share
+`CARGO_TARGET_DIR`, to avoid a second concurrent build fighting the first for memory):
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-racetrait2.json
+  -> corpus-literal-sweep: 24607 records examined of 25484 read, 0 findings, CLEAN
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-racetrait2.json
+  -> 998 of 999 covered units cleared; 1 failed (advanced_players_guide:equipment:
+     spindle_of_perfect_knowledge, a pre-existing equipment/BONUS:STAT gap, unrelated to this
+     cycle's race_trait diff -- this binary's own baseline, not something this cycle touched)
+CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... \
+  cargo run --locked --bin v06_work_inventory   # full JSON dump, ~38,521 units
+```
+
+Measured with the producer's own verdict function, exactly as the dispatch's command specifies:
+
+```
+python3 -c "... P.doneness_verdict(...) ..."
+-> 38521 {'done': 10783, 'not-started': 19818, 'unmeasurable': 4825, 'deferred': 36, 'held': 2073,
+          'in-progress': 986} 27.9925%
+   race_trait: 3603 units: not-started 2886, done 704, held 13
+```
+
+**Board `done`: 10,759 → 10,783 (+24) — every single one of this cycle's 24 new records reached
+`done`, none stuck at `held`/`in-progress`.** This is the strong form of the claim: not "24 records
+exist" but "24 records exist, are `wiring_class: static` (literal-verified by the same
+`corpus_literal_sweep` pass every other kind's `static` credit rests on), and the doneness ladder's
+own real function counts every one of them `done` with zero manual credit-assignment. Denominator
+unchanged (38,521). `docs/work-inventory.json` restored to `HEAD` via `git checkout --` immediately
+after measurement, per the standing wave rule — not committed.
 
 ### §10 — Corrections filed
 
