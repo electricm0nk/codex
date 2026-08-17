@@ -1240,18 +1240,54 @@ def transcribe(book: str) -> str:
 
     # The deferred half of `UnmodelledDesc`. A row the parser refused is fine
     # only if something else already dropped it; one that reached this point is
-    # on its way into the generated table, and the refusal is now this
-    # transcription's refusal.
-    shipping_unscreenable = [u for u in abilities if u["corpus_key"] in unscreenable]
-    if shipping_unscreenable:
-        raise SystemExit(
-            f"{book}: "
+    # OWNED and would otherwise ship -- but "would ship" and "ships" are not
+    # the same thing.
+    #
+    # **CORRECTED (`SD31-E6-F9-005`): this used to `raise SystemExit`, which
+    # crashed the WHOLE BOOK's transcription over these few rows** -- not just
+    # refusing the ambiguous row, refusing every OTHER genuinely-owned,
+    # cleanly-parseable ability in the same book too. Confirmed live against
+    # the pinned oracle: re-running this script for `bestiary`/`bestiary_2`
+    # (before this fix) raised on exactly the 5 `ce_abilities_race.lst` rows
+    # `OPEN-ISSUES.md` row 157 names and produced ZERO other movement, even
+    # though `classify_monster_ability_rows.py` independently confirms 135
+    # (`bestiary`) + 95 (`bestiary_2`) OTHER not-ingested ability rows are
+    # genuinely row-named/prefix-owned and parse cleanly -- the crash was
+    # silently blocking all of them, not just the 5 unscreenable ones.
+    #
+    # The fix picks the SAME remedy this transcriber already applies to a PI
+    # row or a `.COPY=` row: drop the row that cannot be shipped honestly,
+    # name it precisely in the header and on stderr, and let every OTHER row
+    # this book owns transcribe. This is not a widening of `parse_desc` --
+    # picking the wrong `DESC:` variant under time pressure is exactly the
+    # fabrication risk `OPEN-ISSUES.md` row 157 correctly declined to take,
+    # and this fix still declines it. It only stops that unresolved question
+    # from holding every unrelated, unambiguous record hostage.
+    unscreenable_shipping = [u for u in abilities if u["corpus_key"] in unscreenable]
+    if unscreenable_shipping:
+        unscreenable_keys = {u["corpus_key"] for u in unscreenable_shipping}
+        abilities = [u for u in abilities if u["corpus_key"] not in unscreenable_keys]
+        # Same cleanup the PI-drop pass above already performs, and for the
+        # identical reason: a monster's OWN `ability_keys` field was computed
+        # early (`mine`, before this or any other drop pass ran) and must not
+        # keep naming a key that no longer has a row in `abilities` -- an
+        # un-caught instance of exactly this shape is what
+        # `bestiary::tests::every_ability_key_a_shipped_monster_names_
+        # resolves_here` caught live this cycle (`Demon (Hezrou) names
+        # ability Stench, which this table does not define`) before this
+        # line existed.
+        for key in monster_ability_keys:
+            monster_ability_keys[key] = [
+                a for a in monster_ability_keys[key] if a not in unscreenable_keys
+            ]
+        print(
+            f"{book}: {len(unscreenable_shipping)} owned ability row(s) NOT transcribed "
+            "(parse_desc cannot resolve their multi-DESC: shape without guessing): "
             + "; ".join(
                 f"{u['source_file']}:{u['source_line']} ({u['corpus_key']})"
-                for u in shipping_unscreenable
-            )
-            + " would be transcribed but carry a `DESC:` shape parse_desc refuses. "
-            "Widen it deliberately."
+                for u in unscreenable_shipping
+            ),
+            file=sys.stderr,
         )
 
     # Finalized against whatever `abilities` actually ships after every screen
@@ -1441,6 +1477,28 @@ def transcribe(book: str) -> str:
         # Product Identity name in its own namespaced key.
         for unit in orphans:
             out.append(f"//!   * `{unit['source_file']}:{unit['source_line']}`")
+    if unscreenable_shipping:
+        out.append("//!")
+        out.append(
+            f"//! {len(unscreenable_shipping)} further ability row(s) of this book ARE owned"
+        )
+        out.append(
+            "//! but are NOT transcribed: each carries several `DESC:` tokens under a gate"
+        )
+        out.append(
+            "//! `parse_desc` does not model (a `PREVAREQ`/`PREVARGT` comparison against a"
+        )
+        out.append(
+            "//! `BONUS:VAR`-set value), and picking one by position would risk shipping"
+        )
+        out.append(
+            "//! subtly wrong player-facing text. `not-ingested` is their honest status; widen"
+        )
+        out.append(
+            "//! `parse_desc` deliberately, hand-verified per row, to reach them:"
+        )
+        for unit in unscreenable_shipping:
+            out.append(f"//!   * `{unit['source_file']}:{unit['source_line']}` ({unit['corpus_key']})")
     out.append("")
     out.append(
         "use crate::rules_core::rules_tables::monster_chassis::{"

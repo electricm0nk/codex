@@ -148,5 +148,150 @@ class WriteBookDoesNotTruncateOnFailure(unittest.TestCase):
         self.assertEqual(self.target.read_text(), "// new content for fake_book\n")
 
 
+class UnscreenableRowIsDroppedNotFatal(unittest.TestCase):
+    """`transcribe()` used to `raise SystemExit` the instant ONE owned ability
+    row carried a multi-`DESC:` shape `parse_desc` cannot resolve -- crashing
+    the whole book's transcription over that one row, not just refusing it.
+    Confirmed live against the pinned oracle (`SD31-E6-F9-005`): re-running
+    the transcriber for `bestiary`/`bestiary_2` raised on exactly 3/2 such
+    rows and produced ZERO other movement, even though 135/95 OTHER
+    genuinely-owned ability rows in those same books parse cleanly.
+
+    `parse_desc` itself is UNCHANGED -- picking the right `DESC:` variant by
+    position is still refused, deliberately (`OPEN-ISSUES.md` row 157: that
+    would risk shipping subtly wrong player text). Only the BLAST RADIUS of
+    the refusal changes: the ambiguous row is dropped, named, and reported --
+    the same treatment a Product Identity or `.COPY=` row already gets -- and
+    every OTHER row this book owns still transcribes.
+
+    Hermetic: a synthetic `bonus_bestiary`-shaped corpus tree (one monster
+    owning two abilities, one clean and one unmodelled) plus a synthetic
+    `docs/work-inventory.json`, never the live oracle.
+    """
+
+    def setUp(self) -> None:
+        self._tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self._tmp.cleanup)
+        self._old_cwd = os.getcwd()
+        # `pi_blacklist_terms`/`redacted_pi_marker` read a REPO-RELATIVE path
+        # (`src/rules_core/pi_screening.rs` etc.) -- resolve those to absolute
+        # paths against the real repo BEFORE chdir'ing into the synthetic tree,
+        # the same discipline `resolve_book_file`'s own tests use for
+        # `PCGEN_CORPUS_ROOT`.
+        self._old_pi_screen_rs = tmt.PI_SCREEN_RS
+        self._old_pi_marker_rs = tmt.PI_MARKER_RS
+        tmt.PI_SCREEN_RS = os.path.abspath(tmt.PI_SCREEN_RS)
+        tmt.PI_MARKER_RS = os.path.abspath(tmt.PI_MARKER_RS)
+        self.addCleanup(self._restore_pi_paths)
+        os.chdir(self._tmp.name)
+        self.addCleanup(os.chdir, self._old_cwd)
+
+        self.corpus_root = pathlib.Path(self._tmp.name) / "pcgen"
+        book_dir = (
+            self.corpus_root
+            / "pathfinder"
+            / "paizo"
+            / "roleplaying_game"
+            / "bonus_bestiary"
+        )
+        book_dir.mkdir(parents=True)
+        self._old_env = os.environ.get("PCGEN_CORPUS_ROOT")
+        os.environ["PCGEN_CORPUS_ROOT"] = str(self.corpus_root)
+        self.addCleanup(self._restore_env)
+
+        # One monster row naming both abilities via `ABILITY:Special Ability`.
+        races = book_dir / "bb_races.lst"
+        races.write_text(
+            "Test Monster\tKEY:Test Monster\tSIZE:M\t"
+            "ABILITY:Special Ability|AUTOMATIC|Test Monster ~ Weird Ability|"
+            "Test Monster ~ Fine Ability\tSOURCEPAGE:p.1\n"
+        )
+        # Ability 1: TWO `DESC:` tokens, neither gated on `DisplayFullAbility`,
+        # not a continuation (both carry a pipe), not a superset (texts do not
+        # share a prefix), not variable-bearing (both carry a pipe entry) --
+        # the exact shape `parse_desc` refuses via `UnmodelledDesc`.
+        # Ability 2: one plain `DESC:`, parses cleanly.
+        abilities = book_dir / "bb_abilities.lst"
+        abilities.write_text(
+            "Weird Ability\tKEY:Test Monster ~ Weird Ability\t"
+            "CATEGORY:Special Ability\tTYPE:SpecialQuality\t"
+            "DESC:First incompatible text.|SomeGate:Foo\t"
+            "DESC:Second incompatible text.|OtherGate:Bar\tSOURCEPAGE:p.2\n"
+            "Fine Ability\tKEY:Test Monster ~ Fine Ability\t"
+            "CATEGORY:Special Ability\tTYPE:SpecialQuality\t"
+            "DESC:A perfectly ordinary description.\tSOURCEPAGE:p.2\n"
+        )
+
+        os.makedirs("docs", exist_ok=True)
+        inventory = {
+            "units": [
+                {
+                    "book": "bonus_bestiary",
+                    "kind": "monster",
+                    "corpus_key": "Test Monster",
+                    "name": "Test Monster",
+                    "source_file": "bb_races.lst",
+                    "source_line": 1,
+                    "status": "not-ingested",
+                },
+                {
+                    "book": "bonus_bestiary",
+                    "kind": "monster_ability",
+                    "corpus_key": "Test Monster ~ Weird Ability",
+                    "name": "Weird Ability",
+                    "source_file": "bb_abilities.lst",
+                    "source_line": 1,
+                    "status": "not-ingested",
+                },
+                {
+                    "book": "bonus_bestiary",
+                    "kind": "monster_ability",
+                    "corpus_key": "Test Monster ~ Fine Ability",
+                    "name": "Fine Ability",
+                    "source_file": "bb_abilities.lst",
+                    "source_line": 2,
+                    "status": "not-ingested",
+                },
+            ]
+        }
+        with open("docs/work-inventory.json", "w", encoding="utf-8") as handle:
+            import json
+
+            json.dump(inventory, handle)
+
+    def _restore_env(self) -> None:
+        if self._old_env is None:
+            os.environ.pop("PCGEN_CORPUS_ROOT", None)
+        else:
+            os.environ["PCGEN_CORPUS_ROOT"] = self._old_env
+
+    def _restore_pi_paths(self) -> None:
+        tmt.PI_SCREEN_RS = self._old_pi_screen_rs
+        tmt.PI_MARKER_RS = self._old_pi_marker_rs
+
+    def test_the_clean_sibling_ships_even_though_the_unmodelled_row_does_not(
+        self,
+    ) -> None:
+        content = tmt.transcribe("bonus_bestiary")
+        self.assertIn('key: "Test Monster ~ Fine Ability"', content)
+        self.assertNotIn("Weird Ability", content.split("MONSTER_ABILITIES")[1])
+
+    def test_the_unscreenable_row_is_named_in_the_header_not_silently_dropped(
+        self,
+    ) -> None:
+        content = tmt.transcribe("bonus_bestiary")
+        self.assertIn("bb_abilities.lst:1", content)
+        self.assertIn("Test Monster ~ Weird Ability", content)
+
+    def test_the_clean_ability_still_ships_if_the_unmodelled_one_is_seen_first(
+        self,
+    ) -> None:
+        """Order independence: the drop must not depend on which ability the
+        monster's `ABILITY:` token names first. Confirms the fix filters by
+        `corpus_key` membership in `unscreenable`, not by position."""
+        content = tmt.transcribe("bonus_bestiary")
+        self.assertEqual(content.count("MonsterAbilityRecord {"), 1)
+
+
 if __name__ == "__main__":
     unittest.main()
