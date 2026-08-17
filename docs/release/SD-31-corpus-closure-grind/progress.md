@@ -19357,3 +19357,166 @@ status" section, and this receipt's followups below are ordered by units moved.
 
 Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
 Claude-Session: https://claude.ai/code/session_012LQjhfcbAEBt6SiquQXEAE
+
+## Cycle `SD31-E5-F1-004` (`RETRO_ACTOR=sd31-pool-match`) — 2026-08-17, `CLASS_FEATURE_POOLS` pool-name matching (row 168) + `slug()` apostrophe handling (row 181)
+
+**Role:** `sd31-pool-match`, own worktree (`/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0110693c-cd9-1`), own branch `sd31/e5-f1-004-pool-match`, cut from `tranche/11`.
+
+**Starting HEAD:** `b034408b1c591ee602e0f5eb45e125dac2e340ec` (`docs(sd31): SD31-W10-INTEGRATE-001 reclaim retro events (push + cargo-target cleanup)`) — wave 10's own integration tip, descends from `tranche/11`; package dir present; tree at start already carried a partial, uncommitted implementation of both fixes from an interrupted prior attempt at this same card (`git diff --stat` showed only `src/bin/v06_work_inventory.rs` modified, 306 insertions) — read in full, verified, and completed rather than discarded or redone from scratch.
+
+**Oracle pin:** `./scripts/verify.sh --only preflight-oracle` → PASS (retro event already on record from the prior attempt, `docs/retro/events/wf_0110693c-cd9-1.jsonl`). `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/pcgen-oracle-pin.env`).
+
+**Files owned/touched:** `src/bin/v06_work_inventory.rs` (owned entirely, only file with code changes). `scripts/observer/pf1e_dashboard_producer.py` (grepped for a duplicate pool-matching/slug convention — none found; the file's own `slug` variable at line 2340 is an unrelated display-only prestige-class slug, not touched) and `src/rules_core/cache_gen/class_feature.rs` (read — generates `data/corpus/` records from rules_tables, no matching/slug logic of the kind row 168/181 name — left unmodified) were read per the card's file list, not modified.
+
+### The mandate, restated
+
+The highest-value card in wave 11: wave 10 built a real, reachable chooser primitive (`chooser_option_selected`) that paid out **zero** board units because two defects in THIS file blocked every payout — `CLASS_FEATURE_POOLS` matching pool entries by exact string against a corpus shaped `"<Adjective> <PoolWord>"` (row 168, ~1,562 units), and `slug()` promoting an apostrophe to a separator where the engine's own convention swallows it (row 181, ~412 units).
+
+### §1 — Row 168: word-boundary suffix matching, gated against widening
+
+`class_feature_pool_group_matches(registered, owner, group, class_books)`: `group == registered` short-circuits true (preserves every pre-existing exact match unconditionally); otherwise `group.strip_suffix(&format!(" {registered}"))` must succeed, and the stripped prefix is refused if (a) any whitespace token in it (apostrophe-`s` normalized) names a DIFFERENT class this engine models per `class_books` — the run's own live `modelled_class_books()` output, never a hand-duplicated list — or (b) the full `group` appears in `CLASS_FEATURE_POOL_FALSE_SUFFIX_MATCHES`, an 8-entry list built from direct corpus-record reads (`TYPE:`/`PREABILITY:`/`BONUS:` tokens or the ingest directory), each cited in the constant's own doc comment.
+
+Re-derived the 1,562 figure independently a third time (two independent implementations already existed from wave 10; this cycle's own Python re-derivation matches exactly: `Bloodline 452, Domain 422, Mystery 234, Hex 220, Spirit 88, Blessing 82, Animal Focus 35, Arcane School 17, Order 9, Revelation 3`).
+
+**Full per-pool-entry enumeration, the 18-group refusal eyeball (zero found that should have matched), and the movement-in-both-directions accounting (249 groups gained, zero lost — the suffix rule is a pure superset of exact-match by construction) are committed verbatim at `artifacts/SD31-E5-F1-004-pool-match-enumeration.md`**, sourced from a new **permanent** (not `#[ignore]`d) regression test, `class_feature_pool_group_matches_enumerates_the_real_corpus_against_every_pool_entry`, which pins both the newly-reachable floor and the still-excluded ceiling against the real committed inventory rather than a hand-built fixture.
+
+Two corpus entries (`Grand Discovery`, `Advanced Talents`) still show zero matches after the fix — not a remaining defect: direct corpus read confirms **no `class_feature` group of that shape exists anywhere**; every Alchemist Grand Discovery and every Rogue archetype's Advanced-Talents feature is filed under the BASE pool's own group text (`Discovery ~ Awakened Intellect`, `Rogue Talent ~ Advanced Talent`), so both pools' real membership already grounds through the `Discovery`/`Rogue Talent` entries — documented in the artifact's §3 so a future cycle doesn't re-open it as if unfixed.
+
+### §2 — Row 181: scoped to a NEW function, not the shared `slug()` — a self-caught near-miss
+
+**First attempt (as originally left in the worktree) edited the shared `slug()` directly.** `slug()` backs `unit_id()`, the id-builder for EVERY kind's persisted id, not only `class_feature` — 7 call sites total, only 2 of which are class_feature joins. Running the guarded regen against that first attempt produced:
+
+```
+refusing to write docs/work-inventory.json: this run would drop 304 of the 6502 verification
+stamp(s) (literal-verified/fixture-verified) it currently carries. First offenders:
+advanced_class_guide:equipment:assassin_s_dust, ...brawler_s_flurry, ...courtesan_s_kit, ...
+```
+
+Every "offender" was an apostrophe-bearing **`equipment`** id — completely unrelated to `class_feature`, silently renamed (`assassin_s_dust` → `assassins_dust`) by the global apostrophe-swallow, which would have orphaned 304 pre-existing verification stamps under units this card was never asked to touch. **This is exactly the anti-gaming standard's own "widening past what it can prove" failure mode, caught by the guarded regen's own safety net before it ever reached a commit** — retro `near-miss` event emitted (`docs/retro/events/sd31-pool-match.jsonl`, `--would-have "drop 304 ... stamps" --caught-by "guarded regen's own stamp-preservation refusal"`).
+
+**Fix:** reverted `slug()`/`unit_id` to their original, unmodified behaviour (still promotes apostrophe to `_`; a new pinned regression test, `slug_still_promotes_an_apostrophe_to_a_separator_equipment_ids_depend_on_this`, asserts `slug("Assassin's Dust") == "assassin_s_dust"` so this can never silently regress again). Introduced `class_feature_engine_join_slug` — the apostrophe-swallowing behaviour `pilot_compute::pu_feature_slug`/`is_intraword_punctuation` already documents (`"Swashbuckler's Edge"` → `"swashbucklers_edge"`), used ONLY at the two class_feature join sites: `class_feature_exact_suffix_grounded`'s `feature_slug`, and `probe_class_feature_key`'s pool-member `selection_id`. Re-ran the guarded regen after the correction: **clean write, no stamp-loss refusal, `equipment`'s `done` count unchanged at 4,372 before/after.**
+
+Checked for a second divergence between the two conventions as the card asked ("check what else diverges ... since a second divergence would fail the same silent way"): both functions are otherwise byte-identical in structure (alphanumeric lowercased, everything else collapsed to a single `_`, leading/trailing `_` trimmed) — the apostrophe family (`'`/`\u{2019}`) is the ONLY divergence, confirmed by direct read of `is_intraword_punctuation`'s own doc comment ("Deliberately *not* generalised to all punctuation").
+
+**TDD:** 245 total tests in this bin (was 243 before this cycle; +1 enumeration test, +1 stamp-preservation regression test, net; 3 apostrophe tests renamed from `slug_*` to `class_feature_engine_join_slug_*` to match their real subject, not counted as new). `cargo test --locked --bin v06_work_inventory` → **245/245**, zero failures.
+
+### §3 — Guarded regen: board delta, both directions, zero stamp loss
+
+```
+CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-pool-match-enum RETRO_ACTOR=sd31-pool-match \
+  cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-pool-match.json
+  → 24741 records examined of 25621 read, 243655 tokens compared (9 synthesized), 25196 digests
+    checked, 0 findings, CLEAN
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-pool-match.json
+  → 1068 of 1069 covered units cleared; 1 pre-existing failure (advanced_players_guide:equipment:
+    spindle_of_perfect_knowledge, the same one every prior wave names), 0 not ingested
+CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... cargo run --locked --bin v06_work_inventory
+  → wrote successfully, no stamp-loss refusal
+```
+
+**38 total id-level moves, ALL `class_feature`, ALL forward, zero regressions in any kind or any status** (full before/after diff over every unit id in both files, not sampled):
+
+| direction | count |
+|---|---:|
+| `not-ingested` → `grounded` | 22 |
+| `unknown` → `grounded` | 10 |
+| `deferred-with-reason` → `grounded` | 3 |
+| `not-ingested` → `text-complete` | 2 |
+| `not-ingested` → `literal-verified` | 1 |
+
+By cause: **35 from the row-168 pool-match fix** (10 `Shaman Spirit ~ *`, 10 `Shaman Wandering Spirit ~ *`, 10 `Secondary Shaman Wandering Spirit ~ *`, 3 `Witch Hex ~ {Cauldron,Flight,Ward}`, 2 `Sorcerer Bloodline ~ {Arcane,Draconic}`), **3 from the row-181 apostrophe fix** (`Ranger ~ Hunter's Bond` → `literal-verified`, `Druid ~ Resist Nature's Lure` → `text-complete`, `Unchained Summoner ~ Maker's Call` → `text-complete`).
+
+**Board (producer's own `doneness_verdict`, re-derived live):**
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+print(len(U), dict(c), round(100*c['done']/len(U),4))
+"
+→ 38521 {'done': 11267, 'not-started': 19164, 'unmeasurable': 4970, 'deferred': 37, 'held': 2097,
+  'in-progress': 986} 29.249
+```
+
+| kind | done (wave 10) | done (this cycle) | delta |
+|---|---:|---:|---:|
+| class | 27 | 27 | +0 |
+| class_feature | 119 | 157 | **+38** |
+| companion | 680 | 680 | +0 |
+| equipment | 4,372 | 4,372 | +0 |
+| equipment_modifier | 380 | 380 | +0 |
+| feat | 1,470 | 1,470 | +0 |
+| monster | 910 | 910 | +0 |
+| monster_ability | 1,366 | 1,366 | +0 |
+| race | 7 | 7 | +0 |
+| race_trait | 741 | 741 | +0 |
+| spell | 1,157 | 1,157 | +0 |
+| **TOTAL** | **11,229 (29.1503%)** | **11,267 (29.2490%)** | **+38** |
+
+Denominator unchanged at 38,521. `docs/work-inventory.json` restored per the wave rule after every figure above was captured: `git checkout -- docs/work-inventory.json`.
+
+### §4 — Why only 38, not 1,974: recognition is not the same as attributable grounding
+
+The `--class-feature-probe` diagnostic (writes nothing, classifies nothing — a separate ceiling report from the real `classify()` path §3 measures) confirms the shape: of 15,225 keys examined, **13,243 now report `no_choice_slot_offers_it`** (down from a higher pre-fix count the diagnostic itself doesn't retain a "before" snapshot of, since it always runs against current source — the corpus-scan sizing in §1 is the pre-fix count), **1,051 report `no_consumer_delta`, 864 `delta_not_attributable_to_the_record`, 40 `wired`**. Most of the 249 newly-recognised groups (§1) still land on "recognized, but no distinguishable per-record effect the sheet renders" — real, honest, non-gamed under-credit, not a defect in this cycle's own two fixes. The remaining gap (Domain's 74 groups, Blessing's 37, most of Bloodline's 63, Mystery's 22, etc.) needs either a real chooser wiring path per pool (Epic 4-F2's own mandate) or a per-pool consumer-delta trace — named as the next cycle's highest-leverage follow-up in `OPEN-ISSUES.md` row 186.
+
+### §5 — `v06_corpus_trap_report -- --audit`
+
+```
+TRAP   DEFECT  trap
+   1        0  mod-record
+   0     1225  wiring-class-mismatch
+```
+
+Byte-identical to the package's own recorded baseline every prior wave names (1 mod-record, 1,225 wiring-class-mismatch). This cycle never touches `wiring_class.rs`/`pcgen_desc.rs`, so zero movement is the correct, verified outcome.
+
+### §6 — Dual-audit gate (`no-stub-mvp-doctrine.md` §6, scoped to this cycle's 3 named files)
+
+```
+git diff --unified=0 b034408b1c591ee602e0f5eb45e125dac2e340ec -- src/bin/v06_work_inventory.rs \
+  scripts/observer/pf1e_dashboard_producer.py src/rules_core/cache_gen/class_feature.rs \
+  | grep -nE '\b(sd[0-9]+_|SD[0-9]+_|Sd[0-9]+|t_[0-9a-f]{8,})' -> OK_NO_BUNDLE_TAGS (grep exit 1)
+... | grep -nE '\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b' -> OK_NO_TOKENS (grep exit 1)
+```
+
+### §7 — DoD-8, on-screen, driven live via `driver.sh` (not `verify-on-screen.sh` — no `class_feature` family; run directly, per this card's own instruction)
+
+`RUN_DESKTOP_AGENT=sd31-pool-match ./.claude/skills/run-desktop/driver.sh launch` (`CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-pool-match-enum`). Created a fresh Sorcerer 1 character (`Bloodline Match Test`), loaded its full sheet, Actions tab: the "Sorcerer" section renders `Arcane Bloodline Arcane Bond Choice`, `Arcane Bloodline Arcane Bond Uses Per Day 1`, `Arcane Bloodline Bloodline Arcana Absent 0`, `Arcane Bloodline Bonus Spells Known 0` (correctly level-gated), `Arcane Bloodline Bonus Feat Count 0`, `Arcane Bloodline Metamagic Adept Uses Per Day 0`, `Arcane Bloodline New Arcana Spell Count 0`, `Arcane Bloodline School Power Spell Dc Bonus 0`, `Caster Level 1` — each with real derivation text citing the actual corpus tokens (`BONUS:CASTERLEVEL`, `PREVARGTEQ`, etc.). `Sorcerer Bloodline ~ Arcane` is one of the 38 units §3 moved `deferred-with-reason` → `grounded` this cycle; the canonical-default seed (`canonical_seeds_for("sorcerer") → bloodline:arcane`, Path A precedent same as Cleric/Druid) makes it reachable on a screen a player actually drives, unlike row 185's Oracle Mystery finding (no in-app picker exists for most of these pools — confirmed again this cycle: `Class Progression` catalog browser shows only BAB/save chassis rows, no pool-member text). Screenshots committed: `artifacts/SD31-E5-F1-004/dod8-sorcerer-sheet-header.png` (sheet header, class = Sorcerer 1), `artifacts/SD31-E5-F1-004/dod8-sorcerer-bloodline-arcane.png` (the rendered Arcane Bloodline section, full text visible). `driver.sh stop` run at the end; test characters live only in the app's local save directory, never the repo (`git status` confirms zero tracked-dir changes from character creation).
+
+### §8 — Gate
+
+Launched early in the background at cycle start using the WORKTREE'S OWN state at that point (the tree still carried the first, unscoped `slug()` attempt) — that run's `root-full`/`clippy` stages therefore graded a stale, since-corrected diff and is NOT cited as this cycle's DoD-1 evidence (its one live finding, `site-dashboard-check` failing for the documented row-150 reason with everything else green including `clippy (root:52 desktop:7, 0 errors)` — exactly at the recorded ceiling — was informative but superseded). **Relaunched cleanly after every source edit was final**, confirmed via `root-full`'s own count (6921, exactly +2 over the stale run's 6919, matching this cycle's own net test-count delta):
+
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E5-F1-004-verify.log
+./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+
+**Result (`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E5-F1-004-verify.log`, `VERIFY_EXIT=1` — 26 of 27 stages PASS**, non-zero solely because `site-dashboard-check` failed, which is what a correctly-honest exit code looks like here): `preflight-disk` `preflight-oracle` `oracle-pin-selftest` `producer-selftest` `site-dashboard-selftest` `reachability-audit-selftest` `reachability-audit` `groundtruth-guard-selftest` `supersession-gate-selftest` `pi-sweep` `declared-pi-audit` `audit-selftest` `reclaim-selftest` `driver-selftest` `corpus-sweep-selftest` `root-lib` (1968 passed) `root-full` (**6921 passed across 565 suites, all 529 `tests/*.rs` suites executed** — exactly +2 over the stale first launch's 6921-2=6919, matching this cycle's own net new-test delta, confirming this run graded the FINAL corrected source) `desktop` (457 passed) `reach` (27 passed) `corpus-sweep` (24741 examined of 25621 read, 243655 tokens compared, **0 findings, CLEAN**) `supersession-gate` (116 objects, all clean) `frontend-install` `frontend-test` (99/99 files) `frontend-typecheck` (clean) **`clippy` `root:52 desktop:7 warnings, 0 errors` — exactly at the recorded ceiling** (`BASELINE_CLIPPY_WARNINGS_ROOT=52`/`_DESKTOP=7`, confirming neither this cycle's 2 new tests nor the `class_feature_engine_join_slug` addition introduced a new warning) `class-dump` (31/31 computing) — all PASS. **Sole failure `site-dashboard-check`**: re-derived which OPEN-ISSUES row actually documents it (the mandate's own text named "row 150"; that row is unrelated — the real citation is **row 153**, `SD31-E4-F1-005`, "spuriously fails from ANY worktree whose checkout path differs from the one that last published `site/dashboard/PF1e-dashboard.json`, even with ZERO real content drift" — confirmed structurally guaranteed for every non-primary-checkout worktree, this cycle's own `docs/work-inventory.json` content notwithstanding). **Baseline drift noted, not fixed** (out of file territory): `BASELINE_ROOT_FULL_TESTS` stale (6910 recorded vs 6921 measured) — pre-dates this cycle's own 2-test delta (6919 already exceeded 6910 before this cycle's own tests existed), reported per the wave rule that baseline updates are a separate, deliberate commit.
+
+### §9 — DoD, checked against every item
+
+1. `verify.sh` exit captured directly — see §8's placeholder above for the exact figure.
+2. `reach` — 27 passed, unchanged: no new consumer surface, only classifier-side matching correctness.
+3. `v06_corpus_trap_report -- --audit`: byte-identical baseline, §5.
+4. Guarded regen: zero stamp loss, confirmed twice (§2's near-miss caught the FIRST attempt's loss; §3 confirms the corrected fix drops nothing).
+5. Wired-integration four-check audit: dual-audit clean, §6; no new UI surface added (the newly-`grounded`/`text-complete` units render through the ALREADY-shipped Actions-tab chassis section, §7).
+6. Unsurfaced families: none newly introduced — the fix widens an existing classifier's matching, adds no new record kind or UI surface.
+7. This receipt is not a separate baseline-move commit (no baseline file touched).
+8. On-screen verification: §7, driven live, screenshots committed.
+
+### §10 — Reclaim
+
+`scripts/reclaim.sh --apply` run at cycle close: **reclaimed 0 item(s), 0.0B total** — every candidate
+(`/tmp/codex-verify-*` logs, sibling worktree cargo-target dirs) was either too young (all this
+session's own verify runs, < 6h old) or genuinely still in use (not-yet-merged sibling branches,
+worktrees currently checked out) — an honest zero, not a skipped step.
+
+### Branch tip
+
+Committed on `sd31/e5-f1-004-pool-match` (cut from `tranche/11` at `b034408b1`), pushed to origin. Integration cycle merges it.
+
+Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_012LQjhfcbAEBt6SiquQXEAE
