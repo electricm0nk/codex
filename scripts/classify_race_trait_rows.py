@@ -36,13 +36,19 @@ import glob
 import os
 import sys
 
-# The 18 races the product models (`ingest_race_traits::IN_SCOPE_RACES`,
-# SD-27 `decisions.md §25.3`). A trait of any other race cannot ground: the
-# resolver returns None without a chassis, whatever the ingest writes.
+# The 30 races the product models (`ingest_race_traits::IN_SCOPE_RACES`,
+# SD-27 `decisions.md §25.3`, widened 18 -> 24 by SD-31 Epic 1-F2 and
+# 24 -> 30 by SD-31-E6-F4-003, both re-synced here 2026-08-16 -- this
+# screening copy had drifted to the original 18 across both widenings,
+# undercounting every subsequent screen's "in-scope rows" figure). A trait
+# of any other race cannot ground: the resolver returns None without a
+# chassis, whatever the ingest writes.
 IN_SCOPE_RACES = [
     "Dwarf", "Elf", "Gnome", "Half-Elf", "Half-Orc", "Halfling", "Human",
     "Aasimar", "Drow", "Duergar", "Goblin", "Hobgoblin", "Kobold", "Merfolk",
     "Orc", "Svirfneblin", "Tengu", "Tiefling",
+    "Fetchling", "Grippli", "Ifrit", "Oread", "Sylph", "Undine",
+    "Catfolk", "Kitsune", "Ratfolk", "Strix", "Suli", "Wayang",
 ]
 RACIAL_TRAIT_SUFFIX = " Racial Trait"
 RACIAL_DEFAULT_SUFFIX = " Racial Default"

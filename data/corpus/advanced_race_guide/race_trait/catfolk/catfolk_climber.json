@@ -1,0 +1,82 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T00:37:23Z",
+  "data": {
+    "key": "Catfolk ~ Climber",
+    "name": "Climber",
+    "race_key": "Catfolk",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Catfolk Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Catfolk_ReplaceSprinter"
+    ],
+    "description": "Catfolk hunters excel at hunting prey from trees and other high vantage points. Catfolk with this racial trait possess a climb speed of 20 feet (along with the +8 racial bonus on Climb checks a climb speed affords). This racial trait replaces sprinter.",
+    "source_page": "p.91",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Catfolk ~ Climber"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Catfolk Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Catfolk ~ Climber],[!PREFACT:1,ABILITIES,Catfolk_ReplaceSprinter=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Catfolk hunters excel at hunting prey from trees and other high vantage points. Catfolk with this racial trait possess a climb speed of 20 feet (along with the +8 racial bonus on Climb checks a climb speed affords)."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces sprinter.|!PREABILITY:1,CATEGORY=Special Ability,Catfolk ~ Climber"
+      },
+      {
+        "key": "MOVE",
+        "value": "Climb,20"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.91"
+      },
+      {
+        "key": "FACT",
+        "value": "Catfolk_ReplaceSprinter|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 361,
+    "record_key": "Catfolk ~ Climber"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

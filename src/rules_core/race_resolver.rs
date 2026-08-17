@@ -1248,6 +1248,39 @@ const ALTERNATE_TRAIT_REPLACE_FLAGS: &[(&str, &[&str])] = &[
     ("Undine ~ Ooze Breath", &["Undine_ReplaceSpellLikeAbility"]),
     ("Undine ~ Terrain Chameleon", &["Undine_ReplaceEnergyResistance"]),
     ("Undine ~ Water Sense", &["Undine_ReplaceEnergyResistance"]),
+    // ---- Catfolk, Kitsune, Ratfolk, Strix, Suli, Wayang (SD-31-E6-F4-003, 2026-08-16) ----
+    // Advanced Race Guide's own 6-race chassis batch (SD-31-E6-F4-002 built
+    // the chassis; this cycle ingested the real alternate-trait rows
+    // `arg_abilities_race.lst` carries for them). Values read verbatim off
+    // `data/corpus/advanced_race_guide/race_trait/` for these races' new
+    // `TraitRole::Alternate` rows, the same way every row above was. Suli's
+    // `Energy Strike` sets two flags on one row (it replaces both elemental
+    // assault and energy resistance); Strix's `Wing-Clipped` is the only
+    // entry here that ALSO grants a dependent row (`Wing-Clipped ~ Strix ~
+    // Flight`, `TraitRole::FlagGranted` via its own `ABILITY:...|AUTOMATIC|`
+    // token, never itself in this table). Suli's `Earthfoot`/`Firehand`/
+    // `Icewalk`/`Shockshield` are deliberately absent for the identical
+    // reason: they carry no `FACT:` token of their own, `Energy Strike`
+    // grants them via `ABILITY:...|AUTOMATIC|Suli ~ <name>|PREABILITY:...`.
+    ("Catfolk ~ Cat's Claws", &["Catfolk_ReplaceNaturalHunter"]),
+    ("Catfolk ~ Clever Cat", &["Catfolk_ReplaceNaturalHunter"]),
+    ("Catfolk ~ Climber", &["Catfolk_ReplaceSprinter"]),
+    ("Catfolk ~ Curiosity", &["Catfolk_ReplaceNaturalHunter"]),
+    ("Catfolk ~ Nimble Faller", &["Catfolk_ReplaceSprinter"]),
+    ("Catfolk ~ Scent", &["Catfolk_ReplaceVision"]),
+    ("Kitsune ~ Fast Shifter", &["Kitsune_ReplaceKitsuneMagic"]),
+    ("Kitsune ~ Gregarious", &["Kitsune_ReplaceAgile"]),
+    ("Ratfolk ~ Cornered Fury", &["Ratfolk_ReplaceSwarming"]),
+    ("Ratfolk ~ Scent", &["Ratfolk_ReplaceTinker"]),
+    ("Ratfolk ~ Skulk", &["Ratfolk_ReplaceTinker"]),
+    ("Ratfolk ~ Unnatural", &["Ratfolk_ReplaceRodentEmpathy"]),
+    ("Strix ~ Dayguard", &["Strix_ReplaceNocturnal"]),
+    ("Strix ~ Frightening", &["Strix_ReplaceNocturnal"]),
+    ("Strix ~ Nimble", &["Strix_ReplaceSuspicious"]),
+    ("Strix ~ Tough", &["Strix_ReplaceSuspicious"]),
+    ("Strix ~ Wing-Clipped", &["Strix_ReplaceFlight"]),
+    ("Suli ~ Energy Strike", &["Suli_ReplaceElementalAssault", "Suli_ReplaceEnergyResistance"]),
+    ("Wayang ~ Dissolution's Child", &["Wayang_ReplaceShadowMagic"]),
 
     // ================= Inner Sea Races =================
     // SD-29 race-trait lane, round 2. 68 of the book's 72 in-scope rows set
@@ -2089,7 +2122,11 @@ mod tests {
         // (`Half-Orc ~ Plagueborn`) + Inner Sea Races' 67 + Horror
         // Adventures' 41, all landed by SD-29's race-trait lane, + SD-31
         // Epic 1-F2's 48 (ARG's 42 + Inner Sea Races' 6).
-        assert_eq!(count(TraitRole::Alternate), 330);
+        // 330 -> 349 by SD-31-E6-F4-003 (2026-08-16): the same 6 races' own
+        // real ARG alternate-trait rows, minus Strix's Wing-Clipped-granted
+        // Flight and Suli's Energy-Strike-granted Earthfoot/Firehand/
+        // Icewalk/Shockshield (those 5 are `FlagGranted`, not `Alternate`).
+        assert_eq!(count(TraitRole::Alternate), 349);
         // 5 + Inner Sea Races' 3: `Junk Tinker ~ Skilled` (named by an
         // `ABILITY:Goblin Racial Trait|AUTOMATIC|` grant) and the two rows
         // carrying a positive `PREFACT` gate, `Secret Magic ~ Merfolk ~ Speed`
@@ -2125,7 +2162,15 @@ mod tests {
         // Races) -- plus the 4 already-`FlagGranted`-by-`classify()` `Mostly
         // Human ~ <Race> ~ Languages` rows (positive `PREFACT`), one of
         // which (Oread's) is granted by that same `Oread ~ Isolated`.
-        assert_eq!(count(TraitRole::FlagGranted), 66);
+        // 66 -> 71 by SD-31-E6-F4-003 (2026-08-16): Strix's `Wing-Clipped`
+        // grants `Wing-Clipped ~ Strix ~ Flight` (`ABILITY:Strix Racial
+        // Trait|AUTOMATIC|...`), and Suli's `Energy Strike` grants all 4 of
+        // `Earthfoot`/`Firehand`/`Icewalk`/`Shockshield` the same way, each
+        // via an `ABILITY:...|AUTOMATIC|Suli ~ <name>|PREABILITY:...` token
+        // whose trailing `PREABILITY` clause `link_automatic_grants` already
+        // tolerates (same shape it already reads for the Fetchling/Oread
+        // rows named above).
+        assert_eq!(count(TraitRole::FlagGranted), 71);
         // `Oversized Goblin` and `Human ~ Tribalistic Languages` -- see
         // `no_corpus_trait_is_left_without_a_readable_gate`, which pins both by
         // key and names each one's remedy. Unchanged by SD-31 Epic 1-F2: every
@@ -2134,7 +2179,7 @@ mod tests {
         assert_eq!(count(TraitRole::Unclassified), 2);
         assert_eq!(
             corpus.traits.values().flatten().count(),
-            695,
+            719,
             "175 standard + 156 ARG + 5 Monster Codex + 1 APG + 71 Inner Sea Races \
              + 43 Horror Adventures + 64 Core Essentials heritage records (16 heritages \
              + the 48 replacement rows they grant) + SD-31 Epic 1-F2's 113 (57 standard \
@@ -2142,7 +2187,8 @@ mod tests {
              + 5 Inner Sea Races grant-linked/positive-gate rows, 2026-08-15) + the \
              Skinwalker follow-on batch's 9 standard-tier rows + SD-31-E6-F4-002's \
              Advanced Race Guide batch of 58 standard-tier rows (2026-08-16: Catfolk, \
-             Kitsune, Ratfolk, Strix, Suli, Wayang; 637 -> 695)"
+             Kitsune, Ratfolk, Strix, Suli, Wayang; 637 -> 695) + SD-31-E6-F4-003's own \
+             24-record alternate-trait batch for those same 6 races (2026-08-16: 695 -> 719)"
         );
     }
 
@@ -2305,7 +2351,17 @@ mod tests {
         // (each B2 race's `ingest_races` batch wrote its `!PREFACT` gates
         // from the same globalvar reconciliation the original 18 use), so
         // the orphan-flag assertion above still does not move.
-        assert_eq!(all_flags.len(), 113);
+        //
+        // SD-31-E6-F4-003 (2026-08-16) moved this 113 -> 127: 14 brand-new
+        // `<Race>_Replace*` flags across Catfolk (3), Kitsune (2), Ratfolk
+        // (3), Strix (3, including `Strix_ReplaceFlight`), Suli (2) and
+        // Wayang (1)'s own real ARG alternate-trait rows -- all in those 6
+        // races' own namespaces, none colliding with any earlier book's.
+        // Every one is claimed by that same race's own standard row
+        // (`ingest_races.rs`'s `SD-31-E6-F4-002` batch wrote each race's
+        // `!PREFACT` gates from its own globalvar file), so the orphan-flag
+        // assertion above still does not move.
+        assert_eq!(all_flags.len(), 127);
     }
 
     /// **No alternate in the loaded corpus fires an inert flag any more.**
@@ -2328,10 +2384,14 @@ mod tests {
         }
         assert_eq!(
             checked,
-            330,
+            349,
             "153 ARG + 4 Monster Codex + 1 APG + 67 Inner Sea Races + 41 Horror Adventures + \
-             48 SD-31 Epic 1-F2 Bestiary 2 batch (ARG's 42 + Inner Sea Races' 6, 2026-08-15). \
-             **282, not 283, since 2026-08-12** (SD-29 `decisions.md` 53): Inner Sea Races' \
+             48 SD-31 Epic 1-F2 Bestiary 2 batch (ARG's 42 + Inner Sea Races' 6, 2026-08-15) + \
+             SD-31-E6-F4-003's 19 (2026-08-16, ARG's own 6-race chassis batch's alternates, \
+             minus Strix's Wing-Clipped-granted Flight and Suli's Energy-Strike-granted \
+             Earthfoot/Firehand/Icewalk/Shockshield -- those 5 are `FlagGranted`, never \
+             offered by the picker). **282, not 283, since 2026-08-12** (SD-29 \
+             `decisions.md` 53): Inner Sea Races' \
              `Elf ~ Sovyrian-Born` carries `NAMEISPI:YES`, PCGen's own declaration that the \
              record NAME is Product Identity, and a name cannot be redacted -- so the row is \
              dropped, not screened."
@@ -2548,9 +2608,10 @@ mod tests {
         }
         assert_eq!(
             corpus_rows.len(),
-            330,
+            349,
             "153 ARG + 4 Monster Codex + 1 APG + 67 Inner Sea Races + 41 Horror Adventures + \
-             48 SD-31 Epic 1-F2 Bestiary 2 batch (ARG's 42 + Inner Sea Races' 6) selectable \
+             48 SD-31 Epic 1-F2 Bestiary 2 batch (ARG's 42 + Inner Sea Races' 6) + \
+             SD-31-E6-F4-003's 19 (2026-08-16, ARG's own 6-race chassis batch) selectable \
              alternates"
         );
         assert_eq!(ALTERNATE_TRAIT_REPLACE_FLAGS.len(), corpus_rows.len(), "no table row is extra or missing");
@@ -2592,7 +2653,7 @@ mod tests {
         let typo = vec!["Dwarf ~ Saltbeerd".to_string()];
         assert!(replace_flags_fired_by(&typo).is_empty());
         assert_eq!(unknown_alternate_trait_keys(&typo), vec!["Dwarf ~ Saltbeerd".to_string()]);
-        assert_eq!(selectable_alternate_trait_keys().len(), 330);
+        assert_eq!(selectable_alternate_trait_keys().len(), 349);
     }
 
     #[test]

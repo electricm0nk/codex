@@ -1102,9 +1102,10 @@ mod tests {
         // reader has to infer from an absence.
         assert!(
             !arg_book.content_kind_counts.contains_key("race_traits"),
-            "ARG's 259 racial-trait records (156 -> 201 by SD-31 Epic 1-F2, 2026-08-15; \
-             201 -> 259 by SD-31-E6-F4-002, 2026-08-16) are corpus-JSON-only; see the module \
-             doc for why they are accounted for in LICENSE.json rather than here"
+            "ARG's 283 racial-trait records (156 -> 201 by SD-31 Epic 1-F2, 2026-08-15; \
+             201 -> 259 by SD-31-E6-F4-002; 259 -> 283 by SD-31-E6-F4-003, both 2026-08-16) \
+             are corpus-JSON-only; see the module doc for why they are accounted for in \
+             LICENSE.json rather than here"
         );
     }
 

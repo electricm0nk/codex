@@ -284,11 +284,12 @@ function verifiesTheCorpusIsReallyOnDiskAndCarriesEighteenRaces() {
   );
   assertEqual(
     loadTraits().length,
-    434,
-    'race trait records across all three books (CRB 67 + B1 108 + ARG 259; ARG 156 -> 201 by ' +
+    458,
+    'race trait records across all three books (CRB 67 + B1 108 + ARG 283; ARG 156 -> 201 by ' +
       'SD-31 Epic 1-F2, 2026-08-15, 201 -> 259 by SD-31-E6-F4-002\'s own 6-race chassis batch, ' +
-      '2026-08-16 -- this test only loads CRB/B1/ARG, so Bestiary 2/5\'s new chassis is out of ' +
-      'its scope, but ARG\'s own growth still moves this total)',
+      '259 -> 283 by SD-31-E6-F4-003\'s own 24-record alternate-trait batch for those same 6 ' +
+      'races, both 2026-08-16 -- this test only loads CRB/B1/ARG, so Bestiary 2/5\'s new ' +
+      'chassis is out of its scope, but ARG\'s own growth still moves this total)',
   );
   const standard = loadStandardTraits();
   assertEqual(standard.length, 175, 'standard racial trait records (CRB 67 + B1 108)');
