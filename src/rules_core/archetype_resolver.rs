@@ -129,6 +129,65 @@ pub fn archetype_claiming_slot_entry(
         })
 }
 
+/// **The chooser-interaction primitive** (SD31-E4-F2-001, design recorded at
+/// `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E3-F3-001-chooser-primitive-design.md`).
+///
+/// `archetype_claims_slot` answers "has an archetype swapped this named slot
+/// out?" -- a question with exactly one fixed computation behind it once the
+/// answer is known. A chooser class (Oracle Mystery/Revelation, Sorcerer
+/// Bloodline, Arcanist Exploit, Cleric Domain, ...) needs a second, different
+/// question this primitive answers instead: *given a named option pool (a
+/// tier of choice, e.g. "which Mystery," "which Revelation within that
+/// Mystery"), did the character actually pick THIS option, and is this
+/// option a real corpus-declared member of that pool at all* -- not "was
+/// the slot swapped away," which `archetype_claims_slot` already covers and
+/// this primitive deliberately does not re-answer (Design A, a unified
+/// abstraction merging both questions, was considered and rejected in the
+/// design doc above precisely because the two questions read different
+/// input shapes and answering them together buys nothing a thin composition
+/// doesn't already buy).
+///
+/// True when BOTH hold:
+/// 1. `input` carries a recorded `SelectedChoice` with `choice_set_id ==
+///    pool_choice_id` and `selection_id == option_id` -- the character
+///    genuinely made this selection, not an inferred or assumed one.
+/// 2. `corpus_pool` contains `option_id` -- the selection is a real,
+///    corpus-declared member of the named pool, never an invented or
+///    drifted id. This is the second failure mode the design doc names by
+///    name: a hand-maintained id list silently drifting away from the
+///    corpus is the exact shape `equipment_keys` once had
+///    (`archetype_resolver.rs`'s own "Aggregation, not a new parallel
+///    list" framing above). `corpus_pool` is the caller's real,
+///    grep-verified option-pool array (e.g. every real `KEY:<X> Mystery`
+///    the corpus declares for Oracle) -- transcribed from the pinned
+///    oracle, never generated. A selection whose `option_id` is not in
+///    `corpus_pool` returns `false` even if the character's raw
+///    `selected_choices` genuinely carries it, because an untrusted or
+///    stale id must never silently ground a value.
+///
+/// Whether a *selected* option actually grounds a real computation is,
+/// exactly as the design doc states, each option's own hand-built grounding
+/// function -- this primitive answers only "was this real option picked,"
+/// never "does picking it compute a magnitude." Composing the two remains
+/// the caller's job (see `pilot_compute::mod::ground_oracle_tier_one_revelations`'s
+/// Battle Mystery/Battlecry block, the first production consumer of this
+/// primitive).
+pub fn chooser_option_selected(
+    input: &CharacterInput,
+    pool_choice_id: &str,
+    option_id: &str,
+    corpus_pool: &[&str],
+) -> bool {
+    if !corpus_pool.contains(&option_id) {
+        return false;
+    }
+    input
+        .chosen
+        .selected_choices
+        .iter()
+        .any(|choice| choice.choice_set_id == pool_choice_id && choice.selection_id == option_id)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -248,5 +307,90 @@ mod tests {
         .character_input
         .expect("fixture must load");
         assert!(archetype_claiming_slot_entry(&input, "Slayer", "WeaponProficiencies").is_none());
+    }
+
+    // -- chooser_option_selected (SD31-E4-F2-001) --
+
+    const TEST_POOL_CHOICE_ID: &str = "choice:test_mystery";
+    const TEST_POOL: &[&str] = &["mystery:life", "mystery:lore", "mystery:nature"];
+
+    fn input_with_choice(choice_set_id: &str, selection_id: &str) -> CharacterInput {
+        let mut input = crate::rules_core::character_input::load_character_input_fixture(
+            include_str!(
+                "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+            ),
+        )
+        .character_input
+        .expect("fixture must load");
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: choice_set_id.to_owned(),
+            selection_id: selection_id.to_owned(),
+        });
+        input
+    }
+
+    /// The positive case: a real corpus-pool member the character actually
+    /// selected is recognized.
+    #[test]
+    fn a_selected_option_that_is_a_real_pool_member_is_recognized() {
+        let input = input_with_choice(TEST_POOL_CHOICE_ID, "mystery:life");
+        assert!(chooser_option_selected(&input, TEST_POOL_CHOICE_ID, "mystery:life", TEST_POOL));
+    }
+
+    /// The base negative case: no selection at all is never recognized,
+    /// even for a real pool member.
+    #[test]
+    fn no_selection_at_all_is_not_recognized() {
+        let input = crate::rules_core::character_input::load_character_input_fixture(
+            include_str!(
+                "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+            ),
+        )
+        .character_input
+        .expect("fixture must load");
+        assert!(!chooser_option_selected(&input, TEST_POOL_CHOICE_ID, "mystery:life", TEST_POOL));
+    }
+
+    /// A selection recorded under a DIFFERENT choice-set id must not be
+    /// recognized -- proves the check is scoped to the named pool, not any
+    /// selection anywhere on the character (the same wrong-subject guard
+    /// `archetype_claims_slot` already proves for slots).
+    #[test]
+    fn a_selection_under_a_different_choice_set_id_is_not_recognized() {
+        let input = input_with_choice("choice:some_other_pool", "mystery:life");
+        assert!(!chooser_option_selected(&input, TEST_POOL_CHOICE_ID, "mystery:life", TEST_POOL));
+    }
+
+    /// **The load-bearing negative case.** A `selection_id` the character
+    /// genuinely carries but that is NOT a real member of `corpus_pool`
+    /// must never be recognized -- this is the guard against a stale or
+    /// invented id silently grounding a value the corpus never declared,
+    /// the exact `equipment_keys`-drift failure mode this primitive's own
+    /// doc comment names.
+    #[test]
+    fn a_selection_not_present_in_the_corpus_pool_is_not_recognized() {
+        let input = input_with_choice(TEST_POOL_CHOICE_ID, "mystery:invented_pool_member");
+        assert!(!chooser_option_selected(
+            &input,
+            TEST_POOL_CHOICE_ID,
+            "mystery:invented_pool_member",
+            TEST_POOL
+        ));
+    }
+
+    /// A character with more than one selection on the same pool (a
+    /// genuine multi-select pool, e.g. Cleric's two domains) still
+    /// recognizes each one independently -- the primitive does not assume
+    /// at most one selection per pool.
+    #[test]
+    fn a_second_unrelated_selection_on_the_same_pool_does_not_hide_the_first() {
+        let mut input = input_with_choice(TEST_POOL_CHOICE_ID, "mystery:life");
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: TEST_POOL_CHOICE_ID.to_owned(),
+            selection_id: "mystery:lore".to_owned(),
+        });
+        assert!(chooser_option_selected(&input, TEST_POOL_CHOICE_ID, "mystery:life", TEST_POOL));
+        assert!(chooser_option_selected(&input, TEST_POOL_CHOICE_ID, "mystery:lore", TEST_POOL));
+        assert!(!chooser_option_selected(&input, TEST_POOL_CHOICE_ID, "mystery:nature", TEST_POOL));
     }
 }

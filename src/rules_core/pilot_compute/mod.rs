@@ -2888,6 +2888,74 @@ const ORACLE_CINDER_DANCE_SPEED_BONUS: i16 = 10;
 /// Lore Mystery's Lore Keeper names exactly 10 Knowledge skills in its
 /// own `BONUS:SKILL|...` token.
 const ORACLE_LORE_KEEPER_KNOWLEDGE_SKILL_COUNT: i16 = 10;
+
+/// SD31-E4-F2-001: Battle Mystery, the seventh Mystery this deepening
+/// grounds and the first wired through the new
+/// `archetype_resolver::chooser_option_selected` primitive rather than the
+/// hand-rolled `oracle_level_with_revelation` shape the other six use --
+/// picked as this cycle's representative pool (mirrors the standing
+/// "ground one representative option per pool honestly" ruling) because
+/// its own tier-1 Battlecry revelation is entirely flat, self-scoped
+/// magnitudes, no dice roll, matching the same shape every already-
+/// grounded revelation above requires.
+const BATTLE_MYSTERY_SELECTION: &str = "mystery:battle";
+/// The full, real, corpus-declared Mystery pool `chooser_option_selected`
+/// validates every Mystery selection against -- every `KEY:<X> Mystery`
+/// row `advanced_players_guide/apg_abilities_class.lst` declares, grep-
+/// verified: `grep -oP '(?<=KEY:)[A-Za-z]+ Mystery\b'
+/// apg_abilities_class.lst | sort -u` -> exactly these 10, matching
+/// `SD31-E3-F1-001-clearance-table.json`'s own `mysteries_named_in_book:
+/// 10`. Transcribed verbatim, never generated or inferred -- the exact
+/// guard this primitive's own doc comment names.
+const ORACLE_MYSTERY_POOL: &[&str] = &[
+    "mystery:battle",
+    "mystery:bone",
+    "mystery:flame",
+    "mystery:heavens",
+    "mystery:life",
+    "mystery:lore",
+    "mystery:nature",
+    "mystery:stone",
+    "mystery:waves",
+    "mystery:wind",
+];
+/// Battle Mystery's own tier-1 revelation this cycle grounds: PF1
+/// Advanced Player's Guide, "Battlecry" -- `BONUS:VAR|OracleBattlecryBonus|1`
+/// (+2 from `PRECLASS:1,Oracle=10`), `BONUS:VAR|OracleBattlecryDuration|CHA`,
+/// `BONUS:VAR|OracleBattlecryTimes|1+classlevel("Oracle")/5`. All three are
+/// flat formulas -- no dice roll, no target-creature-state dependency --
+/// the same shape Sidestep Secret/Nature's Whispers/Lore Keeper already
+/// ground.
+const ORACLE_BATTLECRY_REVELATION: &str = "revelation:battlecry";
+/// Battle Mystery's real, corpus-declared revelation pool this Mystery's
+/// own choice draws from -- every `KEY:Battle Mystery ~ <X>` row in
+/// `apg_abilities_class.lst`, grep-verified (`grep -oP
+/// '(?<=KEY:Battle Mystery ~ )[^\t]+' apg_abilities_class.lst`), 11 real
+/// entries. Scoped to Battle Mystery alone (not a flat cross-Mystery
+/// revelation list) -- a revelation name from a DIFFERENT Mystery must
+/// never validate here, matching this program's own "a shared NAME is not
+/// a duplicate" discipline (`decisions.md §10`).
+const ORACLE_BATTLE_MYSTERY_REVELATION_POOL: &[&str] = &[
+    "revelation:battlecry",
+    "revelation:battlefield_clarity",
+    "revelation:combat_healer",
+    "revelation:iron_skin",
+    "revelation:maneuver_mastery",
+    "revelation:resiliency",
+    "revelation:skill_at_arms",
+    "revelation:surprising_charge",
+    "revelation:war_sight",
+    "revelation:weapon_mastery",
+    "revelation:final_revelation",
+];
+/// Battlecry's flat morale bonus: `1`, upgraded to `2` at Oracle level 10
+/// (`BONUS:VAR|OracleBattlecryBonus|1|PRECLASS:1,Oracle=10`).
+const ORACLE_BATTLECRY_BASE_BONUS: i16 = 1;
+const ORACLE_BATTLECRY_UPGRADED_BONUS: i16 = 2;
+const ORACLE_BATTLECRY_UPGRADE_LEVEL: u8 = 10;
+/// Battlecry's uses-per-day divisor: `1+classlevel("Oracle")/5`.
+const ORACLE_BATTLECRY_TIMES_PER_DAY_LEVEL_DIVISOR: i16 = 5;
+
 /// Deaf Curse's `BONUS:SITUATION|Perception=Opposed|-4`. Grounds per the
 /// lead's explicit ruling (2026-07-27): a flat modifier applying to your
 /// OWN roll clears the corrected bar even when the check is opposed --
@@ -13576,13 +13644,15 @@ fn ground_or_block_oracle_mystery(
                 | NATURE_MYSTERY_SELECTION
                 | BONE_MYSTERY_SELECTION
                 | FLAME_MYSTERY_SELECTION
+                | BATTLE_MYSTERY_SELECTION
         )
     }) {
         diagnostics.push(ComputationDiagnostic {
             id: "class_feature.apg.oracle.mystery_powers.unsupported".to_owned(),
             message: "Oracle remains blocked on its Mystery powers burden: no recognized Mystery \
-                 choice is present (only Life, Lore, Nature, Bone, and Flame have any grounded \
-                 revelation in this codebase), so no Oracle Mystery-power support is claimed"
+                 choice is present (only Life, Lore, Nature, Bone, Flame, and Battle have any \
+                 grounded revelation in this codebase), so no Oracle Mystery-power support is \
+                 claimed"
                 .to_owned(),
             claim_blocking: true,
         });
@@ -13622,6 +13692,63 @@ fn oracle_level_with_revelation(
         return None;
     }
     Some(oracle_level)
+}
+
+/// Same question as `oracle_level_with_revelation` (did this Oracle take
+/// `BATTLE_MYSTERY_SELECTION` AND explicitly record
+/// `ORACLE_BATTLECRY_REVELATION`?), but composed through the new
+/// `archetype_resolver::chooser_option_selected` primitive
+/// (SD31-E4-F2-001) instead of the bare `.contains()` idiom above --
+/// this is the primitive's first production caller, proven reachable via
+/// `build_pilot_headless_receipt` in this module's own test suite. Kept as
+/// a separate function rather than a rewrite of `oracle_level_with_revelation`
+/// itself: the six existing revelations stay on their proven, already-
+/// reviewed path unchanged, and this new path can be reviewed on its own
+/// against the primitive independently, matching this card's own
+/// "land the primitive before any pool uses it, so the mechanism can be
+/// reviewed independently of its first consumers" instruction.
+fn oracle_level_with_battlecry_revelation(input: &CharacterInput) -> Option<u8> {
+    let oracle_level = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == ORACLE_CLASS_ID)
+        .map(|class_level| class_level.level)?;
+    if !archetype_resolver::chooser_option_selected(
+        input,
+        ORACLE_MYSTERY_CHOICE_ID,
+        BATTLE_MYSTERY_SELECTION,
+        ORACLE_MYSTERY_POOL,
+    ) {
+        return None;
+    }
+    if !archetype_resolver::chooser_option_selected(
+        input,
+        ORACLE_REVELATION_CHOICE_ID,
+        ORACLE_BATTLECRY_REVELATION,
+        ORACLE_BATTLE_MYSTERY_REVELATION_POOL,
+    ) {
+        return None;
+    }
+    Some(oracle_level)
+}
+
+/// Battlecry's flat morale bonus: `ORACLE_BATTLECRY_BASE_BONUS` (+1),
+/// stepping to `ORACLE_BATTLECRY_UPGRADED_BONUS` (+2) at Oracle level
+/// `ORACLE_BATTLECRY_UPGRADE_LEVEL` (10) -- `BONUS:VAR|OracleBattlecryBonus|1`
+/// plus `|1|PRECLASS:1,Oracle=10` (the two flat additions sum to +2, they
+/// do not replace one another).
+fn oracle_battlecry_bonus(oracle_level: u8) -> i16 {
+    if oracle_level >= ORACLE_BATTLECRY_UPGRADE_LEVEL {
+        ORACLE_BATTLECRY_UPGRADED_BONUS
+    } else {
+        ORACLE_BATTLECRY_BASE_BONUS
+    }
+}
+
+/// Battlecry's uses-per-day: `1+classlevel("Oracle")/5`, integer division.
+fn oracle_battlecry_times_per_day(oracle_level: u8) -> i16 {
+    1 + i16::from(oracle_level) / ORACLE_BATTLECRY_TIMES_PER_DAY_LEVEL_DIVISOR
 }
 
 /// The stat-substitution idiom shared by Sidestep Secret
@@ -14017,6 +14144,54 @@ fn ground_oracle_tier_one_revelations(
             ),
         });
     }
+
+    // SD31-E4-F2-001: Battle Mystery's Battlecry, the seventh revelation this
+    // deepening grounds and the first wired through
+    // `archetype_resolver::chooser_option_selected` rather than the
+    // hand-rolled `oracle_level_with_revelation` shape above -- see
+    // `oracle_level_with_battlecry_revelation`'s own doc comment for why it
+    // is a separate function rather than a rewrite of the shared helper.
+    if let Some(oracle_level) = oracle_level_with_battlecry_revelation(input) {
+        let bonus = oracle_battlecry_bonus(oracle_level);
+        let duration_rounds = input.chosen.ability_scores.charisma;
+        let times_per_day = oracle_battlecry_times_per_day(oracle_level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.oracle.battle_mystery.battlecry_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Oracle level {oracle_level} Battle Mystery Battlecry grants allies within 100 \
+                 feet a +{bonus} morale bonus on attack rolls, skill checks, and saving throws \
+                 (+1, rising to +2 from Oracle level {ORACLE_BATTLECRY_UPGRADE_LEVEL} -- \
+                 `BONUS:VAR|OracleBattlecryBonus|1` plus `|1|PRECLASS:1,Oracle=10`). This engine \
+                 computes no ally entity anywhere, so the bonus grounds as a standalone flat \
+                 magnitude, the same 'grant-only identity record, no execution engine' idiom \
+                 used throughout this session"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.oracle.battle_mystery.battlecry_duration_rounds".to_owned(),
+            value: duration_rounds,
+            detail: format!(
+                "Oracle level {oracle_level} Battle Mystery Battlecry's morale bonus lasts a \
+                 number of rounds equal to the Oracle's Charisma SCORE, not modifier \
+                 (`BONUS:VAR|OracleBattlecryDuration|CHA`). At Charisma {duration_rounds} this \
+                 is {duration_rounds} rounds. This engine tracks no round-by-round duration \
+                 state, so this grounds as a standalone flat magnitude"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.oracle.battle_mystery.battlecry_uses_per_day".to_owned(),
+            value: times_per_day,
+            detail: format!(
+                "Oracle level {oracle_level} Battle Mystery Battlecry uses per day: \
+                 1 + Oracle level / {ORACLE_BATTLECRY_TIMES_PER_DAY_LEVEL_DIVISOR} \
+                 (`BONUS:VAR|OracleBattlecryTimes|1+classlevel(\"Oracle\")/5`). At Oracle level \
+                 {oracle_level} this is 1 + {oracle_level} / \
+                 {ORACLE_BATTLECRY_TIMES_PER_DAY_LEVEL_DIVISOR} = {times_per_day}. This grounds \
+                 only the flat daily use count; it performs no per-use consumption tracking"
+            ),
+        });
+    }
 }
 
 /// Grounds Oracle's Curse choice (v0.6 alpha swarm, risks item 8, Oracle
@@ -14349,6 +14524,7 @@ fn oracle_mystery_grounds_a_power(input: &CharacterInput) -> bool {
                 | NATURE_MYSTERY_SELECTION
                 | BONE_MYSTERY_SELECTION
                 | FLAME_MYSTERY_SELECTION
+                | BATTLE_MYSTERY_SELECTION
         )
     });
     if !all_recognized {
@@ -14358,7 +14534,7 @@ fn oracle_mystery_grounds_a_power(input: &CharacterInput) -> bool {
     if mystery_selections.contains(&LIFE_MYSTERY_SELECTION) {
         return true;
     }
-    [
+    let revelation_grounds = [
         (LORE_MYSTERY_SELECTION, ORACLE_SIDESTEP_SECRET_REVELATION),
         (LORE_MYSTERY_SELECTION, ORACLE_LORE_KEEPER_REVELATION),
         (NATURE_MYSTERY_SELECTION, ORACLE_NATURES_WHISPERS_REVELATION),
@@ -14366,7 +14542,12 @@ fn oracle_mystery_grounds_a_power(input: &CharacterInput) -> bool {
         (FLAME_MYSTERY_SELECTION, ORACLE_CINDER_DANCE_REVELATION),
     ]
     .iter()
-    .any(|(mystery, revelation)| oracle_level_with_revelation(input, mystery, revelation).is_some())
+    .any(|(mystery, revelation)| oracle_level_with_revelation(input, mystery, revelation).is_some());
+    // SD31-E4-F2-001: Battle Mystery's Battlecry checked separately -- it is
+    // grounded through the new `chooser_option_selected` primitive
+    // (`oracle_level_with_battlecry_revelation`), not the `revelation_grounds`
+    // array's shared `oracle_level_with_revelation` helper.
+    revelation_grounds || oracle_level_with_battlecry_revelation(input).is_some()
 }
 
 /// Whether this Oracle's Curse selection names at least one of the four
@@ -14436,16 +14617,18 @@ fn push_oracle_other_features_deferred_diagnostic(
             "{ORACLE_CLASS_ID} remains blocked beyond its base-attack-bonus/base-save chassis \
              pillar, its known-spell posture, Life Mystery's own Healing Hands, and the Clouded \
              Vision, Lame, Wasting, and Deaf Curses, and at least one revelation each from the \
-             Bone, Flame, Life, Lore and Nature Mysteries: Haunted (a genuine no-op -- zero \
+             Bone, Flame, Life, Lore, Nature and Battle Mysteries (Battle's own Battlecry \
+             grounded SD31-E4-F2-001, wired through the new chooser_option_selected \
+             primitive): Haunted (a genuine no-op -- zero \
              numeric tokens in the corpus), Tongues (an 8-language chooser with no magnitude), \
              Orisons (the `CAST:0,3` at-will 0-level set -- the known-spell grounding covers \
-             spell levels 1-3 only), the five Mysteries with NO grounded revelation at all \
-             (Battle, Heavens, Stone, Waves, Winds) plus every ungrounded revelation within \
-             the five that do, Oracle's own Mystery-granted bonus spell-list \
+             spell levels 1-3 only), the four Mysteries with NO grounded revelation at all \
+             (Heavens, Stone, Waves, Wind) plus every ungrounded revelation within \
+             the six that do, Oracle's own Mystery-granted bonus spell-list \
              portion of `SPELLLIST:2|Cleric|Oracle`, and spontaneous Cure Wounds/Inflict Wounds \
              conversion (mirrors Cleric's own unmodeled spontaneous-conversion gap) remain \
              ungrounded anywhere in this codebase; no class-feature or spell execution is \
-             fabricated in this bounded chassis baseline. Orisons and the five \
+             fabricated in this bounded chassis baseline. Orisons and the four \
              no-revelation Mysteries were previously covered only by the vague phrase \
              \"the remaining Mystery revelations\" (task #76). {}",
             if canonical_choices_ground_powers {
@@ -56602,9 +56785,10 @@ mod slayer_dispatch_widening_safety_tests {
 mod oracle_dispatch_widening_safety_tests {
     use super::{
         build_pilot_headless_receipt, AcquisitionMode, CharacterClassLevel, CharacterInput,
-        HeadlessReceiptStatus, BONE_MYSTERY_SELECTION, CLOUDED_VISION_CURSE_SELECTION,
-        DEAF_CURSE_SELECTION, FIGHTER_CLASS_ID, FLAME_MYSTERY_SELECTION, LAME_CURSE_SELECTION,
-        LIFE_MYSTERY_SELECTION, LORE_MYSTERY_SELECTION, NATURE_MYSTERY_SELECTION,
+        HeadlessReceiptStatus, BATTLE_MYSTERY_SELECTION, BONE_MYSTERY_SELECTION,
+        CLOUDED_VISION_CURSE_SELECTION, DEAF_CURSE_SELECTION, FIGHTER_CLASS_ID,
+        FLAME_MYSTERY_SELECTION, LAME_CURSE_SELECTION, LIFE_MYSTERY_SELECTION,
+        LORE_MYSTERY_SELECTION, NATURE_MYSTERY_SELECTION, ORACLE_BATTLECRY_REVELATION,
         ORACLE_CHANNEL_REVELATION, ORACLE_CINDER_DANCE_REVELATION, ORACLE_CLASS_ID,
         ORACLE_CURSE_CHOICE_ID, ORACLE_LORE_KEEPER_REVELATION, ORACLE_MYSTERY_CHOICE_ID,
         ORACLE_NATURES_WHISPERS_REVELATION, ORACLE_NEAR_DEATH_REVELATION,
@@ -57707,6 +57891,178 @@ mod oracle_dispatch_widening_safety_tests {
             .find(|e| e.id == "class_feature.apg.oracle.flame_mystery.cinder_dance_speed_bonus")
             .expect("Cinder Dance must ground");
         assert_eq!(cinder.value, 10, "flat +10 ft base land speed: {cinder:?}");
+    }
+
+    /// SD31-E4-F2-001: Battle Mystery's Battlecry, the first revelation
+    /// grounded through `archetype_resolver::chooser_option_selected`
+    /// rather than the shared `oracle_level_with_revelation` helper.
+    /// Charisma raised to 18 (fixture default via `oracle_with_revelation`)
+    /// so the duration magnitude (= Charisma SCORE) is non-trivial. At
+    /// Oracle level 1 (below the level-10 upgrade): bonus 1, duration 18,
+    /// uses per day 1 + 1/5 = 1.
+    #[test]
+    fn battlecry_grounds_its_bonus_duration_and_uses_per_day_at_level_one() {
+        let receipt = build_pilot_headless_receipt(&oracle_with_revelation(
+            1,
+            BATTLE_MYSTERY_SELECTION,
+            ORACLE_BATTLECRY_REVELATION,
+        ));
+        for (id, expected) in [
+            ("class_feature.apg.oracle.battle_mystery.battlecry_bonus", 1),
+            ("class_feature.apg.oracle.battle_mystery.battlecry_duration_rounds", 18),
+            ("class_feature.apg.oracle.battle_mystery.battlecry_uses_per_day", 1),
+        ] {
+            let record = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("{id} must ground: {:?}", receipt.computation.diagnostics));
+            assert_eq!(record.value, expected, "{id}: {record:?}");
+        }
+    }
+
+    /// The bonus steps from +1 to +2 at Oracle level 10
+    /// (`PRECLASS:1,Oracle=10`); uses per day steps with level too
+    /// (1 + 10/5 = 3).
+    #[test]
+    fn battlecry_bonus_and_uses_per_day_step_up_at_oracle_level_ten() {
+        let receipt = build_pilot_headless_receipt(&oracle_with_revelation(
+            10,
+            BATTLE_MYSTERY_SELECTION,
+            ORACLE_BATTLECRY_REVELATION,
+        ));
+        let bonus = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.oracle.battle_mystery.battlecry_bonus")
+            .expect("Battlecry bonus must ground");
+        assert_eq!(bonus.value, 2, "upgraded +2 at Oracle level 10: {bonus:?}");
+        let times = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.oracle.battle_mystery.battlecry_uses_per_day")
+            .expect("Battlecry uses per day must ground");
+        assert_eq!(times.value, 3, "1 + 10/5 = 3: {times:?}");
+    }
+
+    /// A Mystery pick alone (no revelation recorded) grounds nothing for
+    /// Battle either -- the same budgeted-revelation shape every other
+    /// non-Life Mystery already enforces, now proven for the primitive-
+    /// composed path too.
+    #[test]
+    fn a_battle_mystery_pick_alone_grounds_no_battlecry() {
+        let mut input = human_oracle_input(1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ORACLE_MYSTERY_CHOICE_ID.to_owned(),
+            selection_id: BATTLE_MYSTERY_SELECTION.to_owned(),
+        });
+        let receipt = build_pilot_headless_receipt(&input);
+        assert!(
+            !receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id.starts_with("class_feature.apg.oracle.battle_mystery.")),
+            "a bare Mystery pick must ground no revelation: {:?}",
+            receipt.computation.explanations
+        );
+    }
+
+    /// A revelation name from a DIFFERENT Mystery's own real pool must
+    /// never ground Battlecry -- proves `ORACLE_BATTLE_MYSTERY_REVELATION_POOL`
+    /// genuinely scopes the primitive's guard to Battle Mystery alone, not
+    /// "any revelation anywhere" (`decisions.md §10`'s "a shared NAME is
+    /// not a duplicate" discipline, applied to the chooser primitive).
+    #[test]
+    fn a_revelation_from_a_different_mysterys_pool_does_not_ground_battlecry() {
+        let receipt = build_pilot_headless_receipt(&oracle_with_revelation(
+            1,
+            BATTLE_MYSTERY_SELECTION,
+            ORACLE_LORE_KEEPER_REVELATION,
+        ));
+        assert!(
+            !receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id.starts_with("class_feature.apg.oracle.battle_mystery.")),
+            "a cross-Mystery revelation id must never ground Battlecry: {:?}",
+            receipt.computation.explanations
+        );
+    }
+
+    /// A Fighter carrying spoofed Battle Mystery + Battlecry entries must
+    /// never ground anything -- the same class-ownership gate every other
+    /// Oracle grounding proves, now proven for the primitive-composed path.
+    #[test]
+    fn a_non_oracle_never_grounds_battlecry() {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        let mut fighter = result.character_input.expect("valid fixture");
+        fighter.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ORACLE_MYSTERY_CHOICE_ID.to_owned(),
+            selection_id: BATTLE_MYSTERY_SELECTION.to_owned(),
+        });
+        fighter.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ORACLE_REVELATION_CHOICE_ID.to_owned(),
+            selection_id: ORACLE_BATTLECRY_REVELATION.to_owned(),
+        });
+        let receipt = build_pilot_headless_receipt(&fighter);
+        assert!(
+            !receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id.starts_with("class_feature.apg.oracle.")),
+            "a Fighter must never ground an Oracle revelation via the primitive: {:?}",
+            receipt.computation.explanations
+        );
+    }
+
+    /// **The full-character reachability proof.** A Battle-Mystery Oracle
+    /// with a grounded Curse recorded reaches `HeadlessReceiptStatus::Computed`
+    /// through `build_pilot_headless_receipt` exactly the same way
+    /// `single_class_oracle_with_everything_recognized_reaches_computed`
+    /// already proves for Life Mystery -- proving the new primitive's first
+    /// consumer is genuinely reachable end to end, not merely unit-tested
+    /// in isolation (this card's own "reachability is proven through a
+    /// headless pilot receipt, never a resolver unit test alone" bar).
+    #[test]
+    fn single_class_oracle_with_battle_mystery_and_a_curse_reaches_computed() {
+        let mut input = human_oracle_input(1);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ORACLE_MYSTERY_CHOICE_ID.to_owned(),
+            selection_id: BATTLE_MYSTERY_SELECTION.to_owned(),
+        });
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ORACLE_REVELATION_CHOICE_ID.to_owned(),
+            selection_id: ORACLE_BATTLECRY_REVELATION.to_owned(),
+        });
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ORACLE_CURSE_CHOICE_ID.to_owned(),
+            selection_id: CLOUDED_VISION_CURSE_SELECTION.to_owned(),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "a Battle-Mystery Oracle with a grounded Curse must reach Computed via the new \
+             chooser_option_selected-composed path, exactly as Life Mystery already does: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.apg.oracle.battle_mystery.battlecry_bonus"),
+            "the Computed receipt must actually carry the grounded Battlecry bonus: {:?}",
+            receipt.computation.explanations
+        );
     }
 
     /// Cinder Dance and the Lame Curse are mutually exclusive in the
@@ -65767,13 +66123,24 @@ mod apg_canonical_choice_path_a_tests {
 
     /// The same guard for Oracle: an unrecognized Mystery or Curse
     /// alongside a recognized one keeps the class blocked. Neither the
-    /// Battle Mystery nor the Haunted Curse has a single grounded power
+    /// Heavens Mystery nor the Haunted Curse has a single grounded power
     /// in this codebase, so a build naming one is not something this
     /// engine can honestly call computed.
+    ///
+    /// **SD31-E4-F2-001 correction:** this test used to probe
+    /// `mystery:battle` here. Battle Mystery's own Battlecry revelation is
+    /// now genuinely grounded (wired through the new
+    /// `archetype_resolver::chooser_option_selected` primitive), so
+    /// `mystery:battle` is no longer a valid "unrecognized" probe value --
+    /// its own test premise, not the guard, was stale. Swapped to
+    /// `mystery:heavens` (still genuinely ungrounded), preserving the
+    /// test's real intent: a second, still-unrecognized Mystery selected
+    /// alongside the canonical Life pick must not ride Life's own
+    /// narrowing to a false `Computed`. `retro.py correction` emitted.
     #[test]
     fn oracle_unrecognized_mystery_or_curse_alongside_the_canonical_one_stays_blocked() {
         for (choice_set_id, selection_id) in [
-            (ORACLE_MYSTERY_CHOICE_ID, "mystery:battle"),
+            (ORACLE_MYSTERY_CHOICE_ID, "mystery:heavens"),
             (ORACLE_CURSE_CHOICE_ID, "curse:haunted"),
         ] {
             let mut input = canonically_chosen(ORACLE_CLASS_ID, 7);

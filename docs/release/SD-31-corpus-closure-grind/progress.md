@@ -17522,3 +17522,278 @@ checkpoint (already cleaned up, or the lanes/reviewers used different `CARGO_TAR
 `sd31-class-split-wire-regen` deliberately left untouched: neither is in this wave's own
 explicit list, and unilaterally judging another actor's directory "finished" is not this
 cycle's call to make.
+
+## SD31-E4-F2-001 — epic-4-mechanism F2: chooser-interaction primitive + Oracle Battle Mystery
+
+**Role:** `sd31-chooser` (`RETRO_ACTOR=sd31-chooser`). **Checkout:** own worktree
+`/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_800ec009-61e-1`, branch
+`sd31/e4-f2-chooser-SD31-E4-F2-001`, pushed to origin. **Starting HEAD:**
+`f8d2dc1d087d3ceeeb71d0f9785d185f65eede46` (`docs(sd31): trailing auto-appended retro events
+(verify.sh/reclaim.sh self-instrumentation)`), confirmed descending from `origin/tranche/11` --
+package dir was absent on first check, tree was clean, recovered per the mandatory-first-actions
+step (`git fetch origin && git reset --hard origin/tranche/11`). **Oracle SHA:**
+`7f818006e371188e5717fd18d74d18a420747fc6` (`./scripts/verify.sh --only preflight-oracle` -> PASS,
+`oracle-pin-selftest` 11/11).
+
+### 1 — Verified the design against today's code before building anything
+
+Read `artifacts/SD31-E3-F3-001-chooser-primitive-design.md` (Epic 3-F3's own design, Design B:
+reuse `archetype_claims_slot` for tier-availability, add one new `chooser_option_selected`
+primitive for per-option grounding, Design A -- a unified abstraction -- rejected) and re-checked
+it against the live tree, post the wave-9 `pilot_compute.rs` -> directory-module split: every
+citation the design makes (`archetype_claims_slot` at `archetype_resolver.rs:86`,
+`ARCANIST_METAMAGIC_KNOWLEDGE_CHOICE_ID`/`ORACLE_MYSTERY_CHOICE_ID`/`ORACLE_REVELATION_CHOICE_ID`/
+`SORCERER_BLOODLINE_CHOICE_ID` in `pilot_compute/mod.rs`) is still live and unchanged. Design B
+still stands; nothing in the split invalidated it.
+
+### 2 — The primitive, own commit (`a1a8ef79e`)
+
+`chooser_option_selected(input, pool_choice_id, option_id, corpus_pool) -> bool` in
+`archetype_resolver.rs`. True only when BOTH (a) `input.chosen.selected_choices` genuinely carries
+the selection, AND (b) `option_id` is a member of the caller's real, grep-verified `corpus_pool` --
+the second guard is load-bearing (its own dedicated negative test) and is exactly what stops a
+hand-typed id list from silently drifting off the corpus, the `equipment_keys` failure shape this
+program has already hit once.
+
+**Stated with its tradeoff against `archetype_claims_slot`, as the card asked:** supersession
+answers "did an archetype swap this slot away" -- a fixed 1:1 computation once known.
+`chooser_option_selected` answers "of the N real options in this pool, which did the character
+take, and is that specific option a real corpus member" -- the grounding itself (does the taken
+option compute a magnitude) stays each option's own hand-built function, exactly as the design doc
+specifies; the primitive deliberately produces no single "how done" percentage the way
+`archetype_claims_slot` does for a supersession class, because collapsing per-option grounding into
+one number is the blended-percentage anti-pattern Decision 34/64 already forbids.
+
+TDD: 6 tests in `archetype_resolver.rs` (positive; no-selection; wrong-choice-set; the load-bearing
+not-in-corpus-pool negative; a multi-select-pool case mirroring Cleric's own two-domain shape).
+12/12 green in the module before touching a consumer -- landed as its own commit precisely so the
+mechanism is reviewable independently of its first consumer, per this card's own instruction.
+
+### 3 — First production consumer, own commit (`26810a13e`): Oracle Battle Mystery / Battlecry
+
+**Which pool, and why, re-derived not assumed:** `SD31-E3-F1-001-clearance-table.json` names Oracle
+at 5/10 mysteries wired (Life, Lore, Nature, Bone, Flame); the 5 remaining are Battle, Heavens,
+Stone, Waves, Wind. Checked each of the 4 unwired-and-uncosted candidates' own corpus rows in
+`advanced_players_guide/apg_abilities_class.lst` before picking. Battlecry (Battle Mystery's tier-1
+revelation) is the cleanest: `BONUS:VAR|OracleBattlecryBonus|1` (+2 more from
+`PRECLASS:1,Oracle=10`), `BONUS:VAR|OracleBattlecryDuration|CHA`,
+`BONUS:VAR|OracleBattlecryTimes|1+classlevel("Oracle")/5` -- three flat, self-scoped magnitudes,
+no dice, no target-creature-state dependency, matching every already-grounded revelation's shape.
+
+`oracle_level_with_battlecry_revelation` composes two `chooser_option_selected` calls (mystery
+availability + the budgeted revelation pick) instead of the `.contains()` idiom the other 6
+revelations use. Kept as a genuinely separate function rather than a rewrite of the shared
+`oracle_level_with_revelation` helper -- the 6 existing, already-reviewed revelations stay on their
+proven path unchanged; only the new consumer runs through the primitive.
+
+`ORACLE_MYSTERY_POOL` (10 real corpus mysteries) and `ORACLE_BATTLE_MYSTERY_REVELATION_POOL` (11
+real corpus revelations, scoped to Battle Mystery alone -- a revelation name from a DIFFERENT
+Mystery must never validate here, per `decisions.md §10`'s "shared name is not a duplicate"
+discipline) are the grep-verified `corpus_pool` arrays, cited with their exact commands inline in
+the source.
+
+Two pre-existing Computed-gate functions extended to recognize Battle alongside the existing five
+(`oracle_mystery_grounds_a_power`, `ground_or_block_oracle_mystery`) -- both required; the second
+was found only because the first full-suite run went RED without it (see §4).
+
+**Reachability proven via `build_pilot_headless_receipt`, not a resolver unit test alone** (this
+card's explicit bar):
+`single_class_oracle_with_battle_mystery_and_a_curse_reaches_computed` proves a Battle-Mystery
+Oracle with a grounded Curse reaches `HeadlessReceiptStatus::Computed`, mirroring the pre-existing
+Life-Mystery proof (`single_class_oracle_with_everything_recognized_reaches_computed`) exactly.
+
+TDD: 6 new tests (level-1 bonus/duration/uses-per-day; the level-10 step; mystery-alone-grounds-
+nothing; cross-Mystery-revelation-id guard; non-Oracle isolation; the full-Computed reachability
+proof above).
+
+### 4 — What the full suite caught, and how it was fixed (not swept under)
+
+`cargo test --locked --lib` (full module, not scoped to the new tests) found ONE pre-existing test
+whose own premise the new grounding falsified:
+`oracle_unrecognized_mystery_or_curse_alongside_the_canonical_one_stays_blocked` used
+`mystery:battle` as its "still-unrecognized" negative probe. Root-caused rather than just patched:
+the guard the test exercises (`all_recognized` in `oracle_mystery_grounds_a_power`) is real and was
+correctly catching Battle right up until Battle became genuinely grounded -- the test's SCENARIO
+went stale, not the guard. Swapped the probe to `mystery:heavens` (confirmed still absent from
+every recognition list), preserving the test's real intent unchanged. `retro.py correction`
+emitted with `--verified-by` citing the exact `cargo test` command and the before/after result
+(`docs/retro/events/sd31-chooser.jsonl`).
+
+Also corrected `push_oracle_other_features_deferred_diagnostic`'s own shipped diagnostic text
+(player-adjacent, not internal commentary -- it used to list "the five Mysteries with NO grounded
+revelation at all (Battle, Heavens, Stone, Waves, Winds)"; now correctly names Battle among the six
+that DO ground at least one revelation and lists the real remaining four).
+
+Final state: **1,960/1,960 lib tests green** (was 1,948 before this cycle's 12 new tests across
+both commits), **zero regressions**.
+
+### 5 — Board-verdict impact: measured at zero, and traced to the exact cause (not left a mystery)
+
+Guarded regen, own `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-chooser` (sanctioned 3-step
+procedure):
+
+```
+corpus_literal_sweep --json-out ...   -> 24,699 records examined of 25,576 read, 0 findings, CLEAN
+derived_evaluator_fixture_check ...   -> 998 of 999 cleared, 1 pre-existing failure
+                                          (advanced_players_guide:equipment:spindle_of_perfect_
+                                          knowledge, named in every prior wave's receipt), exit 0
+v06_work_inventory (guarded)          -> exit 0, no stamp-loss guard failure, 38,540 total both
+                                          before and after
+```
+
+Before/after `doneness_verdict()` replay, every one of the 38,540 unit ids individually diffed:
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+print(len(U), dict(c), round(100*c['done']/len(U),4))
+"
+# BEFORE: 38521 {'done': 10958, 'not-started': 19479, 'unmeasurable': 4912, 'deferred': 37,
+#                'held': 2149, 'in-progress': 986}  28.4468%
+# AFTER:  38521 {'done': 10958, 'not-started': 19479, 'unmeasurable': 4912, 'deferred': 37,
+#                'held': 2149, 'in-progress': 986}  28.4468%   (byte-identical)
+```
+
+Full id-by-id diff: **0 units moved verdict anywhere on the board** (not only `class_feature`);
+0 ids only-in-before; 0 ids only-in-after.
+
+**Traced to the exact cause, re-derived, not assumed:**
+`advanced_players_guide:class_feature:battle_mystery_battlecry`'s own inventory record
+(`status: "unknown"`, `evidence: "class_feature_group_names_no_class_at_all"`) never reaches the
+point where `v06_work_inventory.rs`'s classifier would check my new explanation id at all, because
+`CLASS_FEATURE_POOLS`'s `"Mystery"` entry (`src/bin/v06_work_inventory.rs:6203`) requires an EXACT
+string match against the corpus_key's group prefix, and the real prefix is `"Battle Mystery"`, not
+bare `"Mystery"` -- a pre-existing, structural mismatch, not introduced this cycle and not fixable
+in-territory (`v06_work_inventory.rs` is lane 2's file, not named in this card's `FILES YOU OWN`).
+
+**Found while tracing this: 13 of the 28 `CLASS_FEATURE_POOLS` entries share the identical dead
+shape** (Grand Discovery, Advanced Talents, Hex, Revelation, Blessing, Bloodline, Domain, Order,
+Mystery, Curse, Spirit, Animal Focus, Arcane School) -- confirmed one by one against the real
+corpus groups (`"Battle Mystery"`, `"Air Domain"`, `"Aberrant Bloodline"`, `"Witch Hex"`, `"Hunter
+Animal Focus"`, ...). **1,562 not-done `class_feature` units** sit under a group shape these 13
+entries can never match, independently reproduced with two unrelated implementations (a Python
+walk over the JSON, and a separate `awk` pass over a plain text dump of the same corpus_key groups)
+agreeing exactly at 1,562, by word: Bloodline 452, Domain 422, Mystery 234, Hex 220, Spirit 88,
+Blessing 82, Animal Focus 35, Arcane School 17, Order 9, Revelation 3. This means
+`SD31-E5-F1-002`'s own "472 units (5.6%) already touch a wired pool" figure (`OPEN-ISSUES.md` row
+152) is an OVER-count of what the registry can structurally reach TODAY.
+
+Logged as `OPEN-ISSUES.md` rows 167 (this cycle's own landing) and 168 (the dead-registration
+finding), append-only, both NOTE severity -- informational, not a blocker; the primitive itself is
+real, reachable, and independently reviewable regardless of when lane 2 lands row 168's fix.
+
+`docs/work-inventory.json` restored per the wave rule (`git checkout --`, confirmed clean via
+`git status --porcelain`) -- **not committed by this cycle.**
+
+### 6 — Units that become eligible once lane 2 lands the fix
+
+**Not marking any unit `done` myself** -- per this card's explicit instruction, that is the
+inventory's job (lane 2's `v06_work_inventory.rs`, out of this cycle's file territory). Reporting
+the count instead: fixing row 168's 13 dead `CLASS_FEATURE_POOLS` entries' group-matching (exact
+string -> suffix/pattern) would let the classifier's owner/pool lookup for those 1,562 units
+proceed past the current hard stop. Whether each individual unit then reaches `done`/`held` depends
+separately on whether an explanation id exists for it (most won't yet; only Battlecry has one from
+this cycle). The one unit this cycle's own grounding directly targets,
+`advanced_players_guide:class_feature:battle_mystery_battlecry`, becomes eligible for `done`/`held`
+once BOTH row 168's registry fix AND the pool's explanation-id lookup (a second, distinct lane-2
+step, not traced further this cycle) land.
+
+### 7 — PI screening
+
+**Not applicable.** This cycle wrote zero generated records (`data/corpus/**`) -- pure engine code
+(`archetype_resolver.rs`, `pilot_compute/mod.rs`) plus doc/artifact changes. No SD-30 PI contract
+invocation is required per `decisions.md`/`kanban.md`'s "Cross-SD gate discipline" (both gate the
+production *ingest* path, and this cycle's production path emits no new corpus record).
+`declared_pi_shipping_audit` still ran as part of the full gate regardless (§8) and reported clean,
+consistent with nothing new being shipped for it to catch.
+
+### 8 — Gate
+
+`LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E4-F2-001-verify.log`, launched EARLY
+in the background per gate-sequencing discipline, kept alive while this receipt / OPEN-ISSUES /
+guarded-regen work ran concurrently in a separate `CARGO_TARGET_DIR`. The box carried unusually
+heavy concurrent load this cycle (7+ sibling `verify.sh` full-gate runs observed via `ps aux`
+simultaneously, well above the documented 8-agent cap when counting agents already in flight before
+this cycle started), which materially slowed every stage.
+
+**Every stage this receipt was able to observe complete, in order, all PASS:**
+preflight-disk, preflight-oracle, oracle-pin-selftest, producer-selftest, site-dashboard-selftest,
+reachability-audit-selftest, reachability-audit (98.95% reachable ceiling, unchanged),
+groundtruth-guard-selftest, supersession-gate-selftest, pi-sweep, declared-pi-audit, audit-selftest,
+reclaim-selftest, driver-selftest, corpus-sweep-selftest, **root-lib (1,960 passed)**, **root-full
+(6,886 passed across 565 suites, all 529 `tests/*.rs` suites executed)**, **desktop (457 passed)**,
+**reach (27 passed -- DoD item 2 satisfied, a real non-zero claim)**, **corpus-sweep (24,699
+examined, 0 findings)**, supersession-gate (116 objects clean), frontend-install, **frontend-test
+(99/99 files)**, **frontend-typecheck (tsc clean)**. The one pre-existing FAIL observed
+(`site-dashboard-check`, exit 1) is the documented, path-dependent, worktree-vs-primary-checkout
+defect this package's own prior receipts already attribute and confirm non-regressing (`progress.md`
+line ~15981: "`site-dashboard-check` fails from ANY worktree whose checkout path differs from the
+one that last regenerated the dashboard") -- not caused by this cycle's diff.
+
+`clippy — cargo clippy --locked --tests -j 2 (BOTH crates)` was still running when this receipt was
+written (own separate `cargo clippy --locked --lib` check, run to completion earlier in this
+worktree: **20 warnings, root, unchanged from baseline, none in touched code** -- current recorded
+ceiling is `BASELINE_CLIPPY_WARNINGS_ROOT=52`/`BASELINE_CLIPPY_WARNINGS_DESKTOP=7` per
+`scripts/verify-baselines.env`, well under both). `VERIFY_EXIT` not yet obtained at receipt-write
+time -- **stated exactly as measured, not inferred or rounded up**, per this package's own standing
+discipline ("a gate that has not returned is not a gate that passed"). Every stage through
+`frontend-typecheck` is independently PASS, which is strong partial evidence, but the receipt does
+not claim `VERIFY_EXIT=0` without having seen it.
+
+### 9 — DoD item 8 — on-screen verification
+
+**Genuinely blocked for the NEW Battlecry feature specifically, reported rather than faked or
+dropped.** Checked before attempting: Oracle IS a selectable class in the app's
+`CreateCharacterForm` (`characterHubModel.ts`'s `CLASS_OPTIONS`, `supportLevel: 'full'`), but the
+app has **no player-facing Mystery picker anywhere in the frontend** (`grep -rln "[Mm]ystery"
+apps/desktop/src/` returns only two unrelated `.test.ts` files) -- Oracle characters are seeded
+through `apps/desktop/src-tauri/src/pf1_adapter.rs`'s hardcoded canonical-default choice table
+(Path A, the same standing v0.6 precedent that seeds Sorcerer/Cleric/Druid), which names only
+`mystery:life` + `curse:clouded_vision` for Oracle. `pf1_adapter.rs` is lane 2/3's file, out of
+this card's territory (`FILES YOU OWN`: `archetype_resolver.rs`, `pilot_compute/**`,
+`rules_tables/*/archetype_tables`) -- extending its seed table to also offer `mystery:battle` /
+`revelation:battlecry` is a real, named, one-entry follow-on for a future cycle, not something this
+one can honestly do in-territory.
+
+Also honored the box's own concurrency memory note (`run-desktop/SKILL.md`: "Do not run
+`driver.sh launch` and `scripts/verify.sh` at the same time") -- the full gate was live in this
+worktree for the cycle's entire remaining duration, so `driver.sh` was never launched here at all
+this cycle, consistent with that rule rather than a missed step.
+
+**Logged as a blocker, not faked.** See `blockers` in the structured receipt.
+
+### 10 — Reclaim
+
+`scripts/reclaim.sh --apply` run at cycle end (figures below §"Reclaim figures"). This cycle also
+started, then deliberately killed, a second, fully redundant parallel guarded-regen run
+(`sd31-chooser-regen`, own separate `CARGO_TARGET_DIR`) after realizing partway through that it
+duplicated work the first regen (in `sd31-chooser`) had already completed -- reported honestly
+(wasted real CPU/disk for a few minutes) rather than silently. Its target dir is removed as part of
+this cycle's own reclaim.
+
+### Followups (ordered by units they would move)
+
+1. **`OPEN-ISSUES.md` row 168 -- the 13 dead `CLASS_FEATURE_POOLS` registrations.** 1,562-unit
+   floor, lane 2's file, a one-line-shape fix (exact-equality -> suffix match) plus re-derivation.
+2. **The other 4 unwired Oracle mysteries** (Heavens/Stone/Waves/Wind) -- same primitive, same
+   pattern this cycle just proved; each needs its own representative-option pick and grounding
+   function, following exactly this cycle's own worked example.
+3. **Sorcerer's 8 remaining `core_rulebook` bloodlines (2/10 wired) + Arcanist's 45 remaining
+   exploits (1/46 wired)** -- the other two chooser-shape classes this card's mandate named by
+   name; same primitive, not yet touched this cycle. One cycle's budget did not stretch to all
+   three classes; landed the foundation + one genuinely working pool per the card's own fallback
+   instruction ("land its foundation plus one genuinely working pool and say precisely where you
+   stopped").
+4. **DoD-8 for Battlecry specifically** -- needs `pf1_adapter.rs` (lane 2/3, out of this card's
+   territory) to seed `mystery:battle`/`revelation:battlecry` as an alternate Oracle canonical
+   choice; see §9.
+5. **`OPEN-ISSUES.md` row 167/168's own `VERIFY_EXIT`** -- confirm the full gate's final exit code
+   once it returns (this receipt was written while `clippy --tests` was still running under heavy
+   box contention); every stage observed through `frontend-typecheck` was independently green.
+
+Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_012LQjhfcbAEBt6SiquQXEAE
