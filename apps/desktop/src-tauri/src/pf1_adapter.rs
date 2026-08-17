@@ -205,14 +205,25 @@ const IMPROVED_NATURAL_ARMOR_EVOLUTION_SELECTION: &str = "evolution:improved_nat
 ///   Good's own Touch of Good is the grounded power. Deliberately the same
 ///   canonical domain Cleric already seeds, since both classes share
 ///   `active_touch_of_good_bonus`.
-/// * `mystery:life` + `curse:clouded_vision` — `KEY:Oracle ~ Life
-///   Mystery` (`TYPE:...OracleMystery`) and `KEY:Oracle ~ Clouded Vision`
-///   (`TYPE:...OracleCurse`), the pools `Oracle's Mystery` /
-///   `Oracle's Curse` grant one pick from each of. Life is the only
-///   Mystery whose power (Healing Hands) follows from the Mystery choice
-///   alone rather than a second budgeted revelation pick, and Clouded
-///   Vision's 30-foot cap likewise needs no second choice — so this pair
-///   is the only seed that grounds real powers with one selection each.
+/// * `mystery:battle` + `revelation:battlecry` + `curse:clouded_vision` —
+///   `KEY:Battle Mystery` / `KEY:Battle Mystery ~ Battlecry`
+///   (`TYPE:...OracleMystery` / `...OracleRevelation`) and `KEY:Oracle ~
+///   Clouded Vision` (`TYPE:...OracleCurse`). **Changed 2026-08-17
+///   (SD31-E4-F2-002, `OPEN-ISSUES.md` row 185) from the prior default of
+///   `mystery:life` alone** — Battle Mystery's own Battlecry revelation is
+///   the first `class_feature` unit `archetype_resolver::
+///   chooser_option_selected` grounds (`pilot_compute.rs`'s
+///   `oracle_level_with_battlecry_revelation`), and this seed is that
+///   primitive's own Path A on-screen proof (DoD-8), following the exact
+///   same precedent Sorcerer/Cleric/Druid already use — ONE fixed
+///   canonical default, no in-game choice yet. Battle needs a SECOND seed
+///   (the revelation pick) that Life did not, because revelations are a
+///   budgeted selection rather than an automatic grant
+///   (`ORACLE_REVELATION_CHOICE_ID`); Clouded Vision's 30-foot cap still
+///   needs no second choice, unchanged from before. Life Mystery's own
+///   Healing Hands remains fully grounded and covered by
+///   `pilot_compute.rs`'s headless tests — only the desktop app's
+///   CREATION-time default moved, not the engine's Life Mystery support.
 ///
 /// Verified directly against `pilot_compute.rs`'s own
 /// `apg_canonical_choice_path_a_tests`, which proves these exact seeds are
@@ -225,7 +236,9 @@ const INQUISITOR_CLASS_ID: &str = "class:inquisitor";
 const INQUISITOR_DOMAIN_CHOICE_ID: &str = "choice:inquisitor_domain";
 const ORACLE_CLASS_ID: &str = "class:oracle";
 const ORACLE_MYSTERY_CHOICE_ID: &str = "choice:oracle_mystery";
-const LIFE_MYSTERY_SELECTION: &str = "mystery:life";
+const BATTLE_MYSTERY_SELECTION: &str = "mystery:battle";
+const ORACLE_REVELATION_CHOICE_ID: &str = "choice:oracle_revelation";
+const ORACLE_BATTLECRY_REVELATION: &str = "revelation:battlecry";
 const ORACLE_CURSE_CHOICE_ID: &str = "choice:oracle_curse";
 const CLOUDED_VISION_CURSE_SELECTION: &str = "curse:clouded_vision";
 
@@ -919,13 +932,22 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
             selection_id: "domain:good".to_owned(),
         });
     } else if request.class_id == ORACLE_CLASS_ID {
-        // Oracle is the only one of the three needing TWO seeds: a PF1
-        // oracle has both a Mystery and a Curse, and the engine
-        // claim-blocks on each independently, so neither alone reaches
-        // `Computed`.
+        // Oracle needs THREE seeds now, not two: a PF1 oracle has a
+        // Mystery, a Curse, AND (for Battle Mystery specifically) a
+        // budgeted Revelation pick, and the engine claim-blocks on each
+        // independently. Battle Mystery + Battlecry replaces the prior
+        // Life Mystery default (SD31-E4-F2-002, `OPEN-ISSUES.md` row
+        // 185) so this creation-time seed is DoD-8's own on-screen proof
+        // that `archetype_resolver::chooser_option_selected`'s first
+        // production consumer reaches a real player-created character,
+        // not only a headless receipt.
         selected_choices.push(SelectedChoice {
             choice_set_id: ORACLE_MYSTERY_CHOICE_ID.to_owned(),
-            selection_id: LIFE_MYSTERY_SELECTION.to_owned(),
+            selection_id: BATTLE_MYSTERY_SELECTION.to_owned(),
+        });
+        selected_choices.push(SelectedChoice {
+            choice_set_id: ORACLE_REVELATION_CHOICE_ID.to_owned(),
+            selection_id: ORACLE_BATTLECRY_REVELATION.to_owned(),
         });
         selected_choices.push(SelectedChoice {
             choice_set_id: ORACLE_CURSE_CHOICE_ID.to_owned(),
