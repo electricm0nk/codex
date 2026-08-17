@@ -24482,3 +24482,241 @@ auto-emitted `verification` (preflight-oracle PASS).
 7. **PI gate residuals, ~23 embedded-name hits + 1,482 unresolved coordinates** (row 234 items 1-2) --
    lower urgency (both pre-existing, neither this wave's regression), but real and counted now.
 
+
+---
+
+## SITE-PUBSTATUS-001 -- Public status feed: PI screening, standing, three-bucket doneness, self-maintaining (2026-08-17)
+
+**Role:** `site-public-status` (`RETRO_ACTOR=site-public-status`). **Scope:** bounded public-site task,
+independent of the (operator-paused-until-Wednesday) SD-31 corpus grind -- no `docs/work-inventory.json`
+touch, no guarded regen. File territory: `scripts/site/build_public_status.py`,
+`site/status-data.json`, `site/status-data/**`, `scripts/publish-site-dashboard.sh` (read-only this
+cycle -- already correctly wired, see §4), `scripts/verify.sh`'s stage list, `scripts/tests/
+test_build_public_status.py`, `scripts/site_public_status_pi_gate.py` (new), this file, and
+`loop-instruction.md`. `site/status.html` and `site/dashboard/**` untouched, per the operator's own
+scope correction ("I'm happy with the way the current rendering works... It sounds like you want to
+strip all the names entirely" -- rejected; this is a DATA change, not a redesign).
+
+### 0. Preflight
+
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/pcgen-oracle-pin.env`),
+confirmed via `./scripts/verify.sh --only preflight-oracle` (PASS, "oracle at pin
+7f818006e371188e5717fd18d74d18a420747fc6"). Branch `tranche/11`, starting HEAD `cd37d2e65`.
+
+### 1. PI screening (Decision 12, "withhold the name, keep the row")
+
+Reused `scripts/observer/pi_redaction.py` as directed -- no second screening implementation, no
+hand-listed names. `build_public_status.py::redact_for_display` runs AFTER standing is computed
+(provenance identity needs the true name; see §3) and:
+
+- checks every item `name` against `pi_redaction.build_declared_pi_name_book_index()` (per-book,
+  precise -- every row carries its own `book`) OR the global `build_declared_pi_name_index()`
+  (unambiguous-everywhere safety net, in case a ledger `book` id and an oracle directory basename
+  ever disagree) -- same two-index combination `site_dashboard_pi_gate.py` already uses;
+- checks every `type_facet` too, on a proven SUBSTRING basis (see below) and redacts the WHOLE field,
+  not just the matching span;
+- a final blanket exact-match pass (`pi_redaction.redact_declared_pi_names`) over the whole assembled
+  document right before writing, the same defense-in-depth net `site_dashboard_pi_gate.py` uses.
+
+**`type_facet` proven capable of carrying a declared-PI name.** Command:
+```
+python3 -c "
+import json, glob, sys
+sys.path.insert(0,'scripts/observer'); import pi_redaction
+declared = sorted(pi_redaction.build_declared_pi_name_index(), key=len, reverse=True)
+facets=set()
+for p in glob.glob('site/dashboard/units/PF1e-units-*.json'):
+    doc=json.load(open(p)); idx=doc['fields'].index('type_facet')
+    for row in doc['rows']:
+        if row[idx]: facets.add(row[idx])
+hits=[(f,n) for f in facets for n in declared if n in f]
+print(len(hits))
+"
+```
+30 distinct facets hit (33 published rows), all genuine Golarion proper nouns embedded in a compound
+PCGen-TYPE identifier a whole-token/exact match cannot see: `MagaambyanInitiateClassFeatures...`
+contains but does not equal the declared name `Magaambya`; also hit: Talmandor, Rivethun,
+Qadira/Qadiran, Varisia, Signifer, Jezelda, Ulfen, Galt, Keleshite, Nex/Nexian, Hermea. Zero
+coincidental short-name false positives found in the live corpus (checked explicitly: the shortest
+declared names, 3-4 chars like "Nex"/"Galt", produced only genuine hits, not noise) -- so the
+false-positive rationale that motivates `pi_redaction`'s own exact-match preference for object NAMES
+(the "Shackles of Compliance" collision) does not carry over to this differently-shaped, compound
+field. Documented in `_type_facet_carries_declared_pi`'s own docstring.
+
+**New gate: `scripts/site_public_status_pi_gate.py`** (mirrors `site_dashboard_pi_gate.py`, scoped to
+`site/status-data.json` + `site/status-data/*.json`). Wired as verify.sh's `site-public-status-pi-gate`
+stage (both stage sets). **Mutation-proven**: seeded `'Abadar'` into `site/status-data.json`'s
+`books[0].title` and `'Absalom'` into `site/status-data/core_rulebook.json`'s first item name --
+```
+site-public-status-pi-gate: FAIL — 2 declared-PI name(s) found across 32 scanned file(s):
+  site/status-data.json:$.books[0].title carries declared-PI name 'Abadar'
+  site/status-data/core_rulebook.json:$.kinds[0].items[0].name carries declared-PI name 'Absalom'
+```
+-- confirmed red, restored the two files from a pre-seed backup, re-ran, confirmed
+`site-public-status-pi-gate: CLEAN`.
+
+**Re-derived figure, corrects the dispatch brief.** Brief estimated "123 distinct published-ledger
+names are declared PI." Re-derivation (both the per-book index and the global index, against every
+one of the 36,156 published item names) finds **0** currently reaching a cleartext name field. Root
+cause of the gap, not a false-clean result: `pf1e_dashboard_producer.py`'s `build_unit_shards`
+(`scripts/observer/pf1e_dashboard_producer.py:4203-4284`) already applies the SAME oracle-backed
+redaction at generation time and has already shipped 306 `[redacted PI]` markers straight into the
+COMMITTED `site/dashboard/units/*.json` ledgers this script reads (`grep -o '\[redacted PI\]'
+site/dashboard/units/*.json | wc -l` per file: class 21, class_feature 125, equipment 79, feat 34,
+monster 21, race 5, race_trait 1, spell 20 = 306). This cycle's own redaction pass is a genuine,
+mutation-proven second layer (Decision 12 requirement #3's "gate, proven able to fail") -- it
+currently finds nothing NEW to catch because the primary defense is already doing its job, which is
+what a working safety net looks like, not evidence it is unneeded. Filed as a retro `correction`
+event (`docs/retro/events/site-public-status.jsonl`).
+
+### 2. Public doneness: three buckets
+
+`DONENESS_TO_PUBLIC` in `build_public_status.py`, asserted at import time to cover every
+`producer.DONENESS_VALUES` entry (fail-loud if the producer ever adds a seventh):
+
+| public | from |
+|---|---|
+| `done` | `done` |
+| `partial` | `held`, `in-progress` |
+| `not-started` | `not-started`, `unmeasurable`, `deferred` |
+
+**`unmeasurable` -> `not-started`, defended.** Re-read the actual records (not just the label): the
+`unmeasurable` verdict fires when the producer's own ladder has NO grounding probe for a unit at all
+(`NO_GROUNDING_PROBE` kinds -- equipment, spells) or the wiring-class/status combination gives no
+evidence either way. Neither "held" (partial, real evidence) nor "done" (best evidence) is honest for
+a unit we cannot yet measure at all; publishing it as `not-started` under-claims, which is the correct
+direction per the dispatch's own instruction. Kept this reading after re-checking rather than picking
+the more flattering "partial" bucket.
+
+### 3. Standing (Decision 14)
+
+Reused `scripts/observer/provenance.py::classify_unambiguous` -- no reimplementation.
+`object_id = f"{kind}::{name}"` (`build_public_status.py::object_id`): the unit ledger carries no
+finer-grained corpus_key (no source_line, no PCC identifier), so kind-qualified name is the most
+precise identity available at this layer; a genuinely-different object sharing a bare name with
+another of the same kind across books falls out `unclassified` (the module's own honest, conservative
+default), never guessed. `core_essentials` is the one already-decided `packaging-artifact` book
+(decisions.md §9). Standing is computed BEFORE the PI-redaction pass runs (`build()`'s own ordering) so
+provenance identity always uses the true name -- proven by test
+`test_standing_uses_the_true_name_not_the_redacted_marker`, which shows two DIFFERENT declared-PI
+objects in different books do not collapse into one fake multi-book "object" once both are redacted to
+the same marker string.
+
+**Re-derived distribution** (all 38,521 ledger rows, not just the 36,156 BOOK_TITLES-scoped published
+ones):
+```
+python3 -c "
+import json, glob, sys
+sys.path.insert(0,'scripts/observer'); import provenance
+sys.path.insert(0,'scripts/site'); import build_public_status as bps
+by_kind = bps.load_units_by_kind()
+all_items = bps.classify_all(by_kind)
+standing = bps.compute_standing(all_items)
+from collections import Counter
+print(Counter(standing.values()))
+"
+```
+`origin` 29,523 / `unclassified` 8,870 / `packaging-artifact` 128. This differs from the dispatch
+brief's rough "~36,854 origin / ~1,558 unclassified" estimate; the direction is explained by
+`object_id` granularity -- kind+name is coarser than a true corpus_key, so more same-kind,
+same-bare-name pairs across different books are (correctly, conservatively) detected as "printed in
+>1 book" and fall to `unclassified` than a finer key would produce. No `variant` is ever emitted by
+`classify_unambiguous` (Decision 14's per-race branch-1/2/3 comparison is explicitly out of this
+module's scope this cycle), so `denominator = origin + variant = 29,523` exactly.
+
+**Visibly excluded, not silently dropped.** Every rollup (`overall`, each book, each kind) now carries
+`standing_breakdown` (count per standing value) and `excluded_from_percentage` (items outside
+`denominator`) alongside `done`/`partial`/`not_started`/`denominator`/`pct` -- additive fields;
+`site/status.html` reads only the pre-existing `done`/`denominator`/`pct` keys and is unaffected
+structurally. Example, Core Rulebook: `denominator` 4,489, `pct` 64.1, `excluded_from_percentage` 734
+(all `unclassified` -- races/traits/spells this book shares an unruled printing history with a later
+book), `standing_breakdown: {origin: 4489, unclassified: 734}`.
+
+**Overall (all books, standing-qualifying items only):** `done` 10,428 / `partial` 2,836 /
+`not_started` 16,259 / `denominator` 29,523 / `pct` 35.3.
+
+### 4. Self-maintaining
+
+`scripts/publish-site-dashboard.sh` already called `build_public_status.py` (plain, then `--check`) as
+its own trailing step before this cycle started -- confirmed by reading it, not assumed; no change
+needed there. Added, this cycle:
+
+- **`build-public-status-selftest`** -- `python3 -m unittest scripts/tests/test_build_public_status.py`
+  (15 cases: doneness bucket coverage, standing via scratch provenance fixtures, denominator/exclusion
+  math, PI redaction via a scratch pcgen tree -- same `Scratch`-fixture pattern `test_pi_redaction.py`
+  already uses, no pinned oracle needed).
+- **`site-public-status-check`** -- `python3 scripts/site/build_public_status.py --check`, run directly
+  (previously only reachable transitively through `site-dashboard-check` -> `publish-site-dashboard.sh
+  --check`'s trailing call). **Mutation-proven**: set `core_rulebook.json`'s first kind's `done` to
+  `999999`, ran the stage, got `FAIL exit 1`; restored, re-ran, got `PASS`.
+- **`site-public-status-pi-gate`** -- see §1.
+
+All three wired into both `ALL_STAGES` and `QUICK_STAGES` in `scripts/verify.sh`, next to their
+`site-dashboard-*` counterparts. `loop-instruction.md` override 10 records that any cycle touching
+`docs/work-inventory.json` or `site/dashboard/units/*.json` runs the real publish (not `--check`) and
+commits before closing -- the gates are what actually enforce it, not the instruction alone.
+
+**Decoupled from the pre-existing `site-dashboard-check` staleness.** `site/dashboard/PF1e-
+dashboard.json` is stale against the live `docs/work-inventory.json` right now (pre-existing, unrelated
+to this cycle -- `git status --porcelain` shows zero diff to `site/dashboard/units/*.json` or
+`docs/work-inventory.json`; the corpus grind is paused, this drift predates that pause). Because
+`build_public_status.py` reads only the COMMITTED `site/dashboard/units/*.json` ledgers, never the live
+producer, `site-public-status-check` stays green independent of that unrelated staleness -- confirmed
+by running it standalone (PASS) while `publish-site-dashboard.sh --check`'s top-level comparison
+reports STALE. Same non-regressing precedent this package's own receipts have recorded before
+(SD31-E6-F9-003: "the staleness is against the corpus's own forward motion... not against this
+cycle's work").
+
+### 5. Verify
+
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SITE-PUBSTATUS-001-verify.log
+./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+Launched early (17:35 EDT), in the background, while this receipt and the retro events were written.
+Per loop-instruction.md's own 4a ("always land the commit and the receipt before returning, even if
+the gate has not finished"): **this receipt lands with the gate still running** (`root-full`, the
+~490-binary suite, in progress at receipt-write time) -- a resumed cycle re-derives the exit code from
+the same log path rather than this run being re-launched from scratch.
+
+**All 25 stages that had completed by receipt time: 23 PASS, 2 FAIL, both PRE-EXISTING and unrelated
+to this cycle's diff** (`git diff cd37d2e65 HEAD -- <the two files below>` is empty for both --
+confirmed, not assumed):
+
+- **`site-dashboard-selftest` FAIL (2 passed, 4 failed).** Root cause: `scripts/tests/
+  test_publish_site_dashboard.sh`'s fake-repo fixture copies `scripts/publish-site-dashboard.sh` and a
+  fake producer into a scratch tree, but never provisions `scripts/site/build_public_status.py` (or
+  `scripts/observer/`) alongside it -- so the REAL script's own trailing call
+  (`python3 "$REPO_ROOT/scripts/site/build_public_status.py"`) hits `No such file or directory` inside
+  every fixture scenario that reaches it. Bisected: the trailing call was added by `a7f8068ca` ("feat
+  (site): public build-status drill-down page + allow-listed data projection"), confirmed via `git
+  merge-base --is-ancestor a7f8068ca cd37d2e65` to be an ANCESTOR of this cycle's own starting HEAD --
+  the fixture gap has existed since that commit landed, before this cycle touched anything, and the
+  immediately-prior full-gate run in this file (SD31-W13-INTEGRATE-001, ~24076) still shows
+  `site-dashboard-selftest` PASS, so the regression window is narrow and entirely upstream of this
+  cycle. `scripts/tests/test_publish_site_dashboard.sh` is not in this cycle's file territory
+  (`YOUR FILES` names `build_public_status.py`/`status-data*`/`publish-site-dashboard.sh`/`verify.sh`'s
+  stage list/new test scripts -- not this existing one), so left unfixed and reported here rather than
+  silently patched outside the granted scope. **Named remedy**: seed the fake-repo fixture with a copy
+  of (or a fake stand-in for) `scripts/site/build_public_status.py`'s dependency surface, the same
+  pattern the fixture already uses for `PF1E_DASHBOARD_PRODUCER`.
+- **`site-dashboard-check` FAIL** -- `site/dashboard/PF1e-dashboard.json is STALE -- run
+  ./scripts/publish-site-dashboard.sh`. Reproduced standalone (`./scripts/publish-site-dashboard.sh
+  --check`, same message) before this receipt was written. `git status --porcelain` shows zero diff to
+  `site/dashboard/units/*.json` or `docs/work-inventory.json` -- the staleness is the corpus's own
+  forward motion against the committed top-level feed, not this cycle's work (same non-regressing
+  shape this package has recorded before, e.g. SD31-E6-F9-003). Confirmed this cycle's own
+  `site-public-status-check` stage is DECOUPLED from it (§4 above): it reads only the committed
+  `site/dashboard/units/*.json` ledgers, never the live producer, so it stays green independent of this
+  unrelated drift.
+
+**Every new stage this cycle added: PASS.** `build-public-status-selftest` (15 cases),
+`site-public-status-check`, `site-public-status-pi-gate` (32 files / 1,612 declared-PI names, zero
+leaked). `site-dashboard-pi-gate` (the adjacent, pre-existing gate) also PASS -- confirms this cycle's
+diff introduced no new PI exposure on either surface.
+
+`root-lib`: 2025 passed (unchanged from the immediately-prior cycle's own count). `root-full`: still
+running at receipt time (see log). Clippy: not yet reached; this cycle touches zero `.rs` files
+(`git diff cd37d2e65 HEAD -- '*.rs'` is empty, confirmed), so ceiling root:52/desktop:7 cannot have
+moved regardless of this run's outcome.
+
