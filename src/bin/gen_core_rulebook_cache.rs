@@ -248,7 +248,7 @@ fn equipment_source(file: &CorpusFile, index: &LineIndex<'_>, entry: &EquipmentT
         .or_else(|| index.by_identity.get(entry.key).copied())?;
 
     let desc_toks = desc_tokens(line_text);
-    let has_clear = desc_toks.iter().any(|t| *t == "DESC:.CLEAR");
+    let has_clear = desc_toks.contains(&"DESC:.CLEAR");
     let real_desc = desc_toks.iter().find(|t| **t != "DESC:.CLEAR");
 
     if has_clear && real_desc.is_some() {
@@ -454,6 +454,29 @@ fn main() {
                     && desc_tokens(line).iter().any(|t| t.len() > "DESC:".len())
                 {
                     found = Some(((idx + 1) as u32, entry.key.to_string()));
+                    break;
+                }
+            }
+        }
+        // `.COPY=<entry.key>` racial spell-like-ability variant
+        // (decisions.md §15, 2026-08-17): `CLASSES:.CLEARALL` rows carry no
+        // `DESC:` of their own (spell properties/level/description inherit
+        // from the parent named before `.COPY=`, already resolved onto
+        // `entry` itself), so this branch is deliberately the only one that
+        // does not require a `DESC:` token on the matched line -- it still
+        // requires the row's own identity field to literally read
+        // `<parent>.COPY=<entry.key>`, so it can only ever match a row that
+        // really does copy-declare this exact spell name.
+        if found.is_none() {
+            let copy_suffix = format!(".COPY={}", entry.key);
+            for (idx, line) in spells_file.lines.iter().enumerate() {
+                if line.starts_with('#') {
+                    continue;
+                }
+                if let Some(identity) = identity_field(line)
+                    && identity.ends_with(&copy_suffix)
+                {
+                    found = Some(((idx + 1) as u32, identity.to_string()));
                     break;
                 }
             }

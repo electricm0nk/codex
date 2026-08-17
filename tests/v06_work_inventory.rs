@@ -194,7 +194,13 @@ fn feat_rows_without_a_type_facet_are_not_feats() {
 }
 
 /// `missing_classifying_token` for spells, and the `.COPY=` merge that takes
-/// `cr_spells.lst` from 674 raw rows to `crb::spell_list`'s documented 652.
+/// `cr_spells.lst` from 674 raw non-`.COPY=` rows to 652 base spell records.
+/// `crb::spell_list::SPELL_LIST` now carries 664 -- the 652 base records
+/// PLUS the 12 `.COPY=` racial spell-like-ability variant records ingested
+/// under SD31 `decisions.md §15` (2026-08-17), which this raw-row
+/// enumeration deliberately still excludes (`!r.first().contains(".COPY=")`)
+/// since it is reproducing the base-record count, not `SPELL_LIST`'s full
+/// count including variants.
 #[test]
 fn crb_spell_rules_reproduce_the_documented_652() {
     let dir = corpus_or_skip!();
@@ -209,11 +215,12 @@ fn crb_spell_rules_reproduce_the_documented_652() {
     assert_eq!(
         distinct(ids),
         652,
-        "CRB spell enumeration must reproduce `crb::spell_list`'s documented count"
+        "CRB base-spell (non-`.COPY=`) enumeration must reproduce this documented count"
     );
     assert_eq!(
         codex::rules_core::rules_tables::crb::spell_list::SPELL_LIST.len(),
-        652
+        664,
+        "652 base records + 12 `.COPY=` racial SLA variants (decisions.md §15)"
     );
 }
 

@@ -173,12 +173,12 @@ fn every_catalog_row_off_the_wizard_list_is_refused() {
 
     assert_eq!(
         catalog.len(),
-        1937,
+        1950,
         "the desktop Add Spell picker serves this many records"
     );
     assert_eq!(
         off_list.len(),
-        1295,
+        1308,
         "this many of them are on no wizard list in any ingested book"
     );
 

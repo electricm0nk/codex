@@ -258,10 +258,10 @@ fn the_gate_now_covers_every_ingested_book_and_the_census_is_pinned() {
     assert_eq!(
         census,
         vec![
-            ("CRB", 652, 62, 334, 256),
+            ("CRB", 664, 62, 334, 268),
             ("APG", 297, 18, 77, 202),
             ("ACG", 144, 23, 66, 55),
-            ("ARG", 92, 15, 47, 30),
+            ("ARG", 93, 15, 47, 31),
         ]
     );
 }
