@@ -19357,3 +19357,242 @@ status" section, and this receipt's followups below are ordered by units moved.
 
 Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
 Claude-Session: https://claude.ai/code/session_012LQjhfcbAEBt6SiquQXEAE
+## SD31-E4-F2-002 — epic-4-mechanism F2: 4 more Oracle Mystery pools + Mystery-picker Path A seed + DoD-8 (2026-08-17)
+
+**Role:** `sd31-pools-wire`. **Starting HEAD:** `b034408b1` (`docs(sd31): SD31-W10-INTEGRATE-001
+reclaim retro events`), confirmed a descendant of `origin/tranche/11`'s tip at cycle start.
+**Branch:** `sd31/pools-wire-SD31-E4-F2-002`, pushed to origin. **Oracle SHA:**
+`7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/verify.sh --only preflight-oracle` PASS at
+cycle start).
+
+### §1 — What this cycle did
+
+Wave 10 (`SD31-E4-F2-001`) built `archetype_resolver::chooser_option_selected` and proved it for
+exactly one pool: Oracle's Battle Mystery / Battlecry. Its own named followup: "4 more Oracle
+mysteries plus Sorcerer's/Arcanist's own bloodlines/exploits remain unwired through it."
+
+This cycle wired the 4 remaining Oracle Mysteries — **Stone, Waves, Wind, Heavens** — through the
+same primitive, each grounding one real, corpus-verified representative tier-1 revelation:
+
+| Mystery | Revelation | Magnitude(s) grounded | Corpus source |
+|---|---|---|---|
+| Stone | Steelbreaker Skin | damage + duration, both `classlevel("Oracle")` | `apg_abilities_class.lst:677` |
+| Waves | Icy Skin | cold resistance, additive 2-tier (5 base, +5@Oracle5, +10@Oracle11) | `apg_abilities_class.lst:689` |
+| Wind | Spark Skin | electricity resistance, identical formula shape to Icy Skin | `apg_abilities_class.lst:702` |
+| Heavens | Coat of Many Stars | AC bonus `4+2*max(0,floor((lvl-3)/4))` + duration | `apg_abilities_class.lst:607` |
+
+All four transcribed verbatim from the pinned oracle's own `BONUS:VAR` token chains (re-derived
+this cycle, cited per-const in `pilot_compute/mod.rs`), never invented. Reachability proven through
+`build_pilot_headless_receipt`, never a resolver unit test alone — 7 new tests: per-Mystery
+grounding + level-stepping (3), cross-Mystery-pool rejection (1), bare-Mystery-pick rejection (1),
+and one full-character `Computed`-reachability sweep covering all 4 (`each_new_mystery_reaches_computed_with_a_curse`).
+
+**All 10 real, corpus-declared Oracle Mysteries are now genuinely grounded** (Life/Lore/Nature/Bone/
+Flame — pre-existing hand-rolled path; Battle — wave 10's primitive; Stone/Waves/Wind/Heavens — this
+cycle's primitive). This retired an existing test's stale premise: `oracle_unrecognized_mystery_or_
+curse_alongside_the_canonical_one_stays_blocked` used `mystery:heavens` as its "real Mystery, still
+ungrounded" probe value, which stopped being true the moment Heavens was wired — the SAME shape wave
+10's own commit already corrected once for `mystery:battle`. Swapped to a synthetic non-corpus id
+(`mystery:nonexistent_test_probe`), which tests the guard's actual property (an unrecognized
+selection must never ride the canonical pick to `Computed`) more directly than a real-but-ungrounded
+id, which no longer exists in a 10/10-grounded world. `retro.py correction` emitted.
+
+**Sorcerer bloodline and Arcanist exploit pools (this card's own next-named targets) were NOT
+reached this cycle** — deferred, not faked, per the standing "ground one representative option per
+pool honestly rather than faking breadth" ruling and this program's own time-boxing precedent.
+`retro.py deferral` emitted with the exact scope (2 more pools, ~10 and ~44 members respectively).
+
+### §2 — The Mystery-picker Path A seed (row 185) + DoD-8
+
+Row 185's own follow-up named the reason DoD-8 was blocked for wave 10's Battle Mystery work: **the
+desktop app has no Mystery picker at all** — every Oracle created through `CreateCharacterForm.tsx`
+was silently seeded `mystery:life` by `pf1_adapter.rs`'s hardcoded canonical-default table.
+
+Landed the sanctioned Path A fix (same precedent as Sorcerer/Cleric/Druid — one fixed canonical
+default, no real in-game choice yet): `compose_character_input`'s Oracle branch now seeds
+`mystery:battle` + `revelation:battlecry` + `curse:clouded_vision` (was `mystery:life` +
+`curse:clouded_vision`). This is a genuine picker-seed, explicitly documented as such — **not**
+described as a real picker, which does not exist.
+
+**DoD-8, driven for real via `run-desktop`'s `driver.sh`** (`RUN_DESKTOP_AGENT=sd31-pools-wire`,
+own `npm ci` run first — a fresh worktree's `apps/desktop/node_modules` did not exist):
+1. Launched the real desktop app (`npx tauri dev` under Xvfb, `:86`).
+2. Created "Kelmar Skysho," a Dwarf Oracle, through the app's own Create Character form (typed
+   name, selected Race=Dwarf, Class=Oracle via keyboard type-ahead on the native `<select>`,
+   clicked Create).
+3. Loaded the saved character and opened the Actions tab.
+4. **Screenshot proves, on a real player-created character, not a hand-authored save file:**
+   "Battle Mystery Battlecry Bonus 1", "Battle Mystery Battlecry Duration Rounds -2" (Charisma 6 →
+   modifier -2, correctly rendered even though negative), "Battle Mystery Battlecry Uses Per Day 1",
+   and "Clouded Vision Curse Vision Range Cap 30" — all four rendering live with their real
+   corpus-citing detail text.
+
+Committed at `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E4-F2-002/
+oracle-battle-mystery-battlecry-actions-tab.png`.
+
+`driver.sh stop` run cleanly before launching this cycle's own `verify.sh`, per the "never run
+driver.sh concurrently with your own gate" rule.
+
+### §3 — `reach_gate.rs` claim (row 185's DoD-2) — NOT added, and why
+
+Traced `reach_gate.rs` end to end before touching it (never touched — read-only investigation).
+**Every registered claim in its `match (book, kind) => Reach` table operates at whole-`(book,
+kind-bucket)` granularity**, driven by the module's three real inventory sources (ingest
+diagnostic, compiled-table scan, `data/corpus/` directory scan) — there is no existing primitive
+for a claim scoped to one sub-family of explanation ids within a kind. `("apg","class_features")`
+already carries an honest `OPEN_FINDINGS` gap entry (2055 records, "no per-class mechanism wiring
+has landed"). Registering a NEW claim there that returns `Surfaced` would falsely assert reach for
+all 2055 records, not just the ~13 this and wave 10's own wiring actually touch — a Decision-1(a)
+violation. The one precedent for a sub-book claim (`pu_class_features_reach()`) is a full new probe
+requiring its own citation-embedding convention built specifically for that case — a scoped
+engineering task on its own, sized and left as `OPEN-ISSUES.md` row 186's followup, not a same-cycle
+add-on. DoD-8 (the load-bearing half of row 185's ask) is fully discharged; DoD-2 stays open, named
+precisely.
+
+### §4 — Board impact: re-derived, honestly zero this cycle — and precisely why
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+print(len(U), dict(c), round(100*c['done']/len(U),4))
+"
+# -> 38521 {'done': 11229, ...} 29.1503   (UNCHANGED from wave 10's own closing figure)
+```
+
+**Guarded regen run** (measurement only, `docs/work-inventory.json` `git checkout --`'d before
+committing, per the WAVE RULE):
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-pools-wire.json
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-pools-wire.json
+CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep-sd31-pools-wire.json \
+DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture-sd31-pools-wire.json \
+  cargo run --locked --bin v06_work_inventory
+```
+`derived_evaluator_fixture_check`: 1068 of 1069 covered units cleared; 1 pre-existing failure
+(`advanced_players_guide:equipment:spindle_of_perfect_knowledge`, an `equipment` record outside
+this card's file territory, not caused by this cycle). `v06_work_inventory` exit 0, **zero stamp
+loss** (no dropped-stamp guard failure).
+
+**Traced the zero precisely rather than accepting it silently.** All 5 corpus records this cycle's
+new grounding functions target sit at inventory `status=unknown` / `evidence=class_feature_group_
+names_no_class_at_all`:
+
+```
+advanced_players_guide:class_feature:stone_mystery_steelbreaker_skin   | unknown | derived
+advanced_players_guide:class_feature:waves_mystery_icy_skin            | unknown | computed
+advanced_players_guide:class_feature:wind_mystery_spark_skin           | unknown | computed
+advanced_players_guide:class_feature:heavens_mystery_coat_of_many_stars| unknown | computed
+```
+
+**This is the EXACT same root cause `OPEN-ISSUES.md` row 168 already names**, confirmed by reading
+`v06_work_inventory.rs`'s own `CLASS_FEATURE_POOLS` table (line ~6303): its `("Mystery", "oracle",
+"choice:oracle_mystery", "mystery:")` and `("Revelation", "oracle", "choice:oracle_revelation",
+"revelation:")` entries are bare-word, and can never match the real corpus group strings ("Battle
+Mystery", "Stone Mystery", ...) — row 168's own finding, re-confirmed here rather than re-derived
+independently. **Proof this is not a new defect and not something my own wiring introduced:** the
+6 PRE-EXISTING, engine-proven, DoD-8-provable Oracle revelations (Life/Lore/Nature/Bone/Flame/
+Battle) sit at the IDENTICAL `unknown`/`class_feature_group_names_no_class_at_all` status today —
+including Battle Mystery, whose wave-10 receipt already reported "Board-verdict impact of the
+primitive alone this wave: 0" for exactly this reason.
+
+**4 units become eligible once row 168 lands** (out of lane 2's/`v06_work_inventory.rs`'s file
+territory, not touched this cycle): `stone_mystery_steelbreaker_skin`, `waves_mystery_icy_skin`,
+`wind_mystery_spark_skin`, `heavens_mystery_coat_of_many_stars`. Per this card's own instruction —
+"DO NOT mark units done... report which units become eligible and the count" — this is reported,
+not applied.
+
+### §5 — Definition of Done
+
+1. **`./scripts/verify.sh` — SUMMARY corroborated, exit code not directly captured.**
+   `LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E4-F2-002-verify-final2.log`. This
+   cycle launched the gate with `nohup ./scripts/verify.sh > "$LOG" 2>&1 & ; disown` rather than the
+   exact `...; echo "VERIFY_EXIT=$?" >> "$LOG"` one-liner (needed to `kill`/relaunch it twice — see
+   below — so the disowned background form was used both times), so no script-captured `$?` exists.
+   Said so plainly rather than inferring one, per the mandate's own instruction; corroborated instead
+   via the log's own SUMMARY block, the sanctioned fallback: **`RESULT: FAIL`, exactly ONE of 27
+   stages failing — `site-dashboard-check`** (`exit 1`, log at
+   `/tmp/codex-verify-qMJJLQ/site-dashboard-check.log`: `"site/dashboard/PF1e-dashboard.json is
+   STALE"`). Traced to `OPEN-ISSUES.md` row 153 (this card's dispatch brief cited "row 150" — off by
+   3, corrected here): a pre-existing, worktree-checkout-path-dependent defect
+   (`unit_index/source_document` is an absolute path `--check`'s scrub logic never stamp-strips, so
+   it differs between this worktree and whichever checkout last published the feed even with
+   byte-identical content) that has fired for essentially every non-primary-checkout cycle in this
+   package's recorded history. **Confirmed not caused or worsened by this cycle**:
+   `docs/work-inventory.json` was `git checkout --`'d back to its pre-regen state before this gate
+   ran (§4), so the producer's only real content input is byte-identical to `HEAD`; this cycle wrote
+   no file under `site/`. **All 26 other stages PASS**, including `root-lib` (1975 passed),
+   `root-full` (6917 passed across 565 suites), `desktop` (457 passed), `reach` (27 passed,
+   unchanged), `corpus-sweep` (0 findings), `clippy` (root:52 desktop:7 warnings, 0 errors — AT the
+   ceiling, not over it), `class-dump` (31/31 computing). Two earlier gate launches were superseded
+   and are recorded, not deleted (`SD31-E4-F2-002-verify.log`, `SD31-E4-F2-002-verify-final.log`):
+   the first was killed intentionally before this cycle's code was complete, per the "launch early"
+   convention's own spirit (a contaminated `root-lib` result mid-edit is not a real verdict); the
+   second caught a REAL, this-cycle-caused test-premise staleness at `root-lib`
+   (`oracle_unrecognized_mystery_or_curse_alongside_the_canonical_one_stays_blocked` — see §1), fixed
+   in source and `retro.py correction`'d, and was killed and relaunched fresh rather than trusted
+   contaminated.
+2. **Reach passes with a claim for this cycle's families** — `reach` stage: 27 passed, unchanged.
+   No NEW reach_gate claim exists for Oracle Mystery revelations (§3), and none did before this
+   cycle either — not a regression, an honestly-characterized pre-existing gap.
+3. **`v06_corpus_trap_report -- --audit`**: exit 2, `1 mod-record` + `1225 wiring-class-mismatch` —
+   matches the documented baseline exactly (`/tmp/trap-audit-sd31-pools-wire.log`), confirmed not
+   worsened.
+4. **Guarded regen, zero stamp loss** — §4.
+5. **Four-check wired-integration audit — CLEAN.** Ran the template's own §6 recipe directly
+   (`BASE_BRANCH=$(git merge-base HEAD origin/tranche/11)`, diffed against the pre-cycle tip since
+   this cycle's work is uncommitted at audit time):
+   ```
+   git diff --unified=0 b034408b1...WORKING -- src/rules_core/pilot_compute/mod.rs \
+     apps/desktop/src-tauri/src/pf1_adapter.rs ':!**/__tests__/**' ':!**/*.test.*' \
+     | grep -nE '\b(sd[0-9]+_|SD[0-9]+_|Sd[0-9]+|t_[0-9a-f]{8,})' || echo OK_NO_BUNDLE_TAGS
+   # -> OK_NO_BUNDLE_TAGS  (this cycle's own "SD31-E4-F2-002" citations are hyphenated prose,
+   #    never a leaked `sd31_`-shaped identifier)
+   git diff --unified=0 b034408b1...WORKING -- <same paths> \
+     | grep -nE '\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b' || echo OK_NO_TOKENS
+   # -> OK_NO_TOKENS
+   ```
+   No stub, no fixture-only data in a production path, no empty handler: every new
+   `oracle_level_with_*_revelation` function requires a real class-ownership check plus two real
+   `chooser_option_selected` guards against the real transcribed corpus pool, and every new
+   explanation is reached through the real `ground_or_block_oracle_class_features` production path,
+   proven by `build_pilot_headless_receipt` AND the DoD-8 screenshot (a real player-created
+   character, not a headless-only proof).
+6. **Unsurfaced families**: none newly unsurfaced by this cycle; `OPEN-ISSUES.md` row 186 names the
+   one pre-existing gap (reach_gate claim) this cycle characterized but correctly did not fake.
+7. **Baseline moves — none applied this cycle, drift named and left for reconciliation.** The gate's
+   own BASELINE NOTES: `BASELINE_ROOT_LIB_TESTS` stale (1968 recorded, 1975 measured, +7 = exactly
+   this cycle's own new `#[test]` count) and `BASELINE_ROOT_FULL_TESTS` stale (6910 recorded, 6917
+   measured, +7, no double-count). `scripts/verify-baselines.env` is a shared, chronologically
+   append-ordered file outside this card's granted territory; rather than risk inserting at the
+   wrong point in its history under time pressure, this drift is named here precisely (both old and
+   new values, both re-derived, both attributable to exactly this cycle's 7 new tests) for the wave's
+   own integration cycle to reconcile, matching this file's established precedent of INTEGRATE
+   cycles doing this reconciliation rather than every worker cycle editing it individually. All other
+   baselines (`ROOT_TEST_BINARIES` 565, `DESKTOP_TESTS` 457, `FRONTEND_TEST_FILES` 99,
+   `CLIPPY_WARNINGS_ROOT/DESKTOP` 52/7, `CORPUS_LITERAL_RECORDS` 24741) matched the gate's own
+   output exactly — no stale note for any of them.
+8. **On-screen verification — §2.** Real screenshot, real creation path, real chosen pool option
+   computing a real value.
+
+### §6 — Reclaim
+
+`scripts/reclaim.sh --apply` run mid-cycle (before this receipt's own commit): `1 item(s), 1.1MB
+total` — every other candidate correctly `SKIPPED` (live worktrees, unmerged branches, this cycle's
+own still-in-use `CARGO_TARGET_DIR`s). `du -sh` at cycle close: `sd31-pools-wire` 32G,
+`sd31-pools-wire-checkonly` 2.3G — both removed manually after this receipt's commit lands and the
+branch is pushed (not before, per the "delete at cycle end" rule, not mid-cycle while still needed).
+`df -B1G /` at cycle close: 968G total, 47% used, 521G free — no disk pressure at any point this
+cycle.
+
+### Branch tip
+
+Committed on `sd31/pools-wire-SD31-E4-F2-002`, pushed to origin. Own worktree, own
+`CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-pools-wire`.
+
+Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_012LQjhfcbAEBt6SiquQXEAE
+

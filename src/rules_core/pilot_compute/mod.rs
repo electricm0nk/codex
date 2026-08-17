@@ -2956,6 +2956,126 @@ const ORACLE_BATTLECRY_UPGRADE_LEVEL: u8 = 10;
 /// Battlecry's uses-per-day divisor: `1+classlevel("Oracle")/5`.
 const ORACLE_BATTLECRY_TIMES_PER_DAY_LEVEL_DIVISOR: i16 = 5;
 
+/// SD31-E4-F2-002: the 4 remaining Mysteries `SD31-E4-F2-001`'s own
+/// followup named (`kanban.md` "Wave 10 integration status" /
+/// `OPEN-ISSUES.md` row 168) -- Stone, Waves, Wind, Heavens -- wired
+/// through the same `archetype_resolver::chooser_option_selected`
+/// primitive Battle Mystery proved. Each grounds one representative
+/// tier-1 revelation with a genuinely flat, self-scoped, non-target-
+/// dependent magnitude, matching the standing "ground one representative
+/// option per pool honestly" ruling.
+const STONE_MYSTERY_SELECTION: &str = "mystery:stone";
+const WAVES_MYSTERY_SELECTION: &str = "mystery:waves";
+const WIND_MYSTERY_SELECTION: &str = "mystery:wind";
+const HEAVENS_MYSTERY_SELECTION: &str = "mystery:heavens";
+/// Stone Mystery's real, corpus-declared revelation pool -- every
+/// `KEY:Stone Mystery ~ <X>` row in `apg_abilities_class.lst`, grep-
+/// verified (`grep -oP '(?<=KEY:Stone Mystery ~ )[^\t]+'
+/// apg_abilities_class.lst`), 11 real entries, transcribed verbatim.
+const ORACLE_STONE_MYSTERY_REVELATION_POOL: &[&str] = &[
+    "revelation:acid_skin",
+    "revelation:clobbering_strike",
+    "revelation:crystal_sight",
+    "revelation:earth_glide",
+    "revelation:mighty_pebble",
+    "revelation:rock_throwing",
+    "revelation:shard_explosion",
+    "revelation:steelbreaker_skin",
+    "revelation:stone_stability",
+    "revelation:touch_of_acid",
+    "revelation:final_revelation",
+];
+/// Waves Mystery's real, corpus-declared revelation pool, same grep
+/// discipline as Stone's, 11 real entries.
+const ORACLE_WAVES_MYSTERY_REVELATION_POOL: &[&str] = &[
+    "revelation:blizzard",
+    "revelation:fluid_nature",
+    "revelation:fluid_travel",
+    "revelation:freezing_spell",
+    "revelation:ice_armor",
+    "revelation:icy_skin",
+    "revelation:punitive_transformation",
+    "revelation:water_form",
+    "revelation:water_sight",
+    "revelation:wintry_touch",
+    "revelation:final_revelation",
+];
+/// Wind Mystery's real, corpus-declared revelation pool, 10 real entries.
+const ORACLE_WIND_MYSTERY_REVELATION_POOL: &[&str] = &[
+    "revelation:air_barrier",
+    "revelation:gaseous_form",
+    "revelation:invisibility",
+    "revelation:lightning_breath",
+    "revelation:spark_skin",
+    "revelation:touch_of_electricity",
+    "revelation:wortex_spells",
+    "revelation:wind_sight",
+    "revelation:wings_of_air",
+    "revelation:final_revelation",
+];
+/// Heavens Mystery's real, corpus-declared revelation pool, 11 real
+/// entries.
+const ORACLE_HEAVENS_MYSTERY_REVELATION_POOL: &[&str] = &[
+    "revelation:awesome_display",
+    "revelation:coat_of_many_stars",
+    "revelation:dweller_in_darkness",
+    "revelation:guiding_star",
+    "revelation:interstellar_void",
+    "revelation:lure_of_the_heavens",
+    "revelation:mantle_of_moonlight",
+    "revelation:moonlight_bridge",
+    "revelation:spray_of_shooting_stars",
+    "revelation:star_chart",
+    "revelation:final_revelation",
+];
+/// Stone Mystery's Steelbreaker Skin, this cycle's representative for
+/// Stone: `apg_abilities_class.lst`'s own record grants
+/// `BONUS:VAR|OracleSteelbreakerSkinDamage|classlevel("Oracle")` and
+/// `BONUS:VAR|OracleSteelbreakerSkinDuration|classlevel("Oracle")` -- a
+/// standard-action, once-per-day self-activation (not a target-creature
+/// or environment condition), so it clears Decision 7 REFINED's
+/// universal-vs-conditional bar the same way Life's Channel (also
+/// activation-gated) already does.
+const ORACLE_STEELBREAKER_SKIN_REVELATION: &str = "revelation:steelbreaker_skin";
+/// Waves Mystery's Icy Skin, this cycle's representative for Waves:
+/// `BONUS:VAR|ColdResistanceBonus|5+OracleColdResistanceBonus|TYPE=Resistance`
+/// plus two PRECLASS-gated additions to `OracleColdResistanceBonus`
+/// (`|5|PRECLASS:1,Oracle=5`, `|10|PRECLASS:1,Oracle=11`) -- the same
+/// additive two-tier shape Bone Mystery's Near Death already grounds
+/// (`ORACLE_NEAR_DEATH_BASE_SAVE_BONUS`/`ORACLE_NEAR_DEATH_UPGRADE_LEVEL`),
+/// always-on cold resistance, no target-creature dependency.
+const ORACLE_ICY_SKIN_REVELATION: &str = "revelation:icy_skin";
+/// Wind Mystery's Spark Skin, this cycle's representative for Wind:
+/// identical formula shape to Icy Skin
+/// (`BONUS:VAR|ElectricityResistanceBonus|5+OracleElectricityResistanceBonus`,
+/// same two PRECLASS-gated `+5`/`+10` steps at Oracle 5/11), electricity
+/// resistance instead of cold.
+const ORACLE_SPARK_SKIN_REVELATION: &str = "revelation:spark_skin";
+/// Heavens Mystery's Coat of Many Stars, this cycle's representative for
+/// Heavens: `BONUS:VAR|OracleCoatofManyStarsACBonus|
+/// 4+2*max(0,floor((classlevel("Oracle")-3)/4))` and
+/// `BONUS:VAR|OracleCoatofManyStarsDuration|classlevel("Oracle")` --
+/// self-cast armor bonus, standard-action activation gated the same way
+/// Steelbreaker Skin is, no target-creature or environment dependency.
+const ORACLE_COAT_OF_MANY_STARS_REVELATION: &str = "revelation:coat_of_many_stars";
+/// Icy Skin / Spark Skin's shared elemental-resistance formula: a flat
+/// `5` base, `+5` more at Oracle level `ORACLE_ELEMENTAL_RESISTANCE_TIER_TWO_LEVEL`,
+/// `+10` more (cumulative, not replacing) at Oracle level
+/// `ORACLE_ELEMENTAL_RESISTANCE_TIER_THREE_LEVEL` -- re-derived directly
+/// from both records' identical `BONUS:VAR` chains, not assumed shared
+/// because the names match.
+const ORACLE_ELEMENTAL_RESISTANCE_BASE: i16 = 5;
+const ORACLE_ELEMENTAL_RESISTANCE_TIER_TWO_LEVEL: u8 = 5;
+const ORACLE_ELEMENTAL_RESISTANCE_TIER_TWO_BONUS: i16 = 5;
+const ORACLE_ELEMENTAL_RESISTANCE_TIER_THREE_LEVEL: u8 = 11;
+const ORACLE_ELEMENTAL_RESISTANCE_TIER_THREE_BONUS: i16 = 10;
+/// Coat of Many Stars' AC-bonus step size and the level at which stepping
+/// begins (`4 + 2*max(0,floor((level-3)/4))`).
+const ORACLE_COAT_OF_MANY_STARS_BASE_AC_BONUS: i16 = 4;
+const ORACLE_COAT_OF_MANY_STARS_AC_STEP: i16 = 2;
+const ORACLE_COAT_OF_MANY_STARS_STEP_START_LEVEL: i16 = 3;
+const ORACLE_COAT_OF_MANY_STARS_STEP_INTERVAL: i16 = 4;
+
 /// Deaf Curse's `BONUS:SITUATION|Perception=Opposed|-4`. Grounds per the
 /// lead's explicit ruling (2026-07-27): a flat modifier applying to your
 /// OWN roll clears the corrected bar even when the check is opposed --
@@ -13624,14 +13744,15 @@ fn ground_or_block_oracle_mystery(
             id: "class_feature.apg.oracle.mystery_revelations_beyond_life.unmodeled".to_owned(),
             message: "Oracle Mystery revelation content beyond the grounded Tier-1 set remains \
                  unmodeled. Grounded: Life's Healing Hands and Channel, Lore's Sidestep Secret \
-                 and Lore Keeper, Nature's Nature's Whispers, Bone's Near Death, and Flame's \
-                 Cinder Dance -- each (except the already-shipped Healing Hands) requiring an \
-                 explicit `choice:oracle_revelation` pick, since revelations are a budgeted \
-                 selection rather than an automatic grant. Not implemented: every other \
-                 revelation across the 10 Mysteries, including the ally-dependent, \
-                 environment-dependent, and opponent-state-dependent ones (which need engine \
-                 state this codebase does not have), the summon-subsystem ones, and the 34 of \
-                 100 revelation records that carry no numeric token at all -- a genuine no-op, \
+                 and Lore Keeper, Nature's Nature's Whispers, Bone's Near Death, Flame's Cinder \
+                 Dance, Battle's Battlecry, Stone's Steelbreaker Skin, Waves' Icy Skin, Wind's \
+                 Spark Skin, and Heavens' Coat of Many Stars -- each (except the already-shipped \
+                 Healing Hands) requiring an explicit `choice:oracle_revelation` pick, since \
+                 revelations are a budgeted selection rather than an automatic grant. Every \
+                 other revelation across all 10 Mysteries remains unimplemented, including the \
+                 ally-dependent, environment-dependent, and opponent-state-dependent ones (which \
+                 need engine state this codebase does not have), the summon-subsystem ones, and \
+                 the revelation records that carry no numeric token at all -- a genuine no-op, \
                  not a transcription backlog. This does not block an otherwise-valid Mystery \
                  posture"
                 .to_owned(),
@@ -13645,14 +13766,18 @@ fn ground_or_block_oracle_mystery(
                 | BONE_MYSTERY_SELECTION
                 | FLAME_MYSTERY_SELECTION
                 | BATTLE_MYSTERY_SELECTION
+                | STONE_MYSTERY_SELECTION
+                | WAVES_MYSTERY_SELECTION
+                | WIND_MYSTERY_SELECTION
+                | HEAVENS_MYSTERY_SELECTION
         )
     }) {
         diagnostics.push(ComputationDiagnostic {
             id: "class_feature.apg.oracle.mystery_powers.unsupported".to_owned(),
             message: "Oracle remains blocked on its Mystery powers burden: no recognized Mystery \
-                 choice is present (only Life, Lore, Nature, Bone, Flame, and Battle have any \
-                 grounded revelation in this codebase), so no Oracle Mystery-power support is \
-                 claimed"
+                 choice is present (this codebase now recognizes all 10 real Mysteries -- Life, \
+                 Lore, Nature, Bone, Flame, Battle, Stone, Waves, Wind, Heavens -- each with at \
+                 least one grounded revelation), so no Oracle Mystery-power support is claimed"
                 .to_owned(),
             claim_blocking: true,
         });
@@ -13749,6 +13874,163 @@ fn oracle_battlecry_bonus(oracle_level: u8) -> i16 {
 /// Battlecry's uses-per-day: `1+classlevel("Oracle")/5`, integer division.
 fn oracle_battlecry_times_per_day(oracle_level: u8) -> i16 {
     1 + i16::from(oracle_level) / ORACLE_BATTLECRY_TIMES_PER_DAY_LEVEL_DIVISOR
+}
+
+/// SD31-E4-F2-002: Stone Mystery's Steelbreaker Skin, composed through
+/// `chooser_option_selected` exactly as `oracle_level_with_battlecry_revelation`
+/// composes Battle Mystery's Battlecry -- see that function's own doc
+/// comment for why this stays a separate function per-Mystery rather than
+/// a generalized one.
+fn oracle_level_with_steelbreaker_skin_revelation(input: &CharacterInput) -> Option<u8> {
+    let oracle_level = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == ORACLE_CLASS_ID)
+        .map(|class_level| class_level.level)?;
+    if !archetype_resolver::chooser_option_selected(
+        input,
+        ORACLE_MYSTERY_CHOICE_ID,
+        STONE_MYSTERY_SELECTION,
+        ORACLE_MYSTERY_POOL,
+    ) {
+        return None;
+    }
+    if !archetype_resolver::chooser_option_selected(
+        input,
+        ORACLE_REVELATION_CHOICE_ID,
+        ORACLE_STEELBREAKER_SKIN_REVELATION,
+        ORACLE_STONE_MYSTERY_REVELATION_POOL,
+    ) {
+        return None;
+    }
+    Some(oracle_level)
+}
+
+/// SD31-E4-F2-002: Waves Mystery's Icy Skin, same composition shape as
+/// Steelbreaker Skin above.
+fn oracle_level_with_icy_skin_revelation(input: &CharacterInput) -> Option<u8> {
+    let oracle_level = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == ORACLE_CLASS_ID)
+        .map(|class_level| class_level.level)?;
+    if !archetype_resolver::chooser_option_selected(
+        input,
+        ORACLE_MYSTERY_CHOICE_ID,
+        WAVES_MYSTERY_SELECTION,
+        ORACLE_MYSTERY_POOL,
+    ) {
+        return None;
+    }
+    if !archetype_resolver::chooser_option_selected(
+        input,
+        ORACLE_REVELATION_CHOICE_ID,
+        ORACLE_ICY_SKIN_REVELATION,
+        ORACLE_WAVES_MYSTERY_REVELATION_POOL,
+    ) {
+        return None;
+    }
+    Some(oracle_level)
+}
+
+/// SD31-E4-F2-002: Wind Mystery's Spark Skin, same composition shape as
+/// Steelbreaker Skin above.
+fn oracle_level_with_spark_skin_revelation(input: &CharacterInput) -> Option<u8> {
+    let oracle_level = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == ORACLE_CLASS_ID)
+        .map(|class_level| class_level.level)?;
+    if !archetype_resolver::chooser_option_selected(
+        input,
+        ORACLE_MYSTERY_CHOICE_ID,
+        WIND_MYSTERY_SELECTION,
+        ORACLE_MYSTERY_POOL,
+    ) {
+        return None;
+    }
+    if !archetype_resolver::chooser_option_selected(
+        input,
+        ORACLE_REVELATION_CHOICE_ID,
+        ORACLE_SPARK_SKIN_REVELATION,
+        ORACLE_WIND_MYSTERY_REVELATION_POOL,
+    ) {
+        return None;
+    }
+    Some(oracle_level)
+}
+
+/// SD31-E4-F2-002: Heavens Mystery's Coat of Many Stars, same composition
+/// shape as Steelbreaker Skin above.
+fn oracle_level_with_coat_of_many_stars_revelation(input: &CharacterInput) -> Option<u8> {
+    let oracle_level = input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == ORACLE_CLASS_ID)
+        .map(|class_level| class_level.level)?;
+    if !archetype_resolver::chooser_option_selected(
+        input,
+        ORACLE_MYSTERY_CHOICE_ID,
+        HEAVENS_MYSTERY_SELECTION,
+        ORACLE_MYSTERY_POOL,
+    ) {
+        return None;
+    }
+    if !archetype_resolver::chooser_option_selected(
+        input,
+        ORACLE_REVELATION_CHOICE_ID,
+        ORACLE_COAT_OF_MANY_STARS_REVELATION,
+        ORACLE_HEAVENS_MYSTERY_REVELATION_POOL,
+    ) {
+        return None;
+    }
+    Some(oracle_level)
+}
+
+/// Steelbreaker Skin's flat per-use magnitudes: both damage prevented and
+/// duration equal the Oracle's class level
+/// (`BONUS:VAR|OracleSteelbreakerSkinDamage|classlevel("Oracle")`,
+/// `...Duration|classlevel("Oracle")`).
+fn oracle_steelbreaker_skin_damage(oracle_level: u8) -> i16 {
+    i16::from(oracle_level)
+}
+fn oracle_steelbreaker_skin_duration_minutes(oracle_level: u8) -> i16 {
+    i16::from(oracle_level)
+}
+
+/// The elemental-resistance formula shared by Icy Skin and Spark Skin: a
+/// flat base, `+TIER_TWO_BONUS` more from `TIER_TWO_LEVEL`, and
+/// `+TIER_THREE_BONUS` more (additive, not replacing) from
+/// `TIER_THREE_LEVEL` -- the same additive two-tier shape Bone Mystery's
+/// Near Death already grounds.
+fn oracle_elemental_resistance(oracle_level: u8) -> i16 {
+    let mut resistance = ORACLE_ELEMENTAL_RESISTANCE_BASE;
+    if oracle_level >= ORACLE_ELEMENTAL_RESISTANCE_TIER_TWO_LEVEL {
+        resistance += ORACLE_ELEMENTAL_RESISTANCE_TIER_TWO_BONUS;
+    }
+    if oracle_level >= ORACLE_ELEMENTAL_RESISTANCE_TIER_THREE_LEVEL {
+        resistance += ORACLE_ELEMENTAL_RESISTANCE_TIER_THREE_BONUS;
+    }
+    resistance
+}
+
+/// Coat of Many Stars' AC bonus: `4 + 2*max(0,floor((level-3)/4))`.
+/// `div_euclid` gives floor division for a positive divisor even when the
+/// dividend (`level - 3`) is negative, matching PCGen's own `floor()`.
+fn oracle_coat_of_many_stars_ac_bonus(oracle_level: u8) -> i16 {
+    let steps = (i16::from(oracle_level) - ORACLE_COAT_OF_MANY_STARS_STEP_START_LEVEL)
+        .div_euclid(ORACLE_COAT_OF_MANY_STARS_STEP_INTERVAL)
+        .max(0);
+    ORACLE_COAT_OF_MANY_STARS_BASE_AC_BONUS + ORACLE_COAT_OF_MANY_STARS_AC_STEP * steps
+}
+
+/// Coat of Many Stars' duration: `classlevel("Oracle")` hours/day.
+fn oracle_coat_of_many_stars_duration_hours(oracle_level: u8) -> i16 {
+    i16::from(oracle_level)
 }
 
 /// The stat-substitution idiom shared by Sidestep Secret
@@ -14203,6 +14485,110 @@ fn ground_oracle_tier_one_revelations(
             ),
         });
     }
+
+    // SD31-E4-F2-002: the 4 remaining Mysteries wired through
+    // `chooser_option_selected`, same shape as Battle Mystery above.
+    if let Some(oracle_level) = oracle_level_with_steelbreaker_skin_revelation(input) {
+        let damage = oracle_steelbreaker_skin_damage(oracle_level);
+        let duration = oracle_steelbreaker_skin_duration_minutes(oracle_level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.oracle.stone_mystery.steelbreaker_skin_damage".to_owned(),
+            value: damage,
+            detail: format!(
+                "Oracle level {oracle_level} Stone Mystery Steelbreaker Skin: as a standard \
+                 action, any weapon striking you takes {damage} points of damage \
+                 (`BONUS:VAR|OracleSteelbreakerSkinDamage|classlevel(\"Oracle\")`). Usable once \
+                 per day; not folded into any weapon-damage total this engine computes, since \
+                 no weapon-vs-Oracle interaction exists here. From Oracle level 15 the damage \
+                 also ignores up to 10 points of hardness -- not modelled, no hardness facet \
+                 exists in this engine"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.oracle.stone_mystery.steelbreaker_skin_duration_minutes"
+                .to_owned(),
+            value: duration,
+            detail: format!(
+                "Oracle level {oracle_level} Stone Mystery Steelbreaker Skin lasts {duration} \
+                 minutes per use (`BONUS:VAR|OracleSteelbreakerSkinDuration|classlevel(\"Oracle\")`). \
+                 This engine tracks no round-by-round or minute-by-minute duration state, so \
+                 this grounds as a standalone flat magnitude"
+            ),
+        });
+    }
+
+    if let Some(oracle_level) = oracle_level_with_icy_skin_revelation(input) {
+        let resistance = oracle_elemental_resistance(oracle_level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.oracle.waves_mystery.icy_skin_cold_resistance".to_owned(),
+            value: resistance,
+            detail: format!(
+                "Oracle level {oracle_level} Waves Mystery Icy Skin grants cold resistance \
+                 {resistance} (`5 + OracleColdResistanceBonus`, always on, stepping to \
+                 +{ORACLE_ELEMENTAL_RESISTANCE_TIER_TWO_BONUS} more at Oracle level \
+                 {ORACLE_ELEMENTAL_RESISTANCE_TIER_TWO_LEVEL} and +{ORACLE_ELEMENTAL_RESISTANCE_TIER_THREE_BONUS} \
+                 more (additive, not replacing) at Oracle level \
+                 {ORACLE_ELEMENTAL_RESISTANCE_TIER_THREE_LEVEL}). This engine computes no \
+                 resistance/DR total, so this grounds as a standalone flat magnitude. From \
+                 Oracle level 17 the corpus record replaces resistance with cold IMMUNITY \
+                 (`ABILITY:...Immunity to Cold|PRECLASS:1,Oracle=17`); this engine does not \
+                 model that qualitative shift, so this magnitude understates a level-17+ \
+                 character and is honest about doing so rather than fabricating an immunity \
+                 sentinel value"
+            ),
+        });
+    }
+
+    if let Some(oracle_level) = oracle_level_with_spark_skin_revelation(input) {
+        let resistance = oracle_elemental_resistance(oracle_level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.oracle.wind_mystery.spark_skin_electricity_resistance"
+                .to_owned(),
+            value: resistance,
+            detail: format!(
+                "Oracle level {oracle_level} Wind Mystery Spark Skin grants electricity \
+                 resistance {resistance} -- the identical formula shape and step values as \
+                 Waves Mystery's Icy Skin (`ORACLE_ELEMENTAL_RESISTANCE_TIER_TWO_LEVEL`/\
+                 `_TIER_THREE_LEVEL`), electricity instead of cold. This engine computes no \
+                 resistance/DR total, so this grounds as a standalone flat magnitude, with the \
+                 same honest level-17+ immunity understatement Icy Skin's own detail names"
+            ),
+        });
+    }
+
+    if let Some(oracle_level) = oracle_level_with_coat_of_many_stars_revelation(input) {
+        let ac_bonus = oracle_coat_of_many_stars_ac_bonus(oracle_level);
+        let duration_hours = oracle_coat_of_many_stars_duration_hours(oracle_level);
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.oracle.heavens_mystery.coat_of_many_stars_ac_bonus".to_owned(),
+            value: ac_bonus,
+            detail: format!(
+                "Oracle level {oracle_level} Heavens Mystery Coat of Many Stars grants a \
+                 +{ac_bonus} armor bonus to AC (`{ORACLE_COAT_OF_MANY_STARS_BASE_AC_BONUS} + \
+                 {ORACLE_COAT_OF_MANY_STARS_AC_STEP}*max(0,floor((Oracle level - \
+                 {ORACLE_COAT_OF_MANY_STARS_STEP_START_LEVEL})/{ORACLE_COAT_OF_MANY_STARS_STEP_INTERVAL}))`), \
+                 usable {duration_hours} hour(s) per day (not necessarily consecutive). Not \
+                 folded into the real `defense.baseline_armor_class` total: unlike Nature's \
+                 Whispers, this bonus is activation-gated (a conjured coat you don a standard \
+                 action to summon), not always on, and integrating an activation-gated bonus \
+                 into a flat total would overstate an Oracle who has not activated it. From \
+                 Oracle level 13 the coat also grants DR 5/slashing -- not modelled, no DR \
+                 facet exists in this engine"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.oracle.heavens_mystery.coat_of_many_stars_duration_hours"
+                .to_owned(),
+            value: duration_hours,
+            detail: format!(
+                "Oracle level {oracle_level} Heavens Mystery Coat of Many Stars is usable \
+                 {duration_hours} hour(s) per day, equal to the Oracle's class level \
+                 (`BONUS:VAR|OracleCoatofManyStarsDuration|classlevel(\"Oracle\")`); the \
+                 duration does not need to be consecutive. This engine tracks no \
+                 hour-by-hour duration state, so this grounds as a standalone flat magnitude"
+            ),
+        });
+    }
 }
 
 /// Grounds Oracle's Curse choice (v0.6 alpha swarm, risks item 8, Oracle
@@ -14536,6 +14922,10 @@ fn oracle_mystery_grounds_a_power(input: &CharacterInput) -> bool {
                 | BONE_MYSTERY_SELECTION
                 | FLAME_MYSTERY_SELECTION
                 | BATTLE_MYSTERY_SELECTION
+                | STONE_MYSTERY_SELECTION
+                | WAVES_MYSTERY_SELECTION
+                | WIND_MYSTERY_SELECTION
+                | HEAVENS_MYSTERY_SELECTION
         )
     });
     if !all_recognized {
@@ -14554,11 +14944,17 @@ fn oracle_mystery_grounds_a_power(input: &CharacterInput) -> bool {
     ]
     .iter()
     .any(|(mystery, revelation)| oracle_level_with_revelation(input, mystery, revelation).is_some());
-    // SD31-E4-F2-001: Battle Mystery's Battlecry checked separately -- it is
-    // grounded through the new `chooser_option_selected` primitive
-    // (`oracle_level_with_battlecry_revelation`), not the `revelation_grounds`
-    // array's shared `oracle_level_with_revelation` helper.
-    revelation_grounds || oracle_level_with_battlecry_revelation(input).is_some()
+    // SD31-E4-F2-001/002: Battle/Stone/Waves/Wind/Heavens Mysteries checked
+    // separately -- each is grounded through the `chooser_option_selected`
+    // primitive (a dedicated `oracle_level_with_<X>_revelation` function per
+    // Mystery), not the `revelation_grounds` array's shared
+    // `oracle_level_with_revelation` helper.
+    revelation_grounds
+        || oracle_level_with_battlecry_revelation(input).is_some()
+        || oracle_level_with_steelbreaker_skin_revelation(input).is_some()
+        || oracle_level_with_icy_skin_revelation(input).is_some()
+        || oracle_level_with_spark_skin_revelation(input).is_some()
+        || oracle_level_with_coat_of_many_stars_revelation(input).is_some()
 }
 
 /// Whether this Oracle's Curse selection names at least one of the four
@@ -56798,12 +57194,15 @@ mod oracle_dispatch_widening_safety_tests {
         build_pilot_headless_receipt, AcquisitionMode, CharacterClassLevel, CharacterInput,
         HeadlessReceiptStatus, BATTLE_MYSTERY_SELECTION, BONE_MYSTERY_SELECTION,
         CLOUDED_VISION_CURSE_SELECTION, DEAF_CURSE_SELECTION, FIGHTER_CLASS_ID,
-        FLAME_MYSTERY_SELECTION, LAME_CURSE_SELECTION, LIFE_MYSTERY_SELECTION,
-        LORE_MYSTERY_SELECTION, NATURE_MYSTERY_SELECTION, ORACLE_BATTLECRY_REVELATION,
-        ORACLE_CHANNEL_REVELATION, ORACLE_CINDER_DANCE_REVELATION, ORACLE_CLASS_ID,
-        ORACLE_CURSE_CHOICE_ID, ORACLE_LORE_KEEPER_REVELATION, ORACLE_MYSTERY_CHOICE_ID,
+        FLAME_MYSTERY_SELECTION, HEAVENS_MYSTERY_SELECTION, LAME_CURSE_SELECTION,
+        LIFE_MYSTERY_SELECTION, LORE_MYSTERY_SELECTION, NATURE_MYSTERY_SELECTION,
+        ORACLE_BATTLECRY_REVELATION, ORACLE_CHANNEL_REVELATION, ORACLE_CINDER_DANCE_REVELATION,
+        ORACLE_CLASS_ID, ORACLE_COAT_OF_MANY_STARS_REVELATION, ORACLE_CURSE_CHOICE_ID,
+        ORACLE_ICY_SKIN_REVELATION, ORACLE_LORE_KEEPER_REVELATION, ORACLE_MYSTERY_CHOICE_ID,
         ORACLE_NATURES_WHISPERS_REVELATION, ORACLE_NEAR_DEATH_REVELATION,
-        ORACLE_REVELATION_CHOICE_ID, ORACLE_SIDESTEP_SECRET_REVELATION, WASTING_CURSE_SELECTION,
+        ORACLE_REVELATION_CHOICE_ID, ORACLE_SIDESTEP_SECRET_REVELATION,
+        ORACLE_SPARK_SKIN_REVELATION, ORACLE_STEELBREAKER_SKIN_REVELATION, STONE_MYSTERY_SELECTION,
+        WASTING_CURSE_SELECTION, WAVES_MYSTERY_SELECTION, WIND_MYSTERY_SELECTION,
     };
     use crate::rules_core::character_input::{
         load_character_input_fixture, SelectedChoice, SpellSelection,
@@ -58109,6 +58508,228 @@ mod oracle_dispatch_widening_safety_tests {
             "the Computed receipt must actually carry the grounded Battlecry bonus: {:?}",
             receipt.computation.explanations
         );
+    }
+
+    /// SD31-E4-F2-002: Stone Mystery's Steelbreaker Skin, wired through
+    /// the same `chooser_option_selected` composition as Battle Mystery's
+    /// Battlecry. At Oracle level 5, damage and duration both equal the
+    /// class level (5).
+    #[test]
+    fn steelbreaker_skin_grounds_damage_and_duration_at_class_level() {
+        let receipt = build_pilot_headless_receipt(&oracle_with_revelation(
+            5,
+            STONE_MYSTERY_SELECTION,
+            ORACLE_STEELBREAKER_SKIN_REVELATION,
+        ));
+        for (id, expected) in [
+            ("class_feature.apg.oracle.stone_mystery.steelbreaker_skin_damage", 5),
+            (
+                "class_feature.apg.oracle.stone_mystery.steelbreaker_skin_duration_minutes",
+                5,
+            ),
+        ] {
+            let record = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("{id} must ground: {:?}", receipt.computation.diagnostics));
+            assert_eq!(record.value, expected, "{id}: {record:?}");
+        }
+    }
+
+    /// SD31-E4-F2-002: Waves Mystery's Icy Skin. Below Oracle level 5 the
+    /// resistance is the flat base (5); at level 5-10 it steps to 10; at
+    /// level 11+ it steps again (additive) to 20.
+    #[test]
+    fn icy_skin_grounds_cold_resistance_and_steps_with_level() {
+        let below = build_pilot_headless_receipt(&oracle_with_revelation(
+            1,
+            WAVES_MYSTERY_SELECTION,
+            ORACLE_ICY_SKIN_REVELATION,
+        ));
+        let tier_two = build_pilot_headless_receipt(&oracle_with_revelation(
+            5,
+            WAVES_MYSTERY_SELECTION,
+            ORACLE_ICY_SKIN_REVELATION,
+        ));
+        let tier_three = build_pilot_headless_receipt(&oracle_with_revelation(
+            11,
+            WAVES_MYSTERY_SELECTION,
+            ORACLE_ICY_SKIN_REVELATION,
+        ));
+        for (receipt, expected) in [(below, 5), (tier_two, 10), (tier_three, 20)] {
+            let record = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_feature.apg.oracle.waves_mystery.icy_skin_cold_resistance")
+                .unwrap_or_else(|| panic!("Icy Skin must ground: {:?}", receipt.computation.diagnostics));
+            assert_eq!(record.value, expected, "{record:?}");
+        }
+    }
+
+    /// SD31-E4-F2-002: Wind Mystery's Spark Skin -- the identical formula
+    /// shape as Icy Skin (electricity instead of cold), proven at the
+    /// same tier-two level.
+    #[test]
+    fn spark_skin_grounds_electricity_resistance() {
+        let receipt = build_pilot_headless_receipt(&oracle_with_revelation(
+            5,
+            WIND_MYSTERY_SELECTION,
+            ORACLE_SPARK_SKIN_REVELATION,
+        ));
+        let record = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.oracle.wind_mystery.spark_skin_electricity_resistance")
+            .unwrap_or_else(|| panic!("Spark Skin must ground: {:?}", receipt.computation.diagnostics));
+        assert_eq!(record.value, 10, "Oracle level 5 -> tier-two resistance 10: {record:?}");
+    }
+
+    /// SD31-E4-F2-002: Heavens Mystery's Coat of Many Stars. At Oracle
+    /// level 1 the AC bonus is the flat base (+4, since
+    /// `max(0,floor((1-3)/4))` clamps to 0) and duration is 1 hour/day;
+    /// at level 7 the AC bonus steps to +6 (`floor((7-3)/4)=1`).
+    #[test]
+    fn coat_of_many_stars_grounds_ac_bonus_and_duration_and_steps_with_level() {
+        let level_one = build_pilot_headless_receipt(&oracle_with_revelation(
+            1,
+            HEAVENS_MYSTERY_SELECTION,
+            ORACLE_COAT_OF_MANY_STARS_REVELATION,
+        ));
+        let ac_one = level_one
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.oracle.heavens_mystery.coat_of_many_stars_ac_bonus")
+            .expect("Coat of Many Stars AC bonus must ground");
+        assert_eq!(ac_one.value, 4, "level 1 -> base +4: {ac_one:?}");
+        let level_seven = build_pilot_headless_receipt(&oracle_with_revelation(
+            7,
+            HEAVENS_MYSTERY_SELECTION,
+            ORACLE_COAT_OF_MANY_STARS_REVELATION,
+        ));
+        let ac_seven = level_seven
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.oracle.heavens_mystery.coat_of_many_stars_ac_bonus")
+            .expect("Coat of Many Stars AC bonus must ground");
+        assert_eq!(ac_seven.value, 6, "level 7 -> +6 (floor((7-3)/4)=1): {ac_seven:?}");
+    }
+
+    /// A Mystery pick alone (no revelation recorded) grounds nothing for
+    /// any of the 4 new Mysteries -- same budgeted-revelation shape every
+    /// other non-Life Mystery enforces.
+    #[test]
+    fn a_new_mystery_pick_alone_grounds_no_revelation() {
+        for mystery in [
+            STONE_MYSTERY_SELECTION,
+            WAVES_MYSTERY_SELECTION,
+            WIND_MYSTERY_SELECTION,
+            HEAVENS_MYSTERY_SELECTION,
+        ] {
+            let mut input = human_oracle_input(1);
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: ORACLE_MYSTERY_CHOICE_ID.to_owned(),
+                selection_id: mystery.to_owned(),
+            });
+            let receipt = build_pilot_headless_receipt(&input);
+            assert!(
+                !receipt
+                    .computation
+                    .explanations
+                    .iter()
+                    .any(|e| e.id.contains("steelbreaker_skin")
+                        || e.id.contains("icy_skin")
+                        || e.id.contains("spark_skin")
+                        || e.id.contains("coat_of_many_stars")),
+                "a bare {mystery} pick must ground no revelation: {:?}",
+                receipt.computation.explanations
+            );
+        }
+    }
+
+    /// A revelation name from a DIFFERENT Mystery's own pool must never
+    /// ground Steelbreaker Skin -- proves
+    /// `ORACLE_STONE_MYSTERY_REVELATION_POOL` scopes the primitive's guard
+    /// to Stone Mystery alone.
+    #[test]
+    fn a_revelation_from_a_different_mysterys_pool_does_not_ground_steelbreaker_skin() {
+        let receipt = build_pilot_headless_receipt(&oracle_with_revelation(
+            5,
+            STONE_MYSTERY_SELECTION,
+            ORACLE_ICY_SKIN_REVELATION,
+        ));
+        assert!(
+            !receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id.contains("steelbreaker_skin")),
+            "a cross-Mystery revelation id must never ground Steelbreaker Skin: {:?}",
+            receipt.computation.explanations
+        );
+    }
+
+    /// **Full-character reachability, all 4 new Mysteries.** Each reaches
+    /// `HeadlessReceiptStatus::Computed` through `build_pilot_headless_receipt`
+    /// with a grounded Curse recorded, exactly as Battle Mystery already
+    /// proves -- this card's own "reachability is proven through a
+    /// headless pilot receipt, never a resolver unit test" bar, applied to
+    /// all 4 remaining pools named in the mandate.
+    #[test]
+    fn each_new_mystery_reaches_computed_with_a_curse() {
+        for (mystery, revelation, explanation_id) in [
+            (
+                STONE_MYSTERY_SELECTION,
+                ORACLE_STEELBREAKER_SKIN_REVELATION,
+                "class_feature.apg.oracle.stone_mystery.steelbreaker_skin_damage",
+            ),
+            (
+                WAVES_MYSTERY_SELECTION,
+                ORACLE_ICY_SKIN_REVELATION,
+                "class_feature.apg.oracle.waves_mystery.icy_skin_cold_resistance",
+            ),
+            (
+                WIND_MYSTERY_SELECTION,
+                ORACLE_SPARK_SKIN_REVELATION,
+                "class_feature.apg.oracle.wind_mystery.spark_skin_electricity_resistance",
+            ),
+            (
+                HEAVENS_MYSTERY_SELECTION,
+                ORACLE_COAT_OF_MANY_STARS_REVELATION,
+                "class_feature.apg.oracle.heavens_mystery.coat_of_many_stars_ac_bonus",
+            ),
+        ] {
+            let mut input = human_oracle_input(5);
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: ORACLE_MYSTERY_CHOICE_ID.to_owned(),
+                selection_id: mystery.to_owned(),
+            });
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: ORACLE_REVELATION_CHOICE_ID.to_owned(),
+                selection_id: revelation.to_owned(),
+            });
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: ORACLE_CURSE_CHOICE_ID.to_owned(),
+                selection_id: CLOUDED_VISION_CURSE_SELECTION.to_owned(),
+            });
+            let receipt = build_pilot_headless_receipt(&input);
+            assert_eq!(
+                receipt.status,
+                HeadlessReceiptStatus::Computed,
+                "{mystery} Oracle with a grounded Curse must reach Computed: {:?}",
+                receipt.computation.diagnostics
+            );
+            assert!(
+                receipt.computation.explanations.iter().any(|e| e.id == explanation_id),
+                "the Computed receipt must carry {explanation_id}: {:?}",
+                receipt.computation.explanations
+            );
+        }
     }
 
     /// Cinder Dance and the Lame Curse are mutually exclusive in the
@@ -66168,25 +66789,31 @@ mod apg_canonical_choice_path_a_tests {
     }
 
     /// The same guard for Oracle: an unrecognized Mystery or Curse
-    /// alongside a recognized one keeps the class blocked. Neither the
-    /// Heavens Mystery nor the Haunted Curse has a single grounded power
-    /// in this codebase, so a build naming one is not something this
-    /// engine can honestly call computed.
+    /// alongside a recognized one keeps the class blocked. The Haunted
+    /// Curse has no grounded power in this codebase, so a build naming it
+    /// is not something this engine can honestly call computed.
     ///
     /// **SD31-E4-F2-001 correction:** this test used to probe
-    /// `mystery:battle` here. Battle Mystery's own Battlecry revelation is
-    /// now genuinely grounded (wired through the new
-    /// `archetype_resolver::chooser_option_selected` primitive), so
-    /// `mystery:battle` is no longer a valid "unrecognized" probe value --
-    /// its own test premise, not the guard, was stale. Swapped to
-    /// `mystery:heavens` (still genuinely ungrounded), preserving the
-    /// test's real intent: a second, still-unrecognized Mystery selected
-    /// alongside the canonical Life pick must not ride Life's own
-    /// narrowing to a false `Computed`. `retro.py correction` emitted.
+    /// `mystery:battle` here; Battle Mystery's own Battlecry became
+    /// genuinely grounded, so that probe value went stale. Swapped to
+    /// `mystery:heavens`.
+    ///
+    /// **SD31-E4-F2-002 correction:** `mystery:heavens` in turn went
+    /// stale the same way -- this cycle wired Heavens Mystery's own Coat
+    /// of Many Stars (alongside Stone/Waves/Wind), so **all 10 real,
+    /// corpus-declared Mysteries are now genuinely grounded** and none
+    /// remains available as a "real Mystery, still ungrounded" probe
+    /// value. Swapped to a synthetic, non-corpus identifier
+    /// (`mystery:nonexistent_test_probe`) instead -- this tests the exact
+    /// same property `oracle_mystery_grounds_a_power`'s `all_recognized`
+    /// guard enforces (an unrecognized selection value must never ride
+    /// the canonical Life pick to `Computed`), and does so more directly
+    /// than a real-but-ungrounded Mystery id, which no longer exists in a
+    /// 10/10-grounded world. `retro.py correction` emitted.
     #[test]
     fn oracle_unrecognized_mystery_or_curse_alongside_the_canonical_one_stays_blocked() {
         for (choice_set_id, selection_id) in [
-            (ORACLE_MYSTERY_CHOICE_ID, "mystery:heavens"),
+            (ORACLE_MYSTERY_CHOICE_ID, "mystery:nonexistent_test_probe"),
             (ORACLE_CURSE_CHOICE_ID, "curse:haunted"),
         ] {
             let mut input = canonically_chosen(ORACLE_CLASS_ID, 7);
