@@ -1,0 +1,86 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": null,
+    "description": "This item functions like a murderer’s machete, but is a +2 keen wounding short sword. Wielder gains a +2 bonus on Stealth checks and Survival checks to track; 1/day wielder gains benefits of cruel jaunt spell.",
+    "key": "Murderer's Machete (Greater)",
+    "name": "Murderer's Machete, Greater",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Murderer's Machete (Greater)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Murderer's Machete, Greater"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Greater Murderer's Machete"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "TYPE",
+        "value": "Slashing"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel.Special Ability ~ +2 ~ Weapon.Special Ability ~ Keen ~ Weapon.Special Ability ~ Wounding ~ Weapon.Special Ability ~ Enhancement Cost|20000"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong conjuration [evil]"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|13th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|39,310 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Magic Arms and Armor, bleed, cruel jaunt, keen edge, creator must sacrifice a sentient living creature"
+      },
+      {
+        "key": "SPROP",
+        "value": "Wielder gains a +2 bonus on Stealth checks and Survival checks to track; 1/day wielder gains benefits of cruel jaunt spell."
+      },
+      {
+        "key": "DESC",
+        "value": ".CLEAR"
+      },
+      {
+        "key": "DESC",
+        "value": "This item functions like a murderer’s machete, but is a +2 keen wounding short sword."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 21,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_equip_arms_armor.lst",
+    "record_key": "Murderer's Machete (Greater)",
+    "sha256": "daa97d61fd7d37ff29702c8b6aeccdd05a6669ded9a95146ff1923072284ee7a"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

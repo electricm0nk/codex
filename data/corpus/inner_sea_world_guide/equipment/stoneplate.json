@@ -1,0 +1,75 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 1800.0,
+    "description": null,
+    "key": "Stoneplate",
+    "name": "Stoneplate",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "9",
+          "TYPE=Armor"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Full Plate"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Heavy.ArmorProfHeavy.Suit.Standard"
+      },
+      {
+        "key": "COST",
+        "value": "1800"
+      },
+      {
+        "key": "WT",
+        "value": "75"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "-6"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Stone"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.291"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "35"
+      }
+    ],
+    "weight_lbs": 75.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 23,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_equip_arms_armor.lst",
+    "record_key": "Stoneplate",
+    "sha256": "552092581f8480ce2a536d5358ebd3049ccb2f93a7e65a10a6287acbff6e50fa"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": null,
+    "description": "This +2 longsword contains the hideous captured screams of a torture victim. The blade howls these blasphemies and profanities whenever it is drawn. This discordant noise grants the wielder a +5 competence bonus on Intimidate checks, but any creature can hear the howls with a Perception DC of –10, regardless of the wielder’s Stealth.&nl;The disturbing noise makes it difficult for nearby creatures to concentrate. Any creature other than the wielder within 60 feet attempting to cast a spell must succeed at a concentration check (DC = 15 + spell level) or the spell fails. Creatures within 60 feet take a –2 penalty on skill checks that require concentration and are unable to take 10 (unless they have an ability that enables them to take 10 while distracted or threatened). If the wielder is evil and has the bardic performance ability, she can use the screams as a masterwork instrument for either Perform (sing) or Perform (wind) and the DCs of her bardic performances that are fear effects increase by 1.&nl;Silence and similar effects suppress all the blade’s magical abilities except its enhancement bonus. Creatures other than wielder within 60 feet need a concentration check (DC = 15 + spell level) to cast as spell, they take -2 on skill chacks needing concentration, and cannot take 10 due to distraction.",
+    "key": "Screaming Blade",
+    "name": "Screaming Blade",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "SORTKEY",
+        "value": "Screaming Blade"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel.Special Ability ~ +2 ~ Weapon.Special Ability ~ Enhancement Cost|13000"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate evocation [evil]"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|10th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|12,815 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Magic Arms and Armor, sound burst, creator must be evil and torture a sentient creature during creation"
+      },
+      {
+        "key": "SPROP",
+        "value": "Creatures other than wielder within 60 feet need a concentration check (DC = 15 + spell level) to cast as spell, they take -2 on skill chacks needing concentration, and cannot take 10 due to distraction."
+      },
+      {
+        "key": "DESC",
+        "value": ".CLEAR"
+      },
+      {
+        "key": "DESC",
+        "value": "This +2 longsword contains the hideous captured screams of a torture victim. The blade howls these blasphemies and profanities whenever it is drawn. This discordant noise grants the wielder a +5 competence bonus on Intimidate checks, but any creature can hear the howls with a Perception DC of –10, regardless of the wielder’s Stealth.&nl;The disturbing noise makes it difficult for nearby creatures to concentrate. Any creature other than the wielder within 60 feet attempting to cast a spell must succeed at a concentration check (DC = 15 + spell level) or the spell fails. Creatures within 60 feet take a –2 penalty on skill checks that require concentration and are unable to take 10 (unless they have an ability that enables them to take 10 while distracted or threatened). If the wielder is evil and has the bardic performance ability, she can use the screams as a masterwork instrument for either Perform (sing) or Perform (wind) and the DCs of her bardic performances that are fear effects increase by 1.&nl;Silence and similar effects suppress all the blade’s magical abilities except its enhancement bonus."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 25,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_equip_arms_armor.lst",
+    "record_key": "Screaming Blade",
+    "sha256": "daa97d61fd7d37ff29702c8b6aeccdd05a6669ded9a95146ff1923072284ee7a"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

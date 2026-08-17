@@ -759,7 +759,18 @@ Potion\tKEY:Potion of Blur\tTYPE:Magic.Potion\tCOST:300
         assert_eq!(count(EQUIPMENT_BOOK_ARG), 215);
         assert_eq!(count(EQUIPMENT_BOOK_PU), 42);
         assert_eq!(count(EQUIPMENT_BOOK_UI), 105);
-        assert_eq!(count(EQUIPMENT_BOOK_UE), 1614);
+        // `SD31-E6-F10-003`: 1614 -> 1613. Extending this generator's own
+        // `declared_pi_at` check (built for the 8 new books this cycle)
+        // over the FULL compiled table caught a genuine, PRE-EXISTING PI
+        // leak this cycle did not introduce: `ultimate_equipment:"Elysian
+        // Shield"` declares `NAMEISPI:YES` in the real corpus
+        // (`ue_equip_arms_armor.lst`) and was shipping unscreened in this
+        // compiled table (and therefore live in the desktop catalog, which
+        // reads `equipment_catalog_rows()` -- chaining this table directly,
+        // never through `data/corpus/`'s own, separately-screened JSON) --
+        // `gen_cache_equipment_gap`'s JSON-write path already excluded it
+        // correctly; this generator's OWN output did not, until now.
+        assert_eq!(count(EQUIPMENT_BOOK_UE), 1613);
         // SD28-E15: UM's 26-record equipment table (24 General + 2
         // ArmsArmor). Re-derived from the catalog itself, not by hand-adding
         // 26 to the old 5,477 total -- also independently confirmed the 26
@@ -791,8 +802,17 @@ Potion\tKEY:Potion of Blur\tTYPE:Magic.Potion\tCOST:300
         // `docs/work-inventory.json`'s `not-ingested` equipment /
         // equipment_modifier population across the nine already-compiled
         // books; `tests/equipment_gap_tables.rs` pins the per-book split.
+        // `SD31-E6-F10-003`: the gap lane's own row count grew by 421
+        // (769 -> 1,190; 8 further already-compiled books, net of 12
+        // declared-PI exclusions AND 2 bare PFS organized-play legality
+        // OVERLAY rows this cycle's own fixes caught -- see
+        // `gen_equipment_gap_tables.rs`'s `declared_pi_at` and its
+        // `is_non_record_line` `PFSNotLegal` extension), so the total grows
+        // by the same 421 (6,915 -> 7,336). Hand-authored count is
+        // unchanged; this card's file grant never touches a hand-authored
+        // table.
         assert_eq!(hand_authored_equipment_rows().len(), 6_146);
-        assert_eq!(rows.len(), 6_915);
+        assert_eq!(rows.len(), 7_336);
 
         // CRB first, then the documented chain order -- the property the
         // "CRB behaviour unchanged" guarantee rests on.
@@ -937,6 +957,25 @@ Potion\tKEY:Potion of Blur\tTYPE:Magic.Potion\tCOST:300
         // removal, not assumed from the count alone. The remaining 14 are
         // untouched by this cycle's file territory (no `equipment_gap`
         // record shares their key) and still genuinely disagree.
+        //
+        // GREW 14 -> 16, `SD31-E6-F10-003` (8 further already-compiled
+        // books extended into the gap lane): `"Bullet (Sling/Alchemical)"`
+        // (Monster Codex's `KEY:` for its alchemical sling-bullet row,
+        // `mc_equip_arms_armor.lst`) and `"Incense (10 sticks)"` (Occult
+        // Adventures' `oa_equip.lst`) are the same shape as every entry
+        // above -- a corpus gap row's `KEY:` coincidentally matches a
+        // string `equipment_cost_gp_headless_resolve`'s free-form,
+        // CRB-precedence matching resolves to a DIFFERENT real row. Both
+        // records are real, both belong in the catalog, and neither this
+        // cycle's file grant nor its own new rows are the wrong side of the
+        // disagreement -- verified by direct construction: re-derived this
+        // exact list from a fresh `cargo test --lib equipment_resolver::
+        // tests::the_two_lookups_agree` run against this cycle's own final
+        // state (not copied from an earlier, mid-edit gate run that also
+        // transiently showed a THIRD, now-gone name -- `"Bolas (Shoanti)"`,
+        // `inner_sea_world_guide`'s own declared-PI-excluded row, correctly
+        // absent from the compiled table once `declared_pi_at` landed, so
+        // it was never a real disagreement to pin).
         assert_eq!(
             disagreements,
             vec![
@@ -947,6 +986,8 @@ Potion\tKEY:Potion of Blur\tTYPE:Magic.Potion\tCOST:300
                 "Backpack (Carrier)",
                 "Backpack (Hydration)",
                 "Backpack (Weaponrack)",
+                "Bullet (Sling/Alchemical)",
+                "Incense (10 sticks)",
                 "Mithral (Heavy Armor)",
                 "Mithral (Item)",
                 "Mithral (Medium Armor)",

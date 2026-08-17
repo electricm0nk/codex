@@ -42,7 +42,50 @@ use std::path::{Path, PathBuf};
 
 use codex::rules_core::equipment_resolver::{hand_authored_equipment_rows, EQUIPMENT_BOOK_ACG, EQUIPMENT_BOOK_APG, EQUIPMENT_BOOK_ARG, EQUIPMENT_BOOK_B1, EQUIPMENT_BOOK_CRB, EQUIPMENT_BOOK_UC, EQUIPMENT_BOOK_UE, EQUIPMENT_BOOK_UI, EQUIPMENT_BOOK_UPSI, EQUIPMENT_BOOK_UW};
 use codex::rules_core::pcgen_desc::{leaked_pcgen_syntax, render_pcgen_desc};
+use codex::rules_core::pi_screening::{declared_product_identity, DeclaredProductIdentity};
 use codex::rules_core::pi_table_sweep::screen_generated_table;
+use codex::rules_core::shape_b_v1::REDACTED_PI_MARKER;
+
+/// `§53.5`'s declared-PI reader, applied to the real corpus line at
+/// `lst_path:line` (1-indexed). A local copy of `cache_gen::equipment_gap`'s
+/// `pub(crate)` function of the same name (that visibility is scoped to the
+/// library crate; this file is a separate binary crate and cannot reach a
+/// `pub(crate)` item there) -- same logic, same public `pi_screening::
+/// declared_product_identity` primitive underneath, so the two stay in
+/// agreement by construction rather than by convention.
+fn declared_pi_at(lst_path: &Path, line: u32) -> DeclaredProductIdentity {
+    if line == 0 {
+        return DeclaredProductIdentity::default();
+    }
+    let Ok(content) = std::fs::read_to_string(lst_path) else {
+        return DeclaredProductIdentity::default();
+    };
+    let Some(row) = content.lines().nth((line - 1) as usize) else {
+        return DeclaredProductIdentity::default();
+    };
+    let tokens: Vec<(&str, &str)> =
+        row.split('\t').filter_map(|field| field.split_once(':')).collect();
+    declared_product_identity(tokens)
+}
+
+// SD31-E6-F10-003: short codes for 13 further already-compiled books that
+// carry `not-ingested` equipment/equipment_modifier residue but have no
+// hand-authored `equipment_resolver::EQUIPMENT_BOOK_*` constant of their
+// own (none of them has a per-book `equipment_tables` module at all --
+// every one of their catalog rows will come from this gap lane, the same
+// shape `EQUIPMENT_BOOK_UW`'s own doc comment already describes). Declared
+// locally rather than added to `equipment_resolver.rs` -- that file is
+// outside this card's file grant and nothing downstream needs these codes
+// to be `pub` constants; a plain `&'static str` literal is exactly what
+// `BookInput.code`/`EquipmentGapRow.book` already are.
+const EQUIPMENT_BOOK_OA: &str = "OA";
+const EQUIPMENT_BOOK_HA: &str = "HA";
+const EQUIPMENT_BOOK_ISR: &str = "ISR";
+const EQUIPMENT_BOOK_ISWG: &str = "ISWG";
+const EQUIPMENT_BOOK_MC: &str = "MC";
+const EQUIPMENT_BOOK_B2: &str = "B2";
+const EQUIPMENT_BOOK_B3: &str = "B3";
+const EQUIPMENT_BOOK_B4: &str = "B4";
 
 /// Refuses to ship a description whose rendering the player would see as
 /// broken PCGen syntax -- an unsubstituted `%N`/`%<KEYWORD>` reference or a
@@ -178,6 +221,102 @@ const BOOK_INPUTS: &[BookInput] = &[
             "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_equipmods.lst",
         ],
     },
+    // --- SD31-E6-F10-003: 8 further already-compiled books, none of which
+    // has a hand-authored `equipment_tables` module -- exactly the same
+    // "compiled rule set, no per-book equipment table" shape as `UW` above,
+    // confirmed against `v06_work_inventory.rs`'s own `COMPILED_RULE_SETS`
+    // (each of these book slugs already has a `RuleSetId` compiled for its
+    // `monster`/`race_trait`/`class_feature` kinds) and against
+    // `docs/work-inventory.json`'s own `source_file` field per book (never
+    // guessed from a directory glob). No new `RuleSetId`, no new corpus
+    // cache, no new player surface -- the existing equipment catalog already
+    // renders every row `equipment_gap_rows()` chains in.
+    //
+    // **5 further eligible books (`inner_sea_gods`, `mythic_adventures`,
+    // `inner_sea_combat`, `inner_sea_intrigue`, `book_of_the_damned_volume_2`
+    // -- ~394 more units, `OPEN-ISSUES.md` row 177) were tried and DELIBERATELY
+    // EXCLUDED from this batch**, not silently dropped: the real, unmodified
+    // corpus text hits `pi_table_sweep::screen_generated_table`'s blacklist
+    // (deity/place proper nouns -- "Desna", "Erastil", "Lastwall", "Numeria",
+    // "Kyonin", "Calistria", ... -- inside item names like "Altar of Desna"),
+    // and that screen's own doc contract is a HARD STOP on the whole
+    // generation run, never a per-row silent drop. Per the mandate's own PI
+    // discipline this is the check working as designed, not a defect to route
+    // around -- weakening it to a per-row skip so this batch could include
+    // those 5 books would be exactly the kind of gate-loosening the mandate
+    // forbids. Left for a dedicated PI-redaction pass.
+    BookInput {
+        code: EQUIPMENT_BOOK_OA,
+        slug: "occult_adventures",
+        files: &["pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst"],
+    },
+    BookInput {
+        code: EQUIPMENT_BOOK_HA,
+        slug: "horror_adventures",
+        files: &[
+            "pathfinder/paizo/roleplaying_game/horror_adventures/ha_equip_arms_armor.lst",
+            "pathfinder/paizo/roleplaying_game/horror_adventures/ha_equip_general.lst",
+            "pathfinder/paizo/roleplaying_game/horror_adventures/ha_equip_magic_items.lst",
+            "pathfinder/paizo/roleplaying_game/horror_adventures/ha_equipmods.lst",
+        ],
+    },
+    BookInput {
+        code: EQUIPMENT_BOOK_ISR,
+        slug: "inner_sea_races",
+        files: &[
+            "pathfinder/paizo/campaign_setting/inner_sea_races/isr_equip_arms_armor.lst",
+            "pathfinder/paizo/campaign_setting/inner_sea_races/isr_equip_general.lst",
+        ],
+    },
+    BookInput {
+        code: EQUIPMENT_BOOK_ISWG,
+        slug: "inner_sea_world_guide",
+        files: &[
+            "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_equip_arms_armor.lst",
+            "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_equip_general.lst",
+            "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_equip_magic_items.lst",
+            "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_equipmods.lst",
+        ],
+    },
+    BookInput {
+        code: EQUIPMENT_BOOK_MC,
+        slug: "monster_codex",
+        files: &[
+            "pathfinder/paizo/roleplaying_game/monster_codex/mc_equip_arms_armor.lst",
+            "pathfinder/paizo/roleplaying_game/monster_codex/mc_equip_general.lst",
+            "pathfinder/paizo/roleplaying_game/monster_codex/mc_equip_magic_items.lst",
+            "pathfinder/paizo/roleplaying_game/monster_codex/mc_equipmods.lst",
+        ],
+    },
+    BookInput {
+        code: EQUIPMENT_BOOK_B2,
+        slug: "bestiary_2",
+        files: &[
+            "pathfinder/paizo/roleplaying_game/bestiary_2/b2_equip_arms_armor.lst",
+            "pathfinder/paizo/roleplaying_game/bestiary_2/b2_equip_general.lst",
+            "pathfinder/paizo/roleplaying_game/bestiary_2/_pfs/pfs_b2_equip_arms_armor.lst",
+            "pathfinder/paizo/roleplaying_game/bestiary_2/_pfs/pfs_b2_equip_general.lst",
+        ],
+    },
+    BookInput {
+        code: EQUIPMENT_BOOK_B3,
+        slug: "bestiary_3",
+        files: &[
+            "pathfinder/paizo/roleplaying_game/bestiary_3/b3_equip_arms_armor.lst",
+            "pathfinder/paizo/roleplaying_game/bestiary_3/b3_equipmods.lst",
+            "pathfinder/paizo/roleplaying_game/bestiary_3/_pfs/pfs_b3_equip_arms_armor.lst",
+            "pathfinder/paizo/roleplaying_game/bestiary_3/_pfs/pfs_b3_equipmods.lst",
+        ],
+    },
+    BookInput {
+        code: EQUIPMENT_BOOK_B4,
+        slug: "bestiary_4",
+        files: &[
+            "pathfinder/paizo/roleplaying_game/bestiary_4/b4_equip_arms_armor.lst",
+            "pathfinder/paizo/roleplaying_game/bestiary_4/b4_equip_magic_items.lst",
+            "pathfinder/paizo/roleplaying_game/bestiary_4/b4_equipmods.lst",
+        ],
+    },
 ];
 
 /// One parsed corpus record, before the already-held filter runs.
@@ -188,6 +327,24 @@ struct ParsedRecord {
     cost_gp: Option<f64>,
     weight_lbs: Option<f64>,
     description: Option<String>,
+    /// 1-indexed line within the file this record was parsed from — the
+    /// `§53.5` declared-PI reader (`declared_pi_at`) needs a real citation,
+    /// not just the parsed fields. Added `SD31-E6-F10-003`: before this
+    /// field existed, this generator's ONLY PI defense was `screen_
+    /// generated_table`'s blacklist substring scan (`§52.3`) over the
+    /// FINISHED table — real, but not the SAME check `gen_cache_equipment_
+    /// gap`'s separate JSON-write path already runs (`declared_pi_at`,
+    /// reading the corpus's own `NAMEISPI:`/`DESCISPI:` declaration), and
+    /// this generator's output (the compiled Rust table) is what the
+    /// desktop catalog actually reads (`equipment_catalog_rows()` chains
+    /// `equipment_gap_tables::equipment_gap_rows()` directly, never through
+    /// the JSON files at all) — so a name the JSON-write path correctly
+    /// excluded could still ship, uncaught, through THIS path. Confirmed
+    /// live: `inner_sea_races:Belkzen Battle Standard` (`NAMEISPI:YES`
+    /// declared) was excluded from `data/corpus/inner_sea_races/equipment/`
+    /// by `gen_cache_equipment_gap` but was STILL compiled into this file's
+    /// own `INNER_SEA_RACES_GAP_ROWS` static before this fix.
+    line: u32,
 }
 
 /// The catalog category a `.lst` basename declares. `_equipmods` is tested
@@ -211,6 +368,27 @@ fn tab_fields(line: &str) -> Vec<&str> {
 
 fn token_value<'a>(fields: &[&'a str], token: &str) -> Option<&'a str> {
     fields.iter().find_map(|f| f.trim().strip_prefix(token))
+}
+
+/// A `DESC:` token's real value, found by `SD31-E6-F10-003` while extending
+/// this generator to `horror_adventures`: PCGen lets a `.COPY=`/variant row
+/// state `DESC:.CLEAR` (discard the base record's inherited description)
+/// immediately followed by a SECOND `DESC:` field carrying the row's own
+/// real replacement text -- confirmed against the real corpus,
+/// `horror_adventures/ha_equip_arms_armor.lst`'s `Lupine Rageskin` row:
+/// `DESC:.CLEAR\tDESC:This +1 leather armor consists of wolf skins sewn
+/// together...` (9 rows total share this shape, all in this one file).
+/// `token_value`'s own `find_map` returns the FIRST match, which for all 9
+/// rows is the literal string `".CLEAR"` -- not fabricated data, but a real,
+/// richer description silently REPLACED by a bare directive token. This
+/// walks every `DESC:` field in a row's declared order and returns the
+/// first one that is not the bare clear-directive, so a
+/// `.CLEAR`-then-real-value row recovers its real value and a row with only
+/// `DESC:.CLEAR` and nothing after it (not observed in this generator's own
+/// input set, but not assumed impossible) correctly yields `None` rather
+/// than shipping the directive token as if it were prose.
+fn description_token_value<'a>(fields: &[&'a str]) -> Option<&'a str> {
+    fields.iter().filter_map(|f| f.trim().strip_prefix("DESC:")).find(|v| *v != ".CLEAR")
 }
 
 /// A PCGen numeric token, or `None` when the token is absent or carries a
@@ -244,6 +422,38 @@ fn is_non_record_line(first: &str, fields: &[&str]) -> bool {
         return true;
     }
     if first.contains(".MOD") {
+        return true;
+    }
+    // `SD31-E6-F10-003`: a PFS organized-play legality OVERLAY row -- e.g.
+    // `bestiary_2/_pfs/pfs_b2_equip_arms_armor.lst`'s entire content is
+    // shaped `<bare item name>\tTYPE:PFSNotLegal\t!PRECHARACTERTYPE:1,PC`,
+    // flagging an item ALREADY declared elsewhere as ineligible for PFS
+    // play, never a new item declaration. Confirmed corpus-wide before
+    // narrowing this predicate: 146 files carry `PFSNotLegal` and only 11
+    // of those occurrences also carry `COST:`/`DESC:`/`SPROP:` (a real
+    // record that additionally states a legality flag), so this checks for
+    // the ABSENCE of every real-content token too, not the presence of
+    // `PFSNotLegal` alone -- a row combining both stays a real record.
+    // Caught live: `pfs_b2_equip_arms_armor.lst`'s bare `Maul of the
+    // Titans` row (no `KEY:` of its own) collided with the SAME book's real
+    // `Maul of the Titans` row (whose own `KEY:` is the archetype-qualified
+    // `Elysian Maul of the Titans`) and was shipped as if it were a second,
+    // distinct catalog entry citing the real row's line -- a genuine
+    // `record_key`/cited-line mismatch `tests/v06_corpus_trap_report.rs`'s
+    // `ingested_record_keys_match_their_cited_line` caught. `bestiary_3`'s
+    // `pfs_b3_equip_arms_armor.lst` had the identical shape for `Ranged
+    // Cannon` (real row's own `KEY:` is `Ranged Cannon ~ Clockwork
+    // Goliath`).
+    if fields.iter().any(|f| f.trim() == "TYPE:PFSNotLegal")
+        && !fields.iter().any(|f| {
+            let f = f.trim();
+            f.starts_with("COST:")
+                || f.starts_with("WT:")
+                || f.starts_with("DESC:")
+                || f.starts_with("SPROP:")
+                || f.starts_with("EQMOD:")
+        })
+    {
         return true;
     }
     false
@@ -283,7 +493,7 @@ fn collect_base_fields(texts: &[String]) -> HashMap<String, BaseFields> {
                 continue;
             }
             let key = token_value(&fields, "KEY:").map(str::to_string).unwrap_or_else(|| first.to_string());
-            let desc = token_value(&fields, "DESC:").map(str::trim).filter(|d| !d.is_empty());
+            let desc = description_token_value(&fields).map(str::trim).filter(|d| !d.is_empty());
             let sprop = token_value(&fields, "SPROP:").map(str::trim).filter(|d| !d.is_empty());
             let description = match (desc, sprop) {
                 (Some(d), Some(s)) if d != s => Some(format!("{d} {s}")),
@@ -315,7 +525,8 @@ fn collect_base_fields(texts: &[String]) -> HashMap<String, BaseFields> {
 /// beyond its own line.
 fn parse_lst(text: &str, category: &'static str, base_fields: &HashMap<String, BaseFields>) -> Vec<ParsedRecord> {
     let mut out = Vec::new();
-    for line in text.lines() {
+    for (line_idx, line) in text.lines().enumerate() {
+        let line_number = (line_idx + 1) as u32;
         let fields = tab_fields(line);
         let Some(first) = fields.first() else { continue };
         let first = first.trim();
@@ -339,7 +550,7 @@ fn parse_lst(text: &str, category: &'static str, base_fields: &HashMap<String, B
         // line. A record may carry either, both, or neither — joined when
         // both are present, exactly as `ultimate_equipment::equipment_tables`
         // documents for the same corpus shape. Never a fabricated placeholder.
-        let desc = token_value(&fields, "DESC:").map(str::trim).filter(|d| !d.is_empty());
+        let desc = description_token_value(&fields).map(str::trim).filter(|d| !d.is_empty());
         let sprop = token_value(&fields, "SPROP:").map(str::trim).filter(|d| !d.is_empty());
         let mut description = match (desc, sprop) {
             (Some(d), Some(s)) if d != s => Some(format!("{d} {s}")),
@@ -367,7 +578,7 @@ fn parse_lst(text: &str, category: &'static str, base_fields: &HashMap<String, B
             }
         }
 
-        out.push(ParsedRecord { key, name, category, cost_gp, weight_lbs, description: safe_description(description) });
+        out.push(ParsedRecord { key, name, category, cost_gp, weight_lbs, description: safe_description(description), line: line_number });
     }
     out
 }
@@ -438,6 +649,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let mut body = String::new();
     let mut totals: Vec<(&str, usize)> = Vec::new();
+    let mut name_pi_excluded: u32 = 0;
+    let mut description_pi_redacted: u32 = 0;
 
     for input in BOOK_INPUTS {
         let mut rows: Vec<ParsedRecord> = Vec::new();
@@ -452,18 +665,19 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         // real per-record parse), and re-reading from disk a second time
         // risks a race against nothing (files are static) but is simply
         // wasted I/O; read once, use twice.
-        let mut file_texts: Vec<(String, String)> = Vec::new();
+        let mut file_texts: Vec<(PathBuf, String, String)> = Vec::new();
         for rel in input.files {
             let path = root.join(rel);
             let text = std::fs::read_to_string(&path)
                 .map_err(|e| format!("{}: {e}", path.display()))?;
             let basename = Path::new(rel).file_name().unwrap().to_string_lossy().into_owned();
-            file_texts.push((basename, text));
+            file_texts.push((path, basename, text));
         }
-        let base_fields =
-            collect_base_fields(&file_texts.iter().map(|(_, t)| t.clone()).collect::<Vec<_>>());
+        let base_fields = collect_base_fields(
+            &file_texts.iter().map(|(_, _, t)| t.clone()).collect::<Vec<_>>(),
+        );
 
-        for (basename, text) in &file_texts {
+        for (path, basename, text) in &file_texts {
             for record in parse_lst(text, category_for(basename), &base_fields) {
                 let already = held
                     .get(input.code)
@@ -477,6 +691,26 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 // `equipment_catalog_row_by_key`'s own first-match rule.
                 if !seen.insert(record.key.clone()) {
                     continue;
+                }
+                // `§53.5` declared-PI reader, applied to the COMPILED table
+                // this time (`SD31-E6-F10-003`) -- see `ParsedRecord::line`'s
+                // own doc comment for why this generator needed its own
+                // copy of this check rather than relying on `gen_cache_
+                // equipment_gap`'s separate JSON-write-path screen. A
+                // declared-PI name is a hard exclude (a name cannot be
+                // redacted, `pi_screening::DeclaredProductIdentity::name`'s
+                // own doc comment); a declared-PI description is redacted to
+                // the marker, same as every other PI-screened description in
+                // this program.
+                let declared = declared_pi_at(path, record.line);
+                if declared.name {
+                    name_pi_excluded += 1;
+                    continue;
+                }
+                let mut record = record;
+                if declared.description {
+                    description_pi_redacted += 1;
+                    record.description = Some(REDACTED_PI_MARKER.to_string());
                 }
                 rows.push(record);
             }
@@ -591,6 +825,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         println!("  {slug:28} {n:5}");
     }
     println!("pi-screening: CLEAN (0 hits over the generated text)");
+    println!(
+        "declared-pi (§53.5): {name_pi_excluded} name(s) excluded whole, \
+         {description_pi_redacted} description(s) redacted to {REDACTED_PI_MARKER:?}"
+    );
     Ok(())
 }
 
@@ -764,5 +1002,137 @@ mod copy_inheritance_tests {
         // line), which base_fields correctly does NOT hold — so leaf stays
         // unresolved rather than silently chaining through X's real text.
         assert_eq!(leaf.description, None);
+    }
+}
+
+#[cfg(test)]
+mod desc_clear_directive_tests {
+    use super::*;
+
+    /// The proof case, reproduced byte-for-byte from the real corpus
+    /// (`SD31-E6-F10-003`, found extending this generator to
+    /// `horror_adventures`): `ha_equip_arms_armor.lst`'s `Lupine Rageskin`
+    /// row states TWO `DESC:` fields on one line — `DESC:.CLEAR` (discard
+    /// the base's inherited description) followed by the row's own real
+    /// replacement prose. Before this cycle's fix, `token_value`'s
+    /// `find_map` returned the FIRST `DESC:` match — the literal string
+    /// `".CLEAR"` — so the record shipped that directive token joined with
+    /// its `SPROP:` as if it were real description text, silently dropping
+    /// 200+ words of genuine corpus prose. 9 rows in this one file share
+    /// this exact shape.
+    #[test]
+    fn a_desc_clear_directive_is_skipped_in_favor_of_the_real_desc_that_follows_it() {
+        let line = "Leather Armor (Base).COPY=Lupine Rageskin\t\tSORTKEY:Lupine Rageskin\tVISIBLE:YES\t\
+                     SPROP:when wearer rages, he turns into a Medium wolf with +1 bonus to natural armor\t\t\
+                     DESC:.CLEAR\tDESC:This +1 leather armor consists of wolf skins sewn together with sinew.";
+        let base_fields = collect_base_fields(&[]);
+        let records = parse_lst(line, "ArmsArmor", &base_fields);
+        let record = &records[0];
+        assert_eq!(
+            record.description.as_deref(),
+            Some(
+                "This +1 leather armor consists of wolf skins sewn together with sinew. \
+                 when wearer rages, he turns into a Medium wolf with +1 bonus to natural armor"
+            ),
+            "must ship the row's real DESC: prose (joined with SPROP:), never the bare \
+             `.CLEAR` directive token"
+        );
+    }
+
+    /// A row with only a single, ordinary `DESC:` field is unaffected — the
+    /// fix must not touch the overwhelmingly common case.
+    #[test]
+    fn an_ordinary_single_desc_field_is_unaffected() {
+        let fields = ["Foo", "DESC:Ordinary prose"];
+        assert_eq!(description_token_value(&fields), Some("Ordinary prose"));
+    }
+
+    /// A row stating `DESC:.CLEAR` with no real `DESC:` after it yields
+    /// `None`, never the directive token itself — this exact shape was not
+    /// observed in this generator's own input set, but the function must
+    /// not assume it is impossible.
+    #[test]
+    fn a_bare_clear_with_no_following_desc_yields_none() {
+        let fields = ["Foo", "DESC:.CLEAR"];
+        assert_eq!(description_token_value(&fields), None);
+    }
+}
+
+#[cfg(test)]
+mod pfs_not_legal_overlay_tests {
+    use super::*;
+
+    /// The proof case, reproduced byte-for-byte from the real corpus
+    /// (`SD31-E6-F10-003`): `bestiary_2/_pfs/pfs_b2_equip_arms_armor.lst`'s
+    /// bare `Maul of the Titans` row carries only a PFS legality flag, no
+    /// `KEY:` of its own and no real equipment content — the SAME book's
+    /// real declaration (`b2_equip_arms_armor.lst`) states this exact item
+    /// under `KEY:Elysian Maul of the Titans`, so before this fix the two
+    /// rows' bare-name-vs-KEY mismatch let the overlay row slip past the
+    /// `seen` dedup as if it were a second, distinct catalog entry.
+    #[test]
+    fn a_bare_pfs_not_legal_overlay_row_is_not_a_record() {
+        let base_fields = collect_base_fields(&[]);
+        let text = "Maul of the Titans\tTYPE:PFSNotLegal\t!PRECHARACTERTYPE:1,PC\n";
+        assert_eq!(
+            parse_lst(text, "ArmsArmor", &base_fields).len(),
+            0,
+            "a bare PFSNotLegal overlay row with no real content must not parse as a record"
+        );
+    }
+
+    /// The corpus-wide guard this predicate must not become too broad for:
+    /// 11 of 146 `PFSNotLegal`-carrying rows corpus-wide ALSO carry real
+    /// content (a genuine record that happens to also be PFS-illegal), and
+    /// those must still parse.
+    #[test]
+    fn a_pfs_not_legal_row_that_also_carries_real_content_still_parses() {
+        let base_fields = collect_base_fields(&[]);
+        let text = "Real Weapon\tTYPE:PFSNotLegal\tCOST:50\tWT:2\tDESC:A real item that happens to be PFS-illegal.\n";
+        let records = parse_lst(text, "ArmsArmor", &base_fields);
+        assert_eq!(records.len(), 1, "a PFSNotLegal row carrying real content must still parse");
+        assert_eq!(records[0].cost_gp, Some(50.0));
+    }
+}
+
+#[cfg(test)]
+mod declared_pi_tests {
+    use super::*;
+
+    /// The proof case, reproduced from the real corpus (`SD31-E6-F10-003`):
+    /// `inner_sea_races:Belkzen Battle Standard` declares `NAMEISPI:YES` and
+    /// was compiled into this generator's output BEFORE this fix, even
+    /// though `gen_cache_equipment_gap`'s separate JSON-write path already
+    /// excluded it. `line` is 1-indexed, matching every other citation this
+    /// program stores.
+    #[test]
+    fn a_nameispi_row_is_flagged_and_a_descispi_row_is_flagged_separately() {
+        let dir = std::env::temp_dir().join(format!("gegt_pi_test_{}", std::process::id()));
+        std::fs::create_dir_all(&dir).unwrap();
+        let file = dir.join("book_equip.lst");
+        std::fs::write(
+            &file,
+            "Belkzen Battle Standard\tCOST:34000\tNAMEISPI:YES\n\
+             Ordinary Banner\tCOST:100\tDESC:A plain banner.\tDESCISPI:YES\n\
+             Plain Rope\tCOST:1\n",
+        )
+        .unwrap();
+        let name_pi = declared_pi_at(&file, 1);
+        assert!(name_pi.name, "line 1's NAMEISPI:YES must be read");
+        assert!(!name_pi.description);
+        let desc_pi = declared_pi_at(&file, 2);
+        assert!(desc_pi.description, "line 2's DESCISPI:YES must be read");
+        assert!(!desc_pi.name);
+        let clean = declared_pi_at(&file, 3);
+        assert!(!clean.name && !clean.description, "an undeclared row must read as clean");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// Line 0 (no citation at all) is never a declaration -- mirrors
+    /// `cache_gen::equipment_gap`'s own `declared_pi_at_line_zero_is_no_
+    /// declaration`, since this is a local copy of that exact function.
+    #[test]
+    fn line_zero_is_no_declaration() {
+        assert!(!declared_pi_at(Path::new("/nonexistent"), 0).any());
     }
 }

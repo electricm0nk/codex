@@ -752,9 +752,17 @@ mod tests {
         // UW reaches this catalog only through the corpus gap lane; 57 of its
         // 127 rows carry a real `DESC:`/`SPROP:` token.
         assert_eq!(with_description("UW"), 57);
+        // `SD31-E6-F10-003`: 8 further already-compiled books (`OA`, `HA`,
+        // `ISR`, `ISWG`, `MC`, `B2`, `B3`, `B4`) extended into the corpus
+        // gap lane -- same "no hand-authored table, every row from the gap
+        // lane" shape as `UW` above. Re-derived fresh from the built
+        // catalog, not adjusted by delta: 4235 + 195 = 4430 (`declared_pi_at`'s
+        // own fix in `gen_equipment_gap_tables.rs` redacts/excludes 4 fewer
+        // than the earlier, pre-fix intermediate count -- re-derived fresh,
+        // not hand-adjusted, after that fix landed).
         assert_eq!(
             response.entries.iter().filter(|e| e.description.is_some()).count(),
-            4235
+            4430
         );
     }
 
@@ -806,7 +814,12 @@ mod tests {
         // full raw/dupe/collision reconciliation (1,425 raw - 1 same-book
         // dupe - 55 cross-book collisions = 1,369; 190 raw - 10 collisions
         // = 180).
-        assert_eq!(count_by_book(&response, "UE"), 1614);
+        // `SD31-E6-F10-003`: 1614 -> 1613, `declared_pi_at`'s extension over
+        // this whole compiled table catching a pre-existing PI leak
+        // (`ultimate_equipment:"Elysian Shield"`, `NAMEISPI:YES`) that
+        // predates this cycle -- see `equipment_resolver.rs`'s own comment
+        // on the same number for the full citation.
+        assert_eq!(count_by_book(&response, "UE"), 1613);
         // 24 General (pregenerated spellbooks) + 2 ArmsArmor (Scrollmaster
         // Gear); no `um_equipmods.lst` file exists for this book. Matches
         // `equipment_resolver::EQUIPMENT_BOOK_UM`'s own pinned 26.
@@ -827,14 +840,38 @@ mod tests {
         // compiled rule set whose feats and archetypes reach the player.
         assert_eq!(count_by_book(&response, "UW"), 127);
 
-        // 3309 + 375 + 319 + 7 + 215 + 42 + 105 + 1614 + 26 + 552 + 224 + 127.
+        // `SD31-E6-F10-003`: 8 further already-compiled books extended into
+        // the corpus gap lane, same "no hand-authored table" shape as `UW`
+        // above -- each book's count here is exactly its
+        // `gen_cache_equipment_gap` file count (`find data/corpus/<book>/
+        // equipment -name '*.json' | wc -l`), one catalog row per shipped
+        // JSON file, one to one.
+        assert_eq!(count_by_book(&response, "OA"), 119);
+        assert_eq!(count_by_book(&response, "HA"), 117);
+        assert_eq!(count_by_book(&response, "ISR"), 71);
+        assert_eq!(count_by_book(&response, "ISWG"), 46);
+        assert_eq!(count_by_book(&response, "MC"), 49);
+        // `B2`/`B3`: 7/8, not 8/9 -- each net of 1 bare PFS organized-play
+        // legality OVERLAY row (`is_non_record_line`'s `PFSNotLegal`
+        // extension) that was shipping as a spurious second catalog entry;
+        // see `tests/equipment_gap_tables.rs`'s own `EXPECTED_PER_BOOK` for
+        // the full citation.
+        assert_eq!(count_by_book(&response, "B2"), 7);
+        assert_eq!(count_by_book(&response, "B3"), 8);
+        assert_eq!(count_by_book(&response, "B4"), 5);
+
+        // 3309 + 375 + 319 + 7 + 215 + 42 + 105 + 1613 + 26 + 552 + 224 + 127
+        // + 119 + 117 + 71 + 46 + 49 + 7 + 8 + 5.
         // Pinned as a total as well as per book so that a book silently
         // dropping out of the chain cannot be masked by another book
         // growing. The +769 over the previous 6146 is exactly the corpus
         // gap lane's row count (`tests/equipment_gap_tables.rs` pins the
         // per-book split against `docs/work-inventory.json`'s own
-        // `not-ingested` population).
-        assert_eq!(response.entries.len(), 6915);
+        // `not-ingested` population); the further +421 (6915 -> 7336) is
+        // `SD31-E6-F10-003`'s 8-book extension of that same lane, net of
+        // the 1 pre-existing UE PI leak (`"Elysian Shield"`) and the 2 bare
+        // PFS legality overlay rows this cycle's fixes also caught.
+        assert_eq!(response.entries.len(), 7336);
     }
 
     #[test]
@@ -1131,7 +1168,15 @@ mod tests {
         // asserted here is that every collision the lane introduced actually
         // involves a gap row -- a new collision between two hand tables would
         // still fail, above.
-        assert_eq!(cross_book.len(), 203);
+        // `SD31-E6-F10-003`: +12 new cross-book collisions from the 8
+        // newly-extended gap-lane books (203 -> 215), every one verified
+        // below to involve a gap row.
+        // 213 -> 212: `bestiary_2`'s bare `Maul of the Titans` PFS legality
+        // overlay row (removed, `is_non_record_line`'s `PFSNotLegal`
+        // extension) was one of the 12 new cross-book collisions; the
+        // `bestiary_3` `Ranged Cannon` removal did not change this count
+        // (it never collided with another book's key).
+        assert_eq!(cross_book.len(), 212);
         for key in cross_book.difference(&expected_cross_book) {
             assert!(
                 gap_pairs.iter().any(|(_, gap_key)| gap_key == key),
@@ -1202,8 +1247,13 @@ mod tests {
         // 310 CRB + 75 APG + 20 ACG + 4 B1 + 29 ARG + 0 PU + 14 UI + 281 UE
         // + 2 UM + 52 UPSI + 149 UC + 1 UW. (`SD31-E6-F10-002`: 2 ArmsArmor
         // rows moved CRB -> B1, `decisions.md §9`; the 937 total is
-        // unchanged.)
-        assert_eq!(response.entries.len(), 937);
+        // unchanged.) `SD31-E6-F10-003`: +86 ArmsArmor rows across the 8
+        // newly-extended gap-lane books (937 -> 1023), re-derived fresh from
+        // the built catalog, not adjusted by a hand count.
+        // 1017 -> 1015: both removed PFS legality overlay rows
+        // (`bestiary_2`'s `Maul of the Titans`, `bestiary_3`'s `Ranged
+        // Cannon`) were `ArmsArmor` category.
+        assert_eq!(response.entries.len(), 1015);
         for entry in &response.entries {
             assert_eq!(entry.category, "ArmsArmor");
         }

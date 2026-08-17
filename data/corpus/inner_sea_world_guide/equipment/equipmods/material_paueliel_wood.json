@@ -1,0 +1,118 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "Equipmods",
+    "cost_gp": null,
+    "description": "10 hp/inch, hardness 7",
+    "key": "Material ~ Paueliel Wood",
+    "name": "Paueliel Wood",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "EQM",
+          "WEIGHTDIV",
+          "2"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "ACCHECK",
+          "2",
+          "TYPE=Enhancement",
+          "PRETYPE:1,Shield"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.Ammunition",
+          "6"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.Weapon",
+          "300"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.Shield",
+          "150"
+        ]
+      },
+      {
+        "qualifiers": [
+          "WEAPON",
+          "TOHIT",
+          "1",
+          "TYPE=Enhancement",
+          "PRETYPE:1,Weapon"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Material ~ Paueliel Wood"
+      },
+      {
+        "key": "TYPE",
+        "value": "BaseMaterial.MasterworkQuality.Ammunition.Weapon.Shield"
+      },
+      {
+        "key": "COST",
+        "value": "WT*15"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Wooden.Paueliel.Masterwork"
+      },
+      {
+        "key": "REPLACES",
+        "value": "Special Quality ~ Masterwork ~ Armor,Special Quality ~ Masterwork ~ Weapon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.255"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Wooden"
+      },
+      {
+        "key": "SPROP",
+        "value": "10 hp/inch, hardness 7"
+      },
+      {
+        "key": "ASSIGNTOALL",
+        "value": "YES"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 9,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_equipmods.lst",
+    "record_key": "Material ~ Paueliel Wood",
+    "sha256": "6d7d7231ee25f7f2aad9a8baab74890d96a49db6011183987eacbc2687eeb896"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:cost"
+  ]
+}

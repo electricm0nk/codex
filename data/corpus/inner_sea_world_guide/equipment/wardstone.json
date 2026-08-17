@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 0.0,
+    "description": "forbiddance path 300-ft.-wide: 12d6 damage/rnd to demons (Will DC 18 for half), no teleportation",
+    "key": "Wardstone",
+    "name": "Wardstone",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Artifact.Minor"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "WT",
+        "value": "2500"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.301"
+      },
+      {
+        "key": "SPROP",
+        "value": "forbiddance path 300-ft.-wide: 12d6 damage/rnd to demons (Will DC 18 for half), no teleportation"
+      }
+    ],
+    "weight_lbs": 2500.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 20,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_equip_magic_items.lst",
+    "record_key": "Wardstone",
+    "sha256": "74597707ea44ca43d75cb45d8f39e2262c2ace0c42be46729626f547aa943653"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

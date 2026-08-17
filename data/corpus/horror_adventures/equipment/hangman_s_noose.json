@@ -1,0 +1,74 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": null,
+    "description": "This +1 whip is made from a hemp rope that once served as the noose in a gallows. The countless executions committed with the rope have left an indelible mark on the weapon.&nl;As a standard action, the wielder of a hangman’s noose can attempt a combat maneuver check to wrap the whip around a creature’s neck. If she succeeds, the victim can’t move outside of the whip’s reach. As a standard action, the wielder can attempt a reposition combat maneuver check to move the victim within the whip’s reach or to pull the whip tighter, strangling the victim. Once the target is being strangled, the wielder can attempt a combat maneuver check as a standard action to squeeze the air out of the victim’s lungs. This reduces the amount of time the victim can hold his breath by 1d6+1 rounds.&nl;A victim can escape the noose with a successful Escape Artist check (DC = the wielder’s CMD), or by severing the noose with an attack or a successful sunder combat maneuver check. The noose has AC 18, hardness 2, and 12 hp. If severed, the noose can still be used as a +1 whip and repairs itself after 1 hour. As a standard action, the wielder can attempt a combat maneuver check to wrap the whip around a creature' s neck, allowing wielder to attempt a reposition maneuver or to strangle target",
+    "key": "Hangman's Noose",
+    "name": "Hangman's Noose",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "SORTKEY",
+        "value": "Hangman's Noose"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Rope.Special Ability ~ +1 ~ Weapon.Special Ability ~ Enhancement Cost|16000"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate necromancy"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|9th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|9,301 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Magic Arms and Armor, animate rope, suffocation"
+      },
+      {
+        "key": "SPROP",
+        "value": "As a standard action, the wielder can attempt a combat maneuver check to wrap the whip around a creature' s neck, allowing wielder to attempt a reposition maneuver or to strangle target"
+      },
+      {
+        "key": "DESC",
+        "value": ".CLEAR"
+      },
+      {
+        "key": "DESC",
+        "value": "This +1 whip is made from a hemp rope that once served as the noose in a gallows. The countless executions committed with the rope have left an indelible mark on the weapon.&nl;As a standard action, the wielder of a hangman’s noose can attempt a combat maneuver check to wrap the whip around a creature’s neck. If she succeeds, the victim can’t move outside of the whip’s reach. As a standard action, the wielder can attempt a reposition combat maneuver check to move the victim within the whip’s reach or to pull the whip tighter, strangling the victim. Once the target is being strangled, the wielder can attempt a combat maneuver check as a standard action to squeeze the air out of the victim’s lungs. This reduces the amount of time the victim can hold his breath by 1d6+1 rounds.&nl;A victim can escape the noose with a successful Escape Artist check (DC = the wielder’s CMD), or by severing the noose with an attack or a successful sunder combat maneuver check. The noose has AC 18, hardness 2, and 12 hp. If severed, the noose can still be used as a +1 whip and repairs itself after 1 hour."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 15,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_equip_arms_armor.lst",
+    "record_key": "Hangman's Noose",
+    "sha256": "daa97d61fd7d37ff29702c8b6aeccdd05a6669ded9a95146ff1923072284ee7a"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -6337,7 +6337,9 @@ mod tests {
         // The point of this test is the assertion BELOW, not this count: an
         // offered row the attach gate refuses is a dead affordance, and 584
         // newly offered rows is 584 new chances to ship one.
-        assert_eq!(offered.len(), 1666, "the picker's real offered-row count");
+        // `SD31-E6-F10-003`: +17 further corpus gap-lane Equipmods rows,
+        // across 8 further already-compiled books (1666 -> 1683).
+        assert_eq!(offered.len(), 1683, "the picker's real offered-row count");
 
         let refused: Vec<&str> = offered
             .iter()

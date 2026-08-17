@@ -1,0 +1,74 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": 0.0,
+    "description": null,
+    "key": "Rock (Huge)",
+    "name": "Rock (Huge)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Rock"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Rock"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Simple.Ranged.Standard.Bludgeoning.Thrown.Rock"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "WT",
+        "value": "100"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "2d6"
+      },
+      {
+        "key": "RANGE",
+        "value": "140"
+      },
+      {
+        "key": "SIZE",
+        "value": "C"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.303"
+      }
+    ],
+    "weight_lbs": 100.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 13,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_equip_arms_armor.lst",
+    "record_key": "Rock (Huge)",
+    "sha256": "93b8cccb460b161062fb770d4823006fa42316df408c177ec8743d5c4a321c4f"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

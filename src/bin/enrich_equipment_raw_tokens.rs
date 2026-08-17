@@ -263,6 +263,22 @@ fn main() {
         // 18 new records stay at the thin KEY:-token-only fallback, same
         // reasoning as every entry above.
         "ultimate_magic",
+        // SD31-E6-F10-003: `gen_cache_equipment_gap` extended to 8 further
+        // already-compiled books this cycle (none has a hand-authored
+        // `equipment_tables` module; every row comes from the gap lane,
+        // same shape as the `ultimate_*` entries above) -- same reasoning:
+        // omitting them here leaves their new records at the thin
+        // KEY:-token-only fallback and, critically, never eligible for
+        // `corpus_literal_sweep`'s `literal-verified` done rung, which is
+        // the reason this list exists at all.
+        "occult_adventures",
+        "horror_adventures",
+        "inner_sea_races",
+        "inner_sea_world_guide",
+        "monster_codex",
+        "bestiary_2",
+        "bestiary_3",
+        "bestiary_4",
     ];
 
     let mut total_enriched = 0u32;

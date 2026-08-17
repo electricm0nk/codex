@@ -2143,6 +2143,27 @@ fn equipment_book_slug_for(short_code: &str) -> &'static str {
         // table; all 127 of its catalog rows come from
         // `rules_tables::equipment_gap_tables`.
         "UW" => "ultimate_wilderness",
+        // SD31-E6-F10-003: 8 further already-compiled books extended into
+        // `equipment_gap_tables`, same "no hand-authored table, all rows
+        // from the gap lane" shape as `UW` above. This is a NARROW,
+        // additive-only exception to this card's file grant (equipment_gap
+        // lane, NOT this file) -- made because this exact function's own
+        // panic (this arm's sibling, below) otherwise hard-crashes
+        // `v06_work_inventory` for every caller the moment
+        // `equipment_resolver::equipment_catalog_rows()` carries these
+        // codes, which this cycle's `equipment_gap_tables.rs` regen makes
+        // true unconditionally. Purely an 8-line match-arm list append,
+        // self-verified by this file's own pre-existing
+        // `equipment_book_slug_for_covers_every_catalog_book` test; no other
+        // line in this file touched.
+        "OA" => "occult_adventures",
+        "HA" => "horror_adventures",
+        "ISR" => "inner_sea_races",
+        "ISWG" => "inner_sea_world_guide",
+        "MC" => "monster_codex",
+        "B2" => "bestiary_2",
+        "B3" => "bestiary_3",
+        "B4" => "bestiary_4",
         other => panic!(
             "equipment_resolver::equipment_catalog_rows() now carries an unmapped book code \
              {other:?} -- add it to equipment_book_slug_for so the equipment classifier does \

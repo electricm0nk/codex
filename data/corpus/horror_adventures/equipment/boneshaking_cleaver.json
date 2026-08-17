@@ -1,0 +1,74 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": null,
+    "description": "This well-balanced, two-handed cleaver is nearly 6 feet in length. Its blade protrudes from a hilt that appears to be the spine of an animal, capped with a skull at its end. A boneshaking cleaver functions as a +3 unholy greataxe. On a critical hit, it also rattles the target’s bones, rending flesh and separating joints. This deals 1 point of Constitution damage and allows the wielder to apply one of the following conditions to the target for 1 round: deafened, shaken, or sickened. On a critical, deals 1 point of Con damage, allows wielder to apply one of the following conditions to target for 1 round: deafened, shaken, or sickened.",
+    "key": "Boneshaking Cleaver",
+    "name": "Boneshaking Cleaver",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "SORTKEY",
+        "value": "Boneshaking Cleaver"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel.Special Ability ~ +3 ~ Weapon.Special Ability ~ Unholy ~ Weapon.Special Ability ~ Enhancement Cost|72000"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong necromancy [evil]"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|15th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|45,320 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Magic Arms and Armor, bestow curse, unholy blight"
+      },
+      {
+        "key": "SPROP",
+        "value": "On a critical, deals 1 point of Con damage, allows wielder to apply one of the following conditions to target for 1 round: deafened, shaken, or sickened."
+      },
+      {
+        "key": "DESC",
+        "value": ".CLEAR"
+      },
+      {
+        "key": "DESC",
+        "value": "This well-balanced, two-handed cleaver is nearly 6 feet in length. Its blade protrudes from a hilt that appears to be the spine of an animal, capped with a skull at its end. A boneshaking cleaver functions as a +3 unholy greataxe. On a critical hit, it also rattles the target’s bones, rending flesh and separating joints. This deals 1 point of Constitution damage and allows the wielder to apply one of the following conditions to the target for 1 round: deafened, shaken, or sickened."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 13,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_equip_arms_armor.lst",
+    "record_key": "Boneshaking Cleaver",
+    "sha256": "daa97d61fd7d37ff29702c8b6aeccdd05a6669ded9a95146ff1923072284ee7a"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

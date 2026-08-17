@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 15.0,
+    "description": "To provide any benefit, the goggles must be continuously worn for 1 hour, during which time the wearer takes a -2 penalty on all sight-based Perception checks. After this 1-hour period, the user can remove the goggles to gain a +2 circumstance bonus on Perception checks for the read aura occult skill unlock. This benefit fades after 1 hour.",
+    "key": "Aura Goggles",
+    "name": "Aura Goggles",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Tools"
+      },
+      {
+        "key": "COST",
+        "value": "15"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.248"
+      },
+      {
+        "key": "SPROP",
+        "value": "To provide any benefit, the goggles must be continuously worn for 1 hour, during which time the wearer takes a -2 penalty on all sight-based Perception checks. After this 1-hour period, the user can remove the goggles to gain a +2 circumstance bonus on Perception checks for the read aura occult skill unlock. This benefit fades after 1 hour."
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 8,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst",
+    "record_key": "Aura Goggles",
+    "sha256": "48877b9621bd36c3812d91cc603838c92eda6199fd2bd116d16d47523cbc1cbc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

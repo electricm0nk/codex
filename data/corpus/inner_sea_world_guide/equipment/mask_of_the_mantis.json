@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 6000.0,
+    "description": "3 charges/day (darkvision 60 ft., see invisibility, deathwatch, or +5 competence to perception) for 30 mins",
+    "key": "Mask of the Mantis",
+    "name": "Mask of the Mantis",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Headgear"
+      },
+      {
+        "key": "COST",
+        "value": "6000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.298"
+      },
+      {
+        "key": "SPROP",
+        "value": "3 charges/day (darkvision 60 ft., see invisibility, deathwatch, or +5 competence to perception) for 30 mins"
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_equip_magic_items.lst",
+    "record_key": "Mask of the Mantis",
+    "sha256": "74597707ea44ca43d75cb45d8f39e2262c2ace0c42be46729626f547aa943653"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

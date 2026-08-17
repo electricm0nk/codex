@@ -1,0 +1,74 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "ArmsArmor",
+    "cost_gp": null,
+    "description": "This +1 hide armor is stitched together from grizzly bear hides. When the wearer rages, she automatically turns into a Large brown bear, as if using change shape (beast shape II). The armor melds with her new form as normal, but the armor's enhancement bonus changes into a +1 enhancement bonus to her natural armor. When the rage ends, the wearer reverts to her own form. when wearer rages, he turns into a Large brown bear with +1 bonus to natural armor",
+    "key": "Ursine Rageskin",
+    "name": "Ursine Rageskin",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "SORTKEY",
+        "value": "Ursine Rageskin"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Leather.Special Ability ~ +1 ~ Armor.Special Ability ~ Enhancement Cost|19000"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|7th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|armor"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|10,165 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Magic Arms and Armor, beast shape II"
+      },
+      {
+        "key": "SPROP",
+        "value": "when wearer rages, he turns into a Large brown bear with +1 bonus to natural armor"
+      },
+      {
+        "key": "DESC",
+        "value": ".CLEAR"
+      },
+      {
+        "key": "DESC",
+        "value": "This +1 hide armor is stitched together from grizzly bear hides. When the wearer rages, she automatically turns into a Large brown bear, as if using change shape (beast shape II). The armor melds with her new form as normal, but the armor's enhancement bonus changes into a +1 enhancement bonus to her natural armor. When the rage ends, the wearer reverts to her own form."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 9,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_equip_arms_armor.lst",
+    "record_key": "Ursine Rageskin",
+    "sha256": "daa97d61fd7d37ff29702c8b6aeccdd05a6669ded9a95146ff1923072284ee7a"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

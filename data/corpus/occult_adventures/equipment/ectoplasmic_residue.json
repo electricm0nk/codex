@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "General",
+    "cost_gp": 20.0,
+    "description": "ranged touch attack DC13 Will, shaken 1d4 rounds, splash 1 round",
+    "key": "Ectoplasmic Residue",
+    "name": "Ectoplasmic Residue",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Splash Weapon"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Alchemical.Consumable.Weapon.Ranged.Thrown.Splash.Flask"
+      },
+      {
+        "key": "COST",
+        "value": "20"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "RANGE",
+        "value": "10"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.252"
+      },
+      {
+        "key": "QUALITY",
+        "value": "CraftDC|25"
+      },
+      {
+        "key": "SPROP",
+        "value": "ranged touch attack DC13 Will, shaken 1d4 rounds, splash 1 round"
+      }
+    ],
+    "weight_lbs": 2.0
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 41,
+    "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_equip.lst",
+    "record_key": "Ectoplasmic Residue",
+    "sha256": "48877b9621bd36c3812d91cc603838c92eda6199fd2bd116d16d47523cbc1cbc"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

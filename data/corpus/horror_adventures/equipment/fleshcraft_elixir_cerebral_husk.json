@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 500.0,
+    "description": "Once per day, when a saving throw against a mind-affecting effect fails, subject can shunt the effect into the cerebral husk, ignoring that effect, dealing 1d6 points of Constitution damage [Penalty] -2 penalty on Intelligence-based checks; DURATION 24 hours; SAVE DC 17",
+    "key": "Fleshcraft Elixir (Cerebral Husk)",
+    "name": "Fleshcraft Elixir (Cerebral Husk)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME] Fleshcraft Elixir"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Fleshcraft.Elixir.Consumable.Headband"
+      },
+      {
+        "key": "COST",
+        "value": "500"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.167"
+      },
+      {
+        "key": "SPROP",
+        "value": "Once per day, when a saving throw against a mind-affecting effect fails, subject can shunt the effect into the cerebral husk, ignoring that effect, dealing 1d6 points of Constitution damage [Penalty] -2 penalty on Intelligence-based checks; DURATION 24 hours; SAVE DC 17"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-17T08:18:39Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 81,
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_equip_magic_items.lst",
+    "record_key": "Fleshcraft Elixir (Cerebral Husk)",
+    "sha256": "500c71ebdeab1408dd9550ead46f2fe0298a9874b4bf47743641ab05a6e932b8"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

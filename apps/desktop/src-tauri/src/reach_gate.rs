@@ -1125,6 +1125,18 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // unions in itself. The empty seed set here is the literal truth of
         // this book's hand-authored coverage, not an omission.
         ("ultimate_wilderness", "equipment") => Some(equipment_reach("UW", BTreeSet::new())),
+        // `SD31-E6-F10-003`: 8 further already-compiled books extended into
+        // the corpus gap lane, same "no hand-authored table at all" shape
+        // as `UW` above — every one of their catalog rows is a gap-lane
+        // row, which `equipment_reach` unions in itself.
+        ("occult_adventures", "equipment") => Some(equipment_reach("OA", BTreeSet::new())),
+        ("horror_adventures", "equipment") => Some(equipment_reach("HA", BTreeSet::new())),
+        ("inner_sea_races", "equipment") => Some(equipment_reach("ISR", BTreeSet::new())),
+        ("inner_sea_world_guide", "equipment") => Some(equipment_reach("ISWG", BTreeSet::new())),
+        ("monster_codex", "equipment") => Some(equipment_reach("MC", BTreeSet::new())),
+        ("bestiary_2", "equipment") => Some(equipment_reach("B2", BTreeSet::new())),
+        ("bestiary_3", "equipment") => Some(equipment_reach("B3", BTreeSet::new())),
+        ("bestiary_4", "equipment") => Some(equipment_reach("B4", BTreeSet::new())),
 
         // Races: `list_race_catalog` serves every race's trait bundle, each
         // row carrying the trait's own name and derivation prose, rendered by
