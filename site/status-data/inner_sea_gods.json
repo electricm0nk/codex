@@ -1,0 +1,2445 @@
+{
+  "id": "inner_sea_gods",
+  "title": "Inner Sea Gods",
+  "kinds": [
+    {
+      "kind": "class",
+      "label": "Classes",
+      "done": 0,
+      "denominator": 3,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "Evangelist",
+          "doneness": "not-started",
+          "type_facet": "PC.Prestige"
+        },
+        {
+          "name": "Exalted",
+          "doneness": "not-started",
+          "type_facet": "PC.Prestige"
+        },
+        {
+          "name": "Sentinel",
+          "doneness": "not-started",
+          "type_facet": "PC.Prestige"
+        }
+      ]
+    },
+    {
+      "kind": "equipment",
+      "label": "Equipment",
+      "done": 0,
+      "denominator": 150,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "All-Seeing Armor",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Altar of Abadar",
+          "doneness": "not-started",
+          "type_facet": "Magic.Altar"
+        },
+        {
+          "name": "Altar of Asmodeus",
+          "doneness": "not-started",
+          "type_facet": "Magic.Altar"
+        },
+        {
+          "name": "Altar of Calistria",
+          "doneness": "not-started",
+          "type_facet": "Magic.Altar"
+        },
+        {
+          "name": "Altar of Cayden Cailean",
+          "doneness": "not-started",
+          "type_facet": "Magic.Altar"
+        },
+        {
+          "name": "Altar of Desna",
+          "doneness": "not-started",
+          "type_facet": "Magic.Altar"
+        },
+        {
+          "name": "Altar of Erastil",
+          "doneness": "not-started",
+          "type_facet": "Magic.Altar"
+        },
+        {
+          "name": "Altar of Gorum",
+          "doneness": "not-started",
+          "type_facet": "Magic.Altar"
+        },
+        {
+          "name": "Altar of Gozreh",
+          "doneness": "not-started",
+          "type_facet": "Magic.Altar"
+        },
+        {
+          "name": "Altar of Iomedae",
+          "doneness": "not-started",
+          "type_facet": "Magic.Altar"
+        },
+        {
+          "name": "Altar of Irori",
+          "doneness": "not-started",
+          "type_facet": "Magic.Altar"
+        },
+        {
+          "name": "Altar of Lamashtu",
+          "doneness": "not-started",
+          "type_facet": "Magic.Altar"
+        },
+        {
+          "name": "Altar of Nethys",
+          "doneness": "not-started",
+          "type_facet": "Magic.Altar"
+        },
+        {
+          "name": "Altar of Norgorber",
+          "doneness": "not-started",
+          "type_facet": "Magic.Altar"
+        },
+        {
+          "name": "Altar of Pharasma",
+          "doneness": "not-started",
+          "type_facet": "Magic.Altar"
+        },
+        {
+          "name": "Altar of Rovagug",
+          "doneness": "not-started",
+          "type_facet": "Magic.Altar"
+        },
+        {
+          "name": "Altar of Sarenrae",
+          "doneness": "not-started",
+          "type_facet": "Magic.Altar"
+        },
+        {
+          "name": "Altar of Shelyn",
+          "doneness": "not-started",
+          "type_facet": "Magic.Altar"
+        },
+        {
+          "name": "Altar of Torag",
+          "doneness": "not-started",
+          "type_facet": "Magic.Altar"
+        },
+        {
+          "name": "Altar of Urgathoa",
+          "doneness": "not-started",
+          "type_facet": "Magic.Altar"
+        },
+        {
+          "name": "Altar of Zon-Huthon",
+          "doneness": "not-started",
+          "type_facet": "Magic.Altar"
+        },
+        {
+          "name": "Armor Of The Unqenchable Fire",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Barbed Pentacle Of Asmodeus",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Neck.Amulet"
+        },
+        {
+          "name": "Bear Pelt Of The Bonebreaker",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Shoulders.Cloak"
+        },
+        {
+          "name": "Beautiful War Paint",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Head.Headgear"
+        },
+        {
+          "name": "Belt Of The Snake King",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Belt.Belt"
+        },
+        {
+          "name": "Besmara's Bicorne",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Head.Headgear"
+        },
+        {
+          "name": "Besmara's Tricorne",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Head.Headgear"
+        },
+        {
+          "name": "Black Alibi",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Blackfingers Apron",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Blade Of Three Fancies",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Blessed Keepsake",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Neck.Amulet"
+        },
+        {
+          "name": "Bloodlight",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Boots Of The Earth",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Feet.Boot"
+        },
+        {
+          "name": "Boots Of The Eternal Rose",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Feet.Boot"
+        },
+        {
+          "name": "Broken Chain Of The Beast",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Belt.Belt"
+        },
+        {
+          "name": "Bronze Skinning Knife",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_None"
+        },
+        {
+          "name": "Bronze Whisperer's Shield",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Calmitous Mail",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Carouser's Retort",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Cloak Of The Crusader",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Shoulders.Cloak"
+        },
+        {
+          "name": "Cloak Of The Night Sky",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Shoulders.Cloak"
+        },
+        {
+          "name": "Dawnfire",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Dawnflower Chain Vest",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Dawnflower Lantern",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_None"
+        },
+        {
+          "name": "Dawnflower Sash",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Belt.SLOT_Head.Headgear.Belt"
+        },
+        {
+          "name": "Deadeye Leather",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Deadeye's Spotter Ring",
+          "doneness": "not-started",
+          "type_facet": "SLOT_Ring.Ring.Magic"
+        },
+        {
+          "name": "Deathlurker's Cloak",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Shoulders.Cloak"
+        },
+        {
+          "name": "Demon Mother's Mask",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Head.Headgear"
+        },
+        {
+          "name": "Diabolical Masquerade Mask",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Head.Headgear"
+        },
+        {
+          "name": "Dream Candle",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_None"
+        },
+        {
+          "name": "Dreamwing Cape",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Shoulders.Cloak"
+        },
+        {
+          "name": "Driftwood Shield",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Droskar's Guiding Ring",
+          "doneness": "not-started",
+          "type_facet": "SLOT_Ring.Ring.Magic"
+        },
+        {
+          "name": "Enduring Bloom",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Eternal Iron Breastplate",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Fangtide Scale Mail",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Fate Blade",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Fate's Shears",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_None"
+        },
+        {
+          "name": "Father's Forgehammer",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_None"
+        },
+        {
+          "name": "Featherscale Cloak",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Shoulders.Cloak"
+        },
+        {
+          "name": "Flask Of The Reaper",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_None"
+        },
+        {
+          "name": "Forgefather's Half-Plate",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Forgefather's Sledge",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Fugitive Finder",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Fuming Blood Sabre",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Ghost Battling Ring",
+          "doneness": "not-started",
+          "type_facet": "SLOT_Ring.Ring.Magic"
+        },
+        {
+          "name": "Glorious Flame Ring",
+          "doneness": "not-started",
+          "type_facet": "SLOT_Ring.Ring.Magic"
+        },
+        {
+          "name": "Gloves Of Bony Power",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Hands.Glove"
+        },
+        {
+          "name": "Gluttonous Feasting Ring",
+          "doneness": "not-started",
+          "type_facet": "SLOT_Ring.Ring.Magic"
+        },
+        {
+          "name": "Golden Judge's Breastplate",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Gossamer Amberstone",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Neck.Amulet"
+        },
+        {
+          "name": "Gravewatcher Chainmail",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Gray Gambler's Hat",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Head.Headgear"
+        },
+        {
+          "name": "Gray Master's Leathers",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Great Barghest Hero Cloak",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Shoulders.Cloak"
+        },
+        {
+          "name": "Grim Gloom Mail",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Gutbite Belt",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Belt.Belt"
+        },
+        {
+          "name": "Hag's Shabble",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Body.Robe"
+        },
+        {
+          "name": "Half-Plate Of The Dark Prince",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Hell's Eye",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Hero's Release Pendant",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Neck.Amulet"
+        },
+        {
+          "name": "Icon Of The Midwife",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_None"
+        },
+        {
+          "name": "Inheritor's Breastplate",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Inheritor's Gauntlet",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Hands.Glove"
+        },
+        {
+          "name": "Inheritor's Light",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Iron Lord's Transforming Slivers",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_None.Consumable"
+        },
+        {
+          "name": "Key Of The Second Vault",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Neck.Amulet"
+        },
+        {
+          "name": "Kimle Coat",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Kinbonded Bow",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Knight-Inheritor's Ring",
+          "doneness": "not-started",
+          "type_facet": "SLOT_Ring.Ring.Magic"
+        },
+        {
+          "name": "Lucky Drunk's Mail",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Mask Of Conflicting Energies",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Head.Headgear"
+        },
+        {
+          "name": "Mask Of Cutting Flash",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Head.Headgear"
+        },
+        {
+          "name": "Medal Of The Hero's Heart",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Neck.Amulet"
+        },
+        {
+          "name": "Milanite Armor",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Nail Of The Princess",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Nethysian Ring Of Minor Spell Storing",
+          "doneness": "not-started",
+          "type_facet": "SLOT_Ring.Ring.Magic"
+        },
+        {
+          "name": "Nightstone Of Sorrow",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Neck.Amulet"
+        },
+        {
+          "name": "Obliviating Flail",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Orb Of The Waybringer",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Neck.Amulet"
+        },
+        {
+          "name": "Painspike Armor",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Pallid Chain",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Pallid Crystal",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Neck.Amulet"
+        },
+        {
+          "name": "Pelt Of The Demon Mother",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Perfect Tuning Fork",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_None"
+        },
+        {
+          "name": "Perfection Leather",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Perfectionist Shavtoosh",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Poison Gum",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_None.Consumable"
+        },
+        {
+          "name": "Preklikin's Book Of Cults",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_None"
+        },
+        {
+          "name": "Profane Seal Signet",
+          "doneness": "not-started",
+          "type_facet": "SLOT_Ring.Ring.Magic"
+        },
+        {
+          "name": "Purification Talisman",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Neck.Amulet"
+        },
+        {
+          "name": "Quarterstaff Of Entwined Serpents",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Red Hound Ring",
+          "doneness": "not-started",
+          "type_facet": "SLOT_Ring.Ring.Magic"
+        },
+        {
+          "name": "Red Stalker Armor",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Redlust's Daughter",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Rhombocrystal",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_None"
+        },
+        {
+          "name": "Ring Of Serene Contortions",
+          "doneness": "not-started",
+          "type_facet": "SLOT_Ring.Ring.Magic"
+        },
+        {
+          "name": "Ring Of Seven Lovely Colors",
+          "doneness": "not-started",
+          "type_facet": "SLOT_Ring.Ring.Magic"
+        },
+        {
+          "name": "Ring Of Stairs And Stars",
+          "doneness": "not-started",
+          "type_facet": "SLOT_Ring.Ring.Magic"
+        },
+        {
+          "name": "Ring Of Sundering Metals",
+          "doneness": "not-started",
+          "type_facet": "SLOT_Ring.Ring.Magic"
+        },
+        {
+          "name": "Ring Of Unquenchable Passions",
+          "doneness": "not-started",
+          "type_facet": "SLOT_Ring.Ring.Magic"
+        },
+        {
+          "name": "Robe Of The Master Of Masters",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Body.Robe"
+        },
+        {
+          "name": "Rosy Hauberk",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Rusting Teeth Of The Rough Beast",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Sacrificial Dagger Of The Blood Mother",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_None"
+        },
+        {
+          "name": "Safecamp Wagon",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_None"
+        },
+        {
+          "name": "Scabbard Of Pain",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_None"
+        },
+        {
+          "name": "Sea Banshee Coat",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Shad'Gorum Nugget",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Neck.Amulet"
+        },
+        {
+          "name": "Shooting Starknife",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Silent Blade Vest",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Chest.Shirt"
+        },
+        {
+          "name": "Spellsight Bracer",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Wrists.Bracer"
+        },
+        {
+          "name": "Stagger-Proof Boots",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Feet.Boot"
+        },
+        {
+          "name": "Starfaring Robe",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Body.Robe"
+        },
+        {
+          "name": "Starsong Mail",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Steward's Iron Key",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_None"
+        },
+        {
+          "name": "Stinging Stiletto",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Neck.SLOT_Ring.Amulet.Ring"
+        },
+        {
+          "name": "Stormstrike",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Tankard Of The Drunken Hero",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_None"
+        },
+        {
+          "name": "Toiler's Armor",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Umbral Chain",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Veil Of Veils",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Head.Headgear"
+        },
+        {
+          "name": "Veiled Chain",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Vengeful Kiss",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Vurra Of The Maker",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Neck.Amulet"
+        },
+        {
+          "name": "Wayfinder Of Zephyrs",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_None"
+        },
+        {
+          "name": "Windwave Kilt",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_Belt.Belt"
+        },
+        {
+          "name": "Zonzon Doll Of Forgiveness",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous Item.SLOT_None.Consumable"
+        }
+      ]
+    },
+    {
+      "kind": "monster_ability",
+      "label": "Monster Abilities",
+      "done": 72,
+      "denominator": 161,
+      "pct": 44.7,
+      "items": [
+        {
+          "name": "Ability Drain",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural.AttackOption"
+        },
+        {
+          "name": "Ablative Adaptation",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Acid Web",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Adamantine Attacks",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Alluring Scent",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.Aura"
+        },
+        {
+          "name": "Always Armed",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Animated Shield",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Armor of Valor",
+          "doneness": "held",
+          "type_facet": "SpecialQuality.Supernatural.Defensive"
+        },
+        {
+          "name": "Aura of Bravery",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural.Aura"
+        },
+        {
+          "name": "Bardic Magic",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Bardic Performance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Bardic Performance",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Bay",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural.AttackOption"
+        },
+        {
+          "name": "Bladed Slam",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Breath Weapon",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Breath Weapon",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Breath Weapon",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Breath Weapon",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural.BreathWeapon"
+        },
+        {
+          "name": "Breath Weapon",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural.BreathWeapon"
+        },
+        {
+          "name": "Bugle",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Cascade of Spears",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Chainstorm",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.Aura"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Channel Negative Energy",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Charming Aura",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.Aura"
+        },
+        {
+          "name": "Constant Spells",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Constant Spells",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Death's Dagger",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Deathless",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Defender's Shield",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Deft Limbs",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Detach Head",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Detect Evil",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.Sense"
+        },
+        {
+          "name": "Detect Evil",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.Sense"
+        },
+        {
+          "name": "Detect Good",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.Sense"
+        },
+        {
+          "name": "Detect Magic",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.Sense"
+        },
+        {
+          "name": "Devour Soul",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Disease Swarm",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Divine Trigger",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Divine Trigger",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Dream Dust",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural.AttackOption"
+        },
+        {
+          "name": "Dwarf Blood",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Eat Metal",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Ectoplasmic Focus",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Eldritch Blast",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural.AttackOption"
+        },
+        {
+          "name": "Electric Hooves",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Emissary",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Enchantment Resistance",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Energy Channel Aura",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural.Aura"
+        },
+        {
+          "name": "Energy Ray",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural.AttackOption"
+        },
+        {
+          "name": "Exaction",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Eyeless",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.Vision"
+        },
+        {
+          "name": "Fade",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Fast Healing",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.ModifyHP"
+        },
+        {
+          "name": "Fate Aura",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.Aura"
+        },
+        {
+          "name": "Form of Sea and Sky",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Freeze",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Frostfire Spirit",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Gaze",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Gaze",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Ghostly Arms",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Glittering Radiance",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Grim White Stag ~ Poison Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Hammer Storm",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Heroes' Feast",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Hexes",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural.AttackOption"
+        },
+        {
+          "name": "Hibernation",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Holy Fire",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Horrific Appearance",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Howl of Despair",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Immunity to Cold",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary.Immunity"
+        },
+        {
+          "name": "Immunity to Possession",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.Immunity"
+        },
+        {
+          "name": "Immunity to Rust",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary.Immunity"
+        },
+        {
+          "name": "Implant",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Inspiration",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Ironsense",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.Vision"
+        },
+        {
+          "name": "Languages",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.Communicate"
+        },
+        {
+          "name": "Languages",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural.Communicate"
+        },
+        {
+          "name": "Lay on Hands",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.LayOnHands.Lay on Hand"
+        },
+        {
+          "name": "Lay on Hands",
+          "doneness": "held",
+          "type_facet": "SpecialQuality.Supernatural.LayOnHands.Lay on Hand"
+        },
+        {
+          "name": "Lord of Battle",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Luck Domain",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Mind Control",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Monk Abilities",
+          "doneness": "held",
+          "type_facet": "SpecialQuality"
+        },
+        {
+          "name": "Murderer's Reward",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Negate Aroma",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "No Breath",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Penetrating Gaze",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Poison",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison Flesh",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Poison Gout",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural.AttackOption"
+        },
+        {
+          "name": "Poison Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Poison Stream",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Possession",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural.AttackOption"
+        },
+        {
+          "name": "Powerful Blows (Slam)",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Protection from Evil",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Protective Aura",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Radiance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Rage Aura",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.Aura"
+        },
+        {
+          "name": "Ray",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural.AttackOption"
+        },
+        {
+          "name": "Regeneration",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.ModifyHP"
+        },
+        {
+          "name": "Regeneration",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.ModifyHP"
+        },
+        {
+          "name": "Regeneration",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.ModifyHP"
+        },
+        {
+          "name": "Regeneration",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.ModifyHP"
+        },
+        {
+          "name": "Regeneration",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary.ModifyHP"
+        },
+        {
+          "name": "Resistance to Divine Power",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary.Resistance"
+        },
+        {
+          "name": "Self-Resurrection",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Semi-Incorporeal",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Sense Poison",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Shield Form",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Shock Cestus",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural.AttackOption"
+        },
+        {
+          "name": "Shroud of Flame",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural.Aura"
+        },
+        {
+          "name": "Soul Scream",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Speak with Animals",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural.Communicate"
+        },
+        {
+          "name": "Spell Deflection",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural.Defensive"
+        },
+        {
+          "name": "Staggered",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Staggering Drunk",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Starlight Blast",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural.AttackOption"
+        },
+        {
+          "name": "Strength Damage",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Stun",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Stunning Claw",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Stunning Ray",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural.AttackOption"
+        },
+        {
+          "name": "Sudden Strike",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Swallow Whole",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Extraordinary.AttackOption"
+        },
+        {
+          "name": "Swarm Form",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Swift Tracker",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Terror Shape",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Tugging Strands",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Uncanny Dodge",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Unearthly Grace",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Unnerving Gaze",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Unnerving Gaze",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Unstoppable Force",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Veil of Forms",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Versatile Performance",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Vicious Critical",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Water Mastery",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Weapon Proficiencies",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Witchcraft",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        }
+      ]
+    },
+    {
+      "kind": "monster",
+      "label": "Monsters",
+      "done": 37,
+      "denominator": 39,
+      "pct": 94.9,
+      "items": [
+        {
+          "name": "Angel (Iophanite)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Arcanotheign",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Archon (Stag)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Ataxian",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Azata (Thyrlien)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Basileus",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Burleev",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Chalkost",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Dapsara",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Demon (Swaithe)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Devil (Accomplice)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Hand of the Inheritor",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Karumzek",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Kyton (Lampadarius)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Lawgiver",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Mother's Maw",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Night Monarch",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Orsheval",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Pavbagha",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Personification of Fury",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Psychopomp (Ahmuuth)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Qlippoth (Thognorok)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Sarcovalt",
+          "doneness": "held",
+          "type_facet": null
+        },
+        {
+          "name": "Steward of the Skein",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Sunlord Thalachos",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Thais",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "The First Blade",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "The Grand Defender",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "The Grim White Stag",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "The Menotherian",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "The Old Man",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "The Prince in Chains",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "The Spirit of Adoration",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "The Stabbing Beast",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Vendenopterix",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Xocothian",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Yethazmari",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Yhohm",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Zentragt",
+          "doneness": "done",
+          "type_facet": null
+        }
+      ]
+    },
+    {
+      "kind": "race_trait",
+      "label": "Race Traits",
+      "done": 0,
+      "denominator": 28,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "Acid Web",
+          "doneness": "not-started",
+          "type_facet": "Ability Focus"
+        },
+        {
+          "name": "Alluring Scent",
+          "doneness": "not-started",
+          "type_facet": "Ability Focus"
+        },
+        {
+          "name": "Bay",
+          "doneness": "not-started",
+          "type_facet": "Ability Focus"
+        },
+        {
+          "name": "Chainstorm",
+          "doneness": "not-started",
+          "type_facet": "Ability Focus"
+        },
+        {
+          "name": "Charming Aura",
+          "doneness": "not-started",
+          "type_facet": "Ability Focus"
+        },
+        {
+          "name": "Desecrate Aura",
+          "doneness": "not-started",
+          "type_facet": "Aura.Supernatural"
+        },
+        {
+          "name": "Dream Dust",
+          "doneness": "not-started",
+          "type_facet": "Ability Focus"
+        },
+        {
+          "name": "Eldritch Blast",
+          "doneness": "not-started",
+          "type_facet": "Ability Focus"
+        },
+        {
+          "name": "Energy Channel Aura",
+          "doneness": "not-started",
+          "type_facet": "Ability Focus"
+        },
+        {
+          "name": "Fate Aura",
+          "doneness": "not-started",
+          "type_facet": "Ability Focus"
+        },
+        {
+          "name": "Favored Enemy",
+          "doneness": "not-started",
+          "type_facet": "FavoredEnemy.SpecialAttack.Extraordinary.AttackOption"
+        },
+        {
+          "name": "Favored Terrain",
+          "doneness": "not-started",
+          "type_facet": "FavoredEnemy.SpecialAttack.Extraordinary.AttackOption"
+        },
+        {
+          "name": "Glittering Radiance",
+          "doneness": "not-started",
+          "type_facet": "Ability Focus"
+        },
+        {
+          "name": "Herald Traits",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Howl of Despair",
+          "doneness": "not-started",
+          "type_facet": "Ability Focus"
+        },
+        {
+          "name": "Mind Control",
+          "doneness": "not-started",
+          "type_facet": "Ability Focus"
+        },
+        {
+          "name": "Penetrating Gaze",
+          "doneness": "not-started",
+          "type_facet": "Ability Focus"
+        },
+        {
+          "name": "Possession",
+          "doneness": "not-started",
+          "type_facet": "Ability Focus"
+        },
+        {
+          "name": "Radiance",
+          "doneness": "not-started",
+          "type_facet": "Ability Focus"
+        },
+        {
+          "name": "Shroud of Flame",
+          "doneness": "not-started",
+          "type_facet": "Ability Focus"
+        },
+        {
+          "name": "Spawn of Rovagug Traits",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Speed Burst",
+          "doneness": "not-started",
+          "type_facet": "ModifyMovement.Extraordinary"
+        },
+        {
+          "name": "Staggered",
+          "doneness": "not-started",
+          "type_facet": "Ability Focus"
+        },
+        {
+          "name": "Starlight Blast",
+          "doneness": "not-started",
+          "type_facet": "Ability Focus"
+        },
+        {
+          "name": "Stunning Claw",
+          "doneness": "not-started",
+          "type_facet": "Ability Focus"
+        },
+        {
+          "name": "Stunning Ray",
+          "doneness": "not-started",
+          "type_facet": "Ability Focus"
+        },
+        {
+          "name": "Truespeech",
+          "doneness": "not-started",
+          "type_facet": "Communicate.Supernatural"
+        },
+        {
+          "name": "Truespeech",
+          "doneness": "not-started",
+          "type_facet": "Communicate.Supernatural"
+        }
+      ]
+    },
+    {
+      "kind": "spell",
+      "label": "Spells",
+      "done": 0,
+      "denominator": 96,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "Abadar's Truthtelling",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Abstemiousness",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Air Breathing (Personification of Fury)",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Arcane Mark (Profane Seal Signet)",
+          "doneness": "not-started",
+          "type_facet": "Arcane"
+        },
+        {
+          "name": "Aspect of the Nightingale",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Baphomet's Blessing",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Beacon of Luck",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Beast Shape I (Red Hound Ring)",
+          "doneness": "not-started",
+          "type_facet": "Arcane"
+        },
+        {
+          "name": "Beast Shape II (Bear Pelt Of The Bonebreaker)",
+          "doneness": "not-started",
+          "type_facet": "Arcane"
+        },
+        {
+          "name": "Beast Shape IV (Ring Of Seven Lovely Colors)",
+          "doneness": "not-started",
+          "type_facet": "Arcane"
+        },
+        {
+          "name": "Blade Snare",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Blessing of the Watch",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Brittle Portal",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Burst of Glory",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Caustic Blood",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Channel Vigor",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Channel the Gift",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Create Water (Ataxian)",
+          "doneness": "not-started",
+          "type_facet": "Divine"
+        },
+        {
+          "name": "Deadeye's Arrow",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Defending Bone",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Dream Feast",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Early Judgment",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Enhance Water",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Face of the Devourer",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Fairness",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Fallback Strategy",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "False Alibi",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Feather Fall (Pavbagha)",
+          "doneness": "not-started",
+          "type_facet": "Arcane"
+        },
+        {
+          "name": "Firebelly",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Fractions of Heal and Harm",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Freedom's Toast",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Geas/Quest (Asmodean)",
+          "doneness": "not-started",
+          "type_facet": "Divine"
+        },
+        {
+          "name": "Ghoul Hunger",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Gozreh's Trident",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Hairline Fractures",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Hammer of Mending",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Haze of Dreams",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Heightened Charm Person",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Hunter's Blessing",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Ice Armor",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Inheritor's Smite",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Instant Summons (First Blade)",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Knock (Caydenite)",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Levitate (Self only)",
+          "doneness": "not-started",
+          "type_facet": "Arcane"
+        },
+        {
+          "name": "Light Prison",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Lighten Object",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Lighten Object, Mass",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Lose the Trail",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Maddening Oubliette",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Magic Fang (Belt Of The Snake King)",
+          "doneness": "not-started",
+          "type_facet": "Divine"
+        },
+        {
+          "name": "Magic Jar (Ataxian)",
+          "doneness": "not-started",
+          "type_facet": "Arcane"
+        },
+        {
+          "name": "Monstrous Extremities",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Night of Blades",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Pick Your Poison",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Plague Bearer",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Planar Ally (Thais)",
+          "doneness": "not-started",
+          "type_facet": "Divine"
+        },
+        {
+          "name": "Plane Shift (self and willing targets only)",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Poisoned Egg",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Quickened Vomit Swarm",
+          "doneness": "not-started",
+          "type_facet": "Arcane"
+        },
+        {
+          "name": "Rage (Self only)",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Read Weather",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Replenish Ki",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Rovagug's Fury",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Sadomasochism",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Secret Speech",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Seducer's Eyes",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Shared Sacrifice",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Shield of the Dawnflower, Greater",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Sky Swim",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Smite Abomination",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Spawn Calling",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Speak With Animals (Zentragt)",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Spell Gauge",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Spell Scourge",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Summon Monster I (Ahmuuth)",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Summon Monster I (Broken Chain Of The Beast)",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Summon Monster I (Red Hound Ring)",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Summon Monster II (Demon Mother's Mask)",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Summon Monster II (Personification of Fury)",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Summon Monster IV (Yethazmari)",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Summon Monster IX (Personification of Fury)",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Summon Monster V (Basileus)",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Summon Monster VI (The Stabbing Beast)",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Symbol of Debauchery",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Symbol of Dispelling",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Sympathy (Shelynite)",
+          "doneness": "not-started",
+          "type_facet": "Divine"
+        },
+        {
+          "name": "Tap Inner Beauty",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Touch of Bloodletting",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Tracking Mark",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Transplant Visage",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Unwelcome Halo",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Vengeful Stinger",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Vexing Miscalculation",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Vomit Swarm (Sarcovalt)",
+          "doneness": "not-started",
+          "type_facet": "Arcane"
+        },
+        {
+          "name": "Weapons Against Evil",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Whispering Wind (Gozren)",
+          "doneness": "not-started",
+          "type_facet": "Divine"
+        }
+      ]
+    }
+  ]
+}

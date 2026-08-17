@@ -1,0 +1,1203 @@
+{
+  "id": "inner_sea_bestiary",
+  "title": "Inner Sea Bestiary",
+  "kinds": [
+    {
+      "kind": "monster_ability",
+      "label": "Monster Abilities",
+      "done": 143,
+      "denominator": 190,
+      "pct": 75.3,
+      "items": [
+        {
+          "name": "Acid Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.MutantSpecialAbility"
+        },
+        {
+          "name": "Acidic Pustules",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.MutantSpecialAbility"
+        },
+        {
+          "name": "Adaptive Learning",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Aura of Madness",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Bitter Flames",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Bleed Damage",
+          "doneness": "done",
+          "type_facet": "SpecialAttack"
+        },
+        {
+          "name": "Blood Rage",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Booster Jets",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Breath Weapon",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.MutantSpecialAbility"
+        },
+        {
+          "name": "Breath Weapon",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Breath Weapon",
+          "doneness": "done",
+          "type_facet": "SpecialAttack"
+        },
+        {
+          "name": "Burrowing Bite",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Can't Be Disarmed",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Censor",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Chain Guns",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Charge Weapon",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Combined Arms",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Combined Arms",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Compel Plants",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Construct Bane",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Consume Flesh",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Consume Memory",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Corporate Will",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Corpse Cremation",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Create Carrionstorm",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Create Spawn",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Create Spawn",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Critical Hit Vulnerability",
+          "doneness": "done",
+          "type_facet": "SpecialQuality"
+        },
+        {
+          "name": "Curse of Living Death",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Curse of Stone",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Cyth-V'sug's Unity",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Daemonic Harbinger Traits",
+          "doneness": "done",
+          "type_facet": "SpecialQuality"
+        },
+        {
+          "name": "Damage Reduction",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Damage Reduction",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Daughters of Arlantia",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Deadly Slam",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Deformed Arm",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.MutantDeformity"
+        },
+        {
+          "name": "Deformed Leg",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.MutantDeformity"
+        },
+        {
+          "name": "Delayed Suggestion",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.SpellLike"
+        },
+        {
+          "name": "Dimensional Snare",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Disease",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Disease",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural.MutantSpecialAbility"
+        },
+        {
+          "name": "Dispelling Critical",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Drain Prana",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural q"
+        },
+        {
+          "name": "Dreamwarden",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Dust Cloud",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Eldritch Surge",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Electricity Vulnerability",
+          "doneness": "done",
+          "type_facet": "SpecialQuality"
+        },
+        {
+          "name": "Energy Drain",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Entropic Breath",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Expressive Chameleon",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Expurgate",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Eye Rays",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Fast Healing",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Fire Damage",
+          "doneness": "done",
+          "type_facet": "SpecialAttack"
+        },
+        {
+          "name": "Flesh Mansion",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Fleshy Shield",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Fling",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Flux Infusion Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Flying Charge",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Force Field",
+          "doneness": "held",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Frenzy",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Frightful Presence",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Fungal Rejuvenation",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Glowsap",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Gnaw",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Gush",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Hibernation",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Hopedrinker",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Hungry Gaze",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Immunities",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Immunity to Bleed Effects",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.Immunity"
+        },
+        {
+          "name": "Immunity to Magic",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Immunity to Magic",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Immunity to Magic",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Immunity to Permanent Wounds",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.Immunity"
+        },
+        {
+          "name": "Immunity to Turning",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary.Immunity"
+        },
+        {
+          "name": "Impeded Magic",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Incandescent Body",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Incendiary Grasp",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Increased Speed",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.MutantSpecialAbility"
+        },
+        {
+          "name": "Infernal Duke Traits",
+          "doneness": "done",
+          "type_facet": "SpecialQuality"
+        },
+        {
+          "name": "Intelligence Drain",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Intelligent",
+          "doneness": "done",
+          "type_facet": "SpecialQuality"
+        },
+        {
+          "name": "Keen Sight",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Laser Rifle",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Link",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Lost Time",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Luckbringer",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Malevolence",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Maw of the Abyss",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Militant",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Mind Feed",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Mindshatter",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Mock",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Moxix's Delectation",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Mucus Cloud",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Nascent Demon Lord Traits",
+          "doneness": "done",
+          "type_facet": "SpecialQuality"
+        },
+        {
+          "name": "Navigational Awareness",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Necrotic Field",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Negative Energy",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Parasitic Bond",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Petrified Body",
+          "doneness": "held",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Planebound",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Plant Empathy",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Plasma Lance",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Possess Corpse",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Possession",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Powerful Blows",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Psychopomp Traits",
+          "doneness": "done",
+          "type_facet": "SpecialQuality"
+        },
+        {
+          "name": "Quantum Lash",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Ravage Magic",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Razmiri Aversion",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Reconstitution",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Regeneration",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary.ModifyHP"
+        },
+        {
+          "name": "Regeneration",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Regeneration",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary.ModifyHP"
+        },
+        {
+          "name": "Rend Faith",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Rending Mandibles",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Resilient",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Resistance to Mind-Affecting ~ Output",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.Resistance"
+        },
+        {
+          "name": "Righteous Bite",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Rockets",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Runemastery",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Rupture",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Sawtooth",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Scholastic Masquerade",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Self-Repair",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Sense Apostate",
+          "doneness": "held",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Shadow Cloak",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Shadow Touch",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Shared Rupture",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Shatter Silence",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Shattered Mind",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.MutantDeformity"
+        },
+        {
+          "name": "Siphon Spirit",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Slime",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Slowing Gaze",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Soul Lock",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Spell Absorption",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Spell Reservoir",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Spell Resistance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Spell Sunder",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Spell-Like Abilities",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Spell-Like Abilities",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Spell-Like Abilities",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Spell-Like Abilities",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Spell-Like Abilities",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Spell-Like Abilities",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Spell-Like Abilities",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Spell-Like Abilities",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Spell-Like Abilities",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Spell-Like Abilities",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Spell-Like Abilities",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Spell-Like Abilities",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Spell-Like Abilities",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary.Supernatural.SpellLike"
+        },
+        {
+          "name": "Spells",
+          "doneness": "done",
+          "type_facet": "SpecialQuality"
+        },
+        {
+          "name": "Spines",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Spirit Sense",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Spirit Touch",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Spit",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Sporepod",
+          "doneness": "held",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Starflight",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Summon",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Superior Optics",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Suppressing Fire",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Swarm",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Swift Cuts",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Swift Transformation",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Sword Mastery",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Tainted Blood",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Temporal Anomaly",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Terminal Aura",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Thorn Throw",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Thoughtlance",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Thunderous Bark",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Toxic Flesh",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Transformation",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Unbound",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Undersized Weapons",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Unnerving Gaze",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Unstoppable Force",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Urban Defender",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Vanish",
+          "doneness": "held",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Voice of the Ancients",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Vulnerable to Glass",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Warped Hide",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.MutantDeformity"
+        },
+        {
+          "name": "Weakness to Prayer",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality"
+        },
+        {
+          "name": "Weapon Expertise",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary"
+        }
+      ]
+    },
+    {
+      "kind": "monster",
+      "label": "Monsters",
+      "done": 38,
+      "denominator": 40,
+      "pct": 95.0,
+      "items": [
+        {
+          "name": "Apostasy Wraith",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Beetle (Scarab)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Beetle (Stalk)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Cayhound",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Ceru",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Charnel Colossus",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Chemnosit",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Fungus Queen",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Giant (Shadow)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Golem (Marrowstone)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Golem (Noqual)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Golem (Quantium)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Kakuen-Taka",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Khaei",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Korir-Kokembe",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Kyton (Termagant)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Lorthact",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Mantis (Deadly)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Mockingfey",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Moxix",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Nightripper",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Oronci",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Petrified Maiden",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Psychopomp (Memitim)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Psychopomp (Shoki)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Psychopomp (Viduus)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Robot (Annihilator)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Robot (Gearsman)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Robot (Myrmidon)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Spellscar Fext",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Star Monarch",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Thin Man",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Umbral Shepherd",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Veiled Master",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Vespergaunt",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Volnagur",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Water Wraith",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Whirlmaw",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Woundwyrm",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Zelishkar",
+          "doneness": "done",
+          "type_facet": null
+        }
+      ]
+    },
+    {
+      "kind": "race_trait",
+      "label": "Race Traits",
+      "done": 0,
+      "denominator": 4,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "Paralysis",
+          "doneness": "not-started",
+          "type_facet": "SpecialAtack.Supernatural"
+        },
+        {
+          "name": "Resistance to Mind-Affecting",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Spell-Like Abilities",
+          "doneness": "not-started",
+          "type_facet": "SpellLike"
+        },
+        {
+          "name": "Weapon Selection",
+          "doneness": "not-started",
+          "type_facet": "PetrifiedMaidenWeaponSelection"
+        }
+      ]
+    }
+  ]
+}

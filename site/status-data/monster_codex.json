@@ -1,0 +1,1122 @@
+{
+  "id": "monster_codex",
+  "title": "Monster Codex",
+  "kinds": [
+    {
+      "kind": "class_feature",
+      "label": "Class Features",
+      "done": 0,
+      "denominator": 36,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "Alchemical Trapper",
+          "doneness": "not-started",
+          "type_facet": "Archetype.AlchemistArchetype"
+        },
+        {
+          "name": "Alchemical Weapon",
+          "doneness": "not-started",
+          "type_facet": "Alchemist Class Features.GrenadierClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Ancient Arms",
+          "doneness": "not-started",
+          "type_facet": "Druid Class Features.AncientGuardianClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Ancient Guardian",
+          "doneness": "not-started",
+          "type_facet": "Archetype.DruidArchetype"
+        },
+        {
+          "name": "Ancient Ways",
+          "doneness": "not-started",
+          "type_facet": "Druid Class Features.AncientGuardianClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Apocalypse Mysteries",
+          "doneness": "not-started",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleMystery"
+        },
+        {
+          "name": "Blackstar Bomb*",
+          "doneness": "not-started",
+          "type_facet": "AlchemistClassFeatures.SpecialAttack.AlchemistDiscovery.AlchemistBombModifier"
+        },
+        {
+          "name": "Bloodline Arcana",
+          "doneness": "not-started",
+          "type_facet": "Class Feature.Sorcerer Class Feature.Sorcerer Bloodline Arcana.SpecialQuality.Special Quality"
+        },
+        {
+          "name": "Bloodline Powers",
+          "doneness": "not-started",
+          "type_facet": "Class Feature.Sorcerer Class Feature"
+        },
+        {
+          "name": "Bomb Trap",
+          "doneness": "unmeasurable",
+          "type_facet": "Alchemist Class Features.AlchemicalTrapperClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Bonus Feat",
+          "doneness": "unmeasurable",
+          "type_facet": "Barbarian Class Features.PackRagerClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Bouda",
+          "doneness": "not-started",
+          "type_facet": "Archetype.WitchArchetype"
+        },
+        {
+          "name": "Bouda's Eye",
+          "doneness": "not-started",
+          "type_facet": "Witch Class Features.BoudaClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Cold-Blooded",
+          "doneness": "not-started",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleSecondCurse"
+        },
+        {
+          "name": "Cold-Blooded",
+          "doneness": "not-started",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleCurse"
+        },
+        {
+          "name": "Community Bond",
+          "doneness": "unmeasurable",
+          "type_facet": "Druid Class Features.AncientGuardianClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Defy Acid",
+          "doneness": "unmeasurable",
+          "type_facet": "ApocalypseMysteryEnergyType"
+        },
+        {
+          "name": "Defy Cold",
+          "doneness": "unmeasurable",
+          "type_facet": "ApocalypseMysteryEnergyType"
+        },
+        {
+          "name": "Defy Electricity",
+          "doneness": "unmeasurable",
+          "type_facet": "ApocalypseMysteryEnergyType"
+        },
+        {
+          "name": "Defy Elements",
+          "doneness": "unmeasurable",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.ApocalypseRevelation.Extraordinary"
+        },
+        {
+          "name": "Defy Fire",
+          "doneness": "unmeasurable",
+          "type_facet": "ApocalypseMysteryEnergyType"
+        },
+        {
+          "name": "Defy Sonic",
+          "doneness": "unmeasurable",
+          "type_facet": "ApocalypseMysteryEnergyType"
+        },
+        {
+          "name": "Destructive Roots",
+          "doneness": "not-started",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.ApocalypseRevelation.Supernatural"
+        },
+        {
+          "name": "Directed Blast",
+          "doneness": "not-started",
+          "type_facet": "Alchemist Class Features.GrenadierClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Dispel Hostility",
+          "doneness": "unmeasurable",
+          "type_facet": "Druid Class Features.AncientGuardianClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Doomsayer",
+          "doneness": "not-started",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.ApocalypseRevelation.Supernatural"
+        },
+        {
+          "name": "Dragon Yapper",
+          "doneness": "not-started",
+          "type_facet": "Archetype.BardArchetype"
+        },
+        {
+          "name": "Dust to Dust",
+          "doneness": "unmeasurable",
+          "type_facet": "OracleClassFeatures.SpecialAttack.OracleRevelation.ApocalypseRevelation.Supernatural.PerDayOracleRevelation"
+        },
+        {
+          "name": "Earth Crawler",
+          "doneness": "unmeasurable",
+          "type_facet": "Class Feature.Sorcerer Class Feature.Ghoul Bloodline ~ Power LVL 15.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural"
+        },
+        {
+          "name": "Erosion Touch",
+          "doneness": "unmeasurable",
+          "type_facet": "OracleClassFeatures.SpecialAttack.OracleRevelation.ApocalypseRevelation.Supernatural.RevelationTargetOneOnly.PerDayOracleRevelation"
+        },
+        {
+          "name": "Fearmonger",
+          "doneness": "not-started",
+          "type_facet": "Archetype.AntipaladinArchetype"
+        },
+        {
+          "name": "Feed on Fear",
+          "doneness": "unmeasurable",
+          "type_facet": "Antipaladin Class Features.FearmongerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Fetish",
+          "doneness": "unmeasurable",
+          "type_facet": "Witch Class Features.BoudaClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Final Revelation",
+          "doneness": "not-started",
+          "type_facet": "OracleClassFeatures.SpecialQuality.FinalRevelation"
+        },
+        {
+          "name": "Flying Beast Tamer",
+          "doneness": "unmeasurable",
+          "type_facet": "Alchemist Class Features.WingedMarauderClassFeatures.SpecialQuality.Extraordinary.Animal Companion"
+        },
+        {
+          "name": "Frightening Cruelty",
+          "doneness": "not-started",
+          "type_facet": "Antipaladin Class Features.FearmongerClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Frightful Song",
+          "doneness": "not-started",
+          "type_facet": "Bard Class Features.DragonYapperClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Ghoul Bloodline",
+          "doneness": "unmeasurable",
+          "type_facet": "SorcererBloodlineChoice"
+        },
+        {
+          "name": "Ghoul Bloodline",
+          "doneness": "not-started",
+          "type_facet": "Class Feature.Sorcerer Class Feature.SpecialQuality.ClassSpecialization.Sorcerer Bloodline"
+        },
+        {
+          "name": "Ghoul Bloodline ~ Bonus Spells",
+          "doneness": "not-started",
+          "type_facet": "Internal"
+        },
+        {
+          "name": "Ghoulish Aspect",
+          "doneness": "unmeasurable",
+          "type_facet": "Class Feature.Sorcerer Class Feature.Ghoul Bloodline ~ Power LVL 20.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Supernatural"
+        },
+        {
+          "name": "Ghoulish Claws",
+          "doneness": "unmeasurable",
+          "type_facet": "Class Feature.Sorcerer Class Feature.Ghoul Bloodline ~ Power LVL 01.Sorcerer Bloodline Power.SpecialAttack.Special Attack.Supernatural"
+        },
+        {
+          "name": "Grenadier",
+          "doneness": "not-started",
+          "type_facet": "Archetype.AlchemistArchetype"
+        },
+        {
+          "name": "Hyena Shape",
+          "doneness": "unmeasurable",
+          "type_facet": "Witch Class Features.BoudaClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Infested",
+          "doneness": "not-started",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleSecondCurse"
+        },
+        {
+          "name": "Infested",
+          "doneness": "not-started",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleCurse"
+        },
+        {
+          "name": "Leathery Skin",
+          "doneness": "unmeasurable",
+          "type_facet": "Class Feature.Sorcerer Class Feature.Ghoul Bloodline ~ Power LVL 03.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Extraordinary"
+        },
+        {
+          "name": "Martial Weapon Proficiency",
+          "doneness": "unmeasurable",
+          "type_facet": "Alchemist Class Features.GrenadierClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Mud Witch",
+          "doneness": "not-started",
+          "type_facet": "WitchClassFeatures.SpecialQuality.Supernatural.WitchHex.MinorHex"
+        },
+        {
+          "name": "Near Death",
+          "doneness": "unmeasurable",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.ApocalypseRevelation.Supernatural"
+        },
+        {
+          "name": "Pack Rager",
+          "doneness": "not-started",
+          "type_facet": "Archetype.BarbarianArchetype"
+        },
+        {
+          "name": "Panicked",
+          "doneness": "unmeasurable",
+          "type_facet": "AntipaladinClassFeatures.SpecialAttack.Supernatural.Cruelty.LayOnHands"
+        },
+        {
+          "name": "Pass the Torch",
+          "doneness": "unmeasurable",
+          "type_facet": "OracleClassFeatures.SpecialAttack.OracleRevelation.ApocalypseRevelation.Supernatural.PerDayOracleRevelation"
+        },
+        {
+          "name": "Patience of Nature",
+          "doneness": "unmeasurable",
+          "type_facet": "Druid Class Features.AncientGuardianClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Power of the Fallen",
+          "doneness": "unmeasurable",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.ApocalypseRevelation.SpellLike.RevelationTargetOneOnly.PerDayOracleRevelation"
+        },
+        {
+          "name": "Precise Bombs",
+          "doneness": "not-started",
+          "type_facet": "Alchemist Class Features.GrenadierClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Raging Tactician",
+          "doneness": "unmeasurable",
+          "type_facet": "Barbarian Class Features.PackRagerClassFeatures.SpecialQuality"
+        },
+        {
+          "name": "Ravenous Frenzy",
+          "doneness": "unmeasurable",
+          "type_facet": "Class Feature.Sorcerer Class Feature.Ghoul Bloodline ~ Power LVL 09.Sorcerer Bloodline Power.SpecialQuality.Special Quality.Extraordinary"
+        },
+        {
+          "name": "Sipping Pet",
+          "doneness": "not-started",
+          "type_facet": "AlchemistClassFeatures.SpecialQuality.AlchemistDiscovery"
+        },
+        {
+          "name": "Spell Blast",
+          "doneness": "not-started",
+          "type_facet": "OracleClassFeatures.SpecialAttack.OracleRevelation.ApocalypseRevelation.Supernatural"
+        },
+        {
+          "name": "Staggering Blast",
+          "doneness": "not-started",
+          "type_facet": "Alchemist Class Features.GrenadierClassFeatures.SpecialQuality.Supernatural"
+        },
+        {
+          "name": "Trapfinding",
+          "doneness": "unmeasurable",
+          "type_facet": "Alchemist Class Features.AlchemicalTrapperClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Undo Artifice",
+          "doneness": "unmeasurable",
+          "type_facet": "Druid Class Features.AncientGuardianClassFeatures.SpecialQuality.SpellLike"
+        },
+        {
+          "name": "Unimpeachable",
+          "doneness": "not-started",
+          "type_facet": "Druid Class Features.AncientGuardianClassFeatures.SpecialQuality.Extraordinary"
+        },
+        {
+          "name": "Unstoppable Overrun",
+          "doneness": "not-started",
+          "type_facet": "OracleClassFeatures.SpecialAttack.OracleRevelation.ApocalypseRevelation.Extraordinary"
+        },
+        {
+          "name": "Void Bomb*",
+          "doneness": "unmeasurable",
+          "type_facet": "AlchemistClassFeatures.SpecialAttack.AlchemistDiscovery.AlchemistBombModifier"
+        },
+        {
+          "name": "Winged Marauder",
+          "doneness": "not-started",
+          "type_facet": "Archetype.AlchemistArchetype"
+        },
+        {
+          "name": "Yapping Song",
+          "doneness": "not-started",
+          "type_facet": "Bard Class Features.DragonYapperClassFeatures.SpecialQuality"
+        }
+      ]
+    },
+    {
+      "kind": "companion",
+      "label": "Companions",
+      "done": 14,
+      "denominator": 15,
+      "pct": 93.3,
+      "items": [
+        {
+          "name": "7th-Level Advancement ~ Companion (Giant Vulture)",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement"
+        },
+        {
+          "name": "Companion (Cave Salamander)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Companion (Giant Vulture)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Companion (Gorthek)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Companion (Python (Riding))",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Companion (Rat (Riding))",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Companion (Yzobu)",
+          "doneness": "done",
+          "type_facet": null
+        },
+        {
+          "name": "Companion Advancement (Cave Salamander)",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement"
+        },
+        {
+          "name": "Companion Advancement (Gorthek)",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement"
+        },
+        {
+          "name": "Companion Advancement (Python (Riding))",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement"
+        },
+        {
+          "name": "Companion Advancement (Rat (Riding))",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement"
+        },
+        {
+          "name": "Companion Advancement (Yzobu)",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement"
+        },
+        {
+          "name": "Familiar (Seru)",
+          "doneness": "done",
+          "type_facet": "Companion.Familiar.Magical Beast"
+        },
+        {
+          "name": "Familiar (Sootwing Bat)",
+          "doneness": "held",
+          "type_facet": "Companion.Familiar.Undead"
+        },
+        {
+          "name": "Stampede",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        }
+      ]
+    },
+    {
+      "kind": "equipment",
+      "label": "Equipment",
+      "done": 0,
+      "denominator": 45,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "Alchemical Blood",
+          "doneness": "not-started",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Ambush Cauldron",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous"
+        },
+        {
+          "name": "Banner of the Rushing Horde",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous"
+        },
+        {
+          "name": "Bloodfeast Shield",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Bolas Bolts (10)",
+          "doneness": "not-started",
+          "type_facet": "Ammunition.Resizable.Standard.BolaBolt"
+        },
+        {
+          "name": "Bombchucker",
+          "doneness": "not-started",
+          "type_facet": "Goods.General"
+        },
+        {
+          "name": "Bullet, Sling (Alchemical)",
+          "doneness": "not-started",
+          "type_facet": "Ammunition.Resizable.Standard.Bullet"
+        },
+        {
+          "name": "Cap of Enervation",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Headgear"
+        },
+        {
+          "name": "Cave Dweller's Greataxe",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Caver's Bolt",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous"
+        },
+        {
+          "name": "Cloak of the Troll King",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Cloak"
+        },
+        {
+          "name": "Crashing Boots",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Boot"
+        },
+        {
+          "name": "Elixir of Oppression",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Consumable"
+        },
+        {
+          "name": "Extractor's Gloves",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Glove"
+        },
+        {
+          "name": "Fervor Juice",
+          "doneness": "not-started",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Flindbar",
+          "doneness": "not-started",
+          "type_facet": "Weapon.Resizable.Melee.OneHanded.Exotic.Standard.Bludgeoning.Piercing.Flail.Gnoll"
+        },
+        {
+          "name": "Flying Straps",
+          "doneness": "not-started",
+          "type_facet": "Goods.Mount.Resizable"
+        },
+        {
+          "name": "Flying Straps (Masterwork)",
+          "doneness": "not-started",
+          "type_facet": "Goods.Mount.Resizable"
+        },
+        {
+          "name": "Fog-Cutting Lenses",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Eyegear"
+        },
+        {
+          "name": "Frostblood Axe",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Gauntlets of Rending",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Glove"
+        },
+        {
+          "name": "Gorthek Masks",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous"
+        },
+        {
+          "name": "Headband of Vermin Control",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Headgear"
+        },
+        {
+          "name": "Horn Harness",
+          "doneness": "not-started",
+          "type_facet": "Goods.Mount.Resizable"
+        },
+        {
+          "name": "Horror Dust",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Consumable"
+        },
+        {
+          "name": "Hunter's Nose Ring",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Headgear"
+        },
+        {
+          "name": "Hyena Shawl",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Headgear"
+        },
+        {
+          "name": "Irongrip Gauntlets",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Glove"
+        },
+        {
+          "name": "Light-Killer's Grease",
+          "doneness": "not-started",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Pugwampi Braid",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous"
+        },
+        {
+          "name": "Rat (Riding)",
+          "doneness": "not-started",
+          "type_facet": "Mount.Goods.Transportation.Container"
+        },
+        {
+          "name": "Rat (Riding/Combat Trained)",
+          "doneness": "not-started",
+          "type_facet": "Mount.Goods.Transportation.Container"
+        },
+        {
+          "name": "Rhinarium Paste",
+          "doneness": "not-started",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Saddle (Gorthek)",
+          "doneness": "not-started",
+          "type_facet": "Goods.Mount.Resizable"
+        },
+        {
+          "name": "Serpent-Necked Flail",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Serpentine Choker",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Amulet"
+        },
+        {
+          "name": "Signal Rocket",
+          "doneness": "not-started",
+          "type_facet": "Goods.Alchemical.Consumable"
+        },
+        {
+          "name": "Slaver's Crossbow, Heavy",
+          "doneness": "not-started",
+          "type_facet": "Weapon.Resizable.Exotic.Ranged.Standard.Bludgeoning.Container.Projectile.Crossbow"
+        },
+        {
+          "name": "Slaver's Crossbow, Light",
+          "doneness": "not-started",
+          "type_facet": "Weapon.Resizable.Exotic.Ranged.Standard.Bludgeoning.Container.Projectile.Crossbow"
+        },
+        {
+          "name": "Snakebiter Arrow",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Spiderdraw",
+          "doneness": "not-started",
+          "type_facet": "Goods.Alchemical.Consumable.Weapon.Ranged.Thrown.Splash"
+        },
+        {
+          "name": "Spikebones",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous"
+        },
+        {
+          "name": "Venomsweat Salve",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Consumable"
+        },
+        {
+          "name": "War Drums of Savagery",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous"
+        },
+        {
+          "name": "Winter Wolf Runetooth",
+          "doneness": "not-started",
+          "type_facet": "Magic.Wondrous.Consumable"
+        }
+      ]
+    },
+    {
+      "kind": "equipment_modifier",
+      "label": "Equipment Modifiers",
+      "done": 0,
+      "denominator": 4,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "Burning",
+          "doneness": "not-started",
+          "type_facet": "Weapon"
+        },
+        {
+          "name": "Catalytic",
+          "doneness": "not-started",
+          "type_facet": "Weapon.Ammunition"
+        },
+        {
+          "name": "Steaming",
+          "doneness": "not-started",
+          "type_facet": "Armor"
+        },
+        {
+          "name": "Virulent",
+          "doneness": "not-started",
+          "type_facet": "Weapon"
+        }
+      ]
+    },
+    {
+      "kind": "feat",
+      "label": "Feats",
+      "done": 0,
+      "denominator": 32,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "Angelbane Strike",
+          "doneness": "not-started",
+          "type_facet": "General"
+        },
+        {
+          "name": "Aquatic Adaption",
+          "doneness": "not-started",
+          "type_facet": "General"
+        },
+        {
+          "name": "Aquatic Advantage",
+          "doneness": "not-started",
+          "type_facet": "General"
+        },
+        {
+          "name": "Awesome Charge",
+          "doneness": "not-started",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Bushwhack",
+          "doneness": "not-started",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Chain Challenge",
+          "doneness": "not-started",
+          "type_facet": "General"
+        },
+        {
+          "name": "Cleaving Sweep",
+          "doneness": "not-started",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Coordinated Reposition",
+          "doneness": "not-started",
+          "type_facet": "Teamwork"
+        },
+        {
+          "name": "Disarm Partner",
+          "doneness": "not-started",
+          "type_facet": "Combat.Teamwork"
+        },
+        {
+          "name": "Draconic Magic",
+          "doneness": "not-started",
+          "type_facet": "General"
+        },
+        {
+          "name": "Gnawer",
+          "doneness": "not-started",
+          "type_facet": "General"
+        },
+        {
+          "name": "Horn Rider",
+          "doneness": "not-started",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Horn Riders Charge",
+          "doneness": "not-started",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Hurtful",
+          "doneness": "not-started",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Improved Disarm Partner",
+          "doneness": "not-started",
+          "type_facet": "Combat.Teamwork"
+        },
+        {
+          "name": "Motivated March",
+          "doneness": "not-started",
+          "type_facet": "General"
+        },
+        {
+          "name": "Mutual Hatred",
+          "doneness": "not-started",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Pack Rat",
+          "doneness": "not-started",
+          "type_facet": "General"
+        },
+        {
+          "name": "Pile On",
+          "doneness": "not-started",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Scarred Legion",
+          "doneness": "not-started",
+          "type_facet": "Teamwork"
+        },
+        {
+          "name": "Shadow Shroud",
+          "doneness": "not-started",
+          "type_facet": "General"
+        },
+        {
+          "name": "Shared Stash",
+          "doneness": "not-started",
+          "type_facet": "Teamwork"
+        },
+        {
+          "name": "Sharptooth",
+          "doneness": "not-started",
+          "type_facet": "General"
+        },
+        {
+          "name": "Shocking Bellow",
+          "doneness": "not-started",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Slurk Rider",
+          "doneness": "not-started",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Snapping Flank",
+          "doneness": "not-started",
+          "type_facet": "Combat.Teamwork"
+        },
+        {
+          "name": "Snipers Lantern",
+          "doneness": "not-started",
+          "type_facet": "General"
+        },
+        {
+          "name": "Spirit of the Corps",
+          "doneness": "not-started",
+          "type_facet": "Combat.Teamwork"
+        },
+        {
+          "name": "Staggering Blow",
+          "doneness": "not-started",
+          "type_facet": "Combat"
+        },
+        {
+          "name": "Strangler",
+          "doneness": "not-started",
+          "type_facet": "General"
+        },
+        {
+          "name": "Vampiric Companion",
+          "doneness": "not-started",
+          "type_facet": "General"
+        },
+        {
+          "name": "Visceral Threat",
+          "doneness": "not-started",
+          "type_facet": "Combat"
+        }
+      ]
+    },
+    {
+      "kind": "monster_ability",
+      "label": "Monster Abilities",
+      "done": 3,
+      "denominator": 3,
+      "pct": 100.0,
+      "items": [
+        {
+          "name": "Disease",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Supernatural"
+        },
+        {
+          "name": "Poison",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        },
+        {
+          "name": "Spit Venom",
+          "doneness": "done",
+          "type_facet": "SpecialAttack.Extraordinary"
+        }
+      ]
+    },
+    {
+      "kind": "monster",
+      "label": "Monsters",
+      "done": 1,
+      "denominator": 2,
+      "pct": 50.0,
+      "items": [
+        {
+          "name": "Seru",
+          "doneness": "done",
+          "type_facet": "Magical Beast"
+        },
+        {
+          "name": "Sootwing Bat",
+          "doneness": "held",
+          "type_facet": "Undead"
+        }
+      ]
+    },
+    {
+      "kind": "race_trait",
+      "label": "Race Traits",
+      "done": 4,
+      "denominator": 14,
+      "pct": 28.6,
+      "items": [
+        {
+          "name": "+2 Strength, +2 Dexterity, -2 Charisma",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Goblin Racial Trait.SpecialQuality.Racial Ability Scores"
+        },
+        {
+          "name": "Bat (Sootwing) ~ Paralysis",
+          "doneness": "not-started",
+          "type_facet": null
+        },
+        {
+          "name": "Cheek Pouches",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Ratfolk Racial Trait.SpecialQuality.Special Quality"
+        },
+        {
+          "name": "Cleanliness",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Ratfolk Racial Trait.SpecialQuality.Special Quality"
+        },
+        {
+          "name": "Ironskin",
+          "doneness": "not-started",
+          "type_facet": "Racial Spell-Like Ability"
+        },
+        {
+          "name": "Ironskinned",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Duergar Racial Trait.SpecialQuality.Special Quality"
+        },
+        {
+          "name": "Lab Rat",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Ratfolk Racial Trait.SpecialQuality.Special Quality"
+        },
+        {
+          "name": "Low-Light Vision",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Ratfolk Racial Trait.SpecialQuality.Racial Vision"
+        },
+        {
+          "name": "Medium",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Goblin Racial Trait.SpecialQuality.Racial Size"
+        },
+        {
+          "name": "Normal Speed",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Ratfolk Racial Trait.SpecialQuality.Racial Speed"
+        },
+        {
+          "name": "Oversized Goblin",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Goblin Racial Trait.SpecialQuality.Special Quality.Goblin Variant"
+        },
+        {
+          "name": "Standard Goblin",
+          "doneness": "not-started",
+          "type_facet": "Goblin Variant"
+        },
+        {
+          "name": "Surface Sprinter",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Ratfolk Racial Trait.SpecialQuality.Special Quality"
+        },
+        {
+          "name": "Twilight-Touched",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Duergar Racial Trait.SpecialQuality.Special Quality"
+        }
+      ]
+    },
+    {
+      "kind": "spell",
+      "label": "Spells",
+      "done": 0,
+      "denominator": 24,
+      "pct": 0.0,
+      "items": [
+        {
+          "name": "Air Breathing",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Amplify Stench",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Aura of Cannibalism",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Blood in the Water",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Bouncy Body",
+          "doneness": "not-started",
+          "type_facet": "Arcane"
+        },
+        {
+          "name": "Control Vermin",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Dust Ward",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Endothermic Touch",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Fleshy Facade",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Gift of the Deep",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Hungry Earth",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Ice Slick",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Ironskin",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Isolate",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Magic Boulder",
+          "doneness": "not-started",
+          "type_facet": "Divine"
+        },
+        {
+          "name": "Mark of the Reptile God",
+          "doneness": "not-started",
+          "type_facet": "Divine"
+        },
+        {
+          "name": "Mud Buddy",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Scale Spikes",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Scale Spikes (Greater)",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Spellsteal",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Sundered Serpent Coil",
+          "doneness": "not-started",
+          "type_facet": "Arcane"
+        },
+        {
+          "name": "Swarm of Fangs",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Transfer Regeneration",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        },
+        {
+          "name": "Trial of Fire and Acid",
+          "doneness": "not-started",
+          "type_facet": "Arcane.Divine"
+        }
+      ]
+    }
+  ]
+}

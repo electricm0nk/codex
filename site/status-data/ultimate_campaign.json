@@ -1,0 +1,130 @@
+{
+  "id": "ultimate_campaign",
+  "title": "Ultimate Campaign",
+  "kinds": [
+    {
+      "kind": "feat",
+      "label": "Feats",
+      "done": 15,
+      "denominator": 21,
+      "pct": 71.4,
+      "items": [
+        {
+          "name": "Accursed",
+          "doneness": "held",
+          "type_facet": "Story"
+        },
+        {
+          "name": "Arisen",
+          "doneness": "held",
+          "type_facet": "Story"
+        },
+        {
+          "name": "Battlefield Healer",
+          "doneness": "done",
+          "type_facet": "Story"
+        },
+        {
+          "name": "Champion",
+          "doneness": "done",
+          "type_facet": "Story"
+        },
+        {
+          "name": "Damned",
+          "doneness": "done",
+          "type_facet": "Story"
+        },
+        {
+          "name": "Deny the Reaper",
+          "doneness": "done",
+          "type_facet": "Story"
+        },
+        {
+          "name": "Eldritch Researcher",
+          "doneness": "done",
+          "type_facet": "Story"
+        },
+        {
+          "name": "Fearless Zeal",
+          "doneness": "deferred",
+          "type_facet": "Story"
+        },
+        {
+          "name": "Feral Heart",
+          "doneness": "done",
+          "type_facet": "Story"
+        },
+        {
+          "name": "Foeslayer",
+          "doneness": "done",
+          "type_facet": "Story"
+        },
+        {
+          "name": "Forgotten Past",
+          "doneness": "done",
+          "type_facet": "Story"
+        },
+        {
+          "name": "Glimpse Beyond",
+          "doneness": "done",
+          "type_facet": "Story"
+        },
+        {
+          "name": "Innocent Blood",
+          "doneness": "done",
+          "type_facet": "Story"
+        },
+        {
+          "name": "Liberator",
+          "doneness": "held",
+          "type_facet": "Story"
+        },
+        {
+          "name": "Lost Legacy",
+          "doneness": "done",
+          "type_facet": "Story"
+        },
+        {
+          "name": "Magnum Opus",
+          "doneness": "deferred",
+          "type_facet": "Story"
+        },
+        {
+          "name": "Shamed",
+          "doneness": "held",
+          "type_facet": "Story"
+        },
+        {
+          "name": "Stronghold",
+          "doneness": "done",
+          "type_facet": "Story"
+        },
+        {
+          "name": "Thief of Legend",
+          "doneness": "held",
+          "type_facet": "Story"
+        },
+        {
+          "name": "Town Tamer",
+          "doneness": "held",
+          "type_facet": "Story"
+        },
+        {
+          "name": "True Love",
+          "doneness": "done",
+          "type_facet": "Story"
+        },
+        {
+          "name": "Unforgotten",
+          "doneness": "done",
+          "type_facet": "Story"
+        },
+        {
+          "name": "Vengeance",
+          "doneness": "done",
+          "type_facet": "Story"
+        }
+      ]
+    }
+  ]
+}
