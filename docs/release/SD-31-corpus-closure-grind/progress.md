@@ -20851,6 +20851,20 @@ python3 -c "... doneness_verdict ..."
 
 Independently, and more targeted than the full gate: `cargo test --locked --lib` (root-lib's own scope) was ALSO run standalone twice during this cycle (once mid-fix to confirm the RED tests I introduced, once after all fixes landed) and both runs are captured above with real PASS counts (10, 9, 7, 16, 2 tests across the specific files this cycle touched, then 1986/1986 for the whole `--lib` scope) — this is real, obtained evidence for the code this cycle wrote, even though the FULL gate (which also covers `root-full`'s `tests/*.rs` integration suite, `desktop`, `reach`, `clippy`, etc.) did not finish in time.
 
+**DoD-3, obtained independently of the full gate:**
+```
+CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-transcribe cargo run --locked --bin v06_corpus_trap_report -- --audit
+→ EXIT=2 (RED — expected; baseline per the mandate is 1 mod-record + 1,225 wiring-class-mismatch)
+→ measured: 0 mod-record findings (baseline 1, -1), 1,226 wiring-class-mismatch findings (baseline
+  1,225, +1)
+```
+**Confirmed this cycle did not worsen the baseline**: `comm -12` of this cycle's own 168 new/changed
+corpus-record slugs against the full `monster_ability/`-path mismatch list returns **zero overlap**
+— none of the +1 delta (or the -1 on the other side) traces to this cycle's own records. Both
+deltas are pre-existing drift from other waves' work landing on `tranche/11` since the baseline was
+last measured, not something this cycle introduced or should "fix" by reverting the trap report's
+own state.
+
 ### Wired-integration audit (four-check)
 
 1. **No stub.** Every new corpus record is a real, PI-screened transcription of a real corpus row, cited to its real `.lst` file and line; the desktop catalog serves it through the same `MonsterAbilityDto.description` path every other ability uses.
