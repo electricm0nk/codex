@@ -6491,6 +6491,20 @@ const CLASS_FEATURE_POOL_FALSE_SUFFIX_MATCHES: &[&str] = &[
 ///    `"Shifter's Blessing"` or an Investigator talent named `"Inspired
 ///    Discovery"`; only reading the record's own `TYPE:`/`PREABILITY:`/
 ///    `BONUS:` tokens can.
+/// 3. **No same-class different-SLOT collision.** A wave-11 adversarial review
+///    (`OPEN-ISSUES.md` row 186's own finding-1/finding-2 correction) proved the
+///    first two guards are both scoped to cross-CLASS collisions and are
+///    structurally blind to a group that names a DIFFERENT slot of the SAME
+///    owner class: `"Shaman Wandering Spirit"` and `"Secondary Shaman
+///    Wandering Spirit"` both pass guards 1-2 for `("Spirit", "shaman")` even
+///    though the engine gates each behind its own separate, ungated-vs-gated
+///    `PREVARGTEQ`/`PREABILITY` token and models only the primary Spirit slot
+///    -- `probe_class_feature_key` ran the byte-identical computation for all
+///    three groups and credited 20 units on another record's grounding path.
+///    [`CLASS_FEATURE_POOL_SLOT_QUALIFIERS`] names the adjectives that mark a
+///    DIFFERENT slot of the same class (`Wandering`, `Secondary`, `Major`,
+///    `Grand`, `Advanced`, `Unchained`) so a match can never again cross a
+///    slot boundary within one class.
 fn class_feature_pool_group_matches(
     registered: &str,
     owner: &str,
@@ -6511,9 +6525,28 @@ fn class_feature_pool_group_matches(
     }
     prefix.split_whitespace().all(|token| {
         let normalized = token.trim_end_matches("'s").trim_end_matches('\'').to_ascii_lowercase();
+        if CLASS_FEATURE_POOL_SLOT_QUALIFIERS.contains(&normalized.as_str()) {
+            return false;
+        }
         !class_books.contains_key(&normalized) || normalized == owner
     })
 }
+
+/// Adjectives that mark a group as a DIFFERENT selection SLOT of the same
+/// owner class rather than a plain member of the registered pool -- see guard
+/// 3 on [`class_feature_pool_group_matches`]. Corpus-verified examples this
+/// list must keep refusing: `"Shaman Wandering Spirit"` / `"Secondary Shaman
+/// Wandering Spirit"` (a separately-gated slot from `"Shaman Spirit"`,
+/// `PREVARGTEQ:ShamanWanderingSpiritBase,1` / a further negated
+/// `!PREABILITY:1,...,Shaman Wandering Spirit ~ Battle`), `"Witch Major Hex"`
+/// / `"Witch Grand Hex"` (separate, higher-level Hex tiers, not plain `Hex`),
+/// `"Unchained Rogue Talent"` (decisions.md §10's own AMENDMENT: "rogue and
+/// unchained rogue are two completely different classes"), and the
+/// third-party `"Psionic Advanced Rogue Talent"` slot. A word matching this
+/// list can never be waved through by guard 1 (cross-class token) because it
+/// is not itself a class name, so it needed its own guard.
+const CLASS_FEATURE_POOL_SLOT_QUALIFIERS: &[&str] =
+    &["wandering", "secondary", "major", "grand", "advanced", "unchained"];
 
 /// Every `class_feature` corpus key in the committed inventory, deduplicated.
 /// The inventory is read rather than the PCGen corpus because the units this
@@ -11679,6 +11712,56 @@ mod class_feature_consumer_delta_tests {
             "Discovery",
             "alchemist",
             "GrandDiscovery",
+            &class_books
+        ));
+    }
+
+    /// Wave-11 adversarial review, `OPEN-ISSUES.md` row 186 findings 1 and 2:
+    /// guards 1-2 alone credited `"Shaman Wandering Spirit"` and `"Secondary
+    /// Shaman Wandering Spirit"` to the SAME `("Spirit", "shaman")` entry as
+    /// the real `"Shaman Spirit"` primary slot, because neither guard can see
+    /// a same-class different-SLOT collision. Guard 3 must refuse all three
+    /// concrete corpus-verified same-class collisions, and must not refuse the
+    /// primary slot they were wrongly conflated with.
+    #[test]
+    fn same_class_different_slot_qualifier_is_refused_even_though_the_owner_matches() {
+        let class_books = test_class_books();
+        // The real primary slot must still match -- this guard must not
+        // become a false negative on the record it exists to protect.
+        assert!(class_feature_pool_group_matches("Spirit", "shaman", "Shaman Spirit", &class_books));
+        // The two different, separately-gated slots must never again share
+        // that primary slot's grounding path.
+        assert!(!class_feature_pool_group_matches(
+            "Spirit",
+            "shaman",
+            "Shaman Wandering Spirit",
+            &class_books
+        ));
+        assert!(!class_feature_pool_group_matches(
+            "Spirit",
+            "shaman",
+            "Secondary Shaman Wandering Spirit",
+            &class_books
+        ));
+        // decisions.md §10's own AMENDMENT: "rogue and unchained rogue are two
+        // completely different classes" -- Unchained Rogue Talent must never
+        // join base Rogue's Talent pool.
+        assert!(!class_feature_pool_group_matches(
+            "Rogue Talent",
+            "rogue",
+            "Unchained Rogue Talent",
+            &class_books
+        ));
+        // Witch's own higher-level Hex tiers are separate slots from the
+        // plain Hex pool, not extra members of it.
+        assert!(!class_feature_pool_group_matches("Hex", "witch", "Witch Major Hex", &class_books));
+        assert!(!class_feature_pool_group_matches("Hex", "witch", "Witch Grand Hex", &class_books));
+        // Third-party Dreamscarred content routed at Rogue's own Talent slot
+        // by a slot-qualified name must be refused the same way.
+        assert!(!class_feature_pool_group_matches(
+            "Rogue Talent",
+            "rogue",
+            "Psionic Advanced Rogue Talent",
             &class_books
         ));
     }
