@@ -1,8 +1,9 @@
 ---
 canonical: true
 owner: sd31-supersession
-cycle: SD31-D10-REGISTER-001
-authority: decisions.md Decision 10 (2026-08-16 operator ruling) + its 2026-08-16 amendment
+cycle: SD31-D10-REGISTER-001; direction CORRECTED by SD31-D13-REG-001 (2026-08-17)
+authority: decisions.md Decision 10 (2026-08-16 operator ruling) + its 2026-08-16 amendment,
+  direction CORRECTED by Decision 13 (2026-08-17 operator ruling) -- see §12
 started: 2026-08-16
 ---
 
@@ -68,17 +69,25 @@ a candidate `(kind=monster_ability, corpus_key="Kyton ~ Unnerving Gaze")` pair a
 `bestiary:monster_ability:kyton_unnerving_gaze` record). A full accounting of every such deferred pair
 requires the re-attribution to land first; re-run this script once it has.
 
+**Re-derived again at direction-correction time (2026-08-17, `SD31-D13-REG-001`):** `core_essentials`
+re-attribution has landed partial progress since the paragraph above was written — the current
+`docs/work-inventory.json` carries **128** residual `core_essentials` units, not 644 — and, as
+predicted, some of the freed collisions now surface as `§7` candidates (7 new `monster_ability`
+raw-line-not-found rows this build, including this section's own worked example,
+`monster_ability:Kyton ~ Unnerving Gaze`). Still excluded from pairing either way; still not this
+card's fix (lane 1's file territory). See `§12` for the full current-state re-derivation.
+
 ## 2. Guard 1 — a shared NAME is not a duplicate
 
 Matching `(kind, name)` implicates units across owners that share nothing but a label. Re-derived
-fresh against the 37,896 non-`core_essentials` units on the board:
+fresh at direction-correction time (2026-08-17, `SD31-D13-REG-001`) against the current
+non-`core_essentials` units on the board:
 
 | measure | value |
 |---|---:|
-| objects sharing `(kind, name)` across books | 2,313 |
-| units involved | 8,382 (21.8 % of the strict 38,521-unit board) |
-| objects sharing `(kind, corpus_key)` across books | 743 |
-| units involved | 1,543 (4.0 %) |
+| objects sharing `(kind, name)` across books | 8,610 units, 22.4 % of the strict 38,521-unit board |
+| objects sharing `(kind, corpus_key)` across books | 749 |
+| units involved | 1,555 (4.0 %) |
 
 Worked example confirmed directly in this run's own data (the card's own cited case):
 `class_feature` **"Flight"** is `Witch Hex ~ Flight` (`advanced_players_guide`), `Aegis ~ Flight`
@@ -86,10 +95,14 @@ Worked example confirmed directly in this run's own data (the card's own cited c
 `(kind, name)` match would have implicated as duplicates of each other. **Every pairing in this
 register matches on `(kind, corpus_key)`, never `(kind, name)`.**
 
-(This re-derived 8,382/21.8% differs slightly from Decision 10's own quoted 8,738/22.7% — expected
-corpus drift across the six waves between that decision landing and this cycle; re-derive, don't
-transcribe, is the standing rule this program follows, and the two figures still land in the same
-ballpark and support the same conclusion: `(kind, name)` is unusable as a duplicate signal.)
+(This re-derived 8,610/22.4% differs slightly from the 8,382/21.8% this section quoted at the
+prior build, and from Decision 10's own quoted 8,738/22.7% before that — expected corpus drift as
+waves land between builds (most recently, `core_essentials` re-attribution moving units to real
+books); re-derive, don't transcribe, is the standing rule this program follows, and all three
+figures land in the same ballpark and support the same conclusion: `(kind, name)` is unusable as a
+duplicate signal. This direction-correction cycle did not change how Guard 1 is computed — only
+`§6`'s survivor/superseded direction changed; this table's movement is corpus drift, re-derived
+per the standing rule, not a Decision-13 effect.)
 
 ## 3. Guard 2 — a later VARIANT is not a reprint
 
@@ -115,7 +128,7 @@ amendment's explicit instruction.
 
 `(kind, corpus_key)` match is Guard 1's fix, not proof of duplication by itself — decisions.md's own
 caution ("evidence... is only that the keys match" does not qualify) is taken literally here. For
-every one of the 578 non-`core_essentials`, non-variant-line candidate groups, this cycle fetched
+every one of the 584 non-`core_essentials`, non-variant-line candidate groups, this cycle fetched
 **each side's raw `.lst` row** (via its `source_file`/`source_line`) from the pinned oracle and
 compared them field-by-field:
 
@@ -128,16 +141,20 @@ compared them field-by-field:
   0.90+ "near miss" that differs by one added classification tag — goes to §6
   (`candidates_needing_record_level_comparison`), never into the register itself.
 
+**Re-derived at direction-correction time (2026-08-17, `SD31-D13-REG-001`)** — the evidence bar
+itself is unchanged by Decision 13 (only `§6`'s survivor/superseded direction flips); these counts
+move only from ordinary corpus drift between builds:
+
 | outcome | groups |
 |---|---:|
-| clean (non-`core_essentials`, non-variant-line) groups checked | 578 |
-| **PROVEN same object (this register)** | **117** |
+| clean (non-`core_essentials`, non-variant-line) groups checked | 584 |
+| **PROVEN same object (this register)** | **116** |
 | differ materially — same key, NOT the same object (Guard-1-shaped false positive at the key level) | 433 |
-| near-miss (similarity ≥ 0.90, not exact — candidates §6) | 21 |
-| inconclusive — raw `.lst` row not found (candidates §6) | 7 |
+| near-miss (similarity ≥ 0.90, not exact — candidates §7) | 21 |
+| inconclusive — raw `.lst` row not found (candidates §7) | 14 |
 | no usable `SOURCEDATE` for one side (left out entirely, per the standing rule never to guess an order) | 0 |
 
-**433 of 578 same-key groups are genuinely different objects.** This is the same shape Guard 1 already
+**433 of 584 same-key groups are genuinely different objects.** This is the same shape Guard 1 already
 proved at the `(kind, name)` level, reproducing at the `(kind, corpus_key)` level: a shared identifier
 is still not proof of duplication on its own, only a candidate worth checking. `Bullet (Firearm/Pitted)`
 (`ultimate_combat` vs `ultimate_equipment`) is a concrete example — identical name and `COST`, but
@@ -147,161 +164,170 @@ real content difference, correctly excluded, not merely a coincidence of formatt
 ## 5. Superseded sourcebooks
 
 **None found.** No whole sourcebook's content is wholly (or even substantially) duplicated elsewhere.
-The heaviest single loser among the 117 proven pairs:
+**Re-derived under the Decision 13 direction correction — the identity of the "heaviest loser" book
+flips along with `§6`'s direction**, since a "loser" is now whichever book prints the LATER reprint
+of an identical object, not the earlier one:
 
 | book | units superseded (this register) | book's own total units | % |
 |---|---:|---:|---:|
-| `inner_sea_world_guide` | 62 | 402 | 15.4 % |
+| `adventurers_guide` (heaviest by absolute count) | 54 | 974 | 5.54 % |
+| `bestiary_6` (heaviest by % of its own total) | 13 | 72 | 18.06 % |
 
-Every other losing book is under 2% of its own total (`ultimate_combat` 35/2,056 = 1.7%, next
-heaviest). 15.4% is real signal (Adventurer's Guide (2017) republishes a meaningful slice of Inner Sea
-World Guide's (2011) Hellknight-order material as its own appendix) but nowhere near "the whole book,"
-so no `superseded_sourcebooks` entry is warranted.
+`inner_sea_world_guide` — the pre-Decision-13 "heaviest loser" at 62/402 (15.4 %) — now loses only
+**2** units (0.5 % of its own 400-unit total): under first-print-wins, ISWG (2011) is the *survivor*
+against `adventurers_guide` (2017) for nearly every pair the two books share, the exact reversal
+Decision 13 exists to produce (`decisions.md §13`: *"the 7 Core Rulebook races stay with the Core
+Rulebook... ARG's core-race chapters add alternate racial traits"* is the same shape — an early book
+regains ownership of material a later book had been credited with). Every other losing book is under
+2% of its own total except `bestiary_6` (flagged above); 18.06% is real signal (Bestiary 6 (2017-05)
+and Ultimate Wilderness (2017-11) are five months apart and share several reprinted domain powers) but
+nowhere near "the whole book," so no `superseded_sourcebooks` entry is warranted.
 
 ## 6. Superseded objects — the register
 
-**117 objects, 135 redundant units** (some objects span 3+ books; each superseded side counts once).
+**116 objects, 134 redundant units** (some objects span 3+ books; each superseded side counts once).
 Full field-level evidence, raw `.lst` lines, and the exact command are in
-`SUPERSESSION-REGISTER.json`; this table is mechanically rendered from that JSON.
+`SUPERSESSION-REGISTER.json`; this table is mechanically rendered from that JSON. **Direction
+corrected under Decision 13 (2026-08-17, `SD31-D13-REG-001`): for an identical pair the FIRST
+print owns it -- `surviving` is now the OLDER book, `superseded` the later reprint(s), the
+opposite of this section's pre-2026-08-17 direction. All 116 pairs re-verified: same object
+identities, direction swapped, zero new or dropped entries -- see section 12.**
 
 | # | kind | corpus_key | surviving (book, SOURCEDATE) | superseded (book, SOURCEDATE) |
 |---:|---|---|---|---|
-| 1 | class | Hellknight | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 2 | class_feature | Armored Casting ~ RMA | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 3 | class_feature | Artifice ~ HK | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 4 | class_feature | Blood Mantis Form | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 5 | class_feature | Brand ~ HK | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 6 | class_feature | Censor ~ HK | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 7 | class_feature | Death Mantis Form | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 8 | class_feature | Discipline ~ HK | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 9 | class_feature | Domain Power ~ Dragonbreath | ultimate_wilderness (2017-11) | bestiary_6 (2017-05); inner_sea_world_guide (2011-03) |
-| 10 | class_feature | Domain Power ~ Guarded Mind | bestiary_6 (2017-05) | bestiary_4 (2013-10); horror_adventures (2016-08); inner_sea_world_guide (2011-03) |
-| 11 | class_feature | Domain Power ~ It Came From Beyond | bestiary_6 (2017-05) | bestiary_4 (2013-10); horror_adventures (2016-08); inner_sea_world_guide (2011-03) |
-| 12 | class_feature | Domain Power ~ Part the Veil | bestiary_6 (2017-05) | bestiary_4 (2013-10); horror_adventures (2016-08); inner_sea_world_guide (2011-03) |
-| 13 | class_feature | Domain Power ~ Serpent Companion | ultimate_wilderness (2017-11) | bestiary_6 (2017-05); inner_sea_world_guide (2011-03) |
-| 14 | class_feature | Domain Power ~ The Stars Are Right | bestiary_6 (2017-05) | bestiary_4 (2013-10); horror_adventures (2016-08); inner_sea_world_guide (2011-03) |
-| 15 | class_feature | Domain Power ~ Venomous Saliva | ultimate_wilderness (2017-11) | bestiary_6 (2017-05) |
-| 16 | class_feature | Fear ~ HKFow1 | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 17 | class_feature | Fear ~ HKFow2 | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 18 | class_feature | Fear ~ HKFow3 | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 19 | class_feature | Fearsomeness ~ HK | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 20 | class_feature | Force of Will ~ HK | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 21 | class_feature | Glory ~ HK | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 22 | class_feature | Hellknight Armor Benefits | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 23 | class_feature | Inquisitor Domain ~ Dark Tapestry Subdomain | bestiary_6 (2017-05) | horror_adventures (2016-08); inner_sea_world_guide (2011-03) |
-| 24 | class_feature | Inquisitor Domain ~ Dragon Subdomain | ultimate_wilderness (2017-11) | bestiary_6 (2017-05); inner_sea_world_guide (2011-03) |
-| 25 | class_feature | Inquisitor Domain ~ Scalykind | ultimate_wilderness (2017-11) | bestiary_6 (2017-05); inner_sea_world_guide (2011-03) |
-| 26 | class_feature | Inquisitor Domain ~ Stars Subdomain | bestiary_6 (2017-05) | horror_adventures (2016-08); inner_sea_world_guide (2011-03) |
-| 27 | class_feature | Inquisitor Domain ~ Void | bestiary_6 (2017-05) | horror_adventures (2016-08); inner_sea_world_guide (2011-03) |
-| 28 | class_feature | Knowledge ~ HK | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 29 | class_feature | Law ~ HK | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 30 | class_feature | Magic Warrior ~ Magic Warrior's Aspect | adventurers_guide (2017-06) | inner_sea_intrigue (2016-06) |
-| 31 | class_feature | Magic Warrior ~ Nameless Anonymity | adventurers_guide (2017-06) | inner_sea_intrigue (2016-06) |
-| 32 | class_feature | Magic Warrior ~ Nameless Mask | adventurers_guide (2017-06) | inner_sea_intrigue (2016-06) |
-| 33 | class_feature | Magic ~ HK | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 34 | class_feature | Magus Archetype ~ Magic Warrior | adventurers_guide (2017-06) | inner_sea_intrigue (2016-06) |
-| 35 | class_feature | Mantis Doom | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 36 | class_feature | Mantis Form | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 37 | class_feature | Nobility ~ HK | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 38 | class_feature | Onslaught ~ HK | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 39 | class_feature | Pentamic Faith ~ HK | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 40 | class_feature | Physical Enhancement ~ Constitution | advanced_class_guide (2014-08) | core_rulebook (2009-08) |
-| 41 | class_feature | Physical Enhancement ~ Dexterity | advanced_class_guide (2014-08) | core_rulebook (2009-08) |
-| 42 | class_feature | Physical Enhancement ~ Strength | advanced_class_guide (2014-08) | core_rulebook (2009-08) |
-| 43 | class_feature | Protection ~ HK | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 44 | class_feature | RMA Bonus Spells | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 45 | class_feature | RMA Weapon Proficiencies | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 46 | class_feature | Red Shroud | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 47 | class_feature | Resurrection Sense | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 48 | class_feature | Rune ~ HK | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 49 | class_feature | Shackle ~ HK | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 50 | class_feature | Strength ~ HK | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 51 | class_feature | Summon Devil V ~ HK | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 52 | class_feature | Summon Devil VI ~ HK | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 53 | class_feature | Summon Devil VII ~ HK | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 54 | class_feature | Summon Devil ~ HK | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 55 | class_feature | Summon Mantis | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 56 | class_feature | Tempest Druid ~ Druid Domain | adventurers_guide (2017-06) | inner_sea_magic (2011-07) |
-| 57 | class_feature | Travel ~ HK | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 58 | class_feature | Vigilance ~ HK | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 59 | class_feature | War ~ HK | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 60 | class_feature | Wrack ~ HK | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 61 | companion | 1 [†] | ultimate_magic (2011-05) | book_of_the_damned_volume_1 (2009-10) |
-| 62 | companion | Chicken ~ Drift | ultimate_wilderness (2017-11) | bestiary_5 (2015-12) |
-| 63 | companion | Companion Advancement ~ Giant Vulture | monster_codex (2014-11) | bestiary_3 (2012-01) |
-| 64 | companion | Grab ~ Medium | ultimate_wilderness (2017-11) | bestiary_4 (2013-10) |
-| 65 | companion | Penguin ~ Toboggan | ultimate_wilderness (2017-11) | bestiary_5 (2015-12) |
-| 66 | equipment | Aldori Dueling Sword | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 67 | equipment | Blunderbuss | ultimate_equipment (2012-08) | ultimate_combat (2011-01) |
-| 68 | equipment | Buckler Gun | ultimate_equipment (2012-08) | ultimate_combat (2011-01) |
-| 69 | equipment | Culverin | ultimate_equipment (2012-08) | ultimate_combat (2011-01) |
-| 70 | equipment | Do-maru | ultimate_equipment (2012-08) | ultimate_combat (2011-01) |
-| 71 | equipment | Double Hackbut | ultimate_equipment (2012-08) | ultimate_combat (2011-01) |
-| 72 | equipment | Fire Lance | ultimate_equipment (2012-08) | ultimate_combat (2011-01) |
-| 73 | equipment | Four-mirror Armor | ultimate_equipment (2012-08) | ultimate_combat (2011-01) |
-| 74 | equipment | Goz Mask | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 75 | equipment | Haramaki | ultimate_equipment (2012-08) | ultimate_combat (2011-01) |
-| 76 | equipment | Katana | ultimate_equipment (2012-08) | ultimate_combat (2011-01) |
-| 77 | equipment | Kikko Armor | ultimate_equipment (2012-08) | ultimate_combat (2011-01) |
-| 78 | equipment | Kusari Gusoku | ultimate_equipment (2012-08) | ultimate_combat (2011-01) |
-| 79 | equipment | Lamellar (Horn) | ultimate_equipment (2012-08) | ultimate_combat (2011-01) |
-| 80 | equipment | Lamellar (Iron) | ultimate_equipment (2012-08) | ultimate_combat (2011-01) |
-| 81 | equipment | Lamellar (Leather) | ultimate_equipment (2012-08) | ultimate_combat (2011-01) |
-| 82 | equipment | Lamellar (Steel) | ultimate_equipment (2012-08) | ultimate_combat (2011-01) |
-| 83 | equipment | Lamellar Cuirass | ultimate_equipment (2012-08) | ultimate_combat (2011-01) |
-| 84 | equipment | Mask of the Mantis | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 85 | equipment | Mountain Pattern Armor | ultimate_equipment (2012-08) | ultimate_combat (2011-01) |
-| 86 | equipment | Musket (Axe) | ultimate_equipment (2012-08) | ultimate_combat (2011-01) |
-| 87 | equipment | Musket (Double-Barreled) | ultimate_equipment (2012-08) | ultimate_combat (2011-01) |
-| 88 | equipment | Musket (Warhammer) | ultimate_equipment (2012-08) | ultimate_combat (2011-01) |
-| 89 | equipment | O-yoroi | ultimate_equipment (2012-08) | ultimate_combat (2011-01) |
-| 90 | equipment | Pistol (Coat) | ultimate_equipment (2012-08) | ultimate_combat (2011-01) |
-| 91 | equipment | Pistol (Dagger) | ultimate_equipment (2012-08) | ultimate_combat (2011-01) |
-| 92 | equipment | Pistol (Double-Barreled) | ultimate_equipment (2012-08) | ultimate_combat (2011-01) |
-| 93 | equipment | Pistol (Dragon) | ultimate_equipment (2012-08) | ultimate_combat (2011-01) |
-| 94 | equipment | Pistol (Sword Cane) | ultimate_equipment (2012-08) | ultimate_combat (2011-01) |
-| 95 | equipment | Powder Keg | ultimate_equipment (2012-08) | ultimate_combat (2011-01) |
-| 96 | equipment | Revolver | ultimate_equipment (2012-08) | ultimate_combat (2011-01) |
-| 97 | equipment | Rifle | ultimate_equipment (2012-08) | ultimate_combat (2011-01) |
-| 98 | equipment | Rifle (Pepperbox) | ultimate_equipment (2012-08) | ultimate_combat (2011-01) |
-| 99 | equipment | Shotgun | ultimate_equipment (2012-08) | ultimate_combat (2011-01) |
-| 100 | equipment | Shotgun (Double-Barreled) | ultimate_equipment (2012-08) | ultimate_combat (2011-01) |
-| 101 | equipment | Silken Ceremonial Armor | ultimate_equipment (2012-08) | ultimate_combat (2011-01) |
-| 102 | equipment | Tatami-do | ultimate_equipment (2012-08) | ultimate_combat (2011-01) |
-| 103 | equipment | Zoic Fetish (Amphibian) | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 104 | equipment | Zoic Fetish (Bird) | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 105 | equipment | Zoic Fetish (Fish) | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 106 | equipment | Zoic Fetish (Mammal) | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 107 | equipment | Zoic Fetish (Reptile) | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
-| 108 | equipment_modifier | STONE | inner_sea_world_guide (2011-03) | ultimate_combat (2011-01) |
-| 109 | feat | Tribal Hunter | ultimate_wilderness (2017-11) | adventurers_guide (2017-06) |
-| 110 | monster | Kami (Shikigami) | occult_adventures (2015-07) | bestiary_3 (2012-01) |
-| 111 | race_trait | Shikigami ~ Improvised Weapon Mastery | occult_adventures (2015-07) | bestiary_3 (2012-01) |
-| 112 | race_trait | Shikigami ~ Spell-Like Abilities | occult_adventures (2015-07) | bestiary_3 (2012-01) |
-| 113 | race_trait | Vishkanya ~ Toxic ~ Vishkanya Venom | inner_sea_races (2015-09) | advanced_race_guide (2012-06); bestiary_3 (2012-01) |
-| 114 | spell | Animal Growth (Reptiles Only) | ultimate_wilderness (2017-11) | bestiary_6 (2017-05); inner_sea_world_guide (2011-03) |
-| 115 | spell | Animal Shapes (Reptiles Only) | ultimate_wilderness (2017-11) | bestiary_6 (2017-05); inner_sea_world_guide (2011-03) |
-| 116 | spell | Summon Demons (Nascent Demon Lord) | inner_sea_world_guide (2011-03) | book_of_the_damned_volume_2 (2010-10) |
-| 117 | spell | Summon Mantis | adventurers_guide (2017-06) | inner_sea_world_guide (2011-03) |
+| 1 | class | Hellknight | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 2 | class_feature | Armored Casting ~ RMA | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 3 | class_feature | Artifice ~ HK | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 4 | class_feature | Blood Mantis Form | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 5 | class_feature | Brand ~ HK | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 6 | class_feature | Censor ~ HK | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 7 | class_feature | Death Mantis Form | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 8 | class_feature | Discipline ~ HK | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 9 | class_feature | Domain Power ~ Dragonbreath | inner_sea_world_guide (2011-03) | bestiary_6 (2017-05); ultimate_wilderness (2017-11) |
+| 10 | class_feature | Domain Power ~ Guarded Mind | inner_sea_world_guide (2011-03) | bestiary_4 (2013-10); bestiary_6 (2017-05); horror_adventures (2016-08) |
+| 11 | class_feature | Domain Power ~ It Came From Beyond | inner_sea_world_guide (2011-03) | bestiary_4 (2013-10); bestiary_6 (2017-05); horror_adventures (2016-08) |
+| 12 | class_feature | Domain Power ~ Part the Veil | inner_sea_world_guide (2011-03) | bestiary_4 (2013-10); bestiary_6 (2017-05); horror_adventures (2016-08) |
+| 13 | class_feature | Domain Power ~ Serpent Companion | inner_sea_world_guide (2011-03) | bestiary_6 (2017-05); ultimate_wilderness (2017-11) |
+| 14 | class_feature | Domain Power ~ The Stars Are Right | inner_sea_world_guide (2011-03) | bestiary_4 (2013-10); bestiary_6 (2017-05); horror_adventures (2016-08) |
+| 15 | class_feature | Domain Power ~ Venomous Saliva | bestiary_6 (2017-05) | ultimate_wilderness (2017-11) |
+| 16 | class_feature | Fear ~ HKFow1 | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 17 | class_feature | Fear ~ HKFow2 | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 18 | class_feature | Fear ~ HKFow3 | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 19 | class_feature | Fearsomeness ~ HK | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 20 | class_feature | Force of Will ~ HK | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 21 | class_feature | Glory ~ HK | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 22 | class_feature | Hellknight Armor Benefits | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 23 | class_feature | Inquisitor Domain ~ Dark Tapestry Subdomain | inner_sea_world_guide (2011-03) | bestiary_6 (2017-05); horror_adventures (2016-08) |
+| 24 | class_feature | Inquisitor Domain ~ Dragon Subdomain | inner_sea_world_guide (2011-03) | bestiary_6 (2017-05); ultimate_wilderness (2017-11) |
+| 25 | class_feature | Inquisitor Domain ~ Scalykind | inner_sea_world_guide (2011-03) | bestiary_6 (2017-05); ultimate_wilderness (2017-11) |
+| 26 | class_feature | Inquisitor Domain ~ Stars Subdomain | inner_sea_world_guide (2011-03) | bestiary_6 (2017-05); horror_adventures (2016-08) |
+| 27 | class_feature | Inquisitor Domain ~ Void | inner_sea_world_guide (2011-03) | bestiary_6 (2017-05); horror_adventures (2016-08) |
+| 28 | class_feature | Knowledge ~ HK | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 29 | class_feature | Law ~ HK | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 30 | class_feature | Magic Warrior ~ Magic Warrior's Aspect | inner_sea_intrigue (2016-06) | adventurers_guide (2017-06) |
+| 31 | class_feature | Magic Warrior ~ Nameless Anonymity | inner_sea_intrigue (2016-06) | adventurers_guide (2017-06) |
+| 32 | class_feature | Magic Warrior ~ Nameless Mask | inner_sea_intrigue (2016-06) | adventurers_guide (2017-06) |
+| 33 | class_feature | Magic ~ HK | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 34 | class_feature | Magus Archetype ~ Magic Warrior | inner_sea_intrigue (2016-06) | adventurers_guide (2017-06) |
+| 35 | class_feature | Mantis Doom | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 36 | class_feature | Mantis Form | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 37 | class_feature | Nobility ~ HK | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 38 | class_feature | Onslaught ~ HK | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 39 | class_feature | Pentamic Faith ~ HK | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 40 | class_feature | Physical Enhancement ~ Constitution | core_rulebook (2009-08) | advanced_class_guide (2014-08) |
+| 41 | class_feature | Physical Enhancement ~ Dexterity | core_rulebook (2009-08) | advanced_class_guide (2014-08) |
+| 42 | class_feature | Physical Enhancement ~ Strength | core_rulebook (2009-08) | advanced_class_guide (2014-08) |
+| 43 | class_feature | Protection ~ HK | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 44 | class_feature | RMA Bonus Spells | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 45 | class_feature | RMA Weapon Proficiencies | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 46 | class_feature | Red Shroud | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 47 | class_feature | Resurrection Sense | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 48 | class_feature | Rune ~ HK | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 49 | class_feature | Shackle ~ HK | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 50 | class_feature | Strength ~ HK | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 51 | class_feature | Summon Devil V ~ HK | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 52 | class_feature | Summon Devil VI ~ HK | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 53 | class_feature | Summon Devil VII ~ HK | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 54 | class_feature | Summon Devil ~ HK | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 55 | class_feature | Summon Mantis | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 56 | class_feature | Tempest Druid ~ Druid Domain | inner_sea_magic (2011-07) | adventurers_guide (2017-06) |
+| 57 | class_feature | Travel ~ HK | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 58 | class_feature | Vigilance ~ HK | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 59 | class_feature | War ~ HK | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 60 | class_feature | Wrack ~ HK | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 61 | companion | Chicken ~ Drift | bestiary_5 (2015-12) | ultimate_wilderness (2017-11) |
+| 62 | companion | Companion Advancement ~ Giant Vulture | bestiary_3 (2012-01) | monster_codex (2014-11) |
+| 63 | companion | Grab ~ Medium | bestiary_4 (2013-10) | ultimate_wilderness (2017-11) |
+| 64 | companion | Penguin ~ Toboggan | bestiary_5 (2015-12) | ultimate_wilderness (2017-11) |
+| 65 | equipment | Aldori Dueling Sword | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 66 | equipment | Blunderbuss | ultimate_combat (2011-01) | ultimate_equipment (2012-08) |
+| 67 | equipment | Buckler Gun | ultimate_combat (2011-01) | ultimate_equipment (2012-08) |
+| 68 | equipment | Culverin | ultimate_combat (2011-01) | ultimate_equipment (2012-08) |
+| 69 | equipment | Do-maru | ultimate_combat (2011-01) | ultimate_equipment (2012-08) |
+| 70 | equipment | Double Hackbut | ultimate_combat (2011-01) | ultimate_equipment (2012-08) |
+| 71 | equipment | Fire Lance | ultimate_combat (2011-01) | ultimate_equipment (2012-08) |
+| 72 | equipment | Four-mirror Armor | ultimate_combat (2011-01) | ultimate_equipment (2012-08) |
+| 73 | equipment | Goz Mask | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 74 | equipment | Haramaki | ultimate_combat (2011-01) | ultimate_equipment (2012-08) |
+| 75 | equipment | Katana | ultimate_combat (2011-01) | ultimate_equipment (2012-08) |
+| 76 | equipment | Kikko Armor | ultimate_combat (2011-01) | ultimate_equipment (2012-08) |
+| 77 | equipment | Kusari Gusoku | ultimate_combat (2011-01) | ultimate_equipment (2012-08) |
+| 78 | equipment | Lamellar (Horn) | ultimate_combat (2011-01) | ultimate_equipment (2012-08) |
+| 79 | equipment | Lamellar (Iron) | ultimate_combat (2011-01) | ultimate_equipment (2012-08) |
+| 80 | equipment | Lamellar (Leather) | ultimate_combat (2011-01) | ultimate_equipment (2012-08) |
+| 81 | equipment | Lamellar (Steel) | ultimate_combat (2011-01) | ultimate_equipment (2012-08) |
+| 82 | equipment | Lamellar Cuirass | ultimate_combat (2011-01) | ultimate_equipment (2012-08) |
+| 83 | equipment | Mask of the Mantis | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 84 | equipment | Mountain Pattern Armor | ultimate_combat (2011-01) | ultimate_equipment (2012-08) |
+| 85 | equipment | Musket (Axe) | ultimate_combat (2011-01) | ultimate_equipment (2012-08) |
+| 86 | equipment | Musket (Double-Barreled) | ultimate_combat (2011-01) | ultimate_equipment (2012-08) |
+| 87 | equipment | Musket (Warhammer) | ultimate_combat (2011-01) | ultimate_equipment (2012-08) |
+| 88 | equipment | O-yoroi | ultimate_combat (2011-01) | ultimate_equipment (2012-08) |
+| 89 | equipment | Pistol (Coat) | ultimate_combat (2011-01) | ultimate_equipment (2012-08) |
+| 90 | equipment | Pistol (Dagger) | ultimate_combat (2011-01) | ultimate_equipment (2012-08) |
+| 91 | equipment | Pistol (Double-Barreled) | ultimate_combat (2011-01) | ultimate_equipment (2012-08) |
+| 92 | equipment | Pistol (Dragon) | ultimate_combat (2011-01) | ultimate_equipment (2012-08) |
+| 93 | equipment | Pistol (Sword Cane) | ultimate_combat (2011-01) | ultimate_equipment (2012-08) |
+| 94 | equipment | Powder Keg | ultimate_combat (2011-01) | ultimate_equipment (2012-08) |
+| 95 | equipment | Revolver | ultimate_combat (2011-01) | ultimate_equipment (2012-08) |
+| 96 | equipment | Rifle | ultimate_combat (2011-01) | ultimate_equipment (2012-08) |
+| 97 | equipment | Rifle (Pepperbox) | ultimate_combat (2011-01) | ultimate_equipment (2012-08) |
+| 98 | equipment | Shotgun | ultimate_combat (2011-01) | ultimate_equipment (2012-08) |
+| 99 | equipment | Shotgun (Double-Barreled) | ultimate_combat (2011-01) | ultimate_equipment (2012-08) |
+| 100 | equipment | Silken Ceremonial Armor | ultimate_combat (2011-01) | ultimate_equipment (2012-08) |
+| 101 | equipment | Tatami-do | ultimate_combat (2011-01) | ultimate_equipment (2012-08) |
+| 102 | equipment | Zoic Fetish (Amphibian) | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 103 | equipment | Zoic Fetish (Bird) | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 104 | equipment | Zoic Fetish (Fish) | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 105 | equipment | Zoic Fetish (Mammal) | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 106 | equipment | Zoic Fetish (Reptile) | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
+| 107 | equipment_modifier | STONE | ultimate_combat (2011-01) | inner_sea_world_guide (2011-03) |
+| 108 | feat | Tribal Hunter | adventurers_guide (2017-06) | ultimate_wilderness (2017-11) |
+| 109 | monster | Kami (Shikigami) | bestiary_3 (2012-01) | occult_adventures (2015-07) |
+| 110 | race_trait | Shikigami ~ Improvised Weapon Mastery | bestiary_3 (2012-01) | occult_adventures (2015-07) |
+| 111 | race_trait | Shikigami ~ Spell-Like Abilities | bestiary_3 (2012-01) | occult_adventures (2015-07) |
+| 112 | race_trait | Vishkanya ~ Toxic ~ Vishkanya Venom | bestiary_3 (2012-01) | advanced_race_guide (2012-06); inner_sea_races (2015-09) |
+| 113 | spell | Animal Growth (Reptiles Only) | inner_sea_world_guide (2011-03) | bestiary_6 (2017-05); ultimate_wilderness (2017-11) |
+| 114 | spell | Animal Shapes (Reptiles Only) | inner_sea_world_guide (2011-03) | bestiary_6 (2017-05); ultimate_wilderness (2017-11) |
+| 115 | spell | Summon Demons (Nascent Demon Lord) | book_of_the_damned_volume_2 (2010-10) | inner_sea_world_guide (2011-03) |
+| 116 | spell | Summon Mantis | inner_sea_world_guide (2011-03) | adventurers_guide (2017-06) |
 
-**[†] Row 61** — `corpus_key: "1"` is not a transcription error: both books' raw rows read literally
-`1\tABILITY:FEAT|AUTOMATIC|CMB Output` — a PCGen internal chargen-scaffold row (an automatic-feat
-output helper), not a player-facing companion. Kept in the register because the evidence bar is
-genuinely met (byte-identical content, both books), flagged here so a reviewer isn't confused by the
-bare key.
-
-**Redundant excess: 135** (117 objects; 12 of them span 3 books, contributing 2 superseded units each
-— `117 + 12 = ` doesn't map 1:1 to unit count, so this is the direct tally: `sum(len(superseded)) for
-each object` = 135, matching `SUPERSESSION-REGISTER.json`'s own `denominator.count_removed`, which the
-gate independently cross-checks every run).
+**Redundant excess: 134** (116 objects; 14 of them span 3+ books, contributing 2 superseded units
+each -- the direct tally is `sum(len(superseded)) for each object` = 134, matching
+`SUPERSESSION-REGISTER.json`'s own `denominator.count_removed`, which the gate independently
+cross-checks every run).
 
 ## 7. Candidates needing record-level comparison (NOT in the register)
 
-28 groups where either the field similarity is high but not exact (21, similarity ≥ 0.90 — mostly a
+35 groups where either the field similarity is high but not exact (21, similarity >= 0.90 -- mostly a
 single added/reordered classification tag between the two printings) or the raw `.lst` row could not
-be located this pass (7 — a companion/spell/equipment key resolving to a monster-block cross-reference
-rather than its own file, needing a hand lookup). **None of these count toward the denominator
-change.** Full field diffs are in `SUPERSESSION-REGISTER.json`.
+be located this pass (14 -- a companion/monster_ability/spell key resolving to a monster-block
+cross-reference rather than its own file, needing a hand lookup; 7 of these are new since the
+register was last regenerated -- see section 12 -- surfaced by `core_essentials` re-attribution
+progressing from 644 to 128 residual units between builds, which exposed `monster_ability`
+cross-book collisions `core_essentials`'s exclusion previously hid, including this card's own
+worked example, `monster_ability:Kyton ~ Unnerving Gaze`). **None of these count toward the
+denominator change.** Full field diffs are in `SUPERSESSION-REGISTER.json`.
 
 | # | kind | corpus_key | books | reason | similarity |
 |---:|---|---|---|---|---:|
@@ -332,7 +358,14 @@ change.** Full field diffs are in `SUPERSESSION-REGISTER.json`.
 | 25 | companion | Familiar (Pig) | bestiary_3, ultimate_magic | raw_line_not_found | — |
 | 26 | companion | Parrot | advanced_players_guide, ultimate_wilderness | raw_line_not_found | — |
 | 27 | equipment | Poison (Violet Venom) | bestiary, ultimate_wilderness | raw_line_not_found | — |
-| 28 | spell | Quickened Lightning Bolt | bestiary, bestiary_4 | raw_line_not_found | — |
+| 28 | monster_ability | Clockwork ~ Difficult to Create | bestiary_3, inner_sea_world_guide | raw_line_not_found | — |
+| 29 | monster_ability | Clockwork ~ Swift Reactions | bestiary_3, inner_sea_world_guide | raw_line_not_found | — |
+| 30 | monster_ability | Clockwork ~ Winding | bestiary_3, inner_sea_world_guide | raw_line_not_found | — |
+| 31 | monster_ability | Immunity to Permanent Wounds | bestiary, inner_sea_bestiary | raw_line_not_found | — |
+| 32 | monster_ability | Kyton ~ Unnerving Gaze | bestiary, bestiary_3 | raw_line_not_found | — |
+| 33 | monster_ability | Rakshasa ~ Detect Thoughts | bestiary, bestiary_3 | raw_line_not_found | — |
+| 34 | monster_ability | Water Walk ~ Constant | bestiary_2, bestiary_4 | raw_line_not_found | — |
+| 35 | spell | Quickened Lightning Bolt | bestiary, bestiary_4 | raw_line_not_found | — |
 
 **Why these stay out.** Per this card's own instruction: *"if your evidence for a pair is only that
 the keys match, that pair does not go in the register."* Row 2 (`Hellknight Plate`) is illustrative —
@@ -385,6 +418,14 @@ the superseded population's own done-rate (36/135 = 26.7%) is slightly ABOVE the
 24.6% rate. Reported precisely rather than the more flattering (and wrong) "denominator only" framing
 a first pass assumed.
 
+**This whole section is a historical snapshot from an earlier wave** (mandate ~24.6%, before six
+further waves of real work). Decision 13's direction correction does not change WHICH units are
+superseded (the object set is unchanged, `§6`), only which SIDE of each pair is `surviving` vs
+`superseded` — but that DOES change the specific superseded unit ids `EXCLUDED_UNIT_IDS` would name,
+and each id's own doneness state (a unit that used to be counted `surviving`/kept may now be the
+`superseded` side dropped, or vice versa). **Re-derived against today's board in `§12`; do not apply
+this section's stale numerator/denominator figures.**
+
 ## 9. The gate
 
 `scripts/supersession_register_gate.py`, wired as the `supersession-gate` stage in `scripts/verify.sh`
@@ -396,7 +437,10 @@ stage sets). For every `objects[]` entry it:
 2. REFUSES any entry naming `pathfinder_unchained`/`mythic_adventures` on either side without a
    non-empty `reprint_proof` string.
 3. REFUSES any entry naming `book == "core_essentials"` on either side (Decision 9).
-4. REFUSES a backwards `SOURCEDATE` order (surviving older than something it supposedly supersedes).
+4. REFUSES a backwards `SOURCEDATE` order — **direction corrected under Decision 13 (2026-08-17):
+   surviving must be the FIRST print, so the gate now refuses surviving being NEWER than something
+   it supposedly supersedes** (pre-Decision-13 this bullet read the opposite way — "surviving older
+   than…" — see `§12`).
 5. REFUSES a `denominator.count_removed` that does not match the register's own tally.
 
 **Proven able to fail, both required shapes, by mutation test**
@@ -486,3 +530,118 @@ and the one bad entry is gone, but wiring `EXCLUDED_UNIT_IDS` into the live deno
 (§8's own spec) remains a separate, dedicated change this integration cycle chose not to make
 inline under wave pressure — see `progress.md`'s `SD31-W7-INTEGRATE-001` receipt and the followups
 list for the exact next step.
+
+
+## 12. Decision 13 direction correction (`SD31-D13-REG-001`, 2026-08-17)
+
+**What changed.** Decision 10 (2026-08-16) recorded the operator's original direction as *"the
+most recent publishing takes precedence and the older one is flagged as superseded"*. Decision 13
+(2026-08-17, verbatim: *"if they are identical - first print owns it"*) corrected that: **for an
+IDENTICAL pair the FIRST print owns it, the later printing is superseded.** This section is the
+required re-derivation `decisions.md §13` names (*"every existing entry's direction must be
+re-derived... the register stays PROPOSED until it is re-derived under this rule"*).
+
+**What this cycle touched.**
+
+1. `supersession_register_build.py` — the survivor pick flipped from `max(books, key=date)`
+   (newest) to `min(books, key=date)` (first print). Evidence bar, guards, and every other rule
+   are byte-for-byte unchanged.
+2. `supersession_register_gate.py` — the SOURCEDATE-ordering refusal flipped from *"surviving
+   older than superseded is refused"* to *"surviving NEWER than superseded is refused"*, TDD:
+   `scripts/tests/test_supersession_register_gate.py` was edited FIRST (3 tests now encode the
+   corrected direction), confirmed to fail against the pre-fix gate (proving the tests exercise
+   real behavior, not tautologies), then the gate was fixed and the full 16-case suite reconfirmed
+   green.
+3. `SUPERSESSION-REGISTER.json` was regenerated end-to-end against the current
+   `docs/work-inventory.json` and the pinned oracle (`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`).
+4. `SUPERSESSION-REGISTER.md` (this document) — §§1, 2, 4, 5, 6, 7, 8, 9 updated with re-derived
+   numbers; this section added.
+
+**Proof the swap is exact, not a rebuild that happened to look similar.** Every one of the 116
+proven objects in the pre-correction register maps to the identical `(kind, corpus_key)` in the
+post-correction register, with `surviving`/`superseded` book sets exactly swapped (surviving's
+book moves to the superseded set and vice versa) — verified programmatically, 0 mismatches, 0 new
+objects, 0 dropped objects:
+
+```
+# pre-D13 register backed up before regen: `git show HEAD:docs/release/SD-31-corpus-closure-grind/artifacts/SUPERSESSION-REGISTER.json > /tmp/old-register.json`
+python3 -c "
+import json
+old = json.load(open('/tmp/old-register.json'))
+new = json.load(open('docs/release/SD-31-corpus-closure-grind/artifacts/SUPERSESSION-REGISTER.json'))
+oldmap = {(o['kind'], o['corpus_key']): o for o in old['objects']}
+newmap = {(o['kind'], o['corpus_key']): o for o in new['objects']}
+assert set(oldmap) == set(newmap)
+for k in oldmap:
+    o, n = oldmap[k], newmap[k]
+    os_, ns_ = o['surviving']['book'], n['surviving']['book']
+    ob, nb = {s['book'] for s in o['superseded']}, {s['book'] for s in n['superseded']}
+    assert ns_ in ob and os_ in nb
+print('116/116 clean swaps, 0 mismatches')
+"
+```
+
+**Did the register SHRINK, per `decisions.md §13`'s expectation?** No, and this is a deliberately
+re-verified finding, not an assumption: `supersession_register_build.py`'s evidence bar (§4)
+already refused any pair that was not field-identical after normalization — a Dwarf/Grey-Dwarf
+shape (branch 2, "a different thing") or a darkvision-60-vs-90 shape (branch 3, "same thing,
+changed values") would already fail the exact-match test and land in §7's candidates, never in
+the register. **The 116 objects here were always branch-1-shaped (identical); §13's branch 2/3
+split does not remove any of them — it only reversed which side of each identical pair is
+`surviving`.** The register's OWN size is unaffected by this correction; what moves is 134 unit
+ids' worth of `EXCLUDED_UNIT_IDS` membership (§8) and the specific unit each id names, not the
+count.
+
+**Gate re-run against the corrected, regenerated register:**
+
+```
+python3 scripts/supersession_register_gate.py --corpus-root "$PCGEN_CORPUS_ROOT"
+# -> supersession_register_gate: 116 objects checked
+#    OK: every entry proves same-object field equality and clears both guards
+```
+
+**Gate proven able to fail on the OLD (pre-correction) register**, confirming the direction check
+is a real, live guard and not decorative:
+
+```
+python3 scripts/supersession_register_gate.py --register /tmp/old-register.json \
+  --corpus-root "$PCGEN_CORPUS_ROOT"
+# -> supersession_register_gate: 116 objects checked
+#    FAIL: 134 violation(s) — one per superseded side of every proven pair (matching
+#    objects_redundant_excess exactly, since each entry's `surviving` date is checked
+#    against EVERY one of its `superseded` sides individually), e.g.:
+#    class:Hellknight: surviving adventurers_guide (2017-06) is NEWER than superseded
+#    inner_sea_world_guide (2011-03) -- Decision 13: for an identical pair the FIRST
+#    print owns it, the later printing is superseded
+```
+
+**Re-derived current-board figures (today's `docs/work-inventory.json`, mandate denominator
+`decisions.md §5`), superseding every numerator/denominator figure quoted in §8 (that section's
+own numbers are six waves stale):**
+
+| | value |
+|---|---:|
+| mandate denominator before | **38,521** |
+| redundant excess this register proves | **134** |
+| proposed denominator after (still PROPOSED, NOT APPLIED) | **38,387** |
+| mandate numerator before | **11,829** |
+| of the 134 superseded units, currently `done` (real `doneness_verdict()`) | **38** (not-started 89, unmeasurable 6, in-progress 1) |
+| mandate numerator if applied | 11,829 → **11,791** |
+| mandate headline if applied | 30.7079 % → **30.7161 %** (moves UP slightly this time — the superseded population's own done-rate, 38/134 = 28.4%, is now slightly BELOW the board's 30.71% rate, the opposite sign from §8's wave-7 snapshot, because the population itself changed under the direction swap) |
+
+**Candidates (§7) grew from 28 to 35, clean groups checked from 578 to 584 — NOT a Decision 13
+effect.** Both are ordinary corpus drift: `core_essentials` re-attribution (lane 1) progressed
+from 644 to 128 residual units between the two builds, freeing several `monster_ability`
+cross-book collisions `core_essentials`'s exclusion had been hiding (7 new `raw_line_not_found`
+rows, §7 rows 28-34) — including this register's own `§1` worked example,
+`monster_ability:Kyton ~ Unnerving Gaze`. None of the 7 are Decision 13's doing; they were always
+candidates once `core_essentials` stopped hiding them, and none has been promoted to the register
+without the same field-level identity proof every other entry needs.
+
+**Status: still PROPOSED, NOT APPLIED.** This cycle changes no unit's `book` attribution (frozen
+pending the operator's race ruling, §13's amendment) and edits neither `v06_work_inventory.rs` nor
+the producer — §8's `EXCLUDED_UNIT_IDS` wiring spec is unchanged and still not implemented. Race
+attribution stays frozen; see
+`docs/release/SD-31-corpus-closure-grind/artifacts/RACE-EVIDENCE-D13.md` for the worked-example
+table `decisions.md §13`'s amendment asked for, still separately awaiting the operator's
+branch-1/2/3 ruling per race.

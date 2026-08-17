@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """scripts/supersession_register_gate.py -- SD31-D10-REGISTER-001, the
 Supersession Register's own gate (`decisions.md` Decision 10 + its
-2026-08-16 amendment).
+2026-08-16 amendment, direction CORRECTED by Decision 13, 2026-08-17: for
+an identical pair the FIRST print owns it, not the newest).
 
 Decision 10 is the FIRST authorization in this package to shrink the
 mandate denominator, and a standing rule a cycle may apply without a
@@ -190,14 +191,18 @@ def validate_entry(entry: dict, finder: FileFinder | None) -> list[str]:
                 f"never a reprint, without record-level proof"
             )
 
-    # -- SOURCEDATE ordering: newest wins, the right way round -------------
+    # -- SOURCEDATE ordering: FIRST print owns it (Decision 13, 2026-08-17) -
+    # For an IDENTICAL pair the FIRST printing is `surviving`; a later
+    # printing is `superseded`. (Decision 10's original "newest wins"
+    # direction was corrected by Decision 13 -- see decisions.md §13.)
     sdate = surviving.get("source_date")
     for s in superseded:
-        if sdate is not None and s.get("source_date") is not None and s["source_date"] > sdate:
+        if sdate is not None and s.get("source_date") is not None and s["source_date"] < sdate:
             violations.append(
                 f"{entry.get('kind')}:{entry.get('corpus_key')}: surviving "
-                f"{surviving.get('book')} ({sdate}) is OLDER than superseded "
-                f"{s.get('book')} ({s['source_date']}) -- newest printing must win"
+                f"{surviving.get('book')} ({sdate}) is NEWER than superseded "
+                f"{s.get('book')} ({s['source_date']}) -- Decision 13: for an "
+                f"identical pair the FIRST print owns it, the later printing is superseded"
             )
 
     # -- REFUSAL 1: material-difference guard (re-derived from the oracle) -

@@ -1,0 +1,2497 @@
+{
+  "Dwarf": {
+    "advanced_players_guide": [
+      {
+        "trait": "Ancient Enmity",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 16
+      },
+      {
+        "trait": "Craftsman",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 17
+      },
+      {
+        "trait": "Deep Warrior",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 18
+      },
+      {
+        "trait": "Lorekeeper",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 19
+      },
+      {
+        "trait": "Magic Resistant",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 20
+      },
+      {
+        "trait": "Relentless",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 21
+      },
+      {
+        "trait": "Stonesinger",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 22
+      },
+      {
+        "trait": "Stubborn",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 23
+      }
+    ],
+    "advanced_race_guide": [
+      {
+        "trait": "Ancient Enmity",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 33
+      },
+      {
+        "trait": "Craftsman",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 34
+      },
+      {
+        "trait": "Deep Warrior",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 35
+      },
+      {
+        "trait": "Giant Hunter",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 36
+      },
+      {
+        "trait": "Lorekeeper",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 37
+      },
+      {
+        "trait": "Magic Resistant",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 38
+      },
+      {
+        "trait": "Minesight",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 39
+      },
+      {
+        "trait": "Mountaineer",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 40
+      },
+      {
+        "trait": "Relentless",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 41
+      },
+      {
+        "trait": "Rock Stepper",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 42
+      },
+      {
+        "trait": "Saltbeard",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 43
+      },
+      {
+        "trait": "Sky Sentinel",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 44
+      },
+      {
+        "trait": "Stonesinger",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 45
+      },
+      {
+        "trait": "Stubborn",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 46
+      },
+      {
+        "trait": "Surface Survivalist",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 47
+      },
+      {
+        "trait": "Wyrmscourged",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 48
+      },
+      {
+        "trait": "Xenophobic",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 49
+      }
+    ],
+    "horror_adventures": [
+      {
+        "trait": "Barrow Scholar",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 13
+      },
+      {
+        "trait": "Barrow Warden",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 14
+      },
+      {
+        "trait": "Healthy",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 15
+      },
+      {
+        "trait": "Sense Aberration",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 16
+      },
+      {
+        "trait": "Tightfisted",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 17
+      },
+      {
+        "trait": "Viscous Blood",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 18
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Lasting Grudge",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 33
+      },
+      {
+        "trait": "Siege Survivor",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 34
+      },
+      {
+        "trait": "Slag Child",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 35
+      },
+      {
+        "trait": "Spell Smasher",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 36
+      },
+      {
+        "trait": "Spiritual Support",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 37
+      },
+      {
+        "trait": "Stoic Negotiator",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 38
+      },
+      {
+        "trait": "Unstoppable",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 39
+      }
+    ]
+  },
+  "Elf": {
+    "advanced_players_guide": [
+      {
+        "trait": "Desert Runner",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 31
+      },
+      {
+        "trait": "Dreamspeaker",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 32
+      },
+      {
+        "trait": "Eternal Grudge",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 33
+      },
+      {
+        "trait": "Lightbringer",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 34
+      },
+      {
+        "trait": "Silent Hunter",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 35
+      },
+      {
+        "trait": "Spirit of the Waters",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 36
+      },
+      {
+        "trait": "Woodcraft",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 37
+      }
+    ],
+    "advanced_race_guide": [
+      {
+        "trait": "Arcane Focus",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 74
+      },
+      {
+        "trait": "Darkvision",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 75
+      },
+      {
+        "trait": "Desert Runner",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 76
+      },
+      {
+        "trait": "Dreamspeaker",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 77
+      },
+      {
+        "trait": "Elemental Resistance",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 78
+      },
+      {
+        "trait": "Envoy",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 79
+      },
+      {
+        "trait": "Eternal Grudge",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 80
+      },
+      {
+        "trait": "Fleet-Footed",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 81
+      },
+      {
+        "trait": "Lightbringer",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 82
+      },
+      {
+        "trait": "Silent Hunter",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 83
+      },
+      {
+        "trait": "Spirit of the Waters",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 84
+      },
+      {
+        "trait": "Urbanite",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 85
+      },
+      {
+        "trait": "Woodcraft",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 86
+      }
+    ],
+    "horror_adventures": [
+      {
+        "trait": "Blightborn",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 27
+      },
+      {
+        "trait": "Creepy",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 28
+      },
+      {
+        "trait": "Keeper of Secrets",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 29
+      },
+      {
+        "trait": "Light against Darkness",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 30
+      },
+      {
+        "trait": "Long-Limbed",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 31
+      },
+      {
+        "trait": "Perfect",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 32
+      },
+      {
+        "trait": "Slender",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 33
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Ageless Patience",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 60
+      },
+      {
+        "trait": "Disinterested Observer",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 61
+      },
+      {
+        "trait": "Elven Arrogance",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 62
+      },
+      {
+        "trait": "Human-Raised",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 63
+      },
+      {
+        "trait": "Memories Beyond Death",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 64
+      },
+      {
+        "trait": "Overwhelming Magic",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 65
+      },
+      {
+        "trait": "Retreat Magic",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 66
+      }
+    ]
+  },
+  "Gnome": {
+    "advanced_players_guide": [
+      {
+        "trait": "Academician",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 45
+      },
+      {
+        "trait": "Eternal Hope",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 46
+      },
+      {
+        "trait": "Gift of Tongues",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 47
+      },
+      {
+        "trait": "Magical Linguist",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 48
+      },
+      {
+        "trait": "Master Tinker",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 49
+      },
+      {
+        "trait": "Pyromaniac",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 50
+      },
+      {
+        "trait": "Warden of Nature",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 51
+      }
+    ],
+    "advanced_race_guide": [
+      {
+        "trait": "Academician",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 121
+      },
+      {
+        "trait": "Bond to the Land",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 122
+      },
+      {
+        "trait": "Darkvision",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 123
+      },
+      {
+        "trait": "Eternal Hope",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 124
+      },
+      {
+        "trait": "Explorer",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 125
+      },
+      {
+        "trait": "Fell Magic",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 126
+      },
+      {
+        "trait": "Gift of Tongues",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 127
+      },
+      {
+        "trait": "Knack With Poison",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 128
+      },
+      {
+        "trait": "Magical Linguist",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 129
+      },
+      {
+        "trait": "Master Tinker",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 130
+      },
+      {
+        "trait": "Pyromaniac",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 131
+      },
+      {
+        "trait": "Warden of Nature",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 132
+      }
+    ],
+    "horror_adventures": [
+      {
+        "trait": "Fairy Catcher",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 42
+      },
+      {
+        "trait": "Inquisitive",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 43
+      },
+      {
+        "trait": "Shadow Dodger",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 44
+      },
+      {
+        "trait": "Shadow Foe",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 45
+      },
+      {
+        "trait": "Stalker",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 46
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Architectural Ingenuity",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 96
+      },
+      {
+        "trait": "Dirty Trickster",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 97
+      },
+      {
+        "trait": "Intrepid Settler",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 98
+      },
+      {
+        "trait": "Utilitarian Magic",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 99
+      },
+      {
+        "trait": "Vivacious",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 100
+      },
+      {
+        "trait": "Wright",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 101
+      }
+    ]
+  },
+  "Half-Elf": {
+    "advanced_players_guide": [
+      {
+        "trait": "Ancestral Arms",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 59
+      },
+      {
+        "trait": "Arcane Training",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 60
+      },
+      {
+        "trait": "Dual Minded",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 62
+      },
+      {
+        "trait": "Integrated",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 63
+      },
+      {
+        "trait": "Sociable",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 64
+      },
+      {
+        "trait": "Water Child",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 65
+      }
+    ],
+    "advanced_race_guide": [
+      {
+        "trait": "Ancestral Arms",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 154
+      },
+      {
+        "trait": "Arcane Training",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 155
+      },
+      {
+        "trait": "Drow Magic",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 156
+      },
+      {
+        "trait": "Drow-Blooded",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 157
+      },
+      {
+        "trait": "Dual Minded",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 158
+      },
+      {
+        "trait": "Integrated",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 159
+      },
+      {
+        "trait": "Sociable",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 160
+      },
+      {
+        "trait": "Wary",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 161
+      },
+      {
+        "trait": "Water Child",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 162
+      }
+    ],
+    "horror_adventures": [
+      {
+        "trait": "Dreamer",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 55
+      },
+      {
+        "trait": "Mismatched",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 56
+      },
+      {
+        "trait": "Multidisciplined",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 57
+      },
+      {
+        "trait": "Round Ears",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 58
+      },
+      {
+        "trait": "Starchild",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/support/ha_abilities_race_oa.lst",
+        "line": 5
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Elf-Scorned",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 123
+      },
+      {
+        "trait": "Eye for Opportunity",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 124
+      },
+      {
+        "trait": "Kindred-Raised",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 125
+      },
+      {
+        "trait": "Reflexive Improvisation",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 126
+      },
+      {
+        "trait": "Sea Legs",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 127
+      },
+      {
+        "trait": "Sophisticate",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 128
+      },
+      {
+        "trait": "Weapon Familiarity",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 129
+      }
+    ]
+  },
+  "Half-Orc": {
+    "advanced_players_guide": [
+      {
+        "trait": "Beastmaster",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 78
+      },
+      {
+        "trait": "Bestial",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 79
+      },
+      {
+        "trait": "Cavewight",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 80
+      },
+      {
+        "trait": "Chain Fighter",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 81
+      },
+      {
+        "trait": "Gatecrasher",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 82
+      },
+      {
+        "trait": "Plagueborn",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 83
+      },
+      {
+        "trait": "Rock Climber",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 84
+      },
+      {
+        "trait": "Sacred Tattoo",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 85
+      },
+      {
+        "trait": "Scavenger",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 86
+      },
+      {
+        "trait": "Toothy",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 87
+      }
+    ],
+    "advanced_race_guide": [
+      {
+        "trait": "Acute Darkvision",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 193
+      },
+      {
+        "trait": "Beastmaster",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 194
+      },
+      {
+        "trait": "Bestial",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 195
+      },
+      {
+        "trait": "Cavewight",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 196
+      },
+      {
+        "trait": "Chain Fighter",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 197
+      },
+      {
+        "trait": "City-Raised",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 198
+      },
+      {
+        "trait": "Forest Walker",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 199
+      },
+      {
+        "trait": "Gatecrasher",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 200
+      },
+      {
+        "trait": "Rock Climber",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 201
+      },
+      {
+        "trait": "Sacred Tattoo",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 202
+      },
+      {
+        "trait": "Scavenger",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 203
+      },
+      {
+        "trait": "Shaman's Apprentice",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 204
+      },
+      {
+        "trait": "Skilled",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 205
+      },
+      {
+        "trait": "Toothy",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 206
+      }
+    ],
+    "horror_adventures": [
+      {
+        "trait": "Inured",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 67
+      },
+      {
+        "trait": "Monstrous Sympathy",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 68
+      },
+      {
+        "trait": "Pain Tolerance",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 69
+      },
+      {
+        "trait": "Projection",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 70
+      },
+      {
+        "trait": "Smog Sight",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 71
+      },
+      {
+        "trait": "Stoic",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 72
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Divided Attention",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 150
+      },
+      {
+        "trait": "Human-Raised",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 151
+      },
+      {
+        "trait": "Orc Atavism",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 152
+      },
+      {
+        "trait": "Overlooked Mastermind",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 153
+      },
+      {
+        "trait": "Pariah",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 154
+      },
+      {
+        "trait": "Sea Raider",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 155
+      },
+      {
+        "trait": "War-Leader",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 156
+      }
+    ]
+  },
+  "Halfling": {
+    "advanced_players_guide": [
+      {
+        "trait": "Craven",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 95
+      },
+      {
+        "trait": "Low Blow",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 96
+      },
+      {
+        "trait": "Outrider",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 97
+      },
+      {
+        "trait": "Practicality",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 98
+      },
+      {
+        "trait": "Swift as Shadows",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 99
+      },
+      {
+        "trait": "Underfoot",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 100
+      },
+      {
+        "trait": "Wanderlust",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 101
+      },
+      {
+        "trait": "Warslinger",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 102
+      }
+    ],
+    "advanced_race_guide": [
+      {
+        "trait": "Adaptable Luck",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 227
+      },
+      {
+        "trait": "Craven",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 228
+      },
+      {
+        "trait": "Fleet of Foot",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 229
+      },
+      {
+        "trait": "Ingratiating",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 230
+      },
+      {
+        "trait": "Low Blow",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 231
+      },
+      {
+        "trait": "Outrider",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 232
+      },
+      {
+        "trait": "Polyglot",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 233
+      },
+      {
+        "trait": "Practicality",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 234
+      },
+      {
+        "trait": "Shiftless",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 235
+      },
+      {
+        "trait": "Swift as Shadows",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 236
+      },
+      {
+        "trait": "Underfoot",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 237
+      },
+      {
+        "trait": "Wanderlust",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 238
+      },
+      {
+        "trait": "Warslinger",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 239
+      }
+    ],
+    "horror_adventures": [
+      {
+        "trait": "Acquisitive",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 81
+      },
+      {
+        "trait": "Attentive",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 82
+      },
+      {
+        "trait": "Blessed",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 83
+      },
+      {
+        "trait": "Creepy Doll",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 84
+      },
+      {
+        "trait": "Deep Jungle",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 85
+      },
+      {
+        "trait": "Irrepressible",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 86
+      },
+      {
+        "trait": "Resourceful",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 87
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Caretaker",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 177
+      },
+      {
+        "trait": "Driven Worker",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 178
+      },
+      {
+        "trait": "Human Shadow",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 179
+      },
+      {
+        "trait": "Secretive Survivor",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 180
+      },
+      {
+        "trait": "Skulker",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 181
+      },
+      {
+        "trait": "Unfettered",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 182
+      },
+      {
+        "trait": "Unlucky Halfling",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 183
+      }
+    ]
+  },
+  "Human": {
+    "advanced_players_guide": [
+      {
+        "trait": "Eye for Talent",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 110
+      },
+      {
+        "trait": "Heart of the Fields",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 111
+      },
+      {
+        "trait": "Heart of the Streets",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 112
+      },
+      {
+        "trait": "Heart of the Wilderness",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_race.lst",
+        "line": 113
+      }
+    ],
+    "advanced_race_guide": [
+      {
+        "trait": "Adoptive Parentage",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 257
+      },
+      {
+        "trait": "Dual Talent",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 258
+      },
+      {
+        "trait": "Eye for Talent",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 259
+      },
+      {
+        "trait": "Focused Study",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 260
+      },
+      {
+        "trait": "Heart of the Fields",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 261
+      },
+      {
+        "trait": "Heart of the Mountain",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 262
+      },
+      {
+        "trait": "Heart of the Sea",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 263
+      },
+      {
+        "trait": "Heart of the Slums",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 264
+      },
+      {
+        "trait": "Heart of the Snows",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 265
+      },
+      {
+        "trait": "Heart of the Streets",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 266
+      },
+      {
+        "trait": "Heart of the Sun",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 267
+      },
+      {
+        "trait": "Heart of the Wilderness",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 268
+      },
+      {
+        "trait": "Heroic",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 269
+      },
+      {
+        "trait": "Mixed Heritage",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 270
+      },
+      {
+        "trait": "Silver Tongued",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 271
+      }
+    ],
+    "horror_adventures": [
+      {
+        "trait": "Aquatic Ancestry",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 101
+      },
+      {
+        "trait": "Giant Ancestry",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 102
+      },
+      {
+        "trait": "Piety",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 103
+      },
+      {
+        "trait": "Psychic Defense",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 104
+      },
+      {
+        "trait": "Rationalize",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 105
+      },
+      {
+        "trait": "Reptilian Ancestry",
+        "file": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        "line": 106
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Awareness",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 201
+      },
+      {
+        "trait": "Comprehensive Education",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 202
+      },
+      {
+        "trait": "Industrious",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 203
+      },
+      {
+        "trait": "Innovative",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 204
+      },
+      {
+        "trait": "Institutional Memory",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 205
+      },
+      {
+        "trait": "Military Tradition",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 206
+      },
+      {
+        "trait": "Practiced Hunter",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 207
+      },
+      {
+        "trait": "Self-Made Fate",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 208
+      },
+      {
+        "trait": "Social Ties",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 209
+      },
+      {
+        "trait": "Tribalistic",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 210
+      },
+      {
+        "trait": "Unstoppable Magic",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 211
+      },
+      {
+        "trait": "Wayfarer",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 212
+      },
+      {
+        "trait": "Tribalistic Languages",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 216
+      }
+    ]
+  },
+  "Aasimar": {
+    "advanced_race_guide": [
+      {
+        "trait": "Celestial Crusader",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 324
+      },
+      {
+        "trait": "Deathless Spirit",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 325
+      },
+      {
+        "trait": "Exalted Resistance",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 326
+      },
+      {
+        "trait": "Halo",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 327
+      },
+      {
+        "trait": "Heavenborn",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 328
+      },
+      {
+        "trait": "Immortal Spark",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 329
+      },
+      {
+        "trait": "Incorruptible",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 330
+      },
+      {
+        "trait": "Scion of Humanity",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 331
+      },
+      {
+        "trait": "Truespeaker",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 332
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Crusading Magic",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 335
+      },
+      {
+        "trait": "Lost Promise",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 336
+      }
+    ]
+  },
+  "Catfolk": {
+    "advanced_race_guide": [
+      {
+        "trait": "Cat's Claws",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 359
+      },
+      {
+        "trait": "Clever Cat",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 360
+      },
+      {
+        "trait": "Climber",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 361
+      },
+      {
+        "trait": "Curiosity",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 362
+      },
+      {
+        "trait": "Nimble Faller",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 363
+      },
+      {
+        "trait": "Scent",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 364
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Jungle Stalker",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 382
+      }
+    ]
+  },
+  "Dhampir": {
+    "advanced_race_guide": [
+      {
+        "trait": "Dayborn",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 395
+      },
+      {
+        "trait": "Fangs",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 396
+      },
+      {
+        "trait": "Vampiric Empathy",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 397
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Heir to Undying Nobility",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 517
+      },
+      {
+        "trait": "Vampire Hunter",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 518
+      }
+    ]
+  },
+  "Drow": {
+    "advanced_race_guide": [
+      {
+        "trait": "Ambitious Schemer",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 424
+      },
+      {
+        "trait": "Ancestral Grudge",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 425
+      },
+      {
+        "trait": "Blasphemous Covenant",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 426
+      },
+      {
+        "trait": "Darklands Stalker",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 427
+      },
+      {
+        "trait": "Seducer",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 428
+      },
+      {
+        "trait": "Surface Infiltrator",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 429
+      },
+      {
+        "trait": "Spider Step",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_feats.lst",
+        "line": 277
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Defensive Training",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 545
+      }
+    ]
+  },
+  "Fetchling": {
+    "advanced_race_guide": [
+      {
+        "trait": "Emissary",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 454
+      },
+      {
+        "trait": "Gloom Shimmer",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 455
+      },
+      {
+        "trait": "Shadow Magic",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 456
+      },
+      {
+        "trait": "Subtle Manipulator",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 457
+      },
+      {
+        "trait": "World Walker",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 458
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Shadow Agent",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 618
+      }
+    ]
+  },
+  "Goblin": {
+    "advanced_race_guide": [
+      {
+        "trait": "Cave Crawler",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 485
+      },
+      {
+        "trait": "City Scavenger",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 486
+      },
+      {
+        "trait": "Eat Anything",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 487
+      },
+      {
+        "trait": "Over-Sized Ears",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 489
+      },
+      {
+        "trait": "Tree Runner",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 490
+      },
+      {
+        "trait": "Weapon Familiarity",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 491
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Junk Tinker",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 731
+      }
+    ]
+  },
+  "Hobgoblin": {
+    "advanced_race_guide": [
+      {
+        "trait": "Bandy-Legged",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 512
+      },
+      {
+        "trait": "Battle-Hardened",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 513
+      },
+      {
+        "trait": "Engineer",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 514
+      },
+      {
+        "trait": "Fearsome",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 515
+      },
+      {
+        "trait": "Magehunter",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 516
+      },
+      {
+        "trait": "Pit Boss",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 517
+      },
+      {
+        "trait": "Scarred",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 518
+      },
+      {
+        "trait": "Slave Hunter",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 519
+      },
+      {
+        "trait": "Unfit",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 520
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Authoritative",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 800
+      }
+    ]
+  },
+  "Ifrit": {
+    "advanced_race_guide": [
+      {
+        "trait": "Desert Mirage",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 543
+      },
+      {
+        "trait": "Efreeti Magic",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 544
+      },
+      {
+        "trait": "Fire in the Blood",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 545
+      },
+      {
+        "trait": "Fire Insight",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 546
+      },
+      {
+        "trait": "Fire-Starter",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 547
+      },
+      {
+        "trait": "Forge-Hardened",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 548
+      },
+      {
+        "trait": "Hypnotic",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 549
+      },
+      {
+        "trait": "Wildfire Heart",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 550
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Brazen Flame",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 823
+      }
+    ]
+  },
+  "Kobold": {
+    "advanced_race_guide": [
+      {
+        "trait": "Beast Bond",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 573
+      },
+      {
+        "trait": "Dragon-Scaled",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 574
+      },
+      {
+        "trait": "Gliding Wings",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 575
+      },
+      {
+        "trait": "Jester",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 576
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Dragon Affinity",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 893
+      }
+    ]
+  },
+  "Orc": {
+    "advanced_race_guide": [
+      {
+        "trait": "Dayrunner",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 599
+      },
+      {
+        "trait": "Feral",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 600
+      },
+      {
+        "trait": "Smeller",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 601
+      },
+      {
+        "trait": "Squalid",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 602
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Reckless Climber",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 987
+      }
+    ]
+  },
+  "Oread": {
+    "advanced_race_guide": [
+      {
+        "trait": "Crystalline Form",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 629
+      },
+      {
+        "trait": "Earth Insight",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 630
+      },
+      {
+        "trait": "Ferrous Growth",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 631
+      },
+      {
+        "trait": "Fertile Soil",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 632
+      },
+      {
+        "trait": "Granite Skin",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 633
+      },
+      {
+        "trait": "Mountain-Born",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 634
+      },
+      {
+        "trait": "Stone in the Blood",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 635
+      },
+      {
+        "trait": "Treacherous Earth",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 636
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Isolated",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 1010
+      }
+    ]
+  },
+  "Ratfolk": {
+    "advanced_race_guide": [
+      {
+        "trait": "Cornered Fury",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 659
+      },
+      {
+        "trait": "Scent",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 660
+      },
+      {
+        "trait": "Skulk",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 661
+      },
+      {
+        "trait": "Unnatural",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 662
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Market Dweller",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 1037
+      }
+    ],
+    "monster_codex": [
+      {
+        "trait": "Cheek Pouches",
+        "file": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_race.lst",
+        "line": 45
+      },
+      {
+        "trait": "Cleanliness",
+        "file": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_race.lst",
+        "line": 46
+      },
+      {
+        "trait": "Lab Rat",
+        "file": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_race.lst",
+        "line": 47
+      },
+      {
+        "trait": "Surface Sprinter",
+        "file": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_race.lst",
+        "line": 48
+      }
+    ]
+  },
+  "Sylph": {
+    "advanced_race_guide": [
+      {
+        "trait": "Air Insight",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 685
+      },
+      {
+        "trait": "Breeze-Kissed",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 686
+      },
+      {
+        "trait": "Like the Wind",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 687
+      },
+      {
+        "trait": "Sky Speaker",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 688
+      },
+      {
+        "trait": "Storm in the Blood",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 689
+      },
+      {
+        "trait": "Thunderous Resilience",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 690
+      },
+      {
+        "trait": "Weather Savvy",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 691
+      },
+      {
+        "trait": "Whispering Wind",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 692
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Secretive",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 1320
+      }
+    ]
+  },
+  "Tengu": {
+    "advanced_race_guide": [
+      {
+        "trait": "Carrion Sense",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 716
+      },
+      {
+        "trait": "Claw Attack",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 717
+      },
+      {
+        "trait": "Exotic Weapon Training",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 718
+      },
+      {
+        "trait": "Glide",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 719
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Deft Swords",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 1367
+      }
+    ]
+  },
+  "Tiefling": {
+    "advanced_race_guide": [
+      {
+        "trait": "Beguiling Liar",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 747
+      },
+      {
+        "trait": "Fiendish Sprinter",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 748
+      },
+      {
+        "trait": "Maw or Claw",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 749
+      },
+      {
+        "trait": "Prehensile Tail",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 750
+      },
+      {
+        "trait": "Scaled Skin",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 751
+      },
+      {
+        "trait": "Soul Seer",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 752
+      },
+      {
+        "trait": "Vestigial Wings",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 753
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Bullying",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 1539
+      },
+      {
+        "trait": "Light from the Darkness",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 1540
+      },
+      {
+        "trait": "Pass for Human",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 1541
+      }
+    ]
+  },
+  "Undine": {
+    "advanced_race_guide": [
+      {
+        "trait": "Acid Breath",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 776
+      },
+      {
+        "trait": "Amphibious",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 777
+      },
+      {
+        "trait": "Deepsight",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 778
+      },
+      {
+        "trait": "Flesh Chameleon",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 779
+      },
+      {
+        "trait": "Hydrated Vitality",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 780
+      },
+      {
+        "trait": "Nereid Fascination",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 781
+      },
+      {
+        "trait": "Ooze Breath",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 782
+      },
+      {
+        "trait": "Terrain Chameleon",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 783
+      },
+      {
+        "trait": "Water Sense",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 784
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Triton Magic",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 1610
+      }
+    ]
+  },
+  "Duergar": {
+    "advanced_race_guide": [
+      {
+        "trait": "Blood Enmity",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 847
+      },
+      {
+        "trait": "Daysighted",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 848
+      },
+      {
+        "trait": "Deep Magic",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 849
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Magical Taskmaster",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 571
+      }
+    ],
+    "monster_codex": [
+      {
+        "trait": "Ironskinned",
+        "file": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_race.lst",
+        "line": 16
+      },
+      {
+        "trait": "Twilight-Touched",
+        "file": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_race.lst",
+        "line": 17
+      }
+    ]
+  },
+  "Gillman": {
+    "advanced_race_guide": [
+      {
+        "trait": "Riverfolk",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 874
+      },
+      {
+        "trait": "Slime Hunter",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 875
+      },
+      {
+        "trait": "Throwback",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 876
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Deep Gillman",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 710
+      }
+    ]
+  },
+  "Grippli": {
+    "advanced_race_guide": [
+      {
+        "trait": "Glider",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 905
+      },
+      {
+        "trait": "Jumper",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 906
+      },
+      {
+        "trait": "Princely",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 907
+      },
+      {
+        "trait": "Toxic Skin",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 908
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Defensive Training",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 779
+      }
+    ]
+  },
+  "Kitsune": {
+    "advanced_race_guide": [
+      {
+        "trait": "Fast Shifter",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 936
+      },
+      {
+        "trait": "Gregarious",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 937
+      },
+      {
+        "trait": "Magical Tail",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_feats.lst",
+        "line": 157
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Duplicitous",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 870
+      }
+    ]
+  },
+  "Merfolk": {
+    "advanced_race_guide": [
+      {
+        "trait": "Darkvision",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 960
+      },
+      {
+        "trait": "Seasinger",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 961
+      },
+      {
+        "trait": "Strongtail",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 962
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Secret Magic",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 937
+      }
+    ]
+  },
+  "Nagaji": {
+    "advanced_race_guide": [
+      {
+        "trait": "Hypnotic Gaze",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 985
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Serpent Affinity",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 964
+      }
+    ]
+  },
+  "Samsaran": {
+    "advanced_race_guide": [
+      {
+        "trait": "Mystic Past Life",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 1010
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Mountaineer",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 1060
+      }
+    ]
+  },
+  "Strix": {
+    "advanced_race_guide": [
+      {
+        "trait": "Dayguard",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 1149
+      },
+      {
+        "trait": "Frightening",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 1150
+      },
+      {
+        "trait": "Nimble",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 1151
+      },
+      {
+        "trait": "Tough",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 1152
+      },
+      {
+        "trait": "Wing-Clipped",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 1153
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Cautious Brawler",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 1243
+      }
+    ]
+  },
+  "Suli": {
+    "advanced_race_guide": [
+      {
+        "trait": "Energy Strike",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 1179
+      },
+      {
+        "trait": "Earthfoot",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 1183
+      },
+      {
+        "trait": "Firehand",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 1184
+      },
+      {
+        "trait": "Icewalk",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 1185
+      },
+      {
+        "trait": "Shockshield",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 1186
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Trusted Mediator",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 1266
+      }
+    ]
+  },
+  "Svirfneblin": {
+    "advanced_race_guide": [
+      {
+        "trait": "Healthy",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 1213
+      },
+      {
+        "trait": "Stoneseer",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 1214
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Stalwart Watcher",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 1293
+      },
+      {
+        "trait": "Stalwart Watcher Output",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 1297
+      }
+    ]
+  },
+  "Vanara": {
+    "advanced_race_guide": [
+      {
+        "trait": "Tree Stranger",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 1236
+      },
+      {
+        "trait": "Whitecape",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 1237
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Risky Troublemaker",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 1632
+      }
+    ]
+  },
+  "Vishkanya": {
+    "advanced_race_guide": [
+      {
+        "trait": "Sensual",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 1271
+      },
+      {
+        "trait": "Subtle Appearance",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 1272
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "Deceptive",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 1662
+      }
+    ]
+  },
+  "Wayang": {
+    "advanced_race_guide": [
+      {
+        "trait": "Dissolution's Child",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        "line": 1296
+      }
+    ],
+    "inner_sea_races": [
+      {
+        "trait": "In the Shadows",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 1690
+      }
+    ]
+  },
+  "Android": {
+    "inner_sea_races": [
+      {
+        "trait": "Repairing Nanites",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 359
+      }
+    ]
+  },
+  "Changeling": {
+    "inner_sea_races": [
+      {
+        "trait": "Hag Magic",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 418
+      },
+      {
+        "trait": "Witchborn",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 419
+      }
+    ]
+  },
+  "Gathlain": {
+    "inner_sea_races": [
+      {
+        "trait": "Nimbus of Vitality",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 640
+      }
+    ],
+    "ultimate_wilderness": [
+      {
+        "trait": "Flighty",
+        "file": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+        "line": 50
+      },
+      {
+        "trait": "Honey Whisperer",
+        "file": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+        "line": 51
+      },
+      {
+        "trait": "Intense Curiosity",
+        "file": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+        "line": 52
+      },
+      {
+        "trait": "Otherworldly Gossip",
+        "file": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+        "line": 53
+      },
+      {
+        "trait": "Titled",
+        "file": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+        "line": 54
+      },
+      {
+        "trait": "Tree-Born",
+        "file": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+        "line": 55
+      },
+      {
+        "trait": "Tree Dialect",
+        "file": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+        "line": 56
+      }
+    ]
+  },
+  "Ghoran": {
+    "inner_sea_races": [
+      {
+        "trait": "Disgusting",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 687
+      }
+    ],
+    "ultimate_wilderness": [
+      {
+        "trait": "Creator's Legacy",
+        "file": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+        "line": 85
+      },
+      {
+        "trait": "Martial Recollection",
+        "file": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+        "line": 86
+      },
+      {
+        "trait": "Spelleater",
+        "file": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_race.lst",
+        "line": 87
+      },
+      {
+        "trait": "Occult Scion",
+        "file": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/support/uw_abilities_class_oa.lst",
+        "line": 172
+      }
+    ]
+  },
+  "Kasatha": {
+    "inner_sea_races": [
+      {
+        "trait": "Stealthy",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 846
+      }
+    ]
+  },
+  "Lashunta": {
+    "inner_sea_races": [
+      {
+        "trait": "Insidious Telepathy",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 914
+      }
+    ]
+  },
+  "Skinwalker": {
+    "inner_sea_races": [
+      {
+        "trait": "Beast Talker",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 1213
+      }
+    ]
+  },
+  "Syrinx": {
+    "inner_sea_races": [
+      {
+        "trait": "Oppressive",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 1343
+      }
+    ]
+  },
+  "Triaxian": {
+    "inner_sea_races": [
+      {
+        "trait": "Transitional Lore",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 1566
+      }
+    ]
+  },
+  "Trox": {
+    "inner_sea_races": [
+      {
+        "trait": "Tremorsense",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 1587
+      }
+    ]
+  },
+  "Wyrwood": {
+    "inner_sea_races": [
+      {
+        "trait": "Repair Magic",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 1709
+      }
+    ]
+  },
+  "Wyvaran": {
+    "inner_sea_races": [
+      {
+        "trait": "Evasive Maneuvers",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        "line": 1731
+      }
+    ]
+  }
+}

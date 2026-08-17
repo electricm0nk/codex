@@ -1,0 +1,1356 @@
+{
+  "aasimar": {
+    "name": "Aasimar",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.85",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 17,
+        "nonsource_tags": []
+      },
+      {
+        "book": "bestiary",
+        "source_date": "2009-10",
+        "source_page": "p.7",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary/b1_races_pc.lst",
+        "line": 6,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.238",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 21,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "android": {
+    "name": "Android",
+    "citations": [
+      {
+        "book": "bestiary_5",
+        "source_date": "2015-12",
+        "source_page": "p.19",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_races_pc.lst",
+        "line": 7,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_bestiary",
+        "source_date": "2013-06",
+        "source_page": "p.3",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+        "line": 8,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.239",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 22,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "aquatic_elf": {
+    "name": "Elf, Aquatic",
+    "citations": []
+  },
+  "catfolk": {
+    "name": "Catfolk",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.91",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 18,
+        "nonsource_tags": []
+      },
+      {
+        "book": "bestiary_3",
+        "source_date": "2012-01",
+        "source_page": "p.47",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races_pc.lst",
+        "line": 6,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.239",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 23,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "changeling": {
+    "name": "Changeling",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.184",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 36,
+        "nonsource_tags": []
+      },
+      {
+        "book": "bestiary_4",
+        "source_date": "2013-10",
+        "source_page": "p.29",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races_pc.lst",
+        "line": 8,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.240",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 24,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "dhampir": {
+    "name": "Dhampir",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.97",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 19,
+        "nonsource_tags": []
+      },
+      {
+        "book": "bestiary_2",
+        "source_date": "2010-12",
+        "source_page": "p.89",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races_pc.lst",
+        "line": 6,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.240",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 25,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "drow": {
+    "name": "Drow",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.103",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 20,
+        "nonsource_tags": []
+      },
+      {
+        "book": "bestiary",
+        "source_date": "2009-10",
+        "source_page": "p.114",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary/b1_races_pc.lst",
+        "line": 7,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.241",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 26,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "duergar": {
+    "name": "Duergar",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.186",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 37,
+        "nonsource_tags": []
+      },
+      {
+        "book": "bestiary",
+        "source_date": "2009-10",
+        "source_page": "p.117",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary/b1_races_pc.lst",
+        "line": 8,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.241",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 27,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "dwarf": {
+    "name": "Dwarf",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.10",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 7,
+        "nonsource_tags": []
+      },
+      {
+        "book": "core_rulebook",
+        "source_date": "2009-08",
+        "source_page": "p.21",
+        "file": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_races.lst",
+        "line": 7,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.236",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 10,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "elf": {
+    "name": "Elf",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.20",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 8,
+        "nonsource_tags": []
+      },
+      {
+        "book": "core_rulebook",
+        "source_date": "2009-08",
+        "source_page": "p.22",
+        "file": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_races.lst",
+        "line": 8,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.236",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 11,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "fetchling": {
+    "name": "Fetchling",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.109",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 21,
+        "nonsource_tags": []
+      },
+      {
+        "book": "bestiary_2",
+        "source_date": "2010-12",
+        "source_page": "p.123",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races_pc.lst",
+        "line": 7,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.242",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 29,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "gathlain": {
+    "name": "Gathlain",
+    "citations": [
+      {
+        "book": "bestiary_4",
+        "source_date": "2013-10",
+        "source_page": "p.122",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races_pc.lst",
+        "line": 9,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.243",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 30,
+        "nonsource_tags": []
+      },
+      {
+        "book": "ultimate_wilderness",
+        "source_date": "2017-11",
+        "source_page": "p.9",
+        "file": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races.lst",
+        "line": 5,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "ghoran": {
+    "name": "Ghoran",
+    "citations": [
+      {
+        "book": "bestiary_5",
+        "source_date": "2015-12",
+        "source_page": "p.119",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_races_pc.lst",
+        "line": 11,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_bestiary",
+        "source_date": "2013-06",
+        "source_page": "p.14",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+        "line": 29,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.243",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 31,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "gillman": {
+    "name": "Gillman",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.188",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 38,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.243",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 32,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_world_guide",
+        "source_date": "2011-03",
+        "source_page": "p.310",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races.lst",
+        "line": 20,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "gnome": {
+    "name": "Gnome",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.30",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 9,
+        "nonsource_tags": []
+      },
+      {
+        "book": "core_rulebook",
+        "source_date": "2009-08",
+        "source_page": "p.23",
+        "file": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_races.lst",
+        "line": 9,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.237",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 12,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "goblin": {
+    "name": "Goblin",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.115",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 22,
+        "nonsource_tags": []
+      },
+      {
+        "book": "bestiary",
+        "source_date": "2009-10",
+        "source_page": "p.156",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary/b1_races_pc.lst",
+        "line": 9,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.244",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 34,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "grippli": {
+    "name": "Grippli",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.190",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 39,
+        "nonsource_tags": []
+      },
+      {
+        "book": "bestiary_2",
+        "source_date": "2010-12",
+        "source_page": "p.149",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races_pc.lst",
+        "line": 8,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.244",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 35,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "half_elf": {
+    "name": "Half-Elf",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.40",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 10,
+        "nonsource_tags": []
+      },
+      {
+        "book": "core_rulebook",
+        "source_date": "2009-08",
+        "source_page": "p.24",
+        "file": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_races.lst",
+        "line": 10,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.237",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 13,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_world_guide",
+        "source_date": "2011-03",
+        "source_page": null,
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races.lst",
+        "line": 7,
+        "nonsource_tags": [
+          "TEMPLATE:Human Ethnicity"
+        ]
+      }
+    ]
+  },
+  "half_orc": {
+    "name": "Half-Orc",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.50",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 11,
+        "nonsource_tags": []
+      },
+      {
+        "book": "core_rulebook",
+        "source_date": "2009-08",
+        "source_page": "p.25",
+        "file": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_races.lst",
+        "line": 11,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.237",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 14,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_world_guide",
+        "source_date": "2011-03",
+        "source_page": null,
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races.lst",
+        "line": 8,
+        "nonsource_tags": [
+          "TEMPLATE:Human Ethnicity"
+        ]
+      }
+    ]
+  },
+  "halfling": {
+    "name": "Halfling",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.60",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 12,
+        "nonsource_tags": []
+      },
+      {
+        "book": "core_rulebook",
+        "source_date": "2009-08",
+        "source_page": "p.26",
+        "file": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_races.lst",
+        "line": 12,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.238",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 15,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "hobgoblin": {
+    "name": "Hobgoblin",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.121",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 23,
+        "nonsource_tags": []
+      },
+      {
+        "book": "bestiary",
+        "source_date": "2009-10",
+        "source_page": "p.175",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary/b1_races_pc.lst",
+        "line": 10,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.244",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 36,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "human": {
+    "name": "Human",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.70",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 13,
+        "nonsource_tags": []
+      },
+      {
+        "book": "core_rulebook",
+        "source_date": "2009-08",
+        "source_page": "p.27",
+        "file": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_races.lst",
+        "line": 13,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.238",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 16,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_world_guide",
+        "source_date": "2011-03",
+        "source_page": null,
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races.lst",
+        "line": 9,
+        "nonsource_tags": [
+          "TEMPLATE:Human Ethnicity"
+        ]
+      }
+    ]
+  },
+  "ifrit": {
+    "name": "Ifrit",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.127",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 24,
+        "nonsource_tags": []
+      },
+      {
+        "book": "bestiary_2",
+        "source_date": "2010-12",
+        "source_page": "p.160",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races_pc.lst",
+        "line": 9,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.245",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 37,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "kasatha": {
+    "name": "Kasatha",
+    "citations": [
+      {
+        "book": "bestiary_4",
+        "source_date": "2013-10",
+        "source_page": "p.174",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races_pc.lst",
+        "line": 10,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.245",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 38,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "kitsune": {
+    "name": "Kitsune",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.192",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 40,
+        "nonsource_tags": []
+      },
+      {
+        "book": "bestiary_4",
+        "source_date": "2013-10",
+        "source_page": "p.175",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races_pc.lst",
+        "line": 11,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.245",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 39,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "kobold": {
+    "name": "Kobold",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.133",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 25,
+        "nonsource_tags": []
+      },
+      {
+        "book": "bestiary",
+        "source_date": "2009-10",
+        "source_page": "p.183",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary/b1_races_pc.lst",
+        "line": 11,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.245",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 40,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "lashunta": {
+    "name": "Lashunta",
+    "citations": [
+      {
+        "book": "inner_sea_bestiary",
+        "source_date": "2013-06",
+        "source_page": "p.25",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+        "line": 45,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.246",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 41,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "merfolk": {
+    "name": "Merfolk",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.194",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 41,
+        "nonsource_tags": []
+      },
+      {
+        "book": "bestiary",
+        "source_date": "2009-10",
+        "source_page": "p.204",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary/b1_races_pc.lst",
+        "line": 12,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.246",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 42,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "monkey_goblin": {
+    "name": "Goblin, Monkey",
+    "citations": []
+  },
+  "nagaji": {
+    "name": "Nagaji",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.196",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 42,
+        "nonsource_tags": []
+      },
+      {
+        "book": "bestiary_4",
+        "source_date": "2013-10",
+        "source_page": "p.196",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races_pc.lst",
+        "line": 12,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.246",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 43,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "orc": {
+    "name": "Orc",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.139",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 26,
+        "nonsource_tags": []
+      },
+      {
+        "book": "bestiary",
+        "source_date": "2009-10",
+        "source_page": "p.222",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary/b1_races_pc.lst",
+        "line": 13,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.246",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 44,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "oread": {
+    "name": "Oread",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.145",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 27,
+        "nonsource_tags": []
+      },
+      {
+        "book": "bestiary_2",
+        "source_date": "2010-12",
+        "source_page": "p.205",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races_pc.lst",
+        "line": 10,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.247",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 45,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "ratfolk": {
+    "name": "Ratfolk",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.151",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 28,
+        "nonsource_tags": []
+      },
+      {
+        "book": "bestiary_3",
+        "source_date": "2012-01",
+        "source_page": "p.231",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races_pc.lst",
+        "line": 7,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.247",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 46,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "rougarou": {
+    "name": "Rougarou",
+    "citations": []
+  },
+  "samsaran": {
+    "name": "Samsaran",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.198",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 43,
+        "nonsource_tags": []
+      },
+      {
+        "book": "bestiary_4",
+        "source_date": "2013-10",
+        "source_page": "p.198",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races_pc.lst",
+        "line": 13,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.247",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 47,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "skinwalker": {
+    "name": "Skinwalker",
+    "citations": [
+      {
+        "book": "bestiary_5",
+        "source_date": "2015-12",
+        "source_page": "p.233",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_races_pc.lst",
+        "line": 15,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.248",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 48,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "strix": {
+    "name": "Strix",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.200",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 44,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_world_guide",
+        "source_date": "2011-03",
+        "source_page": "p.313",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races.lst",
+        "line": 21,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "suli": {
+    "name": "Suli",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.202",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 45,
+        "nonsource_tags": []
+      },
+      {
+        "book": "bestiary_3",
+        "source_date": "2012-01",
+        "source_page": "p.258",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races_pc.lst",
+        "line": 8,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.250",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 49,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "svirfneblin": {
+    "name": "Svirfneblin",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.204",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 46,
+        "nonsource_tags": []
+      },
+      {
+        "book": "bestiary",
+        "source_date": "2009-10",
+        "source_page": "p.261",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary/b1_races_pc.lst",
+        "line": 14,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.250",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 50,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "sylph": {
+    "name": "Sylph",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.157",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 29,
+        "nonsource_tags": []
+      },
+      {
+        "book": "bestiary_2",
+        "source_date": "2010-12",
+        "source_page": "p.258",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races_pc.lst",
+        "line": 11,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.250",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 51,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "syrinx": {
+    "name": "Syrinx",
+    "citations": [
+      {
+        "book": "inner_sea_bestiary",
+        "source_date": "2013-06",
+        "source_page": "p.51",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+        "line": 82,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.251",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 52,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "tengu": {
+    "name": "Tengu",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "P.163",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 30,
+        "nonsource_tags": []
+      },
+      {
+        "book": "bestiary",
+        "source_date": "2009-10",
+        "source_page": "p.263",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary/b1_races_pc.lst",
+        "line": 15,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.251",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 53,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "tiefling": {
+    "name": "Tiefling",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "P.169",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 31,
+        "nonsource_tags": []
+      },
+      {
+        "book": "bestiary",
+        "source_date": "2009-10",
+        "source_page": "p.264",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary/b1_races_pc.lst",
+        "line": 16,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.251",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 54,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "triaxian": {
+    "name": "Triaxian",
+    "citations": [
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.252",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 55,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "trox": {
+    "name": "Trox",
+    "citations": [
+      {
+        "book": "bestiary_4",
+        "source_date": "2013-10",
+        "source_page": "p.264",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races_pc.lst",
+        "line": 14,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.253",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 56,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "undine": {
+    "name": "Undine",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.175",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 32,
+        "nonsource_tags": []
+      },
+      {
+        "book": "bestiary_2",
+        "source_date": "2010-12",
+        "source_page": "p.275",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races_pc.lst",
+        "line": 12,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.253",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 57,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "vanara": {
+    "name": "Vanara",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.206",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 47,
+        "nonsource_tags": []
+      },
+      {
+        "book": "bestiary_3",
+        "source_date": "2012-01",
+        "source_page": "p.280",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races_pc.lst",
+        "line": 9,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.253",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 58,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "vishkanya": {
+    "name": "Vishkanya",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.208",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 48,
+        "nonsource_tags": []
+      },
+      {
+        "book": "bestiary_3",
+        "source_date": "2012-01",
+        "source_page": "p.281",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races_pc.lst",
+        "line": 10,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.253",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 59,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "wayang": {
+    "name": "Wayang",
+    "citations": [
+      {
+        "book": "advanced_race_guide",
+        "source_date": "2012-06",
+        "source_page": "p.274",
+        "file": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races.lst",
+        "line": 49,
+        "nonsource_tags": []
+      },
+      {
+        "book": "bestiary_4",
+        "source_date": "2013-10",
+        "source_page": "p.274",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races_pc.lst",
+        "line": 15,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.254",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 60,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "wyrwood": {
+    "name": "Wyrwood",
+    "citations": [
+      {
+        "book": "bestiary_4",
+        "source_date": "2013-10",
+        "source_page": "p.280",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races_pc.lst",
+        "line": 16,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.254",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 61,
+        "nonsource_tags": []
+      }
+    ]
+  },
+  "wyvaran": {
+    "name": "Wyvaran",
+    "citations": [
+      {
+        "book": "bestiary_4",
+        "source_date": "2013-10",
+        "source_page": "p.281",
+        "file": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races_pc.lst",
+        "line": 17,
+        "nonsource_tags": []
+      },
+      {
+        "book": "inner_sea_races",
+        "source_date": "2015-09",
+        "source_page": "p.254",
+        "file": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_races.lst",
+        "line": 62,
+        "nonsource_tags": []
+      }
+    ]
+  }
+}

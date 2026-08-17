@@ -22835,3 +22835,259 @@ Modified: `scripts/observer/pf1e_dashboard_producer.py`, `scripts/tests/test_pf1
 `scripts/verify.sh`, `site/dashboard/PF1e-dashboard.json`, `site/dashboard/units/*.json` (new,
 committed), `site/dashboard/README.md`, `docs/release/SD-31-corpus-closure-grind/artifacts/
 OPEN-ISSUES.md` (row 222 appended).
+## Cycle `SD31-D13-REG-001` (`RETRO_ACTOR=sd31-register-race`) — 2026-08-17, Supersession Register direction correction (Decision 13) + the race evidence table
+
+**Starting HEAD**: `10c666125` (tranche/11 tip after `git fetch origin && git reset --hard
+origin/tranche/11` — worktree's package dir was absent and tree was clean per the mandatory
+first-actions protocol). **Branch**: `sd31/register-race-SD31-D13-REG-001`, pushed to origin.
+**Oracle SHA**: `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
+(`./scripts/verify.sh --only preflight-oracle`, PASS). **Final tip**: `1d5b735fe`.
+
+Two deliverables, both owed to the operator per `decisions.md §13`'s amendment.
+
+### §1 — Deliverable 1: the Supersession Register, rebuilt in the corrected direction
+
+**The bug.** `decisions.md §10` originally recorded "most recent publishing wins"; the register
+(116 objects) and its gate were both built to that direction. `§13` (2026-08-17 operator ruling,
+verbatim: *"if they are identical - first print owns it"*) reversed it. Every entry's
+survivor/superseded sides needed to swap.
+
+**TDD.** Edited `scripts/tests/test_supersession_register_gate.py` FIRST: flipped
+`CleanEntryPassesTest`'s two cases to the corrected shape (surviving = older/first print),
+renamed/inverted `StructuralRefusalTest`'s date-order test
+(`test_survivor_newer_than_superseded_is_refused`, was `test_backwards_sourdate_order_is_refused`
+asserting the OPPOSITE direction), and flipped `MaterialDifferenceRefusalTest`'s fixture direction
+so it isolates the material-difference guard without also tripping the (now-different) date-order
+check.
+
+```
+python3 -m unittest scripts.tests.test_supersession_register_gate -v
+# BEFORE the gate fix: 3 failures (the 3 edited tests), confirming they exercise real behavior,
+# not tautologies -- exact assertion text: "surviving bookA (2009-08) is OLDER than superseded
+# bookB (2012-01) -- newest printing must win" (the OLD, now-wrong message)
+```
+
+Fixed `scripts/supersession_register_gate.py`'s SOURCEDATE-ordering refusal: now fires when
+`surviving` is NEWER than `superseded` (was: older). Fixed
+`docs/release/SD-31-corpus-closure-grind/artifacts/supersession_register_build.py`'s survivor pick:
+`min(books, key=date)` (first print), was `max(...)` (newest). Re-ran the 16-case suite: green.
+
+**Regenerated the register end-to-end**, against the CURRENT `docs/work-inventory.json` and the
+pinned oracle (not a hand-edit — per this program's standing rule against hand-trimmed generated
+artifacts):
+
+```
+PCGEN_CORPUS_ROOT=/home/ubuntu/workspace/repos/pcgen/data \
+  python3 docs/release/SD-31-corpus-closure-grind/artifacts/supersession_register_build.py
+```
+
+**Result: 116 objects, unchanged count.** Corpus drift since the register was last built moved
+`clean_groups_checked` 577→584 and `candidates_count` 28→35 (both explained: `core_essentials`
+re-attribution progressed 644→128 residual units between builds, freeing 7 new `monster_ability`
+near-candidates), but the PROVEN (identical) population held at 116 — the register's own evidence
+bar already excluded non-identical pairs before this fix, so Decision 13's branch-2/3 split removes
+nothing new. **Verified this is a real, checked finding, not an assumption**: every one of the 116
+pre-correction objects maps to the identical `(kind, corpus_key)` post-correction, with
+surviving/superseded book sets exactly swapped — 0 mismatches, 0 new, 0 dropped:
+
+```
+git show 10c666125:docs/release/SD-31-corpus-closure-grind/artifacts/SUPERSESSION-REGISTER.json > /tmp/old-register.json
+python3 -c "
+import json
+old=json.load(open('/tmp/old-register.json'))
+new=json.load(open('docs/release/SD-31-corpus-closure-grind/artifacts/SUPERSESSION-REGISTER.json'))
+oldmap={(o['kind'],o['corpus_key']):o for o in old['objects']}
+newmap={(o['kind'],o['corpus_key']):o for o in new['objects']}
+assert set(oldmap)==set(newmap)
+for k in oldmap:
+    o,n=oldmap[k],newmap[k]
+    os_,ns_=o['surviving']['book'],n['surviving']['book']
+    ob,nb={s['book'] for s in o['superseded']},{s['book'] for s in n['superseded']}
+    assert ns_ in ob and os_ in nb
+print('116/116 clean swaps, 0 mismatches')
+"
+# -> 116/116 clean swaps, 0 mismatches
+```
+
+**Gate re-run against the corrected register**: clean.
+
+```
+python3 scripts/supersession_register_gate.py --corpus-root "$PCGEN_CORPUS_ROOT"
+# -> supersession_register_gate: 116 objects checked
+#    OK: every entry proves same-object field equality and clears both guards
+```
+
+**Gate PROVEN able to fail** on the pre-correction register (mutation-proof, per the standing "a
+gate that cannot fail is worse than no gate" rule): running the FIXED gate against the OLD
+(pre-correction, backed-up) JSON produces 134 violations (one per superseded side of every proven
+pair — matches `objects_redundant_excess` exactly):
+
+```
+python3 scripts/supersession_register_gate.py --register /tmp/old-register.json --corpus-root "$PCGEN_CORPUS_ROOT"
+# -> supersession_register_gate: 116 objects checked
+#    FAIL: 134 violation(s)
+```
+
+**Re-derived current-board figures** (today's board, `mandate_pct_before` 30.7079%,
+`decisions.md §5`'s denominator 38,521), superseding every stale wave-7 number in
+`SUPERSESSION-REGISTER.md §8`:
+
+| | value |
+|---|---:|
+| redundant excess this register proves | **134** |
+| proposed denominator after (still PROPOSED, NOT APPLIED) | 38,521 → 38,387 |
+| of the 134 superseded units, currently `done` (real `doneness_verdict()`) | **38** |
+| mandate numerator if applied | 11,829 → 11,791 |
+| mandate headline if applied | 30.7079% → **30.7161%** (moves UP this time, not down — the
+  superseded population's own done-rate, 38/134 = 28.4%, is now slightly BELOW the board average,
+  the opposite sign from the wave-7 snapshot, because the specific population changed under the
+  direction swap) |
+
+**Status: STILL PROPOSED, NOT APPLIED.** No unit's `book` attribution changed. No denominator
+change applied — `docs/work-inventory.json` untouched (out of this card's write scope, confirmed by
+`git status --porcelain` clean on that path throughout). `SUPERSESSION-REGISTER.md` §§1, 2, 4, 5, 6,
+7, 8, 9 updated with re-derived numbers; new §12 documents the whole correction, every command above,
+and the swap-proof.
+
+**Files touched**: `docs/release/SD-31-corpus-closure-grind/artifacts/SUPERSESSION-REGISTER.{md,json}`,
+`docs/release/SD-31-corpus-closure-grind/artifacts/supersession_register_build.py`,
+`scripts/supersession_register_gate.py`, `scripts/tests/test_supersession_register_gate.py`. Commit
+`0fe1c4747`.
+
+### §2 — Deliverable 2: the race evidence table (the operator is waiting on this)
+
+**The problem with the existing artifact.** `SD31-ATTRIB-003-race-evidence.md` (2026-08-16) counted
+CITATIONS ("4/5 traits cited, 12 total mentions") and never showed one real field VALUE side by
+side, so it could not answer `§13`'s amendment's actual question: *"devil is in the details.
+without examples of what you found, it's hard to give a ruling."*
+
+**Method** (full detail + all three reproduction scripts committed under
+`docs/release/SD-31-corpus-closure-grind/artifacts/race-evidence-scripts/`):
+
+1. `race_evidence_gen.py` — for every one of the 51 `core_essentials/races/<slug>/` races, finds
+   every in-mandate book's `<Race>.MOD` citation of the base `RACE:` declaration, its SOURCEDATE
+   (read fresh from each book's own `.pcc`, never from memory), SOURCEPAGE, exact file:line, and
+   any tag beyond `SOURCE*`/`TYPE`. 47 of 51 races are printed by 2+ in-mandate books.
+2. `race_mod_scan.py` — corpus-wide scan of all 799 `<Race> ~ <Trait>` KEYs' `.MOD` occurrences
+   across all 37 in-mandate books, checking for ANY mechanical-value override (the branch-3
+   detector). **Result: 0 hits in-mandate.** (3 hits exist in the wider PCGen oracle, all in
+   `player_companion` supplements outside the 37-book roster — confirmed, not silently dropped.)
+3. `race_alt_traits.py` — for every race, counts genuinely NEW (`non-.MOD`) `race_trait` KEY
+   declarations each citing book contributes (branch-2 evidence). **439 new objects across 48
+   races.**
+
+**Key finding, corpus-wide, not a sample:** within the 37-book mandate, no base race object or base
+race trait has EVER had its value changed by a later book. Every later citation either (a) supplies
+only a page reference to the same shared declaration (branch 1), or (b) introduces a genuinely new,
+separately-keyed object — an alternate racial trait — that coexists rather than replaces (branch 2).
+The operator's own darkvision-60/90 hypothetical is found for real (`Dwarf ~ Minesight`, ARG p.12,
+`VISION:Darkvision (90)`), but it is a SEPARATE, OPTIONAL, own-KEY trait, not a universal value
+replacement of `Dwarf ~ Vision` (which stays 60 ft, untouched, still the default) — branch 2, not
+branch 3.
+
+**Concrete, evidence-backed correction named for the operator**: 5 of Bestiary 4's 9 races
+(Changeling, Kitsune, Nagaji, Samsaran, Wayang) are cited by Advanced Race Guide
+(`SOURCEDATE:2012-06`) 16 months BEFORE Bestiary 4 (`SOURCEDATE:2013-10`) —
+`advanced_race_guide/arg_races.lst:36`: `Changeling.MOD	TYPE:Uncommon	SOURCEPAGE:p.184`. Under
+`§13` branch 1 (identical, first print owns it) these belong to ARG, reversing
+`RACE_NEWEST_PRINTING`'s own doc comment (`src/bin/v06_work_inventory.rs:1598-1606`), which computed
+the SAME date comparison under Decision 10's original (now-superseded) direction and concluded the
+opposite. Retro correction emitted (`1786987441037-sd31-register-race-c1ca4a`). Catfolk (the
+operator's own `§10` worked example) is also re-corrected: Bestiary 3 (2012-01) predates ARG
+(2012-06) by 5 months, matching `§13`'s own predicted outcome, now confirmed with the exact
+citation. `OPEN-ISSUES.md` row 140's Inner Sea Races question is answered as a structural side
+effect (ISR is the latest citer for 46/47 races, so it can never be `[FIRST]` under branch 1) —
+Skinwalker is the one exception found (ISR predates Bestiary 5 by 3 months), flagged not resolved.
+
+**Nothing changed.** `RACE_TRUE_BOOK`/`RACE_NEWEST_PRINTING` untouched (outside this card's write
+scope, and race attribution stays FROZEN regardless). Every branch classification in the document
+is marked PROPOSED. `OPEN-ISSUES.md` row 222 appended, pointing to the new document and naming both
+corrections for the operator's ruling.
+
+**Files**: `docs/release/SD-31-corpus-closure-grind/artifacts/RACE-EVIDENCE-D13.md`,
+`docs/release/SD-31-corpus-closure-grind/artifacts/race-evidence-scripts/{race_evidence_gen.py,
+race_alt_traits.py, race_mod_scan.py, race-citations.json, race-alt-traits.json}`,
+`docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md` (row 222 appended). Commit
+`1d5b735fe`.
+
+### §3 — Gate
+
+Card instruction: "your card changes no production code — run `--only preflight-oracle` plus any
+doc/JSON lint stage... If you DO change production code, run the full gate." This card DID change
+production code (`scripts/supersession_register_gate.py`, its test) — a real `verify.sh` stage — so
+the FULL gate was run, not the narrow one.
+
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-D13-REG-001-verify.log
+./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+
+VERIFY_EXIT=1. 25/27 stages PASS, including both this card's own changed stages
+(`supersession-gate-selftest` -- 16 cases; `supersession-gate` -- 116 objects, all clean).
+Full stage list: preflight-disk, preflight-oracle, oracle-pin-selftest, producer-selftest,
+site-dashboard-selftest, reachability-audit-selftest, reachability-audit (98.95%),
+groundtruth-guard-selftest, supersession-gate-selftest, pi-sweep, declared-pi-audit,
+audit-selftest, reclaim-selftest, corpus-sweep-selftest, root-lib (2000 passed), root-full
+(6977 passed across 565 suites), desktop (461 passed), reach (27 passed), corpus-sweep
+(25655 examined, 0 findings), supersession-gate, frontend-install, frontend-test (99/99),
+frontend-typecheck, clippy (root:52 desktop:7, AT ceiling, 0 new), class-dump (31/31
+computing) -- all PASS.
+
+**Two failures, both pre-existing/unrelated, not caused by this card's changes:**
+- `site-dashboard-check` — documented, non-regressing worktree path reason (`OPEN-ISSUES.md` row 153,
+  the mandate's own briefing names this as expected). Not chased, per instruction.
+- `driver-selftest` — `test_run_desktop_driver.sh`'s "readiness ignores an app process on another
+  agent's display" case failed: `_app_pid` returned a live PID whose `DISPLAY` env was `:70`, not
+  this test's own `:69`, on a shared box running many concurrent agent worktrees at the time of this
+  run. This card touched no desktop/driver code (`git diff --stat` confirms zero files under
+  `apps/desktop` or `scripts/tests/test_run_desktop_driver.sh`); this is shared-checkout
+  cross-contamination, not a regression this cycle introduced.
+
+`supersession-gate` and `supersession-gate-selftest` (this card's own changed code): PASS, both
+runs (16/16 self-test cases; 116/116 objects clean against the live pinned oracle).
+
+**DoD item 8, on-screen verification**: this card changes no production UI/engine code and ships no
+new unit or record — both deliverables are documentation/register artifacts with zero effect on
+`docs/work-inventory.json` or any doneness field. No screen to drive; nothing player-visible
+changed. Per the DoD's own framing ("driving the real app has caught two defects no code gate
+could"), that applies to code that reaches the player, which this card's changes do not.
+
+### §4 — work-inventory.json
+
+**Untouched.** This card's file territory explicitly excludes `v06_work_inventory.rs` and the
+producer, and neither deliverable moves any unit's doneness field (Decision 14's own invariant:
+"provenance decides denominator membership; doneness measures progress within it; a provenance
+change must move ZERO doneness fields" — this cycle proposes a provenance change but applies
+nothing). `git status --porcelain docs/work-inventory.json` confirmed empty throughout the cycle.
+
+### §5 — Corrections, reworks, and things narrowly avoided
+
+1. **The 3-node-swap TDD proof** — before touching the gate, confirmed the 3 edited tests actually
+   FAILED against the unfixed gate (not tautological assertions) — caught the exact old-vs-new
+   assertion text mismatch this required.
+2. **The register-shrink assumption, checked and refuted.** The dispatch brief itself expected the
+   register to shrink under `§13`. Verified this explicitly rather than assuming it: the register's
+   evidence bar (exact field-match after normalization) already excluded every non-identical pair
+   BEFORE this cycle, so nothing shrinks — only direction changes. Reported precisely (`§1` above,
+   `SUPERSESSION-REGISTER.md §12`) rather than either quoting the old 116 as if nothing happened or
+   force-fitting a shrink narrative that the data does not support.
+3. **`SD31-ATTRIB-003-race-evidence.md`'s methodology gap, named not silently worked around.** That
+   document's citation-count approach could not answer the operator's question; rather than
+   patching it, built a new document from a different, value-level methodology and said so
+   explicitly in both documents' cross-references.
+4. **The RACE_NEWEST_PRINTING doc-comment contradiction** — found by directly re-deriving the same
+   SOURCEDATE comparison that comment already computed, not by reading the comment's conclusion at
+   face value. The comment was RIGHT under Decision 10's original direction and is WRONG under
+   Decision 13's correction — this is a live artifact of the ruling changing under the code's feet,
+   not a bug in the comment when it was written.
+5. **Skinwalker/Inner Sea Races exception, caught by scanning, not asserted from the general
+   pattern.** Nearly generalized "ISR is never first" from 46/47 races without checking the 47th;
+   ran the check anyway and found the one exception.
+
+### §6 — Reclaim
+
+```
+scripts/reclaim.sh --apply
+```
+
+Reclaimed 0 bytes -- every other worktree/branch/cargo-target on the shared box was either still checked out, not yet merged, or (this card's own $CARGO_TARGET_DIR) still live from this cycle's own verify.sh run. Nothing eligible this cycle.
