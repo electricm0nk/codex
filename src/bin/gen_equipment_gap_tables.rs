@@ -40,7 +40,7 @@ use std::collections::{BTreeSet, HashMap};
 use std::fmt::Write as _;
 use std::path::{Path, PathBuf};
 
-use codex::rules_core::equipment_resolver::{hand_authored_equipment_rows, EQUIPMENT_BOOK_ACG, EQUIPMENT_BOOK_APG, EQUIPMENT_BOOK_ARG, EQUIPMENT_BOOK_CRB, EQUIPMENT_BOOK_UC, EQUIPMENT_BOOK_UE, EQUIPMENT_BOOK_UI, EQUIPMENT_BOOK_UPSI, EQUIPMENT_BOOK_UW};
+use codex::rules_core::equipment_resolver::{hand_authored_equipment_rows, EQUIPMENT_BOOK_ACG, EQUIPMENT_BOOK_APG, EQUIPMENT_BOOK_ARG, EQUIPMENT_BOOK_B1, EQUIPMENT_BOOK_CRB, EQUIPMENT_BOOK_UC, EQUIPMENT_BOOK_UE, EQUIPMENT_BOOK_UI, EQUIPMENT_BOOK_UPSI, EQUIPMENT_BOOK_UW};
 use codex::rules_core::pcgen_desc::{leaked_pcgen_syntax, render_pcgen_desc};
 use codex::rules_core::pi_table_sweep::screen_generated_table;
 
@@ -100,13 +100,24 @@ const BOOK_INPUTS: &[BookInput] = &[
     BookInput {
         code: EQUIPMENT_BOOK_CRB,
         slug: "core_rulebook",
+        files: &["pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst"],
+    },
+    // `decisions.md §9` (`core_essentials` re-attribution, "re-attribute
+    // first, drop the label second"): these 2 files physically live under
+    // the shared `core_essentials` library `core_rulebook.pcc` includes
+    // unconditionally, and an earlier draft of this table routed their 3
+    // records to CRB on that basis ("CRB is that host" -- now corrected).
+    // Both files' own uncommented `SOURCELONG:Bestiary`/`SOURCESHORT:B1`
+    // header (verified 2026-08-17, not assumed) says otherwise: 100% of
+    // each file's content is Bestiary, none is genuinely Core Rulebook, so
+    // Decision 9's "re-attribute by the file's own SOURCELONG" rule routes
+    // them to B1/bestiary instead. Confirmed harmless to CRB: neither file
+    // ever supplied a genuinely-CRB record (`grep SOURCELONG` on both
+    // files finds exactly one value, `Bestiary`, each).
+    BookInput {
+        code: EQUIPMENT_BOOK_B1,
+        slug: "bestiary",
         files: &[
-            "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
-            // `core_essentials` is the shared library `core_rulebook.pcc`
-            // includes unconditionally; its three equipment records are
-            // reported `shared_library_record_held_by_no_ingested_host`
-            // precisely because no ingested host's table holds them. CRB is
-            // that host.
             "pathfinder/paizo/roleplaying_game/core_essentials/ce_equip_arms_armor.lst",
             "pathfinder/paizo/roleplaying_game/core_essentials/ce_equip_general.lst",
         ],

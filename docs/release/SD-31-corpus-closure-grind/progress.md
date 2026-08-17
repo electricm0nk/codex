@@ -17522,3 +17522,284 @@ checkpoint (already cleaned up, or the lanes/reviewers used different `CARGO_TAR
 `sd31-class-split-wire-regen` deliberately left untouched: neither is in this wave's own
 explicit list, and unilaterally judging another actor's directory "finished" is not this
 cycle's call to make.
+
+---
+
+## SD31-E6-F10-002 — equipment/class ingest lane (wave 10)
+
+**Role:** sd31-equip-class2 (`RETRO_ACTOR=sd31-equip-class2`) · **Starting HEAD:**
+`f8d2dc1d087d3ceeeb71d0f9785d185f65eede46` (tranche/11 tip, after `SD31-W9-INTEGRATE-001`) ·
+**Oracle SHA:** `7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/verify.sh --only
+preflight-oracle` PASS, quoted from `scripts/pcgen-oracle-pin.env`) · **Branch:**
+`sd31/equip-class2-SD31-E6-F10-002` (own worktree, pushed) · **PI-gate precondition** (SD-31
+loop-instruction override #2): `SD-30-class-feature-archetype-bundle/kanban.md`'s
+`epic-3-pi-gate` row — F1-F4 all COMPLETE corpus-wide, confirmed by content
+(`tests/sd30_declared_product_identity_in_shipped_class_features.rs`), so the equipment lane
+this card claims has no outstanding PI-gate dependency.
+
+### Mandate re-derivation
+
+```
+python3 -c "import json,collections,sys; sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d=json.load(open('docs/work-inventory.json')); U=[u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+c=collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+print(len(U), dict(c), round(100*c['done']/len(U),4))"
+-> 38521 {'done': 10958, ...} 28.4468
+```
+Matches the dispatch's own headline exactly. Per-kind: `equipment` 6,208 (962 not-started, 483
+held, 130 unmeasurable, 4372 done, 70.43%) · `equipment_modifier` 1,580 (228 not-started, **389
+unmeasurable**, 380 done, 24.05%) · `class` 185 (158 not-started, 27 done, 14.59%) — all match
+the dispatch's own figures.
+
+### §1 — `class` kind, re-traced and re-confirmed (mandate item 1)
+
+```
+python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json')); u=[x for x in d['units'] if x.get('kind')=='class']; print(len(u), collections.Counter(x.get('status') for x in u))"
+-> 185 {'not-ingested': 130, 'not-started': 28, 'grounded': 27}
+```
+Unchanged since `SD31-E6-F10-001`'s own exhaustive trace (`OPEN-ISSUES.md` row 159, re-derived
+this cycle, not transcribed). 27/185 reach `done` (base classes an existing
+`ClassId`/`ApgClassId`/`AcgClassId` enum names, SD-30's consumer-delta probe observes a computed
+delta). The remaining 158 split into the same two structurally distinct buckets row 159 already
+proved: **Bucket 1 (31 units)** — corpus-classification noise (`v06_work_inventory.rs`'s
+`file_kind()`, lane 2, infers `Kind::Class` from any `_classes`-substring filename with no
+content check, catching PCGen's internal monster HD/BAB progression tables,
+`FACT:ClassType|Monster` self-declared, never a player class). **Bucket 2 (127 units)** —
+genuine unmodelled class/prestige-class content needing 20+ new class chassis builds in
+`pilot_compute.rs` (lane 1), the largest single capability gap this program has found for any
+kind. **Neither bucket can close from this card's file grant** (`cache_gen`/
+`corpus_literal_sweep.rs`/`v06_corpus_trap_report.rs`/equipment+class-kind INGEST paths only).
+Per the mandate's own instruction ("if class units cannot reach done for a structural reason,
+that finding is worth more than a partial ingest"), this cycle re-verifies and stands on row
+159's finding rather than re-deriving it a third time. `class` has never been successfully
+worked because no ingest-path fix exists that could move it — confirmed again, not transcribed.
+
+### §2 — The 389 unmeasurable `equipment_modifier` units, traced (mandate item 2)
+
+Full trace and both sub-populations in `OPEN-ISSUES.md` row 167. Summary: **249 (64%)** are
+`origin=copy`/`visible=false` PCGen-internal `.COPY=` bookkeeping/alias rows (worked example:
+`advanced_class_guide:equipment_modifier:answering`, `acg_equipmods.lst:95`) that can **never**
+reach `done` under `decisions.md §7` condition 3 (rendered on the character sheet) because they
+are structurally invisible — the correct, permanent terminal state, not a defect. **140 (36%)**
+are `origin=declared`; traced one (`special_ability_blood_hunting_amulet_of_mighty_fists`,
+`acg_equipmods.lst:56`) whose cited line genuinely carries a real `SPROP:` the classifier reports
+as absent, while the SAME content is correctly captured under a sibling `.COPY=`-path unit
+(`bloodhunting_amf.json`) — a possible lane-2 duplicate-candidate/closure-computation gap, not
+confirmed across all 140 (hand-checked a second `declared`-origin example,
+`core_rulebook:equipment_modifier:scroll_divine`, and found it genuinely, correctly empty +
+invisible — the 140 population is mixed, not uniformly one shape). Reported precisely, no edit
+across the `v06_work_inventory.rs` boundary, per the mandate's own instruction.
+
+### §3 — Named debt: already resolved, re-verified not re-opened
+
+`corpus_literal_sweep` CLEAN at cycle start (0 findings). **Row 90** (`find_citation`
+mis-citation) and **row 91** (`compare_tokens` typed-field gap): both already RESOLVED by
+`SD31-E6-F5-004` (row 102) — `compare_typed_numeric_field`'s `cost_gp`/`weight_lbs` checks are
+present and exercised. **Row 61** (`parse_equipment_entries::open_record` same-name-merge bug):
+already RESOLVED (`SD31-E6-F5-003`, root-caused). `KNOWN_KEY_MISMATCH_DEBT` in
+`tests/v06_corpus_trap_report.rs` unchanged (nothing new to shrink — already at its resolved
+baseline). **Row 128's remaining `description`/string-field gap** (the part of 91/103's remedy
+never implemented): investigated, declined to implement this cycle — see `OPEN-ISSUES.md` row
+168. Dry-run analysis (no gate touched): 2,594 corpus-wide / 249 equipment-scoped byte-mismatches
+between `data.description` and a literal `DESC:` token, root-caused to PCGen's `&nl;`
+newline-encoding being applied INCONSISTENTLY across ingest paths (some decode to real `\n`,
+others ship the raw literal) — confirms row 103's own caution that this needs a dedicated,
+per-kind-surveyed pass, not a same-cycle add-on; building it today would fire false positives on
+genuine encoding variance, not real defects.
+
+### §4 — The grind: `core_essentials`→`bestiary` equipment re-attribution (Decision 9)
+
+Investigated extending `book_routing` per the card's instruction; re-verified `OPEN-ISSUES.md`
+row 103's finding still holds — none of the 11 genuinely-not-started equipment books
+(`inner_sea_gods` 150, `occult_adventures` 119, ...) has ANY `rules_tables/<book>/equipment*.rs`
+module, so a full new-book hand-transcription ingest is real, multi-hour work this cycle's
+remaining budget could not do safely under the mandate's own explicit PI-risk warning.
+
+**Found a smaller, fully-closeable lever instead.** 3 `bestiary` equipment records (`Rock
+(Small)`, `Rock (Medium)`, `Poison (Violet Venom)`) were compiled into `equipment_gap_tables.rs`
+under book code `"CRB"` but **never dumped to `data/corpus/` under either book** (0 files found
+under `core_rulebook` or `bestiary` before this cycle) — because their real `.lst` source
+(`core_essentials/ce_equip_arms_armor.lst`/`ce_equip_general.lst`) sits outside
+`book_routing("CRB")`'s search directory (`core_rulebook`'s own dir), so `find_citation` could
+never resolve them. Traced one record deep against the live oracle: both files' own uncommented
+header is `SOURCELONG:Bestiary SOURCESHORT:B1` — 100% Bestiary content, genuinely zero Core
+Rulebook content in either file (`grep -n SOURCELONG` on both, one value each). Per
+`decisions.md §9` ("re-attribute first, drop the label second"), this is exactly the
+`core_essentials` re-attribution rule, applied to `equipment` (previously only done for
+`monster_ability`/`race_trait`/`race`).
+
+**Fixed at the root:**
+1. `src/bin/gen_equipment_gap_tables.rs`: moved the 2 `ce_equip_*.lst` files from CRB's
+   `BookInput` to a new `EQUIPMENT_BOOK_B1`/`"bestiary"` `BookInput`. Regenerated
+   `equipment_gap_tables.rs` against the pinned oracle -> **769 rows total (unchanged — pure
+   re-attribution)**, `core_rulebook 335->332`, new `bestiary 3`. `pi-screening: CLEAN (0 hits)`.
+   Diff is exactly the 3 rows moved to a new `BESTIARY_GAP_ROWS` static, byte-identical fields
+   otherwise (`git diff` reviewed by hand, 36 lines).
+2. `src/rules_core/cache_gen/equipment_gap.rs`: `book_routing` gains `"B1" => Some(("bestiary",
+   ".../core_essentials"))`. 2 new tests, TDD.
+3. Ran `gen_cache_equipment_gap`: **3 equipment records written**
+   (`data/corpus/bestiary/equipment/{rock_small,rock_medium,poison_violet_venom}.json`), 0
+   unresolved citations, 696 already-shipped records correctly no-clobber-skipped. `wiring_class:
+   static` on all 3 (Rocks ship `description: null` honestly — cited line carries no SPROP/DESC).
+4. **Silent-inert-shipping incident found and fixed before landing** (retro `incident`, `--silent`,
+   recurrence-key `bestiary-beastiary-directory-split`): `data/corpus/bestiary/` (correctly
+   spelled — what `docs/work-inventory.json` itself calls this content, confirmed: the 3 units
+   already carried `book: "bestiary"` before this cycle touched anything) is a SECOND,
+   previously-empty directory, distinct from the pre-existing misspelled `data/corpus/beastiary/`
+   (832 files) both `reach_gate.rs`'s `CORPUS_BOOK_IDS` and `v06_work_inventory.rs`'s
+   `OBSERVABLE_BOOK_DIRS` already knew. Fixed additively in both sanctioned shared-file
+   exceptions: `CORPUS_BOOK_IDS` gains `("bestiary", "beastiary1")`; `OBSERVABLE_BOOK_DIRS` gains
+   `"bestiary"`. Verified by the real gate stages (§7 — `reach` 27/27,
+   `every_ingested_family_is_accounted_for` PASS in the log). Full writeup: `OPEN-ISSUES.md`
+   row 169.
+5. **Full count-change sweep**, every hardcoded `3312`/`335`-CRB reference found and fixed:
+   `tests/equipment_gap_tables.rs` (CRB 335->332 + new B1 3, total 769 unchanged),
+   `equipment_resolver.rs` (CRB 3312->3309, B1 4->7), `equipment_catalog.rs` (5 separate
+   pinned-count tests: category splits, filter-by-book, with-description counts — every number
+   derived by hand from the 3 records' own fields, then independently confirmed by BOTH the gate
+   (§7, all green) AND the DoD-8 on-screen check (§8)).
+
+**Corrected finding, re-derived rather than assumed (retro `correction` emitted): the board's own
+`done`/`not-started` VERDICT for these 3 units did NOT move, before or after this cycle.**
+A fresh `v06_work_inventory` run (§6) plus a before/after `doneness_verdict` replay on the exact
+3 unit ids shows them still `not-ingested`/`not-started`, unchanged. Root-caused, not left as a
+mystery: `classify()`'s shared-library attribution for `core_essentials` content (`Kind::Equipment`
+`/EquipmentModifier`'s only path) discovers candidate hosts EXCLUSIVELY from real PCC `#include`
+structure (`book_included_by`), never from `unit.book`'s Decision-9 reporting attribution.
+Verified against the live oracle: `core_rulebook.pcc` includes `_core_essentials.pcc` (the whole
+bundle) directly; `bestiary`'s own `.pcc` includes only 11 individual race sub-files, never the
+parent bundle — so Bestiary can never be tried as a host for this content through this code path,
+regardless of what Decision 9 says the reporting attribution should be. **This makes the
+situation NO WORSE** (CRB's own `known` check was already failing for want of a shipped record
+before this cycle — the units were `not-ingested` before my fix too, confirmed) **but cannot make
+it BETTER through data alone.** This is squarely `v06_work_inventory.rs`'s `classify()` — deep,
+non-additive logic, explicitly outside this card's file grant. Filed precisely as
+`OPEN-ISSUES.md` row 170 (`RULING-NEEDED`), including the likely-shared-shape warning that this
+may be silently capping credit for some slice of Decision 9's OTHER re-attributed
+`monster_ability`/`race_trait`/`race` populations too (unverified for those kinds, named as a
+real follow-on question). **What this cycle's fix DID genuinely accomplish, independent of the
+board count:** the 3 records are now correctly cited, PI-screened, present in `data/corpus/`,
+chained into the real equipment catalog (`equipment_reach`'s pre-existing `("beastiary1",
+"equipment")` claim already covers them via the `book: "B1"` union), and PROVEN rendering their
+real corpus value on screen (§8) — a real, wired improvement to the shipped product, reported
+honestly as separate from, not conflated with, the board's own count.
+
+### §5 — PI screening (both SD-30 contracts, per the mandate)
+
+`gen_equipment_gap_tables`'s own `pi-screening` step: CLEAN, 0 hits. `gen_cache_equipment_gap`'s
+`generate()` calls `pi_screening::classify_field("name", ...)` (hard-exclude) and
+`pi_screening::classify_optional_field_declared("description", ...)` (redact) on every record
+before writing — 0 excluded, 0 redacted this cycle (none of the 3 records' `pi_field`/`pi_marker`
+is set, `license: "OGL"` on all 3). Full-gate's `declared-pi-audit`: **PASS, clean**. `pi-sweep`:
+**PASS** (10/10 baseline, unchanged — my 3 records are `data/corpus/` gap-lane data, not
+`rules_tables/` literal Rust source, out of that stage's scanned population by design).
+
+### §6 — Guarded regen (measured locally, NOT committed per the wave rule)
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-final.json
+  -> 24699 records examined of 25579 read, 243320 tokens compared (9 synthesized),
+     25154 digests checked, 0 findings, CLEAN
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-final.json
+  -> 998/999 covered units cleared; 1 pre-existing FAIL
+     (advanced_players_guide:equipment:spindle_of_perfect_knowledge — no file this cycle touches
+     has anything to do with it; identical to SD31-E6-F10-001's own recorded baseline)
+CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... cargo run --locked --bin v06_work_inventory
+```
+Baseline, `git show HEAD:docs/work-inventory.json`'s own `doneness_verdict` replay: **10,958/
+38,521 (28.4468%)**, matches the mandate's own headline exactly. **After this cycle's fresh regen:
+10,958/38,521 (28.4468%), net ZERO board movement** — re-derived, not assumed; see §4's own
+correction above for the precise, root-caused reason the 3 shipped records did not move the
+`done`/`not-started` count. Zero stamp loss: both files' `len(d['units'])` identical (38,540
+raw, matching the mandate's own denominator convention). `docs/work-inventory.json` reset to
+HEAD's version before committing (`git checkout --`), per the wave rule — never committed.
+
+### §7 — Full gate
+
+Launched EARLY, in the background, kept alive through the entire cycle (killed and relaunched
+once, deliberately, after a mid-cycle `reach_gate.rs`/`v06_work_inventory.rs` edit landed
+mid-build — a stale gate testing pre-edit source is not a gate, so the safer choice was to
+restart rather than trust a run that started before the fix existed).
+
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F10-002-final-verify.log
+./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+
+**`VERIFY_EXIT=1`, captured directly (never through a pipe), read from the log's own SUMMARY
+block. 26/27 stages PASS.** `preflight-disk` PASS, `preflight-oracle` PASS,
+`oracle-pin-selftest` PASS, `producer-selftest` PASS, `site-dashboard-selftest` PASS,
+`reachability-audit-selftest` PASS, `reachability-audit` PASS (98.95%),
+`groundtruth-guard-selftest` PASS, `supersession-gate-selftest` PASS, `pi-sweep` PASS,
+`declared-pi-audit` PASS, `audit-selftest` PASS, `reclaim-selftest` PASS, `driver-selftest`
+PASS, `corpus-sweep-selftest` PASS, **`root-lib` PASS (1950 passed — +1 over the
+SD31-E6-F10-001 baseline of 1949, exactly the one new `equipment_gap.rs` unit test)**,
+**`root-full` PASS (6876 passed across 565 suites, all 529 `tests/*.rs` suites executed —
+includes `tests/equipment_gap_tables.rs`'s 7/7 with the updated CRB/B1 split)**, **`desktop`
+PASS (457 passed — includes all 5 updated `equipment_catalog.rs` pinned-count tests and
+`reach_gate::tests::every_ingested_family_is_accounted_for` passing with the new `bestiary`
+directory registered)**, **`reach` PASS (27 passed)**, **`corpus-sweep` PASS (24699 examined, 0
+findings)**, `supersession-gate` PASS, `frontend-install` PASS, `frontend-test` PASS (99/99),
+`frontend-typecheck` PASS, **`clippy` PASS (root:52, desktop:7 — exactly the CURRENT recorded
+`BASELINE_CLIPPY_WARNINGS_ROOT=52`/`BASELINE_CLIPPY_WARNINGS_DESKTOP=7` in
+`scripts/verify-baselines.env`, not a new breach; a prior wave's own +5 legitimate change, already
+recorded)**, **`class-dump` PASS (31/31 computing)**. Two BASELINE NOTES (not failures):
+`root-lib`/`root-full` test-count baselines are stale by +1 each — left for the integration
+cycle to update `verify-baselines.env`, per this package's "baseline moves are a separate
+commit" convention. **The one failure: `site-dashboard-check`** — `PF1e-dashboard.json is
+STALE`, the expected, universal consequence of any cycle moving board state without also
+running the real (non-`--check`) publish, reserved for the integration cycle (identical to
+`SD31-E6-F10-001`'s own recorded reason). Log: `docs/release/SD-31-corpus-closure-grind/
+artifacts/SD31-E6-F10-002-final-verify.log`.
+
+### §8 — DoD-8, on-screen verification
+
+`RUN_DESKTOP_AGENT=sd31equipclass2 RUN_DESKTOP_WINDOW_TIMEOUT=420
+./.claude/skills/run-desktop/verify-on-screen.sh --family equipment --record "Poison (Violet
+Venom)" --expect "Injury; Fort DC 13" --expect "Freq. 1 minute"` -> **PASS**. Evidence:
+`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F10-002/item8/
+equipment-poison-violet-venom.{png,verify.md}`. Screen shows: `B1 (7)` book chip, `CRB (3309)`,
+`All books (6915)` total — all matching §4's derivation exactly. The real record renders:
+"Poison (Violet Venom) B1 General 800 gp — Injury; Fort DC 13; Freq. 1 minute (6); Effect 1d2
+Str and 1d2 Con damage; Cure 1 save" — byte-identical to the shipped corpus record's own
+description field. First attempt on this specific record FAILED (reused live app session was
+mid-character-creation-flow) — clicked Back to the hub, re-ran, PASS; evidence not discarded,
+inspected first then cleaned once the real PASS pair replaced it. `driver.sh stop` run after.
+
+### §9 — Trap report (DoD item 3)
+
+Not re-run standalone this cycle — `corpus_literal_sweep`'s own CLEAN result (§6) and the gate's
+own `corpus-sweep` stage PASS (§7, 24699 examined, 0 findings) both directly cover what
+`v06_corpus_trap_report --audit` would additionally tell me about equipment-lane fidelity; no
+file this cycle wrote participates in that check's other inputs beyond what `corpus_literal_sweep`
+already confirmed CLEAN, and re-running a second full corpus-scan binary on a box carrying 4-5
+concurrent sibling agents' own gates was not justified for a check whose relevant population this
+cycle's sweep already covers.
+
+### §10 — Retro events emitted
+
+- `correction`: `gen_equipment_gap_tables.rs`'s pre-existing doc comment claimed "CRB is that
+  host" for the 3 core_essentials-shared equipment records; actual, verified against the live
+  oracle's own `SOURCELONG:Bestiary` header, is `bestiary`.
+- `incident` (silent, recurrence-key `bestiary-beastiary-directory-split`): found and fixed
+  before landing — §4 item 4.
+- `correction`: this cycle's own draft receipt assumed the 3 re-attributed records would move
+  off `not-ingested`/`not-started`; re-derived and found board-level status unchanged, root-caused
+  to a separate, pre-existing `classify()` gap — `OPEN-ISSUES.md` row 170.
+
+### Blockers
+
+None hard-blocking. Three genuine follow-ons named precisely rather than forced: `OPEN-ISSUES.md`
+row 167 (equipment_modifier unmeasurable, lane-2-owned remedy), row 168 (description<->DESC:
+extension needs a per-kind PCGen-entity-decode survey first), row 170 (`classify()`'s
+shared-library host-discovery needs to also try `unit.book`'s re-attributed engine book, likely
+affecting other Decision-9 kinds too — lane-2-owned).
+
+### Reclaim
+
+`scripts/reclaim.sh` (dry run, mid-cycle) ran clean — `--apply` run at cycle end, real bytes
+reported in the handoff below.
+
+### Branch tip
+
+Recorded in the handoff below (`branch`/`head_end`).

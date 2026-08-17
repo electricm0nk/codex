@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-17T04:26:53Z",
+  "data": {
+    "key": "Poison (Violet Venom)",
+    "category": "General",
+    "name": "Poison (Violet Venom)",
+    "cost_gp": 800.0,
+    "weight_lbs": 0.0,
+    "description": "Injury; Fort DC 13; Freq. 1 minute (6); Effect 1d2 Str and 1d2 Con damage; Cure 1 save"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_equip_general.lst",
+    "sha256": "8b826bab866f84ccfe5273b2c5b523c20f7beb5696a239cccd103c8e6b91807a",
+    "line": 6,
+    "record_key": "Poison (Violet Venom)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-17T04:26:53Z",
+  "data": {
+    "key": "Rock (Medium)",
+    "category": "ArmsArmor",
+    "name": "Rock (Medium)",
+    "cost_gp": 0.0,
+    "weight_lbs": 100.0,
+    "description": null
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_equip_arms_armor.lst",
+    "sha256": "8dc672637f6a9add0d56770213e6e563a60e563a48858590a245b7e52fb7b22e",
+    "line": 8,
+    "record_key": "Rock (Medium)"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

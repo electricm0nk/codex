@@ -2745,6 +2745,16 @@ const OBSERVABLE_BOOK_DIRS: &[&str] = &[
     "ultimate_psionics",
     "ultimate_wilderness",
     "ultimate_magic",
+    // `SD31-E6-F10-002`: `cache_gen::equipment_gap`'s `"B1"` routing landed
+    // `data/corpus/bestiary/equipment/*.json` (3 records re-attributed from
+    // `core_essentials` per `decisions.md §9`) -- a SECOND, previously-
+    // empty directory, correctly spelled, distinct from the pre-existing
+    // misspelled `"beastiary"` entry above that this book's other content
+    // (monster/race_trait/etc.) already ships under. Without this entry
+    // `probe_equipment_effect_wiring` would never observe these 3 real,
+    // cited records despite them being on disk. Append-only per this
+    // wave's shared-file discipline.
+    "bestiary",
 ];
 
 fn book_corpus_roots(repo_root: &Path) -> Vec<PathBuf> {

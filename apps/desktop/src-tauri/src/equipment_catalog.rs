@@ -729,10 +729,14 @@ mod tests {
         // changed; `UW`'s own 2 recovered fields were `weight_lbs`, not
         // `description`, so its count is unchanged too. Every figure below
         // re-derived fresh from the catalog itself, not adjusted by delta.
-        assert_eq!(with_description("CRB"), 2219);
+        // `SD31-E6-F10-002`: `Poison (Violet Venom)` (has a description)
+        // moved CRB -> B1 (`decisions.md §9`); `Rock (Small)`/`Rock
+        // (Medium)` (no description) moved the same way. 2219 - 1 = 2218;
+        // 4 + 1 = 5.
+        assert_eq!(with_description("CRB"), 2218);
         assert_eq!(with_description("APG"), 368);
         assert_eq!(with_description("ACG"), 312);
-        assert_eq!(with_description("B1"), 4);
+        assert_eq!(with_description("B1"), 5);
         assert_eq!(with_description("ARG"), 205);
         assert_eq!(with_description("PU"), 42);
         assert_eq!(with_description("UI"), 48);
@@ -785,10 +789,13 @@ mod tests {
     fn catalog_spans_every_ingested_book_with_their_real_counts() {
         let response = build_equipment_catalog();
 
-        assert_eq!(count_by_book(&response, "CRB"), 3312);
+        // `SD31-E6-F10-002`: 3 corpus-gap rows re-attributed CRB -> B1
+        // (`decisions.md §9`, `tests/equipment_gap_tables.rs` has the full
+        // story). 3312 - 3 = 3309; 4 + 3 = 7. Catalog total is unchanged.
+        assert_eq!(count_by_book(&response, "CRB"), 3309);
         assert_eq!(count_by_book(&response, "APG"), 375);
         assert_eq!(count_by_book(&response, "ACG"), 319);
-        assert_eq!(count_by_book(&response, "B1"), 4);
+        assert_eq!(count_by_book(&response, "B1"), 7);
         assert_eq!(count_by_book(&response, "ARG"), 215);
         assert_eq!(count_by_book(&response, "PU"), 42);
         // 91 equipment + 7 equipmods -- see `ultimate_intrigue::equipment_tables`'s
@@ -820,7 +827,7 @@ mod tests {
         // compiled rule set whose feats and archetypes reach the player.
         assert_eq!(count_by_book(&response, "UW"), 127);
 
-        // 3312 + 375 + 319 + 4 + 215 + 42 + 105 + 1614 + 26 + 552 + 224 + 127.
+        // 3309 + 375 + 319 + 7 + 215 + 42 + 105 + 1614 + 26 + 552 + 224 + 127.
         // Pinned as a total as well as per book so that a book silently
         // dropping out of the chain cannot be masked by another book
         // growing. The +769 over the previous 6146 is exactly the corpus
@@ -848,9 +855,11 @@ mod tests {
     fn per_book_category_counts_are_pinned() {
         let response = build_equipment_catalog();
 
-        // CRB — unchanged by the widening; the pre-existing pins.
-        assert_eq!(count_by_book_category(&response, "CRB", "ArmsArmor"), 312);
-        assert_eq!(count_by_book_category(&response, "CRB", "General"), 454);
+        // CRB — `SD31-E6-F10-002` moved 2 ArmsArmor rows (`Rock (Small)`,
+        // `Rock (Medium)`) and 1 General row (`Poison (Violet Venom)`) to
+        // B1 below (`decisions.md §9` re-attribution).
+        assert_eq!(count_by_book_category(&response, "CRB", "ArmsArmor"), 310);
+        assert_eq!(count_by_book_category(&response, "CRB", "General"), 453);
         assert_eq!(count_by_book_category(&response, "CRB", "MagicItems"), 1556);
         assert_eq!(count_by_book_category(&response, "CRB", "Equipmods"), 990);
 
@@ -865,10 +874,13 @@ mod tests {
         assert_eq!(count_by_book_category(&response, "ACG", "MagicItems"), 141);
         assert_eq!(count_by_book_category(&response, "ACG", "Equipmods"), 96);
 
-        // Bestiary 1 — 4 monster-intrinsic items, and genuinely no
-        // `b1_equipmods.lst` file at all.
-        assert_eq!(count_by_book_category(&response, "B1", "ArmsArmor"), 2);
-        assert_eq!(count_by_book_category(&response, "B1", "General"), 1);
+        // Bestiary 1 — 4 hand-authored monster-intrinsic items plus, as of
+        // `SD31-E6-F10-002`, 3 corpus-gap rows re-attributed from CRB
+        // (`Rock (Small)`/`Rock (Medium)` ArmsArmor, `Poison (Violet
+        // Venom)` General; `decisions.md §9`) — genuinely no
+        // `b1_equipmods.lst` file at all, so Equipmods stays 0.
+        assert_eq!(count_by_book_category(&response, "B1", "ArmsArmor"), 4);
+        assert_eq!(count_by_book_category(&response, "B1", "General"), 2);
         assert_eq!(count_by_book_category(&response, "B1", "MagicItems"), 1);
         assert_eq!(count_by_book_category(&response, "B1", "Equipmods"), 0);
 
@@ -1187,8 +1199,10 @@ mod tests {
             book: None,
         });
 
-        // 312 CRB + 75 APG + 20 ACG + 2 B1 + 29 ARG + 0 PU + 14 UI + 281 UE
-        // + 2 UM + 52 UPSI + 149 UC + 1 UW.
+        // 310 CRB + 75 APG + 20 ACG + 4 B1 + 29 ARG + 0 PU + 14 UI + 281 UE
+        // + 2 UM + 52 UPSI + 149 UC + 1 UW. (`SD31-E6-F10-002`: 2 ArmsArmor
+        // rows moved CRB -> B1, `decisions.md §9`; the 937 total is
+        // unchanged.)
         assert_eq!(response.entries.len(), 937);
         for entry in &response.entries {
             assert_eq!(entry.category, "ArmsArmor");
@@ -1198,10 +1212,11 @@ mod tests {
     #[test]
     fn filter_equipment_catalog_narrows_to_one_book() {
         for (book, expected) in [
-            ("CRB", 3312),
+            // `SD31-E6-F10-002`: 3 rows moved CRB -> B1 (`decisions.md §9`).
+            ("CRB", 3309),
             ("APG", 375),
             ("ACG", 319),
-            ("B1", 4),
+            ("B1", 7),
             ("ARG", 215),
             ("PU", 42),
             // UW is filterable only because the corpus gap lane put it in
