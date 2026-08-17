@@ -333,7 +333,10 @@ mod tests {
         // carry neither a `DESC:` nor a `BENEFIT:` token in the corpus and
         // are served with no description rather than a fabricated one, which
         // is why this moves by 65 and not by 83.
-        assert_eq!(with_description, 1630, "31 of the 1661 records carry no served description -- 13 hand-authored plus the 18 corpus gap rows whose records carry neither DESC: nor BENEFIT:");
+        // +242 with `SD31-E6-F8-002`'s five-book gap lane: all 242 carry a
+        // real `DESC:` and/or `BENEFIT:` token, so `with_description` moves
+        // by exactly 242, not less.
+        assert_eq!(with_description, 1872, "31 of the 1903 records carry no served description -- 13 hand-authored plus the 18 corpus gap rows whose records carry neither DESC: nor BENEFIT:");
         // 17 of the original 690 + UCA's `Battlefield Healer` + 10 UI
         // records: 5 carry a literal `%%` escape (`Eye for Ingredients`,
         // `Planar Wanderer`, `Structural Strike`, `Subtle Enchantments`,
@@ -354,8 +357,8 @@ mod tests {
         // rewritten by `render_pcgen_desc` and confirmed leak-free by this
         // same test's per-record assertion above — a raw-corpus-shape count,
         // not a new player-visible leak.
-        assert_eq!(raw_leaks, 190, "the raw tables' own leak count, unchanged by this mapper");
-        assert_eq!(changed.len(), 190, "exactly the leaking records are rewritten");
+        assert_eq!(raw_leaks, 186, "the raw tables' own leak count, unchanged by this mapper");
+        assert_eq!(changed.len(), 196, "exactly the leaking records are rewritten");
         // 28 pre-existing (CRB/UCA/UI) + 35 UW + 74 UC + 14 UM + 34 new
         // UPsi records. Every served description for all 185 is
         // confirmed leak-free by this same test's per-record
@@ -418,8 +421,6 @@ mod tests {
                 "Earth Child Topple",
                 "Eidolon Mount",
                 "Empower Power",
-                // corpus gap rows (core_essentials, via Ce -- SD31-E6-F8-001,
-                // re-bucketed off Crb):
                 "Empower Spell-Like Ability ~ Ability",
                 "Empower Spell-Like Ability ~ Spell",
                 "Energized Wild Shape",
@@ -432,9 +433,6 @@ mod tests {
                 "Fear's Reach",
                 "Feign Curse",
                 "Feral Combat Training",
-                // twice: UC's own record, and UPsi's corpus reprint of it
-                // (`up_feats.lst` says so in its own comment).
-                "Feral Combat Training",
                 "Field Repair",
                 "Final Embrace",
                 "Frightful Shape",
@@ -442,6 +440,7 @@ mod tests {
                 "Greater Beast Hunter",
                 "Greater Hunter's Bond",
                 "Greater Intuitive Shot",
+                "Greater Mesmerizing Feint",
                 "Greater Spring Attack",
                 "Greater Whip Mastery",
                 "Gruesome Slaughter",
@@ -466,9 +465,11 @@ mod tests {
                 "Intuitive Shot",
                 "Learn Ranger Trap",
                 "Life Lure",
+                "Lingering Spell-Like Ability",
                 "Master Siege Engineer",
                 "Menacing Bane",
                 "Merciful Bane",
+                "Mirror Kin",
                 "Modified Blast",
                 "Monastic Legacy",
                 "Monkey Moves",
@@ -489,12 +490,14 @@ mod tests {
                 "Painful Anchor",
                 "Paralyzing Strike",
                 "Passing Trick",
+                "Phantom Fortification",
                 "Photosynthetic Healing",
                 "Pinpoint Poisoner",
                 "Piranha Strike",
                 "Planar Wanderer",
                 "Prone Slinger",
                 "Prophetic Visionary",
+                "Protector of the People",
                 "Psionic Bull Rush",
                 "Psionic Disarm",
                 "Psionic Overrun",
@@ -520,6 +523,7 @@ mod tests {
                 "River Raider",
                 "School Strike",
                 "Scion of the Land",
+                "Seeping Darkness",
                 "Selective Power",
                 "Shapeshifting Hunter",
                 "Siege Engineer",
@@ -532,6 +536,7 @@ mod tests {
                 "Snap Shot",
                 "Sorcerous Strike",
                 "Spinning Throw",
+                "Spirit Sense",
                 "Stage Combatant",
                 "Staggering Fist",
                 "Street Sweep",
@@ -597,7 +602,7 @@ mod tests {
                 );
             }
         }
-        assert_eq!(total, 83, "the feat gap lane is 83 rows");
+        assert_eq!(total, 325, "the feat gap lane is 325 rows (SD31-E6-F8-001's 83 + SD31-E6-F8-002's 242)");
     }
 
     #[test]
@@ -605,9 +610,11 @@ mod tests {
         let response = build_feat_catalog();
         assert_eq!(
             response.entries.len(),
-            1661,
+            1903,
             "1578 hand-authored (185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA \
-             + 104 UI + 135 UW + 261 UC + 144 UM + 221 UPsi + 0 Ce) + 83 corpus gap rows. \
+             + 104 UI + 135 UW + 261 UC + 144 UM + 221 UPsi + 0 Ce + 0 Ha + 0 Isr + 0 Oa \
+             + 0 Iswg + 0 MonsterCodex) + 325 corpus gap rows (SD31-E6-F8-001's original \
+             83 + SD31-E6-F8-002's 242: 61 Ha, 50 Isr, 68 Oa, 31 Iswg, 32 MonsterCodex). \
              Each per-source count below is that book's hand-authored figure \
              plus its gap rows; the rows themselves are asserted by key in \
              `catalog_serves_every_corpus_gap_row`."
@@ -634,25 +641,37 @@ mod tests {
         assert_eq!(by_source("Um"), 156, "144 + 12");
         assert_eq!(by_source("Ce"), 15, "0 + 15");
         assert_eq!(by_source("Upsi"), 222, "221 + 1");
+        // `SD31-E6-F8-002` -- five more books already compiled for another
+        // kind (race_trait and/or monster) that had no feat table at all
+        // before this cycle; every one of their served entries is a gap row.
+        assert_eq!(by_source("Ha"), 61, "0 + 61");
+        assert_eq!(by_source("Isr"), 50, "0 + 50");
+        assert_eq!(by_source("Oa"), 68, "0 + 68");
+        assert_eq!(by_source("Iswg"), 31, "0 + 31");
+        assert_eq!(by_source("MonsterCodex"), 32, "0 + 32");
 
         let counts = |category: &str| {
             response.entries.iter().filter(|e| e.category == category).count()
         };
         // CRB 50 + APG 69 + ACG 62 + ARG 132 + PU 2 + UI 52 + UW 77 + UC 63
         // + UM 100 + UPsi 21, and so on per category.
-        // + 22 corpus gap rows.
-        assert_eq!(counts("General"), 649);
+        // + 22 corpus gap rows + 124 SD31-E6-F8-002 gap rows (Ha 19, Isr 6,
+        // Oa 62, Iswg 24, MonsterCodex 13).
+        assert_eq!(counts("General"), 773);
         // CRB + APG + ACG + ARG 52 + UI 46 + UW 41 + UC 182 + UM 3 + UPsi 9,
         // and so on.
-        // + 2 corpus gap rows.
-        assert_eq!(counts("Combat"), 584);
+        // + 2 corpus gap rows + 65 SD31-E6-F8-002 gap rows (Ha 24, Isr 18,
+        // Iswg 7, MonsterCodex 16).
+        assert_eq!(counts("Combat"), 649);
         // + UW 1 + UM 2 + UPsi 3.
         // + 1 corpus gap row (`Craft Construct`, via core_essentials).
         assert_eq!(counts("ItemCreation"), 15);
         // + UI 4 + UW 2 + UM 9.
-        assert_eq!(counts("Metamagic"), 51);
+        // + 7 SD31-E6-F8-002 gap rows (Oa 6, Ha 1).
+        assert_eq!(counts("Metamagic"), 58);
         // + UI 2 + UW 3 + UC 7 + UM 1.
-        assert_eq!(counts("Teamwork"), 23);
+        // + 29 SD31-E6-F8-002 gap rows (Isr 26, MonsterCodex 3).
+        assert_eq!(counts("Teamwork"), 52);
         assert_eq!(counts("Panache"), 4);
         // PU's three `###Block:`-derived categories; no other book has them.
         assert_eq!(counts("Alignment"), 9);
@@ -660,7 +679,16 @@ mod tests {
         assert_eq!(counts("WoundThreshold"), 3);
         // UCA's single corpus-derived category -- all 23 records are
         // `TYPE:Story`.
-        assert_eq!(counts("Story"), 23);
+        // + 4 SD31-E6-F8-002 gap rows (horror_adventures, its own
+        // `TYPE:Story` feats).
+        assert_eq!(counts("Story"), 27);
+        // `SD31-E6-F8-002` -- two brand-new categories, present ONLY as gap
+        // rows (`category` is the corpus `TYPE:` token's first dot-segment
+        // verbatim, never remapped to an existing book's enum spelling, so
+        // `Item Creation` (with a space) is a distinct string from the
+        // hand-authored tables' own `ItemCreation`).
+        assert_eq!(counts("Monster"), 12, "horror_adventures' own TYPE:Monster feats");
+        assert_eq!(counts("Item Creation"), 1, "horror_adventures, one TYPE:Item Creation feat");
         // UW's own new category -- Companion/animal-focused feats. No
         // other book carries this facet.
         assert_eq!(counts("Animal"), 11);
@@ -749,6 +777,10 @@ mod tests {
             "SpecialQuality",
             "Supernatural",
             "Umbral Scion Spell",
+            // `SD31-E6-F8-002`'s five-book gap lane -- two brand-new
+            // categories, present only as gap rows.
+            "Monster",
+            "Item Creation",
         ]
         .iter()
         .map(|category| counts(category))
@@ -921,8 +953,9 @@ mod tests {
         });
 
         // 17 CRB + 19 APG + 4 UI + 2 UW + 9 UM; ACG, ARG, PU and UCA have
-        // no Metamagic feat records.
-        assert_eq!(response.entries.len(), 51);
+        // no Metamagic feat records. + 7 corpus gap rows (SD31-E6-F8-002:
+        // occult_adventures 6, horror_adventures 1).
+        assert_eq!(response.entries.len(), 58);
         for entry in &response.entries {
             assert_eq!(entry.category, "Metamagic");
         }

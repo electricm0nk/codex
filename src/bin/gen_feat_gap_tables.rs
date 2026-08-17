@@ -47,6 +47,7 @@ use std::collections::{BTreeMap, BTreeSet};
 use std::fmt::Write as _;
 use std::path::{Path, PathBuf};
 
+use codex::rules_core::pcgen_desc;
 use codex::rules_core::pi_screening::{self, declared_product_identity};
 use codex::rules_core::pi_table_sweep::screen_generated_table;
 use codex::rules_core::rules_tables::feats_all::hand_authored_feat_tables;
@@ -149,6 +150,46 @@ const BOOK_INPUTS: &[BookInput] = &[
         slug: "ultimate_wilderness",
         files: &["pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_feats.lst"],
     },
+    // `SD31-E6-F8-002` -- five books already compiled into `COMPILED_RULE_SETS`
+    // for another kind (race_trait and/or monster) that never had a feat
+    // table at all. `docs/work-inventory.json`'s `feat` units for these books
+    // carry `evidence: "feat_key_absent_from_catalog"` (a started book with no
+    // feat table), never `no_compiled_rule_set_for_book` -- re-derived,
+    // `python3` over `docs/work-inventory.json`, 2026-08-16 -- so, unlike
+    // `mythic_adventures`/`adventurers_guide`, closing this population needs
+    // no new `RuleSetId` and no `v06_work_inventory.rs` edit, only a gap-row
+    // book here plus the matching empty `hand_authored_feat_tables()` slice
+    // (`feats_all.rs`) so `all_feat_tables()` joins them.
+    BookInput {
+        rule_set: RuleSetId::Ha,
+        variant: "Ha",
+        slug: "horror_adventures",
+        files: &["pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst"],
+    },
+    BookInput {
+        rule_set: RuleSetId::Isr,
+        variant: "Isr",
+        slug: "inner_sea_races",
+        files: &["pathfinder/paizo/campaign_setting/inner_sea_races/isr_feats.lst"],
+    },
+    BookInput {
+        rule_set: RuleSetId::Oa,
+        variant: "Oa",
+        slug: "occult_adventures",
+        files: &["pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst"],
+    },
+    BookInput {
+        rule_set: RuleSetId::Iswg,
+        variant: "Iswg",
+        slug: "inner_sea_world_guide",
+        files: &["pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_feats.lst"],
+    },
+    BookInput {
+        rule_set: RuleSetId::MonsterCodex,
+        variant: "MonsterCodex",
+        slug: "monster_codex",
+        files: &["pathfinder/paizo/roleplaying_game/monster_codex/mc_feats.lst"],
+    },
 ];
 
 /// One parsed corpus feat record, before the already-held filter runs.
@@ -241,7 +282,27 @@ fn parse_lst(text: &str) -> Vec<ParsedRecord> {
         let desc = token_value(&fields, "DESC:").map(str::trim).filter(|d| !d.is_empty());
         let benefit = token_value(&fields, "BENEFIT:").map(str::trim).filter(|d| !d.is_empty());
         let mut description = match (desc, benefit) {
-            (Some(d), Some(b)) if d != b => Some(format!("{d} {b}")),
+            // Both fields present and different: each is rendered through
+            // `pcgen_desc::render_pcgen_desc` INDEPENDENTLY before the join,
+            // not after. `inner_sea_world_guide`'s `Godless Healing` carries
+            // a real PCGen `%1/day...|GodlessHealingTimes` argument tail on
+            // BOTH its `DESC:` and its `BENEFIT:` token; joining the two RAW
+            // strings first (as the single-field arms below still do) would
+            // strand the first field's tail in the MIDDLE of the joined
+            // text, where `apps/desktop`'s own serve-time `render_pcgen_desc`
+            // call -- which can only strip a *trailing* tag -- ships it
+            // verbatim (`SD31-E6-F8-002`, caught live by `feat_catalog::
+            // feat_descriptions_are_rendered_and_otherwise_byte_identical`).
+            // A single field carries no such risk (nothing else to strand
+            // it against) and is left exactly as raw as before, so the
+            // single-field population's existing "raw, rendered once at
+            // serve time" contract (`feat_catalog.rs`'s own pinned counts)
+            // is unchanged by this fix.
+            (Some(d), Some(b)) if d != b => Some(format!(
+                "{} {}",
+                pcgen_desc::render_pcgen_desc(d).text,
+                pcgen_desc::render_pcgen_desc(b).text
+            )),
             (Some(d), _) => Some(d.to_string()),
             (None, Some(b)) => Some(b.to_string()),
             (None, None) => None,
@@ -271,11 +332,32 @@ fn parse_lst(text: &str) -> Vec<ParsedRecord> {
         // Every top-level `PRE`-family token, verbatim and in source order,
         // including the negated `!PRE...` form — the same set
         // `feats_all::FeatCatalogRecord::prerequisites` documents.
+        //
+        // Contract 52.3's blacklist scan, applied per-token: a `PRETEXT:`
+        // (free narrative prose, unlike the other structured `PRE*` tokens)
+        // can name a Golarion setting term (`inner_sea_races`'s `Varisian`/
+        // `Garundi`/`Mwangi`/`Vudrani` ethnicities, found live this cycle,
+        // `SD31-E6-F8-002`) the whole-generated-file sweep below in `main`
+        // would otherwise HARD STOP on with no per-record remedy. Redacted in
+        // place, the same treatment `description` already gets a few lines
+        // up — a prerequisite is mechanics text, not the record's identity,
+        // so this is the `description` shape, never the `NAMEISPI` drop-the-
+        // record shape.
         let prerequisites: Vec<String> = fields
             .iter()
             .map(|f| f.trim())
             .filter(|f| f.starts_with("PRE") || f.starts_with("!PRE"))
-            .map(|f| f.to_string())
+            .map(|f| {
+                let (blacklist_license, ..) = pi_screening::classify_field("prerequisite", f);
+                if blacklist_license != License::Ogl {
+                    match f.split_once(':') {
+                        Some((token, _)) => format!("{token}:{REDACTED_PI_MARKER}"),
+                        None => REDACTED_PI_MARKER.to_string(),
+                    }
+                } else {
+                    f.to_string()
+                }
+            })
             .collect();
 
         out.push(ParsedRecord { key, name, category, description, prerequisites, name_is_pi });
@@ -527,5 +609,73 @@ mod pi_screen_tests {
         let records = parse_lst(text);
         assert_eq!(records.len(), 1);
         assert_eq!(records[0].description.as_deref(), Some(REDACTED_PI_MARKER));
+    }
+
+    /// Contract 52.3's blanket blacklist scan applied to a THIRD field this
+    /// generator carries: `prerequisites`. `SD31-E6-F8-002` found this gap
+    /// live — `inner_sea_races/isr_feats.lst`'s `PRETEXT:` prerequisites name
+    /// Golarion setting terms (`Varisian`, `Garundi`, `Mwangi`, `Vudrani`) the
+    /// generator's own whole-file `screen_generated_table` sweep correctly
+    /// caught (HARD STOP, nothing written) but `parse_lst` had no per-field
+    /// redaction for, unlike `description`. A blacklisted PRE-family token is
+    /// redacted in place, mirroring `description`'s own treatment — it is
+    /// prerequisite mechanics text, not the record's identity, so this is the
+    /// `description` shape (redact), never the `NAMEISPI` shape (drop the
+    /// whole record).
+    #[test]
+    fn parse_lst_redacts_a_prerequisite_that_hits_the_blacklist() {
+        let text = "Deadly Troupe\tTYPE:Teamwork\tPRETEXT:human (Varisian).\tDESC:Ok.\n";
+        let records = parse_lst(text);
+        assert_eq!(records.len(), 1);
+        assert_eq!(
+            records[0].prerequisites,
+            vec![format!("PRETEXT:{REDACTED_PI_MARKER}")],
+            "a blacklisted PRETEXT token must be redacted, not shipped verbatim"
+        );
+    }
+
+    /// The sibling case: an ordinary prerequisite with no blacklist hit must
+    /// pass through byte-for-byte, so the redaction cannot become a blanket
+    /// PRETEXT-stripping shortcut.
+    #[test]
+    fn parse_lst_does_not_redact_an_ordinary_prerequisite() {
+        let text = "Ordinary Feat\tTYPE:General\tPRESTAT:1,STR=13\tDESC:Ok.\n";
+        let records = parse_lst(text);
+        assert_eq!(records.len(), 1);
+        assert_eq!(records[0].prerequisites, vec!["PRESTAT:1,STR=13".to_string()]);
+    }
+
+    /// The real defect `SD31-E6-F8-002` found: `inner_sea_world_guide`'s
+    /// `Godless Healing` carries BOTH a `DESC:` and a `BENEFIT:` token, each
+    /// independently ending in a real PCGen `%1/day...|GodlessHealingTimes`
+    /// argument tail (`BONUS:VAR|GodlessHealingTimes|1` backs the `%1`).
+    /// Naively joining the two RAW strings with `format!("{d} {b}")` leaves
+    /// the FIRST field's tail sitting in the MIDDLE of the joined text —
+    /// `apps/desktop`'s serve-time `render_pcgen_desc` call can only strip a
+    /// *trailing* tag, so the middle one shipped verbatim
+    /// (`feat_catalog::feat_descriptions_are_rendered_and_otherwise_byte_
+    /// identical` caught it live: "served feat \"Godless Healing\" still
+    /// leaks"). Each field must be rendered (and its own tail resolved/
+    /// dropped, per `pcgen_desc`'s no-fabrication rule — this generator has
+    /// no character to compute a real value against) BEFORE the join, not
+    /// after.
+    #[test]
+    fn parse_lst_never_leaves_a_pipe_tail_stranded_mid_string_when_desc_and_benefit_both_carry_one()
+    {
+        let text = "Godless Healing\tTYPE:General\t\
+                     DESC:Heal yourself 1d8+(TL) hp %1/day.|GodlessHealingTimes\t\
+                     BENEFIT:%1/day you may heal yourself.|GodlessHealingTimes\n";
+        let records = parse_lst(text);
+        assert_eq!(records.len(), 1);
+        let description = records[0].description.as_deref().expect("has a description");
+        assert_eq!(
+            codex::rules_core::pcgen_desc::leaked_pcgen_syntax(description),
+            None,
+            "joined description must not leak raw PCGen syntax: {description:?}"
+        );
+        assert_eq!(
+            description, "Heal yourself 1d8+(TL) hp /day. /day you may heal yourself.",
+            "each field's own %1 is dropped in place (no character to resolve it against) and its tail stripped, independently, before the join"
+        );
     }
 }

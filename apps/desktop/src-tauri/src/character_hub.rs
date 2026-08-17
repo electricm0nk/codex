@@ -7151,10 +7151,11 @@ mod tests {
             list_feats_for_character_at_root(&root, &crate::feat_catalog::FeatCatalogFilter::default())
                 .expect("listing should succeed");
 
-        // 1578 hand-authored + the 83 corpus gap rows. This is the character
+        // 1578 hand-authored + the 325 corpus gap rows (`SD31-E6-F8-001`'s
+        // original 83 + `SD31-E6-F8-002`'s 242). This is the character
         // sheet's own feat list, so this number moving is the evidence that
         // the gap lane's rows reach a player and not only a table.
-        assert_eq!(response.entries.len(), 1661, "no record may be filtered away");
+        assert_eq!(response.entries.len(), 1903, "no record may be filtered away");
         for entry in &response.entries {
             let eligibility = entry
                 .eligibility
@@ -7199,7 +7200,7 @@ mod tests {
     #[test]
     fn the_character_less_catalog_sends_no_eligibility_key() {
         let response = crate::feat_catalog::build_feat_catalog();
-        assert_eq!(response.entries.len(), 1661);
+        assert_eq!(response.entries.len(), 1903);
         assert!(response.entries.iter().all(|entry| entry.eligibility.is_none()));
         let json = serde_json::to_string(&response.entries[0]).expect("serialises");
         assert!(!json.contains("eligibility"), "{json}");

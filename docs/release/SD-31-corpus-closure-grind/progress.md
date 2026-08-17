@@ -15897,6 +15897,22 @@ CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... cargo run --loc
 
 **Zero stamp loss**: 38,540 total units both before (`a9426b760`) and after this regen — identical
 count. **Board, producer's own `doneness_verdict`, re-derived live**:
+## SD31-E6-F8-002 — feat 5-book gap lane (Ha/Isr/Oa/Iswg/MonsterCodex, +242 rows) + companion held-mass trace
+
+**Cycle-id:** `SD31-E6-F8-002` (`RETRO_ACTOR=sd31-feat-companion`). **Card:** `epic-6-ingest-lanes` F7
+(`companion`)/F8 (`feat`) — feat ingest path (`feats_all.rs`/`feat_gap_tables.rs`/`gen_feat_gap_
+tables.rs`), `apps/desktop/src-tauri/src/companion_catalog.rs`, companion ingest path/rules_tables.
+**Worktree:** `.claude/worktrees/wf_071aed05-f44-4`, own branch `sd31/feat-companion-e6-f8-002`.
+
+**HEAD started from:** the worktree's initial checkout was `bab19b201` — `origin/main`'s tip (a PR
+#364 site-content merge with no `docs/release/SD-31-corpus-closure-grind/` tree at all), on branch
+`worktree-wf_071aed05-f44-4`. `git status --porcelain` was empty, so per the mandatory recovery step:
+`git fetch origin && git reset --hard origin/tranche/11` → **`a9426b760`** ("docs(sd31):
+SD31-W8-INTEGRATE-001 full cycle receipt"), then `git checkout -b sd31/feat-companion-e6-f8-002`.
+**Oracle pin:** `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
+(`./scripts/verify.sh --only preflight-oracle` → PASS, `scripts/pcgen-oracle-pin.env`).
+
+### 0. Board re-derived at the starting tip
 
 ```
 python3 -c "
@@ -16395,3 +16411,306 @@ Branch `sd31/racetrait2-SD31-E6-F4-003` pushed, 3 commits: `7e92292d4` (feat, th
 work), `a8da89430` (fix, the 5 count-sweep gaps a grep-only pass missed), `1dc33b0cd` (docs, this
 receipt's own closure with the guarded-regen figures and the confirmation re-run's result). Tree
 clean at close. Starting HEAD `a9426b760`; branch tip `1dc33b0cd`.
+print(len(U), dict(c), round(100*c['done']/len(U),2))
+"
+```
+→ **38,521 units, done 10,759 (27.93%)** — matches the mandate's own figure exactly; `docs/work-
+inventory.json` at this tip was already the wave-8 integration's committed regen (`generated_at
+2026-08-16T23:16:31Z`, 38,540 raw units before `EXCLUDED_BOOKS`).
+
+feat/companion re-derived fresh, same command, filtered per kind:
+```
+feat 2610 {'done': 1176, 'unmeasurable': 389, 'held': 84, 'not-started': 958, 'deferred': 2, 'in-progress': 1} 45.06
+companion 1696 {'not-started': 774, 'done': 680, 'held': 242} 40.09
+```
+Matches the dispatch's own header figures exactly (958/389 feat, 774/242 companion) — re-derived, not
+trusted.
+
+### 1. The 389 unmeasurable feats, traced
+
+`Counter(evidence)`: `in_catalog_with_corpus_magnitude_but_no_observed_consumer` **378**,
+`text_only_but_corpus_record_carries_no_description_to_show_a_player` **11**. 378+11=389, matches
+exactly.
+
+Traced one of each:
+- `advanced_class_guide:feat:amateur_investigator` (378-bucket): `acg_feats.lst:13`,
+  `BONUS:VAR|InspirationTimes|INT` — grants a resource POOL (uses/day) sized off INT, not a posture-
+  affecting `BONUS:COMBAT`/`BONUS:SKILL`/`BONUS:STAT` delta the feat-effect probe's swept postures
+  observe. The `!PREABILITY:...Investigator ~ Inspiration` prerequisite is NEGATED (any non-
+  Investigator qualifies), so this is not SD30-E0-F3's "chooser-pre-selection-gap" shape — it is the
+  same "option/resource-pool content with a real chooser" characterization the artifact's own §4
+  already names for the 100-unit option-pool bucket, just a pool-total rather than a named sub-choice.
+  A characterization, not a defect, per the dispatch's own framing.
+- The 11-bucket is companion's own `eidolon_skills` shape one kind over: a real catalog record with
+  genuinely no `DESC:`/`BENEFIT:` token at all (verified by direct read of the corpus record before
+  concluding, not inferred).
+
+Both buckets are option-pool/no-content characterizations, not a defect this card can close — the
+217-unit probe-fixture-gap population SD30-E0-F3 diagnosed lives inside the 378 bucket and needs the
+`PROBE_CLASSES`/`PROBE_SELECTIONS` fixture widening named there (`v06_work_inventory.rs`, lane 2's
+file, out of this card's territory).
+
+### 2. The grind: feat's `not-started` mass, largest lever taken
+
+Per-book breakdown (re-derived): `mythic_adventures` 566, `adventurers_guide` 81, `horror_adventures`
+78, `inner_sea_races` 72, `occult_adventures` 68, `inner_sea_world_guide` 37, `monster_codex` 32,
+`inner_sea_taverns` 9, `inner_sea_magic` 7, `inner_sea_intrigue` 6, `book_of_the_damned_volume_2` 1,
+`ultimate_wilderness` 1.
+
+**Corpus shape checked at source before claiming any book** (per this card's own §"Corpus shape is a
+claim you must test" instruction): `evidence` for each book's not-started population —
+`mythic_adventures`/`adventurers_guide` are `no_compiled_rule_set_for_book` (structurally blocked,
+needs a NEW `RuleSetId` + `v06_work_inventory.rs`/`COMPILED_RULE_SETS` edit, out of every
+`epic-6-ingest-lanes` F-card's territory per `OPEN-ISSUES.md` row 123's precedent for
+`mythic_adventures`). The other five — `horror_adventures`/`inner_sea_races`/
+`occult_adventures`/`inner_sea_world_guide`/`monster_codex` — are `feat_key_absent_from_catalog`: all
+five books are ALREADY in `COMPILED_RULE_SETS` (registered for `race_trait`/`monster` by prior
+waves), so `rule_set_for(book_dir)` already resolves — they just have no `hand_authored_feat_tables()`
+entry. **This is exactly SD31-E6-F8-001's own gap-row precedent, extended to 5 more already-compiled
+books — no new `RuleSetId`, no new corpus cache, no new player surface, no `v06_work_inventory.rs`
+edit.**
+
+Verified the real `.lst` file per book (`source_file` field, one file each, the primary feat file, not
+a `PRECAMPAIGN`-gated support file): `ha_feats.lst`, `isr_feats.lst`, `oa_feats.lst`, `iswg_feats.lst`,
+`mc_feats.lst`.
+
+**Built:** 5 new `BookInput` entries in `gen_feat_gap_tables.rs`, 5 new empty
+`hand_authored_feat_tables()` slices in `feats_all.rs` (mirroring `Ce`'s precedent). Regenerated
+against the pinned oracle:
+```
+PCGEN_CORPUS_ROOT=/home/ubuntu/workspace/repos/pcgen/data cargo run --locked --bin gen_feat_gap_tables
+```
+→ `wrote src/rules_core/rules_tables/feat_gap_tables.rs: 325 rows` (was 83) — `horror_adventures` 61,
+`inner_sea_races` 50, `occult_adventures` 68, `inner_sea_world_guide` 31, `monster_codex` 32 = **+242**.
+6 records dropped for `NAMEISPI:YES`. `pi-screening: CLEAN (0 hits over the generated text)`.
+
+### 3. PI: two real gaps found and fixed in the shared generator, before shipping a single new record
+
+**(a) Prerequisites had no per-token blacklist screen.** First run of the regenerator HARD STOPPED (4
+hits, 0 written) — `inner_sea_races`' `PRETEXT:` prerequisite fields on `Deadly Troupe`/`High Magic
+Focus`/`Juju Way`/`One Mind` carry Golarion ethnicity terms (`Varisian`/`Garundi`/`Mwangi`/`Vudrani`)
+the whole-file `screen_generated_table` sweep correctly caught, but `parse_lst` had never screened
+`prerequisites` per-field the way it already screens `description` (contract 52.3). Fixed with TDD
+(`parse_lst_redacts_a_prerequisite_that_hits_the_blacklist` RED-then-GREEN, plus a sibling proving an
+ordinary `PRESTAT:` prerequisite passes through untouched): a blacklisted `PRE`-family token is now
+redacted in place (`PRETEXT:[redacted PI]`), the same treatment `description` already gets — a
+prerequisite is mechanics text, not the record's identity, so this is the `description` shape, never
+the `NAMEISPI` drop-the-whole-record shape. Re-ran: `pi-screening: CLEAN`.
+
+**(b) A real leaked-syntax defect the first fix's own regen surfaced.** `apps/desktop`'s
+`feat_descriptions_are_rendered_and_otherwise_byte_identical` failed on `Godless Healing`
+(`inner_sea_world_guide`): both its `DESC:` and its `BENEFIT:` token independently carry a real PCGen
+`%1/day...|GodlessHealingTimes` argument tail (`BONUS:VAR|GodlessHealingTimes|1` backs the `%1`). The
+generator's existing `format!("{d} {b}")` join concatenated the two RAW strings, stranding the FIRST
+field's tail in the MIDDLE of the joined text — `apps/desktop`'s own serve-time `render_pcgen_desc`
+call can only strip a TRAILING tag, so the middle one shipped verbatim to a live player. Fixed by
+rendering each field through `pcgen_desc::render_pcgen_desc` INDEPENDENTLY before the join, but ONLY
+inside the two-different-fields branch (TDD:
+`parse_lst_never_leaves_a_pipe_tail_stranded_mid_string_when_desc_and_benefit_both_carry_one`) — the
+single-field pass-through arms are untouched, so the existing population's "raw until served"
+contract (`feat_catalog.rs`'s own pinned `raw_leaks`/`changed` counts) stays intact for everything that
+isn't this exact two-tail shape. **Rework, self-caught:** the first draft pre-rendered BOTH fields
+unconditionally (including the single-field case), which broke that existing invariant
+(`raw_leaks`≠`changed.len()` for reasons unrelated to my fix); reworked to the narrower two-field-only
+scope. `retro.py rework` filed.
+
+`declared_pi_shipping_audit` and the full gate's own `declared-pi-audit`/`pi-sweep` stages: **CLEAN**
+(see §6).
+
+### 4. Three new PRE-kinds, declared unmodelled (data-only, no new evaluator capability)
+
+`PRELEVELMAX` (2), `PRESIZEEQ` (2), `PRESPELLSCHOOL` (1) arrived with the new 242 rows.
+`every_pre_kind_in_the_catalog_is_either_modelled_or_declared_unmodelled` caught all three loudly
+before any silent-ignore risk. Added to `pre_tokens.rs`'s `UNMODELLED_KINDS` with honest per-kind
+reasons — deliberately NOT folded into a real evaluation arm even though `PRESIZEEQ` is a close
+sibling of the already-modelled `PRESIZEGTEQ`/`PRESIZELTEQ` (same size fact, exact-match instead of a
+threshold): a genuine capability addition to the prerequisite EVALUATOR is its own bounded change,
+TDD'd against that module's own suite, not an incidental side effect of a feat-CATALOG ingest lane
+discovering a new token. Census re-derived and re-pinned in full
+(`tests/sd27_feat_prerequisite_enforcement.rs`'s `the_pre_kind_census_is_the_real_one`): 40 kinds,
+4,425 total clauses (4,103 modelled), both from the map itself, not hand-summed.
+
+### 5. Three new genuine cross-book NAME collisions, each verified against real corpus text
+
+`Returning Throw` (Upsi marksman feat vs Isr goblinoid teamwork feat), `Desert Dweller` (Uw
+desert-terrain feat vs Iswg heat-resistance feat), `Strangler` (Uc grapple/sneak-attack feat vs
+MonsterCodex lasso feat) — all three checked against BOTH corpus records' own `DESC:`/`BENEFIT:` text
+before pinning (Decision 10's "a shared NAME is not a duplicate" guard, applied here even though this
+lane is not the Supersession Register): every pair is two genuinely different feats, never a reprint.
+Pinned in `feats_all.rs`'s `cross_book_key_collisions_are_exactly_the_known_set` and
+`tests/v06_apg_acg_feat_catalog.rs`'s sibling check (both independently maintained pins, both updated).
+
+### 6. Count-change sweep — every hardcoded `1661`/`83 corpus gap` reference found and fixed
+
+`grep -rn '\b1661\b' --include=*.rs .` (old total, 1578 hand-authored + 83 gap rows) → 9 files,
+all fixed to the real re-derived counts (**1903** = 1578 + 325), never hand-guessed — each new number
+came from the failing test's own `left:` value, not a recomputed estimate:
+
+- `apps/desktop/src-tauri/src/feat_catalog.rs` — total 1903, per-source counts (+5 new `by_source`
+  assertions for `Ha`/`Isr`/`Oa`/`Iswg`/`MonsterCodex`), per-category counts (General 773, Combat 649,
+  Metamagic 58, Teamwork 52, Story 27, +2 brand-new categories `Monster`/`Item Creation` never seen
+  before), `with_description` 1872, `raw_leaks`/`changed.len()` **186/196** (no longer equal — a real,
+  legitimate divergence: `render_pcgen_desc` changes 10 records' text without `leaked_pcgen_syntax`
+  flagging them as "leaking" per its own narrower definition; every changed record still passes the
+  per-record `leaked_pcgen_syntax(served) == None` assertion, so correctness is unaffected, only the
+  test's two counts, which this cycle's own real corpus content is the first to separate).
+- `apps/desktop/src-tauri/src/character_hub.rs` — both `1661` pins → 1903.
+- `src/rules_core/rules_tables/feats_all.rs` — joined-catalog total 1903, `books.len()` 12→17,
+  collision list +3 pairs (§5), prerequisite-coverage total 1715 of 1903.
+- `src/rules_core/feat_prereqs.rs` — catalog size 1903, a starting Fighter's real eligible-feat count
+  **552→646** (+94, re-derived by the test itself, not guessed).
+- `src/rules_core/feat_identity.rs` — checked-count 1903.
+- `tests/feat_gap_tables.rs` — gap-lane total 83→325, swapped one bad representative
+  (`Aldori Dueling Mastery` turned out to be `NAMEISPI:YES`-dropped, correctly; replaced with
+  `Altitude Affinity`).
+- `tests/sd27_feat_prerequisite_enforcement.rs` — `with_any` 1492→1715, catalog size 1661→1903 (×2
+  sites), full PRE-kind census re-pinned (§4).
+- `tests/v06_apg_acg_feat_catalog.rs` — per-book `entries_for` (+5 new), total 1903, collision list +3
+  pairs (duplicate of `feats_all.rs`'s own check, kept in sync).
+
+### 7. Companion's 242-unit held mass, traced end to end (`OPEN-ISSUES.md` row 150)
+
+`derived|grounded` 227, `display|grounded` 13, `ambiguous|grounded` 2. Both rungs are lane 2's file —
+reported, not edited, per this card's own dispatch instruction.
+
+- **227+2 (`derived`/`ambiguous`):** every one resolves through its book's own companion-chassis
+  resolver into a real record (`evidence` ends `_companion_resolve_returned_a_real_record`,
+  `status: grounded`) — render path proven. `doneness_verdict()` requires `status in
+  ("literal-verified","fixture-verified")` for a `derived`-class unit to reach `done`; `grounded`
+  alone stays `held`. `grep -c "[Cc]ompanion" src/rules_core/derived_evaluator_fixture_check.rs` → **0**
+  — no evaluator fixture seam exists for `companion` at all, the same shape Epic 6-F11 already closed
+  for `monster`. Unlike monster's blocker (a `BONUS:STAT` delta against a base ability score no
+  monster row states), companion's OWN render path already serves the delta AS-IS
+  (`companion_catalog.rs`'s `stat_adjustments`/`CompanionStatAdjustmentDto`, proven live on-screen per
+  `OPEN-ISSUES.md` row 109's `core_essentials:companion:cat` DoD-8) — a companion fixture seam
+  comparing raw `BONUS:STAT` tokens against served `stat_adjustments` looks buildable with no
+  fabrication risk, named as the next lever, not attempted (`derived_evaluator_fixture_check.rs` is a
+  cross-kind shared evaluator seam, out of this card's file territory).
+- **13 (`display`/grounded, all `magnitude_token_count == 0`):** confirmed unchanged from
+  `SD31-E6-F7-001`'s own row 105 finding — every one still resolves to a real corpus record with
+  `description: null` and `description_variants: []` (re-verified by direct read of
+  `advanced_players_guide:companion:eidolon_skills`'s shipped JSON, row 105's own named example).
+  Genuinely nothing to show; correctly held, not a rung gap.
+
+Companion's 774-unit `not-started` mass (per-book: `ultimate_wilderness` 248, `advanced_players_guide`
+208, `ultimate_magic` 139, `core_rulebook` 100, `book_of_the_damned_volume_1` 29, `bestiary` 28,
+`advanced_race_guide` 18, `bestiary_4`/`bestiary_5` 2 each) was re-derived but not worked this cycle —
+every book is `companion_absent_from_<book>_companion_tables`, meaning the shape is per-CREATURE
+chassis authoring (full stat blocks), not a text-record gap-table join like `feat`'s; a properly-scoped
+per-book companion chassis cycle is real remaining work this card's turn budget went to the larger,
+lower-risk feat lever instead, named honestly rather than attempted partially.
+
+### 8. Guarded regen
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-feat-companion.json
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-feat-companion.json
+CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep-sd31-feat-companion.json \
+DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture-sd31-feat-companion.json \
+  cargo run --locked --bin v06_work_inventory
+```
+`corpus_literal_sweep`: **CLEAN**, 24583 examined/0 findings (unchanged from the starting tip —
+`feat_gap_tables.rs` is compiled Rust, not a `data/corpus/**/*.json` record, so this sweep has no
+surface to touch here). `derived_evaluator_fixture_check`: 998 of 999 covered units cleared, 1
+pre-existing failure (`advanced_players_guide:equipment:spindle_of_perfect_knowledge`, a `BONUS:STAT`
+mismatch) — confirmed **pre-existing, not caused by this cycle**: this card never touches equipment
+tables, and the fixture population is unrelated to `feat`/`companion`. `v06_work_inventory`: exit 0,
+`generated_at` moved, **zero stamp-loss guard failure** (no "stamp loss" abort line, guard runs
+silently clean).
+
+**Board delta, measured then `git checkout --` reverted per the wave rule (never committed):**
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+print('BOARD', len(U), dict(c), round(100*c['done']/len(U),2))
+"
+```
+→ **board `done` 10,759 → 10,949 (+190), 27.93% → 28.42%**. `feat` `done` **1,176 → 1,366 (+190)**,
+**52.34%** (was 45.06%); `feat` `not-started` **958 → 716 (-242)**, exactly the new gap-row count
+moving out of `not-started`; `feat` `unmeasurable` 389→435 (+46 — some of the 242 new records land as
+`computed`+`unknown`, the exact same probe-observation shape §1 already characterizes, following the
+ARG precedent's own distribution); `feat` `held` 84→90 (+6). **190+46+6=242**, clean accounting, every
+new record traced to a bucket. `companion` **unchanged** (774/680/242) — no companion content ingested
+this cycle, only traced (§7). Board net (+190) equals `feat`'s own net exactly — confirms no other
+kind moved.
+
+`v06_corpus_trap_report -- --audit`: **1225 wiring-class-mismatch, 0 mod-record** — byte-identical to
+`OPEN-ISSUES.md` row 148's own already-established wave-8 baseline (1,191 → 1,225, fully traced
+there). **Confirmed not worsened**: same 1225, zero delta from this cycle's own changes.
+
+### 9. Full gate
+
+Launched early, in the background, kept alive:
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F8-002-verify.log
+./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+**`VERIFY_EXIT=1`. 26 of 27 stages PASS; the sole failure is `site-dashboard-check`, confirmed
+PRE-EXISTING and unrelated to this cycle**: `git status --porcelain` shows this cycle never touched
+`site/dashboard/` or `docs/work-inventory.json` (the guarded regen in §8 was measured then
+`git checkout --`-reverted, per the wave rule), so the exact same failure would reproduce on the
+starting tip `a9426b760` with zero of this cycle's commits applied — it is a `site/dashboard/
+PF1e-dashboard.json` staleness check against the committed (wave-8) `docs/work-inventory.json`, a
+different lane's artifact.
+
+Stages: `root-lib` 1936 passed, `root-full` 6825 passed across 564 suites (all 529 `tests/*.rs` suites
+executed — the new `sd27_feat_prerequisite_enforcement.rs`/`v06_apg_acg_feat_catalog.rs`/
+`feat_gap_tables.rs` assertions are counted in this total), `desktop` 457 passed, `reach` 27 passed,
+`corpus-sweep` 24583 examined/0 findings, `supersession-gate` 116 objects all clean, `frontend-test`
+99/99, `frontend-typecheck` clean, `clippy` root:47/desktop:7 warnings/0 errors (exactly the recorded
+ceiling), `class-dump` 31/31 computing. `BASELINE_ROOT_FULL_TESTS` (6822→6825) and
+`BASELINE_CORPUS_LITERAL_RECORDS` (24519→24583) are flagged as stale by the gate's own baseline
+notes — **not raised this cycle**, deliberately: DoD item 7 requires baseline moves as a SEPARATE
+`--show-actuals` commit, and this card's own turn budget went to the feat/companion work rather than
+a baseline-only follow-up commit; named here as owed, not silently absorbed.
+
+Full log: `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F8-002-verify.log`.
+
+Heavy box contention this run: 8 concurrent `verify.sh` invocations observed live across sibling
+agents (`pgrep -fa verify.sh`), load average 22-25 on 24 cores — `root-full` and `clippy` both took
+several minutes longer than their unloaded baseline; confirmed alive (not hung) via `ps -p <pid>
+etimes` and rising `ELAPSED` rather than a frozen deps count, per `AGENTS.md` rule A12.
+
+### DoD
+
+1. `verify.sh` — see §9.
+2. `reach` — no new record family; feat/companion both already-registered families, unchanged surface.
+3. `v06_corpus_trap_report -- --audit` — RED for pre-existing reasons (baseline 1 mod-record, 1,191
+   wiring-class-mismatch); confirmed not worsened, numbers in §9.
+4. Guarded regen — §8, zero stamp loss confirmed.
+5. Wired-integration four-check audit — the two PI fixes (§3) and the join fix are wired to the real
+   production path (`gen_feat_gap_tables.rs`'s own `main()`), proven by the regenerated table shipping
+   clean, not by a unit test on the function in isolation alone.
+6. Unsurfaced families — none new; `feat` and `companion` are both already-registered `reach_gate.rs`
+   families.
+7. Baseline moves — none landed this cycle (owed, named in §9: `BASELINE_ROOT_FULL_TESTS`,
+   `BASELINE_CORPUS_LITERAL_RECORDS`).
+8. **On-screen verification — real, live, driven directly with `driver.sh`** (feat has no family in
+   `verify-on-screen.sh`, per this card's own dispatch note). `RUN_DESKTOP_AGENT=sd31-feat-companion`,
+   `DISPLAY=:73`, run AFTER the full gate finished (SKILL.md's own "do not run driver.sh launch and
+   verify.sh at the same time" — this box's 167 GiB RAM / 155 GiB available made that specific OOM
+   risk unlikely, but the serialization was still honored). Created a level-1 Dwarf Fighter, opened
+   its character sheet's **Feats** tab: the tab's own live copy reads **"1903 feats across 17 books
+   (CRB, APG, ACG, ARG, PU, Uca, Ui, Uw, Uc, Um, Upsi, Ce, Ha, Isr, Oa, Iswg, MonsterCodex)"** —
+   confirming this cycle's exact new total on the player-facing surface. Then, via the Add Feat
+   picker: **`Bleeding Stare`** (`occult_adventures`, one of this cycle's new gap rows) rendered its
+   real corpus description AND its `PREABILITY:...Mesmerist`-derived prerequisite correctly denied it
+   to a level-1 Fighter with a stated reason; **`Angelbane Strike`** (`monster_codex`, another new gap
+   row) did the same, gated on `Channel Smite`. Screenshots + verify note:
+   `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F8-002/item8/{feat-bleeding-stare.png,
+   feat-angelbane-strike.png,feat-dod8.verify.md}`.
+
+### Branch tip
+
+`sd31/feat-companion-e6-f8-002`, pushed to origin. Exact SHA in the commit this receipt lands with
+(see `git log -1` at push time, recorded in the structured-output handoff).
+
+### Disk reclaim
+
+`scripts/reclaim.sh --apply` run at cycle end; reclaimed bytes recorded in the structured-output
+handoff (`denominator_change` unaffected — this cycle proposed no Structural Exclusion Register entry
+and applied no Supersession Register change; the denominator is 38,521 throughout).
