@@ -269,8 +269,10 @@ fn cross_book_feat_key_repeats_are_exactly_the_known_set() {
     //   `Returning Throw` (Upsi marksman feat vs Isr goblinoid teamwork feat)
     //   `Desert Dweller` (Uw desert-terrain feat vs Iswg heat-resistance feat)
     //   `Strangler` (Uc grapple/sneak-attack feat vs MonsterCodex lasso feat)
+    let (mythic_cross_book, other_cross_book): (Vec<_>, Vec<_>) =
+        cross_book.into_iter().partition(|(_, _, second)| *second == RuleSetId::Mythic);
     assert_eq!(
-        cross_book,
+        other_cross_book,
         vec![
             ("Endurance", RuleSetId::Crb, RuleSetId::Pu),
             ("Extended Animal Focus", RuleSetId::Acg, RuleSetId::Uw),
@@ -280,12 +282,21 @@ fn cross_book_feat_key_repeats_are_exactly_the_known_set() {
             ("Strangler", RuleSetId::Uc, RuleSetId::MonsterCodex),
         ]
     );
+
+    // `SD31-E6-F2-007` -- `RuleSetId::Mythic`'s 142 collisions are the same
+    // mechanically-proven population `feats_all::tests::
+    // cross_book_key_collisions_are_exactly_the_known_set` checks record-by-
+    // record (every colliding Mythic row's own `PREABILITY:` prerequisite
+    // names that exact key under `CATEGORY=FEAT`); not re-verified a second
+    // time here, only counted, so this pin still fails if a future book adds
+    // or removes one.
+    assert_eq!(mythic_cross_book.len(), 142, "re-derive if a book's feat gap rows change");
 }
 
 #[test]
 fn the_aggregate_catalog_spans_every_ingested_book() {
     let books = all_feat_tables();
-    assert_eq!(books.len(), 17);
+    assert_eq!(books.len(), 18);
 
     let entries_for = |rule_set: RuleSetId| {
         books
@@ -328,9 +339,13 @@ fn the_aggregate_catalog_spans_every_ingested_book() {
     assert_eq!(entries_for(RuleSetId::Oa), 68); // 0 + 68
     assert_eq!(entries_for(RuleSetId::Iswg), 31); // 0 + 31
     assert_eq!(entries_for(RuleSetId::MonsterCodex), 32); // 0 + 32
+    // `SD31-E6-F2-007` -- Mythic Adventures' first compiled rule set of any
+    // kind; every served entry is a gap row (`ma_feats.lst`'s 358 non-`.MOD`
+    // declarations).
+    assert_eq!(entries_for(RuleSetId::Mythic), 358); // 0 + 358
 
     let total: usize = books.iter().map(|b| b.entries.len()).sum();
-    assert_eq!(total, 1903, "186 CRB + 172 APG + 129 ACG + 235 ARG + 17 PU + 23 UCA + 107 UI + 136 UW + 263 UC + 156 UM + 222 UPsi + 15 Ce + 61 Ha + 50 Isr + 68 Oa + 31 Iswg + 32 MonsterCodex = 1578 hand-authored + 325 corpus gap rows (SD31-E6-F8-001's 83 + SD31-E6-F8-002's 242)");
+    assert_eq!(total, 2261, "186 CRB + 172 APG + 129 ACG + 235 ARG + 17 PU + 23 UCA + 107 UI + 136 UW + 263 UC + 156 UM + 222 UPsi + 15 Ce + 61 Ha + 50 Isr + 68 Oa + 31 Iswg + 32 MonsterCodex + 358 Mythic = 1578 hand-authored + 683 corpus gap rows (SD31-E6-F8-001's 83 + SD31-E6-F8-002's 242 + SD31-E6-F2-007's 358)");
 }
 
 #[test]

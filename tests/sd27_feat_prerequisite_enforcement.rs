@@ -186,7 +186,7 @@ fn the_pre_kind_census_is_the_real_one() {
         // moved with the 242 new gap rows' own `PRE`-family tokens.
         ("!PREABILITY", 35),
         ("!PREALIGN", 6),
-        ("PREABILITY", 1444),
+        ("PREABILITY", 1598),
         ("PREALIGN", 26),
         ("PRECHECKBASE", 2),
         ("PRECLASS", 130),
@@ -209,21 +209,22 @@ fn the_pre_kind_census_is_the_real_one() {
         ("PRESIZEEQ", 2),
         ("PRESIZEGTEQ", 3),
         ("PRESIZELTEQ", 7),
-        ("PRESKILL", 336),
+        ("PRESKILL", 337),
         ("PRESPELL", 38),
-        ("PRESPELLCAST", 12),
+        ("PRESPELLCAST", 13),
         ("PRESPELLDESCRIPTOR", 2),
         ("PRESPELLSCHOOL", 1),
         ("PRESPELLSCHOOLSUB", 2),
         ("PRESPELLTYPE", 12),
-        ("PRESTAT", 242),
+        ("PRESTAT", 244),
+        ("PRETEMPLATE", 34),
         ("PRETEXT", 146),
-        ("PRETOTALAB", 365),
+        ("PRETOTALAB", 368),
         ("PREVAREQ", 12),
         ("PREVARGT", 9),
-        ("PREVARGTEQ", 802),
-        ("PREVARLT", 3),
-        ("PREVARLTEQ", 1),
+        ("PREVARGTEQ", 961),
+        ("PREVARLT", 4),
+        ("PREVARLTEQ", 2),
         ("PREVISION", 2),
         ("PREWEAPONPROF", 19),
     ]
@@ -233,27 +234,30 @@ fn the_pre_kind_census_is_the_real_one() {
 
     assert_eq!(catalog_kind_census(), expected);
 
-    // Prerequisite clauses across 40 distinct kinds (was 37/3,914 with
-    // 3,713 modelled before `SD31-E6-F8-002`'s five-book feat gap lane; that
-    // cycle in turn was 35/3,805 before the original 83-row gap lane).
-    // `PRELEVELMAX`/`PRESIZEEQ`/`PRESPELLSCHOOL` are the three kinds this
-    // cycle introduced, all declared unmodelled with a stated reason rather
-    // than guessed at (`pre_tokens.rs`'s `UNMODELLED_KINDS`). The kind-by-
-    // kind values above are pinned as-observed; see
-    // `MODELLED_KINDS`/`UNMODELLED_KINDS` for which of them carry a real
-    // evaluation arm versus a named reason for staying unmodelled, and
-    // `pre_tokens.rs`'s own `ClauseOutcome::Informational` arm for
-    // `PRETEXT:`'s own third category. Total computed from the map itself,
-    // not hand-summed (decisions.md §43's own lesson: a hand-summed total
-    // was wrong once already this session).
+    // Prerequisite clauses across 41 distinct kinds (was 40/4,425 with
+    // 4,103 modelled before `SD31-E6-F2-007`'s Mythic Adventures feat gap
+    // lane; that cycle in turn was 37/3,914 with 3,713 modelled before
+    // `SD31-E6-F8-002`'s five-book feat gap lane; that cycle in turn was
+    // 35/3,805 before the original 83-row gap lane). `PRETEMPLATE` is the
+    // one kind this cycle introduced (all 34 occurrences are Mythic's own
+    // "Racial Heritage" feats' `PRETEMPLATE:1,Racial Heritage ~ <Race>`
+    // clause), declared unmodelled with a stated reason rather than guessed
+    // at (`pre_tokens.rs`'s `UNMODELLED_KINDS`) -- this engine has no
+    // template system. The kind-by-kind values above are pinned
+    // as-observed; see `MODELLED_KINDS`/`UNMODELLED_KINDS` for which of
+    // them carry a real evaluation arm versus a named reason for staying
+    // unmodelled, and `pre_tokens.rs`'s own `ClauseOutcome::Informational`
+    // arm for `PRETEXT:`'s own third category. Total computed from the map
+    // itself, not hand-summed (decisions.md §43's own lesson: a hand-summed
+    // total was wrong once already this session).
     let total: usize = expected.values().sum();
-    assert_eq!(total, 4425);
+    assert_eq!(total, 4781);
     let modelled: usize = expected
         .iter()
         .filter(|(kind, _)| MODELLED_KINDS.contains(&kind.trim_start_matches('!')))
         .map(|(_, count)| *count)
         .sum();
-    assert_eq!(modelled, 4103);
+    assert_eq!(modelled, 4422);
 }
 
 /// 599 of the catalog's 690 records carry at least one prerequisite -- the
@@ -270,9 +274,10 @@ fn the_number_of_records_carrying_any_prerequisite_is_the_real_one() {
     // + 98 of UI's 104 records (real `PRE`-family tokens, gathered directly
     // at ingest -- see `ultimate_intrigue::feat_tables`'s own doc comment).
     // + 63 of the original 83 corpus gap rows + 223 of `SD31-E6-F8-002`'s 242
-    // more, whose `PRE`-family tokens the gap generator carries verbatim off
-    // the corpus record.
-    assert_eq!(with_any, 1715, "of 1903");
+    // more + 195 of `SD31-E6-F2-007`'s 358 Mythic Adventures rows, whose
+    // `PRE`-family tokens the gap generator carries verbatim off the corpus
+    // record.
+    assert_eq!(with_any, 1910, "of 2261");
 }
 
 // ---------------------------------------------------------------------------
@@ -469,7 +474,7 @@ fn every_ineligible_feat_states_a_reason_for_every_build() {
         let level = input.chosen.class_levels[0].level;
         let facts = character_prereq_facts(input, i16::from(level));
         let reports = evaluate_every_catalog_feat(&facts);
-        assert_eq!(reports.len(), 1903);
+        assert_eq!(reports.len(), 2261);
         for report in &reports {
             if report.is_eligible {
                 assert_eq!(report.unavailable_reason(), None);

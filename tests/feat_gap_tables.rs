@@ -163,13 +163,18 @@ fn the_gap_rows_are_exactly_the_joined_catalog_minus_the_hand_authored_one() {
         "joining the gap rows must never remove a hand-authored record"
     );
     let added = joined.len() - hand.len();
+    // `SD31-E6-F2-007` -- +358 with Mythic Adventures' own first-ever gap
+    // lane (`ma_feats.lst`'s non-`.MOD` declarations, all 358 with distinct
+    // keys, verbatim from `gen_feat_gap_tables`'s own stdout at the pinned
+    // oracle).
     assert_eq!(
-        added, 325,
-        "the gap lane is 325 rows: 83 from the original 7-book lane \
+        added, 683,
+        "the gap lane is 683 rows: 83 from the original 7-book lane \
          (`SD31-E6-F8-001`) + 242 from the five books `SD31-E6-F8-002` added \
          (horror_adventures 61 + inner_sea_races 50 + occult_adventures 68 + \
-         inner_sea_world_guide 31 + monster_codex 32), verbatim from \
-         `gen_feat_gap_tables`'s own stdout at the pinned oracle"
+         inner_sea_world_guide 31 + monster_codex 32) + 358 from Mythic \
+         Adventures (`SD31-E6-F2-007`), verbatim from `gen_feat_gap_tables`'s \
+         own stdout at the pinned oracle"
     );
 }
 

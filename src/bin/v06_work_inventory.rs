@@ -1964,6 +1964,8 @@ const COMPILED_RULE_SETS: &[RuleSetId] = &[
     RuleSetId::Isg,
     // SD31-E6-F2-003 -- this book's first compiled rule set of any kind.
     RuleSetId::Oa,
+    // SD31-E6-F2-007 -- this book's first compiled rule set of any kind.
+    RuleSetId::Mythic,
 ];
 
 /// The corpus directory whose records a rule set is compiled from. Exhaustive
@@ -2003,6 +2005,7 @@ fn corpus_dir_for(rule_set: RuleSetId) -> &'static str {
         RuleSetId::Isb => "inner_sea_bestiary",
         RuleSetId::Isg => "inner_sea_gods",
         RuleSetId::Oa => "occult_adventures",
+        RuleSetId::Mythic => "mythic_adventures",
     }
 }
 
@@ -2056,6 +2059,7 @@ fn rule_set_id(rule_set: RuleSetId) -> &'static str {
         RuleSetId::Isb => "inner_sea_bestiary",
         RuleSetId::Isg => "inner_sea_gods",
         RuleSetId::Oa => "occult_adventures",
+        RuleSetId::Mythic => "mythic_adventures",
     }
 }
 

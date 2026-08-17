@@ -190,6 +190,21 @@ const BOOK_INPUTS: &[BookInput] = &[
         slug: "monster_codex",
         files: &["pathfinder/paizo/roleplaying_game/monster_codex/mc_feats.lst"],
     },
+    // `SD31-E6-F2-007` -- Mythic Adventures' first compiled rule set of any
+    // kind (named in this generator's own doc comment above as an example
+    // needing a new `RuleSetId` and a `v06_work_inventory.rs` edit; both
+    // now done). Only `ma_feats.lst`'s 358 non-`.MOD` declarations are
+    // parsed here -- `parse_lst`'s existing `.MOD` skip already excludes
+    // the file's 208 `.MOD` rows, which target `race_trait`-kind base
+    // records elsewhere in the corpus (e.g. `Android ~ Vision`), not a
+    // feat this table could honestly hold (`RuleSetId::Mythic`'s own doc
+    // comment; reported, not ingested, `OPEN-ISSUES.md`).
+    BookInput {
+        rule_set: RuleSetId::Mythic,
+        variant: "Mythic",
+        slug: "mythic_adventures",
+        files: &["pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst"],
+    },
 ];
 
 /// One parsed corpus feat record, before the already-held filter runs.

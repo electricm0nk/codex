@@ -358,6 +358,13 @@ pub const UNMODELLED_KINDS: &[(&str, &str)] = &[
     // Sibling of the already-unmodelled `PRESPELLSCHOOLSUB`/`PRESPELLTYPE`:
     // this engine does not model which spell schools a character knows.
     ("PRESPELLSCHOOL", "spell-school prerequisites are not modelled"),
+    // Arrived with `SD31-E6-F2-007`'s Mythic Adventures feat gap lane
+    // (2026-08-17): all 34 occurrences are the book's own "Mythic Racial
+    // Heritage" feats' `PRETEMPLATE:1,Racial Heritage ~ <Race>` clause,
+    // gating the feat on a PCGen TEMPLATE this character record does not
+    // carry -- this engine has no template system at all (no ingested race
+    // or class chassis applies one), so there is no fact to check against.
+    ("PRETEMPLATE", "PCGen template prerequisites are not modelled"),
 ];
 
 /// Evaluates one top-level `PRE`-family token against `facts`.
