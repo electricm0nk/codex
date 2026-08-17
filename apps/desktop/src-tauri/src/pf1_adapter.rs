@@ -323,6 +323,34 @@ const WITCH_HEX_CHOICE_ID: &str = "choice:witch_hex";
 const SHAMAN_CLASS_ID: &str = "class:shaman";
 const SHAMAN_SPIRIT_CHOICE_ID: &str = "choice:shaman_spirit";
 
+/// SD31-E4-F2-003 (2026-08-17): Barbarian's Rage Power chooser
+/// (`BARBARIAN_RAGE_POWER_SLOTS`, `pilot_compute.rs`) had no in-game picker
+/// at all -- the same "no picker in the creation UI can submit one" gap
+/// `WITCH_HEX_CHOICE_ID`'s own doc comment names for Witch/Shaman, except
+/// Barbarian already reaches `Computed` WITHOUT any Rage Power selected (the
+/// chooser is additive evidence, not a claim-blocking precondition), so this
+/// seed exists purely to put a real, corpus-verified selection on-screen for
+/// DoD-8 -- not to unblock a stuck posture the way the Witch/Shaman seeds
+/// do. `choice:barbarian_rage_power` is the FIRST of ten numbered slots
+/// (`BARBARIAN_RAGE_POWER_SLOTS`), available from Barbarian level 2;
+/// Superstition is `pilot_compute.rs`'s own representative Rage Power (see
+/// `SUPERSTITION_RAGE_POWER_SELECTION`'s doc comment there for why).
+///
+/// **Real bug found live driving the actual app, not caught by any code
+/// gate**: a bare `"superstition"` selection_id (zero colons) fails to
+/// SAVE at all -- `saved_character::local_store::validate_character_input`
+/// requires at least one colon to round-trip through the fixture grammar,
+/// the exact same shape `EMPOWER_SPELL_METAMAGIC_SELECTION`'s own doc
+/// comment already documents for Arcanist. This seed therefore persists the
+/// NAMESPACED form; `pilot_compute.rs`'s `rage_power_selection_denamespaced`
+/// strips the `"rage_power:"` prefix before validating against the real
+/// corpus pool, so this and the board's own `--class-feature-probe` (which
+/// generates the bare form, per `CLASS_FEATURE_POOLS`'s registered EMPTY
+/// namespace for this pool) both ground the identical real value.
+const BARBARIAN_CLASS_ID: &str = "class:barbarian";
+const BARBARIAN_RAGE_POWER_CHOICE_ID: &str = "choice:barbarian_rage_power";
+const SUPERSTITION_RAGE_POWER_SELECTION: &str = "rage_power:superstition";
+
 /// **Why Flight, of the corpus's 53 base Witch hexes.** Verified directly
 /// against the PCGen corpus
 /// (`.../advanced_players_guide/apg_abilities_class.lst:892`):
@@ -875,6 +903,20 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
         selected_choices.push(SelectedChoice {
             choice_set_id: SHAMAN_SPIRIT_CHOICE_ID.to_owned(),
             selection_id: LIFE_SPIRIT_SELECTION.to_owned(),
+        });
+    } else if request.class_id == BARBARIAN_CLASS_ID && request.level >= 2 {
+        // See `BARBARIAN_RAGE_POWER_CHOICE_ID`'s own doc comment: unlike
+        // Witch/Shaman above, Barbarian already reaches `Computed` without
+        // this seed -- it exists only to put a real, corpus-verified
+        // Rage Power selection on-screen. Gated on level >= 2 because the
+        // corpus's own Rage Power grant ("Starting at 2nd level, a
+        // barbarian gains a rage power") makes the choice slot itself a
+        // no-op below that level; the level selector already lets a
+        // creation request pick 2+ directly, so no separate level-up step
+        // is needed to observe it.
+        selected_choices.push(SelectedChoice {
+            choice_set_id: BARBARIAN_RAGE_POWER_CHOICE_ID.to_owned(),
+            selection_id: SUPERSTITION_RAGE_POWER_SELECTION.to_owned(),
         });
     } else if request.class_id == SUMMONER_CLASS_ID {
         // v0.6 alpha swarm (Summoner Eidolon evolution canonical-narrowing
@@ -2031,6 +2073,13 @@ mod tests {
     fn shaman_request_for(character_id: &str, level: u8) -> CreateCharacterRequest {
         CreateCharacterRequest {
             class_id: SHAMAN_CLASS_ID.to_owned(),
+            ..request_for(character_id, level)
+        }
+    }
+
+    fn barbarian_request_for(character_id: &str, level: u8) -> CreateCharacterRequest {
+        CreateCharacterRequest {
+            class_id: BARBARIAN_CLASS_ID.to_owned(),
             ..request_for(character_id, level)
         }
     }
@@ -3236,6 +3285,65 @@ mod tests {
             HeadlessReceiptStatus::Computed,
             "a composed Shaman must reach Computed: {:?}",
             receipt.computation.diagnostics
+        );
+    }
+
+    /// The composed level-2 Barbarian really carries the canonical
+    /// Superstition rage power selection, and the real headless receipt
+    /// really carries the grounded save-bonus record -- both halves, so a
+    /// seed that lands the choice without the engine ever picking it up
+    /// would still fail here. Unlike the Witch/Shaman seeds above, a
+    /// Barbarian already reaches `Computed` without this seed (see
+    /// `BARBARIAN_RAGE_POWER_CHOICE_ID`'s own doc comment), so this test
+    /// checks the grounded explanation record directly rather than the
+    /// `Computed` status alone.
+    #[test]
+    fn a_composed_level2_barbarian_gets_the_canonical_superstition_rage_power_and_computes() {
+        let barbarian_input = compose_character_input(&barbarian_request_for("barbarian-seed", 2));
+
+        assert!(
+            barbarian_input.chosen.selected_choices.iter().any(|c| {
+                c.choice_set_id == BARBARIAN_RAGE_POWER_CHOICE_ID
+                    && c.selection_id == SUPERSTITION_RAGE_POWER_SELECTION
+            }),
+            "a composed level-2 Barbarian must carry the canonical Superstition rage power: {:?}",
+            barbarian_input.chosen.selected_choices
+        );
+
+        let receipt = build_pilot_headless_receipt(&barbarian_input);
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "a composed level-2 Barbarian must reach Computed: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt.computation.explanations.iter().any(
+                |e| e.id == "class_feature.barbarian.rage_power.superstition.save_bonus"
+            ),
+            "the engine must emit the real Superstition save-bonus grounding record, proving \
+             the seed is resolved rather than merely tolerated: {:?}",
+            receipt.computation.explanations
+        );
+    }
+
+    /// A level-1 Barbarian must NOT receive the seed -- the corpus's own
+    /// Rage Power grant starts at 2nd level, and seeding the choice slot
+    /// below that level would be dead input the engine's own `level <
+    /// grant_level` guard silently ignores, masking a future regression in
+    /// that guard rather than proving anything about this seed's own
+    /// level gate.
+    #[test]
+    fn a_composed_level1_barbarian_gets_no_rage_power_seed() {
+        let barbarian_input = compose_character_input(&barbarian_request_for("barbarian-level1", 1));
+        assert!(
+            !barbarian_input
+                .chosen
+                .selected_choices
+                .iter()
+                .any(|c| c.choice_set_id == BARBARIAN_RAGE_POWER_CHOICE_ID),
+            "a composed level-1 Barbarian must not receive the Rage Power seed: {:?}",
+            barbarian_input.chosen.selected_choices
         );
     }
 
