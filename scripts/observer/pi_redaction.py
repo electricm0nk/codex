@@ -29,11 +29,12 @@ coordinates:
   (book, source_file, source_line) coordinates, as carried by
   `docs/work-inventory.json` units. Used by `build_unit_shards`.
 * `build_declared_pi_name_index(corpus_root)` -- a full pinned-oracle sweep
-  returning the set of every NAME the oracle itself declares
+  returning the set of every UNAMBIGUOUS name the oracle itself declares
   `NAMEISPI:YES`, for scanning free-form roster text
   (`_parse_lst_first_field`) and for `scripts/site_dashboard_pi_gate.py`'s
-  word-boundary scan over whatever the producer actually shipped -- the
-  same technique `OPEN-ISSUES.md` row 149 already applied by hand.
+  exact-match scan (see `find_declared_pi_leaks`) over whatever the
+  producer actually shipped -- the same technique `OPEN-ISSUES.md` row 149
+  already applied by hand.
 
 Both are read-only over the pinned PCGen checkout; neither ever writes to it.
 

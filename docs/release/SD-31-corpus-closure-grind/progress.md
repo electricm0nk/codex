@@ -22568,3 +22568,270 @@ reclaimed-bytes figure.
 fully reconciled — see §3). `done %`: 30.7053% → 30.7079%. Reachable ceiling: 98.95%
 (38,115/38,521), unchanged. `ambiguous` wiring-class population: 406 units, unchanged. Race
 attribution: FROZEN, untouched. Supersession Register: PROPOSED, NOT applied, untouched.
+
+
+---
+
+## SD31-D14-PROV-001 — Decision 12 (public-feed PI redaction) + Decision 14 (provenance schema)
+
+**Actor:** sd31-provenance · **Branch:** `sd31-provenance/D14-PROV-001` (own worktree/branch, not
+merged to `tranche/11` by this cycle — the integration cycle merges it) · **Starting HEAD:**
+`10c666125` (tip of `tranche/11` at dispatch) · **Final branch tip:** `3437808e8` · **Oracle SHA:**
+`7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/verify.sh --only preflight-oracle` — PASS,
+quoted from `scripts/pcgen-oracle-pin.env`).
+
+### §1 — Decision 12: public-feed PI redaction
+
+**The finding this cycle answers** (`OPEN-ISSUES.md` rows 141/149): `site/dashboard/units/*.json`
+would publish 261 declared-PI unit names verbatim if ever committed; `site/dashboard/
+PF1e-dashboard.json`'s own `manifests`/roadmap content already published 56 more. Operator ruling,
+Decision 12 (`decisions.md §12`, 2026-08-17): **"withhold the name, keep the row."**
+
+**New module** `scripts/observer/pi_redaction.py` — ports `src/rules_core/pi_screening.rs
+::declared_product_identity` to Python (no Python binding exists for the crate). Two lookup shapes:
+`OracleNameChecker.declared(book, source_file, source_line)` (exact-coordinate cross-reference, used
+by `build_unit_shards`) and `build_declared_pi_name_index()` (a full Paizo-scoped oracle sweep
+returning every UNAMBIGUOUS declared-PI name — `pi_names - non_pi_names` — used by
+`_parse_lst_first_field`'s roster builder and the verify.sh gate).
+
+**Two real false-positive classes found and fixed during development**, both documented in the
+module's own comments:
+1. **Cross-game-system collision.** The full `$PCGEN_CORPUS_ROOT` checkout is not Pathfinder-only —
+   it also carries Spycraft/Starfinder/Deadlands/third-party Pathfinder publishers under
+   `pathfinder/*`. An unscoped walk found `spycraft/.../shadowforce_archer_gear_mystic.lst:55`'s own
+   `NAMEISPI:YES` row named bare `"Teleport"`, which flagged the Core Rulebook's unrelated, non-PI
+   `"Teleport"` spell as a leak — first run: **973 gate hits**, nearly all false. Fixed by scoping
+   every walk to `<root>/pathfinder/paizo` (`paizo_root()`).
+2. **Substring-of-a-longer-name collision.** Word-boundary substring matching flagged `"Shackles of
+   Compliance"` (an ordinary `ultimate_equipment` magic item) because `"Shackles"` (a declared-PI
+   Golarion region background) occurs as one word inside it — second run: **42 hits**, several real,
+   several false. Fixed by switching every scan to exact-string-leaf matching.
+3. A third gap survived both fixes: a `.MOD` row that only tags an EXISTING declared-PI object
+   (`inner_sea_world_guide`'s PFS-legality tags for 3 races whose original definition is PI-declared
+   elsewhere) carries no `NAMEISPI:YES` on its own line, so the exact-coordinate check alone missed
+   it — caught by the gate on the first real regen (**3 hits**, `PF1e-units-race.json`), fixed with a
+   blanket defense-in-depth exact-match sweep (`redact_declared_pi_names`) over the whole assembled
+   document AND every shard, plus a `SHARD_SCHEMA` 13→14 bump so the pre-fix shard cache could not
+   keep serving them.
+
+**Producer changes** (`pf1e_dashboard_producer.py`): `build_unit_shards` redacts each unit's `name`
+against its own cited row (row/count/status/wiring_class unaffected); `_parse_lst_first_field` redacts
+at the source line (fixes `_book_item_roster` AND `_prestige_class_roadmap`'s `ag_variants` in one
+place — row 149's exact exposure; dedup keys on the real name, not the marker); a blanket exact-match
+sweep runs last as defense-in-depth.
+
+**New gate** `scripts/site_dashboard_pi_gate.py` + `verify.sh` stage `site-dashboard-pi-gate` (both
+stage sets): fails when the committed feed or any shard carries a declared-PI name.
+**Mutation-proven**: seeded `"Otyugh Hide"` in the top-level feed's `_mutation_test_leak` key AND in
+`PF1e-units-equipment.json`'s first row — gate correctly reported `FAIL — 2 declared-PI name(s)
+found`; both reverted (`cp` from a pre-seed backup), gate re-confirmed CLEAN before commit.
+
+**New selftest** `pi-redaction-selftest` (`test_pi_redaction.py`, 24 cases). Mutation-proven: flipping
+`declared_product_identity`'s `!= "YES"` guard to `!= "NO_SUCH_VALUE"` fails 6 of 19 cases (reverted
+before commit).
+
+**Regenerated and committed**: `site/dashboard/PF1e-dashboard.json` + `site/dashboard/units/*.json`
+(committed for the first time — withheld until 1–3 above landed, per row 141's requirement #4).
+Command: `./scripts/publish-site-dashboard.sh`. Figures, re-derived post-fix:
+
+```
+$ python3 scripts/site_dashboard_pi_gate.py
+site-dashboard-pi-gate: CLEAN — 13 file(s) scanned against 1617 declared-PI name(s), zero leaked
+
+$ python3 -c "import json; d=json.load(open('site/dashboard/PF1e-dashboard.json')); ui=d['unit_index']; print(ui['pi_redacted_names'], ui['pi_oracle_available'], ui['total_units'])"
+289 True 38521
+```
+
+Total unit count is unchanged at 38,521 — the row always survives; only 289 display names were
+withheld. `site/dashboard/README.md`'s "What is in the feed" section (which had asserted "No Paizo
+Product Identity text" on 2026-08-16, based on a redaction-marker string scan that could never have
+caught this class of leak) corrected in place. `OPEN-ISSUES.md` row 222 appended (rows 141/149 left
+untouched, per convention).
+
+### §2 — Decision 14: provenance schema (CONFIRMED, origin-flip mechanics)
+
+**New module** `scripts/observer/provenance.py` — the nine canonical statuses (`origin`, `duplicate`,
+`superseded`, `errata-source`, `variant`, `descoped-licensing`, `descoped-structural`,
+`packaging-artifact`, `out-of-roster`) plus one non-canonical bookkeeping sentinel, `UNCLASSIFIED`,
+for "not yet decided" per `§13`'s amendment (race attribution stays FROZEN pending the operator's
+worked-example evidence table).
+
+**Six gates, each with a mutation-proof test** (`test_provenance.py`, 32 cases, all passing):
+1. `check_totality` — every `(object, book)` pair carries exactly one status.
+2. `check_exactly_one_authoritative` — zero = unowned, two = the `§13` comparison never ran.
+3. `compute_denominator` — `denominator = authoritative + variant` (`origin + errata-source +
+   variant`). **Mutation-proven against the real anti-gaming shape**: widening
+   `DENOMINATOR_STATUSES` to also count `duplicate` fails
+   `test_origin_and_variant_count_duplicate_and_superseded_do_not` (`3 != 2`); reverted before commit.
+4. `check_packaging_artifact_trending_to_zero` / `check_descoped_structural_signed`.
+5. `assert_provenance_change_does_not_move_doneness`.
+6. `report_denominator_change`.
+
+**Population** (`classify_unambiguous`): an object printed in exactly one book is trivially `origin`;
+Decision 9's already-settled `core_essentials` finding is applied directly as `packaging-artifact`;
+everything printed in more than one book is left `UNCLASSIFIED`.
+
+**Validated against the real corpus**, NOT committed as a data artifact (this cycle does not apply the
+schema to the mandate denominator — the Supersession Register rebuild has not landed and race
+attribution is frozen):
+
+```
+docs/work-inventory.json, 38,540 (kind:corpus_key, book) pairs (deduped defensively on the pair):
+  origin: 36,854 | packaging-artifact: 128 (core_essentials) | unclassified: 1,558
+  duplicate/superseded/errata-source/variant/descoped-*/out-of-roster: 0 (none yet ruled)
+  denominator if this were applied (NOT applied this cycle): 36,854
+  totality violations against the full universe: 0
+```
+
+No call site in `pf1e_dashboard_producer.py` reads `compute_denominator()` this cycle.
+
+**New selftest** `provenance-selftest` (32 cases), both stage sets.
+
+### §3 — Gate: full `./scripts/verify.sh`, launched early, kept alive
+
+```
+LOG=docs/release/SD-31-corpus-closure-grind/artifacts/SD31-D14-PROV-001-verify.log
+RETRO_ACTOR=sd31-provenance CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-provenance \
+  ./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+```
+
+**VERIFY_EXIT=0.** Launched early (13:27 local), kept alive through a ~45-minute run (a heavily
+box-contended `root-full` — ~490 test binaries, `desktop` — a fresh GTK/Tauri compile, and `clippy`
+over both crates each took several minutes; every other agent visibly sharing the same
+`cargo-targets` tree throughout). All 30 stages passed, including all 3 new stages:
+
+```
+PASS preflight-disk, preflight-oracle, oracle-pin-selftest, producer-selftest,
+     pi-redaction-selftest (24 cases), provenance-selftest (32 cases),
+     site-dashboard-selftest, site-dashboard-check, site-dashboard-pi-gate
+     (13 files / 1617 names, zero leaked), reachability-audit-selftest,
+     reachability-audit (98.95% ceiling), groundtruth-guard-selftest,
+     supersession-gate-selftest, pi-sweep, declared-pi-audit (clean),
+     audit-selftest, reclaim-selftest, driver-selftest, corpus-sweep-selftest,
+     root-lib (2000 passed), root-full (6977 passed across 565 suites),
+     desktop (461 passed), reach (27 passed),
+     corpus-sweep (25655 examined, 0 findings), supersession-gate (116 objects clean),
+     frontend-install, frontend-test (99/99), frontend-typecheck (tsc clean),
+     clippy (root:52 desktop:7 warnings — AT the documented ceiling, no new warning),
+     class-dump (31/31 computing)
+RESULT: PASS
+```
+
+Real-time retro event auto-emitted by verify.sh itself (`RETRO_ACTOR` was set):
+`docs/retro/events/sd31-provenance.jsonl`, `duration_seconds: 2696`, `result: PASS`.
+
+### §4 — Wired-integration audit (four-check)
+
+```
+$ BASE_BRANCH=10c666125 bash scripts/wired-integration-audit.sh
+===== Check 1 — forbidden tokens in shipping code =====        OK_NO_TOKENS
+===== Check 2 — empty event handlers on user-facing affordances =====   OK_NO_NOOP_HANDLERS
+===== Check 3 — mock libraries leaking into shipping code =====         OK_NO_MOCK_LEAKS
+===== Check 4 — "Would …" return strings (canonical stub pattern) =====  OK_NO_WOULD_STRINGS
+AUDIT PASSED. All four checks clean.
+```
+
+### §5 — Corpus trap report (condition 3)
+
+```
+$ CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-provenance cargo run --locked --bin v06_corpus_trap_report -- --audit
+TRAP_EXIT=2
+        1        0  mod-record
+        0     1225  wiring-class-mismatch
+```
+
+Matches the documented baseline exactly (1 mod-record, 1,225 wiring-class-mismatch) — no worsening.
+This card touched no Rust source, so no movement was expected or found.
+
+### §6 — Guarded regen (measure only, NOT committed)
+
+```
+$ CARGO_TARGET_DIR=.../sd31-provenance cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-provenance.json
+corpus-literal-sweep: 25655 records examined of 26703 read, 248939 tokens compared (9 synthesized), 26278 digests checked, 0 findings — CLEAN
+
+$ CARGO_TARGET_DIR=.../sd31-provenance cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-provenance.json
+derived-evaluator-fixture-check: 1267 of 1268 covered units cleared; 1 failed (pre-existing,
+advanced_players_guide:equipment:spindle_of_perfect_knowledge — not touched or caused by this cycle,
+no Rust source changed)
+
+$ CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... CARGO_TARGET_DIR=.../sd31-provenance \
+    cargo run --locked --bin v06_work_inventory
+$ git diff -- docs/work-inventory.json
+-  "generated_at": "2026-08-17T15:19:21Z",
++  "generated_at": "2026-08-17T18:18:51Z",
+(1 line changed — the timestamp only; ZERO stamp loss, zero content drift)
+$ git checkout -- docs/work-inventory.json   # reverted, not committed, per the wave rule
+```
+
+Re-derived board figure with the producer's own verdict function (unchanged, as expected — this card
+made zero wiring_class/status changes):
+
+```
+$ python3 -c "... doneness_verdict over docs/work-inventory.json ..."
+38521 {'done': 11829, 'not-started': 18243, 'unmeasurable': 5128, 'deferred': 38,
+       'held': 1901, 'in-progress': 1382} 30.7079
+```
+
+Matches wave-12's own cited figure (11,829/38,521, 30.7079%) exactly — confirms this cycle moved
+**zero** doneness fields, satisfying Decision 14 invariant 5 for its own module's own non-application.
+
+### §7 — On-screen verification (DoD-8)
+
+This card's changes are the public status-dashboard producer and two new, not-yet-wired
+(provenance)/newly-wired-but-Python-only (PI redaction) modules — neither renders inside
+`apps/desktop`. Driven anyway as the mandated regression check via
+`apps/desktop/.claude/skills/run-desktop/driver.sh` (`RUN_DESKTOP_AGENT=sd31provenance`, unique to
+this cycle; no `verify-on-screen.sh` per the mandate's own note). Sequence: `launch` (cold GTK/Tauri
+build, ~4 min — same build clippy/desktop had just finished) → landing page confirmed on screen →
+clicked "Browse Equipment Catalog" → **7,817 real equipment items across 25 ingested books** render
+live with real prices/descriptions (Arrow, Bolt, Repeating Bolt, Bullet, Blowgun Dart, ... all with
+real gp costs and corpus prose). Screenshot committed at
+`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-D14-PROV-001/on-screen-equipment-catalog.png`.
+`driver.sh stop` run before the final commit.
+
+### §8 — reclaim.sh
+
+```
+$ bash scripts/reclaim.sh --apply
+  reclaimed: 0 item(s), 0.0B total
+```
+
+Every other agent's `CARGO_TARGET_DIR` on the box was live (real process holding it) throughout this
+cycle's ~45-minute gate — correctly none reclaimed. My own `CARGO_TARGET_DIR`
+(`/home/ubuntu/cargo-targets/sd31-provenance`) is left in place per the standing rule (delete on
+finish); doing so now, after this receipt.
+
+### §9 — Corrected/reworked/narrowly avoided
+
+1. First cut of `build_declared_pi_name_index` walked the ENTIRE `$PCGEN_CORPUS_ROOT` (every game
+   system sharing the box's pcgen checkout, not just Pathfinder) and produced **973 false-positive
+   gate hits** dominated by ordinary English words ("Bolt", "Shield", "Teleport", "Focus") colliding
+   with unrelated cross-game-system PI declarations. Root-caused to one specific Spycraft row, fixed
+   by scoping to `pathfinder/paizo`.
+2. Second cut used word-boundary substring matching and still produced **42 hits**, several genuine
+   (`Aldori Artistry (Disarm)`, `Varisian Pilgrim`) but several more false (`Shackles of Compliance`
+   flagged via its substring `Shackles`). Fixed by switching to exact-string-leaf matching throughout
+   (gate, blanket redaction pass, and the ambiguous-name index itself).
+3. Even after both fixes, **3 real leaks** survived in `PF1e-units-race.json` (`.MOD`-row races whose
+   declaration lives on a different oracle line than the one this program cites) — caught by the gate
+   before commit, not missed silently; fixed with the blanket defense-in-depth sweep plus a
+   `SHARD_SCHEMA` bump so the pre-fix shard cache could not keep serving them.
+4. `dataclasses.dataclass` on a dynamically `exec_module`-loaded module (`provenance.py`) crashes on
+   import (`AttributeError: 'NoneType' object has no attribute '__dict__'`) unless the module is
+   registered in `sys.modules` under its own name BEFORE `exec_module` runs — hit and fixed in the
+   test loader.
+5. `verify.sh`'s cargo-heavy stages ran ~45 minutes on a box shared with several other concurrent
+   agents' builds — genuinely long, not stalled (confirmed live via `ps`/deps-dir growth at each
+   check rather than assumed). Kept the background run alive across the whole wait rather than
+   accepting a partial result, per the DoD's own "verify.sh exits 0, captured directly" requirement.
+
+### §10 — Files changed (branch `sd31-provenance/D14-PROV-001`, commits `433b21fee`, `00efc3139`,
+`3cd5e69af`, `3437808e8`, plus this receipt's own commit)
+
+New: `scripts/observer/pi_redaction.py`, `scripts/observer/provenance.py`,
+`scripts/site_dashboard_pi_gate.py`, `scripts/tests/test_pi_redaction.py`,
+`scripts/tests/test_provenance.py`.
+Modified: `scripts/observer/pf1e_dashboard_producer.py`, `scripts/tests/test_pf1e_dashboard_producer.py`,
+`scripts/verify.sh`, `site/dashboard/PF1e-dashboard.json`, `site/dashboard/units/*.json` (new,
+committed), `site/dashboard/README.md`, `docs/release/SD-31-corpus-closure-grind/artifacts/
+OPEN-ISSUES.md` (row 222 appended).
