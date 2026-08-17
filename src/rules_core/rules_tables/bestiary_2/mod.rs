@@ -244,14 +244,20 @@ mod tests {
     /// filters drop; the two that survive as units are the two this table
     /// withholds, for the reason the module doc gives.
     ///
-    /// **314 and 401.** This book carries no Product Identity in either
-    /// signal, so nothing is withheld for that; the two withheld monster rows
-    /// are `.COPY=` deltas and the 65 withheld ability rows are owned by no
-    /// shipped monster row of this book.
+    /// **314 and (corrected `SD31-E6-F9-005`, was 401) 493.** This book
+    /// carries no Product Identity in either signal, so nothing is withheld
+    /// for that; the two withheld monster rows are `.COPY=` deltas. Of the
+    /// 401 owned-but-unshipped ability rows the transcriber used to leave on
+    /// the table, 92 were reachable and cleanly parseable, silently blocked
+    /// only because `transcribe()` `raise SystemExit`'d the instant it found
+    /// the 2 OTHER unmodelled-`DESC:`-shape rows anywhere in the book
+    /// (`OPEN-ISSUES.md` row 157/206). The fix drops just those 2 (named in
+    /// this book's own module doc comment above) instead of crashing the
+    /// whole run, and the other 92 now ship for real: 401 + 92 = 493.
     #[test]
     fn the_book_ships_every_stat_block_and_only_the_owned_abilities() {
         assert_eq!(monsters().len(), 314);
-        assert_eq!(monster_abilities().len(), 401);
+        assert_eq!(monster_abilities().len(), 493);
     }
 
     /// Every transcribed ability row is owned by a monster row of this book.
