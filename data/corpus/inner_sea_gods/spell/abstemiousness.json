@@ -1,7 +1,7 @@
 {
   "completeness": "full",
   "data": {
-    "description": "Sometimes lrori smiles on his worshipers, granting them a reprieve from physical hunger. This spell magically enhances a handful of simple food, imbuing it with enough nutrition to satisfy a Medium or smaller creature for a full day. The spell does not create food, and thus will not alone prevent someone from starving, but it can extend even limited reserves for lengthy periods.",
+    "description": "[redacted PI]",
     "key": "Abstemiousness",
     "level": 1,
     "raw_tokens": [
@@ -19,7 +19,7 @@
       },
       {
         "key": "DESC",
-        "value": "Sometimes lrori smiles on his worshipers, granting them a reprieve from physical hunger. This spell magically enhances a handful of simple food, imbuing it with enough nutrition to satisfy a Medium or smaller creature for a full day. The spell does not create food, and thus will not alone prevent someone from starving, but it can extend even limited reserves for lengthy periods."
+        "value": "[redacted PI]"
       },
       {
         "key": "DURATION",
@@ -61,9 +61,9 @@
     "school": "Transmutation"
   },
   "ingested_at": "2026-08-17T01:45:11Z",
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
   "population": "in_scope",
   "source": {
     "kind": "lst_token",

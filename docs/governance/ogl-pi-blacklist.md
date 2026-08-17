@@ -166,6 +166,31 @@ not silently diverge from this shared file:
   adding it does not widen redaction anywhere beyond this one already-
   redacted record. `PI_BLACKLIST_TERMS` is now 55 terms (54 + this one).
 
+### Per-book override: Inner Sea Gods (added by cycle SD31-W9-INTEGRATE-001, 2026-08-17)
+
+- New terms discovered not in §2 above: `Cayden CaiLean` and `lrori` —
+  both classified PI, because both are the pinned oracle's OWN
+  miscapitalization/OCR-typo variant of an EXISTING §2 blacklist deity
+  name (`Cayden Cailean`, `Irori`) that the exact-substring scan cannot
+  see. `isg_spells.lst:46`'s `FACTSET:Deity|Cayden CaiLean` (capital `L`)
+  shipped unredacted in `data/corpus/inner_sea_gods/spell/pick_your_poison.json`
+  while all 51 of its correctly-spelled siblings redacted; `isg_spells.lst:8`'s
+  own OCR of "Irori" as "lrori" (lowercase `L`) shipped unredacted in both
+  `data.description` and `raw_tokens` in `abstemiousness.json`, and in the
+  compiled, player-served `rules_tables::inner_sea_gods::spell_list::SPELL_LIST`
+  table this book's spell catalog actually reads from. Found by an
+  adversarial review of SD31-E6-F10-001's own screening (which correctly
+  redacted the other 51 FACTSET deity hits and dropped 4 name-PI records)
+  missing exactly these two oracle-typo forms. Folded into the SHARED term
+  list (not kept ISG-only), per this section's own instruction. Verified
+  before folding in: neither term occurs anywhere else in `data/corpus` or
+  the PCGen source corpus outside these two records, and neither is a
+  substring of, nor contains, any other blacklist term, so adding them
+  does not widen redaction anywhere beyond these two records.
+  `PI_BLACKLIST_TERMS` is now 57 terms (55 + these two). Both records
+  re-screened and confirmed clean on disk and in the compiled table after
+  the fix.
+
 No other entries yet — cycles 2.0.6-2.0.9 (CRB, APG, ACG, Bestiary 1 retro-fits)
 append here as they run.
 
