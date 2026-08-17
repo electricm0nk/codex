@@ -21053,10 +21053,14 @@ functions).
 
 ### 10. Disk reclaim
 
-`scripts/reclaim.sh --apply`: **reclaimed 0 item(s), 0.0B total** — 203 items skipped, all correctly
-(other agents' live target dirs, unpushed worktrees, verify-logs under the age floor). Not concerning:
-`df -B1G /` shows 420G free / 57% used, well clear of `preflight-disk`'s 90%/20G floor. This box carries
-many concurrent SD-31 agents right now (`sd31-spell3`, `sd31-feat-matcher`, `sd31-transcribe`,
+`scripts/reclaim.sh --apply`, run twice at cycle close (the tool's own auto-emitted retro event is the
+authority, not this receipt's first hand-read of the second run's tail): first run reclaimed **1 item,
+1.1MB** (one aged-out `/tmp/codex-verify-*` log); the immediate second run reclaimed **0 item(s), 0.0B**
+— nothing left to reclaim a few seconds later. 203 items skipped on the second run, all correctly (other
+agents' live target dirs, unpushed worktrees, verify-logs under the age floor). Not concerning either way:
+`df -B1G /` shows 420G+ free / 57% used, well clear of `preflight-disk`'s 90%/20G floor — the real
+reclaim this cycle was the ~38GB of its own `CARGO_TARGET_DIR`s removed manually at cycle end (§ below).
+This box carries many concurrent SD-31 agents right now (`sd31-spell3`, `sd31-feat-matcher`, `sd31-transcribe`,
 `sd31-equip-class4` all observed running in their own worktrees during this cycle), which is exactly why
 the guard correctly refuses to touch anything.
 
