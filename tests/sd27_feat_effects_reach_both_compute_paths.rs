@@ -53,7 +53,7 @@
 //! produces divergences tomorrow, including for a producer no catalog feat
 //! reaches yet.
 
-const PILOT_COMPUTE: &str = include_str!("../src/rules_core/pilot_compute.rs");
+const PILOT_COMPUTE: &str = include_str!("../src/rules_core/pilot_compute/mod.rs");
 const PILOT_COMPUTE_CORPUS: &str = include_str!("../src/rules_core/pilot_compute_corpus.rs");
 
 /// The one function allowed to read `feat_effects` on behalf of both twins.
