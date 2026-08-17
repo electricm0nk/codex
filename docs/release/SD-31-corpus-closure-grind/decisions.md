@@ -1056,3 +1056,65 @@ reason no reader could see; C would discard the roadmap the feed exists to show.
 **Authority:** operator ruling, 2026-08-17, answering rows 141 and 149. Row 197 (Elysian Shield
 cross-book declared-PI propagation) is a related but SEPARATE question and is **not** answered by
 this decision.
+
+## Decision 13 — Supersession direction CORRECTED: identical printings are owned by the FIRST print (operator ruling 2026-08-17)
+
+**Ruled, verbatim:**
+
+> "if they are identical - first print owns it."
+
+**This corrects Decision 10's stated direction.** `§10` recorded the operator's earlier framing as
+*"the most recent publishing takes precedence and the older one is flagged as superseded/out of
+scope"*, and the orchestrating session applied that to attribution — which moved all 7 Core Rulebook
+races to the Advanced Race Guide and left `core_rulebook` reporting **zero** races, the very symptom
+the operator originally raised. The corrected rule resolves that without a carve-out.
+
+### The rule, as a two-branch test
+
+Given the same object printed in two books, **compare the two printings**:
+
+1. **IDENTICAL → it is a duplicate → the FIRST printing owns it.** The later printing is superseded
+   and out of scope. (`§10`'s denominator protection is unchanged; only the direction of the survivor
+   flips — the survivor is now the OLDER book.)
+2. **DIFFERENT → it is not a duplicate at all → BOTH stay**, each owned by its own book. The later
+   book published something new, not a reprint.
+
+Branch 2 is the same principle as `§10`'s AMENDMENT (*"rogue and unchained rogue are two completely
+different classes - one does not replace the other"*), generalised: **the amendment was a special
+case of this test all along.** Pathfinder Unchained and Mythic Adventures are simply the loudest
+instances of "different, therefore both stay".
+
+### What this settles
+
+* **The 7 Core Rulebook races stay with the Core Rulebook.** ARG's core-race chapters add alternate
+  racial traits — they are *not identical* — so branch 2 applies: the CRB owns the base race, ARG
+  owns the material it added. `core_rulebook`'s race count is restored by the rule itself, not by an
+  exception carved out for it.
+* **Bestiary 4's 9 races**: decided per race by the same comparison, not by book. Re-derive.
+* **Catfolk** (the operator's own worked example, `§10`): now decided by comparing Bestiary 3's and
+  ARG's printings rather than by date. If ARG merely reprints the base traits, **Bestiary 3 owns it**
+  — the opposite of `§10`'s recorded outcome. If ARG adds material, both stay. **Compare, do not
+  assume.**
+
+### THE COMPARISON IS THE WHOLE RULE, AND IT IS NOT A DATE CHECK
+
+"Identical" is a claim about the two records' CONTENT, established field by field against the corpus,
+exactly as `§10` already requires same-object evidence. A date ordering alone decides nothing under
+this decision; it only breaks the tie *after* identity is proven. Publication order still comes from
+the `.pcc` headers' `SOURCEDATE:` — never from memory.
+
+### Binding consequences for the Supersession Register
+
+* **Every existing entry's direction must be re-derived.** The register (116 objects, still
+  **PROPOSED, NOT APPLIED**) was built under "newest wins". Under this decision the survivor of an
+  identical pair is the OLDER printing, so each entry's surviving/superseded sides swap — and any
+  pair whose two records are NOT identical **leaves the register entirely**, because it was never a
+  duplicate.
+* Expect the register to SHRINK. `§10`'s already-reduced excess figure is an upper bound again.
+* The register stays PROPOSED until it is re-derived under this rule. **Nothing has left the
+  denominator and nothing may until then.**
+* Race attribution stays FROZEN until the re-derivation lands, then unfreezes under this rule.
+
+**Authority:** operator ruling, 2026-08-17, verbatim above. Supersedes `§10`'s direction; `§10`'s
+guards (a shared NAME is not a duplicate; match on `(kind, corpus_key)`; a later VARIANT is not a
+reprint) all stand unchanged and are reinforced by branch 2.
