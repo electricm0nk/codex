@@ -20779,3 +20779,207 @@ record are above in this same receipt (§1-§5).
 
 Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
 Claude-Session: https://claude.ai/code/session_012LQjhfcbAEBt6SiquQXEAE
+## Cycle `SD31-E6-F2-009` (`RETRO_ACTOR=sd31-spell3`) — 2026-08-17, `epic-6-ingest-lanes` F2 (`spell`), tautological mutation-test remediation
+
+**Role:** `sd31-spell3` (`RETRO_ACTOR=sd31-spell3`). **Checkout:** own worktree
+`.claude/worktrees/wf_091c1ff2-4bf-5`, branch `sd31/spell3-E6-F2-009`. **Starting HEAD:**
+`50d36f3b2` (`docs(sd31): SD31-W11-INTEGRATE-001 wave receipt, kanban, orchestrator log, DoD-8
+screenshot` — tranche/11 tip at dispatch). **Oracle pin:**
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/pcgen-oracle-pin.env`),
+confirmed via `./scripts/verify.sh --only preflight-oracle` → `PASS preflight-oracle (oracle at
+pin 7f818006e371188e5717fd18d74d18a420747fc6)`.
+
+### Mandate re-derivation (before this cycle's work, at starting HEAD)
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+d = json.load(open('docs/work-inventory.json'))
+U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+print(len(U), dict(c), round(100*c['done']/len(U),2))
+"
+→ 38521 {'done': 11828, 'not-started': 18752, 'unmeasurable': 5007, 'deferred': 38, 'held': 1904,
+  'in-progress': 992} 30.71
+```
+
+`spell`: 2,843 total, `done` 1,356 (47.6961%), `not-started` 910, `unmeasurable` 26, `held` 394,
+`in-progress` 157 — matches the prompt's table exactly (re-derived, not transcribed).
+
+### Priority 1 — the tautological mutation test (row 201), DONE
+
+Read `OPEN-ISSUES.md` row 201: the spell RANGE seam's `// MUTATION PROOF` test
+(`a_wrong_expected_base_ft_makes_the_evaluator_disagree`) asserted `real.base_ft != 999` in
+isolation and never called `run_spell_range_bar_check` — none of that function's three failure
+branches was exercised by any test.
+
+Per the card's own instruction ("check the seam's OTHER assertions the same way — a tautology
+rarely arrives alone"), audited every other `// MUTATION PROOF`-labelled test in
+`derived_evaluator_fixture_check.rs` (the file, not just the RANGE seam):
+
+- **DURATION seam** (`a_wrong_expected_per_level_makes_the_evaluator_disagree`): same defect —
+  asserted `real.per_level != 99` in isolation, never called `run_spell_bar_check`. Fixed.
+- **monster seam** (`monster_seam_tests`, e.g.
+  `demon_balor_shaped_monster_class_yields_its_trailing_hd_as_caster_level`): checked and found
+  GENUINE — each test calls `spell_like_ability_caster_level(&block)` directly with a real
+  constructed input and asserts a real output. Not touched.
+
+**Fix, both seams identically:** added a `ScratchRangeRoot`/`ScratchDurationRoot` test helper
+(same `std::env::temp_dir()` + pid-suffixed scratch-dir pattern as `wiring_class.rs`'s
+`ScratchBook`) that builds a synthetic `repo_root` — one scratch `data/corpus/<book>/spell/*.json`
+record with a real `RANGE:`/`DURATION:` token, plus one scratch
+`tests/fixtures/rules_core/derived-evaluator-fixtures.json` with a `spell_range_entries`/
+`spell_entries` row the caller corrupts — and drives the REAL `run_spell_range_bar_check`/
+`run_spell_bar_check` end to end. Each seam now has:
+
+- a RED case: corrupted `expected` → the unit lands in `report.failures` (never `report.cleared`)
+- a GREEN case (positive control): correct `expected` → the unit clears, proving the RED case
+  fails because the value is wrong, not because the synthetic harness always reports failure
+
+**Proof, run not asserted:**
+```
+CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-spell3 \
+  cargo test --locked --lib rules_core::derived_evaluator_fixture_check
+→ running 35 tests ... test result: ok. 35 passed; 0 failed; 0 ignored; 0 measured;
+  1954 filtered out; finished in 0.47s
+```
+4 new tests: `a_wrong_expected_base_ft_makes_run_spell_range_bar_check_report_a_failure`,
+`a_correct_expected_base_ft_clears_run_spell_range_bar_check`,
+`a_wrong_expected_per_level_makes_run_spell_bar_check_report_a_failure`,
+`a_wrong_expected_unit_makes_run_spell_bar_check_report_a_failure`,
+`a_correct_expected_duration_clears_run_spell_bar_check` (5, not 4 — one extra positive control
+on the DURATION side beyond the RANGE side's single positive control).
+
+**Zero unit movement.** This is a test-quality fix on an already-shipped credit; the +199 `spell`
+`done` credit `SD31-E6-F2-008` landed stands unchanged. `docs/work-inventory.json` untouched by
+this section of the cycle.
+
+### Priority 2 — grind: characterized, not attempted (row 204)
+
+Re-derived the `spell` `not-started` population's shape (`docs/work-inventory.json`, filtered to
+`kind=spell`):
+
+| population | count | shape |
+|---|---:|---|
+| `not-ingested`, `origin=copy` | 14 | `.COPY=` "Restricted Use Spells" rows (`cr_spells.lst`
+`###Block: Restricted Use Spells`, `arg_spells.lst`) — genuinely new, independently-keyed spell
+records the ingest path drops because it treats `.COPY=` identically to `.MOD` |
+| `not-ingested`, `origin=mod_only` | 348 | genuine `.MOD` class-spell-list membership rows
+(dominated by `occult_adventures` at 328) — not new spells, a `class_spell_levels` fact |
+| `not-ingested`, `origin=declared` | 436 | real new-book ingest scope (`bestiary` 108,
+`horror_adventures` 72, `ultimate_wilderness` 61, `bestiary_4` 56, etc.) |
+| `computed`+`ingested-magnitude` (in-progress) | 120 | `TEMPBONUS:` spell-effect application —
+needs an active-effects engine, likely `pilot_compute/**` territory (explicitly not mine) |
+
+Verified the `.COPY=` gap one record deep: `data/corpus/core_rulebook/spell/animate_objects.json`
+exists (the base spell) but no `animate_objects_small_or_smaller.json` does — confirmed via
+`cache_gen::spell_lane_dump::base_declaration_lines` (`if record.name.ends_with(".MOD") ||
+record.name.contains(".COPY=") { ... }`, both excluded identically) and `gen_core_rulebook_cache`
+(source of CRB's own JSON cache, driven from the compiled `rules_tables::crb::spell_list::
+SPELL_LIST` table, which also omits the 12 CRB `.COPY=` records).
+
+**Judged NOT to attempt this cycle.** Investigated a possible precedent (`SPELL_LIST` entries with
+`level: 0`, e.g. "Summon Nature's Ally IV (Animals Only)") and confirmed it is NOT the same shape
+— those are full standalone declarations with their own `DOMAINS:Animal=4` class access, not
+`.COPY=` rows with `CLASSES:.CLEARALL`. No clean precedent exists in this codebase for correctly
+citing a `.COPY=` record (the `.COPY=` row names the new key; the SOURCE row is what "actually
+declares" each inherited field's value — getting that citation split wrong is exactly this card's
+own named gaming signature: "a `.MOD` citation must name the row that ACTUALLY declares the
+record. Never edit a citation merely to satisfy the byte-match"). Logged as `OPEN-ISSUES.md`
+row 204 rather than rushed under time pressure, matching row 178's own precedent ("Traced
+precisely, found the true rung, did not fabricate a citation fix where none was needed").
+
+### DoD checks
+
+1. **verify.sh** — launched early (background task, `RETRO_ACTOR=sd31-spell3
+   CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-spell3 ./scripts/verify.sh`), kept alive for
+   the whole cycle (ran ~08:00–08:39, competing with a heavily-loaded shared box — many other
+   SD31 lane worktrees' full gates ran concurrently, load average 24 on 24 cores) rather than
+   piped/backgrounded-and-abandoned. Full log:
+   `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E6-F2-009-verify.log`.
+   **VERIFY_EXIT=1, captured directly** (`echo VERIFY_EXIT=$? >> log` on the background task's
+   own exit). 26 of 27 stages PASS: preflight-disk, preflight-oracle, oracle-pin-selftest,
+   producer-selftest, site-dashboard-selftest, reachability-audit-selftest, reachability-audit
+   (**98.95%**, matches wave-11 baseline unchanged), groundtruth-guard-selftest,
+   supersession-gate-selftest, pi-sweep, declared-pi-audit (clean), audit-selftest,
+   reclaim-selftest, driver-selftest, corpus-sweep-selftest, root-lib (1984 passed), root-full
+   (**6947 passed across 565 suites, all 529 `tests/*.rs` suites executed**), desktop (459
+   passed), reach (27 passed), corpus-sweep (25163 examined, 0 findings), supersession-gate (116
+   objects, all clean), frontend-install, frontend-test (99/99 files), frontend-typecheck (tsc
+   clean), **clippy (root:52 desktop:7 warnings, 0 errors — exactly at the documented ceiling,
+   not breached by this cycle's new test code)**, class-dump (31/31 computing). **The one
+   failure: `site-dashboard-check`** (`site/dashboard/PF1e-dashboard.json is STALE`) — confirmed
+   this cycle to be the documented, non-regressing worktree-path issue (`OPEN-ISSUES.md` row
+   153: "spuriously fails from ANY worktree whose checkout path differs from the one that last
+   published the feed, even with ZERO real content drift"); not chased, per the standing
+   instruction. **Baseline note (not a failure):** `BASELINE_ROOT_FULL_TESTS` is stale (6945
+   recorded vs 6947 measured, +2) — not touched this cycle; a baseline-file edit is a separate,
+   deliberate commit (DoD item 7) and this ±2 test-count drift plausibly includes this cycle's
+   own net test-function additions plus other concurrently-landing lanes' — left for the
+   integration cycle to re-derive and update in one pass rather than guessed at here.
+2. **reach** — `reach` stage PASS, 27 passed (Tauri `reach_gate` suite,
+   `apps/desktop/src-tauri`); `reachability-audit` PASS at 98.95% (38117/38521 or equivalent),
+   unchanged from the wave-11 baseline this cycle started from (my change touches no reachable
+   surface).
+3. **`v06_corpus_trap_report -- --audit`** — `AUDIT_EXIT=2`, `1 mod-record, 1225
+   wiring-class-mismatch` — EXACT match to the documented baseline (`1 mod-record, 1,225
+   wiring-class-mismatch`). No worsening.
+4. **Guarded regen, zero stamp loss:**
+   ```
+   CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-spell3 \
+     cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/sweep-sd31-spell3.json
+   → corpus-literal-sweep: 25163 records examined of 26043 read, 246142 tokens compared
+     (9 synthesized), 25618 digests checked, 0 findings. CLEAN. exit 0.
+   CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-spell3 \
+     cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/fixture-sd31-spell3.json
+   → exit 0.
+   CORPUS_LITERAL_SWEEP_REPORT=/tmp/sweep-sd31-spell3.json \
+   DERIVED_FIXTURE_CHECK_REPORT=/tmp/fixture-sd31-spell3.json \
+   CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-spell3 \
+     cargo run --locked --bin v06_work_inventory
+   → exit 0, no stamp-preservation-guard refusal, no slug/id renames.
+   ```
+   Board measured after the regen (producer's own `doneness_verdict`): **38521 total, done
+   11828 (30.7053%)** — byte-identical to the pre-regen figure at the top of this receipt.
+   `spell`: 2843 total, done 1356 — also unchanged. **Zero movement, as expected** (this cycle's
+   diff is entirely `#[cfg(test)]` code; no ingest path, corpus record, or classifier logic
+   changed). `docs/work-inventory.json` reverted (`git checkout --
+   docs/work-inventory.json`) before committing, per the wave rule — not committed.
+5. **Wired-integration four-check audit** — the template §6 dual-audit gate (`docs/governance/
+   loop-instruction-template.md §6`) run against this cycle's own diff (`git diff HEAD --
+   src/rules_core/derived_evaluator_fixture_check.rs
+   docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md`):
+   `OK_NO_BUNDLE_TAGS`, `OK_NO_TOKENS`. Clean.
+6. **Unsurfaced families** — none introduced; row 204 surfaces the `.COPY=`/`.MOD`/`declared`/
+   `TEMPBONUS` shapes for the next spell-owning cycle.
+7. **Baseline moves** — none; this cycle moved zero board units (test-quality fix only), so no
+   separate `--show-actuals` commit is needed.
+8. **DoD-8 on-screen verification** — **not applicable this cycle.** No new unit was grounded
+   (zero board movement); the change is entirely inside `#[cfg(test)]` modules with zero effect on
+   any shipped/runtime code path, so there is no new spell value to screenshot. Fabricating a
+   screenshot of unchanged behavior would violate "never fake it" more than honestly stating N/A.
+
+### PI screening
+
+Not applicable: this cycle wrote no generated corpus record. The synthetic test fixtures live
+entirely under `std::env::temp_dir()`, are cleaned up on `Drop`, and never touch
+`data/corpus/` or the committed `tests/fixtures/rules_core/derived-evaluator-fixtures.json`.
+
+### Retro
+
+1 `rework` event emitted (`docs/retro/events/sd31-spell3.jsonl`) documenting the tautological-test
+defect and its fix.
+
+### Commit / push
+
+Branch: `sd31/spell3-E6-F2-009`. Commit `cbb4e5954`, pushed to
+`origin/sd31/spell3-E6-F2-009` (`git push -u origin sd31/spell3-E6-F2-009`, new branch created on
+GitHub). A second commit follows this receipt (docs-only: verify log + this progress.md entry).
+
+### Reclaim
+
+`scripts/reclaim.sh --apply` → see this cycle's own run, appended after this receipt lands.
+
+Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_012LQjhfcbAEBt6SiquQXEAE
