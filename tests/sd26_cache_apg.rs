@@ -347,23 +347,84 @@ fn equipment_cache_has_all_338_records_with_real_description_ceiling() {
     assert_eq!(has_description, 331, "real APG equipment description ceiling (decisions.md §11.4, 97.9%)");
 }
 
+/// The web citation for a record's DESCRIPTION, wherever this record shape
+/// keeps it.
+///
+/// Two shapes are legal, and the difference is which field the citation lives
+/// in, never whether it exists:
+///
+/// * **pre-`SD31-E6-F5-005`** — `source` itself is the web citation. SD-26
+///   `decisions.md §11.2` made `source` a discriminated union to describe the
+///   provenance of the FIELD each SD-25 intake cycle was closing, and for APG
+///   equipment that field was the description; the record's own identity,
+///   `cost_gp` and `weight` were always corpus-derived
+///   (`rules_tables::apg::equipment_data`'s module doc comment states the
+///   `COST:`/`WT:`/`OUTPUTNAME:`/`KEY:` token sourcing directly).
+/// * **post-`SD31-E6-F5-005`** — `source` is the record's own real corpus row
+///   (`lst_token`, with the sha256-pinned path/line it was always derivable
+///   from) and `description_source` carries the web citation, unchanged and in
+///   full. Splitting them is what let `corpus_literal_sweep` byte-compare these
+///   records for the first time.
+fn description_web_citation(record: &Value) -> Option<&Value> {
+    for field in ["description_source", "source"] {
+        let candidate = &record[field];
+        if candidate["kind"] == "web_second_source" {
+            return Some(candidate);
+        }
+    }
+    None
+}
+
 #[test]
 fn equipment_cache_never_forces_the_all_web_sourced_description_field_into_an_lst_token_shape() {
     // decisions.md §11.2: "A cache built strictly to the original Shape B
     // could not represent APG's equipment descriptions at all (0/338
-    // records have a native LST DESC: token)." Every populated equipment
-    // description in this cache must be web_second_source, never
-    // lst_token.
+    // records have a native LST DESC: token)." That premise is unchanged and
+    // this test still enforces its consequence: a populated APG equipment
+    // description must NEVER be attributed to an LST `DESC:` token, because no
+    // such token exists anywhere in the book. What `SD31-E6-F5-005` changed is
+    // only WHERE the web citation is written (see `description_web_citation`),
+    // so this assertion is made on the citation rather than on `source`'s tag
+    // -- and is strengthened while it is here: §11's own E3 rule is "cite every
+    // web-sourced field: URL + fetch date + the identity-match basis used", and
+    // all three sub-fields are now checked, which the previous form never did.
     let records = load_all("equipment");
+    let mut described = 0;
     for (path, record) in &records {
-        if !record["data"]["description"].is_null() {
-            assert_eq!(
-                record["source"]["kind"], "web_second_source",
-                "{}: populated APG equipment description must be web_second_source (0/338 native DESC: tokens exist)",
+        if record["data"]["description"].is_null() {
+            continue;
+        }
+        described += 1;
+        let citation = description_web_citation(record).unwrap_or_else(|| {
+            panic!(
+                "{}: populated APG equipment description must carry a web_second_source citation \
+                 in `source` or `description_source` (0/338 native DESC: tokens exist)",
+                path.display()
+            )
+        });
+        for field in ["url", "fetched_at", "identity_match_basis"] {
+            assert!(
+                citation[field].is_string(),
+                "{}: web citation is missing `{field}` (decisions.md §11: cite every web-sourced \
+                 field with URL + fetch date + identity-match basis)",
                 path.display()
             );
         }
+        // And the record must never claim the description came from the corpus
+        // row its `source` now cites: `data.description` is byte-unchanged from
+        // the web-sourced text, and no `DESC:` token backs it.
+        assert!(
+            !record["data"]["raw_tokens"]
+                .as_array()
+                .into_iter()
+                .flatten()
+                .any(|t| t["key"] == "DESC"),
+            "{}: no APG equipment row carries a DESC: token; a raw_tokens DESC entry would mean \
+             the description was re-attributed to the corpus",
+            path.display()
+        );
     }
+    assert_eq!(described, 331, "real APG equipment description ceiling (decisions.md §11.4, 97.9%)");
 }
 
 #[test]
@@ -401,8 +462,13 @@ fn equipment_cache_uses_weight_basis_identity_match_for_the_documented_cost_quir
         .collect();
     for key in ["Beaststrike Club", "Mace (Boulderhead)", "Guarding Blade", "Mistmail", "Boneless Leather"] {
         let record = records.get(key).unwrap_or_else(|| panic!("missing equipment record {key}"));
+        // Read the basis off the web citation wherever this record shape keeps
+        // it (see `description_web_citation`) -- `SD31-E6-F5-005` moved the
+        // citation to `description_source` without altering a byte of it.
+        let citation = description_web_citation(record)
+            .unwrap_or_else(|| panic!("{key}: no web_second_source citation on this record"));
         assert_eq!(
-            record["source"]["identity_match_basis"], "name+weight",
+            citation["identity_match_basis"], "name+weight",
             "{key}: documented corpus-quirk item should use name+weight identity match"
         );
     }

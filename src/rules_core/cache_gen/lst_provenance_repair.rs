@@ -263,9 +263,9 @@ fn decide(
 ///   `corpus_literal_sweep` resolves and whose immediate parent directory
 ///   name it attributes the book from.
 /// * `records_dir` — `data/corpus/<book>/equipment`.
-/// `write` is `false` for a check run: every record is read and decided
-/// exactly as it would be for a real run -- the SAME predicate, not a second
-/// implementation of it -- and only the final `std::fs::write` is skipped.
+/// * `write` — `false` for a check run: every record is read and decided
+///   exactly as it would be for a real run (the SAME predicate, not a second
+///   implementation of it); only the final `std::fs::write` is skipped.
 pub fn repair_book(
     corpus_root: &Path,
     book_rel_dir: &str,
