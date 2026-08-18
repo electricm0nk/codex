@@ -496,12 +496,38 @@ def _is_word_char(ch: str) -> bool:
     return ch.isalnum()
 
 
-def find_declared_pi_word_matches(value: str, declared_names_by_length) -> list[str]:
+def find_declared_pi_word_matches(value: str, declared_names_by_length, case_insensitive: bool = False) -> list[str]:
     """Every name in `declared_names_by_length` that appears in `value` as a
     freestanding WORD -- immediately bounded by a non-alphanumeric character
     (or the start/end of the string) on BOTH sides -- rather than merely
     fused as a same-word stem/prefix inside a longer, differently-spelled
-    word. Case-sensitive, same convention as `value_carries_declared_pi_substring`.
+    word. Case-sensitive BY DEFAULT (`case_insensitive=False`), same
+    convention as `value_carries_declared_pi_substring` and unchanged for
+    every existing caller that does not pass the new argument.
+
+    `case_insensitive=True` (FIX-DASHBOARD-PI, 2026-08-17): a small, real
+    class of declared-PI names IS a title beginning with an ordinary
+    English word (`"The Serpent King"`, `"The Green Mother"` -- 11 such
+    names in the pinned oracle at this writing) -- a mid-sentence embed of
+    one naturally lowercases the article (`"Helm of the Serpent King"`),
+    which a case-sensitive compare never matches even though the embed is
+    exactly as genuine as `"Death (Pharasma)"`'s. Opt-in and additive
+    (returned names are still the ORIGINAL, correctly-cased declared
+    strings -- only the comparison folds case) so every existing caller
+    and test is byte-for-byte unaffected; `_PiScreen`
+    (`pf1e_dashboard_producer.py`) is the one caller that opts in."""
+    if case_insensitive:
+        return _find_declared_pi_word_matches_impl(value.casefold(), declared_names_by_length,
+                                                    fold=str.casefold)
+    return _find_declared_pi_word_matches_impl(value, declared_names_by_length, fold=None)
+
+
+def _find_declared_pi_word_matches_impl(search_value: str, declared_names_by_length, fold) -> list[str]:
+    """Shared body for `find_declared_pi_word_matches`: `search_value` is
+    already folded (or not) by the caller above; `fold` (a callable or
+    `None`) is applied to each candidate NAME so the search-side and the
+    name-side always agree on case-folding, while the returned match is
+    always the original, correctly-cased name from `declared_names_by_length`.
 
     WHY WORD-BOUNDARY, NOT PLAIN SUBSTRING, FOR A NATURAL-LANGUAGE NAME:
     `redact_for_display`'s own `name` field is prose (an object's title),
@@ -553,18 +579,19 @@ def find_declared_pi_word_matches(value: str, declared_names_by_length) -> list[
     an item could embed two different region words), not just the first,
     so a caller can report exactly which term(s) triggered."""
     hits: list[str] = []
-    n = len(value)
+    n = len(search_value)
     for name in declared_names_by_length:
         if not name:
             continue
+        candidate = fold(name) if fold else name
         start = 0
         while True:
-            idx = value.find(name, start)
+            idx = search_value.find(candidate, start)
             if idx == -1:
                 break
-            before_ok = idx == 0 or not _is_word_char(value[idx - 1])
-            end = idx + len(name)
-            after_ok = end == n or not _is_word_char(value[end])
+            before_ok = idx == 0 or not _is_word_char(search_value[idx - 1])
+            end = idx + len(candidate)
+            after_ok = end == n or not _is_word_char(search_value[end])
             if before_ok and after_ok:
                 hits.append(name)
                 break

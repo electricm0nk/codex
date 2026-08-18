@@ -1,6 +1,6 @@
 {
   "available": true,
-  "schema": 14,
+  "schema": 15,
   "generated_at": "2026-08-17T20:14:10Z",
   "source_document": "/home/ubuntu/workspace/repos/codex/docs/work-inventory.json",
   "shard_base": "units/",
@@ -15,7 +15,8 @@
   "total_units": 38521,
   "proven_units": 5993,
   "doneness_unmapped_seen": false,
-  "pi_redacted_names": 306,
+  "pi_redacted_names": 420,
+  "category_labels_redacted": 3,
   "pi_oracle_available": true,
   "kinds": {
     "class": {
@@ -101,7 +102,7 @@
         "not-started": 929
       },
       "shard": "PF1e-units-class_feature.json",
-      "bytes": 2342528,
+      "bytes": 2339408,
       "doneness_unmapped": {},
       "categories": {
         "specialquality": {
@@ -1554,7 +1555,7 @@
           "deferred": 0
         },
         "varisianpilgrimdomain": {
-          "label": "Varisian Pilgrim Domain",
+          "label": "[redacted PI]",
           "done": 0,
           "held": 0,
           "in-progress": 0,
@@ -2130,7 +2131,7 @@
           "deferred": 0
         },
         "tattooedsorcerervarisiantattoo": {
-          "label": "Tattooed Sorcerer Varisian Tattoo",
+          "label": "[redacted PI]",
           "done": 0,
           "held": 0,
           "in-progress": 0,
@@ -3246,7 +3247,7 @@
           "deferred": 0
         },
         "pathfinderspastfocus": {
-          "label": "Pathfinders Past Focus",
+          "label": "[redacted PI]",
           "done": 0,
           "held": 0,
           "in-progress": 0,
@@ -5519,7 +5520,7 @@
         "fixture-verified": 11
       },
       "shard": "PF1e-units-equipment.json",
-      "bytes": 833811,
+      "bytes": 833711,
       "doneness_unmapped": {},
       "categories": {
         "magic": {
@@ -7500,7 +7501,7 @@
         "literal-verified": 13
       },
       "shard": "PF1e-units-race_trait.json",
-      "bytes": 520171,
+      "bytes": 519982,
       "doneness_unmapped": {},
       "categories": {
         "racialtraits": {
@@ -10778,7 +10779,7 @@
         "unknown": 26
       },
       "shard": "PF1e-units-spell.json",
-      "bytes": 329104,
+      "bytes": 329067,
       "doneness_unmapped": {},
       "categories": {
         "arcane": {

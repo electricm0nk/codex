@@ -25078,3 +25078,172 @@ this package's write scope), run manually and documented as such in its own modu
 `docs/work-inventory.json` (not read or written), the guarded regen, `site/dashboard/**`, Rust,
 `site/status.html` styling, `docs/governance/third-party-tier-licensing-survey.md` (another
 session's file, untouched).
+
+## FIX-DASHBOARD-PI — Dashboard feed brought to parity with the public status feed's PI screen (2026-08-18)
+
+Bounded PUBLIC-SITE fix, SD-31 grind itself untouched (`docs/work-inventory.json` not read or
+written; no guarded regen invoked). `PCGEN_ORACLE_SHA` at pin
+`7f818006e371188e5717fd18d74d18a420747fc6` (`./scripts/verify.sh --only preflight-oracle`).
+
+### 1. Re-derived the leak set myself
+
+An independent word-boundary sweep (case-insensitive, over every `site/**/*.json` string leaf
+against the pinned oracle's declared-PI index) found **89** hits before any fix, almost all in
+`site/dashboard/PF1e-dashboard.json` and its `units/*.json` shards — `site/status-data*` was
+already clean (`SITE-PI-ALLOWLIST-001` had already fixed that surface). `site_dashboard_pi_gate.py`
+reported CLEAN throughout, because its only checks were EXACT string-leaf equality — structurally
+blind to a name embedded inside a longer string. Confirmed the brief's specific claim directly:
+`Bow of Erastil` (`Composite Longbow (Base).COPY=Bow of Erastil`), `Witherfang`
+(`Kukri (Base).COPY=Witherfang`), `Legendsbane` (`Dagger (Base).COPY=Legendsbane`) were all still
+shipping raw in the committed feed — `site/dashboard/README.md`'s claim that SD31-W13-INTEGRATE-001
+had already fixed these three was wrong; corrected in that file (see §6 below).
+
+### 2. Root cause: two gaps, not one
+
+- **The `.COPY=` gap.** All three named leaks are PCGen `.COPY=` directives: `Composite Longbow
+  (Base).COPY=Bow of Erastil` CREATES a new object named `Bow of Erastil`; the actual
+  `NAMEISPI:YES` declaration lives on a SEPARATE `.MOD` row for that same object, several lines
+  later in `ma_equip.lst`. `_parse_lst_first_field` (the roster reader behind
+  `site/dashboard/PF1e-dashboard.json`'s `books[*].items.*` panels) skips `.MOD` rows entirely (by
+  design — they tag an existing object, not a new one) and checked ONLY the current row's own
+  `NAMEISPI:` token — so the `.COPY=` row's own silence read as "not PI," and the raw
+  `"X.COPY=Y"` directive syntax shipped verbatim, PI status aside.
+- **The word-boundary gap.** `Rivethun Calm Spirit`/`Rivethun Sixth Sense` (also `.COPY=`-created)
+  have NO row anywhere that declares them PI directly — `"Rivethun"` alone is the declared-PI name
+  (a Psychic Discipline). `Helm of the Serpent King` is an ordinary item name that embeds the
+  declared-PI record `"The Serpent King"` verbatim. Neither is catchable by ANY exact-match check;
+  both need the word-boundary embed check `SITE-PI-ALLOWLIST-001` already built for
+  `site/status-data*` and never carried over to this feed.
+
+### 3. Fix: reuse, don't reimplement
+
+No new matching primitive. `_PiScreen` (new class, `pf1e_dashboard_producer.py`) bundles
+`pi_redaction.build_declared_pi_name_index`/`build_declared_pi_name_book_index`/
+`build_book_declared_name_lists` (all pre-existing) plus the SAME shared, reviewed
+`scripts/site/pi_substring_allowlist.py` `build_public_status.py` already uses — one instance, built
+once per producer run, threaded through `build_pf1e_dashboard` → `_book_item_roster` →
+`_parse_lst_first_field` and into `build_unit_shards`, instead of each call site independently
+re-walking the oracle. `_parse_lst_first_field` now runs `pi_redaction.clean_first_field` on the raw
+first field (the SAME normalizer `pi_redaction.py`'s own index-builder uses) — extracting `Bow of
+Erastil` from `"Composite Longbow (Base).COPY=Bow of Erastil"` instead of shipping the directive
+verbatim — then screens the cleaned name through THREE layers: (1) the row's own `NAMEISPI:` token
+(unchanged), (2) exact match against the full oracle index (catches `Bow of Erastil`/`Witherfang`/
+`Legendsbane`, whose declaration lives on a different row), (3) `_PiScreen.screen` — word-boundary
+embed, book-scoped union global, gated by the allow-list (catches `Rivethun Calm Spirit`/
+`Rivethun Sixth Sense`/`Helm of the Serpent King`, none of which any row anywhere declares by that
+exact string). `build_unit_shards` gets the SAME word-boundary pass on its `name` field (after its
+pre-existing exact-match passes), PLUS a new pass on `type_facet` — plain SUBSTRING, no allow-list,
+mirroring `build_public_status.py`'s own established convention for that different, compound-
+identifier field shape (this shard field had NO screen of any kind before this fix — a real,
+independent leak: `"ClassFeatures.Hellknight Signifer Class Feature.SpecialQuality"` embeds two
+declared-PI names verbatim) — PLUS a new pass on every `categories[*]`/`school_categories[*]`
+`label` (`unit_index`, the exact "KNOWN RESIDUAL GAP" `site_dashboard_pi_gate.py`'s own docstring
+used to name), gated by a new `is_allowlisted_for_any_book` (a category label is aggregated across
+a whole kind, not one book-scoped object, so there is no single book to check a reviewed entry
+against).
+
+**Case-sensitivity fix, found by my own re-derivation, not the brief.** `Helm of the Serpent King`
+survived the first pass of this fix: `find_declared_pi_word_matches` is case-SENSITIVE by
+convention, and `"The Serpent King"` (the declared name, capitalized as a title) never
+case-sensitive-matches `"the Serpent King"` (the same words, mid-sentence, grammatically
+lowercased). 11 declared-PI names in the pinned oracle begin with an ordinary word this way
+(`"The Green Mother"`, `"The Nightripper"`, etc.) — added an OPT-IN `case_insensitive: bool = False`
+parameter to `find_declared_pi_word_matches` (default preserves every existing caller/test
+byte-for-byte, including `build_public_status.py`'s own case-sensitive calls, untouched); `_PiScreen`
+and the gate's three new passes both opt in.
+
+### 4. Allow-list: one new entry, shared file
+
+`Ulfen Guard Class Feature` (`unit_index` category label for the already-reviewed `Ulfen Guard`
+prestige class's own class features — same ethnicity-of-origin title, "Class Feature" is this
+program's own mechanical suffix, not narrative PI content) added to the SAME
+`scripts/site/pi_substring_allowlist.py` — 11 entries total, still well under the 20-entry tripwire.
+Every other mundane name the dashboard publishes (`Dimensional Shackles`, `Shackles of Compliance`,
+`Shackles of Durance Vile`, `Leashed Shackles`, `Darklands Goggles`, `Darklands Stalker`,
+`Ulfen Guard`, three `Lastwall Banner` variants) was ALREADY on the list from `SITE-PI-ALLOWLIST-001`
+— reused as-is, no duplication.
+
+**Category labels judged one at a time, per the brief's instruction, against the actual corpus
+row:**
+- `Ulfen Guard Class Feature` → ALLOW-LISTED (see above).
+- `Varisian Pilgrim Domain` → REDACTED. `"Varisian Pilgrim"` is itself `NAMEISPI:YES`
+  (`ism_abilities_class.lst`) — a cleric archetype whose own DESC is substantively about Varisian
+  culture; the category label is a direct embed of that declared name, not a homonym.
+- `Tattooed Sorcerer Varisian Tattoo` → REDACTED. `"Varisian Tattoo"` is `NAMEISPI:YES`
+  (Tattooed Sorcerer bloodline power), DESC substantively about the tattoo's Varisian origin.
+- `Pathfinders Past Focus` → REDACTED. `"Pathfinders Past"` is `NAMEISPI:YES`
+  (`ag_abilities_class.lst`), DESC substantively about Pathfinder Society lore (the Wall of Names).
+
+**Every other newly-found leak reads as genuine PI on its own corpus row and was left to the default
+(redact, not allow-list):** `Barbed Pentacle Of Asmodeus`, `Besmara's Bicorne`/`Besmara's Tricorne`,
+`Blackfingers Apron`, `Gray Master's Leathers`, `Shad'Gorum Nugget` (all named deities/NPCs),
+`Empyreal Lord (Cernunnos)`/`Empyreal Lord (Korada)`, `Spawn of Rovagug Traits`,
+`Daughter of Urgathoa` (×3), `Sandpoint Devil` (×3, itself a named Golarion monster),
+`Abadar's Truthtelling`, `Rovagug's Fury`, three `Hellknight Half-Plate/Leather/Plate Barding`
+items, `Signifer Mask`, `Rod (Storm Kindler's)` — none allow-listed; none needed a hand-written rule
+either, the general word-boundary-plus-allow-list mechanism redacts anything not explicitly cleared.
+
+### 5. Gate made as strong as the redaction, mutation-proven
+
+`site_dashboard_pi_gate.py` gained three new passes, all built from `find_declared_pi_word_matches`
+(never a new matching primitive): `find_book_roster_leaks` (top-level feed's
+`books[*].items.{equipment,feats,spells,monsters,races,prestige_classes}[]`, book-scoped via each
+book's own `id`), `find_shard_word_boundary_leaks` (every `units/*.json` shard's `name`
+word-boundary AND `type_facet` plain-substring, book-scoped via each row's `book`), and
+`find_category_label_leaks` (`unit_index.kinds[*].categories[*]`/`school_categories[*]`'s own
+`label`, gated by `is_allowlisted_for_any_book`; reads both the standalone `units/index.json` and
+the same index embedded in the top-level feed under `unit_index`). A new
+`scripts/tests/test_site_dashboard_pi_gate.py` (16 cases, scratch-fixture based, same pattern as
+the sibling `test_site_public_status_pi_gate.py`) exercises all three directly.
+
+**Mutation-proven against the real committed files, not just the fixture suite:** seeded
+`"Death (Pharasma)"` simultaneously into (a) `site/dashboard/PF1e-dashboard.json`'s
+`books[0].items.equipment`, (b) `site/dashboard/units/PF1e-units-equipment.json`'s own `rows`, and
+(c) `site/dashboard/units/index.json`'s first category `label` — ran the real gate:
+`FAIL — 3 declared-PI leak(s) found`, one hit per seed, each naming the exact JSON path and the
+matched word. All three seeds then reverted from a pre-seed scratch checksum; `md5sum` confirmed
+byte-identical to the pre-seed state and `git status --porcelain` on the three files showed no
+new diff before proceeding to the real regeneration.
+
+### 6. Regenerate + commit + README correction
+
+`./scripts/publish-site-dashboard.sh` regenerated `site/dashboard/PF1e-dashboard.json` and
+`site/dashboard/units/*.json` (5 of 11 shard files actually changed content: `class_feature`,
+`equipment`, `race_trait`, `spell`, `index.json` — the kinds that carried a leak).
+`SHARD_SCHEMA` bumped 14→15 so a cache written before this fix cannot serve stale (unredacted)
+shards forever, same doctrine as every prior bump on that constant. `site/dashboard/README.md`
+corrected: the prior "CORRECTED 2026-08-17" section's own closing claim (that `Bow of Erastil`/
+`Legendsbane`/`Witherfang` were caught and fixed by SD31-W13-INTEGRATE-001) was wrong — a new
+"CORRECTED AGAIN 2026-08-17 (FIX-DASHBOARD-PI)" section states what was actually true (an
+exact-match-only gate reported CLEAN while word-boundary leaks shipped) and removes the stale
+"KNOWN RESIDUAL GAP" note about category labels, now closed.
+
+**`site/status-data*` deliberately left untouched**, per the brief's explicit scope
+(`publish-site-dashboard.sh` with no flags regenerates BOTH in one run; the status-data half of
+each regen was reverted via `git checkout` before committing anything).
+
+### 7. Blocker found, not fixed (out of scope): status-data identity collisions
+
+`build_public_status.py`'s own `object_id(item)` is `f"{kind}::{name}"`, reading `name` DIRECTLY
+from `site/dashboard/units/*.json` — the SAME field this fix now redacts to the literal string
+`"[redacted PI]"` for far more rows than before (420 names + 3 category labels + an unmeasured
+`type_facet` count, vs. whatever narrower exact-match set `site/status-data*` was last committed
+against). Multiple DIFFERENT real objects that are now ALL named `"[redacted PI]"` collide onto the
+SAME `object_id` within a book (e.g. `inner_sea_gods` alone has 29 equipment rows now redacted),
+which `provenance.classify_unambiguous` reads as repeated/ambiguous appearances of "the same"
+object — flipping some items' `standing` from `origin` to `unclassified` in a regenerated
+`site/status-data*`. This is a LATENT bug in `build_public_status.py`'s identity computation that
+has existed since Decision 12's very first exact-match redaction (261 names all colliding on the
+same marker already); this fix's wider redaction coverage makes it measurably worse, not newly
+introduced. **Not fixed here** — `build_public_status.py` and `site/status-data*` are both outside
+this task's write scope. Confirmed via the real gate that this is a STANDING/staleness issue only,
+not a PI leak: `site-public-status-pi-gate: CLEAN — 32 file(s) scanned … zero leaked` even against
+the now-stale committed files. Flagging for the orchestrator to route to a follow-up cycle
+authorized to touch `build_public_status.py` (fix candidate: derive `object_id` from something
+collision-resistant even under redaction — e.g. `(book, source_file, source_line)` if the ledger
+ever carries it, or a stable pre-redaction hash — rather than the possibly-redacted display name).
+
+### 8. Full gate
+
+Launched early, exit captured directly to
+`docs/release/SD-31-corpus-closure-grind/artifacts/FIX-DASHBOARD-PI-verify.log`. No Rust touched.

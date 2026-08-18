@@ -461,6 +461,43 @@ class FindDeclaredPiWordMatchesTests(unittest.TestCase):
         self.assertTrue(pi_redaction.value_carries_declared_pi_word("Death (Pharasma)", ["Pharasma"]))
         self.assertFalse(pi_redaction.value_carries_declared_pi_word("Brightness Seeker", ["Brigh"]))
 
+    def test_case_sensitive_by_default_misses_a_lowercased_article_embed(self):
+        # FIX-DASHBOARD-PI (2026-08-17): "The Serpent King" mid-sentence
+        # naturally lowercases its leading article ("Helm of the Serpent
+        # King") -- the DEFAULT (case_insensitive=False) behavior every
+        # existing caller relies on stays exactly as before: no match.
+        hits = pi_redaction.find_declared_pi_word_matches(
+            "Helm of the Serpent King", ["The Serpent King"]
+        )
+        self.assertEqual(hits, [])
+
+    def test_case_insensitive_opt_in_catches_the_lowercased_article_embed(self):
+        hits = pi_redaction.find_declared_pi_word_matches(
+            "Helm of the Serpent King", ["The Serpent King"], case_insensitive=True
+        )
+        # The returned hit is the ORIGINAL, correctly-cased declared name,
+        # not a folded copy -- callers (allow-list lookups, reporting) must
+        # see the real declared string.
+        self.assertEqual(hits, ["The Serpent King"])
+
+    def test_case_insensitive_still_respects_word_boundaries(self):
+        # A same-word fusion is still excluded even when folded ("Thereof"
+        # embeds "the" as a fused prefix, not a freestanding word).
+        hits = pi_redaction.find_declared_pi_word_matches(
+            "Thereof Bound", ["The"], case_insensitive=True
+        )
+        self.assertEqual(hits, [])
+
+    def test_case_insensitive_still_clears_a_mundane_homonym_the_same_way(self):
+        # Case-folding does not change WHICH strings match, only HOW they
+        # match -- "Shackles of Compliance" is still a freestanding-word
+        # hit either way; a reviewed allow-list entry is what clears it,
+        # not this primitive.
+        hits = pi_redaction.find_declared_pi_word_matches(
+            "Shackles of Compliance", ["Shackles"], case_insensitive=True
+        )
+        self.assertEqual(hits, ["Shackles"])
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -234,6 +234,112 @@ class BuildUnitShardsPiRedactionTest(unittest.TestCase):
         )
 
 
+class BuildUnitShardsWordBoundaryAndTypeFacetTest(unittest.TestCase):
+    """FIX-DASHBOARD-PI (2026-08-17): `build_unit_shards` must ALSO catch a
+    declared-PI name EMBEDDED in a `name` field with no `NAMEISPI:YES` row
+    of its own (word-boundary, via `_PiScreen`) and a declared-PI name
+    embedded in the raw `type_facet` compound identifier (plain substring,
+    no allow-list) -- neither existed before this fix. Mutation-proof: a
+    clean row and a leaking row of each kind sit side by side; only the
+    leaking ones are redacted."""
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self._tmp.cleanup)
+        oracle_root = os.path.join(self._tmp.name, "oracle")
+        book_dir = os.path.join(
+            oracle_root, "pathfinder", "paizo", "roleplaying_game", "ultimate_equipment"
+        )
+        os.makedirs(book_dir)
+        with open(os.path.join(book_dir, "ue_equip.lst"), "w", encoding="utf-8") as f:
+            # "Rendmoor" is declared PI on its OWN row -- the embedding unit
+            # below carries no such declaration on ITS row, so only the
+            # word-boundary/substring layer can catch it.
+            f.write("Rendmoor\tNAMEISPI:YES\tCOST:1\n")
+
+        doc = {
+            "generated_at": "2026-08-17T00:00:00Z",
+            "units": [
+                {
+                    "id": "ultimate_equipment:equipment:sturdy_rope",
+                    "book": "ultimate_equipment",
+                    "kind": "equipment",
+                    "name": "Sturdy Rope",
+                    "type_facet": "Goods.Adventuring Gear",
+                    "source_file": "ue_equip.lst",
+                    "source_line": 99,
+                    "status": "grounded",
+                    "wiring_class": "static",
+                },
+                {
+                    "id": "ultimate_equipment:equipment:blade_of_rendmoor",
+                    "book": "ultimate_equipment",
+                    "kind": "equipment",
+                    "name": "Blade of Rendmoor",
+                    "type_facet": "Weapon.Martial.Sword",
+                    "source_file": "ue_equip.lst",
+                    "source_line": 98,
+                    "status": "grounded",
+                    "wiring_class": "static",
+                },
+                {
+                    "id": "ultimate_equipment:equipment:rendmoor_helm",
+                    "book": "ultimate_equipment",
+                    "kind": "equipment",
+                    "name": "Ordinary Helm",
+                    "type_facet": "ClassFeatures.Rendmoor Guard.SpecialQuality",
+                    "source_file": "ue_equip.lst",
+                    "source_line": 97,
+                    "status": "grounded",
+                    "wiring_class": "static",
+                },
+            ],
+        }
+        self.doc_path = os.path.join(self._tmp.name, "fab-work-inventory.json")
+        with open(self.doc_path, "w", encoding="utf-8") as f:
+            json.dump(doc, f)
+        self.shard_dir = os.path.join(self._tmp.name, "shards")
+
+        self._env_patch = unittest.mock.patch.dict(os.environ, {"PCGEN_CORPUS_ROOT": oracle_root})
+        self._env_patch.start()
+        self.addCleanup(self._env_patch.stop)
+
+    def _rows(self, kind_shard_path):
+        with open(kind_shard_path, encoding="utf-8") as f:
+            return json.load(f)
+
+    def test_word_boundary_embed_and_type_facet_substring_are_both_redacted(self):
+        index = producer.build_unit_shards(doc_path=self.doc_path, shard_dir=self.shard_dir)
+        self.assertTrue(index.get("available"), index.get("note"))
+        equipment = index["kinds"]["equipment"]
+        self.assertEqual(equipment["units"], 3, "no row is ever dropped for a name/type_facet hit")
+
+        shard = self._rows(os.path.join(self.shard_dir, equipment["shard"]))
+        name_idx = shard["fields"].index("name")
+        tf_idx = shard["fields"].index("type_facet")
+        # `build_unit_shards` preserves unit order within a kind, so pairing
+        # the fabricated units (which carry a unique `source_line`) with the
+        # shard's own rows positionally is a stable lookup.
+        rows_by_line = {u["source_line"]: row for u, row in zip(doc_units_in_order(self.doc_path), shard["rows"])}
+
+        clean = rows_by_line[99]
+        self.assertEqual(clean[name_idx], "Sturdy Rope")
+        self.assertEqual(clean[tf_idx], "Goods.Adventuring Gear", "an ordinary type_facet must ship unredacted")
+
+        self.assertEqual(rows_by_line[98][name_idx], producer.pi_redaction.REDACTED_PI_MARKER,
+                          "\"Blade of Rendmoor\" embeds the declared-PI name \"Rendmoor\" as a word")
+
+        self.assertEqual(rows_by_line[97][name_idx], "Ordinary Helm",
+                          "the name field itself carries no leak")
+        self.assertEqual(rows_by_line[97][tf_idx], producer.pi_redaction.REDACTED_PI_MARKER,
+                          "type_facet embeds \"Rendmoor\" as a substring and must be withheld")
+
+
+def doc_units_in_order(doc_path):
+    with open(doc_path, encoding="utf-8") as f:
+        return json.load(f)["units"]
+
+
 class ParseLstFirstFieldPiRedactionTest(unittest.TestCase):
     """`_parse_lst_first_field` feeds `_book_item_roster` (equipment/feats/
     spells rosters) AND `_prestige_class_roadmap`'s `ag_variants` --

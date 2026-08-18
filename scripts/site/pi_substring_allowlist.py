@@ -147,6 +147,29 @@ ALLOWLIST: list[dict] = [
         "books": ["inner_sea_combat"],
         "reason": "Same Lastwall Banner item family; see the Harchist entry's reason.",
     },
+    {
+        # FIX-DASHBOARD-PI (2026-08-17): the dashboard's `unit_index`
+        # category labels (`scripts/observer/pf1e_dashboard_producer.py`'s
+        # `build_unit_shards`) are built from a TYPE-token first segment,
+        # not a book-scoped published item -- this is the label for the
+        # already-reviewed `Ulfen Guard` prestige class's own class
+        # features (`isc_classes.lst`: `ABILITY:Ulfen Guard Class
+        # Feature|AUTOMATIC|...`), not a new object. Read against the
+        # corpus row: the class itself is a mundane ethnicity-of-origin
+        # title (see the `Ulfen Guard` entry above), and "Class Feature"
+        # is this program's own mechanical category suffix, never PCGen
+        # narrative content -- same judgment, just the category-label
+        # shape instead of the item-name shape.
+        "name": "Ulfen Guard Class Feature",
+        "term": "Ulfen",
+        "books": ["inner_sea_combat"],
+        "reason": (
+            "The unit_index category label for the already-allow-listed Ulfen "
+            "Guard prestige class's own class features -- same ethnicity-of-"
+            "origin class title, not narrative PI content; see the `Ulfen "
+            "Guard` entry's own reason above."
+        ),
+    },
 ]
 
 
@@ -187,3 +210,20 @@ def is_allowlisted(name: str, book: str, index: dict[str, dict] | None = None) -
     if not entry:
         return False
     return book in entry["books"]
+
+
+def is_allowlisted_for_any_book(name: str, index: dict[str, dict] | None = None) -> bool:
+    """True if `name` has ANY reviewed allow-list entry, regardless of which
+    book(s) it was reviewed for.
+
+    FIX-DASHBOARD-PI (2026-08-17): every OTHER caller of this module checks
+    a real published item that carries its own `book` (`is_allowlisted`,
+    above, deliberately requires it -- see the module docstring's "WHY
+    KEYED ON THE FULL NAME, NOT THE TERM"). A `unit_index` category label
+    is a different shape: it is aggregated from a TYPE-token segment across
+    every book in a whole KIND (`build_unit_shards`'s `categories`), so
+    there is no single book to check a `(name, book)` entry against. Using
+    this looser sibling for that one shape is deliberate and narrow -- it
+    is never a substitute for `is_allowlisted` on an actual per-item name."""
+    idx = index if index is not None else build_allowlist_index()
+    return name in idx

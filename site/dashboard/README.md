@@ -65,17 +65,44 @@ PCGen oracle's own declaration — exact `(book, source_file, source_line)` coor
 whole assembled document and every shard, PLUS (added SD31-W13-INTEGRATE-001, after that sweep was
 found to miss three `.MOD`-declared names it should have caught) a per-book exact-match pass over
 every shard's own `fields`/`rows` schema, closing the gap where a name is declared PI in one book and
-legitimately not in another. A declared name ships as `[redacted PI]`; the row, its count, and every
-other figure about it are unaffected. A `verify.sh` stage, `site-dashboard-pi-gate`, fails the build
-if a declared-PI name is ever found in the committed feed or a shard — mutation-proven by seeding a
-leak in both and confirming both are caught, including the three specific names (`Bow of Erastil`,
-`Legendsbane`, `Witherfang`) that slipped through before this cycle's fix. KNOWN RESIDUAL GAP: a
-declared-PI name embedded inside a longer derived string (e.g. a `categories[*].label` built from a
-TYPE token) is still invisible to exact-leaf matching — see `OPEN-ISSUES.md`.
+legitimately not in another.
+
+**CORRECTED AGAIN 2026-08-17 (FIX-DASHBOARD-PI).** The paragraph above's own closing claim was wrong:
+`Bow of Erastil`, `Legendsbane` and `Witherfang` were **not** caught and fixed by SD31-W13-INTEGRATE-001
+— they were still shipping, raw, as `Composite Longbow (Base).COPY=Bow of Erastil`,
+`Dagger (Base).COPY=Legendsbane` and `Kukri (Base).COPY=Witherfang` in the committed feed at the moment
+this correction was written. Every check up to this point — the coordinate-based redaction, the
+per-book pass, and `site-dashboard-pi-gate` itself — was **EXACT-match only**: it asks "does this
+string equal a declared-PI name," never "does this string *contain* one." All three names above are
+created by a PCGen `.COPY=` directive whose OWN row carries no `NAMEISPI:YES` token at all (the
+declaration lives on a separate `.MOD` row for the same object, several lines later in the same file);
+an exact-match check has no string to match against, so it reported CLEAN — correctly, by its own
+definition — while these names, `Helm of the Serpent King`, several `Rivethun`-prefixed spells, and
+four built-up `unit_index` category labels (`Varisian Pilgrim Domain`, `Tattooed Sorcerer Varisian
+Tattoo`, `Pathfinders Past Focus`, plus a fourth judged mundane — see below) all shipped. An
+independent word-boundary sweep over everything under `site/` found 89 such leaks, almost all here.
+**The lesson that matters more than any single name:** a gate reporting CLEAN is only as strong as what
+it checks for, and this repo had already re-learned the exact-vs-word-boundary distinction once, for
+`site/status-data*` (`SITE-PI-ALLOWLIST-001`) — that fix was never carried over to this feed until now.
+
+Fixed with the SAME technique (and the SAME shared, reviewed allow-list,
+`scripts/site/pi_substring_allowlist.py` — not a second list) `SITE-PI-ALLOWLIST-001` already proved
+for `site/status-data*`: `pi_redaction.find_declared_pi_word_matches`, a freestanding-WORD embed check
+(book-scoped union global), gated by allow-list entries reviewed one name at a time against the actual
+corpus row. `_PiScreen` (`pf1e_dashboard_producer.py`) applies it in `_parse_lst_first_field` (closing
+the `.COPY=` gap above — a public roster must never leak PCGen's own patch-directive syntax either,
+independent of PI status), in `build_unit_shards`'s row `name` field, and in every `categories[*]`/
+`school_categories[*]` category label. `site_dashboard_pi_gate.py` runs the same word-boundary check,
+independently, over the top-level feed's book rosters, every shard, and every category label —
+mutation-proven by seeding a declared-PI name into each of those three shapes and confirming all three
+go RED, then confirming a clean `git status --porcelain` after every seed was removed. A declared name
+still ships as `[redacted PI]`; the row, its count, and every other figure about it are unaffected. The
+former "KNOWN RESIDUAL GAP" note about `categories[*].label` being invisible to exact-leaf matching is
+closed; do not re-add it without re-deriving whether it is still true.
 
 `site/dashboard/units/` (the per-kind unit-search shards, ~38.5k rows) is committed here for the
-first time as of the same fix — it was deliberately withheld until the redaction above existed
-(row 141's requirement #4).
+first time as of the SD31-W13-INTEGRATE-001 fix — it was deliberately withheld until the redaction
+above existed (row 141's requirement #4).
 
 None of the ordinary internal-engineering-prose content this section originally described (decision
 bodies, per-book open questions, agent snippets, local paths, monster stat-block `detail` strings) is

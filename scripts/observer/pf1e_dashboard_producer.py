@@ -56,6 +56,16 @@ _pi_spec = importlib.util.spec_from_file_location("pi_redaction", _PI_REDACTION)
 pi_redaction = importlib.util.module_from_spec(_pi_spec)
 _pi_spec.loader.exec_module(pi_redaction)
 
+# FIX-DASHBOARD-PI (2026-08-17): the same shared, reviewed allow-list
+# `scripts/site/build_public_status.py` already uses for the public status
+# projection -- see `_PiScreen` below for why the dashboard feed needs it
+# too (word-boundary matching is deliberately over-inclusive; this is the
+# one place a mundane homonym is cleared, one entry at a time).
+_PI_ALLOWLIST = pathlib.Path(__file__).resolve().parent.parent / "site" / "pi_substring_allowlist.py"
+_pi_allowlist_spec = importlib.util.spec_from_file_location("pi_substring_allowlist", _PI_ALLOWLIST)
+pi_substring_allowlist = importlib.util.module_from_spec(_pi_allowlist_spec)
+_pi_allowlist_spec.loader.exec_module(pi_substring_allowlist)
+
 
 # ---------------------------------------------------------------------------
 # Paths
@@ -1511,7 +1521,14 @@ def build_pf1e_dashboard(
     usage: dict,
     refreshed: dt.datetime,
     report_text: str = "",
+    pi_screen: "_PiScreen | None" = None,
 ) -> dict:
+    # FIX-DASHBOARD-PI (2026-08-17): built ONCE for the whole run (or reused
+    # from the caller, which also threads the SAME instance into
+    # `build_unit_shards` -- see `main()`) and passed down through every
+    # `_book_item_roster`/`_prestige_classes` call below, rather than each
+    # one independently re-walking the pinned oracle checkout.
+    pi_screen = pi_screen if pi_screen is not None else _PiScreen()
     # 1) Workchannels (auto-discovered)
     workchannels = discover_workchannels(status_text)
 
@@ -1618,7 +1635,7 @@ def build_pf1e_dashboard(
     books = []
     for b in IN_SCOPE_BOOKS:
         matrix, open_questions = derive_book_matrix(b["id"], content or {}, classes)
-        items = _book_item_roster(b["id"], top_n=5, content=content)
+        items = _book_item_roster(b["id"], top_n=5, content=content, pi_screen=pi_screen)
         books.append({
             "id": b["id"],
             "title": b["title"],
@@ -1682,7 +1699,7 @@ def build_pf1e_dashboard(
         # corpus roster (a legitimate "what PCGen ships" display), kept for
         # that purpose only -- it no longer feeds `status`.
         channel_launched = b["channel"] in ("SD-27", "SD-28", "SD-29", "SD-30")
-        items = _book_item_roster(b["id"], top_n=5) if channel_launched else {"equipment": [], "feats": [], "spells": []}
+        items = _book_item_roster(b["id"], top_n=5, pi_screen=pi_screen) if channel_launched else {"equipment": [], "feats": [], "spells": []}
         if not channel_launched:
             status = "unassigned"
         elif _book_has_landed_units(b["id"]):
@@ -1755,7 +1772,7 @@ def build_pf1e_dashboard(
             # ARG's zero is a ruling, not an omission; carry it so the viewer
             # can say so instead of silently showing seven races and no context.
             "races_note": _arg_race_note,
-            "prestige_classes": _prestige_classes(),
+            "prestige_classes": _prestige_classes(pi_screen=pi_screen),
         },
         "books": books,
         "channels": channels_data,
@@ -2087,22 +2104,113 @@ _BOOK_LST_FILES = {
     },
 }
 
-# In-memory cache of parsed LST contents.
+class _PiScreen:
+    """Bundles the shared, built-once declared-PI inputs every name-emitting
+    call site in this module needs: `pi_redaction`'s full-oracle name index
+    (flat and per-book) plus the shared, reviewed allow-list
+    (`scripts/site/pi_substring_allowlist.py` -- the SAME file
+    `build_public_status.py`'s public-status projection already uses, not a
+    second one). Built ONCE per producer run (`build_pf1e_dashboard`/
+    `main`) and threaded down through `_book_item_roster`/
+    `_parse_lst_first_field`/`_prestige_classes`/`build_unit_shards`, rather
+    than each call site independently re-walking the pinned oracle
+    checkout (`build_unit_shards`'s own existing comment already notes that
+    walk's real cost).
+
+    FIX-DASHBOARD-PI (2026-08-17): `build_unit_shards`'s pre-existing
+    EXACT-match passes only catch a name that IS, verbatim, a declared-PI
+    name. `screen()` adds the WORD-BOUNDARY embed check
+    `build_public_status.py::redact_for_display` already uses for the
+    public status projection (`pi_redaction.find_declared_pi_word_matches`,
+    book-scoped union global, gated by the shared allow-list) -- the
+    dashboard feed never had this layer at all, which is exactly how
+    `Bow of Erastil`, `Witherfang`, `Legendsbane`, `Helm of the Serpent
+    King` and the `Rivethun` spells shipped raw: none of those ships its
+    OWN `NAMEISPI:YES` token on the row that names it (the declaration
+    lives on a DIFFERENT row for the same object, or no row declares the
+    exact string a `.COPY=` directive created), so a row-local or
+    exact-match check alone is structurally blind to them."""
+
+    def __init__(self, declared_pi_names=None, declared_pi_name_books=None, allowlist_index=None):
+        self.names = (
+            declared_pi_names if declared_pi_names is not None
+            else pi_redaction.build_declared_pi_name_index()
+        )
+        self.by_length = sorted(self.names, key=len, reverse=True)
+        name_to_books = (
+            declared_pi_name_books if declared_pi_name_books is not None
+            else pi_redaction.build_declared_pi_name_book_index()
+        )
+        self.book_declared = pi_redaction.build_book_declared_name_lists(name_to_books)
+        self.allowlist_index = (
+            allowlist_index if allowlist_index is not None
+            else pi_substring_allowlist.build_allowlist_index()
+        )
+
+    def screen(self, name, book=None):
+        """Return `name` unchanged, or `pi_redaction.REDACTED_PI_MARKER` if
+        it carries a declared-PI name -- exact match first (cheap, catches
+        the common case), then a word-boundary embed check (book-scoped
+        union global) gated by the shared allow-list.
+
+        `book=None` means there is no single book to scope or allow-list
+        against (a `unit_index` category label aggregated across a whole
+        kind, not one book-scoped object) -- the GLOBAL word-boundary check
+        still runs, gated by `is_allowlisted_for_any_book` instead of the
+        per-item `is_allowlisted`."""
+        if not isinstance(name, str) or not name or name == pi_redaction.REDACTED_PI_MARKER:
+            return name
+        if name.strip() in self.names:
+            return pi_redaction.REDACTED_PI_MARKER
+        book_names = self.book_declared.get(book, ()) if book else ()
+        # case_insensitive=True (FIX-DASHBOARD-PI): a title-shaped declared
+        # name that itself begins with an ordinary word (`"The Serpent
+        # King"`) naturally loses its capital when embedded mid-sentence
+        # (`"Helm of the Serpent King"`) -- see
+        # `find_declared_pi_word_matches`'s own docstring for the full
+        # rationale. Scoped to THIS screen only; `build_public_status.py`'s
+        # own case-sensitive calls are untouched.
+        matches = set(pi_redaction.find_declared_pi_word_matches(name, book_names, case_insensitive=True))
+        matches.update(pi_redaction.find_declared_pi_word_matches(name, self.by_length, case_insensitive=True))
+        if not matches:
+            return name
+        if book:
+            allowed = pi_substring_allowlist.is_allowlisted(name, book, self.allowlist_index)
+        else:
+            allowed = pi_substring_allowlist.is_allowlisted_for_any_book(name, self.allowlist_index)
+        return name if allowed else pi_redaction.REDACTED_PI_MARKER
+
+
+# In-memory cache of parsed LST contents, keyed (path, book_id) -- book_id
+# is part of the key because the SAME physical file can legitimately screen
+# differently for a different book context (FIX-DASHBOARD-PI, 2026-08-17).
 _LST_CACHE = {}
 
 
-def _parse_lst_first_field(path: str) -> list:
-    """Parse an LST file and return the unique first-field names.
+def _parse_lst_first_field(path: str, book_id: str | None = None, pi_screen: "_PiScreen | None" = None) -> list:
+    """Parse an LST file and return the unique first-field display names.
     Filters out modifier lines (.MOD), category markers, and inline stat
     definitions (which start with KEY:, TYPE:, STATS:, DEFINE:, BONUS:, etc.).
+
+    `book_id`/`pi_screen` (FIX-DASHBOARD-PI, 2026-08-17): every name this
+    function returns is a public roster's ONLY source for that row
+    (`_book_item_roster`, `_prestige_classes`'s `ag_variants` both feed
+    straight from here into `site/dashboard/**`) -- see `_PiScreen`'s own
+    docstring for why the row-local NAMEISPI check alone (kept below,
+    unchanged, as the cheap first layer) is not enough on its own.
+    `pi_screen=None` builds one locally -- real producer call sites pass one
+    built ONCE per run; a test with no real oracle checkout to worry about
+    is still free to call this with no arguments at all.
     """
-    if path in _LST_CACHE:
-        return _LST_CACHE[path]
+    cache_key = (path, book_id)
+    if cache_key in _LST_CACHE:
+        return _LST_CACHE[cache_key]
     seen = set()
     names = []
     if not os.path.exists(path):
-        _LST_CACHE[path] = names
+        _LST_CACHE[cache_key] = names
         return names
+    screen = pi_screen if pi_screen is not None else _PiScreen()
     SKIP_PREFIXES = (
         "KEY:", "TYPE:", "STATS:", "DEFINE:", "BONUS:", "PRE", "OUTPUTNAME:",
         "CHOOSE:", "STACK:", "MULT:", "DESC:", "SOURCEPAGE:", "BENEFIT:",
@@ -2138,23 +2246,49 @@ def _parse_lst_first_field(path: str) -> list:
                 continue
             if (len(name) <= 200 and not name.endswith(".MOD")
                     and not any(name.startswith(p) for p in SKIP_PREFIXES)):
-                if name not in seen:
-                    seen.add(name)
+                # FIX-DASHBOARD-PI (2026-08-17): the raw first field can
+                # carry PCGen row-OPERATOR syntax (`Composite Longbow
+                # (Base).COPY=Bow of Erastil` -- a `.COPY=` row CREATES a
+                # new object named after the right-hand side, not the
+                # left-hand source key it copies from). `clean_first_field`
+                # (shared with `pi_redaction.py`'s own index-builder, so
+                # both agree on what "the name" is) extracts the real
+                # display name; a public roster must never leak PCGen's own
+                # patch-directive syntax regardless of PI status.
+                display = pi_redaction.clean_first_field(parts[0])
+                if not display:
+                    continue
+                if display not in seen:
+                    seen.add(display)
                     # Decision 12 (2026-08-17): this function reads a real
                     # PCGen row and is a public roster's ONLY source for
                     # that row's name (`_book_item_roster`,
-                    # `_prestige_class_roadmap`'s `ag_variants` both feed
-                    # straight from here into `site/dashboard/**`). The row
-                    # itself may declare `NAMEISPI:YES` -- dedup above keys
-                    # on the REAL name (`seen`), so two different
-                    # declared-PI rows still each hold their own slot; only
-                    # the DISPLAYED string is withheld, per "withhold the
-                    # name, keep the row."
+                    # `_prestige_classes`'s `ag_variants` both feed straight
+                    # from here into `site/dashboard/**`). Dedup above keys
+                    # on the REAL display name, so two different declared-PI
+                    # rows still each hold their own slot; only the
+                    # DISPLAYED string is withheld, per "withhold the name,
+                    # keep the row."
+                    #
+                    # Layer 1 (cheap, unchanged): THIS row's own
+                    # NAMEISPI:YES token -- catches a fresh, non-operator
+                    # row that declares PI on itself.
+                    # Layer 2 (`screen.screen`, FIX-DASHBOARD-PI): the
+                    # full-oracle exact-match AND word-boundary checks --
+                    # catches the declaration living on a DIFFERENT row (a
+                    # `.MOD` for the same object, e.g. `Bow of Erastil`,
+                    # `Witherfang`, `Legendsbane`) or a genuine embed with
+                    # no row of its own at all (`Rivethun Calm Spirit`,
+                    # created by a `.COPY=` directive that never declares
+                    # PI on its own line).
                     name_is_pi, _ = pi_redaction.declared_product_identity(
                         pi_redaction.parse_row_tokens(line)
                     )
-                    names.append(pi_redaction.REDACTED_PI_MARKER if name_is_pi else name)
-    _LST_CACHE[path] = names
+                    if name_is_pi:
+                        names.append(pi_redaction.REDACTED_PI_MARKER)
+                    else:
+                        names.append(screen.screen(display, book_id))
+    _LST_CACHE[cache_key] = names
     return names
 
 
@@ -2247,17 +2381,26 @@ def _load_beastiary_monsters(content: dict | None = None) -> list:
     return fallback
 
 
-def _book_item_roster(book_id: str, top_n: int = 5, content: dict | None = None) -> dict:
+def _book_item_roster(book_id: str, top_n: int = 5, content: dict | None = None,
+                      pi_screen: "_PiScreen | None" = None) -> dict:
     """Return per-kind item rosters for a book, extracted from PCGen LST corpora.
     The dashboard panel renders the first N items per kind (default 5).
     Storage is the full list; top_n is the panel display limit.
 
     Items are plain name strings for every kind except Bestiary 1's monsters,
     which carry their own engine-derived state (see `_load_beastiary_monsters`).
+
+    `pi_screen` (FIX-DASHBOARD-PI, 2026-08-17): built once here if not
+    supplied, then reused across every file this ONE book reads -- not
+    rebuilt per file, and not left to each `_parse_lst_first_field` call to
+    build its own (see `_PiScreen`'s own docstring for why that walk is
+    expensive). `build_pf1e_dashboard` builds one ONCE for the whole run
+    and passes it to every `_book_item_roster` call.
     """
     out = {"equipment": [], "feats": [], "spells": [], "monsters": [], "races": []}
     if book_id not in _BOOK_LST_FILES:
         return out
+    screen = pi_screen if pi_screen is not None else _PiScreen()
     book_dir = os.path.join(_PCGEN_ROOT, _BOOK_LST_DIRS[book_id])
     kind_files = _BOOK_LST_FILES[book_id]
     for kind, files in kind_files.items():
@@ -2268,7 +2411,7 @@ def _book_item_roster(book_id: str, top_n: int = 5, content: dict | None = None)
             continue
         names = []
         for f in files:
-            names.extend(_parse_lst_first_field(os.path.join(book_dir, f)))
+            names.extend(_parse_lst_first_field(os.path.join(book_dir, f), book_id=book_id, pi_screen=screen))
         # Dedupe preserving order
         seen = set()
         unique = []
@@ -2280,7 +2423,7 @@ def _book_item_roster(book_id: str, top_n: int = 5, content: dict | None = None)
     return out
 
 
-def _prestige_classes() -> list:
+def _prestige_classes(pi_screen: "_PiScreen | None" = None) -> list:
     """Return the prestige-class roster for the dashboard's Classes (Prestige)
     sub-panel. With AG dropped (2026-07-26), the AG prestige roster is gone.
     Pathfinder Unchained (now in SD-27) has 3 unchained class variants
@@ -2311,7 +2454,7 @@ def _prestige_classes() -> list:
     # ag_classes.lst at producer run time; re-introduced 2026-07-26 when
     # AG moved from SD-27 (replaced by Pathfinder Unchained) to SD-30.
     ag_path = os.path.join(_PCGEN_ROOT, "adventurers_guide", "ag_classes.lst")
-    ag_names = _parse_lst_first_field(ag_path)
+    ag_names = _parse_lst_first_field(ag_path, book_id="adventurers_guide", pi_screen=pi_screen)
     ag_names = [n for n in ag_names if n and n != "Wizard"]
     ag_variants = [(n, n, "Adventurer's Guide", "SD-30") for n in ag_names]
 
@@ -2715,7 +2858,16 @@ SPELL_SHARD_FIELDS = UNIT_SHARD_FIELDS + ("school",)
 # regression Decision 12 requirement #3's gate exists to catch, so this
 # bump is what makes the FIRST post-fix run actually recompute instead of
 # serving the pre-fix shard back unchanged.
-SHARD_SCHEMA = 14
+#
+# 14 -> 15 (FIX-DASHBOARD-PI, 2026-08-17): `name` (row) and `categories[*]`/
+# `school_categories[*]`'s own `label` are now ALSO screened with a
+# WORD-BOUNDARY embed check (`_PiScreen.screen`, book-scoped union global,
+# gated by the shared `pi_substring_allowlist`) on top of the round-14
+# exact-match check -- `category_labels_redacted` is new on the top-level
+# index. Same doctrine again: a cache written before this fix would keep
+# serving `"Helm of the Serpent King"`, `"Varisian Pilgrim Domain"` and
+# every other word-boundary leak this fix closes indefinitely.
+SHARD_SCHEMA = 15
 WORK_INVENTORY_FULL_DOC = os.environ.get(
     "PF1E_WORK_INVENTORY_DOC",
     os.path.expanduser("~/workspace/repos/codex/docs/work-inventory.json"),
@@ -4126,7 +4278,8 @@ def _category_bucket() -> dict:
 
 def build_unit_shards(doc_path: str = WORK_INVENTORY_FULL_DOC,
                       shard_dir: str = UNIT_SHARD_DIR,
-                      declared_pi_names: set | None = None) -> dict:
+                      declared_pi_names: set | None = None,
+                      pi_screen: "_PiScreen | None" = None) -> dict:
     """Emit per-kind unit shards and return the index the viewer navigates.
 
     `declared_pi_names` is the full-oracle name index (see the module-level
@@ -4226,6 +4379,24 @@ def build_unit_shards(doc_path: str = WORK_INVENTORY_FULL_DOC,
     # everywhere else). Rows already carry `book`, so this closes that gap
     # with context the flat set structurally cannot have.
     declared_pi_name_books = pi_redaction.build_declared_pi_name_book_index()
+    # FIX-DASHBOARD-PI (2026-08-17): the word-boundary layer (see
+    # `_PiScreen`'s own docstring) -- built from the SAME
+    # `declared_pi_name_index`/`declared_pi_name_books` just constructed
+    # above rather than re-walking the oracle a third time, unless a caller
+    # already built one for the whole run and passed it in.
+    screen = (
+        pi_screen if pi_screen is not None
+        else _PiScreen(declared_pi_names=declared_pi_name_index,
+                       declared_pi_name_books=declared_pi_name_books)
+    )
+    category_labels_redacted = 0
+
+    def _screen_category_label(label, screen_obj):
+        nonlocal category_labels_redacted
+        screened = screen_obj.screen(label, book=None)
+        if screened != label:
+            category_labels_redacted += 1
+        return screened
 
     kinds: dict[str, dict] = {}
     for kind, units in sorted(grouped.items()):
@@ -4282,6 +4453,45 @@ def build_unit_shards(doc_path: str = WORK_INVENTORY_FULL_DOC,
                     continue
                 if row[book_idx] in declared_pi_name_books.get(val, ()):
                     row[name_idx] = pi_redaction.REDACTED_PI_MARKER
+                    pi_redacted_total += 1
+        # Word-boundary pass (FIX-DASHBOARD-PI, 2026-08-17): the two passes
+        # above are EXACT-match only (a `name` field that IS, verbatim, a
+        # declared-PI name) -- structurally blind to a genuine EMBED like
+        # `"Helm of the Serpent King"` (the declared-PI record's own name
+        # is just `"The Serpent King"`) or `"Death (Pharasma)"`, the same
+        # gap `build_public_status.py::redact_for_display` already closed
+        # for the public status projection. Runs AFTER both exact passes
+        # (the `!= REDACTED_PI_MARKER` guard skips anything already
+        # redacted) and is gated by the SAME shared, reviewed allow-list.
+        if name_idx is not None and book_idx is not None:
+            for row in rows:
+                val = row[name_idx]
+                if not isinstance(val, str) or val == pi_redaction.REDACTED_PI_MARKER:
+                    continue
+                screened = screen.screen(val, row[book_idx])
+                if screened != val:
+                    row[name_idx] = screened
+                    pi_redacted_total += 1
+        # `type_facet` pass (FIX-DASHBOARD-PI, 2026-08-17): this shard field
+        # ships the RAW PCGen TYPE token verbatim (`"ClassFeatures.Hellknight
+        # Signifer Class Feature.SpecialQuality.Extraordinary"`) and had NO
+        # screen of any kind before this fix -- a real leak, independent of
+        # `name`. `type_facet` is a compound machine identifier, not
+        # natural-language prose, so this uses PLAIN SUBSTRING matching
+        # (`value_carries_declared_pi_substring`), GLOBALLY, with no
+        # allow-list -- the SAME convention (and the SAME PROVEN 30-hit
+        # false-positive-free result on this exact class of token)
+        # `build_public_status.py`'s own `type_facet` screen already
+        # established for the public status projection; see that module's
+        # own comment for the substring-vs-word-boundary rationale specific
+        # to this field's shape.
+        type_facet_idx = fields.index("type_facet") if "type_facet" in fields else None
+        if type_facet_idx is not None:
+            for row in rows:
+                tf = row[type_facet_idx]
+                if (isinstance(tf, str) and tf != pi_redaction.REDACTED_PI_MARKER
+                        and pi_redaction.value_carries_declared_pi_substring(tf, screen.by_length)):
+                    row[type_facet_idx] = pi_redaction.REDACTED_PI_MARKER
                     pi_redacted_total += 1
         by_status: dict[str, int] = {}
         # Sub-category rollup (round 20): per-category doneness-verdict
@@ -4403,8 +4613,22 @@ def build_unit_shards(doc_path: str = WORK_INVENTORY_FULL_DOC,
             # not whichever spelling happened to be iterated over first.
             "categories": {
                 gkey: {
-                    "label": category_label(
-                        pick_category_representative(category_raw_variants[gkey])),
+                    # FIX-DASHBOARD-PI (2026-08-17): a category label is a
+                    # BUILT-UP string (the TYPE token's own first segment,
+                    # translated for display) -- exactly the shape
+                    # `site_dashboard_pi_gate.py`'s own "KNOWN RESIDUAL GAP"
+                    # note warned exact-leaf matching is blind to
+                    # (`"Varisian Pilgrim Domain"` embeds the declared-PI
+                    # archetype name `"Varisian Pilgrim"` verbatim). No
+                    # `book` to scope against here -- a category is
+                    # aggregated across every book in the whole KIND -- so
+                    # `screen()` runs the GLOBAL word-boundary check, gated
+                    # by `is_allowlisted_for_any_book` instead of a
+                    # per-book entry.
+                    "label": _screen_category_label(
+                        category_label(pick_category_representative(category_raw_variants[gkey])),
+                        screen,
+                    ),
                     **buckets,
                 }
                 for gkey, buckets in sorted(categories.items(),
@@ -4419,7 +4643,7 @@ def build_unit_shards(doc_path: str = WORK_INVENTORY_FULL_DOC,
             # need a spell-specific special case to know what it is showing.
             kind_entry["category_axis_label"] = "Tradition"
             kind_entry["school_categories"] = {
-                sch: {"label": sch, **buckets}
+                sch: {"label": _screen_category_label(sch, screen), **buckets}
                 for sch, buckets in sorted(school_categories.items(),
                                             key=lambda kv: -sum(kv[1].values()))
             }
@@ -4476,6 +4700,13 @@ def build_unit_shards(doc_path: str = WORK_INVENTORY_FULL_DOC,
         # The row itself is never dropped for a name-PI hit (`units` above
         # already counts it); this reports only the display substitution.
         "pi_redacted_names": pi_redacted_total,
+        # FIX-DASHBOARD-PI (2026-08-17): how many `categories[*].label`/
+        # `school_categories[*].label` strings (built-up TYPE-token
+        # translations, not raw unit names) were withheld this run --
+        # tracked separately from `pi_redacted_names` because it is a
+        # different kind of substitution (a whole category's display
+        # label, not one unit's row).
+        "category_labels_redacted": category_labels_redacted,
         "pi_oracle_available": oracle_checker.available,
         "kinds": kinds,
     }
@@ -4502,31 +4733,36 @@ def main() -> int:
     report_text = pathlib.Path(args.report).read_text(encoding="utf-8", errors="replace") if pathlib.Path(args.report).exists() else ""
     usage = _observer.read_usage(args.usage_cache)
 
-    data = build_pf1e_dashboard(status_text, risks_text, args.risks_doc, usage, refreshed, report_text)
+    # Decision 12 (2026-08-17) / FIX-DASHBOARD-PI (2026-08-17): one shared
+    # `_PiScreen` (full-oracle declared-PI name index, flat and per-book,
+    # plus the shared allow-list), built ONCE and threaded through
+    # `build_pf1e_dashboard` (which threads it further into
+    # `_book_item_roster`/`_prestige_classes`) and `build_unit_shards`
+    # below -- a ~2.5s oracle walk is not paid three times in the same run.
+    pi_screen = _PiScreen()
+    data = build_pf1e_dashboard(status_text, risks_text, args.risks_doc, usage, refreshed, report_text,
+                                pi_screen=pi_screen)
     # Load prior owner-managed state (manifests items, SD-27+ channels) and
     # merge into the regenerated data. This preserves the lead's manifest
     # writes and the orchestrator's SD-27+ channel data across producer runs.
     prior_state = _load_existing_owner_state(args.out)
     data = _merge_owner_state(data, prior_state)
-    # Decision 12 (2026-08-17): one full-oracle declared-PI name sweep,
-    # shared by `build_unit_shards`' own blanket pass below AND the
-    # top-level document's own pass a few lines down -- built once so a
-    # ~2.5s oracle walk is not paid twice in the same run.
-    declared_pi_names = pi_redaction.build_declared_pi_name_index()
     # Written alongside the payload rather than inside it: the shards are the
     # drill-down layer, and inlining 44k units would defeat the point.
     data["unit_index"] = build_unit_shards(
         shard_dir=os.path.join(os.path.dirname(os.path.abspath(args.out)), "units"),
-        declared_pi_names=declared_pi_names,
+        declared_pi_names=pi_screen.names,
+        pi_screen=pi_screen,
     )
     # Blanket defense-in-depth sweep over the WHOLE top-level document --
     # catches a declared-PI name surfacing through any field this cycle did
-    # not individually chase (a category label, a future roster), on top of
-    # the two precise, coordinate-based fixes already wired into
-    # `_parse_lst_first_field` and `build_unit_shards`'s own `name` field.
+    # not individually chase (a future roster shape), on top of the
+    # precise, targeted fixes already wired into `_parse_lst_first_field`,
+    # `build_unit_shards`'s own `name` field, and its category labels.
     # Exact-match only; see `pi_redaction.redact_declared_pi_names`'s
-    # docstring for why a substring scan is the wrong tool here.
-    data = pi_redaction.redact_declared_pi_names(data, declared_pi_names)
+    # docstring for why a substring scan is the wrong tool for a blanket,
+    # schema-agnostic pass over arbitrary internal-engineering prose.
+    data = pi_redaction.redact_declared_pi_names(data, pi_screen.names)
     err = _atomic_write_json(args.out, data)
     if err:
         # Leave the previous payload in place rather than publishing a broken
