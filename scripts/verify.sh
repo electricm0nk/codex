@@ -107,8 +107,8 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
+ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
+QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -709,6 +709,45 @@ run_build_public_status_selftest() {
     fi
 
     stage_pass build-public-status-selftest "$ran cases passed"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: site-asset-stamp-check
+#
+# `site/styles.css` has a stable filename, so a returning visitor's browser
+# will keep serving its cached copy after a deploy unless the URL changes.
+# On 2026-08-18 that shipped a live page whose HTML was current but whose CSS
+# was not, and it was only caught because the operator looked at it on a
+# phone. `scripts/site/stamp_asset_versions.py` appends `?v=<content-hash>` to
+# every stylesheet reference; this gate fails when the committed stamps no
+# longer match the committed stylesheet. A failure here means: run
+# `python3 scripts/site/stamp_asset_versions.py` and commit the result.
+# ---------------------------------------------------------------------------
+
+run_site_asset_stamp_check() {
+    stage_start "site-asset-stamp-check — scripts/site/stamp_asset_versions.py --check"
+    local log="$LOG_DIR/site-asset-stamp-check.log"
+    local script="$REPO_ROOT/scripts/site/stamp_asset_versions.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail site-asset-stamp-check "script missing at scripts/site/stamp_asset_versions.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 "$script" --check ) >"$log" 2>&1
+    local status=$?
+
+    if (( status != 0 )); then
+        stage_fail site-asset-stamp-check "exit $status — $log"
+        return
+    fi
+
+    if ! grep -q "^OK: " "$log"; then
+        stage_fail site-asset-stamp-check "exited 0 without confirming currency — $log"
+        return
+    fi
+
+    stage_pass site-asset-stamp-check "site/*.html cache-busting stamps match site/styles.css"
 }
 
 # ---------------------------------------------------------------------------
@@ -1797,6 +1836,7 @@ for stage in "${SELECTED[@]}"; do
         site-dashboard-check) run_site_dashboard_check ;;
         site-dashboard-pi-gate) run_site_dashboard_pi_gate ;;
         build-public-status-selftest) run_build_public_status_selftest ;;
+        site-asset-stamp-check) run_site_asset_stamp_check ;;
         site-public-status-check) run_site_public_status_check ;;
         site-public-status-pi-gate) run_site_public_status_pi_gate ;;
         reachability-audit-selftest) run_reachability_audit_selftest ;;
