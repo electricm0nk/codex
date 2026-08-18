@@ -236,6 +236,13 @@ a:focus-visible {
 .discworld-stage-art {
   position: relative;
 }
+/* The hotspot percentages must resolve against the IMAGE box. .wrap carries
+   `padding: 0 24px`, and a percentage `left` resolves against the padding
+   box, so positioning against .discworld-stage-art put every pin ~24px off
+   at each edge. This inner box hugs the artwork exactly. */
+.discworld-map {
+  position: relative;
+}
 .discworld-art {
   width: 100%;
   height: auto;
@@ -271,15 +278,12 @@ a:focus-visible {
   padding: 2px 8px;
   border-radius: 999px;
   white-space: nowrap;
-  opacity: 0;
-  transform: translateY(-2px);
-  transition: opacity 0.15s ease, transform 0.15s ease;
   pointer-events: none;
 }
 .city-hotspot:hover .city-hotspot-label,
 .city-hotspot:focus-visible .city-hotspot-label {
-  opacity: 1;
-  transform: translateY(0);
+  color: #fff;
+  border-color: var(--space-gold-soft);
 }
 .city-tm {
   font-weight: 700;
@@ -287,24 +291,23 @@ a:focus-visible {
   margin-left: 2px;
 }
 
-.city-hotspot-pill {
-  font-size: 9px;
+.city-hotspot-tag {
+  font-size: 9.5px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: var(--space-ink-muted);
-  background: var(--space-paper-alt);
+  background: rgba(6, 8, 18, 0.6);
   border: 1px solid var(--space-rule);
   border-radius: 999px;
-  padding: 2px 8px;
-  opacity: 0;
-  transform: translateY(-2px);
-  transition: opacity 0.15s ease, transform 0.15s ease;
+  padding: 1px 7px;
+  white-space: nowrap;
   pointer-events: none;
 }
-.city-hotspot:hover .city-hotspot-pill,
-.city-hotspot:focus-visible .city-hotspot-pill {
-  opacity: 1;
-  transform: translateY(0);
+.city-hotspot-tag-live {
+  color: #1c130c;
+  background: var(--space-gold);
+  border-color: var(--space-gold);
 }
 
 .city-hotspot-live .city-hotspot-dot {
@@ -317,9 +320,7 @@ a:focus-visible {
 }
 .city-hotspot-live .city-hotspot-label {
   color: #fff;
-  opacity: 1;
-  transform: none;
-  background: rgba(6, 8, 18, 0.7);
+  background: rgba(6, 8, 18, 0.78);
   border: 1px solid var(--space-gold-soft);
 }
 .city-hotspot-live .city-tm { color: var(--space-gold); }
@@ -719,41 +720,90 @@ a:focus-visible {
 .status-books-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  gap: 14px;
   margin-bottom: 24px;
 }
+/* These are the primary navigation of the status page, so they are sized as
+   real buttons (comfortable tap target on a phone) and state their status in
+   words, not only as a bar and a percentage. */
 .status-book-card {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 104px;
   width: 100%;
   background: var(--paper);
   border: 1px solid var(--rule);
-  border-radius: 8px;
-  padding: 14px 16px;
+  border-left: 4px solid var(--rule);
+  border-radius: 10px;
+  padding: 16px 18px;
   font-family: inherit;
   text-align: left;
   cursor: pointer;
+  transition: border-color 0.12s ease, background 0.12s ease;
 }
 .status-book-card:hover,
 .status-book-card:focus-visible {
   border-color: var(--accent);
+  border-left-color: var(--accent);
   background: var(--code-bg);
 }
+.status-book-card-done    { border-left-color: var(--gold); }
+.status-book-card-partial { border-left-color: var(--accent); }
+.status-book-card-pending { border-left-color: var(--rule); }
 .status-book-head {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
-  gap: 8px;
-  margin-bottom: 8px;
+  align-items: flex-start;
+  gap: 10px;
 }
 .status-book-title {
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.3;
   color: var(--ink);
 }
 .status-book-pct {
-  font-size: 13px;
-  color: var(--ink-muted);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
   flex-shrink: 0;
+  line-height: 1.1;
+}
+.status-book-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 2px;
+}
+.status-book-badge {
+  flex-shrink: 0;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+.status-book-badge-done {
+  color: #1c130c;
+  background: var(--gold);
+}
+.status-book-badge-partial {
+  color: var(--ink);
+  background: var(--paper-alt);
+  border: 1px solid var(--accent);
+}
+.status-book-badge-pending {
+  color: var(--ink-muted);
+  background: var(--code-bg);
+  border: 1px solid var(--rule);
+}
+.status-book-count {
+  font-size: 12.5px;
+  color: var(--ink-muted);
 }
 
 /* Book/kind drill-down navigation */
@@ -809,29 +859,51 @@ a:focus-visible {
   border-color: var(--gold);
 }
 
-.status-item-list {
-  display: flex;
-  flex-direction: column;
+/* Item table. A real <table> so the three facts per row (name, standing,
+   doneness) stay in aligned, individually-headed columns. The previous flex
+   rows had no headers and no column rule, so on a narrow screen the name and
+   both pills ran together into one unreadable string. */
+.status-item-tablewrap {
   border: 1px solid var(--rule);
   border-radius: 8px;
-  overflow: hidden;
+  overflow-x: auto;
   margin-bottom: 16px;
+  -webkit-overflow-scrolling: touch;
 }
-.status-item-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 16px;
-  background: var(--paper);
+.status-item-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
 }
+.status-item-table thead th {
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  background: var(--paper-alt);
+  border-bottom: 1px solid var(--rule);
+  padding: 9px 14px;
+  white-space: nowrap;
+}
+.status-item-table thead th:nth-child(2),
+.status-item-table thead th:nth-child(3) { text-align: right; }
+.status-item-row { background: var(--paper); }
 .status-item-row:nth-child(even) { background: var(--paper-alt); }
-.status-item-name { font-size: 14px; color: var(--ink); }
-.status-item-pills {
-  display: flex;
-  flex-shrink: 0;
-  gap: 6px;
-  align-items: center;
+.status-item-table td {
+  padding: 9px 14px;
+  border-top: 1px solid var(--rule);
+  vertical-align: middle;
+}
+.status-item-name {
+  font-size: 14px;
+  color: var(--ink);
+  width: 100%;
+}
+.status-item-cell {
+  text-align: right;
+  white-space: nowrap;
 }
 .status-item-pill {
   flex-shrink: 0;
@@ -1014,6 +1086,9 @@ a:focus-visible {
   .grid.three { grid-template-columns: 1fr; }
   .world-select-grid { grid-template-columns: 1fr 1fr; }
   .status-books-grid { grid-template-columns: 1fr; }
+  .status-item-table { font-size: 13px; }
+  .status-item-table td,
+  .status-item-table thead th { padding: 9px 10px; }
   .hero h1 { font-size: 30px; }
   .lede { font-size: 17px; }
 }
@@ -1079,4 +1154,78 @@ pre code {
 }
 .site-footer p {
   margin: 0 0 4px;
+}
+
+
+/* ---------------------------------------------------------------------------
+   Map legend (phones)
+   Six always-on nowrap labels cannot coexist on a ~340px-wide image; they
+   overlap into unreadable noise, and the widest of them overflows the frame
+   and is clipped. Below 720px the floating labels are hidden and this legend
+   carries exactly the same six districts, in the same order, with the same
+   standing tags.
+--------------------------------------------------------------------------- */
+.discworld-legend {
+  display: none;
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+}
+.discworld-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border: 1px solid var(--space-rule);
+  border-radius: 8px;
+  background: rgba(6, 8, 18, 0.55);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--space-ink-muted);
+}
+.discworld-legend-item + .discworld-legend-item { margin-top: 8px; }
+.discworld-legend-item a {
+  color: #fff;
+  text-decoration: none;
+}
+.discworld-legend-dot {
+  flex-shrink: 0;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--space-ink-muted);
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
+}
+.discworld-legend-live {
+  border-color: var(--space-gold-soft);
+  background: rgba(6, 8, 18, 0.75);
+}
+.discworld-legend-live .discworld-legend-dot {
+  background: var(--space-gold);
+  border-color: var(--space-gold-soft);
+  box-shadow: 0 0 10px rgba(242, 193, 78, 0.8);
+}
+.discworld-legend-tag {
+  margin-left: auto;
+  flex-shrink: 0;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--space-ink-muted);
+  border: 1px solid var(--space-rule);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+.discworld-legend-tag-live {
+  color: #1c130c;
+  background: var(--space-gold);
+  border-color: var(--space-gold);
+}
+
+@media (max-width: 720px) {
+  .city-hotspot-label,
+  .city-hotspot-tag { display: none; }
+  .discworld-legend { display: block; }
 }
