@@ -1,8 +1,8 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-08-17T20:14:10Z",
-  "source_document": "/home/ubuntu/workspace/repos/codex/docs/work-inventory.json",
+  "generated_at": "2026-08-18T22:48:33Z",
+  "source_document": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_1ad13e3b-085-5/docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
     "name",
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 38521,
-  "proven_units": 5993,
+  "proven_units": 5970,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 420,
   "category_labels_redacted": 3,
@@ -6815,26 +6815,26 @@
     },
     "feat": {
       "units": 2610,
-      "proven": 1570,
+      "proven": 1547,
       "by_status": {
-        "text-complete": 1462,
-        "unknown": 542,
+        "text-complete": 1439,
+        "unknown": 565,
         "grounded": 108,
         "not-started": 97,
         "not-ingested": 399,
         "deferred-with-reason": 2
       },
       "shard": "PF1e-units-feat.json",
-      "bytes": 258188,
+      "bytes": 258050,
       "doneness_unmapped": {},
       "categories": {
         "general": {
           "label": "General",
           "done": 519,
-          "held": 52,
+          "held": 51,
           "in-progress": 1,
           "not-started": 58,
-          "unmeasurable": 210,
+          "unmeasurable": 211,
           "deferred": 0
         },
         "combat": {
@@ -6866,11 +6866,11 @@
         },
         "psionic": {
           "label": "Psionic",
-          "done": 82,
+          "done": 81,
           "held": 1,
           "in-progress": 0,
           "not-started": 0,
-          "unmeasurable": 70,
+          "unmeasurable": 71,
           "deferred": 0
         },
         "teamwork": {
@@ -6911,11 +6911,11 @@
         },
         "story": {
           "label": "Story",
-          "done": 18,
-          "held": 7,
+          "done": 3,
+          "held": 1,
           "in-progress": 0,
           "not-started": 0,
-          "unmeasurable": 0,
+          "unmeasurable": 21,
           "deferred": 2
         },
         "itemcreation": {

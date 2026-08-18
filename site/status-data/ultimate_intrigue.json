@@ -5377,8 +5377,8 @@
       "kind": "feat",
       "label": "Feats",
       "done": 91,
-      "partial": 2,
-      "not_started": 14,
+      "partial": 1,
+      "not_started": 15,
       "denominator": 107,
       "pct": 85.0,
       "excluded_from_percentage": 0,
@@ -5694,7 +5694,7 @@
         },
         {
           "name": "Ironclad Logic",
-          "doneness": "partial",
+          "doneness": "not-started",
           "type_facet": "General",
           "standing": "origin"
         },

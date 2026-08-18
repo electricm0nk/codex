@@ -1,14 +1,14 @@
 {
-  "generated_at": "2026-08-18T21:32:15Z",
+  "generated_at": "2026-08-18T22:51:16Z",
   "doneness_values": [
     "done",
     "partial",
     "not-started"
   ],
   "overall": {
-    "done": 10423,
-    "partial": 2835,
-    "not_started": 16232,
+    "done": 10407,
+    "partial": 2828,
+    "not_started": 16255,
     "denominator": 29490,
     "pct": 35.3,
     "excluded_from_percentage": 9031,
@@ -50,9 +50,9 @@
     {
       "id": "ultimate_psionics",
       "title": "Ultimate Psionics",
-      "done": 494,
+      "done": 493,
       "partial": 139,
-      "not_started": 1631,
+      "not_started": 1632,
       "denominator": 2264,
       "pct": 21.8,
       "excluded_from_percentage": 231,
@@ -219,8 +219,8 @@
       "id": "ultimate_intrigue",
       "title": "Ultimate Intrigue",
       "done": 260,
-      "partial": 32,
-      "not_started": 602,
+      "partial": 31,
+      "not_started": 603,
       "denominator": 894,
       "pct": 29.1,
       "excluded_from_percentage": 208,
@@ -414,11 +414,11 @@
     {
       "id": "ultimate_campaign",
       "title": "Ultimate Campaign",
-      "done": 15,
-      "partial": 6,
-      "not_started": 2,
+      "done": 0,
+      "partial": 0,
+      "not_started": 23,
       "denominator": 23,
-      "pct": 65.2,
+      "pct": 0.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 23

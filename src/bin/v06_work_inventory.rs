@@ -2592,6 +2592,24 @@ impl EngineFacts {
     /// SERVED value rather than the closure's, and additionally refuses the
     /// upstream tooling marker (a different placeholder, same family:
     /// neither is a player-facing description). `SD31-W9-INTEGRATE-001`.
+    ///
+    /// **`SD31-E2-F3-002`: the marker arm is now
+    /// [`wiring_class::carries_editorial_not_implemented_marker`], not a
+    /// literal-uppercase `contains`.** The three arms this replaced
+    /// (`eq_ignore_ascii_case("[NOT IMPLEMENTED]")` and
+    /// `contains("[NOT IMPLEMENTED")`) matched exactly one spelling of an
+    /// admission the pinned oracle ships in twenty, so the SAME marker in
+    /// the SAME embedded position produced OPPOSITE verdicts on letter
+    /// case alone: `monster_codex:feat:vampiric_companion`'s
+    /// `"... [NOT IMPLEMENTED} ..."` was demoted to `unmeasurable` while
+    /// `ultimate_campaign`'s 21 story feats, whose served value opens
+    /// `"[Not Implemented] ..."`, were counted `done`/`held`. The demoting
+    /// direction is the one this file already committed to (see
+    /// `a_feat_served_pcgens_not_implemented_marker_does_not_read_text_complete`,
+    /// whose own fixture is an EMBEDDED marker with real prose either
+    /// side), so generalising it is a widening of an accepted rule, not a
+    /// new one — and it moves `done` DOWN, which is the direction
+    /// `decisions.md` Decision 1(a) requires a judgement call to fall in.
     fn feat_desc_leaks_pi_or_upstream_marker(&self, book: &str, key: &str, name: &str) -> bool {
         let served = self
             .feat_served_descriptions
@@ -2600,8 +2618,7 @@ impl EngineFacts {
         match served {
             Some(Some(desc)) => {
                 !is_real_description_value(desc)
-                    || desc.trim().eq_ignore_ascii_case("[NOT IMPLEMENTED]")
-                    || desc.contains("[NOT IMPLEMENTED")
+                    || wiring_class::carries_editorial_not_implemented_marker(desc)
             }
             _ => false,
         }
@@ -5049,9 +5066,15 @@ fn classify(
                     reason: Some(
                         "the feat is in the engine's catalog and its raw corpus closure carries \
                          real DESC: text, but the SERVED description (the compiled value a \
-                         player actually reads) is a marker string, not prose -- a PI redaction \
-                         or PCGen's own upstream '[NOT IMPLEMENTED]' editorial marker -- so \
-                         there is nothing real to show a player either way"
+                         player actually reads) is not clean player prose: it is either a PI \
+                         redaction marker standing in for the whole description, or it carries \
+                         upstream PCGen's own editorial not-implemented admission (shipped in \
+                         twenty spellings -- '[NOT IMPLEMENTED]', '[Not Implemented]', \
+                         '(NOT IMPLEMENTED)', '[ML bonus not implemented.]' and the rest), which \
+                         says in the shipped text itself that the rule it describes is not \
+                         mechanised. Either way what reaches the screen is not a description \
+                         this package can call complete -- and a fabricated one is never the \
+                         alternative"
                             .to_string(),
                     ),
                     engine_book: engine_book_field,
@@ -7979,6 +8002,62 @@ mod prose_magnitude_status_tests {
             false,
         );
         assert_ne!(verdict.status, "text-complete");
+        assert_eq!(verdict.status, "unknown");
+        assert_eq!(verdict.evidence, "feat_served_description_is_a_placeholder_marker_not_prose");
+    }
+
+    /// `SD31-E2-F3-002`: the SAME editorial admission, in the SAME
+    /// embedded position, must produce the SAME verdict regardless of
+    /// letter case. Before this fix the marker arm was
+    /// `desc.contains("[NOT IMPLEMENTED")` -- literal uppercase -- so
+    /// `ultimate_campaign`'s 21 story feats (whose joined served value
+    /// begins `"[Not Implemented] ..."`) reached `done`/`held` while
+    /// `monster_codex:feat:vampiric_companion`'s byte-identical shape in
+    /// uppercase was demoted to `unmeasurable`. Two spellings of one
+    /// upstream marker, opposite verdicts.
+    #[test]
+    fn a_feat_served_a_mixed_case_not_implemented_marker_is_demoted_like_the_uppercase_one() {
+        let mut facts = facts_with_feat_catalog("ultimate_campaign", "Accursed");
+        facts.feat_served_descriptions.insert(
+            ("ultimate_campaign", "Accursed".to_string()),
+            Some(
+                "[Not Implemented] Your curse weighs down your soul like a millstone around \
+                 your neck. You gain spell resistance equal to 5 + your character level.",
+            ),
+        );
+        let verdict = classify(
+            &feat_unit("ultimate_campaign", "Accursed", 0),
+            &facts,
+            &BTreeSet::new(),
+            false,
+            true,
+            "display",
+            false,
+        );
+        assert_ne!(verdict.status, "text-complete");
+        assert_eq!(verdict.status, "unknown");
+        assert_eq!(verdict.evidence, "feat_served_description_is_a_placeholder_marker_not_prose");
+    }
+
+    /// The parenthesised spelling `acg/archetype_tables.rs` ships three of
+    /// (`"(NOT IMPLEMENTED) At first level, a primal companion hunter..."`)
+    /// is the same admission and gets the same verdict.
+    #[test]
+    fn a_feat_served_a_parenthesised_not_implemented_marker_is_demoted_too() {
+        let mut facts = facts_with_feat_catalog("advanced_class_guide", "Primal Transformation");
+        facts.feat_served_descriptions.insert(
+            ("advanced_class_guide", "Primal Transformation".to_string()),
+            Some("(NOT IMPLEMENTED) At first level, a primal companion hunter can awaken a primal creature."),
+        );
+        let verdict = classify(
+            &feat_unit("advanced_class_guide", "Primal Transformation", 0),
+            &facts,
+            &BTreeSet::new(),
+            false,
+            true,
+            "display",
+            false,
+        );
         assert_eq!(verdict.status, "unknown");
         assert_eq!(verdict.evidence, "feat_served_description_is_a_placeholder_marker_not_prose");
     }
