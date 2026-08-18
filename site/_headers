@@ -17,3 +17,27 @@
   Permissions-Policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()
   Content-Security-Policy: default-src 'none'; img-src 'self' data:; style-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
   Cache-Control: public, max-age=300
+
+# ---------------------------------------------------------------------------
+# Caching
+#
+# A `_headers` rule matches on PATH ONLY (the query string is ignored), and a
+# bare `/` matches the root document alone -- every other URL previously fell
+# through to Cloudflare's defaults with nothing stated here.
+#
+# HTML and the generated JSON feeds must revalidate on every view, or a status
+# page can show yesterday's numbers. The stylesheet is the opposite case: its
+# URL now carries a content hash (see scripts/site/stamp_asset_versions.py), so
+# a given URL's bytes never change and it is safe to cache hard. Caching it
+# hard is also the point -- an unversioned, long-lived stylesheet cache is what
+# served stale CSS to a live visitor on 2026-08-18.
+# ---------------------------------------------------------------------------
+
+/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/styles.css
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/*
+  Cache-Control: public, max-age=604800

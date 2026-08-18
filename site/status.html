@@ -15,7 +15,7 @@
       } catch (e) {}
     })();
   </script>
-  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/styles.css?v=f489f04cb8" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ctext y='14' font-size='14'%3E📕%3C/text%3E%3C/svg%3E" />
 </head>
 <body>
@@ -137,7 +137,18 @@
             </div>
           </div>
           <p class="section-sub-tight" id="status-item-count"></p>
-          <div class="status-item-list" id="status-item-list" aria-live="polite"></div>
+          <div class="status-item-tablewrap">
+            <table class="status-item-table">
+              <thead>
+                <tr>
+                  <th scope="col">Item</th>
+                  <th scope="col">Standing</th>
+                  <th scope="col">Doneness</th>
+                </tr>
+              </thead>
+              <tbody id="status-item-list" aria-live="polite"></tbody>
+            </table>
+          </div>
           <div class="status-pagination" id="status-pagination"></div>
         </div>
 
@@ -233,20 +244,41 @@
       var bookCache = {};                // book_id -> parsed status-data/<id>.json
       var kindState = { items: [], filter: 'all', query: '', page: 1 };
 
+      // The three-bucket doneness vocabulary applied to a WHOLE book or
+      // category, so a card states its status in words and not only as a bar.
+      // Derived from the counts the feed already publishes -- never from pct,
+      // which rounds (0.4% would otherwise read as "not started").
+      function rollupDoneness(roll) {
+        if (!roll || !roll.denominator) return 'not-started';
+        if (roll.done >= roll.denominator) return 'done';
+        if (roll.done > 0 || roll.partial > 0) return 'partial';
+        return 'not-started';
+      }
+
       function makeProgressCard(opts) {
-        // opts: { title, pct, onClick }
+        // opts: { title, pct, roll, onClick }
+        var state = rollupDoneness(opts.roll);
+        var suffix = { 'done': 'done', 'partial': 'partial', 'not-started': 'pending' }[state];
         var card = document.createElement('button');
         card.type = 'button';
-        card.className = 'status-book-card';
+        card.className = 'status-book-card status-book-card-' + suffix;
         card.innerHTML =
           '<div class="status-book-head">' +
             '<span class="status-book-title"></span>' +
             '<span class="status-book-pct"></span>' +
           '</div>' +
-          '<div class="progress-bar"><div class="progress-bar-fill"></div></div>';
+          '<div class="progress-bar"><div class="progress-bar-fill"></div></div>' +
+          '<div class="status-book-foot">' +
+            '<span class="status-book-badge status-book-badge-' + suffix + '"></span>' +
+            '<span class="status-book-count"></span>' +
+          '</div>';
         card.querySelector('.status-book-title').textContent = opts.title;
         card.querySelector('.status-book-pct').textContent = opts.pct + '%';
         card.querySelector('.progress-bar-fill').style.width = opts.pct + '%';
+        card.querySelector('.status-book-badge').textContent = DONENESS_LABELS[state];
+        card.querySelector('.status-book-count').textContent = opts.roll
+          ? opts.roll.done.toLocaleString() + ' of ' + opts.roll.denominator.toLocaleString() + ' built'
+          : '';
         card.addEventListener('click', opts.onClick);
         return card;
       }
@@ -273,6 +305,7 @@
           booksEl.appendChild(makeProgressCard({
             title: book.title,
             pct: book.pct,
+            roll: book,
             onClick: function () { location.hash = '#pf1e-status/' + book.id; }
           }));
         });
@@ -293,8 +326,9 @@
         bookKindsEl.innerHTML = '';
         detail.kinds.forEach(function (kind) {
           bookKindsEl.appendChild(makeProgressCard({
-            title: kind.label + ' (' + kind.items.length.toLocaleString() + ')',
+            title: kind.label,
             pct: kind.pct,
+            roll: kind,
             onClick: function () { location.hash = '#pf1e-status/' + bookId + '/' + kind.kind; }
           }));
         });
@@ -341,15 +375,13 @@
 
         itemListEl.innerHTML = '';
         pageItems.forEach(function (it) {
-          var row = document.createElement('div');
+          var row = document.createElement('tr');
           row.className = 'status-item-row';
           var pillClass = DONENESS_PILL_CLASSES[it.doneness] || 'status-item-pill-pending';
           row.innerHTML =
-            '<span class="status-item-name"></span>' +
-            '<span class="status-item-pills">' +
-              '<span class="status-item-pill status-item-pill-standing"></span>' +
-              '<span class="status-item-pill ' + pillClass + '"></span>' +
-            '</span>';
+            '<td class="status-item-name"></td>' +
+            '<td class="status-item-cell"><span class="status-item-pill status-item-pill-standing"></span></td>' +
+            '<td class="status-item-cell"><span class="status-item-pill ' + pillClass + '"></span></td>';
           row.querySelector('.status-item-name').textContent = it.name;
           var pills = row.querySelectorAll('.status-item-pill');
           pills[0].textContent = STANDING_LABELS[it.standing] || humanizeToken(it.standing);
