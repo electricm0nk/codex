@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-18T03:17:50Z",
+  "generated_at": "2026-08-18T13:41:35Z",
   "doneness_values": [
     "done",
     "partial",
@@ -436,19 +436,6 @@
       "standing_breakdown": {
         "origin": 12,
         "unclassified": 22
-      }
-    },
-    {
-      "id": "core_essentials",
-      "title": "Core Essentials",
-      "done": 0,
-      "partial": 0,
-      "not_started": 0,
-      "denominator": 0,
-      "pct": 0.0,
-      "excluded_from_percentage": 128,
-      "standing_breakdown": {
-        "packaging-artifact": 128
       }
     }
   ]
