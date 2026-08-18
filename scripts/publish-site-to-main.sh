@@ -63,9 +63,18 @@ say "publish site/  from '$FROM'  ->  '$TO'"
 # ---------------------------------------------------------------------------
 say "1/6  preconditions"
 
-if [ -n "$(git status --porcelain --untracked-files=no)" ]; then
-    git status --short --untracked-files=no >&2
-    fail "working tree has uncommitted tracked changes. Commit or stash them first
+# `docs/retro/events/*.jsonl` is excluded deliberately, not as a convenience:
+# scripts/verify.sh appends a verification event to it on EVERY run, and this
+# script runs verify.sh stages itself in step 2. Including it makes the check
+# unsatisfiable -- the act of publishing dirties the tree it just demanded be
+# clean. It is auto-generated telemetry, never part of the publish payload
+# (only site/ is published), so its state cannot affect what goes live.
+DIRTY="$(git status --porcelain --untracked-files=no \
+         | grep -vE '^.. docs/retro/events/.*\.jsonl$' || true)"
+
+if [ -n "$DIRTY" ]; then
+    echo "$DIRTY" >&2
+    fail "working tree has uncommitted tracked changes. Commit them first
        (note: this repo forbids 'git stash' -- commit instead)."
 fi
 
