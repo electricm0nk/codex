@@ -25539,3 +25539,90 @@ replaying `doneness_verdict()` over `docs/work-inventory.json` directly, and agr
    citation fix; `computed` reaches `done` only via `grounded`, and 18 of them did exactly that on
    their own once `raw_tokens` existed. The other 25 need real effect wiring.
 5. **DoD item 8** for the 40 `equipment_modifier` text promotions — see §5.
+
+### §8 — Wired-integration four-check audit (base `12f1f5c94`, no-stub doctrine §"Per-cycle audit")
+
+```
+1  OK_NO_TOKENS
+2  OK_NO_NOOP_HANDLERS
+3  OK_NO_MOCK_LEAKS
+4  OK_NO_WOULD_STRINGS
+```
+
+### §9 — Gate, run 1: found 5 failures this cycle caused, and 14 it inherited
+
+```
+RETRO_ACTOR=sd31-ingest6-w14 CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-w14-ingest6 \
+  ./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+VERIFY_EXIT=1   RESULT: FAIL — root-full desktop reach frontend-test clippy
+```
+Log preserved at `artifacts/SD31-E6-F5-005-verify-run1.log`.
+
+**Every `test result: FAILED` line was attributed back to its `Running` line and named** — no
+"the N known environmental failures" bucket (`AGENTS.md` §Concurrency).
+
+**Caused by this cycle — 5 tests + a clippy ceiling breach, all fixed at the source (commit
+`c21623fce`), none excused, none of the invariants weakened:**
+
+| test | cause | fix |
+|---|---|---|
+| `derived_evaluator_fixture_check::engine_evaluator_output_equals_the_corpus_derived_expected_value` | *"1 unit(s) clear the `derived` bar but are still on the `UNCLEARED` record"* | `UNCLEARED` emptied — see below |
+| `derived_evaluator_fixture_check::engine_ingest_cites_the_same_upstream_bytes_the_fixture_was_read_from` | *"`spindle_of_perfect_knowledge` is recorded in `UNCLEARED` but now passes. Delete the entry — a stale excuse left in place is how an exemption list starts."* | same |
+| `sd26_cache_apg::equipment_cache_never_forces_the_all_web_sourced_description_field_into_an_lst_token_shape` | asserted `source.kind == web_second_source` for every described record | read the citation from `description_source` **or** `source` |
+| `sd26_cache_apg::equipment_cache_uses_weight_basis_identity_match_for_the_documented_cost_quirk_subset` | `identity_match_basis` now lives in `description_source` | same helper |
+| `sd26_cache_core_rulebook::provenance_kind_distribution_matches_decisions_md_11_2...` | `web_second_source count 0` (was 82) | same reading rule; the pinned counts 67 / 117 / 81..=83 are **unchanged** |
+| `clippy` | root 54 vs ceiling 51 | **all 3 excess warnings were `doc_lazy_continuation` in this cycle's own new module**; fixed the doc comment rather than raising the baseline. `cargo clippy --locked --tests` now reports **0** warnings in either new file. |
+
+**`UNCLEARED` is now EMPTY, and that is the first time in this program's record.** The register's
+own doc comment says its purpose is that *"the fix must delete the entry rather than leave a stale
+excuse behind"* — it turned red **on the fix**, which is the gate working exactly as designed.
+
+**The two `sd26_cache_*` reformulations are strictly stronger, not weaker, and that is
+mutation-proven.** SD-26 `decisions.md §11.2` made `source` a discriminated union to record *the
+provenance of the field each SD-25 intake cycle was closing* — for APG equipment that field was the
+**description** ("APG description: 331/331 populated records are web-sourced"), while the identity,
+`cost_gp` and `weight` were always corpus-derived. §11.2's premise (0/338 native `DESC:` tokens) is
+untouched and still enforced. The new form additionally requires `url` + `fetched_at` +
+`identity_match_basis` to all be present — §11's own E3 rule, *"cite every web-sourced field: URL +
+fetch date + the identity-match basis used"*, which the previous form never checked — and rejects a
+fabricated `DESC:` `raw_token`. Three seeded mutations, three distinct assertion lines:
+
+```
+drop description_source        -> panicked at tests/sd26_cache_apg.rs:399
+blank identity_match_basis     -> panicked at tests/sd26_cache_apg.rs:406
+add a fabricated DESC: token   -> panicked at tests/sd26_cache_apg.rs:416
+```
+All three reverted; `cargo test --locked --test sd26_cache_apg` → `7 passed; 0 failed`.
+
+**Inherited red at the base tip `12f1f5c94`, NOT caused by this cycle — 14 tests + 1 frontend file
+across four stages.** This cycle's diff touches exactly 412 files under
+`data/corpus/advanced_players_guide/equipment/` and `data/corpus/core_rulebook/equipment/` (all
+`M`, zero `A`, zero `D` — `git diff --name-status 12f1f5c94...HEAD -- data/corpus`), plus the
+inventory, the site feeds, the docs, and 3 source files. It touches **no** `race_trait`,
+`race`, or `companion` record at all.
+
+| stage | failures | why they are not this cycle's |
+|---|---|---|
+| `desktop` | `companion_catalog::every_served_key_matches_a_corpus_record_file` | `data/corpus/core_essentials/companion: No such file or directory` |
+| `desktop`, `reach` | 5 × `reach_gate::*` | `data/corpus/core_essentials/race_trait/` absent; ARG `race_trait` on disk 414 vs pinned 350; `apg/crb/ultimate_magic companions` reach nothing |
+| `root-full` | `sd27_ability_automatic_granted_race_traits`, `sd27_alternate_racial_trait_reachability`, `v06_work_inventory::arg_race_file_carries_favored_class_bonus_...`, `ingest_apg_race_traits::already_ingested_keys_...`, `ingest_race_traits::no_committed_trait_description_leaks_...` | all `race_trait`; ARG 350-vs-414 again |
+| `root-full` | `sd27_book_license_record_counts` × 2 | APG `LICENSE.json` states 2735, disk has **2743 — and had 2743 at the base too**: `git ls-tree -r --name-only 12f1f5c94 data/corpus/advanced_players_guide/ \| grep '\.json$' \| grep -v '/LICENSE.json$' \| wc -l` → `2743`. ARG redaction count 1 vs 10, a book this cycle never opened. |
+| `root-full` | `sd_governance_stub_registry_divergence::registry_book_stub_entries_match_stub_artifacts_exactly` | *"registry contains book_stub entry/entries with no matching data/stubs/*.json artifact: [`core_essentials`]"* |
+| `frontend-test` | `characterHub/raceCreationCoverage.test.ts` | race-trait total across CRB+B1+ARG: expected 525, got 589 |
+
+**Root cause, single and named:** the base tip is the commit
+`12f1f5c94 chore(sd31): regen the dashboard + status feeds after the Core Essentials move` — the
+**Core Essentials move landed the data relocation and the dashboard regen, but not the code and
+count pins that read it.** `data/corpus/core_essentials/` does not exist at `12f1f5c94`
+(`git ls-tree --name-only 12f1f5c94 data/corpus/core_essentials/` → empty) while `reach_gate.rs:3511`,
+`companion_catalog.rs:649` and the stub registry all still require it, and the records it moved into
+`advanced_race_guide/race_trait/` pushed that book past six separately-pinned count assertions.
+Logged as `OPEN-ISSUES.md` row 239. **Not fixed here:** `race`/`race_trait`/`companion` are the F3/F4
+and F7 lanes' file territory, another wave-14 lane may already hold them, and a cycle that reaches
+into another lane's files mid-wave is how the shared-checkout incidents in `AGENTS.md` §Concurrency
+happen.
+
+### §10 — Gate, run 2
+
+Launched after commit `c21623fce`. Result recorded below; log at
+`artifacts/SD31-E6-F5-005-verify.log`.
