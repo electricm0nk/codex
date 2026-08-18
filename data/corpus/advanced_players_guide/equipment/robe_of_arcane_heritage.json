@@ -1,27 +1,82 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Robe of Arcane Heritage",
     "category": "MagicItems",
-    "name": "Robe of Arcane Heritage",
     "cost_gp": 16000.0,
-    "weight": 1.0,
-    "description": "Dark purple and blue robes that treat a sorcerer's level as 4 higher for the purposes of bloodline powers."
+    "description": "Dark purple and blue robes that treat a sorcerer's level as 4 higher for the purposes of bloodline powers.",
+    "key": "Robe of Arcane Heritage",
+    "name": "Robe of Arcane Heritage",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "BloodlineLVL",
+          "4"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "BloodlineProgressionLVL",
+          "4"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "BloodlineFeatProgression",
+          "-4"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "EldritchHeritageBloodlineLVL",
+          "4"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Robe"
+      },
+      {
+        "key": "COST",
+        "value": "16000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.308"
+      }
+    ],
+    "weight": 1.0
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html",
+  "description_source": {
+    "citation_precision": "category_aggregate_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+cost",
-    "citation_precision": "category_aggregate_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 227,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_magic_items.lst",
+    "record_key": "Robe of Arcane Heritage",
+    "sha256": "215c58046b3919dd191b8e605dc59e881507ee8133aabaacf6be105124a0add3"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

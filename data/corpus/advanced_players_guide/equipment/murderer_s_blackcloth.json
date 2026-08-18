@@ -1,27 +1,87 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Murderer's Blackcloth",
     "category": "ArmsArmor",
-    "name": "Murderer's Blackcloth",
     "cost_gp": 5.0,
-    "weight": 10.0,
-    "description": "A +1 shadow padded armor that increases a wearing rogue's sneak attack bleed damage by 1."
+    "description": "A +1 shadow padded armor that increases a wearing rogue's sneak attack bleed damage by 1.",
+    "key": "Murderer's Blackcloth",
+    "name": "Murderer's Blackcloth",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "1",
+          "TYPE=Armor",
+          "PREVAREQ:DisableArmorBonus,0"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Padded"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Armor.Light.ArmorProfLight.Suit.Specific.Nonmetal"
+      },
+      {
+        "key": "COST",
+        "value": "5"
+      },
+      {
+        "key": "WT",
+        "value": "10"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "0"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Cloth.Special Ability ~ +1 ~ Armor.Special Ability ~ Shadow ~ Armor.Special Ability ~ Enhancement Cost|7500"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.285"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "5"
+      },
+      {
+        "key": "SPROP",
+        "value": "Increases the bleed damage of the rogue's sneak attacks by +1."
+      }
+    ],
+    "weight": 10.0
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/armor.html",
+  "description_source": {
+    "citation_precision": "exact_item_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+cost",
-    "citation_precision": "exact_item_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/armor.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 42,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_arms_armor.lst",
+    "record_key": "Murderer's Blackcloth",
+    "sha256": "f3e6aea97309b4c0e3746245c112d0880f014ae69077be5b3deba0567aeb8468"
   },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

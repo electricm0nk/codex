@@ -1,27 +1,57 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Loaded Dice (Superior)",
     "category": "General",
-    "name": "Loaded Dice, Superior",
     "cost_gp": 50.0,
-    "weight": 0.0,
-    "description": "Higher-quality loaded dice carved around a naturally heavy inclusion, requiring a DC 20 to 30 check to detect."
+    "description": "Higher-quality loaded dice carved around a naturally heavy inclusion, requiring a DC 20 to 30 check to detect.",
+    "key": "Loaded Dice (Superior)",
+    "name": "Loaded Dice, Superior",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Loaded Dice, Superior"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Entertainment"
+      },
+      {
+        "key": "COST",
+        "value": "50"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.182"
+      }
+    ],
+    "weight": 0.0
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+  "description_source": {
+    "citation_precision": "category_aggregate_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+cost",
-    "citation_precision": "category_aggregate_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 121,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_general.lst",
+    "record_key": "Loaded Dice (Superior)",
+    "sha256": "1b5b3aed553824d296a75513db68c9a8a8f7b44990b7e0eec4953a532ae5dbbd"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

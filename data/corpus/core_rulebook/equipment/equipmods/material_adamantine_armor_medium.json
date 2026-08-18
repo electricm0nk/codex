@@ -1,26 +1,113 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
-    "key": "Material ~ Adamantine ~ Armor / Medium",
     "category": "equipmods",
-    "name": "Adamantine",
     "cost_gp": 10000.0,
-    "weight_lbs": null,
-    "description": "Adamantine is extremely strong and favored by weapon and armor smiths alike for its ability to cut through solid barriers with ease and endure heavy blows. Weapons with at least one adamantine part ignore hardness less than 20 when dealing damage to objects. Armor and shields made of adamantine grant their wearer damage reduction: 1/-- for light armor, 2/-- for medium armor, 3/-- for heavy armor."
+    "description": "Adamantine is extremely strong and favored by weapon and armor smiths alike for its ability to cut through solid barriers with ease and endure heavy blows. Weapons with at least one adamantine part ignore hardness less than 20 when dealing damage to objects. Armor and shields made of adamantine grant their wearer damage reduction: 1/-- for light armor, 2/-- for medium armor, 3/-- for heavy armor.",
+    "key": "Material ~ Adamantine ~ Armor / Medium",
+    "name": "Adamantine",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "ArmorCheckPenalty",
+          "-1",
+          "TYPE=Enhancement"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "ACCHECK",
+          "1",
+          "TYPE=Enhancement"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Material ~ Adamantine ~ Armor / Medium"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "FRONT"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NORMAL"
+      },
+      {
+        "key": "TYPE",
+        "value": "BaseMaterial.MasterworkQuality.Armor"
+      },
+      {
+        "key": "COST",
+        "value": "10000"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Metal.Adamantine.Masterwork"
+      },
+      {
+        "key": "REPLACES",
+        "value": "Special Quality ~ Masterwork ~ Armor"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.154"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,Metal,Medium"
+      },
+      {
+        "key": "DR",
+        "value": "2/-"
+      },
+      {
+        "key": "SPROP",
+        "value": "adamantine"
+      },
+      {
+        "key": "ASSIGNTOALL",
+        "value": "NO"
+      },
+      {
+        "key": "INFO",
+        "value": "hp|40 hp/inch"
+      },
+      {
+        "key": "INFO",
+        "value": "Hardness|hardness 20"
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://www.d20pfsrd.com/equipment---final/special-materials/",
+  "description_source": {
     "fetched_at": "2026-07-22",
-    "identity_match_basis": "name"
+    "identity_match_basis": "name",
+    "kind": "web_second_source",
+    "url": "https://www.d20pfsrd.com/equipment---final/special-materials/"
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 99,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "Material ~ Adamantine ~ Armor / Medium",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "no_corpus_line"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

@@ -1,27 +1,61 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Staff of Performance",
     "category": "MagicItems",
-    "name": "Staff of Performance",
     "cost_gp": 26800.0,
-    "weight": 5.0,
-    "description": "A varnished cedar staff that grows ornamental keys and strings to resemble its owner's favorite instrument, granting calm emotions, glibness, hypnotic pattern, pyrotechnics, enthrall, major image, and sculpt sound."
+    "description": "A varnished cedar staff that grows ornamental keys and strings to resemble its owner's favorite instrument, granting calm emotions, glibness, hypnotic pattern, pyrotechnics, enthrall, major image, and sculpt sound.",
+    "key": "Staff of Performance",
+    "name": "Staff of Performance",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Staff"
+      },
+      {
+        "key": "COST",
+        "value": "26800"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "BASEITEM",
+        "value": "Staff"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Staff Charges|CHARGES[10]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.297"
+      }
+    ],
+    "weight": 5.0
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html",
+  "description_source": {
+    "citation_precision": "category_aggregate_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+cost",
-    "citation_precision": "category_aggregate_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 31,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_magic_items.lst",
+    "record_key": "Staff of Performance",
+    "sha256": "215c58046b3919dd191b8e605dc59e881507ee8133aabaacf6be105124a0add3"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

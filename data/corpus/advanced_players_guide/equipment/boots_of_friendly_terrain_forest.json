@@ -1,27 +1,65 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Boots of Friendly Terrain (Forest)",
     "category": "MagicItems",
-    "name": "Boots of Friendly Terrain (Forest)",
     "cost_gp": 2400.0,
-    "weight": 1.0,
-    "description": "Supple leather boots letting a ranger treat forest terrain as a favored terrain, granting a +2 bonus on the associated checks."
+    "description": "Supple leather boots letting a ranger treat forest terrain as a favored terrain, granting a +2 bonus on the associated checks.",
+    "key": "Boots of Friendly Terrain (Forest)",
+    "name": "Boots of Friendly Terrain (Forest)",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "FavoredTerrainForest",
+          "2"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Boot"
+      },
+      {
+        "key": "COST",
+        "value": "2400"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.301"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Equipment ~ Favored Terrain (Forest)|PREMULT:2,[PRECLASS:1,Ranger=1],[!PREABILITY:1,CATEGORY=Special Ability,Favored Terrain (Forest)]"
+      }
+    ],
+    "weight": 1.0
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html",
+  "description_source": {
+    "citation_precision": "category_aggregate_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+cost",
-    "citation_precision": "category_aggregate_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 137,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_magic_items.lst",
+    "record_key": "Boots of Friendly Terrain (Forest)",
+    "sha256": "215c58046b3919dd191b8e605dc59e881507ee8133aabaacf6be105124a0add3"
   },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

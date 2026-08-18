@@ -1,27 +1,57 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Antiplague (Vial)",
     "category": "General",
-    "name": "Antiplague (Vial)",
     "cost_gp": 50.0,
-    "weight": 0.0,
-    "description": "A foul-tasting, milky tonic granting a +5 alchemical bonus on Fortitude saves against disease for 1 hour; a creature already infected may reroll its save that day using the better result."
+    "description": "A foul-tasting, milky tonic granting a +5 alchemical bonus on Fortitude saves against disease for 1 hour; a creature already infected may reroll its save that day using the better result.",
+    "key": "Antiplague (Vial)",
+    "name": "Antiplague (Vial)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Alchemical.Vial.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "50"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.182"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Craft DC|25"
+      }
+    ],
+    "weight": 0.0
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+  "description_source": {
+    "citation_precision": "category_aggregate_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+cost",
-    "citation_precision": "category_aggregate_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 55,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_general.lst",
+    "record_key": "Antiplague (Vial)",
+    "sha256": "1b5b3aed553824d296a75513db68c9a8a8f7b44990b7e0eec4953a532ae5dbbd"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

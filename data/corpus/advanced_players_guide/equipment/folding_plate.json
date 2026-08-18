@@ -1,27 +1,87 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Folding Plate",
     "category": "ArmsArmor",
-    "name": "Folding Plate",
     "cost_gp": 1500.0,
-    "weight": 50.0,
-    "description": "A +1 full plate armor that can transform between a wearable brooch and its full armor form on command."
+    "description": "A +1 full plate armor that can transform between a wearable brooch and its full armor form on command.",
+    "key": "Folding Plate",
+    "name": "Folding Plate",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "9",
+          "TYPE=Armor",
+          "PREVAREQ:DisableArmorBonus,0"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Full Plate"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Armor.Heavy.ArmorProfHeavy.Suit.Specific"
+      },
+      {
+        "key": "COST",
+        "value": "1500"
+      },
+      {
+        "key": "WT",
+        "value": "50"
+      },
+      {
+        "key": "PREEQUIP",
+        "value": "1,Brooch (Folding Plate)"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "-6"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ +1 ~ Armor.Material ~ Steel"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.284"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "35"
+      }
+    ],
+    "weight": 50.0
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/armor.html",
+  "description_source": {
+    "citation_precision": "exact_item_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+cost",
-    "citation_precision": "exact_item_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/armor.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 31,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_arms_armor.lst",
+    "record_key": "Folding Plate",
+    "sha256": "f3e6aea97309b4c0e3746245c112d0880f014ae69077be5b3deba0567aeb8468"
   },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

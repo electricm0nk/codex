@@ -1,27 +1,69 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Arrow (Smoke)",
     "category": "ArmsArmor",
-    "name": "Arrow, Smoke",
     "cost_gp": 10.0,
-    "weight": 0.15,
-    "description": "A single specially shaped smokestick arrow that trails smoke in flight and creates a 5-foot cube of smoke where it strikes."
+    "description": "A single specially shaped smokestick arrow that trails smoke in flight and creates a 5-foot cube of smoke where it strikes.",
+    "key": "Arrow (Smoke)",
+    "name": "Arrow, Smoke",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Arrow, Smoke"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ammunition.Resizable.Standard.Arrow.Individual"
+      },
+      {
+        "key": "COST",
+        "value": "10"
+      },
+      {
+        "key": "WT",
+        "value": "0.15"
+      },
+      {
+        "key": "BASEQTY",
+        "value": "1"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel.Material ~ Wood"
+      },
+      {
+        "key": "MODS",
+        "value": "YES"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.177"
+      }
+    ],
+    "weight": 0.15
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+  "description_source": {
+    "citation_precision": "category_aggregate_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+cost",
-    "citation_precision": "category_aggregate_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 13,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_arms_armor.lst",
+    "record_key": "Arrow (Smoke)",
+    "sha256": "f3e6aea97309b4c0e3746245c112d0880f014ae69077be5b3deba0567aeb8468"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

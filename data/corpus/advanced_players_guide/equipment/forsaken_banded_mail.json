@@ -1,27 +1,87 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Forsaken Banded Mail",
     "category": "ArmsArmor",
-    "name": "Forsaken Banded Mail",
     "cost_gp": 250.0,
-    "weight": 35.0,
-    "description": "A +1 banded mail that prevents its wearer from casting divine spells but grants spell resistance against divine abilities and treats its enhancement bonus as 2 higher against divine creatures."
+    "description": "A +1 banded mail that prevents its wearer from casting divine spells but grants spell resistance against divine abilities and treats its enhancement bonus as 2 higher against divine creatures.",
+    "key": "Forsaken Banded Mail",
+    "name": "Forsaken Banded Mail",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "7",
+          "TYPE=Armor",
+          "PREVAREQ:DisableArmorBonus,0"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Banded Mail"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Armor.Heavy.ArmorProfHeavy.Suit.Specific"
+      },
+      {
+        "key": "COST",
+        "value": "250"
+      },
+      {
+        "key": "WT",
+        "value": "35"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "-6"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ +1 ~ Armor.Material ~ Steel"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.284"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "35"
+      },
+      {
+        "key": "SPROP",
+        "value": "Cannot cast divine spells or use any spell-like supernatural ability gained from a connection to a deity and gains SR 19 against the same, and treats the armor's enhancement bonus as +2 higher against creatures with these abilities."
+      }
+    ],
+    "weight": 35.0
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/armor.html",
+  "description_source": {
+    "citation_precision": "exact_item_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+cost",
-    "citation_precision": "exact_item_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/armor.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 32,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_arms_armor.lst",
+    "record_key": "Forsaken Banded Mail",
+    "sha256": "f3e6aea97309b4c0e3746245c112d0880f014ae69077be5b3deba0567aeb8468"
   },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

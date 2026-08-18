@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-08-18T21:32:15Z",
+  "generated_at": "2026-08-18T23:00:02Z",
   "doneness_values": [
     "done",
     "partial",
     "not-started"
   ],
   "overall": {
-    "done": 10423,
-    "partial": 2835,
-    "not_started": 16232,
+    "done": 10757,
+    "partial": 2538,
+    "not_started": 16195,
     "denominator": 29490,
-    "pct": 35.3,
+    "pct": 36.5,
     "excluded_from_percentage": 9031,
     "standing_breakdown": {
       "origin": 29490,
@@ -22,11 +22,11 @@
     {
       "id": "core_rulebook",
       "title": "Core Rulebook",
-      "done": 2878,
-      "partial": 732,
-      "not_started": 879,
+      "done": 2916,
+      "partial": 731,
+      "not_started": 842,
       "denominator": 4489,
-      "pct": 64.1,
+      "pct": 65.0,
       "excluded_from_percentage": 734,
       "standing_breakdown": {
         "origin": 4489,
@@ -36,11 +36,11 @@
     {
       "id": "advanced_players_guide",
       "title": "Advanced Player's Guide",
-      "done": 364,
-      "partial": 432,
+      "done": 660,
+      "partial": 136,
       "not_started": 1526,
       "denominator": 2322,
-      "pct": 15.7,
+      "pct": 28.4,
       "excluded_from_percentage": 920,
       "standing_breakdown": {
         "origin": 2322,

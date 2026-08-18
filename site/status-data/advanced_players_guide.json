@@ -13810,11 +13810,11 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 5,
-      "partial": 322,
+      "done": 301,
+      "partial": 26,
       "not_started": 1,
       "denominator": 328,
-      "pct": 1.5,
+      "pct": 91.8,
       "excluded_from_percentage": 10,
       "standing_breakdown": {
         "origin": 328,
@@ -13823,61 +13823,61 @@
       "items": [
         {
           "name": "Abacus",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Tools",
           "standing": "origin"
         },
         {
           "name": "Agile Breastplate",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Armor.Medium.ArmorProfMedium.Suit.Standard",
           "standing": "origin"
         },
         {
           "name": "Agile Half-Plate",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Armor.Heavy.ArmorProfHeavy.Suit.Standard",
           "standing": "origin"
         },
         {
           "name": "Alchemical Grease",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Alchemical.Consumable",
           "standing": "origin"
         },
         {
           "name": "Alchemical Solvent (Vial)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Alchemical.Vial.Consumable",
           "standing": "origin"
         },
         {
           "name": "Alchemist's Kindness",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Alchemical.Consumable",
           "standing": "origin"
         },
         {
           "name": "Alchemist's Kit",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Tools.CraftToolsAlchemist",
           "standing": "unclassified"
         },
         {
           "name": "Alchemist's Lab (Portable)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Tools.CraftToolsAlchemist",
           "standing": "origin"
         },
         {
           "name": "Alkali (Flask)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Alchemical.Flask.Consumable",
           "standing": "origin"
         },
         {
           "name": "All Tools Vest",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Vest",
           "standing": "origin"
         },
@@ -13895,73 +13895,73 @@
         },
         {
           "name": "Animal Harness",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Animal",
           "standing": "origin"
         },
         {
           "name": "Annihilation Spectacles",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Eyes",
           "standing": "origin"
         },
         {
           "name": "Antiplague (Vial)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Alchemical.Vial.Consumable",
           "standing": "origin"
         },
         {
           "name": "Anvil (Blacksmith)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Tools",
           "standing": "origin"
         },
         {
           "name": "Anvil (Farrier)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Tools",
           "standing": "origin"
         },
         {
           "name": "Anvil (Goldsmith/Silversmith)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Tools",
           "standing": "origin"
         },
         {
           "name": "Apple of Eternal Sleep",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous",
           "standing": "origin"
         },
         {
           "name": "Armor of Insults",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Armor.Light.ArmorProfLight.Suit.Specific",
           "standing": "origin"
         },
         {
           "name": "Armored Coat",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Armor.Medium.ArmorProfMedium.Suit.Standard",
           "standing": "origin"
         },
         {
           "name": "Arrow (Blunt)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Ammunition.Resizable.Standard.Arrow.Individual",
           "standing": "origin"
         },
         {
           "name": "Arrow (Flight)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Ammunition.Resizable.Standard.Arrow.Individual",
           "standing": "origin"
         },
         {
           "name": "Arrow (Searing)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Ammunition.Resizable.Specific.Arrow.Individual",
           "standing": "origin"
         },
@@ -13973,157 +13973,157 @@
         },
         {
           "name": "Arrow (Smoke)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Ammunition.Resizable.Standard.Arrow.Individual",
           "standing": "origin"
         },
         {
           "name": "Arrows (Blunt/20)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Ammunition.Resizable.Standard.Arrow",
           "standing": "origin"
         },
         {
           "name": "Arrows (Flight/20)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Ammunition.Resizable.Standard.Arrow",
           "standing": "origin"
         },
         {
           "name": "Arrows (Smoke/20)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Ammunition.Resizable.Standard.Arrow",
           "standing": "origin"
         },
         {
           "name": "Assisting Gloves",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Glove",
           "standing": "unclassified"
         },
         {
           "name": "Astrolabe",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Tools",
           "standing": "origin"
         },
         {
           "name": "Axe (Undercutting)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.OneHanded.Martial.Specific.Slashing.Axe",
           "standing": "origin"
         },
         {
           "name": "Backpack (Masterwork)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.General.Container.Resizable",
           "standing": "origin"
         },
         {
           "name": "Balancing Pole",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Tools",
           "standing": "origin"
         },
         {
           "name": "Bandages of Rapid Recovery",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Chest.Consumable",
           "standing": "origin"
         },
         {
           "name": "Barbed Vest",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.General",
           "standing": "origin"
         },
         {
           "name": "Bardiche",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.TwoHanded.Martial.Reach.Standard.Slashing.Polearm",
           "standing": "origin"
         },
         {
           "name": "Battle Aspergillum",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.Light.Finesseable.Simple.Standard.Bludgeoning.Mace.Hammer",
           "standing": "origin"
         },
         {
           "name": "Battlement Shield",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Shield.Tower.Specific.Close.Nonmetal",
           "standing": "origin"
         },
         {
           "name": "Bayonet",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.TwoHanded.Simple.Standard.Piercing.Bayonet.Close",
           "standing": "origin"
         },
         {
           "name": "Beacon of True Faith",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Artifact.Minor.Light Source",
           "standing": "origin"
         },
         {
           "name": "Bear Trap",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Tools",
           "standing": "origin"
         },
         {
           "name": "Beaststrike Club",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.OneHanded.Ranged.Thrown.Simple.Specific.Bludgeoning.Club.Hammer",
           "standing": "origin"
         },
         {
           "name": "Bec de Corbin",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.TwoHanded.Martial.Reach.Standard.Bludgeoning.Piercing.Polearm",
           "standing": "origin"
         },
         {
           "name": "Bellows",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Tools",
           "standing": "origin"
         },
         {
           "name": "Bill",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.TwoHanded.Martial.Reach.Standard.Slashing.Polearm",
           "standing": "origin"
         },
         {
           "name": "Blade of Binding",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.TwoHanded.Martial.Specific.Slashing.Sword.BladeHeavy",
           "standing": "origin"
         },
         {
           "name": "Bladeguard",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Alchemical.Consumable",
           "standing": "origin"
         },
         {
           "name": "Blanket",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.General.Resizable",
           "standing": "origin"
         },
         {
           "name": "Bloodblock",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Alchemical.Consumable",
           "standing": "origin"
         },
         {
           "name": "Bolt (Tangle)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Ammunition.Resizable.Specific.Bolt.Individual",
           "standing": "origin"
         },
@@ -14135,19 +14135,19 @@
         },
         {
           "name": "Boneless Leather",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Armor.Light.ArmorProfLight.Suit.Specific.Nonmetal",
           "standing": "origin"
         },
         {
           "name": "Book of the Loremaster",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Book",
           "standing": "origin"
         },
         {
           "name": "Boomerang",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Exotic.Ranged.Standard.Bludgeoning.Thrown.Consumable",
           "standing": "origin"
         },
@@ -14219,157 +14219,157 @@
         },
         {
           "name": "Bottle of Messages",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Consumable",
           "standing": "origin"
         },
         {
           "name": "Bottle of the Bound",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Artifact.Major",
           "standing": "origin"
         },
         {
           "name": "Bracelet of Mercy",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Bracelet",
           "standing": "origin"
         },
         {
           "name": "Brass Knuckles",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Natural.Weapon Group Natural.Melee.Unarmed.Monk.Bludgeoning.Finesseable.Close",
           "standing": "origin"
         },
         {
           "name": "Brooch (Folding Plate)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Brooch",
           "standing": "origin"
         },
         {
           "name": "Buccaneer's Breastplate",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Armor.Medium.ArmorProfMedium.Suit.Specific",
           "standing": "origin"
         },
         {
           "name": "Buffoon's Sword",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.Martial.Specific.Cursed.Piercing.Sword",
           "standing": "origin"
         },
         {
           "name": "Bullet (Dustburst)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Ammunition.Resizable.Specific.Bullet.Individual",
           "standing": "origin"
         },
         {
           "name": "Buoy (Common)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.General",
           "standing": "origin"
         },
         {
           "name": "Buoy (Superior)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.General",
           "standing": "origin"
         },
         {
           "name": "Butterfly Net",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.General.Resizable",
           "standing": "origin"
         },
         {
           "name": "Cage (Diminutive or Fine)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Animal.Container",
           "standing": "origin"
         },
         {
           "name": "Cage (Huge)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Animal.Container",
           "standing": "origin"
         },
         {
           "name": "Cage (Large)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Animal.Container",
           "standing": "origin"
         },
         {
           "name": "Cage (Small or Medium)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Animal.Container",
           "standing": "origin"
         },
         {
           "name": "Cage (Tiny)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Animal.Container",
           "standing": "origin"
         },
         {
           "name": "Campfire Bead",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous",
           "standing": "origin"
         },
         {
           "name": "Cannibal Ring",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Ring.Cursed",
           "standing": "origin"
         },
         {
           "name": "Casting Plaster",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Alchemical.Consumable",
           "standing": "origin"
         },
         {
           "name": "Catching Cape",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Cape",
           "standing": "origin"
         },
         {
           "name": "Cauldron",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Tools",
           "standing": "origin"
         },
         {
           "name": "Cauldron of Brewing",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous",
           "standing": "origin"
         },
         {
           "name": "Cauldron of Flying",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous",
           "standing": "origin"
         },
         {
           "name": "Cauldron of Plenty",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous",
           "standing": "origin"
         },
         {
           "name": "Cauldron of Resurrection",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous",
           "standing": "origin"
         },
         {
           "name": "Cauldron of Seeing",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous",
           "standing": "origin"
         },
@@ -14399,205 +14399,205 @@
         },
         {
           "name": "Cauldron of the Dead",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous",
           "standing": "origin"
         },
         {
           "name": "Cestus",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.Light.Finesseable.Simple.Standard.Bludgeoning.Piercing.Monk.Close",
           "standing": "origin"
         },
         {
           "name": "Chakram",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Martial.Ranged.Thrown.Standard.Slashing.Chakram",
           "standing": "origin"
         },
         {
           "name": "Chalkboard",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.General",
           "standing": "origin"
         },
         {
           "name": "Chest (Huge)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.General.Container",
           "standing": "origin"
         },
         {
           "name": "Chest (Large)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.General.Container",
           "standing": "origin"
         },
         {
           "name": "Chest (Medium)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.General.Container",
           "standing": "origin"
         },
         {
           "name": "Chest (Small)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.General.Container",
           "standing": "origin"
         },
         {
           "name": "Clamor Box",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous",
           "standing": "origin"
         },
         {
           "name": "Cleats",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Clothing.Resizable",
           "standing": "origin"
         },
         {
           "name": "Cloak of Immolation",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Cursed",
           "standing": "origin"
         },
         {
           "name": "Cloud Castle of the Storm King",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Artifact.Major",
           "standing": "origin"
         },
         {
           "name": "Compass",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Tools",
           "standing": "origin"
         },
         {
           "name": "Construct Channel Brick",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous",
           "standing": "origin"
         },
         {
           "name": "Cowardly Crouching Cloak",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Cape",
           "standing": "origin"
         },
         {
           "name": "Crossbow (Double)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Exotic.Ranged.Standard.Piercing.Container.Projectile.Crossbow",
           "standing": "origin"
         },
         {
           "name": "Crown of Blindness",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Cursed",
           "standing": "origin"
         },
         {
           "name": "Crystal of Healing Hands",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Neck",
           "standing": "origin"
         },
         {
           "name": "Dagger (Swordbreaker)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.Light.Finesseable.Exotic.Standard.Dagger.Tengu",
           "standing": "origin"
         },
         {
           "name": "Daystar Half-Plate",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Armor.Heavy.ArmorProfHeavy.Suit.Specific",
           "standing": "origin"
         },
         {
           "name": "Defoliant Polish",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Consumable",
           "standing": "origin"
         },
         {
           "name": "Dog Sled",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Transportation.Animal",
           "standing": "origin"
         },
         {
           "name": "Doomharp",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Instrument.String.Masterwork",
           "standing": "origin"
         },
         {
           "name": "Drill",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Tools",
           "standing": "origin"
         },
         {
           "name": "Dungeon Ring (Jailers)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Ring",
           "standing": "unclassified"
         },
         {
           "name": "Dungeon Ring (Prisoners)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Ring",
           "standing": "unclassified"
         },
         {
           "name": "Dust of Emulation",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Consumable",
           "standing": "origin"
         },
         {
           "name": "Earplugs",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.General",
           "standing": "origin"
         },
         {
           "name": "Falcata",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.OneHanded.Exotic.Standard.Slashing.HeavyBlade.Tengu",
           "standing": "origin"
         },
         {
           "name": "Flash Powder",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Alchemical.Consumable",
           "standing": "unclassified"
         },
         {
           "name": "Flying Ointment",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous",
           "standing": "origin"
         },
         {
           "name": "Folding Plate",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Armor.Heavy.ArmorProfHeavy.Suit.Specific",
           "standing": "origin"
         },
         {
           "name": "Footprint Book",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Tools.Book",
           "standing": "origin"
         },
         {
           "name": "Fork of the Forgotten One",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.TwoHanded.Martial.Reach.Artifact.Major.Piercing.Polearm",
           "standing": "origin"
         },
@@ -14609,37 +14609,37 @@
         },
         {
           "name": "Forsaken Banded Mail",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Armor.Heavy.ArmorProfHeavy.Suit.Specific",
           "standing": "origin"
         },
         {
           "name": "Fortress Shield",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Shield.Tower.Standard.Close.Nonmetal",
           "standing": "origin"
         },
         {
           "name": "Fortune-Teller's Deck (Common)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Tools.CardDeck",
           "standing": "origin"
         },
         {
           "name": "Fortune-Teller's Deck (Masterwork)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Tools",
           "standing": "origin"
         },
         {
           "name": "Fortune-Teller's Deck (Quality)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Tools.CardDeck",
           "standing": "origin"
         },
         {
           "name": "Furs",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Clothing.Resizable",
           "standing": "origin"
         },
@@ -14693,43 +14693,43 @@
         },
         {
           "name": "Girdle of Opposite Gender",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Cursed",
           "standing": "origin"
         },
         {
           "name": "Glaive-Guisarme",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.TwoHanded.Martial.Reach.Standard.Slashing.Polearm",
           "standing": "origin"
         },
         {
           "name": "Gloves of Dueling",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Glove",
           "standing": "origin"
         },
         {
           "name": "Glowing Glove",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Glove",
           "standing": "origin"
         },
         {
           "name": "Grappler's Mask",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Mask",
           "standing": "origin"
         },
         {
           "name": "Guarding Blade",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.Light.Finesseable.Martial.Specific.Piercing.Sword.BladeLight",
           "standing": "origin"
         },
         {
           "name": "Hammer of Thunderbolts",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.OneHanded.Martial.Artifact.Minor.Bludgeoning.Hammer",
           "standing": "origin"
         },
@@ -14741,325 +14741,325 @@
         },
         {
           "name": "Hat of Hatreds",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Cursed",
           "standing": "origin"
         },
         {
           "name": "Helm of Fearsome Mien",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Helm",
           "standing": "origin"
         },
         {
           "name": "Horn of the Huntmaster",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Instrument",
           "standing": "origin"
         },
         {
           "name": "Hourglass (1 Hour)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.General",
           "standing": "origin"
         },
         {
           "name": "Hourglass (1 minute)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.General",
           "standing": "origin"
         },
         {
           "name": "Hourglass (6 seconds)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.General",
           "standing": "origin"
         },
         {
           "name": "Improvised Weapon, Light",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.Light.Finesseable.Simple.Standard.Bludgeoning.Mace.Hammer",
           "standing": "origin"
         },
         {
           "name": "Improvised Weapon, One-Handed",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.OneHanded.Ranged.Thrown.Simple.Standard.Bludgeoning.Club.Hammer",
           "standing": "origin"
         },
         {
           "name": "Improvised Weapon, Two-Handed",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.OneHanded.Simple.Standard.Double.Bludgeoning.Quarterstaff.Polearm",
           "standing": "origin"
         },
         {
           "name": "Ioun Torch",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous",
           "standing": "origin"
         },
         {
           "name": "Iron Spike",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.General",
           "standing": "origin"
         },
         {
           "name": "Key of Lock Jamming",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Consumable",
           "standing": "origin"
         },
         {
           "name": "Khopesh",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.OneHanded.Exotic.Standard.Slashing.HeavyBlade.Tengu",
           "standing": "origin"
         },
         {
           "name": "Ki Mat",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous",
           "standing": "origin"
         },
         {
           "name": "Knight's Pennon (Battle)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous",
           "standing": "origin"
         },
         {
           "name": "Knight's Pennon (Honor)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous",
           "standing": "origin"
         },
         {
           "name": "Knight's Pennon (Parley)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous",
           "standing": "origin"
         },
         {
           "name": "Knucklebone of Fickle Fortune",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Artifact.Minor",
           "standing": "origin"
         },
         {
           "name": "Lance (Jousting)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.OneHanded.Martial.Reach.Specific.Piercing.Lance.Spear",
           "standing": "origin"
         },
         {
           "name": "Lance (Shieldsplitter)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.OneHanded.Martial.Reach.Specific.Piercing.Lance.Spear",
           "standing": "origin"
         },
         {
           "name": "Leeching Kit",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Tools",
           "standing": "origin"
         },
         {
           "name": "Light Detector",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Alchemical.Consumable",
           "standing": "origin"
         },
         {
           "name": "Liquid Ice (Flask)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Alchemical.Flask.Consumable",
           "standing": "origin"
         },
         {
           "name": "Loaded Dice (Average)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Entertainment",
           "standing": "origin"
         },
         {
           "name": "Loaded Dice (Superior)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Entertainment",
           "standing": "origin"
         },
         {
           "name": "Lord's Banner (Crusades)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous",
           "standing": "origin"
         },
         {
           "name": "Lord's Banner (Swiftness)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous",
           "standing": "origin"
         },
         {
           "name": "Lord's Banner (Terror)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous",
           "standing": "origin"
         },
         {
           "name": "Lord's Banner (Victory)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous",
           "standing": "origin"
         },
         {
           "name": "Lucerne Hammer",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.TwoHanded.Martial.Reach.Standard.Bludgeoning.Piercing.Polearm",
           "standing": "unclassified"
         },
         {
           "name": "Mace (Boulderhead)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.OneHanded.Simple.Specific.Bludgeoning.Mace.Hammer",
           "standing": "origin"
         },
         {
           "name": "Magnet",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.General",
           "standing": "origin"
         },
         {
           "name": "Manacles of Cooperation",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Wrist",
           "standing": "origin"
         },
         {
           "name": "Mancatcher",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.TwoHanded.Exotic.Reach.Standard.Piercing.Polearm",
           "standing": "origin"
         },
         {
           "name": "Map Maker's Kit",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Tools",
           "standing": "origin"
         },
         {
           "name": "Marbles",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.General",
           "standing": "origin"
         },
         {
           "name": "Marked Cards",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Entertainment",
           "standing": "origin"
         },
         {
           "name": "Mask of Giants (Greater)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Mask",
           "standing": "origin"
         },
         {
           "name": "Mask of Giants (Lesser)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Mask",
           "standing": "origin"
         },
         {
           "name": "Mistmail",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Armor.Light.ArmorProfLight.Suit.Specific",
           "standing": "origin"
         },
         {
           "name": "Moon Circlet",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Circlet",
           "standing": "origin"
         },
         {
           "name": "Muleback Cords",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Shoulders",
           "standing": "origin"
         },
         {
           "name": "Murderer's Blackcloth",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Armor.Light.ArmorProfLight.Suit.Specific.Nonmetal",
           "standing": "origin"
         },
         {
           "name": "Necklace of Ki Serenity",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Necklace",
           "standing": "unclassified"
         },
         {
           "name": "Necromancer's Athame",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous",
           "standing": "origin"
         },
         {
           "name": "Nushadir (Vial)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Alchemical.Vial.Consumable",
           "standing": "origin"
         },
         {
           "name": "Outfit (Hot Weather)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Clothing.Resizable.Starting",
           "standing": "origin"
         },
         {
           "name": "Perfect Golden Lute",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Artifact.Minor",
           "standing": "origin"
         },
         {
           "name": "Periscope",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.General",
           "standing": "origin"
         },
         {
           "name": "Philter of Love",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous",
           "standing": "origin"
         },
         {
           "name": "Pilum",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Martial.Ranged.Thrown.Standard.Piercing.Pilum.Javelin.Spear",
           "standing": "origin"
         },
         {
           "name": "Portrait Book",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Tools.Book",
           "standing": "origin"
         },
         {
           "name": "Powder",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.General",
           "standing": "origin"
         },
         {
           "name": "Pulley",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Tools",
           "standing": "origin"
         },
@@ -15077,697 +15077,697 @@
         },
         {
           "name": "Quilted Cloth",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Armor.Light.ArmorProfLight.Suit.Standard.Nonmetal",
           "standing": "origin"
         },
         {
           "name": "Rice Paper (Sheet)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.General.Writing.Documents",
           "standing": "origin"
         },
         {
           "name": "Ring (Poison Pill)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.General",
           "standing": "origin"
         },
         {
           "name": "Ring of Arcane Signets",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Ring",
           "standing": "origin"
         },
         {
           "name": "Ring of Delayed Doom",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Ring",
           "standing": "origin"
         },
         {
           "name": "Ring of Forcefangs",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Ring",
           "standing": "origin"
         },
         {
           "name": "Ring of Maniacal Devices",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Ring",
           "standing": "unclassified"
         },
         {
           "name": "Ring of Retribution",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Ring",
           "standing": "origin"
         },
         {
           "name": "Ring of Truth",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Ring.Cursed",
           "standing": "origin"
         },
         {
           "name": "Riot Pipes",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Instrument.Cursed",
           "standing": "origin"
         },
         {
           "name": "Robe of Arcane Heritage",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Robe",
           "standing": "unclassified"
         },
         {
           "name": "Rod (Bouncing/Greater)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Bouncing/Lesser)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Bouncing/Normal)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Dazing/Greater)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Dazing/Lesser)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Dazing/Normal)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Disruptive/Greater)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Disruptive/Lesser)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Disruptive/Normal)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Ectoplasmic/Greater)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Ectoplasmic/Lesser)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Ectoplasmic/Normal)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Elemental Acid/Greater)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Elemental Acid/Lesser)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Elemental Acid/Normal)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Elemental Cold/Greater)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Elemental Cold/Lesser)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Elemental Cold/Normal)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Elemental Electricity/Greater)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Elemental Electricity/Lesser)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Elemental Electricity/Normal)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Elemental Fire/Greater)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Elemental Fire/Lesser)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Elemental Fire/Normal)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Focused/Greater)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Focused/Lesser)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Focused/Normal)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Intensified/Greater)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Intensified/Lesser)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Intensified/Normal)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Lingering/Greater)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Lingering/Lesser)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Lingering/Normal)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Merciful/Greater)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Merciful/Lesser)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Merciful/Normal)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Persistent/Greater)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Persistent/Lesser)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Persistent/Normal)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Reach/Greater)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Reach/Lesser)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Reach/Normal)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Selective/Greater)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Selective/Lesser)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Selective/Normal)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Sickening/Greater)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Sickening/Lesser)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Sickening/Normal)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Thundering/Greater)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Thundering/Lesser)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod (Thundering/Normal)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod",
           "standing": "origin"
         },
         {
           "name": "Rod of Arson",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod.Cursed",
           "standing": "origin"
         },
         {
           "name": "Rope (Spider Silk/50 ft.)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.General",
           "standing": "origin"
         },
         {
           "name": "Sash of the War Champion",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Chest",
           "standing": "origin"
         },
         {
           "name": "Saw",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Tools",
           "standing": "origin"
         },
         {
           "name": "Scabbard of Stanching",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Belt.Container",
           "standing": "origin"
         },
         {
           "name": "Scabbard of Vigor",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Belt.Container",
           "standing": "origin"
         },
         {
           "name": "Sextant",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Tools",
           "standing": "origin"
         },
         {
           "name": "Sheath of Bladestealth",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Belt.Container",
           "standing": "origin"
         },
         {
           "name": "Signal Horn",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.General",
           "standing": "origin"
         },
         {
           "name": "Silver Smite Bracelet",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Bracelet",
           "standing": "origin"
         },
         {
           "name": "Smelling Salts",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Alchemical.Consumable",
           "standing": "origin"
         },
         {
           "name": "Smoke Pellet",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Alchemical.Consumable",
           "standing": "origin"
         },
         {
           "name": "Smoked Goggles",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.General",
           "standing": "origin"
         },
         {
           "name": "Sneezing Powder (Pouch)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Alchemical.Pouch.Consumable",
           "standing": "origin"
         },
         {
           "name": "Sniper Goggles",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Goggles",
           "standing": "origin"
         },
         {
           "name": "Snowshoes",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Clothing.Resizable",
           "standing": "origin"
         },
         {
           "name": "Soothe Syrup",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Alchemical.Consumable",
           "standing": "origin"
         },
         {
           "name": "Soothsayer's Raiment (Battlecry)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Armor.Medium.ArmorProfMedium.Suit.Specific",
           "standing": "origin"
         },
         {
           "name": "Soothsayer's Raiment (Battlefield Clarity)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Armor.Medium.ArmorProfMedium.Suit.Specific",
           "standing": "origin"
         },
         {
           "name": "Soul Soap",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Consumable",
           "standing": "origin"
         },
         {
           "name": "Spear (Boar)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.TwoHanded.Ranged.Thrown.Simple.Standard.Piercing.Spear",
           "standing": "origin"
         },
         {
           "name": "Spear (Chain)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.TwoHanded.Exotic.Standard.Piercing.Slashing",
           "standing": "origin"
         },
         {
           "name": "Spindle of Perfect Knowledge",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Artifact.Minor",
           "standing": "origin"
         },
         {
           "name": "Spirit Blade",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.Light.Finesseable.Ranged.Thrown.Simple.Specific.Piercing.Slashing.Dagger.BladeLight.Tengu",
           "standing": "origin"
         },
         {
           "name": "Staff of Bolstering",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Staff",
           "standing": "origin"
         },
         {
           "name": "Staff of Cackling Wrath",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Staff",
           "standing": "origin"
         },
         {
           "name": "Staff of Hoarding",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Staff",
           "standing": "origin"
         },
         {
           "name": "Staff of Journeys",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Staff",
           "standing": "origin"
         },
         {
           "name": "Staff of Many Rays",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Staff",
           "standing": "origin"
         },
         {
           "name": "Staff of Obstacles",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Staff",
           "standing": "origin"
         },
         {
           "name": "Staff of Performance",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Staff",
           "standing": "origin"
         },
         {
           "name": "Staff of Revelations",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Staff",
           "standing": "origin"
         },
         {
           "name": "Staff of Rigor",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Staff",
           "standing": "origin"
         },
         {
           "name": "Staff of Shrieking",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Staff",
           "standing": "origin"
         },
         {
           "name": "Staff of Slumber",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Staff",
           "standing": "origin"
         },
         {
           "name": "Staff of Souls",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Staff",
           "standing": "origin"
         },
         {
           "name": "Staff of Stealth",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Staff",
           "standing": "origin"
         },
         {
           "name": "Staff of Toxins",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Staff",
           "standing": "origin"
         },
         {
           "name": "Staff of Traps",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Staff",
           "standing": "origin"
         },
         {
           "name": "Staff of Vision",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Staff",
           "standing": "origin"
         },
         {
           "name": "Staff of Weather",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Staff",
           "standing": "origin"
         },
         {
           "name": "Stake (Wood)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.Light.Finesseable.Ranged.Thrown.Simple.Standard.Piercing.Close",
           "standing": "origin"
         },
         {
           "name": "Starknife (Sparkwake)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.Light.Finesseable.Ranged.Thrown.Martial.Specific.Piercing.BladeLight.Tengu",
           "standing": "origin"
         },
         {
           "name": "String (50 ft.)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.General",
           "standing": "origin"
         },
         {
           "name": "Swarmsuit",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.General.Resizable",
           "standing": "origin"
         },
         {
           "name": "Sword (Temple)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.OneHanded.Exotic.Standard.Slashing.HeavyBlade.Tengu",
           "standing": "origin"
         },
         {
           "name": "Sword Cane",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.OneHanded.Martial.Standard.Piercing.Sword",
           "standing": "origin"
         },
         {
           "name": "Symptom Kit",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Tools",
           "standing": "origin"
         },
         {
           "name": "Talisman of Reluctant Wishes",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Artifact.Minor",
           "standing": "origin"
         },
         {
           "name": "Tent (Large)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.General.Resizable",
           "standing": "origin"
         },
         {
           "name": "Tent (Medium)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.General.Resizable",
           "standing": "origin"
         },
         {
           "name": "Tent (Pavilion)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.General.Resizable",
           "standing": "origin"
         },
         {
           "name": "The Moaning Diamond",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Artifact.Major",
           "standing": "origin"
         },
         {
           "name": "The Shield of the Sun",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Artifact.Major",
           "standing": "origin"
         },
@@ -15779,19 +15779,19 @@
         },
         {
           "name": "Traveling Spellbook",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Tools.Book.Spellbook",
           "standing": "origin"
         },
         {
           "name": "Trident of Stability",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.OneHanded.Martial.Ranged.Thrown.Specific.Piercing.Trident.Spear",
           "standing": "origin"
         },
         {
           "name": "Twine (50 ft.)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.General",
           "standing": "origin"
         },
@@ -15803,49 +15803,49 @@
         },
         {
           "name": "War Paint of the Terrible Visage",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Consumable",
           "standing": "origin"
         },
         {
           "name": "Weapon Blanch (Adamantine)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Alchemical.Consumable",
           "standing": "origin"
         },
         {
           "name": "Weapon Blanch (Cold Iron)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Alchemical.Consumable",
           "standing": "origin"
         },
         {
           "name": "Weapon Blanch (Silver)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Alchemical.Consumable",
           "standing": "origin"
         },
         {
           "name": "Weapon Cord",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.General",
           "standing": "origin"
         },
         {
           "name": "Whistle (Signal)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.General",
           "standing": "origin"
         },
         {
           "name": "Whistle (Silent)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.General",
           "standing": "origin"
         },
         {
           "name": "Wooden",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Armor.Light.ArmorProfLight.Suit.Standard.Nonmetal",
           "standing": "origin"
         }

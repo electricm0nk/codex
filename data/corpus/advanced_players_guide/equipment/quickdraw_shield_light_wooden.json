@@ -1,27 +1,103 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Quickdraw Shield (Light/Wooden)",
     "category": "ArmsArmor",
-    "name": "Quickdraw Shield, Light Wooden",
     "cost_gp": 53.0,
-    "weight": 6.0,
-    "description": "A light wooden shield fitted with straps letting a wielder with base attack bonus +1 or higher ready or stow it as a swift action; Quick Draw allows it as a free action."
+    "description": "A light wooden shield fitted with straps letting a wielder with base attack bonus +1 or higher ready or stow it as a swift action; Quick Draw allows it as a free action.",
+    "key": "Quickdraw Shield (Light/Wooden)",
+    "name": "Quickdraw Shield, Light Wooden",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "1",
+          "TYPE=Shield",
+          "PREVAREQ:DisableShieldBonus,0"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Quickdraw Shield, Light Wooden"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "SHIELD|Quickdraw Shield (Light)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shield.Light.Standard.Close"
+      },
+      {
+        "key": "COST",
+        "value": "53"
+      },
+      {
+        "key": "WT",
+        "value": "6"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "-2"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d3"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Wood"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.180"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "5"
+      }
+    ],
+    "weight": 6.0
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+  "description_source": {
+    "citation_precision": "category_aggregate_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+cost",
-    "citation_precision": "category_aggregate_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 53,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_arms_armor.lst",
+    "record_key": "Quickdraw Shield (Light/Wooden)",
+    "sha256": "f3e6aea97309b4c0e3746245c112d0880f014ae69077be5b3deba0567aeb8468"
   },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

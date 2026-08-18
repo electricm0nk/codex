@@ -1,26 +1,84 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
-    "key": "Special Ability ~ Fortification / Moderate ~ Armor",
     "category": "equipmods",
-    "name": "Moderate Fortification",
     "cost_gp": null,
-    "weight_lbs": null,
-    "description": "This suit of armor or shield produces a magical force that protects vital areas of the wearer more effectively. Whenever a critical hit or sneak attack is scored on the wearer, there is a 50% chance that the critical hit or sneak attack is negated and damage is instead rolled normally."
+    "description": "This suit of armor or shield produces a magical force that protects vital areas of the wearer more effectively. Whenever a critical hit or sneak attack is scored on the wearer, there is a 50% chance that the critical hit or sneak attack is negated and damage is instead rolled normally.",
+    "key": "Special Ability ~ Fortification / Moderate ~ Armor",
+    "name": "Moderate Fortification",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "SORTKEY",
+        "value": "Fortification (Moderate)"
+      },
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Fortification / Moderate ~ Armor"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "FRONT"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NORMAL"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Bracer.ArmorLike.Shield"
+      },
+      {
+        "key": "PLUS",
+        "value": "3"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "REPLACES",
+        "value": "Special Ability ~ Fortification / Heavy ~ Armor,Special Ability ~ Fortification / Light ~ Armor"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.463"
+      },
+      {
+        "key": "PREMULT",
+        "value": "2,[PRETYPE:1,ArmorEnhancement,ShieldEnhancement],[PRETYPE:1,Armor,Shield,Bracer]"
+      },
+      {
+        "key": "SPROP",
+        "value": "50% chance to negate critical hits and sneak attacks"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Eqmod ~ Fortification (Medium)"
+      }
+    ],
+    "weight_lbs": null
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://www.d20pfsrd.com/magic-items/magic-armor/magic-armor-and-shield-special-abilities/fortification/",
+  "description_source": {
     "fetched_at": "2026-07-22",
-    "identity_match_basis": "name"
+    "identity_match_basis": "name",
+    "kind": "web_second_source",
+    "url": "https://www.d20pfsrd.com/magic-items/magic-armor/magic-armor-and-shield-special-abilities/fortification/"
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 331,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "Special Ability ~ Fortification / Moderate ~ Armor",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
   },
   "wiring_class": "ambiguous",
   "wiring_class_signals": [
     "no_corpus_line"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

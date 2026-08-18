@@ -1,27 +1,93 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Lance (Shieldsplitter)",
     "category": "ArmsArmor",
-    "name": "Shieldsplitter Lance",
     "cost_gp": 10.0,
-    "weight": 10.0,
-    "description": "A +1 keen lance that can penetrate shields, dealing shield damage on a hit and bypassing hardness during sunder attempts against a shielded opponent."
+    "description": "A +1 keen lance that can penetrate shields, dealing shield damage on a hit and bypassing hardness during sunder attempts against a shielded opponent.",
+    "key": "Lance (Shieldsplitter)",
+    "name": "Shieldsplitter Lance",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Shieldsplitter Lance"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Lance"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.OneHanded.Martial.Reach.Specific.Piercing.Lance.Spear"
+      },
+      {
+        "key": "COST",
+        "value": "10"
+      },
+      {
+        "key": "WT",
+        "value": "10"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x3"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d8"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Keen ~ Weapon.Special Ability ~ +1 ~ Weapon.Material ~ Wood"
+      },
+      {
+        "key": "WIELD",
+        "value": "OneHanded"
+      },
+      {
+        "key": "REACHMULT",
+        "value": "2"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.290"
+      },
+      {
+        "key": "SPROP",
+        "value": "On a successful strike on an opponent who carries a shield, the opponent's shield takes the same damage as the opponent. When attempting a sunder attack against a shield, it bypasses the shieldUs hardness."
+      }
+    ],
+    "weight": 10.0
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/weapons.html",
+  "description_source": {
+    "citation_precision": "exact_item_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+cost",
-    "citation_precision": "exact_item_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/weapons.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 89,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_arms_armor.lst",
+    "record_key": "Lance (Shieldsplitter)",
+    "sha256": "f3e6aea97309b4c0e3746245c112d0880f014ae69077be5b3deba0567aeb8468"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

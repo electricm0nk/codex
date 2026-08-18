@@ -1,27 +1,99 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Soothsayer's Raiment (Battlecry)",
     "category": "ArmsArmor",
-    "name": "Soothsayer's Raiment (Battlecry)",
     "cost_gp": 150.0,
-    "weight": 40.0,
-    "description": "A +1 chainmail granting the wearer oracle spellcasting access to the Battle mystery's Battlecry revelation, plus a +5 bonus on the wearer's divination spell success."
+    "description": "A +1 chainmail granting the wearer oracle spellcasting access to the Battle mystery's Battlecry revelation, plus a +5 bonus on the wearer's divination spell success.",
+    "key": "Soothsayer's Raiment (Battlecry)",
+    "name": "Soothsayer's Raiment (Battlecry)",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "6",
+          "TYPE=Armor",
+          "PREVAREQ:DisableArmorBonus,0"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "OracleBattlecryTimes",
+          "1",
+          "PREABILITY:1,CATEGORY=Special Ability,Battlecry ~ Battle Mystery"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Chainmail"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Armor.Medium.ArmorProfMedium.Suit.Specific"
+      },
+      {
+        "key": "COST",
+        "value": "150"
+      },
+      {
+        "key": "WT",
+        "value": "40"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "-5"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Enhancement Cost|9000.Special Ability ~ +1 ~ Armor.Material ~ Steel"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.286"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "30"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Soothsayer Revelation ~ Battlecry|PREMULT:3,[PRECLASS:1,Oracle=1],[PREABILITY:1,CATEGORY=Special Ability,Battle Mystery ~ Oracle],[!PREABILITY:1,CATEGORY=Special Ability,Battlecry ~ Battle Mystery]"
+      },
+      {
+        "key": "SPROP",
+        "value": "For divination spells with a percentage-based chance of success (such as augury and divination), the wearer's chance increases by +5."
+      }
+    ],
+    "weight": 40.0
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/armor.html",
+  "description_source": {
+    "citation_precision": "exact_item_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+cost",
-    "citation_precision": "exact_item_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/armor.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 43,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_arms_armor.lst",
+    "record_key": "Soothsayer's Raiment (Battlecry)",
+    "sha256": "f3e6aea97309b4c0e3746245c112d0880f014ae69077be5b3deba0567aeb8468"
   },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

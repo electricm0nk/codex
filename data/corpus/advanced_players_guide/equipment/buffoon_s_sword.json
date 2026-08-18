@@ -1,27 +1,85 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Buffoon's Sword",
     "category": "ArmsArmor",
-    "name": "Buffoon's Sword",
     "cost_gp": 10.0,
-    "weight": 2.0,
-    "description": "A cursed blade that behaves like a sword of subtlety until used in combat, at which point it imposes a -10 penalty on Stealth checks and forces the wielder to blurt out the truth unless a DC 15 Will save succeeds."
+    "description": "A cursed blade that behaves like a sword of subtlety until used in combat, at which point it imposes a -10 penalty on Stealth checks and forces the wielder to blurt out the truth unless a DC 15 Will save succeeds.",
+    "key": "Buffoon's Sword",
+    "name": "Buffoon's Sword",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Sword (Short)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.Martial.Specific.Cursed.Piercing.Sword"
+      },
+      {
+        "key": "COST",
+        "value": "10"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "2"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Enhancement Cost|20000.Special Ability ~ +1 ~ Weapon.Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.310"
+      },
+      {
+        "key": "SPROP",
+        "value": "+4 to hit and damage if wielder is making a sneak attack and -10 penalty on all Stealth checks made by its wielder. It also makes it nearly impossible for the owner to tell a lie or engage in any other sort of subterfuge. Each time he does so, he must make a DC 15 Will saving throw to avoid blurting out the truth or taking some other involuntary action that spoils his attempted ruse. Only curse-ending magic can rid the wielder of the sword once its curse activates."
+      }
+    ],
+    "weight": 2.0
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/cursedItems.html",
+  "description_source": {
+    "citation_precision": "exact_item_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+cost",
-    "citation_precision": "exact_item_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/cursedItems.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 90,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_arms_armor.lst",
+    "record_key": "Buffoon's Sword",
+    "sha256": "f3e6aea97309b4c0e3746245c112d0880f014ae69077be5b3deba0567aeb8468"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

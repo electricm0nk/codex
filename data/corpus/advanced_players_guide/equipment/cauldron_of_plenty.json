@@ -1,27 +1,53 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Cauldron of Plenty",
     "category": "MagicItems",
-    "name": "Cauldron of Plenty",
     "cost_gp": 15000.0,
-    "weight": 25.0,
-    "description": "An enchanted iron pot that can produce nourishing food for 36 people daily, or a heroes' feast for 12 people weekly."
+    "description": "An enchanted iron pot that can produce nourishing food for 36 people daily, or a heroes' feast for 12 people weekly.",
+    "key": "Cauldron of Plenty",
+    "name": "Cauldron of Plenty",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "15000"
+      },
+      {
+        "key": "WT",
+        "value": "25"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.302"
+      }
+    ],
+    "weight": 25.0
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html",
+  "description_source": {
+    "citation_precision": "category_aggregate_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+cost",
-    "citation_precision": "category_aggregate_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 155,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_magic_items.lst",
+    "record_key": "Cauldron of Plenty",
+    "sha256": "215c58046b3919dd191b8e605dc59e881507ee8133aabaacf6be105124a0add3"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }
