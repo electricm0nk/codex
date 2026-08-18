@@ -1,0 +1,159 @@
+{
+  "id": "ultimate_campaign",
+  "title": "Ultimate Campaign",
+  "kinds": [
+    {
+      "kind": "feat",
+      "label": "Feats",
+      "done": 15,
+      "partial": 6,
+      "not_started": 2,
+      "denominator": 23,
+      "pct": 65.2,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 23
+      },
+      "items": [
+        {
+          "name": "Accursed",
+          "doneness": "partial",
+          "type_facet": "Story",
+          "standing": "origin"
+        },
+        {
+          "name": "Arisen",
+          "doneness": "partial",
+          "type_facet": "Story",
+          "standing": "origin"
+        },
+        {
+          "name": "Battlefield Healer",
+          "doneness": "done",
+          "type_facet": "Story",
+          "standing": "origin"
+        },
+        {
+          "name": "Champion",
+          "doneness": "done",
+          "type_facet": "Story",
+          "standing": "origin"
+        },
+        {
+          "name": "Damned",
+          "doneness": "done",
+          "type_facet": "Story",
+          "standing": "origin"
+        },
+        {
+          "name": "Deny the Reaper",
+          "doneness": "done",
+          "type_facet": "Story",
+          "standing": "origin"
+        },
+        {
+          "name": "Eldritch Researcher",
+          "doneness": "done",
+          "type_facet": "Story",
+          "standing": "origin"
+        },
+        {
+          "name": "Fearless Zeal",
+          "doneness": "not-started",
+          "type_facet": "Story",
+          "standing": "origin"
+        },
+        {
+          "name": "Feral Heart",
+          "doneness": "done",
+          "type_facet": "Story",
+          "standing": "origin"
+        },
+        {
+          "name": "Foeslayer",
+          "doneness": "done",
+          "type_facet": "Story",
+          "standing": "origin"
+        },
+        {
+          "name": "Forgotten Past",
+          "doneness": "done",
+          "type_facet": "Story",
+          "standing": "origin"
+        },
+        {
+          "name": "Glimpse Beyond",
+          "doneness": "done",
+          "type_facet": "Story",
+          "standing": "origin"
+        },
+        {
+          "name": "Innocent Blood",
+          "doneness": "done",
+          "type_facet": "Story",
+          "standing": "origin"
+        },
+        {
+          "name": "Liberator",
+          "doneness": "partial",
+          "type_facet": "Story",
+          "standing": "origin"
+        },
+        {
+          "name": "Lost Legacy",
+          "doneness": "done",
+          "type_facet": "Story",
+          "standing": "origin"
+        },
+        {
+          "name": "Magnum Opus",
+          "doneness": "not-started",
+          "type_facet": "Story",
+          "standing": "origin"
+        },
+        {
+          "name": "Shamed",
+          "doneness": "partial",
+          "type_facet": "Story",
+          "standing": "origin"
+        },
+        {
+          "name": "Stronghold",
+          "doneness": "done",
+          "type_facet": "Story",
+          "standing": "origin"
+        },
+        {
+          "name": "Thief of Legend",
+          "doneness": "partial",
+          "type_facet": "Story",
+          "standing": "origin"
+        },
+        {
+          "name": "Town Tamer",
+          "doneness": "partial",
+          "type_facet": "Story",
+          "standing": "origin"
+        },
+        {
+          "name": "True Love",
+          "doneness": "done",
+          "type_facet": "Story",
+          "standing": "origin"
+        },
+        {
+          "name": "Unforgotten",
+          "doneness": "done",
+          "type_facet": "Story",
+          "standing": "origin"
+        },
+        {
+          "name": "Vengeance",
+          "doneness": "done",
+          "type_facet": "Story",
+          "standing": "origin"
+        }
+      ]
+    }
+  ]
+}

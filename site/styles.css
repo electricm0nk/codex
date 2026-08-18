@@ -613,6 +613,287 @@ a:focus-visible {
 }
 .feature-card p { margin: 0; color: var(--ink-soft); font-size: 15px; }
 
+/* World-select buttons (project status page) */
+.world-select-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 12px;
+}
+.world-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+  padding: 28px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--rule);
+  background: var(--paper-alt);
+  text-decoration: none;
+  min-height: 100px;
+}
+.world-btn-name {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  font-weight: 700;
+}
+.trademark-mark {
+  font-weight: 700;
+  color: var(--gold-soft);
+  margin-left: 2px;
+}
+.world-btn-tag {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+.world-btn-live {
+  border-color: var(--gold);
+  background: var(--paper-alt);
+  cursor: pointer;
+}
+.world-btn-live .world-btn-name { color: var(--ink); }
+.world-btn-live:hover {
+  border-color: var(--gold-soft);
+  background: var(--code-bg);
+  text-decoration: none;
+}
+.world-btn-tag-live {
+  color: #1c130c;
+  background: var(--gold);
+  border-color: var(--gold);
+}
+.world-btn-planned {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+.world-btn-planned .world-btn-name { color: var(--ink-muted); }
+.world-btn-planned .trademark-mark { color: var(--ink-muted); }
+
+/* Reusable progress bar */
+.progress-bar {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--rule);
+  overflow: hidden;
+}
+.progress-bar-lg { height: 10px; }
+.progress-bar-fill {
+  height: 100%;
+  width: 0;
+  background: var(--gold);
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+/* Pathfinder build-status figures */
+.status-overall {
+  max-width: 640px;
+  margin: 0 auto 40px;
+}
+.status-overall-figure {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+.status-overall-pct {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.status-overall-label {
+  font-size: 14.5px;
+  color: var(--ink-muted);
+}
+.status-books-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.status-book-card {
+  display: block;
+  width: 100%;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 14px 16px;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.status-book-card:hover,
+.status-book-card:focus-visible {
+  border-color: var(--accent);
+  background: var(--code-bg);
+}
+.status-book-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.status-book-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.status-book-pct {
+  font-size: 13px;
+  color: var(--ink-muted);
+  flex-shrink: 0;
+}
+
+/* Book/kind drill-down navigation */
+.status-back {
+  display: inline-block;
+  background: none;
+  border: none;
+  color: var(--link);
+  font-family: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 16px;
+}
+.status-back:hover { text-decoration: underline; }
+
+.status-item-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.status-item-search {
+  flex: 1 1 240px;
+  min-width: 0;
+  padding: 9px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 14px;
+}
+.status-filter-chips {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.status-chip {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-muted);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 6px 14px;
+  cursor: pointer;
+}
+.status-chip.is-active {
+  color: #1c130c;
+  background: var(--gold);
+  border-color: var(--gold);
+}
+
+.status-item-list {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+.status-item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: var(--paper);
+}
+.status-item-row:nth-child(even) { background: var(--paper-alt); }
+.status-item-name { font-size: 14px; color: var(--ink); }
+.status-item-pills {
+  display: flex;
+  flex-shrink: 0;
+  gap: 6px;
+  align-items: center;
+}
+.status-item-pill {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+.status-item-pill-done {
+  color: #1c130c;
+  background: var(--gold);
+}
+.status-item-pill-partial {
+  color: var(--ink);
+  background: var(--paper-alt);
+  border: 1px solid var(--accent);
+}
+.status-item-pill-pending {
+  color: var(--ink-muted);
+  background: var(--code-bg);
+  border: 1px solid var(--rule);
+}
+.status-item-pill-standing {
+  color: var(--ink-muted);
+  background: transparent;
+  border: 1px solid var(--rule);
+  font-weight: 600;
+}
+.status-standing-note {
+  color: var(--ink-muted);
+  margin-top: 4px;
+}
+.status-standing-note:empty { display: none; }
+
+.status-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.status-page-btn {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--paper-alt);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 6px 14px;
+  cursor: pointer;
+}
+.status-page-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.status-page-label {
+  font-size: 13px;
+  color: var(--ink-muted);
+}
+
 /* Callout */
 .callout {
   background: var(--paper-alt);
@@ -731,8 +1012,13 @@ a:focus-visible {
 @media (max-width: 720px) {
   .grid.two { grid-template-columns: 1fr; }
   .grid.three { grid-template-columns: 1fr; }
+  .world-select-grid { grid-template-columns: 1fr 1fr; }
+  .status-books-grid { grid-template-columns: 1fr; }
   .hero h1 { font-size: 30px; }
   .lede { font-size: 17px; }
+}
+@media (max-width: 480px) {
+  .world-select-grid { grid-template-columns: 1fr; }
 }
 
 code {

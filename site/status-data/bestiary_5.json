@@ -1,0 +1,1569 @@
+{
+  "id": "bestiary_5",
+  "title": "Bestiary 5",
+  "kinds": [
+    {
+      "kind": "companion",
+      "label": "Companions",
+      "done": 37,
+      "partial": 11,
+      "not_started": 2,
+      "denominator": 50,
+      "pct": 74.0,
+      "excluded_from_percentage": 7,
+      "standing_breakdown": {
+        "origin": 50,
+        "unclassified": 7
+      },
+      "items": [
+        {
+          "name": "Companion (Cameroceras)",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin"
+        },
+        {
+          "name": "Companion (Ceratosaurus)",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin"
+        },
+        {
+          "name": "Companion (Chalicotherium)",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin"
+        },
+        {
+          "name": "Companion (Digmaul)",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin"
+        },
+        {
+          "name": "Companion (Frog (Goliath))",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin"
+        },
+        {
+          "name": "Companion (Frog Father)",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin"
+        },
+        {
+          "name": "Companion (Kaprosuchus)",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin"
+        },
+        {
+          "name": "Companion (Megaprimatus)",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin"
+        },
+        {
+          "name": "Companion (Moa)",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin"
+        },
+        {
+          "name": "Companion (Narwhal)",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin"
+        },
+        {
+          "name": "Companion (Plesiosaurus)",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin"
+        },
+        {
+          "name": "Companion (Polar Bear (Dire))",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin"
+        },
+        {
+          "name": "Companion (Polar Bear)",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin"
+        },
+        {
+          "name": "Companion (Therizinosaurus)",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin"
+        },
+        {
+          "name": "Companion (Troodon)",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin"
+        },
+        {
+          "name": "Companion (Uintatherium)",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin"
+        },
+        {
+          "name": "Companion (Whale (Blue))",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin"
+        },
+        {
+          "name": "Companion (Wolliped)",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin"
+        },
+        {
+          "name": "Companion Advancement (Cameroceras)",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement",
+          "standing": "origin"
+        },
+        {
+          "name": "Companion Advancement (Ceratosaurus)",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement",
+          "standing": "origin"
+        },
+        {
+          "name": "Companion Advancement (Chalicotherium)",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement",
+          "standing": "origin"
+        },
+        {
+          "name": "Companion Advancement (Digmaul)",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement",
+          "standing": "origin"
+        },
+        {
+          "name": "Companion Advancement (Frog (Goliath))",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement",
+          "standing": "origin"
+        },
+        {
+          "name": "Companion Advancement (Frog Father)",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement",
+          "standing": "origin"
+        },
+        {
+          "name": "Companion Advancement (Kaprosuchus)",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement",
+          "standing": "origin"
+        },
+        {
+          "name": "Companion Advancement (Megaprimatus)",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement",
+          "standing": "origin"
+        },
+        {
+          "name": "Companion Advancement (Moa)",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement",
+          "standing": "origin"
+        },
+        {
+          "name": "Companion Advancement (Narwhal)",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement",
+          "standing": "origin"
+        },
+        {
+          "name": "Companion Advancement (Plesiosaurus)",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement",
+          "standing": "origin"
+        },
+        {
+          "name": "Companion Advancement (Polar Bear (Dire))",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement",
+          "standing": "origin"
+        },
+        {
+          "name": "Companion Advancement (Polar Bear)",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement",
+          "standing": "origin"
+        },
+        {
+          "name": "Companion Advancement (Therizinosaurus)",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement",
+          "standing": "origin"
+        },
+        {
+          "name": "Companion Advancement (Troodon)",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement",
+          "standing": "origin"
+        },
+        {
+          "name": "Companion Advancement (Uintatherium)",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement",
+          "standing": "origin"
+        },
+        {
+          "name": "Companion Advancement (Whale (Blue))",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement",
+          "standing": "origin"
+        },
+        {
+          "name": "Companion Advancement (Wolliped)",
+          "doneness": "done",
+          "type_facet": "CompanionAdvancement",
+          "standing": "origin"
+        },
+        {
+          "name": "Curl",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary.TrilobiteRacialTrait",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Disease Resistant",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary.FlyingFoxRacialTrait",
+          "standing": "origin"
+        },
+        {
+          "name": "Drift",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary.ChickenRacialTrait",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Familiar (Aether Wysp)",
+          "doneness": "partial",
+          "type_facet": "Companion.Familiar.Outsider",
+          "standing": "origin"
+        },
+        {
+          "name": "Familiar (Air Wysp)",
+          "doneness": "partial",
+          "type_facet": "Companion.Familiar.Outsider",
+          "standing": "origin"
+        },
+        {
+          "name": "Familiar (Brain Mole)",
+          "doneness": "not-started",
+          "type_facet": "Companion.Familiar.Magical Beast",
+          "standing": "origin"
+        },
+        {
+          "name": "Familiar (Chicken)",
+          "doneness": "partial",
+          "type_facet": "Companion.Familiar.Animal",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Familiar (Chuspiki)",
+          "doneness": "not-started",
+          "type_facet": "Companion.Familiar.Magical Beast",
+          "standing": "origin"
+        },
+        {
+          "name": "Familiar (Clockwork Familiar)",
+          "doneness": "partial",
+          "type_facet": "Companion.Familiar.Construct",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Familiar (Earth Wysp)",
+          "doneness": "partial",
+          "type_facet": "Companion.Familiar.Outsider",
+          "standing": "origin"
+        },
+        {
+          "name": "Familiar (Esipil)",
+          "doneness": "partial",
+          "type_facet": "Companion.Familiar.Outsider",
+          "standing": "origin"
+        },
+        {
+          "name": "Familiar (Fire Wysp)",
+          "doneness": "partial",
+          "type_facet": "Companion.Familiar.Outsider",
+          "standing": "origin"
+        },
+        {
+          "name": "Familiar (Flying Fox)",
+          "doneness": "partial",
+          "type_facet": "Companion.Familiar.Animal",
+          "standing": "origin"
+        },
+        {
+          "name": "Familiar (Liminal Sprite)",
+          "doneness": "partial",
+          "type_facet": "Companion.Familiar.Fey",
+          "standing": "origin"
+        },
+        {
+          "name": "Familiar (Penguin)",
+          "doneness": "partial",
+          "type_facet": "Companion.Familiar.Animal",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Familiar (Red Panda)",
+          "doneness": "partial",
+          "type_facet": "Companion.Familiar.Animal",
+          "standing": "origin"
+        },
+        {
+          "name": "Familiar (Seal)",
+          "doneness": "partial",
+          "type_facet": "Companion.Familiar.Animal",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Familiar (Trilobite)",
+          "doneness": "partial",
+          "type_facet": "Companion.Familiar.Vermin",
+          "standing": "origin"
+        },
+        {
+          "name": "Familiar (Water Wysp)",
+          "doneness": "partial",
+          "type_facet": "Companion.Familiar.Outsider",
+          "standing": "origin"
+        },
+        {
+          "name": "Familiar (Xiao)",
+          "doneness": "partial",
+          "type_facet": "Companion.Familiar.Magical Beast",
+          "standing": "origin"
+        },
+        {
+          "name": "Toboggan",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.Extraordinary.PenguinRacialTrait",
+          "standing": "unclassified"
+        }
+      ]
+    },
+    {
+      "kind": "monster_ability",
+      "label": "Monster Abilities",
+      "done": 0,
+      "partial": 0,
+      "not_started": 25,
+      "denominator": 25,
+      "pct": 0.0,
+      "excluded_from_percentage": 15,
+      "standing_breakdown": {
+        "origin": 25,
+        "unclassified": 15
+      },
+      "items": [
+        {
+          "name": "Air Blast",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.SpellLike.ChuspikiRacialTrait",
+          "standing": "origin"
+        },
+        {
+          "name": "Ambush Attack",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.PlesiosaurusRacialTrait",
+          "standing": "origin"
+        },
+        {
+          "name": "Ball Tail",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.DigmaulRacialTrait",
+          "standing": "origin"
+        },
+        {
+          "name": "Basic Aerokinesis",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.ChuspikiRacialTrait",
+          "standing": "origin"
+        },
+        {
+          "name": "Bewildering Assault",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural.EsipilRacialTrait",
+          "standing": "origin"
+        },
+        {
+          "name": "Brain Drain",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural.BrainMoleRacialTrait",
+          "standing": "origin"
+        },
+        {
+          "name": "Drench",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.WaterWyspRacialTrait",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Easily Trained",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.TroodonRacialTrait",
+          "standing": "origin"
+        },
+        {
+          "name": "Easy to Call",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.SahkilSubtypeTrait",
+          "standing": "origin"
+        },
+        {
+          "name": "Emotional Focus",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.SahkilSubtypeTrait",
+          "standing": "origin"
+        },
+        {
+          "name": "Feather Fall",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Hold Breath",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.BlueWhaleRacialTrait",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Hold Breath",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.NarwhalRacialTrait",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Lesser Telekinesis",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.AetherWyspRacialTrait",
+          "standing": "origin"
+        },
+        {
+          "name": "Living Battery",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.WyspRacialTrait",
+          "standing": "origin"
+        },
+        {
+          "name": "Look of Fear",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural.EsipilRacialTrait",
+          "standing": "origin"
+        },
+        {
+          "name": "Look of Fear",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural.SahkilSubtypeTrait",
+          "standing": "origin"
+        },
+        {
+          "name": "Pressure Adaptation",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.CamerocerasRacialTrait",
+          "standing": "origin"
+        },
+        {
+          "name": "Ramming Snout",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.KaprosuchusRacialTrait",
+          "standing": "origin"
+        },
+        {
+          "name": "Repartee",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Supernatural.LiminalSpriteRacialTrait",
+          "standing": "origin"
+        },
+        {
+          "name": "Resonance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.WyspRacialTrait.Aura",
+          "standing": "origin"
+        },
+        {
+          "name": "Sahkil Traits",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.Supernatural",
+          "standing": "origin"
+        },
+        {
+          "name": "Second Sight",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.BrainMoleRacialTrait",
+          "standing": "origin"
+        },
+        {
+          "name": "Servitor",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.WyspRacialTrait",
+          "standing": "origin"
+        },
+        {
+          "name": "Shrouded Mind",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.BrainMoleRacialTrait",
+          "standing": "origin"
+        },
+        {
+          "name": "Skip Between",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.SahkilSubtypeTrait",
+          "standing": "origin"
+        },
+        {
+          "name": "Spell-Like Abilities",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.BrainMoleRacialTrait",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Spell-Like Abilities",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.ChuspikiRacialTrait",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Spell-Like Abilities",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.EsipilRacialTrait",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Spell-Like Abilities",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.LiminalSpriteRacialTrait",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Spell-Like Abilities",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.SpellLike.XiaoRacialTrait",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Spirit Touch",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.SahkilSubtypeTrait",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Spit",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.WollipedRacialTrait",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Sprint",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.TherizinosaurusRacialTrait",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Sweeping Strike",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.TherizinosaurusRacialTrait",
+          "standing": "origin"
+        },
+        {
+          "name": "Tusk",
+          "doneness": "not-started",
+          "type_facet": "SpecialAttack.Extraordinary.NarwhalRacialTrait",
+          "standing": "origin"
+        },
+        {
+          "name": "Unnatural Aura",
+          "doneness": "not-started",
+          "type_facet": "Universal Monster Rule.SpecialQuality.Supernatural.Aura",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Versatile Performance",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.LiminalSpriteRacialTrait",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Wind Blessed",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.ChuspikiRacialTrait",
+          "standing": "origin"
+        },
+        {
+          "name": "Wind Form",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Supernatural.ChuspikiRacialTrait",
+          "standing": "unclassified"
+        }
+      ]
+    },
+    {
+      "kind": "race_trait",
+      "label": "Race Traits",
+      "done": 0,
+      "partial": 2,
+      "not_started": 81,
+      "denominator": 83,
+      "pct": 0.0,
+      "excluded_from_percentage": 63,
+      "standing_breakdown": {
+        "unclassified": 63,
+        "origin": 83
+      },
+      "items": [
+        {
+          "name": "+2 Constitution, +2 Charisma",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Shabti Racial Trait.Shabti Racial Default.Racial Ability Scores",
+          "standing": "unclassified"
+        },
+        {
+          "name": "+2 Constitution, +2 Wisdom, -2  Dexterity",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Deep One Hybrid Racial Trait.Deep One Hybrid Racial Default.Racial Ability Scores",
+          "standing": "origin"
+        },
+        {
+          "name": "+2 Constitution, -2 Charisma, +2 Wisdom While in Bestial Form",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality.Racial Ability Scores",
+          "standing": "origin"
+        },
+        {
+          "name": "+2 Constitution, -2 Intelligence, +2 Wisdom While in Bestial Form",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality.Racial Ability Scores",
+          "standing": "origin"
+        },
+        {
+          "name": "+2 Constitution, -2 Wisdom, +2 Strength While in Bestial Form",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality.Racial Ability Scores",
+          "standing": "origin"
+        },
+        {
+          "name": "+2 Dexterity, +2 Constitution, -2 Intelligence",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Caligni Racial Trait.Caligni Racial Default.Racial Ability Scores",
+          "standing": "origin"
+        },
+        {
+          "name": "+2 Dexterity, -2 Wisdom, +2 Charisma While in Bestial Form",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality.Racial Ability Scores",
+          "standing": "origin"
+        },
+        {
+          "name": "+2 Intelligence, +2 Wisdom, -2 Constitution",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Astomoi Racial Trait.Astomoi Racial Default.Racial Ability Scores",
+          "standing": "unclassified"
+        },
+        {
+          "name": "+2 Intelligence, -2 Strength, +2 Dexterity While in Bestial Form",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality.Racial Ability Scores",
+          "standing": "origin"
+        },
+        {
+          "name": "+2 Intelligence, -2 Wisdom, +2 Dexterity While in Bestial Form",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality.Racial Ability Scores",
+          "standing": "origin"
+        },
+        {
+          "name": "+2 Strength, +2 Charisma, -2 Dexterity",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Reptoid Racial Trait.Reptoid Racial Default.Racial Ability Scores",
+          "standing": "origin"
+        },
+        {
+          "name": "+2 Strength, +2 Wisdom, -2 Intelligence",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Orang-Pendak Racial Trait.Orang-Pendak Racial Default.Racial Ability Scores",
+          "standing": "unclassified"
+        },
+        {
+          "name": "+2 Strength, -2 Charisma, +2 Constitution While in Bestial Form",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality.Racial Ability Scores",
+          "standing": "origin"
+        },
+        {
+          "name": "+2 Wisdom, -2 Charisma, +2 Dexterity While in Bestial Form",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality.Racial Ability Scores",
+          "standing": "origin"
+        },
+        {
+          "name": "+2 Wisdom, -2 Intelligence, +2 Constitution While in Bestial Form",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality.Racial Ability Scores",
+          "standing": "origin"
+        },
+        {
+          "name": "+2 Wisdom, -2 Intelligence, +2 to One Physical Ability Score While in Bestial Form",
+          "doneness": "partial",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.Skinwalker Racial Default.SpecialQuality.Racial Ability Scores",
+          "standing": "origin"
+        },
+        {
+          "name": "Animal-Minded",
+          "doneness": "partial",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.Skinwalker Racial Default.SpecialQuality",
+          "standing": "origin"
+        },
+        {
+          "name": "Animal-Minded",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality",
+          "standing": "origin"
+        },
+        {
+          "name": "Animal-Minded",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality",
+          "standing": "origin"
+        },
+        {
+          "name": "Animal-Minded",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality",
+          "standing": "origin"
+        },
+        {
+          "name": "Animal-Minded",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality",
+          "standing": "origin"
+        },
+        {
+          "name": "Animal-Minded",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality",
+          "standing": "origin"
+        },
+        {
+          "name": "Animal-Minded",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality",
+          "standing": "origin"
+        },
+        {
+          "name": "Animal-Minded",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality",
+          "standing": "origin"
+        },
+        {
+          "name": "Animal-Minded",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality",
+          "standing": "origin"
+        },
+        {
+          "name": "Animal-Minded",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality",
+          "standing": "origin"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Reptoid Racial Trait.Reptoid Racial Default.Supernatural",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "partial",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.Skinwalker Racial Default.SpecialQuality.Special Quality.Special Ability.Supernatural",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality.Special Quality.Special Ability.Supernatural",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality.Special Quality.Special Ability.Supernatural",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality.Special Quality.Special Ability.Supernatural",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality.Special Quality.Special Ability.Supernatural",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality.Special Quality.Special Ability.Supernatural",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality.Special Quality.Special Ability.Supernatural",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality.Special Quality.Special Ability.Supernatural",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality.Special Quality.Special Ability.Supernatural",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Change Shape",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality.Special Quality.Special Ability.Supernatural",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Change Shape (2 Claw Attacks)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Racial Trait",
+          "standing": "origin"
+        },
+        {
+          "name": "Change Shape (2 Hoof Attacks)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Racial Trait",
+          "standing": "origin"
+        },
+        {
+          "name": "Change Shape (2 Talon Attacks)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Racial Trait",
+          "standing": "origin"
+        },
+        {
+          "name": "Change Shape (Ability Modifier Charisma)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Racial Trait",
+          "standing": "origin"
+        },
+        {
+          "name": "Change Shape (Ability Modifier Constitution)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Racial Trait",
+          "standing": "origin"
+        },
+        {
+          "name": "Change Shape (Ability Modifier Dexterity)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Racial Trait",
+          "standing": "origin"
+        },
+        {
+          "name": "Change Shape (Ability Modifier Strength)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Racial Trait",
+          "standing": "origin"
+        },
+        {
+          "name": "Change Shape (Ability Modifier Wisdom)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Racial Trait",
+          "standing": "origin"
+        },
+        {
+          "name": "Change Shape (Amphibious)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Racial Trait",
+          "standing": "origin"
+        },
+        {
+          "name": "Change Shape (Base Speed +10)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Racial Trait",
+          "standing": "origin"
+        },
+        {
+          "name": "Change Shape (Bite Attack)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Racial Trait",
+          "standing": "origin"
+        },
+        {
+          "name": "Change Shape (Climb Speed)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Racial Trait",
+          "standing": "origin"
+        },
+        {
+          "name": "Change Shape (Climb Speed)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Racial Trait",
+          "standing": "origin"
+        },
+        {
+          "name": "Change Shape (Darkvision)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Racial Trait",
+          "standing": "origin"
+        },
+        {
+          "name": "Change Shape (Distraction)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Racial Trait",
+          "standing": "origin"
+        },
+        {
+          "name": "Change Shape (Endurance)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Racial Trait",
+          "standing": "origin"
+        },
+        {
+          "name": "Change Shape (Ferocity)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Racial Trait",
+          "standing": "origin"
+        },
+        {
+          "name": "Change Shape (Fly Speed +10)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Racial Trait",
+          "standing": "origin"
+        },
+        {
+          "name": "Change Shape (Gore Attack)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Racial Trait",
+          "standing": "origin"
+        },
+        {
+          "name": "Change Shape (Natural Armor)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Racial Trait",
+          "standing": "origin"
+        },
+        {
+          "name": "Change Shape (Perception Bonus)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Racial Trait",
+          "standing": "origin"
+        },
+        {
+          "name": "Change Shape (Reduce Falling Damage)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Racial Trait",
+          "standing": "origin"
+        },
+        {
+          "name": "Change Shape (Saving Throws)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Racial Trait",
+          "standing": "origin"
+        },
+        {
+          "name": "Change Shape (Scent)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Racial Trait",
+          "standing": "origin"
+        },
+        {
+          "name": "Change Shape (See In Darkness)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Racial Trait",
+          "standing": "origin"
+        },
+        {
+          "name": "Change Shape (Swim Speed)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Racial Trait",
+          "standing": "origin"
+        },
+        {
+          "name": "Cold-Blooded",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Reptoid Racial Trait.Reptoid Racial Default.Extraordinary",
+          "standing": "origin"
+        },
+        {
+          "name": "Darkvision",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Shabti Racial Trait.Shabti Racial Default.Racial Vision",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Death Throes",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Caligni Racial Trait.Caligni Racial Default.Supernatural",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Electricity",
+          "doneness": "not-started",
+          "type_facet": "ClockworkFamiliarRacialAbility.SpecialAttack.Extraordinary",
+          "standing": "origin"
+        },
+        {
+          "name": "Esipil ~ Change Shape",
+          "doneness": "not-started",
+          "type_facet": "EsipilRacialTrait",
+          "standing": "origin"
+        },
+        {
+          "name": "Final Change",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Deep One Hybrid Racial Trait.Deep One Hybrid Racial Default.Supernatural",
+          "standing": "origin"
+        },
+        {
+          "name": "Forest Walker",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Orang-Pendak Racial Trait.Orang-Pendak Racial Default.Extraordinary",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Humanoid (Skinwalker)",
+          "doneness": "not-started",
+          "type_facet": "RangerClassFeatures.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
+          "standing": "origin"
+        },
+        {
+          "name": "Immortal",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Shabti Racial Trait.Shabti Racial Default.Extraordinary",
+          "standing": "origin"
+        },
+        {
+          "name": "Immune to Undeath",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Shabti Racial Trait.Shabti Racial Default.Extraordinary",
+          "standing": "origin"
+        },
+        {
+          "name": "Item Installation",
+          "doneness": "not-started",
+          "type_facet": "ClockworkFamiliarRacialAbility.SpecialQuality.Extraordinary",
+          "standing": "origin"
+        },
+        {
+          "name": "Languages",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Astomoi Racial Trait.Astomoi Racial Default.Racial Language",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Languages",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Caligni Racial Trait.Caligni Racial Default.Racial Language",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Languages",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Deep One Hybrid Racial Trait.Deep One Hybrid Racial Default.Racial Language",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Languages",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Orang-Pendak Racial Trait.Orang-Pendak Racial Default.Racial Language",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Languages",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Reptoid Racial Trait.Reptoid Racial Default.Racial Language",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Languages",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Shabti Racial Trait.Shabti Racial Default.Racial Language",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Languages",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.Skinwalker Racial Default.SpecialQuality.Racial Language",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Light Sensitivity",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Caligni Racial Trait.Caligni Racial Default.LightSensitivity.Weakness",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Low-Light Vision",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Deep One Hybrid Racial Trait.Deep One Hybrid Racial Default.Racial Senses",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Low-Light Vision",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Orang-Pendak Racial Trait.Orang-Pendak Racial Default.Racial Vision",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Low-Light Vision",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Reptoid Racial Trait.Reptoid Racial Default.Racial Vision",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Low-Light Vision",
+          "doneness": "partial",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.Skinwalker Racial Default.SpecialQuality.Racial Vision",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Medium",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Astomoi Racial Trait.Astomoi Racial Default.Racial Size",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Medium",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Caligni Racial Trait.Caligni Racial Default.Racial Size",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Medium",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Deep One Hybrid Racial Trait.Deep One Hybrid Racial Default.Racial Size",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Medium",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Reptoid Racial Trait.Reptoid Racial Default.Racial Size",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Medium",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Shabti Racial Trait.Shabti Racial Default.Racial Size",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Medium",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.Skinwalker Racial Default.SpecialQuality.Racial Size",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Mental Potency",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Reptoid Racial Trait.Reptoid Racial Default.Extraordinary",
+          "standing": "origin"
+        },
+        {
+          "name": "Mouthless",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Astomoi Racial Trait.Astomoi Racial Default.Extraordinary",
+          "standing": "origin"
+        },
+        {
+          "name": "Native Outsider",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Shabti Racial Trait.Shabti Racial Default",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Natural Armor",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Deep One Hybrid Racial Trait.Deep One Hybrid Racial Default",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Natural Weapons",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Reptoid Racial Trait.Reptoid Racial Default.Extraordinary",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Normal Speed",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Astomoi Racial Trait.Astomoi Racial Default.Racial Speed",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Normal Speed",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Caligni Racial Trait.Caligni Racial Default.Racial Speed",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Normal Speed",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Orang-Pendak Racial Trait.Orang-Pendak Racial Default.Racial Speed",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Normal Speed",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Reptoid Racial Trait.Reptoid Racial Default.Racial Speed",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Normal Speed",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Shabti Racial Trait.Shabti Racial Default.Racial Speed",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Normal Speed",
+          "doneness": "partial",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.Skinwalker Racial Default.SpecialQuality.Racial Speed",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Own Two Feet",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Orang-Pendak Racial Trait.Orang-Pendak Racial Default.Extraordinary.Weakness",
+          "standing": "origin"
+        },
+        {
+          "name": "Past-Life Knowledge",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Shabti Racial Trait.Shabti Racial Default.Extraordinary",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Potion Installation",
+          "doneness": "not-started",
+          "type_facet": "ClockworkFamiliarInstalledItem",
+          "standing": "origin"
+        },
+        {
+          "name": "Psychic Magic",
+          "doneness": "not-started",
+          "type_facet": "TYPE:SpecialQuality.SpellLike",
+          "standing": "origin"
+        },
+        {
+          "name": "Resist Level Drain",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Shabti Racial Trait.Shabti Racial Default.Extraordinary",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Sahkil Traits",
+          "doneness": "not-started",
+          "type_facet": null,
+          "standing": "origin"
+        },
+        {
+          "name": "Scales",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Reptoid Racial Trait.Reptoid Racial Default",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Scent",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Astomoi Racial Trait.Astomoi Racial Default.Racial Senses",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Scroll Installation",
+          "doneness": "not-started",
+          "type_facet": "ClockworkFamiliarInstalledItem",
+          "standing": "origin"
+        },
+        {
+          "name": "Sea Longing",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Deep One Hybrid Racial Trait.Deep One Hybrid Racial Default.Extraordinary.Weakness",
+          "standing": "origin"
+        },
+        {
+          "name": "See in Darkness",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Caligni Racial Trait.Caligni Racial Default.Racial Senses",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Sensitive Breath",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Astomoi Racial Trait.Astomoi Racial Default.Extraordinary.Weakness",
+          "standing": "origin"
+        },
+        {
+          "name": "Shapechanger",
+          "doneness": "done",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.Skinwalker Racial Default.SpecialQuality.Racial Type",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Shattered Soul",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Shabti Racial Trait.Shabti Racial Default.Extraordinary.Weakness",
+          "standing": "origin"
+        },
+        {
+          "name": "Simian Empathy",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Orang-Pendak Racial Trait.Orang-Pendak Racial Default.Extraordinary",
+          "standing": "origin"
+        },
+        {
+          "name": "Skinwalker",
+          "doneness": "not-started",
+          "type_facet": "AdoptiveRace",
+          "standing": "origin"
+        },
+        {
+          "name": "Skinwalker",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Subrace",
+          "standing": "origin"
+        },
+        {
+          "name": "Slow",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Deep One Hybrid Racial Trait.Deep One Hybrid Racial Default.Racial Speed",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Small",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Orang-Pendak Racial Trait.Orang-Pendak Racial Default.Racial Size",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Spell-Like Ability",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Shabti Racial Trait.Shabti Racial Default.SpellLike",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Spell-Like Ability",
+          "doneness": "partial",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.Skinwalker Racial Default.SpecialQuality",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Spell-Like Ability",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Spell-Like Ability",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Spell-Like Ability",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Spell-Like Ability",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Spell-Like Ability",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Spell-Like Ability",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Spell-Like Ability",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Spell-Like Ability",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Spell-Like Ability",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Skinwalker Racial Trait.SpecialQuality",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Take to the Water",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Deep One Hybrid Racial Trait.Deep One Hybrid Racial Default.Extraordinary",
+          "standing": "origin"
+        },
+        {
+          "name": "Tear Apart",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Orang-Pendak Racial Trait.Orang-Pendak Racial Default.Extraordinary",
+          "standing": "origin"
+        },
+        {
+          "name": "Telepathic Senses",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.SpecialQuality.Astomoi Racial Trait.Astomoi Racial Default.Extraordinary.Racial Senses",
+          "standing": "origin"
+        },
+        {
+          "name": "Wand Installation",
+          "doneness": "not-started",
+          "type_facet": "ClockworkFamiliarInstalledItem",
+          "standing": "origin"
+        },
+        {
+          "name": "Werebat-Kin (Bloodmarked)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Subrace",
+          "standing": "origin"
+        },
+        {
+          "name": "Werebear-Kin (Coldborn)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Subrace",
+          "standing": "origin"
+        },
+        {
+          "name": "Wereboar-Kin (Ragebred)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Subrace",
+          "standing": "origin"
+        },
+        {
+          "name": "Werecrocodile-Kin (Scaleheart)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Subrace",
+          "standing": "origin"
+        },
+        {
+          "name": "Wereraptor-Kin (Aerieborn)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Subrace",
+          "standing": "origin"
+        },
+        {
+          "name": "Wererat-Kin (Nightskulk)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Subrace",
+          "standing": "origin"
+        },
+        {
+          "name": "Wereshark-Kin (Seascarred)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Subrace",
+          "standing": "origin"
+        },
+        {
+          "name": "Weretiger-Kin (Fanglord)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Subrace",
+          "standing": "origin"
+        },
+        {
+          "name": "Werewolf-Kin (Witchwolf)",
+          "doneness": "not-started",
+          "type_facet": "Skinwalker Subrace",
+          "standing": "origin"
+        }
+      ]
+    },
+    {
+      "kind": "race",
+      "label": "Races",
+      "done": 0,
+      "partial": 0,
+      "not_started": 7,
+      "denominator": 7,
+      "pct": 0.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 7
+      },
+      "items": [
+        {
+          "name": "Astomoi",
+          "doneness": "not-started",
+          "type_facet": "Humanoid.PC",
+          "standing": "origin"
+        },
+        {
+          "name": "Caligni",
+          "doneness": "not-started",
+          "type_facet": "Humanoid.PC",
+          "standing": "origin"
+        },
+        {
+          "name": "Deep One Hybrid",
+          "doneness": "not-started",
+          "type_facet": "Humanoid.PC",
+          "standing": "origin"
+        },
+        {
+          "name": "Orang-Pendak",
+          "doneness": "not-started",
+          "type_facet": "Humanoid.PC",
+          "standing": "origin"
+        },
+        {
+          "name": "Reptoid",
+          "doneness": "not-started",
+          "type_facet": "Humanoid.PC",
+          "standing": "origin"
+        },
+        {
+          "name": "Shabti",
+          "doneness": "not-started",
+          "type_facet": "Outsider.PC",
+          "standing": "origin"
+        },
+        {
+          "name": "Skinwalker",
+          "doneness": "not-started",
+          "type_facet": "Base.PC",
+          "standing": "origin"
+        }
+      ]
+    }
+  ]
+}
