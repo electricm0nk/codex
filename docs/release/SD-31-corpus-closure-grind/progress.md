@@ -25532,3 +25532,82 @@ The desktop run is the one that matters for the function move:
 for all 7 originally-offered races against the values the pre-corpus `RACE_OPTIONS` table shipped —
 passes unchanged, which is the evidence that moving the predicate into `rules_core` changed no
 product behaviour.
+
+### 10. Full-gate verdict — RED, and the red is entirely pre-existing on `tranche/11`
+
+The isolated run (own `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-w14-race-chassis`, log dir
+`/tmp/codex-verify-wjDJS5`) reported:
+
+```
+FAIL  root-full  (cargo exit 101; 7022 passed across 566 suites)
+FAIL  desktop    (cargo exit 101; 457 passed, 6 failed)
+FAIL  reach      (cargo exit 101)
+```
+
+**Every `test result: FAILED` line is attributed back to its suite by name — no bucket, per
+`AGENTS.md` §Concurrency.** Fourteen distinct failures:
+
+| suite | failing test |
+|---|---|
+| `--bin ingest_apg_race_traits` | `already_ingested_keys_reads_real_keys_off_disk_not_a_hand_list` |
+| `--bin ingest_race_traits` | `no_committed_trait_description_leaks_pcgen_syntax_in_any_declared_book` |
+| `--test sd27_ability_automatic_granted_race_traits` | `the_ability_automatic_grant_shape_is_exactly_two_records_corpus_wide` |
+| `--test sd27_alternate_racial_trait_reachability` | `the_three_dependent_rows_are_not_offered_as_choices_and_the_menu_is_exactly_the_alternates` |
+| `--test sd27_book_license_record_counts` | `every_owned_books_stated_record_count_equals_the_records_on_disk`, `every_owned_books_stated_redaction_count_equals_the_redactions_on_disk` |
+| `--test sd_governance_stub_registry_divergence` | `registry_book_stub_entries_match_stub_artifacts_exactly` |
+| desktop / reach | `companion_catalog::tests::every_served_key_matches_a_corpus_record_file`, `reach_gate::tests::{core_essentials_heritage_racial_traits_reach_a_player, args_alternate_racial_traits_are_visible_only_because_the_corpus_is_scanned, every_declared_claim_actually_carries_the_records, unreached_records_are_exactly_the_recorded_findings, unsurfaced_families_are_exactly_the_recorded_findings}` |
+
+**All fourteen were reproduced at the base commit `12f1f5c94` with none of this cycle's changes
+present** — not argued from the diff, run. A detached worktree was cut at `12f1f5c94`
+(`git worktree add --detach`), given its own `CARGO_TARGET_DIR`, and the six suites re-run there:
+
+```
+--- cargo test --locked --test sd_governance_stub_registry_divergence ---   FAILED (1)
+--- cargo test --locked --test sd27_book_license_record_counts ---          FAILED (2)
+--- cargo test --locked --test sd27_ability_automatic_granted_race_traits --- FAILED (1)
+--- cargo test --locked --test sd27_alternate_racial_trait_reachability --- FAILED (1)
+--- cargo test --locked --bin ingest_apg_race_traits ---                    FAILED (1)
+--- cargo test --locked --bin ingest_race_traits ---                        FAILED (1)
+(apps/desktop/src-tauri) cargo test --locked -j 2   ->  456 passed; 6 failed
+```
+
+Same six desktop tests, same eight root tests, same assertion values. This branch's desktop run is
+**457 passed / 6 failed** against base's **456 / 6** — the +1 pass is this cycle's own new pin.
+
+**Root cause, traced:** commit `d8175d817` "site: stop publishing Core Essentials as a sourcebook"
+(operator-authored, 2026-08-18, an ancestor of `12f1f5c94`) relocated corpus records between book
+directories — Advanced Race Guide `race_trait` went **350 → 414** on disk, APG's licensed record
+count 2,735 → 2,743, ARG's PI-redaction count 1 → 10, `data/corpus/core_essentials/race_trait/`
+disappeared, eight APG familiar `companion` records moved and now reach no surface — **without
+updating the count-pinning files, the `reach_gate` claims, or the stub registry.** That is exactly
+the standing "a record-count change compiles clean but leaves other files' hardcoded assertions red"
+hazard. Re-derived: `len(glob('data/corpus/advanced_race_guide/race_trait/*/*.json'))` → **414**.
+
+**This cycle changed no file any of the fourteen reads:**
+`git diff --name-only 12f1f5c94..HEAD -- data/` → **0**; `-- tests/` → **0**.
+
+**A second, contaminated run must not be mistaken for a third finding.** A later run appearing in the
+same log file (`-j 8`, log dir `/tmp/codex-verify-4Cn2v0`) additionally reported
+`FAIL site-dashboard-check` and `FAIL root-lib` (`beastiary1::companion_tests::
+the_book_defines_twenty_four_companions_and_thirty_five_abilities`). **Neither reproduces**, in this
+worktree or at base:
+
+```
+./scripts/publish-site-dashboard.sh --check
+#   site/dashboard/PF1e-dashboard.json is current
+#   OK: status-data.json and status-data/*.json are up to date        EXIT=0
+cargo test --locked --lib beastiary1::companion_tests   # 5 passed, 0 failed  (here AND at 12f1f5c94)
+```
+
+`pgrep -af verify.sh` at that moment showed **four concurrent `verify.sh` sweeps** on this box,
+including a sibling worktree agent running `./scripts/verify.sh -j 10` and others with no visible
+per-agent `CARGO_TARGET_DIR`. That is precisely `AGENTS.md`'s recorded hazard — a shared target
+directory "produces a plausible wrong number rather than an error." Logged as `OPEN-ISSUES.md` row
+239. The trustworthy verdict for this card is the isolated `wjDJS5` run above.
+
+**Disposition.** The gate is RED and this cycle did not make it red; it also did not fix it, because
+repairing fourteen count pins across `tests/`, `src/bin/ingest_*.rs`, `reach_gate.rs`'s claim
+register, three `LICENSE.json` artifacts and the stub registry is a different card's work and touches
+files this one does not own. **Recorded as a blocker on `tranche/11` itself (`OPEN-ISSUES.md` row
+239), not excused as a background condition** — `AGENTS.md`: "a verification stage red for more than
+one run is a blocker."
