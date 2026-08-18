@@ -53,6 +53,29 @@ mkdir -p "$FAKE_REPO/scripts" "$FAKE_REPO/site/dashboard"
 cp "$SCRIPT" "$FAKE_REPO/scripts/publish-site-dashboard.sh"
 chmod +x "$FAKE_REPO/scripts/publish-site-dashboard.sh"
 
+# A stand-in for scripts/site/build_public_status.py. The script under test
+# calls it on both paths (--check and a real run); the real one imports the
+# observer package and reads the committed unit ledgers, neither of which
+# exists in this hermetic fake repo. Same override pattern as FAKE_PRODUCER:
+# this test covers publish-site-dashboard.sh's ORCHESTRATION, not the
+# projection generator, which has its own suite in test_build_public_status.py.
+FAKE_PUBLIC_STATUS="$WORKROOT/fake_build_public_status.py"
+cat >"$FAKE_PUBLIC_STATUS" <<'PY_INNER'
+"""Stand-in projection builder: honours --check, writes a marker otherwise."""
+import os
+import sys
+
+out = os.path.join(os.getcwd(), "site", "status-data.json")
+if "--check" in sys.argv:
+    print("site/status-data.json is current")
+else:
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    with open(out, "w") as handle:
+        handle.write('{"stand_in": true}\n')
+    print(f"wrote {out}")
+sys.exit(0)
+PY_INNER
+
 # The fake producer: writes a small JSON document to --out. Models the two
 # real-producer behaviors the seeding fix depends on:
 #   - `generated_at` always moves (every real run re-stamps it; scrubbed by
@@ -105,7 +128,9 @@ sys.exit(0)
 PY
 
 run() {
-    OUT=$(cd "$FAKE_REPO" && PF1E_DASHBOARD_PRODUCER="$FAKE_PRODUCER" ./scripts/publish-site-dashboard.sh "$@" 2>&1)
+    OUT=$(cd "$FAKE_REPO" && PF1E_DASHBOARD_PRODUCER="$FAKE_PRODUCER" \
+        PF1E_PUBLIC_STATUS_BUILDER="$FAKE_PUBLIC_STATUS" \
+        ./scripts/publish-site-dashboard.sh "$@" 2>&1)
     ST=$?
 }
 

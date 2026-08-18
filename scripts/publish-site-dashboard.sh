@@ -23,6 +23,12 @@ SHARD_DIR="$REPO_ROOT/site/dashboard/units"
 # points this at a tiny fake producer so the seeding/comparison logic below
 # can be proven without the real 4000+-line producer or a full corpus.
 PRODUCER="${PF1E_DASHBOARD_PRODUCER:-$REPO_ROOT/scripts/observer/pf1e_dashboard_producer.py}"
+# Overridable only by scripts/tests/test_publish_site_dashboard.sh, for the same
+# reason PRODUCER is: the self-test builds a hermetic fake repo containing only
+# this script, so the real projection generator (which imports the observer
+# package and reads the committed unit ledgers) is not present there. The test
+# points this at a tiny stand-in; every real run uses the default.
+PUBLIC_STATUS_BUILDER="${PF1E_PUBLIC_STATUS_BUILDER:-$REPO_ROOT/scripts/site/build_public_status.py}"
 # The real producer's `WORK_INVENTORY_FULL_DOC` default hardcodes
 # `~/workspace/repos/codex/docs/work-inventory.json` -- correct for the
 # shared checkout but WRONG from any other worktree (SD-31 cycles each run in
@@ -152,11 +158,11 @@ PY
     # docstring, and this repo's "What is in the feed" note in
     # site/dashboard/README.md, for why the projection reads the unit ledgers
     # rather than this file). Check that projection is current too.
-    python3 "$REPO_ROOT/scripts/site/build_public_status.py" --check
+    python3 "$PUBLIC_STATUS_BUILDER" --check
 else
     python3 "$PRODUCER" --out "$OUT" >/dev/null
     echo "wrote $OUT"
 
     echo "==> Regenerating public status projection (site/status-data.json + site/status-data/*.json)"
-    python3 "$REPO_ROOT/scripts/site/build_public_status.py"
+    python3 "$PUBLIC_STATUS_BUILDER"
 fi
