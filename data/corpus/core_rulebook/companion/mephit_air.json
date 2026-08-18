@@ -1,0 +1,168 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "ability_keys": [
+      "core_essentials:companion:air_mephit_breath_weapon",
+      "core_essentials:companion:air_mephit_fast_healing"
+    ],
+    "corpus_key": "Mephit (Air)",
+    "external_ability_refs": [],
+    "key": "core_rulebook:companion:mephit_air",
+    "monster_class": "Outsider (Ref/Will):3",
+    "name": "Mephit, Air",
+    "natural_armor": null,
+    "natural_attacks": [],
+    "race_subtype": "Air",
+    "race_type": "Outsider",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Mephit (Air)"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common|Auran"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX,CHA|4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR,CON|2"
+      },
+      {
+        "key": "CR",
+        "value": "3"
+      },
+      {
+        "key": "DR",
+        "value": "5/Magic"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|S"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KEY",
+        "value": "Mephit (Air)"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Outsider ~ Mephit"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Outsider (Ref/Will):3"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Fly,60"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Air Mephit"
+      },
+      {
+        "key": "RACESUBTYPE",
+        "value": "Air"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Outsider"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "ROLE",
+        "value": "Combat"
+      },
+      {
+        "key": "SIZE",
+        "value": "S"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.202"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Outsider"
+      }
+    ],
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "S",
+    "source_page": "p.202",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": 2
+      },
+      {
+        "ability": "CON",
+        "amount": 2
+      },
+      {
+        "ability": "DEX",
+        "amount": 4
+      },
+      {
+        "ability": "CHA",
+        "amount": 4
+      },
+      {
+        "ability": "INT",
+        "amount": -4
+      }
+    ],
+    "type_segments": [
+      "Outsider"
+    ]
+  },
+  "ingested_at": "2026-08-15T01:24:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 77,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_cr.lst",
+    "record_key": "Mephit (Air)",
+    "sha256": "d702c902a162f7e319b0aff6bed67c2611c6790c629a8dc30de1e503e1fe0a87"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

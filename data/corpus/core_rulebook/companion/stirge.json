@@ -1,0 +1,162 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "ability_keys": [
+      "core_essentials:companion:stirge_attach",
+      "core_essentials:companion:stirge_blood_drain",
+      "core_essentials:companion:stirge_diseased"
+    ],
+    "corpus_key": "Stirge",
+    "external_ability_refs": [],
+    "key": "core_rulebook:companion:stirge",
+    "monster_class": "Magical Beast:1",
+    "name": "Stirge",
+    "natural_armor": null,
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Touch"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Magical Beast",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Stirge"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-10"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RaceSizeIsLong|1|TYPE=Base"
+      },
+      {
+        "key": "CR",
+        "value": "1/2"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|T"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Magical Beast ~ Stirge"
+      },
+      {
+        "key": "LEGS",
+        "value": "6"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Magical Beast:1"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,10,Fly,40"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Touch,Weapon.Natural.Weapon Group Natural.Melee.Finesseable.Piercing,*1,Attach"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Magical Beast"
+      },
+      {
+        "key": "REACH",
+        "value": "0"
+      },
+      {
+        "key": "SIZE",
+        "value": "T"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.260"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magical Beast"
+      }
+    ],
+    "reach_feet": 0,
+    "record_type": "creature",
+    "size": "T",
+    "source_page": "p.260",
+    "speeds": [
+      {
+        "feet": 10,
+        "mode": "Walk"
+      },
+      {
+        "feet": 40,
+        "mode": "Fly"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": -8
+      },
+      {
+        "ability": "DEX",
+        "amount": 8
+      },
+      {
+        "ability": "INT",
+        "amount": -10
+      },
+      {
+        "ability": "WIS",
+        "amount": 2
+      },
+      {
+        "ability": "CHA",
+        "amount": -4
+      }
+    ],
+    "type_segments": [
+      "Magical Beast"
+    ]
+  },
+  "ingested_at": "2026-08-15T01:24:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 70,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_cr.lst",
+    "record_key": "Stirge",
+    "sha256": "d702c902a162f7e319b0aff6bed67c2611c6790c629a8dc30de1e503e1fe0a87"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:cr"
+  ]
+}

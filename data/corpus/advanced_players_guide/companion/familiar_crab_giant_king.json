@@ -1,0 +1,191 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "ability_keys": [],
+    "corpus_key": "Familiar (Crab (Giant King))",
+    "external_ability_refs": [
+      "Constrict",
+      "Crab Companion ~ Water Dependency",
+      "Grab"
+    ],
+    "key": "advanced_players_guide:companion:familiar_crab_giant_king",
+    "monster_class": "Vermin:1",
+    "name": "Familiar (Crab (Giant King))",
+    "natural_armor": 5,
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Vermin",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Claw"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Constrict|Crab Companion ~ Water Dependency|Grab"
+      },
+      {
+        "key": "BONUS",
+        "value": "SKILL|Perception|4|TYPE=Racial"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-9"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|AC_Natural_Armor|5|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstrictBonusDamage|STR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ConstrictDieSize|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RaceSizeIsLong|1|TYPE=Base"
+      },
+      {
+        "key": "CR",
+        "value": "1/4"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|T"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Familiar ~ Crab (Giant King)"
+      },
+      {
+        "key": "LEGS",
+        "value": "8"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Vermin:1"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Swim,20"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Familiar [NAME]"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Vermin"
+      },
+      {
+        "key": "REACH",
+        "value": "0"
+      },
+      {
+        "key": "SIZE",
+        "value": "T"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "z_Companion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.50"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Aquatic"
+      },
+      {
+        "key": "TYPE",
+        "value": "Companion.Familiar"
+      }
+    ],
+    "reach_feet": 0,
+    "record_type": "creature",
+    "size": "T",
+    "source_page": "p.50",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Swim"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": -4
+      },
+      {
+        "ability": "DEX",
+        "amount": 6
+      },
+      {
+        "ability": "CON",
+        "amount": 2
+      },
+      {
+        "ability": "CHA",
+        "amount": -8
+      },
+      {
+        "ability": "INT",
+        "amount": -9
+      }
+    ],
+    "type_segments": [
+      "Companion",
+      "Familiar"
+    ]
+  },
+  "ingested_at": "2026-08-15T01:24:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 7,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_apg.lst",
+    "record_key": "Familiar (Crab (Giant King))",
+    "sha256": "2503bc54689a1f20beedf12c51d9563f24e91b74788d24bc73567c483fa004ec"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:cr"
+  ]
+}

@@ -189,8 +189,20 @@ BOOK_TITLES = {
     "bestiary_6": "Bestiary 6",
     "bonus_bestiary": "Bonus Bestiary",
     "ultimate_campaign": "Ultimate Campaign",
-    "core_essentials": "Core Essentials",
 }
+
+# A packaging artifact is not a sourcebook, so it must never be published as
+# one. `core_essentials` was listed in BOOK_TITLES and therefore rendered as a
+# book on the public status page -- with a 0% headline and 128 excluded units
+# -- even though decisions.md §9 had already ruled it is not a real Pathfinder
+# book. Removing the entry fixes today's page; this assertion is what stops it,
+# or any future packaging artifact, from being added back by hand.
+_shown_artifacts = PACKAGING_ARTIFACT_BOOKS & set(BOOK_TITLES)
+if _shown_artifacts:
+    raise ValueError(
+        "packaging-artifact books must never be shown as sourcebooks; "
+        f"remove from BOOK_TITLES: {sorted(_shown_artifacts)}"
+    )
 
 
 def load_units_by_kind(units_dir: Path = UNITS_DIR):
@@ -513,6 +525,16 @@ def main():
         for book_id, detail in book_details.items()
     }
 
+    def orphan_detail_files(texts):
+        """Committed per-book files for books this run no longer publishes."""
+        if not BOOK_DETAIL_DIR.is_dir():
+            return []
+        return sorted(
+            path
+            for path in BOOK_DETAIL_DIR.glob("*.json")
+            if path.stem not in texts
+        )
+
     if check_only:
         stale = False
         if OUTPUT.exists():
@@ -526,6 +548,9 @@ def main():
             if not path.exists() or path.read_text() != text:
                 stale = True
                 print(f"STALE: {path}", file=sys.stderr)
+        for orphan in orphan_detail_files(detail_texts):
+            stale = True
+            print(f"STALE: {orphan} is no longer a published book", file=sys.stderr)
         if stale:
             print(f"STALE: {OUTPUT} or one or more book-detail files need regenerating", file=sys.stderr)
             sys.exit(1)
@@ -536,6 +561,12 @@ def main():
     BOOK_DETAIL_DIR.mkdir(exist_ok=True)
     for book_id, text in detail_texts.items():
         (BOOK_DETAIL_DIR / f"{book_id}.json").write_text(text)
+    for orphan in orphan_detail_files(detail_texts):
+        # Writing is not enough: dropping a book from BOOK_TITLES left its old
+        # detail file on disk, and site/ IS the deployed artifact, so the file
+        # stayed publicly fetchable after the book stopped being published.
+        orphan.unlink()
+        print(f"removed orphaned detail file {orphan}")
 
     total_items = sum(len(k["items"]) for d in book_details.values() for k in d["kinds"])
     print(

@@ -1,0 +1,166 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "ability_keys": [],
+    "corpus_key": "Familiar (Donkey Rat)",
+    "external_ability_refs": [
+      "Scent"
+    ],
+    "key": "ultimate_magic:companion:familiar_donkey_rat",
+    "monster_class": "Animal:1",
+    "name": "Familiar (Donkey Rat)",
+    "natural_armor": null,
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Animal",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Bite"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Scent"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|-6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CON|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|6"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|INT|-8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-4"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|WIS|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RaceSizeIsLong|1|TYPE=Base"
+      },
+      {
+        "key": "CR",
+        "value": "1/4"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|S"
+      },
+      {
+        "key": "KIT",
+        "value": "1|Familiar ~ Donkey Rat"
+      },
+      {
+        "key": "LEGS",
+        "value": "4"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Animal:1"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30,Swim,20"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME]"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Animal"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "S"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.117"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      }
+    ],
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "S",
+    "source_page": "p.117",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Swim"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": -4
+      },
+      {
+        "ability": "DEX",
+        "amount": 6
+      },
+      {
+        "ability": "CON",
+        "amount": 2
+      },
+      {
+        "ability": "INT",
+        "amount": -8
+      },
+      {
+        "ability": "WIS",
+        "amount": 2
+      },
+      {
+        "ability": "CHA",
+        "amount": -6
+      }
+    ],
+    "type_segments": []
+  },
+  "ingested_at": "2026-08-15T01:24:11Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 7,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_um.lst",
+    "record_key": "Familiar (Donkey Rat)",
+    "sha256": "107c19938fca45aecbd6ce0d07fbd5a43feeed3feade64cb3212f78dc26af6a9"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:cr"
+  ]
+}
