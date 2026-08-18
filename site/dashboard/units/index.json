@@ -1,8 +1,8 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-08-17T20:14:10Z",
-  "source_document": "/home/ubuntu/workspace/repos/codex/docs/work-inventory.json",
+  "generated_at": "2026-08-18T22:41:05Z",
+  "source_document": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_1ad13e3b-085-4/docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
     "name",
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 38521,
-  "proven_units": 5993,
+  "proven_units": 5996,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 420,
   "category_labels_redacted": 3,
@@ -7396,22 +7396,23 @@
     },
     "race": {
       "units": 103,
-      "proven": 0,
+      "proven": 3,
       "by_status": {
-        "not-ingested": 93,
-        "literal-verified": 7,
+        "grounded": 3,
+        "literal-verified": 34,
+        "not-ingested": 63,
         "not-started": 3
       },
       "shard": "PF1e-units-race.json",
-      "bytes": 9971,
+      "bytes": 10067,
       "doneness_unmapped": {},
       "categories": {
         "base": {
           "label": "Base",
-          "done": 0,
+          "done": 30,
           "held": 0,
           "in-progress": 0,
-          "not-started": 44,
+          "not-started": 14,
           "unmeasurable": 0,
           "deferred": 0
         },

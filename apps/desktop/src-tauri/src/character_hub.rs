@@ -3917,9 +3917,10 @@ pub fn export_character(app: tauri::AppHandle, request: ExportCharacterRequest) 
 /// `decisions.md §24` forbids a general `BONUS:`/`DEFINE:`/`PREREQ:` formula
 /// interpreter and requires each feature to be a hand-modelled,
 /// corpus-verified pure function with a test. Every field below is exactly
-/// that: [`fixed_ability_adjustments`] reads the ability codes and magnitude
-/// off a `BONUS:STAT` chain's own qualifiers, [`vision_reading`] reads a
-/// `VISION:` token's own declared range, size and speed come from
+/// that: `codex::rules_core::race_creation`'s `fixed_ability_adjustments`
+/// reads the ability codes and magnitude off a `BONUS:STAT` chain's own
+/// qualifiers, its `vision_reading` reads a `VISION:` token's own declared
+/// range, size and speed come from
 /// [`ResolvedRace`]'s already-modelled chassis-then-trait-override rule.
 /// Nothing is summed across traits, no PCGen variable is resolved, and no
 /// `PREREQ:` is evaluated.
@@ -3977,169 +3978,28 @@ pub struct RaceCreationRosterResponse {
     pub diagnostics: Vec<String>,
 }
 
-/// PCGen's `BONUS:STAT` ability codes, mapped to the ability names
-/// `AbilityScoresDto` / `characterHubModel.ABILITY_KEYS` use on the wire.
-const STAT_CODE_TO_ABILITY: &[(&str, &str)] = &[
-    ("STR", "strength"),
-    ("DEX", "dexterity"),
-    ("CON", "constitution"),
-    ("INT", "intelligence"),
-    ("WIS", "wisdom"),
-    ("CHA", "charisma"),
-];
-
-/// The `TYPE:` token PCGen tags a race's ability-modifier row with.
-const RACIAL_ABILITY_SCORES_TYPE: &str = "Racial Ability Scores";
-
-/// The race's ability-modifier trait, if it declares one.
-fn racial_ability_scores_trait(
-    race: &codex::rules_core::race_resolver::ResolvedRace,
-) -> Option<&codex::rules_core::race_resolver::ResolvedTrait> {
-    race.traits
-        .iter()
-        .find(|resolved| resolved.type_tokens.iter().any(|t| t == RACIAL_ABILITY_SCORES_TYPE))
-}
-
-/// The fixed ability modifiers a `Racial Ability Scores` row declares.
-///
-/// Reads `BONUS:STAT|<codes>|<magnitude>` chains only. `<codes>` is
-/// comma-separated and frequently names more than one ability — Goblin's
-/// `BONUS:STAT|STR,CHA|-2` grants **both** — so every code in the list is
-/// credited. An unrecognized code is reported by the caller rather than
-/// dropped.
-fn fixed_ability_adjustments(
-    ability_trait: &codex::rules_core::race_resolver::ResolvedTrait,
-) -> Result<BTreeMap<String, i16>, String> {
-    let mut out: BTreeMap<String, i16> = BTreeMap::new();
-    for chain in &ability_trait.raw_bonus_chains {
-        if chain.qualifiers.first().map(String::as_str) != Some("STAT") {
-            continue;
-        }
-        let (Some(codes), Some(raw_magnitude)) = (chain.qualifiers.get(1), chain.qualifiers.get(2))
-        else {
-            return Err(format!("{}: a BONUS:STAT chain is missing its codes or magnitude", ability_trait.key));
-        };
-        let magnitude: i16 = raw_magnitude
-            .parse()
-            .map_err(|_| format!("{}: BONUS:STAT magnitude {raw_magnitude:?} is not an integer", ability_trait.key))?;
-        for code in codes.split(',') {
-            let code = code.trim();
-            let ability = STAT_CODE_TO_ABILITY
-                .iter()
-                .find(|(stat, _)| *stat == code)
-                .map(|(_, ability)| *ability)
-                .ok_or_else(|| format!("{}: unknown BONUS:STAT ability code {code:?}", ability_trait.key))?;
-            *out.entry(ability.to_owned()).or_insert(0) += magnitude;
-        }
-    }
-    out.retain(|_, delta| *delta != 0);
-    Ok(out)
-}
-
-/// The freely-distributed "+2 to one ability score" points a
-/// `Racial Ability Scores` row grants.
-///
-/// PCGen splits the fact across two places: the *number of picks* is
-/// machine-readable (`BONUS:ABILITYPOOL|Ability Bonus|1`) but the *magnitude
-/// per pick* appears only in the row's own display name. That is stated here
-/// rather than hidden, and the name is matched strictly — a row that does not
-/// have the shape yields an error naming it, never a guessed magnitude.
-fn floating_ability_bonus_points(
-    ability_trait: &codex::rules_core::race_resolver::ResolvedTrait,
-) -> Result<u8, String> {
-    let picks: u8 = ability_trait
-        .raw_bonus_chains
-        .iter()
-        .filter(|chain| {
-            chain.qualifiers.first().map(String::as_str) == Some("ABILITYPOOL")
-                && chain.qualifiers.get(1).map(String::as_str) == Some("Ability Bonus")
-        })
-        .map(|chain| chain.qualifiers.get(2).and_then(|n| n.parse::<u8>().ok()).unwrap_or(0))
-        .sum();
-    if picks == 0 {
-        return Ok(0);
-    }
-    let magnitude = ability_trait
-        .name
-        .strip_prefix('+')
-        .and_then(|rest| rest.strip_suffix(" to One Ability Score"))
-        .and_then(|n| n.parse::<u8>().ok())
-        .ok_or_else(|| {
-            format!(
-                "{}: an ability-pool row must state its magnitude in its own name, got {:?}",
-                ability_trait.key, ability_trait.name
-            )
-        })?;
-    Ok(picks * magnitude)
-}
-
-/// The race's senses, rendered the way the Character Sheet's Details panel
-/// prints them, from the `VISION:` tokens on its resolved traits.
-///
-/// A race with no `VISION:` token honestly has normal vision. An
-/// unrecognized token yields an error naming it rather than being silently
-/// skipped — a dropped sense is a rules fact the player would never learn was
-/// missing.
-fn vision_reading(
-    race: &codex::rules_core::race_resolver::ResolvedRace,
-) -> Result<String, String> {
-    let mut readings: Vec<String> = Vec::new();
-    for resolved in &race.traits {
-        for token in resolved.raw_tokens.iter().filter(|t| t.key == "VISION") {
-            let value = token.value.trim();
-            let reading = if let Some(range) =
-                value.strip_prefix("Darkvision (").and_then(|rest| rest.strip_suffix(')'))
-            {
-                range
-                    .parse::<u16>()
-                    .map(|feet| format!("Darkvision {feet} ft."))
-                    .map_err(|_| format!("{}: unreadable Darkvision range {value:?}", resolved.key))?
-            } else if value == "Low-Light Vision" {
-                "Low-light vision".to_owned()
-            } else {
-                return Err(format!("{}: unrecognized VISION token {value:?}", resolved.key));
-            };
-            if !readings.contains(&reading) {
-                readings.push(reading);
-            }
-        }
-    }
-    Ok(if readings.is_empty() { "Normal".to_owned() } else { readings.join(", ") })
-}
-
 /// Builds one race's creation chassis, or the reason it cannot be offered.
+///
+/// The predicate itself lives in the headless rules crate
+/// (`codex::rules_core::race_creation`) so that `src/bin/v06_work_inventory.rs`
+/// -- which cannot depend on this crate -- can OBSERVE the same function
+/// rather than re-implement it. This wrapper is only the wire-DTO mapping;
+/// every refusal reason, every `BONUS:STAT` reading and the `VISION:`
+/// rendering are that module's, unchanged by the move (SD-31
+/// `OPEN-ISSUES.md` rows 170/207/226).
 fn race_creation_chassis(
     race: &codex::rules_core::race_resolver::ResolvedRace,
 ) -> Result<RaceCreationChassisDto, String> {
-    let size = race
-        .size
-        .ok_or_else(|| format!("{}: declares no readable creature size", race.race_key))?;
-    let base_speed_ft = race
-        .walk_speed_ft
-        .ok_or_else(|| format!("{}: declares no readable base land speed", race.race_key))?;
-    let vision = vision_reading(race)?;
-    let (ability_adjustments, floating_bonus_points) = match racial_ability_scores_trait(race) {
-        Some(ability_trait) => {
-            (fixed_ability_adjustments(ability_trait)?, floating_ability_bonus_points(ability_trait)?)
-        }
-        None => (BTreeMap::new(), 0),
-    };
-    if ability_adjustments.is_empty() && floating_bonus_points == 0 {
-        return Err(format!(
-            "{}: states neither a fixed ability modifier nor a floating ability pool",
-            race.race_key
-        ));
-    }
-
+    let chassis = codex::rules_core::race_creation::race_creation_chassis(race)?;
     Ok(RaceCreationChassisDto {
-        race_id: format!("race:{}", race.race_key.to_lowercase()),
-        label: race.race_key.clone(),
-        book: crate::race_catalog::book_code(&race.book_id),
-        size: format!("{size:?}"),
-        vision,
-        base_speed_ft,
-        ability_adjustments,
-        floating_bonus_points,
+        race_id: format!("race:{}", chassis.race_key.to_lowercase()),
+        label: chassis.race_key,
+        book: crate::race_catalog::book_code(&chassis.book_id),
+        size: format!("{:?}", chassis.size),
+        vision: chassis.vision,
+        base_speed_ft: chassis.base_speed_ft,
+        ability_adjustments: chassis.ability_adjustments,
+        floating_bonus_points: chassis.floating_bonus_points,
     })
 }
 
@@ -4330,6 +4190,62 @@ mod tests {
             let expected_adjustments: BTreeMap<String, i16> =
                 adjustments.iter().map(|(k, v)| ((*k).to_owned(), *v)).collect();
             assert_eq!(race.ability_adjustments, expected_adjustments, "{race_id} ability adjustments");
+        }
+    }
+
+    /// The three races whose inventory `wiring_class` is `computed`, whose
+    /// board `done` therefore rests on `grounded` ALONE — with no
+    /// independent `corpus_literal_sweep` byte-verification behind it, the
+    /// way the 27 `static` races have (SD-31 wave 14,
+    /// `v06_work_inventory.rs`'s `probe_race_creation_roster`). Their
+    /// magnitudes are pinned by name here so that credit cannot survive the
+    /// roster quietly serving a different number.
+    ///
+    /// Values transcribed from the rows that declare them, not from the
+    /// engine: `data/corpus/beastiary/race_trait/aasimar/
+    /// aasimar_ability_scores.json` (`BONUS:STAT|WIS,CHA|2`), the matching
+    /// `tiefling_ability_scores.json` (`BONUS:STAT|DEX,INT|2` +
+    /// `BONUS:STAT|CHA|-2`) and `data/corpus/advanced_race_guide/race_trait/
+    /// changeling/changeling_ability_scores.json` (`BONUS:STAT|WIS,CHA|2` +
+    /// `BONUS:STAT|CON|-2`).
+    #[test]
+    fn the_computed_class_races_serve_their_real_ability_magnitudes() {
+        let expected: [ShippedRaceRow; 3] = [
+            ("race:aasimar", "Medium", "Darkvision 60 ft.", 30, 0, &[("charisma", 2), ("wisdom", 2)]),
+            (
+                "race:tiefling",
+                "Medium",
+                "Darkvision 60 ft.",
+                30,
+                0,
+                &[("charisma", -2), ("dexterity", 2), ("intelligence", 2)],
+            ),
+            (
+                "race:changeling",
+                "Medium",
+                "Darkvision 60 ft.",
+                30,
+                0,
+                &[("charisma", 2), ("constitution", -2), ("wisdom", 2)],
+            ),
+        ];
+        for (race_id, size, vision, speed, floating, adjustments) in expected {
+            let race = roster_race(race_id);
+            assert_eq!(race.size, size, "{race_id} size");
+            assert_eq!(race.vision, vision, "{race_id} vision");
+            assert_eq!(race.base_speed_ft, speed, "{race_id} speed");
+            assert_eq!(race.floating_bonus_points, floating, "{race_id} floating ability points");
+            let expected_adjustments: BTreeMap<String, i16> =
+                adjustments.iter().map(|(k, v)| ((*k).to_owned(), *v)).collect();
+            assert_eq!(
+                race.ability_adjustments, expected_adjustments,
+                "{race_id} ability adjustments"
+            );
+            assert!(
+                !race.ability_adjustments.is_empty(),
+                "{race_id} reaches board `done` on `grounded` alone -- an empty magnitude here \
+                 would be an unverified credit"
+            );
         }
     }
 

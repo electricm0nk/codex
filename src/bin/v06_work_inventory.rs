@@ -50,6 +50,7 @@ use codex::rules_core::character_input::{
     SelectedChoice, SpellSelection, load_character_input_fixture,
 };
 use codex::rules_core::corpus_loader::{BookCorpusRoot, load_equipment_corpus, load_spell_corpus};
+use codex::rules_core::race_creation::race_creation_chassis;
 use codex::rules_core::race_resolver::{TraitRole, load_race_corpus};
 use codex::rules_core::equipment_effects::compute_equipment_effects;
 use codex::rules_core::equipment_resolver;
@@ -2398,7 +2399,18 @@ struct EngineFacts {
     /// class the engine actually models.
     class_feature_effect_wired: BTreeMap<String, &'static str>,
     /// Every race the engine models, by lowercase name.
+    ///
+    /// **`crb::RaceId::ALL`'s seven variants only.** Kept as the FALLBACK
+    /// rule beneath `race_creation_roster`, never as the primary one, for
+    /// exactly the reason [`probe_reachable_race_traits`] gives for
+    /// `race_trait_ids`: this enum is the pre-corpus CRB table and the
+    /// product models every race off disk. See
+    /// [`probe_race_creation_roster`].
     race_names: BTreeSet<String>,
+    /// Every race the product's OWN character-creation roster offers a
+    /// player, by lowercase race key -> the corpus book its chassis record
+    /// was loaded from. See [`probe_race_creation_roster`].
+    race_creation_roster: BTreeMap<String, String>,
     /// Race trait identities the engine grounds, as `<race>.<trait slug>`.
     ///
     /// CRB's seven compiled races only. Kept as the FALLBACK rule beneath
@@ -2543,7 +2555,14 @@ impl EngineFacts {
             }
             Kind::MonsterAbility => hit_lowercase(self.chassis_monster_ability_keys.get(book)),
             Kind::Companion => hit_lowercase(self.chassis_companion_keys.get(book)),
-            Kind::Race => book == "core_rulebook" && self.race_names.contains(&name.to_lowercase()),
+            // Same union as the verdict arm above: the roster is the
+            // product's own answer, `race_names` the legacy CRB enum.
+            Kind::Race => {
+                self.race_creation_roster.get(&name.to_lowercase()).map(String::as_str)
+                    == Some(book)
+                    || (book == "core_rulebook"
+                        && self.race_names.contains(&name.to_lowercase()))
+            }
             // The record's OWN race gates this, not "any modelled race" --
             // see `modelled_race_of_race_trait`.
             Kind::RaceTrait => {
@@ -2993,6 +3012,71 @@ struct RaceTraitProbe {
     /// claiming to verify the finer trait-key-level question for a race
     /// that has SOME seam; see OPEN-ISSUES for the narrower remaining gap.
     consumer_verified: BTreeSet<(String, usize)>,
+}
+
+/// Every race the product's OWN character-creation roster would offer a
+/// player, keyed by lowercase race key and valued by the corpus book its
+/// chassis record was loaded from.
+///
+/// # Why this exists (SD-31 `OPEN-ISSUES.md` rows 170, 207, 226)
+///
+/// The `race` kind's verdict answered "is this race modelled?" by testing
+/// membership in `crb::race_tables::RaceId::ALL` -- the ORIGINAL seven-variant
+/// CRB enum (`Human`/`Dwarf`/`Elf`/`Gnome`/`HalfElf`/`HalfOrc`/`Halfling`).
+/// The product stopped depending on that enum for race identity long ago: it
+/// loads `data/corpus/<book>/race/*.json` through
+/// `race_resolver::load_race_corpus` and serves the result from the
+/// `list_race_creation_roster` Tauri command. Three consecutive cycles traced
+/// the same consequence one unit deep -- `race` frozen at 7 `done` of 103
+/// across six waves, unmoved by four real chassis batches -- and each named
+/// this exact remedy.
+///
+/// # What it observes, and why that is a magnitude and not a load
+///
+/// It calls `race_creation::race_creation_chassis`, **the same function**
+/// `character_hub::build_race_creation_roster` calls to build the roster the
+/// player picks from -- never a re-implementation of it (that is the failure
+/// [`probe_race_trait_corpus`]'s own doc comment exists to prevent, and the
+/// reason the predicate was moved into `rules_core` rather than copied here).
+///
+/// A race passes only if the loaded corpus states a readable size, a readable
+/// base land speed, senses that parse, AND a real ability-score magnitude --
+/// a `BONUS:STAT` set or a floating "+N to one ability score" pool. A race
+/// stating none of the latter is REFUSED, which is what makes this a
+/// consumer-delta observation rather than the "record is on disk" observation
+/// `SD31-W12-INTEGRATE-001` demoted 251 `race_trait` units for. The numbers
+/// this predicate reads are the ones
+/// `apps/desktop/src/characterHub/composeCreateCharacterRequest.ts`'s
+/// `applyRacialAbilityAdjustments` bakes into the ability scores submitted at
+/// character creation, so a race that passes has a magnitude that changes the
+/// player's calculated sheet.
+///
+/// An unreadable corpus yields an EMPTY map, never a guessed one: the verdict
+/// then falls back to the `RaceId::ALL` rule below and the inventory
+/// under-claims. Under-claiming on a broken read is the safe direction.
+fn probe_race_creation_roster(repo_root: &Path) -> BTreeMap<String, String> {
+    let books = app_race_corpus_books(repo_root);
+    let dirs: Vec<(String, PathBuf)> =
+        books.into_iter().map(|b| (b.clone(), repo_root.join("data/corpus").join(b))).collect();
+    let roots: Vec<BookCorpusRoot<'_>> = dirs
+        .iter()
+        .map(|(book, dir)| BookCorpusRoot { book_id: book.as_str(), dir: dir.as_path() })
+        .collect();
+    let corpus = load_race_corpus(&roots);
+
+    let mut offered = BTreeMap::new();
+    for race_key in corpus.race_keys() {
+        // `resolve(key, &[])` is exactly what `build_race_creation_roster`
+        // passes -- a plain member of the race, no alternates chosen.
+        let Some(resolved) = corpus.resolve(race_key, &[]) else { continue };
+        // A refusal is DROPPED here rather than recorded as a near-miss: the
+        // roster withholds that race from the player, so the inventory must
+        // report it un-grounded for the same reason.
+        if let Ok(chassis) = race_creation_chassis(&resolved) {
+            offered.insert(chassis.race_key.to_lowercase(), chassis.book_id);
+        }
+    }
+    offered
 }
 
 fn probe_race_trait_corpus(repo_root: &Path) -> RaceTraitProbe {
@@ -4124,6 +4208,7 @@ fn gather_engine_facts(
         .map(|t| format!("{}.{}", race_name(t.race_id), slug(t.trait_name)))
         .collect();
     let race_trait_probe = probe_race_trait_corpus(repo_root);
+    let race_creation_roster = probe_race_creation_roster(repo_root);
 
     // The class consumer-delta probe, over exactly the classes the engine
     // models. Runs BEFORE the union sweep below because it asks a different
@@ -4182,6 +4267,7 @@ fn gather_engine_facts(
         // population and sibling map are corpus facts, not engine facts.
         class_feature_effect_wired: BTreeMap::new(),
         race_names,
+        race_creation_roster,
         race_trait_ids,
         race_trait_probe,
         explanation_ids,
@@ -5388,6 +5474,34 @@ fn classify(
             not_ingested("monster_absent_from_MonsterId_ALL")
         }
         Kind::Race => {
+            // PRIMARY: the product's own character-creation roster offers
+            // this race to a player. This OVERRULES the `RaceId::ALL` rule
+            // below rather than supplementing it, exactly as the
+            // `Kind::RaceTrait` arm's corpus probe overrules `race_trait_ids`
+            // and for the same reason: `RaceId::ALL` is the seven-variant
+            // pre-corpus CRB enum, and the product has modelled races off
+            // disk since SD-29. Order is safe -- every one of the enum's
+            // seven races is also in the roster (asserted by
+            // `every_raceid_all_race_is_also_offered_by_the_creation_roster`
+            // below), so nothing the old rule grounded can be demoted.
+            //
+            // The observation is the attribution, so it is reported as such:
+            // a race whose observed corpus book differs from its own unit
+            // book is credited to the observed one, exactly as the
+            // `race_trait` arm already does (`decisions.md §49.3`).
+            if let Some(observed) = facts.race_creation_roster.get(&unit.name.to_lowercase()) {
+                let engine_book_for_verdict = if own_engine_book == Some(observed.as_str()) {
+                    engine_book_field.clone()
+                } else {
+                    Some(observed.to_string())
+                };
+                return Verdict {
+                    status: "grounded",
+                    evidence: "race_offered_by_the_real_character_creation_roster".to_string(),
+                    reason: None,
+                    engine_book: engine_book_for_verdict,
+                };
+            }
             if facts.race_names.contains(&unit.name.to_lowercase()) {
                 return Verdict {
                     status: "grounded",
@@ -5397,7 +5511,12 @@ fn classify(
                     engine_book: engine_book_field,
                 };
             }
-            not_ingested("race_absent_from_RaceId_ALL")
+            // The evidence token names what was actually consulted. It used
+            // to read `race_absent_from_RaceId_ALL`, which after this change
+            // would describe the fallback rule rather than the rule that
+            // decided -- and which was already the *wrong* reason for the
+            // 30 races that had a real corpus chassis all along.
+            not_ingested("race_absent_from_the_character_creation_roster")
         }
         Kind::RaceTrait => {
             // PRIMARY: the race corpus the app really loads applies this
@@ -8814,6 +8933,185 @@ mod race_trait_grounding_tests {
             assert!(
                 src.contains(&format!("\"{book}\"")),
                 "{book} is not named in race_catalog.rs at all"
+            );
+        }
+    }
+
+    // ----- `race` kind: the creation-roster probe (SD-31 wave 14) -----
+
+    fn race_unit(book: &str, name: &str, file: &str, line: usize) -> CorpusUnit {
+        CorpusUnit {
+            book: book.to_string(),
+            source_book: book.to_string(),
+            kind: Kind::Race,
+            key: name.to_string(),
+            name: name.to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: file.to_string(), line },
+            magnitude_token_count: 1,
+            type_facet: None,
+            visible: true,
+        }
+    }
+
+    /// The defect this probe closes, stated as a test over the REAL corpus.
+    ///
+    /// Catfolk has had a real chassis record on disk since 2026-08-16
+    /// (`data/corpus/advanced_race_guide/race/catfolk.json`) and is offered
+    /// by the live `list_race_creation_roster` command, yet the `race` kind
+    /// verdicted it `race_absent_from_RaceId_ALL` -- because `RaceId::ALL`
+    /// is the seven-variant CRB enum and Catfolk is not one of the seven.
+    /// Before the probe existed this asserted `not-ingested`.
+    #[test]
+    fn a_non_crb_race_with_a_real_creation_chassis_is_grounded() {
+        let facts = EngineFacts {
+            race_creation_roster: probe_race_creation_roster(&probe_root()),
+            ..Default::default()
+        };
+        let unit = race_unit("advanced_race_guide", "Catfolk", "catfolk_races.lst", 6);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(verdict.evidence, "race_offered_by_the_real_character_creation_roster");
+    }
+
+    /// **Proof the new rung can fail** (`decisions.md §1(a)`: a gate that
+    /// cannot fail is worse than no gate). The SAME Catfolk unit the test
+    /// above grounds is classified against an EMPTY roster -- the state the
+    /// probe itself returns when the corpus cannot be read -- and must fall
+    /// all the way back to `not-ingested`. If this ever passes as
+    /// `grounded`, the grounding is coming from somewhere other than the
+    /// observation, and the rung is decorative.
+    #[test]
+    fn the_same_race_is_not_grounded_when_the_roster_observes_nothing() {
+        let facts = EngineFacts::default();
+        assert!(facts.race_creation_roster.is_empty());
+        let unit = race_unit("advanced_race_guide", "Catfolk", "catfolk_races.lst", 6);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
+        assert_eq!(verdict.status, "not-ingested");
+        assert_eq!(verdict.evidence, "race_absent_from_the_character_creation_roster");
+    }
+
+    /// A `grounded` race is NOT board-`done` on its own for the `static` and
+    /// `derived` wiring classes -- it is `held` until `corpus_literal_sweep`
+    /// independently byte-verifies the record against the pinned oracle.
+    /// This pins that the new rung cannot manufacture a `done` by itself for
+    /// the 34 static/derived races it grounds: `apply_done_rung_stamps` is
+    /// still the only thing that can promote them, and it only ever consults
+    /// the sweep's own verified set.
+    #[test]
+    fn grounding_a_static_race_does_not_stamp_it_verified_without_the_sweep() {
+        fn grounded_catfolk() -> InventoryUnit {
+            InventoryUnit {
+                id: "advanced_race_guide:race:catfolk".to_string(),
+                unit: race_unit("advanced_race_guide", "Catfolk", "catfolk_races.lst", 6),
+                verdict: Verdict {
+                    status: "grounded",
+                    evidence: "race_offered_by_the_real_character_creation_roster".to_string(),
+                    reason: None,
+                    engine_book: None,
+                },
+                wiring_class: wiring_class::WiringClass::Static,
+                wiring_class_reason: "test".to_string(),
+                wiring_class_signals: BTreeSet::new(),
+            }
+        }
+
+        let mut items = [grounded_catfolk()];
+        apply_done_rung_stamps(&mut items, &BTreeSet::new(), &BTreeSet::new());
+        assert_eq!(items[0].verdict.status, "grounded", "an unverified race must stay held");
+
+        // ... and IS stamped once the sweep really verified that coordinate.
+        let verified: BTreeSet<(String, String, usize)> = [(
+            "advanced_race_guide".to_string(),
+            "catfolk_races.lst".to_string(),
+            6usize,
+        )]
+        .into_iter()
+        .collect();
+        let mut items = [grounded_catfolk()];
+        apply_done_rung_stamps(&mut items, &verified, &BTreeSet::new());
+        assert_eq!(items[0].verdict.status, "literal-verified");
+    }
+
+    /// The probe must DISCRIMINATE, not promote everything it is asked
+    /// about. `Skeleton` is one of the monster-template `RACE:` rows that
+    /// share this kind (`OPEN-ISSUES.md` row 170): no chassis record exists
+    /// for it, no player can create one, and it must stay `not-ingested`.
+    /// A probe that grounded this would be the "100 % promotion rate" shape
+    /// `SD28-E14-F1`'s retracted spell probe was retracted for.
+    #[test]
+    fn a_monster_template_race_row_with_no_chassis_stays_not_ingested() {
+        let facts = EngineFacts {
+            race_creation_roster: probe_race_creation_roster(&probe_root()),
+            ..Default::default()
+        };
+        let unit = race_unit("bestiary", "Skeleton", "b1_races.lst", 1);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "static", false);
+        assert_eq!(verdict.status, "not-ingested");
+        assert_eq!(verdict.evidence, "race_absent_from_the_character_creation_roster");
+    }
+
+    /// The probe promotes a MINORITY of the kind's units, measured over the
+    /// real corpus rather than asserted. If this ever reaches every race on
+    /// the board, the probe has stopped discriminating and this test says so
+    /// before a receipt quotes the number.
+    #[test]
+    fn the_creation_roster_covers_a_minority_of_the_boards_race_rows() {
+        let offered = probe_race_creation_roster(&probe_root());
+        assert!(
+            (20..=60).contains(&offered.len()),
+            "the creation roster offered {} races -- outside the plausible band for a \
+             corpus with a per-race chassis file each; re-derive before trusting it",
+            offered.len()
+        );
+    }
+
+    /// No demotion is possible: every race the legacy `RaceId::ALL` rule
+    /// grounded is also offered by the roster, so putting the roster FIRST
+    /// can only add. This is the ordering guarantee the verdict arm's own
+    /// comment claims, tested rather than asserted.
+    #[test]
+    fn every_raceid_all_race_is_also_offered_by_the_creation_roster() {
+        let offered = probe_race_creation_roster(&probe_root());
+        for race in RaceId::ALL {
+            let name = race_name(*race).to_lowercase();
+            assert!(
+                offered.contains_key(&name),
+                "{name} is grounded by RaceId::ALL but not offered by the creation roster -- \
+                 the roster-first ordering would demote it"
+            );
+        }
+    }
+
+    /// The probe is a MAGNITUDE observation, not a load observation: every
+    /// race it offers states a real ability-score magnitude, because
+    /// `race_creation_chassis` refuses a race that states none. Proven over
+    /// the real corpus by re-reading each offered race's own chassis through
+    /// the same shared predicate.
+    #[test]
+    fn every_offered_race_states_a_real_ability_magnitude() {
+        let books = app_race_corpus_books(&probe_root());
+        let dirs: Vec<(String, PathBuf)> = books
+            .into_iter()
+            .map(|b| (b.clone(), probe_root().join("data/corpus").join(b)))
+            .collect();
+        let roots: Vec<BookCorpusRoot<'_>> = dirs
+            .iter()
+            .map(|(book, dir)| BookCorpusRoot { book_id: book.as_str(), dir: dir.as_path() })
+            .collect();
+        let corpus = load_race_corpus(&roots);
+        let offered = probe_race_creation_roster(&probe_root());
+        assert!(!offered.is_empty(), "the probe observed nothing at all");
+        for key in offered.keys() {
+            let resolved = corpus
+                .resolve_key(key)
+                .and_then(|real| corpus.resolve(real, &[]))
+                .unwrap_or_else(|| panic!("{key} is offered but does not resolve"));
+            let chassis = race_creation_chassis(&resolved)
+                .unwrap_or_else(|why| panic!("{key} is offered but refused: {why}"));
+            assert!(
+                !chassis.ability_adjustments.is_empty() || chassis.floating_bonus_points > 0,
+                "{key} is offered with no ability magnitude at all"
             );
         }
     }
