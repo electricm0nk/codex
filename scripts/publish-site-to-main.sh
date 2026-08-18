@@ -240,8 +240,18 @@ cleanup() {
 trap cleanup EXIT
 
 git worktree add --quiet -b "$PUBLISH_BRANCH" "$PUBLISH_WT" "origin/$TO"
-git -C "$PUBLISH_WT" checkout "$FROM" -- site/
-git -C "$PUBLISH_WT" add -- site/
+# `git checkout <ref> -- site/` is ADDITIVE: it adds and overwrites, but it
+# never removes a file that exists on the deploy branch and no longer exists on
+# the source branch. This script's whole premise is publishing the site/ TREE as
+# it stands, so that gap silently made removals unpublishable -- a file dropped
+# from site/ stayed live and publicly fetchable after the change that removed
+# it. Caught when dropping Core Essentials left site/status-data/
+# core_essentials.json on main. Clear the directory first so the checkout
+# reconstructs it exactly, and stage with -A so deletions are recorded.
+git -C "$PUBLISH_WT" rm -r -q --ignore-unmatch --cached -- site
+rm -rf "${PUBLISH_WT:?}/site"
+git -C "$PUBLISH_WT" checkout "$FROM" -- site
+git -C "$PUBLISH_WT" add -A -- site
 
 if git -C "$PUBLISH_WT" diff --cached --quiet; then
     echo "    no staged difference after all; aborting cleanly."
