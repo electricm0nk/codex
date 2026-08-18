@@ -38,15 +38,15 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 96,
+      "done": 92,
       "partial": 25,
-      "not_started": 5,
-      "denominator": 126,
-      "pct": 76.2,
-      "excluded_from_percentage": 24,
+      "not_started": 3,
+      "denominator": 120,
+      "pct": 76.7,
+      "excluded_from_percentage": 30,
       "standing_breakdown": {
-        "origin": 126,
-        "unclassified": 24
+        "origin": 120,
+        "unclassified": 30
       },
       "items": [
         {
@@ -899,25 +899,25 @@
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Magic.Wondrous Item.SLOT_Neck.Amulet",
-          "standing": "origin"
+          "standing": "unclassified"
         },
         {
           "name": "[redacted PI]",
           "doneness": "done",
           "type_facet": "Magic.Wondrous Item.SLOT_Head.Headgear",
-          "standing": "origin"
+          "standing": "unclassified"
         },
         {
           "name": "[redacted PI]",
           "doneness": "done",
           "type_facet": "Magic.Wondrous Item.SLOT_Head.Headgear",
-          "standing": "origin"
+          "standing": "unclassified"
         },
         {
           "name": "[redacted PI]",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "unclassified"
         },
         {
           "name": "[redacted PI]",
@@ -929,7 +929,7 @@
           "name": "[redacted PI]",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "unclassified"
         },
         {
           "name": "[redacted PI]",
@@ -947,7 +947,7 @@
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Magic.Wondrous Item.SLOT_Neck.Amulet",
-          "standing": "origin"
+          "standing": "unclassified"
         }
       ]
     },
@@ -2187,13 +2187,13 @@
       "label": "Race Traits",
       "done": 0,
       "partial": 0,
-      "not_started": 23,
-      "denominator": 23,
+      "not_started": 22,
+      "denominator": 22,
       "pct": 0.0,
-      "excluded_from_percentage": 5,
+      "excluded_from_percentage": 6,
       "standing_breakdown": {
-        "origin": 23,
-        "unclassified": 5
+        "origin": 22,
+        "unclassified": 6
       },
       "items": [
         {
@@ -2362,7 +2362,7 @@
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "unclassified"
         }
       ]
     },
@@ -2370,13 +2370,14 @@
       "kind": "spell",
       "label": "Spells",
       "done": 8,
-      "partial": 58,
-      "not_started": 30,
-      "denominator": 96,
-      "pct": 8.3,
-      "excluded_from_percentage": 0,
+      "partial": 57,
+      "not_started": 27,
+      "denominator": 92,
+      "pct": 8.7,
+      "excluded_from_percentage": 4,
       "standing_breakdown": {
-        "origin": 96
+        "origin": 92,
+        "unclassified": 4
       },
       "items": [
         {
@@ -2935,25 +2936,25 @@
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "unclassified"
         },
         {
           "name": "[redacted PI]",
           "doneness": "partial",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "unclassified"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "unclassified"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "unclassified"
         }
       ]
     }

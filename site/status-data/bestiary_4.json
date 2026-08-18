@@ -6599,13 +6599,13 @@
       "label": "Race Traits",
       "done": 6,
       "partial": 10,
-      "not_started": 103,
-      "denominator": 119,
-      "pct": 5.0,
-      "excluded_from_percentage": 69,
+      "not_started": 101,
+      "denominator": 117,
+      "pct": 5.1,
+      "excluded_from_percentage": 71,
       "standing_breakdown": {
-        "unclassified": 69,
-        "origin": 119
+        "unclassified": 71,
+        "origin": 117
       },
       "items": [
         {
@@ -7728,13 +7728,13 @@
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "unclassified"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "unclassified"
         }
       ]
     },

@@ -7,13 +7,13 @@
       "label": "Class Features",
       "done": 0,
       "partial": 0,
-      "not_started": 53,
-      "denominator": 53,
+      "not_started": 52,
+      "denominator": 52,
       "pct": 0.0,
-      "excluded_from_percentage": 118,
+      "excluded_from_percentage": 119,
       "standing_breakdown": {
-        "unclassified": 118,
-        "origin": 53
+        "unclassified": 119,
+        "origin": 52
       },
       "items": [
         {
@@ -866,7 +866,7 @@
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Internal",
-          "standing": "origin"
+          "standing": "unclassified"
         },
         {
           "name": "[redacted PI]",
@@ -1979,13 +1979,13 @@
       "label": "Race Traits",
       "done": 5,
       "partial": 1,
-      "not_started": 33,
-      "denominator": 39,
-      "pct": 12.8,
-      "excluded_from_percentage": 15,
+      "not_started": 24,
+      "denominator": 30,
+      "pct": 16.7,
+      "excluded_from_percentage": 24,
       "standing_breakdown": {
-        "unclassified": 15,
-        "origin": 39
+        "unclassified": 24,
+        "origin": 30
       },
       "items": [
         {
@@ -2262,55 +2262,55 @@
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "unclassified"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "unclassified"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "unclassified"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "unclassified"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "unclassified"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "unclassified"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "unclassified"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "unclassified"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "unclassified"
         }
       ]
     },

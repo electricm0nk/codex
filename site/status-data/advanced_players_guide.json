@@ -7,13 +7,13 @@
       "label": "Class Features",
       "done": 1,
       "partial": 2,
-      "not_started": 1238,
-      "denominator": 1241,
+      "not_started": 1237,
+      "denominator": 1240,
       "pct": 0.1,
-      "excluded_from_percentage": 814,
+      "excluded_from_percentage": 815,
       "standing_breakdown": {
-        "unclassified": 814,
-        "origin": 1241
+        "unclassified": 815,
+        "origin": 1240
       },
       "items": [
         {
@@ -12344,7 +12344,7 @@
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "InquisitorDomain",
-          "standing": "origin"
+          "standing": "unclassified"
         }
       ]
     },

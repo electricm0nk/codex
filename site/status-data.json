@@ -1,20 +1,20 @@
 {
-  "generated_at": "2026-08-17T23:12:08Z",
+  "generated_at": "2026-08-18T03:17:50Z",
   "doneness_values": [
     "done",
     "partial",
     "not-started"
   ],
   "overall": {
-    "done": 10428,
-    "partial": 2836,
-    "not_started": 16259,
-    "denominator": 29523,
+    "done": 10423,
+    "partial": 2835,
+    "not_started": 16232,
+    "denominator": 29490,
     "pct": 35.3,
-    "excluded_from_percentage": 8998,
+    "excluded_from_percentage": 9031,
     "standing_breakdown": {
-      "origin": 29523,
-      "unclassified": 8870,
+      "origin": 29490,
+      "unclassified": 8903,
       "packaging-artifact": 128
     }
   },
@@ -38,13 +38,13 @@
       "title": "Advanced Player's Guide",
       "done": 364,
       "partial": 432,
-      "not_started": 1527,
-      "denominator": 2323,
+      "not_started": 1526,
+      "denominator": 2322,
       "pct": 15.7,
-      "excluded_from_percentage": 919,
+      "excluded_from_percentage": 920,
       "standing_breakdown": {
-        "origin": 2323,
-        "unclassified": 919
+        "origin": 2322,
+        "unclassified": 920
       }
     },
     {
@@ -178,13 +178,13 @@
       "title": "Bestiary 4",
       "done": 533,
       "partial": 164,
-      "not_started": 332,
-      "denominator": 1029,
-      "pct": 51.8,
-      "excluded_from_percentage": 307,
+      "not_started": 330,
+      "denominator": 1027,
+      "pct": 51.9,
+      "excluded_from_percentage": 309,
       "standing_breakdown": {
-        "unclassified": 307,
-        "origin": 1029
+        "unclassified": 309,
+        "origin": 1027
       }
     },
     {
@@ -260,15 +260,15 @@
     {
       "id": "inner_sea_gods",
       "title": "Inner Sea Gods",
-      "done": 179,
-      "partial": 88,
-      "not_started": 104,
-      "denominator": 371,
-      "pct": 48.2,
-      "excluded_from_percentage": 106,
+      "done": 175,
+      "partial": 87,
+      "not_started": 98,
+      "denominator": 360,
+      "pct": 48.6,
+      "excluded_from_percentage": 117,
       "standing_breakdown": {
-        "origin": 371,
-        "unclassified": 106
+        "origin": 360,
+        "unclassified": 117
       }
     },
     {
@@ -276,13 +276,13 @@
       "title": "Inner Sea Races",
       "done": 166,
       "partial": 16,
-      "not_started": 87,
-      "denominator": 269,
-      "pct": 61.7,
-      "excluded_from_percentage": 46,
+      "not_started": 86,
+      "denominator": 268,
+      "pct": 61.9,
+      "excluded_from_percentage": 47,
       "standing_breakdown": {
-        "origin": 269,
-        "unclassified": 46
+        "origin": 268,
+        "unclassified": 47
       }
     },
     {
@@ -328,20 +328,6 @@
       }
     },
     {
-      "id": "inner_sea_world_guide",
-      "title": "Inner Sea World Guide",
-      "done": 44,
-      "partial": 11,
-      "not_started": 131,
-      "denominator": 186,
-      "pct": 23.7,
-      "excluded_from_percentage": 214,
-      "standing_breakdown": {
-        "unclassified": 214,
-        "origin": 186
-      }
-    },
-    {
       "id": "monster_codex",
       "title": "Monster Codex",
       "done": 74,
@@ -353,6 +339,20 @@
       "standing_breakdown": {
         "origin": 186,
         "unclassified": 21
+      }
+    },
+    {
+      "id": "inner_sea_world_guide",
+      "title": "Inner Sea World Guide",
+      "done": 44,
+      "partial": 11,
+      "not_started": 121,
+      "denominator": 176,
+      "pct": 25.0,
+      "excluded_from_percentage": 224,
+      "standing_breakdown": {
+        "unclassified": 224,
+        "origin": 176
       }
     },
     {

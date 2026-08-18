@@ -903,13 +903,13 @@
       "label": "Race Traits",
       "done": 53,
       "partial": 14,
-      "not_started": 52,
-      "denominator": 119,
-      "pct": 44.5,
-      "excluded_from_percentage": 23,
+      "not_started": 51,
+      "denominator": 118,
+      "pct": 44.9,
+      "excluded_from_percentage": 24,
       "standing_breakdown": {
-        "origin": 119,
-        "unclassified": 23
+        "origin": 118,
+        "unclassified": 24
       },
       "items": [
         {
@@ -1762,7 +1762,7 @@
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "RacialTraits.Elf Racial Trait.SpecialQuality.Special Quality.Applied Bonus",
-          "standing": "origin"
+          "standing": "unclassified"
         }
       ]
     },
