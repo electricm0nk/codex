@@ -1,0 +1,455 @@
+{
+  "generated_at": "2026-08-18T03:17:50Z",
+  "doneness_values": [
+    "done",
+    "partial",
+    "not-started"
+  ],
+  "overall": {
+    "done": 10423,
+    "partial": 2835,
+    "not_started": 16232,
+    "denominator": 29490,
+    "pct": 35.3,
+    "excluded_from_percentage": 9031,
+    "standing_breakdown": {
+      "origin": 29490,
+      "unclassified": 8903,
+      "packaging-artifact": 128
+    }
+  },
+  "books": [
+    {
+      "id": "core_rulebook",
+      "title": "Core Rulebook",
+      "done": 2878,
+      "partial": 732,
+      "not_started": 879,
+      "denominator": 4489,
+      "pct": 64.1,
+      "excluded_from_percentage": 734,
+      "standing_breakdown": {
+        "origin": 4489,
+        "unclassified": 734
+      }
+    },
+    {
+      "id": "advanced_players_guide",
+      "title": "Advanced Player's Guide",
+      "done": 364,
+      "partial": 432,
+      "not_started": 1526,
+      "denominator": 2322,
+      "pct": 15.7,
+      "excluded_from_percentage": 920,
+      "standing_breakdown": {
+        "origin": 2322,
+        "unclassified": 920
+      }
+    },
+    {
+      "id": "ultimate_psionics",
+      "title": "Ultimate Psionics",
+      "done": 494,
+      "partial": 139,
+      "not_started": 1631,
+      "denominator": 2264,
+      "pct": 21.8,
+      "excluded_from_percentage": 231,
+      "standing_breakdown": {
+        "origin": 2264,
+        "unclassified": 231
+      }
+    },
+    {
+      "id": "advanced_class_guide",
+      "title": "Advanced Class Guide",
+      "done": 437,
+      "partial": 107,
+      "not_started": 1416,
+      "denominator": 1960,
+      "pct": 22.3,
+      "excluded_from_percentage": 1176,
+      "standing_breakdown": {
+        "origin": 1960,
+        "unclassified": 1176
+      }
+    },
+    {
+      "id": "ultimate_wilderness",
+      "title": "Ultimate Wilderness",
+      "done": 395,
+      "partial": 132,
+      "not_started": 1089,
+      "denominator": 1616,
+      "pct": 24.4,
+      "excluded_from_percentage": 246,
+      "standing_breakdown": {
+        "origin": 1616,
+        "unclassified": 246
+      }
+    },
+    {
+      "id": "occult_adventures",
+      "title": "Occult Adventures",
+      "done": 302,
+      "partial": 21,
+      "not_started": 1215,
+      "denominator": 1538,
+      "pct": 19.6,
+      "excluded_from_percentage": 191,
+      "standing_breakdown": {
+        "origin": 1538,
+        "unclassified": 191
+      }
+    },
+    {
+      "id": "ultimate_equipment",
+      "title": "Ultimate Equipment",
+      "done": 1205,
+      "partial": 99,
+      "not_started": 88,
+      "denominator": 1392,
+      "pct": 86.6,
+      "excluded_from_percentage": 223,
+      "standing_breakdown": {
+        "origin": 1392,
+        "unclassified": 223
+      }
+    },
+    {
+      "id": "ultimate_combat",
+      "title": "Ultimate Combat",
+      "done": 422,
+      "partial": 31,
+      "not_started": 906,
+      "denominator": 1359,
+      "pct": 31.1,
+      "excluded_from_percentage": 697,
+      "standing_breakdown": {
+        "origin": 1359,
+        "unclassified": 697
+      }
+    },
+    {
+      "id": "ultimate_magic",
+      "title": "Ultimate Magic",
+      "done": 338,
+      "partial": 80,
+      "not_started": 893,
+      "denominator": 1311,
+      "pct": 25.8,
+      "excluded_from_percentage": 446,
+      "standing_breakdown": {
+        "origin": 1311,
+        "unclassified": 446
+      }
+    },
+    {
+      "id": "advanced_race_guide",
+      "title": "Advanced Race Guide",
+      "done": 395,
+      "partial": 203,
+      "not_started": 625,
+      "denominator": 1223,
+      "pct": 32.3,
+      "excluded_from_percentage": 355,
+      "standing_breakdown": {
+        "origin": 1223,
+        "unclassified": 355
+      }
+    },
+    {
+      "id": "bestiary",
+      "title": "Bestiary",
+      "done": 450,
+      "partial": 183,
+      "not_started": 501,
+      "denominator": 1134,
+      "pct": 39.7,
+      "excluded_from_percentage": 519,
+      "standing_breakdown": {
+        "origin": 1134,
+        "unclassified": 519
+      }
+    },
+    {
+      "id": "bestiary_4",
+      "title": "Bestiary 4",
+      "done": 533,
+      "partial": 164,
+      "not_started": 330,
+      "denominator": 1027,
+      "pct": 51.9,
+      "excluded_from_percentage": 309,
+      "standing_breakdown": {
+        "unclassified": 309,
+        "origin": 1027
+      }
+    },
+    {
+      "id": "bestiary_3",
+      "title": "Bestiary 3",
+      "done": 320,
+      "partial": 20,
+      "not_started": 604,
+      "denominator": 944,
+      "pct": 33.9,
+      "excluded_from_percentage": 348,
+      "standing_breakdown": {
+        "origin": 944,
+        "unclassified": 348
+      }
+    },
+    {
+      "id": "bestiary_2",
+      "title": "Bestiary 2",
+      "done": 409,
+      "partial": 178,
+      "not_started": 330,
+      "denominator": 917,
+      "pct": 44.6,
+      "excluded_from_percentage": 343,
+      "standing_breakdown": {
+        "origin": 917,
+        "unclassified": 343
+      }
+    },
+    {
+      "id": "ultimate_intrigue",
+      "title": "Ultimate Intrigue",
+      "done": 260,
+      "partial": 32,
+      "not_started": 602,
+      "denominator": 894,
+      "pct": 29.1,
+      "excluded_from_percentage": 208,
+      "standing_breakdown": {
+        "origin": 894,
+        "unclassified": 208
+      }
+    },
+    {
+      "id": "horror_adventures",
+      "title": "Horror Adventures",
+      "done": 198,
+      "partial": 6,
+      "not_started": 499,
+      "denominator": 703,
+      "pct": 28.2,
+      "excluded_from_percentage": 153,
+      "standing_breakdown": {
+        "origin": 703,
+        "unclassified": 153
+      }
+    },
+    {
+      "id": "pathfinder_unchained",
+      "title": "Pathfinder Unchained",
+      "done": 24,
+      "partial": 25,
+      "not_started": 399,
+      "denominator": 448,
+      "pct": 5.4,
+      "excluded_from_percentage": 378,
+      "standing_breakdown": {
+        "origin": 448,
+        "unclassified": 378
+      }
+    },
+    {
+      "id": "inner_sea_gods",
+      "title": "Inner Sea Gods",
+      "done": 175,
+      "partial": 87,
+      "not_started": 98,
+      "denominator": 360,
+      "pct": 48.6,
+      "excluded_from_percentage": 117,
+      "standing_breakdown": {
+        "origin": 360,
+        "unclassified": 117
+      }
+    },
+    {
+      "id": "inner_sea_races",
+      "title": "Inner Sea Races",
+      "done": 166,
+      "partial": 16,
+      "not_started": 86,
+      "denominator": 268,
+      "pct": 61.9,
+      "excluded_from_percentage": 47,
+      "standing_breakdown": {
+        "origin": 268,
+        "unclassified": 47
+      }
+    },
+    {
+      "id": "book_of_the_damned_volume_2",
+      "title": "Book of the Damned, Vol. 2",
+      "done": 18,
+      "partial": 3,
+      "not_started": 210,
+      "denominator": 231,
+      "pct": 7.8,
+      "excluded_from_percentage": 23,
+      "standing_breakdown": {
+        "origin": 231,
+        "unclassified": 23
+      }
+    },
+    {
+      "id": "inner_sea_combat",
+      "title": "Inner Sea Combat",
+      "done": 39,
+      "partial": 1,
+      "not_started": 184,
+      "denominator": 224,
+      "pct": 17.4,
+      "excluded_from_percentage": 174,
+      "standing_breakdown": {
+        "origin": 224,
+        "unclassified": 174
+      }
+    },
+    {
+      "id": "inner_sea_intrigue",
+      "title": "Inner Sea Intrigue",
+      "done": 43,
+      "partial": 3,
+      "not_started": 144,
+      "denominator": 190,
+      "pct": 22.6,
+      "excluded_from_percentage": 66,
+      "standing_breakdown": {
+        "origin": 190,
+        "unclassified": 66
+      }
+    },
+    {
+      "id": "monster_codex",
+      "title": "Monster Codex",
+      "done": 74,
+      "partial": 5,
+      "not_started": 107,
+      "denominator": 186,
+      "pct": 39.8,
+      "excluded_from_percentage": 21,
+      "standing_breakdown": {
+        "origin": 186,
+        "unclassified": 21
+      }
+    },
+    {
+      "id": "inner_sea_world_guide",
+      "title": "Inner Sea World Guide",
+      "done": 44,
+      "partial": 11,
+      "not_started": 121,
+      "denominator": 176,
+      "pct": 25.0,
+      "excluded_from_percentage": 224,
+      "standing_breakdown": {
+        "unclassified": 224,
+        "origin": 176
+      }
+    },
+    {
+      "id": "inner_sea_bestiary",
+      "title": "Inner Sea Bestiary",
+      "done": 137,
+      "partial": 8,
+      "not_started": 26,
+      "denominator": 171,
+      "pct": 80.1,
+      "excluded_from_percentage": 63,
+      "standing_breakdown": {
+        "origin": 171,
+        "unclassified": 63
+      }
+    },
+    {
+      "id": "bestiary_5",
+      "title": "Bestiary 5",
+      "done": 37,
+      "partial": 13,
+      "not_started": 115,
+      "denominator": 165,
+      "pct": 22.4,
+      "excluded_from_percentage": 85,
+      "standing_breakdown": {
+        "unclassified": 85,
+        "origin": 165
+      }
+    },
+    {
+      "id": "book_of_the_damned_volume_1",
+      "title": "Book of the Damned, Vol. 1",
+      "done": 20,
+      "partial": 1,
+      "not_started": 37,
+      "denominator": 58,
+      "pct": 34.5,
+      "excluded_from_percentage": 32,
+      "standing_breakdown": {
+        "origin": 58,
+        "unclassified": 32
+      }
+    },
+    {
+      "id": "bestiary_6",
+      "title": "Bestiary 6",
+      "done": 24,
+      "partial": 2,
+      "not_started": 17,
+      "denominator": 43,
+      "pct": 55.8,
+      "excluded_from_percentage": 29,
+      "standing_breakdown": {
+        "origin": 43,
+        "unclassified": 29
+      }
+    },
+    {
+      "id": "ultimate_campaign",
+      "title": "Ultimate Campaign",
+      "done": 15,
+      "partial": 6,
+      "not_started": 2,
+      "denominator": 23,
+      "pct": 65.2,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 23
+      }
+    },
+    {
+      "id": "bonus_bestiary",
+      "title": "Bonus Bestiary",
+      "done": 8,
+      "partial": 1,
+      "not_started": 3,
+      "denominator": 12,
+      "pct": 66.7,
+      "excluded_from_percentage": 22,
+      "standing_breakdown": {
+        "origin": 12,
+        "unclassified": 22
+      }
+    },
+    {
+      "id": "core_essentials",
+      "title": "Core Essentials",
+      "done": 0,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 0,
+      "pct": 0.0,
+      "excluded_from_percentage": 128,
+      "standing_breakdown": {
+        "packaging-artifact": 128
+      }
+    }
+  ]
+}

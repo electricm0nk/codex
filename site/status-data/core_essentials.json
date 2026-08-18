@@ -1,0 +1,819 @@
+{
+  "id": "core_essentials",
+  "title": "Core Essentials",
+  "kinds": [
+    {
+      "kind": "monster_ability",
+      "label": "Monster Abilities",
+      "done": 0,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 0,
+      "pct": 0.0,
+      "excluded_from_percentage": 9,
+      "standing_breakdown": {
+        "packaging-artifact": 9
+      },
+      "items": [
+        {
+          "name": "Blindsense",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.Vision",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Blindsight",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.Vision",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Darkvision",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.Vision",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Dragon Age Category",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Dragon Senses",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Low-Light Vision",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.Vision",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "See Etheral",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Vision",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "See Invisibility",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Vision",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Tremorsense",
+          "doneness": "not-started",
+          "type_facet": "SpecialQuality.Extraordinary.Vision",
+          "standing": "packaging-artifact"
+        }
+      ]
+    },
+    {
+      "kind": "race_trait",
+      "label": "Race Traits",
+      "done": 0,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 0,
+      "pct": 0.0,
+      "excluded_from_percentage": 111,
+      "standing_breakdown": {
+        "packaging-artifact": 111
+      },
+      "items": [
+        {
+          "name": "+2 Constitution, +2 Charisma, -2 Intelligence",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Ghoran Racial Trait.Ghoran Racial Default.SpecialQuality.Racial Ability Scores",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "+2 Constitution, +2 Wisdom, -2 Strength",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Triaxian Racial Trait.Triaxian Racial Default.SpecialQuality.Racial Ability Scores",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "+2 Dexterity, +2 Charisma, -2 Constitution",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Gathlain Racial Trait.Gathlain Racial Default.SpecialQuality.Racial Ability Scores",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "+2 Dexterity, +2 Intelligence, -2 Charisma",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Android Racial Trait.Android Racial Default.SpecialQuality.Racial Ability Scores",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "+2 Dexterity, +2 Intelligence, -2 Constitution",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Aquatic Elf Racial Trait.Aquatic Elf Racial Default.SpecialQuality.Racial Ability Scores",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "+2 Intelligence",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Lashunta Racial Trait.Lashunta Racial Default.SpecialQuality.Racial Ability Scores",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "+2 Natural Armor",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Ghoran Racial Trait.Ghoran Racial Default.SpecialQuality",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "+2 Wisdom, -2 Dexterity",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Syrinx Racial Trait.Syrinx Racial Default.SpecialQuality.Racial Ability Scores",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "+4 Dexterity, -2 Wisdom, -2 Charisma",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Monkey Goblin Racial Trait.Monkey Goblin Racial Default.SpecialQuality.Racial Ability Scores",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Acrobatic",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Monkey Goblin Racial Trait.Monkey Goblin Racial Default.SpecialQuality",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Amphibious",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Aquatic Elf Racial Trait.Aquatic Elf Racial Default.SpecialQuality",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Android",
+          "doneness": "not-started",
+          "type_facet": "AdoptiveRace",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Android",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Android Racial Trait.Android Racial Default.SpecialQuality.Racial Type",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Aquatic",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Aquatic Elf Racial Trait.Aquatic Elf Racial Default.SpecialQuality.Racial Type",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Aquatic Elf",
+          "doneness": "not-started",
+          "type_facet": "AdoptiveRace",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Bite",
+          "doneness": "not-started",
+          "type_facet": "RaceAbility.SpecialQuality",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Bonus Feat",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Triaxian Racial Trait.Triaxian Racial Default.SpecialQuality",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Breath Weapon",
+          "doneness": "not-started",
+          "type_facet": "RaceAbility.SpecialQuality.Supernatural",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Capsize",
+          "doneness": "not-started",
+          "type_facet": "Extraordinary.SpecialQuality",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Claw",
+          "doneness": "not-started",
+          "type_facet": "RaceAbility.SpecialQuality",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Constructed",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Android Racial Trait.Android Racial Default.SpecialQuality.Special Ability.Defensive.Extraordinary",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Crush",
+          "doneness": "not-started",
+          "type_facet": "Extraordinary.SpecialQuality",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Crush",
+          "doneness": "not-started",
+          "type_facet": "RaceAbility.SpecialAttack.Extraordinary",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Damage Reduction",
+          "doneness": "not-started",
+          "type_facet": "RaceAbility.SpecialQuality",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Darkvision",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Syrinx Racial Trait.Syrinx Racial Default.SpecialQuality.Racial Vision",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Delicious",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Ghoran Racial Trait.Ghoran Racial Default.SpecialQuality.Special Ability.Extraordinary.Weakness",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Dragon Senses",
+          "doneness": "not-started",
+          "type_facet": "RaceAbility.SpecialQuality.Extraordinary",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Elven Immunities",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Aquatic Elf Racial Trait.Aquatic Elf Racial Default.SpecialQuality",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Elven Magic",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Aquatic Elf Racial Trait.Aquatic Elf Racial Default.SpecialQuality.Special Quality.Elven Magic",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Emotionless",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Android Racial Trait.Android Racial Default.SpecialQuality.Special Quality.Special Ability.Extraordinary",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Exceptional Senses",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Android Racial Trait.Android Racial Default.SpecialQuality.Racial Vision",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Fearless",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Monkey Goblin Racial Trait.Monkey Goblin Racial Default.SpecialQuality",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Fey",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Gathlain Racial Trait.Gathlain Racial Default.SpecialQuality.Racial Type",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Flight",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Syrinx Racial Trait.Syrinx Racial Default.SpecialQuality.Racial Speed",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Freedom of Movement",
+          "doneness": "not-started",
+          "type_facet": "Extraordinary.SpecialQuality",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Frightful Presence",
+          "doneness": "not-started",
+          "type_facet": "RaceAbility.SpecialQuality.Extraordinary",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Gathlain",
+          "doneness": "not-started",
+          "type_facet": "AdoptiveRace",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Ghoran",
+          "doneness": "not-started",
+          "type_facet": "AdoptiveRace",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Goblinoid",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Monkey Goblin Racial Trait.Monkey Goblin Racial Default.SpecialQuality.Racial Type",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Humanoid (Android)",
+          "doneness": "not-started",
+          "type_facet": "RangerClassFeatures.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Humanoid (Lashunta)",
+          "doneness": "not-started",
+          "type_facet": "RangerClassFeatures.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Humanoid (Syrinx)",
+          "doneness": "not-started",
+          "type_facet": "RangerClassFeatures.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Humanoid (Triaxian)",
+          "doneness": "not-started",
+          "type_facet": "RangerClassFeatures.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Immunities",
+          "doneness": "not-started",
+          "type_facet": "RaceAbility.SpecialQuality.Extraordinary",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Immunity to Nausea",
+          "doneness": "not-started",
+          "type_facet": "Extraordinary.Immunity",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Immunity to Negative Energy",
+          "doneness": "not-started",
+          "type_facet": "Extraordinary.Immunity",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Immunity to vision-based attacks",
+          "doneness": "not-started",
+          "type_facet": "Extraordinary.Immunity",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Keen Senses",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Aquatic Elf Racial Trait.Aquatic Elf Racial Default.SpecialQuality",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Keen Senses",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Triaxian Racial Trait.Triaxian Racial Default.SpecialQuality",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Knowledgeable",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Lashunta Racial Trait.Lashunta Racial Default.SpecialQuality",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Languages",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Android Racial Trait.Android Racial Default.SpecialQuality.Racial Language",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Languages",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Aquatic Elf Racial Trait.Aquatic Elf Racial Default.SpecialQuality.Racial Language",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Languages",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Gathlain Racial Trait.Gathlain Racial Default.SpecialQuality.Racial Language",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Languages",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Ghoran Racial Trait.Ghoran Racial Default.SpecialQuality.Racial Language",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Languages",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Lashunta Racial Trait.Lashunta Racial Default.SpecialQuality.Racial Language",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Languages",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Monkey Goblin Racial Trait.Monkey Goblin Racial Default.SpecialQuality.Racial Language",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Languages",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Syrinx Racial Trait.Syrinx Racial Default.SpecialQuality.Racial Language",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Languages",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Triaxian Racial Trait.Triaxian Racial Default.SpecialQuality.Racial Language",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Lashunta",
+          "doneness": "not-started",
+          "type_facet": "AdoptiveRace",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Lashunta",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Lashunta Racial Trait.Lashunta Racial Default.SpecialQuality.Racial Type",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Lashunta Magic",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Lashunta Racial Trait.Lashunta Racial Default.SpecialQuality",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Light Dependent",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Ghoran Racial Trait.Ghoran Racial Default.SpecialQuality.Special Ability.Weakness",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Limited Telepathy",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Lashunta Racial Trait.Lashunta Racial Default.SpecialQuality.Communicate",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Low-Light Vision",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Aquatic Elf Racial Trait.Aquatic Elf Racial Default.SpecialQuality.Racial Vision",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Low-Light Vision",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Gathlain Racial Trait.Gathlain Racial Default.SpecialQuality.Racial Vision",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Low-Light Vision",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Monkey Goblin Racial Trait.Monkey Goblin Racial Default.SpecialQuality.Racial Vision",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Low-Light Vision",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Syrinx Racial Trait.Syrinx Racial Default.SpecialQuality.Racial Vision",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Low-Light Vision",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Triaxian Racial Trait.Triaxian Racial Default.SpecialQuality.Racial Vision",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Medium",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Android Racial Trait.Android Racial Default.SpecialQuality.Racial Size",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Medium",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Aquatic Elf Racial Trait.Aquatic Elf Racial Default.SpecialQuality.Racial Size",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Medium",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Ghoran Racial Trait.Ghoran Racial Default.SpecialQuality.Racial Size",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Medium",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Lashunta Racial Trait.Lashunta Racial Default.SpecialQuality.Racial Size",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Medium",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Syrinx Racial Trait.Syrinx Racial Default.SpecialQuality.Racial Size",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Medium",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Triaxian Racial Trait.Triaxian Racial Default.SpecialQuality.Racial Size",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Monkey Goblin",
+          "doneness": "not-started",
+          "type_facet": "AdoptiveRace",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Nanite Surge",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Android Racial Trait.Android Racial Default.SpecialQuality.Special Quality.Special Ability.Extraordinary",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Natural Armor",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Gathlain Racial Trait.Gathlain Racial Default.SpecialQuality",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Natural Climber",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Monkey Goblin Racial Trait.Monkey Goblin Racial Default.SpecialQuality",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Natural Magic",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Ghoran Racial Trait.Ghoran Racial Default.SpecialQuality.SpellLike",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Nocturnal",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Syrinx Racial Trait.Syrinx Racial Default.SpecialQuality",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Normal Speed",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Android Racial Trait.Android Racial Default.SpecialQuality.Racial Speed",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Normal Speed",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Aquatic Elf Racial Trait.Aquatic Elf Racial Default.SpecialQuality.Racial Speed",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Normal Speed",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Gathlain Racial Trait.Gathlain Racial Default.SpecialQuality.Racial Speed",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Normal Speed",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Ghoran Racial Trait.Ghoran Racial Default.SpecialQuality.Racial Speed",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Normal Speed",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Lashunta Racial Trait.Lashunta Racial Default.SpecialQuality.Racial Speed",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Normal Speed",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Syrinx Racial Trait.Syrinx Racial Default.SpecialQuality.Racial Speed",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Normal Speed",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Triaxian Racial Trait.Triaxian Racial Default.SpecialQuality.Racial Speed",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Past-Life Knowledge",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Ghoran Racial Trait.Ghoran Racial Default.SpecialQuality.Special Quality.Special Ability.Extraordinary",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Plant",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Ghoran Racial Trait.Ghoran Racial Default.SpecialQuality.Racial Type",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Prehensile Tail",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Monkey Goblin Racial Trait.Monkey Goblin Racial Default.SpecialQuality.Special Quality.Extraordinary",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Pride",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Syrinx Racial Trait.Syrinx Racial Default.SpecialQuality",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Seasoned",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Triaxian Racial Trait.Triaxian Racial Default.SpecialQuality.Special Quality",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Seed",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Ghoran Racial Trait.Ghoran Racial Default.SpecialQuality.Special Quality.Special Ability.Extraordinary",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Sexual Dimorphism",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Lashunta Racial Trait.Lashunta Racial Default.SpecialQuality",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Slow Speed",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Monkey Goblin Racial Trait.Monkey Goblin Racial Default.SpecialQuality.Racial Speed",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Small",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Gathlain Racial Trait.Gathlain Racial Default.SpecialQuality.Racial Size",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Small",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Monkey Goblin Racial Trait.Monkey Goblin Racial Default.SpecialQuality.Racial Size",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Speak with Avians",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Syrinx Racial Trait.Syrinx Racial Default.SpecialQuality.Special Ability.Extraordinary.Communicate",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Spell Resistance",
+          "doneness": "not-started",
+          "type_facet": "RaceAbility.SpecialQuality.Extraordinary",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Spell-Like Abilities",
+          "doneness": "not-started",
+          "type_facet": "RaceAbility.SpecialQuality",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Spell-Like Abilities",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Gathlain Racial Trait.Gathlain Racial Default.SpecialQuality",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Spells",
+          "doneness": "not-started",
+          "type_facet": "RaceAbility.SpecialQuality",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Swim Speed",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Aquatic Elf Racial Trait.Aquatic Elf Racial Default.SpecialQuality",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Syrinx",
+          "doneness": "not-started",
+          "type_facet": "AdoptiveRace",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Syrinx",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Syrinx Racial Trait.Syrinx Racial Default.SpecialQuality.Racial Type",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Tail Slap",
+          "doneness": "not-started",
+          "type_facet": "RaceAbility.SpecialQuality",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Tail Sweep",
+          "doneness": "not-started",
+          "type_facet": "RaceAbility.SpecialAttack.Extraordinary",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Triaxian",
+          "doneness": "not-started",
+          "type_facet": "AdoptiveRace",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Triaxian",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Triaxian Racial Trait.Triaxian Racial Default.SpecialQuality.Racial Type",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Weapon Familiarity",
+          "doneness": "not-started",
+          "type_facet": "RacialTraits.Aquatic Elf Racial Trait.Aquatic Elf Racial Default.SpecialQuality.Special Quality.Weapon Familiarity",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Wing",
+          "doneness": "not-started",
+          "type_facet": "RaceAbility.SpecialQuality",
+          "standing": "packaging-artifact"
+        }
+      ]
+    },
+    {
+      "kind": "race",
+      "label": "Races",
+      "done": 0,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 0,
+      "pct": 0.0,
+      "excluded_from_percentage": 8,
+      "standing_breakdown": {
+        "packaging-artifact": 8
+      },
+      "items": [
+        {
+          "name": "Android",
+          "doneness": "not-started",
+          "type_facet": "Base.PC",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Elf, Aquatic",
+          "doneness": "not-started",
+          "type_facet": "Base.PC",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Gathlain",
+          "doneness": "not-started",
+          "type_facet": "Base.PC",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Ghoran",
+          "doneness": "not-started",
+          "type_facet": "Base.PC",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Goblin, Monkey",
+          "doneness": "not-started",
+          "type_facet": "Base.PC",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Lashunta",
+          "doneness": "not-started",
+          "type_facet": "Base.PC",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Syrinx",
+          "doneness": "not-started",
+          "type_facet": "Base.PC",
+          "standing": "packaging-artifact"
+        },
+        {
+          "name": "Triaxian",
+          "doneness": "not-started",
+          "type_facet": "Base.PC",
+          "standing": "packaging-artifact"
+        }
+      ]
+    }
+  ]
+}
