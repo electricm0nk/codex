@@ -25045,5 +25045,6332 @@
         "ability": "CON"
       }
     }
+  ],
+  "companion_token_family": "BONUS:WEAPONPROF=<attack>|DAMAGE (PF1 CRB p.182 single-natural-attack extra half-Strength damage: max(0, floor(STR_modifier / 2)))",
+  "companion_derivation": "PCGen `BONUS:WEAPONPROF=<attack>|DAMAGE|<formula>` on a companion CREATURE row. expected.shape names the formula's rules meaning and expected.damage_bonus_at_strength_modifier pins the evaluated damage bonus at nine Strength modifiers, each computed from PF1 CRB p.9's halve-and-round-down convention (math.floor) plus the token's own max(0,...) clamp -- NOT read back from this repo's evaluator, and NOT inferred from the creature's natural-attack count, which upstream PCGen does not state uniformly (129 single-attack rows carry no such token; 3 two-attack rows carry one). natural_attack_names is recorded as a corpus fact only.",
+  "companion_independence": "scripts/derive_companion_strength_damage_fixtures.py re-reads the pinned upstream .lst bytes directly, extracts the token with its own regex, classifies the shape with its own from-scratch classifier (classify_shape), and computes every expected value with math.floor -- structurally independent of src/rules_core/derived_evaluator_fixture_check.rs's parse_companion_strength_damage / evaluate_companion_strength_damage. It opens no file under data/corpus/, reads no Rust table, and imports no engine module. docs/work-inventory.json is read for identity and selection only.",
+  "companion_entries": [
+    {
+      "unit_id": "advanced_players_guide:companion:familiar_centipede_house",
+      "book": "advanced_players_guide",
+      "record_key": "Familiar (Centipede (House))",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_apg.lst",
+      "upstream_lst_sha256": "2503bc54689a1f20beedf12c51d9563f24e91b74788d24bc73567c483fa004ec",
+      "upstream_line": 6,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "advanced_players_guide:companion:familiar_fox",
+      "book": "advanced_players_guide",
+      "record_key": "Familiar (Fox)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_apg.lst",
+      "upstream_lst_sha256": "2503bc54689a1f20beedf12c51d9563f24e91b74788d24bc73567c483fa004ec",
+      "upstream_line": 8,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "advanced_players_guide:companion:familiar_spider_scarlet",
+      "book": "advanced_players_guide",
+      "record_key": "Familiar (Spider (Scarlet))",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_apg.lst",
+      "upstream_lst_sha256": "2503bc54689a1f20beedf12c51d9563f24e91b74788d24bc73567c483fa004ec",
+      "upstream_line": 11,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "advanced_players_guide:companion:parrot",
+      "book": "advanced_players_guide",
+      "record_key": "Parrot",
+      "attack": "Claw",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_apg.lst",
+      "upstream_lst_sha256": "2503bc54689a1f20beedf12c51d9563f24e91b74788d24bc73567c483fa004ec",
+      "upstream_line": 17,
+      "corpus_field": "BONUS:WEAPONPROF=Claw|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "bestiary_2:companion:familiar_cassisian",
+      "book": "bestiary_2",
+      "record_key": "Familiar (Cassisian)",
+      "attack": "Slam",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races_familiar.lst",
+      "upstream_lst_sha256": "1d341ce56b60bc691178213b7cb2ad454dc22cca799eaaffedf315b21f31c8b6",
+      "upstream_line": 11,
+      "corpus_field": "BONUS:WEAPONPROF=Slam|DAMAGE|max(0,STR/2)",
+      "natural_attack_names": [
+        "Slam"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "bestiary_2:companion:familiar_elemental_ice_small",
+      "book": "bestiary_2",
+      "record_key": "Familiar (Elemental (Ice/Small))",
+      "attack": "Slam",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races_familiar.lst",
+      "upstream_lst_sha256": "1d341ce56b60bc691178213b7cb2ad454dc22cca799eaaffedf315b21f31c8b6",
+      "upstream_line": 15,
+      "corpus_field": "BONUS:WEAPONPROF=Slam|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Slam"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "bestiary_2:companion:familiar_elemental_lightning_small",
+      "book": "bestiary_2",
+      "record_key": "Familiar (Elemental (Lightning/Small))",
+      "attack": "Slam",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races_familiar.lst",
+      "upstream_lst_sha256": "1d341ce56b60bc691178213b7cb2ad454dc22cca799eaaffedf315b21f31c8b6",
+      "upstream_line": 16,
+      "corpus_field": "BONUS:WEAPONPROF=Slam|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Slam"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "bestiary_2:companion:familiar_elemental_magma_small",
+      "book": "bestiary_2",
+      "record_key": "Familiar (Elemental (Magma/Small))",
+      "attack": "Slam",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races_familiar.lst",
+      "upstream_lst_sha256": "1d341ce56b60bc691178213b7cb2ad454dc22cca799eaaffedf315b21f31c8b6",
+      "upstream_line": 17,
+      "corpus_field": "BONUS:WEAPONPROF=Slam|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Slam"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "bestiary_2:companion:familiar_elemental_mud_small",
+      "book": "bestiary_2",
+      "record_key": "Familiar (Elemental (Mud/Small))",
+      "attack": "Slam",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races_familiar.lst",
+      "upstream_lst_sha256": "1d341ce56b60bc691178213b7cb2ad454dc22cca799eaaffedf315b21f31c8b6",
+      "upstream_line": 18,
+      "corpus_field": "BONUS:WEAPONPROF=Slam|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Slam"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "bestiary_2:companion:familiar_snapping_turtle",
+      "book": "bestiary_2",
+      "record_key": "Familiar (Snapping Turtle)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races_familiar.lst",
+      "upstream_lst_sha256": "1d341ce56b60bc691178213b7cb2ad454dc22cca799eaaffedf315b21f31c8b6",
+      "upstream_line": 6,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "bestiary_4:companion:familiar_archaeopteryx",
+      "book": "bestiary_4",
+      "record_key": "Familiar (Archaeopteryx)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races_companion.lst",
+      "upstream_lst_sha256": "a25e07ccc8202a4b84238383d652ae7e30128569cb949455c7c621d1743146c5",
+      "upstream_line": 17,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "bestiary_4:companion:familiar_dodo",
+      "book": "bestiary_4",
+      "record_key": "Familiar (Dodo)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races_companion.lst",
+      "upstream_lst_sha256": "a25e07ccc8202a4b84238383d652ae7e30128569cb949455c7c621d1743146c5",
+      "upstream_line": 18,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "bestiary_4:companion:familiar_giant_flea",
+      "book": "bestiary_4",
+      "record_key": "Familiar (Giant Flea)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races_companion.lst",
+      "upstream_lst_sha256": "a25e07ccc8202a4b84238383d652ae7e30128569cb949455c7c621d1743146c5",
+      "upstream_line": 22,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "bestiary_4:companion:familiar_platypus",
+      "book": "bestiary_4",
+      "record_key": "Familiar (Platypus)",
+      "attack": "Spur",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races_companion.lst",
+      "upstream_lst_sha256": "a25e07ccc8202a4b84238383d652ae7e30128569cb949455c7c621d1743146c5",
+      "upstream_line": 19,
+      "corpus_field": "BONUS:WEAPONPROF=Spur|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Spur"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "bestiary_4:companion:familiar_tuatara",
+      "book": "bestiary_4",
+      "record_key": "Familiar (Tuatara)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races_companion.lst",
+      "upstream_lst_sha256": "a25e07ccc8202a4b84238383d652ae7e30128569cb949455c7c621d1743146c5",
+      "upstream_line": 21,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "bestiary_5:companion:familiar_chicken",
+      "book": "bestiary_5",
+      "record_key": "Familiar (Chicken)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_races_companion.lst",
+      "upstream_lst_sha256": "abc345765b76b957e43dc473fba69c8774f2e1c85df56b2817bc866ca71e509d",
+      "upstream_line": 26,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "bestiary_5:companion:familiar_flying_fox",
+      "book": "bestiary_5",
+      "record_key": "Familiar (Flying Fox)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_races_companion.lst",
+      "upstream_lst_sha256": "abc345765b76b957e43dc473fba69c8774f2e1c85df56b2817bc866ca71e509d",
+      "upstream_line": 27,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "bestiary_5:companion:familiar_penguin",
+      "book": "bestiary_5",
+      "record_key": "Familiar (Penguin)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_races_companion.lst",
+      "upstream_lst_sha256": "abc345765b76b957e43dc473fba69c8774f2e1c85df56b2817bc866ca71e509d",
+      "upstream_line": 28,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "bestiary_5:companion:familiar_red_panda",
+      "book": "bestiary_5",
+      "record_key": "Familiar (Red Panda)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_races_companion.lst",
+      "upstream_lst_sha256": "abc345765b76b957e43dc473fba69c8774f2e1c85df56b2817bc866ca71e509d",
+      "upstream_line": 29,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "bestiary_5:companion:familiar_seal",
+      "book": "bestiary_5",
+      "record_key": "Familiar (Seal)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_races_companion.lst",
+      "upstream_lst_sha256": "abc345765b76b957e43dc473fba69c8774f2e1c85df56b2817bc866ca71e509d",
+      "upstream_line": 30,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "bestiary_5:companion:familiar_trilobite",
+      "book": "bestiary_5",
+      "record_key": "Familiar (Trilobite)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_races_companion.lst",
+      "upstream_lst_sha256": "abc345765b76b957e43dc473fba69c8774f2e1c85df56b2817bc866ca71e509d",
+      "upstream_line": 31,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "bestiary_6:companion:familiar_coral_capuchin",
+      "book": "bestiary_6",
+      "record_key": "Familiar (Coral Capuchin)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_races_companion.lst",
+      "upstream_lst_sha256": "79889f4840da7eaffeefbe9ef7b91c349dc58f66e3fad9730e88d773cc345aa3",
+      "upstream_line": 18,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:companion:blue_ringed_octopus",
+      "book": "ultimate_magic",
+      "record_key": "Blue-Ringed Octopus",
+      "attack": "Tentacles",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_um.lst",
+      "upstream_lst_sha256": "107c19938fca45aecbd6ce0d07fbd5a43feeed3feade64cb3212f78dc26af6a9",
+      "upstream_line": 20,
+      "corpus_field": "BONUS:WEAPONPROF=Tentacles|DAMAGE|-STR",
+      "natural_attack_names": [
+        "Tentacles",
+        "Bite"
+      ],
+      "expected": {
+        "shape": "negated_full_strength",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 4
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": -1
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": -2
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": -3
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": -6
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": -7
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:companion:familiar_blue_ringed_octopus",
+      "book": "ultimate_magic",
+      "record_key": "Familiar (Blue-Ringed Octopus)",
+      "attack": "Tentacles",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_um.lst",
+      "upstream_lst_sha256": "107c19938fca45aecbd6ce0d07fbd5a43feeed3feade64cb3212f78dc26af6a9",
+      "upstream_line": 6,
+      "corpus_field": "BONUS:WEAPONPROF=Tentacles|DAMAGE|-STR",
+      "natural_attack_names": [
+        "Tentacles",
+        "Bite"
+      ],
+      "expected": {
+        "shape": "negated_full_strength",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 4
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": -1
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": -2
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": -3
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": -6
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": -7
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:companion:familiar_goat",
+      "book": "ultimate_magic",
+      "record_key": "Familiar (Goat)",
+      "attack": "Gore",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_um.lst",
+      "upstream_lst_sha256": "107c19938fca45aecbd6ce0d07fbd5a43feeed3feade64cb3212f78dc26af6a9",
+      "upstream_line": 9,
+      "corpus_field": "BONUS:WEAPONPROF=Gore|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Gore"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:companion:familiar_pig",
+      "book": "ultimate_magic",
+      "record_key": "Familiar (Pig)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_um.lst",
+      "upstream_lst_sha256": "107c19938fca45aecbd6ce0d07fbd5a43feeed3feade64cb3212f78dc26af6a9",
+      "upstream_line": 14,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:companion:familiar_thrush",
+      "book": "ultimate_magic",
+      "record_key": "Familiar (Thrush)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_um.lst",
+      "upstream_lst_sha256": "107c19938fca45aecbd6ce0d07fbd5a43feeed3feade64cb3212f78dc26af6a9",
+      "upstream_line": 16,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:companion:familiar_turtle",
+      "book": "ultimate_magic",
+      "record_key": "Familiar (Turtle)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_um.lst",
+      "upstream_lst_sha256": "107c19938fca45aecbd6ce0d07fbd5a43feeed3feade64cb3212f78dc26af6a9",
+      "upstream_line": 17,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:companion:fox",
+      "book": "ultimate_magic",
+      "record_key": "Fox",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_um.lst",
+      "upstream_lst_sha256": "107c19938fca45aecbd6ce0d07fbd5a43feeed3feade64cb3212f78dc26af6a9",
+      "upstream_line": 22,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:companion:goat",
+      "book": "ultimate_magic",
+      "record_key": "Goat",
+      "attack": "Gore",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_um.lst",
+      "upstream_lst_sha256": "107c19938fca45aecbd6ce0d07fbd5a43feeed3feade64cb3212f78dc26af6a9",
+      "upstream_line": 23,
+      "corpus_field": "BONUS:WEAPONPROF=Gore|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Gore"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:companion:house_centipede",
+      "book": "ultimate_magic",
+      "record_key": "House Centipede",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_um.lst",
+      "upstream_lst_sha256": "107c19938fca45aecbd6ce0d07fbd5a43feeed3feade64cb3212f78dc26af6a9",
+      "upstream_line": 26,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:companion:pig",
+      "book": "ultimate_magic",
+      "record_key": "Pig",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_um.lst",
+      "upstream_lst_sha256": "107c19938fca45aecbd6ce0d07fbd5a43feeed3feade64cb3212f78dc26af6a9",
+      "upstream_line": 28,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:companion:scarlet_spider",
+      "book": "ultimate_magic",
+      "record_key": "Scarlet Spider",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_um.lst",
+      "upstream_lst_sha256": "107c19938fca45aecbd6ce0d07fbd5a43feeed3feade64cb3212f78dc26af6a9",
+      "upstream_line": 29,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:companion:scorpion_greensting",
+      "book": "ultimate_magic",
+      "record_key": "Scorpion (Greensting))",
+      "attack": "Sting",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_um.lst",
+      "upstream_lst_sha256": "107c19938fca45aecbd6ce0d07fbd5a43feeed3feade64cb3212f78dc26af6a9",
+      "upstream_line": 24,
+      "corpus_field": "BONUS:WEAPONPROF=Sting|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Sting"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:companion:thrush",
+      "book": "ultimate_magic",
+      "record_key": "Thrush",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_um.lst",
+      "upstream_lst_sha256": "107c19938fca45aecbd6ce0d07fbd5a43feeed3feade64cb3212f78dc26af6a9",
+      "upstream_line": 30,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_magic:companion:turtle",
+      "book": "ultimate_magic",
+      "record_key": "Turtle",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_um.lst",
+      "upstream_lst_sha256": "107c19938fca45aecbd6ce0d07fbd5a43feeed3feade64cb3212f78dc26af6a9",
+      "upstream_line": 31,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:arctic_fox",
+      "book": "ultimate_wilderness",
+      "record_key": "Arctic Fox",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 135,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:arctic_hare",
+      "book": "ultimate_wilderness",
+      "record_key": "Arctic Hare",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 136,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:arctic_tern",
+      "book": "ultimate_wilderness",
+      "record_key": "Arctic Tern",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 137,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:armadillo",
+      "book": "ultimate_wilderness",
+      "record_key": "Armadillo",
+      "attack": "Claw",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 138,
+      "corpus_field": "BONUS:WEAPONPROF=Claw|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Claw"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:chicken",
+      "book": "ultimate_wilderness",
+      "record_key": "Chicken",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 141,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:cockroach",
+      "book": "ultimate_wilderness",
+      "record_key": "Cockroach",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 142,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:creeper_ivy",
+      "book": "ultimate_wilderness",
+      "record_key": "Creeper Ivy",
+      "attack": "Slam",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 143,
+      "corpus_field": "BONUS:WEAPONPROF=Slam|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Slam"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:dodo",
+      "book": "ultimate_wilderness",
+      "record_key": "Dodo",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 144,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:dolphin_popoto",
+      "book": "ultimate_wilderness",
+      "record_key": "Dolphin (Popoto)",
+      "attack": "Slam",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 145,
+      "corpus_field": "BONUS:WEAPONPROF=Slam|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Slam"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:dragonfly_shimmerwing",
+      "book": "ultimate_wilderness",
+      "record_key": "Dragonfly (Shimmerwing)",
+      "attack": "Claw",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 146,
+      "corpus_field": "BONUS:WEAPONPROF=Claw|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Claw"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:dwarf_caiman",
+      "book": "ultimate_wilderness",
+      "record_key": "Dwarf Caiman",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 147,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:ermine",
+      "book": "ultimate_wilderness",
+      "record_key": "Ermine",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 149,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_arctic_fox",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Arctic Fox)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 74,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_arctic_hare",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Arctic Hare)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 75,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_arctic_tern",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Arctic Tern)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 76,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_armadillo",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Armadillo)",
+      "attack": "Claw",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 77,
+      "corpus_field": "BONUS:WEAPONPROF=Claw|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Claw"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_chicken",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Chicken)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 79,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_cockroach",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Cockroach)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 80,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_creeper_ivy",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Creeper Ivy)",
+      "attack": "Slam",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 81,
+      "corpus_field": "BONUS:WEAPONPROF=Slam|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Slam"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_dodo",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Dodo)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 82,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_dwarf_caiman",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Dwarf Caiman)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 83,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_ermine",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Ermine)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 85,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_fire_salamander",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Fire Salamander)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 86,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_horned_lizard",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Horned Lizard)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 88,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Blood Squirt",
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_isopod_giant",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Isopod (Giant))",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 90,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_jerboa",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Jerboa)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 91,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_kakapo",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Kakapo)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 92,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_lamprey",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Lamprey)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 94,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_lemming",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Lemming)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 95,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_marine_iguana",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Marine Iguana)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 98,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_meerkat",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Meerkat)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 99,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_mongoose",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Mongoose)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 101,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_penguin",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Penguin)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 106,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_petrifern",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Petrifern)",
+      "attack": "Slam",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 107,
+      "corpus_field": "BONUS:WEAPONPROF=Slam|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Slam"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_platypus",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Platypus)",
+      "attack": "Spur",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 108,
+      "corpus_field": "BONUS:WEAPONPROF=Spur|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Spur"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_popoto_dolphin",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Popoto Dolphin)",
+      "attack": "Slam",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 109,
+      "corpus_field": "BONUS:WEAPONPROF=Slam|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Slam"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_ptarmigan",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Ptarmigan)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 110,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_puffin",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Puffin)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 112,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_rabbit",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Rabbit)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 113,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_ravenous_tumbleweed",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Ravenous Tumbleweed)",
+      "attack": "Slam",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 114,
+      "corpus_field": "BONUS:WEAPONPROF=Slam|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Slam"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_rhamphorhynchus",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Rhamphorhynchus)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 116,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_sawleg_locust",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Sawleg Locust)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 117,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_sea_krait",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Sea Krait)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 118,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_seal",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Seal)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 119,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_shimmerwing_dragonfly",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Shimmerwing Dragonfly)",
+      "attack": "Claw",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 120,
+      "corpus_field": "BONUS:WEAPONPROF=Claw|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Claw"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_spiny_starfish",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Spiny Starfish)",
+      "attack": "Slam",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 123,
+      "corpus_field": "BONUS:WEAPONPROF=Slam|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Slam"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_squirrel",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Squirrel)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 124,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_suture_vine",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Suture Vine)",
+      "attack": "Vine",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 125,
+      "corpus_field": "BONUS:WEAPONPROF=Vine|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Vine"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_tardigrade_giant",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Tardigrade (Giant))",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 126,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_tarsier",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Tarsier)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 127,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_toucan",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Toucan)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 128,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:familiar_wallaby",
+      "book": "ultimate_wilderness",
+      "record_key": "Familiar (Wallaby)",
+      "attack": "Slam",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 130,
+      "corpus_field": "BONUS:WEAPONPROF=Slam|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Slam"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:fire_salamander",
+      "book": "ultimate_wilderness",
+      "record_key": "Fire Salamander",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 150,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:isopod_giant",
+      "book": "ultimate_wilderness",
+      "record_key": "Isopod (Giant)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 153,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:jerboa",
+      "book": "ultimate_wilderness",
+      "record_key": "Jerboa",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 154,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:kakapo",
+      "book": "ultimate_wilderness",
+      "record_key": "Kakapo",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 155,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:lamprey",
+      "book": "ultimate_wilderness",
+      "record_key": "Lamprey",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 157,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:lemming",
+      "book": "ultimate_wilderness",
+      "record_key": "Lemming",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 158,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:lizard_horned",
+      "book": "ultimate_wilderness",
+      "record_key": "Lizard (Horned)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 159,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Blood Squirt",
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:locust_sawleg",
+      "book": "ultimate_wilderness",
+      "record_key": "Locust (Sawleg)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 160,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:marine_iguana",
+      "book": "ultimate_wilderness",
+      "record_key": "Marine Iguana",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 161,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:meerkat",
+      "book": "ultimate_wilderness",
+      "record_key": "Meerkat",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 162,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:mongoose",
+      "book": "ultimate_wilderness",
+      "record_key": "Mongoose",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 164,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:parrot",
+      "book": "ultimate_wilderness",
+      "record_key": "Parrot",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 167,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:penguin",
+      "book": "ultimate_wilderness",
+      "record_key": "Penguin",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 169,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:petrifern",
+      "book": "ultimate_wilderness",
+      "record_key": "Petrifern",
+      "attack": "Slam",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 170,
+      "corpus_field": "BONUS:WEAPONPROF=Slam|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Slam"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:platypus",
+      "book": "ultimate_wilderness",
+      "record_key": "Platypus",
+      "attack": "Spur",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 171,
+      "corpus_field": "BONUS:WEAPONPROF=Spur|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Spur"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:ptarmigan",
+      "book": "ultimate_wilderness",
+      "record_key": "Ptarmigan",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 172,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:puffin",
+      "book": "ultimate_wilderness",
+      "record_key": "Puffin",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 174,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:rabbit",
+      "book": "ultimate_wilderness",
+      "record_key": "Rabbit",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 175,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:ravenous_tumbleweed",
+      "book": "ultimate_wilderness",
+      "record_key": "Ravenous Tumbleweed",
+      "attack": "Slam",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 176,
+      "corpus_field": "BONUS:WEAPONPROF=Slam|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Slam"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:rhamphorhynchus",
+      "book": "ultimate_wilderness",
+      "record_key": "Rhamphorhynchus",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 178,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:sea_krait",
+      "book": "ultimate_wilderness",
+      "record_key": "Sea Krait",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 179,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:seal",
+      "book": "ultimate_wilderness",
+      "record_key": "Seal",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 180,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:spiny_starfish",
+      "book": "ultimate_wilderness",
+      "record_key": "Spiny Starfish",
+      "attack": "Slam",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 183,
+      "corpus_field": "BONUS:WEAPONPROF=Slam|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Slam"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:squirrel",
+      "book": "ultimate_wilderness",
+      "record_key": "Squirrel",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 184,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:suture_vine",
+      "book": "ultimate_wilderness",
+      "record_key": "Suture Vine",
+      "attack": "Vine",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 186,
+      "corpus_field": "BONUS:WEAPONPROF=Vine|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Vine"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:tardigrade_giant",
+      "book": "ultimate_wilderness",
+      "record_key": "Tardigrade (Giant)",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 187,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:tarsier",
+      "book": "ultimate_wilderness",
+      "record_key": "Tarsier",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 188,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:toucan",
+      "book": "ultimate_wilderness",
+      "record_key": "Toucan",
+      "attack": "Bite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 189,
+      "corpus_field": "BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Bite"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:wallaby",
+      "book": "ultimate_wilderness",
+      "record_key": "Wallaby",
+      "attack": "Slam",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+      "upstream_lst_sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+      "upstream_line": 190,
+      "corpus_field": "BONUS:WEAPONPROF=Slam|DAMAGE|max(0,(STR/2))",
+      "natural_attack_names": [
+        "Slam"
+      ],
+      "expected": {
+        "shape": "half_strength_never_negative",
+        "damage_bonus_at_strength_modifier": [
+          {
+            "strength_modifier": -4,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -3,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": -1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 0,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 1,
+            "damage_bonus": 0
+          },
+          {
+            "strength_modifier": 2,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 3,
+            "damage_bonus": 1
+          },
+          {
+            "strength_modifier": 6,
+            "damage_bonus": 3
+          },
+          {
+            "strength_modifier": 7,
+            "damage_bonus": 3
+          }
+        ]
+      }
+    }
   ]
 }

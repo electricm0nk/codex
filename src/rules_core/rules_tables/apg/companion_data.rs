@@ -222,7 +222,7 @@
 //!   * `Temp Evolution ~ Web`
 //!   * `Temp Evolution ~ Wing Buffet`
 
-use crate::rules_core::rules_tables::companion_chassis::{CompanionAbilityDelivery, CompanionAbilityFacet, CompanionAbilityRecord, CompanionRecord, NaturalAttack, Speed, StatAdjustment};
+use crate::rules_core::rules_tables::companion_chassis::{CompanionAbilityDelivery, CompanionAbilityFacet, CompanionAbilityRecord, CompanionRecord, NaturalAttack, NaturalAttackDamageBonus, Speed, StatAdjustment};
 
 /// Every advanced_players_guide companion creature (9 rows).
 pub(super) static COMPANIONS: &[CompanionRecord] = &[
@@ -237,6 +237,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         monster_class: Some("Vermin:1"),
         type_segments: &["Companion", "Familiar"],
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }],
+        natural_attack_damage_bonuses: &[NaturalAttackDamageBonus { attack: "Bite", formula: "max(0,(STR/2))" }],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: -9 }, StatAdjustment { ability: "DEX", amount: 8 }, StatAdjustment { ability: "CHA", amount: -8 }, StatAdjustment { ability: "INT", amount: -9 }],
         natural_armor: Some(2),
         source_page: Some("p.43"),
@@ -256,6 +257,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         monster_class: Some("Eidolon:1"),
         type_segments: &[],
         natural_attacks: &[],
+        natural_attack_damage_bonuses: &[],
         stat_adjustments: &[StatAdjustment { ability: "CON", amount: 2 }, StatAdjustment { ability: "INT", amount: -4 }],
         natural_armor: Some(2),
         source_page: Some("p.56"),
@@ -275,6 +277,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         monster_class: Some("Vermin:1"),
         type_segments: &["Companion", "Familiar"],
         natural_attacks: &[NaturalAttack { name: "Claw", damage_dice: None }],
+        natural_attack_damage_bonuses: &[],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: -4 }, StatAdjustment { ability: "DEX", amount: 6 }, StatAdjustment { ability: "CON", amount: 2 }, StatAdjustment { ability: "CHA", amount: -8 }, StatAdjustment { ability: "INT", amount: -9 }],
         natural_armor: Some(5),
         source_page: Some("p.50"),
@@ -294,6 +297,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         monster_class: Some("Animal:1"),
         type_segments: &["Companion", "Familiar"],
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }],
+        natural_attack_damage_bonuses: &[NaturalAttackDamageBonus { attack: "Bite", formula: "max(0,(STR/2))" }],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 2 }, StatAdjustment { ability: "DEX", amount: 2 }, StatAdjustment { ability: "CON", amount: 4 }, StatAdjustment { ability: "INT", amount: -8 }, StatAdjustment { ability: "WIS", amount: 2 }, StatAdjustment { ability: "CHA", amount: -4 }],
         natural_armor: Some(1),
         source_page: Some("p.87"),
@@ -313,6 +317,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         monster_class: Some("Animal:2"),
         type_segments: &["Companion", "Familiar"],
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }, NaturalAttack { name: "Tentacle", damage_dice: None }],
+        natural_attack_damage_bonuses: &[],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 2 }, StatAdjustment { ability: "WIS", amount: 2 }, StatAdjustment { ability: "DEX", amount: 6 }, StatAdjustment { ability: "CON", amount: 4 }, StatAdjustment { ability: "INT", amount: -8 }, StatAdjustment { ability: "CHA", amount: -8 }],
         natural_armor: Some(1),
         source_page: Some("p.219"),
@@ -332,6 +337,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         monster_class: Some("Vermin:1"),
         type_segments: &["Companion", "Familiar"],
         natural_attacks: &[NaturalAttack { name: "Sting", damage_dice: None }],
+        natural_attack_damage_bonuses: &[],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: -8 }, StatAdjustment { ability: "DEX", amount: 6 }, StatAdjustment { ability: "CHA", amount: -8 }, StatAdjustment { ability: "INT", amount: -9 }],
         natural_armor: Some(3),
         source_page: Some("p.118"),
@@ -351,6 +357,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         monster_class: Some("Vermin:1"),
         type_segments: &["Companion", "Familiar"],
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }],
+        natural_attack_damage_bonuses: &[NaturalAttackDamageBonus { attack: "Bite", formula: "max(0,(STR/2))" }],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: -8 }, StatAdjustment { ability: "DEX", amount: 2 }, StatAdjustment { ability: "CHA", amount: -8 }, StatAdjustment { ability: "INT", amount: -9 }],
         natural_armor: Some(1),
         source_page: Some("p.258"),
@@ -370,6 +377,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         monster_class: Some("Animal:1"),
         type_segments: &["Companion", "Familiar"],
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }],
+        natural_attack_damage_bonuses: &[NaturalAttackDamageBonus { attack: "Claw", formula: "max(0,(STR/2))" }],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: -8 }, StatAdjustment { ability: "DEX", amount: 4 }, StatAdjustment { ability: "CON", amount: -2 }, StatAdjustment { ability: "INT", amount: -8 }, StatAdjustment { ability: "WIS", amount: 4 }, StatAdjustment { ability: "CHA", amount: -4 }],
         natural_armor: None,
         source_page: Some("p.133"),
@@ -389,6 +397,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         monster_class: Some("Animal:1"),
         type_segments: &["Animal"],
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }],
+        natural_attack_damage_bonuses: &[NaturalAttackDamageBonus { attack: "Claw", formula: "max(0,(STR/2))" }],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: -8 }, StatAdjustment { ability: "DEX", amount: 4 }, StatAdjustment { ability: "CON", amount: -2 }, StatAdjustment { ability: "INT", amount: -8 }, StatAdjustment { ability: "WIS", amount: 4 }, StatAdjustment { ability: "CHA", amount: -4 }],
         natural_armor: None,
         source_page: Some("p.133"),

@@ -38,6 +38,35 @@ export interface CompanionAttackDto {
 }
 
 /**
+ * One `BONUS:WEAPONPROF=<attack>|DAMAGE|<formula>` token the creature's row
+ * states — extra damage on a named attack.
+ *
+ * **A rule, not a number.** The dominant corpus formula is `max(0,(STR/2))`,
+ * PCGen's encoding of PF1 CRB p.182's "if a creature has only one natural
+ * attack, it adds 1-1/2 times its Strength bonus on damage rolls": the base
+ * attack applies the full modifier and this token adds the other half, clamped
+ * at zero because the rule is stated about a Strength BONUS. A catalog browser
+ * has no character and therefore no Strength modifier, so the engine renders
+ * the rule in words rather than inventing a total.
+ *
+ * `attack` is the token's OWN selector and is not guaranteed to name one of
+ * `naturalAttacks` — Advanced Player's Guide's Parrot states a Claw damage
+ * bonus and has only a Bite. Served as its own list for exactly that reason.
+ */
+export interface CompanionDamageBonusDto {
+  /** The `WEAPONPROF=` selector verbatim: `"Bite"`, `"Claw"`, `"Slam"`, ... */
+  attack: string;
+  /** The rule in words: `"+1/2 Str modifier (minimum +0)"`, `"+5"`, ... */
+  bonus: string;
+  /**
+   * The formula verbatim for a shape the engine refuses to interpret (`STR/2`
+   * — an unclamped halving whose negative-odd rounding PCGen does not state).
+   * `null` once `bonus` carries the rendered rule.
+   */
+  unparsedFormula: string | null;
+}
+
+/**
  * One `BONUS:STAT` token.
  *
  * **An adjustment, never a score.** A Griffon's row states
@@ -123,6 +152,11 @@ export interface CompanionCatalogEntryDto {
   /** Every `TYPE:` segment verbatim; empty for rows carrying no `TYPE:` token. */
   typeSegments: string[];
   naturalAttacks: CompanionAttackDto[];
+  /**
+   * Every `BONUS:WEAPONPROF=<attack>|DAMAGE|` token on the row. Empty for
+   * most rows, which is a real corpus state.
+   */
+  naturalAttackDamageBonuses: CompanionDamageBonusDto[];
   statAdjustments: CompanionStatAdjustmentDto[];
   /** `BONUS:VAR|AC_Natural_Armor|n|TYPE=Base`, when the row carries one. */
   naturalArmor: number | null;

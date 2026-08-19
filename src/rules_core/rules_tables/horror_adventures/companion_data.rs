@@ -25,6 +25,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         monster_class: Some("Companion:2"),
         type_segments: &["Companion", "AnimalCompanion"],
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }, NaturalAttack { name: "Claw", damage_dice: None }],
+        natural_attack_damage_bonuses: &[],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 2 }, StatAdjustment { ability: "DEX", amount: 6 }, StatAdjustment { ability: "INT", amount: -8 }, StatAdjustment { ability: "WIS", amount: 2 }, StatAdjustment { ability: "CHA", amount: -4 }],
         natural_armor: Some(1),
         source_page: Some("p.50"),

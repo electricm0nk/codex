@@ -1,10 +1,12 @@
 import {
   BOOK_LABELS,
   SIZE_LABELS,
+  DAMAGE_BONUS_CAPTION,
   STAT_ADJUSTMENT_CAPTION,
   formatAbilityHeading,
   formatBook,
   formatCreatureType,
+  formatDamageBonus,
   formatName,
   formatNaturalAttack,
   formatReach,
@@ -86,6 +88,7 @@ function entry(overrides: Partial<CompanionCatalogEntryDto>): CompanionCatalogEn
     monsterClass: 'Companion:2',
     typeSegments: [],
     naturalAttacks: [],
+    naturalAttackDamageBonuses: [],
     statAdjustments: [],
     naturalArmor: null,
     sourcePage: null,
@@ -265,6 +268,33 @@ function testTheBlurbNamesTheBooksTheResponseActuallyContains() {
   assertEqual(formatServedBooks([]), 'no book', 'an empty response says so');
 }
 
+/**
+ * The damage-bonus block. The corpus states a RULE here, not a number, and the
+ * two shapes the screen must keep apart are "the engine read the formula" and
+ * "the engine refused to interpret it" — collapsing them would tell the player
+ * a formula was understood when it was not.
+ */
+function testADamageBonusPrintsTheRuleAndAnUnparsedOneSaysSo() {
+  assertEqual(
+    formatDamageBonus({
+      attack: 'Bite',
+      bonus: '+1/2 Str modifier (minimum +0)',
+      unparsedFormula: null,
+    }),
+    'Bite +1/2 Str modifier (minimum +0)',
+    'a parsed token prints the rule the corpus states'
+  );
+  assertEqual(
+    formatDamageBonus({ attack: 'Tail', bonus: 'STR/2', unparsedFormula: 'STR/2' }),
+    'Tail STR/2 (formula not interpreted)',
+    'a refused formula prints verbatim AND says it was not interpreted'
+  );
+  assert(
+    DAMAGE_BONUS_CAPTION.includes('BONUS:WEAPONPROF'),
+    'the caption names the corpus token so the reader knows it is a corpus fact'
+  );
+}
+
 function main() {
   testEveryServedBookHasARealName();
   testEverySizeCodeTheRosterCarriesHasALabel();
@@ -275,6 +305,7 @@ function main() {
   testTheCompanionWrapperStaysInTheName();
   testAStatAdjustmentKeepsItsSignAndItsCaption();
   testAnAttackWithNoCorpusDicePrintsItsNameAlone();
+  testADamageBonusPrintsTheRuleAndAnUnparsedOneSaysSo();
   testAnAbilityHeadingReadsTheWayTheBookPrintsIt();
   testAnUnmodelledFacetFallsBackToItsVerbatimSegments();
   testTheBlurbNamesTheBooksTheResponseActuallyContains();

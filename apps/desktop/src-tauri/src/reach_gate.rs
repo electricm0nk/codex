@@ -2092,6 +2092,14 @@ fn companions_reach(corpus_book: &str, wire_code: &str) -> Reach {
             || entry.monster_class.is_some()
             || entry.natural_armor.is_some()
             || !entry.natural_attacks.is_empty()
+            // SD31-W15-COMPANION-001: the row's `BONUS:WEAPONPROF=…|DAMAGE|`
+            // tokens, rendered as the PF1 rule they state. Added to the
+            // predicate because it is genuine per-row payload a player reads —
+            // NOT because any row needs it to reach: every row carrying one
+            // already reaches on `natural_attacks`/`stat_adjustments`, and this
+            // clause moving no record is asserted by
+            // `the_damage_bonus_column_moves_no_record_into_reach` below.
+            || !entry.natural_attack_damage_bonuses.is_empty()
             || !entry.stat_adjustments.is_empty()
             || !entry.abilities.is_empty();
         if has_payload {
@@ -3211,6 +3219,49 @@ fn full_inventory() -> BTreeSet<Family> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// ANTI-GAMING (Decision 1(a)): the `naturalAttackDamageBonuses` column
+    /// this cycle added to `companions_reach`'s payload predicate must not be
+    /// what carries any record over the bar. Every companion row that states a
+    /// `BONUS:WEAPONPROF=…|DAMAGE|` token also states natural attacks and stat
+    /// adjustments, so the new clause is genuine payload a player reads and
+    /// nothing more. Asserted rather than assumed — a clause that DID move
+    /// records would be reach bought with a column, which is exactly the
+    /// inflation this program forbids.
+    #[test]
+    fn the_damage_bonus_column_moves_no_record_into_reach() {
+        let response = crate::companion_catalog::build_companion_catalog();
+        let mut with_bonus = 0usize;
+        for entry in &response.entries {
+            if entry.natural_attack_damage_bonuses.is_empty() {
+                continue;
+            }
+            with_bonus += 1;
+            let reaches_without_the_new_clause = entry
+                .race_type
+                .as_deref()
+                .is_some_and(|t| !t.trim().is_empty())
+                || entry.size.as_deref().is_some_and(|s| !s.trim().is_empty())
+                || entry.source_page.as_deref().is_some_and(|p| !p.trim().is_empty())
+                || !entry.speeds.is_empty()
+                || entry.monster_class.is_some()
+                || entry.natural_armor.is_some()
+                || !entry.natural_attacks.is_empty()
+                || !entry.stat_adjustments.is_empty()
+                || !entry.abilities.is_empty();
+            assert!(
+                reaches_without_the_new_clause,
+                "{} would reach ONLY because of naturalAttackDamageBonuses -- that is reach \
+                 bought with a column, not content a player can read",
+                entry.key
+            );
+        }
+        assert!(
+            with_bonus > 0,
+            "no served companion carries a damage-bonus token at all; this test would then be \
+             asserting nothing"
+        );
+    }
 
     /// The inventory itself must be real. If either source silently returned
     /// nothing, every other test here would pass while checking no content at

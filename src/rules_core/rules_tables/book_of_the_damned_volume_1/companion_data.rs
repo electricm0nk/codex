@@ -70,6 +70,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         monster_class: Some("Imp Companion:2"),
         type_segments: &[],
         natural_attacks: &[NaturalAttack { name: "Sting", damage_dice: Some("1d4") }],
+        natural_attack_damage_bonuses: &[],
         stat_adjustments: &[StatAdjustment { ability: "DEX", amount: 7 }, StatAdjustment { ability: "INT", amount: 3 }, StatAdjustment { ability: "WIS", amount: 2 }, StatAdjustment { ability: "CHA", amount: 4 }],
         natural_armor: Some(1),
         source_page: Some("p.78"),

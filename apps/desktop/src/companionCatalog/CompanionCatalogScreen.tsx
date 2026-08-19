@@ -3,6 +3,7 @@ import type {
   CompanionAbilityDto,
   CompanionAttackDto,
   CompanionCatalogEntryDto,
+  CompanionDamageBonusDto,
   CompanionStatAdjustmentDto,
 } from '../boundary/loadCompanionCatalog';
 import { loadCompanionCatalogRuntime } from './companionCatalogRuntime';
@@ -160,9 +161,30 @@ export function formatStatAdjustment(adjustment: CompanionStatAdjustmentDto): st
  */
 export const STAT_ADJUSTMENT_CAPTION = 'Ability score adjustments (corpus BONUS:STAT tokens)';
 
+/**
+ * The damage-bonus block's caption. Names the token so the reader knows it is
+ * a corpus fact, and says "extra" because the base attack already applies the
+ * full Strength modifier -- this is the other half PF1 CRB p.182 grants a
+ * creature with a single natural attack.
+ */
+export const DAMAGE_BONUS_CAPTION = 'Extra damage on attack (corpus BONUS:WEAPONPROF DAMAGE tokens)';
+
 /** `{ name: 'Bite', damageDice: null }` -> `'Bite'`; with dice -> `'Bite 1d6'`. */
 export function formatNaturalAttack(attack: CompanionAttackDto): string {
   return attack.damageDice ? `${attack.name} ${attack.damageDice}` : attack.name;
+}
+
+/**
+ * One damage-bonus row: `"Bite +1/2 Str modifier (minimum +0)"`.
+ *
+ * A shape the engine refuses to interpret prints its token verbatim and says
+ * so, rather than being dropped (which would tell the player the corpus states
+ * nothing) or rendered as if understood.
+ */
+export function formatDamageBonus(bonus: CompanionDamageBonusDto): string {
+  return bonus.unparsedFormula === null
+    ? `${bonus.attack} ${bonus.bonus}`
+    : `${bonus.attack} ${bonus.unparsedFormula} (formula not interpreted)`;
 }
 
 /**
@@ -338,6 +360,12 @@ export function CompanionCatalogScreen(props: CompanionCatalogScreenProps) {
                     Attacks: {entry.naturalAttacks.map(formatNaturalAttack).join(', ')}
                   </p>
                 )}
+                {entry.naturalAttackDamageBonuses.length > 0 ? (
+                  <p style={{ color: 'var(--color-text)', fontSize: '0.75rem', margin: '0.25rem 0 0' }}>
+                    <span style={{ color: 'var(--color-text-faint)' }}>{DAMAGE_BONUS_CAPTION}: </span>
+                    {entry.naturalAttackDamageBonuses.map(formatDamageBonus).join(', ')}
+                  </p>
+                ) : null}
                 {entry.abilities.length > 0 ? (
                   <div style={{ margin: '0.4rem 0 0' }}>
                     {entry.abilities.map((ability) => (
