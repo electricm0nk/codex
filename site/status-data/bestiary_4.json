@@ -619,11 +619,11 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 351,
-      "partial": 55,
+      "done": 355,
+      "partial": 51,
       "not_started": 165,
       "denominator": 571,
-      "pct": 61.5,
+      "pct": 62.2,
       "excluded_from_percentage": 200,
       "standing_breakdown": {
         "origin": 571,
@@ -1238,7 +1238,7 @@
         },
         {
           "name": "Channel Radiation",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -3242,7 +3242,7 @@
         },
         {
           "name": "Obliterate",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -4616,7 +4616,7 @@
         },
         {
           "name": "Suffocating Breath",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -5054,7 +5054,7 @@
         },
         {
           "name": "Void Gaze",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },

@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-08-19T14:12:06Z",
+  "generated_at": "2026-08-19T16:31:34Z",
   "doneness_values": [
     "done",
     "partial",
     "not-started"
   ],
   "overall": {
-    "done": 11218,
-    "partial": 2180,
+    "done": 11224,
+    "partial": 2174,
     "not_started": 16092,
     "denominator": 29490,
-    "pct": 38.0,
+    "pct": 38.1,
     "excluded_from_percentage": 9031,
     "standing_breakdown": {
       "origin": 29490,
@@ -176,11 +176,11 @@
     {
       "id": "bestiary_4",
       "title": "Bestiary 4",
-      "done": 606,
-      "partial": 96,
+      "done": 610,
+      "partial": 92,
       "not_started": 325,
       "denominator": 1027,
-      "pct": 59.0,
+      "pct": 59.4,
       "excluded_from_percentage": 309,
       "standing_breakdown": {
         "unclassified": 309,
@@ -232,11 +232,11 @@
     {
       "id": "horror_adventures",
       "title": "Horror Adventures",
-      "done": 198,
-      "partial": 6,
+      "done": 200,
+      "partial": 4,
       "not_started": 499,
       "denominator": 703,
-      "pct": 28.2,
+      "pct": 28.4,
       "excluded_from_percentage": 153,
       "standing_breakdown": {
         "origin": 703,

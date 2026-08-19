@@ -100,6 +100,28 @@ SAVE_DC_EXPR = re.compile(
 # and is excluded by this regex rather than by a hand-kept list.
 DC_SLOT = re.compile(r"\bDC\s+%(\d+)")
 
+# The SECOND sub-seam (SD31-W16-MONSTER-ABILITY-001, the honest next lever
+# wave 15's receipt named -- `artifacts/SD31-W15-MONSTER-ABILITY-save-dc-
+# seam.md` "What remains held" table). These rows state the DC %N argument as
+# the FULL Universal Monster Rule formula, symbolic in the racial-HD term,
+# instead of a summed literal -- exactly PCGen's `BONUS:VAR|<name>|10+(HD/2)+
+# <STAT>` shape, but written out in full as the DESC argument itself (no named
+# variable, no separate BONUS:VAR token to chase). The coefficient must be
+# LITERALLY `10` and the divisor LITERALLY `2` -- matching the printed rule
+# verbatim, not "some integer over some integer" -- or the row is not
+# credited. `TL` is accepted alongside `HD`: this repo's own monster-SLA seam
+# already established (`derived_evaluator_fixture_check.rs`'s
+# `spell_like_ability_caster_level` doc comment) that PCGen's `TL` term is its
+# internal alias for total Hit Dice on a monster with no PC class levels
+# layered on -- confirmed independently here against
+# `pcgen/code/src/java/pcgen/core/term/PCTLTermEvaluator.java`
+# (`resolve()` returns `display.getTotalLevels()`), which for a pure
+# `MONSTERCLASS:<type>:<HD>` stat block with no other class levels sums to
+# exactly that HD.
+FORMULA_EXPR = re.compile(
+    r"^\s*\(?\s*10\s*\)?\s*\+\s*\(?\s*(?:HD|TL)\s*/\s*2\s*\)?\s*\+\s*(?P<stat>%s)\s*$" % _S
+)
+
 TARGET_KIND = "monster_ability"
 TARGET_WIRING = "derived"
 # BOTH statuses, and the second one is what makes this script IDEMPOTENT.
@@ -196,6 +218,30 @@ def racial_hd(monsterclass_token):
         return None
 
 
+def formula_dc_slot(prose, args):
+    """The `(slot_index, expression, ability)` a row states via the FULL
+    Universal Monster Rule formula (`10+(HD/2)+CON` shape, coefficient and
+    divisor literal), or None. Sibling of `save_dc_slot` for the second
+    sub-seam; deliberately does not also match the flat `<int>+<STAT>` shape
+    (that stays `save_dc_slot`'s alone) and deliberately does not accept a
+    bare variable name (`ClingDC`) -- that shape's formula lives on a
+    SEPARATE `BONUS:VAR` token this script does not resolve, and the compiled
+    engine record carries no field for it either (`description_variables`
+    holds only the bare name), so it is correctly left unresolved rather than
+    guessed.
+    """
+    for m in DC_SLOT.finditer(prose):
+        n = int(m.group(1))
+        if n - 1 >= len(args):
+            continue
+        expr = args[n - 1]
+        fm = FORMULA_EXPR.match(expr)
+        if not fm:
+            continue
+        return n, expr, fm.group("stat")
+    return None
+
+
 def find_owner_row(book_dir, owner_key, cache):
     """The `(path, line_no, fields)` of the monster row whose `KEY:` is `owner_key`.
 
@@ -245,6 +291,34 @@ def main():
     buckets = collections.Counter()
     entries = []
     disagreements = []
+    formula_entries = []
+
+    def resolve_owner(key, path, bucket_prefix=""):
+        """Shared by both DC-argument shapes: `(owner_key, owner_path,
+        owner_line, mc, hd)` or None, incrementing the right bucket on
+        failure. Owner resolution (same book directory, unique `KEY:`,
+        readable `MONSTERCLASS`) does not depend on which shape the ability
+        row's DC argument takes.
+        """
+        if " ~ " not in key:
+            buckets[bucket_prefix + "orphan_key_is_not_monster_namespaced"] += 1
+            return None
+        owner_key = key.split(" ~ ", 1)[0]
+        book_dir = os.path.dirname(path)
+        owners = find_owner_row(book_dir, owner_key, cache)
+        if not owners:
+            buckets[bucket_prefix + "orphan_no_owner_monster_row_in_this_book"] += 1
+            return None
+        if len(owners) > 1:
+            buckets[bucket_prefix + "owner_key_not_unique_in_book"] += 1
+            return None
+        owner_path, owner_line, owner_fields = owners[0]
+        mc = token(owner_fields, "MONSTERCLASS")
+        hd = racial_hd(mc)
+        if hd is None:
+            buckets[bucket_prefix + "owner_racial_hd_unreadable"] += 1
+            return None
+        return owner_key, owner_path, owner_line, mc, hd
 
     for unit in sorted(units, key=lambda u: u["id"]):
         src = unit.get("source_file")
@@ -270,7 +344,40 @@ def main():
         prose, desc_args = parse_desc(desc_raw)
         slot = save_dc_slot(prose, desc_args)
         if slot is None:
-            buckets["no_DC_slot_with_int_plus_stat_argument"] += 1
+            # Not the flat `<int>+<STAT>` shape. Try the SECOND sub-seam
+            # (the full-formula shape) before giving up on the row.
+            fslot = formula_dc_slot(prose, desc_args)
+            if fslot is None:
+                buckets["no_DC_slot_with_int_plus_stat_argument"] += 1
+                continue
+            f_slot_n, f_expr, f_stat = fslot
+            resolved = resolve_owner(key, path, bucket_prefix="formula_")
+            if resolved is None:
+                continue
+            owner_key, owner_path, owner_line, mc, hd = resolved
+            rule_base = 10 + hd // 2
+            buckets["FORMULA_EMITTED"] += 1
+            formula_entries.append({
+                "unit_id": unit["id"],
+                "book": unit["book"],
+                "record_key": key,
+                "upstream_lst": os.path.relpath(path, root),
+                "upstream_lst_sha256": sha256_file(path),
+                "upstream_line": line_no,
+                "corpus_field": "DESC:" + desc_raw,
+                "desc_argument_index": f_slot_n,
+                "desc_argument": f_expr,
+                "owner_monster_key": owner_key,
+                "owner_upstream_lst": os.path.relpath(owner_path, root),
+                "owner_upstream_line": owner_line,
+                "owner_monster_class_token": mc,
+                "owner_racial_hd": hd,
+                "universal_monster_rule_base": rule_base,
+                "expected": {
+                    "save_dc_base": rule_base,
+                    "ability": f_stat,
+                },
+            })
             continue
         slot_n, expr, const, stat = slot
 
@@ -342,6 +449,14 @@ def main():
                      d["owner_monster_key"], d["owner_monster_class_token"],
                      d["universal_monster_rule_base"]))
 
+    if formula_entries:
+        print()
+        print("FORMULA SUB-SEAM EMITTED -- credited via the full-formula shape:")
+        for e in formula_entries:
+            print("  %-58s DESC arg %-16s -> base %d (%s HD %s)"
+                  % (e["unit_id"], e["desc_argument"], e["universal_monster_rule_base"],
+                     e["owner_monster_key"], e["owner_monster_class_token"]))
+
     if args.report:
         return
 
@@ -373,11 +488,40 @@ def main():
         "is an orphan and is excluded."
     )
     doc["monster_ability_entries"] = entries
+    doc["monster_ability_formula_token_family"] = (
+        "DESC (save-DC argument, full-formula shape) x MONSTERCLASS (racial HD)"
+    )
+    doc["monster_ability_formula_derivation"] = (
+        "The SECOND sub-seam (SD31-W16-MONSTER-ABILITY-001), for rows where the DC %N argument "
+        "is not a summed literal but the FULL Universal Monster Rule formula written out, "
+        "symbolic in the racial-HD term -- `10+(HD/2)+<STAT>` or `10+(TL/2)+<STAT>`, coefficient "
+        "and divisor literal. Unlike monster_ability_entries, the ability row states no summed "
+        "constant to cross-check -- the formula IS the rule, restated -- so expected.save_dc_base "
+        "is computed the same way universal_monster_rule_base always was: 10 + racial_hd // 2, "
+        "from the OWNING monster row's MONSTERCLASS token. An entry is emitted only when the "
+        "ability row's argument matches the canonical formula shape exactly (coefficient 10, "
+        "divisor 2, a valid PF ability abbreviation) -- a wrong coefficient (`8+TL/2+CON`) or an "
+        "extra term (`HD+10+HD/2+CON`) is a real deviation from the printed rule and is left "
+        "uncredited, not coerced to fit."
+    )
+    doc["monster_ability_formula_independence"] = (
+        "Same independence shape as monster_ability_independence: every value is a function of "
+        "the upstream PCGen .lst bytes alone, no engine module imported, no file under "
+        "data/corpus/ opened. One tier below monster_ability_entries' two-row cross-check "
+        "(the ability row states no independent constant of its own for the formula shape -- it "
+        "restates the rule symbolically) -- documented as such rather than overstated. The "
+        "engine-side check still crosses two compiled records the fixture generator never reads "
+        "(the ability record's formula shape and the owner's compiled MONSTERCLASS), so a wrong "
+        "engine ingest of either still turns the check red."
+    )
+    doc["monster_ability_formula_entries"] = formula_entries
     with open(FIXTURE, "w", encoding="utf-8") as fh:
         json.dump(doc, fh, indent=2, sort_keys=False)
         fh.write("\n")
     print()
     print("wrote %d monster_ability_entries to %s" % (len(entries), os.path.relpath(FIXTURE, REPO)))
+    print("wrote %d monster_ability_formula_entries to %s"
+          % (len(formula_entries), os.path.relpath(FIXTURE, REPO)))
 
 
 if __name__ == "__main__":

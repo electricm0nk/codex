@@ -39302,5 +39302,136 @@
         ]
       }
     }
+  ],
+  "monster_ability_formula_token_family": "DESC (save-DC argument, full-formula shape) x MONSTERCLASS (racial HD)",
+  "monster_ability_formula_derivation": "The SECOND sub-seam (SD31-W16-MONSTER-ABILITY-001), for rows where the DC %N argument is not a summed literal but the FULL Universal Monster Rule formula written out, symbolic in the racial-HD term -- `10+(HD/2)+<STAT>` or `10+(TL/2)+<STAT>`, coefficient and divisor literal. Unlike monster_ability_entries, the ability row states no summed constant to cross-check -- the formula IS the rule, restated -- so expected.save_dc_base is computed the same way universal_monster_rule_base always was: 10 + racial_hd // 2, from the OWNING monster row's MONSTERCLASS token. An entry is emitted only when the ability row's argument matches the canonical formula shape exactly (coefficient 10, divisor 2, a valid PF ability abbreviation) -- a wrong coefficient (`8+TL/2+CON`) or an extra term (`HD+10+HD/2+CON`) is a real deviation from the printed rule and is left uncredited, not coerced to fit.",
+  "monster_ability_formula_independence": "Same independence shape as monster_ability_independence: every value is a function of the upstream PCGen .lst bytes alone, no engine module imported, no file under data/corpus/ opened. One tier below monster_ability_entries' two-row cross-check (the ability row states no independent constant of its own for the formula shape -- it restates the rule symbolically) -- documented as such rather than overstated. The engine-side check still crosses two compiled records the fixture generator never reads (the ability record's formula shape and the owner's compiled MONSTERCLASS), so a wrong engine ingest of either still turns the check red.",
+  "monster_ability_formula_entries": [
+    {
+      "unit_id": "bestiary_4:monster_ability:dragon_solar_channel_radiation",
+      "book": "bestiary_4",
+      "record_key": "Dragon (Solar) ~ Channel Radiation",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+      "upstream_lst_sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+      "upstream_line": 524,
+      "corpus_field": "DESC:An old or older solar dragon can use its channel life ability to instead channel radiation that deals an equal amount of damage to living creatures. A living creature that succeeds at a Fortitude save (DC %1) takes half damage.|10+(HD/2)+CON",
+      "desc_argument_index": 1,
+      "desc_argument": "10+(HD/2)+CON",
+      "owner_monster_key": "Dragon (Solar)",
+      "owner_upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+      "owner_upstream_line": 53,
+      "owner_monster_class_token": "Dragon:7",
+      "owner_racial_hd": 7,
+      "universal_monster_rule_base": 13,
+      "expected": {
+        "save_dc_base": 13,
+        "ability": "CON"
+      }
+    },
+    {
+      "unit_id": "bestiary_4:monster_ability:dragon_void_obliterate",
+      "book": "bestiary_4",
+      "record_key": "Dragon (Void) ~ Obliterate",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+      "upstream_lst_sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+      "upstream_line": 538,
+      "corpus_field": "DESC:A young or older void dragon's bite deals an additional 2d6 points of negative energy damage. A creature reduced to 0 or fewer hit points by this attack must succeed at a Fortitude save (DC %1) or be immediately slain and reduced to ashes (as the disintegrate spell).|10+(HD/2)+CON",
+      "desc_argument_index": 1,
+      "desc_argument": "10+(HD/2)+CON",
+      "owner_monster_key": "Dragon (Void)",
+      "owner_upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+      "owner_upstream_line": 55,
+      "owner_monster_class_token": "Dragon:6",
+      "owner_racial_hd": 6,
+      "universal_monster_rule_base": 13,
+      "expected": {
+        "save_dc_base": 13,
+        "ability": "CON"
+      }
+    },
+    {
+      "unit_id": "bestiary_4:monster_ability:dragon_void_suffocating_breath",
+      "book": "bestiary_4",
+      "record_key": "Dragon (Void) ~ Suffocating Breath",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+      "upstream_lst_sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+      "upstream_line": 539,
+      "corpus_field": "DESC:Instead of dealing cold damage, a very young or older void dragon can breathe a cone\u00adshaped suffocation effect. An air-dependent creature that fails its Fortitude save (DC %1) suffocates (Pathfinder RPG Core Rulebook 445) for %2 rounds.|10+(HD/2)+CON|DragonAgeCategory",
+      "desc_argument_index": 1,
+      "desc_argument": "10+(HD/2)+CON",
+      "owner_monster_key": "Dragon (Void)",
+      "owner_upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+      "owner_upstream_line": 55,
+      "owner_monster_class_token": "Dragon:6",
+      "owner_racial_hd": 6,
+      "universal_monster_rule_base": 13,
+      "expected": {
+        "save_dc_base": 13,
+        "ability": "CON"
+      }
+    },
+    {
+      "unit_id": "bestiary_4:monster_ability:dragon_void_void_gaze",
+      "book": "bestiary_4",
+      "record_key": "Dragon (Void) ~ Void Gaze",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+      "upstream_lst_sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+      "upstream_line": 540,
+      "corpus_field": "DESC:A creature within 30 feet of an adult or older void dragon must succeed at a Will save (DC %1) or become confused for 1d6 rounds. This gaze attack is a mind-affecting effect.|10+(HD/2)+CHA",
+      "desc_argument_index": 1,
+      "desc_argument": "10+(HD/2)+CHA",
+      "owner_monster_key": "Dragon (Void)",
+      "owner_upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+      "owner_upstream_line": 55,
+      "owner_monster_class_token": "Dragon:6",
+      "owner_racial_hd": 6,
+      "universal_monster_rule_base": 13,
+      "expected": {
+        "save_dc_base": 13,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "horror_adventures:monster_ability:hive_larva_swarm_infest",
+      "book": "horror_adventures",
+      "record_key": "Hive Larva Swarm ~ Infest",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+      "upstream_lst_sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00",
+      "upstream_line": 277,
+      "corpus_field": "DESC:A hive larva swarm can enter the body of a single Small or larger helpless living creature. When it does so, a portion of the swarm enters a creature's mouth and gestates for 1d4 minutes. The gestated larvae ravage the host for 24 hours, during which time the infested creature falls unconscious and can't be woken by any means. During this period the larvae are vulnerable to expulsion by remove disease (DC %1). If successful, the hive larvae die inside of the host, dealing another 1d6 points of acid damage. In some cases, metabolized hive larvae corpses can infect the creature with the hive corruption (see page 24). After 24 hours, the hive larvae achieve symbiosis. The host awakens feeling healthy but hungry. Spells such as diagnose disease and Heal checks used to detect disease no longer detect the hive infestation, and the host creature is now treated as both its original creature type and an aberration for purposes of spells and effects (whichever is worse). A successful DC 25 Knowledge (dungeoneering) check can identify the symbiosis. If the host dies at this point, the larval infestation dies as well. However, if the host is then returned from the dead, the larvae are returned to life as well. The swarm fully matures 2d12 hours after symbiosis. By this point, there is no way to save the host short of a miracle or wish spell. Each round for 2d12 rounds, the host suffers agonizing pain and must succeed at a Fortitude save (DC %1) or be nauseated for 1 round. On each failed save, the host takes 4d6 points of damage as the mature hive creature forcibly separates itself. At the end of the 2d12 rounds, or after the host is slain by the damage, a fully formed hive creature (usually a hive warrior) explodes from within, destroying the host's body.|10+HD/2+CON",
+      "desc_argument_index": 1,
+      "desc_argument": "10+HD/2+CON",
+      "owner_monster_key": "Hive Larva Swarm",
+      "owner_upstream_lst": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_races.lst",
+      "owner_upstream_line": 3,
+      "owner_monster_class_token": "Aberration:7",
+      "owner_racial_hd": 7,
+      "universal_monster_rule_base": 13,
+      "expected": {
+        "save_dc_base": 13,
+        "ability": "CON"
+      }
+    },
+    {
+      "unit_id": "horror_adventures:monster_ability:hive_warrior_acid_spit",
+      "book": "horror_adventures",
+      "record_key": "Hive Warrior ~ Acid Spit",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+      "upstream_lst_sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00",
+      "upstream_line": 285,
+      "corpus_field": "DESC:A hive warrior can spray acid as a ranged touch attack out to a maximum range of 20 feet. Creatures struck by this spray takes %1d6 acid damage. Additionally, creatures damaged by a hive warrior's acid spit continue to take the same amount of acid damage for the next 1d3 rounds. A successful Reflex save (DC %2) halves the initial damage and negates the ongoing damage.|HD|10+HD/2+DEX",
+      "desc_argument_index": 2,
+      "desc_argument": "10+HD/2+DEX",
+      "owner_monster_key": "Hive Warrior",
+      "owner_upstream_lst": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_races.lst",
+      "owner_upstream_line": 5,
+      "owner_monster_class_token": "Aberration:8",
+      "owner_racial_hd": 8,
+      "universal_monster_rule_base": 14,
+      "expected": {
+        "save_dc_base": 14,
+        "ability": "DEX"
+      }
+    }
   ]
 }

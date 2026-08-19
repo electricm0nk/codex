@@ -112,6 +112,7 @@ pub fn run_bar_check(repo_root: &Path) -> BarCheckReport {
     let spell_range = run_spell_range_bar_check(repo_root);
     let class_feature = run_class_feature_bar_check(repo_root);
     let monster_ability = run_monster_ability_bar_check(repo_root);
+    let monster_ability_formula = run_monster_ability_formula_bar_check(repo_root);
     let companion = run_companion_bar_check(repo_root);
     let mut cleared = equipment.cleared;
     cleared.extend(monster.cleared);
@@ -120,6 +121,7 @@ pub fn run_bar_check(repo_root: &Path) -> BarCheckReport {
     cleared.extend(spell_range.cleared);
     cleared.extend(class_feature.cleared);
     cleared.extend(monster_ability.cleared);
+    cleared.extend(monster_ability_formula.cleared);
     cleared.extend(companion.cleared);
     let mut failures = equipment.failures;
     failures.extend(monster.failures);
@@ -128,6 +130,7 @@ pub fn run_bar_check(repo_root: &Path) -> BarCheckReport {
     failures.extend(spell_range.failures);
     failures.extend(class_feature.failures);
     failures.extend(monster_ability.failures);
+    failures.extend(monster_ability_formula.failures);
     failures.extend(companion.failures);
     let mut not_ingested = equipment.not_ingested;
     not_ingested.extend(monster.not_ingested);
@@ -136,6 +139,7 @@ pub fn run_bar_check(repo_root: &Path) -> BarCheckReport {
     not_ingested.extend(spell_range.not_ingested);
     not_ingested.extend(class_feature.not_ingested);
     not_ingested.extend(monster_ability.not_ingested);
+    not_ingested.extend(monster_ability_formula.not_ingested);
     not_ingested.extend(companion.not_ingested);
     // A unit that FAILED any seam must never be reported cleared by another
     // one. `cleared` is a union across seams and `failures` is keyed by
@@ -158,6 +162,7 @@ pub fn run_bar_check(repo_root: &Path) -> BarCheckReport {
             + spell_range.fixtures_total
             + class_feature.fixtures_total
             + monster_ability.fixtures_total
+            + monster_ability_formula.fixtures_total
             + companion.fixtures_total,
     }
 }
@@ -3037,6 +3042,85 @@ pub fn monster_ability_save_dc(
     None
 }
 
+// ---------------------------------------------------------------------------
+// `kind = monster_ability`, second sub-seam (SD31-W16-MONSTER-ABILITY-001) —
+// the FULL-FORMULA shape wave 15's receipt named as the honest next lever
+// (`artifacts/SD31-W15-MONSTER-ABILITY-save-dc-seam.md`, "What remains held
+// in this population"). Everything below is new; nothing above this line
+// changed shape or behaviour.
+// ---------------------------------------------------------------------------
+
+/// Parses one `DESC:` argument stated as the FULL Universal Monster Rule
+/// formula — `10+(HD/2)+CON` / `10+HD/2+CON`, coefficient and divisor
+/// literal — into the ability whose modifier is added.
+///
+/// `TL` is accepted as a synonym for `HD`: PCGen's `TL` term is "total
+/// levels" (`PCTLTermEvaluator.resolve()` returns
+/// `display.getTotalLevels()`), which for a monster stat block with only a
+/// `MONSTERCLASS:` token and no PC class levels layered on sums to exactly
+/// the racial HD [`spell_like_ability_caster_level`]'s own doc comment
+/// already established this for (`BONUS:VAR|SLA_CL|HD` /
+/// `BONUS:VAR|SLA_CL|max(TL,1)` being equivalent on this corpus).
+///
+/// Deliberately does not resolve a base by itself — unlike
+/// [`parse_flat_base_plus_ability`], this shape's ability row states no
+/// independent constant, only the rule restated symbolically. The base comes
+/// from [`universal_monster_rule_save_dc_base`] over the OWNING monster, in
+/// [`monster_ability_formula_save_dc`]. A wrong coefficient (`8+TL/2+CON`) or
+/// an extra term (`HD+10+HD/2+CON`) is a genuine deviation from the printed
+/// rule and returns `None`, exactly like [`parse_flat_base_plus_ability`]
+/// refuses to guess at a shape it cannot read.
+fn parse_formula_base_plus_ability(arg: &str) -> Option<&'static str> {
+    // None of this corpus's live spellings carries internal whitespace;
+    // stripping it costs nothing on the rows that don't have any and makes
+    // the match tolerant of the ones that might.
+    let compact: String = arg.chars().filter(|c| !c.is_whitespace()).collect();
+    let ability_of = |s: &str| PF_ABILITY_ABBREVS.into_iter().find(|a| *a == s);
+    for divisor_var in ["HD", "TL"] {
+        for prefix in [format!("10+({divisor_var}/2)+"), format!("10+{divisor_var}/2+")] {
+            if let Some(stat) = compact.strip_prefix(prefix.as_str())
+                && let Some(ability) = ability_of(stat)
+            {
+                return Some(ability);
+            }
+        }
+    }
+    None
+}
+
+/// **The evaluator, second sub-seam.** The save DC one compiled
+/// monster-ability record states via the full-formula shape, resolved
+/// against its OWNING monster's compiled racial HD — or `None` when the row
+/// states no such formula, or the formula's shape does not match the printed
+/// rule exactly.
+///
+/// Unlike [`monster_ability_save_dc`], this reads TWO compiled records (the
+/// ability record and the owner's stat block) because, for this shape, the
+/// ability row alone states no independent constant to read. That is what
+/// makes this sub-seam one tier below the flat shape's two-row
+/// cross-check — documented as such in
+/// `scripts/derive_monster_ability_save_dc_fixtures.py`'s
+/// `monster_ability_formula_independence` doc field — and it is still
+/// genuinely non-circular: a wrong engine ingest of EITHER compiled record
+/// (the ability row's formula shape, or the owner's `MONSTERCLASS`) turns
+/// this check red.
+pub fn monster_ability_formula_save_dc(
+    record: &crate::rules_core::rules_tables::monster_chassis::MonsterAbilityRecord,
+    owner: &crate::rules_core::rules_tables::monster_chassis::MonsterStatBlock,
+) -> Option<MonsterAbilitySaveDc> {
+    let description = record.description?;
+    for slot in dc_placeholder_slots(description) {
+        let Some(arg) = record.description_variables.get(slot - 1) else {
+            continue;
+        };
+        if let Some(ability) = parse_formula_base_plus_ability(arg) {
+            let base = universal_monster_rule_save_dc_base(owner)?;
+            return Some(MonsterAbilitySaveDc { base, ability, desc_argument_index: slot });
+        }
+    }
+    None
+}
+
 /// One `kind=monster_ability` fixture row, in the shape the committed JSON
 /// carries. Its own shape again, not a forced union with [`MonsterFixture`]:
 /// this seam pins TWO upstream rows, so it carries the owner's citation
@@ -3064,12 +3148,26 @@ pub struct MonsterAbilityFixture {
 
 /// Reads the `monster_ability_entries` array of the committed fixture file.
 pub fn load_monster_ability_fixtures(repo_root: &Path) -> Vec<MonsterAbilityFixture> {
+    load_monster_ability_fixtures_field(repo_root, "monster_ability_entries")
+}
+
+/// Reads the `monster_ability_formula_entries` array — the second sub-seam's
+/// sibling of [`load_monster_ability_fixtures`]. Same committed file, same
+/// row shape (an entry from either array resolves through the same owner
+/// join), different array because the two shapes derive `expected` by
+/// different routes (`scripts/derive_monster_ability_save_dc_fixtures.py`'s
+/// `monster_ability_formula_derivation` doc field explains why).
+pub fn load_monster_ability_formula_fixtures(repo_root: &Path) -> Vec<MonsterAbilityFixture> {
+    load_monster_ability_fixtures_field(repo_root, "monster_ability_formula_entries")
+}
+
+fn load_monster_ability_fixtures_field(repo_root: &Path, field: &str) -> Vec<MonsterAbilityFixture> {
     let path = repo_root.join(FIXTURE_RELATIVE_PATH);
     let text = std::fs::read_to_string(&path)
         .unwrap_or_else(|e| panic!("the committed fixture must be readable at {path:?}: {e}"));
     let doc: serde_json::Value =
         serde_json::from_str(&text).expect("the committed fixture must be valid JSON");
-    let Some(entries) = doc.get("monster_ability_entries").and_then(|v| v.as_array()) else {
+    let Some(entries) = doc.get(field).and_then(|v| v.as_array()) else {
         return Vec::new();
     };
     entries
@@ -3228,6 +3326,116 @@ fn run_monster_ability_bar_check(repo_root: &Path) -> BarCheckReport {
                     fixture.owner_monster_class_token,
                     rule_base,
                     fixture.expected_save_dc_base
+                ),
+            );
+            continue;
+        }
+
+        cleared.insert(fixture.unit_id.clone());
+    }
+
+    BarCheckReport { cleared, failures, not_ingested, fixtures_total }
+}
+
+/// The second sub-seam's half of [`run_bar_check`] — `kind=monster_ability`
+/// rows whose DC argument states the FULL Universal Monster Rule formula
+/// rather than a summed literal. Resolves through the SAME
+/// `monster_chassis::MONSTER_BOOKS` registry [`run_monster_ability_bar_check`]
+/// does; a separate function only because the per-fixture check itself
+/// differs (the evaluator needs the owner resolved BEFORE it can produce a
+/// value at all, since this shape's ability row states no independent
+/// constant).
+fn run_monster_ability_formula_bar_check(repo_root: &Path) -> BarCheckReport {
+    let fixtures = load_monster_ability_formula_fixtures(repo_root);
+    let fixtures_total = fixtures.len();
+
+    let mut cleared = BTreeSet::new();
+    let mut failures: BTreeMap<String, String> = BTreeMap::new();
+    let mut not_ingested: BTreeMap<String, String> = BTreeMap::new();
+
+    for fixture in &fixtures {
+        let registry_book = monster_registry_book(&fixture.book);
+        let Some(monster_book) = MONSTER_BOOKS.iter().find(|b| b.corpus_book == registry_book)
+        else {
+            not_ingested.insert(fixture.unit_id.clone(), fixture.book.clone());
+            continue;
+        };
+        let Some(record) = monster_book.monster_ability_resolve(&fixture.record_key) else {
+            failures.insert(
+                fixture.unit_id.clone(),
+                format!(
+                    "{:?} does not resolve against {registry_book}'s registered monster abilities",
+                    fixture.record_key
+                ),
+            );
+            continue;
+        };
+        let Some(owner) = monster_book.monster_resolve(&fixture.owner_monster_key) else {
+            failures.insert(
+                fixture.unit_id.clone(),
+                format!(
+                    "owner {:?} does not resolve against {registry_book}'s registered monsters, \
+                     so the Universal Monster Rule has no racial HD to apply",
+                    fixture.owner_monster_key
+                ),
+            );
+            continue;
+        };
+
+        // Independent half: the printed rule over the owner's compiled
+        // MONSTERCLASS, which the fixture's expected value was pinned
+        // against at derivation time. Checked live, not trusted from the
+        // stored `universal_monster_rule_base` literal.
+        let Some(rule_base) = universal_monster_rule_save_dc_base(owner) else {
+            failures.insert(
+                fixture.unit_id.clone(),
+                format!(
+                    "owner {:?} states MONSTERCLASS {:?} but no readable racial HD",
+                    fixture.owner_monster_key, fixture.owner_monster_class_token
+                ),
+            );
+            continue;
+        };
+        if rule_base != fixture.expected_save_dc_base {
+            failures.insert(
+                fixture.unit_id.clone(),
+                format!(
+                    "the Universal Monster Rule over owner {:?} ({}) gives base {}, but the \
+                     fixture pins base {}",
+                    fixture.owner_monster_key,
+                    fixture.owner_monster_class_token,
+                    rule_base,
+                    fixture.expected_save_dc_base
+                ),
+            );
+            continue;
+        }
+
+        // The evaluator: does the ability row's formula shape resolve to the
+        // SAME base and ability the fixture pins?
+        let Some(evaluated) = monster_ability_formula_save_dc(record, owner) else {
+            failures.insert(
+                fixture.unit_id.clone(),
+                format!(
+                    "corpus row states {} (DESC argument {}) but the evaluator recognized no \
+                     Universal Monster Rule formula shape",
+                    fixture.corpus_field, fixture.desc_argument
+                ),
+            );
+            continue;
+        };
+        if evaluated.base != fixture.expected_save_dc_base || evaluated.ability != fixture.expected_ability
+        {
+            failures.insert(
+                fixture.unit_id.clone(),
+                format!(
+                    "corpus row states DESC argument {} (expected base {} + {}), evaluator \
+                     produced base {} + {}",
+                    fixture.desc_argument,
+                    fixture.expected_save_dc_base,
+                    fixture.expected_ability,
+                    evaluated.base,
+                    evaluated.ability
                 ),
             );
             continue;

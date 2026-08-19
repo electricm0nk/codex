@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-08-19T14:06:36Z",
+  "generated_at": "2026-08-19T16:15:57Z",
   "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 38521,
-  "proven_units": 5886,
+  "proven_units": 5880,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 420,
   "category_labels_redacted": 3,
@@ -7354,16 +7354,16 @@
     },
     "monster_ability": {
       "units": 2951,
-      "proven": 1613,
+      "proven": 1607,
       "by_status": {
         "not-ingested": 1144,
         "text-complete": 1006,
-        "grounded": 607,
+        "grounded": 601,
         "literal-verified": 102,
-        "fixture-verified": 92
+        "fixture-verified": 98
       },
       "shard": "PF1e-units-monster_ability.json",
-      "bytes": 356345,
+      "bytes": 356393,
       "doneness_unmapped": {},
       "categories": {
         "specialquality": {
@@ -7377,8 +7377,8 @@
         },
         "specialattack": {
           "label": "Special Attacks",
-          "done": 839,
-          "held": 136,
+          "done": 845,
+          "held": 130,
           "in-progress": 0,
           "not-started": 318,
           "unmeasurable": 0,
