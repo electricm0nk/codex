@@ -932,6 +932,88 @@ fn monster_ability_formula_expected_base_reproduces_from_the_printed_universal_m
     assert!(wrong.is_empty(), "{} mismatch(es):\n{}", wrong.len(), wrong.join("\n"));
 }
 
+/// Sibling of [`monster_ability_pinned_corpus_field_is_byte_identical_to_the_upstream_lst`],
+/// for the formula-shape fixtures. Re-reads `owner_upstream_lst`/
+/// `owner_upstream_line` fresh from the pinned oracle and re-derives, from
+/// the raw line's OWN fields (never from the fixture's `owner_monster_key`
+/// string), whether that line really names the owner — independent proof
+/// that `find_owner_row`'s bare-leading-field fallback (`SD31-W17-MONSTER-
+/// ABILITY-001`, `OPEN-ISSUES.md` row 295) picked a real owner row, not a
+/// coincidental substring. The flat-shape sibling only accepts an explicit
+/// `KEY:<name>` token because every one of its 92+23 rows has one; this
+/// formula-shape check additionally accepts the fallback shape (no `KEY:`
+/// token anywhere on the line, first tab-delimited field equals the owner
+/// name verbatim) — but never both loosely: a line WITH a `KEY:` token must
+/// match via `KEY:`, never merely resemble the name in its first field.
+#[test]
+fn monster_ability_formula_owner_citation_is_independently_re_derivable_from_the_upstream_lst() {
+    let fixtures = load_monster_ability_formula_fixtures(&repo_root());
+    assert!(!fixtures.is_empty(), "vacuous without fixtures");
+    let Some(data_root) = pcgen_data_root() else {
+        eprintln!("skipped: neither PCGEN_CORPUS_ROOT nor HOME is set");
+        return;
+    };
+    if !data_root.is_dir() {
+        eprintln!("skipped: no PCGen checkout at {data_root:?}");
+        return;
+    }
+
+    let mut wrong = Vec::new();
+    for fixture in &fixtures {
+        let owner_path = data_root.join(&fixture.owner_upstream_lst);
+        let Ok(bytes) = std::fs::read(&owner_path) else {
+            wrong.push(format!("{}: {:?} is not readable", fixture.unit_id, owner_path));
+            continue;
+        };
+        let lines: Vec<String> =
+            String::from_utf8_lossy(&bytes).split('\n').map(str::to_string).collect();
+        let index = usize::try_from(fixture.owner_upstream_line).expect("line fits in usize");
+        let Some(owner_line) = index.checked_sub(1).and_then(|i| lines.get(i)) else {
+            wrong.push(format!(
+                "{}: {} has no line {}",
+                fixture.unit_id, fixture.owner_upstream_lst, fixture.owner_upstream_line
+            ));
+            continue;
+        };
+        if !owner_line.contains(&format!("MONSTERCLASS:{}", fixture.owner_monster_class_token)) {
+            wrong.push(format!(
+                "{}: line {} of {} does not contain MONSTERCLASS:{:?} verbatim",
+                fixture.unit_id,
+                fixture.owner_upstream_line,
+                fixture.owner_upstream_lst,
+                fixture.owner_monster_class_token
+            ));
+            continue;
+        }
+        // `SD31-W17-INTEGRATE-001` (adversarial review, wave 17): both
+        // checks were loosened. `cited_by_key` used a substring `contains`,
+        // so a fixture citing "Fungus Queen" would have been satisfied by a
+        // row naming "Fungus Queen Elite" -- match the exact tab field
+        // instead. `leading_field` took the first NON-empty tab field,
+        // while the generator's own fallback (`find_owner_row`) requires
+        // `fields[0]` exactly -- use `fields[0]` here too so this test can
+        // never accept a shape the generator itself would reject.
+        let fields: Vec<&str> = owner_line.split('\t').collect();
+        let has_key_token = fields.iter().any(|f| f.starts_with("KEY:"));
+        let cited_by_key =
+            fields.iter().any(|f| *f == format!("KEY:{}", fixture.owner_monster_key));
+        let leading_field = fields.first().copied().unwrap_or("");
+        let cited_by_bare_leading_field =
+            !has_key_token && leading_field == fixture.owner_monster_key;
+        if !(cited_by_key || cited_by_bare_leading_field) {
+            wrong.push(format!(
+                "{}: line {} of {} names neither KEY:{} nor a bare leading field {:?}",
+                fixture.unit_id,
+                fixture.owner_upstream_line,
+                fixture.owner_upstream_lst,
+                fixture.owner_monster_key,
+                fixture.owner_monster_key
+            ));
+        }
+    }
+    assert!(wrong.is_empty(), "{} mismatch(es):\n{}", wrong.len(), wrong.join("\n"));
+}
+
 /// The engine's evaluator reproduces every committed formula fixture over the
 /// live compiled tables — the positive control for the mutation proofs below.
 #[test]

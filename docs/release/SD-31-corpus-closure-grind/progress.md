@@ -29892,3 +29892,230 @@ file this wave); `CLIPPY_WARNINGS_ROOT` (51), `CLIPPY_WARNINGS_DESKTOP` (7) and
 
 `/home/ubuntu/cargo-targets/w16-integrate` deleted at cycle close. All six wave-16 worktrees
 (`wf_b9c2a3a2-9da-1` through `-9`) removed after merge confirmation.
+
+## SD31-W17-MONSTER-ABILITY-001 — the shared owner-resolver's bare-leading-field fallback (2026-08-19)
+
+**Lane:** wave-17 lane, the 166 remaining `derived`+`grounded` `monster_ability` units capped at
+`held` (wider held mass 253). **Branch:** worktree `wf_2df73578-fc5-4`. **Base commit:** confirmed
+at cycle start (`git log --oneline -1` → `1fbc11887`, the dispatched tranche/11 tip — the tree
+originally checked out at a site-publish-only commit with no `docs`/`data`/`scripts`/`schemas`, was
+clean, and was reset to `1fbc11887` per the dispatch's own recovery instruction). **Oracle pin:**
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`, confirmed live via
+`scripts/fetch-pcgen-oracle.sh --check`. **Own `CARGO_TARGET_DIR`:**
+`/home/ubuntu/cargo-targets/w17-monster-ability` (deleted at cycle close).
+
+### 1. The lever — `OPEN-ISSUES.md` row 295's own named follow-up
+
+Row 295 (wave 16) named a real, pre-existing gap in `find_owner_row()` (shared by BOTH the flat and
+full-formula save-DC sub-seams): it matches an owner monster row ONLY via an explicit `KEY:<name>`
+token, so 3 formula-shape candidates whose owner rows carry no `KEY:` at all
+(`fungus_queen_energy_drain`, `aluum_paralysis`, `spine_dragon_spines`) fell into
+`formula_orphan_no_owner_monster_row_in_this_book` even though PCGen lets a monster row's bare
+leading field stand in for its name when it states no `KEY:`. Row 295's own text: *"if
+`find_owner_row()` ever gains a `fields[0]` fallback for the FLAT seam's own reasons, this
+sub-seam's 3 orphans should be re-run — no independent action needed here, it will pick them up
+automatically since owner resolution is shared code"* — an engineering follow-up, not a ruling, and
+squarely inside this lane's grant (`scripts/derive_monster_ability_save_dc_fixtures.py` is
+`monster_ability` tables/fixtures, not the monster chassis).
+
+**Row 295's own claim about the third unit was wrong, and re-deriving it was this cycle's first
+finding, logged as a `scripts/retro.py correction` before any code changed**
+(`docs/retro/events/sd31-w17-monster-ability-lane.jsonl`). Direct read of the pinned oracle:
+`Fungus Queen` and `Aluum` both name a race row whose leading field is literally their own name
+(`isb_races.lst:25`, `iswg_races.lst:10`), but `iswg_races.lst`'s only race row for the
+`Spine Dragon ~ *` ability namespace is named `Dragon (Spine)` (word order reversed — `iswg_races.lst:15`,
+`OUTPUTNAME:[NAME] Dragon` is what prints "Spine Dragon" to a player, the row's own leading
+field/`KEY:` never states that string). This is a genuine name-identity mismatch, not a missing-`KEY:`
+gap, and is **not** safe to bridge with a reordering heuristic — that would be exactly the kind of
+guess this seam's doctrine forbids. `spine_dragon_spines` stays correctly unresolved; only 2 of the
+3 named units move this cycle.
+
+### 2. TDD — the failing test, written before the fix
+
+`scripts/tests/test_derive_monster_ability_save_dc_fixtures.py` (new file, 6 tests). Written and run
+FIRST: 4 of 6 failed against the unmodified `find_owner_row()` (`0 != 1`, "a bare leading-field name
+should resolve as a fallback owner"), 2 passed (the `KEY:`-match-unaffected guarantees, trivially true
+before any change). Confirmed failing for the intended reason, not an import/setup error, before
+`find_owner_row()` was touched.
+
+### 3. The fix
+
+`scripts/derive_monster_ability_save_dc_fixtures.py`'s `find_owner_row()`: collects `KEY:`-tagged
+hits first, over the whole book directory, exactly as before (**byte-for-byte identical matching
+logic** for any owner that already resolves via `KEY:`); only when that set is empty does it fall
+back to a row whose bare leading field equals the owner name AND which itself carries no `KEY:`
+token of its own (so it can never shadow a real `KEY:` match for a *different* owner) AND which
+still carries a readable `MONSTERCLASS:` token, the same requirement the `KEY:` path already
+enforces. Docstring (`THE LINKED-ABILITY REQUIREMENT`) updated to describe the fallback and cite this
+cycle.
+
+All 6 Python tests green after the fix, including an end-to-end case against the real pinned oracle
+(skips rather than fails when the checkout is unavailable) that asserts `Fungus Queen`/`Aluum`
+resolve and `Spine Dragon` correctly does not.
+
+### 4. The derivation, verbatim
+
+```
+export PCGEN_CORPUS_ROOT=/home/ubuntu/workspace/repos/pcgen/data
+python3 scripts/derive_monster_ability_save_dc_fixtures.py --report
+```
+```
+monster_ability derived+grounded units considered: 264
+  no_DC_slot_with_int_plus_stat_argument         137
+  EMITTED                                        92
+  two_derivations_disagree                       23
+  FORMULA_EMITTED                                8
+  row_states_no_DESC                             2
+  orphan_no_owner_monster_row_in_this_book       1
+  formula_orphan_no_owner_monster_row_in_this_book 1
+
+FORMULA SUB-SEAM, the 2 NEWLY EMITTED units (the other 6 are wave 16's, unchanged):
+  inner_sea_bestiary:monster_ability:fungus_queen_energy_drain DESC arg 10+(HD/2)+CHA -> base 16 (Fungus Queen HD Plant:12)
+  inner_sea_world_guide:monster_ability:aluum_paralysis        DESC arg 10+TL/2+CON   -> base 17 (Aluum HD Construct:14)
+```
+
+`264 = 264` (unchanged from wave 16's own dispatch snapshot — the `TARGET_STATUSES = {"grounded",
+"fixture-verified"}` design keeps the population stable across the stamp). `FORMULA_EMITTED` moved
+`6 → 8`; `formula_orphan_no_owner_monster_row_in_this_book` moved `3 → 1` (only `spine_dragon_spines`
+remains). The flat shape's own single orphan stayed `1` (confirmed the same unit, unaffected by the
+fallback — it is a different name-mismatch, not a missing-`KEY:` case either). **Verified
+byte-identical for everything the fix must not touch:** `python3 -c` comparison of the pre- and
+post-fix `monster_ability_entries` arrays (the 92 flat-shape entries) →
+`True`, both length 92. Only `monster_ability_formula_entries` grew, by exactly the 2 new
+`unit_id`s, none dropped.
+
+### 5. Files
+
+| file | what |
+|---|---|
+| `scripts/derive_monster_ability_save_dc_fixtures.py` | `find_owner_row()` widened with the bare-leading-field fallback (see §3); docstring's `THE LINKED-ABILITY REQUIREMENT` section updated. The flat-shape and formula-shape callers, `resolve_owner()`, `save_dc_slot()`/`formula_dc_slot()`, and every regex are otherwise untouched. |
+| `scripts/tests/test_derive_monster_ability_save_dc_fixtures.py` | New. 6 tests: 2 guarantee the pre-existing `KEY:`-match path is unaffected, 3 exercise the new fallback against synthetic `.lst` trees (positive match, `MONSTERCLASS`-required refusal, wrong-name refusal), 1 is the end-to-end pinned-oracle case. |
+| `tests/derived_evaluator_fixture_check_monster_ability.rs` | +1 test, `monster_ability_formula_owner_citation_is_independently_re_derivable_from_the_upstream_lst` — the formula-shape sibling of the flat shape's own `monster_ability_pinned_corpus_field_is_byte_identical_to_the_upstream_lst` owner-citation check, extended to accept the bare-leading-field shape (never both loosely — a line WITH a `KEY:` token must match via `KEY:`). Re-derives, from the raw upstream line's own fields, whether the fixture's `owner_monster_key`/`owner_upstream_lst`/`owner_upstream_line`/`owner_monster_class_token` citation is real — independent of trusting the Python script's own resolution. 23/23 tests pass in the file (22 pre-existing + 1 new). |
+| `tests/fixtures/rules_core/derived-evaluator-fixtures.json` | +2 `monster_ability_formula_entries` rows. The pre-existing 92 `monster_ability_entries` and 6 `monster_ability_formula_entries` are byte-identical (verified, §4). |
+| `docs/work-inventory.json` | Regenerated via the guarded pipeline (§6). |
+| `site/dashboard/PF1e-dashboard.json`, `site/dashboard/PF1e-dashboard.json.last-good`, `site/dashboard/units/PF1e-units-monster_ability.json`, `site/dashboard/units/index.json`, `site/status-data.json`, `site/status-data/inner_sea_bestiary.json`, `site/status-data/inner_sea_world_guide.json` | Refreshed via `scripts/publish-site-dashboard.sh` (real publish, `CODEX_REPO_ROOT` pinned to this worktree — loop-instruction override 10). |
+| `docs/retro/events/sd31-w17-monster-ability-lane.jsonl` | New. One `correction` event for row 295's Spine Dragon claim (§1). |
+
+### 6. Mutation proofs — both gates genuinely fail
+
+**Proof 1 — the Python fix itself.** `find_owner_row`'s fallback condition mutated
+(`key is None and fields[0] == owner_key` → `key is None and fields[0] != owner_key`, i.e. inverted):
+`python3 -m unittest scripts.tests.test_derive_monster_ability_save_dc_fixtures` → **FAILED, 5 of 6**
+(the inverted condition now matches every WRONG-named row in the fixture instead of the right one).
+Restored via `cp` from a pristine pre-mutation copy; `diff -q` confirmed byte-identical; full suite
+green again (6/6).
+
+**Proof 2 — the new Rust independence test.** `owner_monster_key` on the `fungus_queen_energy_drain`
+formula fixture entry mutated to `"Not Fungus Queen"` in a scratch copy of the committed fixture JSON
+(swapped in over the real file, not a synthetic root): `cargo test --test
+derived_evaluator_fixture_check_monster_ability monster_ability_formula_owner_citation_is_independently_re_derivable`
+→ **FAILED, 1 of 1** — *"line 25 of .../isb_races.lst names neither KEY:Not Fungus Queen nor a bare
+leading field"*. Restored via `cp` from the pristine copy; `diff -q` confirmed byte-identical.
+
+Full suite green after both restores:
+`cargo test --locked -j 8 --test derived_evaluator_fixture_check_monster_ability` → `test result: ok.
+23 passed; 0 failed; 0 ignored`.
+
+### 7. Idempotency proof
+
+Inherits the existing fix (`TARGET_STATUSES = {"grounded", "fixture-verified"}`, wave-15's own
+lesson) unchanged — this cycle's fallback adds no new selection or write-merge logic.
+
+```
+# Run 1 (pre-stamp)
+python3 scripts/derive_monster_ability_save_dc_fixtures.py
+sha256sum tests/fixtures/rules_core/derived-evaluator-fixtures.json
+# -> 01b5521917287d830576c486855abff29948d9f8cd8504f7ac5aafcf749ef272b (edited for width)
+
+# Run 2 (immediately after, same tree, before any status stamping)
+python3 scripts/derive_monster_ability_save_dc_fixtures.py
+sha256sum tests/fixtures/rules_core/derived-evaluator-fixtures.json
+# -> IDENTICAL
+```
+
+A THIRD/FOURTH run happened for real, not hypothetically: after the guarded regen below stamped the
+2 units `fixture-verified`, `derive_monster_ability_save_dc_fixtures.py --report` was re-run against
+the POST-regen inventory — identical `264` considered, identical `FORMULA_EMITTED 8` set — and the
+full write re-run reproduced the exact same fixture file hash as runs 1/2.
+
+### 8. Guarded regen — the measured delta
+
+```
+export PCGEN_CORPUS_ROOT=/home/ubuntu/workspace/repos/pcgen/data
+export CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/w17-monster-ability
+S=/tmp/w17-monster-ability-regen
+cargo run --locked --bin corpus_literal_sweep -j 8 -- --json-out "$S/sweep.json"
+# -> corpus-literal-sweep: 26105 records examined of 26741 read, 252158 tokens compared (9
+#    synthesized), 26728 digests checked, 0 findings; CLEAN
+cargo run --locked --bin derived_evaluator_fixture_check -j 8 -- --json-out "$S/fixture.json"
+# -> derived-evaluator-fixture-check: 1752 unit(s) cleared over 2506 fixture row(s); 0 failed; 0 not
+#    ingested
+CORPUS_LITERAL_SWEEP_REPORT="$S/sweep.json" DERIVED_FIXTURE_CHECK_REPORT="$S/fixture.json" \
+  cargo run --locked --bin v06_work_inventory -j 8
+```
+
+`docs/work-inventory.json` `generated_at` moved to `2026-08-19T19:27:30Z`. Both emitted units
+confirmed individually: `status` `grounded` → `fixture-verified`, `evidence`
+`<book>_monster_ability_resolve_returned_a_real_record` (unchanged reachability evidence — only the
+`wiring_class`/status rung moved).
+
+**The board, replayed via `doneness_verdict()`, never asserted** (`EXCLUDED_BOOKS={'beginner_box'}`,
+same predicate the dispatch's own headline figure used):
+
+```
+python3 -c "
+import sys, json
+sys.path.insert(0, 'scripts/observer')
+import pf1e_dashboard_producer as p
+inv = json.load(open('docs/work-inventory.json'))
+units = [u for u in inv['units'] if u.get('book') not in p.EXCLUDED_BOOKS]
+from collections import Counter
+c = Counter(p.doneness_verdict(u.get('wiring_class'), u.get('status'), u.get('kind')) for u in units)
+print(len(units), dict(c))
+"
+# -> 38372 {'done': 12866, 'not-started': 17910, 'unmeasurable': 5076, 'deferred': 38, 'held': 1202,
+#           'in-progress': 1280}
+```
+
+**Before (dispatch figure, unchanged denominator):** 12,864 / 38,372 = 33.52 %, held 1,204.
+**After:** **12,866 / 38,372 = 33.53 %**, held **1,202**. Denominator unmoved (38,372 = 38,372), a
+clean **+2 done / −2 held**, exactly the 2 units emitted — every other kind's count unchanged (the
+swing is exactly ± the units this cycle moved; no cross-kind side effect). `monster_ability`'s own
+wider held mass: **253 → 251**; its `derived`+`grounded` population: **166 → 164**.
+
+### 9. What DoD-8 rests on, and what it does not claim
+
+Identical shape to wave 15/16's own answer for this seam (`artifacts/SD31-W15-MONSTER-ABILITY-save-
+dc-seam.md` §"What this does NOT claim", wave-16's own §7): these 2 reach `done` on the SAME
+reachability argument already established for the grounded population (the ability record resolves
+against the compiled chassis registry and is served unconditionally to the Monster Catalog screen),
+extended by the engine's evaluator now ALSO reproducing, independently, the value the printed rule
+computes from a second corpus row (now confirmed doubly-independent by §6 Proof 2's new Rust test,
+which the wave-16 units never had). **The DC number is verified and is still not on a player's
+screen** — same `render_pcgen_desc`/`OPEN-ISSUES` row 278 gap, not re-litigated here.
+
+### 10. What this cycle could NOT do
+
+* **The 26 named-variable (`ClingDC`-shaped) units are still chassis-blocked** — `OPEN-ISSUES` row
+  294, unchanged, still needing a `monster_chassis.rs` field this lane's grant does not authorize
+  (shared with the `monster`-kind lane). Still `RULING-NEEDED`, not actioned this cycle.
+* **`spine_dragon_spines` stays unresolved** — a genuine name-identity mismatch (`Dragon (Spine)` vs.
+  `Spine Dragon`), not a gap this fallback (or any non-guessing fix) can close. Logged as `OPEN-ISSUES`
+  row 303 (§11 below) plus the retro correction (§1).
+* **No render/DTO/frontend work was attempted** — out of this lane's stated file grant.
+* **The full `scripts/verify.sh` gate suite was NOT run this cycle** (root-lib/root-full/desktop/
+  frontend/etc. — none of which this lane's files touch). What WAS run and is green: the guarded
+  regen (§8), `cargo test --locked -j 8 --test derived_evaluator_fixture_check_monster_ability`
+  (23/23), `python3 -m unittest scripts.tests.test_derive_monster_ability_save_dc_fixtures` (6/6),
+  `cargo check --locked -j 8 --lib --tests` (clean workspace-wide, only pre-existing unrelated
+  warnings), `cargo clippy` on the touched test binary (zero warnings in any file this cycle
+  touched), and the 4 site-dashboard/status verify.sh stages this cycle's `docs/work-inventory.json`
+  change requires (loop-instruction override 10) — all 4 `PASS`.
+
+### 11. Housekeeping
+
+`git status --porcelain` before every write this cycle stayed limited to this lane's own files plus
+the guarded regen's downstream artifacts (`docs/work-inventory.json`, the `site/` publish outputs)
+and the new retro log — never a file outside this lane's grant. `OPEN-ISSUES.md` row 303 records the
+`spine_dragon_spines` finding. `/home/ubuntu/cargo-targets/w17-monster-ability` deleted at cycle
+close.

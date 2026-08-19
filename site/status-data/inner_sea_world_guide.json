@@ -2086,7 +2086,7 @@
         },
         {
           "name": "Paralysis",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Paralysis"

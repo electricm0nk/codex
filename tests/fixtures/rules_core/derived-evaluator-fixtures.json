@@ -39432,6 +39432,48 @@
         "save_dc_base": 14,
         "ability": "DEX"
       }
+    },
+    {
+      "unit_id": "inner_sea_bestiary:monster_ability:fungus_queen_energy_drain",
+      "book": "inner_sea_bestiary",
+      "record_key": "Fungus Queen ~ Energy Drain",
+      "upstream_lst": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+      "upstream_lst_sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
+      "upstream_line": 76,
+      "corpus_field": "DESC:A Fungus Queen drains energy from a mortal she lures into an act of passion, such as a kiss. An unwilling victim must be grappled before the Fungus Queen can use this ability. The Fungus Queen's kiss bestows one negative level. The kiss also has the effect of a suggestion spell, asking the victim to accept another act of passion from the Fungus Queen. The victim must succeed on a DC %1 Will save to negate the suggestion. The DC is 22 for the Fortitude save to remove a negative level.|10+(HD/2)+CHA",
+      "desc_argument_index": 1,
+      "desc_argument": "10+(HD/2)+CHA",
+      "owner_monster_key": "Fungus Queen",
+      "owner_upstream_lst": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+      "owner_upstream_line": 25,
+      "owner_monster_class_token": "Plant:12",
+      "owner_racial_hd": 12,
+      "universal_monster_rule_base": 16,
+      "expected": {
+        "save_dc_base": 16,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "inner_sea_world_guide:monster_ability:aluum_paralysis",
+      "book": "inner_sea_world_guide",
+      "record_key": "Aluum ~ Paralysis",
+      "upstream_lst": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_race.lst",
+      "upstream_lst_sha256": "776debf1cea780aac4b3518c47baf43523d6b06deb0aea80de08b640ffc03c15",
+      "upstream_line": 8,
+      "corpus_field": "DESC:The touch of an aluum paralyzes living creatures that fail a DC %1 Fortitude save for 1d4 minutes.|10+TL/2+CON",
+      "desc_argument_index": 1,
+      "desc_argument": "10+TL/2+CON",
+      "owner_monster_key": "Aluum",
+      "owner_upstream_lst": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races.lst",
+      "owner_upstream_line": 10,
+      "owner_monster_class_token": "Construct:14",
+      "owner_racial_hd": 14,
+      "universal_monster_rule_base": 17,
+      "expected": {
+        "save_dc_base": 17,
+        "ability": "CON"
+      }
     }
   ],
   "companion_skill_token_family": "BONUS:SKILL|<skills>|<A>-<B> (a PF1 skill-check bonus computed as the difference between two ability modifiers, e.g. Climb/Swim keyed off DEX-STR instead of STR alone)",

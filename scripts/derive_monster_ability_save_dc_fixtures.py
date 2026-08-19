@@ -60,10 +60,18 @@ THE LINKED-ABILITY REQUIREMENT
 ------------------------------
 PCGen namespaces a monster's own ability rows as `<Monster> ~ <Ability>`. This
 script resolves the owner by splitting that key and finding a row whose `KEY:`
-is exactly `<Monster>` **in the same book directory**. An ability row that
-resolves to no monster row in its own book is an ORPHAN -- a template-namespaced
-row no monster applies -- and is excluded, because there is no racial HD to
-apply the printed rule to. That exclusion is reported, never silently dropped.
+is exactly `<Monster>` **in the same book directory**. When no row in that book
+directory states that `KEY:` token at all, it falls back to a row whose bare
+LEADING field equals `<Monster>` and which itself carries no `KEY:` token of
+its own -- PCGen lets the leading field stand in for the name when a row
+states no `KEY:` (three named units, `OPEN-ISSUES.md` row 295:
+`Fungus Queen`/`Aluum`/`Spine Dragon`, fixed `SD31-W17-MONSTER-ABILITY-001`).
+The fallback never shadows a real `KEY:` match for a different owner
+(`find_owner_row` collects `KEY:`-tagged hits first and returns them
+immediately if any exist). An ability row that resolves to no monster row in
+its own book by either path is an ORPHAN -- a template-namespaced row no
+monster applies -- and is excluded, because there is no racial HD to apply
+the printed rule to. That exclusion is reported, never silently dropped.
 
 RUN
 ---
@@ -243,14 +251,29 @@ def formula_dc_slot(prose, args):
 
 
 def find_owner_row(book_dir, owner_key, cache):
-    """The `(path, line_no, fields)` of the monster row whose `KEY:` is `owner_key`.
+    """The `(path, line_no, fields)` of the monster row naming `owner_key`.
 
     Searched in the ability file's OWN book directory (and its `support/`
     subdirectory, which Inner Sea Gods uses) -- never book-wide, because an
     ability owned by a monster in a different book is not the linked shape this
     seam credits.
+
+    Primarily matches on an explicit `KEY:<owner_key>` token, PCGen's normal
+    way of naming a row. When NO row in the book directory carries that
+    `KEY:` token at all, falls back to a row whose bare LEADING field equals
+    `owner_key` and which itself carries no `KEY:` token of its own -- PCGen
+    lets the leading field stand in for the name when a row states no `KEY:`
+    (`OPEN-ISSUES.md` row 295: `Fungus Queen`/`Aluum`/`Spine Dragon`, none of
+    which any row anywhere states `KEY:` for). The fallback can therefore
+    never shadow or out-rank a real `KEY:` match for a DIFFERENT owner --
+    `KEY:`-tagged rows are collected first and returned immediately if any
+    exist, before the fallback rows are even considered credited -- so every
+    owner that already resolves via `KEY:` today (the 92 flat-shape + 23
+    disagreement + 6 formula-shape units already gated on this function's
+    prior behavior) sees byte-identical results.
     """
-    hits = []
+    key_hits = []
+    fallback_hits = []
     for dirpath, _dirs, files in os.walk(book_dir):
         for name in sorted(files):
             if not name.endswith(".lst"):
@@ -259,15 +282,21 @@ def find_owner_row(book_dir, owner_key, cache):
             for i, line in enumerate(read_lines(path, cache), start=1):
                 if not line.strip() or line.lstrip().startswith("#"):
                     continue
-                if ("KEY:" + owner_key) not in line:
-                    continue
                 fields = fields_of(line)
-                if token(fields, "KEY") != owner_key:
+                if not fields:
                     continue
-                if token(fields, "MONSTERCLASS") is None:
-                    continue
-                hits.append((path, i, fields))
-    return hits
+                key = token(fields, "KEY")
+                if key == owner_key:
+                    if token(fields, "MONSTERCLASS") is None:
+                        continue
+                    key_hits.append((path, i, fields))
+                elif key is None and fields[0] == owner_key:
+                    if token(fields, "MONSTERCLASS") is None:
+                        continue
+                    fallback_hits.append((path, i, fields))
+    if key_hits:
+        return key_hits
+    return fallback_hits
 
 
 def main():
