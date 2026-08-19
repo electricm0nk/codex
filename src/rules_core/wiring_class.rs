@@ -864,11 +864,82 @@ pub fn closure_signals_with_rules(rows: &[Option<&str>], rules: &SignalRules) ->
     if out.is_empty() { no_corpus_line_signals() } else { out }
 }
 
+/// The widest span of text an editorial marker is allowed to occupy, in
+/// bytes. The longest form the pinned oracle actually ships is
+/// `[Proficiency becoming Weapon Focus at later time not implemented]` (64
+/// bytes); the cap exists so an UNCLOSED bracket cannot let the scan run on
+/// and pair a `not` in one sentence with an `implement` three sentences
+/// later.
+const EDITORIAL_MARKER_MAX_SPAN: usize = 96;
+
+/// Whether `text` carries an editorial "not implemented" admission in any
+/// of the bracketed or parenthesised forms upstream PCGen actually ships.
+///
+/// **Why this is a scan and not a string constant.**
+/// [`UPSTREAM_NOT_IMPLEMENTED`] is an exact, case-sensitive `"[Not
+/// Implemented]"`. Re-derived against the pinned oracle
+/// (`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`) with
+/// `grep -rhoiE '\[[^]]*not [a-z ]*implement[a-z]*[^]]*\]'
+/// "$PCGEN_CORPUS_ROOT/pathfinder" --include=*.lst | sort | uniq -c`, the
+/// corpus carries ~396 marker occurrences in 20 distinct spellings, of
+/// which that constant matches 152 — **38 %**. The single most common
+/// spelling, `[NOT IMPLEMENTED]` (154), is missed entirely. Two consumers
+/// were reading the corpus through that constant-shaped hole, so the same
+/// editorial admission was honoured or ignored purely on letter case.
+///
+/// **The rule.** An opening `[` or `(`, then — within
+/// [`EDITORIAL_MARKER_MAX_SPAN`] bytes and before any closing `]`, `)` or
+/// `}` (the corpus ships one mismatched `[NOT IMPLEMENTED}`) — the
+/// standalone word `not` and, after it, a word beginning `implement`.
+/// Case-insensitive. Requiring a bracket keeps ordinary rule prose out
+/// ("you do not gain this bonus ... this feat is implemented" never
+/// matches); requiring the words in that order inside ONE group keeps a
+/// bracketed aside that merely contains one of them out.
+///
+/// Still reporting-only where [`carries_upstream_not_implemented_marker`]
+/// uses it — it MUST NEVER gate a `wiring_class` determination in either
+/// direction. `v06_work_inventory`'s served-description check is a
+/// different question (what a player is shown), and uses it there.
+pub fn carries_editorial_not_implemented_marker(text: &str) -> bool {
+    let bytes = text.as_bytes();
+    for (i, b) in bytes.iter().enumerate() {
+        if *b != b'[' && *b != b'(' {
+            continue;
+        }
+        let start = i + 1;
+        let hard_end = (start + EDITORIAL_MARKER_MAX_SPAN).min(bytes.len());
+        // Truncate at the first closer, so a bracketed aside can never
+        // reach past its own end into the next sentence.
+        let end = bytes[start..hard_end]
+            .iter()
+            .position(|c| matches!(c, b']' | b')' | b'}'))
+            .map_or(hard_end, |off| start + off);
+        if end <= start {
+            continue;
+        }
+        // Byte slicing is safe here only on a char boundary; a marker is
+        // ASCII, so anything that is not is not a marker.
+        let Some(group) = text.get(start..end) else { continue };
+        let lower = group.to_ascii_lowercase();
+        let mut saw_not = false;
+        for word in lower.split(|c: char| !c.is_ascii_alphanumeric()) {
+            if word == "not" {
+                saw_not = true;
+            } else if saw_not && word.starts_with("implement") {
+                return true;
+            }
+        }
+    }
+    false
+}
+
 /// Whether any row in a unit's token closure carries upstream PCGen's own
-/// `[Not Implemented]` admission. Reporting-only: this MUST NEVER be used
-/// to gate or suppress a `wiring_class` determination in either direction.
+/// not-implemented admission, in any spelling
+/// ([`carries_editorial_not_implemented_marker`]). Reporting-only: this
+/// MUST NEVER be used to gate or suppress a `wiring_class` determination in
+/// either direction.
 pub fn carries_upstream_not_implemented_marker(rows: &[Option<&str>]) -> bool {
-    rows.iter().any(|r| r.is_some_and(|line| line.contains(UPSTREAM_NOT_IMPLEMENTED)))
+    rows.iter().any(|r| r.is_some_and(carries_editorial_not_implemented_marker))
 }
 
 /// [`determine`], over a unit's token closure rather than a single row.
@@ -1911,6 +1982,85 @@ mod tests {
         assert!(carries_upstream_not_implemented_marker(&rows));
         let (class, _, _) = determine_closure(&rows);
         assert_eq!(class, WiringClass::Derived);
+    }
+
+    /// `SD31-E2-F3-002`: the marker detector must be case- and
+    /// form-tolerant. Every string below is a VERBATIM form the pinned
+    /// PCGen oracle actually ships (re-derived at
+    /// `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`:
+    /// `grep -rhoiE '\[[^]]*not [a-z ]*implement[a-z]*[^]]*\]'
+    /// $PCGEN_CORPUS_ROOT/pathfinder --include=*.lst | sort | uniq -c`
+    /// -> 154 `[NOT IMPLEMENTED]`, 152 `[Not Implemented]`, 37
+    /// `[not implemented]`, 20 `[Not implemented]`, plus 29 descriptive
+    /// variants). The pre-existing exact-match constant
+    /// `UPSTREAM_NOT_IMPLEMENTED` matched only the 152, i.e. 38 % of them.
+    #[test]
+    fn editorial_not_implemented_marker_is_detected_in_every_shipped_form() {
+        for form in [
+            "[NOT IMPLEMENTED]",
+            "[Not Implemented]",
+            "[not implemented]",
+            "[Not implemented]",
+            "[Not implemented.]",
+            "[NOT FULLY IMPLEMENTED]",
+            "[Not fully Implemented]",
+            "(NOT IMPLEMENTED)",
+            "[RESTRICTION NOT YET IMPLEMENTED]",
+            "[Poison DC NOT IMPLEMENTED]",
+            "[SKILL RANK CHANGES NOT IMPLEMENTED]",
+            "[Variable Familiar Bonus alteration NOT IMPLEMENTED]",
+            "[ML bonus not implemented.]",
+            "[Proficiency becoming Weapon Focus at later time not implemented]",
+            "[not implemented as temp bonus]",
+            "[Not implemented - requires Formula parser]",
+            // The one mismatched-brace form the corpus ships, which the
+            // pre-existing `contains("[NOT IMPLEMENTED")` prefix arm was
+            // the only thing catching.
+            "[NOT IMPLEMENTED}",
+        ] {
+            assert!(
+                carries_editorial_not_implemented_marker(form),
+                "bare marker not detected: {form:?}"
+            );
+            assert!(
+                carries_editorial_not_implemented_marker(&format!(
+                    "You have mastered ancient techniques. {form} You're proficient with all \
+                     of your race's racial weapons."
+                )),
+                "embedded marker not detected: {form:?}"
+            );
+        }
+    }
+
+    /// The detector must not fire on ordinary rule prose. Each negative is
+    /// a real shape this corpus contains: a bracketed editorial aside that
+    /// is NOT a not-implemented admission, an unbracketed sentence that
+    /// merely uses both words, and a bracketed aside whose closer arrives
+    /// before the second word.
+    #[test]
+    fn editorial_not_implemented_marker_does_not_fire_on_ordinary_prose() {
+        for clean in [
+            "DESC:one undead creature touched [see text]",
+            "[Normal] You cannot use this ability while the effect is implemented elsewhere.",
+            "BENEFIT:This feat is implemented in full and grants a +2 bonus.",
+            "You do not gain this bonus if the opponent is helpless.",
+            "[Implemented] fully",
+            "[Not] implemented",
+        ] {
+            assert!(
+                !carries_editorial_not_implemented_marker(clean),
+                "false positive on: {clean:?}"
+            );
+        }
+    }
+
+    /// The closure-level reporting helper must see every form too --
+    /// before this change it delegated to a single case-sensitive
+    /// `contains(UPSTREAM_NOT_IMPLEMENTED)`.
+    #[test]
+    fn closure_marker_report_sees_the_uppercase_form_too() {
+        let rows = [Some("Ability Focus\tTYPE:General\tDESC:[NOT IMPLEMENTED] real text follows")];
+        assert!(carries_upstream_not_implemented_marker(&rows));
     }
 
     #[test]

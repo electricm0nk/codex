@@ -12133,11 +12133,11 @@
     {
       "kind": "feat",
       "label": "Feats",
-      "done": 129,
+      "done": 128,
       "partial": 1,
-      "not_started": 90,
+      "not_started": 91,
       "denominator": 220,
-      "pct": 58.6,
+      "pct": 58.2,
       "excluded_from_percentage": 2,
       "standing_breakdown": {
         "origin": 220,
@@ -12782,7 +12782,7 @@
         },
         {
           "name": "Improved Psi-Like Ability",
-          "doneness": "done",
+          "doneness": "not-started",
           "type_facet": "Psionic.Racial",
           "standing": "origin"
         },

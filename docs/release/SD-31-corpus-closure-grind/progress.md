@@ -26294,3 +26294,347 @@ register, three `LICENSE.json` artifacts and the stub registry is a different ca
 files this one does not own. **Recorded as a blocker on `tranche/11` itself (`OPEN-ISSUES.md` row
 239), not excused as a background condition** — `AGENTS.md`: "a verification stage red for more than
 one run is a blocker."
+## Cycle `SD31-E2-F3-002-marker` (`RETRO_ACTOR=sd31-e2-verdict-paths`) — 2026-08-18, `epic-2-verdict-paths` F3: the `ambiguous` dead end proved structural; the not-implemented marker detector's case hole closed (**−16 `done`**)
+
+**Branch state (cycle mechanics step 0−, SD-30 `loop-instruction.md`).** The dispatch worktree
+`/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_1ad13e3b-085-5` was cut from the **site
+deploy branch**, not `tranche/11`: `git log --oneline -1` → `37a80141e Merge pull request #371 from
+electricm0nk/site-publish/20260818-070155`, and `ls docs/release/SD-31-corpus-closure-grind/` →
+*"No such file or directory"* — **none of this cycle's required reads existed in its own checkout.**
+Recovered on a verified-clean tree exactly as step 0− prescribes (`git status --porcelain` → empty,
+then `git reset --hard tranche/11`), landing on `12f1f5c94`. Recorded here because step 0−'s own note
+says the event log under-counts this defect 3× precisely when cycles recover silently. **This is the
+same defect the predecessor bundle hit six times, recurring on a NEW base branch (the site deploy
+branch rather than `origin/main`), which means whatever fix was applied there did not generalise.**
+
+**Oracle pin (loop-instruction override 8).** `./scripts/verify.sh --only preflight-oracle` → `PASS
+(oracle at pin 7f818006e371188e5717fd18d74d18a420747fc6)`. Every corpus figure below is re-derived
+against that commit.
+
+**Disk budget.** `df -B1G /` → `968 total / 281 used / 688 avail / 29%`; `nproc` → 24; `free -g` →
+167 total / 154 available. `./scripts/verify.sh --only preflight-disk` → `PASS (29% used, 687G
+available)`. One full-gate agent (this one), own
+`CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-e2-verdict`.
+
+**PI-gate citation.** Not applicable — this cycle claims no book. It touches no `data/corpus/**`
+record and writes no ingest path; its production edits are two classifier/verdict files.
+
+---
+
+### 1. What the card actually still needed, re-derived rather than inherited
+
+The dispatch brief named `OPEN-ISSUES.md` row 3 (the 105 canned `token_evidence` labels) as this
+card's open `BLOCKER`. **It is not open.** Row 3's own resolution column reads *"Fully resolved"* —
+`SD31-E2-F1-002-relabel` re-labelled all 105 on 2026-08-15 and built
+`scripts/ground_truth_evidence_guard.py` to prove it. The brief was stale by twelve waves. Re-derived
+against `kanban.md`'s own row, what `epic-2-verdict-paths` still needs is **F3 alone**: the
+`ambiguous` dead end closed to `done` or registered.
+
+`decisions.md §3` / `AT-31-100`'s register path is **not available**: `OPEN-ISSUES.md`'s own
+quick-reference index states *"No Structural Exclusion Register entry has ever been GRANTED; it
+remains EMPTY"*, and row 36 (`SD31-E2-F3-001`'s own proposal for exactly this population) is answered.
+So F3 can only close by the population genuinely reaching `done`.
+
+### 2. The `ambiguous` dead end is structural, not a classifier bug — proved, not asserted
+
+`python3 scripts/reachability_audit.py` (at `12f1f5c94`, before any edit):
+
+```
+REACHABLE CEILING: 98.95%  (38115 / 38521)
+dead-end cells: 9
+  [no-done-path] ambiguous|grounded             units=34
+  [no-done-path] ambiguous|ingested-magnitude   units=49
+  [no-done-path] ambiguous|text-complete        units=86
+  [no-done-path] ambiguous|not-ingested         units=213
+  [no-done-path] ambiguous|not-started          units=15
+  [no-done-path] ambiguous|unknown              units=9
+  [no-done-path] ambiguous|deferred-with-reason units=0
+  [no-done-path] ambiguous|literal-verified     units=0
+  [no-done-path] ambiguous|fixture-verified     units=0
+  ambiguous_wiring_class_units: 406
+```
+
+**Only 169 of the 406 have an evidence-bearing status at all** (86 `text-complete` + 49
+`ingested-magnitude` + 34 `grounded`); the other 237 are `not-ingested`/`not-started`/`unknown` and
+need ingest, not a verdict path. That is this card's true headroom — **169 units, 0.44 % of the
+38,521-unit board — not the 5,533 the dispatch brief estimated.** The brief's figure adds the 5,127
+`unmeasurable` units, none of which are `ambiguous`: they are all `status == "unknown"`, and
+`_doneness_verdict_uncapped` returns `unmeasurable` for `unknown` **before** the `ambiguous` branch
+is reached, so no verdict-path change can touch them. Re-derived:
+
+```
+python3 -c "
+import json, collections, sys
+sys.path.insert(0,'scripts/observer'); from pf1e_dashboard_producer import doneness_verdict
+u=[x for x in json.load(open('docs/work-inventory.json'))['units'] if x.get('book')!='beginner_box']
+unm=[x for x in u if doneness_verdict(x['wiring_class'],x['status'],x['kind'])=='unmeasurable']
+print(len(unm), collections.Counter(x['status'] for x in unm))
+print(collections.Counter(x['evidence'] for x in unm).most_common())
+"
+# 5127 Counter({'unknown': 5127})
+# [('class_feature_group_names_no_class_at_all', 3893),
+#  ('text_only_but_corpus_record_carries_no_description_to_show_a_player', 677),
+#  ('in_catalog_with_corpus_magnitude_but_no_observed_consumer', 516),
+#  ('spell_list_entry_with_no_corpus_level_and_no_description', 26),
+#  ('feat_served_description_is_a_placeholder_marker_not_prose', 15)]
+```
+
+**Why no verdict-path change can honestly close the cell.** `doneness_verdict`'s `ambiguous` branch
+is governed by a lower-bound rule (its own comment: *"never MORE FAVORABLE than … the SAME status"*
+under the least favourable class the unit could turn out to be). Computed exactly — every concrete
+class's verdict for every evidence status, and the minimum over the candidate sets an `ambiguous`
+unit's signal set actually leaves open:
+
+```
+status                 display        static         derived       computed     | ambiguous(today) | lb{display,derived} | lb{static,derived}
+grounded                held           held           held           done       |       held       |        held        |        held
+text-complete           done           held           held        in-progress   |       held       |        held        |        held
+ingested-magnitude   in-progress       held           held        in-progress   |       held       |        held        |        held
+literal-verified     in-progress       done           done        in-progress   |       held       |    in-progress     |        done
+fixture-verified     in-progress       done           done        in-progress   |       held       |    in-progress     |        done
+```
+
+The two candidate sets are exhaustive and are read off the signal set, not guessed —
+`closure_signals` emits `display:no_magnitude_token` when NO row in the token closure carries a
+magnitude token and `static:literal_magnitudes_only` when one does but no `computed:`/`derived:`
+signal fires, and `classify` reaches `ambiguous` only when neither `computed:` nor `derived:` is
+present. Re-derived over the live population:
+
+```
+python3 -c "
+import json, collections
+a=[x for x in json.load(open('docs/work-inventory.json'))['units']
+   if x.get('book')!='beginner_box' and x['wiring_class']=='ambiguous']
+print(collections.Counter(tuple(sorted(x['wiring_class_signals'])) for x in a))
+"
+# 200 ('ambiguous:prose_scaling_phrase',  'display:no_magnitude_token')
+# 104 ('ambiguous:prose_ability_scaling', 'display:no_magnitude_token')
+#  93 ('ambiguous:prose_scaling_phrase',  'static:literal_magnitudes_only')
+#   9 ('ambiguous:prose_ability_scaling', 'static:literal_magnitudes_only')
+```
+
+**Reading:** for the 304 `{display, derived}` units the two candidate rows differ, so the lower bound
+is `held` at every status — correct, and unreachable. For the 102 `{static, derived}` units the two
+candidates **share one row** in `doneness_verdict`, so the ambiguity is immaterial to the verdict and
+`literal-verified`/`fixture-verified` reaches `done`.
+
+### 3. An 80-unit `done` credit this cycle MEASURED and REFUSED
+
+That second reading is not hypothetical. `corpus_literal_sweep --json-out` at this tip ran **CLEAN**
+(`records_examined: 25688`, `verified: 25628`, exit 0), and joining its verified
+`(book|source_book, source_file, source_line)` triples against the `{static, derived}` ambiguous
+population finds **80 units already byte-verified clean and carrying a status the stamp supersedes**
+(47 `ingested-magnitude`, 32 `grounded`, 1 `text-complete`; 57 `spell` + 23 `equipment`; 52 of them
+`core_rulebook`). None shares its `(book, file, line)` coordinate with another unit, so no unit would
+be credited on a sibling's verification. Adding one `WiringClass::Ambiguous` arm to
+`apply_done_rung_stamps` — gated on `static:literal_magnitudes_only` being present — would move all
+80 from `held` to `done`, satisfy `AT-31-010`'s literal wording, and be defensible on the lower-bound
+rule alone.
+
+**This cycle refused to take it, and the refusal is the finding.** Reading the records one deep is
+what settles it: `advanced_class_guide:spell:repair_undead`'s whole magnitude content is
+`DESC:…heals 1d8 points of damage + 1 point per caster level (maximum +5)`, and
+`advanced_class_guide:spell:silver_darts`'s is `…1d6 points of piercing damage per caster level
+(maximum 10d6)`. Those are real per-caster-level formulas that **nothing in this engine evaluates**.
+The stamp that would credit them is `literal-verified` — `static`'s bar, a byte-equality check on the
+shipped record — and the only reason it clears `derived`'s rung is a table cell
+(`static|derived + literal-verified → done`) that is **inert today**, because
+`apply_done_rung_stamps` stamps `literal-verified` on the `Static` arm alone. Activating that inert
+cell for 80 units whose prose states a formula no evaluator has ever run is crediting `done` for
+having ingested the bytes correctly, which is precisely `decisions.md` Decision 1(a)'s first
+forbidden item. **80 units of available, arguable credit, declined.** Logged as `OPEN-ISSUES.md`
+row 236 (`RULING-NEEDED`) with the exact command, because the operator may reasonably disagree — and
+because `AT-31-010`'s literal wording ("`ambiguous` reaching `done` from at least one status") is,
+on this evidence, **unsatisfiable without either that credit or an SER entry**, a genuine
+contradiction between `AT-31-010` and Decision 1(e) item 4 that only the operator can settle
+(`OPEN-ISSUES.md` row 237).
+
+### 4. What this cycle DID fix: the not-implemented marker detector matched 38 % of its own target
+
+While reading the `ambiguous` feats one record deep, `ultimate_intrigue:feat:ironclad_logic` turned
+up carrying `BENEFIT:[NOT FULLY IMPLEMENTED] You gain a +4 bonus on Diplomacy checks…` — upstream
+PCGen's own editorial admission that the rule is not mechanised — while sitting at `text-complete`.
+Re-derived against the pinned oracle:
+
+```
+grep -rhoiE '\[[^]]*not [a-z ]*implement[a-z]*[^]]*\]' \
+  "$PCGEN_CORPUS_ROOT/pathfinder" --include=*.lst | sort | uniq -c | sort -rn
+#  154 [NOT IMPLEMENTED]        152 [Not Implemented]         37 [not implemented]
+#   20 [Not implemented]          9 [Proficiency becoming Weapon Focus at later time not implemented]
+#    3 [This last NOT IMPLEMENTED]   3 [RESTRICTION NOT YET IMPLEMENTED]   … 20 spellings, ~396 total
+```
+
+`rules_core::wiring_class::UPSTREAM_NOT_IMPLEMENTED` is the exact, case-sensitive string
+`"[Not Implemented]"` — it matches **152 of ~396, 38 %**, and misses the single most common spelling
+outright. Two consumers read the corpus through that hole:
+
+* `carries_upstream_not_implemented_marker` (reporting-only; no production caller today), and
+* `v06_work_inventory`'s `feat_desc_leaks_pi_or_upstream_marker`, whose marker arms were
+  `desc.trim().eq_ignore_ascii_case("[NOT IMPLEMENTED]") || desc.contains("[NOT IMPLEMENTED")` —
+  literal uppercase for the embedded case. **This is a status gate**: it routes a feat to `unknown`
+  (`unmeasurable`), never `done`.
+
+So the SAME upstream admission, in the SAME embedded position, produced OPPOSITE verdicts on letter
+case alone. `monster_codex:feat:vampiric_companion`'s `"… [NOT IMPLEMENTED} …"` was demoted to
+`unmeasurable`; `ultimate_campaign`'s 21 story feats, whose served value opens `"[Not Implemented] "`,
+were counted `done`/`held`. The demoting direction is the one this file had already committed to —
+its own pre-existing test `a_feat_served_pcgens_not_implemented_marker_does_not_read_text_complete`
+uses an EMBEDDED marker with real prose either side and asserts demotion — so generalising it widens
+an accepted rule rather than inventing one, and it moves `done` **down**, the direction Decision 1(a)
+requires a judgement call to fall in.
+
+**TDD, in order.**
+
+1. RED — `editorial_not_implemented_marker_is_detected_in_every_shipped_form` (17 verbatim corpus
+   spellings, each asserted bare AND embedded in real prose) plus
+   `editorial_not_implemented_marker_does_not_fire_on_ordinary_prose` (6 negatives, incl.
+   `"[see text]"`, `"[Not] implemented"` and an unbracketed sentence using both words) and
+   `closure_marker_report_sees_the_uppercase_form_too`. Failed to compile —
+   `cannot find function 'carries_editorial_not_implemented_marker' in this scope`.
+2. GREEN — `carries_editorial_not_implemented_marker` in `src/rules_core/wiring_class.rs`: an
+   opening `[`/`(`, then within `EDITORIAL_MARKER_MAX_SPAN` (96 bytes) and before any `]`/`)`/`}`
+   closer, the standalone word `not` followed by a word beginning `implement`, case-insensitive.
+   The bracket requirement keeps ordinary rule prose out; the closer-truncation stops an aside
+   reaching into the next sentence; `}` is in the closer set because the corpus ships one
+   mismatched `[NOT IMPLEMENTED}`. `cargo test --lib rules_core::wiring_class::` → **57 passed**.
+3. RED — two new tests in `v06_work_inventory`'s `prose_magnitude_status_tests`
+   (`…mixed_case_not_implemented_marker_is_demoted_like_the_uppercase_one` on UCA `Accursed`'s real
+   joined served value, `…parenthesised_not_implemented_marker_is_demoted_too` on ACG's
+   `(NOT IMPLEMENTED)` form). Both failed with `left: "text-complete", right: "unknown"`.
+4. GREEN — `feat_desc_leaks_pi_or_upstream_marker`'s three marker arms replaced by the one helper.
+   `cargo test --bin v06_work_inventory` → **251 passed**; `cargo test --lib` → **2028 passed, 3
+   ignored**.
+
+The branch's `reason` prose was corrected in the same edit: it claimed *"there is nothing real to
+show a player either way"*, which is **false** for an embedded marker with real rule text either side
+(`inner_sea_races:feat:ancestral_weapon_mastery` carries ~700 characters of real prose around one
+marker and was already being demoted on that false reason). The new text states the true ground — the
+served value carries upstream's own admission that the rule is not mechanised — without changing the
+`evidence` key, which the dashboard and prior receipts index on.
+
+### 5. Movement, measured by replaying `doneness_verdict()`, reported in both directions
+
+Guarded regen (`CORPUS_LITERAL_SWEEP_REPORT` + `DERIVED_FIXTURE_CHECK_REPORT` both set from this
+cycle's own runs; the stamp-loss guard did **not** fire, so no `--allow-stamp-loss` was needed):
+
+```
+corpus_literal_sweep  --json-out …/sweep.json    -> CLEAN, exit 0, 25688 examined / 25628 verified
+derived_evaluator_fixture_check --json-out …     -> 1275 of 1276 covered units cleared; 1 failed
+                                                    (advanced_players_guide:equipment:spindle_of_perfect_knowledge,
+                                                     pre-existing, untouched by this cycle)
+cargo run --locked --bin v06_work_inventory      -> wrote docs/work-inventory.json
+```
+
+Then every unit's verdict replayed through the producer's own `doneness_verdict()` (never asserted):
+
+| verdict | before | after | delta |
+|---|---:|---:|---:|
+| `done` | 11,829 | **11,813** | **−16** |
+| `held` | 1,886 | 1,879 | −7 |
+| `unmeasurable` | 5,127 | 5,150 | **+23** |
+| `in-progress` | 1,405 | 1,405 | 0 |
+| `not-started` | 18,236 | 18,236 | 0 |
+| `deferred` | 38 | 38 | 0 |
+
+**Exactly 23 units moved, every one of them downward, every one of them `kind=feat`**, and **no other
+unit in the 38,521-unit board changed `wiring_class`, `status` or verdict** — 0 ids added, 0 removed.
+That the rest of the corpus reproduced identically is itself the regression check: the change is
+surgical, and the committed inventory was reproducible at this tip.
+
+The 23, named in full (`ultimate_campaign` 21, `ultimate_intrigue` 1, `ultimate_psionics` 1):
+
+```
+done -> unmeasurable (16): uca battlefield_healer, champion, damned, deny_the_reaper,
+  eldritch_researcher, feral_heart, foeslayer, forgotten_past, glimpse_beyond, innocent_blood,
+  lost_legacy, stronghold, true_love, unforgotten, vengeance;  ultimate_psionics improved_psi_like_ability
+held -> unmeasurable  (7): uca accursed, arisen, liberator, shamed, thief_of_legend, town_tamer;
+  ultimate_intrigue ironclad_logic
+```
+
+**The honest counter-argument, stated rather than hidden.** `ultimate_campaign::feat_tables`'s own
+module doc argues its 21 story feats are text-complete *because* the served value joins the
+`[Not Implemented]` `DESC:` flavour line to the real `.MOD BENEFIT:` mechanical text — *"an ingest
+that surfaced only the `[Not Implemented]` `DESC:` would be shipping a stub"*. The mechanical text is
+genuinely there. This cycle demoted them anyway, on the ground that the string a player actually
+reads **opens with PCGen's own admission that the rule is not mechanised**, and a description that
+leads with `[Not Implemented]` is not one this package can call complete. The alternative repair —
+stripping the marker before serving — was considered and **rejected**: it would silently present as
+finished a rule the upstream data says is not implemented, which is the stub shape
+`docs/governance/no-stub-mvp-doctrine.md` forbids, and it would move `done` up on a rule invented
+this cycle. Logged as `OPEN-ISSUES.md` row 238 (`RULING-NEEDED`) so the operator can reverse it
+knowingly. Separately, **the marker reaching the player's screen at all is a live product defect** —
+21 UCA feats, 3 ACG archetype grants and 37 other shipped table strings currently render an internal
+editorial marker in the app — logged as row 239.
+
+### 6. Card status
+
+`epic-2-verdict-paths` stays **READY, not COMPLETE.** F3 is not closed: the `ambiguous` dead end is
+intact (`ambiguous` still 406 units, 9 dead-end cells, reachable ceiling 98.95 %) and this cycle
+demonstrated that closing it requires an operator ruling, not more engineering. `epic-3-measurement`
+F4 and `epic-5-chassis-sweep` F3 therefore remain gated (`kanban.md` gate 2). Saying otherwise would
+be the fake-completion `AGENTS.md` rule 2 forbids.
+
+### 7. Files, and what else was regenerated
+
+`src/rules_core/wiring_class.rs`, `src/bin/v06_work_inventory.rs` (production);
+`docs/work-inventory.json` (guarded regen). Because `docs/work-inventory.json` moved,
+loop-instruction override 10 binds: `./scripts/publish-site-dashboard.sh` (real publish, no flags)
+regenerated `site/dashboard/PF1e-dashboard.json`, `site/dashboard/units/PF1e-units-feat.json`,
+`site/dashboard/units/index.json`, `site/status-data.json` and the three affected
+`site/status-data/*.json` books. The public feed moved by exactly this cycle's delta
+(`"done": 10423 → 10407`); `SITE-PUBSTATUS-002`'s known `object_id` collision hazard did **not**
+fire — no book's `standing` distribution changed.
+
+### 8. Full gate — RED at the inherited tip, and PROVEN red before this cycle touched it
+
+Launched early per cycle-mechanics 4a. Logs are committed under
+`artifacts/SD31-E2-F3-002-marker/`.
+
+**Every stage ran; three failed, and none of the three is attributable to this cycle.**
+
+| stage | result |
+|---|---|
+| all 29 preflight / selftest / site / PI / audit / sweep / `root-lib` stages | **PASS** (incl. `site-dashboard-check`, `site-public-status-check`, both site PI gates, `reachability-audit` 98.95 %, `corpus-sweep` CLEAN, `root-lib` 2,028) |
+| `root-full` | **FAIL** — 8 tests, `cargo exit 101`, 7,013 passed across 566 suites |
+| `desktop` | **FAIL** — 6 tests (`reach_gate` ×5, `companion_catalog::every_served_key_matches_a_corpus_record_file`) |
+| `frontend-test` | **FAIL** — 1 file (`raceCreationCoverage.test.ts`) |
+| `clippy` | **PASS** (root 51 / desktop 7 warnings, 0 errors) |
+| `class-dump` | **PASS** (31/31 computing) |
+
+**The gate wrapper was killed by the harness during the `clippy` stage**, so no `VERIFY_EXIT` was
+ever written for the main run — recorded plainly rather than inferred (cycle mechanics 4b: *"If no
+exit code was obtained, say so; do not infer one"*). `clippy` and `class-dump`, the only two stages
+the kill cost, were re-run to completion on their own (`./scripts/verify.sh --only clippy --only
+class-dump` → `RESULT: PASS`, `VERIFY_TAIL_EXIT=0`,
+`artifacts/SD31-E2-F3-002-marker/verify-clippy-classdump.log`). This is the standing
+"interrupt can silently kill background workflows" hazard, hitting a lane agent's own background
+gate rather than a Workflow task.
+
+**Pre-existing-red PROVED by experiment, not argued.** Every failure names `data/corpus/**`,
+`data/stubs/**`, a `LICENSE.json` count or the retired `core_essentials` book — the fallout of
+`d8175d817` ("site: stop publishing Core Essentials as a sourcebook"), which moved 166 corpus
+records between book directories and left every pinned count behind. `git diff --name-only
+12f1f5c94..HEAD` shows this cycle changed **no file under `data/`, `apps/`, or
+`src/rules_core/rules_tables/`**. That is an argument, so the experiment was run as well: the three
+files this cycle touched (`wiring_class.rs`, `v06_work_inventory.rs`, `docs/work-inventory.json`)
+were checked out at `12f1f5c94`, `cargo test --locked --no-fail-fast` re-run, and the files
+restored (`git diff HEAD` on all three then empty).
+
+```
+BASELINE (this cycle's source reverted to 12f1f5c94)   ->  8 failures, exit 101, 560 green suites, 6,950 passed
+WITH THIS CYCLE'S CHANGE (the full gate above)         ->  8 failures, exit 101, 560 green suites, 6,955 passed
+```
+
+**The failing sets are identical, test for test**, and the passed count differs by exactly `+5` —
+this cycle's five new tests. Baseline failure list committed at
+`artifacts/SD31-E2-F3-002-marker/baseline-root-full-at-12f1f5c94.txt`.
+
+`desktop`'s and `frontend-test`'s failures need no experiment: `git diff --name-only
+12f1f5c94..HEAD -- apps/ data/` is **empty**, so both stages' code and inputs are byte-identical to
+the inherited tip and their results cannot have moved.
+
+**Consequence for the wave.** `tranche/11`'s tip was RED before wave 14 started, so no wave-14 lane
+can produce a green gate until the Core Essentials repair lands (the `sd31-ce-companion` lane is on
+it this wave). This cycle's branch should be merged on the evidence above — identical failure set,
+`+5` tests, `clippy`/`class-dump` green — not on a green full gate, which is not obtainable at this
+tip.

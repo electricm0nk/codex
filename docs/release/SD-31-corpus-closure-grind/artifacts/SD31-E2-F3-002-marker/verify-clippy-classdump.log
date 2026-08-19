@@ -1,0 +1,16 @@
+codex verify — mode: --only, jobs: 2
+repo:  /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_1ad13e3b-085-5
+logs:  /tmp/codex-verify-rlQtWt
+---------------------------------------------------------------
+==> clippy — cargo clippy --locked --tests -j 2  (BOTH crates)
+    PASS  clippy  (root:51 desktop:7 warnings, 0 errors)
+---------------------------------------------------------------
+==> class-dump — cargo run --locked --bin v06_class_state_dump  (repo root)
+    PASS  class-dump  (31/31 computing)
+---------------------------------------------------------------
+SUMMARY
+  passed:  2  clippy class-dump
+
+RESULT: PASS
+logs in /tmp/codex-verify-rlQtWt
+VERIFY_TAIL_EXIT=0
