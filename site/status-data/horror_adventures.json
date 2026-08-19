@@ -4415,11 +4415,11 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 1,
-      "partial": 2,
+      "done": 3,
+      "partial": 0,
       "not_started": 47,
       "denominator": 50,
-      "pct": 2.0,
+      "pct": 6.0,
       "excluded_from_percentage": 21,
       "standing_breakdown": {
         "origin": 50,
@@ -4428,7 +4428,7 @@
       "items": [
         {
           "name": "Acid Spit",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.HiveWarrior",
           "standing": "origin",
           "display_name": "Acid Spit"
@@ -4659,7 +4659,7 @@
         },
         {
           "name": "Infest",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.HiveLarvaSwarm",
           "standing": "origin",
           "display_name": "Infest"
