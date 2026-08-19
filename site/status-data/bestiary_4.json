@@ -619,15 +619,15 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 351,
+      "done": 353,
       "partial": 55,
-      "not_started": 165,
-      "denominator": 571,
-      "pct": 61.5,
-      "excluded_from_percentage": 200,
+      "not_started": 167,
+      "denominator": 575,
+      "pct": 61.4,
+      "excluded_from_percentage": 196,
       "standing_breakdown": {
-        "origin": 571,
-        "unclassified": 200
+        "origin": 575,
+        "unclassified": 196
       },
       "items": [
         {
@@ -1528,13 +1528,13 @@
           "name": "Darkvision",
           "doneness": "not-started",
           "type_facet": "Universal Monster Rule.SpecialQuality.Extraordinary.Sense.Vision",
-          "standing": "unclassified"
+          "standing": "origin"
         },
         {
           "name": "Darkvision",
           "doneness": "not-started",
           "type_facet": "Universal Monster Rule.SpecialQuality.Supernatural.Sense.Vision",
-          "standing": "unclassified"
+          "standing": "origin"
         },
         {
           "name": "Dazing Gaze",
@@ -4906,13 +4906,13 @@
           "name": "Tremorsense",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "origin"
         },
         {
           "name": "Tremorsense",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "origin"
         },
         {
           "name": "Tricky Thief",
@@ -6599,13 +6599,13 @@
       "label": "Race Traits",
       "done": 7,
       "partial": 9,
-      "not_started": 101,
-      "denominator": 117,
-      "pct": 6.0,
-      "excluded_from_percentage": 71,
+      "not_started": 102,
+      "denominator": 118,
+      "pct": 5.9,
+      "excluded_from_percentage": 70,
       "standing_breakdown": {
-        "unclassified": 71,
-        "origin": 117
+        "unclassified": 70,
+        "origin": 118
       },
       "items": [
         {
@@ -6714,7 +6714,7 @@
           "name": "Capsize",
           "doneness": "not-started",
           "type_facet": "Oma Racial Trait.SpecialAttack.Extraordinary",
-          "standing": "unclassified"
+          "standing": "origin"
         },
         {
           "name": "Carrier",

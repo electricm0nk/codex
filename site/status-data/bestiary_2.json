@@ -181,14 +181,14 @@
       "kind": "monster_ability",
       "label": "Monster Abilities",
       "done": 232,
-      "partial": 61,
+      "partial": 62,
       "not_started": 63,
-      "denominator": 356,
-      "pct": 65.2,
-      "excluded_from_percentage": 242,
+      "denominator": 357,
+      "pct": 65.0,
+      "excluded_from_percentage": 241,
       "standing_breakdown": {
-        "unclassified": 242,
-        "origin": 356
+        "unclassified": 241,
+        "origin": 357
       },
       "items": [
         {
@@ -2865,7 +2865,7 @@
           "name": "See Invisibility",
           "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike.Sense",
-          "standing": "unclassified"
+          "standing": "origin"
         },
         {
           "name": "See in Darkness",
@@ -5695,15 +5695,15 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 3,
+      "done": 4,
       "partial": 5,
       "not_started": 210,
-      "denominator": 218,
-      "pct": 1.4,
-      "excluded_from_percentage": 98,
+      "denominator": 219,
+      "pct": 1.8,
+      "excluded_from_percentage": 97,
       "standing_breakdown": {
-        "unclassified": 98,
-        "origin": 218
+        "unclassified": 97,
+        "origin": 219
       },
       "items": [
         {
@@ -6808,7 +6808,7 @@
           "name": "Natural Climber",
           "doneness": "done",
           "type_facet": "RacialTraits.Grippli Racial Trait.Grippli Racial Default.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "origin"
         },
         {
           "name": "Natural Invisibility",

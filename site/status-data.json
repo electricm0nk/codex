@@ -1,36 +1,35 @@
 {
-  "generated_at": "2026-08-19T14:12:06Z",
+  "generated_at": "2026-08-19T16:36:23Z",
   "doneness_values": [
     "done",
     "partial",
     "not-started"
   ],
   "overall": {
-    "done": 11218,
-    "partial": 2180,
-    "not_started": 16092,
-    "denominator": 29490,
+    "done": 11228,
+    "partial": 2181,
+    "not_started": 16105,
+    "denominator": 29514,
     "pct": 38.0,
-    "excluded_from_percentage": 9031,
+    "excluded_from_percentage": 8891,
     "standing_breakdown": {
-      "origin": 29490,
-      "unclassified": 8903,
-      "packaging-artifact": 128
+      "origin": 29514,
+      "unclassified": 8891
     }
   },
   "books": [
     {
       "id": "core_rulebook",
       "title": "Core Rulebook",
-      "done": 2996,
+      "done": 3000,
       "partial": 651,
       "not_started": 842,
-      "denominator": 4489,
-      "pct": 66.7,
-      "excluded_from_percentage": 734,
+      "denominator": 4493,
+      "pct": 66.8,
+      "excluded_from_percentage": 730,
       "standing_breakdown": {
-        "origin": 4489,
-        "unclassified": 734
+        "origin": 4493,
+        "unclassified": 730
       }
     },
     {
@@ -52,13 +51,13 @@
       "title": "Ultimate Psionics",
       "done": 496,
       "partial": 136,
-      "not_started": 1632,
-      "denominator": 2264,
+      "not_started": 1633,
+      "denominator": 2265,
       "pct": 21.9,
-      "excluded_from_percentage": 231,
+      "excluded_from_percentage": 230,
       "standing_breakdown": {
-        "origin": 2264,
-        "unclassified": 231
+        "origin": 2265,
+        "unclassified": 230
       }
     },
     {
@@ -80,13 +79,13 @@
       "title": "Ultimate Wilderness",
       "done": 470,
       "partial": 57,
-      "not_started": 1089,
-      "denominator": 1616,
-      "pct": 29.1,
-      "excluded_from_percentage": 246,
+      "not_started": 1096,
+      "denominator": 1623,
+      "pct": 29.0,
+      "excluded_from_percentage": 251,
       "standing_breakdown": {
-        "origin": 1616,
-        "unclassified": 246
+        "origin": 1623,
+        "unclassified": 251
       }
     },
     {
@@ -162,29 +161,29 @@
     {
       "id": "bestiary",
       "title": "Bestiary",
-      "done": 522,
+      "done": 524,
       "partial": 160,
       "not_started": 452,
-      "denominator": 1134,
-      "pct": 46.0,
-      "excluded_from_percentage": 519,
+      "denominator": 1136,
+      "pct": 46.1,
+      "excluded_from_percentage": 517,
       "standing_breakdown": {
-        "origin": 1134,
-        "unclassified": 519
+        "origin": 1136,
+        "unclassified": 517
       }
     },
     {
       "id": "bestiary_4",
       "title": "Bestiary 4",
-      "done": 606,
+      "done": 608,
       "partial": 96,
-      "not_started": 325,
-      "denominator": 1027,
-      "pct": 59.0,
-      "excluded_from_percentage": 309,
+      "not_started": 328,
+      "denominator": 1032,
+      "pct": 58.9,
+      "excluded_from_percentage": 304,
       "standing_breakdown": {
-        "unclassified": 309,
-        "origin": 1027
+        "unclassified": 304,
+        "origin": 1032
       }
     },
     {
@@ -192,27 +191,27 @@
       "title": "Bestiary 3",
       "done": 323,
       "partial": 17,
-      "not_started": 604,
-      "denominator": 944,
+      "not_started": 605,
+      "denominator": 945,
       "pct": 34.2,
-      "excluded_from_percentage": 348,
+      "excluded_from_percentage": 347,
       "standing_breakdown": {
-        "origin": 944,
-        "unclassified": 348
+        "origin": 945,
+        "unclassified": 347
       }
     },
     {
       "id": "bestiary_2",
       "title": "Bestiary 2",
-      "done": 461,
-      "partial": 170,
+      "done": 462,
+      "partial": 171,
       "not_started": 286,
-      "denominator": 917,
+      "denominator": 919,
       "pct": 50.3,
-      "excluded_from_percentage": 343,
+      "excluded_from_percentage": 341,
       "standing_breakdown": {
-        "origin": 917,
-        "unclassified": 343
+        "origin": 919,
+        "unclassified": 341
       }
     },
     {
@@ -248,13 +247,13 @@
       "title": "Pathfinder Unchained",
       "done": 24,
       "partial": 25,
-      "not_started": 399,
-      "denominator": 448,
-      "pct": 5.4,
-      "excluded_from_percentage": 378,
+      "not_started": 400,
+      "denominator": 449,
+      "pct": 5.3,
+      "excluded_from_percentage": 377,
       "standing_breakdown": {
-        "origin": 448,
-        "unclassified": 378
+        "origin": 449,
+        "unclassified": 377
       }
     },
     {
@@ -344,15 +343,15 @@
     {
       "id": "inner_sea_world_guide",
       "title": "Inner Sea World Guide",
-      "done": 47,
+      "done": 48,
       "partial": 9,
       "not_started": 120,
-      "denominator": 176,
-      "pct": 26.7,
-      "excluded_from_percentage": 224,
+      "denominator": 177,
+      "pct": 27.1,
+      "excluded_from_percentage": 223,
       "standing_breakdown": {
-        "unclassified": 224,
-        "origin": 176
+        "unclassified": 223,
+        "origin": 177
       }
     },
     {
