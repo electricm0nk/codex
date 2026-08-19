@@ -79,6 +79,7 @@ IMPORTABLE = (
     "CompanionRecord",
     "NaturalAttack",
     "NaturalAttackDamageBonus",
+    "SkillAbilityDiffBonus",
     "Speed",
     "StatAdjustment",
 )
@@ -232,6 +233,40 @@ def parse_natural_attack_damage_bonuses(row: list[str]) -> list[tuple[str, str]]
         if not attack or not formula:
             continue
         out.append((attack, formula))
+    return out
+
+
+def parse_skill_ability_diff_bonuses(row: list[str]) -> list[tuple[list[str], str]]:
+    """`BONUS:SKILL|Climb,Swim|DEX-STR` -> [(["Climb", "Swim"], "DEX-STR")].
+
+    Only the ARITHMETIC shape is read -- a formula half containing a `-`
+    (an ability-score difference). A row's other `BONUS:SKILL` tokens state a
+    flat `TYPE=Racial` number (`BONUS:SKILL|Perception|4|TYPE=Racial`), a
+    different and already-static quantity this seam does not model; folding
+    the two together under one field would report one quantity under
+    another's name, exactly the discipline
+    `parse_natural_attack_damage_bonuses` states for `|DAMAGE|` vs
+    `|DAMAGESIZE|`.
+
+    Corpus-wide (`grep BONUS:SKILL` over every registered book's races file,
+    2026-08-19) the arithmetic shape is `DEX-STR` in all 136 occurrences and
+    always paired with the identical skill list `Climb,Swim` -- re-derived,
+    not assumed, and the reason the parser accepts a bare `<ABBR>-<ABBR>`
+    shape rather than hard-coding the one string seen.
+    """
+    out: list[tuple[list[str], str]] = []
+    for field in row:
+        if not field.startswith("BONUS:SKILL|"):
+            continue
+        parts = field.split("|")
+        if len(parts) < 3:
+            continue
+        skills = [s.strip() for s in parts[1].split(",") if s.strip()]
+        formula = parts[2].strip()
+        if not skills or not formula or "-" not in formula:
+            # No arithmetic term -- a flat `TYPE=Racial` bonus, out of scope.
+            continue
+        out.append((skills, formula))
     return out
 
 
@@ -1084,6 +1119,7 @@ def transcribe(book: str) -> str:
         attacks = parse_natural_attacks(row)
         adjustments = parse_stat_adjustments(row)
         damage_bonuses = parse_natural_attack_damage_bonuses(row)
+        skill_bonuses = parse_skill_ability_diff_bonuses(row)
         reach = parse_reach(row)
         armor = parse_natural_armor(row)
         out.append("    CompanionRecord {")
@@ -1113,6 +1149,15 @@ def transcribe(book: str) -> str:
             + ", ".join(
                 f"NaturalAttackDamageBonus {{ attack: {rust_str(a)}, formula: {rust_str(f)} }}"
                 for a, f in damage_bonuses
+            )
+            + "],"
+        )
+        out.append(
+            "        skill_ability_diff_bonuses: &["
+            + ", ".join(
+                f"SkillAbilityDiffBonus {{ skills: {rust_slice(skills)}, "
+                f"formula: {rust_str(formula)} }}"
+                for skills, formula in skill_bonuses
             )
             + "],"
         )

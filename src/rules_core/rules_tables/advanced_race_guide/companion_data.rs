@@ -36,7 +36,7 @@
 //!   * `Shaitan Binder Eidolon ~ Wisdom Bonus`
 //!   * `WCEvolution ~ Skilled`
 
-use crate::rules_core::rules_tables::companion_chassis::{CompanionAbilityFacet, CompanionAbilityRecord, CompanionRecord, NaturalAttack, NaturalAttackDamageBonus, Speed, StatAdjustment};
+use crate::rules_core::rules_tables::companion_chassis::{CompanionAbilityFacet, CompanionAbilityRecord, CompanionRecord, NaturalAttack, NaturalAttackDamageBonus, SkillAbilityDiffBonus, Speed, StatAdjustment};
 
 /// Every advanced_race_guide companion creature (7 rows).
 pub(super) static COMPANIONS: &[CompanionRecord] = &[
@@ -52,6 +52,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         type_segments: &["Companion", "Familiar"],
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: Some("1d3") }],
         natural_attack_damage_bonuses: &[NaturalAttackDamageBonus { attack: "Claw", formula: "max(0,(STR/2))" }],
+        skill_ability_diff_bonuses: &[SkillAbilityDiffBonus { skills: &["Climb", "Swim"], formula: "DEX-STR" }],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: -8 }, StatAdjustment { ability: "DEX", amount: 4 }, StatAdjustment { ability: "CON", amount: -2 }, StatAdjustment { ability: "INT", amount: -8 }, StatAdjustment { ability: "WIS", amount: 4 }, StatAdjustment { ability: "CHA", amount: -4 }],
         natural_armor: None,
         source_page: Some("p.133"),
@@ -72,6 +73,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         type_segments: &["Companion", "PlantCompanion"],
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: Some("1d6") }],
         natural_attack_damage_bonuses: &[],
+        skill_ability_diff_bonuses: &[],
         stat_adjustments: &[],
         natural_armor: Some(2),
         source_page: Some("p.26"),
@@ -92,6 +94,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         type_segments: &["Companion", "PlantCompanion"],
         natural_attacks: &[NaturalAttack { name: "Slam", damage_dice: Some("1d4") }],
         natural_attack_damage_bonuses: &[],
+        skill_ability_diff_bonuses: &[],
         stat_adjustments: &[],
         natural_armor: Some(2),
         source_page: Some("p.26"),
@@ -112,6 +115,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         type_segments: &["Companion", "PlantCompanion"],
         natural_attacks: &[NaturalAttack { name: "Thorn", damage_dice: Some("1d4") }],
         natural_attack_damage_bonuses: &[],
+        skill_ability_diff_bonuses: &[],
         stat_adjustments: &[],
         natural_armor: Some(1),
         source_page: Some("p.26"),
@@ -132,6 +136,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         type_segments: &["Companion", "PlantCompanion"],
         natural_attacks: &[NaturalAttack { name: "Slam", damage_dice: Some("1d6") }],
         natural_attack_damage_bonuses: &[],
+        skill_ability_diff_bonuses: &[],
         stat_adjustments: &[],
         natural_armor: Some(1),
         source_page: Some("p.26"),
@@ -152,6 +157,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         type_segments: &["Companion", "AnimalCompanion"],
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }],
         natural_attack_damage_bonuses: &[],
+        skill_ability_diff_bonuses: &[],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 10 }, StatAdjustment { ability: "DEX", amount: 4 }, StatAdjustment { ability: "CON", amount: 4 }, StatAdjustment { ability: "INT", amount: -8 }, StatAdjustment { ability: "CHA", amount: -6 }],
         natural_armor: Some(1),
         source_page: Some("p.56"),
@@ -172,6 +178,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         type_segments: &["Companion", "AnimalCompanion"],
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }, NaturalAttack { name: "Hoof", damage_dice: None }],
         natural_attack_damage_bonuses: &[],
+        skill_ability_diff_bonuses: &[],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 8 }, StatAdjustment { ability: "CON", amount: 4 }, StatAdjustment { ability: "INT", amount: -8 }, StatAdjustment { ability: "WIS", amount: 2 }, StatAdjustment { ability: "CHA", amount: -4 }],
         natural_armor: Some(4),
         source_page: Some("p.56"),

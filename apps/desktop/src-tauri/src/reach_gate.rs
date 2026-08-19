@@ -2100,6 +2100,15 @@ fn companions_reach(corpus_book: &str, wire_code: &str) -> Reach {
             // clause moving no record is asserted by
             // `the_damage_bonus_column_moves_no_record_into_reach` below.
             || !entry.natural_attack_damage_bonuses.is_empty()
+            // SD31 wave 16: the row's `BONUS:SKILL|<skills>|<A>-<B>` tokens,
+            // rendered as the PF1 rule they state. Added for the identical
+            // reason override 2095's own comment states for the sibling
+            // damage-bonus clause: genuine per-row payload a player reads,
+            // NOT because any row needs it to reach — every companion row
+            // carrying this token also carries `BONUS:STAT` adjustments, and
+            // this clause moving no record is asserted by
+            // `the_skill_bonus_column_moves_no_record_into_reach` below.
+            || !entry.skill_ability_diff_bonuses.is_empty()
             || !entry.stat_adjustments.is_empty()
             || !entry.abilities.is_empty();
         if has_payload {
@@ -3259,6 +3268,47 @@ mod tests {
         assert!(
             with_bonus > 0,
             "no served companion carries a damage-bonus token at all; this test would then be \
+             asserting nothing"
+        );
+    }
+
+    /// The `skillAbilityDiffBonuses` twin of
+    /// `the_damage_bonus_column_moves_no_record_into_reach`, same reasoning:
+    /// every companion row that states a `BONUS:SKILL|<skills>|<A>-<B>`
+    /// token also states `BONUS:STAT` adjustments, so the new clause is
+    /// genuine payload a player reads and nothing more.
+    #[test]
+    fn the_skill_bonus_column_moves_no_record_into_reach() {
+        let response = crate::companion_catalog::build_companion_catalog();
+        let mut with_skill_bonus = 0usize;
+        for entry in &response.entries {
+            if entry.skill_ability_diff_bonuses.is_empty() {
+                continue;
+            }
+            with_skill_bonus += 1;
+            let reaches_without_the_new_clause = entry
+                .race_type
+                .as_deref()
+                .is_some_and(|t| !t.trim().is_empty())
+                || entry.size.as_deref().is_some_and(|s| !s.trim().is_empty())
+                || entry.source_page.as_deref().is_some_and(|p| !p.trim().is_empty())
+                || !entry.speeds.is_empty()
+                || entry.monster_class.is_some()
+                || entry.natural_armor.is_some()
+                || !entry.natural_attacks.is_empty()
+                || !entry.natural_attack_damage_bonuses.is_empty()
+                || !entry.stat_adjustments.is_empty()
+                || !entry.abilities.is_empty();
+            assert!(
+                reaches_without_the_new_clause,
+                "{} would reach ONLY because of skillAbilityDiffBonuses -- that is reach bought \
+                 with a column, not content a player can read",
+                entry.key
+            );
+        }
+        assert!(
+            with_skill_bonus > 0,
+            "no served companion carries a skill-bonus token at all; this test would then be \
              asserting nothing"
         );
     }

@@ -147,11 +147,11 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 25,
-      "partial": 1,
+      "done": 26,
+      "partial": 0,
       "not_started": 0,
       "denominator": 26,
-      "pct": 96.2,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 26
@@ -334,7 +334,7 @@
         },
         {
           "name": "Familiar (Mockingfey)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Fey",
           "standing": "origin",
           "display_name": "Familiar (Mockingfey)"

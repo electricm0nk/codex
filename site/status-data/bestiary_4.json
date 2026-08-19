@@ -44,11 +44,11 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 56,
-      "partial": 11,
+      "done": 57,
+      "partial": 10,
       "not_started": 2,
       "denominator": 69,
-      "pct": 81.2,
+      "pct": 82.6,
       "excluded_from_percentage": 11,
       "standing_breakdown": {
         "origin": 69,
@@ -315,7 +315,7 @@
         },
         {
           "name": "Familiar (Sloth)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "origin"
         },

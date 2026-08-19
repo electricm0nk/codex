@@ -48,7 +48,8 @@
 use serde::{Deserialize, Serialize};
 
 use codex::rules_core::derived_evaluator_fixture_check::{
-    format_companion_strength_damage, parse_companion_strength_damage,
+    format_companion_skill_ability_diff, format_companion_strength_damage,
+    parse_companion_skill_ability_diff, parse_companion_strength_damage,
 };
 use codex::rules_core::rules_tables::companion_chassis::{self, CompanionRecord};
 
@@ -169,6 +170,30 @@ pub struct CompanionDamageBonusDto {
     pub unparsed_formula: Option<String>,
 }
 
+/// One `BONUS:SKILL|<skills>|<A>-<B>` token the creature's row states — a
+/// skill-check bonus computed as the DIFFERENCE between two ability
+/// modifiers, rather than a flat number.
+///
+/// **A rule, not a number.** The dominant (and, corpus-wide, only) formula is
+/// `DEX-STR`: familiars and small companions whose Dexterity typically
+/// exceeds their Strength get Climb and Swim checks computed from the
+/// difference between the two rather than from Strength alone, which is what
+/// Climb and Swim otherwise key off. A catalog browser has no character and
+/// therefore no modifiers to subtract, so the engine renders the rule in
+/// words rather than inventing a total — the same posture
+/// [`CompanionDamageBonusDto`] takes for its own formula.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase")]
+pub struct CompanionSkillBonusDto {
+    /// Every skill the token names, e.g. `["Climb", "Swim"]`.
+    pub skills: Vec<String>,
+    /// The rule in words: `"Dex modifier − Str modifier"`.
+    pub bonus: String,
+    /// The token's formula half verbatim, for a shape the engine refuses to
+    /// interpret. `None` once `bonus` carries the rendered rule.
+    pub unparsed_formula: Option<String>,
+}
+
 /// One `BONUS:STAT` token. An adjustment, never a score — see the module doc.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "camelCase")]
@@ -276,6 +301,9 @@ pub struct CompanionCatalogEntryDto {
     /// Empty for most rows, which is a real corpus state — see
     /// [`CompanionDamageBonusDto`].
     pub natural_attack_damage_bonuses: Vec<CompanionDamageBonusDto>,
+    /// Every `BONUS:SKILL|<skills>|<A>-<B>` token on the creature's row.
+    /// Empty for most rows — see [`CompanionSkillBonusDto`].
+    pub skill_ability_diff_bonuses: Vec<CompanionSkillBonusDto>,
     /// `BONUS:STAT` adjustments from the creature's own row.
     pub stat_adjustments: Vec<CompanionStatAdjustmentDto>,
     /// `BONUS:VAR|AC_Natural_Armor|n|TYPE=Base`, when the row carries one.
@@ -605,6 +633,26 @@ fn map_companion(
                 // nothing, which is false.
                 None => CompanionDamageBonusDto {
                     attack: b.attack.to_owned(),
+                    bonus: b.formula.to_owned(),
+                    unparsed_formula: Some(b.formula.to_owned()),
+                },
+            })
+            .collect(),
+        skill_ability_diff_bonuses: record
+            .skill_ability_diff_bonuses
+            .iter()
+            .map(|b| match parse_companion_skill_ability_diff(b.formula) {
+                Some(parsed) => CompanionSkillBonusDto {
+                    skills: b.skills.iter().map(|s| (*s).to_owned()).collect(),
+                    bonus: format_companion_skill_ability_diff(parsed),
+                    unparsed_formula: None,
+                },
+                // The engine refuses this shape rather than guessing at it.
+                // Serving the token verbatim, labelled as unparsed, is the
+                // honest state — dropping the row would tell the player the
+                // corpus says nothing, which is false.
+                None => CompanionSkillBonusDto {
+                    skills: b.skills.iter().map(|s| (*s).to_owned()).collect(),
                     bonus: b.formula.to_owned(),
                     unparsed_formula: Some(b.formula.to_owned()),
                 },

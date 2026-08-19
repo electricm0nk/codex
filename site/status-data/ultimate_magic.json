@@ -7484,11 +7484,11 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 41,
-      "partial": 5,
+      "done": 44,
+      "partial": 2,
       "not_started": 134,
       "denominator": 180,
-      "pct": 22.8,
+      "pct": 24.4,
       "excluded_from_percentage": 18,
       "standing_breakdown": {
         "unclassified": 18,
@@ -7931,7 +7931,7 @@
         },
         {
           "name": "Familiar (Hedgehog)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Familiar (Hedgehog)"
@@ -7987,7 +7987,7 @@
         },
         {
           "name": "Hedgehog",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Hedgehog"
@@ -8085,7 +8085,7 @@
         },
         {
           "name": "King Crab",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "King Crab"

@@ -67,6 +67,30 @@ export interface CompanionDamageBonusDto {
 }
 
 /**
+ * One `BONUS:SKILL|<skills>|<A>-<B>` token the creature's row states — a
+ * skill-check bonus computed as the DIFFERENCE between two ability
+ * modifiers, rather than a flat number.
+ *
+ * **A rule, not a number.** The dominant (and, corpus-wide, only) formula is
+ * `DEX-STR`: familiars and small companions whose Dexterity typically
+ * exceeds their Strength get Climb and Swim checks computed from the
+ * difference between the two rather than from Strength alone. A catalog
+ * browser has no character and therefore no modifiers to subtract, so the
+ * engine renders the rule in words rather than inventing a total.
+ */
+export interface CompanionSkillBonusDto {
+  /** Every skill the token names, e.g. `["Climb", "Swim"]`. */
+  skills: string[];
+  /** The rule in words: `"Dex modifier − Str modifier"`. */
+  bonus: string;
+  /**
+   * The formula verbatim for a shape the engine refuses to interpret.
+   * `null` once `bonus` carries the rendered rule.
+   */
+  unparsedFormula: string | null;
+}
+
+/**
  * One `BONUS:STAT` token.
  *
  * **An adjustment, never a score.** A Griffon's row states
@@ -157,6 +181,11 @@ export interface CompanionCatalogEntryDto {
    * most rows, which is a real corpus state.
    */
   naturalAttackDamageBonuses: CompanionDamageBonusDto[];
+  /**
+   * Every `BONUS:SKILL|<skills>|<A>-<B>` token on the row. Empty for most
+   * rows — see [`CompanionSkillBonusDto`].
+   */
+  skillAbilityDiffBonuses: CompanionSkillBonusDto[];
   statAdjustments: CompanionStatAdjustmentDto[];
   /** `BONUS:VAR|AC_Natural_Armor|n|TYPE=Base`, when the row carries one. */
   naturalArmor: number | null;

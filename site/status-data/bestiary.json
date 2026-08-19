@@ -188,11 +188,11 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 90,
-      "partial": 2,
+      "done": 91,
+      "partial": 1,
       "not_started": 27,
       "denominator": 119,
-      "pct": 75.6,
+      "pct": 76.5,
       "excluded_from_percentage": 35,
       "standing_breakdown": {
         "origin": 119,
@@ -969,7 +969,7 @@
         },
         {
           "name": "Rat, Dire",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin"
         },

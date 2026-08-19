@@ -10,7 +10,7 @@
 //!   * `isi_races_companion.lst` -- 2 companion creature rows
 //!   * `isi_abilities_race_companion.lst` -- 9 companion ability rows
 
-use crate::rules_core::rules_tables::companion_chassis::{CompanionAbilityDelivery, CompanionAbilityFacet, CompanionAbilityRecord, CompanionRecord, NaturalAttack, Speed, StatAdjustment};
+use crate::rules_core::rules_tables::companion_chassis::{CompanionAbilityDelivery, CompanionAbilityFacet, CompanionAbilityRecord, CompanionRecord, NaturalAttack, SkillAbilityDiffBonus, Speed, StatAdjustment};
 
 /// Every inner_sea_intrigue companion creature (2 rows).
 pub(super) static COMPANIONS: &[CompanionRecord] = &[
@@ -26,6 +26,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         type_segments: &["Companion", "Familiar", "Construct"],
         natural_attacks: &[NaturalAttack { name: "Slam", damage_dice: None }],
         natural_attack_damage_bonuses: &[],
+        skill_ability_diff_bonuses: &[SkillAbilityDiffBonus { skills: &["Climb", "Swim"], formula: "DEX-STR" }],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 0 }, StatAdjustment { ability: "DEX", amount: 2 }, StatAdjustment { ability: "CON", amount: 0 }, StatAdjustment { ability: "INT", amount: 0 }, StatAdjustment { ability: "WIS", amount: 0 }, StatAdjustment { ability: "CHA", amount: -10 }],
         natural_armor: None,
         source_page: Some("p.47"),
@@ -46,6 +47,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         type_segments: &["Companion", "Familiar", "Construct"],
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }],
         natural_attack_damage_bonuses: &[],
+        skill_ability_diff_bonuses: &[SkillAbilityDiffBonus { skills: &["Climb", "Swim"], formula: "DEX-STR" }],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 0 }, StatAdjustment { ability: "DEX", amount: 4 }, StatAdjustment { ability: "CON", amount: 0 }, StatAdjustment { ability: "INT", amount: 0 }, StatAdjustment { ability: "WIS", amount: 2 }, StatAdjustment { ability: "CHA", amount: 0 }],
         natural_armor: Some(2),
         source_page: Some("p.47"),

@@ -4,6 +4,7 @@ import type {
   CompanionAttackDto,
   CompanionCatalogEntryDto,
   CompanionDamageBonusDto,
+  CompanionSkillBonusDto,
   CompanionStatAdjustmentDto,
 } from '../boundary/loadCompanionCatalog';
 import { loadCompanionCatalogRuntime } from './companionCatalogRuntime';
@@ -188,6 +189,25 @@ export function formatDamageBonus(bonus: CompanionDamageBonusDto): string {
 }
 
 /**
+ * The skill-bonus block's caption. Names the token so the reader knows it is
+ * a corpus fact.
+ */
+export const SKILL_BONUS_CAPTION = 'Skill bonus from ability difference (corpus BONUS:SKILL tokens)';
+
+/**
+ * One skill-bonus row: `"Climb, Swim: Dex modifier − Str modifier"`.
+ *
+ * A shape the engine refuses to interpret prints its token verbatim and says
+ * so, matching [`formatDamageBonus`]'s own posture.
+ */
+export function formatSkillBonus(bonus: CompanionSkillBonusDto): string {
+  const skills = bonus.skills.join(', ');
+  return bonus.unparsedFormula === null
+    ? `${skills}: ${bonus.bonus}`
+    : `${skills}: ${bonus.unparsedFormula} (formula not interpreted)`;
+}
+
+/**
  * The heading one ability row prints: its name, then what the corpus says it
  * is.
  *
@@ -364,6 +384,12 @@ export function CompanionCatalogScreen(props: CompanionCatalogScreenProps) {
                   <p style={{ color: 'var(--color-text)', fontSize: '0.75rem', margin: '0.25rem 0 0' }}>
                     <span style={{ color: 'var(--color-text-faint)' }}>{DAMAGE_BONUS_CAPTION}: </span>
                     {entry.naturalAttackDamageBonuses.map(formatDamageBonus).join(', ')}
+                  </p>
+                ) : null}
+                {entry.skillAbilityDiffBonuses.length > 0 ? (
+                  <p style={{ color: 'var(--color-text)', fontSize: '0.75rem', margin: '0.25rem 0 0' }}>
+                    <span style={{ color: 'var(--color-text-faint)' }}>{SKILL_BONUS_CAPTION}: </span>
+                    {entry.skillAbilityDiffBonuses.map(formatSkillBonus).join(', ')}
                   </p>
                 ) : null}
                 {entry.abilities.length > 0 ? (
