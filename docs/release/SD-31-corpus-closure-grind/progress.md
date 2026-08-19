@@ -27174,3 +27174,66 @@ is cited by file and line above rather than driven. A cycle that wants the scree
 * `site/dashboard/PF1e-dashboard.json`, `site/dashboard/units/*`, `site/status-data*` —
   `./scripts/publish-site-dashboard.sh` (real publish, per override 10).
 * `docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md` — rows 265, 266, 267.
+
+### 8. The full gate — GREEN
+
+`RETRO_ACTOR=sd31-w15-racetrait CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-w15-racetrait
+./scripts/verify.sh` (full, not `--quick`), exit code captured in the same shell statement, never
+through a pipe:
+
+```
+RESULT: PASS        VERIFY_EXIT=0        logs in /tmp/codex-verify-Ws5QQP
+passed: 34   preflight-disk preflight-oracle oracle-pin-selftest producer-selftest
+             pi-redaction-selftest provenance-selftest site-dashboard-selftest
+             site-dashboard-check site-dashboard-pi-gate build-public-status-selftest
+             site-public-status-check site-public-status-pi-gate site-asset-stamp-check
+             reachability-audit-selftest reachability-audit groundtruth-guard-selftest
+             supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest
+             reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full
+             desktop reach corpus-sweep supersession-gate frontend-install frontend-test
+             frontend-typecheck clippy class-dump
+```
+
+Stages that bear directly on this cycle: `root-lib` 2044 passed; `root-full` **7056 passed across
+568 suites, all 531 `tests/*.rs` suites executed**; `desktop` 463 passed (the separate cargo
+workspace a root sweep does not reach); `reach` 27 passed; `corpus-sweep` 0 findings;
+`site-dashboard-pi-gate` and `site-public-status-pi-gate` both clean over the republished feeds;
+`supersession-gate` 116 objects clean (**the register is untouched by this cycle and still
+PROPOSED, NOT APPLIED**); `reachability-audit` reachable ceiling 98.95 %; `clippy` root 51 /
+desktop 7, unchanged ceilings.
+
+**Baseline movement, as its own reviewable commit** (DoD item 7), carrying the gate's own
+`BASELINE NOTES` verbatim: `BASELINE_ROOT_LIB_TESTS` 2042 → 2044 (the 2 new
+`rules_core::race_creation` tests) and `BASELINE_ROOT_FULL_TESTS` 7052 → 7056 (those 2 plus the 2
+new `race_trait_creation_chassis_consumer_tests`). `BASELINE_ROOT_TEST_BINARIES` deliberately NOT
+raised — both new bin tests live in the existing `v06_work_inventory` target, and the gate measured
+568, matching. Every other baseline matched its stage output with no stale note.
+
+### 9. Two incidents recorded
+
+* **`wrong-base-worktree`** — four of the six wave-15 worktrees were cut at the site-deploy tip
+  `37a80141e` instead of `tranche/11` at `45273fd3b`; that tree has no `docs/`, `data/`, `scripts/`
+  or `src/`, so none of the card's required reads existed. This is the same defect SD-29 hit six
+  times and the event log under-recorded by 3×. Recovered with `git reset --hard 45273fd3b` on a
+  verified-clean tree.
+* **`shared-scratchpad-clobber` (SILENT)** — the harness scratchpad is shared by all six lanes, and
+  another lane overwrote this lane's `receipt.md` and `msg.txt` **in place** while both were live.
+  Nothing was lost here only because this lane had already appended its receipt to `progress.md`
+  and committed its message; a lane that had not yet committed would have published another lane's
+  text as its own, silently and plausibly. This lane's `gate.log` survived only because its name
+  happened not to collide.
+
+### 10. What this cycle could NOT do
+
+* **The 293-unit race-level residual is reported, not corrected** (row 266). Narrowing
+  `consumer_verified` from a race to a trait key is a ~200-unit honest DECREASE resting on a
+  per-seam attribution that has to be derived seam by seam, and a demotion derived wrongly is as
+  much a defect as the over-credit it corrects. Dispatched as its own card, with the demotion
+  expected and budgeted, is the right shape.
+* **The 20 browse-only heritage units** need a product ruling on whether choosing a heritage
+  re-resolves the creation chassis (row 265). The rules-correct answer is plainly yes; the question
+  is whose lane builds the picker, and it is not this one's grant.
+* **DoD item 8 was not performed** — see §6. No family was newly surfaced; what changed is the
+  inventory's ability to see a screen that has been printing these numbers all along.
+* **Nothing in this cycle touched race attribution, the Supersession Register, or the denominator.**
+  The register stays PROPOSED, NOT APPLIED; attribution stays FROZEN; 38,521 in, 38,521 out.
