@@ -27179,7 +27179,7 @@ the `doneness_source_generated_at` stamp names.
 `site/dashboard/units/PF1e-units-monster_ability.json`, `site/dashboard/units/index.json`,
 `site/status-data.json` (30 books, overall 36.9 %) and `site/status-data/bestiary_4.json`.
 
-### 6. The gate — run 1 RED on this cycle's own clippy warning, fixed, run 2 launched
+### 6. The gate — run 1 RED on this cycle's own clippy warning; run 2 GREEN (all 34 stages, VERIFY_EXIT=0)
 
 **Run 1** (`artifacts/SD31-W15-MONSTER-ABILITY-001-verify-run1.log`, at commit `e82896387`):
 `RESULT: FAIL`, `VERIFY_EXIT=1`. **33 of 34 stages PASS; exactly one stage red, and it was this
@@ -27232,10 +27232,30 @@ cargo test --locked -j 4 --test derived_evaluator_fixture_check_monster_ability
 # -> test result: ok. 14 passed; 0 failed; 0 ignored   (was 8)
 ```
 
-**Run 2** launched over the fixed tree, log at
-`artifacts/SD31-W15-MONSTER-ABILITY-001-verify-run2.log`, same runner script
-(`artifacts/run-verify-sd31-w15-monster-ability.sh`), exit code captured in the same shell statement
-that ran it and never through a pipe.
+**Run 2 — `RESULT: PASS`, `VERIFY_EXIT=0`, all 34 stages, 0 FAIL**
+(`artifacts/SD31-W15-MONSTER-ABILITY-001-verify-run2.log`, over the tree of commit `dd7c76d82`;
+same runner script `artifacts/run-verify-sd31-w15-monster-ability.sh`, exit code captured in the
+same shell statement that ran the gate and never through a pipe):
+
+```
+PASS  root-lib          (2042 passed)
+PASS  root-full         (7066 passed across 569 suites, all 532 tests/*.rs suites executed)
+PASS  desktop           (463 passed)
+PASS  reach             (27 passed)
+PASS  clippy            (root:51 desktop:7 warnings, 0 errors)   <- back at the ceiling
+PASS  corpus-sweep      (26105 records examined of 26741 read, 0 findings)
+PASS  supersession-gate (116 objects, all clean)
+PASS  frontend-test     (99/99 files)
+PASS  class-dump        (31/31 computing)
+RESULT: PASS
+VERIFY_EXIT=0
+```
+
+`root-full` moved 7060 → 7066 between the two runs: this fix pass's six added tests. Both figures
+are above `scripts/verify-baselines.env`'s `ROOT_FULL_TESTS` floor of 7052, and `ROOT_TEST_BINARIES`
+is 569 against a floor of 568 — test counts are FLOORS in that file, so growth prints a STALE
+notice and never fails. The floors are left as they are rather than restated here: moving a baseline
+is its own reviewable commit, and the integration cycle owns it once every wave-15 lane has landed.
 
 ### 7. What this cycle could NOT do
 
