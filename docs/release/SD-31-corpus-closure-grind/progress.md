@@ -26933,3 +26933,84 @@ main checkout's own path, so row 245's publish-from-a-worktree defect does not a
 See §9 below — written after the gate returned, with the exit code captured in the same shell
 statement that ran it and never through a pipe. Log:
 `artifacts/SD31-W14-INTEGRATE-001-verify.log`.
+
+### 9. The full gate — GREEN
+
+**Run 1** (`artifacts/SD31-W14-INTEGRATE-001-verify.log`): `./scripts/verify.sh -j 8`,
+`VERIFY_EXIT=1` captured in the same shell statement that ran the gate, never through a pipe.
+**33 of 34 stages PASS, 1 FAIL — `clippy`, `root: 52 warnings exceeds recorded ceiling 51`.**
+`root-full` PASS (7,052 passed across 568 suites, all 531 `tests/*.rs` suites executed),
+`desktop` PASS (463 passed), `reach` PASS, `corpus-sweep` PASS (26,105 examined, 0 findings),
+`frontend-test` PASS (99/99), all six site/PI stages PASS.
+
+**The ceiling was NOT raised.** The single new warning was this cycle's own — `very complex type
+used` on `cache_gen::lst_provenance_repair::decide`'s three-element return type, introduced when
+the wiring-class refresh was added to it. Paid down with a `type DecidedProvenance` alias.
+Re-counted with `verify.sh`'s own `clippy_one_crate` method (`cargo clippy --locked --tests -j 8`,
+`^warning:` lines excluding the `generated N warnings` per-target summaries) → **exactly 51**.
+
+**Run 2** (`artifacts/SD31-W14-INTEGRATE-001-verify-run2.log`), on the fixed tip:
+
+```
+RESULT: PASS
+VERIFY_EXIT=0
+passed: 34   preflight-disk preflight-oracle oracle-pin-selftest producer-selftest
+             pi-redaction-selftest provenance-selftest site-dashboard-selftest
+             site-dashboard-check site-dashboard-pi-gate build-public-status-selftest
+             site-public-status-check site-public-status-pi-gate site-asset-stamp-check
+             reachability-audit-selftest reachability-audit groundtruth-guard-selftest
+             supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest
+             reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full
+             desktop reach corpus-sweep supersession-gate frontend-install frontend-test
+             frontend-typecheck clippy class-dump
+```
+
+**`tranche/11` was RED before this wave and is GREEN after it.** Three lanes independently
+reported the tip `12f1f5c94` red on 14-15 tests across `root-full`, `desktop`, `reach` and
+`frontend-test`, every failure traceable to `d8175d817` moving 166 corpus records between book
+directories without updating the counts, claims and artifacts that read them (rows 245, 251, 258).
+`SD31-CE-COMPANION-001` is what repaired it; the desktop crate went **456 passed / 6 failed →
+463 passed / 0 failed**.
+
+**The desktop crate tested explicitly**, because it is a separate cargo workspace a root sweep
+does not reach: `cargo test --manifest-path apps/desktop/src-tauri/Cargo.toml --locked
+--no-fail-fast -j 8` → `test result: ok. 463 passed; 0 failed; 0 ignored`.
+
+**Gate baselines restated** in `scripts/verify-baselines.env` with the derivation of each move —
+`ROOT_LIB_TESTS` 2025 → 2042, `ROOT_FULL_TESTS` 7016 → 7052, `ROOT_TEST_BINARIES` 566 → 568,
+`DESKTOP_TESTS` 462 → 463, `CORPUS_LITERAL_RECORDS` 25688 → 26105 (+412 equipment records the
+provenance narrowing brought inside the sweep's population for the first time, +5 new APG
+companion records). `CLIPPY_WARNINGS_ROOT` unchanged at 51, `CLIPPY_WARNINGS_DESKTOP` 7,
+`FRONTEND_TEST_FILES` 99, `COMPUTED_CLASSES` 31 — all unchanged and matching.
+
+**Trap report** (`cargo run --locked --bin v06_corpus_trap_report -- --audit`): `TRAP_EXIT=2`
+(the baseline also exits 2), **1 mod-record + 1,192 `wiring-class-mismatch`** — down from the
+1,225 baseline and from the 1,227 `SD31-E6-F5-005` measured, because the 82 self-healed CRB
+records and the Core Essentials regeneration corrected stored classes that had genuinely drifted.
+Moving in the right direction; the population is still its own card (row 246).
+
+**Disk and cleanup:** `df -B1G /` at the end → 968 total / 336 used / 633 avail / 35 %. Own
+`CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-w14-integrate` removed and
+`scripts/reclaim.sh --apply` run at cycle end.
+
+### 10. What this cycle could NOT do
+
+* **The `core_essentials` label is still non-zero (128 units), so `decisions.md §9`'s condition is
+  not discharged and the book must NOT be added to `EXCLUDED_BOOKS`.** The evidence to attribute
+  them does not exist in the pinned oracle — 29 come from a shared file declaring 7 different
+  `SOURCELONG` values including `Universal Rules` (not a book), 49 from 4 races whose files carry
+  no `SOURCELONG` at all, and 50 from 4 races whose files say `Core Rulebook` while three of them
+  (Lashunta, Syrinx, Triaxian) are Distant Worlds races in no Core Rulebook printing. Row 263 —
+  operator ruling, not engineering.
+* **The two equipment cache generators still emit the pre-repair provenance shape.** Detection
+  landed (a reversion is now a red gate); production did not. Row 264.
+* **The 9 pre-existing name-matched `monster_ability` credits.** The strict predicate was applied
+  only to the caller that mints credit; narrowing the others is a possibly-demoting change that
+  wants measuring first. Row 261.
+* **`epic-2-verdict-paths` cannot close**, and this cycle made that harder rather than easier: the
+  80-unit credit its lane refused turns out to be a no-op as described, so `AT-31-010` option (b)
+  is struck. Rows 254/255 — operator ruling.
+* **DoD item 8 (on-screen verification) was not performed for the 40 `equipment_modifier`
+  promotions**, for the reason `SD31-E6-F5-005` recorded and this cycle did not overturn: the
+  desktop app's corpus loader is a bounded fixture bundle, so those specific records cannot be
+  driven through `driver.sh` on this box. Row 242 — operator ruling.

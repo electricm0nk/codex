@@ -1,10 +1,10 @@
 codex verify — mode: full, jobs: 8
 repo:  /home/ubuntu/workspace/repos/codex
-logs:  /tmp/codex-verify-7VrVAo
+logs:  /tmp/codex-verify-aEjt2p
 ---------------------------------------------------------------
 ==> preflight-disk — disk budget check before any build starts
-    repo filesystem (/home/ubuntu/workspace/repos/codex, mounted at /): 35% used, 633G available
-    scratch-log filesystem (/tmp/codex-verify-7VrVAo, mounted at /): 35% used, 633G available
+    repo filesystem (/home/ubuntu/workspace/repos/codex, mounted at /): 36% used, 626G available
+    scratch-log filesystem (/tmp/codex-verify-aEjt2p, mounted at /): 36% used, 626G available
     PASS  preflight-disk  (disk budget OK)
 ---------------------------------------------------------------
 ==> preflight-oracle — scripts/fetch-pcgen-oracle.sh --check
@@ -102,22 +102,14 @@ logs:  /tmp/codex-verify-7VrVAo
     PASS  frontend-typecheck  (tsc --noEmit clean)
 ---------------------------------------------------------------
 ==> clippy — cargo clippy --locked --tests -j 8  (BOTH crates)
-    root: 52 warnings exceeds recorded ceiling 51 — /tmp/codex-verify-7VrVAo/clippy-root.log
-    FAIL  clippy  (root:52 desktop:7 — logs in /tmp/codex-verify-7VrVAo)
+    PASS  clippy  (root:51 desktop:7 warnings, 0 errors)
 ---------------------------------------------------------------
 ==> class-dump — cargo run --locked --bin v06_class_state_dump  (repo root)
     PASS  class-dump  (31/31 computing)
 ---------------------------------------------------------------
 SUMMARY
-  passed:  33  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep supersession-gate frontend-install frontend-test frontend-typecheck class-dump
-  FAILED:  1  clippy
+  passed:  34  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump
 
-BASELINE NOTES (not failures — update deliberately):
-  - BASELINE_ROOT_LIB_TESTS baseline is stale: 2025 recorded, 2042 measured. Update /home/ubuntu/workspace/repos/codex/scripts/verify-baselines.env.
-  - BASELINE_ROOT_FULL_TESTS baseline is stale: 7016 recorded, 7052 measured. Update /home/ubuntu/workspace/repos/codex/scripts/verify-baselines.env.
-  - BASELINE_ROOT_TEST_BINARIES baseline is stale: 566 recorded, 568 measured. Update /home/ubuntu/workspace/repos/codex/scripts/verify-baselines.env.
-  - BASELINE_DESKTOP_TESTS baseline is stale: 462 recorded, 463 measured. Update /home/ubuntu/workspace/repos/codex/scripts/verify-baselines.env.
-  - BASELINE_CORPUS_LITERAL_RECORDS=26105 (was 25688)
-
-RESULT: FAIL — logs in /tmp/codex-verify-7VrVAo
-VERIFY_EXIT=1
+RESULT: PASS
+logs in /tmp/codex-verify-aEjt2p
+VERIFY_EXIT=0
