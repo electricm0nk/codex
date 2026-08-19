@@ -128,6 +128,62 @@ TARGETS = [
         "Ninja ~ No Trace",
         "NoTraceBonus",
     ),
+    # --- added SD31-W15 ---------------------------------------------------
+    # Four more of the 33 `derived`+held `class_feature` units, each one
+    # checked against the THREE conditions this family's own wave-13
+    # withdrawal established (see the `ranger_favored_terrain` note above):
+    #   (a) the headline BONUS:VAR formula parses in the seam's committed
+    #       shape -- no parser widening, no `max(`/`min(`/ability-score term;
+    #   (b) the level variable's alias resolves inside the SAME book's
+    #       `data/corpus/<book>/class_feature/` cache, which is all
+    #       `find_level_var_alias` can see;
+    #   (c) a REAL production consumer computes THIS token's quantity, not a
+    #       different magnitude on the same record. Each is named below with
+    #       the explanation id and the function behind it, and
+    #       `tests/derived_evaluator_fixture_check_class_feature_consumer_quantity.rs`
+    #       drives the real engine to prove the two agree at concrete levels
+    #       rather than leaving it to this comment.
+    (
+        # `class_chassis.paladin.lay_on_hands_heal_amount`, `paladin_level / 2`
+        # (pilot_compute/mod.rs). The record's OTHER magnitude
+        # (`LayOnHandsTimes|(LayOnHandsLVL/2)+CHA`) mixes an ability score and
+        # is not the fixtured token.
+        "core_rulebook:class_feature:paladin_lay_on_hands",
+        "core_rulebook",
+        "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+        "Paladin ~ Lay on Hands",
+        "LayOnHandsDice",
+    ),
+    (
+        # `class_feature.acg.slayer.studied_target_bonus`,
+        # `slayer_studied_target_bonus(level) = level / 5 + 1`
+        # (pilot_compute/class_slayer.rs).
+        "advanced_class_guide:class_feature:slayer_studied_target",
+        "advanced_class_guide",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+        "Slayer ~ Studied Target",
+        "SlayerStudiedTargetBonus",
+    ),
+    (
+        # `class_feature.uc.ninja.sneak_attack`,
+        # `ninja_sneak_attack_dice(level) = (level + 1) / 2`
+        # (pilot_compute/class_ultimate_combat.rs).
+        "ultimate_combat:class_feature:ninja_sneak_attack",
+        "ultimate_combat",
+        "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+        "Ninja ~ Sneak Attack",
+        "SneakAttackDice",
+    ),
+    (
+        # `class_feature.uc.samurai.resolve_uses`,
+        # `samurai_resolve_uses_per_day(level) = (level + 1) / 2`
+        # (pilot_compute/class_ultimate_combat.rs).
+        "ultimate_combat:class_feature:samurai_resolve",
+        "ultimate_combat",
+        "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst",
+        "Samurai ~ Resolve",
+        "SamuraiResolveTimes",
+    ),
 ]
 
 

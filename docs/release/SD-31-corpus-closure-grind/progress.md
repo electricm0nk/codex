@@ -28521,3 +28521,316 @@ Component runs already captured directly:
   `reach_gate::tests::every_ingested_companion_book_reaches_the_catalog_record_by_record`.
 * `npm run typecheck` (apps/desktop) → clean. `npm test` (apps/desktop) → **99/99 test files
   passed**.
+
+## Cycle `SD31-W15-SPELL-CF-001` (`RETRO_ACTOR=sd31-w15-spell-classfeature-lane`) — 2026-08-19, wave 15 fixture-seam lane: `spell` + `class_feature`
+
+**Card:** wave-15 fixture-seam lane — the 119 `spell` and 33 `class_feature` units of the
+960-unit `derived`+`grounded` held population, plus `spell`'s wider held mass. Files: spell
+tables/fixtures and class_feature pool fixtures. `monster` / `monster_ability` / `companion` /
+`equipment` paths not touched.
+
+**Branch state at start.** The dispatch worktree was cut at `37a80141e` — a `site-deploy`
+publish merge with **no `docs/` tree at all**, so none of this card's required reads existed.
+Recovered on a clean tree per SD-30 `loop-instruction.md` cycle step 0−:
+`git status --porcelain` empty → `git reset --hard 45273fd3bda2b3d81209495dad33024a971e4683`
+(`tranche/11`). Recorded here because the log under-counts this defect; this is the same
+wrong-base-commit failure that cycle step exists for.
+
+**Oracle pin, checked first per SD-31 `loop-instruction.md` override 8:**
+`./scripts/verify.sh --only preflight-oracle` → `PASS (oracle at pin
+7f818006e371188e5717fd18d74d18a420747fc6)`. Every figure below is derived against that commit.
+
+**Box, re-derived before any work:** `nproc` 24; `free -g` 167 total / 131 free;
+`df -B1G /` → 968 total / 194 used / 775 avail / 20 %. `./scripts/verify.sh --only
+preflight-disk` → PASS. Own `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-w15-spell-cf-lane`,
+deleted at cycle end. Gate run at `-j 6` (under the wave cap of 8, six lanes concurrent).
+
+### 1. The finding: `range_keyword` fixture coverage was gated by an alphabetical accident
+
+`scripts/derive_spell_range_fixtures.py` (SD31-E6-F2-008, wave 14) selected its candidates with
+
+```python
+and u.get("wiring_class_reason") == "range_keyword"
+```
+
+**That field is not a statement about the record's `RANGE:` token.** It is
+`src/rules_core/wiring_class.rs::classify()`'s tie-break, and the tie-break is
+*lexicographic*:
+
+```rust
+if let Some(hit) = sigs.iter().filter(|s| s.starts_with(prefix)).min() {   // wiring_class.rs:1290
+```
+
+`"derived:prose_expr"` sorts before `"derived:range_keyword"` (`p` < `r`), so **a unit carrying
+both signals can never report `range_keyword`**, however plainly its own upstream row reads
+`RANGE:Close`. The sample record makes it visible without argument:
+
+```json
+"id": "advanced_class_guide:spell:anonymous_interaction",
+"wiring_class_reason": "prose_expr",
+"wiring_class_signals": ["derived:prose_expr", "derived:range_keyword"]
+```
+
+The sibling DURATION generator never filtered on `wiring_class_reason`, which is exactly why the
+two families' coverage diverged (898 vs 199).
+
+**Re-derived, not assumed.** Joining `docs/work-inventory.json`'s `derived`+held `spell` units in
+the eight ingested books to their own pinned upstream `.lst` lines: **151** carry `RANGE:Close`
+(97), `Medium` (32) or `Long` (22) verbatim and were excluded on that alphabetical accident
+alone. 4 of the 151 do not resolve in the `data/corpus/` spell cache and are correctly refused —
+named rather than counted: `advanced_players_guide:spell:fester`, `…:fester_mass`,
+`…:heroic_fortune_mass`, `…:severed_fate`, all `ingested-magnitude`, all APG records whose
+`corpus_key` has no matching `data.key` in `data/corpus/advanced_players_guide/spell/`. That is a
+real ingest gap in the APG spell cache, not a fixture problem, and it is a named follow-on rather
+than a refusal to look. Leaves **147**.
+
+`retro.py correction` emitted (`--subject` the generator's candidate filter, `--verified-by` the
+`classify()` line plus the census and the post-fix generator run).
+
+### 2. The near-miss: both spell fixture generators would have destroyed their own fixture
+
+Regenerating with the filter removed emitted **147 entries where the committed file held 199** —
+a net loss of 199 committed entries. Cause: both spell generators select on
+`status in ("ingested-magnitude", "grounded")`, but a covered unit's status **is
+`fixture-verified`** once `v06_work_inventory::apply_done_rung_stamps` has run. **An
+already-covered unit drops out of its own generator's candidate set.** Re-running the DURATION
+generator unchanged would have cut `spell_entries` from 898 to the handful still unstamped. This
+is the same stamp-loss class `v06_work_inventory`'s `--allow-stamp-loss` guard exists to refuse,
+one layer upstream, and it was latent only because neither generator had been re-run since its
+own first write.
+
+Fixed in both: `fixture-verified` admitted to `STAMPABLE_STATUSES` (with the reason written next
+to it), plus a **refuse-on-shrink guard** in the new `--write` mode — a generated artifact may
+grow freely and may never silently shrink. `retro.py near-miss` emitted.
+
+**Idempotence proven, not asserted:** re-running
+`scripts/derive_spell_caster_level_duration_fixtures.py` against the committed inventory now
+reproduces `spell_entries` **898 / 898, zero added, zero lost, zero changed** — which is also an
+independent re-derivation of every committed DURATION entry from the pinned oracle.
+
+The new `spell_range_entries` set is a **strict superset** of the committed one: 199 retained
+byte-identical (0 changed), 561 added — 147 currently held (the movement) and 414 redundant
+cross-family coverage of units the DURATION seam already cleared, kept because dropping them
+would make the generator's output depend on which family ran first.
+
+### 3. `class_feature`: 4 of 33, each checked against the wave-13 withdrawal's own three conditions
+
+Censused all 33 `derived`+held `class_feature` units against their pinned upstream rows. Four
+clear all three conditions the `ranger_favored_terrain` withdrawal established:
+
+| unit | fixtured token | production consumer |
+|---|---|---|
+| `core_rulebook:…:paladin_lay_on_hands` | `LayOnHandsDice\|LayOnHandsLVL/2` | `class_chassis.paladin.lay_on_hands_heal_amount` = `paladin_level / 2` |
+| `advanced_class_guide:…:slayer_studied_target` | `SlayerStudiedTargetBonus\|SlayerStudiedTargetLVL/5+1` | `class_feature.acg.slayer.studied_target_bonus` = `level / 5 + 1` |
+| `ultimate_combat:…:ninja_sneak_attack` | `SneakAttackDice\|(NinjaSneakAttackLVL+1)/2` | `class_feature.uc.ninja.sneak_attack` = `(level + 1) / 2` |
+| `ultimate_combat:…:samurai_resolve` | `SamuraiResolveTimes\|(SamuraiResolveLVL+1)/2` | `class_feature.uc.samurai.resolve_uses` = `(level + 1) / 2` |
+
+**No parser was widened to fit a book.** The other 29 are refused for stated structural reasons,
+not skipped — counted, not estimated (`scripts` census over the 33 units' own pinned upstream
+rows joined to `data/corpus/<book>/class_feature/`):
+
+| n | reason |
+|---:|---|
+| 21 | no `BONUS:VAR` formula in the seam's committed shape — `max(`/`min(`-wrapped, ability-score-mixed, or no divide at all (incl. `unchained_rage_power_superstition`'s `2+floor(RagePowersLVL/4)`, whose `floor(` wrapper the seam does not parse) |
+| 5 | the formula parses, but its level variable (`InvestigatorLVL`, `BrawlerLVL`, `BraveryLVL`, `RogueTrapSenseLVL`) has no alias inside `data/corpus/<book>/class_feature/` — it is defined in the CLASS file, which is not what `find_level_var_alias` walks |
+| 2 | no `BONUS:VAR` token on the row at all (`cavalier_expert_trainer`, `inquisitor_cunning_initiative`) |
+| 1 | `ranger_favored_terrain` — parses and aliases cleanly, and stays out: wave 13 withdrew it on the quantity mismatch, and §4's new guard is the thing that would now catch it automatically |
+
+### 4. The new guard the withdrawal actually asked for
+
+`class_feature` grounding is decided by an explanation-id **name** match
+(`v06_work_inventory.rs`'s `exact_suffix_grounded`/`suffix_stripped_grounded`), which is
+structurally incapable of seeing a quantity mismatch. That is precisely how
+`ranger_favored_terrain` reached `done` on two true facts about two different magnitudes.
+
+`tests/derived_evaluator_fixture_check_class_feature_consumer_quantity.rs` closes it: it drives
+the **real** engine (`build_pilot_headless_receipt`, the path `CharacterSheet.tsx` renders
+through) at levels chosen to straddle each formula's own step boundary, and asserts the value
+the production consumer publishes equals the **fixture's** formula — i.e. the independently
+derived upstream token — at that level. 27 `(unit, level)` comparisons, all green. A companion
+test asserts the level sample is sensitive (a sample where every level yields the same number
+could not see a wrong divisor).
+
+### 5. `spell_range`'s missing provenance guarantees
+
+The equipment, monster and class_feature fixture families each ship an integration test asserting
+their four provenance guarantees. **The two `kind=spell` families shipped with none** — only the
+in-module "the fixture clears" and "a wrong expected fails" unit tests, neither of which asserts
+that a committed entry's `corpus_field` is genuinely the upstream record's own bytes. That is the
+assertion separating evidence from a restatement of the evaluator, and it was missing for the
+largest spell family while this cycle quadrupled it.
+
+`tests/derived_evaluator_fixture_check_spell_range.rs` adds it: the ruleset claim (expected triple
+re-read from the pinned `miscinfo.lst` at test time by a third independent reading, and the
+engine's own hardcoded constants checked against that same file), the per-record claim
+(`upstream_lst_sha256` re-hashed, `corpus_field` required as a whole tab-separated field on the
+pinned line), the ingest join (`data/corpus/<book>/spell/` must cite the same `(path, line,
+sha256)`), and one-entry-per-unit.
+
+### 6. Every gate this cycle touched, proven able to fail (Decision 1(a))
+
+| mutation | result |
+|---|---|
+| one record's `data/corpus/.../anonymous_interaction.json` `RANGE` token `Close`→`Medium` | cleared **1423 → 1422**, `FAIL advanced_class_guide:spell:anonymous_interaction: corpus row "RANGE:Close" states 25/5/2, evaluator produced 100/10/1` |
+| `spell_range_formula`'s `Close` `base_ft` 25→26 | **498 entries FAILED**, cleared 1423 → 1181 |
+| one fixture entry's `upstream_line` +1 | `spell_range_engine_ingest_cites_the_same_upstream_bytes…` RED. (The byte-identity test stayed green — the neighbouring line also carries `RANGE:Close`. Recorded because it shows 4a is the weaker of the two and both are needed.) |
+| one fixture entry's `corpus_field` `RANGE:Close`→`RANGE:Long` | `spell_range_pinned_corpus_field_is_byte_identical_to_the_upstream_lst` RED |
+| one fixture entry's `expected.base_ft` → 26 | `spell_range_expected_values_are_re_derivable_from_the_pinned_ruleset` RED |
+| a duplicated `unit_id` | `spell_range_entries_are_present_and_one_per_unit` RED |
+| `ninja_sneak_attack_dice` `(level+1)/2` → `(level+2)/2` | `every_mapped_consumer_publishes_the_fixtured_formulas_own_quantity` RED, 6 disagreements. **The bar check stays green on this mutation** — it reads the corpus, not the consumer — which is what makes the quantity guard non-redundant. |
+
+All mutations reverted; `git status` clean of `src/` and `data/` before the gate.
+
+### 7. What moved, measured by replaying `doneness_verdict()`, never asserted
+
+```bash
+cargo run --locked --bin corpus_literal_sweep -- --json-out <scratch>/sweep.json
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out <scratch>/fixture-final.json
+CORPUS_LITERAL_SWEEP_REPORT=<scratch>/sweep.json \
+DERIVED_FIXTURE_CHECK_REPORT=<scratch>/fixture-final.json \
+  cargo run --locked --bin v06_work_inventory      # exit 0 -> zero stamp loss
+# then, per unit: pf1e_dashboard_producer.doneness_verdict(wiring_class, status, kind),
+# EXCLUDED_BOOKS={'beginner_box'}
+```
+
+| | done | held | in-progress | not-started | unmeasurable | deferred | TOTAL |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| before (`generated_at` 2026-08-19T01:10:47Z) | 12,277 | 1,677 | 1,389 | 18,030 | 5,110 | 38 | 38,521 |
+| after (`generated_at` 2026-08-19T11:38:40Z) | **12,428** | 1,526 | 1,389 | 18,030 | 5,110 | 38 | 38,521 |
+
+**31.8709 % → 32.2629 %. +151 done, −151 held; 147 `spell`, 4 `class_feature`.** Nothing
+regressed (0 verdict changes in any other direction), no unit ids added or removed, and the
+denominator is unchanged at 38,521 — **no unit left the denominator and none was proposed for
+exclusion.**
+
+`derived_evaluator_fixture_check` binary: **1276 → 1427 of 1841 covered units cleared, 0 failed,
+0 not ingested.** (1841 entries, 1427 distinct units — the 414 redundant range entries collapse.)
+
+### 8. A gate that cannot pass from a worktree — diagnosed, attributed, not fabricated
+
+`./scripts/verify.sh`'s **`site-dashboard-check` stage failed, and it is pre-existing on
+`tranche/11` and independent of this lane.** Proven, not assumed:
+
+1. Reverted `tests/fixtures/rules_core/derived-evaluator-fixtures.json` to HEAD — this lane's only
+   dashboard-adjacent artifact — and re-ran `./scripts/verify.sh --only site-dashboard-check` →
+   still `FAIL`. (The three modified `scripts/derive_*.py` generators are not invoked by
+   `publish-site-dashboard.sh`, which runs only `pf1e_dashboard_producer.py` and
+   `scripts/site/build_public_status.py`, neither touched.)
+2. Replayed the stage's exact seeding logic keeping the scratch dir, then walked the whole 1.3 MB
+   payload key by key after the script's own scrub (recursive `generated_at`/`generated_by` strip,
+   `usage`/`retrospective` dropped, engine-dump suffix scrubbed). **The only difference in the
+   entire document:**
+
+```
+/unit_index/source_document
+  committed = "/home/ubuntu/workspace/repos/codex/docs/work-inventory.json"
+  fresh     = "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0628906e-65b-4/docs/work-inventory.json"
+```
+
+The committed feed embeds the **primary checkout's absolute path**
+(`pf1e_dashboard_producer.py:4132`/`:4692`, `"source_document": doc_path`), while
+`publish-site-dashboard.sh:38` deliberately pins `PF1E_WORK_INVENTORY_DOC=$REPO_ROOT/docs/work-inventory.json`
+so a worktree never reads another tree's snapshot. The two are in direct conflict: **the stage is
+unconditionally red for every worktree-run cycle and green only from the primary checkout** —
+which is all six wave-15 lanes at once. Not fixed here: the producer is outside this lane's write
+scope and shared by all six. `OPEN-ISSUES` row 282 carries the one-line remedy (record
+`source_document` repo-relative, republish) and the mutation proof the fix must pass.
+`retro.py incident` emitted, `--recurrence-key absolute-path-in-committed-generated-artifact`.
+
+### 9. Gate
+
+`./scripts/verify.sh -j 6`, exit code captured in the same shell statement that ran it, never
+through a pipe (`./scripts/verify.sh -j 6 > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"`).
+
+```
+RESULT: FAIL — VERIFY_EXIT=1
+passed:  33   preflight-disk preflight-oracle oracle-pin-selftest producer-selftest
+              pi-redaction-selftest provenance-selftest site-dashboard-selftest
+              site-dashboard-pi-gate build-public-status-selftest site-public-status-check
+              site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest
+              reachability-audit groundtruth-guard-selftest supersession-gate-selftest
+              pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest
+              corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep
+              supersession-gate frontend-install frontend-test frontend-typecheck clippy
+              class-dump
+FAILED:   1   site-dashboard-check
+```
+
+**33 of 34 PASS. The one failure is `site-dashboard-check`, and §8 proves it is pre-existing on
+`tranche/11` and structural to running from a worktree at all — not caused by, and not fixable
+within, this lane.** Reported as a failure rather than dressed as a pass. Per the loop
+instruction's stop-vs-press-on rule this is not "a gate failing for a real finding about content
+or scope" being routed around: the finding IS the gate defect, it is recorded as `OPEN-ISSUES`
+row 282 with its remedy and its own mutation proof, and nothing was weakened, skipped,
+`#[ignore]`d or excluded to get the other 33 green.
+
+Load-bearing numbers from the run: `root-full` **7059 passed across 570 suites, all 533
+`tests/*.rs` suites executed**; `root-lib` 2042; `desktop` 463; `reach` **27 passed**;
+`corpus-sweep` **0 findings** (26105 records examined, 252158 tokens compared);
+`supersession-gate` 116 objects all clean; `site-dashboard-pi-gate` and
+`site-public-status-pi-gate` **zero declared-PI names leaked** across 13 + 31 files against 1612
+declared-PI names; `clippy` at its ceiling.
+
+**Baselines were measured but deliberately NOT raised in this lane commit.** Growth is a NOTE, not
+a failure (`verify.sh:229`'s `check_floor`), and six wave-15 lanes are each adding tests to the
+same three counters — six lanes each writing their own measured value into
+`scripts/verify-baselines.env` is a guaranteed six-way conflict on a file whose correct value can
+only be known after the merge. Wave 14's own baseline block is written that way for exactly this
+reason ("+35, consistent with the six merged lanes'"). **This lane's own contribution, for the
+integration cycle to fold in:** `ROOT_FULL_TESTS` +7 and `ROOT_TEST_BINARIES` +2 — the 5 tests in
+`tests/derived_evaluator_fixture_check_spell_range.rs` and the 2 in
+`tests/derived_evaluator_fixture_check_class_feature_consumer_quantity.rs`. `ROOT_LIB_TESTS`
+unchanged (no new `#[cfg(test)]` code in `src/`); `DESKTOP_TESTS`, `FRONTEND_TEST_FILES`,
+`CORPUS_LITERAL_RECORDS`, `COMPUTED_CLASSES` unchanged — this cycle added no desktop test, no
+frontend test, no corpus record and no class.
+
+### 10. What this cycle did NOT do
+
+* **`docs/work-inventory.json` and the site feed are deliberately NOT committed.** The guarded
+  regen was run and measured (§7) and then reverted with `git checkout -- docs/work-inventory.json`.
+  Six wave-15 lanes are live on separate branches; six 25 MB regenerated inventories would
+  conflict on every merge and each would be stale the moment the next lane merged. **The
+  integration cycle must run the guarded regen once, after merging all six lanes' fixtures, and
+  then `./scripts/publish-site-dashboard.sh` per `loop-instruction.md` override 10.** The +151
+  is not on the board until it does.
+* **The 8 pre-existing `class_feature` fixtures are not covered by the new quantity guard.** Each
+  of their consumers is reached only under its own posture (a recorded rage-power selection, an
+  archetype-free Fighter, a specific Paladin level gate) — per-unit setup work, not a missing
+  assertion. Named follow-on, not an assumed pass.
+* **`spell_entries` (898, the DURATION family) still has no provenance-guarantee test file.** This
+  cycle added one for `spell_range_entries` and proved the DURATION family re-derives
+  byte-identically from the pinned oracle, which is strong but is not the same assertion. Named
+  follow-on.
+* **DoD-8 on-screen driving was not re-run, and the reason is that no surface changed.** This
+  cycle widened a *fixture*, not a *consumer*: `all_spell_caster_level_ranges` (which feeds
+  `spell_catalog.rs`'s `range_for` → `SpellCatalogEntryDto::range` →
+  `SpellCatalogScreen.tsx:300`'s `Range: {entry.range}`) walks every book and returns
+  **everything parseable**, deliberately not only the fixtured units — its own doc comment says so
+  — so all 147 were already rendering before this cycle. Traced one end to end rather than
+  asserting it: `advanced_class_guide:spell:anonymous_interaction` is
+  `rules_tables/acg/spell_list.rs:137`'s `SpellListEntry { key: "Anonymous Interaction", … }`, the
+  exact `record_key` the new fixture pins; `range_for(BOOK_ACG, "Anonymous Interaction")` resolves
+  `("advanced_class_guide", "Anonymous Interaction")` in that map — the same `(book dir,
+  data.key)` pair the bar check just cleared — and `format_spell_range_formula` renders it
+  `"25 ft. + 5 ft. per 2 caster levels"`. Wave 14's own on-screen verification of that field is
+  the standing evidence for the pixels. **Stated as the inference it is, not as a screenshot.**
+* **The 29 remaining `class_feature` units and the 248 remaining held `spell` units** are named
+  with their structural reasons in §3 and the census, not deferred. The remaining 248 held
+  `spell` units, censused against their own pinned upstream rows so the next lane inherits a real
+  map rather than a total:
+  * **60 are `wiring_class = ambiguous`**, which this seam structurally cannot move —
+    `apply_done_rung_stamps` gates entry on the `match` over `wiring_class` and never stamps
+    `Ambiguous`, by design (`doneness_verdict` caps `ambiguous` + any evidence at `held` because
+    the unit's own bar is unknown). Their lever is the wiring classifier, not the fixture.
+  * **58 are `inner_sea_gods`**, not one of the eight books
+    `spell_resolver::spell_catalog_rows()` chains, so there is no
+    `data/corpus/inner_sea_gods/spell/` for either seam to evaluate against.
+  * **4 are the named APG cache gap** above.
+  * The rest carry no caster-level formula for either seam to verify: 76 `DURATION:Instantaneous`,
+    207 with a `RANGE:` that is `Touch`/`Personal`/a literal distance/`See text`, and the
+    `CASTERLEVEL`-bearing durations among them are the `min(`/`max(`-clamped,
+    `Concentration, up to …` and alternation shapes both seams refuse rather than guess. That is
+    a real statement about the records, not a gap in the instrument.
+* **Nothing was proposed for the Structural Exclusion Register, and nothing left the
+  denominator.** It stayed 38,521 across both regens. Race attribution untouched; the
+  Supersession Register untouched.
