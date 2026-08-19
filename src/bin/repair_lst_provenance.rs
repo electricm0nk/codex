@@ -79,11 +79,14 @@ fn main() {
 
     let mut upgraded = 0usize;
     let mut refused = 0usize;
+    let mut refreshed = 0usize;
     for (book_id, r) in &totals {
         println!(
-            "{book_id}: {} record(s) narrowed to an lst_token citation, {} already cited, {} refused, of {} read",
+            "{book_id}: {} record(s) narrowed to an lst_token citation, {} already cited ({} \
+             stale wiring_class refreshed), {} refused, of {} read",
             r.upgraded.len(),
             r.already_cited,
+            r.wiring_class_refreshed.len(),
             r.refused.len(),
             r.records_seen
         );
@@ -92,8 +95,12 @@ fn main() {
         }
         upgraded += r.upgraded.len();
         refused += r.refused.len();
+        refreshed += r.wiring_class_refreshed.len();
     }
-    println!("repair-lst-provenance: {upgraded} narrowed, {refused} refused");
+    println!(
+        "repair-lst-provenance: {upgraded} narrowed, {refreshed} stale wiring_class refreshed, \
+         {refused} refused"
+    );
 
     if check_only && upgraded > 0 {
         eprintln!("--check: {upgraded} record(s) would change; run without --check to write them");

@@ -131,6 +131,10 @@ pub struct RepairReport {
     pub records_seen: usize,
     /// Records left alone, each with the reason.
     pub refused: Vec<Refusal>,
+    /// Records already narrowed on a previous run whose stale
+    /// `ambiguous`/`no_corpus_line` wiring class was corrected this run.
+    /// `SD31-W14-INTEGRATE-001`; see `refreshed_wiring_class`.
+    pub wiring_class_refreshed: Vec<String>,
 }
 
 /// Every numeric value the closure states under `<lst_key>:`. Mirrors
@@ -200,7 +204,7 @@ fn decide(
     row: &str,
     identities: &BTreeSet<String>,
     mod_index: &BTreeMap<String, Vec<String>>,
-) -> Result<(Value, Value), Refusal> {
+) -> Result<(Value, Value, (String, Vec<String>)), Refusal> {
     if is_copy_row(row) {
         return Err(Refusal::CopyRowNotResolved(record_path.to_string()));
     }
@@ -249,7 +253,46 @@ fn decide(
             "record_key": record_key,
         }),
         web_source.clone(),
+        refreshed_wiring_class(row, identities, mod_index),
     ))
+}
+
+/// The record's `wiring_class`/`wiring_class_signals`, recomputed from the
+/// row this repair just cited.
+///
+/// **CONFIRMED finding, `SD31-W14-INTEGRATE-001` adversarial review of
+/// `SD31-E6-F5-005`.** A `web_second_source` record has no corpus line, so
+/// `wiring_class::classify` correctly stamped it `ambiguous` /
+/// `["no_corpus_line"]`. Narrowing its citation to a real `.lst` row makes
+/// that stamp FALSE, and the repair left it in place: 82 of the 412 repaired
+/// records shipped asserting `no_corpus_line` while carrying a `source.path`
+/// and a `source.line`. The board is unaffected — `v06_work_inventory`
+/// recomputes the class fresh from the oracle rows
+/// (`wiring_class::determine_closure`, `v06_work_inventory.rs:7678`) and never
+/// reads the stored field — but a record that contradicts itself is exactly
+/// the drift this program keeps paying for, and `v06_corpus_trap_report
+/// --audit` reads the stored value.
+///
+/// Uses the SAME closure the magnitude check above is verified against: the
+/// cited row plus every `.MOD` row addressing this record's identities. It
+/// cannot reach a WEAKER class than the record had, because `ambiguous` /
+/// `no_corpus_line` is by construction the class of a record with no row at
+/// all.
+fn refreshed_wiring_class(
+    row: &str,
+    identities: &BTreeSet<String>,
+    mod_index: &BTreeMap<String, Vec<String>>,
+) -> (String, Vec<String>) {
+    let mut rows: Vec<String> = vec![row.to_string()];
+    for identity in identities {
+        if let Some(mods) = mod_index.get(identity) {
+            rows.extend(mods.iter().cloned());
+        }
+    }
+    let row_refs: Vec<Option<&str>> = rows.iter().map(|r| Some(r.as_str())).collect();
+    let signals = crate::rules_core::wiring_class::closure_signals(&row_refs);
+    let (class, _reason) = crate::rules_core::wiring_class::classify(&signals);
+    (class.id().to_string(), signals.into_iter().collect())
 }
 
 /// Repairs every `web_second_source` equipment record under `records_dir`.
@@ -299,6 +342,64 @@ pub fn repair_book(
             != Some("web_second_source")
         {
             report.already_cited += 1;
+            // SELF-HEALING PASS (`SD31-W14-INTEGRATE-001`). A record this tool
+            // already narrowed on a previous run keeps the `ambiguous` /
+            // `no_corpus_line` wiring class it legitimately carried while it
+            // had no citation — 82 shipped that way. Re-running the tool now
+            // corrects them, from the row the record itself cites, so the fix
+            // is a re-run rather than a one-off script nobody can repeat. See
+            // `refreshed_wiring_class`.
+            let asserts_no_corpus_line = root
+                .get("wiring_class_signals")
+                .and_then(Value::as_array)
+                .is_some_and(|a| a.iter().any(|v| v.as_str() == Some("no_corpus_line")));
+            if !asserts_no_corpus_line || root.get("description_source").is_none() {
+                continue;
+            }
+            let (Some(cited_path), Some(cited_line)) = (
+                root.pointer("/source/path").and_then(Value::as_str).map(str::to_string),
+                root.pointer("/source/line").and_then(Value::as_u64),
+            ) else {
+                continue;
+            };
+            let Some(rel) = cited_path.strip_prefix(&format!("{book_rel_dir}/")) else {
+                continue;
+            };
+            let abs_lst = book_dir.join(rel);
+            let lines = match line_cache.get(&abs_lst) {
+                Some(l) => l,
+                None => {
+                    let Ok(text) = std::fs::read_to_string(&abs_lst) else { continue };
+                    let l: Vec<String> = text.lines().map(str::to_string).collect();
+                    line_cache.entry(abs_lst.clone()).or_insert(l)
+                }
+            };
+            let Some(cited_row) = lines.get((cited_line as usize).saturating_sub(1)).cloned()
+            else {
+                continue;
+            };
+            let data = root.get("data").cloned().unwrap_or(Value::Null);
+            let identities: BTreeSet<String> = ["key", "name"]
+                .iter()
+                .filter_map(|f| data.get(*f).and_then(Value::as_str))
+                .map(str::to_string)
+                .filter(|s| !s.is_empty())
+                .collect();
+            let (class, signals) = refreshed_wiring_class(&cited_row, &identities, &mod_index);
+            if let Value::Object(map) = &mut root {
+                map.insert("wiring_class".to_string(), Value::String(class));
+                map.insert(
+                    "wiring_class_signals".to_string(),
+                    Value::Array(signals.into_iter().map(Value::String).collect()),
+                );
+            }
+            if write {
+                let mut out = serde_json::to_string_pretty(&root)
+                    .expect("a Value re-serializes; it was just parsed from JSON");
+                out.push('\n');
+                std::fs::write(&path, out)?;
+            }
+            report.wiring_class_refreshed.push(record_path);
             continue;
         }
         let data = root.get("data").cloned().unwrap_or(Value::Null);
@@ -363,10 +464,20 @@ pub fn repair_book(
             &mod_index,
         ) {
             Err(refusal) => report.refused.push(refusal),
-            Ok((new_source, description_source)) => {
+            Ok((new_source, description_source, (wiring_class, wiring_class_signals))) => {
                 root["source"] = new_source;
                 if let Value::Object(map) = &mut root {
                     map.insert("description_source".to_string(), description_source);
+                    // See `refreshed_wiring_class`: the record's stored class
+                    // was `ambiguous`/`no_corpus_line` precisely BECAUSE it had
+                    // no citation, and it now has one.
+                    map.insert("wiring_class".to_string(), Value::String(wiring_class));
+                    map.insert(
+                        "wiring_class_signals".to_string(),
+                        Value::Array(
+                            wiring_class_signals.into_iter().map(Value::String).collect(),
+                        ),
+                    );
                 }
                 if write {
                     let mut out = serde_json::to_string_pretty(&root)
@@ -422,7 +533,7 @@ mod tests {
     #[test]
     fn a_corpus_backed_record_is_narrowed_to_an_lst_token_citation() {
         let data = json!({"key": "Abacus", "name": "Abacus", "cost_gp": 2.0, "weight": 2.0});
-        let (source, desc_source) = decide(
+        let (source, desc_source, (wiring_class, wiring_class_signals)) = decide(
             "r.json",
             &data,
             &web("https://legacy.aonprd.com/x"),
@@ -445,6 +556,16 @@ mod tests {
         // The web citation is moved, never dropped.
         assert_eq!(desc_source["kind"], "web_second_source");
         assert_eq!(desc_source["url"], "https://legacy.aonprd.com/x");
+        // `SD31-W14-INTEGRATE-001`: the stale `ambiguous`/`no_corpus_line`
+        // stamp a citation-less record legitimately carried is refreshed from
+        // the row that was just cited -- it now HAS a corpus line, and a
+        // record asserting it does not is a contradiction the repair itself
+        // created.
+        assert_ne!(wiring_class, "ambiguous");
+        assert!(
+            !wiring_class_signals.iter().any(|s| s == "no_corpus_line"),
+            "a narrowed record must not keep asserting no_corpus_line: {wiring_class_signals:?}"
+        );
     }
 
     /// The check that makes the upgrade mean something: a shipped cost the

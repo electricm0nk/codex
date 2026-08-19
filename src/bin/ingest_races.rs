@@ -1350,6 +1350,7 @@ fn main() {
             pi_marker: None,
             wiring_class,
             wiring_class_signals,
+            description_source: None,
         };
         let race_slug = slugify(&race_key);
         write_record(&out_root.join(spec.book).join("race").join(format!("{race_slug}.json")), &record);
@@ -1581,6 +1582,7 @@ fn main() {
                 pi_marker,
                 wiring_class,
                 wiring_class_signals,
+                description_source: None,
             };
             write_record(&trait_dir.join(format!("{slug}.json")), &record);
             trait_count += 1;

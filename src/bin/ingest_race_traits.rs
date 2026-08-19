@@ -1491,6 +1491,7 @@ fn ingest_book(book: &BookSource) {
             pi_marker,
             wiring_class,
             wiring_class_signals,
+            description_source: None,
         };
 
         let path = out_root.join(slugify(&row.race_key)).join(format!("{}.json", slugify(&row.key)));

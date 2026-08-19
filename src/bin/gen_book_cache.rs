@@ -667,6 +667,7 @@ fn gen_pathfinder_unchained() {
                     pi_marker,
                     wiring_class,
                     wiring_class_signals,
+                    description_source: None,
                 };
                 let path = out_root.join("feat").join(format!("{}.json", slugify(entry.key)));
                 write_record(&path, &record);
@@ -720,6 +721,7 @@ fn gen_pathfinder_unchained() {
                     pi_marker,
                     wiring_class,
                     wiring_class_signals,
+                    description_source: None,
                 };
                 let base_slug = slugify(entry.name);
                 let count = used_slugs.entry(base_slug.clone()).or_insert(0);
@@ -850,6 +852,7 @@ fn gen_advanced_race_guide() {
                     pi_marker,
                     wiring_class,
                     wiring_class_signals,
+                    description_source: None,
                 };
                 let base = slugify(entry.key);
                 let slug = if spell_slugs_used.insert(base.clone()) {
@@ -956,6 +959,7 @@ fn gen_advanced_race_guide() {
                     pi_marker,
                     wiring_class,
                     wiring_class_signals,
+                    description_source: None,
                 };
                 let used = equipment_slugs_used.entry(category_slug).or_default();
                 let base = slugify(entry.key);
@@ -1033,6 +1037,7 @@ fn gen_advanced_race_guide() {
                     pi_marker,
                     wiring_class,
                     wiring_class_signals,
+                    description_source: None,
                 };
                 let used = feat_slugs_used.entry(category_slug).or_default();
                 let base = slugify(entry.key);
@@ -1369,6 +1374,7 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
             pi_marker: None,
             wiring_class,
             wiring_class_signals,
+            description_source: None,
         };
         write_record(&out_path, &record);
         monster_written += 1;
@@ -1428,6 +1434,7 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
             pi_marker: None,
             wiring_class,
             wiring_class_signals,
+            description_source: None,
         };
         write_record(&out_path, &record);
         ability_written += 1;
@@ -1666,6 +1673,7 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
             pi_marker: None,
             wiring_class,
             wiring_class_signals,
+            description_source: None,
         };
         write_record(
             &out_root.join("companion").join(format!("{}.json", slugify(companion.key))),
@@ -1732,6 +1740,7 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
             pi_marker: None,
             wiring_class,
             wiring_class_signals,
+            description_source: None,
         };
         write_record(
             &out_root.join("companion").join(format!("{}.json", slugify(ability.key))),

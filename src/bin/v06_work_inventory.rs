@@ -2411,6 +2411,31 @@ struct EngineFacts {
     /// player, by lowercase race key -> the corpus book its chassis record
     /// was loaded from. See [`probe_race_creation_roster`].
     race_creation_roster: BTreeMap<String, String>,
+    /// Every race id `pilot_compute` really carries a magnitude consumer for
+    /// (`race_ids_with_a_magnitude_consumer`), lowercase.
+    ///
+    /// **Why this gates `Kind::Race` and only for `wiring_class: computed`
+    /// (`SD31-W14-INTEGRATE-001`).** The creation-roster observation above is
+    /// a real consumer observation, but the adversarial review of
+    /// `SD31-E1-F3-001` measured that it refuses nothing over the live corpus:
+    /// replacing `race_creation_chassis`'s entire body with an unconditional
+    /// `Ok(..)` left the board at exactly 37 done / 66 not-started, because
+    /// there are exactly 37 race records on disk and all 37 state a magnitude.
+    /// For the 27 `static` units that is harmless -- `grounded` only UNBLOCKS
+    /// `apply_done_rung_stamps`, which independently requires a
+    /// `corpus_literal_sweep` byte-verification against the pinned oracle
+    /// before the unit reads `done`. For a `computed` unit there is no second
+    /// check at all: `doneness_verdict` maps `computed` + `grounded` straight
+    /// to `done`. That let three races (Aasimar, Tiefling, Changeling) reach
+    /// `done` on strictly LESS evidence than a `static` race needs -- Decision
+    /// 1(a)'s "evidence weaker than its class actually requires".
+    ///
+    /// The instrument used here is not a new one: it is the same
+    /// `race_ids_with_a_magnitude_consumer` seam `SD31-W12-INTEGRATE-001`
+    /// introduced when it demoted 251 `race_trait` units credited on a
+    /// load-only observation. Applying it one axis over keeps the two kinds'
+    /// bars consistent.
+    race_magnitude_consumer_races: BTreeSet<String>,
     /// Race trait identities the engine grounds, as `<race>.<trait slug>`.
     ///
     /// CRB's seven compiled races only. Kept as the FALLBACK rule beneath
@@ -2516,18 +2541,68 @@ impl EngineFacts {
         self.holds_key(book, &unit.kind, &unit.key, &unit.name)
     }
 
+    /// The STRICT twin of [`Self::holds_unit`]: the unit's own `key` must be
+    /// in the book's table, and a match on the unit's `name` alone does NOT
+    /// count.
+    ///
+    /// CONFIRMED finding, `SD31-W14-INTEGRATE-001` adversarial review of
+    /// `SD31-CE-COMPANION-001`: [`Self::holds_key`]'s `set.contains(key) ||
+    /// set.contains(name)` is a deliberate convenience for the kinds whose
+    /// identity really is their display name, but it is WRONG as an
+    /// attribution signal for a `<Group> ~ <Facet>`-keyed row, because such a
+    /// row's `name` is its bare facet. Measured: 13 `bestiary`
+    /// `monster_ability` units whose OWN `corpus_key` is absent from the
+    /// chassis table (`Regeneration ~ Acid`, `~ Acid/Cold`, `~ Acid/Cold/Fire`,
+    /// `~ Epic`, `~ Fire or Good Spells`, and `Universal Monster Rule ~
+    /// {Burn, Change Shape, Grab, Light Blindness, Light Sensitivity,
+    /// Telepathy, Trip, Whirlwind}`) were promoted to `grounded` off a
+    /// DIFFERENT row whose key equalled their name -- the bare `Regeneration`
+    /// / `Burn` / `Grab` rows. None of the 13 has a corpus record of its own,
+    /// so they sit outside `reach_gate`'s denominator and no gate could
+    /// catch it.
+    ///
+    /// Used by the `decisions.md §9` re-attribution widening below, which is
+    /// the one caller that is CREATING a credit rather than choosing between
+    /// two hosts that both already hold the content.
+    fn holds_unit_by_key(&self, book: &str, unit: &CorpusUnit) -> bool {
+        if matches!(unit.kind, Kind::RaceTrait)
+            && self.race_trait_engine_book(unit) == Some(book)
+        {
+            return true;
+        }
+        self.holds_key_inner(book, &unit.kind, &unit.key, &unit.name, false)
+    }
+
     /// Whether one book's own compiled table holds this unit's identity.
     /// Used to attribute a shared-library record to the book that really
     /// ingested it rather than to an arbitrary one of its hosts.
     fn holds_key(&self, book: &str, kind: &Kind, key: &str, name: &str) -> bool {
+        self.holds_key_inner(book, kind, key, name, true)
+    }
+
+    /// [`Self::holds_key`]'s body, with the name fallback made explicit.
+    /// `name_fallback == false` requires the unit's own `key`; see
+    /// [`Self::holds_unit_by_key`] for the defect that made the distinction
+    /// load-bearing.
+    fn holds_key_inner(
+        &self,
+        book: &str,
+        kind: &Kind,
+        key: &str,
+        name: &str,
+        name_fallback: bool,
+    ) -> bool {
         let hit = |set: Option<&BTreeSet<String>>| {
-            set.map(|s| s.contains(key) || s.contains(name)).unwrap_or(false)
+            set.map(|s| s.contains(key) || (name_fallback && s.contains(name))).unwrap_or(false)
         };
         // The chassis tables are indexed lowercase, because the corpus and the
         // inventory disagree on case for a handful of rows.
         let hit_lowercase = |set: Option<&BTreeSet<String>>| {
-            set.map(|s| s.contains(&key.to_lowercase()) || s.contains(&name.to_lowercase()))
-                .unwrap_or(false)
+            set.map(|s| {
+                s.contains(&key.to_lowercase())
+                    || (name_fallback && s.contains(&name.to_lowercase()))
+            })
+            .unwrap_or(false)
         };
         match kind {
             Kind::Feat => hit(self.feat_keys.get(book)),
@@ -2535,7 +2610,7 @@ impl EngineFacts {
             Kind::Spell => self
                 .spell_levels
                 .get(book)
-                .map(|t| t.contains_key(key) || t.contains_key(name))
+                .map(|t| t.contains_key(key) || (name_fallback && t.contains_key(name)))
                 .unwrap_or(false),
             // Races, race traits and monsters each live in exactly one book's
             // module (`crb::race_tables`, `beastiary1`), so the book gate is
@@ -2550,7 +2625,9 @@ impl EngineFacts {
             // consulting only the chassis would demote the 46. Both halves have
             // to answer, because the book really is in both places.
             Kind::Monster => {
-                (book == "bestiary_1" && self.monster_names.contains(&name.to_lowercase()))
+                (name_fallback
+                    && book == "bestiary_1"
+                    && self.monster_names.contains(&name.to_lowercase()))
                     || hit_lowercase(self.chassis_monster_keys.get(book))
             }
             Kind::MonsterAbility => hit_lowercase(self.chassis_monster_ability_keys.get(book)),
@@ -4226,6 +4303,8 @@ fn gather_engine_facts(
         .collect();
     let race_trait_probe = probe_race_trait_corpus(repo_root);
     let race_creation_roster = probe_race_creation_roster(repo_root);
+    let race_magnitude_consumer_races: BTreeSet<String> =
+        race_ids_with_a_magnitude_consumer().iter().map(|r| r.to_lowercase()).collect();
 
     // The class consumer-delta probe, over exactly the classes the engine
     // models. Runs BEFORE the union sweep below because it asks a different
@@ -4285,6 +4364,7 @@ fn gather_engine_facts(
         class_feature_effect_wired: BTreeMap::new(),
         race_names,
         race_creation_roster,
+        race_magnitude_consumer_races,
         race_trait_ids,
         race_trait_probe,
         explanation_ids,
@@ -5007,11 +5087,16 @@ fn classify(
     // holds it the record is left unattributed rather than assigned to a host
     // at random.
     // `unit.source_book`, deliberately, not `unit.book`: this resolves
-    // which REAL engine consumer table serves this content (e.g.
-    // `RuleSetId::Ce`'s `companion_chassis::COMPANION_BOOKS["core_essentials"]`
-    // for companion/familiar content this engine has always served under
-    // that id, regardless of which real-world book a given row's text
-    // originates from). `unit.book` is the TRUE reporting attribution
+    // which REAL engine consumer table serves this content -- the book whose
+    // compiled rule set the row is actually served from, regardless of which
+    // real-world book a given row's text originates from. (The worked example
+    // this comment used to give, `RuleSetId::Ce`'s
+    // `companion_chassis::COMPANION_BOOKS["core_essentials"]`, was RETIRED by
+    // `SD31-CE-COMPANION-001` when those 102 companion rows were re-filed
+    // under the books their own `.lst` headers name; the re-attribution
+    // widening below is what now covers that case. Comment corrected
+    // `SD31-W14-INTEGRATE-001` -- it cited a registration this same wave
+    // deleted.) `unit.book` is the TRUE reporting attribution
     // (`SD31-ATTRIB-001`) and may now name a book with no such table at all
     // -- using it here silently downgraded 16 already-`grounded` companion
     // units to `not-ingested` (`companion_absent_from_bestiary_1_companion_tables`)
@@ -5071,18 +5156,34 @@ fn classify(
     // `reach_gate::companions_reach` went from 102 unreachable records to zero.
     // Two instruments, opposite directions, and the board's was the wrong one.
     //
-    // **This can only ever widen.** It fires only when the `source_book`-derived
-    // book does NOT hold the unit and the re-attributed `book` DOES, so the
-    // 16-unit downgrade the comment above records (using `unit.book` outright)
-    // cannot recur: that downgrade happened because Bestiary 1 had no companion
-    // table of its own, and an OBSERVED hit is exactly the condition that was
-    // missing. It is the same "credited to a host only when that host's own
+    // **This can only ever widen**, and that property is now pinned by
+    // `reattribution_widening_tests` below rather than only asserted here.
+    // It fires only when the `source_book`-derived book does NOT hold the unit
+    // and the re-attributed `book` DOES hold it BY ITS OWN KEY, so the 16-unit
+    // downgrade the comment above records (using `unit.book` outright) cannot
+    // recur: that downgrade happened because Bestiary 1 had no companion
+    // table of its own, and an observed key hit is exactly the condition that
+    // was missing. It is the same "credited to a host only when that host's own
     // table is observed to hold it" rule the shared-library branch above
-    // already applies, asked of the re-attributed book instead of a pcc host.
+    // already applies, asked of the re-attributed book instead of a pcc host --
+    // tightened to the unit's own key, because unlike that branch this one
+    // mints a credit that did not exist.
+    //
+    // CORRECTED `SD31-W14-INTEGRATE-001` (adversarial review, CONFIRMED
+    // finding, severity high): the guard below calls
+    // [`EngineFacts::holds_unit_by_key`], NOT `holds_unit`. `holds_unit`
+    // delegates to `holds_key`, whose predicate is `set.contains(key) ||
+    // set.contains(name)`; on a `<Group> ~ <Facet>`-keyed row the `name` is
+    // the bare facet, so 13 `bestiary` `monster_ability` units with no
+    // chassis row and no corpus record of their own were credited off a
+    // DIFFERENT row whose key equalled their name. The widening CREATES a
+    // credit rather than choosing between two hosts that both already hold
+    // the content, so it is the one caller that must require the unit's own
+    // key. See `holds_unit_by_key`'s doc comment for the 13 names.
     let reattributed_engine_book = engine_book_for(&unit.book).filter(|reattributed| {
         *reattributed != engine_book
             && !facts.holds_unit(&engine_book, unit)
-            && facts.holds_unit(reattributed, unit)
+            && facts.holds_unit_by_key(reattributed, unit)
     });
     let engine_book = match reattributed_engine_book {
         Some(b) => b.to_string(),
@@ -5558,6 +5659,30 @@ fn classify(
                 } else {
                     Some(observed.to_string())
                 };
+                // `SD31-W14-INTEGRATE-001`: a `computed` race needs a real
+                // magnitude consumer, not just a seat on the roster. See
+                // `EngineFacts::race_magnitude_consumer_races` for the
+                // measurement behind this guard. `static`/`derived`/`display`
+                // are unaffected: for them `grounded` only unblocks the
+                // independent `corpus_literal_sweep` stamp, which is the
+                // second check `computed` does not get.
+                let computed_without_a_consumer = wc_class == "computed"
+                    && !facts.race_magnitude_consumer_races.contains(&unit.name.to_lowercase());
+                if computed_without_a_consumer {
+                    return Verdict {
+                        status: "ingested-magnitude",
+                        evidence:
+                            "race_offered_by_the_roster_but_no_pilot_compute_magnitude_consumer"
+                                .to_string(),
+                        reason: Some(
+                            "wiring_class computed reaches done from grounded with no second \
+                             check, so roster membership alone is weaker evidence than a static \
+                             race's byte-verified stamp (SD31-W14-INTEGRATE-001)"
+                                .to_string(),
+                        ),
+                        engine_book: engine_book_for_verdict,
+                    };
+                }
                 return Verdict {
                     status: "grounded",
                     evidence: "race_offered_by_the_real_character_creation_roster".to_string(),
@@ -9170,18 +9295,104 @@ mod race_trait_grounding_tests {
         assert_eq!(verdict.evidence, "race_absent_from_the_character_creation_roster");
     }
 
-    /// The probe promotes a MINORITY of the kind's units, measured over the
-    /// real corpus rather than asserted. If this ever reaches every race on
-    /// the board, the probe has stopped discriminating and this test says so
-    /// before a receipt quotes the number.
+    /// `SD31-W14-INTEGRATE-001`, CONFIRMED adversarial finding (high): a
+    /// `wiring_class: computed` race reaches board `done` STRAIGHT from
+    /// `grounded` -- `doneness_verdict` has no second check for that class --
+    /// so roster membership alone was weaker evidence than the byte-verified
+    /// `corpus_literal_sweep` stamp a `static` race additionally needs.
+    /// Aasimar, Tiefling and Changeling reached `done` that way. A computed
+    /// race now has to carry a real `pilot_compute` magnitude consumer, the
+    /// same `race_ids_with_a_magnitude_consumer` seam `SD31-W12-INTEGRATE-001`
+    /// used to demote 251 load-only `race_trait` credits.
     #[test]
-    fn the_creation_roster_covers_a_minority_of_the_boards_race_rows() {
+    fn a_computed_race_with_no_pilot_compute_consumer_is_refused_grounded() {
+        let mut facts = EngineFacts {
+            race_creation_roster: probe_race_creation_roster(&probe_root()),
+            ..Default::default()
+        };
+        facts.race_magnitude_consumer_races =
+            race_ids_with_a_magnitude_consumer().iter().map(|r| r.to_lowercase()).collect();
+        let unit = race_unit("advanced_race_guide", "Aasimar", "arg_races.lst", 1);
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(verdict.status, "ingested-magnitude");
+        assert_eq!(
+            verdict.evidence,
+            "race_offered_by_the_roster_but_no_pilot_compute_magnitude_consumer"
+        );
+    }
+
+    /// The guard is narrow, in both directions. A CRB race with a real
+    /// `explain_<race>_race_seam` still grounds at `computed`, and a
+    /// `static` race is untouched by the guard entirely -- for it `grounded`
+    /// only unblocks the independent literal-verified stamp.
+    #[test]
+    fn a_seamed_computed_race_still_grounds_and_static_races_are_untouched() {
+        let mut facts = EngineFacts {
+            race_creation_roster: probe_race_creation_roster(&probe_root()),
+            ..Default::default()
+        };
+        facts.race_magnitude_consumer_races =
+            race_ids_with_a_magnitude_consumer().iter().map(|r| r.to_lowercase()).collect();
+
+        let seamed = race_unit("core_rulebook", "Dwarf", "crb_races.lst", 1);
+        let seamed_verdict =
+            classify(&seamed, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_eq!(seamed_verdict.status, "grounded");
+
+        let unseamed_static = race_unit("advanced_race_guide", "Aasimar", "arg_races.lst", 1);
+        let static_verdict =
+            classify(&unseamed_static, &facts, &BTreeSet::new(), false, true, "static", false);
+        assert_eq!(static_verdict.status, "grounded");
+        assert_eq!(
+            static_verdict.evidence,
+            "race_offered_by_the_real_character_creation_roster"
+        );
+    }
+
+    /// CORRECTED `SD31-W14-INTEGRATE-001`. This test used to be cited as a
+    /// PROMOTION-RATE bound -- "so a `SD28-E14-F1`-shaped 100 %-promotion
+    /// probe goes red". It is not one, and the adversarial review proved it:
+    /// replacing `race_creation_chassis`'s whole body with an unconditional
+    /// `Ok(..)` leaves this test green, because the probe is already at 100 %
+    /// promotion over the population it can see (37 race records on disk, 37
+    /// offered). Its old `20..=60` band was ALSO a false alarm waiting to
+    /// happen in the other direction: 37 shipped + the 22 remaining playable
+    /// races = 59, two short of turning it red on legitimate completion.
+    ///
+    /// What it really checks, and all it now claims to check, is a corpus
+    /// SHAPE invariant: the roster can never offer more races than the corpus
+    /// carries chassis records for, and never zero. The discrimination claim
+    /// belongs to `every_offered_race_states_a_real_ability_magnitude` and to
+    /// `rules_core::race_creation`'s own refusal tests, which DO go red under
+    /// that mutation.
+    #[test]
+    fn the_creation_roster_never_offers_more_races_than_the_corpus_carries() {
         let offered = probe_race_creation_roster(&probe_root());
+        let books = app_race_corpus_books(&probe_root());
+        let on_disk: usize = books
+            .iter()
+            .map(|b| {
+                std::fs::read_dir(probe_root().join("data/corpus").join(b).join("race"))
+                    .map(|d| {
+                        d.filter_map(Result::ok)
+                            .filter(|e| {
+                                e.path().extension().and_then(|x| x.to_str()) == Some("json")
+                                    && e.file_name() != "LICENSE.json"
+                            })
+                            .count()
+                    })
+                    .unwrap_or(0)
+            })
+            .sum();
         assert!(
-            (20..=60).contains(&offered.len()),
-            "the creation roster offered {} races -- outside the plausible band for a \
-             corpus with a per-race chassis file each; re-derive before trusting it",
+            offered.len() <= on_disk,
+            "the creation roster offered {} races but only {on_disk} race chassis records are \
+             on disk -- the probe is inventing races",
             offered.len()
+        );
+        assert!(
+            !offered.is_empty(),
+            "the creation roster offered zero races; the probe, not the corpus, is broken"
         );
     }
 
@@ -13440,5 +13651,116 @@ mod core_essentials_book_attribution_tests {
              moved and needs re-deriving, not just bumping"
         );
         assert!(RACE_NEWEST_PRINTING.iter().all(|(_, book)| *book == "advanced_race_guide"));
+    }
+}
+
+/// `SD31-W14-INTEGRATE-001` — the `decisions.md §9` re-attribution widening
+/// (`SD31-CE-COMPANION-001`) shipped with ZERO test coverage: the adversarial
+/// review's `grep -rn 'reattributed_engine_book' src/ tests/ apps/` returned
+/// only the four implementation lines. The whole of that lane's board movement
+/// (-189 `not-ingested`) came out of a mechanism nothing pinned, so a
+/// non-monotone edit to its three-clause filter would have failed no gate —
+/// Decision 1(a)'s "a gate that cannot fail is worse than no gate", in its
+/// most literal form.
+///
+/// These tests pin the two properties the widening's own comment claims:
+/// it fires ONLY on an observed hit in the re-attributed book's own table
+/// (monotonicity), and that hit must be on the unit's OWN key, never on a
+/// different row whose key happens to equal this unit's bare name.
+#[cfg(test)]
+mod reattribution_widening_tests {
+    use super::*;
+
+    /// A `<Group> ~ <Facet>` monster-ability row that `core_essentials`
+    /// enumerated but Bestiary 1's chassis really serves.
+    fn ce_monster_ability_unit(key: &str, name: &str) -> CorpusUnit {
+        CorpusUnit {
+            book: "bestiary".to_string(),
+            source_book: "core_essentials".to_string(),
+            kind: Kind::MonsterAbility,
+            key: key.to_string(),
+            name: name.to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance {
+                file: "ce_abilities_race.lst".to_string(),
+                line: 1,
+            },
+            magnitude_token_count: 1,
+            type_facet: None,
+            visible: true,
+        }
+    }
+
+    fn facts_with_bestiary_1_chassis(keys: &[&str]) -> EngineFacts {
+        let mut facts = EngineFacts::default();
+        let set = facts.chassis_monster_ability_keys.entry("bestiary_1").or_default();
+        for k in keys {
+            set.insert(k.to_lowercase());
+        }
+        facts
+    }
+
+    /// THE WIDENING WORKS: when Bestiary 1's own table really holds this
+    /// row's key, the unit is credited to `bestiary_1` rather than left
+    /// stranded on the `core_essentials` rule set that no longer serves it.
+    #[test]
+    fn a_reattributed_row_whose_own_key_is_in_the_new_books_table_is_credited_there() {
+        let facts = facts_with_bestiary_1_chassis(&["Universal Monster Rule ~ Grab"]);
+        let unit = ce_monster_ability_unit("Universal Monster Rule ~ Grab", "Grab");
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "static", false);
+        assert_eq!(
+            verdict.engine_book.as_deref(),
+            Some("bestiary_1"),
+            "the re-attribution widening must fire on an observed hit on the unit's own key"
+        );
+    }
+
+    /// THE WIDENING CAN FAIL — and this is the CONFIRMED over-credit it was
+    /// shipped with. `Universal Monster Rule ~ Grab` has no chassis row and no
+    /// corpus record; Bestiary 1's table holds a DIFFERENT, bare `Grab` row.
+    /// Under `holds_unit`'s `contains(key) || contains(name)` predicate that
+    /// bare row credited this unit; under `holds_unit_by_key` it does not.
+    /// Thirteen real board units moved on exactly this mistake.
+    #[test]
+    fn a_reattributed_row_credited_only_by_a_different_rows_name_is_refused() {
+        let facts = facts_with_bestiary_1_chassis(&["Grab"]);
+        let unit = ce_monster_ability_unit("Universal Monster Rule ~ Grab", "Grab");
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "static", false);
+        assert_ne!(
+            verdict.engine_book.as_deref(),
+            Some("bestiary_1"),
+            "a hit on a DIFFERENT row whose key equals this unit's bare name is not evidence \
+             that Bestiary 1 holds this unit (SD31-W14-INTEGRATE-001)"
+        );
+    }
+
+    /// MONOTONICITY, the property the widening's comment claims outright:
+    /// with nothing at all in the re-attributed book's table, the widening
+    /// must not fire, and the verdict must be identical to the one the
+    /// pre-widening code would have produced. This is the direction that
+    /// would demote already-credited units if the filter were ever loosened
+    /// or inverted.
+    #[test]
+    fn the_widening_never_fires_when_the_reattributed_books_table_is_empty() {
+        let facts = EngineFacts::default();
+        let unit = ce_monster_ability_unit("Universal Monster Rule ~ Grab", "Grab");
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, false, "static", false);
+        assert_ne!(verdict.engine_book.as_deref(), Some("bestiary_1"));
+    }
+
+    /// The strict predicate is strict only about the NAME fallback — it still
+    /// answers `true` for the same unit once the real key is present, so the
+    /// fix narrows the evidence rather than disabling the mechanism.
+    #[test]
+    fn holds_unit_by_key_accepts_the_key_and_refuses_the_bare_name() {
+        let unit = ce_monster_ability_unit("Universal Monster Rule ~ Grab", "Grab");
+        let by_name_only = facts_with_bestiary_1_chassis(&["Grab"]);
+        let by_key = facts_with_bestiary_1_chassis(&["Universal Monster Rule ~ Grab"]);
+        assert!(
+            by_name_only.holds_unit("bestiary_1", &unit),
+            "holds_unit keeps its documented name fallback for its other callers"
+        );
+        assert!(!by_name_only.holds_unit_by_key("bestiary_1", &unit));
+        assert!(by_key.holds_unit_by_key("bestiary_1", &unit));
     }
 }

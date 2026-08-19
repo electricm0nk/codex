@@ -306,6 +306,7 @@ fn provenance_kind_distribution_matches_decisions_md_11_2_within_the_dedup_recon
     let root = cache_root();
     let files = json_files_under(&root);
     let mut counts = std::collections::BTreeMap::new();
+    let mut web_sourced_in_source_field = 0u32;
     for path in &files {
         let text = fs::read_to_string(path).unwrap();
         let value: serde_json::Value = serde_json::from_str(&text).unwrap();
@@ -320,11 +321,23 @@ fn provenance_kind_distribution_matches_decisions_md_11_2_within_the_dedup_recon
         // simply written in `description_source` when `source` has been
         // narrowed. Read whichever field holds it; the COUNT below is
         // unchanged, which is the point.
+        // CORRECTED `SD31-W14-INTEGRATE-001`: this used to read
+        // `description_source` FIRST and fall back to `source.kind`, which
+        // made it blind to the one failure that actually threatens the
+        // narrowing -- a cache regeneration reverts the record to
+        // `source.kind == "web_second_source"` with no `description_source`
+        // at all, and the fallback quietly produced the same count and
+        // stayed green. The two fields are now summed, so the count is
+        // preserved for the §11.2 comparison AND a reversion is visible in
+        // `web_sourced_in_source_field` below.
         let kind = if value["description_source"]["kind"].is_string() {
             value["description_source"]["kind"].as_str().unwrap().to_string()
         } else {
             value["source"]["kind"].as_str().unwrap().to_string()
         };
+        if value["source"]["kind"] == "web_second_source" {
+            web_sourced_in_source_field += 1;
+        }
         *counts.entry(kind).or_insert(0u32) += 1;
     }
 
@@ -346,5 +359,19 @@ fn provenance_kind_distribution_matches_decisions_md_11_2_within_the_dedup_recon
         (81..=83).contains(&web_sourced),
         "web_second_source count {web_sourced} drifted outside the expected \
          decisions.md §11.2/§11.5 ballpark (83 raw, 82 after equipmods dedup)"
+    );
+
+    // `SD31-E6-F5-005` narrowed every one of those records' own `source` to
+    // its pinned oracle row, so the CRB cache must carry ZERO `web_second_
+    // source` in `source` itself. This is the assertion the old fallback made
+    // unreachable: re-running `gen_core_rulebook_cache` puts all 82 back and
+    // is caught here rather than passing silently.
+    // (`tests/sd31_lst_provenance_repair_is_durable.rs` pins the same
+    // property corpus-wide, in both directions.)
+    assert_eq!(
+        web_sourced_in_source_field, 0,
+        "{web_sourced_in_source_field} CRB record(s) carry web_second_source in `source` itself \
+         -- the SD31-E6-F5-005 narrowing has been reverted, almost certainly by re-running \
+         gen_core_rulebook_cache, which still emits the pre-repair shape"
     );
 }

@@ -159,6 +159,7 @@ fn v1_type_round_trips_through_serde() {
         pi_marker: Some(PI_MARKER_REDACTED.to_string()),
     wiring_class: String::new(),
     wiring_class_signals: Vec::new(),
+    description_source: None,
     };
 
     let json_text = serde_json::to_string(&record).expect("v1 record must serialize to a JSON string");
@@ -197,6 +198,7 @@ fn license_fields_serialize_with_the_exact_names_and_literals_decisions_md_17_sp
         pi_marker: pi_marker.map(str::to_string),
     wiring_class: String::new(),
     wiring_class_signals: Vec::new(),
+    description_source: None,
     };
 
     let ogl = serde_json::to_value(make(License::Ogl, None, None)).unwrap();
@@ -245,6 +247,7 @@ fn validate_license_enforces_the_decisions_md_17_validation_requirement() {
         pi_marker: pi_marker.map(str::to_string),
     wiring_class: String::new(),
     wiring_class_signals: Vec::new(),
+    description_source: None,
     };
 
     assert_eq!(

@@ -237,8 +237,19 @@ fn stated_u64(license: &serde_json::Value, field: &str, book: &str) -> u64 {
 /// This is the guard proper. It fails in *both* directions: a cycle that adds
 /// records without restating the number, and a number raised past a corpus
 /// that shrank.
+/// EVERY book is reported, not only the first one that disagrees.
+///
+/// CONFIRMED finding, `SD31-W14-INTEGRATE-001` (adversarial review of
+/// `SD31-CE-COMPANION-001`): the prior form ran `assert_eq!` inside the loop,
+/// so it panicked on the first mismatching book and every later book went
+/// unchecked. `advanced_players_guide` sorts before `advanced_race_guide`, and
+/// its own 2735-vs-2743 drift HID ARG's 1514-vs-1578 drift for an entire wave.
+/// A guard that stops at the first failure is a guard that can only ever tell
+/// you about one book. Accumulate, then assert once.
 #[test]
 fn every_owned_books_stated_record_count_equals_the_records_on_disk() {
+    let mut mismatches: Vec<String> = Vec::new();
+    let mut empty: Vec<String> = Vec::new();
     for book in books_stating_a_record_count() {
         let book = book.as_str();
         let by_kind = record_files_by_kind(book);
@@ -250,21 +261,29 @@ fn every_owned_books_stated_record_count_equals_the_records_on_disk() {
             .map(|(kind, files)| format!("{kind}: {}", files.len()))
             .collect();
 
-        assert_eq!(
-            stated,
-            on_disk,
-            "data/corpus/{book}/LICENSE.json states records_processed = {stated}, but {on_disk} \
-             licensed content records are on disk ({}). This artifact is an OGL redistribution \
-             record: restate the number (and the screening note that quotes it) to match the \
-             corpus, rather than adjusting this test.",
-            breakdown.join(", ")
-        );
-
-        assert!(
-            on_disk > 0,
-            "derived zero records for {book}; the derivation, not the artifact, is broken"
-        );
+        if stated != on_disk {
+            mismatches.push(format!(
+                "{book}: LICENSE.json states records_processed = {stated}, {on_disk} on disk ({})",
+                breakdown.join(", ")
+            ));
+        }
+        if on_disk == 0 {
+            empty.push(book.to_string());
+        }
     }
+
+    assert!(
+        mismatches.is_empty(),
+        "{} book(s) state a records_processed that does not match the records on disk. This \
+         artifact is an OGL redistribution record: restate the number (and the screening note \
+         that quotes it) to match the corpus, rather than adjusting this test.\n  {}",
+        mismatches.len(),
+        mismatches.join("\n  ")
+    );
+    assert!(
+        empty.is_empty(),
+        "derived zero records for {empty:?}; the derivation, not the artifact, is broken"
+    );
 }
 
 /// `records_redacted` must equal the records actually carrying a
@@ -277,6 +296,10 @@ fn every_owned_books_stated_record_count_equals_the_records_on_disk() {
 #[test]
 fn every_owned_books_stated_redaction_count_equals_the_redactions_on_disk() {
     let redacted = wire_value(License::PiRedacted);
+    // Accumulated and asserted once, for the same reason
+    // `every_owned_books_stated_record_count_equals_the_records_on_disk`
+    // accumulates: a per-book `assert_eq!` masks every later book.
+    let mut mismatches: Vec<String> = Vec::new();
     for book in books_stating_a_record_count() {
         let book = book.as_str();
         let mut redacted_paths = Vec::new();
@@ -294,15 +317,22 @@ fn every_owned_books_stated_redaction_count_equals_the_redactions_on_disk() {
             }
         }
         let stated = stated_u64(&license_json(book), "records_redacted", book) as usize;
-        assert_eq!(
-            stated,
-            redacted_paths.len(),
-            "data/corpus/{book}/LICENSE.json states records_redacted = {stated}, but {} records \
-             on disk carry a PI redaction: {:?}",
-            redacted_paths.len(),
-            redacted_paths.iter().take(4).collect::<Vec<_>>()
-        );
+        if stated != redacted_paths.len() {
+            mismatches.push(format!(
+                "{book}: LICENSE.json states records_redacted = {stated}, {} records on disk \
+                 carry a PI redaction: {:?}",
+                redacted_paths.len(),
+                redacted_paths.iter().take(4).collect::<Vec<_>>()
+            ));
+        }
     }
+
+    assert!(
+        mismatches.is_empty(),
+        "{} book(s) state a records_redacted that does not match the redactions on disk:\n  {}",
+        mismatches.len(),
+        mismatches.join("\n  ")
+    );
 }
 
 /// Every record the artifact counts must actually carry a licence

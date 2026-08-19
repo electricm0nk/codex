@@ -1038,6 +1038,7 @@ fn main() {
                 pi_marker: None,
                 wiring_class,
                 wiring_class_signals,
+                description_source: None,
             },
         );
         classes_written += 1;
@@ -1164,6 +1165,7 @@ fn main() {
                     pi_marker: feature_pi_marker,
                     wiring_class,
                     wiring_class_signals,
+                    description_source: None,
                 },
             );
             written += 1;
