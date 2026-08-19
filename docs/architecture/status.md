@@ -1,7 +1,7 @@
 # Status
 
 > Scope: what is real, working product surface today across the whole repo, and what is stubbed, partially wired, or deferred — superseding the root README's "Current state" section.
-> Last verified: 2026-08-13 against `tranche/9` (SD-29 **real** closure, Epic 11 run 3). The 2026-08-11 pass belonged to a closure the operator rescinded the same day (`SD-29 decisions.md §42`); every figure it wrote has been re-derived here rather than carried. The rows re-derived in full this pass are the `RuleSetId` catalog count, the JSON-corpus-cache count, the monster/companion/race-trait chassis rows, and the whole §"Corpus coverage, corpus-wide" section; every other row carries its prior 2026-08-07/tranche-8 verification and is unchanged by SD-29.
+> Last verified: **2026-08-18 against `tranche/11`** (SD-31 wave 14, `SD31-W14-INTEGRATE-001`) for the §"Corpus coverage, corpus-wide — re-derived 2026-08-18" section, the `RuleSetId::Ce` row, and the companion-ceiling row; every other row still carries its 2026-08-13 `tranche/9` verification and is unchanged. Prior full pass: 2026-08-13 against `tranche/9` (SD-29 **real** closure, Epic 11 run 3). The 2026-08-11 pass belonged to a closure the operator rescinded the same day (`SD-29 decisions.md §42`); every figure it wrote has been re-derived here rather than carried. The rows re-derived in full this pass are the `RuleSetId` catalog count, the JSON-corpus-cache count, the monster/companion/race-trait chassis rows, and the whole §"Corpus coverage, corpus-wide" section; every other row carries its prior 2026-08-07/tranche-8 verification and is unchanged by SD-29.
 > Maintenance: pre-PR truth-up cycle per [README.md](./README.md) §Maintenance contract — fires before every PR via the architecture-truth-up skill
 
 ## Posture
@@ -165,8 +165,11 @@ citation for the split — not a receipt's prose.
   `scripts/screen_pcc_load_gates.py` proves PCGen would not load.
 - **`ASPECT:` is the `companion` ceiling.**
   `scripts/classify_companion_rows.py` leaves exactly **1** reachable-and-
-  remaining row corpus-wide (`core_essentials` / `Pseudodragon ~ Tail`), and
-  that row needs an `ASPECT:` chassis no table in this program models.
+  remaining row corpus-wide (`Pseudodragon ~ Tail`), and that row needs an
+  `ASPECT:` chassis no table in this program models. (That row was cited as
+  `core_essentials` until 2026-08-18; `SD31-CE-COMPANION-001` re-filed the
+  whole `core_essentials` companion population under the books their own
+  `.lst` `SOURCELONG:` headers name — see the SD-31 wave-14 section below.)
 
 **Companion went 0 → 922 grounded inside SD-29.** The lane did not exist at
 the 2026-08-11 rescinded closure — that document recorded it as "never
@@ -182,6 +185,62 @@ checked in (`scripts/scan_monster_ability_bundle_rows.py`) and routed to
 ceiling correction — following the hop widens an ownership pass and changes
 what every registered book ships — not a backlog line.
 
+
+## Corpus coverage, corpus-wide — re-derived 2026-08-18 (SD-31 wave 14, `SD31-W14-INTEGRATE-001`)
+
+The section above is SD-29's closure snapshot and is kept for its history. **These are the live
+figures**, re-derived at this wave's integration tip on `tranche/11`, never transcribed from a
+lane receipt. Oracle pin `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`.
+
+| quantity | value | how |
+|---|---:|---|
+| book directories in the JSON corpus cache | **34** | `ls -d data/corpus/*/ \| wc -l` |
+| JSON records on disk | **26,773** | `find data/corpus -name '*.json' \| wc -l` |
+| `RuleSetId` variants | **32** | `sed -n '/pub enum RuleSetId/,/^}/p' src/rules_core/rules_tables/mod.rs` — the SD-29-closure list plus `Oa` (Occult Adventures) and `Mythic` |
+| board units (in scope, `beginner_box` excluded) | **38,521** | `docs/work-inventory.json`, replayed through `pf1e_dashboard_producer.doneness_verdict()` |
+| board `done` | **12,277 (31.8709 %)** | same replay; was 11,829 / 30.7079 % before this wave |
+| reachable ceiling | **98.95 %** (38,115 / 38,521) | `python3 scripts/reachability_audit.py` |
+
+By doneness bucket: `done` 12,277 · `held` 1,677 · `in-progress` 1,389 · `not-started` 18,030 ·
+`unmeasurable` 5,110 · `deferred` 38.
+
+### What wave 14 changed in the architecture, not just in the counts
+
+* **`core_essentials` is no longer an engine book for companions or races.** `decisions.md §9`
+  ruled it is a PCGen packaging bundle, not a Pathfinder book. `SD31-CE-COMPANION-001` deleted
+  `rules_tables/core_essentials/` entirely, retired its `CompanionBook` registration, its
+  `CompanionBookSpec` in `gen_book_cache.rs`, its `BookSource`, its `corpus_ingest_diagnostic`
+  row and its entry in `race_catalog::RACE_CORPUS_BOOKS`, and re-transcribed the 102 companion
+  rows into the four books their own `.lst` `SOURCELONG:` headers name — `beastiary1` 59 → 126,
+  `ultimate_magic` 32 → 59, `apg` 4 → 17, `crb` 84 → 84. `reach_gate`'s companion claim went from
+  102 records reaching no player surface to zero. **`RuleSetId::Ce` survives only as the feat-gap
+  host for `ce_feats.lst`'s 15 rows**, and its 128 remaining board units are unattributable from
+  the oracle and await an operator ruling (`OPEN-ISSUES.md` row 263).
+* **A record's `source` and its `description_source` are now two different claims.**
+  `shape_b_v1::CorpusRecordV1` carries an optional `description_source: Option<CorpusSource>`.
+  `SD31-E6-F5-005` narrowed 412 already-shipped equipment records whose `source` said
+  `web_second_source` — their identity, `cost_gp` and `weight` were always corpus-derived and only
+  the description came from the web page — to the pinned oracle's own `.lst` row, moving the web
+  citation intact into `description_source` rather than discarding it. That put those records
+  inside `corpus_literal_sweep`'s population (`lst_token` + `raw_tokens`) for the first time.
+  New module `rules_core::cache_gen::lst_provenance_repair` + `bin/repair_lst_provenance` own
+  this; `tests/sd31_lst_provenance_repair_is_durable.rs` pins the population against reversion.
+  **Known gap:** neither `cache_gen::apg::generate_equipment` nor
+  `gen_core_rulebook_cache::equipment_source` emits the narrowed shape yet, so re-running either
+  generator reverts it — re-run `repair_lst_provenance` after any equipment regeneration
+  (`OPEN-ISSUES.md` row 264).
+* **The `race` kind's doneness verdict now reads the product, not the seven-variant CRB enum.**
+  The character-creation chassis predicate moved out of
+  `apps/desktop/src-tauri/src/character_hub.rs` into headless
+  `src/rules_core/race_creation.rs`, so `v06_work_inventory` calls the SAME function that builds
+  the player's race picker instead of testing `crb::race_tables::RaceId::ALL`. `race` went 7 → 34
+  `done` and its reachable ceiling is 100 %. A `computed`-wiring-class race additionally requires
+  a real `pilot_compute` magnitude consumer, because `computed` + `grounded` maps straight to
+  `done` with no second check.
+* **The `decisions.md §9` re-attribution widening in `v06_work_inventory::classify` requires the
+  unit's own key.** `EngineFacts::holds_unit_by_key` is the strict twin of `holds_unit`; the
+  name fallback is a convenience for kinds whose identity really is their display name and is
+  wrong as an attribution signal for a `<Group> ~ <Facet>`-keyed row.
 
 ## Stubbed / partially wired / deferred today
 

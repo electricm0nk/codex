@@ -661,3 +661,37 @@ wiring-class-mismatch**, byte-identical to baseline.
 
 Full command-level detail, every figure's derivation, the six-lane merge conflict resolution record,
 and the full gate log are in `progress.md`'s `SD31-W13-INTEGRATE-001` receipt.
+
+**Wave 14 landings (`SD31-W14-INTEGRATE-001`, 2026-08-18), four of five lanes merged onto
+`tranche/11`; board 11,829 → 12,277 (30.7079 % → 31.8709 %, +448 — the package's largest
+single-wave gain):**
+- `SD31-CE-COMPANION-001` (`epic-6-ingest-lanes` F7 `companion`, plus a governance sub-task):
+  **`decisions.md §9`'s condition discharged for the companion population.**
+  `rules_tables/core_essentials/` deleted; the 102 companion rows re-transcribed into the four
+  books their own `.lst` `SOURCELONG:` headers name (`beastiary1` 59 → 126, `ultimate_magic`
+  32 → 59, `apg` 4 → 17, `crb` 84 → 84); `reach_gate`'s companion claim from 102 records
+  reaching no player surface to zero; stub-registry entry 0012 retired; a live PI leak in
+  `ingest_race_traits` (un-redacting 9 Tiefling redactions in `raw_tokens` on re-run) found and
+  fixed. **+91 done, +85 held**; collateral on the `not-ingested` axis **-176** (corrected from the
+  lane's own -189 — 13 units were credited off a different row's name, `OPEN-ISSUES.md` row 261).
+  The 102 restored records are NOT board credit; they were already `grounded`/`text-complete`.
+- `SD31-E6-F5-005` (`epic-6-ingest-lanes` F5/F6): **+346**, the wave's largest. 412 already-shipped
+  equipment records' provenance narrowed from a web citation to the pinned oracle's own row, the
+  web citation preserved in a new `description_source` field — which put them inside
+  `corpus_literal_sweep`'s population for the first time. `derived_evaluator_fixture_check` reached
+  **1,276 / 1,276, 0 failed** (row 191's `spindle_of_perfect_knowledge` closed; `UNCLEARED` empty
+  for the first time on record).
+- `SD31-E1-F3-001` (`epic-1-race-chassis` F3): **+27** (not the +30 claimed — 3 `computed` units
+  withdrawn at integration, row 247). The `race` kind's six-wave stall is broken: its verdict now
+  calls the same headless predicate that builds the player's race picker
+  (`src/rules_core/race_creation.rs`) instead of the seven-variant CRB enum. `race` 7 → 34 done,
+  **reachable ceiling for that kind now 100 %**. 22 playable races still need a chassis (row 248).
+- `SD31-E2-F3-002-marker` (`epic-2-verdict-paths` F3): **-16, the wave's honest decrease**, and
+  the card stays `READY`. The not-implemented marker detector was case-sensitive and matched 152 of
+  ~404 corpus occurrences, giving opposite verdicts to the same upstream admission on letter case
+  alone; widened case-insensitively, 23 `feat` units demoted. The card also proved the `ambiguous`
+  dead end is **structural, not an engineering gap** — and this integration cycle CORRECTED its
+  headline finding: the 80-unit credit it refused is a **no-op** as described, so `AT-31-010`
+  option (b) is struck (rows 254/255).
+- **NOT merged:** a second lane (`worktree-wf_1ad13e3b-085-2`) was dispatched onto the same Core
+  Essentials card and took a contradictory route; superseded, not gamed. Rows 262/263.

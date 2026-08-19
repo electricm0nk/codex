@@ -26638,3 +26638,298 @@ can produce a green gate until the Core Essentials repair lands (the `sd31-ce-co
 it this wave). This cycle's branch should be merged on the evidence above — identical failure set,
 `+5` tests, `clippy`/`class-dump` green — not on a green full gate, which is not obtainable at this
 tip.
+
+---
+
+## `SD31-W14-INTEGRATE-001` — wave 14 integration cycle (2026-08-18)
+
+**Branch:** `tranche/11`. **Base:** `12f1f5c94`. **Oracle pin, checked first:**
+`./scripts/fetch-pcgen-oracle.sh --check` → `OK 7f818006e371188e5717fd18d74d18a420747fc6`
+(`PCGEN_ORACLE_SHA` quoted on every corpus figure below). **Disk at start:**
+`df -B1G /` → `968 total / 306 used / 663 avail / 32%`, `nproc` → 24, `free -g` → 167 total /
+84 free. Own `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-w14-integrate`. `pgrep -af
+'verify.sh|cargo'` at start → no other build on the box (wave 14's lanes had all finished), so
+none of row 252's contamination applies to this cycle's numbers.
+
+### 1. What was merged, and what was not
+
+Five lane branches existed; **four were merged.**
+
+| lane | branch | review verdict | merged |
+|---|---|---|---|
+| `SD31-CE-COMPANION-001` — finish the Core Essentials removal | `worktree-wf_1ad13e3b-085-3` | PARTIAL (corrected_units 102) | **yes** — `d0c322f5b` |
+| `SD31-E6-F5-005` — equipment/equipment_modifier provenance | `worktree-wf_1ad13e3b-085-6` | SOUND (corrected_units 346) | **yes** — `66fe9ab64` |
+| `SD31-E1-F3-001` — race chassis verdict re-pointed at the product | `worktree-wf_1ad13e3b-085-4` | PARTIAL (corrected_units 27 of 30) | **yes** — `7bcc22a84` |
+| `SD31-E2-F3-002-marker` — not-implemented marker detector | `worktree-wf_1ad13e3b-085-5` | PARTIAL (units_withdrawn 16) | **yes** — `593a15466` |
+| "Core Essentials removal — finish the code half" | `worktree-wf_1ad13e3b-085-2` | PARTIAL (units_claimed 0) | **NO — superseded** |
+
+**`worktree-wf_1ad13e3b-085-2` was NOT merged, and it was not gamed.** Two lanes were dispatched
+onto the same Core Essentials card without either knowing about the other (the `-3` review caught
+this: *"Worktree wf_1ad13e3b-085-2 is a second lane on the same Core Essentials card. Reconcile
+before merging either."*). The two took contradictory routes on the same 102 companion records:
+`-2` treated the corpus's current directory as the destination of record, could not generate the
+engine tables from it, blocked on the lane's central deliverable, and left the desktop crate at
+458/4; `-3` followed `decisions.md §9`'s NAMED signal — the `.lst` file's own `SOURCELONG:`
+header — re-transcribed four books' companion tables, retired the `core_essentials` registrations,
+and reached `./scripts/verify.sh` `RESULT: PASS` on all 34 stages. They overlap in 13 source files
+and both rewrite the same corpus records; merging both is not possible, and `-3` is the superset
+that discharged the card. `-2`'s one unique deliverable — repairing 98 dangling `core_essentials:`
+key prefixes across 70 companion records — is **not owed**: `grep -rl 'core_essentials:'
+data/corpus/` → **0** on the merged tip, because `-3`'s regeneration rewrote those records
+outright. `-2`'s findings are preserved as OPEN-ISSUES rows 261-263 rather than discarded.
+
+### 2. Board before and after — every unit of movement traced, in both directions
+
+Measured by replaying the producer's own `doneness_verdict(wiring_class, status, kind)` per unit
+over `docs/work-inventory.json` at both revisions, `beginner_box` excluded, never transcribed from
+a lane receipt:
+
+```
+python3 -c "import json,sys,collections; sys.path.insert(0,'scripts/observer');
+  import pf1e_dashboard_producer as P;
+  U=[u for u in json.load(open(P_PATH))['units'] if u.get('book') not in P.EXCLUDED_BOOKS];
+  print(collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U), len(U))"
+```
+
+| | done | held | in-progress | not-started | unmeasurable | deferred | denominator |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| **before** (`git show 12f1f5c94:docs/work-inventory.json`) | 11,829 | 1,886 | 1,405 | 18,236 | 5,127 | 38 | 38,521 |
+| **after** (this cycle's guarded regen) | **12,277** | 1,677 | 1,389 | 18,030 | 5,110 | 38 | 38,521 |
+
+**30.7079 % → 31.8709 %, +448 units.** Denominator unchanged. Unit-by-unit diff: **0 ids added,
+0 ids removed**, 575 units changed doneness bucket.
+
+Per kind:
+
+| kind | total | done (wave 13) | done (wave 14) | delta |
+|---|---:|---:|---:|---:|
+| class | 185 | 27 (14.5946%) | 27 (14.5946%) | +0 |
+| class_feature | 15,472 | 130 (0.8402%) | 130 (0.8402%) | +0 |
+| companion | 1,696 | 680 (40.0943%) | 684 (40.3302%) | +4 |
+| equipment | 6,208 | 4,998 (80.5090%) | 5,303 (85.4220%) | +305 |
+| equipment_modifier | 1,580 | 380 (24.0506%) | 421 (26.6456%) | +41 |
+| feat | 2,610 | 1,475 (56.5134%) | 1,459 (55.9004%) | **-16** |
+| monster | 1,270 | 910 (71.6535%) | 910 (71.6535%) | +0 |
+| monster_ability | 2,951 | 1,369 (46.3911%) | 1,456 (49.3392%) | +87 |
+| race | 103 | 7 (6.7961%) | 34 (33.0097%) | +27 |
+| race_trait | 3,603 | 497 (13.7941%) | 497 (13.7941%) | +0 |
+| spell | 2,843 | 1,356 (47.6961%) | 1,356 (47.6961%) | +0 |
+| **TOTAL** | **38,521** | **11,829 (30.7079%)** | **12,277 (31.8709%)** | **+448** |
+
+**EVERY moved unit, grouped by its own `evidence` token — no residue, in either direction.**
+The 575 bucket changes decompose exactly:
+
+| n | from → to | kind | book | evidence | cause |
+|---:|---|---|---|---|---|
+| 283 | held → done | equipment | advanced_players_guide | `equipment_table_entry_with_corpus_magnitude` | `SD31-E6-F5-005` provenance narrowing → `corpus_literal_sweep` can byte-verify these records for the first time |
+| 60 | not-started → held | monster_ability | bestiary_2 | `bestiary_2_monster_ability_resolve_returned_a_real_record` | `SD31-CE-COMPANION-001` re-attribution widening |
+| 47 | not-started → done | monster_ability | bestiary | `monster_ability_held_and_corpus_record_carries_real_description` | same |
+| 40 | unmeasurable → done | equipment_modifier | core_rulebook | `in_equipment_tables_and_corpus_record_carries_no_magnitude_token` | `SD31-E6-F5-005`: a `web_second_source` record carries no `(path, line)`, so `load_corpus_json_descriptions` skipped it; the descriptions were shipped all along |
+| 22 | not-started → done | race | advanced_race_guide | `race_offered_by_the_real_character_creation_roster` | `SD31-E1-F3-001` verdict re-pointed at `list_race_creation_roster` |
+| 20 | not-started → held | monster_ability | bestiary | `bestiary_1_monster_ability_resolve_returned_a_real_record` | `SD31-CE-COMPANION-001` |
+| 18 | in-progress → done | equipment | advanced_players_guide | `equipment_effect_probe_observed_computed_delta` | `SD31-E6-F5-005`: `raw_tokens` now exist, so the book-agnostic resolvers observe a real delta |
+| 17 | not-started → done | monster_ability | bestiary_2 | `monster_ability_held_and_corpus_record_carries_real_description` | `SD31-CE-COMPANION-001` |
+| **15** | **done → unmeasurable** | **feat** | **ultimate_campaign** | `feat_served_description_is_a_placeholder_marker_not_prose` | **`SD31-E2-F3-002-marker` — honest decrease** |
+| 15 | not-started → done | monster_ability | bestiary_2 | `bestiary_2_monster_ability_resolve_returned_a_real_record` | `SD31-CE-COMPANION-001` |
+| 8 | not-started → done | monster_ability | bestiary | `bestiary_1_monster_ability_resolve_returned_a_real_record` | `SD31-CE-COMPANION-001` |
+| **6** | **held → unmeasurable** | **feat** | **ultimate_campaign** | `feat_served_description_is_a_placeholder_marker_not_prose` | **`SD31-E2-F3-002-marker` — honest decrease** |
+| 4 | not-started → done | race | bestiary_4 | `race_offered_by_the_real_character_creation_roster` | `SD31-E1-F3-001` |
+| 4 | held → done | equipment | advanced_players_guide | `equipment_effect_probe_observed_computed_delta` | `SD31-E6-F5-005` |
+| 4 | not-started → done | companion | advanced_players_guide | `advanced_players_guide_companion_resolve_returned_a_real_record` | `SD31-CE-COMPANION-001` |
+| 3 | not-started → held | equipment | bestiary | `equipment_table_entry_with_corpus_magnitude` | `SD31-CE-COMPANION-001` |
+| **3** | **not-started → in-progress** | **race** | advanced_race_guide (2), bestiary_4 (1) | `race_offered_by_the_roster_but_no_pilot_compute_magnitude_consumer` | **THIS CYCLE's withdrawal of 3 of `SD31-E1-F3-001`'s 30 — §3(b)** |
+| **1** | **done → unmeasurable** | **feat** | **ultimate_psionics** | `feat_served_description_is_a_placeholder_marker_not_prose` | **`SD31-E2-F3-002-marker` — honest decrease** |
+| 1 | not-started → held | monster_ability | bestiary | `monster_ability_held_and_corpus_record_carries_real_description` | `SD31-CE-COMPANION-001` |
+| 1 | in-progress → done | equipment_modifier | core_rulebook | `equipment_effect_probe_observed_computed_delta` | `SD31-E6-F5-005` |
+| 1 | not-started → done | race | bestiary_5 | `race_offered_by_the_real_character_creation_roster` | `SD31-E1-F3-001` |
+| **1** | **held → unmeasurable** | **feat** | **ultimate_intrigue** | `feat_served_description_is_a_placeholder_marker_not_prose` | **`SD31-E2-F3-002-marker` — honest decrease** |
+| 1 | not-started → held | companion | advanced_players_guide | `advanced_players_guide_companion_resolve_returned_a_real_record` | `SD31-CE-COMPANION-001` |
+
+**Reconciliation, by lane, on the `done` axis:**
+
+* `SD31-E6-F5-005` (equipment): 283 + 4 + 18 + 40 + 1 = **+346** — exactly the lane's claim and
+  the review's `corrected_units`, reproduced independently here.
+* `SD31-CE-COMPANION-001` (Core Essentials): 47 + 17 + 15 + 8 + 4 = **+91 done**, plus 85
+  `not-started → held`. On the stamp-independent `not-ingested` axis the lane's collateral is
+  **-176** (bestiary_2 `monster_ability` 92, bestiary `monster_ability` 76, APG `companion` 5,
+  bestiary `equipment` 3), **not the -189 the lane reported** — see §3(a).
+* `SD31-E1-F3-001` (race): **+27**, not the +30 claimed — see §3(b).
+* `SD31-E2-F3-002-marker`: **-16 done** (and -7 held), exactly as the lane reported and as its own
+  review confirmed. This is the wave's honest decrease and it is not netted away silently:
+  `+346 + 91 + 27 − 16 = +448`, which is the whole of the movement.
+
+**The 102 companion records `SD31-CE-COMPANION-001` restored are NOT part of the +448.** They were
+already `grounded`/`text-complete` before `d8175d817` broke their reach claim; the lane restored a
+player surface, not board credit. Its `units_claimed: 102` must not be summed with the other lanes'
+figures, and is not summed here.
+
+### 3. CONFIRMED refute findings — fixed this cycle
+
+Fourteen findings were CONFIRMED across the four merged lanes' reviews. **Nine are fixed in code
+here**; the rest are logged with their remedy (§4).
+
+**(a) HIGH — 13 units credited on a DIFFERENT record's engine row.** `EngineFacts::holds_key`'s
+predicate is `set.contains(key) || set.contains(name)`. On a `<Group> ~ <Facet>`-keyed row the
+`name` is the bare facet, so the `decisions.md §9` re-attribution widening credited 13 `bestiary`
+`monster_ability` units — five `Regeneration ~ {Acid, Acid/Cold, Acid/Cold/Fire, Epic, Fire or
+Good Spells}` and eight `Universal Monster Rule ~ {Burn, Change Shape, Grab, Light Blindness,
+Light Sensitivity, Telepathy, Trip, Whirlwind}` — off the bare `Regeneration`/`Burn`/`Grab` rows.
+None of the 13 has a chassis row or a corpus record of its own, so all 13 sit outside
+`reach_gate`'s denominator and no gate in the repo could catch it. **Fixed:** new
+`EngineFacts::holds_unit_by_key` (strict, no name fallback) is now what the widening consults —
+it is the one caller that MINTS a credit rather than choosing between two hosts that already hold
+the content. Verified after the regen: all 13 read `not-ingested` /
+`monster_ability_has_no_engine_table`. Mutation-proven: reverting the call site to `holds_unit`
+turns `a_reattributed_row_credited_only_by_a_different_rows_name_is_refused` RED
+(`left: Some("bestiary_1"), right: Some("bestiary_1")`).
+
+**(b) HIGH — the race chassis probe refuses nobody, and 3 `computed` units rested on that alone.**
+The review's decisive mutation: replacing `race_creation_chassis`'s ENTIRE BODY with an
+unconditional `Ok(..)` left the board at **37 done / 66 not-started, identical** — there are
+exactly 37 race chassis records on disk and exactly 37 offered. For the 27 `static` units this is
+harmless: `grounded` only unblocks `apply_done_rung_stamps`, which independently requires a
+`corpus_literal_sweep` byte-verification against the pinned oracle. For a `computed` unit there is
+no second check at all (`doneness_verdict` maps `computed` + `grounded` straight to `done`), so
+Aasimar, Tiefling and Changeling reached `done` on strictly LESS evidence than a `static` race
+needs — Decision 1(a)'s "evidence weaker than its class actually requires". **Fixed by
+withdrawing the 3**: a `computed` race now additionally requires a real `pilot_compute` magnitude
+consumer (`race_ids_with_a_magnitude_consumer` — the same seam `SD31-W12-INTEGRATE-001` used to
+demote 251 load-only `race_trait` credits), evidence
+`race_offered_by_the_roster_but_no_pilot_compute_magnitude_consumer`. The 7 CRB races keep
+`grounded` (they have real `explain_<race>_race_seam` functions), so nothing already `done` was
+demoted by the guard itself.
+
+**(c) MEDIUM — the widening shipped with ZERO test coverage.** `grep -rn
+'reattributed_engine_book' src/ tests/ apps/` returned only the four implementation lines, so the
+mechanism responsible for the whole of that lane's board delta could be edited non-monotonically
+and fail no gate. **Fixed:** `mod reattribution_widening_tests` (4 tests) pins that the widening
+fires on the unit's own key, refuses a bare-name hit, never fires on an empty table, and that
+`holds_unit_by_key`/`holds_unit` differ exactly where documented.
+
+**(d) MEDIUM — a "proven able to fail" citation that could not fail.**
+`the_creation_roster_covers_a_minority_of_the_boards_race_rows`'s `20..=60` band was cited as
+bounding the promotion rate; it is unchanged by the always-accept mutant, and it was also a false
+alarm waiting to happen in the other direction (37 shipped + 22 remaining playable = 59, two short
+of red). **Fixed:** rewritten as the corpus-shape invariant it actually is
+(`the_creation_roster_never_offers_more_races_than_the_corpus_carries`), with the discrimination
+claim left where it really lives (`rules_core::race_creation`'s 7 refusal tests + `every_offered_
+race_states_a_real_ability_magnitude`, both of which DO go red under the mutation).
+
+**(e) MEDIUM — a guard that could only ever report one book.**
+`sd27_book_license_record_counts`'s two count guards ran `assert_eq!` INSIDE the loop, so they
+panicked on the first mismatching book and never checked the rest. `advanced_players_guide` sorts
+before `advanced_race_guide` and its own 2735-vs-2743 drift HID ARG's 1514-vs-1578 drift for a
+whole wave. **Fixed:** both guards accumulate every mismatch and assert once, listing all of them.
+
+**(f) HIGH — the provenance narrowing is silently reversible and nothing would notice.** Both
+upstream generators still emit the pre-repair shape (`cache_gen::apg::generate_equipment` stamps
+`Source::WebSecondSource` unconditionally; `gen_core_rulebook_cache::equipment_source` returns
+`web_second_source` for exactly the repaired shape), neither knows `description_source`, and no
+`verify.sh` stage runs either generator — so re-running one reverts all 412 citations and
+withdraws up to 346 units. Worse, the reformulated CRB distribution test read `description_source`
+first and FELL BACK to `source.kind`, so a regenerated record produced the same count and stayed
+green. **Fixed (the detection half):** new `tests/sd31_lst_provenance_repair_is_durable.rs` pins
+the narrowed population in both directions by book — `core_rulebook` 82 narrowed / **0**
+un-narrowed, `advanced_players_guide` 330 / 7, `beastiary` 0 / 1 — plus citation completeness,
+kind confinement, and a typed round-trip; and `sd26_cache_core_rulebook.rs`'s distribution test now
+additionally asserts zero `web_second_source` in `source` itself. **Teaching the two generators to
+emit the narrowed shape is still owed** (OPEN-ISSUES row 264).
+
+**(g) MEDIUM — `description_source` was off-schema.** It was absent from
+`shape_b_v1::CorpusRecordV1`, which carries no `deny_unknown_fields`, so any typed round-trip
+silently DROPPED the web citation — the OGL/attribution record for 412 records' shipped prose.
+**Fixed:** the field is on the canonical struct (`#[serde(default, skip_serializing_if)]`, this
+struct's own versioning convention), all 22 struct literals updated, and
+`description_source_survives_a_typed_round_trip_through_the_canonical_struct` proves it.
+
+**(h) MEDIUM — 82 records shipped contradicting themselves.** They carried `wiring_class:
+"ambiguous"` / `["no_corpus_line"]` while carrying a real `source.path` and `source.line` — the
+narrowing invalidated a stamp it did not refresh. **Fixed at the tool, not by hand:**
+`repair_lst_provenance` now self-heals a previously-narrowed record from the row it cites, so the
+correction is a re-run rather than a one-off script. `cargo run --locked --bin
+repair_lst_provenance` → `0 narrowed, 82 stale wiring_class refreshed, 2 refused`. Census after:
+47 `display`, 35 `computed`, 1 `static`. **Zero board effect**, verified: `v06_work_inventory`
+computes the class fresh from the oracle rows (`wiring_class::determine_closure`,
+`v06_work_inventory.rs:7678`) and never reads the stored field.
+
+**(i) MEDIUM/LOW — prose that contradicted the code it documents.** The `source_book` comment in
+`classify()` still cited `RuleSetId::Ce`'s `COMPANION_BOOKS["core_essentials"]` as its worked
+example — a registration the same wave DELETED. The widening's "an OBSERVED hit" claim described
+`holds_key`, which is key-OR-name. Both corrected in place, naming the wave that corrected them.
+
+### 4. CONFIRMED findings NOT fixed in code — logged, with the remedy
+
+* **The 9 PRE-EXISTING name-matched `monster_ability` credits.** `holds_unit_by_key` was applied
+  only to the widening (the caller that mints credit). Nine older credits reached `bestiary`
+  through the other paths on a name match and are untouched this cycle. OPEN-ISSUES row 261.
+* **Teaching `cache_gen::apg::generate_equipment` and `gen_core_rulebook_cache::equipment_source`
+  to emit the narrowed shape.** Detection landed; production did not. Row 264.
+* **The 10 units on the `static` bar carrying real `BONUS` chains** — row 246, whose "exactly 1"
+  was corrected to 14 in-cycle (4 with independent probe evidence, 10 on the literal bar alone).
+  Not withdrawn: that bar is the repo's standing unchanged `static` rung, which this wave did not
+  loosen.
+* **The two Core Essentials attribution questions** (`ce_feats.lst`'s 15 feats declaring
+  `SOURCELONG:Bestiary` while filed to `core_rulebook`; the 64 Aasimar/Tiefling heritage
+  `race_trait` records with no `SOURCELONG` at all) and **the 128 residual `core_essentials`
+  units** — rows 235 and 262/263. These need an operator ruling, not engineering.
+* **Receipt-prose corrections** applied directly to the OPEN-ISSUES rows rather than left to
+  drift: rows 241 (412/412 → 348 `cost_gp` / 313 `weight`), 246, 247, 253 (169 → 162, 5127 →
+  5150), 254 (the 80-unit credit is a NO-OP as described), 255 (option (b) struck), 257 (60/10
+  files → 65 shipped of 67 lines/11 files; ~396/20 spellings → 404/31).
+
+### 5. The sanctioned guarded regen
+
+Run in this order, each with `--json-out`, and the regen guarded by both reports so the
+stamp-preservation guard had real input and never fired:
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out <sp>/sweep.json
+#   26105 records examined of 26741 read, 252158 tokens compared (9 synthesized),
+#   26728 digests checked, 0 findings -> CLEAN, SWEEP_EXIT=0
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out <sp>/fixture.json
+#   1276 of 1276 covered units cleared; 0 failed; 0 not ingested -> FIX_EXIT=0
+CORPUS_LITERAL_SWEEP_REPORT=<sp>/sweep.json DERIVED_FIXTURE_CHECK_REPORT=<sp>/fixture.json \
+  cargo run --locked --bin v06_work_inventory
+#   WI_EXIT=0, no stamp-loss refusal, --allow-stamp-loss NOT used
+```
+
+Status-axis movement (the axis a missing verification stamp cannot move):
+`not-ingested` **16,840 → 16,634 (-206)** — bestiary_2 `monster_ability` 92, bestiary
+`monster_ability` 76, ARG `race` 24, APG `companion` 5, bestiary_4 `race` 5, bestiary `equipment`
+3, bestiary_5 `race` 1. `literal-verified` 6,122 → 6,436, `grounded` 2,530 → 2,657,
+`ingested-magnitude` 1,812 → 1,512, `unknown` 5,127 → 5,110.
+
+### 6. Public feeds
+
+`./scripts/publish-site-dashboard.sh` (real publish, not `--check`, per loop-instruction override
+10) → `SITE_EXIT=0`; wrote `site/dashboard/PF1e-dashboard.json`, `site/status-data.json`
+(30 books, overall 36.7 %) and 30 book-detail files (36,028 items).
+
+**Override 9 discharged:** the live dashboard's `work_inventory.status_sources_agree` is **false**
+(the two work-inventory sources carry different stamps: `generated_at 2026-08-19T01:02:34Z` vs
+`doneness_source_generated_at 2026-08-19T01:10:47Z`), so every figure quoted from it here is named
+by source. **All board figures in this receipt come from `work_inventory.by_doneness` /
+`mandate_headline`, whose stamp is `doneness_source_generated_at 2026-08-19T01:10:47Z`** — and
+they agree field-for-field with the independent per-unit replay in §2 (`mandate_headline`:
+`done 12277 / denominator 38521`). `site/dashboard/units/index.json`'s `source_document` is the
+main checkout's own path, so row 245's publish-from-a-worktree defect does not apply.
+
+### 7. Epic 0 — the standing reachability audit
+
+`python3 scripts/reachability_audit.py`:
+
+* **REACHABLE CEILING 98.95 % (38,115 / 38,521) — unchanged.**
+* Per-kind: `class` 100 %, `class_feature` 98.71 %, `companion` 99.65 %, `equipment` 99.57 %,
+  `equipment_modifier` 100 %, `feat` 96.90 %, `monster` 100 %, `monster_ability` 99.46 %,
+  **`race` 100 %**, `race_trait` 99.58 %, `spell` 97.82 %.
+* **9 dead-end cells, all `ambiguous|<status>`, 406 units** — unchanged, and `SD31-E2-F3-002-marker`
+  proved this cycle that it is structural, not an engineering gap. Populations re-derived by the
+  audit itself: `ambiguous_wiring_class_units: 406`, `unmeasurable_unknown_status_units: **5110**`
+  (not the 5,127 that lane's own row quoted), `race_total: 103`, `race_not_done: 69`.
+* No Structural Exclusion Register entry has ever been GRANTED; the register remains EMPTY.
+
+### 8. The full gate
+
+See §9 below — written after the gate returned, with the exit code captured in the same shell
+statement that ran it and never through a pipe. Log:
+`artifacts/SD31-W14-INTEGRATE-001-verify.log`.

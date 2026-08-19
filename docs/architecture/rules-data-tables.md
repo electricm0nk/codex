@@ -166,7 +166,14 @@ pub enum RuleSetId {
     Botd1,          // Book of the Damned, Vol. 1   (SD-29 E5 r2)
     Botd2,          // Book of the Damned, Vol. 2   (SD-29 E5 r2)
     Iswg,           // Inner Sea World Guide        (SD-29 E5 r3)
-    Ce,             // Core Essentials              (SD-29 E6 r4; race_trait heritage rows)
+    Ce,             // NOT A BOOK (decisions.md §9)  — a PCGen packaging bundle. Retained
+                    // ONLY as the feat-gap host for `ce_feats.lst`'s 15 rows
+                    // (`feat_gap_tables::CORE_ESSENTIALS_FEAT_GAP_ROWS`, `feats_all`
+                    // books[11], an EMPTY `BookFeatTable`). Its companion module and
+                    // `CompanionBook` registration were DELETED by SD31-CE-COMPANION-001
+                    // (2026-08-18) and those 102 rows re-filed under the books their own
+                    // `.lst` `SOURCELONG:` headers name; `race_catalog::RACE_CORPUS_BOOKS`
+                    // no longer lists it either. It must end at zero units.
     Isc,            // Inner Sea Combat             (SD-29 E7 pilot; companion ONLY)
     Isi,            // Inner Sea Intrigue           (SD-29 E7 pilot extend; familiars)
     B5,             // Bestiary 5                   (SD-29 E7 r2; companion ONLY — zero monsters)

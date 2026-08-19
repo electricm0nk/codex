@@ -683,3 +683,69 @@ phantom-duplicate population that would shrink the `feat` kind and the board DEN
 roughly the same amount if applied — PROPOSED, not applied, `OPEN-ISSUES.md` row 205, needing an
 operator ruling under the same propose-then-rule pathway Decision 9/10 established.
 | 13 | 2026-08-17 | wave `sd31-w13` (agents: `sd31-provenance`, `sd31-register-race`, `sd31-fixture-seam`, `sd31-racetrait6`, `sd31-cf-pools`, `sd31-ingest6`, three `sd31-w13-refute-*` review agents, integration `sd31-w13-integrate`) | Decision 12/14 (public-feed PI redaction + provenance schema); Decision 13 direction correction applied to the Supersession Register + owed race-branch evidence table; class_feature `derived_evaluator_fixture_check` seam (the mandate's own named highest-leverage gap); Changeling/Samsaran race chassis closing `arg_races.lst`'s 37-row roster; Unchained Barbarian's own Rage Power chooser + PU-wide roster-id false-grounding audit; the 13 `.COPY=` racial spell-like-ability spell variants (Decision 15); three Opus-effort adversarial reviews (14 CONFIRMED findings total); this integration cycle (`SD31-W13-INTEGRATE-001`) merging all six lanes, fixing 10 of 14 CONFIRMED findings, running the sanctioned guarded regen, and the wave's full gate | Board: 11,829/38,521 (30.71%) -- UNCHANGED, a genuine net-zero reconciliation (+8 class_feature fixture-verified, +7 race_trait chassis, -15 class_feature PU-roster-id correction, 0 elsewhere). **The fixture seam now genuinely lets a `derived` unit reach `done`** -- 8 real units, the mandate's own named binding constraint, closed for the first time. PI: 3 leaked declared-PI names found and fixed (`Bow of Erastil`/`Legendsbane`/`Witherfang`), 20 more found and redacted by the same fix, `site-dashboard-pi-gate` CLEAN and mutation-proven on the exact 3 names. Reachable ceiling 98.95% (unchanged). Trap report 1 mod-record/1,225 wiring-class-mismatch (byte-identical baseline). See `progress.md` cycle `SD31-W13-INTEGRATE-001` for `VERIFY_EXIT` and full stage summary. |
+
+## Board after wave 14 (`SD31-W14-INTEGRATE-001`, 2026-08-18)
+
+Re-derived live with the producer's own `doneness_verdict()` over the committed
+`docs/work-inventory.json` (the same command as every prior wave's table), not transcribed from
+any lane's own receipt. Oracle pin `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`.
+Dashboard `status_sources_agree` is **false**, so per loop-instruction override 9 the figures below
+are named by source: `work_inventory.by_doneness` / `mandate_headline`, stamp
+`doneness_source_generated_at 2026-08-19T01:10:47Z` — which agrees field-for-field with the
+independent per-unit replay.
+
+| kind | total | done (wave 13) | done (wave 14) | delta |
+|---|---:|---:|---:|---:|
+| class | 185 | 27 (14.5946%) | 27 (14.5946%) | +0 |
+| class_feature | 15,472 | 130 (0.8402%) | 130 (0.8402%) | +0 |
+| companion | 1,696 | 680 (40.0943%) | 684 (40.3302%) | +4 |
+| equipment | 6,208 | 4,998 (80.5090%) | 5,303 (85.4220%) | **+305** |
+| equipment_modifier | 1,580 | 380 (24.0506%) | 421 (26.6456%) | +41 |
+| feat | 2,610 | 1,475 (56.5134%) | 1,459 (55.9004%) | **-16** |
+| monster | 1,270 | 910 (71.6535%) | 910 (71.6535%) | +0 |
+| monster_ability | 2,951 | 1,369 (46.3911%) | 1,456 (49.3392%) | **+87** |
+| race | 103 | 7 (6.7961%) | 34 (33.0097%) | **+27** |
+| race_trait | 3,603 | 497 (13.7941%) | 497 (13.7941%) | +0 |
+| spell | 2,843 | 1,356 (47.6961%) | 1,356 (47.6961%) | +0 |
+| **TOTAL** | **38,521** | **11,829 (30.7079%)** | **12,277 (31.8709%)** | **+448** |
+
+Denominator unchanged all package (38,521); 0 unit ids added, 0 removed. Reachable ceiling
+unchanged (98.95 %; the `ambiguous` population is still 406 and `SD31-E2-F3-002-marker` proved
+this wave that the dead end is structural, not an engineering gap). **`race`'s reachable ceiling
+is now 100 %** — the first wave in six in which that kind moved at all.
+
+**The largest single-wave board gain of the package so far (+448, +1.16 pp), and the two
+directions are kept apart, not netted.** Up: `SD31-E6-F5-005` +346 (equipment provenance
+narrowing, which put 412 already-shipped records inside `corpus_literal_sweep`'s population for
+the first time), `SD31-CE-COMPANION-001` +91 (Core Essentials re-attribution), `SD31-E1-F3-001`
++27 (the `race` verdict re-pointed at the product). Down: `SD31-E2-F3-002-marker` **-16**, the
+wave's honest decrease — 23 `feat` units demoted because the string a player actually reads opens
+with PCGen's own admission that the rule is not mechanised, and the case-sensitive detector had
+been giving opposite verdicts to the same marker on letter case alone. `+346 + 91 + 27 − 16 =
++448`, and every one of the 575 units that changed bucket is traced to a named `evidence` token
+in `progress.md`'s `SD31-W14-INTEGRATE-001` receipt §2, with no residue.
+
+**Two lanes were dispatched onto the same card and one branch was not merged.**
+`worktree-wf_1ad13e3b-085-2` and `-3` both worked the Core Essentials removal without either
+knowing, and took contradictory routes on the same 102 companion records. `-3` followed
+`decisions.md §9`'s named signal (the `.lst`'s own `SOURCELONG:` header), discharged the card and
+reached a green gate; `-2` blocked on the card's central deliverable. `-3` was merged; `-2` was
+not, for supersession, not for gaming — its findings are preserved as `OPEN-ISSUES.md` rows 262
+and 263 rather than discarded, and its one unique deliverable was verified as no longer owed
+(`grep -rl 'core_essentials:' data/corpus/` → 0 on the merged tip). Wave 15 must allocate cards
+to lanes explicitly.
+
+**Three units were WITHDRAWN by this integration cycle, and 13 more were never banked.** The
+adversarial reviews returned 14 CONFIRMED findings across the four merged lanes; nine are fixed in
+code here. The two that moved numbers: (i) the `decisions.md §9` re-attribution widening credited
+13 `bestiary` `monster_ability` units off a DIFFERENT row whose key equalled their bare name —
+`holds_key` is `contains(key) || contains(name)` and a `<Group> ~ <Facet>` row's name is its bare
+facet — fixed with a strict `holds_unit_by_key` for the one caller that mints credit, taking that
+lane's collateral from -189 to **-176** on the `not-ingested` axis; and (ii) three `computed`
+races (Aasimar, Tiefling, Changeling) reached `done` straight from `grounded` with no second
+check, on the same roster observation that for a `static` race merely unblocks an independent
+byte-verification — withdrawn, taking that lane from +30 to **+27**. A mutation replacing
+`race_creation_chassis`'s entire body with an unconditional `Ok(..)` left the board identical,
+which is what settled it.
+
+| 14 | 2026-08-18 | wave `sd31-w14` (lanes: `SD31-CE-COMPANION-001`, `SD31-E6-F5-005`, `SD31-E1-F3-001`, `SD31-E2-F3-002-marker`, plus an unmerged second Core Essentials lane; four adversarial reviews; integration `sd31-w14-integrate`) | Core Essentials finally removed as an engine book — `rules_tables/core_essentials/` deleted, 102 companion rows re-filed under the books their own `SOURCELONG:` headers name, `reach_gate`'s companion claim from 102 unreachable to zero; per-FIELD provenance (`description_source` on `CorpusRecordV1`) narrowing 412 equipment records from a web citation to the pinned oracle row; the `race` verdict re-pointed at the product's own creation roster, breaking a six-wave stall; the not-implemented marker detector widened case-insensitively (an honest -16); this integration cycle merging four of five lanes, fixing 9 of 14 CONFIRMED findings, withdrawing 3 units and refusing 13, running the sanctioned guarded regen, publishing the feeds, and running the wave's full gate | Board: **12,277/38,521 (31.87 %), +448 — the package's largest single-wave gain**, every unit traced to a named cause in both directions (+346 equipment, +91 Core Essentials, +27 race, -16 feat). `race` 7 → 34 done, reachable ceiling for that kind now 100 %. Reachable ceiling overall 98.95 % (unchanged). Corpus sweep CLEAN (26,105 examined, 0 findings); `derived_evaluator_fixture_check` 1,276 / 1,276, 0 failed. Two new durable gates: `sd31_lst_provenance_repair_is_durable` (a cache regeneration silently reverting the narrowing is now RED) and `reattribution_widening_tests`; `sd27_book_license_record_counts`'s two guards no longer mask every book after the first. `core_essentials` still carries 128 unattributable units — `OPEN-ISSUES.md` row 263, needs an operator ruling, and until it is zero `core_essentials` must NOT be excluded. See `progress.md` cycle `SD31-W14-INTEGRATE-001` for `VERIFY_EXIT` and the full stage summary. |
