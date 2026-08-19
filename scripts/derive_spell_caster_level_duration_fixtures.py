@@ -59,6 +59,23 @@ WORK_INVENTORY_BOOK_TO_SHORT = {
 # occurrences) is refused, matching the Rust evaluator's own refusal shape.
 SIMPLE_RE = re.compile(r"^\(CASTERLEVEL(?:\s*\*\s*(\d+))?\)\s*(.+)$")
 
+# Statuses whose evidence a `fixture-verified` stamp supersedes, restating
+# `v06_work_inventory::apply_done_rung_stamps`'s own `matches!` arm.
+#
+# `fixture-verified` is in the list for IDEMPOTENCE, and it is load-bearing:
+# it is not a base status the classifier produces, it is the STAMP this very
+# fixture family causes `apply_done_rung_stamps` to write. Without it, every
+# already-covered unit drops out of this generator's own candidate set on the
+# next run and the fixture silently SHRINKS -- re-running this script against
+# the committed inventory would have cut `spell_entries` from 898 to the
+# handful still unstamped, which is the same stamp-loss class of defect
+# `v06_work_inventory`'s `--allow-stamp-loss` guard exists to refuse. Found
+# and fixed SD31-W15 while widening the sibling RANGE generator, where the
+# identical latent defect would have destroyed 199 committed entries on the
+# first regeneration. Not previously triggered only because neither generator
+# had been re-run since its own first write.
+STAMPABLE_STATUSES = ("ingested-magnitude", "grounded", "fixture-verified")
+
 
 def pcgen_corpus_root() -> str:
     root = os.environ.get("PCGEN_CORPUS_ROOT")
@@ -143,7 +160,7 @@ def main() -> int:
         for u in inv["units"]
         if u.get("kind") == "spell"
         and u.get("wiring_class") == "derived"
-        and u.get("status") in ("ingested-magnitude", "grounded")
+        and u.get("status") in STAMPABLE_STATUSES
         and u.get("book") in WORK_INVENTORY_BOOK_TO_SHORT
     ]
 

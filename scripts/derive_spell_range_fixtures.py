@@ -109,9 +109,101 @@ def range_field_from_raw_line(line: str) -> str | None:
     return None
 
 
+# Statuses whose evidence a `fixture-verified` stamp supersedes. Restates
+# `v06_work_inventory::apply_done_rung_stamps`'s own `matches!` arm, minus
+# `text-complete` (a description-only record states no magnitude for this
+# family's `RANGE:` formula to be the verification OF).
+#
+# `fixture-verified` is in the list for IDEMPOTENCE, and it is load-bearing:
+# it is not a base status the classifier can produce, it is the STAMP this
+# very fixture family causes `apply_done_rung_stamps` to write. A generator
+# that excluded it would drop every already-covered unit out of its own
+# candidate set on the next run and silently shrink the fixture -- exactly
+# the stamp-loss hazard `v06_work_inventory`'s `--allow-stamp-loss` guard
+# exists to refuse. Re-deriving over a stamped unit re-states the same
+# independently-read upstream `RANGE:` token, so the entry reproduces
+# byte-for-byte rather than disappearing. (SD31-W15; the same latent defect
+# is fixed in the sibling DURATION generator in the same commit.)
+STAMPABLE_STATUSES = ("ingested-magnitude", "grounded", "fixture-verified")
+
+
+def is_candidate(unit: dict) -> bool:
+    """Whether `unit` is eligible for a `spell_range_entries` fixture row.
+
+    Deliberately does NOT consult `wiring_class_reason`. That field is
+    `src/rules_core/wiring_class.rs::classify()`'s tie-break -- the
+    LEXICOGRAPHICALLY SMALLEST `derived:` signal on the row
+    (`sigs.iter().filter(|s| s.starts_with("derived:")).min()`) -- so a unit
+    carrying both `derived:prose_expr` and `derived:range_keyword` always
+    reports `prose_expr` (`p` < `r`) however plainly its own upstream row
+    reads `RANGE:Close`. Selecting on it excluded 151 `derived`+held spell
+    units in the eight ingested books whose upstream `RANGE:` token names one
+    of the three keywords verbatim, on an alphabetical accident and nothing
+    else (SD31-W15; the sibling DURATION generator never filtered on it,
+    which is why the two families' coverage diverged).
+
+    What DOES gate: the facts that decide whether a `fixture-verified` stamp
+    could apply at all (`kind`/`wiring_class`/`status`, per
+    `v06_work_inventory::apply_done_rung_stamps`) and whether the book has an
+    ingest for `run_spell_range_bar_check` to evaluate against. The record's
+    own `RANGE:` token is then read from the pinned upstream bytes by
+    `upstream_range_value` below -- the real, per-record filter.
+    """
+    return (
+        unit.get("kind") == "spell"
+        and unit.get("wiring_class") == "derived"
+        and unit.get("status") in STAMPABLE_STATUSES
+        and unit.get("book") in WORK_INVENTORY_BOOK_TO_SHORT
+    )
+
+
+def upstream_lst_path(corpus_root: str, unit: dict) -> str | None:
+    """The pinned upstream `.lst` this unit's provenance cites, or None."""
+    source_file = unit.get("source_file")
+    if not source_file:
+        return None
+    book = unit.get("book")
+    path = os.path.join(
+        corpus_root, "pathfinder", "paizo", "roleplaying_game", str(book), source_file
+    )
+    return path if os.path.isfile(path) else None
+
+
+def upstream_range_value(corpus_root: str, unit: dict) -> str | None:
+    """This unit's own `RANGE:` field value, read verbatim from the pinned
+    upstream bytes at the exact `(source_file, source_line)` its provenance
+    cites. Never from `data/corpus/`, which is what the Rust evaluator reads
+    and must stay independent of."""
+    path = upstream_lst_path(corpus_root, unit)
+    if path is None:
+        return None
+    source_line = unit.get("source_line")
+    if not source_line:
+        return None
+    with open(path, "r", encoding="utf-8", errors="replace") as f:
+        lines = f.read().split("\n")
+    line_no = int(source_line)
+    if line_no < 1 or line_no > len(lines):
+        return None
+    value = range_field_from_raw_line(lines[line_no - 1])
+    return None if value is None else value.strip()
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--limit", type=int, default=None)
+    ap.add_argument(
+        "--write",
+        action="store_true",
+        help=(
+            "merge the derived entries into tests/fixtures/rules_core/"
+            "derived-evaluator-fixtures.json's `spell_range_entries` in place, "
+            "instead of printing them for a caller to paste. The fixture is a "
+            "GENERATED artifact; hand-merging it is how a figure stops being "
+            "re-derivable (SD-30 loop-instruction.md, \"generated, never "
+            "hand-maintained\")."
+        ),
+    )
     ap.add_argument(
         "--work-inventory",
         default=os.path.join(REPO_ROOT, "docs", "work-inventory.json"),
@@ -154,15 +246,7 @@ def main() -> int:
         range_key_index_cache[book] = found
         return found
 
-    candidates = [
-        u
-        for u in inv["units"]
-        if u.get("kind") == "spell"
-        and u.get("wiring_class") == "derived"
-        and u.get("status") in ("ingested-magnitude", "grounded")
-        and u.get("wiring_class_reason") == "range_keyword"
-        and u.get("book") in WORK_INVENTORY_BOOK_TO_SHORT
-    ]
+    candidates = [u for u in inv["units"] if is_candidate(u)]
 
     entries = []
     sha_cache: dict[str, str] = {}
@@ -226,7 +310,30 @@ def main() -> int:
             break
 
     entries.sort(key=lambda e: e["unit_id"])
-    print(json.dumps(entries, indent=2), file=sys.stdout)
+    if args.write:
+        fixture_path = os.path.join(
+            REPO_ROOT, "tests", "fixtures", "rules_core", "derived-evaluator-fixtures.json"
+        )
+        with open(fixture_path) as f:
+            doc = json.load(f)
+        previous = {e["unit_id"] for e in doc.get("spell_range_entries", [])}
+        dropped = sorted(previous - {e["unit_id"] for e in entries})
+        if dropped:
+            # A generated artifact may GROW freely; it may never silently
+            # shrink. Same posture as `v06_work_inventory`'s stamp-loss guard:
+            # refuse and name the losses rather than write them away.
+            print(
+                f"# FATAL: this run would drop {len(dropped)} already-covered "
+                f"unit(s) from spell_range_entries, first 5: {dropped[:5]}",
+                file=sys.stderr,
+            )
+            return 1
+        doc["spell_range_entries"] = entries
+        with open(fixture_path, "w") as f:
+            f.write(json.dumps(doc, indent=2) + "\n")
+        print(f"# wrote {len(entries)} spell_range_entries to {fixture_path}", file=sys.stderr)
+    else:
+        print(json.dumps(entries, indent=2), file=sys.stdout)
     print(
         f"# {len(entries)} entries; candidates={len(candidates)}; "
         f"skipped_no_lst={skipped_no_lst} skipped_no_range_field={skipped_no_range_field} "
