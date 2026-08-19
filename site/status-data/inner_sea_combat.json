@@ -20,1885 +20,2199 @@
           "name": "Abductor",
           "doneness": "not-started",
           "type_facet": "Rogue Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Abductor"
         },
         {
           "name": "Absolute Law",
           "doneness": "not-started",
           "type_facet": "Pure Legion Enforcer Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Absolute Law"
         },
         {
           "name": "Achaekek",
           "doneness": "not-started",
           "type_facet": "RangerClassFeatures.RangerCombatStyle.ClassFeatures",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Achaekek"
         },
         {
           "name": "Acrobatic Stunt",
           "doneness": "not-started",
           "type_facet": "Rogue Class Feature.SpecialQuality.RogueTalent.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Acrobatic Stunt"
         },
         {
           "name": "Adaptable Guardian",
           "doneness": "not-started",
           "type_facet": "[redacted PI]",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Adaptable Guardian"
         },
         {
           "name": "Agile Maneuvers",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Agile Maneuvers"
         },
         {
           "name": "Alert Guardian",
           "doneness": "not-started",
           "type_facet": "Guard Dedication Choice.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Alert Guardian"
         },
         {
           "name": "Alignment",
           "doneness": "not-started",
           "type_facet": "Monk Class Feature.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Alignment"
         },
         {
           "name": "Amateurs!",
           "doneness": "not-started",
           "type_facet": "Fighter Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Amateurs!"
         },
         {
           "name": "Arbitrary Aim",
           "doneness": "not-started",
           "type_facet": "Gunslinger Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Arbitrary Aim"
         },
         {
           "name": "As One",
           "doneness": "not-started",
           "type_facet": "Cavalier Class Feature.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "As One"
         },
         {
           "name": "Aura Sense",
           "doneness": "not-started",
           "type_facet": "Pure Legion Enforcer Class Feature.SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Aura Sense"
         },
         {
           "name": "Aura of Blood",
           "doneness": "not-started",
           "type_facet": "Antipaladin Class Feature.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Aura of Blood"
         },
         {
           "name": "Aura of Death",
           "doneness": "not-started",
           "type_facet": "Antipaladin Class Feature.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Aura of Death"
         },
         {
           "name": "Aura of Excellence",
           "doneness": "not-started",
           "type_facet": "PaladinClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Aura of Excellence"
         },
         {
           "name": "Aura of Law",
           "doneness": "not-started",
           "type_facet": "PaladinClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Aura of Law"
         },
         {
           "name": "Aura of Perfection",
           "doneness": "not-started",
           "type_facet": "PaladinClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Aura of Perfection"
         },
         {
           "name": "Aura of Putrefaction",
           "doneness": "not-started",
           "type_facet": "Antipaladin Class Feature.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Aura of Putrefaction"
         },
         {
           "name": "Aura of Quietus",
           "doneness": "not-started",
           "type_facet": "Antipaladin Class Feature.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Aura of Quietus"
         },
         {
           "name": "Aura of Rebirth",
           "doneness": "not-started",
           "type_facet": "Antipaladin Class Feature.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Aura of Rebirth"
         },
         {
           "name": "Aura of the Grave",
           "doneness": "not-started",
           "type_facet": "Antipaladin Class Feature.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Aura of the Grave"
         },
         {
           "name": "Awaken Divinity",
           "doneness": "not-started",
           "type_facet": "ClassFeatures.Monk Class Feature.Ouat Class Feature.SpecialQuality.Special Quality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Awaken Divinity"
         },
         {
           "name": "Bashing Finish",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Bashing Finish"
         },
         {
           "name": "Beauty Unyielding",
           "doneness": "not-started",
           "type_facet": "Paladin Class Feature.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Beauty Unyielding"
         },
         {
           "name": "Besmara",
           "doneness": "not-started",
           "type_facet": "RangerClassFeatures.RangerCombatStyle.ClassFeatures",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Besmara"
         },
         {
           "name": "Blackjacket Tactics",
           "doneness": "not-started",
           "type_facet": "Fighter Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Blackjacket Tactics"
         },
         {
           "name": "Bleeding Critical",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Bleeding Critical"
         },
         {
           "name": "Blind-Fight",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Blind-Fight"
         },
         {
           "name": "Bloody Assault",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Bloody Assault"
         },
         {
           "name": "Bludgeoner",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Bludgeoner"
         },
         {
           "name": "Bodyguard",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Bodyguard"
         },
         {
           "name": "Bond Breaker",
           "doneness": "not-started",
           "type_facet": "Rogue Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Bond Breaker"
         },
         {
           "name": "Bonus Feats",
           "doneness": "not-started",
           "type_facet": "Fighter Class Feature.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Bonus Feats (Fighter Class Feature.SpecialQuality)"
         },
         {
           "name": "Bonus Feats",
           "doneness": "not-started",
           "type_facet": "Monk Class Feature.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Bonus Feats (Monk Class Feature.SpecialQuality)"
         },
         {
           "name": "Bonus Feats",
           "doneness": "not-started",
           "type_facet": "Monk Class Feature.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Bonus Feats (Monk Class Feature.SpecialQuality) #3"
         },
         {
           "name": "Bonus Feats",
           "doneness": "not-started",
           "type_facet": "Gunslinger Class Feature.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Bonus Feats (Gunslinger Class Feature.SpecialQuality)"
         },
         {
           "name": "Bonus Feats",
           "doneness": "not-started",
           "type_facet": "Cavalier Class Feature.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Bonus Feats (Cavalier Class Feature.SpecialQuality)"
         },
         {
           "name": "Calistria",
           "doneness": "not-started",
           "type_facet": "RangerClassFeatures.RangerCombatStyle.ClassFeatures",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Calistria"
         },
         {
           "name": "Catch Off-Guard",
           "doneness": "not-started",
           "type_facet": "Rogue Class Feature.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Catch Off-Guard (Rogue Class Feature.SpecialQuality.Extraordinary)"
         },
         {
           "name": "Catch Off-Guard",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Catch Off-Guard (RangerBonusFeat)"
         },
         {
           "name": "Cayden Callean",
           "doneness": "not-started",
           "type_facet": "RangerClassFeatures.RangerCombatStyle.ClassFeatures",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Cayden Callean"
         },
         {
           "name": "Certain Revenge",
           "doneness": "not-started",
           "type_facet": "Fighter Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Certain Revenge"
         },
         {
           "name": "Change Out",
           "doneness": "not-started",
           "type_facet": "Gunslinger Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Change Out"
         },
         {
           "name": "Charging Hurler",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Charging Hurler"
         },
         {
           "name": "Chosen Ally",
           "doneness": "not-started",
           "type_facet": "[redacted PI]",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Chosen Ally"
         },
         {
           "name": "Cinder Dance",
           "doneness": "not-started",
           "type_facet": "Barbarian Class Feature.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Cinder Dance"
         },
         {
           "name": "Cinder Sight",
           "doneness": "not-started",
           "type_facet": "Barbarian Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Cinder Sight"
         },
         {
           "name": "Class Skills",
           "doneness": "not-started",
           "type_facet": "Fighter Class Feature.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Class Skills"
         },
         {
           "name": "Clean Capture",
           "doneness": "not-started",
           "type_facet": "Rogue Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Clean Capture"
         },
         {
           "name": "Cleave",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Cleave"
         },
         {
           "name": "Cleaving Finish",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Cleaving Finish"
         },
         {
           "name": "Climbing Stunt",
           "doneness": "not-started",
           "type_facet": "Rogue Class Feature.SpecialQuality.RogueTalent.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Climbing Stunt"
         },
         {
           "name": "Close at Hand",
           "doneness": "not-started",
           "type_facet": "Cavalier Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Close at Hand"
         },
         {
           "name": "Close-Quarters Thrower",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Close-Quarters Thrower"
         },
         {
           "name": "Clothed in Civilization",
           "doneness": "not-started",
           "type_facet": "Guard Dedication Choice.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Clothed in Civilization"
         },
         {
           "name": "Clustered Shots",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Clustered Shots"
         },
         {
           "name": "Code of Conduct",
           "doneness": "not-started",
           "type_facet": "Paladin Class Feature.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Code of Conduct (Paladin Class Feature.SpecialQuality)"
         },
         {
           "name": "Code of Conduct",
           "doneness": "not-started",
           "type_facet": "Paladin Class Feature.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Code of Conduct (Paladin Class Feature.SpecialQuality) #2"
         },
         {
           "name": "Code of Conduct",
           "doneness": "not-started",
           "type_facet": "Antipaladin Class Feature.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Code of Conduct (Antipaladin Class Feature.SpecialQuality)"
         },
         {
           "name": "Combat Expertise",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Combat Expertise"
         },
         {
           "name": "Combat Reflexes",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Combat Reflexes"
         },
         {
           "name": "Confident Defense",
           "doneness": "not-started",
           "type_facet": "PaladinClassFeatures.Extraordinary.ArchetypeAbility.SpecialQuality",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Confident Defense"
         },
         {
           "name": "Confiscate",
           "doneness": "not-started",
           "type_facet": "Pure Legion Enforcer Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Confiscate"
         },
         {
           "name": "Corpse Rider",
           "doneness": "not-started",
           "type_facet": "Antipaladin Class Feature.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Corpse Rider"
         },
         {
           "name": "Covert Commander",
           "doneness": "not-started",
           "type_facet": "Rogue Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Covert Commander"
         },
         {
           "name": "Critical Focus",
           "doneness": "not-started",
           "type_facet": "MonkBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Critical Focus (MonkBonusFeat)"
         },
         {
           "name": "Critical Focus",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Critical Focus (RangerBonusFeat)"
         },
         {
           "name": "Curiosity",
           "doneness": "not-started",
           "type_facet": "Guard Dedication Choice.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Curiosity"
         },
         {
           "name": "Damage Reduction",
           "doneness": "not-started",
           "type_facet": "Barbarian Class Feature.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Damage Reduction"
         },
         {
           "name": "Daring Deeds",
           "doneness": "not-started",
           "type_facet": "Cavalier Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Daring Deeds"
         },
         {
           "name": "Deadly Aim",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Deadly Aim"
         },
         {
           "name": "Deadly Finish",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Deadly Finish"
         },
         {
           "name": "Death or Glory",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Death or Glory"
         },
         {
           "name": "Decree of Law",
           "doneness": "not-started",
           "type_facet": "Pure Legion Enforcer Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Decree of Law"
         },
         {
           "name": "Deeds",
           "doneness": "not-started",
           "type_facet": "Gunslinger Class Feature.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Deeds (Gunslinger Class Feature.SpecialQuality)"
         },
         {
           "name": "Deeds",
           "doneness": "not-started",
           "type_facet": "Gunslinger Class Feature.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Deeds (Gunslinger Class Feature.SpecialQuality) #2"
         },
         {
           "name": "Deflect Arrows",
           "doneness": "not-started",
           "type_facet": "Guard Dedication Choice.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Deflect Arrows"
         },
         {
           "name": "Demonologist",
           "doneness": "not-started",
           "type_facet": "Ranger Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonologist"
         },
         {
           "name": "Desert Mastery",
           "doneness": "not-started",
           "type_facet": "Cavalier Class Feature.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Desert Mastery"
         },
         {
           "name": "Desert Wind",
           "doneness": "not-started",
           "type_facet": "Cavalier Class Feature.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Desert Wind"
         },
         {
           "name": "Desna",
           "doneness": "not-started",
           "type_facet": "RangerClassFeatures.RangerCombatStyle.ClassFeatures",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Desna"
         },
         {
           "name": "Detect Chaos",
           "doneness": "not-started",
           "type_facet": "Paladin Class Feature.SpecialQuality.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Detect Chaos"
         },
         {
           "name": "Disabling Stunt",
           "doneness": "not-started",
           "type_facet": "Rogue Class Feature.SpecialQuality.RogueTalent.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Disabling Stunt"
         },
         {
           "name": "Disarming Strike",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Disarming Strike"
         },
         {
           "name": "Discern Lies",
           "doneness": "not-started",
           "type_facet": "Pure Legion Enforcer Class Feature.SpecialQuality.SpellLike",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Discern Lies"
         },
         {
           "name": "Disengaging Flourish",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Disengaging Flourish"
         },
         {
           "name": "Disruptive",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Disruptive"
         },
         {
           "name": "Disruptive Critical",
           "doneness": "not-started",
           "type_facet": "Pure Legion Enforcer Class Feature.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Disruptive Critical"
         },
         {
           "name": "Distance Thrower",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Distance Thrower"
         },
         {
           "name": "Divine Body",
           "doneness": "not-started",
           "type_facet": "PaladinClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Divine Body"
         },
         {
           "name": "Divine Detective",
           "doneness": "not-started",
           "type_facet": "Pure Legion Enforcer Class Feature.SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Divine Detective"
         },
         {
           "name": "Double Slice",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Double Slice"
         },
         {
           "name": "Dreadful Carnage",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Dreadful Carnage"
         },
         {
           "name": "Druman Blackjacket",
           "doneness": "not-started",
           "type_facet": "Archetype.FighterArchetype.FighterBravery.FighterBonusFeat4.FighterBonusFeat8.FighterBonusFeat12.FighterBonusFeat16",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Druman Blackjacket"
         },
         {
           "name": "Duelist Stance",
           "doneness": "not-started",
           "type_facet": "Fighter Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Duelist Stance"
         },
         {
           "name": "Duelist Training",
           "doneness": "not-started",
           "type_facet": "Fighter Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Duelist Training"
         },
         {
           "name": "Edict of Law",
           "doneness": "not-started",
           "type_facet": "Pure Legion Enforcer Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Edict of Law"
         },
         {
           "name": "Edicts",
           "doneness": "not-started",
           "type_facet": "Cavalier Class Feature.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Edicts (Cavalier Class Feature.SpecialQuality)"
         },
         {
           "name": "Edicts",
           "doneness": "not-started",
           "type_facet": "Cavalier Class Feature.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Edicts (Cavalier Class Feature.SpecialQuality) #2"
         },
         {
           "name": "Endurance",
           "doneness": "not-started",
           "type_facet": "Monk Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Endurance"
         },
         {
           "name": "Engineer Training",
           "doneness": "not-started",
           "type_facet": "Gunslinger Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Engineer Training"
         },
         {
           "name": "Erastil",
           "doneness": "not-started",
           "type_facet": "RangerClassFeatures.RangerCombatStyle.ClassFeatures",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Erastil"
         },
         {
           "name": "Escaping Stunt",
           "doneness": "not-started",
           "type_facet": "Rogue Class Feature.SpecialQuality.RogueTalent.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Escaping Stunt"
         },
         {
           "name": "Esprit de Corps",
           "doneness": "not-started",
           "type_facet": "Fighter Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Esprit de Corps"
         },
         {
           "name": "Exotic Weapon Proficiency",
           "doneness": "not-started",
           "type_facet": "MonkBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Exotic Weapon Proficiency"
         },
         {
           "name": "Exotic Weapon Proficiency (Whip)",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Exotic Weapon Proficiency (Whip)"
         },
         {
           "name": "Exotic Weapon Proficiency (sawtooth sabre)",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Exotic Weapon Proficiency (sawtooth sabre)"
         },
         {
           "name": "Exotic Weapon Proficiency (spiked chain)",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Exotic Weapon Proficiency (spiked chain)"
         },
         {
           "name": "Expanded Spell List",
           "doneness": "not-started",
           "type_facet": "Ranger Class Feature.SpecialQuality",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Expanded Spell List"
         },
         {
           "name": "Far Shot",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Far Shot"
         },
         {
           "name": "Favored Enemy",
           "doneness": "not-started",
           "type_facet": "Ranger Class Feature.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Favored Enemy"
         },
         {
           "name": "Felling Smash",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Felling Smash"
         },
         {
           "name": "Fiendish Quarry",
           "doneness": "not-started",
           "type_facet": "Ranger Class Feature.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Fiendish Quarry"
         },
         {
           "name": "Flame Runner",
           "doneness": "not-started",
           "type_facet": "Barbarian Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Flame Runner"
         },
         {
           "name": "Flying Stunt",
           "doneness": "not-started",
           "type_facet": "Rogue Class Feature.SpecialQuality.RogueTalent.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Flying Stunt"
         },
         {
           "name": "Formal Training",
           "doneness": "not-started",
           "type_facet": "Guard Dedication Choice.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Formal Training"
         },
         {
           "name": "Furious Focus",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Furious Focus"
         },
         {
           "name": "Give Me Fire",
           "doneness": "not-started",
           "type_facet": "Barbarian Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Give Me Fire"
         },
         {
           "name": "Go By Feel",
           "doneness": "not-started",
           "type_facet": "Gunslinger Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Go By Feel"
         },
         {
           "name": "Gorum",
           "doneness": "not-started",
           "type_facet": "RangerClassFeatures.RangerCombatStyle.ClassFeatures",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Gorum"
         },
         {
           "name": "Gozreh",
           "doneness": "not-started",
           "type_facet": "RangerClassFeatures.RangerCombatStyle.ClassFeatures",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Gozreh"
         },
         {
           "name": "Greater Blind-Fight",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Greater Blind-Fight"
         },
         {
           "name": "Greater Feint",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Greater Feint"
         },
         {
           "name": "Greater Grapple",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Greater Grapple"
         },
         {
           "name": "Greater Rage",
           "doneness": "not-started",
           "type_facet": "Guard Dedication Choice.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Greater Rage"
         },
         {
           "name": "Greater Shield Focus",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Greater Shield Focus"
         },
         {
           "name": "Greater Sunder",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Greater Sunder"
         },
         {
           "name": "Greater Trip",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Greater Trip"
         },
         {
           "name": "Greater Two-Weapon Fighting",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Greater Two-Weapon Fighting"
         },
         {
           "name": "Greater Whip Mastery",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Greater Whip Mastery"
         },
         {
           "name": "Grit",
           "doneness": "not-started",
           "type_facet": "Gunslinger Class Feature.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Grit"
         },
         {
           "name": "Guard Dedications",
           "doneness": "not-started",
           "type_facet": "[redacted PI]",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Guard Dedications"
         },
         {
           "name": "Guarded Thoughts",
           "doneness": "not-started",
           "type_facet": "[redacted PI]",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Guarded Thoughts"
         },
         {
           "name": "Gun Scavenger",
           "doneness": "not-started",
           "type_facet": "Archetype.GunslingerArchetype.GunslingerQuickClearDeed.GunslingerTargetingDeed.GunslingerNimble",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Gun Scavenger"
         },
         {
           "name": "Gunsmith",
           "doneness": "not-started",
           "type_facet": "Gunslinger Class Feature.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Gunsmith"
         },
         {
           "name": "Hamatulatsu",
           "doneness": "not-started",
           "type_facet": "MonkBonusFeat",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Hamatulatsu"
         },
         {
           "name": "Hamatulatsu Master",
           "doneness": "not-started",
           "type_facet": "Archetype.MonkArchetype.MonkBonusFeat.MonkBonusFeats.MonkPurityOfBody",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Hamatulatsu Master"
         },
         {
           "name": "Have Gun",
           "doneness": "not-started",
           "type_facet": "Cavalier Class Feature.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Have Gun"
         },
         {
           "name": "Havoc",
           "doneness": "not-started",
           "type_facet": "Cavalier Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Havoc"
         },
         {
           "name": "Hippogriff Companion",
           "doneness": "not-started",
           "type_facet": "Ranger Class Feature.SpecialQuality",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Hippogriff Companion"
         },
         {
           "name": "Home Ground Advantage",
           "doneness": "not-started",
           "type_facet": "Barbarian Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Home Ground Advantage"
         },
         {
           "name": "Home Ground Supremacy",
           "doneness": "not-started",
           "type_facet": "Barbarian Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Home Ground Supremacy"
         },
         {
           "name": "Iconoclast",
           "doneness": "not-started",
           "type_facet": "Pure Legion Enforcer Class Feature.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Iconoclast"
         },
         {
           "name": "Impaling Critical (trident)",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Impaling Critical (trident)"
         },
         {
           "name": "Impaling Critical (unarmed strike)",
           "doneness": "not-started",
           "type_facet": "MonkBonusFeat",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Impaling Critical (unarmed strike)"
         },
         {
           "name": "Improved Bull Rush",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Improved Bull Rush"
         },
         {
           "name": "Improved Charging Hurler",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Improved Charging Hurler"
         },
         {
           "name": "Improved Critical (rapier)",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Improved Critical (rapier)"
         },
         {
           "name": "Improved Critical (short sword)",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Improved Critical (short sword)"
         },
         {
           "name": "Improved Dirty Trick",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Improved Dirty Trick"
         },
         {
           "name": "Improved Disarm",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Improved Disarm"
         },
         {
           "name": "Improved Feint",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Improved Feint"
         },
         {
           "name": "Improved Fiendish Quarry",
           "doneness": "not-started",
           "type_facet": "Ranger Class Feature.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Improved Fiendish Quarry"
         },
         {
           "name": "Improved Godless Healing",
           "doneness": "not-started",
           "type_facet": "Pure Legion Enforcer Class Feature.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Improved Godless Healing"
         },
         {
           "name": "Improved Grapple",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Improved Grapple"
         },
         {
           "name": "Improved Impaling Critical",
           "doneness": "not-started",
           "type_facet": "MonkBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Improved Impaling Critical"
         },
         {
           "name": "Improved Initiative",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Improved Initiative"
         },
         {
           "name": "Improved Shield Bash",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Improved Shield Bash"
         },
         {
           "name": "Improved Snap Shot",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Improved Snap Shot"
         },
         {
           "name": "Improved Sunder",
           "doneness": "not-started",
           "type_facet": "MonkBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Improved Sunder (MonkBonusFeat)"
         },
         {
           "name": "Improved Sunder",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Improved Sunder (RangerBonusFeat)"
         },
         {
           "name": "Improved Trip",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Improved Trip"
         },
         {
           "name": "Improved Two-Weapon Feint",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Improved Two-Weapon Feint"
         },
         {
           "name": "Improved Unarmed Strike",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Improved Unarmed Strike"
         },
         {
           "name": "Improved Vital Strike",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Improved Vital Strike"
         },
         {
           "name": "Improved Whip Mastery",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Improved Whip Mastery"
         },
         {
           "name": "In Harm's Way",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "In Harm's Way"
         },
         {
           "name": "Infamous Deeds",
           "doneness": "not-started",
           "type_facet": "Cavalier Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Infamous Deeds"
         },
         {
           "name": "Infernal Resilience",
           "doneness": "not-started",
           "type_facet": "Monk Class Feature.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Infernal Resilience"
         },
         {
           "name": "Intimidating Prowess",
           "doneness": "not-started",
           "type_facet": "MonkBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Intimidating Prowess"
         },
         {
           "name": "Iomedae",
           "doneness": "not-started",
           "type_facet": "RangerClassFeatures.RangerCombatStyle.ClassFeatures",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Iomedae"
         },
         {
           "name": "Iron-Willed Atheist",
           "doneness": "not-started",
           "type_facet": "Pure Legion Enforcer Class Feature.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Iron-Willed Atheist"
         },
         {
           "name": "Irori",
           "doneness": "not-started",
           "type_facet": "RangerClassFeatures.RangerCombatStyle.ClassFeatures",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Irori"
         },
         {
           "name": "Jungle Endurance",
           "doneness": "not-started",
           "type_facet": "Barbarian Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Jungle Endurance"
         },
         {
           "name": "Jungle Rager",
           "doneness": "not-started",
           "type_facet": "Archetype.BarbarianArchetype.BarbarianUncannyDodge.BarbarianTrapSense.BarbarianImprovedUncannyDodge.BarbarianDamageReduction",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Jungle Rager"
         },
         {
           "name": "Jury-Rig",
           "doneness": "not-started",
           "type_facet": "Gunslinger Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Jury-Rig"
         },
         {
           "name": "Ki Pool",
           "doneness": "not-started",
           "type_facet": "Monk Class Feature.SpecialQuality.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Ki Pool (Monk Class Feature.SpecialQuality.Supernatural)"
         },
         {
           "name": "Ki Pool",
           "doneness": "not-started",
           "type_facet": "PaladinClassFeatures.SpecialAttack.Supernatural.Ki.Ki Pool.AttackOption",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Ki Pool (PaladinClassFeatures.SpecialAttack.Supernatural.Ki.Ki Pool.AttackOption)"
         },
         {
           "name": "Ki Throw",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Ki Throw"
         },
         {
           "name": "Know the Unseen Disciples",
           "doneness": "not-started",
           "type_facet": "ClassFeatures.Monk Class Feature.Ouat Class Feature.SpecialQuality.Special Quality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Know the Unseen Disciples"
         },
         {
           "name": "Kurgess",
           "doneness": "not-started",
           "type_facet": "RangerClassFeatures.RangerCombatStyle.ClassFeatures",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Kurgess"
         },
         {
           "name": "Lamashtu",
           "doneness": "not-started",
           "type_facet": "RangerClassFeatures.RangerCombatStyle.ClassFeatures",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Lamashtu"
         },
         {
           "name": "Lepidstadt Thrust",
           "doneness": "not-started",
           "type_facet": "Fighter Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Lepidstadt Thrust"
         },
         {
           "name": "Lightning Finish",
           "doneness": "not-started",
           "type_facet": "Monk Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Lightning Finish"
         },
         {
           "name": "Lightning Stance",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Lightning Stance"
         },
         {
           "name": "Lunge",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Lunge"
         },
         {
           "name": "Misdirection",
           "doneness": "not-started",
           "type_facet": "Rogue Class Feature.SpecialQuality.SpellLike",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Misdirection"
         },
         {
           "name": "Mobility",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Mobility"
         },
         {
           "name": "Monastic Legacy",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Monastic Legacy"
         },
         {
           "name": "Monk of the Seven Forms",
           "doneness": "not-started",
           "type_facet": "Archetype.MonkArchetype.MonkStunningFist.MonkManeuverTraining.MonkAbundantStep.MonkQuiveringPalm",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Monk of the Seven Forms"
         },
         {
           "name": "Monstrous Mount",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Monstrous Mount"
         },
         {
           "name": "Monstrous Mount Mastery",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Monstrous Mount Mastery"
         },
         {
           "name": "Mount",
           "doneness": "not-started",
           "type_facet": "Cavalier Class Feature.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Mount (Cavalier Class Feature.SpecialQuality.Extraordinary)"
         },
         {
           "name": "Mount",
           "doneness": "not-started",
           "type_facet": "Barbarian Class Feature.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Mount (Barbarian Class Feature.SpecialQuality)"
         },
         {
           "name": "Nimble Moves",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Nimble Moves"
         },
         {
           "name": "Nonbeliever",
           "doneness": "not-started",
           "type_facet": "Pure Legion Enforcer Class Feature.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Nonbeliever"
         },
         {
           "name": "Norgorber",
           "doneness": "not-started",
           "type_facet": "RangerClassFeatures.RangerCombatStyle.ClassFeatures",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Norgorber"
         },
         {
           "name": "Notorious Deeds",
           "doneness": "not-started",
           "type_facet": "Cavalier Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Notorious Deeds"
         },
         {
           "name": "Oath Spells",
           "doneness": "not-started",
           "type_facet": "Paladin Class Feature.SpecialQuality",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Oath Spells (Paladin Class Feature.SpecialQuality)"
         },
         {
           "name": "Oath Spells",
           "doneness": "not-started",
           "type_facet": "Paladin Class Feature.SpecialQuality",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Oath Spells (Paladin Class Feature.SpecialQuality) #2"
         },
         {
           "name": "Oath against Chaos",
           "doneness": "not-started",
           "type_facet": "Archetype.PaladinArchetype.PaladinChannelPositiveEnergy.PaladinDetectEvil.PaladinSmiteEvil",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Oath against Chaos"
         },
         {
           "name": "Oath against Grotesquery",
           "doneness": "not-started",
           "type_facet": "Archetype.PaladinArchetype.PaladinDivineHealth.PaladinAuraOfFaith",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Oath against Grotesquery"
         },
         {
           "name": "Old Reliable",
           "doneness": "not-started",
           "type_facet": "Cavalier Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Old Reliable"
         },
         {
           "name": "Opening Volley",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Opening Volley"
         },
         {
           "name": "Order of Good",
           "doneness": "not-started",
           "type_facet": "Paladin Class Feature.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Order of Good"
         },
         {
           "name": "Order of the Beast",
           "doneness": "not-started",
           "type_facet": "CavalierClassFeatures.CavalierOrder.SpecialQuality",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Order of the Beast"
         },
         {
           "name": "Order of the Guard",
           "doneness": "not-started",
           "type_facet": "CavalierClassFeatures.CavalierOrder.SpecialQuality",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Order of the Guard"
         },
         {
           "name": "Ouat",
           "doneness": "not-started",
           "type_facet": "Archetype.MonkArchetype",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Ouat"
         },
         {
           "name": "Perceived Wrongs",
           "doneness": "not-started",
           "type_facet": "Fighter Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Perceived Wrongs"
         },
         {
           "name": "Personal Trial",
           "doneness": "not-started",
           "type_facet": "PaladinClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Personal Trial"
         },
         {
           "name": "Pin Down",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Pin Down"
         },
         {
           "name": "Pinning Knockout",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Pinning Knockout"
         },
         {
           "name": "Pinpoint Targeting",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Pinpoint Targeting"
         },
         {
           "name": "Point-Blank Shot",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Point-Blank Shot"
         },
         {
           "name": "Power Attack",
           "doneness": "not-started",
           "type_facet": "MonkBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Power Attack (MonkBonusFeat)"
         },
         {
           "name": "Power Attack",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Power Attack (RangerBonusFeat)"
         },
         {
           "name": "Precise Shot",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Precise Shot"
         },
         {
           "name": "Prepared for the Journey",
           "doneness": "not-started",
           "type_facet": "Cavalier Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Prepared for the Journey"
         },
         {
           "name": "Pushing Assault",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Pushing Assault"
         },
         {
           "name": "Quick Dirty Trick",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Quick Dirty Trick"
         },
         {
           "name": "Quick Draw",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Quick Draw"
         },
         {
           "name": "Quick Retort",
           "doneness": "not-started",
           "type_facet": "Cavalier Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Quick Retort"
         },
         {
           "name": "Rage",
           "doneness": "not-started",
           "type_facet": "[redacted PI]",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Rage"
         },
         {
           "name": "Rage Power",
           "doneness": "not-started",
           "type_facet": "Guard Dedication Choice.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Rage Power"
         },
         {
           "name": "Rapid Shot",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Rapid Shot"
         },
         {
           "name": "Reactive Strike",
           "doneness": "not-started",
           "type_facet": "[redacted PI]",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Reactive Strike"
         },
         {
           "name": "Restore True Beauty",
           "doneness": "not-started",
           "type_facet": "Paladin Class Feature.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Restore True Beauty"
         },
         {
           "name": "Riding Stunt",
           "doneness": "not-started",
           "type_facet": "Rogue Class Feature.SpecialQuality.RogueTalent.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Riding Stunt"
         },
         {
           "name": "Rough Rampager",
           "doneness": "not-started",
           "type_facet": "Archetype.AntipaladinArchetype.AntipaladinAuraOfCowardice.AntipaladinAuraOfDespair.AntipaladinAuraOfSin",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Rough Rampager"
         },
         {
           "name": "Sable Company Marine",
           "doneness": "not-started",
           "type_facet": "Archetype.RangerArchetype",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Sable Company Marine"
         },
         {
           "name": "Sand Scourge",
           "doneness": "not-started",
           "type_facet": "Cavalier Class Feature.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Sand Scourge"
         },
         {
           "name": "Sand Storm",
           "doneness": "not-started",
           "type_facet": "Cavalier Class Feature.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Sand Storm"
         },
         {
           "name": "Sarenrae",
           "doneness": "not-started",
           "type_facet": "RangerClassFeatures.RangerCombatStyle.ClassFeatures",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Sarenrae"
         },
         {
           "name": "Savor the Sting",
           "doneness": "not-started",
           "type_facet": "Fighter Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Savor the Sting"
         },
         {
           "name": "Scattershot",
           "doneness": "not-started",
           "type_facet": "Gunslinger Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Scattershot"
         },
         {
           "name": "Science of the Blade",
           "doneness": "not-started",
           "type_facet": "Fighter Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Science of the Blade"
         },
         {
           "name": "Seafaring Companion",
           "doneness": "not-started",
           "type_facet": "Cavalier Class Feature.SpecialQuality",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Seafaring Companion"
         },
         {
           "name": "Seal-Breaker",
           "doneness": "not-started",
           "type_facet": "Archetype.AntipaladinArchetype.AntipaladinAuraOfCowardice.AntipaladinFiendishBoon.AntipaladinAuraOfDespair.AntipaladinAuraOfVengeance",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Seal-Breaker"
         },
         {
           "name": "Sense Perfection",
           "doneness": "not-started",
           "type_facet": "PaladinClassFeatures.Supernatural.ArchetypeAbility.SpecialQuality",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Sense Perfection"
         },
         {
           "name": "Shield Focus",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Shield Focus"
         },
         {
           "name": "Shield Master",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Shield Master"
         },
         {
           "name": "Shield Slam",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Shield Slam"
         },
         {
           "name": "Shield of Swings",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Shield of Swings"
         },
         {
           "name": "Shot on the Run",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Shot on the Run"
         },
         {
           "name": "Sidestep",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Sidestep"
         },
         {
           "name": "Siege Gunner",
           "doneness": "not-started",
           "type_facet": "Archetype.GunslingerArchetype.GunslingerNimble.GunslingerDeadeyeDeed.GunslingerGunslingerInitiativeDeed.GunslingerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Siege Gunner"
         },
         {
           "name": "Sirocco Fury",
           "doneness": "not-started",
           "type_facet": "Monk Class Feature.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Sirocco Fury"
         },
         {
           "name": "Skills",
           "doneness": "not-started",
           "type_facet": "PaladinClassFeatures.ArchetypeAbility.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Skills (PaladinClassFeatures.ArchetypeAbility.SpecialQuality)"
         },
         {
           "name": "Skills",
           "doneness": "not-started",
           "type_facet": "Cavalier Class Feature.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Skills (Cavalier Class Feature.SpecialQuality)"
         },
         {
           "name": "Skills",
           "doneness": "not-started",
           "type_facet": "Cavalier Class Feature.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Skills (Cavalier Class Feature.SpecialQuality) #3"
         },
         {
           "name": "Skills",
           "doneness": "not-started",
           "type_facet": "Ranger Class Feature.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Skills (Ranger Class Feature.SpecialQuality)"
         },
         {
           "name": "Sleight of Hand Stunt",
           "doneness": "not-started",
           "type_facet": "Rogue Class Feature.SpecialQuality.RogueTalent.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Sleight of Hand Stunt"
         },
         {
           "name": "Smite Chaos",
           "doneness": "not-started",
           "type_facet": "Paladin Class Feature.SpecialQuality.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Smite Chaos"
         },
         {
           "name": "Snap Shot",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Snap Shot"
         },
         {
           "name": "Sophisticated Stealth",
           "doneness": "not-started",
           "type_facet": "Rogue Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Sophisticated Stealth"
         },
         {
           "name": "Spell Severed",
           "doneness": "not-started",
           "type_facet": "Cavalier Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Spell Severed"
         },
         {
           "name": "Spellscar Drifter",
           "doneness": "not-started",
           "type_facet": "Archetype.CavalierArchetype.CavalierProficiencies.Tactician.CavalierCavalier'sCharge.Banner.CavalierBonusFeat.CavalierGreaterTactician.CavalierMightyCharge.CavalierDemandingChallenge.CavalierMasterTactician.CavalierSupremeCharge",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Spellscar Drifter"
         },
         {
           "name": "Spring Attack",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Spring Attack"
         },
         {
           "name": "Spurn Tradition",
           "doneness": "not-started",
           "type_facet": "ClassFeatures.Monk Class Feature.Ouat Class Feature.SpecialQuality.Special Quality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Spurn Tradition"
         },
         {
           "name": "Stealth Stunt",
           "doneness": "not-started",
           "type_facet": "Rogue Class Feature.SpecialQuality.RogueTalent.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Stealth Stunt"
         },
         {
           "name": "Step Up",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Step Up"
         },
         {
           "name": "Strike Back",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Strike Back"
         },
         {
           "name": "Stunning Fist",
           "doneness": "not-started",
           "type_facet": "Monk Class Feature.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Stunning Fist (Monk Class Feature.SpecialQuality.Extraordinary)"
         },
         {
           "name": "Stunning Fist",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Stunning Fist (RangerBonusFeat)"
         },
         {
           "name": "Sundering Strike",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Sundering Strike"
         },
         {
           "name": "Superior Tactics",
           "doneness": "not-started",
           "type_facet": "Fighter Class Feature.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Superior Tactics"
         },
         {
           "name": "Surgical Strike",
           "doneness": "not-started",
           "type_facet": "Fighter Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Surgical Strike"
         },
         {
           "name": "Swift Revenge",
           "doneness": "not-started",
           "type_facet": "Fighter Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Swift Revenge"
         },
         {
           "name": "Swimming Stunt",
           "doneness": "not-started",
           "type_facet": "Rogue Class Feature.SpecialQuality.RogueTalent.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Swimming Stunt"
         },
         {
           "name": "Tanglebriar Demonslayer",
           "doneness": "not-started",
           "type_facet": "Archetype.RangerArchetype.RangerEndurance",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Tanglebriar Demonslayer"
         },
         {
           "name": "Targeted Blast",
           "doneness": "not-started",
           "type_facet": "Gunslinger Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Targeted Blast"
         },
         {
           "name": "Teamwork",
           "doneness": "not-started",
           "type_facet": "Guard Dedication Choice.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Teamwork"
         },
         {
           "name": "Tenacious Tracker",
           "doneness": "not-started",
           "type_facet": "Fighter Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Tenacious Tracker"
         },
         {
           "name": "Tight Follower",
           "doneness": "not-started",
           "type_facet": "[redacted PI]",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Tight Follower"
         },
         {
           "name": "Torag",
           "doneness": "not-started",
           "type_facet": "RangerClassFeatures.RangerCombatStyle.ClassFeatures",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Torag"
         },
         {
           "name": "Tough as Nails",
           "doneness": "not-started",
           "type_facet": "Cavalier Class Feature.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Tough as Nails"
         },
         {
           "name": "Traces of Divinity",
           "doneness": "not-started",
           "type_facet": "Pure Legion Enforcer Class Feature.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Traces of Divinity"
         },
         {
           "name": "Two-Handed Thrower",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Two-Handed Thrower"
         },
         {
           "name": "Two-Weapon Defense",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Two-Weapon Defense"
         },
         {
           "name": "Two-Weapon Feint",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Two-Weapon Feint"
         },
         {
           "name": "Two-Weapon Fighting",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Two-Weapon Fighting"
         },
         {
           "name": "Two-Weapon Rend",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Two-Weapon Rend"
         },
         {
           "name": "Unarmed Strike",
           "doneness": "not-started",
           "type_facet": "PaladinClassFeatures.ArchetypeAbility.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Unarmed Strike"
         },
         {
           "name": "Unbreakable Defender",
           "doneness": "not-started",
           "type_facet": "[redacted PI]",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Unbreakable Defender"
         },
         {
           "name": "Uncanny Dodge",
           "doneness": "not-started",
           "type_facet": "Guard Dedication Choice.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Uncanny Dodge"
         },
         {
           "name": "Unstoppable Ravager",
           "doneness": "not-started",
           "type_facet": "Cavalier Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Unstoppable Ravager"
         },
         {
           "name": "Vandal",
           "doneness": "not-started",
           "type_facet": "Cavalier Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Vandal"
         },
         {
           "name": "Vengeance",
           "doneness": "not-started",
           "type_facet": "Fighter Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Vengeance"
         },
         {
           "name": "Vital Strike",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Vital Strike"
         },
         {
           "name": "Voice of Law",
           "doneness": "not-started",
           "type_facet": "Pure Legion Enforcer Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Voice of Law"
         },
         {
           "name": "Wave Rider",
           "doneness": "not-started",
           "type_facet": "Archetype.CavalierArchetype.CavalierProficiencies",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Wave Rider"
         },
         {
           "name": "Wave Strike",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Wave Strike"
         },
         {
           "name": "Weapon Finesse",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Weapon Finesse"
         },
         {
           "name": "Weapon Focus",
           "doneness": "not-started",
           "type_facet": "MonkBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Weapon Focus"
         },
         {
           "name": "Weapon and Armor Proficiency",
           "doneness": "not-started",
           "type_facet": "Fighter Class Feature.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Weapon and Armor Proficiency (Fighter Class Feature.SpecialQuality)"
         },
         {
           "name": "Weapon and Armor Proficiency",
           "doneness": "not-started",
           "type_facet": "Cavalier Class Feature.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Weapon and Armor Proficiency (Cavalier Class Feature.SpecialQuality)"
         },
         {
           "name": "Weapon and Armor Proficiency",
           "doneness": "not-started",
           "type_facet": "Pure Legion Enforcer Class Feature.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Weapon and Armor Proficiency (Pure Legion Enforcer Class Feature.SpecialQuality)"
         },
         {
           "name": "Weapon and Armor Proficiency",
           "doneness": "not-started",
           "type_facet": "Cavalier Class Feature.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Weapon and Armor Proficiency (Cavalier Class Feature.SpecialQuality) #4"
         },
         {
           "name": "Weapon and Armor Proficiency",
           "doneness": "not-started",
           "type_facet": "Fighter Class Feature.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Weapon and Armor Proficiency (Fighter Class Feature.SpecialQuality) #5"
         },
         {
           "name": "Weapon and Armor Proficiency",
           "doneness": "not-started",
           "type_facet": "Cavalier Class Feature.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Weapon and Armor Proficiency (Cavalier Class Feature.SpecialQuality) #6"
         },
         {
           "name": "Well-Paid Loyalty",
           "doneness": "not-started",
           "type_facet": "Fighter Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Well-Paid Loyalty"
         },
         {
           "name": "Whip Mastery",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Whip Mastery"
         },
         {
           "name": "Whirlwind Attack",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Whirlwind Attack"
         },
         {
           "name": "Wind Stance",
           "doneness": "not-started",
           "type_facet": "RangerBonusFeat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Wind Stance"
         },
         {
           "name": "Worn Banner",
           "doneness": "not-started",
           "type_facet": "Cavalier Class Feature.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Worn Banner"
         },
         {
           "name": "Zon-Kuthon",
           "doneness": "not-started",
           "type_facet": "RangerClassFeatures.RangerCombatStyle.ClassFeatures",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Zon-Kuthon"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Archetype.BarbarianArchetype.BarbarianFastMovement.BarbarianUncannyDodge.BarbarianTrapSense.BarbarianImprovedUncannyDodge.BarbarianRagePower4.BarbarianRagePower8.BarbarianRagePower12.BarbarianRagePower16",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Archetype.BarbarianArchetype.BarbarianFastMovement.BarbarianUncannyDodge.BarbarianTrapSense.BarbarianImprovedUncannyDodge.BarbarianRagePower4.BarbarianRagePower8.BarbarianRagePower12.BarbarianRagePower16)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Archetype.CavalierArchetype.CavalierProficiencies.CavalierTactician.CavalierCavalier'sCharge.CavalierBonusFeat6.CavalierGreaterTactician.CavalierMasterTactician",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Archetype.CavalierArchetype.CavalierProficiencies.CavalierTactician.CavalierCavalier'sCharge.CavalierBonusFeat6.CavalierGreaterTactician.CavalierMasterTactician)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Archetype.FighterArchetype.FighterBravery.FighterWeaponTraining1.FighterWeaponTraining2.FighterWeaponTraining3.FighterWeaponTraining4.FighterWeaponMastery",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Archetype.FighterArchetype.FighterBravery.FighterWeaponTraining1.FighterWeaponTraining2.FighterWeaponTraining3.FighterWeaponTraining4.FighterWeaponMastery)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Archetype.FighterArchetype.FighterProficiencies.FighterBonusFeat1.FighterWeaponTraining1.FighterWeaponTraining2.FighterWeaponTraining3.FighterWeaponTraining4",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Archetype.FighterArchetype.FighterProficiencies.FighterBonusFeat1.FighterWeaponTraining1.FighterWeaponTraining2.FighterWeaponTraining3.FighterWeaponTraining4)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Archetype.PaladinArchetype.PaladinArmorProficiencyHeavy.PaladinArmorProficiencyMedium.PaladinShieldProficiency.PaladinAuraOfCourage.PaladinDivineBond.PaladinAuraOfGood.PaladinAuraOfJustice.PaladinSmiteEvil.PaladinChannelPositiveEnergy.PaladinDetectEvil",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Archetype.PaladinArchetype.PaladinArmorProficiencyHeavy.PaladinArmorProficiencyMedium.PaladinShieldProficiency.PaladinAuraOfCourage.PaladinDivineBond.PaladinAuraOfGood.PaladinAuraOfJustice.PaladinSmiteEvil.PaladinChannelPositiveEnergy.PaladinDetectEvil)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Archetype.RogueArchetype.RogueTrapfinding.RogueTrapSense",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Archetype.RogueArchetype.RogueTrapfinding.RogueTrapSense)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Archetype.RogueArchetype.RogueTrapSense.RogueUncannyDodge",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Archetype.RogueArchetype.RogueTrapSense.RogueUncannyDodge)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Archetype.RogueArchetype.RogueTrapfinding.RogueTrapSense.RogueUncannyDodge",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Archetype.RogueArchetype.RogueTrapfinding.RogueTrapSense.RogueUncannyDodge)"
         }
       ]
     },
@@ -1919,13 +2233,15 @@
           "name": "Pure Legion Enforcer",
           "doneness": "not-started",
           "type_facet": "PC.Prestige",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Pure Legion Enforcer"
         },
         {
           "name": "Ulfen Guard",
           "doneness": "not-started",
           "type_facet": "PC.Prestige",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Ulfen Guard"
         }
       ]
     },
@@ -1946,61 +2262,71 @@
           "name": "Companion (Griffon)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Companion (Griffon)"
         },
         {
           "name": "Companion (Hippocampus)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Companion (Hippocampus)"
         },
         {
           "name": "Companion (Hippogriff)",
           "doneness": "done",
           "type_facet": "Magical Beast",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Companion (Hippogriff)"
         },
         {
           "name": "Companion (Worg)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Companion (Worg)"
         },
         {
           "name": "Companion Advancement (Griffon)",
           "doneness": "done",
           "type_facet": "CompanionAdvancement",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Companion Advancement (Griffon)"
         },
         {
           "name": "Companion Advancement (Hippocampus)",
           "doneness": "done",
           "type_facet": "CompanionAdvancement",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Companion Advancement (Hippocampus)"
         },
         {
           "name": "Companion Advancement (Hippogriff)",
           "doneness": "done",
           "type_facet": "CompanionAdvancement",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Companion Advancement (Hippogriff)"
         },
         {
           "name": "Companion Advancement (Worg)",
           "doneness": "done",
           "type_facet": "CompanionAdvancement",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Companion Advancement (Worg)"
         },
         {
           "name": "Mastery (7th Level)",
           "doneness": "done",
           "type_facet": "SpecialQuality",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Mastery (7th Level)"
         },
         {
           "name": "Unable to carry a rider while flying",
           "doneness": "partial",
           "type_facet": "SpecialQuality",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Unable to carry a rider while flying"
         }
       ]
     },
@@ -2022,433 +2348,505 @@
           "name": "Backbreaker Mail",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Backbreaker Mail"
         },
         {
           "name": "Blackjacket",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Blackjacket"
         },
         {
           "name": "Broadside Bulwark",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Broadside Bulwark"
         },
         {
           "name": "Calistrian Kiss",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Calistrian Kiss"
         },
         {
           "name": "Canopic Wrap",
           "doneness": "done",
           "type_facet": "Wondrous.Magic.Slot_Belt.Belt",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Canopic Wrap"
         },
         {
           "name": "Choker of the Rough Beast",
           "doneness": "done",
           "type_facet": "Wondrous.Magic.Slot_Neck.Amulet",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Choker of the Rough Beast"
         },
         {
           "name": "Colossus Draught",
           "doneness": "done",
           "type_facet": "Wondrous.Magic.Consumable",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Colossus Draught"
         },
         {
           "name": "Crag Linnorm Plate",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Crag Linnorm Plate"
         },
         {
           "name": "Crimson Bluff",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Crimson Bluff"
         },
         {
           "name": "Demonic Smith's Gloves",
           "doneness": "done",
           "type_facet": "Wondrous.Magic.Slot_Hands.Glove",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Smith's Gloves"
         },
         {
           "name": "Dueling Cuffs",
           "doneness": "done",
           "type_facet": "Wondrous.Magic.Slot_Wrists.Bracer",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Dueling Cuffs"
         },
         {
           "name": "Earth Breaker of Righted Injustice",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Earth Breaker of Righted Injustice"
         },
         {
           "name": "Ekujae Jungle Armor",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Ekujae Jungle Armor"
         },
         {
           "name": "Feather Token (Catapult)",
           "doneness": "done",
           "type_facet": "Wondrous.Magic",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Feather Token (Catapult)"
         },
         {
           "name": "Feather Token (Ram)",
           "doneness": "done",
           "type_facet": "Wondrous.Magic",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Feather Token (Ram)"
         },
         {
           "name": "Feather Token (Siege Tower)",
           "doneness": "done",
           "type_facet": "Wondrous.Magic",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Feather Token (Siege Tower)"
         },
         {
           "name": "Final Word",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Final Word"
         },
         {
           "name": "Gelugon Plate",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Gelugon Plate"
         },
         {
           "name": "Ghoul Hide",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Ghoul Hide"
         },
         {
           "name": "Greenblood Scourge",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Greenblood Scourge"
         },
         {
           "name": "Guard of Man",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Guard of Man"
         },
         {
           "name": "Guerrilla Bandanna",
           "doneness": "done",
           "type_facet": "Wondrous.Magic.Slot_Headband.Headband",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Guerrilla Bandanna"
         },
         {
           "name": "Holdout Ring",
           "doneness": "done",
           "type_facet": "Wondrous.Magic.Ring",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Holdout Ring"
         },
         {
           "name": "Hunter's Starknife",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Hunter's Starknife"
         },
         {
           "name": "Imperial Army Greathelm",
           "doneness": "done",
           "type_facet": "Wondrous.Magic.Slot_Head.Headgear",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Imperial Army Greathelm"
         },
         {
           "name": "Infernal Cord",
           "doneness": "done",
           "type_facet": "Wondrous.Magic.Slot_Belt.Belt",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Infernal Cord"
         },
         {
           "name": "Infernal Cord, Greater",
           "doneness": "done",
           "type_facet": "Wondrous.Magic.Slot_Belt.Belt",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Infernal Cord, Greater"
         },
         {
           "name": "Ioun Stone (Thorny/Brown)",
           "doneness": "done",
           "type_facet": "Wondrous.Magic.Thorny Ioun Stone",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Ioun Stone (Thorny/Brown)"
         },
         {
           "name": "Ioun Stone (Thorny/Crimson)",
           "doneness": "done",
           "type_facet": "Wondrous.Magic.Thorny Ioun Stone",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Ioun Stone (Thorny/Crimson)"
         },
         {
           "name": "Ioun Stone (Thorny/Orange)",
           "doneness": "done",
           "type_facet": "Wondrous.Magic.Thorny Ioun Stone",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Ioun Stone (Thorny/Orange)"
         },
         {
           "name": "Ioun Stone (Thorny/Silver)",
           "doneness": "done",
           "type_facet": "Wondrous.Magic.Thorny Ioun Stone",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Ioun Stone (Thorny/Silver)"
         },
         {
           "name": "Ioun Stone (Thorny/Teal)",
           "doneness": "done",
           "type_facet": "Wondrous.Magic.Thorny Ioun Stone",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Ioun Stone (Thorny/Teal)"
         },
         {
           "name": "Ioun Stone (Thorny/Violet)",
           "doneness": "done",
           "type_facet": "Wondrous.Magic.Thorny Ioun Stone",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Ioun Stone (Thorny/Violet)"
         },
         {
           "name": "Iron Guard Pauldrons",
           "doneness": "done",
           "type_facet": "Wondrous.Magic.Slot_Shoulders.Cape",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Iron Guard Pauldrons"
         },
         {
           "name": "Kalistocrat's Gloves",
           "doneness": "done",
           "type_facet": "Wondrous.Magic.Slot_Hands.Glove",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Kalistocrat's Gloves"
         },
         {
           "name": "Lastwall Banner (Harchist)",
           "doneness": "not-started",
           "type_facet": "Wondrous.Magic",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Lastwall Banner (Harchist)"
         },
         {
           "name": "Lastwall Banner (Hordeline)",
           "doneness": "not-started",
           "type_facet": "Wondrous.Magic",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Lastwall Banner (Hordeline)"
         },
         {
           "name": "Lastwall Banner (Sunwall)",
           "doneness": "not-started",
           "type_facet": "Wondrous.Magic",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Lastwall Banner (Sunwall)"
         },
         {
           "name": "Lyrune-Quah Klar",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Lyrune-Quah Klar"
         },
         {
           "name": "Mammoth Hide",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Mammoth Hide"
         },
         {
           "name": "Mantle of the Crusader Host",
           "doneness": "done",
           "type_facet": "Wondrous.Magic.Slot_Chest.Shirt",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Mantle of the Crusader Host"
         },
         {
           "name": "Monastic Warden",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Monastic Warden"
         },
         {
           "name": "Mosswater Stained Leather",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Mosswater Stained Leather"
         },
         {
           "name": "Numerian Resistance Plate",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Numerian Resistance Plate"
         },
         {
           "name": "Okeno Madu",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Okeno Madu"
         },
         {
           "name": "Peacekeeping Pistol",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Peacekeeping Pistol"
         },
         {
           "name": "Purging Falcata",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Purging Falcata"
         },
         {
           "name": "Quarterstaff of Contemplation",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Quarterstaff of Contemplation"
         },
         {
           "name": "Ring of the Adept Maneuvers",
           "doneness": "done",
           "type_facet": "Wondrous.Magic.Ring",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Ring of the Adept Maneuvers"
         },
         {
           "name": "Risen Blade",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Risen Blade"
         },
         {
           "name": "Rod of Revolution",
           "doneness": "done",
           "type_facet": "Wondrous.Magic.Rod",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Rod of Revolution"
         },
         {
           "name": "Sable Company Elite Saddle",
           "doneness": "done",
           "type_facet": "Wondrous.Magic.Saddle",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Sable Company Elite Saddle"
         },
         {
           "name": "Sandstorm Sandals",
           "doneness": "done",
           "type_facet": "Wondrous.Magic.Slot_Feet.Boot",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Sandstorm Sandals"
         },
         {
           "name": "Scabbard of the Efreet",
           "doneness": "done",
           "type_facet": "Wondrous.Magic",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Scabbard of the Efreet"
         },
         {
           "name": "Scouting Leather",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Scouting Leather"
         },
         {
           "name": "Seafaring Stanchions",
           "doneness": "done",
           "type_facet": "Wondrous.Magic.Slot_Wrist.Bracer",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Seafaring Stanchions"
         },
         {
           "name": "Shadde-Quah Spirit Bolas",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Shadde-Quah Spirit Bolas"
         },
         {
           "name": "Shadowbound Chains",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Shadowbound Chains"
         },
         {
           "name": "Shearing Sword",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Shearing Sword"
         },
         {
           "name": "Steadfast Urumi",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Steadfast Urumi"
         },
         {
           "name": "Summoner Slayer Eyes",
           "doneness": "done",
           "type_facet": "Wondrous.Magic.Slot_Eyes.Eyewear",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Summoner Slayer Eyes"
         },
         {
           "name": "Tablet of the First Law",
           "doneness": "done",
           "type_facet": "Wondrous.Magic",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Tablet of the First Law"
         },
         {
           "name": "Truefaith Vestments",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Truefaith Vestments"
         },
         {
           "name": "Tunnel Defender Stoneplate",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Tunnel Defender Stoneplate"
         },
         {
           "name": "Wanderer's Scarf",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Wanderer's Scarf"
         },
         {
           "name": "War Commander's Field Plate",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "War Commander's Field Plate"
         },
         {
           "name": "Wendifisa Spear",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Wendifisa Spear"
         },
         {
           "name": "Xill Carapace Armor",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Xill Carapace Armor"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI]"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Wondrous.Magic.Slot_Body.Robe",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Wondrous.Magic.Slot_Body.Robe)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Wondrous.Magic.Slot_Shoulders.Cape",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Wondrous.Magic.Slot_Shoulders.Cape)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #4"
         }
       ]
     }

@@ -361,7 +361,7 @@
         var filtered = kindState.items.filter(function (it) {
           if (kindState.filter === 'done' && it.doneness !== 'done') return false;
           if (kindState.filter === 'pending' && it.doneness === 'done') return false;
-          if (q && it.name.toLowerCase().indexOf(q) === -1) return false;
+          if (q && (it.display_name || it.name).toLowerCase().indexOf(q) === -1) return false;
           return true;
         });
 
@@ -382,7 +382,14 @@
             '<td class="status-item-name"></td>' +
             '<td class="status-item-cell"><span class="status-item-pill status-item-pill-standing"></span></td>' +
             '<td class="status-item-cell"><span class="status-item-pill ' + pillClass + '"></span></td>';
-          row.querySelector('.status-item-name').textContent = it.name;
+          // Decision 17 / Ruling §17: `name` is not unique within a
+          // (book, kind) drill-down (~4,266 same-name collisions
+          // corpus-wide, none sharing a corpus_key or source line -- every
+          // row is a distinct printed thing). `display_name`
+          // (`build_public_status.add_display_names`) disambiguates with
+          // the row's own type_facet or a positional suffix; fall back to
+          // `name` only for an older cached JSON that predates the field.
+          row.querySelector('.status-item-name').textContent = it.display_name || it.name;
           var pills = row.querySelectorAll('.status-item-pill');
           pills[0].textContent = STANDING_LABELS[it.standing] || humanizeToken(it.standing);
           pills[1].textContent = DONENESS_LABELS[it.doneness] || humanizeToken(it.doneness);
