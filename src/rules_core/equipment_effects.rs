@@ -202,7 +202,7 @@ pub fn compute_equipment_effects(
             continue;
         };
         let to_hit_bonus = is_weapon_record(record).then(|| {
-            let bonus = resolve_weapon_to_hit_bonus(&selection.applied_modifiers, corpus);
+            let bonus = resolve_weapon_to_hit_bonus(record, &selection.applied_modifiers, corpus);
             weapon_count += 1;
             single_weapon_to_hit_bonus = bonus;
             bonus
@@ -310,7 +310,30 @@ pub fn compute_equipment_effects(
 /// `BONUS:WEAPON|...|TYPE=Enhancement` chain, contributes nothing --
 /// mirrors the main loop's own resolve-or-skip discipline, not a
 /// fabricated value.
-fn resolve_weapon_to_hit_bonus(applied_modifiers: &[String], corpus: &SourcePackageContent) -> i16 {
+///
+/// **`SD31-W18-INTEGRATE-001` fix (adversarial review, `OPEN-ISSUES.md`
+/// row 309 re-opened):** `weapon_record` is the specific weapon this
+/// to-hit bonus is being resolved for. Wave 18's row-309 re-land guarded
+/// `damage_total::resolve_weapon_enhancement_modifier` against a
+/// `natural_attack_only` bonus (the Amulet of Mighty Fists family)
+/// leaking onto an ordinary weapon's DAMAGE roll, but left THIS function
+/// -- the one `compute_equipment_effects` actually calls for every
+/// weapon's `to_hit_bonus`/`attack_bonus_delta`, via
+/// `selection.applied_modifiers`, the attachment shape the shipped
+/// desktop app's own `attach_equipment_modifier_at_root` uses -- with no
+/// scope check at all. Confirmed live before this fix: an Amulet of
+/// Mighty Fists +5 attached to an ordinary Longsword yielded
+/// `to_hit_bonus = Some(5)` / `attack_bonus_delta = Some(5)`, a real
+/// player-facing regression reaching `character_hub.rs` ->
+/// `CharacterSheet.tsx`'s "Attack Bonus" stat tile. Same guard as
+/// `resolve_weapon_enhancement_modifier`: skip a `natural_attack_only`
+/// bonus unless `weapon_record` itself is a real natural attack.
+fn resolve_weapon_to_hit_bonus(
+    weapon_record: &EquipmentRecord,
+    applied_modifiers: &[String],
+    corpus: &SourcePackageContent,
+) -> i16 {
+    let weapon_is_natural_attack = is_natural_attack_weapon(weapon_record);
     let mut total = 0;
     for modifier_item_id in applied_modifiers {
         let Some((record, _table_cell)) = equipment_id_resolve(modifier_item_id, RuleSetId::Crb, corpus) else {
@@ -324,6 +347,9 @@ fn resolve_weapon_to_hit_bonus(applied_modifiers: &[String], corpus: &SourcePack
         // strictly redundant with it, and silently dropped any non-CRB
         // modifier's bonus before this check ever ran.
         if let Some(bonus) = equipmods::compute_equipmods_effect(record) {
+            if bonus.natural_attack_only && !weapon_is_natural_attack {
+                continue;
+            }
             if bonus.affects.contains("TOHIT") {
                 total += bonus.bonus;
             }
@@ -903,5 +929,56 @@ Unarmed Strike\tKEY:Unarmed Strike\tTYPE:Weapon.Resizable.Melee.Special.Unarmed.
             .expect("the Amulet of Mighty Fists chain must now resolve to a real bonus");
         assert!(bonus.natural_attack_only, "the Amulet of Mighty Fists family scopes to natural attacks only");
         assert_eq!(bonus.bonus, 1);
+    }
+
+    /// `SD31-W18-INTEGRATE-001` (adversarial review, `OPEN-ISSUES.md` row
+    /// 309 re-opened): `damage_total::resolve_weapon_enhancement_modifier`
+    /// was scope-guarded in wave 18, but `resolve_weapon_to_hit_bonus` --
+    /// the function `compute_equipment_effects` actually calls for
+    /// `to_hit_bonus`/`attack_bonus_delta` via `selection.applied_modifiers`,
+    /// the SAME attachment shape the shipped desktop app's
+    /// `attach_equipment_modifier_at_root` uses -- was not. Confirmed live
+    /// before this fix: an Amulet of Mighty Fists +1 attached to an
+    /// ordinary Longsword yielded `to_hit_bonus = Some(1)` /
+    /// `attack_bonus_delta = Some(1)`, leaking the natural-attack-only
+    /// bonus onto a non-natural weapon. Mutation-provable: removing the
+    /// `bonus.natural_attack_only && !weapon_is_natural_attack` skip in
+    /// `resolve_weapon_to_hit_bonus` reproduces `Some(1)` here.
+    #[test]
+    fn amulet_of_mighty_fists_attached_as_a_modifier_does_not_leak_onto_an_ordinary_longsword() {
+        let corpus = corpus_with_fixture();
+        let equipped_items =
+            vec![equipped_with_modifiers("Longsword (Base)", &["Special Ability ~ +1 ~ Amulet of Mighty Fists"])];
+
+        let effects = compute_equipment_effects(&equipped_items, &corpus);
+        let longsword = &effects.per_item[0];
+
+        assert_eq!(
+            longsword.to_hit_bonus,
+            Some(0),
+            "a natural-attack-only bonus attached to a non-natural weapon must not apply"
+        );
+        assert_eq!(
+            effects.attack_bonus_delta,
+            Some(0),
+            "the single-weapon attack_bonus_delta scalar must reflect the same scope guard"
+        );
+    }
+
+    /// Positive control for the same guard: a REAL natural attack
+    /// (Unarmed Strike) with the Amulet attached as a modifier DOES
+    /// receive the bonus -- proves the fix scopes the bonus, it does not
+    /// simply zero it out everywhere.
+    #[test]
+    fn amulet_of_mighty_fists_attached_as_a_modifier_applies_to_a_real_natural_attack() {
+        let corpus = corpus_with_fixture();
+        let equipped_items =
+            vec![equipped_with_modifiers("Unarmed Strike", &["Special Ability ~ +1 ~ Amulet of Mighty Fists"])];
+
+        let effects = compute_equipment_effects(&equipped_items, &corpus);
+        let unarmed = &effects.per_item[0];
+
+        assert_eq!(unarmed.to_hit_bonus, Some(1), "a natural-attack-only bonus must apply to a real natural attack");
+        assert_eq!(effects.attack_bonus_delta, Some(1));
     }
 }

@@ -39,13 +39,24 @@
 //! desktop app (proven live: `apps/desktop/src-tauri/src/
 //! character_hub.rs`'s `attach_equipment_modifier_at_root` gates only on
 //! catalog recognition, target-equipped and funds, no legality check).
-//! Wave 18 adds the missing piece both review findings named: this
-//! module now sets `WeaponEnhancementBonus::natural_attack_only` (real,
-//! distinct from a bare `WEAPON` chain, never guessed), and
-//! `damage_total::resolve_weapon_enhancement_modifier` now checks
-//! `equipment_effects::is_natural_attack_weapon` on the specific weapon
-//! being resolved before applying a natural-attack-only bonus to it — an
-//! ordinary longsword no longer receives the Amulet's bonus, only a real
+//! Wave 18 adds the piece both review findings named: this module now
+//! sets `WeaponEnhancementBonus::natural_attack_only` (real, distinct
+//! from a bare `WEAPON` chain, never guessed).
+//!
+//! **`SD31-W18-INTEGRATE-001` correction (integration-cycle adversarial
+//! review, `OPEN-ISSUES.md` row 309 re-opened a second time):** the
+//! wave-18 lane guarded only `damage_total::
+//! resolve_weapon_enhancement_modifier` (the `weapon_enhancement_bonus`
+//! top-level-selection consumer). It left `equipment_effects::
+//! resolve_weapon_to_hit_bonus` — the function actually called for
+//! `to_hit_bonus`/`attack_bonus_delta` via `selection.applied_modifiers`,
+//! the SAME attachment shape `attach_equipment_modifier_at_root` uses —
+//! unguarded, so an equipped Amulet of Mighty Fists still leaked its
+//! bonus onto an ordinary longsword's attack roll even after that fix.
+//! BOTH consumers now check `equipment_effects::is_natural_attack_weapon`
+//! on the specific weapon being resolved before applying a
+//! `natural_attack_only` bonus to it — an ordinary longsword receives
+//! neither the Amulet's attack nor damage bonus; only a real
 //! natural-attack weapon (e.g. CRB's `Unarmed Strike`) does.
 //!
 //! Deliberately requires the trailing `TYPE=Enhancement` qualifier — this
