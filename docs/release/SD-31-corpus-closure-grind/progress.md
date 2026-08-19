@@ -29196,3 +29196,227 @@ Both scratch target dirs deleted (`/home/ubuntu/cargo-targets/sd31-w15-integrate
 `/home/ubuntu/cargo-targets/` ends this wave empty. Gate logs committed at
 `artifacts/SD31-W15-INTEGRATE-001-verify-run1.log` (FAIL), `-run2.log` (PASS) and `-run3.log`
 (PASS, on the final tip).
+
+## Cycle `SD31-W16-COMPANION-001` (`RETRO_ACTOR=sd31-w16-companion`) — 2026-08-19, wave 16 lane: companion
+Climb/Swim skill-ability-diff seam (**+45 `done`**); spell and class_feature investigated, not touched
+
+**Branch state at cycle-0.** The dispatch worktree was cut at `37a80141e` — `origin`'s site-publish
+deploy tip, no `docs/`/`data/`/`scripts/`/`schemas/` tree. `git status --porcelain` empty on the
+worktree, so recovered with `git reset --hard 7485b31ea` (the dispatch's own named tranche/11 tip,
+"gate run 3 — GREEN on the final wave-15 tip"). Recorded per loop-instruction step 0−.
+
+**Oracle pin, checked first:** `scripts/fetch-pcgen-oracle.sh --check` →
+`pcgen-oracle: OK 7f818006e371188e5717fd18d74d18a420747fc6`. Every figure below is derived against
+that pin.
+
+**Board, re-derived at cycle start** (`doneness_verdict()` replayed over `docs/work-inventory.json`,
+`generated_at 2026-08-19T14:06:36Z`, `EXCLUDED_BOOKS={'beginner_box'}`): 12,748/38,521 = 33.0936%,
+matching the dispatch's own figure exactly. `derived`+`grounded` seam: companion 110, spell 45,
+class_feature 29 (plus monster 253, monster_ability 172 — out of this lane's file scope).
+
+### 1. Companion: the lever wave 15 named, built
+
+Wave 15's own companion cycle (`SD31-W15-COMPANION-001`) named
+`BONUS:SKILL|Climb,Swim|DEX-STR` (133 corpus-wide occurrences at that cycle's tip) as "the largest
+single remaining lever" and explicitly left it as a named follow-on. Re-derived at this cycle's tip
+(corpus-wide `grep` over every registered book's `*_races_*companion*.lst`/`*_races_*familiar*.lst`):
+**136 occurrences, zero variance** — every single one is exactly `Climb,Swim` paired with exactly
+`DEX-STR`. This is PF1's rule for familiars/small companions whose Dexterity typically exceeds their
+Strength: Climb and Swim checks compute from the DIFFERENCE between the two modifiers rather than
+from Strength alone (what Climb/Swim otherwise key off).
+
+**What landed**, mirroring the sibling Strength-damage seam's own shape record-for-record:
+
+* `companion_chassis::SkillAbilityDiffBonus { skills, formula }` + `CompanionRecord::
+  skill_ability_diff_bonuses` — the token verbatim, never a computed number.
+* `scripts/transcribe_companion_tables.py`'s new `parse_skill_ability_diff_bonuses`, filtering on a
+  `-` in the formula half specifically to exclude a row's OTHER `BONUS:SKILL` tokens (flat
+  `TYPE=Racial` numbers, a different and already-static quantity). All 16 registered books
+  regenerated (`+491 −11` lines, purely additive — the `-11` is the auto-derived `use` line growing
+  by one imported symbol per file).
+* The evaluator — `parse_companion_skill_ability_diff` (accepts any `<ABBR>-<ABBR>` pair of the six
+  PF1 ability abbreviations, refuses a self-difference or an unrecognised abbreviation rather than
+  hard-coding the one string seen), `evaluate_companion_skill_ability_diff` (plain subtraction — no
+  rounding question, unlike the sibling seam's halving), `format_companion_skill_ability_diff`
+  ("Dex modifier − Str modifier").
+* `run_companion_skill_bar_check`, wired into `run_bar_check`. Runs against the SHIPPED tables
+  (`COMPANION_BOOKS`), not `data/corpus/`. Needed the `monster_registry_book` `bestiary`→`beastiary`
+  book-spelling alias — the sibling seam's own comment states it deliberately does NOT apply this
+  alias because no committed Strength-damage fixture had ever named `bestiary`; this seam DOES pin a
+  real `bestiary:companion:rat_dire` entry, so the gap stopped being theoretical and the fix was
+  needed for real (reused the existing function rather than duplicating it).
+* `scripts/derive_companion_skill_bonus_fixtures.py` — independent generator, reads the pinned
+  upstream `.lst` bytes directly (never `data/corpus/`, never this repo's own parser), own
+  from-scratch `classify_shape` classifier, plain-Python subtraction for every expected value. 134
+  `companion_skill_entries`, each pinning 9 `(plus_modifier, minus_modifier)` pairs chosen for
+  mutation sensitivity (asymmetric pairs that a swapped-operand bug would fail on both sides of).
+  **A near-miss caught before it shipped**: the first cut of the token collector matched ANY
+  `BONUS:SKILL|…|…` field regardless of whether the formula had an arithmetic term, so a row
+  carrying one arithmetic token plus one-or-more flat racial tokens (16 real rows, e.g.
+  `familiar_sloth`, `tarsier`) was mis-reported as "carries 2 tokens" and skipped; fixed by moving
+  the `-`-presence filter into the collector itself, verified by rerunning (`101 derived` →
+  `134 derived`, `78 skipped` → `45 skipped`, all remaining skips genuinely have no arithmetic
+  token). **Idempotence proven, not asserted**: two consecutive runs on the same (unstamped) tree
+  produce byte-identical `derived-evaluator-fixtures.json` (`diff -q`, confirmed clean) — this
+  generator's `TARGET_STATUSES` includes `fixture-verified` from the start, so it does not carry the
+  wave-15-diagnosed "second run silently erases its own credit" defect at all.
+* Production wiring: `companion_catalog.rs`'s new `skillAbilityDiffBonuses` DTO field
+  (`CompanionSkillBonusDto`), through `loadCompanionCatalog.ts` to `CompanionCatalogScreen.tsx`
+  (`formatSkillBonus`/`SKILL_BONUS_CAPTION`, "Skill bonus from ability difference (corpus
+  BONUS:SKILL tokens): Climb, Swim: Dex modifier − Str modifier") — a catalog browser has no
+  character and therefore no modifiers to subtract, so it renders the rule in words, same posture
+  `format_companion_strength_damage` already takes.
+* `reach_gate.rs`: the new column added to the reach predicate, plus
+  `the_skill_bonus_column_moves_no_record_into_reach` (the twin of the sibling
+  `the_damage_bonus_column_moves_no_record_into_reach`) proving it buys no record's reach on its
+  own — every companion row carrying this token already reaches on `stat_adjustments`.
+
+### 2. Mutation proofs (Decision 1(a)) — each watched go red, then restored
+
+| # | mutation | result |
+|---|---|---|
+| 1 | wrong expected value (a swapped-operand-shaped mutation, `(3,1)→-2` instead of `2`) | 1 red, `"at modifiers (3, 1): expected skill bonus 2, evaluator produced ..."` |
+| 2 | fixture names a skill list the shipped record does not carry (`["Climb"]` vs the real `["Climb","Swim"]`) | 1 red — catches a transcription regression (dropped/renamed field) |
+| 3 | empty ladder (fixture pins no `(plus, minus, bonus)` triple at all) | 1 red — refused rather than vacuously cleared |
+| 4 | parser: self-difference (`STR-STR`), unrecognised abbreviation (`FOO-STR`), no operator at all (`DEX`) | all refuse (`None`), 3 separate TDD anchors |
+
+Plus the positive control (`a_correct_companion_skill_fixture_clears_run_companion_skill_bar_check`)
+and the corpus zero-variance pin (`every_registered_skill_ability_diff_bonus_states_the_same_formula_
+and_skills`, asserting every shipped `SkillAbilityDiffBonus` across all 16 books states exactly
+`DEX-STR`/`["Climb","Swim"]` — fails loudly if a later book ever carries a different spelling,
+rather than letting the parser silently absorb it).
+
+### 3. Measured — every number replayed, never asserted
+
+```
+BEFORE 38521 units done=12748 (33.0936%)  generated_at 2026-08-19T14:06:36Z
+AFTER  38521 units done=12793 (33.2105%)  generated_at 2026-08-19T16:31:42Z
+DELTA  {done: +45, held: -45, in-progress: 0, not-started: 0, unmeasurable: 0, deferred: 0}
+verdict movements: [(('held', 'done'), 45)]   by kind: [(('companion', 'held', 'done'), 45)]
+ids only in BEFORE: 0   only in AFTER: 0
+```
+
+**Denominator unchanged, nothing regressed in any other direction, no unit added/removed/deferred.**
+101 of the 134 committed fixture entries were already `fixture-verified` by the sibling seam or a
+prior wave (the SAME unit, a DIFFERENT quantity newly grounded — real added evidence, no verdict
+change since those units were already `done`); the 45 above are the ones whose ONLY held magnitude
+was this token.
+
+Guarded regen:
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out …/sweep.json
+    -> 26105 records examined of 26741 read, 252158 tokens compared (9 synthesized), 0 findings — CLEAN
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out …/fixture.json
+    -> 1744 unit(s) cleared over 2498 fixture row(s); 0 failed; 0 not ingested   (was 1699/2364)
+CORPUS_LITERAL_SWEEP_REPORT=… DERIVED_FIXTURE_CHECK_REPORT=… cargo run --locked --bin v06_work_inventory
+    -> exit 0, wrote docs/work-inventory.json
+```
+
+Stamp-preservation guard proven able to fire: a bare `cargo run --locked --bin v06_work_inventory`
+(no report env vars) on the SAME post-regen tree exits **1** —
+`refusing to write …/docs/work-inventory.json: this run would drop 8097 of the 8097 verification
+stamp(s) it currently carries` — and does not write. `--allow-stamp-loss` never passed.
+
+`./scripts/publish-site-dashboard.sh` (real publish, per loop-instruction override 10) refreshed
+`site/dashboard/PF1e-dashboard.json` (+ `.last-good`), `site/dashboard/units/{index,PF1e-units-
+companion}.json`, `site/status-data.json` and 7 book-detail files — confined to the books this
+cycle actually touched. **Pre-existing, unrelated finding, not caused by this cycle**: the producer
+prints `WARNING: mandate_headline sanity check failed: ladder sum (38521) + unmapped (0) = 38521 !=
+denominator (38405)` to stderr — a `_mandate_headline()` internal arithmetic disagreement between
+its `by_doneness` ladder and its own `total_units - dropped_units` denominator, independent of any
+unit's doneness verdict and therefore independent of this cycle's change; explicitly designed as a
+non-fatal, log-only check ("the cron must keep publishing"). Not investigated further — the
+producer is not a file this lane owns.
+
+### 4. DoD item 8 — on-screen, driven, not inspected
+
+`RUN_DESKTOP_AGENT=sd31-w16-companion` (never the banned `default`), own
+`CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/w16-companion-desktop2`, run only AFTER the full gate
+returned (never concurrently with `scripts/verify.sh`, per the harness's own note).
+
+`apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh --family companion --record
+"Arctic Fox" --expect "Climb, Swim" --expect "Dex modifier"` → **PASS**. The rendered line the
+harness extracted from the live webview's clipboard (not read off a screenshot, which cannot be
+machine-checked):
+
+```
+Skill bonus from ability difference (corpus BONUS:SKILL tokens): Climb, Swim: Dex modifier − Str modifier
+```
+
+Evidence: `artifacts/SD31-W16-COMPANION-001/item8/companion-arctic-fox.png` +
+`.verify.md`. Every corpus-wide occurrence of this token is the identical `DEX-STR` shape (§1), so
+there is no REFUSED-formula case to demonstrate live the way the sibling Strength-damage seam's
+Whiptail Centipede record demonstrates one — the parser's refusal paths are covered by the four
+in-suite TDD anchors instead (§2 item 4).
+
+### 5. Spell (45 units) and class_feature (29 remaining, 28 after this census) — investigated, not touched
+
+Every one of spell's 45 `derived`+`grounded` units is a `core_rulebook` spell whose `DURATION:`/
+`RANGE:` carries a `(CASTERLEVEL[*N])` term inside a shape the existing seam already, deliberately
+refuses — most visibly the 9 Detect spells' `"Concentration, up to (CASTERLEVEL*N) <unit> [D]"`,
+which has its own NAMED, TESTED refusal
+(`derived_evaluator_fixture_check.rs::spell_seam_tests::concentration_prefix_refuses_rather_than_
+guesses`). This is a real, considered design choice from an earlier cycle, not a latent tie-break bug
+like wave 15's own RANGE fix — so it was not flipped unilaterally. Logged as `OPEN-ISSUES.md` row
+294, RULING-NEEDED, with the exact question the operator would need to answer and the exact 9-10-unit
+yield if answered to widen.
+
+class_feature's largest remaining lever — three `max(<LEVELVAR>/2,1)` "half level, minimum 1"
+Trapfinding-shaped units, each with a real, already-shipped, already-tested production consumer
+(`class_chassis.rogue.trapfinding` / `class_feature.acg.investigator.trapfinding_bonus` /
+`class_feature.pu.unchained_rogue.trapfinding_bonus`, all in `pilot_compute/mod.rs`) — was traced to
+its real ingested JSON for each candidate rather than trusted from the wave-15 census label. Only
+`core_rulebook:class_feature:rogue_trapfinding` is structurally clean (alias on the same record); the
+other two carry SEPARATE, previously-unnamed blockers (`investigator_trapfinding`'s `InvestigatorLVL`
+alias genuinely absent from the whole book's `class_feature/` directory, confirmed by direct grep, not
+the book file the classifier can see; `unchained_rogue_trapfinding`'s ingest represents the token as a
+`DEFINE`, not a `BONUS:VAR`, a shape `load_class_feature_bonus_vars` has never read). Building
+`max(…)`-clamp parsing plus trailing-`|TYPE=…`-suffix tolerance in both the Rust and Python parsers,
+widening the fixture schema, and writing new quantity-guard entries would buy exactly ONE unit today
+— not built, for that reason. Logged as `OPEN-ISSUES.md` row 295, NOTE (no ruling needed — sized
+engineering follow-on).
+
+### 6. What this cycle did NOT do
+
+* The other 65 held companion units (110 − 45) are untouched and stay held, honestly — 56 `bonus`-
+  reason units minus the 39 this seam's own selected population covered leaves the rest genuinely
+  different shapes (`prose_formula_segment` 33, `spells` 11, `prose_expr` 10, and the 56−39=17
+  `bonus`-reason units carrying some OTHER scalar token, e.g. poison-DC/hold-breath-duration formulas
+  this lane did not attempt).
+* Spell and class_feature: see §5. Nothing proposed for the Structural Exclusion Register; nothing
+  left the denominator in either direction.
+
+### 7. Gate
+
+`./scripts/verify.sh -j 8`, `RETRO_ACTOR=sd31-w16-companion`, own
+`CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/w16-companion-verify`, exit code captured in the same
+shell statement that ran it (`... > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"`), never through a
+pipe.
+
+**RESULT: PASS, all 34 stages, `VERIFY_EXIT=0`.** `root-lib` 2081 passed · `root-full` 7130 passed
+across 573 suites, all 536 `tests/*.rs` suites executed · `desktop` 470 passed · `reach` 29 passed ·
+`corpus-sweep` 26105 records examined, **0 findings** · `supersession-gate` 116 objects clean ·
+`frontend-test` 99/99 · `frontend-typecheck` clean · `clippy` root:51 desktop:7, **0 errors, both
+ceilings unchanged** · `class-dump` 31/31 computing · `reachability-audit` ceiling 98.95% (unchanged)
+· both PI gates clean (13+31 files scanned against 1,612 declared-PI names, zero leaked) ·
+`site-dashboard-check`/`site-public-status-check` both **current** (the wave-15-integration fix for
+the absolute-path-in-worktree defect holds).
+
+Three baselines moved, each attributed and re-derived in `scripts/verify-baselines.env`'s own new
+dated block rather than hand-guessed: `ROOT_LIB_TESTS` 2066→2081 (+15, the new
+`companion_skill_seam_tests` module), `ROOT_FULL_TESTS` 7115→7130 (+15, the same tests — root-full
+counts the lib target too, and this cycle added no new `tests/*.rs` file), `DESKTOP_TESTS` 469→470
+(+1, `the_skill_bonus_column_moves_no_record_into_reach`). `ROOT_TEST_BINARIES` (573),
+`CORPUS_LITERAL_RECORDS` (26105), `FRONTEND_TEST_FILES` (99), both clippy ceilings and
+`COMPUTED_CLASSES` (31) all unchanged. Re-ran `--only root-lib` after the baseline update to confirm
+the stale note cleared (`PASS root-lib (2081 passed)`, no note printed).
+
+Component runs also captured directly: `cargo test --locked --lib companion` → 86 passed, 0 failed
+(includes both companion seam modules plus every pre-existing companion-adjacent suite);
+`cargo test --locked --manifest-path apps/desktop/src-tauri/Cargo.toml reach_gate` → 29 passed, 0
+failed, including the new anti-gaming test; `npm run typecheck` clean; `npm test` 99/99 test files.
+
+Auto-emitted verification receipts (verify.sh's own instrumentation, not hand-written) committed at
+`docs/retro/events/sd31-w16-companion.jsonl` (the full-gate PASS) and
+`docs/retro/events/wf_b9c2a3a2-9da-5.jsonl` (the post-baseline-update `--only root-lib` re-check).
