@@ -123,13 +123,29 @@ def sha256_file(path: Path) -> str:
     return h.hexdigest()
 
 
+# The statuses a `derived` `monster` unit can carry and still be in this
+# seam's population.
+#
+# `fixture-verified` MUST be here, and leaving it out is a self-erasing
+# defect, not a tidier filter.  `apply_done_rung_stamps` rewrites a banked
+# unit's status from `grounded` to `fixture-verified`, so a second run of this
+# script with `grounded` alone would find NONE of the units it banked on the
+# first run and would write an EMPTY `monster_sla_entries` -- silently
+# withdrawing every one of them at the next guarded regen.  Caught by running
+# the script twice, which is the only way to see it: the first run looks
+# perfect.
+TARGET_STATUSES = {"grounded", "fixture-verified"}
+
+
 def target_units():
-    """Every `monster` unit the board still holds at `derived`+`grounded`.
+    """Every `monster` unit this seam addresses: `wiring_class=derived` at a
+    status the `derived` done rung can act on.
 
     `docs/work-inventory.json` is read for IDENTITY ONLY -- which `unit_id` a
     `(book, corpus_key)` pair carries, and which units are in the target
     population.  No magnitude and no engine-computed value is ever taken from
-    it.
+    it, and a unit's existing stamp is never treated as evidence: every row is
+    re-derived from the oracle on every run.
     """
     inventory = json.loads(INVENTORY_PATH.read_text())
     return [
@@ -137,7 +153,7 @@ def target_units():
         for u in inventory["units"]
         if u["kind"] == "monster"
         and u["wiring_class"] == "derived"
-        and u["status"] == "grounded"
+        and u["status"] in TARGET_STATUSES
     ]
 
 
@@ -203,9 +219,18 @@ def spell_level_index(data_root: Path):
     built from every PCGen spell `.lst` under the pinned oracle.
 
     The level comes from the spell record's OWN `CLASSES:` token, which is a
-    different file from any monster row.  A spell defined more than once (a
-    later book restating it) keeps the FIRST definition encountered in sorted
-    path order, and the ambiguity is reported rather than silently resolved.
+    different file from any monster row.
+
+    **A spell the oracle defines more than once is REMOVED from the index
+    entirely**, not resolved by a tiebreak.  616 spell identities corpus-wide
+    are multiply defined, and an earlier revision kept the first definition in
+    sorted path order -- which decides the expected value by alphabetical
+    luck (`campaign_setting/` sorts before `roleplaying_game/core_rulebook/`),
+    exactly the "a shared name never implies a shared thing" trap this program
+    has hit before.  Measured cost of refusing instead: **zero rows.** All 94
+    spells the committed fixture cites are defined exactly once, and all 165
+    rows cite `core_rulebook/cr_spells.lst`; this guard exists so a future run
+    over a wider population cannot silently pick the wrong book's printing.
     """
     index: dict[str, tuple] = {}
     duplicates: set[str] = set()
@@ -239,10 +264,15 @@ def spell_level_index(data_root: Path):
             }
             if not levels:
                 continue
-            if identity in index:
+            if identity in index or identity in duplicates:
                 duplicates.add(identity)
                 continue
             index[identity] = (path, number, classes, levels)
+    # Refuse, do not tiebreak. A second definition makes the identity
+    # ambiguous whether or not the two agree, because nothing here can say
+    # which printing a given monster's row was written against.
+    for identity in duplicates:
+        index.pop(identity, None)
     return index, duplicates
 
 

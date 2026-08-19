@@ -27310,6 +27310,60 @@ every label, times, caster-level token, spell name and DC token now goes through
 alongside the existing name/size/type/attack values. Regeneration dropped and redacted exactly the
 same rows as before the change (Inner Sea World Guide: 5 monster + 3 ability rows).
 
+### 9c. A SELF-ERASING defect in this cycle's own derivation script, caught by running it twice
+
+**The first run looked perfect. The second run emptied the fixture.**
+
+`target_units()` selected `status == 'grounded'`. But `apply_done_rung_stamps` rewrites a banked
+unit's status to `fixture-verified` — so on a second run the script found **none** of the 63 units
+it had just banked, wrote an EMPTY `monster_sla_entries`, and would have silently withdrawn all 63
+at the next guarded regen. Nothing in the gate would have caught it: the stamp-loss guard fires on
+`docs/work-inventory.json`, and by then the fixture would already have been committed empty.
+
+```
+python3 scripts/derive_monster_sla_spell_level_fixtures.py   # run 1: 165 rows / 63 units
+python3 scripts/derive_monster_sla_spell_level_fixtures.py   # run 2 (before the fix): 0 rows
+```
+
+Fixed by selecting `status in {'grounded', 'fixture-verified'}` — a unit's existing stamp is never
+treated as evidence, every row is re-derived from the oracle on every run. **Idempotency is now
+proved, not asserted:** two consecutive runs produce a byte-identical file (`diff -q`).
+
+**The fix widened the seam, and the widening was measured before it was accepted.** The population
+now includes the 59 units the WAVE-13 caster-level seam had already banked and that also carry a
+save-DC token, so the fixture is **314 rows over 122 units** (63 this cycle banked + 59 already
+done by the sibling seam). The board did not move, and that was verified by a full guarded regen
+rather than reasoned about:
+
+```
+derived-evaluator-fixture-check: 1339 unit(s) cleared over 1590 fixture row(s); 0 failed; 0 not ingested
+# board replay after: done 12,340 / 38,521 (32.03%) -- IDENTICAL
+# inventory diff vs. the previous commit: units changed: 0, fields that changed: {}
+```
+
+**No unit was demoted, and the reason matters.** The widened population turns up 13 contradicting
+units rather than 8, and 5 of the new ones (Couatl `ethereal jaunt` 3 vs 7; Astradaemon
+`energy drain` 7 vs 9; Vrolikai `symbol of death` 9 vs 8; Zelekhut `geas (lesser)` 3 vs 4; Mothman
+`modify memory` 3 vs 4) are units the caster-level seam already banked. They are **refused at
+DERIVATION time**, so they never enter `monster_sla_entries` and `run_bar_check` never sees them —
+their existing credit rests on a different, still-green magnitude and is untouched. The
+`cleared.remove` guard added to `run_bar_check` this cycle is therefore a no-op today (`0 failed`)
+and exists for the case it is actually for: a COMMITTED fixture that stops matching, which is a
+regression and should demote.
+
+### 9d. A latent hazard closed at zero cost — duplicate spell identities
+
+`spell_level_index` originally kept the FIRST definition of a multiply-defined spell in sorted
+path order. **616 spell identities are multiply defined corpus-wide**, and sorted path order puts
+`campaign_setting/` before `roleplaying_game/core_rulebook/` — so the expected value would have
+been decided by alphabetical luck, the "a shared name never implies a shared thing" trap this
+program has hit before. A multiply-defined identity is now **removed from the index entirely**
+rather than tiebroken.
+
+**Measured cost: zero rows.** All 94 spells the committed fixture cites are defined exactly once,
+and all 314 rows cite `core_rulebook/cr_spells.lst`. The guard exists so a future run over a wider
+population cannot silently pick the wrong book's printing.
+
 ### 10. What this cycle could NOT do
 
 * **The 178-row natural-attack Strength-damage family** (§2). Its expected value is not

@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-08-19T11:43:15Z",
+  "generated_at": "2026-08-19T12:45:51Z",
   "source_document": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0628906e-65b-1/docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
