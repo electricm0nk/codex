@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-08-19T22:40:20Z",
+  "generated_at": "2026-08-19T23:45:09Z",
   "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
