@@ -17,6 +17,7 @@ import { ClassCatalogScreen } from '../classCatalog/ClassCatalogScreen';
 import { RaceCatalogScreen } from '../raceCatalog/RaceCatalogScreen';
 import { CompanionCatalogScreen } from '../companionCatalog/CompanionCatalogScreen';
 import { MonsterCatalogScreen } from '../monsterCatalog/MonsterCatalogScreen';
+import { IntelligentItemCatalogScreen } from '../intelligentItemCatalog/IntelligentItemCatalogScreen';
 import { CorpusIngestDiagnosticPanel } from './CorpusIngestDiagnosticPanel';
 import { StubScreen } from './StubScreen';
 import { isGoogleDriveConfigured } from '../settings/googleDrive';
@@ -37,6 +38,7 @@ type Mode =
   | 'raceCatalog'
   | 'monsterCatalog'
   | 'companionCatalog'
+  | 'intelligentItemCatalog'
   | 'corpusIngestDiagnostic'
   | 'dm-toolkit'
   | 'campaign-list'
@@ -80,6 +82,7 @@ export function CharacterHubPage() {
         onBrowseRaces={() => setMode('raceCatalog')}
         onBrowseMonsters={() => setMode('monsterCatalog')}
         onBrowseCompanions={() => setMode('companionCatalog')}
+        onBrowseIntelligentItems={() => setMode('intelligentItemCatalog')}
         onCorpusIngestDiagnostic={() => setMode('corpusIngestDiagnostic')}
         onCampaignManager={() => setMode('campaign-list')}
         campaignManagerGate={computeCampaignManagerAccessGate(isGoogleDriveConfigured())}
@@ -110,6 +113,10 @@ export function CharacterHubPage() {
 
   if (mode === 'monsterCatalog') {
     return <MonsterCatalogScreen onClose={() => setMode('landing')} />;
+  }
+
+  if (mode === 'intelligentItemCatalog') {
+    return <IntelligentItemCatalogScreen onClose={() => setMode('landing')} />;
   }
 
   if (mode === 'corpusIngestDiagnostic') {
