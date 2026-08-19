@@ -25622,7 +25622,39 @@ and F7 lanes' file territory, another wave-14 lane may already hold them, and a 
 into another lane's files mid-wave is how the shared-checkout incidents in `AGENTS.md` §Concurrency
 happen.
 
-### §10 — Gate, run 2
+### §10 — Gate, run 2 (after commit `c21623fce`)
 
-Launched after commit `c21623fce`. Result recorded below; log at
-`artifacts/SD31-E6-F5-005-verify.log`.
+```
+VERIFY_EXIT=1   RESULT: FAIL
+passed:  30  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest
+             pi-redaction-selftest provenance-selftest site-dashboard-selftest
+             site-dashboard-check site-dashboard-pi-gate build-public-status-selftest
+             site-public-status-check site-public-status-pi-gate site-asset-stamp-check
+             reachability-audit-selftest reachability-audit groundtruth-guard-selftest
+             supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest
+             reclaim-selftest driver-selftest corpus-sweep-selftest root-lib corpus-sweep
+             supersession-gate frontend-install frontend-typecheck clippy class-dump
+FAILED:   4  root-full desktop reach frontend-test
+```
+Log: `artifacts/SD31-E6-F5-005-verify.log`.
+
+**Every failure this cycle caused is gone.** `sd26_cache_apg`, `sd26_cache_core_rulebook` and
+`derived_evaluator_fixture_check` are absent from run 2's failure list entirely, `root-full`'s pass
+count rose `7010 -> 7014` (the four fixed tests), and **`clippy` now PASSES at `root:51 desktop:7`
+— exactly the recorded ceiling, reached by fixing this cycle's own three warnings, not by moving a
+baseline.** `corpus-sweep` PASSES with the +412 records this cycle put into its population:
+`26100 records examined of 26736 read, 252102 tokens compared, 26723 digests checked, 0 findings`.
+
+**The four remaining red stages are the identical inherited set run 1 found, one for one:**
+
+* `desktop` — the same 6 (`companion_catalog::every_served_key_matches_a_corpus_record_file` + 5 `reach_gate::*`)
+* `reach` — the same 5 `reach_gate::*`
+* `frontend-test` — the same 1 file, `characterHub/raceCreationCoverage.test.ts`
+* `root-full` — the same 8, **plus one contention flake**: `sd17_b5_equipment::parse_runs_in_linear_time_on_a_synthetic_large_file`, *"5k equipment records should parse in well under 2s, took 3.204596269s"*. It PASSED in run 1 and passes in isolation on this same tree — `cargo test --locked --test sd17_b5_equipment parse_runs_in_linear_time` → `ok ... finished in 1.30s` — so it is a wall-clock assertion losing to five concurrent wave-14 lane gates, not a regression. Named rather than bucketed.
+
+All of it is `OPEN-ISSUES.md` row 239: the Core Essentials move landed its data relocation without
+the code and count pins that read it. **`VERIFY_EXIT=1` is therefore honest and NOT green, and this
+receipt does not claim otherwise** — the card cannot be marked `COMPLETE` on DoD item 1 until row
+239 is fixed by the lane that owns those files. What this cycle can and does assert is narrower and
+checkable: every stage that exercises the work it did is green, and every failure it introduced was
+found, attributed and fixed rather than excused.
