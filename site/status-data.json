@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-19T14:12:06Z",
+  "generated_at": "2026-08-19T16:28:33Z",
   "doneness_values": [
     "done",
     "partial",
@@ -8,13 +8,13 @@
   "overall": {
     "done": 11218,
     "partial": 2180,
-    "not_started": 16092,
-    "denominator": 29490,
+    "not_started": 16088,
+    "denominator": 29486,
     "pct": 38.0,
-    "excluded_from_percentage": 9031,
+    "excluded_from_percentage": 9002,
     "standing_breakdown": {
-      "origin": 29490,
-      "unclassified": 8903,
+      "origin": 29486,
+      "unclassified": 8874,
       "packaging-artifact": 128
     }
   },
@@ -27,10 +27,10 @@
       "not_started": 842,
       "denominator": 4489,
       "pct": 66.7,
-      "excluded_from_percentage": 734,
+      "excluded_from_percentage": 724,
       "standing_breakdown": {
         "origin": 4489,
-        "unclassified": 734
+        "unclassified": 724
       }
     },
     {
@@ -41,10 +41,10 @@
       "not_started": 1524,
       "denominator": 2322,
       "pct": 29.3,
-      "excluded_from_percentage": 920,
+      "excluded_from_percentage": 910,
       "standing_breakdown": {
         "origin": 2322,
-        "unclassified": 920
+        "unclassified": 910
       }
     },
     {
@@ -94,13 +94,13 @@
       "title": "Occult Adventures",
       "done": 308,
       "partial": 15,
-      "not_started": 1215,
-      "denominator": 1538,
+      "not_started": 1214,
+      "denominator": 1537,
       "pct": 20.0,
-      "excluded_from_percentage": 191,
+      "excluded_from_percentage": 190,
       "standing_breakdown": {
-        "origin": 1538,
-        "unclassified": 191
+        "origin": 1537,
+        "unclassified": 190
       }
     },
     {
@@ -139,10 +139,10 @@
       "not_started": 893,
       "denominator": 1311,
       "pct": 28.0,
-      "excluded_from_percentage": 446,
+      "excluded_from_percentage": 439,
       "standing_breakdown": {
         "origin": 1311,
-        "unclassified": 446
+        "unclassified": 439
       }
     },
     {
@@ -150,12 +150,12 @@
       "title": "Advanced Race Guide",
       "done": 417,
       "partial": 205,
-      "not_started": 601,
-      "denominator": 1223,
-      "pct": 34.1,
+      "not_started": 599,
+      "denominator": 1221,
+      "pct": 34.2,
       "excluded_from_percentage": 355,
       "standing_breakdown": {
-        "origin": 1223,
+        "origin": 1221,
         "unclassified": 355
       }
     },
@@ -332,12 +332,12 @@
       "title": "Monster Codex",
       "done": 74,
       "partial": 5,
-      "not_started": 107,
-      "denominator": 186,
-      "pct": 39.8,
+      "not_started": 106,
+      "denominator": 185,
+      "pct": 40.0,
       "excluded_from_percentage": 21,
       "standing_breakdown": {
-        "origin": 186,
+        "origin": 185,
         "unclassified": 21
       }
     },

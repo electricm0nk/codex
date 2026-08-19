@@ -20,1273 +20,1485 @@
           "name": "Advanced Apply",
           "doneness": "not-started",
           "type_facet": "Internal",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Advanced Apply"
         },
         {
           "name": "Afflicted Lycanthrope",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Afflicted Lycanthrope"
         },
         {
           "name": "Awaken Flames",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Awaken Flames"
         },
         {
           "name": "Binding Touch",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Binding Touch"
         },
         {
           "name": "Blessing of the Worm",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Blessing of the Worm"
         },
         {
           "name": "Blood is Life",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Blood is Life"
         },
         {
           "name": "CCCold",
           "doneness": "not-started",
           "type_facet": "Internal",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "CCCold"
         },
         {
           "name": "CCFire",
           "doneness": "not-started",
           "type_facet": "Internal",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "CCFire"
         },
         {
           "name": "Call Forth the Spawn",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Call Forth the Spawn"
         },
         {
           "name": "Call the Dead",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Call the Dead"
         },
         {
           "name": "Children of the Caves",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Children of the Caves"
         },
         {
           "name": "Cold's Caress",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Cold's Caress"
         },
         {
           "name": "Compelling Voice",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Compelling Voice"
         },
         {
           "name": "Conqueror Worm",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Conqueror Worm"
         },
         {
           "name": "Conspirator's Whisper",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Conspirator's Whisper"
         },
         {
           "name": "Create Portal",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Create Portal"
         },
         {
           "name": "Curse of Brittle Bones",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Curse of Brittle Bones"
         },
         {
           "name": "Damned",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Damned"
         },
         {
           "name": "Death-Stealing Gaze",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Death-Stealing Gaze"
         },
         {
           "name": "Deeper Cuts",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Deeper Cuts"
         },
         {
           "name": "Dehydrating Strike",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Dehydrating Strike"
         },
         {
           "name": "Demonic Form (Bite)",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.DemoniacForm",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Form (Bite)"
         },
         {
           "name": "Demonic Form (Claw)",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.DemoniacForm",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Form (Claw)"
         },
         {
           "name": "Demonic Form (Gills)",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.DemoniacForm",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Form (Gills)"
         },
         {
           "name": "Demonic Form (Gore)",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.DemoniacForm",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Form (Gore)"
         },
         {
           "name": "Demonic Form (Slam)",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.DemoniacForm",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Form (Slam)"
         },
         {
           "name": "Demonic Form (Sting)",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.DemoniacForm",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Form (Sting)"
         },
         {
           "name": "Demonic Form (Wings)",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.DemoniacForm",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Form (Wings)"
         },
         {
           "name": "Demonic Mark",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Mark"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "Internal",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (Internal)"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus)"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #3"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #4"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #5"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #6"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #7"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #8"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #9"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #10"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #11"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #12"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #13"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #14"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #15"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #16"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #17"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #18"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #19"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #20"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience)"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #22"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #23"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #24"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #25"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #26"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #27"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #28"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #29"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #30"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #31"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #32"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience) #33"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #34"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience) #35"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #36"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience) #37"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #38"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #39"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience) #40"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #41"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #42"
         },
         {
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DemonicObedience.SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience (SpecialQuality.DemonicObedience.SaveBonus) #43"
         },
         {
           "name": "Desert's Embrace",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Desert's Embrace"
         },
         {
           "name": "Desert's Wrath",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Desert's Wrath"
         },
         {
           "name": "Desiccating Pulse",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Desiccating Pulse"
         },
         {
           "name": "Dominate Thrall",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Dominate Thrall"
         },
         {
           "name": "Earthshaker",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Earthshaker"
         },
         {
           "name": "Elder's Grace",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Elder's Grace"
         },
         {
           "name": "Energumen",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Energumen"
         },
         {
           "name": "Energumen (Cha)",
           "doneness": "not-started",
           "type_facet": "SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Energumen (Cha)"
         },
         {
           "name": "Energumen (Con)",
           "doneness": "not-started",
           "type_facet": "SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Energumen (Con)"
         },
         {
           "name": "Energumen (Dex)",
           "doneness": "not-started",
           "type_facet": "SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Energumen (Dex)"
         },
         {
           "name": "Energumen (Int)",
           "doneness": "not-started",
           "type_facet": "SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Energumen (Int)"
         },
         {
           "name": "Energumen (Str)",
           "doneness": "not-started",
           "type_facet": "SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Energumen (Str)"
         },
         {
           "name": "Energumen (Wis)",
           "doneness": "not-started",
           "type_facet": "SaveBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Energumen (Wis)"
         },
         {
           "name": "Extra Swim Speed",
           "doneness": "not-started",
           "type_facet": "Internal.DagonSecondOath",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Extra Swim Speed"
         },
         {
           "name": "FCCold",
           "doneness": "not-started",
           "type_facet": "Internal",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "FCCold"
         },
         {
           "name": "FCFire",
           "doneness": "not-started",
           "type_facet": "Internal",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "FCFire"
         },
         {
           "name": "Fire's Harlot",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Fire's Harlot"
         },
         {
           "name": "First Boon",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "First Boon (SpecialQuality.SpellLike)"
         },
         {
           "name": "First Boon",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "First Boon (SpecialQuality.SpellLike) #2"
         },
         {
           "name": "First Boon",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "First Boon (SpecialQuality.SpellLike) #3"
         },
         {
           "name": "First Boon",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "First Boon (SpecialQuality.SpellLike) #4"
         },
         {
           "name": "First Boon",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "First Boon (SpecialQuality.SpellLike) #5"
         },
         {
           "name": "First Boon",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "First Boon (SpecialQuality.SpellLike) #6"
         },
         {
           "name": "First Boon",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "First Boon (SpecialQuality.SpellLike) #7"
         },
         {
           "name": "First Boon",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "First Boon (SpecialQuality.SpellLike) #8"
         },
         {
           "name": "First Boon",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "First Boon (SpecialQuality.SpellLike) #9"
         },
         {
           "name": "First Boon",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "First Boon (SpecialQuality.SpellLike) #10"
         },
         {
           "name": "First Oath",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "First Oath"
         },
         {
           "name": "Flame's Consort",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Flame's Consort"
         },
         {
           "name": "Frozen Wrath",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Frozen Wrath"
         },
         {
           "name": "Fungal Ruin",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Fungal Ruin"
         },
         {
           "name": "Gain Lycanthropy",
           "doneness": "not-started",
           "type_facet": "[redacted PI]",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Gain Lycanthropy"
         },
         {
           "name": "Gain Swim Speed",
           "doneness": "not-started",
           "type_facet": "Internal.DagonSecondOath",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Gain Swim Speed"
         },
         {
           "name": "Gargoyle's Gift",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Gargoyle's Gift"
         },
         {
           "name": "Ghoulish Apotheosis",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Ghoulish Apotheosis"
         },
         {
           "name": "Gift of the Moon",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Gift of the Moon"
         },
         {
           "name": "Glutton's Feast",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Glutton's Feast"
         },
         {
           "name": "Heresy",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Heresy"
         },
         {
           "name": "Heretic's Hiss",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Heretic's Hiss"
         },
         {
           "name": "Heretical Revelation",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Heretical Revelation"
         },
         {
           "name": "Instant Blindness",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Instant Blindness"
         },
         {
           "name": "Invoke Death",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Invoke Death"
         },
         {
           "name": "Invoke the True Storm",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Invoke the True Storm"
         },
         {
           "name": "Jungle's Might",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Jungle's Might"
         },
         {
           "name": "Jungle's Wrath",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Jungle's Wrath"
         },
         {
           "name": "Killer's Finesse",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Killer's Finesse"
         },
         {
           "name": "Kiss of the Grave",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Kiss of the Grave"
         },
         {
           "name": "Life in Blood",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Life in Blood"
         },
         {
           "name": "Lunatic's Gift",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Lunatic's Gift"
         },
         {
           "name": "Maiden's Cry",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Maiden's Cry"
         },
         {
           "name": "Mass Suicide",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Mass Suicide"
         },
         {
           "name": "Master of Shapes",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Master of Shapes"
         },
         {
           "name": "Maze of Madness",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Maze of Madness"
         },
         {
           "name": "Minotaur Form",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Minotaur Form"
         },
         {
           "name": "Murderer's Wrath",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Murderer's Wrath"
         },
         {
           "name": "Necromancer's Secrets",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Necromancer's Secrets"
         },
         {
           "name": "Obedience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Obedience"
         },
         {
           "name": "Parasitic Link",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Parasitic Link"
         },
         {
           "name": "Penultimate Incantation",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Penultimate Incantation"
         },
         {
           "name": "Poisonous Touch",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Poisonous Touch"
         },
         {
           "name": "Portal Jump",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Portal Jump"
         },
         {
           "name": "Possession",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Possession"
         },
         {
           "name": "Primeval Might",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Primeval Might"
         },
         {
           "name": "Raise Scorpion",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Raise Scorpion"
         },
         {
           "name": "Sadist's Trick",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Sadist's Trick"
         },
         {
           "name": "Second Boon",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Second Boon (SpecialQuality.SpellLike)"
         },
         {
           "name": "Second Boon",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Second Boon (SpecialQuality.SpellLike) #2"
         },
         {
           "name": "Second Boon",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Second Boon (SpecialQuality.SpellLike) #3"
         },
         {
           "name": "Second Boon",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Second Boon (SpecialQuality.SpellLike) #4"
         },
         {
           "name": "Second Boon",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Second Boon (SpecialQuality.SpellLike) #5"
         },
         {
           "name": "Second Boon",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Second Boon (SpecialQuality.SpellLike) #6"
         },
         {
           "name": "Second Boon",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Second Boon (SpecialQuality.SpellLike) #7"
         },
         {
           "name": "Second Boon",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Second Boon (SpecialQuality.SpellLike) #8"
         },
         {
           "name": "Second Boon",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Second Boon (SpecialQuality.SpellLike) #9"
         },
         {
           "name": "Second Boon",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Second Boon (SpecialQuality.SpellLike) #10"
         },
         {
           "name": "Second Oath",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Second Oath"
         },
         {
           "name": "Secret Lore",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Secret Lore"
         },
         {
           "name": "Shriek of the Damned",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Shriek of the Damned"
         },
         {
           "name": "Sickness Within",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Sickness Within"
         },
         {
           "name": "Sins of the Flesh",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Sins of the Flesh"
         },
         {
           "name": "Sphinx's Secret",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Sphinx's Secret"
         },
         {
           "name": "Spider's Blessing",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Spider's Blessing"
         },
         {
           "name": "Stat Bonus",
           "doneness": "not-started",
           "type_facet": "[redacted PI]",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Stat Bonus ([redacted PI])"
         },
         {
           "name": "Stat Bonus",
           "doneness": "not-started",
           "type_facet": "[redacted PI]",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Stat Bonus ([redacted PI]) #2"
         },
         {
           "name": "Storm Breath",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Storm Breath"
         },
         {
           "name": "Summon Demon I",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Summon Demon I"
         },
         {
           "name": "Summon Demon II",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Summon Demon II"
         },
         {
           "name": "Summon Froghemoth",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Summon Froghemoth"
         },
         {
           "name": "Swamper's Boon",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Swamper's Boon"
         },
         {
           "name": "Swarm Master",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Swarm Master"
         },
         {
           "name": "Swarm Walker",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Swarm Walker"
         },
         {
           "name": "Swarming Sussurrus",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Swarming Sussurrus"
         },
         {
           "name": "Temporal Web",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Temporal Web"
         },
         {
           "name": "Teratoma",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Teratoma"
         },
         {
           "name": "Teratoma (Bite)",
           "doneness": "not-started",
           "type_facet": "LamashtuTeratomaType",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Teratoma (Bite)"
         },
         {
           "name": "Teratoma (Bleed)",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.LamashtuTeratomaAbility",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Teratoma (Bleed)"
         },
         {
           "name": "Teratoma (Claw)",
           "doneness": "not-started",
           "type_facet": "LamashtuTeratomaType",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Teratoma (Claw)"
         },
         {
           "name": "Teratoma (Grab)",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.LamashtuTeratomaAbility",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Teratoma (Grab)"
         },
         {
           "name": "Teratoma (Reach)",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.LamashtuTeratomaAbility",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Teratoma (Reach)"
         },
         {
           "name": "Teratoma (Tail)",
           "doneness": "not-started",
           "type_facet": "LamashtuTeratomaType",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Teratoma (Tail)"
         },
         {
           "name": "Teratoma (Tentacle)",
           "doneness": "not-started",
           "type_facet": "LamashtuTeratomaType",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Teratoma (Tentacle)"
         },
         {
           "name": "Teratoma (Trip)",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.LamashtuTeratomaAbility",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Teratoma (Trip)"
         },
         {
           "name": "The Lady's Charms",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "The Lady's Charms"
         },
         {
           "name": "Third Boon",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Third Boon (SpecialQuality.SpellLike)"
         },
         {
           "name": "Third Boon",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Third Boon (SpecialQuality.SpellLike) #2"
         },
         {
           "name": "Third Boon",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Third Boon (SpecialQuality.SpellLike) #3"
         },
         {
           "name": "Third Boon",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Third Boon (SpecialQuality.SpellLike) #4"
         },
         {
           "name": "Third Boon",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Third Boon (SpecialQuality.SpellLike) #5"
         },
         {
           "name": "Third Boon",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Third Boon (SpecialQuality.SpellLike) #6"
         },
         {
           "name": "Third Boon",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Third Boon (SpecialQuality.SpellLike) #7"
         },
         {
           "name": "Third Boon",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Third Boon (SpecialQuality.SpellLike) #8"
         },
         {
           "name": "Third Boon",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Third Boon (SpecialQuality.SpellLike) #9"
         },
         {
           "name": "Third Boon",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Third Boon (SpecialQuality.SpellLike) #10"
         },
         {
           "name": "Third Eye",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural.CheckList",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Third Eye"
         },
         {
           "name": "Third Oath",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Third Oath"
         },
         {
           "name": "Transformation",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Transformation"
         },
         {
           "name": "True Lycanthrope",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "True Lycanthrope (SpecialQuality.Supernatural)"
         },
         {
           "name": "True Lycanthrope",
           "doneness": "not-started",
           "type_facet": "[redacted PI]",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "True Lycanthrope ([redacted PI])"
         },
         {
           "name": "True Lycanthrope",
           "doneness": "not-started",
           "type_facet": "[redacted PI]",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "True Lycanthrope ([redacted PI]) #3"
         },
         {
           "name": "True Temptation",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "True Temptation"
         },
         {
           "name": "Truth in the Flesh",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Truth in the Flesh (SpecialQuality.SpellLike)"
         },
         {
           "name": "Truth in the Flesh",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Truth in the Flesh (SpecialQuality.SpellLike) #2"
         },
         {
           "name": "Undead Minion",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Undead Minion"
         },
         {
           "name": "Unwind the Clock",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Unwind the Clock"
         },
         {
           "name": "Vampire Apply",
           "doneness": "not-started",
           "type_facet": "Internal",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Vampire Apply"
         },
         {
           "name": "Vampirism",
           "doneness": "not-started",
           "type_facet": "Internal",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Vampirism (Internal)"
         },
         {
           "name": "Vampirism",
           "doneness": "not-started",
           "type_facet": "Internal",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Vampirism (Internal) #2"
         },
         {
           "name": "Vampirism",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Vampirism (SpecialQuality.Supernatural)"
         },
         {
           "name": "Warty Skin",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Warty Skin"
         },
         {
           "name": "Weapon Proficiencies",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Weapon Proficiencies"
         },
         {
           "name": "Whispers on the Wind",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Whispers on the Wind"
         },
         {
           "name": "Witch's Trick",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Witch's Trick"
         },
         {
           "name": "Wrath of Frost",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Wrath of Frost"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.SpellLike)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.SpellLike) #2"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.SpellLike) #3"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.SpellLike) #4"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.SpellLike) #5"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.SpellLike) #6"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.SpellLike) #7"
         }
       ]
     },
@@ -1307,7 +1519,8 @@
           "name": "Demoniac",
           "doneness": "not-started",
           "type_facet": "PC.Prestige",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demoniac"
         }
       ]
     },
@@ -1329,37 +1542,43 @@
           "name": "Amulet of the Abyss",
           "doneness": "partial",
           "type_facet": "Magic.Wondrous.Amulet",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Amulet of the Abyss"
         },
         {
           "name": "Book of the Damned (Demonic)",
           "doneness": "partial",
           "type_facet": "Artifact.Major",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Book of the Damned (Demonic)"
         },
         {
           "name": "Demon Blood",
           "doneness": "done",
           "type_facet": "Magic.Wondrous.Implant.Consumable",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demon Blood"
         },
         {
           "name": "Demon Senses",
           "doneness": "done",
           "type_facet": "Magic.Wondrous.Implant",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demon Senses"
         },
         {
           "name": "Demon Talon",
           "doneness": "done",
           "type_facet": "Magic.Wondrous.Implant",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demon Talon"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Magic.Wondrous.Amulet",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI]"
         }
       ]
     },
@@ -1380,7 +1599,8 @@
           "name": "Demonic Obedience",
           "doneness": "not-started",
           "type_facet": "General",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demonic Obedience"
         }
       ]
     },
@@ -1402,103 +1622,120 @@
           "name": "Abandon Flesh",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Defensive",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Abandon Flesh"
         },
         {
           "name": "Bloodless",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Defensive",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Bloodless"
         },
         {
           "name": "Boiling Blood",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Defensive",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Boiling Blood"
         },
         {
           "name": "Breath Weapon",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Breath Weapon (SpecialAttack.Supernatural)"
         },
         {
           "name": "Breath Weapon",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Breath Weapon (SpecialAttack.Supernatural) #2"
         },
         {
           "name": "Burning Hooves",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Burning Hooves"
         },
         {
           "name": "Compelling Domination",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Compelling Domination"
         },
         {
           "name": "Flaming Weapon",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Flaming Weapon"
         },
         {
           "name": "Flesh Armor",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Defensive",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Flesh Armor"
         },
         {
           "name": "Gaze of Despair",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Aura",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Gaze of Despair"
         },
         {
           "name": "Grab",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Grab"
         },
         {
           "name": "Inhabit Body",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Inhabit Body"
         },
         {
           "name": "Negative Energy Affinity",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Defensive",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Negative Energy Affinity"
         },
         {
           "name": "Ravenous Embrace",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Ravenous Embrace"
         },
         {
           "name": "Smoke Breath",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Aura",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Smoke Breath"
         },
         {
           "name": "Smoking Wound",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Smoking Wound"
         },
         {
           "name": "Stun",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Stun"
         }
       ]
     },
@@ -1519,25 +1756,29 @@
           "name": "Demon (Brimorak)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demon (Brimorak)"
         },
         {
           "name": "Demon (Seraptis)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demon (Seraptis)"
         },
         {
           "name": "Demon (Vavakia)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demon (Vavakia)"
         },
         {
           "name": "Demon (Vermlek)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demon (Vermlek)"
         }
       ]
     },
@@ -1558,7 +1799,8 @@
           "name": "Smoking Wound",
           "doneness": "not-started",
           "type_facet": "Ability Focus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Smoking Wound"
         }
       ]
     },
@@ -1580,73 +1822,85 @@
           "name": "Disfiguring Touch",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Disfiguring Touch"
         },
         {
           "name": "Portal Jump",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Portal Jump"
         },
         {
           "name": "Rift of Ruin",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Rift of Ruin"
         },
         {
           "name": "Summon Demons (Nascent Demon Lord)",
           "doneness": "not-started",
           "type_facet": "Divine",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Summon Demons (Nascent Demon Lord)"
         },
         {
           "name": "Summon Monster II (Vermlek)",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Summon Monster II (Vermlek)"
         },
         {
           "name": "Summon Monster III (Brimorak)",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Summon Monster III (Brimorak)"
         },
         {
           "name": "Summon Monster V (Seraptis)",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Summon Monster V (Seraptis)"
         },
         {
           "name": "Summon Monster VI (Demoniac)",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Summon Monster VI (Demoniac)"
         },
         {
           "name": "Summon Monster VI (Vavakia)",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Summon Monster VI (Vavakia)"
         },
         {
           "name": "Summon Monster VIII (Demoniac)",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Summon Monster VIII (Demoniac)"
         },
         {
           "name": "Vermin Shape I",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Vermin Shape I"
         },
         {
           "name": "Vermin Shape II",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Vermin Shape II"
         }
       ]
     }

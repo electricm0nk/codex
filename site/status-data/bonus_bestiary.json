@@ -19,19 +19,22 @@
           "name": "Faerie Dragon",
           "doneness": "not-started",
           "type_facet": "Monster",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Faerie Dragon"
         },
         {
           "name": "Lammasu",
           "doneness": "not-started",
           "type_facet": "Monster",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Lammasu"
         },
         {
           "name": "Water Naga",
           "doneness": "not-started",
           "type_facet": "Monster",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Water Naga"
         }
       ]
     },
@@ -53,103 +56,120 @@
           "name": "Babble",
           "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural.Aura",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Babble"
         },
         {
           "name": "Bay",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Bay"
         },
         {
           "name": "Breath Weapon",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Breath Weapon"
         },
         {
           "name": "Disease",
           "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Disease"
         },
         {
           "name": "Faithless",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Aura",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Faithless"
         },
         {
           "name": "Immunity to Magic",
           "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Immunity to Magic"
         },
         {
           "name": "Madness",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Madness"
         },
         {
           "name": "Magic Circle against Evil",
           "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Magic Circle against Evil"
         },
         {
           "name": "Poison",
           "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Poison"
         },
         {
           "name": "Roar",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Roar"
         },
         {
           "name": "Sand Trap",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Sand Trap"
         },
         {
           "name": "Shadow Blend",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Shadow Blend"
         },
         {
           "name": "Shatter Weapons",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Shatter Weapons"
         },
         {
           "name": "Spores",
           "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Spores"
         },
         {
           "name": "Statue",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Statue"
         },
         {
           "name": "Sudden Charge",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Sudden Charge"
         },
         {
           "name": "Touch of Insanity",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Touch of Insanity"
         }
       ]
     },
@@ -171,85 +191,99 @@
           "name": "Allip",
           "doneness": "done",
           "type_facet": null,
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Allip"
         },
         {
           "name": "Ant Lion (Giant)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Ant Lion (Giant)"
         },
         {
           "name": "Ant Lion (Mature)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Ant Lion (Mature)"
         },
         {
           "name": "Ascomoid",
           "doneness": "done",
           "type_facet": null,
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Ascomoid"
         },
         {
           "name": "Axe Beak",
           "doneness": "done",
           "type_facet": null,
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Axe Beak"
         },
         {
           "name": "Caryatid Column",
           "doneness": "done",
           "type_facet": null,
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Caryatid Column"
         },
         {
           "name": "Dragon (Faerie)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Dragon (Faerie)"
         },
         {
           "name": "Dragonne",
           "doneness": "done",
           "type_facet": null,
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Dragonne"
         },
         {
           "name": "Hag (Annis)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Hag (Annis)"
         },
         {
           "name": "Huecuva",
           "doneness": "done",
           "type_facet": null,
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Huecuva"
         },
         {
           "name": "Lammasu",
           "doneness": "done",
           "type_facet": null,
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Lammasu"
         },
         {
           "name": "Naga (Water)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Naga (Water)"
         },
         {
           "name": "Nixie",
           "doneness": "done",
           "type_facet": null,
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Nixie"
         },
         {
           "name": "Shadow Mastiff",
           "doneness": "done",
           "type_facet": null,
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Shadow Mastiff"
         }
       ]
     }

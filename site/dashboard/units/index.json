@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-08-19T14:06:36Z",
+  "generated_at": "2026-08-19T16:19:54Z",
   "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
@@ -12,7 +12,7 @@
     "source_file",
     "type_facet"
   ],
-  "total_units": 38521,
+  "total_units": 38488,
   "proven_units": 5886,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 420,
@@ -89,20 +89,20 @@
       "category_axis_label": "Category"
     },
     "class_feature": {
-      "units": 15472,
+      "units": 15439,
       "proven": 146,
       "by_status": {
-        "unknown": 3893,
-        "not-ingested": 10439,
+        "unknown": 3864,
+        "not-ingested": 10436,
         "deferred-with-reason": 36,
         "grounded": 91,
         "text-complete": 55,
         "fixture-verified": 12,
         "literal-verified": 17,
-        "not-started": 929
+        "not-started": 928
       },
       "shard": "PF1e-units-class_feature.json",
-      "bytes": 2339440,
+      "bytes": 2335504,
       "doneness_unmapped": {},
       "categories": {
         "specialquality": {
@@ -465,15 +465,6 @@
           "unmeasurable": 24,
           "deferred": 0
         },
-        "sorcererbloodlinechoice": {
-          "label": "Sorcerer Bloodline Choice",
-          "done": 0,
-          "held": 0,
-          "in-progress": 0,
-          "not-started": 7,
-          "unmeasurable": 74,
-          "deferred": 0
-        },
         "hunterclassfeatures": {
           "label": "Hunter Class Feature",
           "done": 1,
@@ -616,6 +607,15 @@
           "in-progress": 0,
           "not-started": 41,
           "unmeasurable": 9,
+          "deferred": 0
+        },
+        "sorcererbloodlinechoice": {
+          "label": "Sorcerer Bloodline Choice",
+          "done": 0,
+          "held": 0,
+          "in-progress": 0,
+          "not-started": 4,
+          "unmeasurable": 45,
           "deferred": 0
         },
         "arcanistschoolchoice": {
@@ -3705,15 +3705,6 @@
           "unmeasurable": 2,
           "deferred": 0
         },
-        "enlightenedbloodragerfeatchoice": {
-          "label": "Enlightened Bloodrager Feat Choice",
-          "done": 0,
-          "held": 0,
-          "in-progress": 0,
-          "not-started": 2,
-          "unmeasurable": 0,
-          "deferred": 0
-        },
         "rage": {
           "label": "Rage",
           "done": 0,
@@ -4301,6 +4292,15 @@
         },
         "alchemistgranddiscovery": {
           "label": "Alchemist Grand Discovery",
+          "done": 0,
+          "held": 0,
+          "in-progress": 0,
+          "not-started": 1,
+          "unmeasurable": 0,
+          "deferred": 0
+        },
+        "enlightenedbloodragerfeatchoice": {
+          "label": "Enlightened Bloodrager Feat Choice",
           "done": 0,
           "held": 0,
           "in-progress": 0,

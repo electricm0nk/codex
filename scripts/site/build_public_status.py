@@ -435,10 +435,59 @@ def build_overview(all_items):
     return overall, books
 
 
+def add_display_names(items):
+    """Adds a `display_name` field to every item in `items`, in place.
+
+    Decision 17 / `OPERATOR-RULINGS-2026-08-19.md` Ruling §17: the
+    drill-down shows a bare `name` that is not unique in ~2,325
+    `(book, kind, name)` groups corpus-wide (an 11.07% excess) — 0 of
+    those groups share a `corpus_key`, 0 share a `source_file`+
+    `source_line`. Every row is a distinct printed thing (e.g.
+    `advanced_class_guide` `class_feature` "Bloodline Powers" appears 11
+    times because eleven different bloodlines each print their own), so
+    the fix is a disambiguator, never a merge — this function never drops
+    or combines an item, only labels it.
+
+    `items` must already be the per-(book, kind) list `build_book_details`
+    builds (same `name` value = same drill-down collision the operator
+    saw), and must already be past `redact_for_display`: this function
+    reads only `name` and `type_facet`, both already PI-screened by that
+    point, and introduces no new field or lookup that could reach past
+    that screen — a `REDACTED_PI_MARKER` name/type_facet disambiguates
+    exactly like any other string, revealing nothing beyond what was
+    already public.
+
+    Unique names are left as `display_name == name`. A collision is first
+    disambiguated with the item's own `type_facet` ("Name (facet)"); if
+    that still collides (identical name AND type_facet, or no type_facet
+    at all), a stable positional suffix ("Name (facet) #2" / "Name #2") is
+    appended so the page never shows two rows with nothing to tell them
+    apart.
+    """
+    by_name = {}
+    for it in items:
+        by_name.setdefault(it["name"], []).append(it)
+    for name, group in by_name.items():
+        if len(group) == 1:
+            group[0]["display_name"] = name
+            continue
+        seen = set()
+        for idx, it in enumerate(group, start=1):
+            tf = it.get("type_facet")
+            label = f"{name} ({tf})" if tf else name
+            if label in seen:
+                label = f"{label} #{idx}"
+            seen.add(label)
+            it["display_name"] = label
+
+
 def build_book_details(all_items):
     """Return {book_id: {id, title, kinds: [{kind, label, ...rollup,
-    items: [{name, doneness, type_facet, standing}, ...]}, ...]}} for every
-    book in BOOK_TITLES."""
+    items: [{name, display_name, doneness, type_facet, standing}, ...]}, ...
+    ]}} for every book in BOOK_TITLES. `display_name` (see
+    `add_display_names`) is what the drill-down UI shows; `name` is kept
+    unredacted-of-purpose (it is already PI-screened by this point) for
+    any consumer that wants the plain field."""
     grouped = {}
     for it in all_items:
         if it["book"] not in BOOK_TITLES:
@@ -454,6 +503,7 @@ def build_book_details(all_items):
     for book_id, kinds_map in grouped.items():
         kind_entries = []
         for kind, items in kinds_map.items():
+            add_display_names(items)
             items.sort(key=lambda x: x["name"])
             roll = _rollup(items)
             kind_entries.append({

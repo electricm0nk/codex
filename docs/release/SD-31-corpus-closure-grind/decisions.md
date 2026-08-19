@@ -1475,3 +1475,88 @@ rows so the page stops looking wrong where it is right.
 
 **Authority:** operator ruling, 2026-08-19, verbatim above.
 
+### EXECUTED, wave 16 — 33 confirmed, not 180; the drill-down disambiguator landed
+
+**The honest answer is smaller than the heuristic bound, as `§17` itself anticipated** ("If the
+honest answer is that far fewer than 180 are true duplicates, report that; a smaller correct number
+beats a bigger wrong one"). Confirming case by case — same book/kind/`source_file`, same display
+`name`, `source_line` within 3 either way (the widest radius that finds anything), one side a
+chooser (`type_facet` carrying `Choice`), the other not — finds real pairs in exactly ONE shape:
+the Sorcerer/Bloodrager bloodline chooser-pool idiom, the operator's own worked example, repeated
+systematically across every bloodline in every book that has one:
+
+```
+python3 -c "
+import json, collections
+d = json.load(open('docs/work-inventory.json'))
+units = d['units']
+by_file = collections.defaultdict(list)
+for u in units:
+    sf = u.get('source_file'); sl = u.get('source_line')
+    if sf and sl is not None: by_file[sf].append(u)
+for sf in by_file: by_file[sf].sort(key=lambda u: u['source_line'])
+chooser = [u for u in units if u.get('type_facet') and 'Choice' in u['type_facet']]
+seen=set(); results=[]
+for c in chooser:
+    lst = by_file.get(c['source_file'], []); idx = lst.index(c); cands=[]
+    for k in range(1,4):
+        if idx-k>=0: cands.append(lst[idx-k])
+        if idx+k<len(lst): cands.append(lst[idx+k])
+    for other in cands:
+        if other.get('name')==c.get('name') and 'Choice' not in (other.get('type_facet') or '') and other.get('kind')==c.get('kind'):
+            key = tuple(sorted([c['id'], other['id']]))
+            if key in seen: continue
+            seen.add(key); results.append((c, other)); break
+print(len(results), collections.Counter(c['kind'] for c,o in results))
+"
+# 33 Counter({'class_feature': 33})
+```
+
+**Zero `companion` or `race_trait` pairs were found**, even widening the search to a 10-line
+radius. Reading a sample of the 262 `companion` and 104 `race_trait` chooser-facet rows explains
+why: they are consecutive PICKER OPTIONS of each other (animal-companion Evolution picks, weapon
+critical-confirmation picks, Companion Advancement variants), not a picker beside its own feature
+row — none shares a display name with a same-book/kind non-chooser neighbor. The 180-unit bound was
+a heuristic upper estimate offered for scrutiny, not a target; scrutiny found 33 real ones.
+
+Every one of the 33 was independently confirmed against its paired feature row's own `corpus_key`/
+`type_facet`/`magnitude_token_count` (not just the name match) before being accepted — e.g.
+`adventurers_guide:class_feature:enlightened_bloodrager_bloodline_feat` (the "Bloodline Feat"
+chooser, `EnlightenedBloodragerFeatChoice`) beside `..._bloodline_feat_ag` (the feature, `corpus_key`
+`Enlightened Bloodrager ~ Bloodline Feat ~ AG`) — the identical shape as the operator's own CRB
+example, four lines apart in `ag_abilities_class.lst`, not a coincidental name collision.
+
+**None of the 33 removed units is `done`-capable** (`status` `unknown` or `not-ingested`/
+`not-started` on every one — verified per-unit, not assumed from the class-wide pattern), so this
+removal withdraws no credit; it only shrinks the denominator, exactly as `§17` requires.
+
+**Where it landed:** `DUPLICATE_CHOOSER_DISPLAY_NAME_UNIT_IDS` in `src/bin/v06_work_inventory.rs`
+(applied in `main()` right after the unit-id-uniqueness check, before any aggregation or stamping,
+so no rollup ever counts a confirmed-duplicate row) — a bounded, evidenced id list rather than a
+live heuristic filter, on purpose: `§17` itself is explicit that adjacency is a heuristic and a
+chooser whose paired feature is a genuinely separate mechanic must STAY, so a generic "same name,
+adjacent line" rule running on every future regen would silently sweep in a collision no human
+reviewed. `apply_duplicate_chooser_removal` hard-fails (`exit(1)`) if the corpus ever drifts under
+one of the 33 listed ids rather than silently removing fewer than expected — proven by two tests
+(`duplicate_chooser_removal_tests`) and, at the production call site itself, by disabling the call
+and re-running the full guarded regen: the reappearing duplicate (`docs/work-inventory.json` total
+38,507 → 38,540, the exact 33-unit swing) is the mutation proof this program's anti-gaming rule
+requires. Regenerated via the guarded pipeline (`corpus_literal_sweep` → `derived_evaluator_fixture_
+check` → `v06_work_inventory`, `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`), never a
+hand-edit of the committed JSON.
+
+**The drill-down disambiguator**, separately: `scripts/site/build_public_status.py`'s
+`add_display_names` (called from `build_book_details`, after `redact_for_display` has already run,
+so it reads only already-PI-screened `name`/`type_facet`) gives every item in a per-(book, kind)
+list a `display_name` — unchanged when the name is unique in that list, disambiguated with the
+item's own `type_facet` on a collision, falling back to a positional suffix if that still collides
+or no `type_facet` exists. `site/status.html` now renders and searches `it.display_name || it.name`.
+Never a merge: every one of the ~4,266 genuine same-name collisions corpus-wide keeps its own row,
+now labeled distinctly. Both the function and the wiring at its call site are covered by tests
+(`DisplayNameDisambiguationTests`, `scripts/tests/test_build_public_status.py`), and the wiring test
+was proven to fail (`KeyError: 'display_name'`) with the call site commented out, then pass again
+restored — the RED/GREEN pair `§17`'s own gate-must-be-able-to-fail bar requires.
+
+**Authority (execution):** this ruling's own text (`§17`, "a smaller correct number beats a bigger
+wrong one"), executed wave 16.
+

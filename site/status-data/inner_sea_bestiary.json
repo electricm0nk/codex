@@ -20,1141 +20,1331 @@
           "name": "Acid Resistance",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural.MutantSpecialAbility",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Acid Resistance"
         },
         {
           "name": "Acidic Pustules",
           "doneness": "not-started",
           "type_facet": "SpecialAttack.Extraordinary.MutantSpecialAbility",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Acidic Pustules"
         },
         {
           "name": "Adaptive Learning",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Adaptive Learning"
         },
         {
           "name": "Aura of Madness",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Aura of Madness"
         },
         {
           "name": "Bitter Flames",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Bitter Flames"
         },
         {
           "name": "Bleed Damage",
           "doneness": "done",
           "type_facet": "SpecialAttack",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Bleed Damage"
         },
         {
           "name": "Blood Rage",
           "doneness": "not-started",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Blood Rage"
         },
         {
           "name": "Booster Jets",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Booster Jets"
         },
         {
           "name": "Breath Weapon",
           "doneness": "not-started",
           "type_facet": "SpecialAttack.Extraordinary.MutantSpecialAbility",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Breath Weapon (SpecialAttack.Extraordinary.MutantSpecialAbility)"
         },
         {
           "name": "Breath Weapon",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Breath Weapon (SpecialAttack.Supernatural)"
         },
         {
           "name": "Breath Weapon",
           "doneness": "done",
           "type_facet": "SpecialAttack",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Breath Weapon (SpecialAttack)"
         },
         {
           "name": "Burrowing Bite",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Burrowing Bite"
         },
         {
           "name": "Can't Be Disarmed",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Can't Be Disarmed"
         },
         {
           "name": "Censor",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Censor"
         },
         {
           "name": "Chain Guns",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Chain Guns"
         },
         {
           "name": "Charge Weapon",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Charge Weapon"
         },
         {
           "name": "Combined Arms",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Combined Arms (SpecialAttack.Extraordinary)"
         },
         {
           "name": "Combined Arms",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Combined Arms (SpecialAttack.Extraordinary) #2"
         },
         {
           "name": "Compel Plants",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Compel Plants"
         },
         {
           "name": "Construct Bane",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Construct Bane"
         },
         {
           "name": "Consume Flesh",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Consume Flesh"
         },
         {
           "name": "Consume Memory",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Consume Memory"
         },
         {
           "name": "Corporate Will",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Corporate Will"
         },
         {
           "name": "Corpse Cremation",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Corpse Cremation"
         },
         {
           "name": "Create Carrionstorm",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Create Carrionstorm"
         },
         {
           "name": "Create Spawn",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Create Spawn (SpecialAttack.Supernatural)"
         },
         {
           "name": "Create Spawn",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Create Spawn (SpecialAttack.Supernatural) #2"
         },
         {
           "name": "Critical Hit Vulnerability",
           "doneness": "done",
           "type_facet": "SpecialQuality",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Critical Hit Vulnerability"
         },
         {
           "name": "Curse of Living Death",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Curse of Living Death"
         },
         {
           "name": "Curse of Stone",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Curse of Stone"
         },
         {
           "name": "Cyth-V'sug's Unity",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Cyth-V'sug's Unity"
         },
         {
           "name": "Daemonic Harbinger Traits",
           "doneness": "done",
           "type_facet": "SpecialQuality",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Daemonic Harbinger Traits"
         },
         {
           "name": "Damage Reduction",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Damage Reduction (SpecialQuality.Extraordinary)"
         },
         {
           "name": "Damage Reduction",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Damage Reduction (SpecialQuality.Supernatural)"
         },
         {
           "name": "Daughters of Arlantia",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Daughters of Arlantia"
         },
         {
           "name": "Deadly Slam",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Deadly Slam"
         },
         {
           "name": "Deformed Arm",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.MutantDeformity",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Deformed Arm"
         },
         {
           "name": "Deformed Leg",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.MutantDeformity",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Deformed Leg"
         },
         {
           "name": "Delayed Suggestion",
           "doneness": "partial",
           "type_facet": "SpecialAttack.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Delayed Suggestion"
         },
         {
           "name": "Dimensional Snare",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Dimensional Snare"
         },
         {
           "name": "Disease",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Disease (SpecialAttack.Extraordinary)"
         },
         {
           "name": "Disease",
           "doneness": "not-started",
           "type_facet": "SpecialAttack.Supernatural.MutantSpecialAbility",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Disease (SpecialAttack.Supernatural.MutantSpecialAbility)"
         },
         {
           "name": "Dispelling Critical",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Dispelling Critical"
         },
         {
           "name": "Drain Prana",
           "doneness": "not-started",
           "type_facet": "SpecialAttack.Supernatural q",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Drain Prana"
         },
         {
           "name": "Dreamwarden",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Dreamwarden"
         },
         {
           "name": "Dust Cloud",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Dust Cloud"
         },
         {
           "name": "Eldritch Surge",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Eldritch Surge"
         },
         {
           "name": "Electricity Vulnerability",
           "doneness": "done",
           "type_facet": "SpecialQuality",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Electricity Vulnerability"
         },
         {
           "name": "Energy Drain",
           "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Energy Drain"
         },
         {
           "name": "Entropic Breath",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Entropic Breath"
         },
         {
           "name": "Expressive Chameleon",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Expressive Chameleon"
         },
         {
           "name": "Expurgate",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Expurgate"
         },
         {
           "name": "Eye Rays",
           "doneness": "not-started",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Eye Rays"
         },
         {
           "name": "Fast Healing",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Fast Healing"
         },
         {
           "name": "Fire Damage",
           "doneness": "done",
           "type_facet": "SpecialAttack",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Fire Damage"
         },
         {
           "name": "Flesh Mansion",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Flesh Mansion"
         },
         {
           "name": "Fleshy Shield",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Fleshy Shield"
         },
         {
           "name": "Fling",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Fling"
         },
         {
           "name": "Flux Infusion Poison",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Flux Infusion Poison"
         },
         {
           "name": "Flying Charge",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Flying Charge"
         },
         {
           "name": "Force Field",
           "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Force Field"
         },
         {
           "name": "Frenzy",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Frenzy"
         },
         {
           "name": "Frightful Presence",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Frightful Presence"
         },
         {
           "name": "Fungal Rejuvenation",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Fungal Rejuvenation"
         },
         {
           "name": "Glowsap",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Glowsap"
         },
         {
           "name": "Gnaw",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Gnaw"
         },
         {
           "name": "Gush",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Gush"
         },
         {
           "name": "Hibernation",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Hibernation"
         },
         {
           "name": "Hopedrinker",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Hopedrinker"
         },
         {
           "name": "Hungry Gaze",
           "doneness": "not-started",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Hungry Gaze"
         },
         {
           "name": "Immunities",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Immunities"
         },
         {
           "name": "Immunity to Bleed Effects",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Immunity to Bleed Effects"
         },
         {
           "name": "Immunity to Magic",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Immunity to Magic (SpecialQuality.Supernatural)"
         },
         {
           "name": "Immunity to Magic",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Immunity to Magic (SpecialQuality.Supernatural) #2"
         },
         {
           "name": "Immunity to Magic",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Immunity to Magic (SpecialQuality.Extraordinary)"
         },
         {
           "name": "Immunity to Permanent Wounds",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Immunity to Permanent Wounds"
         },
         {
           "name": "Immunity to Turning",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Immunity to Turning"
         },
         {
           "name": "Impeded Magic",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Impeded Magic"
         },
         {
           "name": "Incandescent Body",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Incandescent Body"
         },
         {
           "name": "Incendiary Grasp",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Incendiary Grasp"
         },
         {
           "name": "Increased Speed",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.MutantSpecialAbility",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Increased Speed"
         },
         {
           "name": "Infernal Duke Traits",
           "doneness": "done",
           "type_facet": "SpecialQuality",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Infernal Duke Traits"
         },
         {
           "name": "Intelligence Drain",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Intelligence Drain"
         },
         {
           "name": "Intelligent",
           "doneness": "done",
           "type_facet": "SpecialQuality",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Intelligent"
         },
         {
           "name": "Keen Sight",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Keen Sight"
         },
         {
           "name": "Laser Rifle",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Laser Rifle"
         },
         {
           "name": "Link",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Link"
         },
         {
           "name": "Lost Time",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Lost Time"
         },
         {
           "name": "Luckbringer",
           "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Luckbringer"
         },
         {
           "name": "Malevolence",
           "doneness": "not-started",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Malevolence"
         },
         {
           "name": "Maw of the Abyss",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Maw of the Abyss"
         },
         {
           "name": "Militant",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Militant"
         },
         {
           "name": "Mind Feed",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Mind Feed"
         },
         {
           "name": "Mindshatter",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Mindshatter"
         },
         {
           "name": "Mock",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Mock"
         },
         {
           "name": "Moxix's Delectation",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Moxix's Delectation"
         },
         {
           "name": "Mucus Cloud",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Mucus Cloud"
         },
         {
           "name": "Nascent Demon Lord Traits",
           "doneness": "done",
           "type_facet": "SpecialQuality",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Nascent Demon Lord Traits"
         },
         {
           "name": "Navigational Awareness",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Navigational Awareness"
         },
         {
           "name": "Necrotic Field",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Necrotic Field"
         },
         {
           "name": "Negative Energy",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Negative Energy"
         },
         {
           "name": "Parasitic Bond",
           "doneness": "not-started",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Parasitic Bond"
         },
         {
           "name": "Petrified Body",
           "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Petrified Body"
         },
         {
           "name": "Planebound",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Planebound"
         },
         {
           "name": "Plant Empathy",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Plant Empathy"
         },
         {
           "name": "Plasma Lance",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Plasma Lance"
         },
         {
           "name": "Poison",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Poison (SpecialAttack.Extraordinary)"
         },
         {
           "name": "Poison",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Poison (SpecialAttack.Extraordinary) #2"
         },
         {
           "name": "Possess Corpse",
           "doneness": "not-started",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Possess Corpse"
         },
         {
           "name": "Possession",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Possession"
         },
         {
           "name": "Powerful Blows",
           "doneness": "not-started",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Powerful Blows"
         },
         {
           "name": "Psychopomp Traits",
           "doneness": "done",
           "type_facet": "SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Psychopomp Traits"
         },
         {
           "name": "Quantum Lash",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Quantum Lash"
         },
         {
           "name": "Ravage Magic",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Ravage Magic"
         },
         {
           "name": "Razmiri Aversion",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Razmiri Aversion"
         },
         {
           "name": "Reconstitution",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Reconstitution"
         },
         {
           "name": "Regeneration",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP)"
         },
         {
           "name": "Regeneration",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Regeneration (SpecialQuality.Extraordinary)"
         },
         {
           "name": "Regeneration",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP) #3"
         },
         {
           "name": "Rend Faith",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Rend Faith"
         },
         {
           "name": "Rending Mandibles",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Rending Mandibles"
         },
         {
           "name": "Resilient",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Resilient"
         },
         {
           "name": "Resistance to Mind-Affecting ~ Output",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.Resistance",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Resistance to Mind-Affecting ~ Output"
         },
         {
           "name": "Righteous Bite",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Righteous Bite"
         },
         {
           "name": "Rockets",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Rockets"
         },
         {
           "name": "Runemastery",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Runemastery"
         },
         {
           "name": "Rupture",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Rupture"
         },
         {
           "name": "Sawtooth",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Sawtooth"
         },
         {
           "name": "Scholastic Masquerade",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Scholastic Masquerade"
         },
         {
           "name": "Self-Repair",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Self-Repair"
         },
         {
           "name": "Sense Apostate",
           "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Sense Apostate"
         },
         {
           "name": "Shadow Cloak",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Shadow Cloak"
         },
         {
           "name": "Shadow Touch",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Shadow Touch"
         },
         {
           "name": "Shared Rupture",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Shared Rupture"
         },
         {
           "name": "Shatter Silence",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Shatter Silence"
         },
         {
           "name": "Shattered Mind",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.MutantDeformity",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Shattered Mind"
         },
         {
           "name": "Siphon Spirit",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Siphon Spirit"
         },
         {
           "name": "Slime",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Slime"
         },
         {
           "name": "Slowing Gaze",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Slowing Gaze"
         },
         {
           "name": "Soul Lock",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Soul Lock"
         },
         {
           "name": "Spell Absorption",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Spell Absorption"
         },
         {
           "name": "Spell Reservoir",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Spell Reservoir"
         },
         {
           "name": "Spell Resistance",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Spell Resistance"
         },
         {
           "name": "Spell Sunder",
           "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Spell Sunder"
         },
         {
           "name": "Spell-Like Abilities",
           "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Spell-Like Abilities (SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Spell-Like Abilities (SpecialQuality.Supernatural)"
         },
         {
           "name": "Spell-Like Abilities",
           "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Spell-Like Abilities (SpecialQuality.SpellLike) #3"
         },
         {
           "name": "Spell-Like Abilities",
           "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Spell-Like Abilities (SpecialQuality.SpellLike) #4"
         },
         {
           "name": "Spell-Like Abilities",
           "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Spell-Like Abilities (SpecialQuality.SpellLike) #5"
         },
         {
           "name": "Spell-Like Abilities",
           "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Spell-Like Abilities (SpecialQuality.SpellLike) #6"
         },
         {
           "name": "Spell-Like Abilities",
           "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Spell-Like Abilities (SpecialQuality.SpellLike) #7"
         },
         {
           "name": "Spell-Like Abilities",
           "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Spell-Like Abilities (SpecialQuality.SpellLike) #8"
         },
         {
           "name": "Spell-Like Abilities",
           "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Spell-Like Abilities (SpecialQuality.SpellLike) #9"
         },
         {
           "name": "Spell-Like Abilities",
           "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Spell-Like Abilities (SpecialQuality.SpellLike) #10"
         },
         {
           "name": "Spell-Like Abilities",
           "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Spell-Like Abilities (SpecialQuality.SpellLike) #11"
         },
         {
           "name": "Spell-Like Abilities",
           "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Spell-Like Abilities (SpecialQuality.SpellLike) #12"
         },
         {
           "name": "Spell-Like Abilities",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Supernatural.SpellLike",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Spell-Like Abilities (SpecialQuality.Extraordinary.Supernatural.SpellLike)"
         },
         {
           "name": "Spells",
           "doneness": "done",
           "type_facet": "SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Spells"
         },
         {
           "name": "Spines",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Spines"
         },
         {
           "name": "Spirit Sense",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Spirit Sense"
         },
         {
           "name": "Spirit Touch",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Spirit Touch"
         },
         {
           "name": "Spit",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Spit"
         },
         {
           "name": "Sporepod",
           "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Sporepod"
         },
         {
           "name": "Starflight",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Starflight"
         },
         {
           "name": "Summon",
           "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Summon"
         },
         {
           "name": "Superior Optics",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Superior Optics"
         },
         {
           "name": "Suppressing Fire",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Suppressing Fire"
         },
         {
           "name": "Swarm",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Swarm"
         },
         {
           "name": "Swift Cuts",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Swift Cuts"
         },
         {
           "name": "Swift Transformation",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Swift Transformation"
         },
         {
           "name": "Sword Mastery",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Sword Mastery"
         },
         {
           "name": "Tainted Blood",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Tainted Blood"
         },
         {
           "name": "Temporal Anomaly",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Temporal Anomaly"
         },
         {
           "name": "Terminal Aura",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Terminal Aura"
         },
         {
           "name": "Thorn Throw",
           "doneness": "not-started",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Thorn Throw"
         },
         {
           "name": "Thoughtlance",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Thoughtlance"
         },
         {
           "name": "Thunderous Bark",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Thunderous Bark"
         },
         {
           "name": "Toxic Flesh",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Toxic Flesh"
         },
         {
           "name": "Transformation",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Transformation"
         },
         {
           "name": "Unbound",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Unbound"
         },
         {
           "name": "Undersized Weapons",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Undersized Weapons"
         },
         {
           "name": "Unnerving Gaze",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Unnerving Gaze"
         },
         {
           "name": "Unstoppable Force",
           "doneness": "not-started",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Unstoppable Force"
         },
         {
           "name": "Urban Defender",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Urban Defender"
         },
         {
           "name": "Vanish",
           "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Vanish"
         },
         {
           "name": "Voice of the Ancients",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Voice of the Ancients"
         },
         {
           "name": "Vulnerable to Glass",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Vulnerable to Glass"
         },
         {
           "name": "Warped Hide",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.MutantDeformity",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Warped Hide"
         },
         {
           "name": "Weakness to Prayer",
           "doneness": "not-started",
           "type_facet": "SpecialQuality",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Weakness to Prayer"
         },
         {
           "name": "Weapon Expertise",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Weapon Expertise"
         }
       ]
     },
@@ -1175,241 +1365,281 @@
           "name": "Apostasy Wraith",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Apostasy Wraith"
         },
         {
           "name": "Beetle (Scarab)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Beetle (Scarab)"
         },
         {
           "name": "Beetle (Stalk)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Beetle (Stalk)"
         },
         {
           "name": "Cayhound",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Cayhound"
         },
         {
           "name": "Ceru",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Ceru"
         },
         {
           "name": "Charnel Colossus",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Charnel Colossus"
         },
         {
           "name": "Chemnosit",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Chemnosit"
         },
         {
           "name": "Fungus Queen",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Fungus Queen"
         },
         {
           "name": "Giant (Shadow)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Giant (Shadow)"
         },
         {
           "name": "Golem (Marrowstone)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Golem (Marrowstone)"
         },
         {
           "name": "Golem (Noqual)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Golem (Noqual)"
         },
         {
           "name": "Golem (Quantium)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Golem (Quantium)"
         },
         {
           "name": "Kakuen-Taka",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Kakuen-Taka"
         },
         {
           "name": "Khaei",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Khaei"
         },
         {
           "name": "Korir-Kokembe",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Korir-Kokembe"
         },
         {
           "name": "Kyton (Termagant)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Kyton (Termagant)"
         },
         {
           "name": "Lorthact",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Lorthact"
         },
         {
           "name": "Mantis (Deadly)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Mantis (Deadly)"
         },
         {
           "name": "Mockingfey",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Mockingfey"
         },
         {
           "name": "Moxix",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Moxix"
         },
         {
           "name": "Nightripper",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Nightripper"
         },
         {
           "name": "Oronci",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Oronci"
         },
         {
           "name": "Petrified Maiden",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Petrified Maiden"
         },
         {
           "name": "Psychopomp (Memitim)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Psychopomp (Memitim)"
         },
         {
           "name": "Psychopomp (Shoki)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Psychopomp (Shoki)"
         },
         {
           "name": "Psychopomp (Viduus)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Psychopomp (Viduus)"
         },
         {
           "name": "Robot (Annihilator)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Robot (Annihilator)"
         },
         {
           "name": "Robot (Gearsman)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Robot (Gearsman)"
         },
         {
           "name": "Robot (Myrmidon)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Robot (Myrmidon)"
         },
         {
           "name": "Spellscar Fext",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Spellscar Fext"
         },
         {
           "name": "Star Monarch",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Star Monarch"
         },
         {
           "name": "Thin Man",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Thin Man"
         },
         {
           "name": "Umbral Shepherd",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Umbral Shepherd"
         },
         {
           "name": "Veiled Master",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Veiled Master"
         },
         {
           "name": "Vespergaunt",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Vespergaunt"
         },
         {
           "name": "Volnagur",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Volnagur"
         },
         {
           "name": "Water Wraith",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Water Wraith"
         },
         {
           "name": "Whirlmaw",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Whirlmaw"
         },
         {
           "name": "Woundwyrm",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Woundwyrm"
         },
         {
           "name": "Zelishkar",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Zelishkar"
         }
       ]
     },
@@ -1431,25 +1661,29 @@
           "name": "Paralysis",
           "doneness": "not-started",
           "type_facet": "SpecialAtack.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Paralysis"
         },
         {
           "name": "Resistance to Mind-Affecting",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Resistance to Mind-Affecting"
         },
         {
           "name": "Spell-Like Abilities",
           "doneness": "not-started",
           "type_facet": "SpellLike",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Spell-Like Abilities"
         },
         {
           "name": "Weapon Selection",
           "doneness": "not-started",
           "type_facet": "PetrifiedMaidenWeaponSelection",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Weapon Selection"
         }
       ]
     }

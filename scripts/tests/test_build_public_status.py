@@ -416,6 +416,113 @@ class PiSubstringAllowlistTests(unittest.TestCase):
         self.assertFalse(pi_allowlist.is_allowlisted("Other Widget", "core_rulebook", index))
 
 
+class DisplayNameDisambiguationTests(unittest.TestCase):
+    """Decision 17 / `OPERATOR-RULINGS-2026-08-19.md` Ruling §17's drill-down
+    display defect: the page shows a bare `name` that is not unique across
+    ~4,266 units corpus-wide (0 share a `corpus_key`, 0 share a
+    `source_file`+`source_line` -- every one is a distinct printed row, so
+    the fix is a disambiguator, never a merge). `add_display_names` is the
+    per-(book, kind) item-list pass that gives every item a `display_name`
+    that IS unique within its own list, built only from fields already
+    through PI redaction (`name`, `type_facet`) by the time
+    `build_book_details` calls it -- see that function's own docstring for
+    why no new field/lookup is introduced that could bypass
+    `redact_for_display`."""
+
+    def _bare(self, name, type_facet=None):
+        return {"name": name, "doneness": "not-started", "type_facet": type_facet, "standing": "origin"}
+
+    def test_a_unique_name_gets_an_unchanged_display_name(self):
+        items = [self._bare("Iron Will")]
+        bps.add_display_names(items)
+        self.assertEqual(items[0]["display_name"], "Iron Will")
+
+    def test_colliding_names_are_disambiguated_by_type_facet(self):
+        # The operator's own worked example: core_rulebook class_feature
+        # "Aberrant Bloodline" listed twice, once as the class feature and
+        # once as the SorcererBloodlineChoice picker option.
+        items = [
+            self._bare("Aberrant Bloodline", type_facet="Class Feature.Sorcerer Bloodline"),
+            self._bare("Aberrant Bloodline", type_facet="SorcererBloodlineChoice"),
+        ]
+        bps.add_display_names(items)
+        labels = sorted(it["display_name"] for it in items)
+        self.assertEqual(len(set(labels)), 2, "colliding rows must get distinct display_name values")
+        self.assertTrue(all(label.startswith("Aberrant Bloodline") for label in labels))
+        self.assertIn("Class Feature.Sorcerer Bloodline", labels[0] + labels[1])
+        self.assertIn("SorcererBloodlineChoice", labels[0] + labels[1])
+
+    def test_eleven_bloodline_powers_rows_stay_eleven_distinct_labels(self):
+        # advanced_class_guide's real shape: 11 different bloodlines each
+        # print their own "Bloodline Powers" row. Collapsing them would
+        # destroy real content (Ruling §17) -- disambiguation must produce
+        # 11 DISTINCT labels, not merge them into one.
+        items = [
+            self._bare("Bloodline Powers", type_facet=f"Bloodline{i}Choice") for i in range(11)
+        ]
+        bps.add_display_names(items)
+        labels = {it["display_name"] for it in items}
+        self.assertEqual(len(labels), 11)
+
+    def test_collision_with_no_type_facet_falls_back_to_a_positional_suffix(self):
+        items = [self._bare("Mystery Row"), self._bare("Mystery Row")]
+        bps.add_display_names(items)
+        labels = {it["display_name"] for it in items}
+        self.assertEqual(len(labels), 2, "must still disambiguate when type_facet is absent")
+        self.assertTrue(all(label.startswith("Mystery Row") for label in labels))
+
+    def test_collision_with_identical_type_facet_still_disambiguates(self):
+        items = [
+            self._bare("Twin Row", type_facet="SameChoice"),
+            self._bare("Twin Row", type_facet="SameChoice"),
+        ]
+        bps.add_display_names(items)
+        labels = {it["display_name"] for it in items}
+        self.assertEqual(len(labels), 2)
+
+    def test_build_book_details_wires_display_name_through_for_a_real_collision(self):
+        # The end-to-end wiring proof: build_book_details is the actual
+        # call site the drill-down JSON comes from. Feeding it two
+        # already-classified/redacted items that collide on `name`
+        # (the operator's own "Aberrant Bloodline" shape) must produce
+        # `display_name` values that differ, inside the REAL output
+        # structure the site reads (`kinds[].items[]`), not just via a
+        # direct call to `add_display_names`.
+        all_items = [
+            {
+                "kind": "class_feature", "book": "core_rulebook",
+                "name": "Aberrant Bloodline", "doneness": "not-started",
+                "type_facet": "Class Feature.Sorcerer Bloodline", "standing": "origin",
+            },
+            {
+                "kind": "class_feature", "book": "core_rulebook",
+                "name": "Aberrant Bloodline", "doneness": "not-started",
+                "type_facet": "SorcererBloodlineChoice", "standing": "origin",
+            },
+        ]
+        details = bps.build_book_details(all_items)
+        kind_entry = details["core_rulebook"]["kinds"][0]
+        self.assertEqual(kind_entry["kind"], "class_feature")
+        display_names = sorted(it["display_name"] for it in kind_entry["items"])
+        self.assertEqual(len(set(display_names)), 2, "the wired pipeline must disambiguate too")
+        self.assertTrue(all(n.startswith("Aberrant Bloodline") for n in display_names))
+
+    def test_display_name_never_exposes_more_than_already_redacted_fields(self):
+        # Both name AND type_facet are already REDACTED_PI_MARKER by the
+        # time this runs (redact_for_display ran first) -- disambiguation
+        # must not reach past those two fields for anything else, and a
+        # positional suffix built from redacted values leaks nothing new.
+        marker = pi_redaction.REDACTED_PI_MARKER
+        items = [self._bare(marker, type_facet=marker), self._bare(marker, type_facet=marker)]
+        bps.add_display_names(items)
+        for it in items:
+            self.assertIn(marker, it["display_name"])
+            # every non-marker character must come from the disambiguation
+            # scaffolding itself (parens, digits, '#'), never a leaked field
+            leftover = it["display_name"].replace(marker, "")
+            self.assertTrue(all(ch in " ()#0123456789" for ch in leftover), it["display_name"])
+
+
 class LoadUnitsByKindTests(unittest.TestCase):
     def setUp(self):
         self.scratch = Scratch("units_dir")
