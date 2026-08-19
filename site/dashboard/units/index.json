@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-08-19T19:27:30Z",
+  "generated_at": "2026-08-19T21:32:33Z",
   "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 38372,
-  "proven_units": 5881,
+  "proven_units": 5857,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 420,
   "category_labels_redacted": 3,
@@ -92,9 +92,9 @@
       "units": 15439,
       "proven": 146,
       "by_status": {
-        "unknown": 3864,
-        "not-ingested": 10436,
-        "deferred-with-reason": 36,
+        "unknown": 3058,
+        "not-ingested": 11237,
+        "deferred-with-reason": 41,
         "grounded": 91,
         "text-complete": 55,
         "fixture-verified": 12,
@@ -102,7 +102,7 @@
         "not-started": 928
       },
       "shard": "PF1e-units-class_feature.json",
-      "bytes": 2335504,
+      "bytes": 2339574,
       "doneness_unmapped": {},
       "categories": {
         "specialquality": {
@@ -119,8 +119,8 @@
           "done": 10,
           "held": 1,
           "in-progress": 0,
-          "not-started": 999,
-          "unmeasurable": 311,
+          "not-started": 1236,
+          "unmeasurable": 74,
           "deferred": 1
         },
         "archetype": {
@@ -164,8 +164,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 133,
-          "unmeasurable": 154,
+          "not-started": 137,
+          "unmeasurable": 150,
           "deferred": 1
         },
         "rangerclassfeatures": {
@@ -173,8 +173,8 @@
           "done": 6,
           "held": 6,
           "in-progress": 0,
-          "not-started": 127,
-          "unmeasurable": 133,
+          "not-started": 141,
+          "unmeasurable": 119,
           "deferred": 0
         },
         "clericclassfeatures": {
@@ -182,8 +182,8 @@
           "done": 0,
           "held": 1,
           "in-progress": 0,
-          "not-started": 73,
-          "unmeasurable": 177,
+          "not-started": 78,
+          "unmeasurable": 172,
           "deferred": 0
         },
         "druidclassfeatures": {
@@ -191,8 +191,8 @@
           "done": 6,
           "held": 2,
           "in-progress": 0,
-          "not-started": 173,
-          "unmeasurable": 60,
+          "not-started": 197,
+          "unmeasurable": 36,
           "deferred": 1
         },
         "masterofmanystylesbonusfeat": {
@@ -209,8 +209,8 @@
           "done": 3,
           "held": 0,
           "in-progress": 0,
-          "not-started": 165,
-          "unmeasurable": 42,
+          "not-started": 188,
+          "unmeasurable": 19,
           "deferred": 0
         },
         "rogueclassfeatures": {
@@ -218,8 +218,8 @@
           "done": 2,
           "held": 4,
           "in-progress": 0,
-          "not-started": 162,
-          "unmeasurable": 42,
+          "not-started": 187,
+          "unmeasurable": 17,
           "deferred": 0
         },
         "specialattack": {
@@ -236,8 +236,8 @@
           "done": 3,
           "held": 1,
           "in-progress": 0,
-          "not-started": 122,
-          "unmeasurable": 55,
+          "not-started": 129,
+          "unmeasurable": 48,
           "deferred": 0
         },
         "rangerbonusfeat": {
@@ -254,8 +254,8 @@
           "done": 2,
           "held": 2,
           "in-progress": 0,
-          "not-started": 98,
-          "unmeasurable": 68,
+          "not-started": 115,
+          "unmeasurable": 51,
           "deferred": 1
         },
         "paladinclassfeatures": {
@@ -263,8 +263,8 @@
           "done": 7,
           "held": 1,
           "in-progress": 0,
-          "not-started": 134,
-          "unmeasurable": 29,
+          "not-started": 142,
+          "unmeasurable": 21,
           "deferred": 0
         },
         "barbarianclassfeatures": {
@@ -272,8 +272,8 @@
           "done": 7,
           "held": 1,
           "in-progress": 0,
-          "not-started": 102,
-          "unmeasurable": 59,
+          "not-started": 124,
+          "unmeasurable": 37,
           "deferred": 0
         },
         "wizardclassfeatures": {
@@ -281,8 +281,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 67,
-          "unmeasurable": 95,
+          "not-started": 71,
+          "unmeasurable": 91,
           "deferred": 0
         },
         "expandedarcana": {
@@ -308,9 +308,9 @@
           "done": 0,
           "held": 1,
           "in-progress": 0,
-          "not-started": 127,
-          "unmeasurable": 25,
-          "deferred": 1
+          "not-started": 137,
+          "unmeasurable": 14,
+          "deferred": 2
         },
         "inquisitordomain": {
           "label": "Inquisitor Domain",
@@ -326,8 +326,8 @@
           "done": 10,
           "held": 4,
           "in-progress": 0,
-          "not-started": 97,
-          "unmeasurable": 36,
+          "not-started": 112,
+          "unmeasurable": 21,
           "deferred": 0
         },
         "arcanistclassfeatures": {
@@ -344,8 +344,8 @@
           "done": 1,
           "held": 2,
           "in-progress": 0,
-          "not-started": 67,
-          "unmeasurable": 60,
+          "not-started": 95,
+          "unmeasurable": 32,
           "deferred": 0
         },
         "brawlerclassfeatures": {
@@ -353,8 +353,8 @@
           "done": 2,
           "held": 1,
           "in-progress": 0,
-          "not-started": 93,
-          "unmeasurable": 30,
+          "not-started": 123,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "mediumclassfeatures": {
@@ -434,8 +434,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 66,
-          "unmeasurable": 22,
+          "not-started": 88,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "mesmeristclassfeatures": {
@@ -443,8 +443,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 56,
-          "unmeasurable": 31,
+          "not-started": 77,
+          "unmeasurable": 10,
           "deferred": 0
         },
         "witchclassfeatures": {
@@ -452,8 +452,8 @@
           "done": 3,
           "held": 0,
           "in-progress": 0,
-          "not-started": 71,
-          "unmeasurable": 10,
+          "not-started": 76,
+          "unmeasurable": 5,
           "deferred": 1
         },
         "bladeskill": {
@@ -470,9 +470,9 @@
           "done": 1,
           "held": 1,
           "in-progress": 0,
-          "not-started": 64,
-          "unmeasurable": 13,
-          "deferred": 1
+          "not-started": 76,
+          "unmeasurable": 0,
+          "deferred": 2
         },
         "vigilantetalent": {
           "label": "Vigilante Talent",
@@ -488,8 +488,8 @@
           "done": 2,
           "held": 4,
           "in-progress": 0,
-          "not-started": 41,
-          "unmeasurable": 27,
+          "not-started": 68,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "weapontraining": {
@@ -506,8 +506,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 57,
-          "unmeasurable": 6,
+          "not-started": 63,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "shamanclassfeatures": {
@@ -515,8 +515,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 23,
-          "unmeasurable": 37,
+          "not-started": 60,
+          "unmeasurable": 0,
           "deferred": 1
         },
         "occultistclassfeatures": {
@@ -524,8 +524,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 45,
-          "unmeasurable": 14,
+          "not-started": 59,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "shamanspirithex": {
@@ -542,8 +542,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 41,
-          "unmeasurable": 17,
+          "not-started": 45,
+          "unmeasurable": 13,
           "deferred": 0
         },
         "ninjaclassfeatures": {
@@ -551,8 +551,8 @@
           "done": 4,
           "held": 0,
           "in-progress": 0,
-          "not-started": 50,
-          "unmeasurable": 1,
+          "not-started": 51,
+          "unmeasurable": 0,
           "deferred": 1
         },
         "skaldclassfeatures": {
@@ -560,8 +560,8 @@
           "done": 1,
           "held": 3,
           "in-progress": 0,
-          "not-started": 44,
-          "unmeasurable": 6,
+          "not-started": 50,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "unchainedragepower": {
@@ -596,8 +596,8 @@
           "done": 5,
           "held": 1,
           "in-progress": 0,
-          "not-started": 28,
-          "unmeasurable": 17,
+          "not-started": 45,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "shifterclassfeatures": {
@@ -605,8 +605,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 41,
-          "unmeasurable": 9,
+          "not-started": 50,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "sorcererbloodlinechoice": {
@@ -686,8 +686,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 32,
-          "unmeasurable": 12,
+          "not-started": 34,
+          "unmeasurable": 10,
           "deferred": 1
         },
         "marksmanclassfeatures": {
@@ -704,8 +704,8 @@
           "done": 3,
           "held": 0,
           "in-progress": 0,
-          "not-started": 34,
-          "unmeasurable": 7,
+          "not-started": 37,
+          "unmeasurable": 4,
           "deferred": 0
         },
         "investigatorroguetalent": {
@@ -731,8 +731,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 34,
-          "unmeasurable": 6,
+          "not-started": 40,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "soulknifeclassfeatures": {
@@ -857,8 +857,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 24,
-          "unmeasurable": 8,
+          "not-started": 32,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "sorcererclassfeature": {
@@ -866,8 +866,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 26,
-          "unmeasurable": 6,
+          "not-started": 32,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "hatemongerfavoredenemy": {
@@ -956,8 +956,8 @@
           "done": 1,
           "held": 0,
           "in-progress": 0,
-          "not-started": 20,
-          "unmeasurable": 2,
+          "not-started": 22,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "domain": {
@@ -1082,8 +1082,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 16,
-          "unmeasurable": 2,
+          "not-started": 18,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "speakerforthepastrevelation": {
@@ -1145,8 +1145,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 14,
-          "unmeasurable": 3,
+          "not-started": 16,
+          "unmeasurable": 1,
           "deferred": 0
         },
         "disenchanterclassfeature": {
@@ -1154,8 +1154,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 15,
-          "unmeasurable": 2,
+          "not-started": 17,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "unchainedmonkbonusfeat": {
@@ -1407,8 +1407,8 @@
           "held": 0,
           "in-progress": 0,
           "not-started": 6,
-          "unmeasurable": 1,
-          "deferred": 2
+          "unmeasurable": 0,
+          "deferred": 3
         },
         "darktempestclassfeatures": {
           "label": "Dark Tempest Class Features",
@@ -1595,8 +1595,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 8,
-          "unmeasurable": 2,
+          "not-started": 10,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "flyingbladeclassfeature": {
@@ -1604,8 +1604,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 8,
-          "unmeasurable": 2,
+          "not-started": 10,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "divinecommanderclassfeature": {
@@ -1613,8 +1613,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 1,
-          "unmeasurable": 9,
+          "not-started": 10,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "eldritchscionbloodragerbloodlinechoice": {
@@ -1766,8 +1766,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 3,
-          "unmeasurable": 6,
+          "not-started": 9,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "mutationwarriormutagenselection": {
@@ -1793,8 +1793,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 4,
-          "unmeasurable": 5,
+          "not-started": 9,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "wildcatmaneuvertraining2": {
@@ -1865,8 +1865,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 7,
-          "unmeasurable": 2,
+          "not-started": 9,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "formlessadeptclassfeature": {
@@ -1928,8 +1928,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 1,
-          "unmeasurable": 7,
+          "not-started": 8,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "sleuthclassfeature": {
@@ -1946,8 +1946,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 7,
-          "unmeasurable": 1,
+          "not-started": 8,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "extrachannel": {
@@ -1964,8 +1964,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 6,
-          "unmeasurable": 2,
+          "not-started": 7,
+          "unmeasurable": 1,
           "deferred": 0
         },
         "hauntedimplementschool": {
@@ -2000,8 +2000,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 7,
-          "unmeasurable": 1,
+          "not-started": 8,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "elementalannihilatorclassfeature": {
@@ -2009,8 +2009,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 7,
-          "unmeasurable": 1,
+          "not-started": 8,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "karmicmonkclassfeature": {
@@ -2099,8 +2099,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 2,
-          "unmeasurable": 5,
+          "not-started": 7,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "eldritchscionclassfeature": {
@@ -2108,8 +2108,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 4,
-          "unmeasurable": 3,
+          "not-started": 7,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "mysteriousavengerclassfeature": {
@@ -2117,8 +2117,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 5,
-          "unmeasurable": 2,
+          "not-started": 7,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "wildcatclassfeature": {
@@ -2126,8 +2126,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 5,
-          "unmeasurable": 2,
+          "not-started": 7,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "tattooedsorcerervarisiantattoo": {
@@ -2198,18 +2198,18 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 7,
+          "not-started": 6,
           "unmeasurable": 0,
-          "deferred": 0
+          "deferred": 1
         },
         "silverballadeerclassfeature": {
           "label": "Silver Balladeer Class Feature",
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 7,
+          "not-started": 6,
           "unmeasurable": 0,
-          "deferred": 0
+          "deferred": 1
         },
         "soheibonusfeat": {
           "label": "Sohei Bonus Feat",
@@ -2279,8 +2279,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 3,
-          "unmeasurable": 3,
+          "not-started": 6,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "daringchampionclassfeature": {
@@ -2288,8 +2288,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 3,
-          "unmeasurable": 3,
+          "not-started": 6,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "steelhoundclassfeature": {
@@ -2297,8 +2297,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 3,
-          "unmeasurable": 3,
+          "not-started": 6,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "unswornshamanclassfeature": {
@@ -2450,8 +2450,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 4,
-          "unmeasurable": 1,
+          "not-started": 5,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "eldritchfontclassfeature": {
@@ -2459,8 +2459,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 3,
-          "unmeasurable": 2,
+          "not-started": 5,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "hoodedchampionclassfeature": {
@@ -2468,8 +2468,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 2,
-          "unmeasurable": 3,
+          "not-started": 5,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "katamasterclassfeature": {
@@ -2477,8 +2477,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 4,
-          "unmeasurable": 1,
+          "not-started": 5,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "mouserclassfeature": {
@@ -2495,8 +2495,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 3,
-          "unmeasurable": 2,
+          "not-started": 5,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "orderofthebeastclassfeature": {
@@ -2504,8 +2504,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 3,
-          "unmeasurable": 2,
+          "not-started": 5,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "shamanwindhex": {
@@ -2603,8 +2603,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 2,
-          "unmeasurable": 3,
+          "not-started": 5,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "visionaryclassfeature": {
@@ -2612,8 +2612,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 4,
-          "unmeasurable": 1,
+          "not-started": 5,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "bondedwitchitemchoice": {
@@ -2765,8 +2765,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 3,
-          "unmeasurable": 1,
+          "not-started": 4,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "dareclassfeature": {
@@ -2792,8 +2792,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 3,
-          "unmeasurable": 1,
+          "not-started": 4,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "flamedancerclassfeature": {
@@ -2801,8 +2801,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 3,
-          "unmeasurable": 1,
+          "not-started": 4,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "heraldofthehornclassfeature": {
@@ -2810,8 +2810,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 2,
-          "unmeasurable": 2,
+          "not-started": 4,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "holyguideclassfeature": {
@@ -2819,8 +2819,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 1,
-          "unmeasurable": 3,
+          "not-started": 3,
+          "unmeasurable": 1,
           "deferred": 0
         },
         "mastermindclassfeature": {
@@ -2837,8 +2837,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 1,
-          "unmeasurable": 3,
+          "not-started": 4,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "shamanlifehex": {
@@ -2864,8 +2864,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 3,
-          "unmeasurable": 1,
+          "not-started": 4,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "stygianslayerclassfeature": {
@@ -2891,8 +2891,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 1,
-          "unmeasurable": 3,
+          "not-started": 4,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "wildwhispererclassfeature": {
@@ -2900,8 +2900,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 2,
-          "unmeasurable": 2,
+          "not-started": 4,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "witchdoctorclassfeature": {
@@ -2954,8 +2954,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 2,
-          "unmeasurable": 2,
+          "not-started": 4,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "necroccultistclassfeature": {
@@ -3053,8 +3053,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 2,
-          "unmeasurable": 1,
+          "not-started": 3,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "counterfeitmageclassfeature": {
@@ -3062,8 +3062,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 2,
-          "unmeasurable": 1,
+          "not-started": 3,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "divinetrackerclassfeature": {
@@ -3071,8 +3071,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 2,
-          "unmeasurable": 1,
+          "not-started": 3,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "bloodragerbloodlinechoice": {
@@ -3089,8 +3089,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 1,
-          "unmeasurable": 2,
+          "not-started": 3,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "exemplarclassfeature": {
@@ -3107,8 +3107,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 2,
-          "unmeasurable": 1,
+          "not-started": 3,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "greenragerclassfeature": {
@@ -3116,8 +3116,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 1,
-          "unmeasurable": 2,
+          "not-started": 3,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "infiltratorclassfeature": {
@@ -3143,8 +3143,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 2,
-          "unmeasurable": 1,
+          "not-started": 3,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "possessedshamanclassfeature": {
@@ -3188,8 +3188,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 2,
-          "unmeasurable": 1,
+          "not-started": 3,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "templechampionclassfeature": {
@@ -3197,8 +3197,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 1,
-          "unmeasurable": 2,
+          "not-started": 3,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "undergroundchemistclassfeature": {
@@ -3206,8 +3206,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 2,
-          "unmeasurable": 1,
+          "not-started": 3,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "voiceofthewildclassfeature": {
@@ -3215,8 +3215,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 2,
-          "unmeasurable": 1,
+          "not-started": 3,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "alchemistarchetype": {
@@ -3323,8 +3323,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 2,
-          "unmeasurable": 1,
+          "not-started": 3,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "falsemediumclassfeature": {
@@ -3386,8 +3386,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 2,
-          "unmeasurable": 1,
+          "not-started": 3,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "relichunterclassfeature": {
@@ -3485,8 +3485,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 1,
-          "unmeasurable": 1,
+          "not-started": 2,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "feralshifterclassfeature": {
@@ -3539,8 +3539,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 1,
-          "unmeasurable": 1,
+          "not-started": 2,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "mutationwarriorclassfeature": {
@@ -3584,8 +3584,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 1,
-          "unmeasurable": 1,
+          "not-started": 2,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "spellsageclassfeature": {
@@ -3602,8 +3602,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 1,
-          "unmeasurable": 1,
+          "not-started": 2,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "spiritguideclassfeature": {
@@ -3611,8 +3611,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 1,
-          "unmeasurable": 1,
+          "not-started": 2,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "unletteredarcanistclassfeature": {
@@ -4196,8 +4196,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 0,
-          "unmeasurable": 1,
+          "not-started": 1,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "martialmasterclassfeature": {
@@ -4205,8 +4205,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 0,
-          "unmeasurable": 1,
+          "not-started": 1,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "metamagicragerclassfeature": {
@@ -4214,8 +4214,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 0,
-          "unmeasurable": 1,
+          "not-started": 1,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "primalistclassfeature": {
@@ -4241,8 +4241,8 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 0,
-          "unmeasurable": 1,
+          "not-started": 1,
+          "unmeasurable": 0,
           "deferred": 0
         },
         "wildcatmaneuvertraining1": {
@@ -4844,16 +4844,16 @@
     },
     "companion": {
       "units": 1696,
-      "proven": 666,
+      "proven": 641,
       "by_status": {
         "not-ingested": 769,
         "literal-verified": 99,
         "text-complete": 165,
-        "grounded": 501,
-        "fixture-verified": 162
+        "grounded": 476,
+        "fixture-verified": 187
       },
       "shard": "PF1e-units-companion.json",
-      "bytes": 228542,
+      "bytes": 228742,
       "doneness_unmapped": {},
       "categories": {
         "none": {
@@ -4885,8 +4885,8 @@
         },
         "specialquality": {
           "label": "Special Qualities",
-          "done": 86,
-          "held": 21,
+          "done": 91,
+          "held": 16,
           "in-progress": 0,
           "not-started": 52,
           "unmeasurable": 0,
@@ -4912,8 +4912,8 @@
         },
         "specialattack": {
           "label": "Special Attacks",
-          "done": 68,
-          "held": 29,
+          "done": 86,
+          "held": 11,
           "in-progress": 0,
           "not-started": 5,
           "unmeasurable": 0,
@@ -5065,8 +5065,8 @@
         },
         "extraordinary": {
           "label": "Extraordinary",
-          "done": 4,
-          "held": 2,
+          "done": 5,
+          "held": 1,
           "in-progress": 0,
           "not-started": 0,
           "unmeasurable": 0,
@@ -5281,8 +5281,8 @@
         },
         "supernatural": {
           "label": "Supernatural",
-          "done": 1,
-          "held": 1,
+          "done": 2,
+          "held": 0,
           "in-progress": 0,
           "not-started": 0,
           "unmeasurable": 0,
@@ -5509,11 +5509,11 @@
     },
     "equipment": {
       "units": 6208,
-      "proven": 347,
+      "proven": 348,
       "by_status": {
-        "ingested-magnitude": 324,
+        "ingested-magnitude": 323,
         "literal-verified": 5099,
-        "grounded": 166,
+        "grounded": 167,
         "unknown": 205,
         "not-started": 164,
         "not-ingested": 58,
@@ -5521,14 +5521,14 @@
         "fixture-verified": 11
       },
       "shard": "PF1e-units-equipment.json",
-      "bytes": 832885,
+      "bytes": 832875,
       "doneness_unmapped": {},
       "categories": {
         "magic": {
           "label": "Magic",
-          "done": 2872,
+          "done": 2873,
           "held": 80,
-          "in-progress": 139,
+          "in-progress": 138,
           "not-started": 135,
           "unmeasurable": 1,
           "deferred": 0

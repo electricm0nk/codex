@@ -1,7 +1,7 @@
 # Status
 
 > Scope: what is real, working product surface today across the whole repo, and what is stubbed, partially wired, or deferred — superseding the root README's "Current state" section.
-> Last verified: **2026-08-19 against `tranche/11`** (SD-31 wave 15, `SD31-W15-INTEGRATE-001`) for the §"Corpus coverage, corpus-wide — re-derived 2026-08-19" section; the 2026-08-18 wave-14 pass for the §"Corpus coverage, corpus-wide — re-derived 2026-08-18" section, the `RuleSetId::Ce` row, and the companion-ceiling row; every other row still carries its 2026-08-13 `tranche/9` verification and is unchanged. Prior full pass: 2026-08-13 against `tranche/9` (SD-29 **real** closure, Epic 11 run 3). The 2026-08-11 pass belonged to a closure the operator rescinded the same day (`SD-29 decisions.md §42`); every figure it wrote has been re-derived here rather than carried. The rows re-derived in full this pass are the `RuleSetId` catalog count, the JSON-corpus-cache count, the monster/companion/race-trait chassis rows, and the whole §"Corpus coverage, corpus-wide" section; every other row carries its prior 2026-08-07/tranche-8 verification and is unchanged by SD-29.
+> Last verified: **2026-08-19 against `tranche/11`** (SD-31 wave 17, `SD31-W17-INTEGRATE-001`) for the §"Corpus coverage, corpus-wide — re-derived 2026-08-19 (SD-31 wave 17, integration cycle)" section (the live figures — waves 14/15/16's own sections are kept below for history, unchanged); the 2026-08-18 wave-14 pass for the §"Corpus coverage, corpus-wide — re-derived 2026-08-18" section, the `RuleSetId::Ce` row, and the companion-ceiling row; every other row still carries its 2026-08-13 `tranche/9` verification and is unchanged. Prior full pass: 2026-08-13 against `tranche/9` (SD-29 **real** closure, Epic 11 run 3). The 2026-08-11 pass belonged to a closure the operator rescinded the same day (`SD-29 decisions.md §42`); every figure it wrote has been re-derived here rather than carried. The rows re-derived in full this pass are the `RuleSetId` catalog count, the JSON-corpus-cache count, the monster/companion/race-trait chassis rows, and the whole §"Corpus coverage, corpus-wide" section; every other row carries its prior 2026-08-07/tranche-8 verification and is unchanged by SD-29.
 > Maintenance: pre-PR truth-up cycle per [README.md](./README.md) §Maintenance contract — fires before every PR via the architecture-truth-up skill
 
 ## Posture
@@ -394,6 +394,77 @@ summing to the full +116 `done`:**
   idiom) — never a cost-based exclusion, which remains forbidden.
 
 
+
+## Corpus coverage, corpus-wide — re-derived 2026-08-19 (SD-31 wave 17, integration cycle)
+
+The section above is wave 16's snapshot and is kept for its history. **These are the live
+figures**, re-derived at this wave's integration tip on `tranche/11` after merging all five
+wave-17 lane branches carrying a commit, building the merged tree (both the root workspace and
+`apps/desktop/src-tauri` as a separate crate), and re-running the guarded regen pipeline — never
+transcribed from a lane receipt. Oracle pin `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`.
+
+| quantity | value | how |
+|---|---:|---|
+| board units (in scope, `beginner_box` excluded) | **38,372** (unchanged — required this wave) | `docs/work-inventory.json`, replayed through `pf1e_dashboard_producer.doneness_verdict()` |
+| board `done` | **12,892 (33.5974 %)** | same replay; was 12,864 / 33.5244 % before this wave |
+| verification stamps | **8,130** (6,436 literal-verified + 1,694 fixture-verified) | `Counter(u['status'] …)` over the same document; was 8,103 |
+| `derived` fixture coverage | **1,777 units cleared over 2,506 fixture rows**, 0 failed, 0 not ingested | `cargo run --locked --bin derived_evaluator_fixture_check`; was 1,750 / 2,504 |
+| corpus literal sweep | 26,105 records examined, **0 findings** | `cargo run --locked --bin corpus_literal_sweep` |
+| reachable ceiling | **98.94 %** | `python3 scripts/reachability_audit.py`; unchanged (denominator did not move) |
+
+By doneness bucket: `done` 12,892 · `held` 1,177 · `in-progress` 1,279 · `not-started` 18,711 ·
+`unmeasurable` 4,270 · `deferred` 43.
+
+**The denominator did NOT move this wave — 38,372 = 38,372, confirmed at both total and per-kind
+level for all 11 kinds.** No lane proposed, and no reviewer found, any content that should leave
+the denominator; `core_essentials` remains absent from the `books` map (`decisions.md §9`'s
+wave-16 discharge unregressed).
+
+**Doneness moved +28, on three independent seams, corpus-wide unit-id diff confirming exactly 837
+units changed status and zero units were added or removed:**
+
+* **+25 `held`→`fixture-verified` (companion).** A new DESC-embedded save-DC formula evaluator
+  seam (`<base>[+HD/2]+<ability>`) — the formula lives only in the ability's own `DESC:` argument
+  list, with no separate `BONUS:` field, so `render_pcgen_desc`'s formula-blind renderer was
+  silently dropping the DC number from player-facing prose before this seam.
+* **+2 `grounded`→`fixture-verified` (monster_ability).** The shared owner-monster-row resolver
+  (`find_owner_row`) widened to accept a bare-leading-field name when no `KEY:` token exists (two
+  of wave 16's three named orphans; the third, `spine_dragon_spines`, stays correctly unresolved —
+  a real name-identity mismatch, not a missing-`KEY:` gap).
+* **+1 `in-progress`→`grounded` (equipment).** `equipmods.rs` widened to accept the `TOHIT,DAMAGE`
+  affected-roll order (the reverse of the canonical `DAMAGE,TOHIT` records) — grounds
+  `maul_of_the_titans` off its own real corpus token.
+
+**One proposed movement was refused at merge time, not shipped.** A wave-17 lane also widened
+`equipmods.rs` to accept a `WEAPONPROF=TYPE.Natural` qualifier subject (targeting the Amulet of
+Mighty Fists family, 5 `equipment_modifier` units). Adversarial review proved live that this
+applies the item's natural-attack-scoped bonus to every equipped weapon — `WeaponEnhancementBonus`
+carries no field for the scope the corpus token states, and the live consumer
+(`damage_total::resolve_weapon_enhancement_modifier`) does not discriminate by weapon type. This
+half of the commit was reverted before merge; the 5 units are `held`, not `done`. See
+`OPEN-ISSUES.md` row 309 for the full trace and the correct fix (a new scope field plus a
+scope-aware consumer, not attempted this cycle).
+
+### What wave 17 changed in the architecture, not just in the counts
+
+* **A magnitude-applying regression was caught before merge, by design.** The equipment_modifier
+  finding above is this wave's proof that "build the merged tree, run the guarded regen, gate it,
+  and have an adversarial reviewer prove reachability with the real driver" catches exactly the
+  class of defect DoD-8 exists to prevent — a plausible-looking widening that is wrong in a way no
+  unit test in the lane's own module caught (its own negative-control test could not fail; see
+  `OPEN-ISSUES.md` row 309).
+* **`class_feature`'s owner-resolution fallback (`class_feature_type_facet_owner_candidates`) now
+  recognizes PCGen's plural `"<Class> Class Features"` taxonomy spelling, not just the singular
+  form** — closing a gap between a lane's own reported figure (811 units) and what the shipped
+  code actually recovered (510) before this wave's merge-time fix. 809 `class_feature` units moved
+  `unknown`→`not-ingested`/`deferred-with-reason` as a result — zero done-eligible movement, by the
+  architecture's own safety guard (a pool-group name can never equal a class's own name, so this
+  fallback can only ever produce `not-ingested`/`deferred-with-reason`, never a false `grounded`).
+* **A `monster`-kind seam lane's own "exhaustive, none viable" census of its 253-unit held
+  population was found materially miscounted by review** (16 of 236 units in the wrong bucket, a
+  second arithmetic error, and an 11-unit previously-unexamined flat-literal-constant
+  sub-population) — logged as `OPEN-ISSUES.md` row 310 for the next `monster`-kind cycle to start
+  from an accurate count.
 
 Grouped by the plane each item lives in. Every row was re-verified directly
 against the cited source, not carried over from a sibling doc unchecked.

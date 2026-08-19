@@ -30430,3 +30430,252 @@ built). `git add -A` never used. `CARGO_TARGET_DIR`s deleted at cycle close.
 
 `/home/ubuntu/cargo-targets/w17-spellcompanion`, `w17-spellcompanion-desktop`, `w17-spellcompanion-
 desktop2`, `w17-verify` all deleted at cycle close.
+
+## `SD31-W17-INTEGRATE-001` — wave 17 integration cycle (2026-08-19)
+
+**Branch:** `tranche/11`, base `1fbc11887` (confirmed: `git log --oneline -1` at cycle start matched
+the dispatched tip; `ls docs data scripts schemas` all present, unlike waves 15/16's first attempt
+which landed on a site-publish-only lineage). **Oracle pin:** `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`.
+**Own `CARGO_TARGET_DIR`:** `/home/ubuntu/cargo-targets/w17-integrate` (root+desktop),
+deleted at cycle close. **Six lane results dispatched, five carried a commit (equipment_modifier,
+equipment, monster_ability, spell+companion+class_feature, feat+class_feature); the sixth
+(`monster` seam) banked 0 and left no branch. Two adversarial reviews returning seven lane
+verdicts total: five SOUND/RESOLVED-shaped, two PARTIAL — neither GAMED.**
+
+### 1. The board, replayed and never asserted
+
+```
+python3 -c "
+import json, collections, sys
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+U=[u for u in json.load(open('docs/work-inventory.json'))['units'] if u['book'] not in P.EXCLUDED_BOOKS]
+c=collections.Counter(P.doneness_verdict(u['wiring_class'],u['status'],u['kind']) for u in U)
+print(dict(c), len(U), '%.4f%%'%(100*c['done']/len(U)))
+"
+```
+
+| | BEFORE (`1fbc11887`, `generated_at` 2026-08-19T18:06:59Z) | AFTER (this cycle) |
+|---|---:|---:|
+| **done** | **12,864 (33.5244 %)** | **12,892 (33.5974 %)** |
+| held | 1,204 | 1,177 |
+| in-progress | 1,280 | 1,279 |
+| not-started | 17,910 | 18,711 |
+| unmeasurable | 5,076 | 4,270 |
+| deferred | 38 | 43 |
+| **denominator** | **38,372** | **38,372** |
+
+**+28 done. Denominator UNCHANGED — 38,372 = 38,372, confirmed at both per-kind and total level**
+(the wave's own standing constraint: the denominator may not move again this wave without an
+operator-signed Structural Exclusion Register entry; none was needed or written). The dispatch
+board's own `not-started` figure (17,892) did NOT reconcile against a fresh replay of the same base
+commit (17,910, 18 short) — every other dispatch figure reproduced exactly; logged as `OPEN-ISSUES.md`
+row 312, a dispatch-generation process note, not a repo defect.
+
+### 2. Denominator: unchanged, confirmed both ways
+
+No lane proposed, and no reviewer found, any content that should leave the denominator this wave.
+`core_essentials` remains absent from `docs/work-inventory.json`'s `books` map (0 units) —
+`decisions.md §9`'s discharge from wave 16 holds, unregressed. Per-kind totals are byte-identical
+before/after for all 11 kinds (`class` 185, `class_feature` 15,439, `companion` 1,696, `equipment`
+6,208, `equipment_modifier` 1,580, `feat` 2,610, `monster` 1,270, `monster_ability` 2,942, `race`
+95, `race_trait` 3,504, `spell` 2,843 — sums to 38,372 both times).
+
+### 3. Doneness movement traced to every named cause, both directions
+
+| n | kind | transition | seam / cause | lane |
+|---:|---|---|---|---|
+| +25 | companion | held → fixture-verified (done) | new DESC-embedded save-DC formula evaluator seam | worktree-wf_2df73578-fc5-5 |
+| +2 | monster_ability | grounded → fixture-verified (done) | `find_owner_row` bare-leading-field owner fallback (2 of row 295's 3 named orphans) | worktree-wf_2df73578-fc5-4 |
+| +1 | equipment | in-progress → grounded (done) | `TOHIT,DAMAGE` reversed-roll-order acceptance in `equipmods.rs` (`maul_of_the_titans`) | worktree-wf_2df73578-fc5-1 (sound half only) |
+| +0 | equipment_modifier | (5 claimed → withdrawn back to held) | `WEAPONPROF=TYPE.Natural` widening reverted at merge time — real player-facing-magnitude regression, see `OPEN-ISSUES.md` row 309 | worktree-wf_2df73578-fc5-1 (unsafe half, NOT merged) |
+| 0 net, 809 internal | class_feature | 804 `unknown`→`not-ingested`, 3 `not-ingested`→`deferred-with-reason`, 2 `unknown`→`deferred-with-reason` | `type_facet` owner-resolution fallback (plural-marker gap fixed at merge time, see `OPEN-ISSUES.md` row 311) — zero done-eligible movement, by design | worktree-wf_2df73578-fc5-6 |
+| 0 | equipment | (470-unit held+in-progress mass re-derived, none moved) | full causal census, all structurally blocked (row 11 provenance ruling / new engine capability) | worktree-wf_2df73578-fc5-2 |
+| 0 | monster | (253-unit `derived`+`grounded` population re-examined) | census corrected by review (16 miscategorized), still no genuinely provable non-circular seam banked; new 11-unit candidate flagged, not built | (no branch — investigation only) |
+
+`25+2+1=28`. Independently re-derived from the merged, regenerated `docs/work-inventory.json` by
+joining base vs. after per unit id: **exactly 837 units changed status corpus-wide** (809
+`class_feature`, 25 `companion`, 2 `monster_ability`, 1 `equipment`), zero added or removed unit
+ids, zero touch to `class`/`feat`/`monster`/`race`/`race_trait`/`spell`/`equipment_modifier`.
+
+| kind | total (before) | total (after) | done (before) | done (after) | delta |
+|---|---:|---:|---:|---:|---:|
+| class | 185 | 185 | 27 (14.5946%) | 27 (14.5946%) | +0 |
+| class_feature | 15,439 | 15,439 | 134 (0.8679%) | 134 (0.8679%) | +0 |
+| companion | 1,696 | 1,696 | 846 (49.8821%) | 871 (51.3561%) | **+25** |
+| equipment | 6,208 | 6,208 | 5,311 (85.5509%) | 5,312 (85.5670%) | **+1** |
+| equipment_modifier | 1,580 | 1,580 | 503 (31.8354%) | 503 (31.8354%) | +0 |
+| feat | 2,610 | 2,610 | 1,459 (55.9004%) | 1,459 (55.9004%) | +0 |
+| monster | 1,270 | 1,270 | 973 (76.6142%) | 973 (76.6142%) | +0 |
+| monster_ability | 2,942 | 2,942 | 1,554 (52.8212%) | 1,556 (52.8892%) | **+2** |
+| race | 95 | 95 | 34 (35.7895%) | 34 (35.7895%) | +0 |
+| race_trait | 3,504 | 3,504 | 520 (14.8402%) | 520 (14.8402%) | +0 |
+| spell | 2,843 | 2,843 | 1,503 (52.8667%) | 1,503 (52.8667%) | +0 |
+| **TOTAL** | **38,372** | **38,372** | **12,864 (33.5244%)** | **12,892 (33.5974%)** | **+28** |
+
+### 4. What was merged, on whose figure — and what was NOT merged as claimed
+
+All five lanes carrying a commit were merged onto `tranche/11`; **none was marked GAMED by either
+reviewer.** Where a reviewer stated `corrected_units`, that figure is what is banked — never a
+lane's own claimed count taken on trust.
+
+| lane | branch | reviewer verdict | claimed | corrected/banked |
+|---|---|---|---:|---:|
+| equipment_modifier | `worktree-wf_2df73578-fc5-1` | PARTIAL | 5 | **1** (reviewer's correction — the WEAPONPROF widening was refused as a real regression; the separable roll-order widening was credited instead, for a DIFFERENT unit the lane never claimed) |
+| equipment (held+in-progress census) | `worktree-wf_2df73578-fc5-2` | SOUND | 0 | 0 |
+| monster (seam census) | (no branch) | PARTIAL | 0 | 0 |
+| monster_ability | `worktree-wf_2df73578-fc5-4` | SOUND | 2 | 2 |
+| spell+companion+class_feature | `worktree-wf_2df73578-fc5-5` | SOUND | 25 | 25 |
+| feat+class_feature | `worktree-wf_2df73578-fc5-6` | PARTIAL | 0 | 0 (taxonomy quality issues, not a units question — see §6) |
+
+**The equipment_modifier lane is the one real "refuse and re-credit" case this wave**, and it is
+NOT the same as GAMED: the reviewer's own verdict text says so explicitly ("Not GAMED: the
+analysis, the RED tests, the 172/211 deferral reporting and the honest disclosure of the uncounted
+equipment unit are all genuine work — this is an engineering miss, not a manufactured number").
+Merged the commit whole (all 8 tests, the module doc comment, the deferral reasoning) then applied
+a targeted code correction at merge time — see §6 item 1.
+
+### 5. Merge mechanics
+
+Merge order: equipment (docs-only, clean) → monster_ability (one real conflict, `OPEN-ISSUES.md`
+row-number collision with equipment's own new row 303 — both lanes independently picked "303" for
+their own new row; renumbered monster_ability's to 304, kept equipment's at 303) → spell/companion
+(one real conflict, `OPEN-ISSUES.md` rows 303-306 collided again with equipment_modifier's and
+monster_ability's own new rows 303/304 — renumbered to 305-308; `progress.md` conflict was pure
+concatenation, both receipts independent) → feat/class_feature (clean except generated JSON) →
+equipment_modifier (clean except generated JSON, then the §6 item 1 correction). Every conflict in
+`docs/work-inventory.json`/`site/dashboard/*`/`site/status-data*`/`tests/fixtures/rules_core/
+derived-evaluator-fixtures.json` was resolved by taking `ours` (whichever side was already merged)
+since ALL such files are regenerated fresh from source in §7 — never hand-merged, never trusted
+un-regenerated.
+
+**Build the merged tree BEFORE gating, per instruction.** `cargo build --locked --workspace -j 8`
+(root) and a separate `cargo build --locked -j 8` in `apps/desktop/src-tauri` (its own cargo
+workspace, no `[workspace]` table links it to root) both compiled clean — only pre-existing
+dead-code warnings, zero errors. No merge-created compile break this wave (unlike waves 15/16).
+
+### 6. CONFIRMED findings fixed this cycle
+
+1. **`equipment_modifier`'s `WEAPONPROF=TYPE.Natural` widening was a real regression (HIGH,
+   adversarial review).** `WEAPONPROF=TYPE.Natural` scopes the Amulet of Mighty Fists' bonus to
+   natural attacks only; `WeaponEnhancementBonus` has no field to carry that scope, and the live
+   consumer (`damage_total::resolve_weapon_enhancement_modifier`) sums every equipped item's bonus
+   into EVERY weapon — reviewer proved live that an equipped Amulet of Mighty Fists +5 gave an
+   ordinary longsword a wrongful +5 attack/+5 damage, reachable in the shipped desktop app (no
+   legality gate in `attach_equipment_modifier_at_root`). Fixed at merge time: reverted the
+   qualifier[0] widening (the Amulet family's 5 units are withdrawn back to `held`), kept the
+   separable and sound `TOHIT,DAMAGE` roll-order acceptance (which legitimately grounds
+   `maul_of_the_titans`, +1 unit, credited to `equipment` not `equipment_modifier`). Also fixed the
+   negative-control test that could never fail (arity guard shadowed the check it claimed to test)
+   and a doc-comment misattribution. Full detail: `OPEN-ISSUES.md` row 309.
+2. **`class_feature_type_facet_owner_candidates` was singular-only while its own reported "811 of
+   3,864" figure assumed plural tolerance too (HIGH, adversarial review).** PCGen spells the
+   `"<Class> Class Feature(s)"` taxonomy segment both ways corpus-wide; the shipped extractor only
+   recognized `" Class Feature"`, silently missing 301 real units carrying `" Class Features"`
+   (e.g. `"Brawler Class Features..."`). Fixed: both suffixes recognized. Live regen confirms 809
+   `class_feature` units actually reclassify (804 `unknown`→`not-ingested`, 5 to
+   `deferred-with-reason`), consistent with the corrected figure — zero done-eligible movement, by
+   the architecture's own safety guard (a pool-group corpus_key can never equal a class's own name,
+   so this fallback can only ever route to `not-ingested`/`deferred-with-reason`, never `grounded`).
+3. **The second (`corpus_class_names`) `.or_else()` fallback call site had zero test coverage
+   (MEDIUM, adversarial review — a real Decision 1(a) gate-vacuity finding).** Deleting the entire
+   block left the full 280-test bin suite green, though it produces 42 of the 506-unit
+   reclassification population (`class_feature_of_unmodelled_corpus_class:{vigilante,mesmerist,...}`).
+   Fixed: added `a_type_facet_marker_naming_a_corpus_declared_but_unmodelled_class_is_not_ingested`,
+   mutation-proved RED on removal of the call site (`left: "unknown", right: "not-ingested"`).
+4. **`monster_ability`'s new upstream-provenance re-derivation test silently skipped in a default
+   environment (LOW, adversarial review).** `PCGEN_CORPUS_ROOT` was required explicitly while the
+   generator it exercises resolves the oracle via its own `$HOME`-relative fallback — a default run
+   never actually proved the test's claim. Fixed: the test now uses the same fallback, only
+   skipping when neither resolves.
+5. **`monster_ability`'s new owner-citation independence test used loose matching (LOW, adversarial
+   review — hardening, the test still caught both intended mutations).** `cited_by_key` was a
+   substring `contains` (satisfiable by `"KEY:Fungus Queen Elite"` for a fixture citing `"Fungus
+   Queen"`); `leading_field` took the first non-empty tab field rather than `fields[0]` exactly,
+   looser than the generator's own fallback condition. Both tightened to match the production
+   resolver's exact logic.
+
+### 7. Guarded regen, run for real
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out $S/sweep.json
+# corpus-literal-sweep: 26105 records examined of 26741 read, 0 findings, CLEAN
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out $S/fixture.json
+# derived-evaluator-fixture-check: 1777 unit(s) cleared over 2506 fixture row(s); 0 failed; 0 not ingested
+CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... CODEX_REPO_ROOT=<own worktree> \
+  cargo run --locked --bin v06_work_inventory
+```
+
+Never `--allow-stamp-loss` (not needed; nothing refused — the guard was watched, no stamp-loss
+message appeared). `docs/work-inventory.json` regenerated: 38,391 total units (unchanged from
+before this wave's merges — no unit added or removed, only status fields on 837 of them).
+
+**Idempotency proven**: two consecutive `v06_work_inventory` runs, both against the merged,
+post-first-run (stamp-promoted) tree, produced byte-identical JSON excluding `generated_at`
+(`json.load` equality check on both parsed documents with `generated_at` popped from each — `True`).
+
+### 8. Site publish
+
+`./scripts/publish-site-dashboard.sh` (with `CODEX_REPO_ROOT` pinned to this worktree, per the
+wave-16 lesson that it otherwise defaults to the shared checkout and shares its result cache across
+agents) — wrote `site/dashboard/PF1e-dashboard.json` and 30 `site/status-data/*.json` book-detail
+files (36,008 items total). `--check` confirms both are current. **`core_essentials` confirmed
+absent from the published book list and its unit count confirmed 0** — `decisions.md §9`'s
+discharge (wave 16) has NOT regressed.
+
+### 9. Full gate
+
+`./scripts/verify.sh -j 8` (repo root; `apps/desktop/src-tauri` tested explicitly as its own stage,
+`desktop`, plus `reach`).
+
+**Run 1: `RESULT: FAIL`.** `site-dashboard-check` failed — `site/dashboard/PF1e-dashboard.json is
+STALE`. Cause: the site publish (§8) had been run once, then a SECOND `v06_work_inventory` run was
+executed afterward to prove idempotency (§7's own idempotency proof), which advanced
+`generated_at` on `docs/work-inventory.json` without a matching site re-publish. Fixed by
+re-running `./scripts/publish-site-dashboard.sh` (real content unchanged — `--check` confirmed
+current afterward) before restarting the gate. This is an integration-cycle sequencing mistake
+(idempotency proof run after publish, not before), not a lane defect or a stale-baseline drift.
+
+**Run 2: `RESULT: PASS`, 34/34 stages.**
+
+```
+SUMMARY
+  passed:  34  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest
+  pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check
+  site-dashboard-pi-gate build-public-status-selftest site-public-status-check
+  site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest
+  reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep
+  declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest
+  root-lib root-full desktop reach corpus-sweep supersession-gate frontend-install
+  frontend-test frontend-typecheck clippy class-dump
+RESULT: PASS
+```
+
+`root-lib` **2,110 passed** (root workspace `cargo test --locked --lib`). `root-full` **7,184
+passed across 574 suites, all 537 `tests/*.rs` suites executed** (`cargo test --locked
+--no-fail-fast`). `desktop` **474 passed** (`apps/desktop/src-tauri`, its own separate cargo
+workspace — tested explicitly, not swept from root). `reach` **30 passed** (`reach_gate`,
+`apps/desktop/src-tauri`). `corpus-sweep` **26,105 records examined of 26,741 read, 0 findings**.
+`supersession-gate` **116 objects, all clean**. `frontend-test` **99/99 files**.
+`frontend-typecheck` clean. `clippy` **root:51 desktop:7 warnings, 0 errors** (baselines
+unchanged). `class-dump` **31/31 computing**. Both PI gates (`site-dashboard-pi-gate`,
+`site-public-status-pi-gate`) zero leaked against 1,612 declared-PI names.
+
+`scripts/verify-baselines.env` updated (measured floors only ever raised, never lowered):
+`BASELINE_ROOT_LIB_TESTS` 2,107 → 2,110 (+3, new tests landed across the merged lanes:
+`class_feature_type_facet_owner_fallback_tests`'s plural-marker-recognition and
+`corpus_class_names` call-site-2 tests, plus `equipmods.rs`'s merge-time-correction net).
+`BASELINE_ROOT_FULL_TESTS` 7,171 → 7,184 (+13, the same lib-test delta plus net new integration
+coverage across the five merged lane branches). `BASELINE_ROOT_TEST_BINARIES` (574) and
+`BASELINE_DESKTOP_TESTS` (474) unchanged (no new test file this wave); `CLIPPY_WARNINGS_ROOT` (51),
+`CLIPPY_WARNINGS_DESKTOP` (7) and `COMPUTED_CLASSES` (31) all unchanged.
+
+### 10. Cleanup
+
+`/home/ubuntu/cargo-targets/w17-integrate`, `w17-integrate-desktop`, `w17-equipment_modifier`
+(from the equipment_modifier lane's own worktree, deleted per its own receipt) deleted at cycle
+close. All five worktrees that carried a merged commit (`wf_2df73578-fc5-1`, `-2`, `-4`, `-5`,
+`-6`) plus the four that carried none (`-3`, `-7`, `-8`, `-9`) removed via `git worktree remove`,
+and their branches deleted after merge confirmation (`git branch -d`, requiring each branch be an
+ancestor of `tranche/11` — refuses silently on anything not actually merged, the same safety
+property `git branch -d` always provides).
+

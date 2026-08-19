@@ -872,3 +872,53 @@ independent seams (see the row-16 entry above and `progress.md` §3).
   `shared_library`-scoped books (of which `core_essentials` is the only one) from the
   roster-completeness check, on the ground that zero self-owned units is that scope's intended
   success state, not an omission.
+
+## Board after wave 17 (`SD31-W17-INTEGRATE-001`, 2026-08-19)
+
+Re-derived live with the producer's own `doneness_verdict()` over the committed
+`docs/work-inventory.json` — the same command as every prior wave's table, never transcribed from
+a lane's own receipt. Oracle pin `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`.
+**Denominator UNCHANGED — 38,372 = 38,372 — as required this wave (no operator-signed Structural
+Exclusion Register entry was needed or written).**
+
+| kind | total (wave 16) | total (wave 17) | done (wave 16) | done (wave 17) | delta |
+|---|---:|---:|---:|---:|---:|
+| class | 185 | 185 | 27 (14.5946%) | 27 (14.5946%) | +0 |
+| class_feature | 15,439 | 15,439 | 134 (0.8679%) | 134 (0.8679%) | +0 |
+| companion | 1,696 | 1,696 | 846 (49.8821%) | 871 (51.3561%) | **+25** |
+| equipment | 6,208 | 6,208 | 5,311 (85.5509%) | 5,312 (85.5670%) | **+1** |
+| equipment_modifier | 1,580 | 1,580 | 503 (31.8354%) | 503 (31.8354%) | +0 |
+| feat | 2,610 | 2,610 | 1,459 (55.9004%) | 1,459 (55.9004%) | +0 |
+| monster | 1,270 | 1,270 | 973 (76.6142%) | 973 (76.6142%) | +0 |
+| monster_ability | 2,942 | 2,942 | 1,554 (52.8212%) | 1,556 (52.8892%) | **+2** |
+| race | 95 | 95 | 34 (35.7895%) | 34 (35.7895%) | +0 |
+| race_trait | 3,504 | 3,504 | 520 (14.8402%) | 520 (14.8402%) | +0 |
+| spell | 2,843 | 2,843 | 1,503 (52.8667%) | 1,503 (52.8667%) | +0 |
+| **TOTAL** | **38,372** | **38,372** | **12,864 (33.5244%)** | **12,892 (33.5974%)** | **+28** |
+
+`+25 companion` (new DESC-embedded save-DC formula seam), `+2 monster_ability` (owner-resolver
+bare-leading-field fallback), `+1 equipment` (`maul_of_the_titans`, off a sound weapon-enhancement
+roll-order widening). `class_feature`'s 809-unit internal reclassification (`unknown` →
+`not-ingested`/`deferred-with-reason`) carries **zero** done-eligible movement, by design. A
+5-unit `equipment_modifier` claim (Amulet of Mighty Fists) was refused at merge time — see
+`progress.md` `SD31-W17-INTEGRATE-001` §4/§6.
+
+### What wave 17 changed in the architecture, not just in the counts
+
+* **A shipped widening that would have applied a magic item's own scoped bonus to every equipped
+  weapon was caught by adversarial review and reverted before merge, not after.** `equipmods.rs`'s
+  `WEAPONPROF=TYPE.Natural` recognition (intended for the Amulet of Mighty Fists family) had no
+  field to carry the natural-attack scope the corpus token states, and the live consumer applies
+  the bonus indiscriminately. This is the wave's one "refuse and re-credit" case — the lane's work
+  was not GAMED (the reviewer's own words), but the specific mechanism was wrong and is now logged
+  as a real engineering follow-up (`OPEN-ISSUES.md` row 309) rather than shipped.
+* **A reported "811 of 3,864" characterization figure was measured against a different predicate
+  than the one shipped in code** — the lane's own report used a plural-tolerant marker match while
+  `class_feature_type_facet_owner_candidates` was singular-only, so a default run would have
+  silently recovered 510, not 811. Fixed at merge time so the shipped code's live behavior matches
+  its own documented figure (`OPEN-ISSUES.md` row 311).
+* **The `monster` seam lane's census of its own 253-unit "exhaustive, none viable" population was
+  found materially wrong** (16 of 236 units miscategorized into the wrong bucket, a second
+  arithmetic error, and an 11-unit previously-unexamined sub-population) — no code or board change
+  resulted (the lane had banked 0 and carried no branch), but the corrected census is now the
+  record for the next `monster`-kind cycle to start from (`OPEN-ISSUES.md` row 310).
