@@ -749,3 +749,77 @@ byte-verification — withdrawn, taking that lane from +30 to **+27**. A mutatio
 which is what settled it.
 
 | 14 | 2026-08-18 | wave `sd31-w14` (lanes: `SD31-CE-COMPANION-001`, `SD31-E6-F5-005`, `SD31-E1-F3-001`, `SD31-E2-F3-002-marker`, plus an unmerged second Core Essentials lane; four adversarial reviews; integration `sd31-w14-integrate`) | Core Essentials finally removed as an engine book — `rules_tables/core_essentials/` deleted, 102 companion rows re-filed under the books their own `SOURCELONG:` headers name, `reach_gate`'s companion claim from 102 unreachable to zero; per-FIELD provenance (`description_source` on `CorpusRecordV1`) narrowing 412 equipment records from a web citation to the pinned oracle row; the `race` verdict re-pointed at the product's own creation roster, breaking a six-wave stall; the not-implemented marker detector widened case-insensitively (an honest -16); this integration cycle merging four of five lanes, fixing 9 of 14 CONFIRMED findings, withdrawing 3 units and refusing 13, running the sanctioned guarded regen, publishing the feeds, and running the wave's full gate | Board: **12,277/38,521 (31.87 %), +448 — the package's largest single-wave gain**, every unit traced to a named cause in both directions (+346 equipment, +91 Core Essentials, +27 race, -16 feat). `race` 7 → 34 done, reachable ceiling for that kind now 100 %. Reachable ceiling overall 98.95 % (unchanged). Corpus sweep CLEAN (26,105 examined, 0 findings); `derived_evaluator_fixture_check` 1,276 / 1,276, 0 failed. Two new durable gates: `sd31_lst_provenance_repair_is_durable` (a cache regeneration silently reverting the narrowing is now RED) and `reattribution_widening_tests`; `sd27_book_license_record_counts`'s two guards no longer mask every book after the first. `core_essentials` still carries 128 unattributable units — `OPEN-ISSUES.md` row 263, needs an operator ruling, and until it is zero `core_essentials` must NOT be excluded. See `progress.md` cycle `SD31-W14-INTEGRATE-001` for `VERIFY_EXIT` and the full stage summary. |
+
+
+## Board after wave 15 (`SD31-W15-INTEGRATE-001`, 2026-08-19)
+
+Re-derived live with the producer's own `doneness_verdict()` over the committed
+`docs/work-inventory.json` (`generated_at` 2026-08-19T14:06:36Z) — the same command as every prior
+wave's table, never transcribed from a lane's own receipt. Oracle pin
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`, checked first per loop-instruction
+override 8. Both figures below come from the per-unit replay over that document, which is the
+source `doneness_source_generated_at` names.
+
+| kind | total | done (wave 14) | done (wave 15) | delta |
+|---|---:|---:|---:|---:|
+| class | 185 | 27 (14.5946%) | 27 (14.5946%) | +0 |
+| class_feature | 15472 | 130 (0.8402%) | 134 (0.8661%) | +4 |
+| companion | 1696 | 684 (40.3302%) | 801 (47.2288%) | +117 |
+| equipment | 6208 | 5303 (85.4220%) | 5311 (85.5509%) | +8 |
+| equipment_modifier | 1580 | 421 (26.6456%) | 438 (27.7215%) | +17 |
+| feat | 2610 | 1459 (55.9004%) | 1459 (55.9004%) | +0 |
+| monster | 1270 | 910 (71.6535%) | 973 (76.6142%) | +63 |
+| monster_ability | 2951 | 1456 (49.3392%) | 1548 (52.4568%) | +92 |
+| race | 103 | 34 (33.0097%) | 34 (33.0097%) | +0 |
+| race_trait | 3603 | 497 (13.7941%) | 520 (14.4324%) | +23 |
+| spell | 2843 | 1356 (47.6961%) | 1503 (52.8667%) | +147 |
+| **TOTAL** | **38521** | **12277 (31.8709%)** | **12748 (33.0936%)** | **+471** |
+
+By doneness bucket: `done` 12,748 · `held` 1,254 · `in-progress` 1,342 · `not-started` 18,030 ·
+`unmeasurable` 5,109 · `deferred` 38. Denominator unchanged all package (38,521); 0 unit ids added,
+0 removed. Reachable ceiling unchanged (98.95 %).
+
+**The largest single-wave board gain of the package, and the first with movement in ONE direction
+only.** `+471` (+1.22 pp), beating wave 14's `+448`. Every one of the 471 units that changed bucket
+is traced to a named `evidence` token in `progress.md`'s `SD31-W15-INTEGRATE-001` receipt §2, with
+no residue: spell 147, companion 117, monster_ability 92, monster 63, equipment_modifier 17 +
+equipment 8, race_trait 23, class_feature 4. **Zero demotions and zero withdrawals** — the first
+wave in four with none, and that is a finding rather than a boast: the four adversarial reviews
+found no wrongly-taken credit, and both PARTIAL verdicts state explicitly that the units stand. The
+one candidate for a decrease (~11 `equipment_modifier` `.COPY=` aliases whose base record was
+already `done`) is an operator question, row 288, and was not netted out unilaterally.
+
+**Three new derived-evaluator seams, tripling what the `derived` done rung can reach.** The
+`derived` wiring class caps at `held` until a unit carries a `fixture-verified` stamp, and before
+this wave five families could produce one. Now eight: `monster_sla` (PF1's spell-like-ability save
+DC run BACKWARDS to derive the granted spell's LEVEL, pinned against that spell's own record in a
+DIFFERENT FILE), `monster_ability` (the Universal Monster Rule's `10 + ½ racial HD`, cross-checked
+against the owner's own `MONSTERCLASS:` row), and `companion` (CRB p.182's single-natural-attack
+1½× Strength rule). Fixture coverage went 1,276 → **1,699 units cleared over 2,364 rows, 0 failed**.
+
+**A defect the merge itself created, caught by the integration gate and by nothing else.** Two
+lanes were green in isolation; one added a field to `MonsterStatBlock` while the other built a
+literal of it, and `root-full` went `cargo exit 101; 0 passed across 0 suites` on the merge (run 1,
+`RESULT: FAIL`, `VERIFY_EXIT=1`). Run 2 after the fix: `RESULT: PASS`, `VERIFY_EXIT=0`, 34/34. Both
+logs are committed. Six green lane gates are not a green wave.
+
+**Three of the wave's four new fixture generators would have ERASED their own committed rows on a
+second run** — selecting `status == "grounded"` while stamping rewrites covered units to
+`fixture-verified`, then replacing the array rather than merging. The review confirmed one; this
+cycle re-ran every generator and found a third (`companion`, all 117 rows). Fixed, and now proven:
+**all eight families re-derive BYTE-IDENTICALLY from the pinned oracle on the stamped tree.**
+
+**A gate that could only pass in one checkout was fixed rather than baselined away.** The published
+feeds recorded the absolute filesystem path of whichever tree published them, which was the single
+differing leaf in a 1.3 MB payload after `site-dashboard-check`'s own scrub — so the stage reported
+STALE for every other checkout, and a home directory was being committed into the
+Cloudflare-published `site/`. Now repo-relative, proven both ways: it still FAILS on a real content
+change, and it now PASSES from a different checkout.
+
+**Operator rulings §16 and §17 are recorded, not executed.** Both change the denominator (~87
+deletions and up to 180 chooser-pair removals), this wave's dispatch freezes it, and `§16` itself
+says to execute against re-derived figures. Written into `decisions.md` with their acceptance
+criteria and owed as wave-16 cards. `core_essentials` therefore still carries its 128 residual
+units and must still NOT be added to `EXCLUDED_BOOKS`.
+
+| 15 | 2026-08-19 | wave `sd31-w15` (lanes: `SD31-W15-MONSTER-SLA-001`, `SD31-W15-MONSTER-ABILITY-001`, `SD31-W15-COMPANION-001`, `SD31-W15-SPELL-CF-001`, `SD31-W15-EQUIPMOD-001..006`, `SD31-W15-RACETRAIT-001`; three adversarial reviews returning four lane verdicts; integration `sd31-w15-integrate`) | Three NEW derived-evaluator seams (monster spell-like-ability save DC → spell level; monster_ability Universal Monster Rule save-DC base; companion single-natural-attack 1½× Strength), taking the `derived` done rung from five families to eight; the `kind=spell` RANGE generator un-blinded from a LEXICOGRAPHIC `wiring_class_reason` tie-break that had hidden 151 units; `probe_equipment_effect_wiring` reading `data/corpus/*/equipment/` instead of a hand-maintained 13-book-short list, and the equipment probe consulted ABOVE the `text-complete` rung; the character-creation chassis now NAMING the record whose ability magnitude it read; this integration cycle merging all six lanes (none GAMED), fixing four CONFIRMED findings plus one the merge itself created, logging six, folding in operator rulings §16/§17, running the sanctioned guarded regen, publishing the feeds and running the wave's full gate twice | Board: **12,748/38,521 (33.09 %), +471 — the package's largest single-wave gain**, and the first with movement in ONE direction only: zero demotions, zero withdrawals, every unit traced to a named `evidence` token. Fixture coverage 1,276 → **1,699 units over 2,364 rows, 0 failed**. Stamps 7,629 → 8,052, zero lost; the stamp guard proven able to fire (a bare regen exits 1 refusing to drop 8,052 stamps). Gate run 1 `FAIL`/`VERIFY_EXIT=1` on a merge-created compile break invisible to both lanes; run 2 `PASS`/`VERIFY_EXIT=0`, 34/34, root-full 7,115 across 573 suites, desktop 469 (tested explicitly as a separate workspace), both PI gates zero leaked vs 1,612 declared-PI names, clippy ceilings unchanged. Three of four new fixture generators would have erased their own rows on re-run — fixed, and all eight families now re-derive byte-identically. `site-dashboard-check` no longer path-pinned to one checkout. Denominator, race attribution, the Supersession Register (116 objects clean, PROPOSED-NOT-APPLIED) and the empty Structural Exclusion Register all untouched. See `progress.md` cycle `SD31-W15-INTEGRATE-001` for `VERIFY_EXIT` and the full stage summary. |

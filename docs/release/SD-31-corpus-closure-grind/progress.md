@@ -28849,3 +28849,344 @@ frontend test, no corpus record and no class.
 * **Nothing was proposed for the Structural Exclusion Register, and nothing left the
   denominator.** It stayed 38,521 across both regens. Race attribution untouched; the
   Supersession Register untouched.
+
+---
+
+## `SD31-W15-INTEGRATE-001` — wave 15 integration cycle (2026-08-19)
+
+**Branch:** `tranche/11`, base `45273fd3b`. **Oracle pin:** `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
+(`./scripts/fetch-pcgen-oracle.sh --check` → `pcgen-oracle: OK 7f818006e3…`, run first per
+loop-instruction override 8). **Own `CARGO_TARGET_DIR`:** `/home/ubuntu/cargo-targets/sd31-w15-integrate`,
+deleted at the end. **Six lanes merged, four adversarial-review verdicts consumed, none GAMED.**
+
+### 1. The board, replayed and never asserted
+
+```
+python3 - <<'PY'
+import json, collections, sys
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+U=[u for u in json.load(open('docs/work-inventory.json'))['units'] if u['book'] not in P.EXCLUDED_BOOKS]
+c=collections.Counter(P.doneness_verdict(u['wiring_class'],u['status'],u['kind']) for u in U)
+print(dict(c), len(U), '%.4f%%'%(100*c['done']/len(U)))
+PY
+```
+
+| | BEFORE (`generated_at` 2026-08-19T01:10:47Z) | AFTER (`generated_at` 2026-08-19T14:06:36Z) |
+|---|---:|---:|
+| **done** | **12,277 (31.8709 %)** | **12,748 (33.0936 %)** |
+| held | 1,677 | 1,254 |
+| in-progress | 1,389 | 1,342 |
+| not-started | 18,030 | 18,030 |
+| unmeasurable | 5,110 | 5,109 |
+| deferred | 38 | 38 |
+| **denominator** | **38,521** | **38,521** |
+
+**+471. Zero demotions. Zero withdrawals. 0 unit ids added, 0 removed. `EXCLUDED_BOOKS` is still
+`{'beginner_box'}` and nothing left the denominator.**
+
+### 2. Every unit of movement traced to a named cause, in both directions
+
+471 units changed verdict; all 471 moved UP; nothing moved down. Traced by joining the two
+inventories per unit and grouping on `(kind, status BEFORE, status AFTER, evidence)`:
+
+| n | kind | transition | evidence token | lane |
+|---:|---|---|---|---|
+| 92 | monster_ability | grounded → fixture-verified | `bestiary_4_monster_ability_resolve_returned_a_real_record` | 2 |
+| 81 | companion | grounded → fixture-verified | `ultimate_wilderness_companion_resolve_returned_a_real_record` | 3 |
+| 74 | spell | grounded → fixture-verified | `spell_effect_probe_observed_computed_delta` | 4 |
+| 73 | spell | ingested-magnitude → fixture-verified | `spell_list_entry_with_resolved_level` | 4 |
+| 31 | monster | grounded → fixture-verified | `bestiary_2_monster_resolve_returned_a_real_stat_block` | 1 |
+| 26 | monster | grounded → fixture-verified | `bestiary_1_monster_resolve_returned_a_real_stat_block` | 1 |
+| 23 | race_trait | ingested-magnitude → **grounded** | `race_trait_ability_magnitude_read_by_the_character_creation_chassis` | 6 |
+| 15 | equipment_modifier | text-complete → **grounded** | `equipment_effect_probe_observed_computed_delta` | 5 |
+| 14 | companion | grounded → fixture-verified | `ultimate_magic_companion_resolve_returned_a_real_record` | 3 |
+| 8 | equipment | ingested-magnitude → **grounded** | `equipment_effect_probe_observed_computed_delta` | 5 |
+| 6 | companion | grounded → fixture-verified | `bestiary_2_companion_resolve_returned_a_real_record` | 3 |
+| 6 | companion | grounded → fixture-verified | `bestiary_5_companion_resolve_returned_a_real_record` | 3 |
+| 5 | companion | grounded → fixture-verified | `bestiary_4_companion_resolve_returned_a_real_record` | 3 |
+| 4 | companion | grounded → fixture-verified | `advanced_players_guide_companion_resolve_returned_a_real_record` | 3 |
+| 4 | monster | grounded → fixture-verified | `bonus_bestiary_monster_resolve_returned_a_real_stat_block` | 1 |
+| 2 | class_feature | grounded → fixture-verified | `explanation_id_observed_after_known_magnitude_suffix_strip` | 4 |
+| 2 | class_feature | grounded → fixture-verified | `explanation_id_observed_in_a_real_computation` | 4 |
+| 1 | companion | grounded → fixture-verified | `bestiary_6_companion_resolve_returned_a_real_record` | 3 |
+| 1 | monster | grounded → fixture-verified | `book_of_the_damned_volume_2_monster_resolve_returned_a_real_stat_block` | 1 |
+| 1 | monster | grounded → fixture-verified | `inner_sea_world_guide_monster_resolve_returned_a_real_stat_block` | 1 |
+| 1 | equipment_modifier | ingested-magnitude → **grounded** | `equipment_effect_probe_observed_computed_delta` | 5 |
+| 1 | equipment_modifier | unknown → **grounded** | `equipment_effect_probe_observed_computed_delta` | 5 |
+
+Rolled up by lane, which is the reviewer-corrected figure in every case (no lane's own count was
+taken on trust): **lane 4 spell+class_feature 151** (147 + 4), **lane 3 companion 117**,
+**lane 2 monster_ability 92**, **lane 1 monster 63**, **lane 5 equipment_modifier 25** (16 + 8 + 1),
+**lane 6 race_trait 23**. `151 + 117 + 92 + 63 + 25 + 23 = 471`, with no residue.
+
+Per kind:
+
+| kind | total | done (wave 14) | done (wave 15) | delta |
+|---|---:|---:|---:|---:|
+| class | 185 | 27 (14.5946%) | 27 (14.5946%) | +0 |
+| class_feature | 15472 | 130 (0.8402%) | 134 (0.8661%) | +4 |
+| companion | 1696 | 684 (40.3302%) | 801 (47.2288%) | +117 |
+| equipment | 6208 | 5303 (85.4220%) | 5311 (85.5509%) | +8 |
+| equipment_modifier | 1580 | 421 (26.6456%) | 438 (27.7215%) | +17 |
+| feat | 2610 | 1459 (55.9004%) | 1459 (55.9004%) | +0 |
+| monster | 1270 | 910 (71.6535%) | 973 (76.6142%) | +63 |
+| monster_ability | 2951 | 1456 (49.3392%) | 1548 (52.4568%) | +92 |
+| race | 103 | 34 (33.0097%) | 34 (33.0097%) | +0 |
+| race_trait | 3603 | 497 (13.7941%) | 520 (14.4324%) | +23 |
+| spell | 2843 | 1356 (47.6961%) | 1503 (52.8667%) | +147 |
+| **TOTAL** | **38521** | **12277 (31.8709%)** | **12748 (33.0936%)** | **+471** |
+
+### 3. What was merged, and on whose figure
+
+All six lane branches merged; **none was marked GAMED by any reviewer**, so nothing was refused.
+Two lanes were returned PARTIAL and both keep their full unit count — in each case the reviewer
+stated explicitly that the units are real and that the PARTIAL is about defects that do not touch
+the credit.
+
+| lane | branch | reviewer verdict | corrected units | banked |
+|---|---|---|---:|---:|
+| 1 monster SLA save-DC seam | `worktree-wf_0628906e-65b-1` | SOUND | 63 | 63 |
+| 2 monster_ability save-DC seam | `worktree-wf_0628906e-65b-2` | **PARTIAL** | 92 | 92 |
+| 3 companion Strength-damage seam | `worktree-wf_0628906e-65b-3` | SOUND | 117 | 117 |
+| 4 spell RANGE widening + class_feature | `worktree-wf_0628906e-65b-4` | **PARTIAL** | 151 | 151 |
+| 5 equipment_modifier probe fixes | `worktree-wf_0628906e-65b-5` | SOUND | 25 | 25 |
+| 6 race_trait creation-chassis evidence | `worktree-wf_0628906e-65b-6` | SOUND | 23 | 23 |
+
+**Two lane branches (2 and 5) were never pushed** and survived only in the shared local object
+store, which the review flagged as a real loss risk. Both are merged here, so their content is now
+on `tranche/11` regardless.
+
+**Conflict resolution, stated because it was substantive and not mechanical.**
+
+* `tests/fixtures/rules_core/derived-evaluator-fixtures.json` was resolved **semantically, never
+  textually.** A script took each family array from the single lane that changed it against the
+  wave base, and REFUSED (raised) if two lanes had changed the same one. Result:
+  `entries` 94, `monster_entries` 77, `monster_sla_entries` 314, `monster_ability_entries` 92,
+  `companion_entries` 117, `spell_entries` 898, `spell_range_entries` 760, `class_feature_entries`
+  12. A textual merge of a 25,000-line JSON file would have been a coin flip.
+* `src/rules_core/derived_evaluator_fixture_check.rs` was rebuilt as the union of three lanes'
+  additions rather than hand-patched through 11 conflict hunks: each lane's change is a pure
+  insertion over the base (verified by `difflib` opcodes), so the seams were re-appended and
+  `run_bar_check` re-wired by exact-count string substitution. Lane 1's cross-seam guard — a unit
+  that FAILED any seam is removed from `cleared` — is retained and now runs after every seam's
+  extends, including the two added after it.
+* `progress.md` was rebuilt deterministically from the wave base plus each lane's own appended
+  receipt. Every lane's `progress.md` change is a pure append (proved: `lane.startswith(base)` for
+  all six), so the file is base + lane 5 + lane 6 + lane 1 + lane 2 + lane 3 + lane 4 + this
+  receipt, with each lane's OPEN-ISSUES cross-references remapped. **This also repaired two
+  conflict markers this cycle itself had left in its own lane-1 merge commit** — caught by the
+  next merge, not by review, and corrected rather than carried.
+* **OPEN-ISSUES row-number collision, which every lane predicted and two lanes reported.** All six
+  lanes branched from a file whose highest row was 264 and four of them independently minted 265+.
+  Reassigned by merge order and every intra-document reference rewritten with them: lane 5 keeps
+  **265-270**, lane 6 → **271-273**, lane 1 → **274-276**, lane 2 → **277-278**, lane 3 →
+  **279-281** (its rows landed in the *Resolved* table and were moved to *Open*), lane 4 →
+  **282-284**. This cycle's own rows are **285-293**.
+* `scripts/verify-baselines.env`: three lanes each raised the same floors from a measurement taken
+  in their own tree, each attributing the identical delta to their own tests. All three comment
+  blocks are kept as history; the values were reset to the pre-wave floors and re-derived ONCE
+  from this cycle's own post-merge gate (§6).
+
+### 4. Findings fixed — four, each mutation-proved, plus one the merge itself created
+
+**(a) HIGH — the published feeds recorded an ABSOLUTE filesystem path.** `unit_index.source_document`
+in `site/dashboard/PF1e-dashboard.json` and `site/dashboard/units/index.json` held the path of
+whichever checkout published. Two consequences, both live: `verify.sh`'s `site-dashboard-check`
+regenerates the feed and compares after a scrub that strips only timestamps, so that string was the
+**single differing leaf in a 1.3 MB payload** and the stage could only pass from the one tree that
+published — a gate failing for a reason unrelated to what it guards, which is how a gate gets
+baselined away; and a home directory plus an ephemeral worktree id was committed into `site/`, the
+directory `deploy-site.yml` publishes to Cloudflare Pages. New
+`pf1e_dashboard_producer.publishable_document_path()` records the path relative to the **enclosing
+git checkout**, found by walking up for `.git` — a FILE in a linked worktree, which is exactly the
+case that broke; `DEFAULT_REPO_ROOT` is deliberately not the base because it is an env default
+pointing at the shared checkout. Five new tests (`producer-selftest`), RED before the helper
+existed. **Proven both ways on this tree:** bumping `unit_index.total_units` by one in the
+committed feed → `is STALE`, exit 1, restored → `is current`; and `--check` run from a DIFFERENT
+checkout (`.claude/worktrees/wf_0628906e-65b-8`, reset to this cycle's own commit) → `is current`,
+exit 0, which was impossible before. Row 285.
+
+**(b) MEDIUM — three of the wave's four new fixture generators would have ERASED their own rows.**
+The reviewer confirmed it for `derive_monster_ability_save_dc_fixtures.py` (sandbox run:
+`wrote 0 monster_ability_entries`). **This cycle re-ran EVERY wave-15 generator on the post-stamp
+tree and found a third the review had not reached:**
+`derive_companion_strength_damage_fixtures.py` → `wrote 0 companion_entries (62 skipped)`, all 117
+rows gone. Shape: the generator selects `status == "grounded"`, `apply_done_rung_stamps()` rewrites
+a covered unit to `fixture-verified`, and every generator REPLACES its family array rather than
+merging — so run 2 selects the empty set and withdraws its own credit at the next regen, with no
+gate catching it. Both fixed to `{"grounded", "fixture-verified"}`. **Proof, not assertion: with
+the fixes in, ALL EIGHT families now re-derive BYTE-IDENTICALLY (`diff -q`) from the pinned oracle
+on the stamped tree** — an independent re-derivation of the whole wave. Lane 2's stated measurement
+command also reproduces on its own tree again (`264 considered | EMITTED 92 | disagree 23 |
+no_DC 146 | no_DESC 2 | orphan 1`), which it did not before. Row 286.
+
+**(c) MEDIUM — `companion_entries` shipped four provenance fields that nothing asserted.** The
+reviewer mutated one row's `upstream_lst` to a nonexistent file, its sha256 to 64 zeros, its line
+to 999999 and its `corpus_field` to a made-up token, and the whole companion suite stayed GREEN.
+Under Decision 1(a) that half of the seam was not a gate. New
+`tests/derived_evaluator_fixture_check_companion.rs` restores the four guarantees every sibling
+family already has, including an INDEPENDENT third re-derivation of all 1,053
+`(strength_modifier, damage_bonus)` pairs written in the test itself. **The reviewer's exact
+mutation now turns 3 of 4 red**; restored → 4/4 green. This does not re-litigate the 117 credited
+units — the reviewer re-derived every one with zero failures — it closes the forward risk. Row 287.
+
+**(d) LOW — lane 2's own mutation proof contained a wrong figure.** It stated the 4 survivors of
+the `hd/2 → hd/3` mutation were "owners with racial HD <= 2"; integer division makes `hd/2 == hd/3`
+true for HD 0, 1 and 3, not 2, and the real survivors are HD 1, 3, 3, 3 while all 7 HD-2 rows die.
+A wrong figure inside a mutation proof is the worst place for one. Corrected in place with the
+reviewer's own re-derivation; `retro.py correction` emitted.
+
+**(e) The merge created a defect no lane could see, and the wave's own gate caught it.**
+`tests/derived_evaluator_fixture_check_monster_ability.rs` builds a `MonsterStatBlock` literal, and
+the sibling monster lane added a `spell_like_abilities` field to that struct **in the same wave**.
+Both trees were green in isolation; on the merge `root-full` reported `cargo exit 101; 0 passed
+across 0 suites`. Fixed with an empty slice — the honest value for a synthetic block that grants no
+spell-like abilities. **This is the argument for running the full gate at integration rather than
+trusting six green lane gates**, and it is recorded as such.
+
+### 5. Findings logged, not fixed — with why
+
+* **Row 288 — the `.COPY=` alias double-count is already banked.** At least 11 of lane 5's 16
+  `equipment_modifier` promotions are PCGen short-key aliases whose BASE record was already `done`
+  at the wave baseline, so one computed effect is now counted two or three times (`Material ~
+  Adamantine ~ Weapon` :101 plus `Adamantine (Weapon)` :521 plus `ADAMANT_WEAP` :537 — one +1
+  TOHIT, three `done` units). **Not withdrawn, and the reason is not convenience:** the credit is
+  not false (the probe feeds the ALIAS key itself into `compute_equipment_effects` and requires a
+  non-`None` effect, so a player selecting that key really does get the number), lane 5 disclosed
+  the structure and escalated the denominator question itself as row 270 with the adamantine
+  example spelled out, and correcting the count unilaterally would pre-empt an explicitly
+  RULING-NEEDED question in the operator's reserved direction. Flagged so row 270 is sized knowing
+  the credit is already on the board.
+* **Row 289 — this wave's dispatch said "43 rows still say RULING-NEEDED"; by the Severity column
+  it is 40.** Two implementations agree on 40; the bare `grep -c` that yields 43 counts three rows
+  that merely mention the term in prose. Nothing turns on it — no lane acted on any RULING-NEEDED
+  row — but a count quoted without its predicate is a recurring failure shape here.
+* **Row 290 — `derived_evaluator_fixture_check`'s headline is honest again but incomplete.** Lane 1
+  already rewrote it to `N unit(s) cleared over M fixture row(s); F failed; N not ingested`, which
+  removes the row/unit conflation the reviewer found and reports failures independently. Residual:
+  there is still no count of DISTINCT COVERED units, because `BarCheckReport` tracks no per-family
+  unit-id set. Adding one touches all eight families; deliberately not done in an integration cycle.
+* **Row 291 — the wrong-base-worktree defect is confirmed on NINE trees, not four.** All six lane
+  worktrees and all three review worktrees woke on `37a80141e`, a site-publish merge with no
+  `docs/`, `data/`, `scripts/`, `schemas/` or `tools/` tree, so not one required read existed.
+  Every agent recovered silently with `git reset --hard 45273fd3b`, which is precisely why the
+  event log under-counts it. The shared-scratchpad clobber recurred too, unchanged from wave 14.
+  Both are harness defects and neither is fixable from inside this repo.
+* **Row 292 — `corpus_root` still publishes an absolute local path.** Same class as (a), but it is
+  identical across checkouts on this box (it comes from the pinned oracle, not the publishing
+  tree), so it breaks no gate. Left alone because the right fix is probably to publish the pin SHA
+  rather than any path, which is a design choice and not a rename.
+* **Row 293 — `race_creation_chassis` refuses no race at all (37/37).** Lane 6's "refuses 99.0 %"
+  is arithmetic over RECORDS. The lane stated the 37/37 fact itself and the record-level half of
+  its instrument is real and mutation-proved in both directions, which is what carries its 23
+  units; pinned so a later cycle does not read the percentage as a hard bar.
+
+### 6. The sanctioned guarded regen and the public feeds
+
+```
+cargo run --locked -j 8 --bin corpus_literal_sweep -- --json-out <scratch>/sweep-w15.json
+  -> 26105 records examined of 26741 read, 252158 tokens compared (9 synthesized),
+     26728 digests checked, 0 findings — CLEAN
+cargo run --locked -j 8 --bin derived_evaluator_fixture_check -- --json-out <scratch>/fixture-w15.json
+  -> 1699 unit(s) cleared over 2364 fixture row(s); 0 failed; 0 not ingested
+CORPUS_LITERAL_SWEEP_REPORT=… DERIVED_FIXTURE_CHECK_REPORT=… \
+  cargo run --locked -j 8 --bin v06_work_inventory     -> REGEN_EXIT=0
+```
+
+**The stamp-preservation guard was not bypassed and was proven able to fire.** A BARE
+`cargo run --locked --bin v06_work_inventory` on the same tree exits **1** with
+`refusing to write …/docs/work-inventory.json: this run would drop 8052 of the 8052 verification
+stamp(s) (literal-verified/fixture-verified) it currently carries` and writes nothing.
+`--allow-stamp-loss` was never passed. **Stamps 7,629 → 8,052: literal-verified unchanged at 6,436,
+fixture-verified 1,193 → 1,616, zero lost.**
+
+`./scripts/publish-site-dashboard.sh` (real publish, not `--check`, per override 10 — this cycle
+wrote `docs/work-inventory.json`) → `site/status-data.json` (30 books, overall 38.0 %) and 30
+book-detail files, 36,028 items.
+
+**`core_essentials` confirmed still ABSENT from the published book list**: 30 books, and zero
+occurrences in `site/status-data.json`, `site/dashboard/units/index.json` or `site/status-data/*`.
+The 5 hits in `PF1e-dashboard.json` are narrative manifest prose, not book entries. **It is still
+NOT in `EXCLUDED_BOOKS`** (`EXCLUDED_BOOKS == {'beginner_box'}`, and `core_essentials` is absent
+from `BOOK_TITLES`), which `OPEN-ISSUES.md` row 263 requires while its 128 residual units remain
+unattributed — see §8.
+
+### 7. The full gate — GREEN on run 2, and run 1's red is reported, not hidden
+
+`RETRO_ACTOR=sd31-w15-integrate CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-w15-integrate ./scripts/verify.sh -j 8 > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"`
+— exit code captured in the same shell statement, never through a pipe. `-j 8` is the box's
+computed full-gate cap.
+
+**Run 1** (`artifacts/SD31-W15-INTEGRATE-001-verify-run1.log`): **`RESULT: FAIL`, `VERIFY_EXIT=1`,
+33 of 34 stages PASS.** The single red stage was `root-full`:
+`cargo exit 101; 0 passed across 0 suites`, and the log's cause is one line —
+`error[E0063]: missing field 'spell_like_abilities' in initializer of MonsterStatBlock`,
+`tests/derived_evaluator_fixture_check_monster_ability.rs:750`. That is finding (e) in §4: a defect
+the merge itself created, invisible to both lanes, and exactly what an integration gate is for.
+
+**Run 2** (`artifacts/SD31-W15-INTEGRATE-001-verify-run2.log`), after the one-line fix:
+**`RESULT: PASS`, `VERIFY_EXIT=0`, 34 of 34 stages.**
+
+```
+PASS root-lib   (2066 passed)
+PASS root-full  (7115 passed across 573 suites, all 536 tests/*.rs suites executed)
+PASS desktop    (469 passed)          PASS reach (28 passed)
+PASS corpus-sweep      (26105 records examined, 0 findings)
+PASS supersession-gate (116 objects, all clean — still PROPOSED, NOT APPLIED)
+PASS site-dashboard-check      PASS site-dashboard-pi-gate      (13 files vs 1612 declared-PI names, zero leaked)
+PASS site-public-status-check  PASS site-public-status-pi-gate  (31 files vs 1612 declared-PI names, zero leaked)
+PASS producer-selftest  pi-redaction-selftest  provenance-selftest  declared-pi-audit  pi-sweep
+PASS reachability-audit (reachable ceiling 98.95%)
+PASS frontend-test (99/99 files)  frontend-typecheck (tsc --noEmit clean)
+PASS clippy (root:51 desktop:7 warnings, 0 errors — both ceilings UNCHANGED)
+PASS class-dump (31/31 computing)
+```
+
+**The desktop crate was ALSO tested explicitly**, because it is a separate cargo workspace a root
+sweep misses: `cargo test --manifest-path apps/desktop/src-tauri/Cargo.toml --locked --no-fail-fast -j 8`
+→ `test result: ok. 469 passed; 0 failed`.
+
+**Baselines re-derived ONCE, post-merge, in their own commit** (the four the run-2 gate reported
+stale): `BASELINE_ROOT_LIB_TESTS` 2042 → **2066**, `BASELINE_ROOT_FULL_TESTS` 7052 → **7115**,
+`BASELINE_ROOT_TEST_BINARIES` 568 → **573**, `BASELINE_DESKTOP_TESTS` 463 → **469**. Every other
+baseline matched its stage output exactly and carries no stale note. Three lanes had each raised
+some of these from their own tree with a per-lane attribution that cannot survive the merge; all
+three comment blocks are kept as history and only these values are live.
+
+### 8. What this cycle could NOT do
+
+* **Operator rulings §16 and §17 are FOLDED IN but NOT EXECUTED.** Both were recorded by the
+  orchestrator during the wave (`artifacts/OPERATOR-RULINGS-2026-08-19.md`) and are now
+  `decisions.md §16`/`§17`. Neither was executed, for a stated reason rather than a convenient one:
+  both change the DENOMINATOR (~87 deletions under §16, up to 180 under §17), this wave's dispatch
+  freezes it, `§16`'s own text says *"Execute against re-derived figures, not these"*, and a
+  deletion is the one board operation a later measurement cannot undo. Both are owed as wave-16
+  cards with their acceptance criteria written into `decisions.md`. **Consequence:**
+  `core_essentials`'s 128 residual units are still in the denominator and it must still NOT be
+  added to `EXCLUDED_BOOKS` (row 263).
+* **Race attribution stays FROZEN and the Supersession Register stays PROPOSED, NOT APPLIED.**
+  `supersession-gate` reports 116 objects clean. Nothing left the denominator; the Structural
+  Exclusion Register remains EMPTY and no entry was proposed.
+* **No unit was withdrawn, and that is a finding rather than a boast.** Waves 12/13/14 demoted 262,
+  withdrew 15 and refused 13; this wave's four reviewers found no wrongly-taken credit — each of
+  the two PARTIAL verdicts explicitly says the units stand. The one candidate is §5's row 288
+  (`.COPY=` aliases), and it is the operator's to rule on, not this cycle's to net out.
+* **DoD item 8 (on-screen verification with the real driver) was performed by ONE lane of six.**
+  The companion lane ran `verify-on-screen.sh --family companion` against two real records and
+  committed the screenshot evidence. The monster lane got close — the derived value reaches a real
+  rendered surface, the rendering is mutation-proved, the browser preview carries a real
+  SLA-bearing record — but no driver run was made. The other four lanes surfaced no new
+  player-visible magnitude and said so. This integration cycle drove no screen itself.
+* **`derived_evaluator_fixture_check` still has no distinct-covered-units count** (row 290), the
+  generators still have no automated idempotency test (row 286), `corpus_root` still publishes an
+  absolute path (row 292), and the wrong-base-worktree and shared-scratchpad harness defects
+  (row 291) are not fixable from inside this repo.
+* **`sd31/racetrait4-SD31-E6-F4-005` was not touched**, nothing was merged to `main`, and no
+  publish PR was opened.
+
+### 9. Housekeeping
+
+Both scratch target dirs deleted (`/home/ubuntu/cargo-targets/sd31-w15-integrate` and
+`…-integrate-desktop`); the six lanes had already deleted theirs, so
+`/home/ubuntu/cargo-targets/` ends this wave empty. Gate logs committed at
+`artifacts/SD31-W15-INTEGRATE-001-verify-run1.log` (FAIL) and `-run2.log` (PASS).
