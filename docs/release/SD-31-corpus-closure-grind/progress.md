@@ -27232,14 +27232,77 @@ CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... \
 **Generator determinism was proved BEFORE the change**, not assumed: re-running all 13 book
 transcriptions against the unmodified tree left `git status --porcelain` empty.
 
-### 9. Production wiring — not a fixture-only path
+### 9. Production wiring — the value reaches the SCREEN, not just the wire
 
 `MonsterStatBlock` gained `spell_like_abilities: &[MonsterSpellLikeAbility]` (every field a
-verbatim substring of the cited row, per the transcriber's standing contract), and
+verbatim substring of the cited row, per the transcriber's standing contract);
 `apps/desktop/src-tauri/src/monster_catalog.rs` serves it as
 `MonsterSpellLikeAbilityDto { spell, times, timeUnit, casterLevelToken, saveDcToken,
-derivedSpellLevel, saveDcAbility }`. The derived spell level reaches the monster catalog the
-desktop app renders; it is not a value only a test can see (`no-stub-mvp-doctrine.md`).
+derivedSpellLevel, saveDcAbility }`; and `MonsterCatalogScreen.tsx` renders each grant the way
+the book prints it — **`3/day — blade barrier (6th, DC 16 + Cha)`**. *"A magnitude is not wired
+until it moves on the twin the player reads"* (`AGENTS.md`; SD-27 `decisions.md §29.1`), so
+serving the DTO would not have been enough on its own.
+
+**The anti-fabrication rule is pinned as a test, not left as a comment.** The DC reaches the
+screen as the FORMULA the corpus states and never as a resolved number — a monster's ability
+SCORES are not a corpus-stated fact here, so a rendered DC would be a fabricated number on a
+player-facing surface. The spell LEVEL beside it is the genuine derivation, and is the only
+number shown. `testTheSaveDcIsShownAsAFormulaAndNeverResolvedToANumber` asserts both halves.
+
+**Mutation-proved on the screen too**, not only in the engine: dropping the ability term from the
+DC clause turns `MonsterCatalogScreen.test.ts` red (`98/99 test files passed`; expected
+`1/day — blade barrier (6th, DC 16 + Cha)`, got `… DC 16`), green again on revert.
+
+The browser preview (`monsterCatalogRuntime.ts`) gained one real SLA-bearing record — Hag (Annis),
+`bb_races.lst:14`, itself one of the 63 banked units — so the new surface is walkable without the
+Tauri backend instead of rendering an always-empty list. Its two attacks carry the real
+`notInCorpus` provenance and the engine's own grounding sentence, restated rather than invented.
+
+**PI screening was extended with the field**, which is the part that would have been a silent
+gap: `transcribe_monster_tables.py`'s `monster_pi_reason` screens exactly the values it EMITS, so
+every label, times, caster-level token, spell name and DC token now goes through `pi_hits`
+alongside the existing name/size/type/attack values. Regeneration dropped and redacted exactly the
+same rows as before the change (Inner Sea World Guide: 5 monster + 3 ability rows), and
+`site-dashboard-pi-gate` passed with the new spell names present in the committed feed
+(13 files scanned against 1,612 declared-PI names, zero leaked).
+
+### 9a. Two shipped figures this cycle's own change made wrong, found by re-deriving
+
+Both are prose that reads as measurement — the drift shape this program keeps hitting. Neither
+was caught by a test; both were caught by re-deriving the number.
+
+* `derived_evaluator_fixture_check`'s summary line printed **"N of M covered units cleared"** with
+  `M = fixtures_total`. True only while every seam emitted one row per unit. This seam emits one
+  row per GRANTED SPELL, so the line would have read `1339 of 1441` — implying 102 silently
+  uncleared units against a real `0 failed / 0 not_ingested`. Now reports the two counts as the
+  two different things they are. The JSON shape is untouched;
+  `load_derived_fixture_verified` consumes only its `verified` array.
+* `v06_work_inventory::load_derived_fixture_verified`'s doc comment claimed the instrument covers
+  **"94 of 2,879 held `derived` units"** — its equipment-only era, stale through four
+  subsequently-added seams. Re-derived: **1,256 of 5,609 `derived` units carry a
+  `fixture-verified` stamp; 1,161 are still capped at `held`.**
+
+`retro.py correction` emitted for both.
+
+### 9b. Gate baselines, restated from measurement
+
+| baseline | was | now | measured by |
+|---|---:|---:|---|
+| `ROOT_LIB_TESTS` | 2042 | **2047** | `cargo test --locked --lib -j 4` → `2047 passed; 0 failed; 3 ignored` |
+| `ROOT_FULL_TESTS` | 7052 | **7065** | `cargo test --locked --no-fail-fast -j 4` → 7065 passed, **0 FAILED** |
+| `ROOT_TEST_BINARIES` | 568 | **569** | 569 `Running` lines in the same log |
+| `DESKTOP_TESTS` | 463 | **465** | `cargo test --manifest-path apps/desktop/src-tauri/Cargo.toml --locked --no-fail-fast -j 4` → `465 passed; 0 failed` |
+| `FRONTEND_TEST_FILES` | 99 | 99 | `npm test` → `99/99 test files passed` (4 new CASES, no new FILE — that baseline counts files, so it is correct rather than stale) |
+| `CORPUS_LITERAL_RECORDS` | 26105 | 26105 | unchanged |
+| `CLIPPY_WARNINGS_DESKTOP` | 7 | 7 | unchanged |
+
+**`CLIPPY_WARNINGS_ROOT` was NOT raised.** The new test file added one `unused_mut`, taking the
+count to **52** against the ceiling of **51**. It was paid down (the closure was never mutated)
+and the re-count returns exactly **51**. Raising the ceiling to fit new code is the move
+Decision 1(a) forbids, and wave 14 set the precedent for paying it down instead.
+
+**The desktop crate was tested explicitly** because it is a separate cargo workspace a root sweep
+does not reach.
 
 **PI screening was extended with the field**, which is the part that would have been a silent
 gap: `transcribe_monster_tables.py`'s `monster_pi_reason` screens exactly the values it EMITS, so
@@ -27257,6 +27320,8 @@ same rows as before the change (Inner Sea World Guide: 5 monster + 3 ability row
   wrong is a corpus question this cycle did not have the printed stat blocks to settle.
 * **The 46 Bestiary 1 records with no `corpus_key`** (§5), 3 of which carry a DC token. They need
   the chassis ingest extended to cover them before ANY derived seam can reach them.
-* **DoD item 8 (on-screen verification)** was not performed. The value reaches a real production
-  DTO (§9) and the desktop crate's own tests cover the mapping, but no `driver.sh` run was made
-  on this box in this cycle.
+* **DoD item 8 (on-screen verification with the real driver) was NOT performed.** This cycle got
+  closer than the phrase usually covers — the derived value reaches a real rendered surface
+  (§9), the rendering is mutation-proved, and the browser preview carries a real record that
+  exercises it — but no `driver.sh` / screenshot run was made on this box. What is missing is
+  the driver, not the wiring.
