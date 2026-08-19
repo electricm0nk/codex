@@ -20,1015 +20,1184 @@
           "name": "Aberration",
           "doneness": "not-started",
           "type_facet": "RoyalAccuserClassFeatures.RoyalAccuserFavoredEnemy",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Aberration"
         },
         {
           "name": "Animal Speech",
           "doneness": "not-started",
           "type_facet": "Druid Class Features.NithveilAdeptClassFeatures.SpecialQuality.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Animal Speech"
         },
         {
           "name": "Atheist Inspiration",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.InvestigatorTalent",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Atheist Inspiration"
         },
         {
           "name": "Bardic Performance",
           "doneness": "not-started",
           "type_facet": "Lion Blade Class Features.ClassFeatures.SpecialQuality.BardicPerformance",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Bardic Performance"
         },
         {
           "name": "Blessed Secrecy",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Blessed Secrecy"
         },
         {
           "name": "Bonded Investigator",
           "doneness": "not-started",
           "type_facet": "Archetype.InvestigatorArchetype",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Bonded Investigator"
         },
         {
           "name": "Calumny",
           "doneness": "not-started",
           "type_facet": "Bard Class Features.ProvocateurClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Calumny"
         },
         {
           "name": "Cavern Stride",
           "doneness": "not-started",
           "type_facet": "Ranger Class Features.LanternBearerClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Cavern Stride"
         },
         {
           "name": "Celebrity Discount",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.InvestigatorTalent.RogueTalent.Unchained Rogue Talent",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Celebrity Discount"
         },
         {
           "name": "Celebrity Perks",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.InvestigatorTalent.RogueTalent.Unchained Rogue Talent",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Celebrity Perks"
         },
         {
           "name": "Chosen Victim",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Chosen Victim"
         },
         {
           "name": "Claimed Turf",
           "doneness": "not-started",
           "type_facet": "RogueClassFeatures.SpecialQuality.Extraordinary.RogueTalent.Unchained Rogue Talent",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Claimed Turf"
         },
         {
           "name": "Clandestine Inquisition",
           "doneness": "not-started",
           "type_facet": "InquisitorDomain.Inquisition",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Clandestine Inquisition"
         },
         {
           "name": "Clockwork Bond",
           "doneness": "not-started",
           "type_facet": "Alchemist Class Features.TinkererClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Clockwork Bond"
         },
         {
           "name": "Clockwork Familiar",
           "doneness": "not-started",
           "type_facet": "Alchemist Class Features.TinkererClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Clockwork Familiar"
         },
         {
           "name": "Clockwork Mimicries",
           "doneness": "not-started",
           "type_facet": "Alchemist Class Features.TinkererClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Clockwork Mimicries"
         },
         {
           "name": "Clockwork Upgrade",
           "doneness": "not-started",
           "type_facet": "Alchemist Class Features.TinkererClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Clockwork Upgrade"
         },
         {
           "name": "Cloud the Mind",
           "doneness": "not-started",
           "type_facet": "Lion Blade Class Features.ClassFeatures.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Cloud the Mind"
         },
         {
           "name": "Companion to the Lonely",
           "doneness": "not-started",
           "type_facet": "Social Talent.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Companion to the Lonely"
         },
         {
           "name": "Comparative Arcane Studies",
           "doneness": "not-started",
           "type_facet": "Bard Class Features.StudiousLibrarianClassFeatures.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Comparative Arcane Studies"
         },
         {
           "name": "Contact Poison Wielder",
           "doneness": "not-started",
           "type_facet": "Enchanting Courtesan Class Features.ClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Contact Poison Wielder"
         },
         {
           "name": "Cover of Night",
           "doneness": "not-started",
           "type_facet": "Rogue Class Features.GuerrillaClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Cover of Night"
         },
         {
           "name": "Covert Spells",
           "doneness": "not-started",
           "type_facet": "Enchanting Courtesan Class Features.ClassFeatures.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Covert Spells"
         },
         {
           "name": "Critical Research Focus",
           "doneness": "not-started",
           "type_facet": "Bard Class Features.StudiousLibrarianClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Critical Research Focus"
         },
         {
           "name": "Crowd Strike",
           "doneness": "not-started",
           "type_facet": "Lion Blade Class Features.ClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Crowd Strike"
         },
         {
           "name": "Damning Performance",
           "doneness": "not-started",
           "type_facet": "Bard Class Features.ProvocateurClassFeatures.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Damning Performance"
         },
         {
           "name": "Darkvision",
           "doneness": "not-started",
           "type_facet": "Ranger Class Features.LanternBearerClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Darkvision"
         },
         {
           "name": "Delayed Spells",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Delayed Spells"
         },
         {
           "name": "Deluding Touch",
           "doneness": "not-started",
           "type_facet": "Enchanting Courtesan Class Features.ClassFeatures.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Deluding Touch"
         },
         {
           "name": "Desert Survivor",
           "doneness": "not-started",
           "type_facet": "Investigator Class Features.GuardianOfImmortalityClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Desert Survivor"
         },
         {
           "name": "Detect Monsters and Secrets",
           "doneness": "not-started",
           "type_facet": "Inquisitor Class Features.RoyalAccuserClassFeatures.SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Detect Monsters and Secrets"
         },
         {
           "name": "Dirge of Misfortune",
           "doneness": "not-started",
           "type_facet": "BardClassFeatures.SpecialQuality.Supernatural.BardicPerformance.Bardic Performance",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Dirge of Misfortune"
         },
         {
           "name": "Disappear",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Disappear"
         },
         {
           "name": "Disarming Flirtation",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Disarming Flirtation"
         },
         {
           "name": "Discreet Inquiries",
           "doneness": "not-started",
           "type_facet": "Social Talent.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Discreet Inquiries"
         },
         {
           "name": "Divine Awareness",
           "doneness": "not-started",
           "type_facet": "TYPE:Summoner Class Features.GodCallerClassFeatures.SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Divine Awareness"
         },
         {
           "name": "Divine Might",
           "doneness": "not-started",
           "type_facet": "TYPE:Summoner Class Features.GodCallerClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Divine Might"
         },
         {
           "name": "Divine Word",
           "doneness": "not-started",
           "type_facet": "TYPE:Summoner Class Features.GodCallerClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Divine Word"
         },
         {
           "name": "Divining Dance",
           "doneness": "not-started",
           "type_facet": "[redacted PI]",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Divining Dance"
         },
         {
           "name": "Dragon",
           "doneness": "not-started",
           "type_facet": "RoyalAccuserClassFeatures.RoyalAccuserFavoredEnemy",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Dragon"
         },
         {
           "name": "Enchanting Touch",
           "doneness": "not-started",
           "type_facet": "Enchanting Courtesan Class Features.ClassFeatures.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Enchanting Touch"
         },
         {
           "name": "Enhanced Vision",
           "doneness": "not-started",
           "type_facet": "Ranger Class Features.LanternBearerClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Enhanced Vision"
         },
         {
           "name": "Enthralling Agitation",
           "doneness": "not-started",
           "type_facet": "[redacted PI]",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Enthralling Agitation"
         },
         {
           "name": "Execution Inquisition",
           "doneness": "not-started",
           "type_facet": "InquisitorDomain.Inquisition",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Execution Inquisition"
         },
         {
           "name": "Executioner's Strike",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Executioner's Strike"
         },
         {
           "name": "Expeditious Advance",
           "doneness": "not-started",
           "type_facet": "Lion Blade Class Features.ClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Expeditious Advance"
         },
         {
           "name": "Eye of the Sun and Moon",
           "doneness": "not-started",
           "type_facet": "Monk Class Features.PerfectScholarClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Eye of the Sun and Moon"
         },
         {
           "name": "False Reading",
           "doneness": "not-started",
           "type_facet": "Vigilante Class Features.AnaphexiaThoughtKillerClassFeatures.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "False Reading"
         },
         {
           "name": "False Spellcaster",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.InvestigatorTalent",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "False Spellcaster"
         },
         {
           "name": "Familiar",
           "doneness": "not-started",
           "type_facet": "Investigator Class Features.BondedInvestigatorClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Familiar"
         },
         {
           "name": "Favored Beat",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.InvestigatorTalent",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Favored Beat"
         },
         {
           "name": "Favored Enemy",
           "doneness": "not-started",
           "type_facet": "Inquisitor Class Features.RoyalAccuserClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Favored Enemy"
         },
         {
           "name": "Final Sway",
           "doneness": "not-started",
           "type_facet": "Inquisitor Class Features.RoyalAccuserClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Final Sway"
         },
         {
           "name": "Frozen Shadow",
           "doneness": "not-started",
           "type_facet": "Archetype.NinjaArchetype",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Frozen Shadow"
         },
         {
           "name": "God Caller",
           "doneness": "not-started",
           "type_facet": "Archetype.SummonerArchetype",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "God Caller"
         },
         {
           "name": "Gossip Collector",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.InvestigatorTalent.RogueTalent.Unchained Rogue Talent",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Gossip Collector"
         },
         {
           "name": "Grandmaster of Disguise",
           "doneness": "not-started",
           "type_facet": "Lion Blade Class Features.ClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Grandmaster of Disguise"
         },
         {
           "name": "Great Renown",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.InvestigatorTalent.RogueTalent.Unchained Rogue Talent",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Great Renown"
         },
         {
           "name": "Greater Detect Magic",
           "doneness": "not-started",
           "type_facet": "Inquisitor Class Features.RoyalAccuserClassFeatures.SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Greater Detect Magic"
         },
         {
           "name": "Greater Tinkering",
           "doneness": "not-started",
           "type_facet": "Alchemist Class Features.TinkererClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Greater Tinkering"
         },
         {
           "name": "Guardian of Immortality",
           "doneness": "not-started",
           "type_facet": "Archetype.InvestigatorArchetype",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Guardian of Immortality"
         },
         {
           "name": "Guardian's Gaze",
           "doneness": "not-started",
           "type_facet": "Investigator Class Features.GuardianOfImmortalityClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Guardian's Gaze"
         },
         {
           "name": "Guerrilla",
           "doneness": "not-started",
           "type_facet": "Archetype.RogueArchetype",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Guerrilla"
         },
         {
           "name": "Guerrilla Sniping",
           "doneness": "not-started",
           "type_facet": "Rogue Class Features.GuerrillaClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Guerrilla Sniping"
         },
         {
           "name": "Guidance",
           "doneness": "not-started",
           "type_facet": "TYPE:Summoner Class Features.GodCallerClassFeatures.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Guidance"
         },
         {
           "name": "Hardy Killer",
           "doneness": "not-started",
           "type_facet": "Ninja Class Features.FrozenShadowClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Hardy Killer"
         },
         {
           "name": "Harsh Judgment",
           "doneness": "not-started",
           "type_facet": "Vigilante Talent.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Harsh Judgment"
         },
         {
           "name": "Heart's Desire",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Heart's Desire"
         },
         {
           "name": "Hidden Spell",
           "doneness": "not-started",
           "type_facet": "Enchanting Courtesan Class Features.ClassFeatures.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Hidden Spell"
         },
         {
           "name": "Hide in the Crowd",
           "doneness": "not-started",
           "type_facet": "Lion Blade Class Features.ClassFeatures.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Hide in the Crowd"
         },
         {
           "name": "Humanoid (Orc)",
           "doneness": "not-started",
           "type_facet": "RoyalAccuserClassFeatures.RoyalAccuserFavoredEnemy",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Humanoid (Orc)"
         },
         {
           "name": "Humanoid (Shapechanger)",
           "doneness": "not-started",
           "type_facet": "RangerClassFeatures.FavoredEnemyBonus",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Humanoid (Shapechanger) (RangerClassFeatures.FavoredEnemyBonus)"
         },
         {
           "name": "Humanoid (Shapechanger)",
           "doneness": "not-started",
           "type_facet": "RoyalAccuserClassFeatures.RoyalAccuserFavoredEnemy.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Humanoid (Shapechanger) (RoyalAccuserClassFeatures.RoyalAccuserFavoredEnemy.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption)"
         },
         {
           "name": "Iconoclastic Strike*",
           "doneness": "not-started",
           "type_facet": "SpecialAttack.Extraordinary.InvestigatorTalent",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Iconoclastic Strike*"
         },
         {
           "name": "Improved Familiar",
           "doneness": "not-started",
           "type_facet": "Investigator Class Features.BondedInvestigatorClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Improved Familiar"
         },
         {
           "name": "Incredible Renown",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.InvestigatorTalent.RogueTalent.Unchained Rogue Talent",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Incredible Renown"
         },
         {
           "name": "Infiltrating Vessel",
           "doneness": "not-started",
           "type_facet": "[redacted PI]",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Infiltrating Vessel"
         },
         {
           "name": "Informative Liaisons",
           "doneness": "not-started",
           "type_facet": "Enchanting Courtesan Class Features.ClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Informative Liaisons"
         },
         {
           "name": "Informed Hunch",
           "doneness": "not-started",
           "type_facet": "Inquisitor Class Features.RoyalAccuserClassFeatures.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Informed Hunch"
         },
         {
           "name": "Innocuous Servant",
           "doneness": "not-started",
           "type_facet": "RogueClassFeatures.SpecialQuality.Extraordinary.RogueTalent.Unchained Rogue Talent",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Innocuous Servant"
         },
         {
           "name": "Inspire Devotion",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Inspire Devotion"
         },
         {
           "name": "Inspired Familiar",
           "doneness": "not-started",
           "type_facet": "Investigator Class Features.BondedInvestigatorClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Inspired Familiar"
         },
         {
           "name": "Inspiring Poise",
           "doneness": "not-started",
           "type_facet": "BardClassFeatures.SpecialQuality.Extraordinary.BardicPerformance.Bardic Performance",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Inspiring Poise"
         },
         {
           "name": "Instant Plan",
           "doneness": "not-started",
           "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Instant Plan"
         },
         {
           "name": "Labyrinthine Words",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Labyrinthine Words"
         },
         {
           "name": "Lantern Bearer",
           "doneness": "not-started",
           "type_facet": "Archetype.RangerArchetype",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Lantern Bearer"
         },
         {
           "name": "Leadership",
           "doneness": "not-started",
           "type_facet": "[redacted PI]",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Leadership"
         },
         {
           "name": "Learn from Failure",
           "doneness": "not-started",
           "type_facet": "Monk Class Features.PerfectScholarClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Learn from Failure"
         },
         {
           "name": "Liar's Familiarity",
           "doneness": "not-started",
           "type_facet": "Investigator Class Features.GuardianOfImmortalityClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Liar's Familiarity"
         },
         {
           "name": "Lore",
           "doneness": "not-started",
           "type_facet": "Monk Class Features.PerfectScholarClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Lore"
         },
         {
           "name": "Loyal Aid",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.InvestigatorTalent.RogueTalent.Unchained Rogue Talent",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Loyal Aid"
         },
         {
           "name": "Magic Warrior",
           "doneness": "not-started",
           "type_facet": "Archetype.MagusArchetype",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Magic Warrior"
         },
         {
           "name": "Magic Warrior's Aspect",
           "doneness": "not-started",
           "type_facet": "Magus Class Features.MagicWarriorClassFeatures.SpecialQuality.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Magic Warrior's Aspect"
         },
         {
           "name": "Maneuvering Dodge",
           "doneness": "not-started",
           "type_facet": "RogueClassFeatures.SpecialQuality.Extraordinary.RogueTalent.Unchained Rogue Talent",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Maneuvering Dodge"
         },
         {
           "name": "Master Poisoner",
           "doneness": "not-started",
           "type_facet": "Enchanting Courtesan Class Features.ClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Master Poisoner"
         },
         {
           "name": "Master of Disguise",
           "doneness": "not-started",
           "type_facet": "Lion Blade Class Features.ClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Master of Disguise"
         },
         {
           "name": "Meticulous Inspection",
           "doneness": "not-started",
           "type_facet": "Inquisitor Class Features.RoyalAccuserClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Meticulous Inspection"
         },
         {
           "name": "Monastic Communication",
           "doneness": "not-started",
           "type_facet": "Vigilante Class Features.AnaphexiaThoughtKillerClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Monastic Communication"
         },
         {
           "name": "Move with the Crowd",
           "doneness": "not-started",
           "type_facet": "Lion Blade Class Features.ClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Move with the Crowd"
         },
         {
           "name": "Nameless Anonymity",
           "doneness": "not-started",
           "type_facet": "Magus Class Features.MagicWarriorClassFeatures.SpecialQuality.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Nameless Anonymity"
         },
         {
           "name": "Nameless Mask",
           "doneness": "not-started",
           "type_facet": "Magus Class Features.MagicWarriorClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Nameless Mask"
         },
         {
           "name": "Narrow Miss",
           "doneness": "not-started",
           "type_facet": "Lion Blade Class Features.ClassFeatures.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Narrow Miss"
         },
         {
           "name": "Nature Bond",
           "doneness": "not-started",
           "type_facet": "Druid Class Features.NithveilAdeptClassFeatures.SpecialQuality.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Nature Bond"
         },
         {
           "name": "One with the Library",
           "doneness": "not-started",
           "type_facet": "Bard Class Features.StudiousLibrarianClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "One with the Library"
         },
         {
           "name": "Orchid's Drop",
           "doneness": "not-started",
           "type_facet": "Investigator Class Features.GuardianOfImmortalityClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Orchid's Drop"
         },
         {
           "name": "Overwhelming Presence",
           "doneness": "not-started",
           "type_facet": "TYPE:Summoner Class Features.GodCallerClassFeatures.SpecialQuality.SpellLike",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Overwhelming Presence"
         },
         {
           "name": "Overwhelming Touch",
           "doneness": "not-started",
           "type_facet": "Enchanting Courtesan Class Features.ClassFeatures.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Overwhelming Touch"
         },
         {
           "name": "Paralyzing Light",
           "doneness": "not-started",
           "type_facet": "Ranger Class Features.LanternBearerClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Paralyzing Light"
         },
         {
           "name": "Perfect Recollection",
           "doneness": "not-started",
           "type_facet": "Bard Class Features.StudiousLibrarianClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Perfect Recollection"
         },
         {
           "name": "Perfect Scholar",
           "doneness": "not-started",
           "type_facet": "Archetype.MonkArchetype",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Perfect Scholar (Archetype.MonkArchetype)"
         },
         {
           "name": "Perfect Scholar",
           "doneness": "not-started",
           "type_facet": "Archetype.Unchained Monk Archetype",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Perfect Scholar (Archetype.Unchained Monk Archetype)"
         },
         {
           "name": "Perfect Surprise",
           "doneness": "not-started",
           "type_facet": "Lion Blade Class Features.ClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Perfect Surprise"
         },
         {
           "name": "Poison Resistance",
           "doneness": "not-started",
           "type_facet": "Ranger Class Features.LanternBearerClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Poison Resistance"
         },
         {
           "name": "Poison Use",
           "doneness": "not-started",
           "type_facet": "Enchanting Courtesan Class Features.ClassFeatures.SpecialQuality.Extraordinary.Poison Use",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Poison Use"
         },
         {
           "name": "Politics Inquisition",
           "doneness": "not-started",
           "type_facet": "InquisitorDomain.Inquisition",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Politics Inquisition"
         },
         {
           "name": "Prepare Results",
           "doneness": "not-started",
           "type_facet": "[redacted PI]",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Prepare Results"
         },
         {
           "name": "Provocateur",
           "doneness": "not-started",
           "type_facet": "Archetype.BardArchetype",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Provocateur (Archetype.BardArchetype)"
         },
         {
           "name": "Provocateur",
           "doneness": "not-started",
           "type_facet": "Bard Class Features.ProvocateurClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Provocateur (Bard Class Features.ProvocateurClassFeatures.SpecialQuality.Extraordinary)"
         },
         {
           "name": "Ready for Betrayal",
           "doneness": "not-started",
           "type_facet": "[redacted PI]",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Ready for Betrayal"
         },
         {
           "name": "Rebel Leader",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Rebel Leader"
         },
         {
           "name": "Reputation",
           "doneness": "not-started",
           "type_facet": "[redacted PI]",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Reputation"
         },
         {
           "name": "Resist Fey Influence",
           "doneness": "not-started",
           "type_facet": "Druid Class Features.NithveilAdeptClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Resist Fey Influence"
         },
         {
           "name": "Revolutionary's Cause",
           "doneness": "not-started",
           "type_facet": "[redacted PI]",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Revolutionary's Cause"
         },
         {
           "name": "Royal Accuser",
           "doneness": "not-started",
           "type_facet": "Archetype.InquisitorArchetype",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Royal Accuser"
         },
         {
           "name": "Safe House",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent.Unchained Rogue Talent",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Safe House"
         },
         {
           "name": "Secret Messenger",
           "doneness": "not-started",
           "type_facet": "Rogue Class Features.GuerrillaClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Secret Messenger"
         },
         {
           "name": "Secret Step",
           "doneness": "not-started",
           "type_facet": "Lion Blade Class Features.ClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Secret Step"
         },
         {
           "name": "Sedition Inquisition",
           "doneness": "not-started",
           "type_facet": "InquisitorDomain.Inquisition",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Sedition Inquisition"
         },
         {
           "name": "Seducer's Leverage",
           "doneness": "not-started",
           "type_facet": "Enchanting Courtesan Class Features.ClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Seducer's Leverage"
         },
         {
           "name": "Seduction Inquisition",
           "doneness": "not-started",
           "type_facet": "InquisitorDomain.Inquisition",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Seduction Inquisition"
         },
         {
           "name": "Seductive Intuition",
           "doneness": "not-started",
           "type_facet": "Enchanting Courtesan Class Features.ClassFeatures.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Seductive Intuition"
         },
         {
           "name": "Shackle Smash",
           "doneness": "not-started",
           "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Shackle Smash"
         },
         {
           "name": "Silencing Strike*",
           "doneness": "not-started",
           "type_facet": "SpecialAttack.Extraordinary.InvestigatorTalent",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Silencing Strike*"
         },
         {
           "name": "Silent Soul",
           "doneness": "not-started",
           "type_facet": "Lion Blade Class Features.ClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Silent Soul"
         },
         {
           "name": "Silent to Magic",
           "doneness": "not-started",
           "type_facet": "Vigilante Class Features.AnaphexiaThoughtKillerClassFeatures.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Silent to Magic"
         },
         {
           "name": "Skilled Liar",
           "doneness": "not-started",
           "type_facet": "Rogue Class Features.GuerrillaClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Skilled Liar"
         },
         {
           "name": "Slowing Strike",
           "doneness": "not-started",
           "type_facet": "Lion Blade Class Features.ClassFeatures.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Slowing Strike"
         },
         {
           "name": "Sneak Attack",
           "doneness": "not-started",
           "type_facet": "Lion Blade Class Features.ClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Sneak Attack"
         },
         {
           "name": "Studied Strike",
           "doneness": "not-started",
           "type_facet": "Investigator Class Features.BondedInvestigatorClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Studied Strike"
         },
         {
           "name": "Studious Librarian",
           "doneness": "not-started",
           "type_facet": "Archetype.BardArchetype",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Studious Librarian"
         },
         {
           "name": "Stunning Light",
           "doneness": "not-started",
           "type_facet": "Ranger Class Features.LanternBearerClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Stunning Light"
         },
         {
           "name": "Sustained Inspirational Expertise",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.InvestigatorTalent",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Sustained Inspirational Expertise"
         },
         {
           "name": "Swift Tracker",
           "doneness": "not-started",
           "type_facet": "Ninja Class Features.FrozenShadowClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Swift Tracker"
         },
         {
           "name": "Teleportation Warden",
           "doneness": "not-started",
           "type_facet": "Investigator Class Features.GuardianOfImmortalityClassFeatures.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Teleportation Warden"
         },
         {
           "name": "Thought-Scent",
           "doneness": "not-started",
           "type_facet": "Vigilante Class Features.AnaphexiaThoughtKillerClassFeatures.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Thought-Scent"
         },
         {
           "name": "Thrill of the Chase",
           "doneness": "not-started",
           "type_facet": "RogueClassFeatures.SpecialQuality.Extraordinary.RogueTalent.Unchained Rogue Talent",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Thrill of the Chase"
         },
         {
           "name": "Tinkerer",
           "doneness": "not-started",
           "type_facet": "Archetype.AlchemistArchetype",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Tinkerer"
         },
         {
           "name": "Tinkering",
           "doneness": "not-started",
           "type_facet": "Alchemist Class Features.TinkererClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Tinkering"
         },
         {
           "name": "Tongue Sacrifice",
           "doneness": "not-started",
           "type_facet": "Vigilante Class Features.AnaphexiaThoughtKillerClassFeatures.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Tongue Sacrifice"
         },
         {
           "name": "Touch of Ecstasy",
           "doneness": "not-started",
           "type_facet": "Enchanting Courtesan Class Features.ClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Touch of Ecstasy"
         },
         {
           "name": "Track Victim",
           "doneness": "not-started",
           "type_facet": "Ninja Class Features.FrozenShadowClassFeatures.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Track Victim"
         },
         {
           "name": "Turnabout",
           "doneness": "not-started",
           "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Turnabout"
         },
         {
           "name": "Twilight Talon Improvisation*",
           "doneness": "not-started",
           "type_facet": "SpecialAttack.Extraordinary.InvestigatorTalent",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Twilight Talon Improvisation*"
         },
         {
           "name": "Uncanny Dodge",
           "doneness": "not-started",
           "type_facet": "Rogue Class Features.GuerrillaClassFeatures.SpecialQuality.Extraordinary.Uncanny Dodge",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Uncanny Dodge"
         },
         {
           "name": "Undead",
           "doneness": "not-started",
           "type_facet": "RoyalAccuserClassFeatures.RoyalAccuserFavoredEnemy",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Undead"
         },
         {
           "name": "Undermine Authority",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Undermine Authority"
         },
         {
           "name": "Unexpected Suggestion",
           "doneness": "not-started",
           "type_facet": "Lion Blade Class Features.ClassFeatures.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Unexpected Suggestion"
         },
         {
           "name": "Walk with the Master",
           "doneness": "not-started",
           "type_facet": "Monk Class Features.PerfectScholarClassFeatures.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Walk with the Master"
         },
         {
           "name": "Whip of Vengeance",
           "doneness": "not-started",
           "type_facet": "Vigilante Talent.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Whip of Vengeance"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Archetype.DruidArchetype",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Archetype.DruidArchetype)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Magus Class Features.MagicWarriorClassFeatures.SpecialQuality.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Magus Class Features.MagicWarriorClassFeatures.SpecialQuality.Supernatural)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Druid Class Features.NithveilAdeptClassFeatures.SpecialQuality.SpellLike",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Druid Class Features.NithveilAdeptClassFeatures.SpecialQuality.SpellLike)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Archetype.OracleArchetype",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Archetype.OracleArchetype)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Archetype.RogueArchetype",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Archetype.RogueArchetype)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "RogueClassFeatures.SpecialQuality.Extraordinary.RogueTalent.Unchained Rogue Talent",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (RogueClassFeatures.SpecialQuality.Extraordinary.RogueTalent.Unchained Rogue Talent)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Social Talent.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Social Talent.SpecialQuality.Extraordinary)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Social Talent.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Social Talent.SpecialQuality.Extraordinary) #8"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Archetype.VigilanteArchetype",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Archetype.VigilanteArchetype)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Archetype.WitchArchetype",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Archetype.WitchArchetype)"
         }
       ]
     },
@@ -1049,13 +1218,15 @@
           "name": "Enchanting Courtesan",
           "doneness": "not-started",
           "type_facet": "PC.Prestige",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Enchanting Courtesan"
         },
         {
           "name": "Lion Blade",
           "doneness": "not-started",
           "type_facet": "PC.Prestige",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Lion Blade"
         }
       ]
     },
@@ -1077,67 +1248,78 @@
           "name": "Electricity",
           "doneness": "done",
           "type_facet": "ClockworkFamiliarRacialAbility.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Electricity"
         },
         {
           "name": "Familiar (Clockwork Familiar)",
           "doneness": "partial",
           "type_facet": "Companion.Familiar.Construct",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Familiar (Clockwork Familiar)"
         },
         {
           "name": "Familiar (Clockwork Spy)",
           "doneness": "partial",
           "type_facet": "Companion.Familiar.Construct",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Familiar (Clockwork Spy)"
         },
         {
           "name": "Item Installation",
           "doneness": "done",
           "type_facet": "ClockworkFamiliarRacialAbility.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Item Installation"
         },
         {
           "name": "Potion Installation",
           "doneness": "done",
           "type_facet": "ClockworkFamiliarInstalledItem",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Potion Installation"
         },
         {
           "name": "Record Audio",
           "doneness": "partial",
           "type_facet": "ClockworkSpyRacialAbility.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Record Audio"
         },
         {
           "name": "Scroll Installation",
           "doneness": "done",
           "type_facet": "ClockworkFamiliarInstalledItem",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Scroll Installation"
         },
         {
           "name": "Self-Destruct",
           "doneness": "done",
           "type_facet": "ClockworkSpyRacialAbility.SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Self-Destruct"
         },
         {
           "name": "Tinkering",
           "doneness": "done",
           "type_facet": "ClockworkFamiliarRacialAbility.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Tinkering (ClockworkFamiliarRacialAbility.SpecialQuality.Extraordinary)"
         },
         {
           "name": "Tinkering",
           "doneness": "done",
           "type_facet": "ClockworkSpyRacialAbility.SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Tinkering (ClockworkSpyRacialAbility.SpecialQuality.Extraordinary)"
         },
         {
           "name": "Wand Installation",
           "doneness": "done",
           "type_facet": "ClockworkFamiliarInstalledItem",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Wand Installation"
         }
       ]
     },
@@ -1159,235 +1341,274 @@
           "name": "Antidote (Vial)",
           "doneness": "done",
           "type_facet": "Goods.Alchemical.Vial.Consumable",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Antidote (Vial)"
         },
         {
           "name": "Bloodlink",
           "doneness": "done",
           "type_facet": "Magic.Wondrous.Amulet",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Bloodlink"
         },
         {
           "name": "Brastlewark Brew",
           "doneness": "done",
           "type_facet": "Magic.Wondrous.Consumable",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Brastlewark Brew"
         },
         {
           "name": "Broadsheet",
           "doneness": "done",
           "type_facet": "Goods.General",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Broadsheet"
         },
         {
           "name": "Chalice of Poison",
           "doneness": "done",
           "type_facet": "Magic.Wondrous",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Chalice of Poison"
         },
         {
           "name": "Chameleon Pill",
           "doneness": "done",
           "type_facet": "Goods.Alchemical.Consumable",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Chameleon Pill"
         },
         {
           "name": "Charmer's Kiss",
           "doneness": "done",
           "type_facet": "Magic.Wondrous.Consumable",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Charmer's Kiss"
         },
         {
           "name": "Elixir of Amnesia",
           "doneness": "done",
           "type_facet": "Magic.Wondrous.Elixir.Consumable",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Elixir of Amnesia"
         },
         {
           "name": "Forger's Friend",
           "doneness": "done",
           "type_facet": "Magic.Wondrous",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Forger's Friend"
         },
         {
           "name": "Hat of Infinite Disguises",
           "doneness": "done",
           "type_facet": "Magic.Wondrous.Headgear",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Hat of Infinite Disguises"
         },
         {
           "name": "Holdout Wand Wrap",
           "doneness": "done",
           "type_facet": "Magic.Wondrous",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Holdout Wand Wrap"
         },
         {
           "name": "Mask of the Cursed Eye",
           "doneness": "done",
           "type_facet": "Magic.Wondrous.Headgear",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Mask of the Cursed Eye"
         },
         {
           "name": "Masterful Gray Gloves",
           "doneness": "done",
           "type_facet": "Magic.Wondrous.Glove",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Masterful Gray Gloves"
         },
         {
           "name": "Medicinal Bezoar",
           "doneness": "done",
           "type_facet": "Magic.Wondrous.Consumable",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Medicinal Bezoar"
         },
         {
           "name": "Memory Musk Gourd",
           "doneness": "done",
           "type_facet": "Magic.Wondrous.Consumable",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Memory Musk Gourd"
         },
         {
           "name": "Piecemeal Weapon",
           "doneness": "done",
           "type_facet": "Goods.General",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Piecemeal Weapon"
         },
         {
           "name": "Platter of Exquisite Feasting",
           "doneness": "done",
           "type_facet": "Magic.Wondrous",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Platter of Exquisite Feasting"
         },
         {
           "name": "Poison (Breath of the Mantis God)",
           "doneness": "done",
           "type_facet": "Goods.Poison.Consumable",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Poison (Breath of the Mantis God)"
         },
         {
           "name": "Poison (Marvelous Fear Gas)",
           "doneness": "done",
           "type_facet": "Goods.Poison.Consumable",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Poison (Marvelous Fear Gas)"
         },
         {
           "name": "Poison (Twilight Illness)",
           "doneness": "done",
           "type_facet": "Goods.Poison.Consumable",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Poison (Twilight Illness)"
         },
         {
           "name": "Poison (Vessel Between)",
           "doneness": "done",
           "type_facet": "Goods.Poison.Consumable",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Poison (Vessel Between)"
         },
         {
           "name": "Rod of the Alicorn",
           "doneness": "done",
           "type_facet": "Magic.Wondrous",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Rod of the Alicorn"
         },
         {
           "name": "Saboteur's Gloves",
           "doneness": "done",
           "type_facet": "Magic.Wondrous.Glove",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Saboteur's Gloves"
         },
         {
           "name": "Seamless Skin",
           "doneness": "done",
           "type_facet": "Magic.Wondrous.Robe",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Seamless Skin"
         },
         {
           "name": "Spectacles of Lip Reading",
           "doneness": "done",
           "type_facet": "Magic.Wondrous.Eyegear",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Spectacles of Lip Reading"
         },
         {
           "name": "Survivor's Ring",
           "doneness": "done",
           "type_facet": "Magic.Ring",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Survivor's Ring"
         },
         {
           "name": "Toastmaster's Teacup",
           "doneness": "done",
           "type_facet": "Magic.Wondrous",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Toastmaster's Teacup"
         },
         {
           "name": "Triple Eyes of Vivid Auras",
           "doneness": "done",
           "type_facet": "Magic.Wondrous.Eyegear",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Triple Eyes of Vivid Auras"
         },
         {
           "name": "Waspguts",
           "doneness": "done",
           "type_facet": "Goods.Alchemical.Vial.Consumable",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Waspguts"
         },
         {
           "name": "Wing Staff",
           "doneness": "done",
           "type_facet": "Goods.General",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Wing Staff"
         },
         {
           "name": "Witness Hunter's Ring",
           "doneness": "done",
           "type_facet": "Magic.Ring",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Witness Hunter's Ring"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Goods.Alchemical.Vial.Consumable",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Goods.Alchemical.Vial.Consumable)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Magic.Wondrous",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Magic.Wondrous)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Magic.Wondrous",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Magic.Wondrous) #3"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Magic.Wondrous",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Magic.Wondrous) #4"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Magic.Wondrous.Consumable",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Magic.Wondrous.Consumable)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Goods.Poison.Consumable",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Goods.Poison.Consumable)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Goods.Poison.Consumable",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Goods.Poison.Consumable) #7"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Goods.Poison.Consumable",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Goods.Poison.Consumable) #8"
         }
       ]
     },
@@ -1408,19 +1629,22 @@
           "name": "Obliviating",
           "doneness": "not-started",
           "type_facet": "Weapon.Melee.Bludgeoning",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Obliviating"
         },
         {
           "name": "Training",
           "doneness": "not-started",
           "type_facet": "Weapon",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Training"
         },
         {
           "name": "Transformative (Greater)",
           "doneness": "partial",
           "type_facet": "Weapon",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Transformative (Greater)"
         }
       ]
     },
@@ -1441,37 +1665,43 @@
           "name": "Convincing Persona",
           "doneness": "done",
           "type_facet": "General",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Convincing Persona"
         },
         {
           "name": "Greater Stylized Spell",
           "doneness": "done",
           "type_facet": "General",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Greater Stylized Spell"
         },
         {
           "name": "Masked Renown",
           "doneness": "not-started",
           "type_facet": "General",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Masked Renown"
         },
         {
           "name": "Masked Symbol",
           "doneness": "done",
           "type_facet": "General",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Masked Symbol"
         },
         {
           "name": "Stylized Spell Mastery",
           "doneness": "done",
           "type_facet": "General",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Stylized Spell Mastery"
         },
         {
           "name": "Stylized Spontaneity",
           "doneness": "done",
           "type_facet": "General",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Stylized Spontaneity"
         }
       ]
     },
@@ -1493,157 +1723,183 @@
           "name": "Apathy",
           "doneness": "not-started",
           "type_facet": "Arcane.Psychic",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Apathy"
         },
         {
           "name": "Assumed Likeness",
           "doneness": "not-started",
           "type_facet": "Arcane.Psychic",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Assumed Likeness"
         },
         {
           "name": "Brightest Light",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine.Psychic",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Brightest Light"
         },
         {
           "name": "Commune with Texts",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine.Psychic",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Commune with Texts"
         },
         {
           "name": "Diminished Detection",
           "doneness": "not-started",
           "type_facet": "Arcane",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Diminished Detection"
         },
         {
           "name": "Dream Reality",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine.Psychic",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Dream Reality"
         },
         {
           "name": "Implant Urge",
           "doneness": "not-started",
           "type_facet": "Arcane.Psychic",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Implant Urge"
         },
         {
           "name": "Inveigle Monster",
           "doneness": "not-started",
           "type_facet": "Arcane.Psychic",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Inveigle Monster"
         },
         {
           "name": "Inveigle Person",
           "doneness": "not-started",
           "type_facet": "Arcane.Psychic",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Inveigle Person"
         },
         {
           "name": "Oath of Anonymity",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine.Psychic",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Oath of Anonymity"
         },
         {
           "name": "Recorporeal Incarnation",
           "doneness": "not-started",
           "type_facet": "Arcane",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Recorporeal Incarnation"
         },
         {
           "name": "Rotting Alliance",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine.Psychic",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Rotting Alliance"
         },
         {
           "name": "Sealed Sending",
           "doneness": "not-started",
           "type_facet": "Arcane",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Sealed Sending"
         },
         {
           "name": "Searching Shadows",
           "doneness": "not-started",
           "type_facet": "Arcane",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Searching Shadows"
         },
         {
           "name": "Seeds of Influence",
           "doneness": "not-started",
           "type_facet": "Arcane.Psychic",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Seeds of Influence"
         },
         {
           "name": "Seeds of Influence (Greater)",
           "doneness": "not-started",
           "type_facet": "Arcane.Psychic",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Seeds of Influence (Greater)"
         },
         {
           "name": "Seek Shelter",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine.Psychic",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Seek Shelter"
         },
         {
           "name": "Substitute Trail",
           "doneness": "not-started",
           "type_facet": "Divine",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Substitute Trail"
         },
         {
           "name": "Transfiguring Touch",
           "doneness": "not-started",
           "type_facet": "Arcane.Psychic",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Transfiguring Touch"
         },
         {
           "name": "True Skill",
           "doneness": "not-started",
           "type_facet": "Arcane.Psychic",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "True Skill"
         },
         {
           "name": "Violent Accident",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine.Psychic",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Violent Accident"
         },
         {
           "name": "Wandering Trail",
           "doneness": "not-started",
           "type_facet": "Divine",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Wandering Trail"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine.Psychic",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Arcane.Divine.Psychic)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine.Psychic",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Arcane.Divine.Psychic) #2"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Arcane",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Arcane)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Arcane.Psychic",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Arcane.Psychic)"
         }
       ]
     }

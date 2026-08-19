@@ -19,139 +19,162 @@
           "name": "Accursed",
           "doneness": "not-started",
           "type_facet": "Story",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Accursed"
         },
         {
           "name": "Arisen",
           "doneness": "not-started",
           "type_facet": "Story",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Arisen"
         },
         {
           "name": "Battlefield Healer",
           "doneness": "not-started",
           "type_facet": "Story",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Battlefield Healer"
         },
         {
           "name": "Champion",
           "doneness": "not-started",
           "type_facet": "Story",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Champion"
         },
         {
           "name": "Damned",
           "doneness": "not-started",
           "type_facet": "Story",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Damned"
         },
         {
           "name": "Deny the Reaper",
           "doneness": "not-started",
           "type_facet": "Story",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Deny the Reaper"
         },
         {
           "name": "Eldritch Researcher",
           "doneness": "not-started",
           "type_facet": "Story",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Eldritch Researcher"
         },
         {
           "name": "Fearless Zeal",
           "doneness": "not-started",
           "type_facet": "Story",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Fearless Zeal"
         },
         {
           "name": "Feral Heart",
           "doneness": "not-started",
           "type_facet": "Story",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Feral Heart"
         },
         {
           "name": "Foeslayer",
           "doneness": "not-started",
           "type_facet": "Story",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Foeslayer"
         },
         {
           "name": "Forgotten Past",
           "doneness": "not-started",
           "type_facet": "Story",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Forgotten Past"
         },
         {
           "name": "Glimpse Beyond",
           "doneness": "not-started",
           "type_facet": "Story",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Glimpse Beyond"
         },
         {
           "name": "Innocent Blood",
           "doneness": "not-started",
           "type_facet": "Story",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Innocent Blood"
         },
         {
           "name": "Liberator",
           "doneness": "not-started",
           "type_facet": "Story",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Liberator"
         },
         {
           "name": "Lost Legacy",
           "doneness": "not-started",
           "type_facet": "Story",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Lost Legacy"
         },
         {
           "name": "Magnum Opus",
           "doneness": "not-started",
           "type_facet": "Story",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Magnum Opus"
         },
         {
           "name": "Shamed",
           "doneness": "not-started",
           "type_facet": "Story",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Shamed"
         },
         {
           "name": "Stronghold",
           "doneness": "not-started",
           "type_facet": "Story",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Stronghold"
         },
         {
           "name": "Thief of Legend",
           "doneness": "not-started",
           "type_facet": "Story",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Thief of Legend"
         },
         {
           "name": "Town Tamer",
           "doneness": "not-started",
           "type_facet": "Story",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Town Tamer"
         },
         {
           "name": "True Love",
           "doneness": "not-started",
           "type_facet": "Story",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "True Love"
         },
         {
           "name": "Unforgotten",
           "doneness": "not-started",
           "type_facet": "Story",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Unforgotten"
         },
         {
           "name": "Vengeance",
           "doneness": "not-started",
           "type_facet": "Story",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Vengeance"
         }
       ]
     }

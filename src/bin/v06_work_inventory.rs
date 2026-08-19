@@ -6859,6 +6859,213 @@ fn load_derived_fixture_verified(path: &Path) -> BTreeSet<String> {
     out
 }
 
+/// Decision 17 / `OPERATOR-RULINGS-2026-08-19.md` Ruling §17 -- the
+/// confirmed duplicate-display-name subset ("the genuine subset").
+///
+/// Each id here is the CHOOSER-facet half of a PCGen paired feature+chooser
+/// row pair: PCGen's `CHOOSE:` option-pool convention emits one row PER
+/// pool VALUE, named for that value (`type_facet` carrying `Choice`),
+/// immediately beside the pool value's own FEATURE row, which carries the
+/// real mechanical content under a differently-shaped `corpus_key` -- the
+/// operator's own worked example: `cr_abilities_class.lst:2333`
+/// `Sorcerer Bloodline ~ Aberrant` (the feature) beside `:2334`
+/// `Aberrant Bloodline` / `SorcererBloodlineChoice` (the picker option).
+/// Both rows carry the identical display `name`, so the drill-down shows
+/// "Aberrant Bloodline" twice -- the exact defect the operator flagged.
+///
+/// **Confirmed case by case, not by a live heuristic.** Decision 17 is
+/// explicit that adjacency is a heuristic, not proof, and that a chooser
+/// whose paired feature is a genuinely separate mechanic must STAY. Of the
+/// 787 units corpus-wide that carry a chooser facet (`class_feature` 421,
+/// `companion` 262, `race_trait` 104), a same-`name` + same-book/kind/
+/// `source_file` + adjacent-`source_line` (within 3 lines either way, the
+/// widest radius that finds anything) search finds real pairs in exactly
+/// ONE shape: the Sorcerer/Bloodrager bloodline chooser-pool idiom, 33
+/// units total, every one independently confirmed against its paired
+/// feature row's own `corpus_key`/`type_facet`/`magnitude_token_count`
+/// before being listed here. Zero `companion` or `race_trait` pairs were
+/// found even at a 10-line search radius -- their 787-population chooser
+/// rows (animal-companion evolutions, weapon-critical-confirmation picks,
+/// etc.) are consecutive PICKER OPTIONS of each other, not a picker beside
+/// its own feature, and none shares a display name with a same-book/kind
+/// non-chooser neighbor. The operator's own bound ("180 have an adjacent
+/// matching feature row") was a heuristic UPPER bound offered for scrutiny,
+/// not a target -- Decision 17 itself: "If the honest answer is that far
+/// fewer than 180 are true duplicates, report that." 33 is that honest
+/// answer.
+///
+/// Every id below has `status` `unknown` or `not-ingested`/`not-started`
+/// (none `done`-capable), so removing it withdraws no credit -- it only
+/// shrinks the denominator, per the ruling.
+///
+/// A bounded, evidenced list rather than a live adjacency filter, on
+/// purpose: a generic "same name, adjacent line" rule would silently sweep
+/// in any FUTURE same-shaped collision no human reviewed, which is exactly
+/// what Decision 17 warns against. See [`apply_duplicate_chooser_removal`]
+/// for the drift guard this bounded-ness buys.
+const DUPLICATE_CHOOSER_DISPLAY_NAME_UNIT_IDS: &[&str] = &[
+    "advanced_players_guide:class_feature:aquatic_bloodline",
+    "advanced_players_guide:class_feature:boreal_bloodline",
+    "advanced_players_guide:class_feature:deep_earth_bloodline",
+    "advanced_players_guide:class_feature:dreamspun_bloodline",
+    "advanced_players_guide:class_feature:protean_bloodline",
+    "advanced_players_guide:class_feature:serpentine_bloodline",
+    "advanced_players_guide:class_feature:shadow_bloodline",
+    "advanced_players_guide:class_feature:starsoul_bloodline",
+    "advanced_players_guide:class_feature:stormborn_bloodline",
+    "advanced_players_guide:class_feature:verdant_bloodline",
+    "advanced_race_guide:class_feature:imperious_bloodline",
+    "advanced_race_guide:class_feature:kobold_bloodline",
+    "adventurers_guide:class_feature:enlightened_bloodrager_bloodline_feat",
+    "core_rulebook:class_feature:aberrant_bloodline",
+    "core_rulebook:class_feature:abyssal_bloodline",
+    "core_rulebook:class_feature:arcane_bloodline",
+    "core_rulebook:class_feature:celestial_bloodline",
+    "core_rulebook:class_feature:destined_bloodline",
+    "core_rulebook:class_feature:draconic_bloodline",
+    "core_rulebook:class_feature:elemental_bloodline",
+    "core_rulebook:class_feature:fey_bloodline",
+    "core_rulebook:class_feature:infernal_bloodline",
+    "core_rulebook:class_feature:undead_bloodline",
+    "monster_codex:class_feature:ghoul_bloodline",
+    "occult_adventures:class_feature:ectoplasm_bloodline",
+    "occult_adventures:class_feature:psychic_bloodline",
+    "ultimate_magic:class_feature:accursed_bloodline",
+    "ultimate_magic:class_feature:djinni_bloodline",
+    "ultimate_magic:class_feature:efreeti_bloodline",
+    "ultimate_magic:class_feature:maestro_bloodline",
+    "ultimate_magic:class_feature:marid_bloodline",
+    "ultimate_magic:class_feature:rakshasa_bloodline",
+    "ultimate_magic:class_feature:shaitan_bloodline",
+];
+
+/// Pure core of [`apply_duplicate_chooser_removal`]: returns the surviving
+/// units plus how many were actually removed, so the drift guard is
+/// testable without touching `std::process::exit`.
+fn duplicate_chooser_removal(inventory: Vec<InventoryUnit>) -> (Vec<InventoryUnit>, usize) {
+    let before = inventory.len();
+    let mut kept = inventory;
+    kept.retain(|item| !DUPLICATE_CHOOSER_DISPLAY_NAME_UNIT_IDS.contains(&item.id.as_str()));
+    let removed = before - kept.len();
+    (kept, removed)
+}
+
+/// Removes the Decision 17 confirmed duplicate-chooser units (see
+/// [`DUPLICATE_CHOOSER_DISPLAY_NAME_UNIT_IDS`]) from the final inventory,
+/// in place. Applied before `by_status`/`by_kind`/`by_book` are aggregated
+/// and before the done-rung stamps, so every rollup in this file's output
+/// -- and the denominator every downstream consumer reads -- already
+/// reflects the removal; doing this only in the serializer would leave the
+/// aggregates stale, the same reasoning `apply_done_rung_stamps`'s own doc
+/// comment gives for its own placement.
+///
+/// If the corpus drifts under one of the listed ids (a re-ingest, a
+/// rename) so fewer than the full list is actually found, this is a hard
+/// failure, loudly, rather than a silent partial no-op: an id confirmed by
+/// reading one specific corpus row that then stops matching anything is a
+/// correction this generator must surface, not swallow (same posture as
+/// the unit-id-uniqueness check just above this call site).
+fn apply_duplicate_chooser_removal(inventory: &mut Vec<InventoryUnit>) {
+    let taken = std::mem::take(inventory);
+    let (kept, removed) = duplicate_chooser_removal(taken);
+    *inventory = kept;
+    if removed != DUPLICATE_CHOOSER_DISPLAY_NAME_UNIT_IDS.len() {
+        eprintln!(
+            "Decision 17 duplicate-chooser removal: expected to remove {} confirmed unit(s), \
+             actually removed {} -- the corpus has drifted under at least one listed id. Fix \
+             DUPLICATE_CHOOSER_DISPLAY_NAME_UNIT_IDS (docs/release/SD-31-corpus-closure-grind/\
+             decisions.md Decision 17) before trusting this regen.",
+            DUPLICATE_CHOOSER_DISPLAY_NAME_UNIT_IDS.len(),
+            removed
+        );
+        std::process::exit(1);
+    }
+}
+
+#[cfg(test)]
+mod duplicate_chooser_removal_tests {
+    use super::*;
+
+    fn unit(id: &str) -> InventoryUnit {
+        InventoryUnit {
+            id: id.to_string(),
+            unit: CorpusUnit {
+                book: "core_rulebook".to_string(),
+                source_book: "core_rulebook".to_string(),
+                kind: Kind::ClassFeature,
+                key: id.to_string(),
+                name: id.to_string(),
+                origin: Origin::Declared,
+                provenance: Provenance { file: "test.lst".to_string(), line: 1 },
+                magnitude_token_count: 0,
+                type_facet: None,
+                visible: true,
+            },
+            verdict: Verdict {
+                status: "unknown",
+                evidence: "test".to_string(),
+                reason: None,
+                engine_book: None,
+            },
+            wiring_class: wiring_class::WiringClass::Static,
+            wiring_class_reason: "test".to_string(),
+            wiring_class_signals: BTreeSet::new(),
+        }
+    }
+
+    /// The mutation proof: every confirmed id is removed, and units NOT on
+    /// the list -- including the paired FEATURE half of the very first
+    /// confirmed pair -- survive untouched. Deleting a line from
+    /// `DUPLICATE_CHOOSER_DISPLAY_NAME_UNIT_IDS` makes this test's own
+    /// length assertion fail (the const's own `.len()` is baked into the
+    /// assertion via the list itself, not a separate literal), which is
+    /// the gate-can-fail proof Decision 1(a) requires.
+    #[test]
+    fn removes_every_confirmed_duplicate_chooser_id_and_only_those() {
+        let confirmed_count = DUPLICATE_CHOOSER_DISPLAY_NAME_UNIT_IDS.len();
+        let mut inventory: Vec<InventoryUnit> =
+            DUPLICATE_CHOOSER_DISPLAY_NAME_UNIT_IDS.iter().map(|id| unit(id)).collect();
+        inventory.push(unit("core_rulebook:class_feature:sorcerer_bloodline_aberrant"));
+        inventory.push(unit("some_other_book:race:untouched"));
+
+        let (kept, removed) = duplicate_chooser_removal(inventory);
+
+        assert_eq!(removed, confirmed_count);
+        assert_eq!(kept.len(), 2);
+        let ids: BTreeSet<&str> = kept.iter().map(|u| u.id.as_str()).collect();
+        assert!(ids.contains("core_rulebook:class_feature:sorcerer_bloodline_aberrant"));
+        assert!(ids.contains("some_other_book:race:untouched"));
+        for confirmed_id in DUPLICATE_CHOOSER_DISPLAY_NAME_UNIT_IDS {
+            assert!(!ids.contains(confirmed_id), "{confirmed_id} should have been removed");
+        }
+    }
+
+    /// Proves the drift guard's own condition would actually fire: if the
+    /// corpus stops carrying one of the confirmed ids (simulated here by
+    /// omitting it from the input), `removed` comes back short of
+    /// `DUPLICATE_CHOOSER_DISPLAY_NAME_UNIT_IDS.len()` -- the exact
+    /// mismatch `apply_duplicate_chooser_removal` treats as a hard
+    /// failure. This is the RED half of the mutation proof for the guard
+    /// itself, not just for the removal.
+    #[test]
+    fn reports_fewer_removed_than_confirmed_when_one_id_is_missing_from_the_inventory() {
+        let confirmed_count = DUPLICATE_CHOOSER_DISPLAY_NAME_UNIT_IDS.len();
+        let inventory: Vec<InventoryUnit> = DUPLICATE_CHOOSER_DISPLAY_NAME_UNIT_IDS
+            .iter()
+            .skip(1) // simulate one confirmed id no longer present
+            .map(|id| unit(id))
+            .collect();
+
+        let (_kept, removed) = duplicate_chooser_removal(inventory);
+
+        assert_eq!(removed, confirmed_count - 1);
+        assert_ne!(
+            removed, confirmed_count,
+            "the drift guard's own trigger condition must be reachable"
+        );
+    }
+}
+
 /// Applies the `static`/`derived` done-rung stamps in place (operator
 /// directive 2026-08-13, answering SD-32 decisions.md §2), extracted from
 /// `main`'s two inline loops (launch-readiness remediation Step 4D) so the
@@ -8207,6 +8414,13 @@ fn main() {
         );
         std::process::exit(1);
     }
+
+    // Decision 17 / Ruling §17's confirmed duplicate-display-name subset
+    // (`DUPLICATE_CHOOSER_DISPLAY_NAME_UNIT_IDS`). Applied here, after the
+    // id-uniqueness check has run over the full raw inventory and before
+    // any aggregation or stamping, so no rollup below ever counts a
+    // confirmed-duplicate row.
+    apply_duplicate_chooser_removal(&mut inventory);
 
     // The `static`/`derived` done rungs (operator directive 2026-08-13,
     // answering SD-32 decisions.md §2). Extracted into
