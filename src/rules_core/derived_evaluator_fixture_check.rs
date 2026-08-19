@@ -109,21 +109,25 @@ pub fn run_bar_check(repo_root: &Path) -> BarCheckReport {
     let spell = run_spell_bar_check(repo_root);
     let spell_range = run_spell_range_bar_check(repo_root);
     let class_feature = run_class_feature_bar_check(repo_root);
+    let monster_ability = run_monster_ability_bar_check(repo_root);
     let mut cleared = equipment.cleared;
     cleared.extend(monster.cleared);
     cleared.extend(spell.cleared);
     cleared.extend(spell_range.cleared);
     cleared.extend(class_feature.cleared);
+    cleared.extend(monster_ability.cleared);
     let mut failures = equipment.failures;
     failures.extend(monster.failures);
     failures.extend(spell.failures);
     failures.extend(spell_range.failures);
     failures.extend(class_feature.failures);
+    failures.extend(monster_ability.failures);
     let mut not_ingested = equipment.not_ingested;
     not_ingested.extend(monster.not_ingested);
     not_ingested.extend(spell.not_ingested);
     not_ingested.extend(spell_range.not_ingested);
     not_ingested.extend(class_feature.not_ingested);
+    not_ingested.extend(monster_ability.not_ingested);
     BarCheckReport {
         cleared,
         failures,
@@ -132,7 +136,8 @@ pub fn run_bar_check(repo_root: &Path) -> BarCheckReport {
             + monster.fixtures_total
             + spell.fixtures_total
             + spell_range.fixtures_total
-            + class_feature.fixtures_total,
+            + class_feature.fixtures_total
+            + monster_ability.fixtures_total,
     }
 }
 
@@ -1400,6 +1405,383 @@ fn run_class_feature_bar_check(repo_root: &Path) -> BarCheckReport {
                 }
             }
         }
+    }
+
+    BarCheckReport { cleared, failures, not_ingested, fixtures_total }
+}
+
+
+// ---------------------------------------------------------------------------
+// `kind = monster_ability` — the save-DC seam (SD31-W15-MONSTER-ABILITY).
+//
+// The `derived`+`grounded` `monster_ability` population is the second-largest
+// held cell on the board (264 units). Every seam above it resolves a magnitude
+// stated on ONE row. This one is different, and deliberately so: its expected
+// value is fixed by TWO independent upstream rows that PF1's own printed rule
+// ties together, so a fixture entry cannot be a restatement of the record the
+// evaluator reads.
+//
+// PF1, `Bestiary` Appendix 1 (Universal Monster Rules), "Format":
+//
+//     "The save DC against a monster's special ability is equal to
+//      10 + 1/2 the monster's racial HD + the monster's relevant ability
+//      modifier."
+//
+// PCGen states the already-summed `10 + 1/2 racial HD` term on the ABILITY
+// row, as the `DESC:` token's argument for the `%N` its prose introduces with
+// the word `DC` (`...succeed at a DC %1 Will save...|15+WIS`). The
+// ability-modifier term stays symbolic — it depends on the creature's live
+// ability score, which this ingest deliberately does not compute (`SD31-E6-
+// F1-002`: a monster's `BONUS:STAT` tokens are ADJUSTMENTS, never scores). It
+// states the racial HD itself on a DIFFERENT row, in a different file, as the
+// trailing segment of `MONSTERCLASS:<type>:<HD>`.
+//
+// So this seam's bar has two halves, and BOTH must hold for a unit to clear:
+//
+//   1. the engine's evaluator, [`monster_ability_save_dc`], run over the
+//      compiled ability record, reproduces the fixture's pinned
+//      `expected.save_dc_base` / `expected.ability`; and
+//   2. [`universal_monster_rule_save_dc_base`], run over the OWNING monster's
+//      compiled stat block, reproduces the same base independently.
+//
+// Half 2 is what makes half 1 non-circular, and it is checked live against the
+// chassis rather than against a number copied into the fixture, so a change to
+// either the printed-rule arithmetic or the owner's ingested Hit Dice turns
+// this check red.
+//
+// **The linked-ability requirement.** PCGen namespaces a monster's own ability
+// rows `<Monster> ~ <Ability>`. An ability whose owner has no monster row in
+// its own book is an ORPHAN — a template-namespaced row no monster applies —
+// and there is no racial HD to apply the printed rule to, so it is never
+// fixtured and never credited.
+//
+// **Where the two derivations disagree, nothing is credited.**
+// `scripts/derive_monster_ability_save_dc_fixtures.py --report` lists every
+// such row rather than dropping it; 23 Bestiary 4 rows sit there today.
+// ---------------------------------------------------------------------------
+
+/// The six PF1 ability abbreviations, spelled as PCGen spells them in a
+/// formula. A BARE abbreviation is the MODIFIER; PCGen spells the score
+/// `<ABBREV>SCORE` (this corpus carries `CHASCORE` on one row), so the two are
+/// distinguishable and only the modifier form is accepted.
+const PF_ABILITY_ABBREVS: [&str; 6] = ["STR", "DEX", "CON", "INT", "WIS", "CHA"];
+
+/// One monster ability's save DC, as far as the corpus states it: the summed
+/// `10 + 1/2 racial HD` term, plus the NAME of the ability whose modifier is
+/// added at play time.
+///
+/// Deliberately not a single integer. Resolving the ability-modifier term
+/// would require the creature's live ability SCORE, which no corpus row states
+/// (`MonsterStatBlock::stat_adjustments` is an adjustment, never a score) —
+/// producing one would be exactly the fabrication `SD31-E6-F1-002` already
+/// refused for this kind.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct MonsterAbilitySaveDc {
+    pub base: i32,
+    pub ability: &'static str,
+    /// The 1-based `%N` slot of the row's `DESC:` argument list this came
+    /// from, so a caller rendering the description knows which placeholder to
+    /// replace.
+    pub desc_argument_index: usize,
+}
+
+/// `10 + 1/2 racial HD`, per the Universal Monster Rule, from the owning
+/// monster's own `MONSTERCLASS:<type>:<HD>` token.
+///
+/// Integer division truncates, which is the rule's own "1/2 HD" rounding
+/// (PF1 rounds fractions down unless told otherwise). Returns `None` rather
+/// than a guess when the row carries no `MONSTERCLASS:` or its trailing
+/// segment is not an integer — the same honest-absence contract
+/// [`spell_like_ability_caster_level`] keeps for the same token.
+pub fn universal_monster_rule_save_dc_base(monster: &MonsterStatBlock) -> Option<i32> {
+    let monster_class = monster.monster_class?;
+    let hd = monster_class.rsplit(':').next()?.trim().parse::<i32>().ok()?;
+    Some(10 + hd / 2)
+}
+
+/// Parses one `DESC:` argument of the shape `<base>+<STAT>` or `<STAT>+<base>`
+/// into `(base, ability)`.
+///
+/// Both operand orders occur in the corpus (`15+WIS` and `CHA+15` are both
+/// live spellings). Anything else — a bare variable name (`ClingDC`), a
+/// full formula (`10+(HD/2)+CON`), a multiplication (`STR*1.5`) — returns
+/// `None`, so a row this cannot read is reported uncovered rather than given
+/// a guessed value.
+fn parse_flat_base_plus_ability(arg: &str) -> Option<(i32, &'static str)> {
+    let (lhs, rhs) = arg.split_once('+')?;
+    let (lhs, rhs) = (lhs.trim(), rhs.trim());
+    let ability_of = |s: &str| PF_ABILITY_ABBREVS.into_iter().find(|a| *a == s);
+    if let Some(ability) = ability_of(rhs) {
+        return lhs.parse::<i32>().ok().map(|base| (base, ability));
+    }
+    if let Some(ability) = ability_of(lhs) {
+        return rhs.parse::<i32>().ok().map(|base| (base, ability));
+    }
+    None
+}
+
+/// The 1-based `%N` slots a description introduces with the literal word `DC`.
+///
+/// Scanned rather than regexed (this crate has no regex dependency, by
+/// design). The word boundary matters: `...deals 3d8+%1 points...` is a damage
+/// term, not a save DC, and must not be claimed by this seam.
+fn dc_placeholder_slots(description: &str) -> Vec<usize> {
+    let bytes = description.as_bytes();
+    let mut slots = Vec::new();
+    let mut i = 0usize;
+    while let Some(found) = description[i..].find("DC") {
+        let at = i + found;
+        i = at + 2;
+        let before_ok = at == 0 || !bytes[at - 1].is_ascii_alphanumeric();
+        if !before_ok {
+            continue;
+        }
+        let mut j = at + 2;
+        // require at least one space between `DC` and `%N`
+        let mut spaces = 0usize;
+        while j < bytes.len() && bytes[j] == b' ' {
+            j += 1;
+            spaces += 1;
+        }
+        if spaces == 0 || j >= bytes.len() || bytes[j] != b'%' {
+            continue;
+        }
+        j += 1;
+        let start = j;
+        while j < bytes.len() && bytes[j].is_ascii_digit() {
+            j += 1;
+        }
+        if j == start {
+            continue;
+        }
+        if let Ok(n) = description[start..j].parse::<usize>() {
+            if n >= 1 {
+                slots.push(n);
+            }
+        }
+    }
+    slots
+}
+
+/// **The evaluator.** The save DC one compiled monster-ability record states,
+/// or `None` when the record states none this engine can read.
+///
+/// This is the function the monster catalog serves from and the function
+/// [`run_monster_ability_bar_check`] holds against the fixture. It reads the
+/// COMPILED `monster_chassis` tables (generated from `data/corpus/`) and
+/// nothing else — never the upstream `.lst`, never the fixture.
+pub fn monster_ability_save_dc(
+    record: &crate::rules_core::rules_tables::monster_chassis::MonsterAbilityRecord,
+) -> Option<MonsterAbilitySaveDc> {
+    let description = record.description?;
+    for slot in dc_placeholder_slots(description) {
+        let Some(arg) = record.description_variables.get(slot - 1) else {
+            continue;
+        };
+        if let Some((base, ability)) = parse_flat_base_plus_ability(arg) {
+            return Some(MonsterAbilitySaveDc { base, ability, desc_argument_index: slot });
+        }
+    }
+    None
+}
+
+/// One `kind=monster_ability` fixture row, in the shape the committed JSON
+/// carries. Its own shape again, not a forced union with [`MonsterFixture`]:
+/// this seam pins TWO upstream rows, so it carries the owner's citation
+/// alongside the ability's.
+#[derive(Debug, Clone)]
+pub struct MonsterAbilityFixture {
+    pub unit_id: String,
+    pub book: String,
+    pub record_key: String,
+    pub upstream_lst: String,
+    pub upstream_lst_sha256: String,
+    pub upstream_line: u64,
+    pub corpus_field: String,
+    pub desc_argument_index: usize,
+    pub desc_argument: String,
+    pub owner_monster_key: String,
+    pub owner_upstream_lst: String,
+    pub owner_upstream_line: u64,
+    pub owner_monster_class_token: String,
+    pub owner_racial_hd: i32,
+    pub universal_monster_rule_base: i32,
+    pub expected_save_dc_base: i32,
+    pub expected_ability: String,
+}
+
+/// Reads the `monster_ability_entries` array of the committed fixture file.
+pub fn load_monster_ability_fixtures(repo_root: &Path) -> Vec<MonsterAbilityFixture> {
+    let path = repo_root.join(FIXTURE_RELATIVE_PATH);
+    let text = std::fs::read_to_string(&path)
+        .unwrap_or_else(|e| panic!("the committed fixture must be readable at {path:?}: {e}"));
+    let doc: serde_json::Value =
+        serde_json::from_str(&text).expect("the committed fixture must be valid JSON");
+    let Some(entries) = doc.get("monster_ability_entries").and_then(|v| v.as_array()) else {
+        return Vec::new();
+    };
+    entries
+        .iter()
+        .map(|e| {
+            let expected = &e["expected"];
+            MonsterAbilityFixture {
+                unit_id: e["unit_id"].as_str().expect("unit_id").to_string(),
+                book: e["book"].as_str().expect("book").to_string(),
+                record_key: e["record_key"].as_str().expect("record_key").to_string(),
+                upstream_lst: e["upstream_lst"].as_str().expect("upstream_lst").to_string(),
+                upstream_lst_sha256: e["upstream_lst_sha256"]
+                    .as_str()
+                    .expect("upstream_lst_sha256")
+                    .to_string(),
+                upstream_line: e["upstream_line"].as_u64().expect("upstream_line"),
+                corpus_field: e["corpus_field"].as_str().expect("corpus_field").to_string(),
+                desc_argument_index: usize::try_from(
+                    e["desc_argument_index"].as_u64().expect("desc_argument_index"),
+                )
+                .expect("a DESC argument index fits in usize"),
+                desc_argument: e["desc_argument"].as_str().expect("desc_argument").to_string(),
+                owner_monster_key: e["owner_monster_key"]
+                    .as_str()
+                    .expect("owner_monster_key")
+                    .to_string(),
+                owner_upstream_lst: e["owner_upstream_lst"]
+                    .as_str()
+                    .expect("owner_upstream_lst")
+                    .to_string(),
+                owner_upstream_line: e["owner_upstream_line"]
+                    .as_u64()
+                    .expect("owner_upstream_line"),
+                owner_monster_class_token: e["owner_monster_class_token"]
+                    .as_str()
+                    .expect("owner_monster_class_token")
+                    .to_string(),
+                owner_racial_hd: i32::try_from(
+                    e["owner_racial_hd"].as_i64().expect("owner_racial_hd"),
+                )
+                .expect("racial HD fits in i32"),
+                universal_monster_rule_base: i32::try_from(
+                    e["universal_monster_rule_base"]
+                        .as_i64()
+                        .expect("universal_monster_rule_base"),
+                )
+                .expect("a save DC base fits in i32"),
+                expected_save_dc_base: i32::try_from(
+                    expected["save_dc_base"].as_i64().expect("expected.save_dc_base"),
+                )
+                .expect("a save DC base fits in i32"),
+                expected_ability: expected["ability"]
+                    .as_str()
+                    .expect("expected.ability")
+                    .to_string(),
+            }
+        })
+        .collect()
+}
+
+/// The `kind=monster_ability` half of [`run_bar_check`].
+///
+/// Resolves through the SAME `monster_chassis::MONSTER_BOOKS` registry
+/// `v06_work_inventory`'s own `grounded` verdict for `monster_ability` already
+/// reads, and the same one the desktop monster catalog serves from — not a
+/// second, parallel table.
+fn run_monster_ability_bar_check(repo_root: &Path) -> BarCheckReport {
+    let fixtures = load_monster_ability_fixtures(repo_root);
+    let fixtures_total = fixtures.len();
+
+    let mut cleared = BTreeSet::new();
+    let mut failures: BTreeMap<String, String> = BTreeMap::new();
+    let mut not_ingested: BTreeMap<String, String> = BTreeMap::new();
+
+    for fixture in &fixtures {
+        let registry_book = monster_registry_book(&fixture.book);
+        let Some(monster_book) = MONSTER_BOOKS.iter().find(|b| b.corpus_book == registry_book)
+        else {
+            not_ingested.insert(fixture.unit_id.clone(), fixture.book.clone());
+            continue;
+        };
+        let Some(record) = monster_book.monster_ability_resolve(&fixture.record_key) else {
+            failures.insert(
+                fixture.unit_id.clone(),
+                format!(
+                    "{:?} does not resolve against {registry_book}'s registered monster abilities",
+                    fixture.record_key
+                ),
+            );
+            continue;
+        };
+
+        // Half 1: the engine's evaluator over the ability record.
+        let Some(evaluated) = monster_ability_save_dc(record) else {
+            failures.insert(
+                fixture.unit_id.clone(),
+                format!(
+                    "corpus row states {} (DESC argument {}) but the evaluator produced no save \
+                     DC at all",
+                    fixture.corpus_field, fixture.desc_argument
+                ),
+            );
+            continue;
+        };
+        if evaluated.base != fixture.expected_save_dc_base
+            || evaluated.ability != fixture.expected_ability
+        {
+            failures.insert(
+                fixture.unit_id.clone(),
+                format!(
+                    "corpus row states DESC argument {} (base {} + {}), evaluator produced base \
+                     {} + {}",
+                    fixture.desc_argument,
+                    fixture.expected_save_dc_base,
+                    fixture.expected_ability,
+                    evaluated.base,
+                    evaluated.ability
+                ),
+            );
+            continue;
+        }
+
+        // Half 2: the printed Universal Monster Rule over the OWNING monster's
+        // stat block, which the evaluator above never reads. This is the half
+        // that makes the fixture's expected value independent of the record
+        // under test, so it is computed live from the chassis rather than
+        // compared against `universal_monster_rule_base` as a stored literal.
+        let Some(owner) = monster_book.monster_resolve(&fixture.owner_monster_key) else {
+            failures.insert(
+                fixture.unit_id.clone(),
+                format!(
+                    "owner {:?} does not resolve against {registry_book}'s registered monsters, \
+                     so the Universal Monster Rule has no racial HD to apply",
+                    fixture.owner_monster_key
+                ),
+            );
+            continue;
+        };
+        let Some(rule_base) = universal_monster_rule_save_dc_base(owner) else {
+            failures.insert(
+                fixture.unit_id.clone(),
+                format!(
+                    "owner {:?} states MONSTERCLASS {:?} but no readable racial HD",
+                    fixture.owner_monster_key, fixture.owner_monster_class_token
+                ),
+            );
+            continue;
+        };
+        if rule_base != fixture.expected_save_dc_base {
+            failures.insert(
+                fixture.unit_id.clone(),
+                format!(
+                    "the Universal Monster Rule over owner {:?} ({}) gives base {}, but the \
+                     ability row states base {}",
+                    fixture.owner_monster_key,
+                    fixture.owner_monster_class_token,
+                    rule_base,
+                    fixture.expected_save_dc_base
+                ),
+            );
+            continue;
+        }
+
+        cleared.insert(fixture.unit_id.clone());
     }
 
     BarCheckReport { cleared, failures, not_ingested, fixtures_total }

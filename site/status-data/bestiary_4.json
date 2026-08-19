@@ -619,11 +619,11 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 286,
-      "partial": 120,
+      "done": 351,
+      "partial": 55,
       "not_started": 165,
       "denominator": 571,
-      "pct": 50.1,
+      "pct": 61.5,
       "excluded_from_percentage": 200,
       "standing_breakdown": {
         "origin": 571,
@@ -710,25 +710,25 @@
         },
         {
           "name": "Accursed Breath",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
         {
           "name": "Acid Blood",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin"
         },
         {
           "name": "Acid Blood",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin"
         },
         {
           "name": "Acidic Tears",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin"
         },
@@ -878,7 +878,7 @@
         },
         {
           "name": "Astral Recoil",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -896,7 +896,7 @@
         },
         {
           "name": "Aura of Lassitude",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.Aura",
           "standing": "origin"
         },
@@ -914,7 +914,7 @@
         },
         {
           "name": "Aura of Whispers",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.Aura",
           "standing": "origin"
         },
@@ -1010,7 +1010,7 @@
         },
         {
           "name": "Blinding Breath",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -1046,7 +1046,7 @@
         },
         {
           "name": "Blow Smoke",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -1124,7 +1124,7 @@
         },
         {
           "name": "Breath Weapon",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified"
         },
@@ -1136,7 +1136,7 @@
         },
         {
           "name": "Breath Weapon",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified"
         },
@@ -1214,7 +1214,7 @@
         },
         {
           "name": "Chains of the Dead",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -1514,7 +1514,7 @@
         },
         {
           "name": "Curse of Scales",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -1574,19 +1574,19 @@
         },
         {
           "name": "Death Throes",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified"
         },
         {
           "name": "Death Throes",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified"
         },
         {
           "name": "Death Throes",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified"
         },
@@ -1598,13 +1598,13 @@
         },
         {
           "name": "Death Throes",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified"
         },
         {
           "name": "Death Throes",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified"
         },
@@ -1652,7 +1652,7 @@
         },
         {
           "name": "Detonate",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -1712,7 +1712,7 @@
         },
         {
           "name": "Disease",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified"
         },
@@ -1724,7 +1724,7 @@
         },
         {
           "name": "Disease",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified"
         },
@@ -1742,13 +1742,13 @@
         },
         {
           "name": "Disease (Blinding Sickness)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
         {
           "name": "Disease (Cackle Fever)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -1784,7 +1784,7 @@
         },
         {
           "name": "Disintegrating Touch",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -1796,7 +1796,7 @@
         },
         {
           "name": "Disorienting Gaze",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -1826,13 +1826,13 @@
         },
         {
           "name": "Dorvae Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
         {
           "name": "Drain Memory",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -1850,13 +1850,13 @@
         },
         {
           "name": "Drown",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
         {
           "name": "Drowning Touch",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -1940,7 +1940,7 @@
         },
         {
           "name": "Enchanting Music",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -1988,13 +1988,13 @@
         },
         {
           "name": "Entangling Slime",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin"
         },
         {
           "name": "Enticing Head-Fruits",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -2012,7 +2012,7 @@
         },
         {
           "name": "Evisceration",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin"
         },
@@ -2090,7 +2090,7 @@
         },
         {
           "name": "Fascination Aura",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Aura",
           "standing": "origin"
         },
@@ -2132,7 +2132,7 @@
         },
         {
           "name": "Fear Aura",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Aura",
           "standing": "unclassified"
         },
@@ -2144,7 +2144,7 @@
         },
         {
           "name": "Fear Aura",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Aura",
           "standing": "unclassified"
         },
@@ -2156,7 +2156,7 @@
         },
         {
           "name": "Fear Cone",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -2186,7 +2186,7 @@
         },
         {
           "name": "Feed",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified"
         },
@@ -2216,7 +2216,7 @@
         },
         {
           "name": "Filth Fever",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin"
         },
@@ -2258,7 +2258,7 @@
         },
         {
           "name": "Fogburst",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -2294,7 +2294,7 @@
         },
         {
           "name": "Frightening Gaze",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -2480,7 +2480,7 @@
         },
         {
           "name": "Heavy Aura",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Aura",
           "standing": "origin"
         },
@@ -2756,13 +2756,13 @@
         },
         {
           "name": "Infectious Laughter",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
         {
           "name": "Infernal Wound",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified"
         },
@@ -2786,7 +2786,7 @@
         },
         {
           "name": "Insane Beauty",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin"
         },
@@ -2804,7 +2804,7 @@
         },
         {
           "name": "Intoxicating Stench",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -2822,7 +2822,7 @@
         },
         {
           "name": "Irritant",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin"
         },
@@ -2858,7 +2858,7 @@
         },
         {
           "name": "Kiss of Death",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -2870,7 +2870,7 @@
         },
         {
           "name": "Lashing Tail",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -2912,7 +2912,7 @@
         },
         {
           "name": "Lightning Lash",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -2966,7 +2966,7 @@
         },
         {
           "name": "Luck Ripple",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin"
         },
@@ -2996,7 +2996,7 @@
         },
         {
           "name": "Magma Shake",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin"
         },
@@ -3008,7 +3008,7 @@
         },
         {
           "name": "Manipulate Luck",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -3044,7 +3044,7 @@
         },
         {
           "name": "Mind Lash",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -3080,13 +3080,13 @@
         },
         {
           "name": "Molten Form",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin"
         },
         {
           "name": "Monk Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified"
         },
@@ -3236,7 +3236,7 @@
         },
         {
           "name": "Numbing Touch",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin"
         },
@@ -3326,7 +3326,7 @@
         },
         {
           "name": "Phasing Attack",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -3386,7 +3386,7 @@
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified"
         },
@@ -3398,7 +3398,7 @@
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified"
         },
@@ -3428,13 +3428,13 @@
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified"
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Supernatural",
           "standing": "unclassified"
         },
@@ -3476,7 +3476,7 @@
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified"
         },
@@ -3488,7 +3488,7 @@
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified"
         },
@@ -3530,13 +3530,13 @@
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified"
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified"
         },
@@ -3770,13 +3770,13 @@
         },
         {
           "name": "Putrid Vomit",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin"
         },
         {
           "name": "Pyroclastic Vomit",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin"
         },
@@ -3788,7 +3788,7 @@
         },
         {
           "name": "Quill Barrage",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin"
         },
@@ -3956,13 +3956,13 @@
         },
         {
           "name": "Roar",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified"
         },
         {
           "name": "Rokurokubi's Curse",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -3986,7 +3986,7 @@
         },
         {
           "name": "Scalding Spray",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin"
         },
@@ -4106,7 +4106,7 @@
         },
         {
           "name": "Shadow Scream",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -4124,7 +4124,7 @@
         },
         {
           "name": "Shake",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin"
         },
@@ -4274,13 +4274,13 @@
         },
         {
           "name": "Slime",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified"
         },
         {
           "name": "Slime Trail",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin"
         },
@@ -4292,19 +4292,19 @@
         },
         {
           "name": "Slowing Toxin",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.Shriezyx",
           "standing": "origin"
         },
         {
           "name": "Smash and Bash",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin"
         },
         {
           "name": "Smashing Breach",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified"
         },
@@ -4364,7 +4364,7 @@
         },
         {
           "name": "Soul Scream",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified"
         },
@@ -4496,7 +4496,7 @@
         },
         {
           "name": "Spores",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified"
         },
@@ -4514,13 +4514,13 @@
         },
         {
           "name": "Staggering Gaze",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
         {
           "name": "Staggering Gaze",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -4538,7 +4538,7 @@
         },
         {
           "name": "Startle",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -4610,7 +4610,7 @@
         },
         {
           "name": "Sucking Wind",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -4730,7 +4730,7 @@
         },
         {
           "name": "Telepathic Feedback",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -4766,7 +4766,7 @@
         },
         {
           "name": "Terrifying Laugh",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -4796,7 +4796,7 @@
         },
         {
           "name": "Tickle",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin"
         },
@@ -4886,7 +4886,7 @@
         },
         {
           "name": "Treasure Form",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin"
         },
@@ -4958,7 +4958,7 @@
         },
         {
           "name": "Unsettling Drone",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Aura",
           "standing": "origin"
         },
@@ -5180,7 +5180,7 @@
         },
         {
           "name": "Weep",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -5216,7 +5216,7 @@
         },
         {
           "name": "Wind Blast",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },

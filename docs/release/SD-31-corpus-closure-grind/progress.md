@@ -27014,3 +27014,178 @@ Moving in the right direction; the population is still its own card (row 246).
   promotions**, for the reason `SD31-E6-F5-005` recorded and this cycle did not overturn: the
   desktop app's corpus loader is a bounded fixture bundle, so those specific records cannot be
   driven through `driver.sh` on this box. Row 242 — operator ruling.
+
+---
+
+## SD31-W15-MONSTER-ABILITY-001 — the `monster_ability` save-DC evaluator seam (2026-08-19)
+
+**Lane:** wave-15 seam lane, `kind=monster_ability`. **Branch:** `worktree-wf_0628906e-65b-2`,
+cut from `tranche/11` `45273fd3b`. **Oracle pin:** `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
+(`./scripts/fetch-pcgen-oracle.sh --check` → `pcgen-oracle: OK 7f818006e3…`).
+**Own `CARGO_TARGET_DIR`:** `/home/ubuntu/cargo-targets/sd31-w15-monster-ability`.
+
+### 0−. Checkout assertion — the SD-30 step-0− defect recurred again
+
+The dispatch worktree was cut at `37a80141e`, **the deploy branch's tip** (`site: publish site/ from
+tranche/11`), not at the dispatched `tranche/11` `45273fd3b`: the tree carried no `docs/`, `data/`,
+`scripts/` or `schemas/` at all, so none of the card's required reads existed. Same defect
+`OPEN-ISSUES` row 250 recorded for `SD31-E1-F3-001` one wave earlier; `git worktree list` shows
+three of this wave's six lanes (`-2`, `-4`, `-6`) got the wrong base and three (`-3`, `-5`) got the
+right one. Recovered on a provably clean tree:
+
+```
+git status --porcelain     # empty
+git reset --hard 45273fd3b # -> HEAD is now at 45273fd3b chore(sd31): wave-14 verify.sh auto-emitted retro events
+```
+
+`retro.py incident` emitted. **This is now a two-wave, four-worktree pattern, not a one-off.**
+
+### 1. The seam
+
+PF1, `Bestiary` Appendix 1 (Universal Monster Rules): *"The save DC against a monster's special
+ability is equal to 10 + 1/2 the monster's racial HD + the monster's relevant ability modifier."*
+
+PCGen states the already-summed `10 + 1/2 racial HD` term **on the ability row**, as the `DESC:`
+token's argument for the `%N` its prose introduces with the word `DC`
+(`…succeed at a DC %1 Will save…|15+WIS`), and states the racial HD itself **on a different row in a
+different file** as the tail of `MONSTERCLASS:<type>:<HD>`. The ability-modifier term stays
+symbolic: it needs the creature's live ability SCORE, and this ingest carries only `BONUS:STAT`
+ADJUSTMENTS (`SD31-E6-F1-002`, row 44) — resolving it would be that finding's refused fabrication.
+
+**Why this fixture is not circular, and why it is stronger than the four seams before it.** Every
+earlier seam in this family pins an expected value read off the SAME row the evaluator parses, so
+its independence rests entirely on the two readings arriving through different artifacts. Here the
+expected value is ALSO fixed by a second corpus row the evaluator never reads, tied to the first by
+the printed rule. An entry is emitted **only when both derivations agree**; a disagreement credits
+nothing. Full derivation, evidence table and the excluded rows:
+`artifacts/SD31-W15-MONSTER-ABILITY-save-dc-seam.md`.
+
+**The linked-ability requirement is enforced structurally.** The owner is resolved from PCGen's own
+`<Monster> ~ <Ability>` key namespacing against the ability file's **own book directory** — never
+from the engine's `owners` field. An orphan (no monster row of its own book) has no racial HD to
+apply the rule to and is excluded; one row fell out that way. The engine side resolves strictly by
+`MonsterBook::monster_ability_resolve` (`a.key == key`), so none of these 92 is exposed to the
+`holds_key` name-fallback shape `OPEN-ISSUES` row 261 found and row 261's 9 residuals still carry.
+
+### 2. Files
+
+| file | what |
+|---|---|
+| `scripts/derive_monster_ability_save_dc_fixtures.py` | NEW. Reads upstream `.lst` bytes for every value; opens no file under `data/corpus/`; reads `docs/work-inventory.json` for identity only. `--report` publishes every exclusion. |
+| `src/rules_core/derived_evaluator_fixture_check.rs` | `monster_ability_save_dc()` (the evaluator), `universal_monster_rule_save_dc_base()` (the printed rule), `MonsterAbilitySaveDc`, `MonsterAbilityFixture`, `load_monster_ability_fixtures()`, `run_monster_ability_bar_check()`, merged into `run_bar_check()`. |
+| `tests/derived_evaluator_fixture_check_monster_ability.rs` | NEW. The four guarantees + two mutation proofs, 8 tests. |
+| `tests/fixtures/rules_core/derived-evaluator-fixtures.json` | +92 `monster_ability_entries` and their three provenance keys. Pure addition: `git diff --numstat` → `1937 0`, and a key-by-key comparison against `HEAD` shows **zero pre-existing key changed**. |
+
+### 3. The derivation, verbatim
+
+```
+export PCGEN_CORPUS_ROOT=/home/ubuntu/workspace/repos/pcgen/data
+python3 scripts/derive_monster_ability_save_dc_fixtures.py --report
+```
+```
+monster_ability derived+grounded units considered: 264
+  no_DC_slot_with_int_plus_stat_argument         146
+  EMITTED                                         92
+  two_derivations_disagree                        23
+  row_states_no_DESC                               2
+  orphan_no_owner_monster_row_in_this_book         1
+```
+
+**All 92 are `bestiary_4`, and that is a corpus fact, not a lane choice.** The inline
+`<base>+<STAT>` spelling of a save-DC argument is a Bestiary 4 convention; the other books in the
+population spell the same fact as a NAMED variable (`…|ClingDC` plus
+`BONUS:VAR|ClingDC|10+(HD/2)+CON`), which lands in the 146 uncovered. That second spelling is a
+real second sub-seam and it was deliberately NOT taken this cycle: there the ability row states the
+FORMULA rather than a value, so the only number available is the one the evaluator itself computes
+from the owner's HD, and a fixture pinning it would be the weak, same-fact-twice shape this wave's
+brief warns against. Recorded rather than banked.
+
+### 4. Mutation proof — the gate genuinely fails
+
+Both mutations were applied to the real source, the suite re-run, and the source restored
+byte-identically (`diff -q` against a pre-mutation copy → identical).
+
+```
+# MUTATION 1, the evaluator (half 1 of the bar)
+MonsterAbilitySaveDc { base, .. }  ->  MonsterAbilitySaveDc { base: base + 1, .. }
+cargo test --locked -j 4 --test derived_evaluator_fixture_check_monster_ability
+# -> test result: FAILED. 6 passed; 2 failed   "92 mismatch(es)"
+
+# MUTATION 2, the printed rule (half 2 — the half that makes half 1 non-circular)
+Some(10 + hd / 2)  ->  Some(10 + hd / 3)
+# -> test result: FAILED. 6 passed; 2 failed   "88 mismatch(es)"
+#    (the 4 survivors are owners with racial HD <= 2, where hd/2 == hd/3)
+
+# RESTORED
+# -> test result: ok. 8 passed; 0 failed; 0 ignored
+```
+
+### 5. Guarded regen — the measured delta
+
+```
+cp docs/work-inventory.json <scratch>/work-inventory-BEFORE.json
+cargo run --locked -j 4 --bin corpus_literal_sweep -- --json-out <scratch>/sweep-w15.json
+# -> 26105 records examined of 26741 read, 252158 tokens compared, 0 findings, CLEAN
+cargo run --locked -j 4 --bin derived_evaluator_fixture_check -- --json-out <scratch>/fixture-w15.json
+# -> 1368 of 1368 covered units cleared; 0 failed; 0 not ingested   (92 of them monster_ability)
+CORPUS_LITERAL_SWEEP_REPORT=<scratch>/sweep-w15.json \
+DERIVED_FIXTURE_CHECK_REPORT=<scratch>/fixture-w15.json \
+  cargo run --locked -j 4 --bin v06_work_inventory     # REGEN_EXIT=0, zero stamp loss reported
+```
+
+`git diff -- docs/work-inventory.json` → **exactly 92 units flip `grounded` → `fixture-verified`**,
+all `bestiary_4` `monster_ability`, nothing else moves (cross-tab `fixture-verified` 1193 → 1285,
+`grounded` 2657 → 2565; per-kind `monster_ability` gains `fixture-verified: 92` and drops
+`grounded` 163 → 71).
+
+**Board delta, measured by replaying the dashboard producer's own `doneness_verdict()` over
+`docs/work-inventory.json` with `EXCLUDED_BOOKS={'beginner_box'}` — never asserted:**
+
+```
+python3 - <<'PY'
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+before = json.load(open('<scratch>/work-inventory-BEFORE.json'))
+after  = json.load(open('docs/work-inventory.json'))
+def tally(d):
+    U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+    c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+    return len(U), c
+nb, cb = tally(before); na, ca = tally(after)
+print('BEFORE', nb, dict(cb), round(100*cb['done']/nb,4))
+print('AFTER ', na, dict(ca), round(100*ca['done']/na,4))
+PY
+```
+→ **BEFORE** 38,521 units · `done` **12,277 (31.8709 %)** · `held` 1,677 — reproducing the
+orchestrator's dispatch board exactly.
+→ **AFTER** 38,521 units · `done` **12,369 (32.1098 %)** · `held` **1,585**.
+→ **delta: +92 `done`, −92 `held`.** `not-started` 18,030, `unmeasurable` 5,110, `in-progress`
+1,389, `deferred` 38 — all four identical before and after. Nothing left the denominator; no race
+attribution touched; no Supersession Register entry applied.
+
+Per-kind: `monster_ability` `done` 1,456 → 1,548, `held` **351 → 259**, `not-started` 1,144
+unchanged.
+
+**Public feed refreshed on the same commit** per loop-instruction override 10:
+`./scripts/publish-site-dashboard.sh` (real publish, exit 0) → `site/dashboard/PF1e-dashboard.json`,
+`site/dashboard/units/PF1e-units-monster_ability.json`, `site/dashboard/units/index.json`,
+`site/status-data.json` (30 books, overall 36.9 %) and `site/status-data/bestiary_4.json`.
+
+### 6. What this cycle could NOT do
+
+* **The 23 `bestiary_4` rows whose two derivations disagree are not credited and not resolved.**
+  Every one is `bestiary_4`; every other book agrees 100 %; the offsets are not uniform (−6 to +2),
+  so this is not one systematic rule. Either the printed stat blocks deviate, or Bestiary 4's
+  racial-HD attribution is wrong. All 23 published with both values. Row 265.
+* **The verified DC is still not on a player's screen.** `render_pcgen_desc` drops a `%N` it cannot
+  resolve to an INTEGER, and `15+WIS` is not one, so `monster_catalog.rs::serve_ability_description`
+  renders *"must succeed at a DC Will save"* for these 92 rows today. `PcgenDisplayValues` is an
+  integer table and cannot carry "15 + the creature's Wisdom modifier"; closing it needs a
+  `save_dc` DTO field, a frontend render, a reach-gate claim and a DoD-8 pass — outside this lane's
+  stated write scope, and `monster_catalog.rs` is also held by the wave-15 seam-monster lane. Row
+  266. **The `done` credit does not rest on this**: these 92 were already `grounded` by a real
+  consumer-delta observation, and what the fixture adds is evaluator fidelity.
+* **The named-variable spelling (the other ~39 `BONUS:VAR|<name>|10+(HD/2)+<STAT>` rows) was not
+  fixtured**, on purpose — see §3.
+* **DoD item 8 (on-screen driving) was not performed**, for the same reason: this cycle adds no new
+  player-visible magnitude. It adds an evaluator and its verification.

@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-08-19T01:14:14Z",
+  "generated_at": "2026-08-19T11:38:07Z",
   "doneness_values": [
     "done",
     "partial",
     "not-started"
   ],
   "overall": {
-    "done": 10825,
-    "partial": 2572,
+    "done": 10890,
+    "partial": 2507,
     "not_started": 16093,
     "denominator": 29490,
-    "pct": 36.7,
+    "pct": 36.9,
     "excluded_from_percentage": 9031,
     "standing_breakdown": {
       "origin": 29490,
@@ -176,11 +176,11 @@
     {
       "id": "bestiary_4",
       "title": "Bestiary 4",
-      "done": 537,
-      "partial": 165,
+      "done": 602,
+      "partial": 100,
       "not_started": 325,
       "denominator": 1027,
-      "pct": 52.3,
+      "pct": 58.6,
       "excluded_from_percentage": 309,
       "standing_breakdown": {
         "unclassified": 309,
