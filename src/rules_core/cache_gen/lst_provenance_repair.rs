@@ -188,6 +188,11 @@ fn record_paths(dir: &Path) -> Vec<PathBuf> {
     out
 }
 
+/// One record's decided provenance: the new `source` value, the web citation
+/// to move to `description_source`, and the `(wiring_class, signals)` pair
+/// refreshed from the row that was just cited.
+type DecidedProvenance = (Value, Value, (String, Vec<String>));
+
 /// Decides one already-parsed record. Returns the new `source` value plus
 /// the web citation to move to `description_source`, or the refusal.
 ///
@@ -204,7 +209,7 @@ fn decide(
     row: &str,
     identities: &BTreeSet<String>,
     mod_index: &BTreeMap<String, Vec<String>>,
-) -> Result<(Value, Value, (String, Vec<String>)), Refusal> {
+) -> Result<DecidedProvenance, Refusal> {
     if is_copy_row(row) {
         return Err(Refusal::CopyRowNotResolved(record_path.to_string()));
     }
