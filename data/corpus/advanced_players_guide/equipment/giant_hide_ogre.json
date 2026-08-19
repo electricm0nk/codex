@@ -1,27 +1,91 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Giant Hide (Ogre)",
     "category": "ArmsArmor",
-    "name": "[NAME]-hide",
     "cost_gp": 15.0,
-    "weight": 25.0,
-    "description": "A +3 hide armor that lets the wearer transform, once per day, into the matching giant's form for up to 15 minutes."
+    "description": "A +3 hide armor that lets the wearer transform, once per day, into the matching giant's form for up to 15 minutes.",
+    "key": "Giant Hide (Ogre)",
+    "name": "[NAME]-hide",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "4",
+          "TYPE=Armor",
+          "PREVAREQ:DisableArmorBonus,0"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "[NAME]-hide"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Hide"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Armor.Medium.ArmorProfMedium.Suit.Specific.Nonmetal"
+      },
+      {
+        "key": "COST",
+        "value": "15"
+      },
+      {
+        "key": "WT",
+        "value": "25"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "-3"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ +3 ~ Armor"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "4"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.284"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "20"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Giant-Hide Armor|TIMES=1|CASTERLEVEL=15|Giant Form I"
+      }
+    ],
+    "weight": 25.0
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/armor.html",
+  "description_source": {
+    "citation_precision": "exact_item_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+weight",
-    "citation_precision": "exact_item_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/armor.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 33,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_arms_armor.lst",
+    "record_key": "Giant Hide (Ogre)",
+    "sha256": "f3e6aea97309b4c0e3746245c112d0880f014ae69077be5b3deba0567aeb8468"
   },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

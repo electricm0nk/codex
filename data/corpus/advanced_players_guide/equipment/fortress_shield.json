@@ -1,27 +1,103 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Fortress Shield",
     "category": "ArmsArmor",
-    "name": "Fortress Shield",
     "cost_gp": 19180.0,
-    "weight": 45.0,
-    "description": "A +1 tower shield that can create a sealed iron cube providing total cover, requiring occupants to hold their breath after the third round."
+    "description": "A +1 tower shield that can create a sealed iron cube providing total cover, requiring occupants to hold their breath after the third round.",
+    "key": "Fortress Shield",
+    "name": "Fortress Shield",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "4",
+          "TYPE=Shield",
+          "PREVAREQ:DisableShieldBonus,0"
+        ]
+      },
+      {
+        "qualifiers": [
+          "WEAPON",
+          "TOHIT",
+          "-2",
+          "PREABILITY:1,CATEGORY=FEAT,Tower Shield Proficiency"
+        ]
+      },
+      {
+        "qualifiers": [
+          "WEAPON",
+          "TOHIT",
+          "SHIELDACCHECK",
+          "!PREABILITY:1,CATEGORY=FEAT,Tower Shield Proficiency"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "SHIELD|Tower Shield"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Shield.Tower.Standard.Close.Nonmetal"
+      },
+      {
+        "key": "COST",
+        "value": "19180"
+      },
+      {
+        "key": "WT",
+        "value": "45"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "-10"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ +1 ~ Armor.Material ~ Wood"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.286"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "50"
+      },
+      {
+        "key": "SPROP",
+        "value": "As a full-round action, transform the shield into a 1-inch thick cube of iron that springs into being, completely enclosing the bearer."
+      }
+    ],
+    "weight": 45.0
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/armor.html",
+  "description_source": {
+    "citation_precision": "exact_item_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+cost",
-    "citation_precision": "exact_item_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/armor.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 51,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_arms_armor.lst",
+    "record_key": "Fortress Shield",
+    "sha256": "f3e6aea97309b4c0e3746245c112d0880f014ae69077be5b3deba0567aeb8468"
   },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

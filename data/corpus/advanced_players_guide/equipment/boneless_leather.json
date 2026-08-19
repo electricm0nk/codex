@@ -1,28 +1,109 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Boneless Leather",
     "category": "ArmsArmor",
-    "name": "Boneless Leather",
     "cost_gp": 11010.0,
-    "weight": 15.0,
-    "description": "A +1 leather armor granting a +5 bonus on Escape Artist and Acrobatics checks, a +5 bonus to CMD, and DR 5/piercing or slashing."
+    "description": "A +1 leather armor granting a +5 bonus on Escape Artist and Acrobatics checks, a +5 bonus to CMD, and DR 5/piercing or slashing.",
+    "key": "Boneless Leather",
+    "name": "Boneless Leather",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "2",
+          "TYPE=Armor",
+          "PREVAREQ:DisableArmorBonus,0"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Acrobatics=Reduce Damage from Falls",
+          "5"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SKILL",
+          "Escape Artist",
+          "5"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "CMB",
+          "5"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Leather"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Armor.Light.ArmorProfLight.Suit.Specific.Nonmetal"
+      },
+      {
+        "key": "COST",
+        "value": "11010"
+      },
+      {
+        "key": "WT",
+        "value": "15"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "0"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Leather.Special Ability ~ +1 ~ Armor"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "6"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.284"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "10"
+      },
+      {
+        "key": "DR",
+        "value": "5/Piercing or Slashing"
+      }
+    ],
+    "weight": 15.0
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/armor.html",
+  "description_source": {
+    "citation_precision": "exact_item_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+weight",
-    "citation_precision": "exact_item_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/armor.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 28,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_arms_armor.lst",
+    "record_key": "Boneless Leather",
+    "sha256": "f3e6aea97309b4c0e3746245c112d0880f014ae69077be5b3deba0567aeb8468"
   },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",
     "derived:dr"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

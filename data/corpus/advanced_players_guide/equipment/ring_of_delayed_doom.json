@@ -1,27 +1,57 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Ring of Delayed Doom",
     "category": "MagicItems",
-    "name": "Ring of Delayed Doom",
     "cost_gp": 45000.0,
-    "weight": null,
-    "description": "A ring set with garnets that lets its wearer delay a harmful saving-throw effect by destroying a garnet, for up to nine total one-minute delays."
+    "description": "A ring set with garnets that lets its wearer delay a harmful saving-throw effect by destroying a garnet, for up to nine total one-minute delays.",
+    "key": "Ring of Delayed Doom",
+    "name": "Ring of Delayed Doom",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Ring"
+      },
+      {
+        "key": "COST",
+        "value": "45000"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Charged Item / 9 Maximum"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.292"
+      },
+      {
+        "key": "SPROP",
+        "value": "Whenever your mind or body first becomes subject to any harmful effect that allows a saving throw to resist or mitigate it, you may, as an immediate action, choose to delay the onset of that effect for 1 minute."
+      }
+    ],
+    "weight": null
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html",
+  "description_source": {
+    "citation_precision": "category_aggregate_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+cost",
-    "citation_precision": "category_aggregate_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 108,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_magic_items.lst",
+    "record_key": "Ring of Delayed Doom",
+    "sha256": "215c58046b3919dd191b8e605dc59e881507ee8133aabaacf6be105124a0add3"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

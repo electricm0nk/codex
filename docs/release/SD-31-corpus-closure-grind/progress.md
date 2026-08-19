@@ -25520,3 +25520,414 @@ failed on the first desktop run and named
 been updated; `sd_governance_stub_registry_divergence` refused a registry entry with no artifact;
 and `sd27_book_license_record_counts` turned out to have been MASKING a second failure
 (`advanced_race_guide` sorts after `advanced_players_guide`, and `assert_eq!` stops at the first).
+
+## SD31-E6-F5-005 — equipment lane: 412 corpus records had a web citation for corpus-derived values (2026-08-18)
+
+**Card:** `epic-6-ingest-lanes` F5 `equipment` / F6 `equipment_modifier` (wave 14 lane
+`epic-6-ingest-lanes`). **Actor:** `sd31-ingest6-w14` · **Worktree branch:**
+`worktree-wf_1ad13e3b-085-6`, not merged to `tranche/11` by this cycle — the integration cycle
+owns the merge (SD-30 loop-instruction cycle-mechanics 5a).
+
+### §0 — Cycle-0 preconditions
+
+**Checkout assertion (step 0−) — RECOVERY REQUIRED, recorded per the rule that says say so.**
+This lane's worktree was cut at `37a80141e` — `origin/main`'s tip, a **site-deploy state** carrying
+only `apps/ site/ src/ tests/` with **no `docs/`, `scripts/`, or `data/` tree at all**, so none of
+the card's required reads existed. This is the identical defect SD-30 cycle-mechanics step 0−
+documents (predecessor worktrees cut at `7d9f1c4f`, `origin/main`'s tip). Recovered on a clean tree:
+
+```
+$ git status --porcelain          # empty
+$ git reset --hard tranche/11
+HEAD is now at 12f1f5c94 chore(sd31): regen the dashboard + status feeds after the Core Essentials move
+```
+
+**Starting HEAD after recovery: `12f1f5c94`.** The four sibling wave-14 worktrees
+(`wf_1ad13e3b-085-2` … `-5`) were all sitting at the same wrong base `37a80141e` when this cycle
+started (`git worktree list`) — flagged to the dispatcher below, since a lane that does not notice
+will silently do its work against a tree with no corpus.
+
+**Oracle pin (override 8), first command after the branch-state check:**
+
+```
+$ ./scripts/verify.sh --only preflight-oracle
+    PASS  preflight-oracle  (oracle at pin 7f818006e371188e5717fd18d74d18a420747fc6)
+```
+
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/pcgen-oracle-pin.env`).
+Every figure below is derived against that pin.
+
+**Disk (cycle-mechanics 1c):** `df -B1G /` → `968 total / 225 used / 744 avail / 24 %` at claim;
+`./scripts/verify.sh --only preflight-disk` PASS. `nproc` 24, `free -g` 167 total / 76 free.
+Own `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-w14-ingest6`, never under `/tmp`.
+
+**PI-gate citation (override 2) — NOT APPLICABLE, and why.** This cycle pins no new book: every
+record it touches is already ingested and already shipped under `data/corpus/`. It writes no new
+`name` or `description` value at all (see §2), so no new text enters the shipping surface for
+SD-30 `epic-3-pi-gate` to have screened. The declared-PI posture is nevertheless *verified* rather
+than assumed — `declared_pi_shipping_audit`, `site-dashboard-pi-gate` and `site-public-status-pi-gate`
+all run in the full gate below.
+
+### §1 — The defect, stated at source
+
+`rules_tables::apg::equipment_data`'s own module doc comment says plainly how APG equipment was
+sourced: `key`, `cost_gp` and `weight` were **generated from the real PCGen corpus**
+(`COST:`/`WT:`/`OUTPUTNAME:`/`KEY:` tokens in `apg_equip_general.lst` / `apg_equip_arms_armor.lst` /
+`apg_equip_magic_items.lst`); only `description` came from a web second source, because those three
+files carry **zero** `DESC:` tokens.
+
+The shipped records nevertheless stamped the **whole record** `source: {kind: "web_second_source",
+url: "https://legacy.aonprd.com/..."}`. Census, re-derived at this cycle's HEAD:
+
+```
+$ python3 -c 'import json,glob,os,collections
+c=collections.Counter()
+for f in glob.glob("data/corpus/*/equipment/**/*.json",recursive=True):
+    if os.path.basename(f)=="LICENSE.json": continue
+    r=json.load(open(f)); s=r.get("source") or {}
+    c[(f.split("/")[2], s.get("kind"), "raw_tokens" in (r.get("data") or {}))]+=1
+print([kv for kv in sorted(c.items()) if kv[0][1]!="lst_token"])'
+#   advanced_players_guide  web_second_source  331   (raw_tokens absent)
+#   core_rulebook           web_second_source   82   (raw_tokens absent)
+#   beastiary               web_second_source    1   (raw_tokens absent)
+#   core_rulebook           lst_corrected_ingest 67
+#   core_rulebook           lst_inherited_copy  117
+#   bestiary                lst_token            3   (raw_tokens absent)
+```
+
+`corpus_literal_sweep`'s population is `source.kind == "lst_token"` **with** `data.raw_tokens`
+(`src/rules_core/corpus_literal_sweep.rs:511`, `SweepTally::records_examined`), so those 414
+records were never byte-compared against the corpus at all and their units could not leave the
+`held` rung. This is the fourth bucket `OPEN-ISSUES.md` **row 11** named and asked for a ruling on,
+the blocker **row 67** hit, and the exact fix **row 191** wrote out and assigned to this lane
+("re-ingest `spindle_of_perfect_knowledge` from `apg_equip_magic_items.lst:13` … engineering
+follow-up for the equipment lane").
+
+**Row 11's ruling question is answered without loosening any bar.** The proposal there was to give
+`web_second_source` units *a different done-bar*, which Decision 1(a) prohibits. This cycle does the
+opposite: it leaves the `static` done-bar exactly where it is and fixes the **citation**, so the
+existing bar can be applied to these records for the first time.
+
+### §2 — What was built
+
+`src/rules_core/cache_gen/lst_provenance_repair.rs` (new, 7 unit tests) +
+`src/bin/repair_lst_provenance.rs` (new driver, `--check` dry run). For each `web_second_source`
+equipment record it:
+
+1. resolves the identity (`data.key`, else `data.name`) with `equipment_gap::find_citation` — the
+   resolver `cache_gen::equipment_gap` and `cache_gen::hand_authored_equipment` already use, not a
+   fork;
+2. builds that row's token closure with `corpus_literal_sweep::token_closure` over
+   `wiring_class::build_mod_index` — **the gate's own functions**, so the precondition here is the
+   gate's predicate, not a weaker sibling of it;
+3. requires every typed magnitude the record actually claims (`cost_gp`, and `weight_lbs` **or** its
+   APG/ACG/Bestiary-era spelling `weight`) to be numerically present in that closure under
+   `COST:` / `WT:`;
+4. only then narrows `source` to `lst_token` (path/sha256/line/record_key) and moves the web
+   citation, **in full**, to an additive `description_source` key.
+
+**No value is invented and no field is rewritten.** `name`, `description`, `cost_gp`, `weight`,
+`license`, `pi_field`, `pi_marker`, `population`, `completeness`, `ingested_at`, `wiring_class` are
+all untouched; the only change is a citation getting more specific plus the `raw_tokens` the
+existing `enrich_equipment_raw_tokens` adds afterwards. The tool operates on raw
+`serde_json::Value`, never a typed round-trip, for the reason that tool's own doc comment records
+at length (a typed round-trip silently dropped `weight`/`equip_type`/`plus` on its first version).
+
+**`weight` is checked by this module even though the sweep reads only `weight_lbs`.** These records
+spell it `weight`, so the sweep's typed-field check silently skips it for exactly the population
+this module moves into the sweep. Upgrading a record whose weight the gate will never look at would
+manufacture an unfalsifiable pass; the check happens where the claim is created instead.
+
+**Refusals are reported by name, never counted away:** `UnresolvedCitation`, `DisabledRow`,
+`MagnitudeDisagreement`, `CopyRowNotResolved` (a `.COPY=` row's inherited tokens are the sweep's own
+resolution rule and this module does not fork it), `NoIdentity`.
+
+### §3 — Mutation proofs (Decision 1(a): a gate that cannot fail is worse than no gate)
+
+**(a) The module's own magnitude check.** Neutering `magnitude_is_corpus_backed` to `return true`
+fails exactly the two tests that assert refusal:
+
+```
+test a_cost_the_corpus_row_does_not_state_refuses ... FAILED
+test a_weight_the_corpus_row_does_not_state_refuses_under_either_field_name ... FAILED
+test result: FAILED. 5 passed; 2 failed
+```
+Reverted; `cargo test --locked --lib cache_gen::lst_provenance_repair` → `7 passed; 0 failed`.
+
+**(b) The sweep really examines the newly-cited records — both dimensions.** After the repair,
+seeded a wrong value into `data/corpus/advanced_players_guide/equipment/abacus.json` (one of the
+newly narrowed records) and ran the real `corpus_literal_sweep`:
+
+```
+# cost_gp 2.0 -> 999.0
+corpus-literal-sweep: MISMATCH data/corpus/advanced_players_guide/equipment/abacus.json:
+  typed field cost_gp=999 is not byte-derivable from any COST: entry in the corpus token closure
+# raw_tokens[0].value TYPE:Goods.Tools -> TYPE:Goods.NotReal
+corpus-literal-sweep: MISMATCH data/corpus/advanced_players_guide/equipment/abacus.json:
+  token not byte-present in corpus token closure: TYPE:Goods.NotReal
+```
+Both reverted from a pre-seed backup; sweep re-confirmed CLEAN before commit.
+
+**Which half of the evidence is independent, stated plainly.** `raw_tokens` are transcribed from the
+cited row by `enrich_equipment_raw_tokens`, so the sweep's *token* comparison on these 412 records
+is a transcription check, not an independent one. The **typed-field** comparison is independent:
+`cost_gp` was authored from the web second source months ago (`ingested_at` 2026-08-03) and this
+cycle compared it, unchanged, against the pinned oracle's `COST:` token — 412/412 agreed, and proof
+(b) shows a disagreement would have been caught. Same for `weight`, checked by §2 step 3.
+
+### §4 — Commands run and what they returned
+
+```
+$ cargo run --locked --bin repair_lst_provenance -- --check
+advanced_players_guide: 330 narrowed, 42 already cited, 1 refused, of 373 read
+  REFUSED  .../equipment/hammer_ricochet.json: cited row is a .COPY= declaration; base row not folded in
+beastiary: 0 narrowed, 3 already cited, 1 refused, of 4 read
+  REFUSED  .../equipment/rag_armor_dark_creeper.json: no corpus row matches this record's identity
+core_rulebook: 82 narrowed, 2911 already cited, 0 refused, of 2993 read
+repair-lst-provenance: 412 narrowed, 2 refused
+$ cargo run --locked --bin repair_lst_provenance          # same figures, written
+
+$ cargo run --locked --bin enrich_equipment_raw_tokens
+enrich_equipment_raw_tokens: 412 enriched, 186 no-LST-citation (untouched), 6683 already-enriched,
+  0 skipped (declared NAMEISPI:YES), 0 citation misses, 0 merged-entry mismatches
+
+$ cargo run --locked --bin corpus_literal_sweep           # BEFORE this cycle's change
+corpus-literal-sweep: 25688 records examined of 26736 read, 249119 tokens compared (9 synthesized),
+  26311 digests checked, 0 findings — CLEAN
+$ cargo run --locked --bin corpus_literal_sweep           # AFTER
+corpus-literal-sweep: 26100 records examined of 26736 read, 252102 tokens compared (9 synthesized),
+  26723 digests checked, 0 findings — CLEAN
+#   +412 records examined, +2,983 tokens compared, +412 digests checked, still zero findings.
+
+$ cargo run --locked --bin derived_evaluator_fixture_check -- --json-out ...
+derived-evaluator-fixture-check: 1276 of 1276 covered units cleared; 0 failed; 0 not ingested
+```
+
+**The standing 1-unit fixture failure is gone.** The most recent recorded baseline in this file
+(`SD31-D14-PROV-001`, 2026-08-17) reads `1267 of 1268 covered units cleared; 1 failed (pre-existing…)`
+— `advanced_players_guide:equipment:spindle_of_perfect_knowledge`, the failure rows 67 and 191 named
+and every prior wave re-confirmed. Its record now cites the row row 191 identified:
+
+```
+$ python3 -c 'import json;print(json.load(open("data/corpus/advanced_players_guide/equipment/spindle_of_perfect_knowledge.json"))["source"])'
+{"kind": "lst_token", "line": 13,
+ "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_magic_items.lst",
+ "record_key": "Spindle of Perfect Knowledge",
+ "sha256": "215c58046b3919dd191b8e605dc59e881507ee8133aabaacf6be105124a0add3"}
+# raw_bonus_chains now carries ["STAT","INT,WIS,CHA","4","TYPE=Enhancement"] — the fixture's expectation.
+```
+
+### §5 — Guarded regen and the measured movement
+
+```
+$ cargo run --locked --bin corpus_literal_sweep -- --json-out /tmp/…/sweep.json
+$ cargo run --locked --bin derived_evaluator_fixture_check -- --json-out /tmp/…/fixture.json
+$ CORPUS_LITERAL_SWEEP_REPORT=/tmp/…/sweep.json DERIVED_FIXTURE_CHECK_REPORT=/tmp/…/fixture.json \
+    cargo run --locked --bin v06_work_inventory
+WI_EXIT=0        # zero stamp loss; --allow-stamp-loss NOT used
+```
+
+**Doneness measured by replaying `doneness_verdict()`, never asserted** — the before/after documents
+run through `pf1e_dashboard_producer.doneness_verdict(wiring_class, status, kind)` per unit,
+`beginner_box` excluded:
+
+| verdict | before | after | delta |
+|---|---:|---:|---:|
+| done | 11,829 | **12,175** | **+346** |
+| held | 1,886 | 1,599 | −287 |
+| in-progress | 1,405 | 1,386 | −19 |
+| unmeasurable | 5,127 | 5,087 | −40 |
+| not-started | 18,236 | 18,236 | 0 |
+| deferred | 38 | 38 | 0 |
+| **denominator** | 38,521 | 38,521 | 0 |
+| **done %** | 30.7079 % | **31.6061 %** | +0.8982 pt |
+
+Per-unit transition audit — **0 units lost `done`, 0 unit ids dropped or added**:
+
+| n | book | kind | transition |
+|---:|---|---|---|
+| 287 | advanced_players_guide | equipment | `static/ingested-magnitude` → `static/literal-verified` |
+| 40 | core_rulebook | equipment_modifier | `display/unknown` → `display/text-complete` |
+| 18 | advanced_players_guide | equipment | `computed/ingested-magnitude` → `computed/grounded` |
+| 1 | core_rulebook | equipment_modifier | `computed/ingested-magnitude` → `computed/grounded` |
+
+**All three transitions traced to root cause, not assumed:**
+
+* **287 → `literal-verified`** is the designed effect: the sweep can now reach them.
+* **19 → `grounded`** carry evidence `equipment_effect_probe_observed_computed_delta`
+  (`v06_work_inventory.rs:5255`) — the engine's own equipment-effect probe **observed a real
+  computed delta** for the first time, because `raw_tokens` is what the book-agnostic resolvers
+  read (`shape_b_v1::RawToken`'s doc comment). An Agile Breastplate now actually applies. This is a
+  real wiring gain, not a bookkeeping one.
+* **40 → `text-complete`** is an **instrument-blindness fix**, and it is the one movement in this
+  cycle that deserves scrutiny, so here is the whole chain:
+  `load_corpus_json_descriptions` (`v06_work_inventory.rs:4208`) indexes a record's description by
+  `(source.path, source.line, source.record_key)` and `continue`s past any record lacking
+  `/source/path` or `/source/line` — which a `web_second_source` record lacks **by construction**.
+  So `has_real_description` was false for these 40 and `classify` returned
+  `unknown` / `text_only_but_corpus_record_carries_no_description_to_show_a_player`. The
+  descriptions were shipped all along; read one in full to confirm rather than trusting the flag:
+  `data/corpus/core_rulebook/equipment/equipmods/special_ability_arrow_catching_shield.json` carries
+  a 600-character rules description of Arrow Catching. The promotion path
+  (`v06_work_inventory.rs:5207`) still gates on `!universal_sheet_modifier` and on
+  `!corpus_json_description_leaks_pcgen_syntax`, both unchanged by this cycle.
+  **Honest shortfall:** DoD item 8 (on-screen verification) was NOT performed for these 40. The
+  desktop app's corpus loader is a bounded fixture bundle (`corpus_fixtures.rs`: *"not a general
+  corpus provider"*), so these records are not reachable through `driver.sh` on this box. The claim
+  rests on the shipped description being real prose (read directly) plus the instrument's own
+  `is_real_description_value` and PCGen-syntax-leak guards — stated as a shortfall, not waved past.
+
+### §6 — Public feed (override 10)
+
+`docs/work-inventory.json` changed, so the refresh is this cycle's job:
+
+```
+$ ./scripts/publish-site-dashboard.sh        # real publish, not --check
+SITE_EXIT=0
+wrote site/dashboard/PF1e-dashboard.json
+Wrote site/status-data.json (30 books, overall 36.5%) and 30 book-detail files (36028 items)
+```
+
+**Override 9 applies — `status_sources_agree` is `false` at this tip, so the source is named.**
+The figures quoted here come from the **committed full document's cross-tab**
+(`work_inventory.by_doneness` / `mandate_headline`), whose own stamp is
+`doneness_source_generated_at: 2026-08-18T22:55:20Z` — identical to this cycle's own
+`docs/work-inventory.json` `generated_at`. The other source (a fresh `v06_work_inventory --summary`,
+`by_status`) is stamped `generated_at: 2026-08-18T22:54:25Z`, i.e. one minute *older* than the regen,
+which is why the field reads `false`. The table in §5 was derived independently of the dashboard, by
+replaying `doneness_verdict()` over `docs/work-inventory.json` directly, and agrees with
+`mandate_headline` exactly: `12175 / 38521`.
+
+### §7 — What this cycle could NOT do
+
+1. **`hammer_ricochet` (APG)** — cited row is a `.COPY=` declaration. Refused rather than upgraded
+   on a closure that may be missing inherited tokens; `corpus_literal_sweep`'s own `.COPY=`
+   resolution (`SD31-E6-F6-001`) would need lifting into a shared helper first. 1 unit still held.
+2. **`rag_armor_dark_creeper` (beastiary)** — no row in `core_essentials` matches either identity.
+   Not fabricated; left `web_second_source`.
+3. **41 CRB `lst_corrected_ingest` / 117 `lst_inherited_copy` records** are still outside the
+   sweep's population by deliberate design (their bytes were intentionally altered). Untouched —
+   that is row 11's genuinely different question and this cycle does not answer it.
+4. **The 43 APG `computed` equipment units** that were already `in-progress` cannot be moved by a
+   citation fix; `computed` reaches `done` only via `grounded`, and 18 of them did exactly that on
+   their own once `raw_tokens` existed. The other 25 need real effect wiring.
+5. **DoD item 8** for the 40 `equipment_modifier` text promotions — see §5.
+
+### §8 — Wired-integration four-check audit (base `12f1f5c94`, no-stub doctrine §"Per-cycle audit")
+
+```
+1  OK_NO_TOKENS
+2  OK_NO_NOOP_HANDLERS
+3  OK_NO_MOCK_LEAKS
+4  OK_NO_WOULD_STRINGS
+```
+
+### §9 — Gate, run 1: found 5 failures this cycle caused, and 14 it inherited
+
+```
+RETRO_ACTOR=sd31-ingest6-w14 CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-w14-ingest6 \
+  ./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"
+VERIFY_EXIT=1   RESULT: FAIL — root-full desktop reach frontend-test clippy
+```
+Log preserved at `artifacts/SD31-E6-F5-005-verify-run1.log`.
+
+**Every `test result: FAILED` line was attributed back to its `Running` line and named** — no
+"the N known environmental failures" bucket (`AGENTS.md` §Concurrency).
+
+**Caused by this cycle — 5 tests + a clippy ceiling breach, all fixed at the source (commit
+`c21623fce`), none excused, none of the invariants weakened:**
+
+| test | cause | fix |
+|---|---|---|
+| `derived_evaluator_fixture_check::engine_evaluator_output_equals_the_corpus_derived_expected_value` | *"1 unit(s) clear the `derived` bar but are still on the `UNCLEARED` record"* | `UNCLEARED` emptied — see below |
+| `derived_evaluator_fixture_check::engine_ingest_cites_the_same_upstream_bytes_the_fixture_was_read_from` | *"`spindle_of_perfect_knowledge` is recorded in `UNCLEARED` but now passes. Delete the entry — a stale excuse left in place is how an exemption list starts."* | same |
+| `sd26_cache_apg::equipment_cache_never_forces_the_all_web_sourced_description_field_into_an_lst_token_shape` | asserted `source.kind == web_second_source` for every described record | read the citation from `description_source` **or** `source` |
+| `sd26_cache_apg::equipment_cache_uses_weight_basis_identity_match_for_the_documented_cost_quirk_subset` | `identity_match_basis` now lives in `description_source` | same helper |
+| `sd26_cache_core_rulebook::provenance_kind_distribution_matches_decisions_md_11_2...` | `web_second_source count 0` (was 82) | same reading rule; the pinned counts 67 / 117 / 81..=83 are **unchanged** |
+| `clippy` | root 54 vs ceiling 51 | **all 3 excess warnings were `doc_lazy_continuation` in this cycle's own new module**; fixed the doc comment rather than raising the baseline. `cargo clippy --locked --tests` now reports **0** warnings in either new file. |
+
+**`UNCLEARED` is now EMPTY, and that is the first time in this program's record.** The register's
+own doc comment says its purpose is that *"the fix must delete the entry rather than leave a stale
+excuse behind"* — it turned red **on the fix**, which is the gate working exactly as designed.
+
+**The two `sd26_cache_*` reformulations are strictly stronger, not weaker, and that is
+mutation-proven.** SD-26 `decisions.md §11.2` made `source` a discriminated union to record *the
+provenance of the field each SD-25 intake cycle was closing* — for APG equipment that field was the
+**description** ("APG description: 331/331 populated records are web-sourced"), while the identity,
+`cost_gp` and `weight` were always corpus-derived. §11.2's premise (0/338 native `DESC:` tokens) is
+untouched and still enforced. The new form additionally requires `url` + `fetched_at` +
+`identity_match_basis` to all be present — §11's own E3 rule, *"cite every web-sourced field: URL +
+fetch date + the identity-match basis used"*, which the previous form never checked — and rejects a
+fabricated `DESC:` `raw_token`. Three seeded mutations, three distinct assertion lines:
+
+```
+drop description_source        -> panicked at tests/sd26_cache_apg.rs:399
+blank identity_match_basis     -> panicked at tests/sd26_cache_apg.rs:406
+add a fabricated DESC: token   -> panicked at tests/sd26_cache_apg.rs:416
+```
+All three reverted; `cargo test --locked --test sd26_cache_apg` → `7 passed; 0 failed`.
+
+**Inherited red at the base tip `12f1f5c94`, NOT caused by this cycle — 14 tests + 1 frontend file
+across four stages.** This cycle's diff touches exactly 412 files under
+`data/corpus/advanced_players_guide/equipment/` and `data/corpus/core_rulebook/equipment/` (all
+`M`, zero `A`, zero `D` — `git diff --name-status 12f1f5c94...HEAD -- data/corpus`), plus the
+inventory, the site feeds, the docs, and 3 source files. It touches **no** `race_trait`,
+`race`, or `companion` record at all.
+
+| stage | failures | why they are not this cycle's |
+|---|---|---|
+| `desktop` | `companion_catalog::every_served_key_matches_a_corpus_record_file` | `data/corpus/core_essentials/companion: No such file or directory` |
+| `desktop`, `reach` | 5 × `reach_gate::*` | `data/corpus/core_essentials/race_trait/` absent; ARG `race_trait` on disk 414 vs pinned 350; `apg/crb/ultimate_magic companions` reach nothing |
+| `root-full` | `sd27_ability_automatic_granted_race_traits`, `sd27_alternate_racial_trait_reachability`, `v06_work_inventory::arg_race_file_carries_favored_class_bonus_...`, `ingest_apg_race_traits::already_ingested_keys_...`, `ingest_race_traits::no_committed_trait_description_leaks_...` | all `race_trait`; ARG 350-vs-414 again |
+| `root-full` | `sd27_book_license_record_counts` × 2 | APG `LICENSE.json` states 2735, disk has **2743 — and had 2743 at the base too**: `git ls-tree -r --name-only 12f1f5c94 data/corpus/advanced_players_guide/ \| grep '\.json$' \| grep -v '/LICENSE.json$' \| wc -l` → `2743`. ARG redaction count 1 vs 10, a book this cycle never opened. |
+| `root-full` | `sd_governance_stub_registry_divergence::registry_book_stub_entries_match_stub_artifacts_exactly` | *"registry contains book_stub entry/entries with no matching data/stubs/*.json artifact: [`core_essentials`]"* |
+| `frontend-test` | `characterHub/raceCreationCoverage.test.ts` | race-trait total across CRB+B1+ARG: expected 525, got 589 |
+
+**Root cause, single and named:** the base tip is the commit
+`12f1f5c94 chore(sd31): regen the dashboard + status feeds after the Core Essentials move` — the
+**Core Essentials move landed the data relocation and the dashboard regen, but not the code and
+count pins that read it.** `data/corpus/core_essentials/` does not exist at `12f1f5c94`
+(`git ls-tree --name-only 12f1f5c94 data/corpus/core_essentials/` → empty) while `reach_gate.rs:3511`,
+`companion_catalog.rs:649` and the stub registry all still require it, and the records it moved into
+`advanced_race_guide/race_trait/` pushed that book past six separately-pinned count assertions.
+Logged as `OPEN-ISSUES.md` row 239. **Not fixed here:** `race`/`race_trait`/`companion` are the F3/F4
+and F7 lanes' file territory, another wave-14 lane may already hold them, and a cycle that reaches
+into another lane's files mid-wave is how the shared-checkout incidents in `AGENTS.md` §Concurrency
+happen.
+
+### §10 — Gate, run 2 (after commit `c21623fce`)
+
+```
+VERIFY_EXIT=1   RESULT: FAIL
+passed:  30  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest
+             pi-redaction-selftest provenance-selftest site-dashboard-selftest
+             site-dashboard-check site-dashboard-pi-gate build-public-status-selftest
+             site-public-status-check site-public-status-pi-gate site-asset-stamp-check
+             reachability-audit-selftest reachability-audit groundtruth-guard-selftest
+             supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest
+             reclaim-selftest driver-selftest corpus-sweep-selftest root-lib corpus-sweep
+             supersession-gate frontend-install frontend-typecheck clippy class-dump
+FAILED:   4  root-full desktop reach frontend-test
+```
+Log: `artifacts/SD31-E6-F5-005-verify.log`.
+
+**Every failure this cycle caused is gone.** `sd26_cache_apg`, `sd26_cache_core_rulebook` and
+`derived_evaluator_fixture_check` are absent from run 2's failure list entirely, `root-full`'s pass
+count rose `7010 -> 7014` (the four fixed tests), and **`clippy` now PASSES at `root:51 desktop:7`
+— exactly the recorded ceiling, reached by fixing this cycle's own three warnings, not by moving a
+baseline.** `corpus-sweep` PASSES with the +412 records this cycle put into its population:
+`26100 records examined of 26736 read, 252102 tokens compared, 26723 digests checked, 0 findings`.
+
+**The four remaining red stages are the identical inherited set run 1 found, one for one:**
+
+* `desktop` — the same 6 (`companion_catalog::every_served_key_matches_a_corpus_record_file` + 5 `reach_gate::*`)
+* `reach` — the same 5 `reach_gate::*`
+* `frontend-test` — the same 1 file, `characterHub/raceCreationCoverage.test.ts`
+* `root-full` — the same 8, **plus one contention flake**: `sd17_b5_equipment::parse_runs_in_linear_time_on_a_synthetic_large_file`, *"5k equipment records should parse in well under 2s, took 3.204596269s"*. It PASSED in run 1 and passes in isolation on this same tree — `cargo test --locked --test sd17_b5_equipment parse_runs_in_linear_time` → `ok ... finished in 1.30s` — so it is a wall-clock assertion losing to five concurrent wave-14 lane gates, not a regression. Named rather than bucketed.
+
+All of it is `OPEN-ISSUES.md` row 239: the Core Essentials move landed its data relocation without
+the code and count pins that read it. **`VERIFY_EXIT=1` is therefore honest and NOT green, and this
+receipt does not claim otherwise** — the card cannot be marked `COMPLETE` on DoD item 1 until row
+239 is fixed by the lane that owns those files. What this cycle can and does assert is narrower and
+checkable: every stage that exercises the work it did is green, and every failure it introduced was
+found, attributed and fixed rather than excused.

@@ -1,27 +1,65 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Beacon of True Faith",
     "category": "MagicItems",
-    "name": "Beacon of True Faith",
     "cost_gp": 0.0,
-    "weight": 2.0,
-    "description": "An ornate electrum torch bearing an undying magical flame; it functions as an everburning torch for most creatures, but grants alignment-based powers to divine spellcasters and faithful creatures."
+    "description": "An ornate electrum torch bearing an undying magical flame; it functions as an everburning torch for most creatures, but grants alignment-based powers to divine spellcasters and faithful creatures.",
+    "key": "Beacon of True Faith",
+    "name": "Beacon of True Faith",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Artifact.Minor.Light Source"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.313"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Bright Illumination|20 ft."
+      },
+      {
+        "key": "QUALITY",
+        "value": "Shadowy Illumination|40 ft."
+      },
+      {
+        "key": "QUALITY",
+        "value": "Duration|Permanent"
+      }
+    ],
+    "weight": 2.0
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html",
+  "description_source": {
+    "citation_precision": "category_aggregate_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+cost",
-    "citation_precision": "category_aggregate_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 8,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_magic_items.lst",
+    "record_key": "Beacon of True Faith",
+    "sha256": "215c58046b3919dd191b8e605dc59e881507ee8133aabaacf6be105124a0add3"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

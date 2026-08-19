@@ -1,8 +1,8 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-08-17T20:14:10Z",
-  "source_document": "/home/ubuntu/workspace/repos/codex/docs/work-inventory.json",
+  "generated_at": "2026-08-18T22:55:20Z",
+  "source_document": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_1ad13e3b-085-6/docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
     "name",
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 38521,
-  "proven_units": 5993,
+  "proven_units": 6052,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 420,
   "category_labels_redacted": 3,
@@ -5508,11 +5508,11 @@
     },
     "equipment": {
       "units": 6208,
-      "proven": 320,
+      "proven": 338,
       "by_status": {
-        "ingested-magnitude": 635,
-        "literal-verified": 4812,
-        "grounded": 139,
+        "ingested-magnitude": 330,
+        "literal-verified": 5099,
+        "grounded": 157,
         "unknown": 205,
         "not-started": 164,
         "not-ingested": 61,
@@ -5520,22 +5520,22 @@
         "fixture-verified": 11
       },
       "shard": "PF1e-units-equipment.json",
-      "bytes": 833711,
+      "bytes": 832957,
       "doneness_unmapped": {},
       "categories": {
         "magic": {
           "label": "Magic",
-          "done": 2712,
-          "held": 219,
-          "in-progress": 160,
+          "done": 2864,
+          "held": 80,
+          "in-progress": 147,
           "not-started": 135,
           "unmeasurable": 1,
           "deferred": 0
         },
         "goods": {
           "label": "Adventuring Gear",
-          "done": 859,
-          "held": 93,
+          "done": 951,
+          "held": 1,
           "in-progress": 9,
           "not-started": 35,
           "unmeasurable": 1,
@@ -5543,8 +5543,8 @@
         },
         "weapon": {
           "label": "Weapon",
-          "done": 390,
-          "held": 57,
+          "done": 428,
+          "held": 19,
           "in-progress": 14,
           "not-started": 10,
           "unmeasurable": 0,
@@ -5570,9 +5570,9 @@
         },
         "armor": {
           "label": "Armor",
-          "done": 112,
+          "done": 117,
           "held": 0,
-          "in-progress": 7,
+          "in-progress": 2,
           "not-started": 5,
           "unmeasurable": 0,
           "deferred": 0
@@ -5588,8 +5588,8 @@
         },
         "artifact": {
           "label": "Artifact",
-          "done": 57,
-          "held": 9,
+          "done": 66,
+          "held": 0,
           "in-progress": 3,
           "not-started": 3,
           "unmeasurable": 0,
@@ -5606,8 +5606,8 @@
         },
         "ammunition": {
           "label": "Ammunition",
-          "done": 49,
-          "held": 9,
+          "done": 58,
+          "held": 0,
           "in-progress": 1,
           "not-started": 0,
           "unmeasurable": 0,
@@ -6077,17 +6077,17 @@
     },
     "equipment_modifier": {
       "units": 1580,
-      "proven": 513,
+      "proven": 554,
       "by_status": {
-        "grounded": 68,
-        "unknown": 461,
-        "text-complete": 445,
-        "ingested-magnitude": 508,
+        "grounded": 69,
+        "unknown": 421,
+        "text-complete": 485,
+        "ingested-magnitude": 507,
         "literal-verified": 35,
         "not-started": 63
       },
       "shard": "PF1e-units-equipment_modifier.json",
-      "bytes": 169321,
+      "bytes": 169551,
       "doneness_unmapped": {},
       "categories": {
         "none": {
@@ -6101,38 +6101,38 @@
         },
         "weapon": {
           "label": "Weapon",
-          "done": 87,
+          "done": 96,
           "held": 2,
           "in-progress": 114,
           "not-started": 0,
-          "unmeasurable": 65,
+          "unmeasurable": 56,
           "deferred": 0
         },
         "armor": {
           "label": "Armor",
-          "done": 29,
+          "done": 31,
           "held": 1,
           "in-progress": 104,
           "not-started": 1,
-          "unmeasurable": 16,
+          "unmeasurable": 14,
           "deferred": 0
         },
         "basematerial": {
           "label": "Base Material",
-          "done": 6,
+          "done": 7,
           "held": 2,
-          "in-progress": 77,
+          "in-progress": 76,
           "not-started": 0,
           "unmeasurable": 0,
           "deferred": 0
         },
         "amuletofmightyfists": {
           "label": "Amulet Of Mighty Fists",
-          "done": 50,
+          "done": 66,
           "held": 0,
           "in-progress": 12,
           "not-started": 0,
-          "unmeasurable": 20,
+          "unmeasurable": 4,
           "deferred": 0
         },
         "mythic": {
@@ -6146,20 +6146,20 @@
         },
         "ammunition": {
           "label": "Ammunition",
-          "done": 18,
+          "done": 28,
           "held": 0,
           "in-progress": 9,
           "not-started": 0,
-          "unmeasurable": 20,
+          "unmeasurable": 10,
           "deferred": 0
         },
         "shield": {
           "label": "Shield",
-          "done": 7,
+          "done": 10,
           "held": 1,
           "in-progress": 29,
           "not-started": 0,
-          "unmeasurable": 8,
+          "unmeasurable": 5,
           "deferred": 0
         },
         "goods": {

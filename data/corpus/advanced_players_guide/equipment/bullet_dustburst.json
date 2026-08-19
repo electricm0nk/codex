@@ -1,27 +1,69 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Bullet (Dustburst)",
     "category": "ArmsArmor",
-    "name": "Bullet, Dustburst",
     "cost_gp": 0.01,
-    "weight": 0.5,
-    "description": "A +1 sling bullet that explodes into a 5-foot cube of choking dust following the target for 1d6 rounds; a creature ending its turn there must save or become sickened and blinded for 1 round."
+    "description": "A +1 sling bullet that explodes into a 5-foot cube of choking dust following the target for 1d6 rounds; a creature ending its turn there must save or become sickened and blinded for 1 round.",
+    "key": "Bullet (Dustburst)",
+    "name": "Bullet, Dustburst",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Bullet, Dustburst"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ammunition.Resizable.Specific.Bullet.Individual"
+      },
+      {
+        "key": "COST",
+        "value": "0.01"
+      },
+      {
+        "key": "WT",
+        "value": "0.5"
+      },
+      {
+        "key": "BASEQTY",
+        "value": "1"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ +1 ~ Ammunition.Material ~ Steel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.290"
+      },
+      {
+        "key": "SPROP",
+        "value": "Explodes into a cloud of choking dust when it strikes its target."
+      }
+    ],
+    "weight": 0.5
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/weapons.html",
+  "description_source": {
+    "citation_precision": "exact_item_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+cost",
-    "citation_precision": "exact_item_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/weapons.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 17,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_arms_armor.lst",
+    "record_key": "Bullet (Dustburst)",
+    "sha256": "f3e6aea97309b4c0e3746245c112d0880f014ae69077be5b3deba0567aeb8468"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

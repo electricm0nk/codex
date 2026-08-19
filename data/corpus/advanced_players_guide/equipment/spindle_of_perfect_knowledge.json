@@ -1,27 +1,69 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Spindle of Perfect Knowledge",
     "category": "MagicItems",
-    "name": "Spindle of Perfect Knowledge",
     "cost_gp": 0.0,
-    "weight": 0.01,
-    "description": "A flawless marquise-cut diamond ioun stone that functions as a +4 headband of mental superiority, granting five ranks in two random Knowledge skills and language comprehension."
+    "description": "A flawless marquise-cut diamond ioun stone that functions as a +4 headband of mental superiority, granting five ranks in two random Knowledge skills and language comprehension.",
+    "key": "Spindle of Perfect Knowledge",
+    "name": "Spindle of Perfect Knowledge",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Spindle of Perfect Knowledge",
+          "2"
+        ]
+      },
+      {
+        "qualifiers": [
+          "STAT",
+          "INT,WIS,CHA",
+          "4",
+          "TYPE=Enhancement"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Artifact.Minor"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "WT",
+        "value": "0.01"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.314"
+      }
+    ],
+    "weight": 0.01
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html",
+  "description_source": {
+    "citation_precision": "category_aggregate_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+cost",
-    "citation_precision": "category_aggregate_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 13,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_magic_items.lst",
+    "record_key": "Spindle of Perfect Knowledge",
+    "sha256": "215c58046b3919dd191b8e605dc59e881507ee8133aabaacf6be105124a0add3"
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }

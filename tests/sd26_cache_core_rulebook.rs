@@ -309,7 +309,22 @@ fn provenance_kind_distribution_matches_decisions_md_11_2_within_the_dedup_recon
     for path in &files {
         let text = fs::read_to_string(path).unwrap();
         let value: serde_json::Value = serde_json::from_str(&text).unwrap();
-        let kind = value["source"]["kind"].as_str().unwrap().to_string();
+        // `SD31-E6-F5-005`: §11.2 made `source` a discriminated union to record
+        // the provenance of the FIELD each SD-25 intake cycle was closing, and
+        // for these 82 CRB equipmods that field was the DESCRIPTION -- their
+        // identity, `cost_gp` and `weight_lbs` were always corpus-derived. That
+        // cycle split the two apart: `source` now names the record's own real,
+        // sha256-pinned corpus row and `description_source` carries the web
+        // citation, unchanged and in full. So the provenance kind this
+        // distribution is about is still exactly where it always was -- it is
+        // simply written in `description_source` when `source` has been
+        // narrowed. Read whichever field holds it; the COUNT below is
+        // unchanged, which is the point.
+        let kind = if value["description_source"]["kind"].is_string() {
+            value["description_source"]["kind"].as_str().unwrap().to_string()
+        } else {
+            value["source"]["kind"].as_str().unwrap().to_string()
+        };
         *counts.entry(kind).or_insert(0u32) += 1;
     }
 

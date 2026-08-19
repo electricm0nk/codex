@@ -85,22 +85,22 @@ const FIXTURE: &str = "tests/fixtures/rules_core/derived-evaluator-fixtures.json
 /// unit named here that starts passing — the fix must delete the entry rather
 /// than leave a stale excuse behind.
 ///
-/// The one entry is the first defect this instrument found, on its first run,
-/// and it is a real one: the item's corpus row grants +4 to three ability
-/// scores and the player receives nothing.
-const UNCLEARED: &[(&str, &str)] = &[(
-    "advanced_players_guide:equipment:spindle_of_perfect_knowledge",
-    "this repo's ingest of the record is a `web_second_source` scrape carrying no \
-     mechanical tokens at all, so the evaluator has nothing to evaluate and the \
-     corpus row's `BONUS:STAT|INT,WIS,CHA|4` reaches no player. Not a property of \
-     this one item, and not a small gap: of APG's 338 ingested equipment records, \
-     331 have `source.kind == web_second_source` against 7 `lst_token`, and 332 \
-     carry neither `raw_tokens` nor `raw_bonus_chains` — so `corpus_loader` \
-     reconstructs a thin record for almost the whole book and every per-category \
-     resolver correctly returns `None`. Counted over \
-     `data/corpus/advanced_players_guide/equipment/**/*.json`. Remedying it is an \
-     ingest-lane change, not a change to this check.",
-)];
+/// The register is EMPTY as of `SD31-E6-F5-005` (2026-08-18) -- the first time
+/// in this program's record that it has been.
+///
+/// Its one entry was `advanced_players_guide:equipment:spindle_of_perfect_knowledge`,
+/// the first defect this instrument ever found on its first run: the record's
+/// ingest was a `web_second_source` scrape carrying no mechanical tokens at all,
+/// so the evaluator had nothing to evaluate and the corpus row's
+/// `BONUS:STAT|INT,WIS,CHA|4` reached no player. That is now really fixed, not
+/// excused -- `OPEN-ISSUES.md` row 191 located the real oracle row no prior wave
+/// had checked for (`apg_equip_magic_items.lst:13`), `cache_gen::
+/// lst_provenance_repair` narrowed the record's citation to it, and
+/// `enrich_equipment_raw_tokens` populated the `raw_bonus_chains` the evaluator
+/// reads. Deleting the entry is what this suite's own two-directional equality
+/// assertion demands: it turned red ON THE FIX, precisely so a stale excuse
+/// could not outlive the defect.
+const UNCLEARED: &[(&str, &str)] = &[];
 
 /// The reason recorded for `unit_id`, if it is a known-uncleared unit.
 fn uncleared_reason(unit_id: &str) -> Option<&'static str> {

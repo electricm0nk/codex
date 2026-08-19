@@ -21008,11 +21008,11 @@
     {
       "kind": "equipment_modifier",
       "label": "Equipment Modifiers",
-      "done": 106,
-      "partial": 313,
-      "not_started": 251,
+      "done": 144,
+      "partial": 312,
+      "not_started": 214,
       "denominator": 670,
-      "pct": 15.8,
+      "pct": 21.5,
       "excluded_from_percentage": 6,
       "standing_breakdown": {
         "origin": 670,
@@ -21381,13 +21381,13 @@
         },
         {
           "name": "Arrow Catching",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Shield",
           "standing": "origin"
         },
         {
           "name": "Arrow Deflection",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Shield",
           "standing": "origin"
         },
@@ -21663,13 +21663,13 @@
         },
         {
           "name": "Brilliant Energy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Amulet of Mighty Fists",
           "standing": "origin"
         },
         {
           "name": "Brilliant Energy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ammunition.Weapon",
           "standing": "origin"
         },
@@ -22023,7 +22023,7 @@
         },
         {
           "name": "Dancing",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Weapon.Melee",
           "standing": "origin"
         },
@@ -22041,13 +22041,13 @@
         },
         {
           "name": "Defending",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Amulet of Mighty Fists",
           "standing": "origin"
         },
         {
           "name": "Defending",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Weapon.Melee",
           "standing": "origin"
         },
@@ -22059,13 +22059,13 @@
         },
         {
           "name": "Disruption",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Amulet of Mighty Fists",
           "standing": "origin"
         },
         {
           "name": "Disruption",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Weapon.Bludgeoning",
           "standing": "origin"
         },
@@ -22257,37 +22257,37 @@
         },
         {
           "name": "Flaming",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Amulet of Mighty Fists",
           "standing": "origin"
         },
         {
           "name": "Flaming",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ammunition.Weapon",
           "standing": "origin"
         },
         {
           "name": "Flaming Burst",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Amulet of Mighty Fists",
           "standing": "origin"
         },
         {
           "name": "Flaming Burst",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ammunition.Weapon",
           "standing": "origin"
         },
         {
           "name": "Frost",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Amulet of Mighty Fists",
           "standing": "origin"
         },
         {
           "name": "Frost",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ammunition.Weapon",
           "standing": "origin"
         },
@@ -22329,7 +22329,7 @@
         },
         {
           "name": "Ghost Touch",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Armor.Bracer.ArmorLike.Shield",
           "standing": "origin"
         },
@@ -22401,13 +22401,13 @@
         },
         {
           "name": "Icy Burst",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Amulet of Mighty Fists",
           "standing": "origin"
         },
         {
           "name": "Icy Burst",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ammunition.Weapon",
           "standing": "origin"
         },
@@ -23697,25 +23697,25 @@
         },
         {
           "name": "Merciful",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Amulet of Mighty Fists",
           "standing": "origin"
         },
         {
           "name": "Merciful",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ammunition.Weapon",
           "standing": "origin"
         },
         {
           "name": "Mighty Cleaving",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Amulet of Mighty Fists",
           "standing": "origin"
         },
         {
           "name": "Mighty Cleaving",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Weapon.Melee",
           "standing": "origin"
         },
@@ -23757,7 +23757,7 @@
         },
         {
           "name": "Mithral",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BaseMaterial.MasterworkQuality.Ammunition.Weapon.Instruments.Tools.Goods",
           "standing": "origin"
         },
@@ -24189,7 +24189,7 @@
         },
         {
           "name": "Returning",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Weapon.Thrown",
           "standing": "unclassified"
         },
@@ -24417,7 +24417,7 @@
         },
         {
           "name": "Seeking",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Weapon.Ranged",
           "standing": "origin"
         },
@@ -24459,25 +24459,25 @@
         },
         {
           "name": "Shock",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Amulet of Mighty Fists",
           "standing": "origin"
         },
         {
           "name": "Shock",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ammunition.Weapon",
           "standing": "origin"
         },
         {
           "name": "Shocking Burst",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Amulet of Mighty Fists",
           "standing": "origin"
         },
         {
           "name": "Shocking Burst",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ammunition.Weapon",
           "standing": "origin"
         },
@@ -24513,7 +24513,7 @@
         },
         {
           "name": "Speed",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Amulet of Mighty Fists",
           "standing": "origin"
         },
@@ -24561,13 +24561,13 @@
         },
         {
           "name": "Spell Storing",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Amulet of Mighty Fists",
           "standing": "unclassified"
         },
         {
           "name": "Spell Storing",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Weapon.Melee",
           "standing": "unclassified"
         },
@@ -24633,13 +24633,13 @@
         },
         {
           "name": "Thundering",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Amulet of Mighty Fists",
           "standing": "origin"
         },
         {
           "name": "Thundering",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ammunition.Weapon",
           "standing": "origin"
         },
@@ -24759,19 +24759,19 @@
         },
         {
           "name": "Vicious",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Amulet of Mighty Fists",
           "standing": "origin"
         },
         {
           "name": "Vicious",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Weapon.Melee",
           "standing": "origin"
         },
         {
           "name": "Vorpal",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Weapon.Melee.Slashing",
           "standing": "origin"
         },
@@ -24849,13 +24849,13 @@
         },
         {
           "name": "Wild",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Armor.Bracer.ArmorLike",
           "standing": "origin"
         },
         {
           "name": "Wild",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Shield",
           "standing": "origin"
         },
@@ -24873,13 +24873,13 @@
         },
         {
           "name": "Wounding",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Amulet of Mighty Fists",
           "standing": "origin"
         },
         {
           "name": "Wounding",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ammunition.Weapon",
           "standing": "origin"
         },

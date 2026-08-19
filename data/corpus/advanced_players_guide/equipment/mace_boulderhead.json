@@ -1,27 +1,89 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
-    "key": "Mace (Boulderhead)",
     "category": "ArmsArmor",
-    "name": "Mace, Boulderhead",
     "cost_gp": 3500.0,
-    "weight": 8.0,
-    "description": "A +1 heavy mace that, once per day, releases a Large boulder rolling 60 feet and dealing 3d8+5 damage (Reflex DC 19 half), leaving difficult terrain that regrows over 24 hours."
+    "description": "A +1 heavy mace that, once per day, releases a Large boulder rolling 60 feet and dealing 3d8+5 damage (Reflex DC 19 half), leaving difficult terrain that regrows over 24 hours.",
+    "key": "Mace (Boulderhead)",
+    "name": "Mace, Boulderhead",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Mace, Boulderhead"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Mace (Heavy)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.OneHanded.Simple.Specific.Bludgeoning.Mace.Hammer"
+      },
+      {
+        "key": "COST",
+        "value": "3500"
+      },
+      {
+        "key": "WT",
+        "value": "8"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d8"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ +1 ~ Weapon"
+      },
+      {
+        "key": "WIELD",
+        "value": "OneHanded"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.290"
+      },
+      {
+        "key": "SPROP",
+        "value": "Once per day you can command the mace to release this head, which grows to the size of a Large boulder (3d8+5 dam; DC 19; Reflex half) and rolls quickly in the direction specified."
+      }
+    ],
+    "weight": 8.0
   },
-  "source": {
-    "kind": "web_second_source",
-    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/weapons.html",
+  "description_source": {
+    "citation_precision": "exact_item_page",
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+weight",
-    "citation_precision": "exact_item_page"
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/weapons.html"
+  },
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 81,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_arms_armor.lst",
+    "record_key": "Mace (Boulderhead)",
+    "sha256": "f3e6aea97309b4c0e3746245c112d0880f014ae69077be5b3deba0567aeb8468"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }
