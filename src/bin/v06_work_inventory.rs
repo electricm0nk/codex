@@ -978,6 +978,110 @@ mod equipment_verdict_rung_tests {
         assert_eq!(verdict.status, "grounded");
         assert_eq!(verdict.evidence, "equipment_universal_sheet_modifier_pending_compute");
     }
+
+    /// CONFIRMED finding (`SD31-W15-EQUIPMOD-001`): the probe consultation
+    /// sat BELOW the `text-complete` rung, so a unit for which
+    /// `probe_equipment_effect_wiring` had *actually observed a computed
+    /// delta* was reported `text-complete` -- strictly weaker evidence --
+    /// whenever it also happened to be `text_only` with a real description.
+    /// That is the exact demotion the probe consultation's own doc comment
+    /// promised did not happen ("a text-and-magnitude-free item the engine
+    /// somehow still observes a delta for is not demoted underneath its own
+    /// real evidence"); the comment was true only for the *undescribed*
+    /// branch below it.
+    ///
+    /// The shape is not hypothetical. Every `.COPY=` alias row in an
+    /// `*_equipmods.lst` carries zero magnitude tokens *on its own row*
+    /// (so `text_only` holds) while inheriting its base row's real
+    /// `BONUS:` chain through the token closure (so `wiring_class` reads
+    /// `computed`, and the probe resolves the alias key to the base
+    /// record and observes a real effect). `core_rulebook:
+    /// equipment_modifier:adamantine_weapon` -- `cr_equipmods.lst:521`,
+    /// `Material ~ Adamantine ~ Weapon.COPY=Adamantine (Weapon)` -- is the
+    /// worked example: `compute_equipment_effects` returns
+    /// `weapon_enhancement_bonus: Some(TOHIT +1)` for that key against the
+    /// real on-disk CRB corpus, and the board still read it
+    /// `text-complete`.
+    #[test]
+    fn an_observed_computed_delta_outranks_the_text_complete_rung() {
+        let mut facts = EngineFacts::default();
+        facts
+            .equipment_keys
+            .entry("ultimate_equipment")
+            .or_default()
+            .insert("Special Ability ~ Observed".to_string());
+        facts.corpus_json_descriptions.insert(
+            ("ue_equipmods.lst".to_string(), 1800, "Special Ability ~ Observed".to_string()),
+            "adamantine, ignore hardness less than 20".to_string(),
+        );
+        // The probe really observed a delta for this (engine_book, key).
+        facts.equipment_effect_wired.insert((
+            "ultimate_equipment".to_string(),
+            "Special Ability ~ Observed".to_string(),
+        ));
+        let unit =
+            equipment_modifier_unit("ue_equipmods.lst", 1800, "Special Ability ~ Observed");
+        // Same call shape as `a_clean_recovered_description_still_reads_
+        // text_complete` above -- text_only, real description, not
+        // universal -- so the ONLY difference between the two cases is the
+        // observation.
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(
+            verdict.status, "grounded",
+            "an observed consumer delta must outrank the text-complete rung, got {:?}",
+            verdict.status
+        );
+        assert_eq!(verdict.evidence, "equipment_effect_probe_observed_computed_delta");
+    }
+
+    /// PROVE THE REORDER CAN FAIL, in the other direction: it must not turn
+    /// into "everything is grounded". An otherwise identical unit the probe
+    /// did NOT observe still reads `text-complete`, so the promotion above
+    /// is carried by the observation and by nothing else.
+    #[test]
+    fn an_unobserved_unit_of_the_same_shape_still_reads_text_complete() {
+        let mut facts = EngineFacts::default();
+        facts
+            .equipment_keys
+            .entry("ultimate_equipment")
+            .or_default()
+            .insert("Special Ability ~ Observed".to_string());
+        facts.corpus_json_descriptions.insert(
+            ("ue_equipmods.lst".to_string(), 1800, "Special Ability ~ Observed".to_string()),
+            "adamantine, ignore hardness less than 20".to_string(),
+        );
+        let unit =
+            equipment_modifier_unit("ue_equipmods.lst", 1800, "Special Ability ~ Observed");
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(verdict.status, "text-complete");
+    }
+
+    /// The observation is `(engine_book, key)`-scoped, and the reorder must
+    /// not widen that. `probe_equipment_effect_wiring`'s `Celestial Shield`
+    /// discipline: ARG's and UE's rows share the key and are different
+    /// items, so an observation recorded against ARG may not promote UE's
+    /// unit.
+    #[test]
+    fn an_observation_recorded_against_another_book_does_not_promote_this_unit() {
+        let mut facts = EngineFacts::default();
+        facts
+            .equipment_keys
+            .entry("ultimate_equipment")
+            .or_default()
+            .insert("Special Ability ~ Observed".to_string());
+        facts.corpus_json_descriptions.insert(
+            ("ue_equipmods.lst".to_string(), 1800, "Special Ability ~ Observed".to_string()),
+            "adamantine, ignore hardness less than 20".to_string(),
+        );
+        facts.equipment_effect_wired.insert((
+            "advanced_race_guide".to_string(),
+            "Special Ability ~ Observed".to_string(),
+        ));
+        let unit =
+            equipment_modifier_unit("ue_equipmods.lst", 1800, "Special Ability ~ Observed");
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(verdict.status, "text-complete");
+    }
 }
 
 /// `"Fast Movement"` -> `"fast_movement"`. The engine's own explanation-id
@@ -3349,12 +3453,61 @@ fn probe_equipment_keys_by_book() -> BTreeMap<&'static str, BTreeSet<&'static st
     by_book
 }
 
+/// Every `data/corpus/<dir>` that actually carries an `equipment/`
+/// subdirectory on disk, as `(dir_name, path)`.
+///
+/// CONFIRMED finding (`SD31-W15-EQUIPMOD-002`): [`probe_equipment_effect_wiring`]
+/// iterated [`OBSERVABLE_BOOK_DIRS`], a hand-maintained list, and thirteen books
+/// with real, cited `data/corpus/<book>/equipment/*.json` content on disk (903 records)
+/// were
+/// simply not on it -- so the probe never looked at them and every one of their
+/// equipment/equipment_modifier units could only ever report
+/// `equipment_table_entry_with_corpus_magnitude`. That is the SAME defect
+/// `OPEN-ISSUES.md` row 12 already recorded for `ultimate_equipment` and that
+/// `SD31-E6-F5-003` already fixed a second time for five more books -- three
+/// recurrences of one hand-maintained list drifting behind the tree it
+/// describes, which is Decision 36's pattern ("two lists of the same fact,
+/// never reconciled").
+///
+/// Reading the directory is what stops a fourth recurrence: a generator that
+/// lands a new book's equipment corpus is observed by the very next inventory
+/// run, with no list to remember to edit.
+/// [`the_equipment_probe_looks_at_every_book_whose_equipment_corpus_exists`]
+/// pins it closed.
+///
+/// **Deliberately scoped to the equipment probe only.** `OBSERVABLE_BOOK_DIRS`
+/// is also the spell probe's and [`load_corpus_json_descriptions`]'s book list;
+/// widening it would change those two instruments' answers as well, which is a
+/// separate claim needing its own evidence. This function changes what the
+/// EQUIPMENT probe asks and nothing else -- and it does not change what counts
+/// as an answer, which is still [`equipment_key_is_wired`], unchanged.
+///
+/// A directory that does not resolve to an engine book, or whose engine book
+/// has no catalog keys, is skipped by the caller exactly as before.
+fn equipment_probe_book_dirs(repo_root: &Path) -> Vec<(String, PathBuf)> {
+    let corpus_root = repo_root.join("data/corpus");
+    let Ok(entries) = std::fs::read_dir(&corpus_root) else {
+        return Vec::new();
+    };
+    let mut out: Vec<(String, PathBuf)> = entries
+        .flatten()
+        .filter(|entry| entry.path().join("equipment").is_dir())
+        .map(|entry| (entry.file_name().to_string_lossy().to_string(), entry.path()))
+        .collect();
+    // Sorted for the same reason `corpus_loader::find_json_files` sorts:
+    // `read_dir` order is the filesystem's, and a probe whose iteration order
+    // varies between two checkouts of the same corpus produces a difference
+    // that looks like a code change.
+    out.sort();
+    out
+}
+
 fn probe_equipment_effect_wiring(repo_root: &Path) -> BTreeSet<(String, String)> {
     let mut wired = BTreeSet::new();
     let keys_by_book = probe_equipment_keys_by_book();
 
-    for (dir_name, dir) in OBSERVABLE_BOOK_DIRS.iter().zip(book_corpus_roots(repo_root)) {
-        let Some(engine_book) = engine_book_for_corpus_dir(dir_name) else {
+    for (dir_name, dir) in equipment_probe_book_dirs(repo_root) {
+        let Some(engine_book) = engine_book_for_corpus_dir(&dir_name) else {
             continue;
         };
         let Some(keys) = keys_by_book.get(engine_book) else {
@@ -5437,6 +5590,44 @@ fn classify(
             if !known {
                 return not_ingested("equipment_key_absent_from_equipment_tables");
             }
+            // `(engine_book, key)`, never a bare key: the probe observed this
+            // delta on ONE book's corpus record, and only that book's unit may
+            // claim it. See `probe_equipment_effect_wiring`'s doc comment for
+            // the `Celestial Shield` case that proves a shared key is not a
+            // shared item.
+            //
+            // CONFIRMED finding (`SD31-W15-EQUIPMOD-001`): this consultation
+            // used to sit BELOW the `text-complete` rung, and its own comment
+            // claimed that placement still meant "a text-and-magnitude-free
+            // item the engine somehow still observes a delta for is not
+            // demoted underneath its own real evidence." **That was false for
+            // every such item that also carried a real description** -- the
+            // `text-complete` rung returned first and the observation was
+            // never read. `grounded` is strictly stronger evidence than
+            // `text-complete` (an observed consumer delta versus prose that
+            // renders), so it is checked FIRST, ahead of every prose rung.
+            //
+            // The population this shadowed is the `.COPY=` alias rows in the
+            // `*_equipmods.lst` files: zero magnitude tokens on the alias row
+            // itself (so `text_only` holds) while the token closure inherits
+            // the base row's real `BONUS:` chain (so `wiring_class` reads
+            // `computed`, whose only `done` rung is `grounded`). See
+            // `an_observed_computed_delta_outranks_the_text_complete_rung`
+            // for the worked example and the two negative controls that
+            // prove the promotion is carried by the observation alone.
+            let observed = |candidate: &str| {
+                facts
+                    .equipment_effect_wired
+                    .contains(&(engine_book.clone(), candidate.to_string()))
+            };
+            if observed(&unit.key) || observed(&unit.name) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "equipment_effect_probe_observed_computed_delta".to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
             // CONFIRMED finding (integration-cycle adversarial review,
             // `SD31-W6-INTEGRATE-001`): refuse this promotion when the
             // recovered corpus description still carries an unresolved
@@ -5485,27 +5676,6 @@ fn classify(
                 return Verdict {
                     status: "grounded",
                     evidence: "equipment_universal_sheet_modifier_pending_compute".to_string(),
-                    reason: None,
-                    engine_book: engine_book_field,
-                };
-            }
-            // `(engine_book, key)`, never a bare key: the probe observed this
-            // delta on ONE book's corpus record, and only that book's unit may
-            // claim it. See `probe_equipment_effect_wiring`'s doc comment for
-            // the `Celestial Shield` case that proves a shared key is not a
-            // shared item. Consulted even for a text_only-but-undescribed
-            // record (below), so a text-and-magnitude-free item the engine
-            // somehow still observes a delta for is not demoted underneath
-            // its own real evidence.
-            let observed = |candidate: &str| {
-                facts
-                    .equipment_effect_wired
-                    .contains(&(engine_book.clone(), candidate.to_string()))
-            };
-            if observed(&unit.key) || observed(&unit.name) {
-                return Verdict {
-                    status: "grounded",
-                    evidence: "equipment_effect_probe_observed_computed_delta".to_string(),
                     reason: None,
                     engine_book: engine_book_field,
                 };
@@ -8744,6 +8914,48 @@ mod e14_harness_tests {
         );
     }
 
+    /// The key-universe guard above pins coverage of the QUESTION on the
+    /// catalog side. This is its corpus-side twin: a catalog key can only be
+    /// asked against a book whose corpus the probe actually opens, and the
+    /// probe's book list used to be [`OBSERVABLE_BOOK_DIRS`] -- a
+    /// hand-maintained list that had already drifted behind the tree twice
+    /// (`OPEN-ISSUES.md` row 12 for `ultimate_equipment`; `SD31-E6-F5-003`
+    /// for five more books) and, when `SD31-W15-EQUIPMOD-002` measured it,
+    /// was missing **thirteen** further books carrying 903 real, cited
+    /// `data/corpus/<book>/equipment/*.json` records between them.
+    ///
+    /// Like its sibling, this pins coverage of the question and never the
+    /// answer: [`equipment_key_is_wired`] is untouched, so a book newly
+    /// looked at whose records carry no mechanical token still grounds
+    /// nothing (`mythic_adventures`, 252 catalog keys, observes 0).
+    ///
+    /// PROVE IT CAN FAIL: point [`equipment_probe_book_dirs`] back at
+    /// `OBSERVABLE_BOOK_DIRS` and this test goes red naming the thirteen.
+    #[test]
+    fn the_equipment_probe_looks_at_every_book_whose_equipment_corpus_exists() {
+        let root = repo_root();
+        let probed: BTreeSet<String> =
+            equipment_probe_book_dirs(&root).into_iter().map(|(name, _)| name).collect();
+        let on_disk: BTreeSet<String> = std::fs::read_dir(root.join("data/corpus"))
+            .expect("data/corpus must exist")
+            .flatten()
+            .filter(|entry| entry.path().join("equipment").is_dir())
+            .map(|entry| entry.file_name().to_string_lossy().to_string())
+            .collect();
+        assert!(
+            !on_disk.is_empty(),
+            "no book carries an equipment corpus at all -- this test is not measuring anything"
+        );
+        let unlooked: Vec<&String> = on_disk.difference(&probed).collect();
+        assert!(
+            unlooked.is_empty(),
+            "{} book(s) carry a real data/corpus/<book>/equipment/ tree the equipment probe \
+             never opens: {:?}",
+            unlooked.len(),
+            unlooked
+        );
+    }
+
     /// The observation is book-scoped, and a shared key is not a shared item.
     ///
     /// `Celestial Shield` is printed in BOTH Ultimate Equipment and the
@@ -8789,9 +9001,18 @@ mod e14_harness_tests {
         );
         // Structural, not just this one pair: no book without a
         // `data/corpus/<book>/equipment` directory may appear at all.
-        let observable: BTreeSet<&'static str> = OBSERVABLE_BOOK_DIRS
+        //
+        // Read off the DIRECTORY, which is what this assertion's own comment
+        // has always claimed to check. It used to be spelled
+        // `OBSERVABLE_BOOK_DIRS`, a hand-maintained list that was a correct
+        // proxy for the directory only while the two agreed -- and
+        // `SD31-W15-EQUIPMOD-002` measured them 13 books apart. Now that
+        // `equipment_probe_book_dirs` reads the tree, the list is no longer a
+        // proxy for anything, and asserting against it would have pinned the
+        // stale answer rather than the invariant.
+        let observable: BTreeSet<&'static str> = equipment_probe_book_dirs(&repo_root())
             .iter()
-            .filter_map(|dir| engine_book_for_corpus_dir(dir))
+            .filter_map(|(dir, _)| engine_book_for_corpus_dir(dir))
             .collect();
         let unobservable: BTreeSet<&String> = wired
             .iter()

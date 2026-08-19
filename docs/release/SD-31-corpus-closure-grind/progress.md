@@ -27014,3 +27014,292 @@ Moving in the right direction; the population is still its own card (row 246).
   promotions**, for the reason `SD31-E6-F5-005` recorded and this cycle did not overturn: the
   desktop app's corpus loader is a bounded fixture bundle, so those specific records cannot be
   driven through `driver.sh` on this box. Row 242 — operator ruling.
+
+---
+
+## SD31-W15-EQUIPMOD-001 — `equipment_modifier`'s 659 `in-progress` units: anatomy, two fixes, +25 (2026-08-19)
+
+**Lane:** wave 15, `equipment_modifier`'s `in-progress` population (the largest single one on the
+board at dispatch). **Branch state at cycle-0:** worktree `wf_0628906e-65b-5` woke on
+`37a80141ed09914d84c9e2c3ae0b14fbeab63e92` — a `site-publish/*` merge with **no `docs/` tree at
+all**, so none of this lane's required reads existed. Recovered on a clean tree with
+`git reset --hard 45273fd3b` per SD-30 `loop-instruction.md` step 0−, and recorded here because that
+step exists specifically because the log under-counts silent recoveries.
+**Oracle:** `./scripts/verify.sh --only preflight-oracle` → `PASS (oracle at pin
+7f818006e371188e5717fd18d74d18a420747fc6)`.
+
+### 1. The lane breakdown, re-derived (not transcribed)
+
+```
+python3 -c "
+import json,collections,sys; sys.path.insert(0,'scripts/observer')
+from pf1e_dashboard_producer import doneness_verdict
+D=json.load(open('docs/work-inventory.json')); print(D['generated_at'])
+U=[u for u in D['units'] if u.get('book')!='beginner_box']
+c=collections.Counter(doneness_verdict(u['wiring_class'],u['status'],u['kind']) for u in U)
+e=collections.Counter(doneness_verdict(u['wiring_class'],u['status'],u['kind'])
+                      for u in U if u['kind']=='equipment_modifier')
+print(dict(c), sum(c.values()), c['done']/sum(c.values())); print(dict(e), sum(e.values()))"
+```
+→ `generated_at 2026-08-19T01:10:47Z`; board `12277/38521 = 31.8709 %`; `equipment_modifier`
+`{done 421, held 16, in-progress 659, not-started 63, unmeasurable 421}` of 1,580. **Reproduces the
+dispatch figure exactly**, including the 659.
+
+### 2. What `in-progress` means for this kind — one structural answer, not 659 separate ones
+
+Every one of the 659 is `wiring_class: computed`, and `doneness_verdict`'s `computed` row has
+exactly one `done` rung: `status == "grounded"`. `grounded` for this kind comes from one place,
+`probe_equipment_effect_wiring`, whose entire bar (`equipment_key_is_wired`) is **seven fields**
+produced by **four resolvers** reading **four token families** — `AC:`/`ACCHECK:`/`SPELLFAILURE:`/
+`MAXDEX:` (`arms_armor`), `BONUS:SKILL` (`general`), `BONUS:STAT` (`magic_items`),
+`BONUS:WEAPON|<TOHIT|DAMAGE|DAMAGE,TOHIT>|<n>|TYPE=Enhancement` (`equipmods`). Nothing else can ever
+produce `done` for an `equipment_modifier` unit.
+
+Measured against the **resolved** corpus record of each of the 659 (join on
+`(basename(source.path), source.line)`, disambiguated by `data.key`):
+
+| | count | share |
+|---|---:|---:|
+| carries no token family ANY shipped resolver reads | **567** | 86.0 % |
+| has no corpus record at its provenance line at all | **72** | 10.9 % |
+| carries a readable token yet was not grounded | **20** | 3.0 % |
+
+The 20 are what this cycle reached: 16 of them were banked (§3, §4), together with 1 `unmeasurable` unit of the same kind and 8 `equipment` units — 25 board-wide. Inside the 567: **194 carry a price and nothing else**
+(`COST:`, no `BONUS:` chain), **221 carry only PCGen-internal `BONUS:VAR`/`BONUS:ITEMCOST`** — which
+`equipment_effects/equipmods.rs`'s own module doc already calls *"internal cost/formula token …
+not genuinely player-facing"* — and **152 carry a real mechanical family no resolver exists for**:
+`BONUS:EQMARMOR` 58, `BONUS:COMBAT` 32, `BONUS:EQM` 24, `BONUS:EQMWEAPON` 12, `DR:` 11,
+`BONUS:SAVE` 9, `SR:` 9, `BONUS:SPELLKNOWN` 9, `SPELLS:` 6, `BONUS:SPELLCAST` 2, `BONUS:SKILLRANK`
+2, `BONUS:LOADMULT` 1, `BONUS:MOVEADD` 1.
+
+The 72 with no corpus record are `ultimate_psionics` 58, `ultimate_equipment` 8, `ultimate_combat`
+6: their DECLARED row was never ingested and only its `.COPY=` alias was — e.g.
+`ultimate_combat:equipment_modifier:material_bone`, `uc_equipmods.lst:39`, whose only corpus record
+is the alias `BONE` written from line 67.
+
+**The 421 `unmeasurable` are understood, and they are not a reachable population either.** All 421
+are `status: unknown` with evidence `text_only_but_corpus_record_carries_no_description_to_show_a_
+player` — in the equipment tables, zero magnitude tokens on their own row, and no real `DESC:`
+anywhere in their token closure. **191** of them are additionally `wiring_class: computed`, which is the
+row-versus-closure split row 269 (`SD31-W15-EQUIPMOD-005`) records.
+
+### 3. `SD31-W15-EQUIPMOD-001` — the probe consultation sat below the `text-complete` rung
+
+`classify()`'s `Kind::Equipment`/`Kind::EquipmentModifier` arm returned `text-complete` **before** it
+ever read the probe's answer, so a unit for which a real consumer delta had been observed was
+reported on strictly weaker evidence. The consultation's own doc comment asserted this did not
+happen; it was true only for the undescribed branch below it.
+
+The shadowed population is the `.COPY=` alias rows in `*_equipmods.lst`: zero magnitude tokens on
+the alias row (so `text_only` holds — `magnitude_token_count` is computed on the row alone) while
+`wiring_class` is determined over the **token closure**, which inherits the base row's real `BONUS:`
+chain (so the unit reads `computed`). Worked example, proven by running the engine against the real
+on-disk corpus rather than by inspection — `core_rulebook:equipment_modifier:adamantine_weapon`
+(`cr_equipmods.lst:521`, `Material ~ Adamantine ~ Weapon.COPY=Adamantine (Weapon)`):
+`compute_equipment_effects` returns `weapon_enhancement_bonus: Some(WeaponEnhancementBonus {
+affects: "TOHIT", bonus: 1 })`, and the board read it `text-complete`.
+
+**TDD, red first, on the exact assertion:**
+```
+cargo test --locked --bin v06_work_inventory -j 4 equipment_verdict_rung_tests
+# BEFORE the fix:
+#   an_observed_computed_delta_outranks_the_text_complete_rung ... FAILED
+#   assertion `left == right` failed: an observed consumer delta must outrank the
+#   text-complete rung, got "text-complete"   left: "text-complete"  right: "grounded"
+# AFTER: test result: ok. 6 passed; 0 failed
+```
+Two negative controls prove the promotion is carried by the observation and nothing else:
+`an_unobserved_unit_of_the_same_shape_still_reads_text_complete`, and
+`an_observation_recorded_against_another_book_does_not_promote_this_unit` (the `Celestial Shield`
+book-scoping discipline, unweakened).
+
+### 4. `SD31-W15-EQUIPMOD-002` — the probe never opened thirteen books' equipment corpus
+
+`probe_equipment_effect_wiring` iterated the hand-maintained `OBSERVABLE_BOOK_DIRS`. Thirteen books
+carrying **903** real, cited `data/corpus/<book>/equipment/*.json` records were not on it, so the
+probe never asked their catalog keys anything: `bestiary_2` (7), `bestiary_3` (8), `bestiary_4` (5),
+`book_of_the_damned_volume_2` (5), `horror_adventures` (117), `inner_sea_combat` (65),
+`inner_sea_gods` (125), `inner_sea_intrigue` (34), `inner_sea_races` (71), `inner_sea_world_guide`
+(46), `monster_codex` (49), `mythic_adventures` (252), `occult_adventures` (119). **This is the third
+recurrence of `OPEN-ISSUES` row 12's shape** — row 12 recorded it for `ultimate_equipment`,
+`SD31-E6-F5-003` fixed it a second time for five more books, and both fixes appended to the list
+instead of removing it.
+
+Replaced with `equipment_probe_book_dirs()`, which reads `data/corpus/*/equipment/`.
+
+**MUTATION-PROVED — the gate can fail.** Pointing the helper back at `OBSERVABLE_BOOK_DIRS`:
+```
+cargo test --locked --bin v06_work_inventory -j 4 the_equipment_probe_looks_at_every_book
+#   ... FAILED
+#   13 book(s) carry a real data/corpus/<book>/equipment/ tree the equipment probe never opens:
+#   ["bestiary_2", "bestiary_3", "bestiary_4", "book_of_the_damned_volume_2", "horror_adventures",
+#    "inner_sea_combat", "inner_sea_gods", "inner_sea_intrigue", "inner_sea_races",
+#    "inner_sea_world_guide", "monster_codex", "mythic_adventures", "occult_adventures"]
+```
+Reverted; green. **Deliberately scoped to the equipment probe alone**: `OBSERVABLE_BOOK_DIRS` is
+also the spell probe's and `load_corpus_json_descriptions`'s book list, and widening it would change
+those two instruments' answers, which is a separate claim needing its own evidence — and a
+concurrent lane owns the spell path this wave. **This widens what is ASKED, never what counts as an
+answer**: `equipment_key_is_wired` is untouched, and `mythic_adventures` — the largest of the
+thirteen at 252 catalog keys — still observes **zero**, which is the honest result.
+
+One existing test moved with it: `a_key_two_books_share_grounds_only_the_book_whose_corpus_was_read`
+asserted "no book without a `data/corpus/<book>/equipment` directory may appear" but implemented that
+against `OBSERVABLE_BOOK_DIRS` — a correct proxy only while the two agreed, and they were thirteen
+books apart. It now reads the directory, i.e. its own stated invariant, and still fails if the probe
+ever grounds a book with no corpus.
+
+### 5. Board delta — measured by guarded regen, not asserted
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out <scratch>/sweep-w15-equipmod.json
+#   26105 records examined of 26741 read, 252158 tokens compared, 0 findings — CLEAN
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out <scratch>/fixture-w15-equipmod.json
+#   1276 of 1276 covered units cleared; 0 failed; 0 not ingested
+CORPUS_LITERAL_SWEEP_REPORT=<scratch>/sweep-w15-equipmod.json \
+DERIVED_FIXTURE_CHECK_REPORT=<scratch>/fixture-w15-equipmod.json \
+  cargo run --locked --bin v06_work_inventory        # stamp guard clean: 0 of 7629 stamps lost
+```
+Then a per-unit diff of the HEAD inventory against the regenerated one, replaying
+`doneness_verdict` over both:
+
+```
+before {'done': 12277, 'not-started': 18030, 'unmeasurable': 5110, 'deferred': 38,
+        'held': 1677, 'in-progress': 1389}  38521  0.3187092754601386
+after  {'done': 12302, 'not-started': 18030, 'unmeasurable': 5109, 'deferred': 38,
+        'held': 1677, 'in-progress': 1365}  38521  0.3193582721113159
+
+ids added 0   removed 0
+DONENESS MOVES:  16 (equipment_modifier, in-progress -> done)
+                  8 (equipment,          in-progress -> done)
+                  1 (equipment_modifier, unmeasurable -> done)
+STATUS MOVES:    15 (equipment_modifier, computed|text-complete      -> computed|grounded)
+                  8 (equipment,          computed|ingested-magnitude -> computed|grounded)
+                  1 (equipment_modifier, computed|ingested-magnitude -> computed|grounded)
+                  1 (equipment_modifier, computed|unknown            -> computed|grounded)
+                  1 (equipment,          derived|ingested-magnitude  -> derived|grounded)
+```
+
+**12,277 → 12,302 `done` (31.8709 % → 31.9358 %), +25. Zero demotions. Zero denominator change.
+Zero movement in any kind other than `equipment`/`equipment_modifier`** — which is the evidence that
+§4's scoping really did leave the spell probe and every other lane's numbers untouched.
+`equipment_modifier` specifically: `done` 421 → 438, `in-progress` 659 → 643, `unmeasurable`
+421 → 420.
+
+`docs/work-inventory.json` restored with `git checkout -- docs/work-inventory.json` per the wave rule
+(the integration cycle performs the sanctioned regen); nothing about this receipt's figures depends
+on that file being committed.
+
+### 6. What this cycle could NOT do
+
+* **The remaining 643 `in-progress` units did not move, and 97 % of them still cannot.** That is
+  §2's measurement, not an estimate. The two engine-shaped follow-ups are named with sizes in
+  `OPEN-ISSUES` row 267 (`SD31-W15-EQUIPMOD-003`); the largest by far is armour enhancement (`BONUS:EQMARMOR` +
+  `BONUS:COMBAT|AC`, 70 distinct records of the 152 mechanically-real ones), which feeds a value the sheet already
+  renders and whose real consumer path — `EquipmentSelection.applied_modifiers` — exists today only
+  for weapons. **A `+1 breastplate` contributes no `+1` right now**: that is real missing player
+  value, not only a board cell.
+* **`COST:` — an item's price — classifies a record `computed` on its own, and 194 units of this
+  kind are stranded by it.** Not acted on: three candidate answers move those units three different
+  ways, and choosing one on my own reading of Decision 7's "nothing to compute" is exactly the
+  self-serving reclassification Decision 1(a) forbids. **`OPEN-ISSUES` row 268 (`SD31-W15-EQUIPMOD-004`) — operator ruling.**
+* **The baked `wiring_class` in `data/corpus/**/equipment/*.json` disagrees with the live one for
+  154 of the 167 units examined**, and `magnitude_token_count` (row-scoped) and `wiring_class`
+  (closure-scoped) read different evidence for every `.COPY=` alias. Replayed, correcting it moves
+  **zero** board units, so it did not justify a corpus-wide shared-instrument change with six lanes
+  running. Row 269 (`SD31-W15-EQUIPMOD-005`).
+* **DoD item 8 (on-screen verification) was not performed for these 17 `equipment_modifier`
+  promotions**, for the reason `SD31-E6-F5-005` recorded and this cycle did not overturn: the
+  desktop app's corpus loader is a bounded fixture bundle, so these specific records cannot be driven
+  through `driver.sh` on this box. **Row 242 — operator ruling, unchanged.** What IS proven on the
+  engine side is stronger than inspection: `compute_equipment_effects` — the same call
+  `pilot_compute_corpus::compute_pilot_with_corpus` makes — returns a real non-`None` mechanical
+  effect for every promoted key, run against the real on-disk corpus.
+* **The two equipment cache generators still emit the pre-repair provenance shape** (row 264). This
+  cycle ran **neither** generator, so nothing narrowed was reverted; `tests/sd31_lst_provenance_
+  repair_is_durable.rs` was not touched or skipped.
+* **645 of this kind's 1,580 units (40.8 %) are `.COPY=` aliases whose base identity is also a unit
+  of the same book** — one object standing in the denominator twice, in a shape `decisions.md
+  §10`/`§13`/`§14` do not reach, because all three are about the same object printed in TWO books.
+  The CRB's single adamantine-weapon material is three units, all resolving to the one record
+  (`compute_equipment_effects` returns `resolved_key: "Material ~ Adamantine ~ Weapon"` for all three
+  keys). **Measured only — nothing excluded, nothing proposed for exclusion, nothing moved.** Row 270
+  (`SD31-W15-EQUIPMOD-006`) — a denominator question, so the operator's alone.
+* **Row-number collision, flagged for the integration cycle.** Every wave-15 lane branched from
+  `45273fd3b`, where `OPEN-ISSUES.md`'s highest row was 264, so at least two lanes independently
+  allocated 265+. This lane's rows are unambiguously keyed by their `Cycle-id` column
+  (`SD31-W15-EQUIPMOD-001` … `-006`); the numbers must be reassigned on merge. `retro.py incident`
+  emitted (`concurrent-lanes-mint-colliding-ids`). Future waves: allocate row-number blocks per lane
+  at dispatch, the way cycle ids already are.
+
+### 7. The 25 promoted units, named
+
+`equipment_modifier` (17): `advanced_players_guide:…:jstng` · `core_rulebook:…:` `adamant_weap`,
+`adamantine_weapon`, `dark`, `mithral_item__848e31e1c09339a8`, `mithral_item__dbbd406cdf419bf0`,
+`shdw`, `shdw_grt`, `shdw_imp`, `slk`, `slk_grt`, `slk_imp` · `ultimate_psionics:…:` `crys_deep`,
+`crys_mun`, `seeing` · `inner_sea_world_guide:…:` `material_paueliel_wood`, `paueliel`.
+`equipment` (8): `inner_sea_gods:equipment:` `bear_pelt_of_the_bonebreaker`,
+`boots_of_the_eternal_rose`, `demon_mother_s_mask`, `hag_s_shabble`, `stinging_stiletto`,
+`veil_of_veils`, `vurra_of_the_maker`, `windwave_kilt`.
+
+Attribution between the two fixes: 15 came from §3's rung reorder alone; 10 needed §4's book
+widening (`inner_sea_gods` ×8, `inner_sea_world_guide` ×2), which is the honest test that §4 bought
+something real rather than only closing a hole.
+
+**PI note, disclosed rather than assumed away.** Four of the eight `inner_sea_gods` records carry
+`license: "PI-REDACTED"` / `pi_field: "description"` (`boots_of_the_eternal_rose`,
+`demon_mother_s_mask`, `stinging_stiletto`, `windwave_kilt`) — their DESCRIPTION is declared PI and
+already withheld; their names are not declared. **Their `done` credit rests on the probe's observed
+mechanical delta, not on the withheld prose**, so it is unaffected by the redaction, and this cycle
+publishes no name and no feed. `declared-pi-audit` and both site PI gates passed on the run below.
+
+### 8. Verification
+
+`./scripts/verify.sh -j 4` (full, not `--quick`), own
+`CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-w15-equipmod`, exit code captured in the same
+shell statement, never through a pipe. Log: `<scratch>/verify.log`.
+
+**GATE RESULT: `passed: 33`, `FAILED: 1  site-dashboard-check`, `RESULT: FAIL`, `VERIFY_EXIT=1`.**
+Every stage green except the one attributed below. Full stage list, in order: `preflight-disk`
+`preflight-oracle` `oracle-pin-selftest` `producer-selftest` `pi-redaction-selftest`
+`provenance-selftest` `site-dashboard-selftest` **`site-dashboard-check` FAIL** `site-dashboard-pi-gate`
+`build-public-status-selftest` `site-public-status-check` `site-public-status-pi-gate`
+`site-asset-stamp-check` `reachability-audit-selftest` `reachability-audit` (ceiling 98.95 %)
+`groundtruth-guard-selftest` `supersession-gate-selftest` `pi-sweep` `declared-pi-audit`
+`audit-selftest` `reclaim-selftest` `driver-selftest` `corpus-sweep-selftest` `root-lib` (2,042)
+`root-full` (7,056) `desktop` (463) `reach` (27) `corpus-sweep` (26,105 records, 0 findings)
+`supersession-gate` (116 objects, all clean) `frontend-install` `frontend-test` (99/99)
+`frontend-typecheck` `clippy` (root 51 / desktop 7 warnings, 0 errors) `class-dump` (31/31 computing).
+
+**Baseline note, deliberately NOT edited:** `BASELINE_ROOT_FULL_TESTS` is stale — 7,052 recorded,
+7,056 measured, the +4 being this cycle's own new tests. It is a FLOOR, so a stale-low value is not
+a failure. Left for the integration cycle to set once from its own post-merge measurement: at least
+two wave-15 lanes added tests, so no single lane can know the correct value. `retro.py incident`
+emitted.
+
+`root-full` **PASS — 7,056 passed across 568 suites, all 531 `tests/*.rs` suites executed**
+(`BASELINE_ROOT_FULL_TESTS` floor 7,052; the +4 are this cycle's own new tests, all in the
+`v06_work_inventory` bin, which is why `root-lib` is unmoved at 2,042 and
+`BASELINE_ROOT_TEST_BINARIES` is unmoved at 568). `tests/sd31_lst_provenance_repair_is_durable.rs`
+ran inside that sweep and passed; this cycle ran neither equipment cache generator, so nothing
+narrowed was reverted (row 264).
+
+**One stage is RED and it is PRE-EXISTING, attributed rather than excused:** `site-dashboard-check`
+→ `site/dashboard/PF1e-dashboard.json is STALE`. Attributed by re-running the check against the
+**pre-change** binary source on a cold, separate target dir:
+
+```
+git show HEAD~1:src/bin/v06_work_inventory.rs > <scratch>/v06_head1.rs   # = 45273fd3b's source
+cp <scratch>/v06_head1.rs src/bin/v06_work_inventory.rs
+CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-w15-equipmod-baseline \
+  ./scripts/publish-site-dashboard.sh --check
+# -> site/dashboard/PF1e-dashboard.json is STALE     (identical)
+```
+Own source restored, the scratch target dir deleted. **`tranche/11` at `45273fd3b` is already red on
+this stage**; this cycle neither caused it nor fixed it, and deliberately did NOT run the real
+publish: the feed would have been rebuilt from a fresh `--summary` run of the NEW binary while the
+committed `docs/work-inventory.json` is still the OLD document, and it would collide with five
+concurrent lanes. Loop-instruction override 10's trigger ("a cycle that touches
+`docs/work-inventory.json` or `site/dashboard/units/*.json`") is not met — this cycle touched
+neither. **Integration cycle: publish once, after the sanctioned regen.** `retro.py correction`
+emitted for the attribution.
