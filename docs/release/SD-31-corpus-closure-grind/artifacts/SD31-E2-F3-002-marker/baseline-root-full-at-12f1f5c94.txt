@@ -1,0 +1,16 @@
+test tests::already_ingested_keys_reads_real_keys_off_disk_not_a_hand_list ... FAILED
+test result: FAILED. 7 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+test tests::no_committed_trait_description_leaks_pcgen_syntax_in_any_declared_book ... FAILED
+test result: FAILED. 13 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+test the_ability_automatic_grant_shape_is_exactly_two_records_corpus_wide ... FAILED
+test result: FAILED. 5 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s
+test the_three_dependent_rows_are_not_offered_as_choices_and_the_menu_is_exactly_the_alternates ... FAILED
+test result: FAILED. 14 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.40s
+test every_owned_books_stated_record_count_equals_the_records_on_disk ... FAILED
+test every_owned_books_stated_redaction_count_equals_the_redactions_on_disk ... FAILED
+test result: FAILED. 4 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.64s
+test registry_book_stub_entries_match_stub_artifacts_exactly ... FAILED
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test arg_race_file_carries_favored_class_bonus_and_choice_suboption_rows_not_traits ... FAILED
+test result: FAILED. 15 passed; 1 failed; 1 ignored; 0 measured; 0 filtered out; finished in 3.00s
+BASELINE_ROOT_FULL_EXIT=101

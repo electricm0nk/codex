@@ -25539,7 +25539,56 @@ regenerated `site/dashboard/PF1e-dashboard.json`, `site/dashboard/units/PF1e-uni
 (`"done": 10423 → 10407`); `SITE-PUBSTATUS-002`'s known `object_id` collision hazard did **not**
 fire — no book's `standing` distribution changed.
 
-### 8. Full gate
+### 8. Full gate — RED at the inherited tip, and PROVEN red before this cycle touched it
 
-Launched early per cycle-mechanics 4a, exit code captured in the same shell statement that ran it,
-log at `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-E2-F3-002-marker-verify.log`.
+Launched early per cycle-mechanics 4a. Logs are committed under
+`artifacts/SD31-E2-F3-002-marker/`.
+
+**Every stage ran; three failed, and none of the three is attributable to this cycle.**
+
+| stage | result |
+|---|---|
+| all 29 preflight / selftest / site / PI / audit / sweep / `root-lib` stages | **PASS** (incl. `site-dashboard-check`, `site-public-status-check`, both site PI gates, `reachability-audit` 98.95 %, `corpus-sweep` CLEAN, `root-lib` 2,028) |
+| `root-full` | **FAIL** — 8 tests, `cargo exit 101`, 7,013 passed across 566 suites |
+| `desktop` | **FAIL** — 6 tests (`reach_gate` ×5, `companion_catalog::every_served_key_matches_a_corpus_record_file`) |
+| `frontend-test` | **FAIL** — 1 file (`raceCreationCoverage.test.ts`) |
+| `clippy` | **PASS** (root 51 / desktop 7 warnings, 0 errors) |
+| `class-dump` | **PASS** (31/31 computing) |
+
+**The gate wrapper was killed by the harness during the `clippy` stage**, so no `VERIFY_EXIT` was
+ever written for the main run — recorded plainly rather than inferred (cycle mechanics 4b: *"If no
+exit code was obtained, say so; do not infer one"*). `clippy` and `class-dump`, the only two stages
+the kill cost, were re-run to completion on their own (`./scripts/verify.sh --only clippy --only
+class-dump` → `RESULT: PASS`, `VERIFY_TAIL_EXIT=0`,
+`artifacts/SD31-E2-F3-002-marker/verify-clippy-classdump.log`). This is the standing
+"interrupt can silently kill background workflows" hazard, hitting a lane agent's own background
+gate rather than a Workflow task.
+
+**Pre-existing-red PROVED by experiment, not argued.** Every failure names `data/corpus/**`,
+`data/stubs/**`, a `LICENSE.json` count or the retired `core_essentials` book — the fallout of
+`d8175d817` ("site: stop publishing Core Essentials as a sourcebook"), which moved 166 corpus
+records between book directories and left every pinned count behind. `git diff --name-only
+12f1f5c94..HEAD` shows this cycle changed **no file under `data/`, `apps/`, or
+`src/rules_core/rules_tables/`**. That is an argument, so the experiment was run as well: the three
+files this cycle touched (`wiring_class.rs`, `v06_work_inventory.rs`, `docs/work-inventory.json`)
+were checked out at `12f1f5c94`, `cargo test --locked --no-fail-fast` re-run, and the files
+restored (`git diff HEAD` on all three then empty).
+
+```
+BASELINE (this cycle's source reverted to 12f1f5c94)   ->  8 failures, exit 101, 560 green suites, 6,950 passed
+WITH THIS CYCLE'S CHANGE (the full gate above)         ->  8 failures, exit 101, 560 green suites, 6,955 passed
+```
+
+**The failing sets are identical, test for test**, and the passed count differs by exactly `+5` —
+this cycle's five new tests. Baseline failure list committed at
+`artifacts/SD31-E2-F3-002-marker/baseline-root-full-at-12f1f5c94.txt`.
+
+`desktop`'s and `frontend-test`'s failures need no experiment: `git diff --name-only
+12f1f5c94..HEAD -- apps/ data/` is **empty**, so both stages' code and inputs are byte-identical to
+the inherited tip and their results cannot have moved.
+
+**Consequence for the wave.** `tranche/11`'s tip was RED before wave 14 started, so no wave-14 lane
+can produce a green gate until the Core Essentials repair lands (the `sd31-ce-companion` lane is on
+it this wave). This cycle's branch should be merged on the evidence above — identical failure set,
+`+5` tests, `clippy`/`class-dump` green — not on a green full gate, which is not obtainable at this
+tip.
