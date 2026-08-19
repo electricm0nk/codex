@@ -27014,3 +27014,235 @@ Moving in the right direction; the population is still its own card (row 246).
   promotions**, for the reason `SD31-E6-F5-005` recorded and this cycle did not overturn: the
   desktop app's corpus loader is a bounded fixture bundle, so those specific records cannot be
   driven through `driver.sh` on this box. Row 242 — operator ruling.
+
+
+## Cycle `SD31-W15-COMPANION-001` (`RETRO_ACTOR=sd31-w15-companion`) — 2026-08-19, wave 15 companion lane: the `kind=companion` derived-evaluator seam (**+117 `done`**)
+
+**Branch state at cycle-0.** The dispatch worktree was cut at `37a80141e` — `origin`'s
+site-publish deploy tip, **which carries no `docs/` tree at all**, so none of this card's required
+reads existed. Recovered on a clean tree with `git reset --hard 45273fd3b` (the dispatch's own
+named `tranche/11` tip). Recorded here per the SD-30 loop-instruction's step 0− because *"a cycle
+that silently recovered and did not say so is why the log under-counts this"* — this is the same
+defect that hit six SD-29 cycles, and it is still live in the dispatch harness.
+
+**Oracle pin, checked first** (loop-instruction override 8):
+`scripts/fetch-pcgen-oracle.sh --check` → `pcgen-oracle: OK
+7f818006e371188e5717fd18d74d18a420747fc6`. Every figure below is derived against that pin.
+
+### 1. What the lane was, and what it found before writing anything
+
+The brief named the 227 `companion` units inside the 960-unit `derived`+`grounded` fixture seam.
+Re-derived at cycle start by replaying `doneness_verdict()` over `docs/work-inventory.json`
+(`generated_at 2026-08-19T01:10:47Z`, `EXCLUDED_BOOKS={'beginner_box'}`): companion carries
+**243 `held`** — 227 `derived`+`grounded`, 14 `display`+`grounded`, 2 `ambiguous`+`grounded` —
+against a board of **12,277 / 38,521 = 31.8709 %**. Both figures reproduced the dispatch's exactly.
+
+Reading one record deep into what actually makes those 227 `derived` (never the inventory's
+`wiring_class_reason` alone) gave the token census over the ingested rows:
+
+| shape | rows |
+|---|---:|
+| `BONUS:SKILL\|Climb,Swim\|DEX-STR` | 133 |
+| `BONUS:WEAPONPROF=<attack>\|DAMAGE\|max(0,(STR/2))` | 114 (+1 `max(0,STR/2)`) |
+| `SPELLS:` caster-level / DC formulas | 12 |
+| `BONUS:VAR\|SLA_CL\|` | 4 |
+
+The second is a **printed rule** — PF1 CRB p.182, *"if a creature has only one natural attack, it
+adds 1-1/2 times its Strength bonus on damage rolls"*: the base attack applies the full modifier,
+this token adds the other half, and `max(0,…)` is why a Strength PENALTY is never multiplied (the
+rule is stated about a *bonus*). That is what this cycle built.
+
+### 2. The trap, hit and avoided
+
+The obvious independent derivation is *"count the natural attacks; one attack ⟹ ×1½"*. **It is
+not a corpus invariant, and checking that before building was the whole difference between this
+seam and a worthless one.** Crossed over all 927 ingested companion records:
+
+```
+(natural attacks, half-STR tokens) -> records
+  (0,0)  54    (0,1)   2
+  (1,0) 129    (1,1) 185
+  (2,0)  74    (2,1)   3
+  (3,0)   3
+```
+
+**129 single-attack rows carry no such token at all**, and 5 rows carry one where the count rule
+does not call for it. Upstream PCGen does not state this rule uniformly. Deriving the expectation
+from the attack count would have manufactured 129 false failures against data that simply is not
+written that way — and "fixing" that by inferring presence from the count would have made the
+fixture a restatement of the corpus row, which is the circular seam Decision 1(a) forbids.
+
+What is derived instead is what **PF1's own halve-and-round-down convention (CRB p.9)** makes of
+the formula each row *actually carries*, computed in Python with `math.floor` by a from-scratch
+classifier. The non-invariance is now pinned by
+`upstream_does_not_state_the_single_attack_rule_uniformly`, which asserts **both** directions are
+non-empty — so a later cycle cannot quietly "simplify" the seam back into the trap.
+
+### 3. What landed
+
+* **`companion_chassis::NaturalAttackDamageBonus`** + `CompanionRecord::
+  natural_attack_damage_bonuses` — the token verbatim (attack selector + formula), never a
+  computed number. Same discipline `StatAdjustment` ("an adjustment, never a score") and
+  `monster_class` already state, and the same one `MonsterStatBlock::sla_cl_token` states for the
+  monster lane's seam.
+* **`scripts/transcribe_companion_tables.py`** emits it; all **16** registered books regenerated
+  (`+497 −12` lines, purely additive). Only the `|DAMAGE|` sub-token is read: `|DAMAGESIZE|1` is a
+  damage-DIE size step, a different quantity, and `bestiary_3`'s companion rows carry it precisely
+  where they carry no `|DAMAGE|`.
+* **The evaluator** — `parse_companion_strength_damage` (shared parse),
+  `evaluate_companion_strength_damage` (the numeric bar), `format_companion_strength_damage`
+  (production rendering). `div_euclid(2)` rather than `/`, because Rust truncates toward zero and
+  PF1 rounds down. **Refuses** the unclamped `STR/2` and `-(STR/2)` (3 rows corpus-wide) rather
+  than guessing PCGen's negative-odd rounding, which this repo cannot prove — the same "honest
+  absence" contract `spell_like_ability_caster_level` keeps for an unparseable `SLA_CL`.
+* **`run_companion_bar_check`** over the **shipped tables** (`COMPANION_BOOKS`), not
+  `data/corpus/` — so a transcription that dropped the token fails here rather than passing on a
+  file no player reads. It also refuses a fixture that pins no `(modifier, bonus)` pair at all.
+* **117 `companion_entries`**, generated by the new
+  `scripts/derive_companion_strength_damage_fixtures.py`, each pinning **nine** Strength modifiers
+  chosen for mutation sensitivity (−4, −3, −1, 0, 1, 2, 3, 6, 7: a negative even and odd catch a
+  dropped clamp, an odd positive catches wrong rounding, an even positive catches full-instead-of-
+  half, zero catches an added constant). The script opens no file under `data/corpus/`, reads no
+  Rust table, imports no engine module, and reads `docs/work-inventory.json` for identity and
+  selection only.
+* **The production caller**, so this is not a fixture-only code path:
+  `companion_catalog`'s `naturalAttackDamageBonuses`, rendered by `CompanionCatalogScreen` under
+  the caption *"Extra damage on attack (corpus BONUS:WEAPONPROF DAMAGE tokens)"*. A catalog
+  browser has no character and therefore no Strength modifier, so the screen shows the **rule**
+  (`Bite +1/2 Str modifier (minimum +0)`), never an invented number — the same posture
+  `spell_catalog` takes with `format_spell_range_formula`. A formula the engine refuses reaches
+  the screen **verbatim and labelled** `(formula not interpreted)`: dropping it would tell the
+  player the corpus says nothing, which is false.
+* **The Parrot finding, pinned.** `advanced_players_guide:companion:parrot`
+  (`ce_races_familiar_apg.lst:17`) states `BONUS:WEAPONPROF=Claw|DAMAGE|max(0,(STR/2))` and its
+  only natural attack is a **Bite**. So a `WEAPONPROF=` selector is never joined against
+  `natural_attacks` anywhere in this seam and the misses are never dropped;
+  `a_damage_bonus_selector_need_not_name_one_of_the_records_natural_attacks` fails if that ever
+  stops being true.
+
+### 4. Mutation proofs (Decision 1(a)) — each watched go red, then restored
+
+| # | mutation | result |
+|---|---|---|
+| 1 | dropped the `max(0,…)` clamp from the evaluator | **115 of 117 fixtures red** — *"at Strength modifier −4: expected damage bonus 0, evaluator produced −2"* |
+| 2 | full Strength instead of half | **115 of 117 red** — *"at Strength modifier 1: expected damage bonus 0, evaluator produced 1"* |
+| 3 | blanked one **pinned** record's transcribed token (Arctic Fox) | **1 red** — *"the shipped record carries no BONUS:WEAPONPROF=Bite\|DAMAGE\| token at all"* |
+
+Mutation 3 was run twice: the first attempt blanked the table's *first* token occurrence
+(`Companion (Anglerfish)`), which is **not** a pinned unit, and the gate correctly stayed green.
+That is the seam behaving properly — the fixture set covers 117 units, not every row carrying the
+token — but a cycle that had stopped there would have recorded a mutation proof that proved
+nothing. Recorded rather than quietly re-run.
+
+Four further in-suite proofs drive the real `run_companion_bar_check` end to end against a scratch
+fixture root pointed at a real shipped record: wrong value, wrong **shape** (`full_strength` and
+`half_strength_never_negative` agree at modifier 0, so a numbers-only comparison could pass a
+mis-parse), absent token, and an **empty ladder** (a fixture asserting nothing is refused, not
+cleared). A positive control proves the harness is not simply always failing.
+
+### 5. Anti-gaming on reach
+
+`companions_reach`'s payload predicate gained the new column, and
+`the_damage_bonus_column_moves_no_record_into_reach` asserts it carries **no** record over the bar
+— every row stating a damage bonus already reaches on `natural_attacks`/`stat_adjustments`. Reach
+is not bought with a column. `reach_gate::tests::
+every_ingested_companion_book_reaches_the_catalog_record_by_record` still passes, which is the
+lane brief's own re-verification that wave 14's re-filed companion rows still reach a player.
+
+### 6. Measured
+
+Every number below is `doneness_verdict()` **replayed** over `docs/work-inventory.json` with
+`EXCLUDED_BOOKS={'beginner_box'}` — never asserted:
+
+```
+BEFORE 38521 units done=12277 (31.8709%)  generated_at 2026-08-19T01:10:47Z
+AFTER  38521 units done=12394 (32.1747%)  generated_at 2026-08-19T11:48:45Z
+DELTA  {done: +117, held: -117, in-progress: 0, not-started: 0, unmeasurable: 0, deferred: 0}
+companion  BEFORE {not-started: 769, done: 684, held: 243}
+companion  AFTER  {not-started: 769, done: 801, held: 126}
+verdict movements: [(('held', 'done'), 117)]   by kind: [('companion', 'held', 'done'), 117)]
+ids only in BEFORE: 0   only in AFTER: 0
+```
+
+**The denominator did not move**, no unit was added, removed, deferred or demoted, and no other
+kind moved in either direction.
+
+Guarded regen per DoD item 4:
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out …/sweep.json
+    -> 26105 records examined, 0 findings, CLEAN
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out …/fixture.json
+    -> 1393 of 1393 covered units cleared; 0 failed; 0 not ingested   (was 1276 before this cycle)
+CORPUS_LITERAL_SWEEP_REPORT=… DERIVED_FIXTURE_CHECK_REPORT=… cargo run --locked --bin v06_work_inventory
+```
+
+A second identical run differs **only** in `generated_at` (verified by comparing the two documents
+with that key removed). The stamp-loss guard was proven able to fail: a bare
+`cargo run --locked --bin v06_work_inventory` exits **1** — *"refusing to write …: this run would
+drop 7746 of the 7746 verification stamp(s) it currently carries"* — **without writing the file**.
+Stamps now stand at 6,436 `literal-verified` + 1,310 `fixture-verified`.
+
+`./scripts/publish-site-dashboard.sh` (real publish, per loop-instruction override 10) refreshed
+`site/dashboard/PF1e-dashboard.json`, `site/dashboard/units/PF1e-units-companion.json`,
+`site/status-data.json` and the 6 affected book-detail files — the change is confined to the seven
+books this cycle touched, which is itself a check that nothing else moved.
+
+### 7. What this cycle could NOT do
+
+* **The other 126 held companion units are untouched and stay held**, honestly. 28 single-attack
+  rows in the selected population state no damage token at all; 8 rows carry two or more;
+  `bestiary:companion:tyrannosaurus_powerful_bite` states `max(0,STR)` and
+  `bestiary_4:companion:companion_dinosaur_diplodocus_tail_lash` states the unclamped `STR/2` —
+  both refused rather than guessed. The remaining mass is the
+  `BONUS:SKILL|Climb,Swim|DEX-STR` shape (133 rows), `SPELLS:` caster-level/DC formulas, and
+  prose-stated scaling. Each is a real follow-on seam, not a deferral.
+* **The `companion` ABILITY rows are out of this seam.** `NaturalAttackDamageBonus` is a field of
+  `CompanionRecord` and the bar resolves through `CompanionBook::companion_resolve`, which
+  searches creatures. Four selected units live in an `*_abilities_*.lst`; the derivation script
+  skips them by name and says so, rather than emitting entries that would read as unresolvable
+  failures. Named follow-on.
+* **DoD item 8 (on-screen verification with the real driver) was NOT performed.** The new column
+  is proven to reach the wire by `every_transcribed_damage_bonus_reaches_the_wire` and
+  `a_half_strength_damage_bonus_reaches_the_screen_as_the_rule_it_states`, and to render by the
+  frontend's own `testADamageBonusPrintsTheRuleAndAnUnparsedOneSaysSo` — but that is a passing
+  test, which by construction cannot reach the "wired into a twin the sheet does not read" class
+  of defect. `companion` is not a newly-surfaced family here (the catalog has shipped since SD-29
+  Epic 7), so this is an added column on an existing surface rather than a new reach claim; it is
+  recorded as a shortfall regardless, not waived.
+
+### 8. A finding outside this lane, recorded not acted on
+
+**Wave 13's `class_feature` fixture seam has no production caller.**
+`grep -rn 'parse_class_feature_level_scaling' --include=*.rs apps/ src/` returns hits only inside
+`derived_evaluator_fixture_check` itself — unlike `spell_like_ability_caster_level`
+(`monster_catalog.rs:694`) and `format_spell_range_formula` / `format_caster_level_linear_duration`
+(`spell_catalog.rs:72,182`), which each have a real one. Under `decisions.md §8` that is a `done`
+credit resting on a non-shipping code path, which is **wired, not retracted** — so this is a card
+for the class_feature owner, not a withdrawal, and this lane did not touch those paths per its
+brief. Logged to `OPEN-ISSUES.md`.
+
+### 9. Verification
+
+`./scripts/verify.sh` (full, not `--quick`), exit code captured directly in the same shell
+statement (`./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"`, never through a
+pipe), own `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-w15-companion`, launched early per
+cycle-mechanics step 4a with the receipt written while it ran.
+
+**GATE RESULT: pending at the time this receipt was first written** — the run was launched at the
+`preflight-disk` stage and had reached `root-full` (the slow one, ~490 test binaries). Every stage
+up to that point PASSED, including `site-dashboard-check`, `site-public-status-check`, both
+`*-pi-gate`s (31 files scanned against 1,612 declared-PI names, zero leaked), `reachability-audit`
+(reachable ceiling 98.95 %) and `pi-sweep`. The result line below is filled in by this cycle's
+follow-up commit; a receipt that said "gate launched, log at `<path>`, exit code not yet obtained"
+is honest and resumable, and inferring one would not be.
+
+Component runs already captured directly:
+
+* `cargo test --locked --lib companion_seam_tests` → **17 passed; 0 failed** (11 parser/arithmetic/
+  corpus-fact anchors + the committed-fixture bar check + 5 scratch-root end-to-end proofs).
+* `cargo test --locked --manifest-path apps/desktop/src-tauri/Cargo.toml companion` → **17 passed;
+  0 failed**, including the three new wire tests and
+  `reach_gate::tests::every_ingested_companion_book_reaches_the_catalog_record_by_record`.
+* `npm run typecheck` (apps/desktop) → clean. `npm test` (apps/desktop) → **99/99 test files
+  passed**.
