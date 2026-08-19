@@ -61,6 +61,7 @@ function buildPreviewCatalog(): CompanionCatalogEntryDto[] {
           description: null,
           descriptionVariants: [],
           statAdjustments: [],
+          saveDcFormulas: [],
           sourcePage: null,
         },
         {
@@ -75,6 +76,7 @@ function buildPreviewCatalog(): CompanionCatalogEntryDto[] {
             { ability: 'STR', amount: 2 },
             { ability: 'CON', amount: 2 },
           ],
+          saveDcFormulas: [],
           sourcePage: null,
         },
       ],
@@ -115,6 +117,7 @@ function buildPreviewCatalog(): CompanionCatalogEntryDto[] {
           description: null,
           descriptionVariants: [],
           statAdjustments: [],
+          saveDcFormulas: [],
           sourcePage: null,
         },
       ],

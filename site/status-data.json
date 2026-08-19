@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-08-19T18:15:19Z",
+  "generated_at": "2026-08-19T20:26:05Z",
   "doneness_values": [
     "done",
     "partial",
     "not-started"
   ],
   "overall": {
-    "done": 11340,
-    "partial": 2073,
+    "done": 11352,
+    "partial": 2061,
     "not_started": 16097,
     "denominator": 29510,
-    "pct": 38.4,
+    "pct": 38.5,
     "excluded_from_percentage": 8862,
     "standing_breakdown": {
       "origin": 29510,
@@ -77,11 +77,11 @@
     {
       "id": "ultimate_wilderness",
       "title": "Ultimate Wilderness",
-      "done": 497,
-      "partial": 30,
+      "done": 505,
+      "partial": 22,
       "not_started": 1096,
       "denominator": 1623,
-      "pct": 30.6,
+      "pct": 31.1,
       "excluded_from_percentage": 251,
       "standing_breakdown": {
         "origin": 1623,
@@ -175,11 +175,11 @@
     {
       "id": "bestiary_4",
       "title": "Bestiary 4",
-      "done": 613,
-      "partial": 91,
+      "done": 617,
+      "partial": 87,
       "not_started": 328,
       "denominator": 1032,
-      "pct": 59.4,
+      "pct": 59.8,
       "excluded_from_percentage": 304,
       "standing_breakdown": {
         "unclassified": 304,

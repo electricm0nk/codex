@@ -4,6 +4,7 @@ import type {
   CompanionAttackDto,
   CompanionCatalogEntryDto,
   CompanionDamageBonusDto,
+  CompanionSaveDcDto,
   CompanionSkillBonusDto,
   CompanionStatAdjustmentDto,
 } from '../boundary/loadCompanionCatalog';
@@ -205,6 +206,27 @@ export function formatSkillBonus(bonus: CompanionSkillBonusDto): string {
   return bonus.unparsedFormula === null
     ? `${skills}: ${bonus.bonus}`
     : `${skills}: ${bonus.unparsedFormula} (formula not interpreted)`;
+}
+
+/**
+ * The save-DC-formula block's caption, on an ABILITY row. Names the field so
+ * the reader knows it is a corpus fact stated only in the ability's own
+ * `DESC:` argument — the same fact `render_pcgen_desc` drops the `%1`
+ * placeholder for, so without this row the DC number is silently missing
+ * from the description above it.
+ */
+export const SAVE_DC_CAPTION = 'Save DC formula (embedded in ability description)';
+
+/**
+ * One save-DC-formula row: `"10 + 1/2 HD + Con modifier"`.
+ *
+ * A shape the engine refuses to interpret prints its token verbatim and says
+ * so, matching [`formatDamageBonus`]'s own posture.
+ */
+export function formatSaveDcFormula(formula: CompanionSaveDcDto): string {
+  return formula.unparsedFormula === null
+    ? formula.formula
+    : `${formula.unparsedFormula} (formula not interpreted)`;
 }
 
 /**
@@ -446,6 +468,12 @@ export function CompanionCatalogScreen(props: CompanionCatalogScreenProps) {
                           <p style={{ color: 'var(--color-text-faint)', fontSize: '0.7rem', margin: '0.1rem 0 0' }}>
                             {STAT_ADJUSTMENT_CAPTION}:{' '}
                             {ability.statAdjustments.map(formatStatAdjustment).join(', ')}
+                          </p>
+                        ) : null}
+                        {ability.saveDcFormulas.length > 0 ? (
+                          <p style={{ color: 'var(--color-text-faint)', fontSize: '0.7rem', margin: '0.1rem 0 0' }}>
+                            {SAVE_DC_CAPTION}:{' '}
+                            {ability.saveDcFormulas.map(formatSaveDcFormula).join(', ')}
                           </p>
                         ) : null}
                       </div>

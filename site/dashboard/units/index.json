@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-08-19T18:06:59Z",
+  "generated_at": "2026-08-19T19:45:09Z",
   "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 38372,
-  "proven_units": 5883,
+  "proven_units": 5858,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 420,
   "category_labels_redacted": 3,
@@ -4844,16 +4844,16 @@
     },
     "companion": {
       "units": 1696,
-      "proven": 666,
+      "proven": 641,
       "by_status": {
         "not-ingested": 769,
         "literal-verified": 99,
         "text-complete": 165,
-        "grounded": 501,
-        "fixture-verified": 162
+        "grounded": 476,
+        "fixture-verified": 187
       },
       "shard": "PF1e-units-companion.json",
-      "bytes": 228542,
+      "bytes": 228742,
       "doneness_unmapped": {},
       "categories": {
         "none": {
@@ -4885,8 +4885,8 @@
         },
         "specialquality": {
           "label": "Special Qualities",
-          "done": 86,
-          "held": 21,
+          "done": 91,
+          "held": 16,
           "in-progress": 0,
           "not-started": 52,
           "unmeasurable": 0,
@@ -4912,8 +4912,8 @@
         },
         "specialattack": {
           "label": "Special Attacks",
-          "done": 68,
-          "held": 29,
+          "done": 86,
+          "held": 11,
           "in-progress": 0,
           "not-started": 5,
           "unmeasurable": 0,
@@ -5065,8 +5065,8 @@
         },
         "extraordinary": {
           "label": "Extraordinary",
-          "done": 4,
-          "held": 2,
+          "done": 5,
+          "held": 1,
           "in-progress": 0,
           "not-started": 0,
           "unmeasurable": 0,
@@ -5281,8 +5281,8 @@
         },
         "supernatural": {
           "label": "Supernatural",
-          "done": 1,
-          "held": 1,
+          "done": 2,
+          "held": 0,
           "in-progress": 0,
           "not-started": 0,
           "unmeasurable": 0,

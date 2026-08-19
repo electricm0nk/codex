@@ -48014,5 +48014,1160 @@
         ]
       }
     }
+  ],
+  "companion_save_dc_token_family": "DESC:<prose>%1<prose>|<base>[+<HD|TL>/2]+<ability> -- a companion ability's save DC, stated entirely in the DESC: token's own trailing formula argument (no separate BONUS: field), e.g. `10+HD/2+CON` or `11+CHA`.",
+  "companion_save_dc_derivation": "Every DESC: field on the ability's own row (there may be several, one per PREVARLT/PREVARGTEQ companion-advancement-tier variant), split on `|`, dropping the leading prose and any PRE\u2026/!PRE\u2026 gate argument. The remaining argument(s) must all parse to the SAME (base, includes_half_hd, ability) triple via this seam's own from-scratch classifier (independent of both the Python-side skill/strength seams and the Rust evaluator). expected.save_dc_at pins the evaluated DC at six (hit_dice, ability_modifier) pairs chosen for mutation sensitivity -- plain integer arithmetic computed here in Python, NOT read back from this repo's evaluator.",
+  "companion_save_dc_independence": "scripts/derive_companion_save_dc_fixtures.py re-reads the pinned upstream .lst bytes directly, splits each DESC: field's tab/pipe structure with its own logic, classifies the shape with its own from-scratch regex (classify_shape) and computes every expected save DC with plain Python arithmetic -- structurally independent of src/rules_core/derived_evaluator_fixture_check.rs's parse_companion_save_dc_formula / evaluate_companion_save_dc_formula. It opens no file under data/corpus/, reads no Rust table, and imports no engine module. docs/work-inventory.json is read for identity and selection only.",
+  "companion_save_dc_entries": [
+    {
+      "unit_id": "bestiary_4:companion:companion_dinosaur_dimorphodon_poison",
+      "book": "bestiary_4",
+      "record_key": "Companion (Dinosaur (Dimorphodon)) ~ Poison",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
+      "upstream_lst_sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6",
+      "upstream_line": 19,
+      "corpus_field": "DESC:...|10+HD/2+CON",
+      "expected": {
+        "base": 10,
+        "includes_half_hd": true,
+        "ability": "CON",
+        "save_dc_at": [
+          {
+            "hit_dice": 0,
+            "ability_modifier": 0,
+            "save_dc": 10
+          },
+          {
+            "hit_dice": 1,
+            "ability_modifier": 3,
+            "save_dc": 13
+          },
+          {
+            "hit_dice": 2,
+            "ability_modifier": -2,
+            "save_dc": 9
+          },
+          {
+            "hit_dice": 5,
+            "ability_modifier": 4,
+            "save_dc": 16
+          },
+          {
+            "hit_dice": 10,
+            "ability_modifier": -1,
+            "save_dc": 14
+          },
+          {
+            "hit_dice": 20,
+            "ability_modifier": 2,
+            "save_dc": 22
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "bestiary_4:companion:drake_shadow_stygian_breath",
+      "book": "bestiary_4",
+      "record_key": "Drake (Shadow) ~ Stygian Breath",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
+      "upstream_lst_sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6",
+      "upstream_line": 81,
+      "corpus_field": "DESC:...|11+CON",
+      "expected": {
+        "base": 11,
+        "includes_half_hd": false,
+        "ability": "CON",
+        "save_dc_at": [
+          {
+            "hit_dice": 0,
+            "ability_modifier": 0,
+            "save_dc": 11
+          },
+          {
+            "hit_dice": 1,
+            "ability_modifier": 3,
+            "save_dc": 14
+          },
+          {
+            "hit_dice": 2,
+            "ability_modifier": -2,
+            "save_dc": 9
+          },
+          {
+            "hit_dice": 5,
+            "ability_modifier": 4,
+            "save_dc": 15
+          },
+          {
+            "hit_dice": 10,
+            "ability_modifier": -1,
+            "save_dc": 10
+          },
+          {
+            "hit_dice": 20,
+            "ability_modifier": 2,
+            "save_dc": 13
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "bestiary_4:companion:flea_giant_disease",
+      "book": "bestiary_4",
+      "record_key": "Flea (Giant) ~ Disease",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
+      "upstream_lst_sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6",
+      "upstream_line": 84,
+      "corpus_field": "DESC:...|10+CON",
+      "expected": {
+        "base": 10,
+        "includes_half_hd": false,
+        "ability": "CON",
+        "save_dc_at": [
+          {
+            "hit_dice": 0,
+            "ability_modifier": 0,
+            "save_dc": 10
+          },
+          {
+            "hit_dice": 1,
+            "ability_modifier": 3,
+            "save_dc": 13
+          },
+          {
+            "hit_dice": 2,
+            "ability_modifier": -2,
+            "save_dc": 8
+          },
+          {
+            "hit_dice": 5,
+            "ability_modifier": 4,
+            "save_dc": 14
+          },
+          {
+            "hit_dice": 10,
+            "ability_modifier": -1,
+            "save_dc": 9
+          },
+          {
+            "hit_dice": 20,
+            "ability_modifier": 2,
+            "save_dc": 12
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "bestiary_4:companion:isitoq_daze",
+      "book": "bestiary_4",
+      "record_key": "Isitoq ~ Daze",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
+      "upstream_lst_sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6",
+      "upstream_line": 88,
+      "corpus_field": "DESC:...|11+CHA",
+      "expected": {
+        "base": 11,
+        "includes_half_hd": false,
+        "ability": "CHA",
+        "save_dc_at": [
+          {
+            "hit_dice": 0,
+            "ability_modifier": 0,
+            "save_dc": 11
+          },
+          {
+            "hit_dice": 1,
+            "ability_modifier": 3,
+            "save_dc": 14
+          },
+          {
+            "hit_dice": 2,
+            "ability_modifier": -2,
+            "save_dc": 9
+          },
+          {
+            "hit_dice": 5,
+            "ability_modifier": 4,
+            "save_dc": 15
+          },
+          {
+            "hit_dice": 10,
+            "ability_modifier": -1,
+            "save_dc": 10
+          },
+          {
+            "hit_dice": 20,
+            "ability_modifier": 2,
+            "save_dc": 13
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "bestiary_4:companion:isitoq_tears_of_anguish",
+      "book": "bestiary_4",
+      "record_key": "Isitoq ~ Tears of Anguish",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
+      "upstream_lst_sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6",
+      "upstream_line": 89,
+      "corpus_field": "DESC:...|11+CHA",
+      "expected": {
+        "base": 11,
+        "includes_half_hd": false,
+        "ability": "CHA",
+        "save_dc_at": [
+          {
+            "hit_dice": 0,
+            "ability_modifier": 0,
+            "save_dc": 11
+          },
+          {
+            "hit_dice": 1,
+            "ability_modifier": 3,
+            "save_dc": 14
+          },
+          {
+            "hit_dice": 2,
+            "ability_modifier": -2,
+            "save_dc": 9
+          },
+          {
+            "hit_dice": 5,
+            "ability_modifier": 4,
+            "save_dc": 15
+          },
+          {
+            "hit_dice": 10,
+            "ability_modifier": -1,
+            "save_dc": 10
+          },
+          {
+            "hit_dice": 20,
+            "ability_modifier": 2,
+            "save_dc": 13
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "bestiary_4:companion:psychopomp_nosoi_haunting_melody",
+      "book": "bestiary_4",
+      "record_key": "Psychopomp (Nosoi) ~ Haunting Melody",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
+      "upstream_lst_sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6",
+      "upstream_line": 104,
+      "corpus_field": "DESC:...|11+CHA",
+      "expected": {
+        "base": 11,
+        "includes_half_hd": false,
+        "ability": "CHA",
+        "save_dc_at": [
+          {
+            "hit_dice": 0,
+            "ability_modifier": 0,
+            "save_dc": 11
+          },
+          {
+            "hit_dice": 1,
+            "ability_modifier": 3,
+            "save_dc": 14
+          },
+          {
+            "hit_dice": 2,
+            "ability_modifier": -2,
+            "save_dc": 9
+          },
+          {
+            "hit_dice": 5,
+            "ability_modifier": 4,
+            "save_dc": 15
+          },
+          {
+            "hit_dice": 10,
+            "ability_modifier": -1,
+            "save_dc": 10
+          },
+          {
+            "hit_dice": 20,
+            "ability_modifier": 2,
+            "save_dc": 13
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:assassin_bug_giant_poison",
+      "book": "ultimate_wilderness",
+      "record_key": "Assassin Bug (Giant) ~ Poison",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+      "upstream_lst_sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+      "upstream_line": 201,
+      "corpus_field": "DESC:...|10+HD/2+CON",
+      "expected": {
+        "base": 10,
+        "includes_half_hd": true,
+        "ability": "CON",
+        "save_dc_at": [
+          {
+            "hit_dice": 0,
+            "ability_modifier": 0,
+            "save_dc": 10
+          },
+          {
+            "hit_dice": 1,
+            "ability_modifier": 3,
+            "save_dc": 13
+          },
+          {
+            "hit_dice": 2,
+            "ability_modifier": -2,
+            "save_dc": 9
+          },
+          {
+            "hit_dice": 5,
+            "ability_modifier": 4,
+            "save_dc": 16
+          },
+          {
+            "hit_dice": 10,
+            "ability_modifier": -1,
+            "save_dc": 14
+          },
+          {
+            "hit_dice": 20,
+            "ability_modifier": 2,
+            "save_dc": 22
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:caterpillar_giant_bristles",
+      "book": "ultimate_wilderness",
+      "record_key": "Caterpillar (Giant) ~ Bristles",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+      "upstream_lst_sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+      "upstream_line": 205,
+      "corpus_field": "DESC:...|12+HD/2+DEX",
+      "expected": {
+        "base": 12,
+        "includes_half_hd": true,
+        "ability": "DEX",
+        "save_dc_at": [
+          {
+            "hit_dice": 0,
+            "ability_modifier": 0,
+            "save_dc": 12
+          },
+          {
+            "hit_dice": 1,
+            "ability_modifier": 3,
+            "save_dc": 15
+          },
+          {
+            "hit_dice": 2,
+            "ability_modifier": -2,
+            "save_dc": 11
+          },
+          {
+            "hit_dice": 5,
+            "ability_modifier": 4,
+            "save_dc": 18
+          },
+          {
+            "hit_dice": 10,
+            "ability_modifier": -1,
+            "save_dc": 16
+          },
+          {
+            "hit_dice": 20,
+            "ability_modifier": 2,
+            "save_dc": 24
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:caterpillar_giant_poison",
+      "book": "ultimate_wilderness",
+      "record_key": "Caterpillar (Giant) ~ Poison",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+      "upstream_lst_sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+      "upstream_line": 206,
+      "corpus_field": "DESC:...|10+HD/2+CON",
+      "expected": {
+        "base": 10,
+        "includes_half_hd": true,
+        "ability": "CON",
+        "save_dc_at": [
+          {
+            "hit_dice": 0,
+            "ability_modifier": 0,
+            "save_dc": 10
+          },
+          {
+            "hit_dice": 1,
+            "ability_modifier": 3,
+            "save_dc": 13
+          },
+          {
+            "hit_dice": 2,
+            "ability_modifier": -2,
+            "save_dc": 9
+          },
+          {
+            "hit_dice": 5,
+            "ability_modifier": 4,
+            "save_dc": 16
+          },
+          {
+            "hit_dice": 10,
+            "ability_modifier": -1,
+            "save_dc": 14
+          },
+          {
+            "hit_dice": 20,
+            "ability_modifier": 2,
+            "save_dc": 22
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:creeping_puffball_poison",
+      "book": "ultimate_wilderness",
+      "record_key": "Creeping Puffball ~ Poison",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+      "upstream_lst_sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+      "upstream_line": 216,
+      "corpus_field": "DESC:...|10+HD/2+CON",
+      "expected": {
+        "base": 10,
+        "includes_half_hd": true,
+        "ability": "CON",
+        "save_dc_at": [
+          {
+            "hit_dice": 0,
+            "ability_modifier": 0,
+            "save_dc": 10
+          },
+          {
+            "hit_dice": 1,
+            "ability_modifier": 3,
+            "save_dc": 13
+          },
+          {
+            "hit_dice": 2,
+            "ability_modifier": -2,
+            "save_dc": 9
+          },
+          {
+            "hit_dice": 5,
+            "ability_modifier": 4,
+            "save_dc": 16
+          },
+          {
+            "hit_dice": 10,
+            "ability_modifier": -1,
+            "save_dc": 14
+          },
+          {
+            "hit_dice": 20,
+            "ability_modifier": 2,
+            "save_dc": 22
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:eurypterid_poison",
+      "book": "ultimate_wilderness",
+      "record_key": "Eurypterid ~ Poison",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+      "upstream_lst_sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+      "upstream_line": 231,
+      "corpus_field": "DESC:...|10+HD/2+CON",
+      "expected": {
+        "base": 10,
+        "includes_half_hd": true,
+        "ability": "CON",
+        "save_dc_at": [
+          {
+            "hit_dice": 0,
+            "ability_modifier": 0,
+            "save_dc": 10
+          },
+          {
+            "hit_dice": 1,
+            "ability_modifier": 3,
+            "save_dc": 13
+          },
+          {
+            "hit_dice": 2,
+            "ability_modifier": -2,
+            "save_dc": 9
+          },
+          {
+            "hit_dice": 5,
+            "ability_modifier": 4,
+            "save_dc": 16
+          },
+          {
+            "hit_dice": 10,
+            "ability_modifier": -1,
+            "save_dc": 14
+          },
+          {
+            "hit_dice": 20,
+            "ability_modifier": 2,
+            "save_dc": 22
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:fire_salamander_skin_secretions",
+      "book": "ultimate_wilderness",
+      "record_key": "Fire Salamander ~ Skin Secretions",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+      "upstream_lst_sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+      "upstream_line": 234,
+      "corpus_field": "DESC:...|10+HD/2+CON",
+      "expected": {
+        "base": 10,
+        "includes_half_hd": true,
+        "ability": "CON",
+        "save_dc_at": [
+          {
+            "hit_dice": 0,
+            "ability_modifier": 0,
+            "save_dc": 10
+          },
+          {
+            "hit_dice": 1,
+            "ability_modifier": 3,
+            "save_dc": 13
+          },
+          {
+            "hit_dice": 2,
+            "ability_modifier": -2,
+            "save_dc": 9
+          },
+          {
+            "hit_dice": 5,
+            "ability_modifier": 4,
+            "save_dc": 16
+          },
+          {
+            "hit_dice": 10,
+            "ability_modifier": -1,
+            "save_dc": 14
+          },
+          {
+            "hit_dice": 20,
+            "ability_modifier": 2,
+            "save_dc": 22
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:flowering_lattice_pollen",
+      "book": "ultimate_wilderness",
+      "record_key": "Flowering Lattice ~ Pollen",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+      "upstream_lst_sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+      "upstream_line": 238,
+      "corpus_field": "DESC:...|12+HD/2+CON",
+      "expected": {
+        "base": 12,
+        "includes_half_hd": true,
+        "ability": "CON",
+        "save_dc_at": [
+          {
+            "hit_dice": 0,
+            "ability_modifier": 0,
+            "save_dc": 12
+          },
+          {
+            "hit_dice": 1,
+            "ability_modifier": 3,
+            "save_dc": 15
+          },
+          {
+            "hit_dice": 2,
+            "ability_modifier": -2,
+            "save_dc": 11
+          },
+          {
+            "hit_dice": 5,
+            "ability_modifier": 4,
+            "save_dc": 18
+          },
+          {
+            "hit_dice": 10,
+            "ability_modifier": -1,
+            "save_dc": 16
+          },
+          {
+            "hit_dice": 20,
+            "ability_modifier": 2,
+            "save_dc": 24
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:horned_lizard_blood_squirt",
+      "book": "ultimate_wilderness",
+      "record_key": "Horned Lizard ~ Blood Squirt",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+      "upstream_lst_sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+      "upstream_line": 241,
+      "corpus_field": "DESC:...|10+HD/2+CON",
+      "expected": {
+        "base": 10,
+        "includes_half_hd": true,
+        "ability": "CON",
+        "save_dc_at": [
+          {
+            "hit_dice": 0,
+            "ability_modifier": 0,
+            "save_dc": 10
+          },
+          {
+            "hit_dice": 1,
+            "ability_modifier": 3,
+            "save_dc": 13
+          },
+          {
+            "hit_dice": 2,
+            "ability_modifier": -2,
+            "save_dc": 9
+          },
+          {
+            "hit_dice": 5,
+            "ability_modifier": 4,
+            "save_dc": 16
+          },
+          {
+            "hit_dice": 10,
+            "ability_modifier": -1,
+            "save_dc": 14
+          },
+          {
+            "hit_dice": 20,
+            "ability_modifier": 2,
+            "save_dc": 22
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:petrifern_toxic_secretion",
+      "book": "ultimate_wilderness",
+      "record_key": "Petrifern ~ Toxic Secretion",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+      "upstream_lst_sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+      "upstream_line": 304,
+      "corpus_field": "DESC:...|10+HD/2+CON",
+      "expected": {
+        "base": 10,
+        "includes_half_hd": true,
+        "ability": "CON",
+        "save_dc_at": [
+          {
+            "hit_dice": 0,
+            "ability_modifier": 0,
+            "save_dc": 10
+          },
+          {
+            "hit_dice": 1,
+            "ability_modifier": 3,
+            "save_dc": 13
+          },
+          {
+            "hit_dice": 2,
+            "ability_modifier": -2,
+            "save_dc": 9
+          },
+          {
+            "hit_dice": 5,
+            "ability_modifier": 4,
+            "save_dc": 16
+          },
+          {
+            "hit_dice": 10,
+            "ability_modifier": -1,
+            "save_dc": 14
+          },
+          {
+            "hit_dice": 20,
+            "ability_modifier": 2,
+            "save_dc": 22
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:platypus_poison",
+      "book": "ultimate_wilderness",
+      "record_key": "Platypus ~ Poison",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+      "upstream_lst_sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+      "upstream_line": 308,
+      "corpus_field": "DESC:...|10+HD/2+CON",
+      "expected": {
+        "base": 10,
+        "includes_half_hd": true,
+        "ability": "CON",
+        "save_dc_at": [
+          {
+            "hit_dice": 0,
+            "ability_modifier": 0,
+            "save_dc": 10
+          },
+          {
+            "hit_dice": 1,
+            "ability_modifier": 3,
+            "save_dc": 13
+          },
+          {
+            "hit_dice": 2,
+            "ability_modifier": -2,
+            "save_dc": 9
+          },
+          {
+            "hit_dice": 5,
+            "ability_modifier": 4,
+            "save_dc": 16
+          },
+          {
+            "hit_dice": 10,
+            "ability_modifier": -1,
+            "save_dc": 14
+          },
+          {
+            "hit_dice": 20,
+            "ability_modifier": 2,
+            "save_dc": 22
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:pufferfish_poison",
+      "book": "ultimate_wilderness",
+      "record_key": "Pufferfish ~ Poison",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+      "upstream_lst_sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+      "upstream_line": 314,
+      "corpus_field": "DESC:...|10+HD/2+CON",
+      "expected": {
+        "base": 10,
+        "includes_half_hd": true,
+        "ability": "CON",
+        "save_dc_at": [
+          {
+            "hit_dice": 0,
+            "ability_modifier": 0,
+            "save_dc": 10
+          },
+          {
+            "hit_dice": 1,
+            "ability_modifier": 3,
+            "save_dc": 13
+          },
+          {
+            "hit_dice": 2,
+            "ability_modifier": -2,
+            "save_dc": 9
+          },
+          {
+            "hit_dice": 5,
+            "ability_modifier": 4,
+            "save_dc": 16
+          },
+          {
+            "hit_dice": 10,
+            "ability_modifier": -1,
+            "save_dc": 14
+          },
+          {
+            "hit_dice": 20,
+            "ability_modifier": 2,
+            "save_dc": 22
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:rash_creeper_poison",
+      "book": "ultimate_wilderness",
+      "record_key": "Rash Creeper ~ Poison",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+      "upstream_lst_sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+      "upstream_line": 318,
+      "corpus_field": "DESC:...|10+HD/2+CON",
+      "expected": {
+        "base": 10,
+        "includes_half_hd": true,
+        "ability": "CON",
+        "save_dc_at": [
+          {
+            "hit_dice": 0,
+            "ability_modifier": 0,
+            "save_dc": 10
+          },
+          {
+            "hit_dice": 1,
+            "ability_modifier": 3,
+            "save_dc": 13
+          },
+          {
+            "hit_dice": 2,
+            "ability_modifier": -2,
+            "save_dc": 9
+          },
+          {
+            "hit_dice": 5,
+            "ability_modifier": 4,
+            "save_dc": 16
+          },
+          {
+            "hit_dice": 10,
+            "ability_modifier": -1,
+            "save_dc": 14
+          },
+          {
+            "hit_dice": 20,
+            "ability_modifier": 2,
+            "save_dc": 22
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:reef_snake_poison",
+      "book": "ultimate_wilderness",
+      "record_key": "Reef Snake ~ Poison",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+      "upstream_lst_sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+      "upstream_line": 329,
+      "corpus_field": "DESC:...|10+HD/2+CON",
+      "expected": {
+        "base": 10,
+        "includes_half_hd": true,
+        "ability": "CON",
+        "save_dc_at": [
+          {
+            "hit_dice": 0,
+            "ability_modifier": 0,
+            "save_dc": 10
+          },
+          {
+            "hit_dice": 1,
+            "ability_modifier": 3,
+            "save_dc": 13
+          },
+          {
+            "hit_dice": 2,
+            "ability_modifier": -2,
+            "save_dc": 9
+          },
+          {
+            "hit_dice": 5,
+            "ability_modifier": 4,
+            "save_dc": 16
+          },
+          {
+            "hit_dice": 10,
+            "ability_modifier": -1,
+            "save_dc": 14
+          },
+          {
+            "hit_dice": 20,
+            "ability_modifier": 2,
+            "save_dc": 22
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:sea_krait_poison",
+      "book": "ultimate_wilderness",
+      "record_key": "Sea Krait ~ Poison",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+      "upstream_lst_sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+      "upstream_line": 377,
+      "corpus_field": "DESC:...|10+HD/2+CON",
+      "expected": {
+        "base": 10,
+        "includes_half_hd": true,
+        "ability": "CON",
+        "save_dc_at": [
+          {
+            "hit_dice": 0,
+            "ability_modifier": 0,
+            "save_dc": 10
+          },
+          {
+            "hit_dice": 1,
+            "ability_modifier": 3,
+            "save_dc": 13
+          },
+          {
+            "hit_dice": 2,
+            "ability_modifier": -2,
+            "save_dc": 9
+          },
+          {
+            "hit_dice": 5,
+            "ability_modifier": 4,
+            "save_dc": 16
+          },
+          {
+            "hit_dice": 10,
+            "ability_modifier": -1,
+            "save_dc": 14
+          },
+          {
+            "hit_dice": 20,
+            "ability_modifier": 2,
+            "save_dc": 22
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:skunk_giant_spray",
+      "book": "ultimate_wilderness",
+      "record_key": "Skunk (Giant) ~ Spray",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+      "upstream_lst_sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+      "upstream_line": 344,
+      "corpus_field": "DESC:...|10+HD/2+CON",
+      "expected": {
+        "base": 10,
+        "includes_half_hd": true,
+        "ability": "CON",
+        "save_dc_at": [
+          {
+            "hit_dice": 0,
+            "ability_modifier": 0,
+            "save_dc": 10
+          },
+          {
+            "hit_dice": 1,
+            "ability_modifier": 3,
+            "save_dc": 13
+          },
+          {
+            "hit_dice": 2,
+            "ability_modifier": -2,
+            "save_dc": 9
+          },
+          {
+            "hit_dice": 5,
+            "ability_modifier": 4,
+            "save_dc": 16
+          },
+          {
+            "hit_dice": 10,
+            "ability_modifier": -1,
+            "save_dc": 14
+          },
+          {
+            "hit_dice": 20,
+            "ability_modifier": 2,
+            "save_dc": 22
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:skunk_musk",
+      "book": "ultimate_wilderness",
+      "record_key": "Skunk ~ Musk",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+      "upstream_lst_sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+      "upstream_line": 341,
+      "corpus_field": "DESC:...|12+HD/2+CON",
+      "expected": {
+        "base": 12,
+        "includes_half_hd": true,
+        "ability": "CON",
+        "save_dc_at": [
+          {
+            "hit_dice": 0,
+            "ability_modifier": 0,
+            "save_dc": 12
+          },
+          {
+            "hit_dice": 1,
+            "ability_modifier": 3,
+            "save_dc": 15
+          },
+          {
+            "hit_dice": 2,
+            "ability_modifier": -2,
+            "save_dc": 11
+          },
+          {
+            "hit_dice": 5,
+            "ability_modifier": 4,
+            "save_dc": 18
+          },
+          {
+            "hit_dice": 10,
+            "ability_modifier": -1,
+            "save_dc": 16
+          },
+          {
+            "hit_dice": 20,
+            "ability_modifier": 2,
+            "save_dc": 24
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:spitting_cobra_poison",
+      "book": "ultimate_wilderness",
+      "record_key": "Spitting Cobra ~ Poison",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+      "upstream_lst_sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+      "upstream_line": 360,
+      "corpus_field": "DESC:...|10+HD/2+CON",
+      "expected": {
+        "base": 10,
+        "includes_half_hd": true,
+        "ability": "CON",
+        "save_dc_at": [
+          {
+            "hit_dice": 0,
+            "ability_modifier": 0,
+            "save_dc": 10
+          },
+          {
+            "hit_dice": 1,
+            "ability_modifier": 3,
+            "save_dc": 13
+          },
+          {
+            "hit_dice": 2,
+            "ability_modifier": -2,
+            "save_dc": 9
+          },
+          {
+            "hit_dice": 5,
+            "ability_modifier": 4,
+            "save_dc": 16
+          },
+          {
+            "hit_dice": 10,
+            "ability_modifier": -1,
+            "save_dc": 14
+          },
+          {
+            "hit_dice": 20,
+            "ability_modifier": 2,
+            "save_dc": 22
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:squid_vampire_photophores",
+      "book": "ultimate_wilderness",
+      "record_key": "Squid (Vampire) ~ Photophores",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+      "upstream_lst_sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+      "upstream_line": 380,
+      "corpus_field": "DESC:...|10+HD/2+CON",
+      "expected": {
+        "base": 10,
+        "includes_half_hd": true,
+        "ability": "CON",
+        "save_dc_at": [
+          {
+            "hit_dice": 0,
+            "ability_modifier": 0,
+            "save_dc": 10
+          },
+          {
+            "hit_dice": 1,
+            "ability_modifier": 3,
+            "save_dc": 13
+          },
+          {
+            "hit_dice": 2,
+            "ability_modifier": -2,
+            "save_dc": 9
+          },
+          {
+            "hit_dice": 5,
+            "ability_modifier": 4,
+            "save_dc": 16
+          },
+          {
+            "hit_dice": 10,
+            "ability_modifier": -1,
+            "save_dc": 14
+          },
+          {
+            "hit_dice": 20,
+            "ability_modifier": 2,
+            "save_dc": 22
+          }
+        ]
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:companion:whiptail_centipede_giant_poison",
+      "book": "ultimate_wilderness",
+      "record_key": "Whiptail Centipede (Giant) ~ Poison",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+      "upstream_lst_sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+      "upstream_line": 385,
+      "corpus_field": "DESC:...|10+HD/2+CON",
+      "expected": {
+        "base": 10,
+        "includes_half_hd": true,
+        "ability": "CON",
+        "save_dc_at": [
+          {
+            "hit_dice": 0,
+            "ability_modifier": 0,
+            "save_dc": 10
+          },
+          {
+            "hit_dice": 1,
+            "ability_modifier": 3,
+            "save_dc": 13
+          },
+          {
+            "hit_dice": 2,
+            "ability_modifier": -2,
+            "save_dc": 9
+          },
+          {
+            "hit_dice": 5,
+            "ability_modifier": 4,
+            "save_dc": 16
+          },
+          {
+            "hit_dice": 10,
+            "ability_modifier": -1,
+            "save_dc": 14
+          },
+          {
+            "hit_dice": 20,
+            "ability_modifier": 2,
+            "save_dc": 22
+          }
+        ]
+      }
+    }
   ]
 }
