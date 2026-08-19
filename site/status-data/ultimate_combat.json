@@ -5,11 +5,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 2,
-      "partial": 1,
+      "done": 3,
+      "partial": 0,
       "not_started": 856,
       "denominator": 859,
-      "pct": 0.2,
+      "pct": 0.3,
       "excluded_from_percentage": 553,
       "standing_breakdown": {
         "origin": 859,
@@ -5556,7 +5556,7 @@
         },
         {
           "name": "Resolve",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SamuraiClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin"
         },
@@ -6510,7 +6510,7 @@
         },
         {
           "name": "Sneak Attack",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "NinjaClassFeatures.SpecialQuality.ClassFeatures.Sneak Attack",
           "standing": "unclassified"
         },
@@ -11568,11 +11568,11 @@
     {
       "kind": "spell",
       "label": "Spells",
-      "done": 139,
-      "partial": 7,
+      "done": 140,
+      "partial": 6,
       "not_started": 0,
       "denominator": 146,
-      "pct": 95.2,
+      "pct": 95.9,
       "excluded_from_percentage": 1,
       "standing_breakdown": {
         "origin": 146,
@@ -11839,7 +11839,7 @@
         },
         {
           "name": "Frost Fall",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },

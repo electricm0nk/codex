@@ -10761,11 +10761,11 @@
     {
       "kind": "equipment_modifier",
       "label": "Equipment Modifiers",
-      "done": 50,
-      "partial": 98,
+      "done": 53,
+      "partial": 95,
       "not_started": 73,
       "denominator": 221,
-      "pct": 22.6,
+      "pct": 24.0,
       "excluded_from_percentage": 5,
       "standing_breakdown": {
         "origin": 221,
@@ -10870,7 +10870,7 @@
         },
         {
           "name": "CRYS_DEEP",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -10882,7 +10882,7 @@
         },
         {
           "name": "CRYS_MUN",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -11866,7 +11866,7 @@
         },
         {
           "name": "SEEING",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },

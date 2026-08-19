@@ -6462,11 +6462,11 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 30,
-      "partial": 16,
+      "done": 41,
+      "partial": 5,
       "not_started": 134,
       "denominator": 180,
-      "pct": 16.7,
+      "pct": 22.8,
       "excluded_from_percentage": 18,
       "standing_breakdown": {
         "unclassified": 18,
@@ -6649,7 +6649,7 @@
         },
         {
           "name": "Blue-Ringed Octopus",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -6829,7 +6829,7 @@
         },
         {
           "name": "Familiar (Blue-Ringed Octopus)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -6841,7 +6841,7 @@
         },
         {
           "name": "Familiar (Goat)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -6853,31 +6853,31 @@
         },
         {
           "name": "Familiar (Pig)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "Familiar (Thrush)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "Familiar (Turtle)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "Fox",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified"
         },
         {
           "name": "Goat",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified"
         },
@@ -6925,7 +6925,7 @@
         },
         {
           "name": "House Centipede",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -7387,7 +7387,7 @@
         },
         {
           "name": "Pig",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified"
         },
@@ -7447,13 +7447,13 @@
         },
         {
           "name": "Scarlet Spider",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "Scorpion (Greensting))",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -7525,7 +7525,7 @@
         },
         {
           "name": "Thrush",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -7537,7 +7537,7 @@
         },
         {
           "name": "Turtle",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -8909,11 +8909,11 @@
     {
       "kind": "spell",
       "label": "Spells",
-      "done": 201,
-      "partial": 62,
+      "done": 219,
+      "partial": 44,
       "not_started": 22,
       "denominator": 285,
-      "pct": 70.5,
+      "pct": 76.8,
       "excluded_from_percentage": 6,
       "standing_breakdown": {
         "origin": 285,
@@ -9072,7 +9072,7 @@
         },
         {
           "name": "Badger's Ferocity",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin"
         },
@@ -9126,7 +9126,7 @@
         },
         {
           "name": "Boiling Blood",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin"
         },
@@ -9240,7 +9240,7 @@
         },
         {
           "name": "Conjure Black Pudding",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
@@ -9252,7 +9252,7 @@
         },
         {
           "name": "Control Construct",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
@@ -9426,7 +9426,7 @@
         },
         {
           "name": "Ear-Piercing Scream",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin"
         },
@@ -9510,7 +9510,7 @@
         },
         {
           "name": "Force Hook Charge",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
@@ -9786,7 +9786,7 @@
         },
         {
           "name": "Ki Shout",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
@@ -9816,13 +9816,13 @@
         },
         {
           "name": "Lightning Arc",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
         {
           "name": "Loathsome Veil",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
@@ -9834,13 +9834,13 @@
         },
         {
           "name": "Mad Hallucination",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
         {
           "name": "Mad Monkeys",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin"
         },
@@ -10116,7 +10116,7 @@
         },
         {
           "name": "Prediction of Failure",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
@@ -10308,7 +10308,7 @@
         },
         {
           "name": "Smug Narcissism",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
@@ -10362,7 +10362,7 @@
         },
         {
           "name": "Strangling Hair",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
@@ -10386,7 +10386,7 @@
         },
         {
           "name": "Summon Minor Monster",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin"
         },
@@ -10482,13 +10482,13 @@
         },
         {
           "name": "Transmute Blood To Acid",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
         {
           "name": "Transmute Rock to Mud (loose sand instead of mud)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin"
         },
@@ -10620,7 +10620,7 @@
         },
         {
           "name": "Wall of Sound",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },

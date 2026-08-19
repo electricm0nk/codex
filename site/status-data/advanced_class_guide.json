@@ -12378,7 +12378,7 @@
         },
         {
           "name": "Studied Target",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Slayer Class Feature.SpecialQuality.Extraordinary",
           "standing": "unclassified"
         },
@@ -18051,11 +18051,11 @@
     {
       "kind": "spell",
       "label": "Spells",
-      "done": 107,
-      "partial": 28,
+      "done": 112,
+      "partial": 23,
       "not_started": 0,
       "denominator": 135,
-      "pct": 79.3,
+      "pct": 83.0,
       "excluded_from_percentage": 9,
       "standing_breakdown": {
         "origin": 135,
@@ -18136,7 +18136,7 @@
         },
         {
           "name": "Anonymous Interaction",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -18232,7 +18232,7 @@
         },
         {
           "name": "Buoyancy",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -18490,7 +18490,7 @@
         },
         {
           "name": "Marching Chant",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -18616,7 +18616,7 @@
         },
         {
           "name": "Repair Undead (Mass)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -18748,55 +18748,55 @@
         },
         {
           "name": "Summon Nature's Ally I",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "unclassified"
         },
         {
           "name": "Summon Nature's Ally II",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "unclassified"
         },
         {
           "name": "Summon Nature's Ally III",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "unclassified"
         },
         {
           "name": "Summon Nature's Ally IV",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "unclassified"
         },
         {
           "name": "Summon Nature's Ally IX",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "unclassified"
         },
         {
           "name": "Summon Nature's Ally V",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "unclassified"
         },
         {
           "name": "Summon Nature's Ally VI",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "unclassified"
         },
         {
           "name": "Summon Nature's Ally VII",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "unclassified"
         },
         {
           "name": "Summon Nature's Ally VIII",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "unclassified"
         },
@@ -18886,7 +18886,7 @@
         },
         {
           "name": "Wall of Blindness/Deafness",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },

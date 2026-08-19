@@ -6118,11 +6118,11 @@
     {
       "kind": "spell",
       "label": "Spells",
-      "done": 73,
-      "partial": 28,
+      "done": 89,
+      "partial": 12,
       "not_started": 0,
       "denominator": 101,
-      "pct": 72.3,
+      "pct": 88.1,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 101
@@ -6130,7 +6130,7 @@
       "items": [
         {
           "name": "Absolution",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin"
         },
@@ -6154,13 +6154,13 @@
         },
         {
           "name": "Audiovisual Hallucination",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Psychic",
           "standing": "origin"
         },
         {
           "name": "Auditory Hallucination",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Psychic",
           "standing": "origin"
         },
@@ -6172,7 +6172,7 @@
         },
         {
           "name": "Bountiful Banquet",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin"
         },
@@ -6202,7 +6202,7 @@
         },
         {
           "name": "Complex Hallucination",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Psychic",
           "standing": "origin"
         },
@@ -6226,7 +6226,7 @@
         },
         {
           "name": "Conjuration Foil",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Psychic",
           "standing": "origin"
         },
@@ -6298,13 +6298,13 @@
         },
         {
           "name": "Demanding Message",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Psychic",
           "standing": "origin"
         },
         {
           "name": "Demanding Message (Mass)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Psychic",
           "standing": "origin"
         },
@@ -6364,7 +6364,7 @@
         },
         {
           "name": "Entice Fey (Lesser)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin"
         },
@@ -6532,7 +6532,7 @@
         },
         {
           "name": "Open Book",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin"
         },
@@ -6568,7 +6568,7 @@
         },
         {
           "name": "Phantasmal Affliction",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Psychic",
           "standing": "origin"
         },
@@ -6580,7 +6580,7 @@
         },
         {
           "name": "Poisonous Balm",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin"
         },
@@ -6646,7 +6646,7 @@
         },
         {
           "name": "Shifted Steps",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin"
         },
@@ -6670,7 +6670,7 @@
         },
         {
           "name": "Trade Items",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Psychic",
           "standing": "origin"
         },
@@ -6682,7 +6682,7 @@
         },
         {
           "name": "Triggered Hallucination",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Psychic",
           "standing": "origin"
         },
@@ -6694,7 +6694,7 @@
         },
         {
           "name": "Underbrush Decoy",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin"
         },

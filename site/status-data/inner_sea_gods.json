@@ -38,11 +38,11 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 92,
-      "partial": 25,
+      "done": 100,
+      "partial": 17,
       "not_started": 3,
       "denominator": 120,
-      "pct": 76.7,
+      "pct": 83.3,
       "excluded_from_percentage": 30,
       "standing_breakdown": {
         "origin": 120,
@@ -63,7 +63,7 @@
         },
         {
           "name": "Bear Pelt Of The Bonebreaker",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous Item.SLOT_Shoulders.Cloak",
           "standing": "origin"
         },
@@ -111,7 +111,7 @@
         },
         {
           "name": "Boots Of The Eternal Rose",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous Item.SLOT_Feet.Boot",
           "standing": "origin"
         },
@@ -201,7 +201,7 @@
         },
         {
           "name": "Demon Mother's Mask",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous Item.SLOT_Head.Headgear",
           "standing": "origin"
         },
@@ -369,7 +369,7 @@
         },
         {
           "name": "Hag's Shabble",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous Item.SLOT_Body.Robe",
           "standing": "origin"
         },
@@ -705,7 +705,7 @@
         },
         {
           "name": "Stinging Stiletto",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous Item.SLOT_Neck.SLOT_Ring.Amulet.Ring",
           "standing": "origin"
         },
@@ -735,7 +735,7 @@
         },
         {
           "name": "Veil Of Veils",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous Item.SLOT_Head.Headgear",
           "standing": "origin"
         },
@@ -753,7 +753,7 @@
         },
         {
           "name": "Vurra Of The Maker",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous Item.SLOT_Neck.Amulet",
           "standing": "origin"
         },
@@ -765,7 +765,7 @@
         },
         {
           "name": "Windwave Kilt",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous Item.SLOT_Belt.Belt",
           "standing": "origin"
         },

@@ -5,11 +5,11 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 4,
-      "partial": 12,
+      "done": 10,
+      "partial": 6,
       "not_started": 0,
       "denominator": 16,
-      "pct": 25.0,
+      "pct": 62.5,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 16
@@ -35,7 +35,7 @@
         },
         {
           "name": "Familiar (Cassisian)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Outsider",
           "standing": "origin"
         },
@@ -53,25 +53,25 @@
         },
         {
           "name": "Familiar (Elemental (Ice/Small))",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Outsider",
           "standing": "origin"
         },
         {
           "name": "Familiar (Elemental (Lightning/Small))",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Outsider",
           "standing": "origin"
         },
         {
           "name": "Familiar (Elemental (Magma/Small))",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Outsider",
           "standing": "origin"
         },
         {
           "name": "Familiar (Elemental (Mud/Small))",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Outsider",
           "standing": "origin"
         },
@@ -95,7 +95,7 @@
         },
         {
           "name": "Familiar (Snapping Turtle)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "origin"
         },
@@ -3784,11 +3784,11 @@
     {
       "kind": "monster",
       "label": "Monsters",
-      "done": 185,
-      "partial": 129,
+      "done": 216,
+      "partial": 98,
       "not_started": 2,
       "denominator": 316,
-      "pct": 58.5,
+      "pct": 68.4,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 316
@@ -3802,19 +3802,19 @@
         },
         {
           "name": "Aeon (Akhana)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "Aeon (Bythos)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "Aeon (Paracletus)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -3826,7 +3826,7 @@
         },
         {
           "name": "Aeon (Theletos)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -3838,19 +3838,19 @@
         },
         {
           "name": "Agathion (Cetaceal)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "Agathion (Draconal)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "Agathion (Leonal)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -3862,7 +3862,7 @@
         },
         {
           "name": "Agathion (Vulpinal)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -3898,19 +3898,19 @@
         },
         {
           "name": "Angel (Monadic Deva)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "Angel (Movanic Deva)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "Animate Dream",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -3928,7 +3928,7 @@
         },
         {
           "name": "Archon (Star)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -3952,19 +3952,19 @@
         },
         {
           "name": "Axiomite",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "Azata (Brijidine)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "Azata (Lyrakien)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -4054,7 +4054,7 @@
         },
         {
           "name": "Brownie",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -4258,7 +4258,7 @@
         },
         {
           "name": "Dark Slayer",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -4318,7 +4318,7 @@
         },
         {
           "name": "Devil (Belier)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -4744,7 +4744,7 @@
         },
         {
           "name": "Gremlin (Pugwampi)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -4762,7 +4762,7 @@
         },
         {
           "name": "Grig",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -4846,7 +4846,7 @@
         },
         {
           "name": "Hound of Tindalos",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -4954,7 +4954,7 @@
         },
         {
           "name": "Korred",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -4966,13 +4966,13 @@
         },
         {
           "name": "Lamia Matriarch",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "Leng Spider",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -5254,7 +5254,7 @@
         },
         {
           "name": "Qlippoth (Shoggti)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -5320,7 +5320,7 @@
         },
         {
           "name": "Sard",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -5356,7 +5356,7 @@
         },
         {
           "name": "Seugathi",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -5416,7 +5416,7 @@
         },
         {
           "name": "Siren",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -5542,7 +5542,7 @@
         },
         {
           "name": "Titan (Elysian)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -5608,7 +5608,7 @@
         },
         {
           "name": "Urdefhan",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -5638,7 +5638,7 @@
         },
         {
           "name": "Wendigo",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -5695,11 +5695,11 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 2,
-      "partial": 6,
+      "done": 3,
+      "partial": 5,
       "not_started": 210,
       "denominator": 218,
-      "pct": 0.9,
+      "pct": 1.4,
       "excluded_from_percentage": 98,
       "standing_breakdown": {
         "unclassified": 98,
@@ -5714,19 +5714,19 @@
         },
         {
           "name": "+2 Dexterity, +2 Charisma, -2 Wisdom",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Fetchling Racial Trait.Fetchling Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "unclassified"
         },
         {
           "name": "+2 Dexterity, +2 Charisma, -2 Wisdom",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Ifrit Racial Trait.Ifrit Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "unclassified"
         },
         {
           "name": "+2 Dexterity, +2 Intelligence, -2 Constitution",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Sylph Racial Trait.Sylph Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "unclassified"
         },
@@ -5738,13 +5738,13 @@
         },
         {
           "name": "+2 Dexterity, +2 Wisdom, -2 Strength",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Undine Racial Trait.Undine Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "origin"
         },
         {
           "name": "+2 Strength, +2 Wisdom, -2 Charisma",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Oread Racial Trait.Oread Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "unclassified"
         },

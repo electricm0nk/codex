@@ -1391,11 +1391,11 @@
     {
       "kind": "equipment_modifier",
       "label": "Equipment Modifiers",
-      "done": 0,
-      "partial": 2,
-      "not_started": 2,
+      "done": 2,
+      "partial": 1,
+      "not_started": 1,
       "denominator": 4,
-      "pct": 0.0,
+      "pct": 50.0,
       "excluded_from_percentage": 2,
       "standing_breakdown": {
         "origin": 4,
@@ -1416,13 +1416,13 @@
         },
         {
           "name": "PAUELIEL",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "Paueliel Wood",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BaseMaterial.MasterworkQuality.Ammunition.Weapon.Shield",
           "standing": "origin"
         },
@@ -1877,11 +1877,11 @@
     {
       "kind": "monster",
       "label": "Monsters",
-      "done": 3,
-      "partial": 6,
+      "done": 4,
+      "partial": 5,
       "not_started": 0,
       "denominator": 9,
-      "pct": 33.3,
+      "pct": 44.4,
       "excluded_from_percentage": 5,
       "standing_breakdown": {
         "origin": 9,
@@ -1908,7 +1908,7 @@
         },
         {
           "name": "Dragon (Spine)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -1990,7 +1990,7 @@
       "items": [
         {
           "name": "+2 Constitution, +2 Charisma, -2 Wisdom",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Gillman Racial Trait.Gillman Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "unclassified"
         },

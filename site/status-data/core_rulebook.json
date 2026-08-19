@@ -5,11 +5,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 6,
-      "partial": 3,
+      "done": 7,
+      "partial": 2,
       "not_started": 340,
       "denominator": 349,
-      "pct": 1.7,
+      "pct": 2.0,
       "excluded_from_percentage": 610,
       "standing_breakdown": {
         "unclassified": 610,
@@ -3066,7 +3066,7 @@
         },
         {
           "name": "Lay on Hands",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PaladinClassFeatures.SpecialQuality.Supernatural.LayOnHands.Lay on Hands",
           "standing": "origin"
         },
@@ -21008,11 +21008,11 @@
     {
       "kind": "equipment_modifier",
       "label": "Equipment Modifiers",
-      "done": 144,
-      "partial": 312,
+      "done": 155,
+      "partial": 301,
       "not_started": 214,
       "denominator": 670,
-      "pct": 21.5,
+      "pct": 23.1,
       "excluded_from_percentage": 6,
       "standing_breakdown": {
         "origin": 670,
@@ -21195,7 +21195,7 @@
         },
         {
           "name": "ADAMANT_WEAP",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -21321,7 +21321,7 @@
         },
         {
           "name": "Adamantine (Weapon)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -21957,7 +21957,7 @@
         },
         {
           "name": "DARK",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -23541,7 +23541,7 @@
         },
         {
           "name": "MITHRAL_ITEM",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -23769,7 +23769,7 @@
         },
         {
           "name": "Mithral (Item)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -24207,19 +24207,19 @@
         },
         {
           "name": "SHDW",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "SHDW_GRT",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "SHDW_IMP",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -24249,19 +24249,19 @@
         },
         {
           "name": "SLK",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "SLK_GRT",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "SLK_IMP",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -27470,11 +27470,11 @@
     {
       "kind": "spell",
       "label": "Spells",
-      "done": 485,
-      "partial": 160,
+      "done": 553,
+      "partial": 92,
       "not_started": 0,
       "denominator": 645,
-      "pct": 75.2,
+      "pct": 85.7,
       "excluded_from_percentage": 19,
       "standing_breakdown": {
         "origin": 645,
@@ -27483,7 +27483,7 @@
       "items": [
         {
           "name": "Acid Arrow",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
@@ -27603,7 +27603,7 @@
         },
         {
           "name": "Animate Plants",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin"
         },
@@ -27843,7 +27843,7 @@
         },
         {
           "name": "Break Enchantment",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin"
         },
@@ -27909,7 +27909,7 @@
         },
         {
           "name": "Calm Emotions",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin"
         },
@@ -27933,7 +27933,7 @@
         },
         {
           "name": "Chain Lightning",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin"
         },
@@ -27981,7 +27981,7 @@
         },
         {
           "name": "Chill Metal",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin"
         },
@@ -28155,7 +28155,7 @@
         },
         {
           "name": "Create Food and Water",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin"
         },
@@ -28173,7 +28173,7 @@
         },
         {
           "name": "Create Water",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin"
         },
@@ -28203,7 +28203,7 @@
         },
         {
           "name": "Cure Critical Wounds (Mass)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin"
         },
@@ -28215,7 +28215,7 @@
         },
         {
           "name": "Cure Light Wounds (Mass)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin"
         },
@@ -28233,7 +28233,7 @@
         },
         {
           "name": "Cure Serious Wounds",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin"
         },
@@ -28341,13 +28341,13 @@
         },
         {
           "name": "Destruction",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin"
         },
         {
           "name": "Detect Animals or Plants",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin"
         },
@@ -28449,7 +28449,7 @@
         },
         {
           "name": "Discern Lies",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin"
         },
@@ -28473,7 +28473,7 @@
         },
         {
           "name": "Disintegrate",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin"
         },
@@ -28767,7 +28767,7 @@
         },
         {
           "name": "Fabricate",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin"
         },
@@ -28797,7 +28797,7 @@
         },
         {
           "name": "Feather Fall",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
@@ -28821,7 +28821,7 @@
         },
         {
           "name": "Finger of Death",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin"
         },
@@ -28839,7 +28839,7 @@
         },
         {
           "name": "Fire Storm",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin"
         },
@@ -28851,7 +28851,7 @@
         },
         {
           "name": "Fireball",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin"
         },
@@ -28869,7 +28869,7 @@
         },
         {
           "name": "Flame Strike",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin"
         },
@@ -28911,7 +28911,7 @@
         },
         {
           "name": "Forbiddance",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin"
         },
@@ -28977,7 +28977,7 @@
         },
         {
           "name": "Freezing Sphere",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
@@ -28989,7 +28989,7 @@
         },
         {
           "name": "Gate",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin"
         },
@@ -29157,7 +29157,7 @@
         },
         {
           "name": "Heal (Mass)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin"
         },
@@ -29169,7 +29169,7 @@
         },
         {
           "name": "Heat Metal",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin"
         },
@@ -29277,7 +29277,7 @@
         },
         {
           "name": "Horrid Wilting",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin"
         },
@@ -29325,7 +29325,7 @@
         },
         {
           "name": "Implosion",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin"
         },
@@ -29349,7 +29349,7 @@
         },
         {
           "name": "Inflict Critical Wounds (Mass)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin"
         },
@@ -29361,7 +29361,7 @@
         },
         {
           "name": "Inflict Light Wounds (Mass)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin"
         },
@@ -29373,7 +29373,7 @@
         },
         {
           "name": "Inflict Moderate Wounds (Mass)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin"
         },
@@ -29385,7 +29385,7 @@
         },
         {
           "name": "Inflict Serious Wounds (Mass)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin"
         },
@@ -29475,7 +29475,7 @@
         },
         {
           "name": "Knock",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
@@ -29541,7 +29541,7 @@
         },
         {
           "name": "Lullaby",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
@@ -29565,7 +29565,7 @@
         },
         {
           "name": "Mage's Faithful Hound",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
@@ -29583,7 +29583,7 @@
         },
         {
           "name": "Mage's Private Sanctum",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
@@ -29643,7 +29643,7 @@
         },
         {
           "name": "Magic Missile",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
@@ -29679,19 +29679,19 @@
         },
         {
           "name": "Major Creation",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin"
         },
         {
           "name": "Major Image",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
         {
           "name": "Make Whole",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin"
         },
@@ -29751,7 +29751,7 @@
         },
         {
           "name": "Minor Image",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
@@ -29763,7 +29763,7 @@
         },
         {
           "name": "Mirage Arcana",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
@@ -29901,7 +29901,7 @@
         },
         {
           "name": "Permanent Image",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
@@ -29949,7 +29949,7 @@
         },
         {
           "name": "Planar Ally (Lesser)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin"
         },
@@ -30039,13 +30039,13 @@
         },
         {
           "name": "Polymorph (Greater)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
         {
           "name": "Polymorph Any Object",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
@@ -30105,7 +30105,7 @@
         },
         {
           "name": "Programmed Image",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
@@ -30183,7 +30183,7 @@
         },
         {
           "name": "Quench",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin"
         },
@@ -30195,7 +30195,7 @@
         },
         {
           "name": "Rainbow Pattern",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
@@ -30285,7 +30285,7 @@
         },
         {
           "name": "Remove Fear",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin"
         },
@@ -30405,31 +30405,31 @@
         },
         {
           "name": "Scorching Ray",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
         {
           "name": "Scorching Ray (Acid)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
         {
           "name": "Scorching Ray (Cold)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
         {
           "name": "Scorching Ray (Electricity)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
         {
           "name": "Screen",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin"
         },
@@ -30453,7 +30453,7 @@
         },
         {
           "name": "Searing Light",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin"
         },
@@ -30483,7 +30483,7 @@
         },
         {
           "name": "Seeming",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
@@ -30621,7 +30621,7 @@
         },
         {
           "name": "Silent Image",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
@@ -30663,7 +30663,7 @@
         },
         {
           "name": "Soften Earth and Stone",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin"
         },
@@ -30867,19 +30867,19 @@
         },
         {
           "name": "Summon Monster I",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "unclassified"
         },
         {
           "name": "Summon Monster II",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "unclassified"
         },
         {
           "name": "Summon Monster III",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "unclassified"
         },
@@ -30891,13 +30891,13 @@
         },
         {
           "name": "Summon Monster IV",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "unclassified"
         },
         {
           "name": "Summon Monster IX",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "unclassified"
         },
@@ -30927,7 +30927,7 @@
         },
         {
           "name": "Summon Monster V",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "unclassified"
         },
@@ -30939,19 +30939,19 @@
         },
         {
           "name": "Summon Monster VI",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "unclassified"
         },
         {
           "name": "Summon Monster VII",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "unclassified"
         },
         {
           "name": "Summon Monster VIII",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "unclassified"
         },
@@ -31113,7 +31113,7 @@
         },
         {
           "name": "Telekinesis",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
@@ -31203,13 +31203,13 @@
         },
         {
           "name": "Transmute Mud to Rock",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin"
         },
         {
           "name": "Transmute Rock to Mud",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin"
         },
@@ -31299,7 +31299,7 @@
         },
         {
           "name": "Veil",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin"
         },
@@ -31323,13 +31323,13 @@
         },
         {
           "name": "Wail of the Banshee",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin"
         },
         {
           "name": "Wall of Fire",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin"
         },
@@ -31347,13 +31347,13 @@
         },
         {
           "name": "Wall of Iron",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin"
         },
         {
           "name": "Wall of Stone",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin"
         },
@@ -31365,7 +31365,7 @@
         },
         {
           "name": "Warp Wood",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin"
         },

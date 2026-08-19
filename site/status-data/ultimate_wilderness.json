@@ -5238,11 +5238,11 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 172,
-      "partial": 118,
+      "done": 247,
+      "partial": 43,
       "not_started": 238,
       "denominator": 528,
-      "pct": 32.6,
+      "pct": 46.8,
       "excluded_from_percentage": 47,
       "standing_breakdown": {
         "origin": 528,
@@ -5395,25 +5395,25 @@
         },
         {
           "name": "Arctic Fox",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin"
         },
         {
           "name": "Arctic Hare",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin"
         },
         {
           "name": "Arctic Tern",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin"
         },
         {
           "name": "Armadillo",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin"
         },
@@ -5641,7 +5641,7 @@
         },
         {
           "name": "Chicken",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin"
         },
@@ -5713,7 +5713,7 @@
         },
         {
           "name": "Cockroach",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Vermin",
           "standing": "origin"
         },
@@ -6379,7 +6379,7 @@
         },
         {
           "name": "Creeper Ivy",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Plant",
           "standing": "origin"
         },
@@ -6511,13 +6511,13 @@
         },
         {
           "name": "Dodo",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin"
         },
         {
           "name": "Dolphin (Popoto)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin"
         },
@@ -6553,7 +6553,7 @@
         },
         {
           "name": "Dragonfly (Shimmerwing)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Vermin",
           "standing": "origin"
         },
@@ -6571,7 +6571,7 @@
         },
         {
           "name": "Dwarf Caiman",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin"
         },
@@ -6667,7 +6667,7 @@
         },
         {
           "name": "Ermine",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin"
         },
@@ -6685,25 +6685,25 @@
         },
         {
           "name": "Familiar (Arctic Fox)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "origin"
         },
         {
           "name": "Familiar (Arctic Hare)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "origin"
         },
         {
           "name": "Familiar (Arctic Tern)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "origin"
         },
         {
           "name": "Familiar (Armadillo)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "origin"
         },
@@ -6715,31 +6715,31 @@
         },
         {
           "name": "Familiar (Chicken)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "unclassified"
         },
         {
           "name": "Familiar (Cockroach)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Vermin",
           "standing": "origin"
         },
         {
           "name": "Familiar (Creeper Ivy)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Plant",
           "standing": "origin"
         },
         {
           "name": "Familiar (Dodo)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "unclassified"
         },
         {
           "name": "Familiar (Dwarf Caiman)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "origin"
         },
@@ -6751,13 +6751,13 @@
         },
         {
           "name": "Familiar (Ermine)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "origin"
         },
         {
           "name": "Familiar (Fire Salamander)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "origin"
         },
@@ -6781,7 +6781,7 @@
         },
         {
           "name": "Familiar (Horned Lizard)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "origin"
         },
@@ -6793,19 +6793,19 @@
         },
         {
           "name": "Familiar (Isopod (Giant))",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Vermin",
           "standing": "origin"
         },
         {
           "name": "Familiar (Jerboa)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "origin"
         },
         {
           "name": "Familiar (Kakapo)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "origin"
         },
@@ -6817,7 +6817,7 @@
         },
         {
           "name": "Familiar (Lamprey)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "origin"
         },
@@ -6829,7 +6829,7 @@
         },
         {
           "name": "Familiar (Lemming)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "origin"
         },
@@ -6847,13 +6847,13 @@
         },
         {
           "name": "Familiar (Marine Iguana)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "origin"
         },
         {
           "name": "Familiar (Meerkat)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "origin"
         },
@@ -6865,7 +6865,7 @@
         },
         {
           "name": "Familiar (Mongoose)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "origin"
         },
@@ -6895,31 +6895,31 @@
         },
         {
           "name": "Familiar (Penguin)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "unclassified"
         },
         {
           "name": "Familiar (Petrifern)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Plant",
           "standing": "origin"
         },
         {
           "name": "Familiar (Platypus)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "unclassified"
         },
         {
           "name": "Familiar (Popoto Dolphin)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "origin"
         },
         {
           "name": "Familiar (Ptarmigan)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "origin"
         },
@@ -6931,19 +6931,19 @@
         },
         {
           "name": "Familiar (Puffin)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "origin"
         },
         {
           "name": "Familiar (Rabbit)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "origin"
         },
         {
           "name": "Familiar (Ravenous Tumbleweed)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Plant",
           "standing": "origin"
         },
@@ -6955,25 +6955,25 @@
         },
         {
           "name": "Familiar (Rhamphorhynchus)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "origin"
         },
         {
           "name": "Familiar (Sawleg Locust)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Vermin",
           "standing": "origin"
         },
         {
           "name": "Familiar (Sea Krait)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "origin"
         },
         {
           "name": "Familiar (Seal)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "unclassified"
         },
@@ -6985,7 +6985,7 @@
         },
         {
           "name": "Familiar (Shimmerwing Dragonfly)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Vermin",
           "standing": "origin"
         },
@@ -7003,37 +7003,37 @@
         },
         {
           "name": "Familiar (Spiny Starfish)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Vermin",
           "standing": "origin"
         },
         {
           "name": "Familiar (Squirrel)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "origin"
         },
         {
           "name": "Familiar (Suture Vine)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Plant",
           "standing": "origin"
         },
         {
           "name": "Familiar (Tardigrade (Giant))",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Vermin",
           "standing": "origin"
         },
         {
           "name": "Familiar (Tarsier)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "origin"
         },
         {
           "name": "Familiar (Toucan)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "origin"
         },
@@ -7045,7 +7045,7 @@
         },
         {
           "name": "Familiar (Wallaby)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "origin"
         },
@@ -7117,7 +7117,7 @@
         },
         {
           "name": "Fire Salamander",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin"
         },
@@ -7441,19 +7441,19 @@
         },
         {
           "name": "Isopod (Giant)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Vermin",
           "standing": "origin"
         },
         {
           "name": "Jerboa",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin"
         },
         {
           "name": "Kakapo",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin"
         },
@@ -7471,7 +7471,7 @@
         },
         {
           "name": "Lamprey",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin"
         },
@@ -7495,7 +7495,7 @@
         },
         {
           "name": "Lemming",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin"
         },
@@ -7507,13 +7507,13 @@
         },
         {
           "name": "Lizard (Horned)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin"
         },
         {
           "name": "Locust (Sawleg)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Vermin",
           "standing": "origin"
         },
@@ -7621,7 +7621,7 @@
         },
         {
           "name": "Marine Iguana",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin"
         },
@@ -7657,7 +7657,7 @@
         },
         {
           "name": "Meerkat",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin"
         },
@@ -7687,7 +7687,7 @@
         },
         {
           "name": "Mongoose",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin"
         },
@@ -7807,7 +7807,7 @@
         },
         {
           "name": "Parrot",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "unclassified"
         },
@@ -7819,7 +7819,7 @@
         },
         {
           "name": "Penguin",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin"
         },
@@ -7831,7 +7831,7 @@
         },
         {
           "name": "Petrifern",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Plant",
           "standing": "origin"
         },
@@ -7897,7 +7897,7 @@
         },
         {
           "name": "Platypus",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin"
         },
@@ -8035,7 +8035,7 @@
         },
         {
           "name": "Ptarmigan",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin"
         },
@@ -8059,7 +8059,7 @@
         },
         {
           "name": "Puffin",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin"
         },
@@ -8095,7 +8095,7 @@
         },
         {
           "name": "Rabbit",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin"
         },
@@ -8113,7 +8113,7 @@
         },
         {
           "name": "Ravenous Tumbleweed",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Plant",
           "standing": "origin"
         },
@@ -8161,7 +8161,7 @@
         },
         {
           "name": "Rhamphorhynchus",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin"
         },
@@ -8197,13 +8197,13 @@
         },
         {
           "name": "Sea Krait",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin"
         },
         {
           "name": "Seal",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin"
         },
@@ -8389,7 +8389,7 @@
         },
         {
           "name": "Spiny Starfish",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Vermin",
           "standing": "origin"
         },
@@ -8449,7 +8449,7 @@
         },
         {
           "name": "Squirrel",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin"
         },
@@ -8473,7 +8473,7 @@
         },
         {
           "name": "Suture Vine",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Plant",
           "standing": "origin"
         },
@@ -8497,13 +8497,13 @@
         },
         {
           "name": "Tardigrade (Giant)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Vermin",
           "standing": "origin"
         },
         {
           "name": "Tarsier",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin"
         },
@@ -8563,7 +8563,7 @@
         },
         {
           "name": "Toucan",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin"
         },
@@ -8653,7 +8653,7 @@
         },
         {
           "name": "Wallaby",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin"
         },

@@ -7665,11 +7665,11 @@
     {
       "kind": "spell",
       "label": "Spells",
-      "done": 129,
-      "partial": 14,
+      "done": 135,
+      "partial": 8,
       "not_started": 328,
       "denominator": 471,
-      "pct": 27.4,
+      "pct": 28.7,
       "excluded_from_percentage": 2,
       "standing_breakdown": {
         "origin": 471,
@@ -7684,7 +7684,7 @@
         },
         {
           "name": "Analyze Aura",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Psychic",
           "standing": "origin"
         },
@@ -7756,7 +7756,7 @@
         },
         {
           "name": "Calm Spirit",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine.Psychic",
           "standing": "origin"
         },
@@ -7870,7 +7870,7 @@
         },
         {
           "name": "Ectoplasmic Snare",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin"
         },
@@ -8014,7 +8014,7 @@
         },
         {
           "name": "Incorporeal Chains",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Psychic",
           "standing": "origin"
         },
@@ -10270,7 +10270,7 @@
         },
         {
           "name": "Purge Spirit",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Psychic",
           "standing": "origin"
         },
@@ -10390,7 +10390,7 @@
         },
         {
           "name": "Telekinetic Maneuver",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Psychic",
           "standing": "origin"
         },

@@ -12474,11 +12474,11 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 4,
-      "partial": 6,
+      "done": 7,
+      "partial": 3,
       "not_started": 190,
       "denominator": 200,
-      "pct": 2.0,
+      "pct": 3.5,
       "excluded_from_percentage": 20,
       "standing_breakdown": {
         "origin": 200,
@@ -13009,7 +13009,7 @@
         },
         {
           "name": "Familiar (Centipede (House))",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar",
           "standing": "origin"
         },
@@ -13021,7 +13021,7 @@
         },
         {
           "name": "Familiar (Fox)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar",
           "standing": "origin"
         },
@@ -13045,7 +13045,7 @@
         },
         {
           "name": "Familiar (Spider (Scarlet))",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar",
           "standing": "origin"
         },
@@ -13405,7 +13405,7 @@
         },
         {
           "name": "Parrot",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "unclassified"
         },
@@ -15854,11 +15854,11 @@
     {
       "kind": "equipment_modifier",
       "label": "Equipment Modifiers",
-      "done": 14,
-      "partial": 10,
+      "done": 15,
+      "partial": 9,
       "not_started": 2,
       "denominator": 26,
-      "pct": 53.8,
+      "pct": 57.7,
       "excluded_from_percentage": 11,
       "standing_breakdown": {
         "origin": 26,
@@ -16017,7 +16017,7 @@
         },
         {
           "name": "JSTNG",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -17810,11 +17810,11 @@
     {
       "kind": "spell",
       "label": "Spells",
-      "done": 198,
-      "partial": 86,
+      "done": 213,
+      "partial": 71,
       "not_started": 0,
       "denominator": 284,
-      "pct": 69.7,
+      "pct": 75.0,
       "excluded_from_percentage": 9,
       "standing_breakdown": {
         "origin": 284,
@@ -17835,7 +17835,7 @@
         },
         {
           "name": "Acid Pit",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -17931,7 +17931,7 @@
         },
         {
           "name": "Bard's Escape",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -18165,7 +18165,7 @@
         },
         {
           "name": "Confess",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -18213,7 +18213,7 @@
         },
         {
           "name": "Create Pit",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -18237,7 +18237,7 @@
         },
         {
           "name": "Deadly Finale",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -18273,7 +18273,7 @@
         },
         {
           "name": "Detect Aberration",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -18555,7 +18555,7 @@
         },
         {
           "name": "Geyser",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -18651,7 +18651,7 @@
         },
         {
           "name": "Hungry Pit",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -18987,7 +18987,7 @@
         },
         {
           "name": "Rampart",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -19035,7 +19035,7 @@
         },
         {
           "name": "Restful Sleep",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -19155,7 +19155,7 @@
         },
         {
           "name": "Shared Wrath",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -19197,7 +19197,7 @@
         },
         {
           "name": "Solid Note",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -19209,7 +19209,7 @@
         },
         {
           "name": "Spiked Pit",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -19257,7 +19257,7 @@
         },
         {
           "name": "Stumble Gap",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -19437,7 +19437,7 @@
         },
         {
           "name": "Tsunami",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
