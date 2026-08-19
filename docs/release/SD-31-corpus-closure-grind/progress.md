@@ -27037,9 +27037,24 @@ the event log under-counts this defect 3×. `retro.py incident` emitted.
 The lane was the 316 `monster` units at `wiring_class=derived, status=grounded` that
 `doneness_verdict()` caps at `held`. Wave 13's `kind=monster` seam derives a
 spell-like-ability CASTER LEVEL from `BONUS:VAR|SLA_CL|` + `MONSTERCLASS:<type>:<HD>`.
-Re-derived against the pinned oracle over all 316 rows: **exactly ONE carries a
-`BONUS:VAR|SLA_CL|` token.** That seam is exhausted for this population, and extending
-its fixture set would have banked one unit.
+Re-derived against the pinned oracle over all 316 rows: **exactly TWO carry a
+`BONUS:VAR|SLA_CL|` token, and `spell_like_ability_caster_level` can bank NEITHER of them.**
+`bestiary:monster:dryad` is one of the 46 Bestiary 1 records with no `corpus_key`, so it does not
+resolve against `MONSTER_BOOKS` at all (§5, `OPEN-ISSUES` row 266);
+`book_of_the_damned_volume_2:monster:demon_vermlek` carries `BONUS:VAR|SLA_CL|HD*3/4`, which that
+function already refuses as unparseable rather than guessing at. **That seam is exhausted for this
+population — extending its fixture set would have banked ZERO units**, so a second, genuinely
+different magnitude was needed rather than more of the same one.
+
+> **CORRECTION to this receipt's own first draft**, and it is the exact defect this program keeps
+> recording. The figure was first written as "exactly ONE", from a script that resolved each unit
+> through `data/corpus/**/monster/*.json` keyed on the record's `data.key` field and **silently
+> skipped the 19 units where that lookup missed** — one of which is Dryad, an `SLA_CL` carrier.
+> The count that mattered was computed over 297 rows while the sentence claimed 316. Re-derived
+> over the dispatch base's own inventory (`git show 45273fd3b:docs/work-inventory.json`) with
+> every unit resolved (`corpus record not located: 0`), the answer is 2.
+> **A filtered denominator produced a confident wrong number, and only re-deriving the finding
+> that looked good caught it.** `retro.py correction` emitted.
 
 The derived signals actually present, re-derived from the oracle rows (not from a doc):
 

@@ -7,7 +7,12 @@
 //! covers the `BONUS:VAR|SLA_CL|` half of the same universal monster rule.
 //! A second seam was needed because the first is exhausted: of the 316
 //! `monster` units the board still held at `derived`+`grounded` when this
-//! seam was built, exactly ONE carries a `BONUS:VAR|SLA_CL|` token at all.
+//! seam was built, exactly TWO carry a `BONUS:VAR|SLA_CL|` token at all, and
+//! `spell_like_ability_caster_level` can bank NEITHER — Dryad is one of the
+//! 46 Bestiary 1 records that do not resolve against `MONSTER_BOOKS`
+//! (`OPEN-ISSUES.md` row 266), and Demon (Vermlek) carries
+//! `BONUS:VAR|SLA_CL|HD*3/4`, which that function already refuses as
+//! unparseable rather than guessing at.
 //!
 //! # The bar
 //!

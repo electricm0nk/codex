@@ -1424,10 +1424,21 @@ fn run_class_feature_bar_check(repo_root: &Path) -> BarCheckReport {
 // `kind = monster`, second seam — the spell-like-ability SAVE DC
 // (SD31-W15-MONSTER-SLA-001). Sibling of `run_monster_bar_check` above, which
 // covers the `BONUS:VAR|SLA_CL|` half of the SAME universal monster rule;
-// this half covers the `SPELLS:…|<spell>,<dc>` half. Only ONE of the 316
-// still-held `derived`+`grounded` `monster` units carries a
-// `BONUS:VAR|SLA_CL|` token at all, so the caster-level seam is exhausted for
-// that population and a second, genuinely different magnitude was needed.
+// this half covers the `SPELLS:…|<spell>,<dc>` half.
+//
+// **The caster-level seam is exhausted for the still-held population, and the
+// evidence is stronger than a bare count.** Of the 316 `monster` units held at
+// `derived`+`grounded` when this seam was built, exactly TWO carry a
+// `BONUS:VAR|SLA_CL|` token at all — and `spell_like_ability_caster_level`
+// can bank NEITHER of them:
+//   * `bestiary:monster:dryad` is one of the 46 Bestiary 1 records that carry
+//     no `corpus_key` and so do not resolve against `MONSTER_BOOKS` at all
+//     (`OPEN-ISSUES.md` row 266);
+//   * `book_of_the_damned_volume_2:monster:demon_vermlek` carries
+//     `BONUS:VAR|SLA_CL|HD*3/4`, which that function already refuses as
+//     unparseable rather than guessing at — see its own doc comment.
+// So a second, genuinely different magnitude was needed, not a wider fixture
+// set over the same one.
 // ---------------------------------------------------------------------------
 
 /// PF1's Spell-Like Abilities universal monster rule fixes the constant part
