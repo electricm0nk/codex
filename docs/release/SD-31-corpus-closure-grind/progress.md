@@ -27389,6 +27389,42 @@ rather than tiebroken.
 and all 314 rows cite `core_rulebook/cr_spells.lst`. The guard exists so a future run over a wider
 population cannot silently pick the wrong book's printing.
 
+### 9e. The gate
+
+`./scripts/verify.sh -j 4`, exit code captured in the same shell statement that ran it, never
+through a pipe:
+
+```
+RESULT: PASS
+VERIFY_EXIT=0
+passed: 34   preflight-disk preflight-oracle oracle-pin-selftest producer-selftest
+             pi-redaction-selftest provenance-selftest site-dashboard-selftest
+             site-dashboard-check site-dashboard-pi-gate build-public-status-selftest
+             site-public-status-check site-public-status-pi-gate site-asset-stamp-check
+             reachability-audit-selftest reachability-audit groundtruth-guard-selftest
+             supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest
+             reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full
+             desktop reach corpus-sweep supersession-gate frontend-install frontend-test
+             frontend-typecheck clippy class-dump
+```
+
+Headline stages: `root-lib` 2047 passed; `root-full` **7065 passed across 569 suites, all 532
+`tests/*.rs` suites executed**; `desktop` 465 passed; `reach` 27 passed; `corpus-sweep` 26105
+records examined, **0 findings**; `pi-sweep` 10 hits over `rules_tables`, 10 baseline rows (the
+new `spell_like_abilities` field added none); `site-dashboard-pi-gate` and
+`site-public-status-pi-gate` both zero leaked against 1,612 declared-PI names;
+`clippy` root:51 desktop:7, **0 errors**; `frontend-test` 99/99; `class-dump` 31/31 computing.
+
+**Two earlier gate runs were killed by this cycle, both recording `VERIFY_EXIT=143`
+(128 + 15 = SIGTERM), and neither is a red gate** -- the tree changed under them and re-running
+was cheaper than reasoning about a mixed result. Killed by PID after reading `pgrep -af` and
+`/proc/<pid>/cwd`, never by `pkill -f`, which on this box would have taken five sibling lanes'
+gates with it (`AGENTS.md` rule A11).
+
+**The final commit is doc-comment-only** (§1's figure correction), so the compile surface was
+re-checked against it directly rather than assumed: `cargo test --locked --lib -j 4` -> 2047
+passed, and the clippy re-count -> exactly 51.
+
 ### 10. What this cycle could NOT do
 
 * **The 178-row natural-attack Strength-damage family** (§2). Its expected value is not
