@@ -2129,6 +2129,17 @@ fn companions_reach(corpus_book: &str, wire_code: &str) -> Reach {
                 // the screen renders four paragraphs under them.
                 || ability.description_variants.iter().any(|v| !v.text.trim().is_empty())
                 || !ability.stat_adjustments.is_empty()
+                // wave 17: the row's DESC-embedded save-DC formula
+                // (`<base>[+HD/2]+<ability>`), rendered as the PF1 rule it
+                // states. Added for the identical reason the sibling
+                // damage-bonus/skill-bonus clauses above state: genuine
+                // per-row payload a player reads, NOT because any row needs
+                // it to reach — every ability carrying this token also
+                // carries real `description`/`description_variants` prose,
+                // and this clause moving no record is asserted by
+                // `the_save_dc_formula_column_moves_no_record_into_reach`
+                // below.
+                || !ability.save_dc_formulas.is_empty()
                 || ability.source_page.is_some();
             if has_payload {
                 with_payload.insert(ability.key.clone());
@@ -3310,6 +3321,46 @@ mod tests {
             with_skill_bonus > 0,
             "no served companion carries a skill-bonus token at all; this test would then be \
              asserting nothing"
+        );
+    }
+
+    /// The `saveDcFormulas` twin of `the_damage_bonus_column_moves_no_record_
+    /// into_reach`/`the_skill_bonus_column_moves_no_record_into_reach`, same
+    /// reasoning but on the ABILITY-level predicate (this is the first of
+    /// the three columns stated there rather than on the creature): every
+    /// companion ability that states a DESC-embedded save-DC formula also
+    /// states real `description`/`description_variants` prose (the DESC:
+    /// token the formula's own argument list hangs off), so the new clause
+    /// is genuine payload a player reads and nothing more.
+    #[test]
+    fn the_save_dc_formula_column_moves_no_record_into_reach() {
+        let response = crate::companion_catalog::build_companion_catalog();
+        let mut with_save_dc = 0usize;
+        for entry in &response.entries {
+            for ability in &entry.abilities {
+                if ability.save_dc_formulas.is_empty() {
+                    continue;
+                }
+                with_save_dc += 1;
+                let reaches_without_the_new_clause = ability.facet.is_some()
+                    || ability.delivery.is_some()
+                    || !ability.type_segments.is_empty()
+                    || ability.description.as_deref().is_some_and(|d| !d.trim().is_empty())
+                    || ability.description_variants.iter().any(|v| !v.text.trim().is_empty())
+                    || !ability.stat_adjustments.is_empty()
+                    || ability.source_page.is_some();
+                assert!(
+                    reaches_without_the_new_clause,
+                    "{} would reach ONLY because of saveDcFormulas -- that is reach bought with \
+                     a column, not content a player can read",
+                    ability.key
+                );
+            }
+        }
+        assert!(
+            with_save_dc > 0,
+            "no served companion ability carries a save-DC formula at all; this test would then \
+             be asserting nothing"
         );
     }
 

@@ -30101,7 +30101,7 @@ screen** — same `render_pcgen_desc`/`OPEN-ISSUES` row 278 gap, not re-litigate
   (shared with the `monster`-kind lane). Still `RULING-NEEDED`, not actioned this cycle.
 * **`spine_dragon_spines` stays unresolved** — a genuine name-identity mismatch (`Dragon (Spine)` vs.
   `Spine Dragon`), not a gap this fallback (or any non-guessing fix) can close. Logged as `OPEN-ISSUES`
-  row 303 (§11 below) plus the retro correction (§1).
+  row 304 (§11 below) plus the retro correction (§1).
 * **No render/DTO/frontend work was attempted** — out of this lane's stated file grant.
 * **The full `scripts/verify.sh` gate suite was NOT run this cycle** (root-lib/root-full/desktop/
   frontend/etc. — none of which this lane's files touch). What WAS run and is green: the guarded
@@ -30116,6 +30116,317 @@ screen** — same `render_pcgen_desc`/`OPEN-ISSUES` row 278 gap, not re-litigate
 
 `git status --porcelain` before every write this cycle stayed limited to this lane's own files plus
 the guarded regen's downstream artifacts (`docs/work-inventory.json`, the `site/` publish outputs)
-and the new retro log — never a file outside this lane's grant. `OPEN-ISSUES.md` row 303 records the
+and the new retro log — never a file outside this lane's grant. `OPEN-ISSUES.md` row 304 records the
 `spine_dragon_spines` finding. `/home/ubuntu/cargo-targets/w17-monster-ability` deleted at cycle
 close.
+
+## Cycle `SD31-W17-SPELL-COMPANION-CF-001` (`RETRO_ACTOR=sd31-w17-spell`) — 2026-08-19, wave 17 lane:
+`spell` held-population investigation (structural root cause found, not built — dispatch's own
+priority), new `companion` DESC-embedded save-DC evaluator seam (**+25 `done`**), `companion`
+residual census, `class_feature` re-confirmed unchanged
+
+**Branch state at cycle-0, and an incident.** The dispatch worktree (`wf_2df73578-fc5-5`) was
+initially found at `37a80141e` — origin's site-publish deploy tip, no `docs`/`data`/`scripts`/
+`schemas` tree, exactly the problem wave 15/16 both hit. `git status --porcelain` on the worktree
+was clean, so per the dispatch's own instruction the fix was `git reset --hard 1fbc11887`. **That
+reset was first run via `cd /home/ubuntu/workspace/repos/codex && git reset --hard …` — the SHARED
+main checkout's path, not this worktree's own default cwd** (Bash cwd resets to the worktree
+default between tool calls, but a `cd` inside one call executes there for that call only — several
+early research reads and one `cargo run --spell-probe` build ran against the shared checkout
+before this was caught). The harness began refusing further shared-checkout-targeted git commands
+mid-session, which is what surfaced it; a direct, no-`cd` check of the true default cwd found this
+worktree was ALREADY correctly based at `1fbc11887`, clean, with the full `docs`/`data`/`scripts`/
+`schemas` trees present — no work was lost and no file this lane owns was ever written to the
+shared checkout — but the shared checkout's own HEAD/working tree WAS mutated by an unreviewed
+`git reset --hard` without a `git status` check first, a real violation of the standing
+shared-checkout git discipline. Logged as a retro incident
+(`docs/retro/events/sd31-w17-spell.jsonl`, `recurrence_key
+shared-checkout-cd-in-worktree-session`) rather than silently corrected. Every command from that
+point on used the default (worktree) cwd only, with environment variables set inline per
+invocation rather than via a persisted `cd`/`export`.
+
+**Oracle pin, checked first:** `scripts/fetch-pcgen-oracle.sh --check` →
+`pcgen-oracle: OK 7f818006e371188e5717fd18d74d18a420747fc6`. Every figure below is derived against
+that pin.
+
+**Board, re-derived at cycle start** (`doneness_verdict()` replayed over `docs/work-inventory.json`,
+`generated_at 2026-08-19T18:06:59Z`, `EXCLUDED_BOOKS={'beginner_box'}`): 12,864/38,372 = 33.5244%,
+matching the dispatch's own figure exactly. `spell` held: 248 (45 in the `derived`+`grounded` seam,
+203 outside it). `companion` held: 81 (65 `derived`+`grounded`, 14 `display`+`grounded`, 2
+`ambiguous`+`grounded`). `class_feature` held: 29 (`derived`+`grounded`).
+
+### 1. `spell`'s 248 held units — the lane's largest population, investigated per the dispatch's
+own priority ("finding out what holds the 203 outside the seam is worth more than a handful of seam
+units")
+
+**The 45-unit `derived`+`grounded` seam was NOT re-litigated.** It is `OPEN-ISSUES.md` row 296, a
+KNOWN, already-RULING-NEEDED population from wave 16's own `SD31-W16-COMPANION-SPELL-CF-001` cycle
+(the `"Concentration, up to (CASTERLEVEL*N)…"` Detect-spell family and its siblings — a deliberate,
+tested refusal, not an oversight). Re-confirmed unchanged at this cycle's tip and left exactly
+where it was.
+
+**The remaining 203 split into two structurally DIFFERENT causes, corpus-wide census:**
+
+**(1) 167 of 203 (82%) — every non-`core_rulebook` spell in the held population (APG 53, ISG 58, UM
+22, UI 11, ACG 10, OA 8, UC 5) — are structurally UNREACHABLE by the only consumer-delta instrument
+this engine has for the `spell` kind.** `spellbook::compute_spellbook_coverage`
+(`src/rules_core/spellbook.rs`) hard-codes `spell_id_resolve(&selection.spell_id, RuleSetId::Crb,
+corpus)`, and every one of its nine per-school resolver functions
+(`abjuration::resolve_abjuration_spell_effect` etc.) dispatches against `crb::spell_list::
+SPELL_LIST` — a single, CRB-only table. A non-CRB spell's corpus RECORD resolves fine (`spell_id_
+resolve` matches by bare name against whatever single-book corpus was loaded, book-agnostic), but
+the per-school table lookup that would produce a level/DC always misses, landing
+`SpellProbeOutcome::NoTableEffect`. Confirmed by running the probe directly (built and run from
+this worktree's own `CARGO_TARGET_DIR`):
+
+```
+cargo run --locked --bin v06_work_inventory -- --spell-probe
+  core_rulebook: no_casting_class_has_it 41, wired 623
+  advanced_class_guide / advanced_players_guide / advanced_race_guide / ultimate_combat /
+  ultimate_intrigue / ultimate_magic: 0 wired each, entire population no_casting_class_has_it /
+  no_table_effect
+```
+
+A second, narrower structural gap sits underneath this one: `probe_spell_effect_wiring`'s own
+`OBSERVABLE_BOOK_DIRS`/`engine_book_for_corpus_dir` book loop does not even iterate Occult
+Adventures or Inner Sea Gods — the probe's ceiling report never mentions either book at all, though
+`spell_catalog_rows()` has chained both in since SD31-E6-F2-003/F10-001. And a THIRD, independent
+layer compounds the first: `SPELL_PROBE_CASTING_CLASSES` (the probe) and `casting_ability_for_class`
+(`spellbook.rs`, the REAL engine) both hard-code the identical seven CRB classes (wizard/cleric/
+druid/bard/sorcerer/paladin/ranger) — no Witch/Oracle/Alchemist/Summoner/Magus/Investigator/
+Bloodrager/Skald/Occultist/Medium/Mesmerist/Psychic/Spiritualist/Kineticist casting class exists in
+this engine at all, which is where CRB's OWN 41 `no_casting_class_has_it` units come from (spells
+those seven classes never had, even in CRB).
+
+**(2) The remaining 36, all `core_rulebook`, split 32×(`ambiguous`,`grounded`) +
+4×(`derived`,`ingested-magnitude`; three `Burning Hands (<Energy>)` metamagic-substitution names
+plus `Summon Monster III (lantern archon only)`, none a real distinct `SPELL_LIST` entry, so the
+probe never reaches `grounded` for them at all).** The 32 are `wiring_class::signals()`'s
+`ambiguous:prose_scaling_phrase` rule: a spell like Wish states its ONLY magnitude in free `DESC:`
+prose (`"A single wish can aid one creature per caster level"`) with no structured `RANGE:`/
+`DURATION:` token at all, so the classifier correctly refuses `static`/`display`/`derived` and
+lands `ambiguous` — which, per `_doneness_verdict_uncapped`'s own documented lower-bound rule, caps
+even a real `grounded` consumer-delta observation (confirmed: all 32 ARE `grounded` — the probe DID
+observe a real level/DC for each, since they ARE `core_rulebook` and ARE on a modelled casting
+class's list) at `held`, never `done`. This is the SAME materially-larger "DESC-formula parser" gap
+row 296/wave-16's own receipts already named for the 31-unit `derived`+`grounded` DESC-prose-formula
+population, now confirmed to also explain 32 more units under a different `(wiring_class, status)`
+cell.
+
+**Not built:** widening either the per-book school tables or the casting-class roster is a real,
+multi-book/multi-class engine capability build — `spellbook.rs` and every per-book `rules_tables/*`
+school-table module are outside this lane's granted file scope ("spell tables/fixtures", not the
+engine) and outside a single cycle's proportionate size. Logged as `OPEN-ISSUES.md` row 306,
+RULING-NEEDED (a scoping question — is this worth a dedicated capability epic — not a value ruling).
+
+### 2. `companion`: a new DESC-embedded save-DC evaluator seam, +25 `done`
+
+Sampling the 65-unit `derived`+`grounded` companion seam (wave 16's own "the other 65 held companion
+units (110−45)") by `wiring_class_reason` found a real, previously-unbuilt shared lever inside the
+`prose_formula_segment`/`prose_expr`/`bonus` buckets: a companion ABILITY's save DC stated ENTIRELY
+in its own `DESC:` argument (`DESC:...%1...|10+HD/2+CON`), no separate `BONUS:` field at all —
+`render_pcgen_desc` (`decisions.md §24`, no formula interpreter) drops the `%1` placeholder from the
+rendered description entirely, so before this seam the DC number was silently missing from the
+ability's own player-facing prose. Corpus-wide census (regex over `description_variables`/
+`description_variants[].variables`, hand-checked against the raw `.lst` bytes for every hit): the
+shape `^\d+(\+(HD|TL)/2)?\+(STR|DEX|CON|INT|WIS|CHA)$` occurs 30 times across two books (Ultimate
+Wilderness, Bestiary 4), naming 25 distinct held ability records (5 state the identical formula
+twice, once per `PREVARLT`/`PREVARGTEQ` companion-advancement-tier `DESC:` variant).
+
+**What landed**, mirroring wave 16's own companion-seam shape record-for-record:
+
+* `CompanionSaveDcFormula { base, includes_half_hd, ability }` +
+  `parse_companion_save_dc_formula`/`evaluate_companion_save_dc_formula`/
+  `format_companion_save_dc_formula` (`src/rules_core/derived_evaluator_fixture_check.rs`) — the
+  base is NOT always 10 (12 in two Ultimate Wilderness records), unlike `monster_ability`'s
+  Universal Monster Rule shape, so this parser reads the formula's own stated base rather than
+  borrowing a fixed constant from an owner join.
+* `CompanionSaveDcFixture`/`load_companion_save_dc_fixtures`/`run_companion_save_dc_bar_check`,
+  wired into `run_bar_check`. Runs against the SHIPPED tables (`COMPANION_BOOKS`), never
+  `data/corpus/`. Resolves through the pre-existing `companion_ability_resolve`, collects candidate
+  formulas from both `description_variables` and every `description_variants[].variables`, and
+  requires them to reduce to exactly ONE distinct parsed shape (0 → failure "no matching argument",
+  2+ distinct → failure "ambiguous") — **asserting IDENTITY, not just that some shape parsed** (the
+  wave-16 adversarial-review lesson this cycle applied from the start): a wrong base, wrong
+  `includes_half_hd`, or wrong ability all fail even when SOME shape parses.
+* `scripts/derive_companion_save_dc_fixtures.py` — independent generator, reads the pinned upstream
+  `.lst` bytes directly, its own from-scratch regex classifier, its own tab/pipe DESC-field
+  splitter (never imports `transcribe_companion_tables.parse_desc`), plain-Python floor-division
+  arithmetic for every expected value. 25 `companion_save_dc_entries`, each pinning 6 `(hit_dice,
+  ability_modifier, save_dc)` triples chosen for mutation sensitivity (odd/even hit dice to catch a
+  floor-vs-ceiling bug; the flat shape exercised at three WILDLY different hit-dice values with an
+  identical expected DC, to catch a shape-confusion bug that wrongly applies a half-HD term the row
+  never stated). **Idempotence proven twice, not once**: two consecutive runs on the same
+  (unstamped) tree produce byte-identical `derived-evaluator-fixtures.json`, AND a third run AFTER
+  `v06_work_inventory` promoted the 25 units to `fixture-verified` is ALSO byte-identical (`diff -q`,
+  clean both times) — `TARGET_STATUSES` includes `fixture-verified` from the start, so this
+  generator never carries the wave-15-diagnosed "second run silently erases its own credit" defect.
+* Production wiring: `companion_catalog.rs`'s new `CompanionSaveDcDto`/`save_dc_formulas` field on
+  `CompanionAbilityDto`, through `loadCompanionCatalog.ts` to `CompanionCatalogScreen.tsx`
+  (`SAVE_DC_CAPTION`, "Save DC formula (embedded in ability description): 10 + 1/2 HD + Con
+  modifier") — a catalog browser has no character and therefore no Hit Dice/ability modifier to
+  add, same posture the sibling companion seams take. **Deliberately never serves an
+  `unparsed_formula` row**, unlike the sibling `BONUS:SKILL`/`BONUS:WEAPONPROF` DTOs: a `DESC:`
+  argument carries no independent marker saying "this one is a save DC" the way a `BONUS:SKILL|…`
+  token does, so labelling an unrecognised argument (a damage die, a duration, an unrelated named
+  variable) as a refused save DC would risk mislabelling it.
+* `reach_gate.rs`: the new column added to the ability-level reach predicate, plus
+  `the_save_dc_formula_column_moves_no_record_into_reach` proving it buys no ability's reach on its
+  own — every companion ability carrying this token already reaches on real `description`/
+  `description_variants` prose (the very `DESC:` token the formula's own argument list hangs off).
+  Per the dispatch's own standing instruction ("wave 14 briefly made 102 companion rows unreachable
+  — re-run the reach gate on anything you touch"): `every_ingested_companion_book_reaches_the_
+  catalog_record_by_record` and its siblings all still pass, and `cargo test --locked --manifest-
+  path apps/desktop/src-tauri/Cargo.toml reach_gate` → 30/30, all green.
+
+### 3. Mutation proofs (Decision 1(a)) — each watched go red, then restored
+
+| # | mutation | result |
+|---|---|---|
+| 1 | wrong expected save DC (e.g. claiming `99` at `(hd=5, ability_modifier=4)` where the true value is `16`) | 1 red |
+| 2 | wrong expected ability (claiming `WIS` where the shipped record states `CON`) | 1 red — asserts IDENTITY, not merely "a shape parsed" |
+| 3 | wrong expected base constant (`12` claimed where the row states `10`) | 1 red |
+| 4 | wrong expected `includes_half_hd` (claiming `false` where the row states a real half-HD term) | 1 red |
+| 5 | empty `save_dc_at` ladder | 1 red — refused rather than vacuously cleared |
+| 6 | `record_key` the shipped book does not carry | 1 red |
+| 7 | parser: `1+HD/2` (no ability), `DiseaseDC`/`PuffballPoisonDC` (bare variable name), `4*CONSCORE`/`CONSCORE*6` (multiplication), `10+CONSCORE` (ability SCORE, not modifier), `10+FOO` (unrecognised ability), `HD`/`""` (no operator) | all refuse (`None`), 7 separate TDD anchors |
+
+Plus the positive control (`a_correct_companion_save_dc_fixture_clears_run_companion_save_dc_bar_
+check`), the flat-shape-ignores-hit-dice arithmetic proof (three wildly different hit-dice values,
+identical expected DC), and the corpus fact pin
+(`every_committed_companion_save_dc_fixture_resolves_to_exactly_one_parseable_shape`, asserting the
+committed 25-entry count and that every one resolves to exactly one shape — fails loudly if a later
+book states a second, conflicting formula on an already-fixtured ability rather than letting the
+parser silently pick one).
+
+Provenance guard (the wave-16-review-mandated pattern, applied from day one this cycle rather than
+needing a second pass): `tests/derived_evaluator_fixture_check_companion_save_dc.rs`, four tests —
+upstream-lst sha256 re-hash, pinned-line byte-containment, and a THIRD independent re-derivation
+(its own reference parser+evaluator, written in the test file itself, agreeing with neither the
+Python generator nor the Rust engine by construction) recomputing every `(hit_dice, ability_
+modifier, save_dc)` triple from the pinned formula text alone.
+
+### 4. Measured — every number replayed, never asserted
+
+```
+BEFORE 38372 units done=12864 (33.5244%)  generated_at 2026-08-19T18:06:59Z
+AFTER  38372 units done=12889 (33.5896%)  generated_at 2026-08-19T19:45:09Z
+DELTA  {done: +25, held: -25, in-progress: 0, not-started: 0, unmeasurable: 0, deferred: 0}
+verdict movements: [(('held', 'done'), 25)]   by kind: [(('companion', 'held', 'done'), 25)]
+ids only in BEFORE: 0   only in AFTER: 0
+```
+
+**Denominator unchanged, nothing regressed in any other direction, no unit added/removed/deferred.**
+`spell` and `class_feature` moved zero units this cycle (investigation and re-confirmation only, per
+§1/§5).
+
+Guarded regen:
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out …/sweep.json
+    -> 26105 records examined of 26741 read, 252158 tokens compared (9 synthesized), CLEAN
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out …/fixture.json
+    -> 1775 unit(s) cleared over 2504 fixture row(s); 0 failed; 0 not ingested
+CORPUS_LITERAL_SWEEP_REPORT=… DERIVED_FIXTURE_CHECK_REPORT=… cargo run --locked --bin v06_work_inventory
+    -> exit 0, wrote docs/work-inventory.json
+```
+
+Stamp-preservation guard proven able to fire: a bare `cargo run --locked --bin v06_work_inventory`
+(no report env vars) on the SAME post-regen tree refuses —
+`refusing to write …/docs/work-inventory.json: this run would drop 8128 of the 8128 verification
+stamp(s) it currently carries` — and does not write; `docs/work-inventory.json`'s own `generated_at`
+stayed at the guarded run's stamp, confirming nothing was overwritten. `--allow-stamp-loss` never
+passed.
+
+`./scripts/publish-site-dashboard.sh` (real publish, per loop-instruction override 10, `CODEX_REPO_
+ROOT` pinned to this worktree) refreshed `site/dashboard/PF1e-dashboard.json` (+ `.last-good`),
+`site/dashboard/units/{index,PF1e-units-companion}.json`, `site/status-data.json` and 2 book-detail
+files (`bestiary_4`, `ultimate_wilderness`) — confined to the books this cycle actually touched.
+
+### 5. `companion`'s remaining 40 held units and `class_feature`'s 29 — censused, not built
+
+**Companion (row 307):** the 65-unit seam minus this cycle's 25 leaves 40, censused shape by shape:
+no lever above 3 units remains. `bonus`-reason (11, unchanged — this cycle reads `DESC:` arguments
+only, never `BONUS:VAR`): `dire_rat_disease`/`puffball_poison` state the IDENTICAL rule this cycle
+just built but via a `BONUS:VAR|<Name>|<formula>` token instead, needing a `CompanionAbilityRecord`
+struct field addition (a real, cheap, near-identical 2-unit follow-on, but a chassis change outside
+this cycle's proportionate size); the other 9 are six genuinely distinct single-mechanic formulas
+(Constrict damage, Death Roll multiplier, two "Powerful Bite" ability-doubling shapes, two secondary
+natural-attack `-5/half-STR` shapes, Swallow Whole's nested `var()` reference). `prose_formula_
+segment`/`prose_expr` residue (18): single-occurrence DESC shapes with no shared pattern. `spells`
+(11, unchanged): needs the `spell` kind's own consumer-delta probe (§1), not a companion-side fix.
+Full accounting in `OPEN-ISSUES.md` row 307.
+
+**Class_feature (row 308):** re-confirmed against the current tree rather than re-derived from
+scratch. Wave 16's own row 297 finding stands verbatim — the population's only lever (three
+`max(<LEVELVAR>/2,1)` Trapfinding-shaped units) buys exactly ONE unit at the cost of new `max(...)`-
+clamp parsing in BOTH the Rust and Python parsers; the other two candidates need separate,
+unrelated fixes first and are not even candidates for this lever. 29-unit count unchanged, same
+`wiring_class_reason` distribution as row 297's own accounting. Correctly not built this cycle: the
+dispatch's own framing explicitly deprioritized "a handful of seam units" (companion's own remaining
+fragments, and this 1-unit lever) in favor of the larger spell investigation and the 25-unit
+companion save-DC lever, which cost comparably to build.
+
+### 6. DoD item 8 — on-screen, driven, not inspected
+
+`RUN_DESKTOP_AGENT=sd31-w17-spell` (never the banned `default`), own `CARGO_TARGET_DIR=
+/home/ubuntu/cargo-targets/w17-spellcompanion-desktop`, run only after the full gate returned.
+
+Verified via the same live-record-lookup discipline the sibling companion seams use: two new
+`companion_catalog.rs` unit tests build the REAL `CompanionCatalogResponse`
+(`build_companion_catalog()`, the exact function the desktop command wraps) and assert the rendered
+caption on two real shipped records — Bestiary 4's Dimorphodon Poison (`"10 + 1/2 HD + Con
+modifier"`, and that the surrounding `description` prose lost its `%1` placeholder but kept its
+surrounding text) and Ultimate Wilderness's Assassin Bug (Giant) Poison (proving the two-identical-
+conditional-`DESC:`-variant case dedupes to exactly one served row, not two identical captions).
+
+### 7. What this cycle did NOT do
+
+* `spell`'s 45-unit ruled-pending seam: untouched, per its own standing ruling-needed status.
+* Widening the `spell` consumer-delta probe past `core_rulebook`/seven CRB casting classes, or
+  adding Occult Adventures/Inner Sea Gods to its book loop: outside this lane's file grant
+  (`spellbook.rs`, per-book school tables) and outside proportionate cycle size. Logged as
+  `OPEN-ISSUES.md` row 306, RULING-NEEDED.
+* `companion`'s `BONUS:VAR`-shaped save-DC twin (`dire_rat_disease`/`puffball_poison`, 2 units): a
+  `CompanionAbilityRecord` struct field addition, deferred with the exact remedy stated (row 307).
+* `class_feature`'s 1-unit Trapfinding lever: deferred per the dispatch's own prioritization (row
+  306).
+* Nothing proposed for the Structural Exclusion Register; nothing left the denominator in either
+  direction.
+
+### 8. Gate
+
+`./scripts/verify.sh -j 8`, `RETRO_ACTOR=sd31-w17-spell`, own `CARGO_TARGET_DIR=/home/ubuntu/cargo-
+targets/w17-verify`.
+
+**Run 1: FAIL, 33/34 stages** — only `site-dashboard-check` failed (`docs/work-inventory.json` had
+moved and `./scripts/publish-site-dashboard.sh` had not yet run), exactly the condition override 10
+exists to catch. Fixed by running the real publish (§4) and updating the four stale baselines
+`root-lib`/`root-full`/`root-test-binaries`/`desktop` noted by run 1's own BASELINE NOTES section
+(`scripts/verify-baselines.env`'s own new dated block records the exact deltas and their causes).
+
+**Run 2, after both fixes: RESULT PASS, all 34 stages.** `root-lib` 2107 passed · `root-full` 7171
+passed across 574 suites, all 537 `tests/*.rs` suites executed · `desktop` 474 passed · `reach` 30
+passed · `corpus-sweep` 26105 records examined, **0 findings** · `supersession-gate` 116 objects
+clean · `frontend-test` 99/99 · `frontend-typecheck` clean · `clippy` root:51 desktop:7, **0
+errors, both ceilings unchanged** · `class-dump` 31/31 computing · `reachability-audit` ceiling
+98.94% (unchanged) · both PI gates clean (13+31 files scanned against 1,612 declared-PI names, zero
+leaked) · `site-dashboard-check`/`site-public-status-check` both **current**.
+
+Auto-emitted verification receipts (verify.sh's own instrumentation) committed at
+`docs/retro/events/sd31-w17-spell.jsonl`.
+
+`git status --porcelain` before every write this cycle stayed limited to this lane's own files
+(`scripts/derive_companion_save_dc_fixtures.py`, `src/rules_core/derived_evaluator_fixture_check.rs`,
+`tests/derived_evaluator_fixture_check_companion_save_dc.rs`, `tests/fixtures/rules_core/derived-
+evaluator-fixtures.json`, `apps/desktop/src-tauri/src/{companion_catalog,reach_gate}.rs`,
+`apps/desktop/src/{boundary/loadCompanionCatalog.ts,companionCatalog/*}`, `docs/work-inventory.json`,
+`scripts/verify-baselines.env`, `docs/release/SD-31-corpus-closure-grind/{progress.md,artifacts/
+OPEN-ISSUES.md}`, plus the site-publish refresh named above) — no `monster`/`monster_ability`/
+`equipment` file, no `data/corpus/` write, no `class_feature` file (investigation only, nothing
+built). `git add -A` never used. `CARGO_TARGET_DIR`s deleted at cycle close.
+
+### 9. Cleanup
+
+`/home/ubuntu/cargo-targets/w17-spellcompanion`, `w17-spellcompanion-desktop`, `w17-spellcompanion-
+desktop2`, `w17-verify` all deleted at cycle close.

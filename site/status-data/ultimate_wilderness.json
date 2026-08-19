@@ -6105,11 +6105,11 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 274,
-      "partial": 16,
+      "done": 282,
+      "partial": 8,
       "not_started": 238,
       "denominator": 528,
-      "pct": 51.9,
+      "pct": 53.4,
       "excluded_from_percentage": 47,
       "standing_breakdown": {
         "origin": 528,
@@ -6419,7 +6419,7 @@
         },
         {
           "name": "Blood Squirt",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.HornedLizardRacialTrait",
           "standing": "origin",
           "display_name": "Blood Squirt"
@@ -6489,7 +6489,7 @@
         },
         {
           "name": "Bristles",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.GiantCaterpillarRacialTrait",
           "standing": "origin",
           "display_name": "Bristles"
@@ -8974,7 +8974,7 @@
         },
         {
           "name": "Musk",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.SkunkRacialTrait.SkunkRacialAbility",
           "standing": "origin",
           "display_name": "Musk"
@@ -9135,7 +9135,7 @@
         },
         {
           "name": "Photophores",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.VampireSquidRacialTrait",
           "standing": "origin",
           "display_name": "Photophores"
@@ -9212,77 +9212,77 @@
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.GiantAssassinBugRacialTrait",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary.GiantAssassinBugRacialTrait)"
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.GiantCaterpillarRacialTrait",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary.GiantCaterpillarRacialTrait)"
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.CreepingPuffballRacialTrait",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary.CreepingPuffballRacialTrait)"
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.EurypteridRacialTrait",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary.EurypteridRacialTrait)"
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Extraordinary.SpecialQuality.PlatypusRacialTrait",
           "standing": "unclassified",
           "display_name": "Poison (Extraordinary.SpecialQuality.PlatypusRacialTrait)"
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.PufferfishRacialTrait",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary.PufferfishRacialTrait)"
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.RashCreeperRacialTrait",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary.RashCreeperRacialTrait)"
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.ReefSnakeRacialTrait",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary.ReefSnakeRacialTrait)"
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.SeaKraitRacialTrait",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary.SeaKraitRacialTrait)"
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.SpittingCobraRacialTrait",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary.SpittingCobraRacialTrait)"
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.GiantWhiptailCentipedeRacialTrait",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary.GiantWhiptailCentipedeRacialTrait)"
@@ -9303,7 +9303,7 @@
         },
         {
           "name": "Pollen",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.FloweringLatticeRacialTrait",
           "standing": "origin",
           "display_name": "Pollen"
@@ -9667,7 +9667,7 @@
         },
         {
           "name": "Skin Secretions",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.FireSalamanderRacialTrait",
           "standing": "origin",
           "display_name": "Skin Secretions"
@@ -9814,7 +9814,7 @@
         },
         {
           "name": "Spray",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.GiantSkunkRacialTrait",
           "standing": "origin",
           "display_name": "Spray"
@@ -9989,7 +9989,7 @@
         },
         {
           "name": "Toxic Secretion",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.PetrifernRacialTrait",
           "standing": "origin",
           "display_name": "Toxic Secretion"

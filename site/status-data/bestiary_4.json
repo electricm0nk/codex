@@ -48,11 +48,11 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 57,
-      "partial": 10,
+      "done": 61,
+      "partial": 6,
       "not_started": 2,
       "denominator": 69,
-      "pct": 82.6,
+      "pct": 88.4,
       "excluded_from_percentage": 11,
       "standing_breakdown": {
         "origin": 69,
@@ -243,14 +243,14 @@
         },
         {
           "name": "Daze",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Daze"
         },
         {
           "name": "Disease",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Disease"
@@ -397,7 +397,7 @@
         },
         {
           "name": "Haunting Melody",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Haunting Melody"
@@ -453,7 +453,7 @@
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary)"
@@ -572,7 +572,7 @@
         },
         {
           "name": "Stygian Breath",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Supernatural.SpecialAttack",
           "standing": "origin",
           "display_name": "Stygian Breath"
@@ -593,7 +593,7 @@
         },
         {
           "name": "Tears of Anguish",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Tears of Anguish"

@@ -91,6 +91,27 @@ export interface CompanionSkillBonusDto {
 }
 
 /**
+ * One companion ABILITY's save DC, stated entirely in a `DESC:` argument —
+ * PCGen's `DESC:...%1...|<base>[+HD/2]+<ability>` encoding.
+ *
+ * **A rule, not a number**, same posture `CompanionSkillBonusDto` and
+ * `CompanionDamageBonusDto` both take. This is the ONLY place the DC reaches
+ * a player at all: the engine's `render_pcgen_desc` drops the `%1`
+ * placeholder from `description` entirely (no formula interpreter), so
+ * without this field the DC number is silently missing from the ability's
+ * own prose.
+ */
+export interface CompanionSaveDcDto {
+  /** The rule in words: `"10 + 1/2 HD + Con modifier"`. */
+  formula: string;
+  /**
+   * The token's raw argument, for a shape the engine refuses to interpret.
+   * `null` once `formula` carries the rendered rule.
+   */
+  unparsedFormula: string | null;
+}
+
+/**
  * One `BONUS:STAT` token.
  *
  * **An adjustment, never a score.** A Griffon's row states
@@ -135,6 +156,11 @@ export interface CompanionAbilityDto {
    */
   descriptionVariants: CompanionDescriptionVariantDto[];
   statAdjustments: CompanionStatAdjustmentDto[];
+  /**
+   * Every DESC-embedded save-DC formula this row states. Empty for most
+   * rows — see `CompanionSaveDcDto`.
+   */
+  saveDcFormulas: CompanionSaveDcDto[];
   sourcePage: string | null;
 }
 

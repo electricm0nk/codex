@@ -115,6 +115,7 @@ pub fn run_bar_check(repo_root: &Path) -> BarCheckReport {
     let monster_ability_formula = run_monster_ability_formula_bar_check(repo_root);
     let companion = run_companion_bar_check(repo_root);
     let companion_skill = run_companion_skill_bar_check(repo_root);
+    let companion_save_dc = run_companion_save_dc_bar_check(repo_root);
     let mut cleared = equipment.cleared;
     cleared.extend(monster.cleared);
     cleared.extend(monster_sla.cleared);
@@ -125,6 +126,7 @@ pub fn run_bar_check(repo_root: &Path) -> BarCheckReport {
     cleared.extend(monster_ability_formula.cleared);
     cleared.extend(companion.cleared);
     cleared.extend(companion_skill.cleared);
+    cleared.extend(companion_save_dc.cleared);
     let mut failures = equipment.failures;
     failures.extend(monster.failures);
     failures.extend(monster_sla.failures);
@@ -135,6 +137,7 @@ pub fn run_bar_check(repo_root: &Path) -> BarCheckReport {
     failures.extend(monster_ability_formula.failures);
     failures.extend(companion.failures);
     failures.extend(companion_skill.failures);
+    failures.extend(companion_save_dc.failures);
     let mut not_ingested = equipment.not_ingested;
     not_ingested.extend(monster.not_ingested);
     not_ingested.extend(monster_sla.not_ingested);
@@ -145,6 +148,7 @@ pub fn run_bar_check(repo_root: &Path) -> BarCheckReport {
     not_ingested.extend(monster_ability_formula.not_ingested);
     not_ingested.extend(companion.not_ingested);
     not_ingested.extend(companion_skill.not_ingested);
+    not_ingested.extend(companion_save_dc.not_ingested);
     // A unit that FAILED any seam must never be reported cleared by another
     // one. `cleared` is a union across seams and `failures` is keyed by
     // `unit_id`, so a unit covered by two seams could otherwise be stamped on
@@ -3883,6 +3887,295 @@ fn run_companion_skill_bar_check(repo_root: &Path) -> BarCheckReport {
     BarCheckReport { cleared, failures, not_ingested, fixtures_total }
 }
 
+/// A companion ABILITY's save DC, stated entirely on its own `DESC:` token —
+/// unlike [`MonsterAbilitySaveDc`]'s formula-shape sub-seam, whose ability row
+/// states no independent constant and borrows the OWNING monster's Universal
+/// Monster Rule base, a `kind=companion` ability row states its own base
+/// constant inline (10, 11 or 12 corpus-wide, never assumed to be 10), so
+/// this shape needs no owner join at all.
+///
+/// Deliberately not a single integer, same reason [`MonsterAbilitySaveDc`]
+/// gives: resolving the ability-modifier term needs a live character this
+/// catalog browser does not have.
+///
+/// `PartialOrd`/`Ord` derived so the bar check can de-duplicate multiple
+/// `DESC:` variants' parsed shapes through a `BTreeSet` when checking they
+/// all agree.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+pub struct CompanionSaveDcFormula {
+    pub base: i32,
+    pub includes_half_hd: bool,
+    pub ability: &'static str,
+}
+
+/// Parses one companion ability's `DESC:` trailing argument of the shape
+/// `<base>+<ability>` or `<base>+<HD|TL>/2+<ability>` (both spellings the
+/// pinned oracle states; a parenthesised `(HD/2)` form does not occur in this
+/// kind's corpus today but is accepted for the same reason
+/// `parse_formula_base_plus_ability` accepts it for `monster_ability`).
+///
+/// **Refuses rather than guesses.** A bare variable NAME (`ClingDC` — needs a
+/// chassis field this seam does not add), a lone `HD`/`TL` term with no
+/// ability at all (`1+HD/2` — Whiptail Centipede (Giant) ~ Wall Climber's
+/// OTHER ability, a duration, not a DC), a multiplication (`4*CONSCORE`), or
+/// an ability SCORE spelling (`CONSCORE`) all return `None`.
+pub fn parse_companion_save_dc_formula(arg: &str) -> Option<CompanionSaveDcFormula> {
+    let compact: String = arg.chars().filter(|c| !c.is_whitespace()).collect();
+    let ability_of = |s: &str| ABILITY_ABBREVIATIONS.into_iter().find(|a| *a == s);
+    for divisor_var in ["HD", "TL"] {
+        for infix in [format!("+({divisor_var}/2)+"), format!("+{divisor_var}/2+")] {
+            if let Some((lhs, rhs)) = compact.split_once(infix.as_str())
+                && let Some(ability) = ability_of(rhs)
+                && let Ok(base) = lhs.parse::<i32>()
+            {
+                return Some(CompanionSaveDcFormula { base, includes_half_hd: true, ability });
+            }
+        }
+    }
+    let (lhs, rhs) = compact.split_once('+')?;
+    let ability = ability_of(rhs)?;
+    let base = lhs.parse::<i32>().ok()?;
+    Some(CompanionSaveDcFormula { base, includes_half_hd: false, ability })
+}
+
+/// The save DC at the given Hit Dice and ability MODIFIER (never a score).
+/// PF1's "1/2 HD" rounds DOWN; Hit Dice is never negative in this corpus, so
+/// `div_euclid` is exact (no negative-operand rounding question, unlike
+/// [`evaluate_companion_strength_damage`]'s halving of a Strength modifier
+/// that can itself be negative).
+pub fn evaluate_companion_save_dc_formula(
+    formula: CompanionSaveDcFormula,
+    hit_dice: i32,
+    ability_modifier: i32,
+) -> i32 {
+    let half_hd = if formula.includes_half_hd { hit_dice.div_euclid(2) } else { 0 };
+    formula.base + half_hd + ability_modifier
+}
+
+/// The player-facing rendering — the PRODUCTION half of this seam, called by
+/// `apps/desktop/src-tauri/src/companion_catalog.rs`. Same posture as
+/// [`format_companion_skill_ability_diff`]: a catalog browser has no
+/// character, so it shows the rule in words rather than a computed number.
+pub fn format_companion_save_dc_formula(formula: CompanionSaveDcFormula) -> String {
+    let ability = ability_word(formula.ability);
+    if formula.includes_half_hd {
+        format!("{} + 1/2 HD + {ability} modifier", formula.base)
+    } else {
+        format!("{} + {ability} modifier", formula.base)
+    }
+}
+
+/// One `kind=companion` save-DC fixture row. A sibling top-level
+/// `companion_save_dc_entries` array in the same committed fixture JSON.
+#[derive(Debug, Clone)]
+pub struct CompanionSaveDcFixture {
+    pub unit_id: String,
+    pub book: String,
+    pub record_key: String,
+    pub upstream_lst: String,
+    pub upstream_lst_sha256: String,
+    pub upstream_line: u64,
+    pub corpus_field: String,
+    pub expected_base: i32,
+    pub expected_includes_half_hd: bool,
+    pub expected_ability: String,
+    /// `(hit_dice, ability_modifier, save_dc)` triples, computed by
+    /// `scripts/derive_companion_save_dc_fixtures.py` from PF1's own
+    /// "1/2 HD rounds down" rule -- never read back from this repo's
+    /// evaluator.
+    pub expected_at: Vec<(i32, i32, i32)>,
+}
+
+/// Reads the `companion_save_dc_entries` array of the same committed fixture
+/// file [`load_fixtures`] reads `entries` from.
+pub fn load_companion_save_dc_fixtures(repo_root: &Path) -> Vec<CompanionSaveDcFixture> {
+    let path = repo_root.join(FIXTURE_RELATIVE_PATH);
+    let text = std::fs::read_to_string(&path)
+        .unwrap_or_else(|e| panic!("the committed fixture must be readable at {path:?}: {e}"));
+    let doc: serde_json::Value =
+        serde_json::from_str(&text).expect("the committed fixture must be valid JSON");
+    let Some(entries) = doc.get("companion_save_dc_entries").and_then(|v| v.as_array()) else {
+        return Vec::new();
+    };
+    entries
+        .iter()
+        .map(|e| {
+            let expected = &e["expected"];
+            CompanionSaveDcFixture {
+                unit_id: e["unit_id"].as_str().expect("unit_id").to_string(),
+                book: e["book"].as_str().expect("book").to_string(),
+                record_key: e["record_key"].as_str().expect("record_key").to_string(),
+                upstream_lst: e["upstream_lst"].as_str().expect("upstream_lst").to_string(),
+                upstream_lst_sha256: e["upstream_lst_sha256"]
+                    .as_str()
+                    .expect("upstream_lst_sha256")
+                    .to_string(),
+                upstream_line: e["upstream_line"].as_u64().expect("upstream_line"),
+                corpus_field: e["corpus_field"].as_str().expect("corpus_field").to_string(),
+                expected_base: i32::try_from(expected["base"].as_i64().expect("expected.base"))
+                    .expect("a base fits in i32"),
+                expected_includes_half_hd: expected["includes_half_hd"]
+                    .as_bool()
+                    .expect("expected.includes_half_hd"),
+                expected_ability: expected["ability"].as_str().expect("expected.ability").to_string(),
+                expected_at: expected["save_dc_at"]
+                    .as_array()
+                    .expect("expected.save_dc_at")
+                    .iter()
+                    .map(|p| {
+                        (
+                            i32::try_from(p["hit_dice"].as_i64().expect("hit_dice"))
+                                .expect("hit_dice fits in i32"),
+                            i32::try_from(p["ability_modifier"].as_i64().expect("ability_modifier"))
+                                .expect("ability_modifier fits in i32"),
+                            i32::try_from(p["save_dc"].as_i64().expect("save_dc"))
+                                .expect("save_dc fits in i32"),
+                        )
+                    })
+                    .collect(),
+            }
+        })
+        .collect()
+}
+
+/// The `kind=companion` save-DC half of [`run_bar_check`]. Runs against the
+/// SHIPPED tables (`companion_chassis::COMPANION_BOOKS`), exactly as
+/// [`run_companion_skill_bar_check`] does and for the same reason: a
+/// transcription that dropped the `DESC:` argument must fail here, not pass
+/// silently against a corpus file no player reads.
+fn run_companion_save_dc_bar_check(repo_root: &Path) -> BarCheckReport {
+    let fixtures = load_companion_save_dc_fixtures(repo_root);
+    let fixtures_total = fixtures.len();
+
+    let mut cleared = BTreeSet::new();
+    let mut failures: BTreeMap<String, String> = BTreeMap::new();
+    let mut not_ingested: BTreeMap<String, String> = BTreeMap::new();
+
+    for fixture in &fixtures {
+        // Joined on the inventory's book id directly, same choice
+        // `run_companion_bar_check` makes and for the same reason: both
+        // committed books (Ultimate Wilderness, Bestiary 4) match
+        // `companion_chassis::COMPANION_BOOKS`'s own `corpus_book` spelling
+        // with no `bestiary` -> `beastiary` alias needed.
+        let Some(book) = companion_book(&fixture.book) else {
+            not_ingested.insert(fixture.unit_id.clone(), fixture.book.clone());
+            continue;
+        };
+        let Some(record) = book.companion_ability_resolve(&fixture.record_key) else {
+            failures.insert(
+                fixture.unit_id.clone(),
+                format!(
+                    "{:?} does not resolve against {}'s registered companion abilities",
+                    fixture.record_key, fixture.book
+                ),
+            );
+            continue;
+        };
+        // Every DESC: argument the shipped record carries, from the plain
+        // field and from every conditional variant — a record may state the
+        // SAME formula twice, once per PREVARLT/PREVARGTEQ
+        // companion-advancement-tier gate (Assassin Bug (Giant) ~ Poison).
+        let mut candidates: Vec<&'static str> = Vec::new();
+        candidates.extend(record.description_variables.iter().copied());
+        for variant in record.description_variants {
+            candidates.extend(variant.variables.iter().copied());
+        }
+        let mut parsed_shapes: BTreeSet<CompanionSaveDcFormula> = BTreeSet::new();
+        for candidate in &candidates {
+            if let Some(shape) = parse_companion_save_dc_formula(candidate) {
+                parsed_shapes.insert(shape);
+            }
+        }
+        let parsed = match parsed_shapes.len() {
+            0 => {
+                failures.insert(
+                    fixture.unit_id.clone(),
+                    format!(
+                        "corpus row states {} but the shipped record carries no DESC: argument \
+                         the evaluator can parse a save-DC shape from (candidates: {candidates:?})",
+                        fixture.corpus_field
+                    ),
+                );
+                continue;
+            }
+            1 => *parsed_shapes.iter().next().expect("len 1"),
+            n => {
+                failures.insert(
+                    fixture.unit_id.clone(),
+                    format!(
+                        "corpus row states {} but the shipped record carries {n} DISTINCT \
+                         parseable save-DC shapes across its DESC: arguments — ambiguous",
+                        fixture.corpus_field
+                    ),
+                );
+                continue;
+            }
+        };
+        // Assert IDENTITY, not just that SOME shape parsed (the wave-16
+        // adversarial-review lesson: a bar check that counts things but
+        // never checks WHICH things is a gate hole). A transcription
+        // regression that silently changed the base, dropped the half-HD
+        // term, or swapped the ability would otherwise leave every
+        // arithmetic check below vacuously comparing against ITS OWN wrong
+        // value.
+        if parsed.base != fixture.expected_base
+            || parsed.includes_half_hd != fixture.expected_includes_half_hd
+            || parsed.ability != fixture.expected_ability
+        {
+            failures.insert(
+                fixture.unit_id.clone(),
+                format!(
+                    "corpus row {:?} states base={} includes_half_hd={} ability={:?}, but the \
+                     evaluator parsed base={} includes_half_hd={} ability={:?}",
+                    fixture.corpus_field,
+                    fixture.expected_base,
+                    fixture.expected_includes_half_hd,
+                    fixture.expected_ability,
+                    parsed.base,
+                    parsed.includes_half_hd,
+                    parsed.ability
+                ),
+            );
+            continue;
+        }
+        let mut mismatch = None;
+        for &(hit_dice, ability_modifier, expected_dc) in &fixture.expected_at {
+            let got = evaluate_companion_save_dc_formula(parsed, hit_dice, ability_modifier);
+            if got != expected_dc {
+                mismatch = Some(format!(
+                    "corpus row {:?} at (hit_dice={hit_dice}, ability_modifier={ability_modifier}): \
+                     expected save DC {expected_dc}, evaluator produced {got}",
+                    fixture.corpus_field
+                ));
+                break;
+            }
+        }
+        match mismatch {
+            Some(message) => {
+                failures.insert(fixture.unit_id.clone(), message);
+            }
+            None if fixture.expected_at.is_empty() => {
+                // A fixture that pins no evaluated value asserts nothing
+                // about the evaluator. Refused rather than counted (Decision
+                // 1(a)).
+                failures.insert(
+                    fixture.unit_id.clone(),
+                    format!(
+                        "fixture for {:?} pins no (hit_dice, ability_modifier, save_dc) triple at \
+                         all, so it asserts nothing",
+                        fixture.corpus_field
+                    ),
+                );
+            }
+            None => {
+                cleared.insert(fixture.unit_id.clone());
+            }
+        }
+    }
+
+    BarCheckReport { cleared, failures, not_ingested, fixtures_total }
+}
+
 /// One `kind=companion` fixture row. A sibling top-level `companion_entries`
 /// array in the same committed fixture JSON, for the reason
 /// [`MonsterFixture`] states about `monster_entries`: a forced-generic union
@@ -4664,6 +4957,371 @@ mod companion_skill_seam_tests {
     fn a_fixture_pinning_no_values_at_all_is_refused_rather_than_cleared() {
         let scratch = ScratchCompanionSkillRoot::new("empty", &["Climb", "Swim"], &[]);
         let report = run_companion_skill_bar_check(&scratch.root);
+        assert!(report.cleared.is_empty(), "cleared: {:?}", report.cleared);
+        assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
+    }
+}
+
+#[cfg(test)]
+mod companion_save_dc_seam_tests {
+    use super::*;
+
+    // --- parser unit tests: one TDD red/green anchor per corpus-observed shape ---
+
+    #[test]
+    fn the_base_plus_half_hd_plus_ability_shape_parses() {
+        // `Companion (Dinosaur (Dimorphodon)) ~ Poison`
+        // (`b4_abilities_companion.lst:19`) -- the most common corpus-wide
+        // spelling, 22 of 25 records.
+        assert_eq!(
+            parse_companion_save_dc_formula("10+HD/2+CON"),
+            Some(CompanionSaveDcFormula { base: 10, includes_half_hd: true, ability: "CON" })
+        );
+    }
+
+    #[test]
+    fn a_different_base_constant_and_ability_also_parse() {
+        // The base is NOT always 10 (unlike `monster_ability`'s Universal
+        // Monster Rule shape) -- `Flowering Lattice ~ Pollen` states 12.
+        assert_eq!(
+            parse_companion_save_dc_formula("12+HD/2+CON"),
+            Some(CompanionSaveDcFormula { base: 12, includes_half_hd: true, ability: "CON" })
+        );
+        assert_eq!(
+            parse_companion_save_dc_formula("12+HD/2+DEX"),
+            Some(CompanionSaveDcFormula { base: 12, includes_half_hd: true, ability: "DEX" })
+        );
+    }
+
+    #[test]
+    fn the_flat_shape_with_no_half_hd_term_parses() {
+        // `Isitoq ~ Daze` (`b4_abilities_companion.lst:88`) states no HD term
+        // at all -- a flat base plus ability modifier.
+        assert_eq!(
+            parse_companion_save_dc_formula("11+CHA"),
+            Some(CompanionSaveDcFormula { base: 11, includes_half_hd: false, ability: "CHA" })
+        );
+        assert_eq!(
+            parse_companion_save_dc_formula("10+CON"),
+            Some(CompanionSaveDcFormula { base: 10, includes_half_hd: false, ability: "CON" })
+        );
+    }
+
+    #[test]
+    fn whitespace_is_tolerated() {
+        assert_eq!(
+            parse_companion_save_dc_formula(" 10 + HD / 2 + CON "),
+            Some(CompanionSaveDcFormula { base: 10, includes_half_hd: true, ability: "CON" })
+        );
+    }
+
+    #[test]
+    fn the_tl_divisor_variable_also_parses() {
+        // No live `kind=companion` corpus row states `TL` today (only
+        // `monster_ability`'s `puffball_poison` BONUS:VAR sibling does, a
+        // different token shape this seam does not read) -- accepted anyway
+        // for the same forward-compatibility reason
+        // `parse_formula_base_plus_ability` accepts it.
+        assert_eq!(
+            parse_companion_save_dc_formula("10+TL/2+WIS"),
+            Some(CompanionSaveDcFormula { base: 10, includes_half_hd: true, ability: "WIS" })
+        );
+    }
+
+    // TDD red/green anchors: shapes this seam deliberately refuses rather than
+    // guesses at.
+
+    #[test]
+    fn a_bare_variable_name_refuses() {
+        // The `monster_ability` named-variable shape (`ClingDC`) -- needs a
+        // chassis field this seam does not add.
+        assert_eq!(parse_companion_save_dc_formula("DiseaseDC"), None);
+        assert_eq!(parse_companion_save_dc_formula("PuffballPoisonDC"), None);
+    }
+
+    #[test]
+    fn a_half_hd_term_with_no_ability_at_all_refuses() {
+        // `Whiptail Centipede (Giant) ~ Wall Climber`'s OTHER DESC argument
+        // (`1+HD/2`) -- a duration, not a save DC. Must not be misread as
+        // `base=1, ability=<garbage>`.
+        assert_eq!(parse_companion_save_dc_formula("1+HD/2"), None);
+    }
+
+    #[test]
+    fn a_multiplication_refuses() {
+        assert_eq!(parse_companion_save_dc_formula("4*CONSCORE"), None);
+        assert_eq!(parse_companion_save_dc_formula("CONSCORE*6"), None);
+    }
+
+    #[test]
+    fn an_ability_score_spelling_refuses() {
+        // `CONSCORE` is the SCORE, not the modifier; only the bare
+        // abbreviation is accepted, same discipline
+        // `PF_ABILITY_ABBREVS`'s doc comment states for the sibling seam.
+        assert_eq!(parse_companion_save_dc_formula("10+CONSCORE"), None);
+    }
+
+    #[test]
+    fn an_unrecognised_ability_abbreviation_refuses() {
+        assert_eq!(parse_companion_save_dc_formula("10+FOO"), None);
+    }
+
+    #[test]
+    fn no_operator_at_all_refuses() {
+        assert_eq!(parse_companion_save_dc_formula("HD"), None);
+        assert_eq!(parse_companion_save_dc_formula(""), None);
+    }
+
+    // --- the rules arithmetic itself ---
+
+    #[test]
+    fn the_half_hd_shape_floors_hit_dice_and_adds_the_ability_modifier() {
+        let f = CompanionSaveDcFormula { base: 10, includes_half_hd: true, ability: "CON" };
+        assert_eq!(evaluate_companion_save_dc_formula(f, 0, 0), 10);
+        assert_eq!(evaluate_companion_save_dc_formula(f, 1, 3), 13); // floor(1/2)=0
+        assert_eq!(evaluate_companion_save_dc_formula(f, 2, -2), 9); // floor(2/2)=1
+        assert_eq!(evaluate_companion_save_dc_formula(f, 5, 4), 16); // floor(5/2)=2
+        assert_eq!(evaluate_companion_save_dc_formula(f, 20, 2), 22); // floor(20/2)=10
+    }
+
+    #[test]
+    fn the_flat_shape_ignores_hit_dice_entirely() {
+        let f = CompanionSaveDcFormula { base: 11, includes_half_hd: false, ability: "CHA" };
+        // Same ability_modifier, wildly different hit_dice -- must produce the
+        // IDENTICAL DC, proving the evaluator does not apply a half-HD term
+        // this shape never stated.
+        assert_eq!(evaluate_companion_save_dc_formula(f, 0, 3), 14);
+        assert_eq!(evaluate_companion_save_dc_formula(f, 1, 3), 14);
+        assert_eq!(evaluate_companion_save_dc_formula(f, 20, 3), 14);
+    }
+
+    #[test]
+    fn the_rendered_text_names_the_rule_rather_than_a_number() {
+        assert_eq!(
+            format_companion_save_dc_formula(CompanionSaveDcFormula {
+                base: 10,
+                includes_half_hd: true,
+                ability: "CON"
+            }),
+            "10 + 1/2 HD + Con modifier"
+        );
+        assert_eq!(
+            format_companion_save_dc_formula(CompanionSaveDcFormula {
+                base: 11,
+                includes_half_hd: false,
+                ability: "CHA"
+            }),
+            "11 + Cha modifier"
+        );
+    }
+
+    // --- the corpus fact this seam rests on, asserted rather than assumed ---
+
+    /// Pins the shape census the module doc and the fixture generator's doc
+    /// comment both state (25 records, two books), so a later cycle cannot
+    /// quietly narrow the parser without this test forcing a re-derivation.
+    #[test]
+    fn every_committed_companion_save_dc_fixture_resolves_to_exactly_one_parseable_shape() {
+        let repo_root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+        let fixtures = load_companion_save_dc_fixtures(&repo_root);
+        assert_eq!(fixtures.len(), 25, "committed companion_save_dc_entries count moved");
+        for f in &fixtures {
+            let book = companion_book(&f.book)
+                .unwrap_or_else(|| panic!("{}: book {:?} not registered", f.unit_id, f.book));
+            let record = book.companion_ability_resolve(&f.record_key).unwrap_or_else(|| {
+                panic!("{}: {:?} does not resolve", f.unit_id, f.record_key)
+            });
+            let mut candidates: Vec<&'static str> = record.description_variables.to_vec();
+            for variant in record.description_variants {
+                candidates.extend(variant.variables.iter().copied());
+            }
+            let shapes: BTreeSet<_> =
+                candidates.iter().filter_map(|c| parse_companion_save_dc_formula(c)).collect();
+            assert_eq!(
+                shapes.len(),
+                1,
+                "{}: expected exactly one parseable save-DC shape, got {shapes:?} from \
+                 candidates {candidates:?}",
+                f.unit_id
+            );
+        }
+    }
+
+    // --- the bar check itself ---
+
+    #[test]
+    fn run_companion_save_dc_bar_check_clears_every_committed_companion_save_dc_fixture() {
+        let repo_root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+        let report = run_companion_save_dc_bar_check(&repo_root);
+        assert!(
+            report.fixtures_total > 0,
+            "the committed fixture must carry at least one companion_save_dc_entries row"
+        );
+        assert!(
+            report.not_ingested.is_empty(),
+            "every committed companion_save_dc fixture's book must be registered, got: {:?}",
+            report.not_ingested
+        );
+        assert!(
+            report.failures.is_empty(),
+            "every committed companion_save_dc fixture must clear the bar, got {} failures, \
+             first few: {:?}",
+            report.failures.len(),
+            report.failures.iter().take(5).collect::<Vec<_>>()
+        );
+        assert_eq!(report.cleared.len(), report.fixtures_total);
+    }
+
+    /// A scratch `repo_root` carrying one fixture the caller controls, pointed
+    /// at a REAL shipped record (`bestiary_4`'s `Companion (Dinosaur
+    /// (Dimorphodon)) ~ Poison`, whose row states `DESC:...|10+HD/2+CON`), so
+    /// a test drives the REAL `run_companion_save_dc_bar_check` end to end
+    /// without touching the committed fixture.
+    struct ScratchCompanionSaveDcRoot {
+        root: PathBuf,
+    }
+
+    impl ScratchCompanionSaveDcRoot {
+        fn new(name: &str, base: i32, includes_half_hd: bool, ability: &str, at: &[(i32, i32, i32)]) -> Self {
+            let root = std::env::temp_dir().join(format!(
+                "codex_companion_save_dc_mutation_proof_{name}_{}",
+                std::process::id()
+            ));
+            let _ = std::fs::remove_dir_all(&root);
+            let fixture_dir = root.join("tests/fixtures/rules_core");
+            std::fs::create_dir_all(&fixture_dir).unwrap();
+            let at_json = at
+                .iter()
+                .map(|(hd, am, dc)| {
+                    format!("{{\"hit_dice\":{hd},\"ability_modifier\":{am},\"save_dc\":{dc}}}")
+                })
+                .collect::<Vec<_>>()
+                .join(",");
+            std::fs::write(
+                fixture_dir.join("derived-evaluator-fixtures.json"),
+                format!(
+                    r#"{{"companion_save_dc_entries":[{{
+                        "unit_id":"scratch:companion:dimorphodon_poison",
+                        "book":"bestiary_4",
+                        "record_key":"Companion (Dinosaur (Dimorphodon)) ~ Poison",
+                        "upstream_lst":"scratch.lst",
+                        "upstream_lst_sha256":"0",
+                        "upstream_line":1,
+                        "corpus_field":"DESC:...|10+HD/2+CON",
+                        "expected":{{"base":{base},"includes_half_hd":{includes_half_hd},"ability":"{ability}","save_dc_at":[{at_json}]}}
+                    }}]}}"#
+                ),
+            )
+            .unwrap();
+            ScratchCompanionSaveDcRoot { root }
+        }
+    }
+
+    impl Drop for ScratchCompanionSaveDcRoot {
+        fn drop(&mut self) {
+            let _ = std::fs::remove_dir_all(&self.root);
+        }
+    }
+
+    /// The positive control, first: a fixture stating the TRUE values for the
+    /// real, resolved Dimorphodon Poison ability must clear the bar.
+    #[test]
+    fn a_correct_companion_save_dc_fixture_clears_run_companion_save_dc_bar_check() {
+        let scratch = ScratchCompanionSaveDcRoot::new(
+            "correct",
+            10,
+            true,
+            "CON",
+            &[(0, 0, 10), (5, 4, 16), (20, -1, 19)],
+        );
+        let report = run_companion_save_dc_bar_check(&scratch.root);
+        assert!(report.failures.is_empty(), "failures: {:?}", report.failures);
+        assert_eq!(report.cleared.len(), 1);
+        assert!(report.cleared.contains("scratch:companion:dimorphodon_poison"));
+    }
+
+    /// MUTATION PROOF 1 -- a wrong evaluated value. Had the evaluator dropped
+    /// the half-HD term entirely, it would produce `14` rather than the true
+    /// `16` at (hd=5, ability_modifier=4), so a fixture claiming `99` must be
+    /// reported as a failure.
+    #[test]
+    fn a_wrong_expected_save_dc_makes_run_companion_save_dc_bar_check_report_a_failure() {
+        let scratch =
+            ScratchCompanionSaveDcRoot::new("wrongvalue", 10, true, "CON", &[(5, 4, 99)]);
+        let report = run_companion_save_dc_bar_check(&scratch.root);
+        assert!(report.cleared.is_empty(), "cleared: {:?}", report.cleared);
+        assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
+        assert!(report.failures.contains_key("scratch:companion:dimorphodon_poison"));
+    }
+
+    /// MUTATION PROOF 2 -- a wrong expected ABILITY. Asserts IDENTITY, not
+    /// just that some shape parsed (wave-16 review lesson): the shipped
+    /// record states CON, not WIS, so a fixture claiming WIS must fail even
+    /// though the (base, includes_half_hd) halves still match.
+    #[test]
+    fn a_wrong_expected_ability_makes_run_companion_save_dc_bar_check_report_a_failure() {
+        let scratch =
+            ScratchCompanionSaveDcRoot::new("wrongability", 10, true, "WIS", &[(5, 4, 16)]);
+        let report = run_companion_save_dc_bar_check(&scratch.root);
+        assert!(report.cleared.is_empty(), "cleared: {:?}", report.cleared);
+        assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
+    }
+
+    /// MUTATION PROOF 3 -- a wrong expected BASE constant.
+    #[test]
+    fn a_wrong_expected_base_makes_run_companion_save_dc_bar_check_report_a_failure() {
+        let scratch = ScratchCompanionSaveDcRoot::new("wrongbase", 12, true, "CON", &[(5, 4, 16)]);
+        let report = run_companion_save_dc_bar_check(&scratch.root);
+        assert!(report.cleared.is_empty(), "cleared: {:?}", report.cleared);
+        assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
+    }
+
+    /// MUTATION PROOF 4 -- a wrong `includes_half_hd`. The shipped record DOES
+    /// carry the half-HD term; a fixture claiming it does not must fail.
+    #[test]
+    fn a_wrong_expected_includes_half_hd_makes_run_companion_save_dc_bar_check_report_a_failure() {
+        let scratch = ScratchCompanionSaveDcRoot::new("wronghalfhd", 10, false, "CON", &[(5, 4, 14)]);
+        let report = run_companion_save_dc_bar_check(&scratch.root);
+        assert!(report.cleared.is_empty(), "cleared: {:?}", report.cleared);
+        assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
+    }
+
+    /// MUTATION PROOF 5 -- a fixture that asserts NOTHING. A row pinning an
+    /// empty ladder would otherwise clear the bar vacuously (Decision 1(a)).
+    #[test]
+    fn a_fixture_pinning_no_values_at_all_is_refused_rather_than_cleared() {
+        let scratch = ScratchCompanionSaveDcRoot::new("empty", 10, true, "CON", &[]);
+        let report = run_companion_save_dc_bar_check(&scratch.root);
+        assert!(report.cleared.is_empty(), "cleared: {:?}", report.cleared);
+        assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
+    }
+
+    /// MUTATION PROOF 6 -- a `record_key` the shipped book does not carry.
+    #[test]
+    fn an_unresolvable_record_key_makes_run_companion_save_dc_bar_check_report_a_failure() {
+        let root = std::env::temp_dir().join(format!(
+            "codex_companion_save_dc_mutation_proof_noresolve_{}",
+            std::process::id()
+        ));
+        let _ = std::fs::remove_dir_all(&root);
+        let fixture_dir = root.join("tests/fixtures/rules_core");
+        std::fs::create_dir_all(&fixture_dir).unwrap();
+        std::fs::write(
+            fixture_dir.join("derived-evaluator-fixtures.json"),
+            r#"{"companion_save_dc_entries":[{
+                "unit_id":"scratch:companion:no_such_ability",
+                "book":"bestiary_4",
+                "record_key":"No Such Ability At All",
+                "upstream_lst":"scratch.lst",
+                "upstream_lst_sha256":"0",
+                "upstream_line":1,
+                "corpus_field":"DESC:...|10+HD/2+CON",
+                "expected":{"base":10,"includes_half_hd":true,"ability":"CON","save_dc_at":[{"hit_dice":5,"ability_modifier":4,"save_dc":16}]}
+            }]}"#,
+        )
+        .unwrap();
+        let report = run_companion_save_dc_bar_check(&root);
+        let _ = std::fs::remove_dir_all(&root);
         assert!(report.cleared.is_empty(), "cleared: {:?}", report.cleared);
         assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
     }

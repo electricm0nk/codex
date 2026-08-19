@@ -48,7 +48,8 @@
 use serde::{Deserialize, Serialize};
 
 use codex::rules_core::derived_evaluator_fixture_check::{
-    format_companion_skill_ability_diff, format_companion_strength_damage,
+    format_companion_save_dc_formula, format_companion_skill_ability_diff,
+    format_companion_strength_damage, parse_companion_save_dc_formula,
     parse_companion_skill_ability_diff, parse_companion_strength_damage,
 };
 use codex::rules_core::rules_tables::companion_chassis::{self, CompanionRecord};
@@ -194,6 +195,27 @@ pub struct CompanionSkillBonusDto {
     pub unparsed_formula: Option<String>,
 }
 
+/// One companion ABILITY's save DC, stated entirely in a `DESC:` argument —
+/// PCGen's `DESC:...%1...|<base>[+HD/2]+<ability>` encoding.
+///
+/// **A rule, not a number**, same posture [`CompanionSkillBonusDto`] and
+/// [`CompanionDamageBonusDto`] both take: a catalog browser has no character
+/// and therefore no Hit Dice or ability modifier to add, so the engine
+/// renders the rule in words. This is the ONLY place the DC reaches a
+/// player at all — `render_pcgen_desc` (`decisions.md §24`, no formula
+/// interpreter) drops the `%1` placeholder from `description` entirely, so
+/// without this field the DC number is silently missing from the ability's
+/// own prose.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase")]
+pub struct CompanionSaveDcDto {
+    /// The rule in words: `"10 + 1/2 HD + Con modifier"`.
+    pub formula: String,
+    /// The token's raw argument, for a shape the engine refuses to
+    /// interpret. `None` once `formula` carries the rendered rule.
+    pub unparsed_formula: Option<String>,
+}
+
 /// One `BONUS:STAT` token. An adjustment, never a score — see the module doc.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "camelCase")]
@@ -262,6 +284,10 @@ pub struct CompanionAbilityDto {
     pub description_variants: Vec<CompanionDescriptionVariantDto>,
     /// The `BONUS:STAT` tokens this advancement package applies.
     pub stat_adjustments: Vec<CompanionStatAdjustmentDto>,
+    /// Every DESC-embedded save-DC formula this row states (from
+    /// `description`'s own argument list and every `description_variants`
+    /// entry's). Empty for most rows — see [`CompanionSaveDcDto`].
+    pub save_dc_formulas: Vec<CompanionSaveDcDto>,
     pub source_page: Option<String>,
 }
 
@@ -566,6 +592,42 @@ fn serve_desc_variants(
         .collect()
 }
 
+/// Every save-DC formula a companion ability's `DESC:` token(s) state, in
+/// words.
+///
+/// Unlike [`CompanionDamageBonusDto`]/[`CompanionSkillBonusDto`] (whose
+/// tokens are a syntactically distinct `BONUS:` family regardless of
+/// whether the specific formula parses), a `DESC:` argument carries no
+/// independent marker saying "this one is a save DC" — the ONLY signal this
+/// screen has that a given argument belongs to this rule family is that
+/// [`parse_companion_save_dc_formula`] actually parses it as one. So, unlike
+/// those two siblings, this field never serves an `unparsed_formula` row:
+/// doing so for an arbitrary DESC argument this parser does not recognise
+/// (a damage die reference, a duration, an unrelated named variable) would
+/// mislabel it as a save DC it may not be. Deduplicated across
+/// `description`'s own argument list and every `description_variants`
+/// entry's, since a record commonly states the identical formula twice, once
+/// per companion-advancement-tier gate (Assassin Bug (Giant) ~ Poison).
+fn serve_save_dc_formulas(
+    record: &companion_chassis::CompanionAbilityRecord,
+) -> Vec<CompanionSaveDcDto> {
+    let mut candidates: Vec<&'static str> = record.description_variables.to_vec();
+    for variant in record.description_variants {
+        candidates.extend(variant.variables.iter().copied());
+    }
+    let mut rendered: Vec<String> = candidates
+        .iter()
+        .filter_map(|c| parse_companion_save_dc_formula(c))
+        .map(format_companion_save_dc_formula)
+        .collect();
+    rendered.sort();
+    rendered.dedup();
+    rendered
+        .into_iter()
+        .map(|formula| CompanionSaveDcDto { formula, unparsed_formula: None })
+        .collect()
+}
+
 fn map_ability(
     book: &str,
     record: &companion_chassis::CompanionAbilityRecord,
@@ -586,6 +648,7 @@ fn map_ability(
                 amount: a.amount,
             })
             .collect(),
+        save_dc_formulas: serve_save_dc_formulas(record),
         source_page: record.source_page.map(str::to_owned),
     }
 }
@@ -767,6 +830,78 @@ mod tests {
         for b in unparsed {
             assert_eq!(b.unparsed_formula.as_deref(), Some(b.bonus.as_str()));
         }
+    }
+
+    /// A save-DC formula stated ONLY in a `DESC:` argument reaches the screen
+    /// as the rule in words -- the same real record
+    /// `run_companion_save_dc_bar_check`'s own scratch tests use. Without
+    /// this field the DC is silently missing: `render_pcgen_desc` drops the
+    /// `%1` placeholder entirely (`decisions.md §24`), so `description`
+    /// alone reads "...save Fort DC ; frequency 1/round for 6 rounds...".
+    #[test]
+    fn a_desc_embedded_save_dc_formula_reaches_the_screen_as_the_rule_it_states() {
+        let response = build_companion_catalog();
+        let dimorphodon = response
+            .entries
+            .iter()
+            .find(|e| e.key == "bestiary_4:companion:companion_dinosaur_dimorphodon")
+            .expect("Bestiary 4 ships a Dimorphodon companion");
+        let poison = dimorphodon
+            .abilities
+            .iter()
+            .find(|a| a.name == "Poison")
+            .expect("Dimorphodon carries a Poison ability");
+        assert_eq!(poison.save_dc_formulas.len(), 1);
+        assert_eq!(poison.save_dc_formulas[0].formula, "10 + 1/2 HD + Con modifier");
+        assert_eq!(poison.save_dc_formulas[0].unparsed_formula, None);
+        // The %1 placeholder must be gone from the rendered prose (the real
+        // reason this field exists) -- but the surrounding text must still
+        // be there, proving this is the ordinary drop-not-corrupt renderer.
+        let description = poison.description.as_deref().unwrap_or("");
+        assert!(!description.contains('%'), "description leaked raw PCGen syntax: {description:?}");
+        assert!(
+            description.contains("save Fort DC"),
+            "description lost its surrounding prose: {description:?}"
+        );
+    }
+
+    /// A record whose ability states the SAME formula on two conditional
+    /// `description_variants` (Assassin Bug (Giant) ~ Poison, gated on
+    /// companion-advancement tier) still serves exactly ONE deduplicated
+    /// entry -- two identical rule-in-words captions would look like a
+    /// second, different DC on the screen.
+    #[test]
+    fn a_formula_repeated_across_conditional_variants_is_served_once() {
+        let response = build_companion_catalog();
+        let bug = response
+            .entries
+            .iter()
+            .find(|e| e.key == "ultimate_wilderness:companion:companion_assassin_bug_giant")
+            .expect("Ultimate Wilderness ships a Giant Assassin Bug companion");
+        let poison = bug
+            .abilities
+            .iter()
+            .find(|a| a.name == "Poison")
+            .expect("Assassin Bug (Giant) carries a Poison ability");
+        assert_eq!(poison.save_dc_formulas.len(), 1, "{:?}", poison.save_dc_formulas);
+        assert_eq!(poison.save_dc_formulas[0].formula, "10 + 1/2 HD + Con modifier");
+    }
+
+    /// Corpus-wide: every save-DC formula this parser recognises reaches SOME
+    /// ability on the wire, and the total is neither zero (asserting
+    /// nothing) nor drifted without this test noticing. **35, not the
+    /// fixture's 25**: an ability is served once PER OWNER (this module's
+    /// own doc comment, `every_registered_ability_reaches_the_wire_under_an_
+    /// owner`'s own distinction) while the fixture pins one row per DISTINCT
+    /// ability RECORD -- a formula whose ability has several owning
+    /// creatures is counted once here per owner, honestly matching what the
+    /// screen actually renders per creature page.
+    #[test]
+    fn every_recognised_save_dc_formula_reaches_the_wire() {
+        let response = build_companion_catalog();
+        let served: usize =
+            response.entries.iter().flat_map(|e| e.abilities.iter()).map(|a| a.save_dc_formulas.len()).sum();
+        assert_eq!(served, 35, "companion save-DC formula count on the wire moved");
     }
 
     /// Every registered creature reaches the wire. Derived from the registry
