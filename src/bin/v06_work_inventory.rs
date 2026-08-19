@@ -6399,8 +6399,14 @@ fn load_sweep_verified(path: &Path) -> BTreeSet<(String, String, usize)> {
 /// Shape: `{"fixtures_total":<n>,"cleared":<n>,"failed":<n>,
 /// "not_ingested":<n>,"verified":["id1","id2",...]}`. Unlike the sweep's
 /// report, there is no whole-report `clean` gate to check: this instrument's
-/// coverage is deliberately partial by design (94 of 2,879 held `derived`
-/// units), and a unit failing does not cast doubt on any other unit's
+/// coverage is deliberately partial by design — re-derived 2026-08-19 over
+/// the committed inventory, **1,256 of 5,609 `derived` units carry a
+/// `fixture-verified` stamp and 1,161 are still capped at `held`** (the
+/// remainder are `not-started`/`unmeasurable`, which no fixture can reach).
+/// The prior text here said "94 of 2,879 held `derived` units", which was
+/// this instrument's equipment-only era and had been stale through four
+/// added seams; it is corrected rather than carried, per this program's own
+/// shipped-prose rule. And a unit failing does not cast doubt on any other unit's
 /// result the way one mismatched book does for the byte-equality sweep, so
 /// the `verified` array alone -- built by `run_bar_check` from a per-unit
 /// pass, never on trust -- is the whole of what this function needs.

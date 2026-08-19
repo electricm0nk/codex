@@ -69,8 +69,16 @@ fn main() -> ExitCode {
     }
 
     if !quiet {
+        // "units cleared" and "fixture rows" are two different counts and this
+        // line used to conflate them, which was true only while every seam
+        // emitted exactly one row per unit. The `monster_sla` seam
+        // (SD31-W15-MONSTER-SLA-001) emits one row per GRANTED SPELL and
+        // clears a unit only when every one of its rows clears, so
+        // `fixtures_total` is now strictly ≥ the number of covered units.
+        // Reporting them as one number would have read as 102 silently
+        // uncleared units.
         println!(
-            "{LABEL}: {} of {} covered units cleared; {} failed; {} not ingested",
+            "{LABEL}: {} unit(s) cleared over {} fixture row(s); {} failed; {} not ingested",
             report.cleared.len(),
             report.fixtures_total,
             report.failures.len(),
