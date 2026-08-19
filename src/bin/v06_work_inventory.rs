@@ -1825,6 +1825,23 @@ fn is_core_essentials_residual(book: &str) -> bool {
     book == "core_essentials"
 }
 
+/// Wave-16 adversarial review (irreversibility & scope lens): mutating
+/// `is_core_essentials_residual` to something broader than the exact
+/// packaging-label match above (e.g. `book.starts_with("core")`) left the
+/// full test suite green while silently deleting thousands of real,
+/// in-scope units from `main`'s classify loop -- the pinned-baseline test
+/// (`core_essentials_real_corpus_residual_never_grows_past_its_pinned_baseline`)
+/// only ever walks `core_essentials`'s OWN book directory, so it cannot see
+/// an over-broad predicate pulling in units enumerated from a DIFFERENT
+/// book's directory. This ceiling closes that hole in the actual
+/// production path (`main`, not just the test binary): it is checked
+/// against every real run, not only `cargo test`. Matches
+/// `core_essentials_real_corpus_residual_never_grows_past_its_pinned_baseline`'s
+/// own `PINNED_BASELINE`; a future cycle that legitimately resolves more of
+/// the residual lowers both constants in the same commit as the fix, never
+/// raises either to make a regression pass.
+const CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING: usize = 117;
+
 /// Enumerate one `.lst` file into `out`, recording every trap hit.
 fn enumerate_file(path: &Path, book: &str, kind: Kind, text: &str, out: &mut BookEnumeration) {
     // `'static`, deliberately: only ever `Some` from `RACE_TRUE_BOOK` /
@@ -8391,6 +8408,21 @@ fn main() {
     // line reads `0 deleted` forever and `decisions.md §9`'s condition is
     // discharged for good.
     eprintln!("core_essentials residuals deleted (decisions.md §16): {core_essentials_residuals_deleted}");
+    // Unbounded by construction otherwise: `is_core_essentials_residual` is
+    // consulted on every unit in the corpus, so a predicate widened past its
+    // intended exact match (whether by a future edit or by this constant
+    // being copy-pasted somewhere looser) would delete real units from the
+    // denominator with no test in the way on a real `main()` run. This is
+    // the production-path guard for exactly that -- see
+    // `CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING`'s doc comment.
+    assert!(
+        core_essentials_residuals_deleted <= CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING,
+        "core_essentials residual deletion ({core_essentials_residuals_deleted}) exceeded its pinned \
+         ceiling ({CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING}) -- decisions.md §16 authorizes deleting \
+         a bounded, re-derived population, not an open-ended predicate. Investigate \
+         is_core_essentials_residual before touching this ceiling; never raise it to make a \
+         regression pass."
+    );
 
     // A deterministic ORDER is not the same guarantee as a unique HANDLE, and
     // every consumer that indexes this file by `id` needs the second one. This
