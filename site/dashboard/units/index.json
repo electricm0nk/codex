@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-08-19T18:06:59Z",
+  "generated_at": "2026-08-19T19:32:08Z",
   "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 38372,
-  "proven_units": 5883,
+  "proven_units": 5889,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 420,
   "category_labels_redacted": 3,
@@ -5509,11 +5509,11 @@
     },
     "equipment": {
       "units": 6208,
-      "proven": 347,
+      "proven": 348,
       "by_status": {
-        "ingested-magnitude": 324,
+        "ingested-magnitude": 323,
         "literal-verified": 5099,
-        "grounded": 166,
+        "grounded": 167,
         "unknown": 205,
         "not-started": 164,
         "not-ingested": 58,
@@ -5521,14 +5521,14 @@
         "fixture-verified": 11
       },
       "shard": "PF1e-units-equipment.json",
-      "bytes": 832885,
+      "bytes": 832875,
       "doneness_unmapped": {},
       "categories": {
         "magic": {
           "label": "Magic",
-          "done": 2872,
+          "done": 2873,
           "held": 80,
-          "in-progress": 139,
+          "in-progress": 138,
           "not-started": 135,
           "unmeasurable": 1,
           "deferred": 0
@@ -6078,17 +6078,17 @@
     },
     "equipment_modifier": {
       "units": 1580,
-      "proven": 604,
+      "proven": 609,
       "by_status": {
-        "grounded": 152,
+        "grounded": 157,
         "unknown": 416,
         "text-complete": 452,
-        "ingested-magnitude": 462,
+        "ingested-magnitude": 457,
         "literal-verified": 35,
         "not-started": 63
       },
       "shard": "PF1e-units-equipment_modifier.json",
-      "bytes": 168941,
+      "bytes": 168891,
       "doneness_unmapped": {},
       "categories": {
         "none": {
@@ -6129,9 +6129,9 @@
         },
         "amuletofmightyfists": {
           "label": "Amulet Of Mighty Fists",
-          "done": 66,
+          "done": 71,
           "held": 0,
-          "in-progress": 12,
+          "in-progress": 7,
           "not-started": 0,
           "unmeasurable": 4,
           "deferred": 0
