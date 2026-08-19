@@ -1,0 +1,103 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Temp Evolution ~ Grab",
+    "delivery": "Extraordinary",
+    "description": "The eidolon becomes adept at grappling foes, gaining the grab ability. Whenever the eidolon makes a successful attack of the selected type, it can attempt a free combat maneuver check. If successful, the eidolon grapples the target. This ability only works on creatures of a size one category smaller than the eidolon or smaller.",
+    "description_variables": [],
+    "description_variants": [],
+    "facet": null,
+    "key": "advanced_players_guide:companion:temp_evolution_grab",
+    "name": "Grab",
+    "owners": [
+      "advanced_players_guide:companion:familiar_crab_giant_king",
+      "advanced_players_guide:companion:familiar_octopus"
+    ],
+    "raw_tokens": [
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Evolution ~ Grab"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|VIRTUAL|Evolution ~ Grab (%LIST)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TempEvolutionCost|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TempEvolutionTaken|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMCHOICES=1|WEAPONPROFICIENCY|PC,TYPE=Natural"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TempEvolutionTaken|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The eidolon becomes adept at grappling foes, gaining the grab ability. Whenever the eidolon makes a successful attack of the selected type, it can attempt a free combat maneuver check. If successful, the eidolon grapples the target. This ability only works on creatures of a size one category smaller than the eidolon or smaller."
+      },
+      {
+        "key": "KEY",
+        "value": "Temp Evolution ~ Grab"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Evolution ~ Bite,Evolution ~ Clawed Hands,Evolution ~ Clawed Feet,Evolution ~ Pincers,Evolution ~ Slam,Evolution ~ Tail Slap,Evolution ~ Tentacle"
+      },
+      {
+        "key": "PREVARGTEQ",
+        "value": "EidolonTempEvolutionPool,2"
+      },
+      {
+        "key": "PREVARLT",
+        "value": "TempEvolutionTaken,TempEvolutionsAllowed"
+      },
+      {
+        "key": "TYPE",
+        "value": "TempEvolutionChoice.Extraordinary"
+      }
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "TempEvolutionChoice",
+      "Extraordinary"
+    ]
+  },
+  "ingested_at": "2026-08-18T22:35:20Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 270,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_companion.lst",
+    "record_key": "Temp Evolution ~ Grab",
+    "sha256": "61a70768a48385f4e43881fe0d28d51abb4eedcd0e3ab1f504660ead793d08b4"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
+}

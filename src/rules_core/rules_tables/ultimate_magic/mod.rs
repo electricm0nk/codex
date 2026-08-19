@@ -10,6 +10,17 @@
 //! book's `companion` family, and the largest single block left in the lane
 //! after Core Rulebook.
 //!
+//! **32 -> 59 by `SD31-CE-COMPANION-001` (2026-08-18).** `decisions.md §9`
+//! retired the `core_essentials` book id; `ce_races_familiar_um.lst` and
+//! `ce_abilities_familiar_race_um.lst` both declare `SOURCELONG:Ultimate
+//! Magic` in their own headers, so their 19 creature rows and 8 ability rows
+//! are this book's. Their corpus records were already sitting in
+//! `data/corpus/ultimate_magic/companion/` and reaching no player surface,
+//! because the engine served them out of a `core_essentials` table this
+//! book's claim never read. The count below is the pre-move figure, kept
+//! because the paragraphs after it are about the ROWS THAT DO NOT SHIP, and
+//! that population is unchanged:
+//!
 //! 32 of the book's 170 `companion` corpus rows ship (10 creature rows, 22
 //! ability rows), which is exactly the `reachable remainder`
 //! `python3 scripts/classify_companion_rows.py ultimate_magic` prints. Shipped

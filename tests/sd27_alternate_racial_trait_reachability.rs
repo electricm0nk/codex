@@ -264,8 +264,8 @@ fn the_three_dependent_rows_are_not_offered_as_choices_and_the_menu_is_exactly_t
     );
     assert_eq!(
         arg,
-        350,
-        "ARG's 350 ingested race-trait records (156 -> 201 by SD-31 Epic 1-F2; 201 -> 259 \
+        414,
+        "ARG's 414 ingested race-trait records (156 -> 201 by SD-31 Epic 1-F2; 201 -> 259 \
          by SD-31-E6-F4-002's own 6-race chassis batch; 259 -> 283 by SD-31-E6-F4-003's own \
          alternate-trait batch for those same 6 races, both 2026-08-16; 283 -> 321 by \
          SD31-E6-F4-004's own 4-race chassis batch, 2026-08-17; 321 -> 332 by \

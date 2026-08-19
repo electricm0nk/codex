@@ -775,8 +775,8 @@ mod tests {
         let keys = already_ingested_keys(&dir);
         assert_eq!(
             keys.len(),
-            350,
-            "ARG's 350 ingested race-trait keys (156 -> 201 by SD-31 Epic 1-F2, 2026-08-15; \
+            414,
+            "ARG's 414 ingested race-trait keys (156 -> 201 by SD-31 Epic 1-F2, 2026-08-15; \
              201 -> 259 by SD-31-E6-F4-002's own 6-race chassis batch; 259 -> 283 by \
              SD-31-E6-F4-003's own 24-record alternate-trait batch for those same 6 races, \
              both 2026-08-16; 283 -> 321 by SD31-E6-F4-004's own 4-race chassis batch \

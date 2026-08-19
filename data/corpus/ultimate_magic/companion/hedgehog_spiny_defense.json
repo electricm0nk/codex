@@ -10,8 +10,8 @@
     "key": "ultimate_magic:companion:hedgehog_spiny_defense",
     "name": "Spiny Defense",
     "owners": [
-      "core_essentials:companion:familiar_hedgehog",
-      "core_essentials:companion:hedgehog"
+      "ultimate_magic:companion:familiar_hedgehog",
+      "ultimate_magic:companion:hedgehog"
     ],
     "raw_tokens": [
       {
@@ -43,7 +43,7 @@
       "Extraordinary"
     ]
   },
-  "ingested_at": "2026-08-15T01:24:11Z",
+  "ingested_at": "2026-08-18T22:35:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

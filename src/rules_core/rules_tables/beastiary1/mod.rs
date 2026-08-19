@@ -122,7 +122,20 @@
 //! **Companion tables (SD-29 Epic 7 round 3, companion lane extend):**
 //! `companion_data` holds Bestiary 1's 24 `b1_races_companion.lst`
 //! creature rows and its 35 `b1_abilities_companion.lst` ability rows,
-//! transcribed by `scripts/transcribe_companion_tables.py`. This is the
+//! transcribed by `scripts/transcribe_companion_tables.py`.
+//!
+//! **Plus 67 more since `SD31-CE-COMPANION-001` (2026-08-18): 31 creature
+//! rows from `ce_races_familiar_cr.lst` and 36 ability rows from
+//! `ce_abilities_familiar_race_cr.lst`.** Both files live under PCGen's
+//! `core_essentials/` packaging directory and both declare
+//! `SOURCELONG:Bestiary` in their own headers, so `decisions.md §9`
+//! re-attribution files their rows here. **The `_cr` suffix is not a book
+//! signal** -- it names the Core Rulebook CLASSES whose familiar list the
+//! file is, while the stat blocks in it are this book's. Reading the
+//! filename instead of the header is what put all 67 records under
+//! `data/corpus/core_rulebook/companion/` on disk while the engine served
+//! them from a `core_essentials` table, leaving every one of them reaching
+//! no player surface at all. This is the
 //! first companion book that needed **no** new `RuleSetId` — the book was
 //! already `in_scope` through `RuleSetId::Bestiary1` — and the first whose
 //! companion tables sit beside another family's tables in one module.
@@ -435,13 +448,43 @@ pub fn companion_abilities() -> &'static [CompanionAbilityRecord] {
 mod companion_tests {
     use super::*;
 
-    /// From `docs/work-inventory.json`'s own units for this book: 59 companion
-    /// units, 24 creature rows and 35 ability rows, none gated and none a
-    /// `*_classes_companion.lst` class row.
+    /// From `docs/work-inventory.json`'s own units for this book: 154 companion
+    /// units, of which 55 creature rows and 71 ability rows ship, none gated
+    /// and none a `*_classes_companion.lst` class row.
+    ///
+    /// **The two halves are pinned by SOURCE FILE, not only in total.** This
+    /// book's companion table draws from two places, and they fail
+    /// independently:
+    ///
+    /// * `b1_races_companion.lst` / `b1_abilities_companion.lst` -- 24 + 35,
+    ///   the book's own directory, unchanged since SD-29 Epic 7 round 3.
+    /// * `ce_races_familiar_cr.lst` / `ce_abilities_familiar_race_cr.lst` --
+    ///   31 + 36. Both files sit under PCGen's `core_essentials/` packaging
+    ///   directory and both declare `SOURCELONG:Bestiary` in their own headers,
+    ///   so `decisions.md §9` re-attribution files their rows here. The `_cr`
+    ///   filename suffix means "the Core Rulebook classes' familiar list" and
+    ///   is NOT a book signal -- reading it as one is what put these 67 records
+    ///   under `core_rulebook` on disk while the engine served them from a
+    ///   `core_essentials` table, which is how all 67 came to reach no player
+    ///   surface at all (`SD31-CE-COMPANION-001`).
     #[test]
-    fn the_book_defines_twenty_four_companions_and_thirty_five_abilities() {
-        assert_eq!(companions().len(), 24);
-        assert_eq!(companion_abilities().len(), 35);
+    fn the_book_defines_fifty_five_companions_and_seventy_one_abilities() {
+        assert_eq!(companions().len(), 55);
+        assert_eq!(companion_abilities().len(), 71);
+
+        let own_creatures =
+            companions().iter().filter(|c| c.source_file.starts_with("b1_")).count();
+        let own_abilities =
+            companion_abilities().iter().filter(|a| a.source_file.starts_with("b1_")).count();
+        assert_eq!(own_creatures, 24, "rows from this book's own directory");
+        assert_eq!(own_abilities, 35, "rows from this book's own directory");
+
+        let reattributed_creatures =
+            companions().iter().filter(|c| c.source_file.starts_with("ce_")).count();
+        let reattributed_abilities =
+            companion_abilities().iter().filter(|a| a.source_file.starts_with("ce_")).count();
+        assert_eq!(reattributed_creatures, 31, "rows re-attributed here by decisions.md §9");
+        assert_eq!(reattributed_abilities, 36, "rows re-attributed here by decisions.md §9");
     }
 
     /// The five rows that made this book look unregisterable, pinned BY NAME.

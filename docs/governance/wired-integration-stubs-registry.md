@@ -172,7 +172,25 @@ Each `book_stub` entry's manifest (`data/stubs/<book_id>.json`) uses the shape s
 - **Remediation cycle:** `SD-27` — matches the manifest's own `planned_resolution_bundle` field. Resolved 2026-07-27 (SD-27 Cycle 2.0, operator-pinned): the bundle number is now committed. Per `docs/release/SD-27-future-state-book-content-ingestion/decisions.md §2`.
 - **Status:** Registered stub 2026-07-23.
 
-### 0012 — `book_stub`: `core_essentials` not yet ingested
+### 0012 — RETIRED 2026-08-18: `core_essentials` is not a book
+
+> **Retired, not deleted.** `data/stubs/core_essentials.json` no longer exists, so this can
+> no longer be a live `book_stub` registration — the registry's own divergence gate
+> (`tests/sd_governance_stub_registry_divergence.rs`) fails on a registered id with no
+> artifact. The heading deliberately drops the `book_stub` marker the gate parses, which
+> retires the registration while keeping the operator justification below on the record.
+>
+> **Why the artifact went away:** operator ruling, SD-31 `decisions.md §9` (2026-08-16) —
+> *"there is no such book in pathfinder 1e as 'core essentials' … it should be removed from
+> scope and ignored"*. PCGen's `core_essentials/` is a packaging bundle whose `.lst` files
+> each declare their own real source book. The ruling's condition — *"we can safely ignore
+> that if we ingest all the real books"* — binds: nothing was dropped, every record was
+> re-attributed to the book its own file header names. The 2009 justification below is
+> superseded by that ruling, not contradicted by it: it correctly described a book-shaped
+> gap under the belief that Core Essentials was a book.
+
+The original entry, verbatim:
+
 
 - **Book / manifest path:** `core_essentials` — `data/stubs/core_essentials.json`
 - **What's missing:** No `data/corpus/core_essentials/` content exists. This PF1 sourcebook (Core Essentials, Paizo, August 2009) has not been ingested into the corpus at all — zero class, spell, equipment, or other content-kind records. `content_kind_counts: null` in the manifest (not `0`) because no counting pass has run against this book; `null` means "not yet measured," `0` would falsely claim measurement happened and found nothing.

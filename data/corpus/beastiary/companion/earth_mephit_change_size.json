@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "corpus_key": "Earth Mephit ~ Change Size",
+    "delivery": null,
+    "description": "Once per day, an earth mephit can enlarge one size category, as enlarge person, except that it only works on the earth mephit. This power acts as a 2nd-level spell.",
+    "description_variables": [],
+    "description_variants": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:companion:earth_mephit_change_size",
+    "name": "Change Size",
+    "owners": [
+      "beastiary:companion:mephit_earth"
+    ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, an earth mephit can enlarge one size category, as enlarge person, except that it only works on the earth mephit. This power acts as a 2nd-level spell."
+      },
+      {
+        "key": "KEY",
+        "value": "Earth Mephit ~ Change Size"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.202"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Special Quality.Special Ability"
+      }
+    ],
+    "record_type": "ability",
+    "source_page": "p.202",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialQuality",
+      "Special Quality",
+      "Special Ability"
+    ]
+  },
+  "ingested_at": "2026-08-18T22:35:13Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 173,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_familiar_race_cr.lst",
+    "record_key": "Earth Mephit ~ Change Size",
+    "sha256": "c61a43a8081bb87f50c6ffb1c48855ba71bb0312907c0fedca151b5dc0fcfe60"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -58,7 +58,7 @@
       "CompanionAdvancement"
     ]
   },
-  "ingested_at": "2026-08-15T01:24:11Z",
+  "ingested_at": "2026-08-18T22:35:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
@@ -72,7 +72,6 @@
   },
   "wiring_class": "computed",
   "wiring_class_signals": [
-    "computed:pre_guard",
-    "derived:bonus"
+    "computed:pre_guard"
   ]
 }

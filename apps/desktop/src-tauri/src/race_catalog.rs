@@ -85,7 +85,6 @@ pub(crate) const RACE_CORPUS_BOOKS: &[&str] = &[
     "monster_codex",
     "inner_sea_races",
     "horror_adventures",
-    "core_essentials",
     // Bestiary 2, SD-31 Epic 1-F2 (2026-08-15): the chassis + standard
     // traits for 6 newly-modelled races (`ingest_races::IN_SCOPE_RACES`),
     // filed under `bestiary_2` per `advanced_race_guide.pcc`'s own
@@ -123,16 +122,6 @@ const BOOK_ISR: &str = "ISR";
 /// records are 41 alternates plus the two `Deep Jungle Halfling ~ …` rows the
 /// resolver classifies from their gates. SD-29 race-trait lane, round 3.
 const BOOK_HA: &str = "HA";
-/// Core Essentials. Loadable like ARG, APG, MC, ISR and HA, and like them it
-/// contributes no *catalog* rows here — its 64 records are Aasimar and
-/// Tiefling *heritage* traits, 16 selectable heritages plus the 48
-/// replacement rows those heritages grant, and none is a racial default. The
-/// book's ordinary standard racial traits are a different thing entirely and
-/// already reach this catalog under the `core_rulebook` and `beastiary` book
-/// ids, which is where `ingest_races` files them (`race_resolver`'s module
-/// doc: a record's book is the corpus directory it was loaded from).
-/// SD-29 race-trait lane, round 4.
-const BOOK_CE: &str = "CE";
 /// Bestiary 2. SD-31 Epic 1-F2 (2026-08-15): the first race-chassis batch
 /// this project has added since the original 18 (`decisions.md §25.3`).
 /// Loaded exactly like `core_rulebook`/`beastiary` — `ingest_races` files
@@ -173,7 +162,6 @@ pub(crate) fn book_code(book_id: &str) -> String {
         "monster_codex" => BOOK_MC.to_string(),
         "inner_sea_races" => BOOK_ISR.to_string(),
         "horror_adventures" => BOOK_HA.to_string(),
-        "core_essentials" => BOOK_CE.to_string(),
         "bestiary_2" => BOOK_B2.to_string(),
         "bestiary_5" => BOOK_B5.to_string(),
         other => other.to_string(),

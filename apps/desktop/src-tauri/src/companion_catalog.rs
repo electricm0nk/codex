@@ -82,11 +82,6 @@ fn book_wire_code(corpus_book: &str) -> &'static str {
         // SD-29 Epic 7 round 6. Ultimate Wilderness — the book's second family,
         // beside the 136 feats SD-28 Epic 26 landed. Same wire code either way.
         "ultimate_wilderness" => "UW",
-        // SD-29 Epic 7 round 7. Core Essentials — the book's second family,
-        // beside the 64 heritage race traits the race-trait lane landed in
-        // `SD29-E6-F2-005`. Same wire code either way: it names the BOOK, and
-        // `CE` is already what `reach_gate`'s `race_traits` claim passes.
-        "core_essentials" => "CE",
         // SD-29 Epic 7 round 8. Core Rulebook — the book's SIXTH family, beside
         // the classes, races, spells, equipment and race traits already landed.
         // `CRB` is not a new code invented here: `race_catalog`, `spell_catalog`
@@ -824,11 +819,30 @@ mod tests {
         // the Advanced Player's Guide's one `TYPE:SkillChoice` row. Equal
         // deltas a third time, so each of these three is reached through
         // exactly one owner too.
-        assert_eq!(unmodelled.len(), 136);
+        //
+        // `SD31-CE-COMPANION-001` (2026-08-18): 136 -> 141 and 35 -> 39, and
+        // **this is the first time the two deltas are NOT equal** -- which is
+        // exactly the statement this pin exists to make visible. `decisions.md
+        // §9` retired the `core_essentials` book id; its 11 unmodelled-facet
+        // rows moved to Bestiary 1 (10) and Ultimate Magic (1) with no change
+        // to either count, because a re-attribution moves a row, not its owner
+        // graph. What DID move is the Advanced Player's Guide: importing
+        // `ce_races_familiar_apg.lst`'s 8 familiar creature rows gave four
+        // previously-orphan evolution-choice ability rows an owner for the
+        // first time (`TYPE:EvolutionChoice` x1, `TYPE:TempEvolutionChoice`
+        // x3), and ONE of the four -- `Temp Evolution ~ Grab` -- is named by
+        // TWO of this book's creature rows, so it produces two wire rows from
+        // one record. +4 records, +5 rows. Derived twice, independently: the
+        // live catalog reports 141, and a standalone scan of every
+        // `rules_tables/*/companion_data.rs`'s `facet: None` rows joined to
+        // each book's own `ability_keys` ownership graph reports 141 rows over
+        // 39 records with `Temp Evolution ~ Grab` as the single new
+        // two-owner row.
+        assert_eq!(unmodelled.len(), 141);
         let mut keys: Vec<&str> = unmodelled.iter().map(|a| a.key.as_str()).collect();
         keys.sort_unstable();
         keys.dedup();
-        assert_eq!(keys.len(), 35, "35 distinct records behind the 136 wire rows");
+        assert_eq!(keys.len(), 39, "39 distinct records behind the 141 wire rows");
         // Named, so neither count above can be satisfied by a different record.
         // Asserted on the WIRE rather than only on the table, because the gap
         // this catches is a row that exists in `rules_tables` and never crosses
@@ -945,7 +959,39 @@ mod tests {
                     //   quality it does not.
                     || ability.type_segments
                         == vec!["RaceAbility".to_owned(), "SpecialAbility".to_owned()]
-                    || ability.type_segments == vec!["SkillChoice".to_owned()],
+                    || ability.type_segments == vec!["SkillChoice".to_owned()]
+                    // `SD31-CE-COMPANION-001` (2026-08-18) adds the NINTH and
+                    // TENTH shapes, and this assertion did its job again: the
+                    // count pins above had already been updated to 141/39 and
+                    // would have accepted any five new rows; this line failed on
+                    // the first desktop run and named the row.
+                    //
+                    // Both arrive from the same cause. Retiring the
+                    // `core_essentials` book id (`decisions.md §9`) imported
+                    // `ce_races_familiar_apg.lst`'s 8 familiar creature rows
+                    // into the Advanced Player's Guide, and those owners reach
+                    // four summoner evolution rows that had no owner before:
+                    //
+                    // * `EvolutionChoice.Extraordinary` (1 row,
+                    //   `Evolution ~ Scent`)
+                    // * `TempEvolutionChoice.Extraordinary` (3 rows,
+                    //   `Temp Evolution ~ Scent` / `~ Constrict` / `~ Grab`)
+                    //
+                    // These are the summoner's EVOLUTION POOL -- the record
+                    // type `decisions.md §65`/`§69` named as the one finding
+                    // behind this book's 208-row shortfall, seen here from the
+                    // other side: four of its rows are reachable after all,
+                    // because a familiar owner names them. They are a CHOICE
+                    // the player spends evolution points on, exactly like
+                    // `SkillChoice` above and for the same reason: mapping
+                    // either onto `SpecialQuality` would claim the eidolon has
+                    // a quality it does not, and `CompanionAbilityFacet` models
+                    // `CompanionAdvancement`/`SpecialQuality`/`SpecialAttack`
+                    // and nothing else.
+                    || ability.type_segments
+                        == vec!["EvolutionChoice".to_owned(), "Extraordinary".to_owned()]
+                    || ability.type_segments
+                        == vec!["TempEvolutionChoice".to_owned(), "Extraordinary".to_owned()],
                 "{} carries an unrecognised unmodelled shape: {:?}",
                 ability.key,
                 ability.type_segments

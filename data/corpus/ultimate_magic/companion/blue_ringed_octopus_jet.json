@@ -10,8 +10,8 @@
     "key": "ultimate_magic:companion:blue_ringed_octopus_jet",
     "name": "Jet",
     "owners": [
-      "core_essentials:companion:familiar_blue_ringed_octopus",
-      "core_essentials:companion:blue_ringed_octopus"
+      "ultimate_magic:companion:familiar_blue_ringed_octopus",
+      "ultimate_magic:companion:blue_ringed_octopus"
     ],
     "raw_tokens": [
       {
@@ -43,7 +43,7 @@
       "Extraordinary"
     ]
   },
-  "ingested_at": "2026-08-15T01:24:11Z",
+  "ingested_at": "2026-08-18T22:35:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,

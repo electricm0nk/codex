@@ -2,7 +2,7 @@
   "completeness": "chassis_only",
   "data": {
     "ability_keys": [
-      "core_essentials:companion:hedgehog_spiny_defense"
+      "ultimate_magic:companion:hedgehog_spiny_defense"
     ],
     "corpus_key": "Hedgehog",
     "external_ability_refs": [],
@@ -137,7 +137,7 @@
     ],
     "type_segments": []
   },
-  "ingested_at": "2026-08-15T01:24:11Z",
+  "ingested_at": "2026-08-18T22:35:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
@@ -151,7 +151,6 @@
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
-    "derived:bonus",
-    "derived:cr"
+    "derived:bonus"
   ]
 }

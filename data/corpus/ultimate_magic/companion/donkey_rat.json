@@ -142,7 +142,7 @@
     ],
     "type_segments": []
   },
-  "ingested_at": "2026-08-15T01:24:11Z",
+  "ingested_at": "2026-08-18T22:35:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
@@ -154,9 +154,8 @@
     "record_key": "Donkey Rat",
     "sha256": "107c19938fca45aecbd6ce0d07fbd5a43feeed3feade64cb3212f78dc26af6a9"
   },
-  "wiring_class": "derived",
+  "wiring_class": "static",
   "wiring_class_signals": [
-    "derived:bonus",
-    "derived:cr"
+    "static:literal_magnitudes_only"
   ]
 }
