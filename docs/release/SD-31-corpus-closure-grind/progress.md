@@ -27097,6 +27097,9 @@ tokens were counted and banked nothing.
 
 ### 4. What was refused, in numbers (`monster_sla_coverage`, shipped inside the fixture)
 
+The census over the population as it stood when the seam was built — the 316 `monster` units
+then held at `derived`+`grounded`:
+
 ```json
 {"dc_tokens_seen": 287, "dc_tokens_verified": 190, "dc_tokens_contradicting": 8,
  "dc_tokens_undetermined_multi_level": 80, "dc_tokens_undetermined_spell_absent": 9,
@@ -27105,6 +27108,13 @@ tokens were counted and banked nothing.
  "target_units_with_no_dc_token_at_all": 219,
  "target_units_with_no_ingested_corpus_record": 19}
 ```
+
+**`units_banked: 63` is this wave's board movement and `§9c`'s widening does not change it.** The
+COMMITTED `monster_sla_coverage` block reads `units_banked: 122` because the idempotency fix
+(`§9c`) also brought the 59 units wave 13's caster-level seam had already banked into this seam's
+coverage. Those 59 were already `done`; the board moved by 63, and the guarded regen in `§9c`
+proves the widening moved it by zero further. Read the two numbers as what they are — 63 units of
+NEW credit, 122 units of coverage.
 
 **A unit is banked when ≥1 of its DC tokens is verified against an independently-stated single
 level AND none of its DC tokens contradicts one.** The 8 contradictions each disqualify their
