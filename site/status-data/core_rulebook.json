@@ -13001,7 +13001,7 @@
         },
         {
           "name": "Maul of the Titans",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Tool.Weapon.Melee.Martial.TwoHanded.Bludgeoning.Club.Hammer",
           "standing": "unclassified",
           "display_name": "Maul of the Titans"
@@ -24428,11 +24428,11 @@
     {
       "kind": "equipment_modifier",
       "label": "Equipment Modifiers",
-      "done": 188,
-      "partial": 270,
+      "done": 193,
+      "partial": 265,
       "not_started": 212,
       "denominator": 670,
-      "pct": 28.1,
+      "pct": 28.8,
       "excluded_from_percentage": 6,
       "standing_breakdown": {
         "origin": 670,
@@ -24469,7 +24469,7 @@
         },
         {
           "name": "+1 to Hit and Damage",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Amulet of Mighty Fists",
           "standing": "origin",
           "display_name": "+1 to Hit and Damage"
@@ -24504,7 +24504,7 @@
         },
         {
           "name": "+2 to Hit and Damage",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Amulet of Mighty Fists",
           "standing": "origin",
           "display_name": "+2 to Hit and Damage"
@@ -24539,7 +24539,7 @@
         },
         {
           "name": "+3 to Hit and Damage",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Amulet of Mighty Fists",
           "standing": "origin",
           "display_name": "+3 to Hit and Damage"
@@ -24574,7 +24574,7 @@
         },
         {
           "name": "+4 to Hit and Damage",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Amulet of Mighty Fists",
           "standing": "origin",
           "display_name": "+4 to Hit and Damage"
@@ -24609,7 +24609,7 @@
         },
         {
           "name": "+5 to Hit and Damage",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Amulet of Mighty Fists",
           "standing": "origin",
           "display_name": "+5 to Hit and Damage"
