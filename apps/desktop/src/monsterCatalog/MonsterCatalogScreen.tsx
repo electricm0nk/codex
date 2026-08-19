@@ -3,6 +3,7 @@ import type {
   DamageDiceSourceDto,
   MonsterAbilityDto,
   MonsterCatalogEntryDto,
+  MonsterSpellLikeAbilityDto,
   NaturalAttackDto,
 } from '../boundary/loadMonsterCatalog';
 import { loadMonsterCatalogRuntime } from './monsterCatalogRuntime';
@@ -183,6 +184,66 @@ export function formatAbilityHeading(ability: MonsterAbilityDto): string {
   if (!ability.delivery) return `${ability.name} — ${facet}`;
   const delivery = ABILITY_DELIVERY_LABELS[ability.delivery] ?? ability.delivery;
   return `${ability.name} — ${facet} (${delivery})`;
+}
+
+/**
+ * One granted spell-like ability, as the player reads it:
+ * `'3/day — blade barrier (6th, DC 16 + Cha)'`.
+ *
+ * **The DC is shown as the formula the corpus states, never as a number.** A
+ * monster's ability SCORES are not a corpus-stated fact in this repo
+ * (`SD31-E6-F1-002` refused to compute that family), so resolving `16+CHA` to
+ * a DC would be a fabrication on a player-facing surface. The spell LEVEL, by
+ * contrast, is a genuine derivation from PF1's Spell-Like Abilities universal
+ * monster rule (`DC = 10 + spell level + ability modifier`) run backwards over
+ * the row's own constant — `derived_evaluator_fixture_check::
+ * spell_like_ability_save_dc`, fixtured against the granted spell's own PCGen
+ * record in a different file (SD31-W15-MONSTER-SLA-001).
+ *
+ * Every absent part is simply omitted rather than rendered as a placeholder: a
+ * spell that allows no save has no DC clause at all, which is the honest
+ * reading of a row that states none.
+ */
+export function formatSpellLikeAbility(sla: MonsterSpellLikeAbilityDto): string {
+  const frequency =
+    sla.times === null
+      ? null
+      : sla.times.toUpperCase() === 'ATWILL'
+        ? 'At will'
+        : `${sla.times}/${(sla.timeUnit ?? 'day').toLowerCase()}`;
+  const parenthetical: string[] = [];
+  if (sla.derivedSpellLevel !== null) parenthetical.push(formatSpellLevel(sla.derivedSpellLevel));
+  if (sla.saveDcToken !== null) {
+    // `15+CHA` -> `DC 15 + Cha`. The token is split rather than reformatted
+    // wholesale so an unexpected shape still renders verbatim instead of
+    // being silently dropped.
+    const [constant, ability] = sla.saveDcToken.split('+');
+    parenthetical.push(
+      ability === undefined
+        ? `DC ${constant}`
+        : `DC ${constant} + ${ability.charAt(0) + ability.slice(1).toLowerCase()}`,
+    );
+  }
+  const tail = parenthetical.length === 0 ? '' : ` (${parenthetical.join(', ')})`;
+  const spell = `${sla.spell.toLowerCase()}${tail}`;
+  return frequency === null ? spell : `${frequency} — ${spell}`;
+}
+
+/** `0` -> `'cantrip'`, `1` -> `'1st'`, `2` -> `'2nd'`, `3` -> `'3rd'`, else `'Nth'`. */
+export function formatSpellLevel(level: number): string {
+  if (level === 0) return 'cantrip';
+  const lastTwo = level % 100;
+  if (lastTwo >= 11 && lastTwo <= 13) return `${level}th`;
+  switch (level % 10) {
+    case 1:
+      return `${level}st`;
+    case 2:
+      return `${level}nd`;
+    case 3:
+      return `${level}rd`;
+    default:
+      return `${level}th`;
+  }
 }
 
 /**
@@ -455,6 +516,29 @@ export function MonsterCatalogScreen(props: { onClose: () => void }) {
                           </p>
                         )}
                       </div>
+                    ))}
+                  </div>
+                ) : null}
+                {entry.spellLikeAbilities.length > 0 ? (
+                  <div style={{ margin: '0.4rem 0 0' }}>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 600 }}>
+                      Spell-Like Abilities
+                    </span>
+                    {entry.spellLikeAbilities.map((sla) => (
+                      // `spell` is the corpus row's own spell name, which is
+                      // unique within a row's grants — two grants of the same
+                      // spell at different frequencies do not occur in the
+                      // registered books.
+                      <p
+                        key={sla.spell}
+                        style={{
+                          color: 'var(--color-text-muted)',
+                          fontSize: '0.72rem',
+                          margin: '0.1rem 0 0',
+                        }}
+                      >
+                        {formatSpellLikeAbility(sla)}
+                      </p>
                     ))}
                   </div>
                 ) : null}

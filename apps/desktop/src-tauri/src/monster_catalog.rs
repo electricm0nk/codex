@@ -426,7 +426,7 @@ pub struct MonsterCatalogEntryDto {
 }
 
 /// One granted spell-like ability, as the screen renders it.
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct MonsterSpellLikeAbilityDto {
     /// The spell's name as the corpus row states it, scope qualifiers
@@ -1329,6 +1329,79 @@ mod tests {
             Some(20),
             "Balor's MONSTERCLASS states 20 Hit Dice and its row carries BONUS:VAR|SLA_CL|HD"
         );
+    }
+
+    /// The save-DC seam's own production reach (SD31-W15-MONSTER-SLA-001):
+    /// a real record's `SPELLS:` grants reach the wire, each carrying the
+    /// spell level PF1's Universal Monster Rule derives from the row's own DC
+    /// constant.
+    ///
+    /// Hag (Annis) (`bb_races.lst:14`) states
+    /// `SPELLS:Innate|TIMES=3|CASTERLEVEL=7|Disguise Self,11+CHA|Fog Cloud,12+CHA`.
+    /// Disguise self is a 1st-level spell and fog cloud a 2nd — which is what
+    /// `11 - 10` and `12 - 10` say AND what `cr_spells.lst`'s own `CLASSES:`
+    /// tokens independently state; this record is one of the 63 the seam's
+    /// committed fixture banks.
+    #[test]
+    fn a_monsters_spell_like_ability_grants_reach_the_wire_with_their_derived_spell_level() {
+        let entries = build_monster_catalog().entries;
+        let annis = entries
+            .iter()
+            .find(|entry| entry.name == "Hag (Annis)")
+            .expect("Hag (Annis) is a real Bonus Bestiary chassis record");
+        assert_eq!(
+            annis.spell_like_abilities.len(),
+            2,
+            "the row grants exactly two spell-like abilities, got {:?}",
+            annis.spell_like_abilities
+        );
+        let disguise = annis
+            .spell_like_abilities
+            .iter()
+            .find(|sla| sla.spell == "Disguise Self")
+            .expect("the row grants Disguise Self");
+        assert_eq!(disguise.derived_spell_level, Some(1));
+        assert_eq!(disguise.save_dc_ability.as_deref(), Some("CHA"));
+        assert_eq!(
+            disguise.save_dc_token.as_deref(),
+            Some("11+CHA"),
+            "the DC reaches the screen as the formula the row states -- a monster's ability \
+             SCORES are not a corpus fact here, so a resolved number would be fabricated"
+        );
+        assert_eq!(disguise.times.as_deref(), Some("3"));
+        assert_eq!(disguise.caster_level_token.as_deref(), Some("7"));
+        let fog = annis
+            .spell_like_abilities
+            .iter()
+            .find(|sla| sla.spell == "Fog Cloud")
+            .expect("the row grants Fog Cloud");
+        assert_eq!(fog.derived_spell_level, Some(2));
+    }
+
+    /// A spell the row states no save for must serve `None` for BOTH the DC
+    /// token and the derived level — never a zero, which would read as a
+    /// cantrip on screen.
+    #[test]
+    fn a_granted_spell_with_no_save_serves_no_dc_and_no_derived_level() {
+        let entries = build_monster_catalog().entries;
+        let served: Vec<&MonsterSpellLikeAbilityDto> = entries
+            .iter()
+            .flat_map(|entry| entry.spell_like_abilities.iter())
+            .filter(|sla| sla.save_dc_token.is_none())
+            .collect();
+        assert!(
+            !served.is_empty(),
+            "the registry serves grants with no save DC; if this is empty the assertion below \
+             is vacuous"
+        );
+        for sla in served {
+            assert_eq!(
+                sla.derived_spell_level, None,
+                "{:?} states no save DC, so no spell level can be derived from one",
+                sla.spell
+            );
+            assert_eq!(sla.save_dc_ability, None, "{:?}", sla.spell);
+        }
     }
 
     /// A monster with a perfectly readable `MONSTERCLASS:` token but no

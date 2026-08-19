@@ -12,6 +12,8 @@ import {
   formatNaturalAttack,
   formatSize,
   formatSpeedClause,
+  formatSpellLevel,
+  formatSpellLikeAbility,
 } from './MonsterCatalogScreen';
 import type { MonsterCatalogEntryDto } from '../boundary/loadMonsterCatalog';
 import { assert, assertEqual } from '../testSupport/asserts';
@@ -103,6 +105,7 @@ function entry(overrides: Partial<MonsterCatalogEntryDto>): MonsterCatalogEntryD
     abilities: [],
     externalAbilityRefs: [],
     spellLikeAbilityCasterLevel: null,
+    spellLikeAbilities: [],
     ...overrides,
   };
 }
@@ -325,6 +328,116 @@ function testEveryDiceProvenanceTheAdapterCanServeHasALabel() {
   );
 }
 
+/**
+ * The real Bestiary 1 Astral Deva grant, straight off `b1_races.lst`:
+ * `SPELLS:Innate|TIMES=1|CASTERLEVEL=13|Blade Barrier,16+CHA|Heal`. Blade
+ * barrier is a 6th-level spell, which is what `16 - 10` states and what
+ * `cr_spells.lst`'s own `CLASSES:Cleric=6` independently confirms.
+ */
+function testASpellLikeAbilityReadsTheWayTheBookPrintsIt() {
+  assertEqual(
+    formatSpellLikeAbility({
+      spell: 'Blade Barrier',
+      times: '1',
+      timeUnit: null,
+      casterLevelToken: '13',
+      saveDcToken: '16+CHA',
+      derivedSpellLevel: 6,
+      saveDcAbility: 'CHA',
+    }),
+    '1/day — blade barrier (6th, DC 16 + Cha)',
+    'a granted spell states its frequency, its derived level and its DC formula'
+  );
+  assertEqual(
+    formatSpellLikeAbility({
+      spell: 'Continual Flame',
+      times: 'ATWILL',
+      timeUnit: null,
+      casterLevelToken: '13',
+      saveDcToken: null,
+      derivedSpellLevel: null,
+      saveDcAbility: null,
+    }),
+    'At will — continual flame',
+    'a spell the row states no save for prints no DC clause at all, rather than a placeholder'
+  );
+  assertEqual(
+    formatSpellLikeAbility({
+      spell: 'Commune',
+      times: '1',
+      timeUnit: 'Week',
+      casterLevelToken: '12',
+      saveDcToken: null,
+      derivedSpellLevel: null,
+      saveDcAbility: null,
+    }),
+    '1/week — commune',
+    "a row's own TIMEUNIT is honoured rather than assuming the per-day default"
+  );
+}
+
+/**
+ * THE ANTI-FABRICATION RULE, pinned as a test: a monster's ability SCORES are
+ * not a corpus-stated fact in this repo, so the save DC must reach the screen
+ * as the formula the row states and never as a resolved number. If this ever
+ * renders a bare integer where an ability term belongs, a player is reading a
+ * number nothing computed.
+ */
+function testTheSaveDcIsShownAsAFormulaAndNeverResolvedToANumber() {
+  const rendered = formatSpellLikeAbility({
+    spell: 'Holy Smite',
+    times: 'ATWILL',
+    timeUnit: null,
+    casterLevelToken: '(max(TL-1,1))',
+    saveDcToken: '14+CHA',
+    derivedSpellLevel: 4,
+    saveDcAbility: 'CHA',
+  });
+  assert(
+    rendered.includes('DC 14 + Cha'),
+    'the DC keeps its ability term, so the reader can see it is a formula'
+  );
+  assert(
+    !/DC \d+\)/.test(rendered),
+    'a DC stated with an ability term must never render as a bare resolved number'
+  );
+}
+
+/** The engine's own refusals must stay legible, not become a rendered zero. */
+function testAnUnreadableDcTokenStillRendersRatherThanVanishing() {
+  assertEqual(
+    formatSpellLikeAbility({
+      spell: 'Suggestion',
+      times: '3',
+      timeUnit: null,
+      casterLevelToken: 'SLA_CL',
+      saveDcToken: '15',
+      derivedSpellLevel: null,
+      saveDcAbility: null,
+    }),
+    '3/day — suggestion (DC 15)',
+    'a DC token the engine refuses to derive a level from still shows the number the row states'
+  );
+}
+
+function testSpellLevelOrdinalsReadAsThePlayerWouldWriteThem() {
+  const cases: [number, string][] = [
+    [0, 'cantrip'],
+    [1, '1st'],
+    [2, '2nd'],
+    [3, '3rd'],
+    [4, '4th'],
+    [9, '9th'],
+    [11, '11th'],
+    [12, '12th'],
+    [13, '13th'],
+    [21, '21st'],
+  ];
+  for (const [level, expected] of cases) {
+    assertEqual(formatSpellLevel(level), expected, `spell level ${level} reads as ${expected}`);
+  }
+}
+
 function main() {
   testSizeOrderCoversEverySizeCodeTheAdapterServes();
   testEverySizeCodeHasARealDisplayLabel();
@@ -340,6 +453,10 @@ function main() {
 testTheBlurbNamesTheBooksTheResponseActuallyContains();
   testAnAttackWithNoCorpusDicePrintsItsNameAlone();
   testAnAbilityHeadingReadsTheWayTheBookPrintsIt();
+  testASpellLikeAbilityReadsTheWayTheBookPrintsIt();
+  testTheSaveDcIsShownAsAFormulaAndNeverResolvedToANumber();
+  testAnUnreadableDcTokenStillRendersRatherThanVanishing();
+  testSpellLevelOrdinalsReadAsThePlayerWouldWriteThem();
 }
 
 main();

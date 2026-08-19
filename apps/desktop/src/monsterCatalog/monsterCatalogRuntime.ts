@@ -17,6 +17,16 @@ import { hasTauriRuntime } from '../boundary/runtime';
  * `reach_gate.rs`'s per-record claims, which derive it from the corpus
  * directories rather than from prose.
  */
+/**
+ * The exact sentence `map_chassis_monster` composes Rust-side for an attack
+ * the corpus names but carries no die expression for
+ * (`apps/desktop/src-tauri/src/monster_catalog.rs`). Restated here rather
+ * than invented so the browser preview reads identically to the desktop app.
+ */
+const NO_DICE_NOTE =
+  "This monster's row names the attack, and the Bonus Bestiary corpus carries no die " +
+  'expression for it at any hop. No value is shown because none was ingested.';
+
 function buildPreviewCatalog(): MonsterCatalogEntryDto[] {
   return [
     {
@@ -38,6 +48,7 @@ function buildPreviewCatalog(): MonsterCatalogEntryDto[] {
       abilities: [],
       externalAbilityRefs: [],
       spellLikeAbilityCasterLevel: null,
+      spellLikeAbilities: [],
     },
     {
       key: 'beastiary1:monster:gnoll',
@@ -55,6 +66,7 @@ function buildPreviewCatalog(): MonsterCatalogEntryDto[] {
       abilities: [],
       externalAbilityRefs: [],
       spellLikeAbilityCasterLevel: null,
+      spellLikeAbilities: [],
     },
     {
       key: 'beastiary1:monster:wolf',
@@ -74,6 +86,7 @@ function buildPreviewCatalog(): MonsterCatalogEntryDto[] {
       abilities: [],
       externalAbilityRefs: [],
       spellLikeAbilityCasterLevel: null,
+      spellLikeAbilities: [],
     },
     {
       key: 'beastiary1:monster:shark',
@@ -93,6 +106,7 @@ function buildPreviewCatalog(): MonsterCatalogEntryDto[] {
       abilities: [],
       externalAbilityRefs: [],
       spellLikeAbilityCasterLevel: null,
+      spellLikeAbilities: [],
     },
     {
       key: 'beastiary1:monster:ankheg',
@@ -120,6 +134,7 @@ function buildPreviewCatalog(): MonsterCatalogEntryDto[] {
       abilities: [],
       externalAbilityRefs: [],
       spellLikeAbilityCasterLevel: null,
+      spellLikeAbilities: [],
     },
     {
       key: 'beastiary1:monster:gelatinous_cube',
@@ -139,6 +154,7 @@ function buildPreviewCatalog(): MonsterCatalogEntryDto[] {
       abilities: [],
       externalAbilityRefs: [],
       spellLikeAbilityCasterLevel: null,
+      spellLikeAbilities: [],
     },
     {
       // Bonus Bestiary's chassis + features, transcribed from
@@ -203,6 +219,70 @@ function buildPreviewCatalog(): MonsterCatalogEntryDto[] {
       // Allip's row carries no `BONUS:VAR|SLA_CL|` token -- its abilities
       // above are Supernatural, not Spell-Like.
       spellLikeAbilityCasterLevel: null,
+      spellLikeAbilities: [],
+    },
+    {
+      // The one preview record that grants spell-like abilities, added with
+      // the field (SD31-W15-MONSTER-SLA-001) so the browser preview actually
+      // walks the new surface instead of rendering an always-empty list.
+      // Transcribed from `bb_races.lst:14` via the compiled
+      // `rules_tables::bonus_bestiary` record, like every other entry here:
+      // `SPELLS:Innate|TIMES=3|CASTERLEVEL=7|Disguise Self,11+CHA|Fog Cloud,12+CHA`.
+      // Disguise self is a 1st-level spell and fog cloud a 2nd, which is what
+      // `11 - 10` and `12 - 10` state and what `cr_spells.lst`'s own
+      // `CLASSES:` tokens independently confirm -- this record is one of the
+      // 63 the save-DC seam banked.
+      key: 'bonus_bestiary:monster:hag_annis',
+      book: 'BB',
+      name: 'Hag (Annis)',
+      challengeRating: 6,
+      size: 'L',
+      speedFt: 40,
+      raceType: 'Monstrous Humanoid',
+      raceSubtype: null,
+      sourcePage: 'p.11',
+      naturalAttacks: [
+        {
+          name: 'Bite',
+          damageDice: null,
+          damageDiceSource: 'notInCorpus',
+          groundingNote: NO_DICE_NOTE,
+        },
+        {
+          name: 'Claw',
+          damageDice: null,
+          damageDiceSource: 'notInCorpus',
+          groundingNote: NO_DICE_NOTE,
+        },
+      ],
+      speeds: [{ mode: 'Walk', feet: 40 }],
+      monsterClass: 'Monstrous Humanoid:7',
+      abilities: [],
+      externalAbilityRefs: ['Grab', 'Rend'],
+      // No `BONUS:VAR|SLA_CL|` token on this row: its grants state their own
+      // `CASTERLEVEL=7` instead, which is a different token and a different
+      // half of the same universal monster rule.
+      spellLikeAbilityCasterLevel: null,
+      spellLikeAbilities: [
+        {
+          spell: 'Disguise Self',
+          times: '3',
+          timeUnit: null,
+          casterLevelToken: '7',
+          saveDcToken: '11+CHA',
+          derivedSpellLevel: 1,
+          saveDcAbility: 'CHA',
+        },
+        {
+          spell: 'Fog Cloud',
+          times: '3',
+          timeUnit: null,
+          casterLevelToken: '7',
+          saveDcToken: '12+CHA',
+          derivedSpellLevel: 2,
+          saveDcAbility: 'CHA',
+        },
+      ],
     },
   ];
 }

@@ -234,7 +234,7 @@ fn monster_sla_pinned_fields_are_byte_identical_to_the_upstream_lsts() {
     }
 
     let mut file_text: BTreeMap<PathBuf, (String, Vec<String>)> = BTreeMap::new();
-    let mut read = |path: PathBuf, cache: &mut BTreeMap<PathBuf, (String, Vec<String>)>| {
+    let read = |path: PathBuf, cache: &mut BTreeMap<PathBuf, (String, Vec<String>)>| {
         cache
             .entry(path.clone())
             .or_insert_with(|| {
