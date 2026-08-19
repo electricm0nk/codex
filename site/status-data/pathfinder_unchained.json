@@ -3483,11 +3483,11 @@
     {
       "kind": "equipment_modifier",
       "label": "Equipment Modifiers",
-      "done": 18,
-      "partial": 24,
+      "done": 38,
+      "partial": 4,
       "not_started": 0,
       "denominator": 42,
-      "pct": 42.9,
+      "pct": 90.5,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 42
@@ -3543,13 +3543,13 @@
         },
         {
           "name": "+1 ABP (Enhancement to Armor)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Armor",
           "standing": "origin"
         },
         {
           "name": "+1 ABP (Enhancement to Shield)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Shield",
           "standing": "origin"
         },
@@ -3561,13 +3561,13 @@
         },
         {
           "name": "+1 Attuned Armor",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Armor.Clothing",
           "standing": "origin"
         },
         {
           "name": "+1 Attuned Shield",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Shield",
           "standing": "origin"
         },
@@ -3585,13 +3585,13 @@
         },
         {
           "name": "+2 ABP (Enhancement to Armor)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Armor",
           "standing": "origin"
         },
         {
           "name": "+2 ABP (Enhancement to Shield)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Shield",
           "standing": "origin"
         },
@@ -3603,13 +3603,13 @@
         },
         {
           "name": "+2 Attuned Armor",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Armor.Clothing",
           "standing": "origin"
         },
         {
           "name": "+2 Attuned Shield",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Shield",
           "standing": "origin"
         },
@@ -3627,13 +3627,13 @@
         },
         {
           "name": "+3 ABP (Enhancement to Armor)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Armor",
           "standing": "origin"
         },
         {
           "name": "+3 ABP (Enhancement to Shield)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Shield",
           "standing": "origin"
         },
@@ -3645,13 +3645,13 @@
         },
         {
           "name": "+3 Attuned Armor",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Armor.Clothing",
           "standing": "origin"
         },
         {
           "name": "+3 Attuned Shield",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Shield",
           "standing": "origin"
         },
@@ -3669,13 +3669,13 @@
         },
         {
           "name": "+4 ABP (Enhancement to Armor)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Armor",
           "standing": "origin"
         },
         {
           "name": "+4 ABP (Enhancement to Shield)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Shield",
           "standing": "origin"
         },
@@ -3687,13 +3687,13 @@
         },
         {
           "name": "+4 Attuned Armor",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Armor.Clothing",
           "standing": "origin"
         },
         {
           "name": "+4 Attuned Shield",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Shield",
           "standing": "origin"
         },
@@ -3711,13 +3711,13 @@
         },
         {
           "name": "+5 ABP (Enhancement to Armor)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Armor",
           "standing": "origin"
         },
         {
           "name": "+5 ABP (Enhancement to Shield)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Shield",
           "standing": "origin"
         },
@@ -3729,13 +3729,13 @@
         },
         {
           "name": "+5 Attuned Armor",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Armor.Clothing",
           "standing": "origin"
         },
         {
           "name": "+5 Attuned Shield",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Shield",
           "standing": "origin"
         },

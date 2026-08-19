@@ -31,23 +31,47 @@ use crate::rules_core::equipment_effects::EquipmentStatEffect;
 ///   conditional variant that only applies to a broken item and is never
 ///   the first `COMBAT|AC` chain on an unbroken record, so taking the
 ///   first match is the correct default (non-broken) armor/shield bonus.
+///   `SD31-W16-EQUIPMOD-001` widened the recognized `TYPE=` set to also
+///   accept `TYPE=ArmorEnhancement`/`TYPE=ShieldEnhancement` — the shape
+///   an `equipment_modifier` armor/shield enhancement-bonus special
+///   ability (`KEY:Special Ability ~ +1 ~ Armor` through `~ +5 ~
+///   Shield`) states its own AC contribution in, verified directly
+///   against the real `core_rulebook/cr_equipmods.lst` corpus records.
 /// - `max_dex` and `spell_failure` come straight off the `MAXDEX:` and
 ///   `SPELLFAILURE:` tokens when present (weapons and shieldless items
-///   carry neither, so both are `None` for e.g. a longsword).
+///   carry neither, so both are `None` for e.g. a longsword) — falling
+///   back to the record's own `BONUS:EQMARMOR|MAXDEX|...` /
+///   `BONUS:EQMARMOR|SPELLFAILURE|...` chain only when no bare token
+///   exists (`SD31-W16-EQUIPMOD-001`: an `equipment_modifier` material
+///   record like `KEY:Material ~ Mithril ~ Armor / Light` states its
+///   real max-dex/spell-failure contribution only in that chain family,
+///   never as a bare token — those live exclusively on BASE armor
+///   records).
 /// - `armor_check_penalty` comes straight off the `ACCHECK:` token (v0.6
 ///   alpha swarm item 1, shape (c)) — present on every armor/shield
 ///   record (`0` for no penalty, a negative number for a real one), the
 ///   same token this module's own doc comment already cited as present
 ///   on `KEY:Leather Armor (Base)` before this field existed to hold it.
+///   `SD31-W16-EQUIPMOD-001`'s same `BONUS:EQMARMOR|ACCHECK|...`
+///   fallback applies here too (a masterwork/material/magic-enhancement
+///   modifier's own check-penalty improvement, e.g.
+///   `KEY:Special Ability ~ +1 ~ Armor`'s `EQMARMOR|ACCHECK|1|
+///   TYPE=Enhancement`) — never consulted when the bare `ACCHECK:` token
+///   is present, so a base record's own real value (including its
+///   conditional "Broken" `EQMARMOR|ACCHECK` chain, which only ever
+///   accompanies a real `ACCHECK:` token) is never shadowed.
 ///
 /// Absence (`None`) is honest: it means this record's raw tokens do not
 /// carry that field, not that the field's value is zero.
 pub fn compute_arms_armor_effect(record: &EquipmentRecord) -> EquipmentStatEffect {
     EquipmentStatEffect {
         armor_class_bonus: armor_class_bonus_from_bonus_chains(record),
-        max_dex: token_i16(record, "MAXDEX"),
-        spell_failure: token_value(record, "SPELLFAILURE").and_then(|value| value.parse().ok()),
-        armor_check_penalty: token_i16(record, "ACCHECK"),
+        max_dex: token_i16(record, "MAXDEX").or_else(|| eqmarmor_chain_value(record, "MAXDEX")),
+        spell_failure: token_value(record, "SPELLFAILURE")
+            .and_then(|value| value.parse().ok())
+            .or_else(|| eqmarmor_chain_value(record, "SPELLFAILURE").map(f32::from)),
+        armor_check_penalty: token_i16(record, "ACCHECK")
+            .or_else(|| eqmarmor_chain_value(record, "ACCHECK")),
     }
 }
 
@@ -66,13 +90,39 @@ fn token_i16(record: &EquipmentRecord, key: &str) -> Option<i16> {
 fn armor_class_bonus_from_bonus_chains(record: &EquipmentRecord) -> Option<i16> {
     record.bonus_chains.iter().find_map(|bonus| {
         let qualifiers = &bonus.qualifiers;
-        let is_default_armor_or_shield_ac_bonus = qualifiers.len() >= 3
+        let is_armor_or_shield_ac_bonus = qualifiers.len() >= 3
             && qualifiers[0] == "COMBAT"
             && qualifiers[1] == "AC"
-            && qualifiers
-                .iter()
-                .any(|qualifier| qualifier == "TYPE=Armor" || qualifier == "TYPE=Shield");
-        if is_default_armor_or_shield_ac_bonus {
+            && qualifiers.iter().any(|qualifier| {
+                matches!(
+                    qualifier.as_str(),
+                    "TYPE=Armor" | "TYPE=Shield" | "TYPE=ArmorEnhancement" | "TYPE=ShieldEnhancement"
+                )
+            });
+        if is_armor_or_shield_ac_bonus {
+            qualifiers[2].parse::<i16>().ok()
+        } else {
+            None
+        }
+    })
+}
+
+/// An `equipment_modifier` record's own `BONUS:EQMARMOR|<field>|<n>[|...]`
+/// chain — the token family a masterwork/material/magic-enhancement
+/// modifier uses to state its armor/shield-stat contribution, distinct
+/// from (and never present alongside a real value in) the bare
+/// `MAXDEX:`/`SPELLFAILURE:`/`ACCHECK:` tokens a BASE armor/shield record
+/// carries instead. Only ever consulted by [`compute_arms_armor_effect`]
+/// as a fallback when the bare token is absent, so a base record's own
+/// real token (and its conditional "Broken" `EQMARMOR` chain, which only
+/// accompanies a real bare token) always wins first. `qualifiers[2]` is a
+/// literal signed integer for every real corpus record this fallback
+/// exists for; a non-numeric value (none observed in the pinned oracle)
+/// yields `None` rather than a fabricated number.
+fn eqmarmor_chain_value(record: &EquipmentRecord, field: &str) -> Option<i16> {
+    record.bonus_chains.iter().find_map(|bonus| {
+        let qualifiers = &bonus.qualifiers;
+        if qualifiers.len() >= 3 && qualifiers[0] == "EQMARMOR" && qualifiers[1] == field {
             qualifiers[2].parse::<i16>().ok()
         } else {
             None
@@ -129,5 +179,78 @@ mod tests {
         assert_eq!(effect.max_dex, None);
         assert_eq!(effect.spell_failure, None);
         assert_eq!(effect.armor_check_penalty, None, "a weapon carries no ACCHECK token at all");
+    }
+
+    /// Real verbatim tokens copied from `KEY:Special Ability ~ +1 ~
+    /// Armor` in `core_rulebook/cr_equipmods.lst` (`equipment_modifier`
+    /// kind, `SD31-W16-EQUIPMOD-001`). An armor-enhancement-bonus
+    /// MODIFIER record carries no bare `ACCHECK:` token of its own (that
+    /// token exists only on a BASE armor record) -- its AC contribution
+    /// is stated as `BONUS:COMBAT|AC|1|TYPE=ArmorEnhancement`, one
+    /// qualifier away from the base-item `TYPE=Armor` this module already
+    /// recognized, and its check-penalty contribution is stated as
+    /// `BONUS:EQMARMOR|ACCHECK|1|TYPE=Enhancement`, a token family this
+    /// module did not read at all before this fix. Before the fix below,
+    /// both fields read `None` even though the record carries real,
+    /// verbatim corpus tokens for exactly these effects.
+    #[test]
+    fn special_ability_plus_one_armor_yields_enhancement_ac_and_acp_from_the_modifier_itself() {
+        let text = "+1 (Enhancement to Armor)\tKEY:Special Ability ~ +1 ~ Armor\tTYPE:Armor\tPLUS:1\tBONUS:COMBAT|AC|1|TYPE=ArmorEnhancement|PREVAREQ:DisableArmorBonus,0\tBONUS:EQMARMOR|ACCHECK|1|TYPE=Enhancement|!PRETYPE:1,EQMODTYPE=MASTERWORKQUALITY\n";
+        let result = parse_equipment_entries("cr_equipmods.lst", text);
+        assert!(result.entries.len() == 1, "expected exactly one parsed record");
+        let record = &result.entries[0];
+
+        let effect = compute_arms_armor_effect(record);
+        assert_eq!(
+            effect.armor_class_bonus,
+            Some(1),
+            "a +1 Armor Enhancement modifier's own TYPE=ArmorEnhancement chain is real AC magnitude"
+        );
+        assert_eq!(
+            effect.armor_check_penalty,
+            Some(1),
+            "the same modifier's EQMARMOR|ACCHECK chain is its real check-penalty contribution"
+        );
+        assert_eq!(effect.max_dex, None, "this modifier carries no MAXDEX-shaped token at all");
+    }
+
+    /// Real verbatim tokens copied from `KEY:Material ~ Mithril ~ Armor /
+    /// Light` in `core_rulebook/cr_equipmods.lst` — a material modifier
+    /// with no `BONUS:COMBAT|AC|...` chain at all (mithral does not grant
+    /// an enhancement AC bonus), but real `EQMARMOR|MAXDEX` and
+    /// `EQMARMOR|SPELLFAILURE` chains this module did not read before
+    /// this fix.
+    #[test]
+    fn mithril_light_armor_yields_max_dex_and_spell_failure_from_eqmarmor_chains() {
+        let text = "Mithral\tKEY:Material ~ Mithril ~ Armor / Light\tTYPE:BaseMaterial.MasterworkQuality.Armor\tCOST:1000\tBONUS:EQMARMOR|ACCHECK|3|TYPE=Enhancement.REPLACE\tBONUS:EQMARMOR|MAXDEX|2\tBONUS:EQMARMOR|SPELLFAILURE|-10|TYPE=Enhancement\n";
+        let result = parse_equipment_entries("cr_equipmods.lst", text);
+        let record = &result.entries[0];
+
+        let effect = compute_arms_armor_effect(record);
+        assert_eq!(effect.armor_class_bonus, None, "mithral grants no enhancement AC bonus");
+        assert_eq!(effect.armor_check_penalty, Some(3), "mithral's real ACP improvement is +3");
+        assert_eq!(effect.max_dex, Some(2), "mithral's real max-dex improvement is +2");
+        assert_eq!(effect.spell_failure, Some(-10.0), "mithral's real spell-failure reduction is -10");
+    }
+
+    /// A base armor record's `ACCHECK:`/`MAXDEX:`/`SPELLFAILURE:` tokens
+    /// still win over any `EQMARMOR` chain on the SAME record — proven
+    /// against `Leather Armor (Base)`'s own real "Broken" chain shape
+    /// (a `PRETYPE`-guarded `EQMARMOR|ACCHECK` variant some base records
+    /// also carry), so the new fallback in
+    /// `special_ability_plus_one_armor_yields_enhancement_ac_and_acp_from_the_modifier_itself`
+    /// cannot shadow a real base-item token with a conditional chain.
+    #[test]
+    fn a_base_armor_records_own_acp_token_outranks_an_eqmarmor_broken_chain() {
+        let text = "Leather Armor\tKEY:Leather Armor (Base)\tTYPE:Armor.Light\tCOST:10\tWT:15\tACCHECK:0\tMAXDEX:6\tSPELLFAILURE:10\tBONUS:COMBAT|AC|2|TYPE=Armor|PREVAREQ:DisableArmorBonus,0\tBONUS:EQMARMOR|ACCHECK|-2|PRETYPE:1,EQMOD=Special Quality ~ Broken ~ Armor\n";
+        let result = parse_equipment_entries("cr_equip_arms_armor.lst", text);
+        let record = &result.entries[0];
+
+        let effect = compute_arms_armor_effect(record);
+        assert_eq!(
+            effect.armor_check_penalty,
+            Some(0),
+            "the record's own real ACCHECK:0 token must win over the conditional Broken EQMARMOR chain"
+        );
     }
 }
