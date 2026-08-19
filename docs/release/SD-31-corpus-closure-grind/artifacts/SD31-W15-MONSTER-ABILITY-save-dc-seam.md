@@ -139,9 +139,37 @@ computes exactly the value that hole wants, but nothing serves it yet: `PcgenDis
 integer table and cannot express "15 + the creature's Wisdom modifier". Closing that needs a
 `save_dc` field on `MonsterAbilityDto`, a frontend render, a reach-gate claim and a DoD-8 on-screen
 pass — a bounded follow-on, deliberately not smuggled into this lane's write scope (the seam-monster
-lane also holds `monster_catalog.rs` this wave). Logged as `OPEN-ISSUES` row 254.
+lane also holds `monster_catalog.rs` this wave). Logged as `OPEN-ISSUES` row 266.
 
-The `done` credit these 92 units take rests on: they were already `grounded` (a real consumer-delta
-observation), and the engine's evaluator now reproduces, over the compiled tables, a value fixed
-independently by the printed rule and a second corpus row. It does **not** rest on the DC being
-rendered.
+The `done` credit these 92 units take rests on: they were already `grounded` on a REACHABILITY
+fact — the ability record resolves in the compiled chassis registry, which registers only
+owner-having rows, and its description is served unconditionally to the Monster Catalog screen —
+and the engine's evaluator now reproduces, over the compiled tables, a value fixed independently by
+the printed rule and a second corpus row. It does **not** rest on the DC being rendered.
+
+**And the repo's own instrument disagrees with the comfortable reading of that, so it is put to the
+operator rather than smoothed over.** `v06_work_inventory::monster_ability_desc_leaks_unresolved_argument()`
+returns `true` for every one of these 92 — its first line is
+`if !record.description_variables.is_empty() { return true }` — and the `text-complete` rung
+consults it to REFUSE promotion precisely because the row would leak an unresolved argument to a
+player. These 92 reach `done` by a different rung (`derived` + `fixture-verified`, the operator's
+2026-08-13 directive) on evidence about the ENGINE, while a render defect the repo already tracks
+persists on the same rows. Row 266 asks the doctrine question directly and offers three answers;
+this cycle took the one the doneness table literally states, and flagged it.
+
+## What remains held in this population, and the named next levers
+
+Re-derived from the POST-regen `docs/work-inventory.json` (`generated_at 2026-08-19T11:33:31Z`)
+joined to each unit's own `data/corpus/<book>/monster_ability/*.json` record — 172 units still
+`derived` + `grounded`:
+
+| shape | units | is there a lever? |
+|---|---:|---|
+| `DESC` states no `DC %N` slot at all | 108 | no save DC to verify; a different token family entirely |
+| **the `DC %N` slot names a `BONUS:VAR` variable** holding `10+(HD/2)+<STAT>` / `10+HD/2+<STAT>` / `10+(TL/2)+<STAT>` | **23** | **yes — the second sub-seam.** The row states the FORMULA rather than the summed value, so the check is "the parser reads the printed formula correctly", cross-checked against an independent reference parser. Same evidence class as the `class_feature` `BONUS:VAR` seam, one tier below this cycle's two-row independence. |
+| the `DC %N` slot's argument is some other expression | 38 | needs a per-shape read before anything is claimed |
+| row states no `DESC` | 2 | nothing to read |
+| `DC` slot carries no argument at index N | 1 | corpus defect; one row |
+
+The 23 were deliberately **not** taken this cycle rather than banked on the weaker shape. They are
+the honest next card for this kind.

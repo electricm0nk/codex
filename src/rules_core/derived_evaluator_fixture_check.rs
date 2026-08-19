@@ -1554,10 +1554,10 @@ fn dc_placeholder_slots(description: &str) -> Vec<usize> {
         if j == start {
             continue;
         }
-        if let Ok(n) = description[start..j].parse::<usize>() {
-            if n >= 1 {
-                slots.push(n);
-            }
+        if let Ok(n) = description[start..j].parse::<usize>()
+            && n >= 1
+        {
+            slots.push(n);
         }
     }
     slots

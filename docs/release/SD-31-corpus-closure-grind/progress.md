@@ -27166,12 +27166,78 @@ attribution touched; no Supersession Register entry applied.
 Per-kind: `monster_ability` `done` 1,456 → 1,548, `held` **351 → 259**, `not-started` 1,144
 unchanged.
 
+**Override 9 compliance (`status_sources_agree`).** The live dashboard reads
+`work_inventory.status_sources_agree: false` on this commit (`generated_at 2026-08-19T10:47:10Z`
+vs. `doneness_source_generated_at 2026-08-19T11:33:31Z` — the producer's own fresh `--summary` run
+and the committed full document are different corpus snapshots). **No figure in this receipt is
+quoted from the dashboard JSON.** Every number above is a replay of `doneness_verdict()` directly
+over `docs/work-inventory.json` at `generated_at 2026-08-19T11:33:31Z`, which is the same document
+the `doneness_source_generated_at` stamp names.
+
 **Public feed refreshed on the same commit** per loop-instruction override 10:
 `./scripts/publish-site-dashboard.sh` (real publish, exit 0) → `site/dashboard/PF1e-dashboard.json`,
 `site/dashboard/units/PF1e-units-monster_ability.json`, `site/dashboard/units/index.json`,
 `site/status-data.json` (30 books, overall 36.9 %) and `site/status-data/bestiary_4.json`.
 
-### 6. What this cycle could NOT do
+### 6. The gate — run 1 RED on this cycle's own clippy warning, fixed, run 2 launched
+
+**Run 1** (`artifacts/SD31-W15-MONSTER-ABILITY-001-verify-run1.log`, at commit `e82896387`):
+`RESULT: FAIL`, `VERIFY_EXIT=1`. **33 of 34 stages PASS; exactly one stage red, and it was this
+cycle's own**, not one of `OPEN-ISSUES` row 251's 14 pre-existing failures (all of which wave 14
+repaired — this run's `root-full`, `desktop` and `reach` are green):
+
+```
+FAIL  clippy  (root:52 desktop:7 — logs in /tmp/codex-verify-1Umkmq)
+      root: 52 warnings exceeds recorded ceiling 51
+      -> clippy-root.log: "this `if` statement can be collapsed"
+         src/rules_core/derived_evaluator_fixture_check.rs:1557  (dc_placeholder_slots)
+```
+
+Every other stage green, including the three that carry this cycle's own artifacts:
+`root-full  (7060 passed across 569 suites, all 532 tests/*.rs suites executed)` — up from the
+recorded floors `ROOT_FULL_TESTS 7052` / `ROOT_TEST_BINARIES 568`, which is this cycle's new test
+binary and its tests; test counts are FLOORS in `scripts/verify-baselines.env`, so growth prints a
+STALE notice and never fails. `desktop (463 passed)`, `reach (27 passed)`,
+`corpus-sweep (26105 records, 0 findings)`, `supersession-gate (116 objects, all clean)`,
+`site-dashboard-pi-gate (13 files vs 1612 declared-PI names, zero leaked)`,
+`site-public-status-pi-gate (31 files, zero leaked)`, `frontend-test (99/99)`,
+`class-dump (31/31 computing)`.
+
+**Fixed**, by collapsing the `if` into a let-chain (the shape `pcgen_desc.rs` already uses).
+Re-measured the way `verify.sh` itself counts —
+`grep '^warning:' clippy.log | grep -v 'generated [0-9]* warning' | wc -l` → **51**, back at the
+recorded ceiling, with this cycle's ~250 added test lines included in the lint.
+
+**Also added in the same fix pass, because run 1 exposed the gap:** the four tests that drive the
+CREDIT-MINTING path itself. The suite as first committed proved the EVALUATOR reproduces every
+fixture; it did not gate `run_monster_ability_bar_check`, the function that decides
+`cleared` vs. `failures` and therefore the function `apply_done_rung_stamps()` reads. A wrapper that
+routed everything to `cleared` would have been a gate that cannot fail — Decision 1(a)'s exact
+prohibition. Driven through the public `run_bar_check` against a scratch fixture root and the REAL
+resolved Bakekujira records:
+
+| test | asserts |
+|---|---|
+| `the_correct_expectation_clears_the_monster_ability_bar_check` | positive control — the real expectation clears |
+| `a_wrong_expected_save_dc_base_is_refused_by_the_bar_check` | base 23 vs. the real 22 → `failures`, `cleared` empty |
+| `a_wrong_expected_ability_is_refused_by_the_bar_check` | `CON` vs. the real `CHA` → refused |
+| `an_ability_whose_owner_does_not_resolve_is_refused_by_the_bar_check` | **the linked-ability rule on the engine side**: an orphan owner is refused, never credited on half 1 alone |
+
+plus two evaluator-refusal tables (`the_evaluator_reads_only_a_dc_slot_with_a_flat_base_plus_ability_argument`,
+`the_universal_monster_rule_rounds_the_half_hit_die_down_and_refuses_what_it_cannot_read`) covering
+the damage-term, `MDC`, named-variable, full-formula, `<ABBREV>SCORE` and missing-argument shapes.
+
+```
+cargo test --locked -j 4 --test derived_evaluator_fixture_check_monster_ability
+# -> test result: ok. 14 passed; 0 failed; 0 ignored   (was 8)
+```
+
+**Run 2** launched over the fixed tree, log at
+`artifacts/SD31-W15-MONSTER-ABILITY-001-verify-run2.log`, same runner script
+(`artifacts/run-verify-sd31-w15-monster-ability.sh`), exit code captured in the same shell statement
+that ran it and never through a pipe.
+
+### 7. What this cycle could NOT do
 
 * **The 23 `bestiary_4` rows whose two derivations disagree are not credited and not resolved.**
   Every one is `bestiary_4`; every other book agrees 100 %; the offsets are not uniform (−6 to +2),
@@ -27183,8 +27249,18 @@ unchanged.
   integer table and cannot carry "15 + the creature's Wisdom modifier"; closing it needs a
   `save_dc` DTO field, a frontend render, a reach-gate claim and a DoD-8 pass — outside this lane's
   stated write scope, and `monster_catalog.rs` is also held by the wave-15 seam-monster lane. Row
-  266. **The `done` credit does not rest on this**: these 92 were already `grounded` by a real
-  consumer-delta observation, and what the fixture adds is evaluator fidelity.
+  266. **The `done` credit does not rest on this**: these 92 were already `grounded` on a
+  REACHABILITY fact — the ability record resolves in the compiled chassis registry, which registers
+  only owner-having rows, and its description is served unconditionally to the Monster Catalog
+  screen — and what the fixture adds is evaluator fidelity. **Stated precisely because the repo's
+  own instrument disagrees with the comfortable reading**:
+  `monster_ability_desc_leaks_unresolved_argument()` returns `true` for all 92 (its first line is
+  `if !record.description_variables.is_empty() { return true }`) and the `text-complete` rung uses
+  it to REFUSE promotion for exactly this reason. These 92 reach `done` by a different rung, on
+  engine evidence, while a render defect the repo already tracks persists on the same rows. Whether
+  that is the intended reading of `derived` + `fixture-verified` -> `done` is a doctrine question,
+  not an engineering one; row 266 puts it to the operator with three answers and takes the
+  literal-table default rather than deciding it.
 * **The named-variable spelling (the other ~39 `BONUS:VAR|<name>|10+(HD/2)+<STAT>` rows) was not
   fixtured**, on purpose — see §3.
 * **DoD item 8 (on-screen driving) was not performed**, for the same reason: this cycle adds no new

@@ -548,3 +548,241 @@ fn a_wrong_universal_monster_rule_base_makes_the_bar_check_fail() {
         "dropping the `1/2` from the printed rule must not compare equal"
     );
 }
+
+// ---------------------------------------------------------------------------
+// The credit-minting path itself, driven end to end.
+//
+// The tests above prove the EVALUATOR reproduces every committed fixture. They
+// do not, by themselves, gate `run_monster_ability_bar_check` — the function
+// that decides `cleared` vs. `failures`, and therefore the function that
+// actually MINTS the `fixture-verified` stamp `apply_done_rung_stamps()`
+// consumes. A wrapper that routed everything to `cleared` would be a gate that
+// cannot fail, which Decision 1(a) forbids outright. These drive it through
+// the public `run_bar_check` against a scratch fixture root and REAL resolved
+// chassis records.
+// ---------------------------------------------------------------------------
+
+use codex::rules_core::derived_evaluator_fixture_check::run_bar_check;
+use codex::rules_core::rules_tables::monster_chassis::{
+    MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock,
+};
+
+/// A scratch `repo_root` carrying ONLY a custom `monster_ability_entries` row
+/// (plus the empty `entries` array the equipment loader requires).
+///
+/// The same property the `monster_entries` harness in
+/// `derived_evaluator_fixture_check.rs` relies on: the monster-ability bar
+/// check resolves BOTH records through the compiled
+/// `monster_chassis::MONSTER_BOOKS` static registry, never the filesystem, so
+/// `repo_root` controls only which FIXTURE file is read — the real Bakekujira
+/// ability row and its real owner stat block resolve regardless.
+struct ScratchFixtureRoot {
+    root: PathBuf,
+}
+
+impl ScratchFixtureRoot {
+    fn new(name: &str, body: &str) -> Self {
+        let root = std::env::temp_dir().join(format!(
+            "codex_monster_ability_bar_check_{name}_{}",
+            std::process::id()
+        ));
+        let _ = std::fs::remove_dir_all(&root);
+        let fixture_dir = root.join("tests/fixtures/rules_core");
+        std::fs::create_dir_all(&fixture_dir).unwrap();
+        std::fs::write(
+            fixture_dir.join("derived-evaluator-fixtures.json"),
+            format!(r#"{{"entries":[],"monster_ability_entries":[{body}]}}"#),
+        )
+        .unwrap();
+        ScratchFixtureRoot { root }
+    }
+}
+
+impl Drop for ScratchFixtureRoot {
+    fn drop(&mut self) {
+        let _ = std::fs::remove_dir_all(&self.root);
+    }
+}
+
+/// One scratch entry against the REAL `Bakekujira ~ Smashing Breach` record and
+/// its REAL owner, with the three values a caller may perturb.
+fn scratch_entry(owner: &str, expected_base: i32, expected_ability: &str) -> String {
+    format!(
+        r#"{{
+            "unit_id":"scratch:monster_ability:bakekujira_smashing_breach",
+            "book":"bestiary_4",
+            "record_key":"Bakekujira ~ Smashing Breach",
+            "upstream_lst":"scratch.lst",
+            "upstream_lst_sha256":"0",
+            "upstream_line":1,
+            "corpus_field":"DESC:scratch|CHA+22",
+            "desc_argument_index":1,
+            "desc_argument":"CHA+22",
+            "owner_monster_key":"{owner}",
+            "owner_upstream_lst":"scratch.lst",
+            "owner_upstream_line":1,
+            "owner_monster_class_token":"Undead:25",
+            "owner_racial_hd":25,
+            "universal_monster_rule_base":22,
+            "expected":{{"save_dc_base":{expected_base},"ability":"{expected_ability}"}}
+        }}"#
+    )
+}
+
+/// POSITIVE CONTROL: the real expectation clears, so the three refusals below
+/// fail because the asserted value is wrong, not because this harness is
+/// always red.
+#[test]
+fn the_correct_expectation_clears_the_monster_ability_bar_check() {
+    let scratch = ScratchFixtureRoot::new("correct", &scratch_entry("Bakekujira", 22, "CHA"));
+    let report = run_bar_check(&scratch.root);
+
+    assert!(report.failures.is_empty(), "failures: {:?}", report.failures);
+    assert_eq!(report.cleared.len(), 1, "cleared: {:?}", report.cleared);
+    assert!(report.cleared.contains("scratch:monster_ability:bakekujira_smashing_breach"));
+}
+
+/// MUTATION 1, through the minting path: a wrong expected base must land in
+/// `failures`, never `cleared`, so the unit can never be stamped.
+#[test]
+fn a_wrong_expected_save_dc_base_is_refused_by_the_bar_check() {
+    let scratch = ScratchFixtureRoot::new("wrong_base", &scratch_entry("Bakekujira", 23, "CHA"));
+    let report = run_bar_check(&scratch.root);
+
+    assert!(report.cleared.is_empty(), "cleared: {:?}", report.cleared);
+    assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
+    assert!(
+        report.failures.contains_key("scratch:monster_ability:bakekujira_smashing_breach")
+    );
+}
+
+/// MUTATION 2: a wrong expected ability is refused too — the ability half of
+/// the expectation is compared, not just the number.
+#[test]
+fn a_wrong_expected_ability_is_refused_by_the_bar_check() {
+    let scratch = ScratchFixtureRoot::new("wrong_ability", &scratch_entry("Bakekujira", 22, "CON"));
+    let report = run_bar_check(&scratch.root);
+
+    assert!(report.cleared.is_empty(), "cleared: {:?}", report.cleared);
+    assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
+}
+
+/// MUTATION 3 — **the linked-ability requirement, enforced on the engine side
+/// too, not only in the derivation script.** An ability whose owner resolves to
+/// no monster of its own book has no racial HD for the printed rule to apply
+/// to, so half 2 of the bar cannot be evaluated and the unit must be refused
+/// rather than credited on half 1 alone.
+#[test]
+fn an_ability_whose_owner_does_not_resolve_is_refused_by_the_bar_check() {
+    let scratch =
+        ScratchFixtureRoot::new("orphan", &scratch_entry("No Such Monster", 22, "CHA"));
+    let report = run_bar_check(&scratch.root);
+
+    assert!(report.cleared.is_empty(), "an orphan must never be credited");
+    assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
+    assert!(
+        report.failures["scratch:monster_ability:bakekujira_smashing_breach"]
+            .contains("does not resolve"),
+        "the refusal must name the unresolved owner: {:?}",
+        report.failures
+    );
+}
+
+// ---------------------------------------------------------------------------
+// The evaluator's own refusals, over synthetic records — one anchor per
+// corpus-observed shape it must NOT read as a save DC.
+// ---------------------------------------------------------------------------
+
+fn synthetic_ability(
+    description: &'static str,
+    variables: &'static [&'static str],
+) -> MonsterAbilityRecord {
+    MonsterAbilityRecord {
+        key: "Scratch ~ Ability",
+        name: "Ability",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some(description),
+        description_variables: variables,
+        source_page: None,
+        owners: &["Scratch"],
+        source_file: "scratch.lst",
+        source_line: 1,
+    }
+}
+
+#[test]
+fn the_evaluator_reads_only_a_dc_slot_with_a_flat_base_plus_ability_argument() {
+    // Both corpus-observed operand orders.
+    let a = synthetic_ability("succeed at a DC %1 Will save", &["15+WIS"]);
+    let dc = monster_ability_save_dc(&a).expect("a readable save DC");
+    assert_eq!((dc.base, dc.ability, dc.desc_argument_index), (15, "WIS", 1));
+
+    let b = synthetic_ability("a DC %2 Fortitude save", &["1d6", "CHA+22"]);
+    let dc = monster_ability_save_dc(&b).expect("a readable save DC");
+    assert_eq!((dc.base, dc.ability, dc.desc_argument_index), (22, "CHA", 2));
+
+    // A DAMAGE term is not a save DC: no `DC ` introduces the placeholder.
+    assert!(monster_ability_save_dc(&synthetic_ability("deals 3d8+%1 points", &["STR*1.5"]))
+        .is_none());
+    // `DC` must be a whole word.
+    assert!(monster_ability_save_dc(&synthetic_ability("the MDC %1 rating", &["15+WIS"])).is_none());
+    // A NAMED variable is not a flat base — this is the second sub-seam's
+    // shape, deliberately out of this seam's reach.
+    assert!(monster_ability_save_dc(&synthetic_ability("a DC %1 Reflex save", &["ClingDC"]))
+        .is_none());
+    // A full PCGen formula must NOT be mangled into `10 + (HD/2)+CON`.
+    assert!(
+        monster_ability_save_dc(&synthetic_ability("a DC %1 Fort save", &["10+(HD/2)+CON"]))
+            .is_none()
+    );
+    // A SCORE is not a modifier: PCGen spells the score `<ABBREV>SCORE`.
+    assert!(
+        monster_ability_save_dc(&synthetic_ability("a DC %1 Will save", &["10+CHASCORE"]))
+            .is_none()
+    );
+    // A slot with no argument at that index resolves to nothing.
+    assert!(monster_ability_save_dc(&synthetic_ability("a DC %3 Will save", &["15+WIS"])).is_none());
+}
+
+fn synthetic_monster(monster_class: Option<&'static str>) -> MonsterStatBlock {
+    MonsterStatBlock {
+        key: "Scratch",
+        name: "Scratch",
+        size: None,
+        speeds: &[],
+        race_type: None,
+        race_subtype: None,
+        challenge_rating: None,
+        monster_class,
+        source_page: None,
+        natural_attacks: &[],
+        stat_adjustments: &[],
+        has_spell_like_abilities: false,
+        sla_cl_token: None,
+        ability_keys: &[],
+        external_ability_refs: &[],
+        source_file: "scratch.lst",
+        source_line: 1,
+    }
+}
+
+#[test]
+fn the_universal_monster_rule_rounds_the_half_hit_die_down_and_refuses_what_it_cannot_read() {
+    assert_eq!(universal_monster_rule_save_dc_base(&synthetic_monster(Some("Undead:25"))), Some(22));
+    assert_eq!(
+        universal_monster_rule_save_dc_base(&synthetic_monster(Some("Construct:12"))),
+        Some(16)
+    );
+    // PF1 rounds the half hit die DOWN.
+    assert_eq!(universal_monster_rule_save_dc_base(&synthetic_monster(Some("Ooze:1"))), Some(10));
+    assert_eq!(universal_monster_rule_save_dc_base(&synthetic_monster(Some("Ooze:3"))), Some(11));
+    // Refuse, never guess.
+    assert_eq!(universal_monster_rule_save_dc_base(&synthetic_monster(None)), None);
+    assert_eq!(universal_monster_rule_save_dc_base(&synthetic_monster(Some("Outsider"))), None);
+    assert_eq!(
+        universal_monster_rule_save_dc_base(&synthetic_monster(Some("Outsider:many"))),
+        None
+    );
+}
