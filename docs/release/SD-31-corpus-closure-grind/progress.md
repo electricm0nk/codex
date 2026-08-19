@@ -29142,6 +29142,11 @@ PASS clippy (root:51 desktop:7 warnings, 0 errors — both ceilings UNCHANGED)
 PASS class-dump (31/31 computing)
 ```
 
+**Run 3** (`artifacts/SD31-W15-INTEGRATE-001-verify-run3.log`), on the FINAL committed tip — run 2
+predated the baseline re-derivation and the doc commits, and a floor is a thing the gate checks:
+**`RESULT: PASS`, `VERIFY_EXIT=0`, 34 of 34 stages, and NO baseline note of any kind.** That is the
+run that certifies what is on `tranche/11`.
+
 **The desktop crate was ALSO tested explicitly**, because it is a separate cargo workspace a root
 sweep misses: `cargo test --manifest-path apps/desktop/src-tauri/Cargo.toml --locked --no-fail-fast -j 8`
 → `test result: ok. 469 passed; 0 failed`.
@@ -29189,4 +29194,5 @@ three comment blocks are kept as history and only these values are live.
 Both scratch target dirs deleted (`/home/ubuntu/cargo-targets/sd31-w15-integrate` and
 `…-integrate-desktop`); the six lanes had already deleted theirs, so
 `/home/ubuntu/cargo-targets/` ends this wave empty. Gate logs committed at
-`artifacts/SD31-W15-INTEGRATE-001-verify-run1.log` (FAIL) and `-run2.log` (PASS).
+`artifacts/SD31-W15-INTEGRATE-001-verify-run1.log` (FAIL), `-run2.log` (PASS) and `-run3.log`
+(PASS, on the final tip).
