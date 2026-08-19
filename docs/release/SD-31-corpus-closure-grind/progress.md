@@ -27188,28 +27188,77 @@ Stamps now stand at 6,436 `literal-verified` + 1,310 `fixture-verified`.
 `site/status-data.json` and the 6 affected book-detail files — the change is confined to the seven
 books this cycle touched, which is itself a check that nothing else moved.
 
+### 6a. DoD item 8 — on-screen verification, driven, not inspected
+
+Run with the repeatable harness rather than by hand:
+`RUN_DESKTOP_AGENT=sd31-w15-companion` (never the banned `default`), its own
+`CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-w15-companion-desktop` (a second directory for a
+second source tree, per `AGENTS.md`), and only AFTER the full gate returned — the harness's own note
+forbids running it concurrently with `scripts/verify.sh`.
+
+**Both records PASS. Two, not one, because the seam has two behaviours and proving only the happy
+one would leave the interesting half unproven:**
+
+| record | what it proves | evidence |
+|---|---|---|
+| `Arctic Fox` (Ultimate Wilderness) | a parsed shape renders as the RULE | `artifacts/SD31-W15-COMPANION-001/item8/companion-arctic-fox.png` + `.verify.md` |
+| `Whiptail Centipede` (Ultimate Wilderness) | a REFUSED formula renders verbatim AND labelled | `artifacts/SD31-W15-COMPANION-001/item8/companion-whiptail-centipede-unparsed.png` + `.verify.md` |
+
+The rendered lines the harness extracted from the live webview's clipboard — not read off a
+screenshot, which cannot be machine-checked:
+
+```
+31:Extra damage on attack (corpus BONUS:WEAPONPROF DAMAGE tokens): Bite +1/2 Str modifier (minimum +0)
+34:Arctic FoxTiny Animal
+```
+```
+26:Companion (Whiptail Centipede (Giant))Medium Companion
+31:Extra damage on attack (corpus BONUS:WEAPONPROF DAMAGE tokens): Bite max(0,(STR/2))|PREVARLT:MasterLevel,7 (formula not interpreted)
+```
+
+That second line is the whole reason the refusal exists: PCGen gates this creature's half-Strength
+bonus on `PREVARLT:MasterLevel,7`, so the bonus is CONDITIONAL — the parser refuses it and the
+screen says so, instead of printing an unconditional rule. A seam that normalised the token away
+would have shown a player a bonus their companion does not yet have.
+
+**A FAILED artifact is deliberately left beside the passing pair.** The first attempt searched the
+full parenthesised record name `Companion (Whiptail Centipede (Giant))` and the harness refused it —
+*"still shows 196 rows — filter did not apply"* — so
+`companion-whiptail-centipede-unparsed.FAILED.verify.md` is committed alongside. Kept, because it is
+a true record of a harness limitation (`--record` is BOTH the search query and the rendered-text
+assertion, and a heavily parenthesised name does not survive as a query) and because the harness
+names FAILED artifacts precisely so they can never be mistaken for passing evidence. The re-run used
+the distinctive substring `Whiptail Centipede`, which is a weaker record assertion — said plainly
+here rather than glossed — while both `--expect` strings carry the actual evidence.
+
 ### 7. What this cycle could NOT do
 
 * **The other 126 held companion units are untouched and stay held**, honestly. 28 single-attack
   rows in the selected population state no damage token at all; 8 rows carry two or more;
   `bestiary:companion:tyrannosaurus_powerful_bite` states `max(0,STR)` and
   `bestiary_4:companion:companion_dinosaur_diplodocus_tail_lash` states the unclamped `STR/2` —
-  both refused rather than guessed. The remaining mass is the
-  `BONUS:SKILL|Climb,Swim|DEX-STR` shape (133 rows), `SPELLS:` caster-level/DC formulas, and
-  prose-stated scaling. Each is a real follow-on seam, not a deferral.
+  both refused rather than guessed. A further shape found while driving the screen and worth naming
+  because it is a genuine rules distinction rather than a parser gap: **11 creature rows carry a
+  PCGen `PRE…`-GATED damage bonus** (`max(0,(STR/2))|PREVARLT:MasterLevel,7` on Ultimate
+  Wilderness's Whiptail Centipede, `|PREVARLT:CompanionAdvancement,1` on Bestiary 6's
+  Quetzalcoatlus, `|PREVARLT:MasterLevel,4` on Bestiary 4's Stag). Those bonuses are CONDITIONAL,
+  the seam refuses them, and the screen prints the token verbatim and says the formula was not
+  interpreted — a conditional bonus rendered as an unconditional rule would be a wrong number on a
+  player's screen. Evaluating them needs a master-level input the catalog does not have.
+
+  Residual breakdown, replayed rather than assumed — **126 held**: `derived`+`grounded` 110,
+  `display`+`grounded` 14, `ambiguous`+`grounded` 2; by reason `bonus` 56, `prose_formula_segment`
+  33, `no_magnitude_token` 14, `spells` 11, `prose_expr` 10, `prose_scaling_phrase` 2; 73 are
+  ability rows and 53 are creature rows. The largest single remaining lever is
+  `BONUS:SKILL|Climb,Swim|DEX-STR` (133 rows corpus-wide). Each is a real follow-on seam, not a
+  deferral, and no unit left the denominator.
 * **The `companion` ABILITY rows are out of this seam.** `NaturalAttackDamageBonus` is a field of
   `CompanionRecord` and the bar resolves through `CompanionBook::companion_resolve`, which
   searches creatures. Four selected units live in an `*_abilities_*.lst`; the derivation script
   skips them by name and says so, rather than emitting entries that would read as unresolvable
   failures. Named follow-on.
-* **DoD item 8 (on-screen verification with the real driver) was NOT performed.** The new column
-  is proven to reach the wire by `every_transcribed_damage_bonus_reaches_the_wire` and
-  `a_half_strength_damage_bonus_reaches_the_screen_as_the_rule_it_states`, and to render by the
-  frontend's own `testADamageBonusPrintsTheRuleAndAnUnparsedOneSaysSo` — but that is a passing
-  test, which by construction cannot reach the "wired into a twin the sheet does not read" class
-  of defect. `companion` is not a newly-surfaced family here (the catalog has shipped since SD-29
-  Epic 7), so this is an added column on an existing surface rather than a new reach claim; it is
-  recorded as a shortfall regardless, not waived.
+* **DoD item 8 was PERFORMED and PASSED on two records** — see §6a. Nothing is owed on the
+  on-screen axis.
 
 ### 8. A finding outside this lane, recorded not acted on
 
@@ -27229,13 +27278,30 @@ statement (`./scripts/verify.sh > "$LOG" 2>&1; echo "VERIFY_EXIT=$?" >> "$LOG"`,
 pipe), own `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-w15-companion`, launched early per
 cycle-mechanics step 4a with the receipt written while it ran.
 
-**GATE RESULT: pending at the time this receipt was first written** — the run was launched at the
-`preflight-disk` stage and had reached `root-full` (the slow one, ~490 test binaries). Every stage
-up to that point PASSED, including `site-dashboard-check`, `site-public-status-check`, both
-`*-pi-gate`s (31 files scanned against 1,612 declared-PI names, zero leaked), `reachability-audit`
-(reachable ceiling 98.95 %) and `pi-sweep`. The result line below is filled in by this cycle's
-follow-up commit; a receipt that said "gate launched, log at `<path>`, exit code not yet obtained"
-is honest and resumable, and inferring one would not be.
+**GATE RESULT: `RESULT: PASS`, all 34 stages, `VERIFY_EXIT=0`.** (This paragraph replaces the
+"pending, exit code not yet obtained" text the receipt carried when it was first committed —
+recorded that way deliberately per cycle-mechanics step 4b rather than inferred.) Headline stages:
+`root-lib` 2059 passed · `root-full` 7069 passed across 568 suites, **all 531 `tests/*.rs` suites
+executed** · `desktop` 467 passed · `reach` 28 passed · `corpus-sweep` 26105 records examined, **0
+findings** · `supersession-gate` 116 objects, all clean · `frontend-test` 99/99 ·
+`frontend-typecheck` clean · `clippy` root:51 desktop:7, **0 errors and both ceilings unchanged** ·
+`class-dump` 31/31 computing · `reachability-audit` reachable ceiling 98.95 % · both PI gates clean
+(31 files scanned against 1,612 declared-PI names, zero leaked).
+
+Three baselines moved, in their own reviewable commit with the gate's verbatim staleness lines and a
+per-test itemisation of each move: `ROOT_LIB_TESTS` 2042 → 2059, `ROOT_FULL_TESTS` 7052 → 7069 (the
+same 17 tests — this cycle added no `tests/*.rs` file, which is why the two deltas are equal), and
+`DESKTOP_TESTS` 463 → 467. `ROOT_TEST_BINARIES`, `CORPUS_LITERAL_RECORDS`, `FRONTEND_TEST_FILES`,
+both clippy ceilings and `COMPUTED_CLASSES` are all unchanged and matched the gate's own output.
+
+**One incident against this cycle's own gate, recorded rather than hidden.** A comment-only
+clarification was written into `derived_evaluator_fixture_check.rs` while the background gate was
+mid-flight at `root-full` — which would have left the gate certifying a tree different from the one
+it started on, the "certifies the mixture" failure SD-29 recorded for shared checkouts, reproduced
+here by one agent against itself. Caught within two minutes by `git status --porcelain` against the
+launch commit, reverted with `git checkout --` on that one file before any rebuild could pick it up,
+and re-applied afterwards with `--only root-lib` (PASS, 2059) and `--only clippy` (PASS, root:51
+desktop:7) re-run to green. `retro.py incident`, recurrence key `edit-during-own-background-gate`.
 
 Component runs already captured directly:
 

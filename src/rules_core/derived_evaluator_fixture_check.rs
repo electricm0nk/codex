@@ -1632,6 +1632,17 @@ fn run_companion_bar_check(repo_root: &Path) -> BarCheckReport {
     let mut not_ingested: BTreeMap<String, String> = BTreeMap::new();
 
     for fixture in &fixtures {
+        // Joined on the INVENTORY's book id straight through, deliberately
+        // without `monster_registry_book`'s `bestiary` -> `beastiary` spelling
+        // map: no committed companion fixture names `bestiary` (its four
+        // candidate units were all skipped by the derivation -- three carry no
+        // damage token and one states the refused `max(0,STR)` shape), and
+        // adding an untested mapping for a population that does not exist
+        // would be a guess. If a later round DOES pin a `bestiary` companion,
+        // this lands in `not_ingested` and
+        // `run_companion_bar_check_clears_every_committed_companion_fixture`
+        // fails on its `not_ingested.is_empty()` assertion -- loudly, which is
+        // the right failure mode for a spelling this seam has never exercised.
         let Some(book) = companion_book(&fixture.book) else {
             not_ingested.insert(fixture.unit_id.clone(), fixture.book.clone());
             continue;
