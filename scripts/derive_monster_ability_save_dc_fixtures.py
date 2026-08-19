@@ -102,7 +102,18 @@ DC_SLOT = re.compile(r"\bDC\s+%(\d+)")
 
 TARGET_KIND = "monster_ability"
 TARGET_WIRING = "derived"
-TARGET_STATUS = "grounded"
+# BOTH statuses, and the second one is what makes this script IDEMPOTENT.
+# `apply_done_rung_stamps()` rewrites a covered unit's status from `grounded`
+# to `fixture-verified`, so a set containing only `grounded` selects the
+# target population on the FIRST run and the EMPTY SET on every run after --
+# and the write below replaces the array rather than merging, so a second run
+# would have silently erased all 92 committed rows and withdrawn their credit
+# at the next regen. Caught by the wave-15 adversarial review, which proved it
+# in a sandbox copy (`wrote 0 monster_ability_entries`). A unit's existing
+# stamp is never treated as EVIDENCE here -- every row is still re-derived
+# from the pinned oracle on every run; the stamp only says "this unit is in
+# the population", which is exactly what it meant before it was stamped.
+TARGET_STATUSES = {"grounded", "fixture-verified"}
 
 
 def pcgen_data_root():
@@ -228,7 +239,7 @@ def main():
         u for u in inventory["units"]
         if u.get("kind") == TARGET_KIND
         and u.get("wiring_class") == TARGET_WIRING
-        and u.get("status") == TARGET_STATUS
+        and u.get("status") in TARGET_STATUSES
     ]
 
     buckets = collections.Counter()

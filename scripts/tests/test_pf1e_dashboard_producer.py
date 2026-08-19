@@ -363,5 +363,97 @@ class ParseLstFirstFieldPiRedactionTest(unittest.TestCase):
         self.assertEqual(len(names), 2, "the declared-PI row must not be dropped")
 
 
+class PublishableDocumentPathTests(unittest.TestCase):
+    """`unit_index.source_document` must be CHECKOUT-INDEPENDENT.
+
+    WHY (SD31-W15-INTEGRATE-001, wave-15 adversarial finding, confirmed twice
+    by two independent reviewers): the published feeds
+    (`site/dashboard/PF1e-dashboard.json`, `site/dashboard/units/index.json`)
+    recorded the ABSOLUTE filesystem path of whichever checkout published
+    them. Two consequences, both real and both observed this wave:
+
+      1. `verify.sh`'s `site-dashboard-check` compares the committed feed
+         against a freshly generated one after a scrub that strips only
+         timestamps. An absolute path is the ONE remaining leaf that differs
+         between checkouts, so the stage reported STALE for every worktree
+         other than the one that published -- a gate failing for a reason
+         entirely unrelated to what it guards, which is how a gate gets
+         baselined away (the mirror image of Decision 1(a)).
+      2. A developer's home directory plus an ephemeral worktree id was
+         committed into `site/`, the directory published to Cloudflare Pages.
+
+    The fix is to record the document's path relative to the enclosing git
+    checkout. Deliberately NOT relative to `DEFAULT_REPO_ROOT`: that is an
+    env-var default pointing at the shared checkout, so it would still be
+    wrong from a worktree. The enclosing checkout is found by walking up for
+    `.git` (a directory in a normal clone, a FILE in a linked worktree -- both
+    must work, and a worktree is precisely the case that broke).
+    """
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self._tmp.cleanup)
+        self.root = pathlib.Path(self._tmp.name)
+
+    def _doc(self, marker_is_file: bool) -> str:
+        (self.root / "docs").mkdir(parents=True, exist_ok=True)
+        doc = self.root / "docs" / "work-inventory.json"
+        doc.write_text("{}", encoding="utf-8")
+        if marker_is_file:
+            (self.root / ".git").write_text("gitdir: /somewhere/else\n", encoding="utf-8")
+        else:
+            (self.root / ".git").mkdir()
+        return str(doc)
+
+    def test_path_inside_a_normal_clone_is_repo_relative(self):
+        self.assertEqual(
+            producer.publishable_document_path(self._doc(marker_is_file=False)),
+            "docs/work-inventory.json",
+        )
+
+    def test_path_inside_a_linked_worktree_is_repo_relative(self):
+        """A linked worktree's `.git` is a FILE, not a directory. This is the
+        case that produced the finding: all six wave-15 lanes ran in linked
+        worktrees."""
+        self.assertEqual(
+            producer.publishable_document_path(self._doc(marker_is_file=True)),
+            "docs/work-inventory.json",
+        )
+
+    def test_two_different_checkouts_yield_the_SAME_published_value(self):
+        """The whole point: the value must not encode which checkout ran."""
+        a = pathlib.Path(self._tmp.name) / "checkout-a"
+        b = pathlib.Path(self._tmp.name) / "checkout-b"
+        vals = []
+        for root in (a, b):
+            (root / "docs").mkdir(parents=True)
+            (root / ".git").mkdir()
+            doc = root / "docs" / "work-inventory.json"
+            doc.write_text("{}", encoding="utf-8")
+            vals.append(producer.publishable_document_path(str(doc)))
+        self.assertEqual(vals[0], vals[1])
+        self.assertEqual(vals[0], "docs/work-inventory.json")
+
+    def test_a_document_outside_any_checkout_keeps_its_absolute_path(self):
+        """Degrade VISIBLY, not silently: a doc that is not in a checkout has
+        no repo-relative name, and inventing a bare basename would make two
+        genuinely different documents compare equal."""
+        loose = self.root / "loose.json"
+        loose.write_text("{}", encoding="utf-8")
+        self.assertEqual(
+            producer.publishable_document_path(str(loose)), os.path.realpath(str(loose))
+        )
+
+    def test_no_published_index_field_carries_an_absolute_path(self):
+        """End-to-end over the real emitter, not just the helper."""
+        doc = self._doc(marker_is_file=False)
+        with open(doc, "w", encoding="utf-8") as f:
+            json.dump({"generated_at": "2026-08-19T00:00:00Z", "units": []}, f)
+        shard_dir = self.root / "shards"
+        index = producer.build_unit_shards(doc_path=doc, shard_dir=str(shard_dir))
+        self.assertEqual(index.get("source_document"), "docs/work-inventory.json")
+        self.assertNotIn(str(self.root), json.dumps(index))
+
+
 if __name__ == "__main__":
     unittest.main()

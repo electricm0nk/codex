@@ -28052,7 +28052,22 @@ cargo test --locked -j 4 --test derived_evaluator_fixture_check_monster_ability
 # MUTATION 2, the printed rule (half 2 — the half that makes half 1 non-circular)
 Some(10 + hd / 2)  ->  Some(10 + hd / 3)
 # -> test result: FAILED. 6 passed; 2 failed   "88 mismatch(es)"
-#    (the 4 survivors are owners with racial HD <= 2, where hd/2 == hd/3)
+#    CORRECTED BY SD31-W15-INTEGRATE-001 (wave-15 adversarial review, confirmed
+#    finding): the parenthetical above read "the 4 survivors are owners with
+#    racial HD <= 2, where hd/2 == hd/3". That is ARITHMETICALLY WRONG in both
+#    directions. Integer division makes hd/2 == hd/3 true for HD 0, 1 and 3 --
+#    NOT 2 -- so the stated rule both misnames the survivors and predicts more
+#    of them than were observed. The reviewer re-ran the mutation and read the
+#    survivors off the committed fixture's own owner_monster_class_token:
+#      gremlin_grimple_putrid_vomit    (Fey:1)
+#      seps_juvenile_acid_blood        (Magical Beast:3)
+#      soulsliver_death_throes         (Outsider (Fort/Ref):3)
+#      weedwhip_poison                 (Plant:3)
+#    i.e. HD 1, 3, 3, 3. The 7 rows at HD 2 all DIE under the mutation.
+#    A wrong figure inside a mutation proof is the worst place for one, and it
+#    is corrected here rather than left standing. The mutation itself is real
+#    and its verdict is unchanged; a STRONGER mutation (10 + hd/2 -> 11 + hd/2)
+#    kills all 92, so no unit of the 92 is inert. `retro.py correction` emitted.
 
 # RESTORED
 # -> test result: ok. 8 passed; 0 failed; 0 ignored

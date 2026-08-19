@@ -2872,6 +2872,46 @@ WORK_INVENTORY_FULL_DOC = os.environ.get(
     "PF1E_WORK_INVENTORY_DOC",
     os.path.expanduser("~/workspace/repos/codex/docs/work-inventory.json"),
 )
+
+
+def publishable_document_path(doc_path: str) -> str:
+    """The value a PUBLISHED feed may record for a source document.
+
+    An absolute filesystem path must never reach `site/` (SD31-W15-INTEGRATE-001,
+    two independent adversarial reviewers, wave 15). It had two live effects:
+
+      * `verify.sh`'s `site-dashboard-check` regenerates the feed and compares it
+        to the committed one after a scrub that strips only timestamps. The
+        absolute path was then the ONLY differing leaf in a 1.3 MB payload, so
+        the stage reported STALE from every checkout except the one that
+        published -- including every linked worktree, CI, and the shared tree
+        after a worktree was cleaned up. A gate that fails for a reason
+        unrelated to what it guards is a gate on its way to being baselined
+        away, which is the mirror image of the Decision 1(a) hazard.
+      * The path (a home directory plus an ephemeral worktree id) was committed
+        into `site/`, which `deploy-site.yml` publishes to Cloudflare Pages.
+
+    So: record the path RELATIVE TO THE ENCLOSING GIT CHECKOUT. The checkout is
+    found by walking up for a `.git` entry -- a directory in a normal clone and
+    a FILE in a linked worktree, and the worktree case is precisely the one that
+    broke, so both are handled. `DEFAULT_REPO_ROOT` is deliberately NOT used as
+    the base: it is an env default pointing at the shared checkout, so it would
+    still produce a checkout-specific answer from a worktree.
+
+    A document outside any checkout keeps its resolved absolute path. That
+    degrades VISIBLY rather than silently: collapsing it to a bare basename
+    would make two genuinely different documents compare equal, which is the
+    cache-identity confusion `compute_wiring_class_summary()` records above.
+    """
+    resolved = os.path.realpath(doc_path)
+    parent = os.path.dirname(resolved)
+    while True:
+        if os.path.exists(os.path.join(parent, ".git")):
+            return os.path.relpath(resolved, parent).replace(os.sep, "/")
+        nxt = os.path.dirname(parent)
+        if nxt == parent:
+            return resolved
+        parent = nxt
 PROVEN_STATUSES = ("grounded", "text-complete")
 
 # ---------------------------------------------------------------------------
@@ -3997,7 +4037,8 @@ def compute_wiring_class_summary(doc_path: str = WORK_INVENTORY_FULL_DOC,
             # for now, not just a schema and a timestamp.
             if (cached.get("available")
                     and cached.get("schema") == WIRING_SUMMARY_SCHEMA
-                    and cached.get("source_document") == doc_path):
+                    and cached.get("source_document")
+                        == publishable_document_path(doc_path)):
                 return cached
     except (OSError, json.JSONDecodeError):
         pass
@@ -4129,7 +4170,7 @@ def compute_wiring_class_summary(doc_path: str = WORK_INVENTORY_FULL_DOC,
         "available": True,
         "schema": WIRING_SUMMARY_SCHEMA,
         "generated_at": doc.get("generated_at"),
-        "source_document": doc_path,
+        "source_document": publishable_document_path(doc_path),
         "wiring_class_values": list(WIRING_CLASS_VALUES),
         "corpus_wide": corpus_wide,
         "by_book": by_book,
@@ -4689,7 +4730,7 @@ def build_unit_shards(doc_path: str = WORK_INVENTORY_FULL_DOC,
         "available": bool(kinds),
         "schema": SHARD_SCHEMA,
         "generated_at": doc.get("generated_at"),
-        "source_document": doc_path,
+        "source_document": publishable_document_path(doc_path),
         "shard_base": "units/",
         "fields": list(UNIT_SHARD_FIELDS),
         "total_units": sum(k["units"] for k in kinds.values()),
