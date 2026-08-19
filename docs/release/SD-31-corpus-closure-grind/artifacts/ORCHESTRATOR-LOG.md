@@ -823,3 +823,52 @@ criteria and owed as wave-16 cards. `core_essentials` therefore still carries it
 units and must still NOT be added to `EXCLUDED_BOOKS`.
 
 | 15 | 2026-08-19 | wave `sd31-w15` (lanes: `SD31-W15-MONSTER-SLA-001`, `SD31-W15-MONSTER-ABILITY-001`, `SD31-W15-COMPANION-001`, `SD31-W15-SPELL-CF-001`, `SD31-W15-EQUIPMOD-001..006`, `SD31-W15-RACETRAIT-001`; three adversarial reviews returning four lane verdicts; integration `sd31-w15-integrate`) | Three NEW derived-evaluator seams (monster spell-like-ability save DC → spell level; monster_ability Universal Monster Rule save-DC base; companion single-natural-attack 1½× Strength), taking the `derived` done rung from five families to eight; the `kind=spell` RANGE generator un-blinded from a LEXICOGRAPHIC `wiring_class_reason` tie-break that had hidden 151 units; `probe_equipment_effect_wiring` reading `data/corpus/*/equipment/` instead of a hand-maintained 13-book-short list, and the equipment probe consulted ABOVE the `text-complete` rung; the character-creation chassis now NAMING the record whose ability magnitude it read; this integration cycle merging all six lanes (none GAMED), fixing four CONFIRMED findings plus one the merge itself created, logging six, folding in operator rulings §16/§17, running the sanctioned guarded regen, publishing the feeds and running the wave's full gate twice | Board: **12,748/38,521 (33.09 %), +471 — the package's largest single-wave gain**, and the first with movement in ONE direction only: zero demotions, zero withdrawals, every unit traced to a named `evidence` token. Fixture coverage 1,276 → **1,699 units over 2,364 rows, 0 failed**. Stamps 7,629 → 8,052, zero lost; the stamp guard proven able to fire (a bare regen exits 1 refusing to drop 8,052 stamps). Gate run 1 `FAIL`/`VERIFY_EXIT=1` on a merge-created compile break invisible to both lanes; run 2 `PASS`/`VERIFY_EXIT=0`, 34/34, root-full 7,115 across 573 suites, desktop 469 (tested explicitly as a separate workspace), both PI gates zero leaked vs 1,612 declared-PI names, clippy ceilings unchanged. Three of four new fixture generators would have erased their own rows on re-run — fixed, and all eight families now re-derive byte-identically. `site-dashboard-check` no longer path-pinned to one checkout. Denominator, race attribution, the Supersession Register (116 objects clean, PROPOSED-NOT-APPLIED) and the empty Structural Exclusion Register all untouched. See `progress.md` cycle `SD31-W15-INTEGRATE-001` for `VERIFY_EXIT` and the full stage summary. |
+| 16 | 2026-08-19 | wave `sd31-w16` (lanes: `ruling-16-ce` core_essentials deletion execution, `ruling-17-dupes` duplicate-chooser display-name dedup, `seam-monster` investigation (banked 0), `seam-monster-ability` formula sub-seam, `seam-companion-spell` companion Climb/Swim seam, `equipment-modifier` armor-enhancement probe widening; three adversarial reviews returning six lane verdicts; integration `sd31-w16-integrate`) | Executed BOTH standing operator rulings against re-derived figures: §16 (`core_essentials` residual 128→0, `decisions.md §9` discharged, 12 re-attributed + 116 deleted) and §17 (33 confirmed duplicate-chooser units removed, not the 180-unit heuristic bound, plus the drill-down disambiguator); two new derived-evaluator seams (`companion` Climb/Swim skill-ability-diff, `monster_ability` full-formula save-DC); `equipment_modifier`'s armor-enhancement probe widened past a standalone-resolution gap; this integration cycle merging all six lanes (none GAMED), fixing 3 CONFIRMED adversarial-review findings plus 1 the merge itself created (caught by `root-full`, not any lane), logging 4 more, running the sanctioned guarded regen, publishing the feeds with a forced-fresh cache, and running the wave's full gate twice | Board: **12,864/38,372 (33.52 %), +116 done, -149 denominator — the first wave with denominator movement since the freeze, both changes operator-directed deletions of content ruled never in scope, never a cost exclusion.** Every unit of both movements traced to a named cause in both directions (progress.md §2/§3): -116 net ruling §16, -33 ruling §17, +65 equipment_modifier armor-enhancement widening, +45 companion Climb/Swim seam, +6 monster_ability formula seam. `core_essentials` confirmed absent from the published book list and from `docs/work-inventory.json`'s `books` map entirely. Fixture coverage 1,699→**1,750 units over 2,504 rows, 0 failed**. Stamps 8,052→**8,103**. A gate hole the companion lane's own bar check carried (arithmetic-only, never checking WHICH abilities) was found by review and fixed at integration, not left open. Gate run 1 `FAIL`/`VERIFY_EXIT=1` on a merge-created consequence invisible to any lane (ruling §16 correctly drove `core_essentials` to zero contribution, which a pre-existing roster-completeness test had never anticipated for a `shared_library`-scoped book); run 2 `PASS`/`VERIFY_EXIT=0`, 34/34 stages (root-lib 2084, root-full 7144/573 suites, desktop 470, reach 29, corpus-sweep 0 findings, clippy root:51/desktop:7 warnings/0 errors, class-dump 31/31). Race attribution, the Supersession Register (PROPOSED-NOT-APPLIED), and the empty Structural Exclusion Register all untouched. See `progress.md` cycle `SD31-W16-INTEGRATE-001` for the full stage summary. |
+## Board after wave 16 (`SD31-W16-INTEGRATE-001`, 2026-08-19)
+
+Re-derived live with the producer's own `doneness_verdict()` over the committed
+`docs/work-inventory.json` (`generated_at` 2026-08-19T18:06:59Z) — the same command as every prior
+wave's table, never transcribed from a lane's own receipt. Oracle pin
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`, checked first per loop-instruction
+override 8. **Denominator moved for the first time since the freeze — 38,521 → 38,372 — from two
+operator-directed deletions (rulings §16/§17), reported separately from doneness movement in
+`progress.md` `SD31-W16-INTEGRATE-001` §2/§3.**
+
+| kind | total (wave 15) | total (wave 16) | done (wave 15) | done (wave 16) | delta |
+|---|---:|---:|---:|---:|---:|
+| class | 185 | 185 | 27 (14.5946%) | 27 (14.5946%) | +0 |
+| class_feature | 15,472 | 15,439 | 134 (0.8661%) | 134 (0.8681%) | +0 |
+| companion | 1,696 | 1,696 | 801 (47.2288%) | 846 (49.8821%) | **+45** |
+| equipment | 6,208 | 6,208 | 5,311 (85.5509%) | 5,311 (85.5509%) | +0 |
+| equipment_modifier | 1,580 | 1,580 | 438 (27.7215%) | 503 (31.8354%) | **+65** |
+| feat | 2,610 | 2,610 | 1,459 (55.9004%) | 1,459 (55.9004%) | +0 |
+| monster | 1,270 | 1,270 | 973 (76.6142%) | 973 (76.6142%) | +0 |
+| monster_ability | 2,951 | 2,942 | 1,548 (52.4568%) | 1,554 (52.8212%) | **+6** |
+| race | 103 | 95 | 34 (33.0097%) | 34 (35.7895%) | +0 |
+| race_trait | 3,603 | 3,504 | 520 (14.4324%) | 520 (14.8402%) | +0 |
+| spell | 2,843 | 2,843 | 1,503 (52.8667%) | 1,503 (52.8667%) | +0 |
+| **TOTAL** | **38,521** | **38,372** | **12,748 (33.0936%)** | **12,864 (33.5244%)** | **+116** |
+
+`race`/`race_trait`/`class_feature`/`monster_ability` total-column drops are the denominator
+change (ruling §16's 128→12 net + ruling §17's -33), not a doneness loss — no `done` unit appears
+in either deletion. `companion`/`equipment_modifier`/`monster_ability` done-column gains are three
+independent seams (see the row-16 entry above and `progress.md` §3).
+
+### What wave 16 changed in the architecture, not just in the counts
+
+* **`decisions.md §9`'s condition is discharged.** `core_essentials` no longer appears as a key in
+  `docs/work-inventory.json`'s `books` map at all — the label that has been tracked and reported
+  since SD-31's very first wave reached zero and stayed there, confirmed by a production-path
+  ceiling assertion (`CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING`), not just by a test.
+* **The denominator is no longer frozen in fact, only in principle** (Decision 6's cost-exclusion
+  ban still holds absolutely): both changes this wave were operator-directed deletions of content
+  ruled never to have existed in scope, executed against re-derived per-row evidence rather than
+  the ruling's own upper-bound estimates in both cases (12/1 vs. ~41 rescued for §16; 33 vs. 180 for
+  §17) — a smaller, more honestly-derived number in both directions.
+* **A merge-created consequence (not a lane defect) was caught by the gate, exactly as the process
+  is designed to catch it.** `every_corpus_book_appears_in_the_inventory` had never been wrong
+  before this wave — no lane could have caught it in isolation, since it only fires once
+  `core_essentials`'s residual reaches true zero at a fully-merged tip. Fixed by exempting
+  `shared_library`-scoped books (of which `core_essentials` is the only one) from the
+  roster-completeness check, on the ground that zero self-owned units is that scope's intended
+  success state, not an omission.

@@ -240,23 +240,26 @@ FUTURE_STATE_BOOKS = [
     # is now stale -- most of what was unique to `core_essentials` was a
     # mislabelled true-book attribution, not genuinely core_essentials-only
     # content; see `work_inventory_panel()`'s own doc comment. The row stays
-    # here because a genuine residual remains -- **129** as of
-    # `SD31-D9-DISSOLVE-001` (2026-08-16, `decisions.md §9`'s
-    # re-attribute-first-drop-the-label-second sequencing), down from 644
-    # (`SD31-ATTRIB-002`) after that cycle's `resolve_true_book_for_core_essentials`
-    # became source-line-aware (`ce_abilities_race.lst`'s 11 mid-file
-    # `SOURCELONG:` directives, previously only checked over a file's first
-    # 5 lines) and moved 516 of the previously-unresolved units to their
-    # real book. The remaining 129 are the file's own 23 pre-directive rows
-    # plus 6 `SOURCELONG:Universal Rules` rows (PCGen's own internal
-    # designation, not a Paizo book) and the 8 races
-    # (`android`/`aquatic_elf`/`gathlain`/`ghoran`/`lashunta`/
-    # `monkey_goblin`/`syrinx`/`triaxian`) two or more in-scope books each
-    # natively declare -- genuinely ambiguous, not a resolvable defect. The
-    # attribution contract gate (`core_essentials_book_attribution_tests::
+    # here for the administrative/roadmap panel, but as of operator ruling
+    # §16 (2026-08-19, wave 16) the residual is **0**: every remaining
+    # `core_essentials`-labelled unit was either re-attributed to its true
+    # book (12, Ghoran's own `ultimate_wilderness` declaration) or deleted
+    # outright as a hallucination not found in print (116 -- the file's own
+    # 23 pre-directive rows, 6 `SOURCELONG:Universal Rules` rows, Ghoran's
+    # held-back duplicate `race` chassis row, and 86 units across the 7
+    # remaining ambiguous/unattributable races). `decisions.md §9`'s
+    # condition is discharged: `core_essentials` no longer appears as a key
+    # in `docs/work-inventory.json`'s `books` map at all. This row is kept
+    # here, at 0, as the historical record of the label's dissolution
+    # (1,610 -> 644 -> 129 -> 128 -> 0) rather than deleted, so a future
+    # regression that reintroduces the label is visible against a known-zero
+    # baseline. The attribution contract gate
+    # (`core_essentials_book_attribution_tests::
     # core_essentials_real_corpus_residual_never_grows_past_its_pinned_baseline`,
-    # `v06_work_inventory.rs`) ratchets this figure: it fails if the real
-    # corpus's residual ever grows past 129.)
+    # `v06_work_inventory.rs`) and `main()`'s own
+    # `CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING` assertion both still ratchet
+    # the pre-deletion residual at 117, so a regression is caught before this
+    # panel would ever need to report a non-zero figure again.)
     {"id": "core_essentials", "title": "Core Essentials", "channel": ""},
     {"id": "advanced_race_guide", "title": "Advanced Race Guide", "channel": "SD-27"},
     {"id": "pathfinder_unchained", "title": "Pathfinder Unchained", "channel": "SD-27"},
@@ -1043,13 +1046,18 @@ def work_inventory_panel(inventory: dict | None, wiring: dict | None = None) -> 
                 "core_essentials's own base definitions, not a duplicate of them. "
                 "As of SD31-ATTRIB-001 (2026-08-16) core_essentials-sourced units "
                 "attribute to their TRUE book wherever provable one record deep; "
-                "its own residual -- content no single in-scope book can be shown "
-                "to own -- is the `core_essentials` row still shown below, now 128 "
-                "units, down from 1,610 (SD31-D9-DISSOLVE-001, 2026-08-16, fixed the "
-                "516-unit re-attributable population OPEN-ISSUES.md row 94 had left "
-                "open). See work_inventory_panel()'s own doc comment for the full "
-                "derivation and decisions.md §9/§10's race-attribution work this "
-                "same cycle.)"
+                "operator ruling §16 (2026-08-19, wave 16) then ordered every "
+                "remaining residual -- content no single in-scope book could be "
+                "shown to own -- DELETED as a hallucination until it appears in "
+                "print, rather than merely flagged. The `core_essentials` row is "
+                "now 0 units, down from 1,610 (SD31-D9-DISSOLVE-001, 2026-08-16, "
+                "fixed the 516-unit re-attributable population OPEN-ISSUES.md row "
+                "94 had left open) then 128 (SD31-ATTRIB-001) then 0 (ruling §16, "
+                "wave 16 -- 12 re-attributed to their true book, 116 deleted), "
+                "which discharges decisions.md §9's condition: the label no "
+                "longer appears in `docs/work-inventory.json.books` at all. See "
+                "work_inventory_panel()'s own doc comment for the full derivation "
+                "and decisions.md §9/§10/§16's race-attribution work.)"
             ),
         },
         "full_document": "docs/work-inventory.json",

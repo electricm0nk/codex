@@ -787,11 +787,24 @@ fn every_corpus_book_appears_in_the_inventory() {
         .iter()
         .filter_map(|u| u["book"].as_str().map(|s| s.to_string()))
         .collect();
+    // `shared_library` is exempted alongside `out_of_scope` as of `decisions.md
+    // §16` (operator ruling 2026-08-19, executed wave 16): a shared-library
+    // packaging directory (`core_essentials`) exists PRECISELY so its content
+    // attributes to the real books that include it, or -- for content no real
+    // book can be shown to own -- is deleted outright as a hallucination not
+    // found in print. Zero units contributed under its OWN name is that
+    // ruling's success condition, not a book silently skipped: contrast
+    // `out_of_scope`, which is skipped by operator directive and never
+    // expected to contribute regardless. Before wave 16, `core_essentials`
+    // legitimately still held units (a genuine, evidenced residual) and so
+    // was correctly caught by the stricter check; after wave 16 deleted the
+    // residual to zero, keeping the old check would fail on the ruling's own
+    // discharge of `decisions.md §9`'s condition.
     let unmeasured: Vec<String> = doc["books"]
         .as_array()
         .expect("books array")
         .iter()
-        .filter(|b| b["scope"].as_str() != Some("out_of_scope"))
+        .filter(|b| !matches!(b["scope"].as_str(), Some("out_of_scope") | Some("shared_library")))
         .filter_map(|b| b["id"].as_str().map(|s| s.to_string()))
         .filter(|id| !books_with_units.contains(id))
         .collect();

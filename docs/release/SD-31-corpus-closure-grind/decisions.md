@@ -1441,6 +1441,63 @@ absent from `BOOK_TITLES` and from the published book list.
 **Authority:** operator ruling, 2026-08-19, verbatim above and in full at
 `artifacts/OPERATOR-RULINGS-2026-08-19.md`.
 
+### EXECUTED, wave 16 — `core_essentials` residual is now 0; `§9`'s condition discharged
+
+**Every group re-derived per row against the pinned oracle first, rather than trusting this
+section's own estimate** (per this section's own "execute against re-derived figures, not these"
+instruction). Ghoran's 13 units split further than the estimate above: its 12 `race_trait` rows
+resolve via a new `RACE_TRUE_BOOK` entry to `ultimate_wilderness` (its own native declaration in
+`uw_races.lst`), but its 1 `race`-kind chassis row is deliberately WITHHELD rather than
+re-attributed — `ultimate_wilderness:race:ghoran` already exists natively from that same file, so
+re-attributing the `core_essentials` copy too would have silently minted a second unit for one game
+object. `ce_abilities_race.lst`'s 29 rows were read line-by-line against the file's own
+`SOURCELONG:` directive spans: none fall inside a real Bestiary/Bestiary-N directive's span — 23
+precede the file's first directive entirely (a bucket this section's own two-row table never
+named), 6 fall under `SOURCELONG:Universal Rules` (already correctly refused above) — so all 29 are
+deleted, not the ~28-rescued/~1-deleted split estimated above. The other 7 races (Android, Aquatic
+Elf, Gathlain, Lashunta, Monkey Goblin, Syrinx, Triaxian; 86 units) were re-confirmed corpus-wide to
+have no race declaration outside `core_essentials`, matching the estimate exactly, and deleted.
+
+**Net: 12 rescued, 116 deleted** (not the ~41 rescued/~87 deleted estimated above — see above for
+exactly why each group's real count diverged). `python3 -c "import json; print(sum(1 for u in
+json.load(open('docs/work-inventory.json'))['units'] if u.get('book')=='core_essentials'))"` →
+**0**. `core_essentials` no longer appears as a key in `docs/work-inventory.json`'s `books` map at
+all — **`§9`'s condition is discharged.** None of the 128 was `done`-capable (128/128
+`not-ingested`), so zero credit moved; the board denominator dropped 38,521 → 38,405 from this
+decision alone (a further -33 from `§17`'s own execution, below, brings the wave-16 integration tip
+to 38,372 — the two changes are independent and must be read separately, never summed as one
+"denominator fix").
+
+**A gap in this section's own worked table, found by wave-16 adversarial review and disclosed
+rather than silently absorbed:** the 23 pre-directive `ce_abilities_race.lst` rows deleted above
+were never named as their own bucket in this section's two-row RE-ATTRIBUTE/DELETE table — they
+were deleted under the operator's broader verbatim principle ("for any unit ... you cannot find in
+printed books ... I consider them hallucinations until they appear in print"), not under either
+named bucket. Several of these 23 carry real printed-rule prose (Darkvision, Blindsense, Tremorsense
+and similar vision-mode traits; a "Default True Dragon Abilities" block) with no representation
+under any other book in the ledger. Logged as `OPEN-ISSUES.md` row 299 for the operator's awareness
+rather than assumed either way; not reverted, since the verbatim principle is the higher-precedence
+authority and the two-row table was itself only ever an estimate this section already said to
+re-derive.
+
+**Production-path hardening added the same cycle (adversarial review finding):**
+`is_core_essentials_residual` (the predicate `main()`'s classify loop consults to decide what to
+delete) was found unbounded — a widened predicate left the full test suite green while a real
+`main()` run would silently delete thousands of unrelated units, because the existing pinned-baseline
+test only ever walks `core_essentials`'s own book directory and cannot see over-broad deletion of
+units enumerated from elsewhere. `CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING = 117` (matching the
+existing test's own pin) is now asserted in `main()` itself, on every real regen, not just
+`cargo test`.
+
+**Where it landed:** `src/bin/v06_work_inventory.rs` (`is_core_essentials_residual`, the
+`RACE_CHASSIS_ALREADY_NATIVE` carve-out for Ghoran, `CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING`).
+Regenerated via the guarded pipeline (`corpus_literal_sweep` → `derived_evaluator_fixture_check` →
+`v06_work_inventory`), never a hand-edit of the committed JSON. Full derivation, the exact
+per-group counts, and the mutation proof are in `OPEN-ISSUES.md` row 299 and this wave's
+`progress.md` receipt.
+
+**Authority (execution):** this decision's own ruling text, quoted verbatim above, executed wave 16.
+
 ## Decision 17 — Duplicate display names: a drill-down defect, with one real double-counted subset (operator ruling 2026-08-19)
 
 **Operator, verbatim:** *"I was looking at the dashboard drill down and noticed some things listed

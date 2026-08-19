@@ -20,1027 +20,1198 @@
           "name": "Armored Casting",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Armored Casting"
         },
         {
           "name": "Artifice",
           "doneness": "not-started",
           "type_facet": "Domain.HKDomain",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Artifice"
         },
         {
           "name": "Blood Mantis Form",
           "doneness": "not-started",
           "type_facet": "Supernatural.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Blood Mantis Form"
         },
         {
           "name": "Bonus to AC",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.AndorenFalconry",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Bonus to AC"
         },
         {
           "name": "Bonus to Attack",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.AndorenFalconry",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Bonus to Attack"
         },
         {
           "name": "Bonus to Will Saves",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.AndorenFalconry",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Bonus to Will Saves"
         },
         {
           "name": "Brand",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike.HKAbility.HKOPyre",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Brand"
         },
         {
           "name": "Censor",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural.HKAbility.HKORack",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Censor"
         },
         {
           "name": "Crusader",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Crusader"
         },
         {
           "name": "Damnation ~ Chaotic",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural.LowFinal",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Damnation ~ Chaotic"
         },
         {
           "name": "Damnation ~ Evil",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural.LowFinal",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Damnation ~ Evil"
         },
         {
           "name": "Dark Tapestry Subdomain",
           "doneness": "not-started",
           "type_facet": "InquisitorDomain",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Dark Tapestry Subdomain"
         },
         {
           "name": "Death Mantis Form",
           "doneness": "not-started",
           "type_facet": "Supernatural.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Death Mantis Form"
         },
         {
           "name": "Detect Chaos",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Detect Chaos"
         },
         {
           "name": "Dinosaur Companion",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DomainPower.Animal Companion",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Dinosaur Companion (SpecialQuality.DomainPower.Animal Companion)"
         },
         {
           "name": "Dinosaur Companion",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DomainPower.Animal Companion",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Dinosaur Companion (SpecialQuality.DomainPower.Animal Companion) #2"
         },
         {
           "name": "Dirty Fighting",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Dirty Fighting"
         },
         {
           "name": "Discern Lies",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Discern Lies"
         },
         {
           "name": "Discipline",
           "doneness": "not-started",
           "type_facet": "Internal",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Discipline"
         },
         {
           "name": "Divination",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Divination"
         },
         {
           "name": "Dragon Subdomain",
           "doneness": "not-started",
           "type_facet": "InquisitorDomain",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Dragon Subdomain"
         },
         {
           "name": "Dragonbreath",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DomainPower",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Dragonbreath (SpecialQuality.DomainPower)"
         },
         {
           "name": "Dragonbreath",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DomainPower",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Dragonbreath (SpecialQuality.DomainPower) #2"
         },
         {
           "name": "Fading",
           "doneness": "not-started",
           "type_facet": "Supernatural.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Fading"
         },
         {
           "name": "Fearsomeness",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.HKAbility.HKOAny",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Fearsomeness"
         },
         {
           "name": "Flag of Convenience",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Flag of Convenience"
         },
         {
           "name": "Force of Will",
           "doneness": "not-started",
           "type_facet": "Internal",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Force of Will"
         },
         {
           "name": "Force of Will 1 (Charm)",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.HKFoW1",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Force of Will 1 (Charm)"
         },
         {
           "name": "Force of Will 1 (Compulsion)",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.HKFoW1",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Force of Will 1 (Compulsion)"
         },
         {
           "name": "Force of Will 1 (Fear)",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.HKFoW1",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Force of Will 1 (Fear)"
         },
         {
           "name": "Force of Will 1 (Figment)",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.HKFoW1",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Force of Will 1 (Figment)"
         },
         {
           "name": "Force of Will 1 (Glamer)",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.HKFoW1",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Force of Will 1 (Glamer)"
         },
         {
           "name": "Force of Will 1 (Pattern)",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.HKFoW1",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Force of Will 1 (Pattern)"
         },
         {
           "name": "Force of Will 1 (Phantasm)",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.HKFoW1",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Force of Will 1 (Phantasm)"
         },
         {
           "name": "Force of Will 2 (Charm)",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.HKFoW2",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Force of Will 2 (Charm)"
         },
         {
           "name": "Force of Will 2 (Compulsion)",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.HKFoW2",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Force of Will 2 (Compulsion)"
         },
         {
           "name": "Force of Will 2 (Fear)",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.HKFoW2",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Force of Will 2 (Fear)"
         },
         {
           "name": "Force of Will 2 (Figment)",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.HKFoW2",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Force of Will 2 (Figment)"
         },
         {
           "name": "Force of Will 2 (Glamer)",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.HKFoW2",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Force of Will 2 (Glamer)"
         },
         {
           "name": "Force of Will 2 (Pattern)",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.HKFoW2",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Force of Will 2 (Pattern)"
         },
         {
           "name": "Force of Will 2 (Phantasm)",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.HKFoW2",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Force of Will 2 (Phantasm)"
         },
         {
           "name": "Force of Will 3 (Charm)",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.HKFoW3",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Force of Will 3 (Charm)"
         },
         {
           "name": "Force of Will 3 (Compulsion)",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.HKFoW3",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Force of Will 3 (Compulsion)"
         },
         {
           "name": "Force of Will 3 (Fear)",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.HKFoW3",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Force of Will 3 (Fear)"
         },
         {
           "name": "Force of Will 3 (Figment)",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.HKFoW3",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Force of Will 3 (Figment)"
         },
         {
           "name": "Force of Will 3 (Glamer)",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.HKFoW3",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Force of Will 3 (Glamer)"
         },
         {
           "name": "Force of Will 3 (Pattern)",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.HKFoW3",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Force of Will 3 (Pattern)"
         },
         {
           "name": "Force of Will 3 (Phantasm)",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.HKFoW3",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Force of Will 3 (Phantasm)"
         },
         {
           "name": "Glory",
           "doneness": "not-started",
           "type_facet": "Domain.HKDomain",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Glory"
         },
         {
           "name": "Guarded Mind",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.DomainPower",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Guarded Mind (SpecialQuality.Extraordinary.DomainPower)"
         },
         {
           "name": "Guarded Mind",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.DomainPower",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Guarded Mind (SpecialQuality.Extraordinary.DomainPower) #2"
         },
         {
           "name": "Hell's Knight",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Hell's Knight"
         },
         {
           "name": "Infernal Armor",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Infernal Armor"
         },
         {
           "name": "It Came From Beyond",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DomainPower",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "It Came From Beyond (SpecialQuality.DomainPower)"
         },
         {
           "name": "It Came From Beyond",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DomainPower",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "It Came From Beyond (SpecialQuality.DomainPower) #2"
         },
         {
           "name": "Knowledge",
           "doneness": "not-started",
           "type_facet": "Domain.HKDomain",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Knowledge"
         },
         {
           "name": "Law",
           "doneness": "not-started",
           "type_facet": "Domain.HKDomain",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Law"
         },
         {
           "name": "Lawbringer",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Lawbringer"
         },
         {
           "name": "Live to Fight Another Day",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Live to Fight Another Day"
         },
         {
           "name": "Magic",
           "doneness": "not-started",
           "type_facet": "Domain.HKDomain",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Magic"
         },
         {
           "name": "Mantis Doom",
           "doneness": "not-started",
           "type_facet": "Supernatural.SpecialAttack",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Mantis Doom"
         },
         {
           "name": "Mantis Form",
           "doneness": "not-started",
           "type_facet": "Supernatural.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Mantis Form"
         },
         {
           "name": "Nobility",
           "doneness": "not-started",
           "type_facet": "Domain.HKDomain",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Nobility"
         },
         {
           "name": "Onslaught",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural.HKAbility.HKONail",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Onslaught"
         },
         {
           "name": "Part the Veil",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Part the Veil (SpecialQuality.Supernatural.DomainPower)"
         },
         {
           "name": "Part the Veil",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Part the Veil (SpecialQuality.Supernatural.DomainPower) #2"
         },
         {
           "name": "Parting Shot",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Parting Shot"
         },
         {
           "name": "Path of Darkness ~ Chaotic",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural.LowPath",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Path of Darkness ~ Chaotic"
         },
         {
           "name": "Path of Darkness ~ Evil",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural.LowPath",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Path of Darkness ~ Evil"
         },
         {
           "name": "Path of Light ~ Good",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural.LowPath",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Path of Light ~ Good"
         },
         {
           "name": "Path of Light ~ Lawful",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural.LowPath",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Path of Light ~ Lawful"
         },
         {
           "name": "Pentamic Faith",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.HKOGodClaw",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Pentamic Faith"
         },
         {
           "name": "Planar Cohort",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Planar Cohort"
         },
         {
           "name": "Prayer Attack",
           "doneness": "not-started",
           "type_facet": "Supernatural.SpecialAttack",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Prayer Attack"
         },
         {
           "name": "Protection",
           "doneness": "not-started",
           "type_facet": "Domain.HKDomain",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Protection"
         },
         {
           "name": "RMA Bonus Spells",
           "doneness": "not-started",
           "type_facet": "Internal",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "RMA Bonus Spells"
         },
         {
           "name": "RMA Weapon Proficiencies",
           "doneness": "not-started",
           "type_facet": "Special.ClassFeatures",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "RMA Weapon Proficiencies"
         },
         {
           "name": "Reading the Signs",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Reading the Signs"
         },
         {
           "name": "Red Shroud",
           "doneness": "not-started",
           "type_facet": "Supernatural.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Red Shroud"
         },
         {
           "name": "Redemption ~ Good",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural.LowFinal",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Redemption ~ Good"
         },
         {
           "name": "Redemption ~ Lawful",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural.LowFinal",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Redemption ~ Lawful"
         },
         {
           "name": "Resurrection Sense",
           "doneness": "not-started",
           "type_facet": "Supernatural.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Resurrection Sense"
         },
         {
           "name": "Rune",
           "doneness": "not-started",
           "type_facet": "Domain.HKDomain",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Rune"
         },
         {
           "name": "Ruthless",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Ruthless"
         },
         {
           "name": "Sabre Fighting",
           "doneness": "not-started",
           "type_facet": "Extraordinary.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Sabre Fighting"
         },
         {
           "name": "Saurian Subdomain",
           "doneness": "not-started",
           "type_facet": "InquisitorDomain",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Saurian Subdomain"
         },
         {
           "name": "Scalykind",
           "doneness": "not-started",
           "type_facet": "InquisitorDomain",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Scalykind"
         },
         {
           "name": "Scholar ~ Arcana",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Scholar",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Scholar ~ Arcana"
         },
         {
           "name": "Scholar ~ Dungeoneering",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Scholar",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Scholar ~ Dungeoneering"
         },
         {
           "name": "Scholar ~ Engineering",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Scholar",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Scholar ~ Engineering"
         },
         {
           "name": "Scholar ~ Geography",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Scholar",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Scholar ~ Geography"
         },
         {
           "name": "Scholar ~ History",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Scholar",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Scholar ~ History"
         },
         {
           "name": "Scholar ~ Local",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Scholar",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Scholar ~ Local"
         },
         {
           "name": "Scholar ~ Nature",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Scholar",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Scholar ~ Nature"
         },
         {
           "name": "Scholar ~ Nobility",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Scholar",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Scholar ~ Nobility"
         },
         {
           "name": "Scholar ~ Planes",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Scholar",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Scholar ~ Planes"
         },
         {
           "name": "Scholar ~ Religion",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Scholar",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Scholar ~ Religion"
         },
         {
           "name": "Scion of Lore",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.NobleScion",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Scion of Lore"
         },
         {
           "name": "Scion of Lore ~ Arcana",
           "doneness": "not-started",
           "type_facet": "Internal",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Scion of Lore ~ Arcana"
         },
         {
           "name": "Scion of Lore ~ Dungeoneering",
           "doneness": "not-started",
           "type_facet": "Internal",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Scion of Lore ~ Dungeoneering"
         },
         {
           "name": "Scion of Lore ~ Engineering",
           "doneness": "not-started",
           "type_facet": "Internal",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Scion of Lore ~ Engineering"
         },
         {
           "name": "Scion of Lore ~ Geography",
           "doneness": "not-started",
           "type_facet": "Internal",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Scion of Lore ~ Geography"
         },
         {
           "name": "Scion of Lore ~ History",
           "doneness": "not-started",
           "type_facet": "Internal",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Scion of Lore ~ History"
         },
         {
           "name": "Scion of Lore ~ Local",
           "doneness": "not-started",
           "type_facet": "Internal",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Scion of Lore ~ Local"
         },
         {
           "name": "Scion of Lore ~ Nature",
           "doneness": "not-started",
           "type_facet": "Internal",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Scion of Lore ~ Nature"
         },
         {
           "name": "Scion of Lore ~ Nobility",
           "doneness": "not-started",
           "type_facet": "Internal",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Scion of Lore ~ Nobility"
         },
         {
           "name": "Scion of Lore ~ Planes",
           "doneness": "not-started",
           "type_facet": "Internal",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Scion of Lore ~ Planes"
         },
         {
           "name": "Scion of Lore ~ Religion",
           "doneness": "not-started",
           "type_facet": "Internal",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Scion of Lore ~ Religion"
         },
         {
           "name": "Scion of Magic",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.NobleScion",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Scion of Magic"
         },
         {
           "name": "Scion of Peace",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.NobleScion",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Scion of Peace"
         },
         {
           "name": "Scion of War",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.NobleScion",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Scion of War"
         },
         {
           "name": "Scion of the Arts",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.NobleScion",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Scion of the Arts"
         },
         {
           "name": "Serpent Companion",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.DomainPower.Animal Companion",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Serpent Companion (SpecialQuality.Extraordinary.DomainPower.Animal Companion)"
         },
         {
           "name": "Serpent Companion",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.DomainPower.Animal Companion",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Serpent Companion (SpecialQuality.Extraordinary.DomainPower.Animal Companion) #2"
         },
         {
           "name": "Shackle",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural.HKAbility.HKOChain",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Shackle"
         },
         {
           "name": "Smite Chaos",
           "doneness": "not-started",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Smite Chaos"
         },
         {
           "name": "Spirit Deck",
           "doneness": "not-started",
           "type_facet": "SpecialAttack.Supernatural.Checklist",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Spirit Deck"
         },
         {
           "name": "Stars Subdomain",
           "doneness": "not-started",
           "type_facet": "InquisitorDomain",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Stars Subdomain"
         },
         {
           "name": "Strength",
           "doneness": "not-started",
           "type_facet": "Domain.HKDomain",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Strength"
         },
         {
           "name": "Summon Devil",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Summon Devil (SpecialQuality.SpellLike)"
         },
         {
           "name": "Summon Devil",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Summon Devil (SpecialQuality.SpellLike) #2"
         },
         {
           "name": "Summon Devil",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Summon Devil (SpecialQuality.SpellLike) #3"
         },
         {
           "name": "Summon Devil",
           "doneness": "not-started",
           "type_facet": "Internal.HKAbility.HKOGate",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Summon Devil (Internal.HKAbility.HKOGate)"
         },
         {
           "name": "Summon Mantis",
           "doneness": "not-started",
           "type_facet": "Spelllike.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Summon Mantis"
         },
         {
           "name": "The Stars Are Right",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DomainPower",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "The Stars Are Right (SpecialQuality.DomainPower)"
         },
         {
           "name": "The Stars Are Right",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DomainPower",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "The Stars Are Right (SpecialQuality.DomainPower) #2"
         },
         {
           "name": "Tower of Charisma",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Tower of Charisma"
         },
         {
           "name": "Tower of Constitution",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Tower of Constitution"
         },
         {
           "name": "Tower of Dexterity",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Tower of Dexterity"
         },
         {
           "name": "Tower of Intelligence",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Tower of Intelligence"
         },
         {
           "name": "Tower of Strength",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Tower of Strength"
         },
         {
           "name": "Tower of Wisdom",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Tower of Wisdom"
         },
         {
           "name": "Tracker",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike.HKAbility.HKOAny",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Tracker"
         },
         {
           "name": "Travel",
           "doneness": "not-started",
           "type_facet": "Domain.HKDomain",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Travel"
         },
         {
           "name": "Venomous Stare",
           "doneness": "not-started",
           "type_facet": "SpecialAttack.SpellLike.DomainPower",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Venomous Stare (SpecialAttack.SpellLike.DomainPower)"
         },
         {
           "name": "Venomous Stare",
           "doneness": "not-started",
           "type_facet": "SpecialAttack.SpellLike.DomainPower",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Venomous Stare (SpecialAttack.SpellLike.DomainPower) #2"
         },
         {
           "name": "Vigilance",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural.HKAbility.HKOScourge",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Vigilance"
         },
         {
           "name": "Void",
           "doneness": "not-started",
           "type_facet": "InquisitorDomain",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Void"
         },
         {
           "name": "War",
           "doneness": "not-started",
           "type_facet": "Domain.HKDomain",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "War"
         },
         {
           "name": "Wrack",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural.HKAbility.HKOAny",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Wrack"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.Extraordinary)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Internal",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Internal)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural.Checklist",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.Supernatural.Checklist)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Internal",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Internal) #4"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.Extraordinary) #5"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "[redacted PI]",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI])"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "[redacted PI]",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #7"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "[redacted PI]",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #8"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "[redacted PI]",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #9"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "[redacted PI]",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #10"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.HKOrder",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.HKOrder)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.HKOrder",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.HKOrder) #12"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.HKOrder",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.HKOrder) #13"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.HKOrder",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.HKOrder) #14"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.HKOrder",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.HKOrder) #15"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.HKOrder",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.HKOrder) #16"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.HKOrder",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.HKOrder) #17"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.TotemSpirit",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.TotemSpirit)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.TotemSpirit",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.TotemSpirit) #19"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.TotemSpirit",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.TotemSpirit) #20"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.TotemSpirit",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.TotemSpirit) #21"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.TotemSpirit",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.TotemSpirit) #22"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.TotemSpirit",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.TotemSpirit) #23"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.TotemSpirit",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.TotemSpirit) #24"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "[redacted PI]",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #25"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "[redacted PI]",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #26"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "[redacted PI]",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #27"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "[redacted PI]",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #28"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "[redacted PI]",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #29"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "[redacted PI]",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #30"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "[redacted PI]",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #31"
         }
       ]
     },
@@ -1062,31 +1233,36 @@
           "name": "Low Templar",
           "doneness": "not-started",
           "type_facet": "PC.Prestige",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Low Templar"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Monster",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Monster)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "PC.Prestige",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (PC.Prestige)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "PC.Prestige",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (PC.Prestige) #3"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "PC.Prestige",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (PC.Prestige) #4"
         }
       ]
     },
@@ -1108,283 +1284,330 @@
           "name": "Black Powder (Dose)",
           "doneness": "done",
           "type_facet": "Ammunition.Resizable.Standard.BlackPowder",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Black Powder (Dose)"
         },
         {
           "name": "Black Powder (Keg)",
           "doneness": "done",
           "type_facet": "Ammunition.Resizable.Standard.BlackPowder",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Black Powder (Keg)"
         },
         {
           "name": "Blackaxe",
           "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.TwoHanded.Martial.Standard.Slashing.Axe.Artifact.Major.Epic",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Blackaxe"
         },
         {
           "name": "Bladed Scarf",
           "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.TwoHanded.Exotic.Finesseable.Standard.Slashing",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Bladed Scarf"
         },
         {
           "name": "Bullet (Firearm)",
           "doneness": "done",
           "type_facet": "Ammunition.Resizable.Standard.Bullet",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Bullet (Firearm)"
         },
         {
           "name": "Cannon",
           "doneness": "done",
           "type_facet": "Weapon.Ranged.Siege.Exotic.Standard.Bludgeoning.Piercing.Container.Projectile.Firearm",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Cannon"
         },
         {
           "name": "Cannon Ball",
           "doneness": "done",
           "type_facet": "Ammunition.Resizable.Standard.Bullet",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Cannon Ball"
         },
         {
           "name": "Charm of Aluum Control",
           "doneness": "done",
           "type_facet": "Magic.Wondrous.Amulet",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Charm of Aluum Control"
         },
         {
           "name": "Dogslicer",
           "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.Light.Finesseable.Martial.Standard.Slashing",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Dogslicer"
         },
         {
           "name": "Earth Breaker",
           "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.TwoHanded.Martial.Standard.Bludgeoning",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Earth Breaker"
         },
         {
           "name": "Field Plate",
           "doneness": "done",
           "type_facet": "Armor.Heavy.ArmorProfHeavy.Suit.Standard",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Field Plate"
         },
         {
           "name": "Final Blade",
           "doneness": "done",
           "type_facet": "Magic.Artifact.Minor",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Final Blade"
         },
         {
           "name": "Flag",
           "doneness": "done",
           "type_facet": "Goods.General.Flag",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Flag"
         },
         {
           "name": "Goz Mask",
           "doneness": "done",
           "type_facet": "Magic.Wondrous.Headgear",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Goz Mask"
         },
         {
           "name": "Heatstone",
           "doneness": "done",
           "type_facet": "Goods.Alchemical.Consumable",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Heatstone"
         },
         {
           "name": "Horsechopper",
           "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.TwoHanded.Martial.Piercing.Slashing",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Horsechopper"
         },
         {
           "name": "Klar (as Shield)",
           "doneness": "done",
           "type_facet": "Shield.Light.Standard",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Klar (as Shield)"
         },
         {
           "name": "Klar (as weapon)",
           "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.OneHanded.Martial.Standard.Slashing",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Klar (as weapon)"
         },
         {
           "name": "Leaf Armor",
           "doneness": "done",
           "type_facet": "Armor.Light.ArmorProfLight.Suit.Standard.Nonmetal",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Leaf Armor"
         },
         {
           "name": "Mask of the Mantis",
           "doneness": "done",
           "type_facet": "Magic.Wondrous.Headgear",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Mask of the Mantis"
         },
         {
           "name": "Musket",
           "doneness": "done",
           "type_facet": "Weapon.Resizable.Ranged.TwoHanded.Exotic.Standard.Bludgeoning.Piercing.Container.Projectile.Firearm",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Musket"
         },
         {
           "name": "Ogre Hook",
           "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.TwoHanded.Martial.Standard.Piercing",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Ogre Hook"
         },
         {
           "name": "Pepperbox",
           "doneness": "done",
           "type_facet": "Weapon.Resizable.Ranged.OneHanded.Exotic.Standard.Bludgeoning.Piercing.Container.Projectile.Firearm",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Pepperbox"
         },
         {
           "name": "Perfume (Common)",
           "doneness": "done",
           "type_facet": "Goods.Alchemical.Consumable",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Perfume (Common)"
         },
         {
           "name": "Perfume (Exotic)",
           "doneness": "done",
           "type_facet": "Goods.Alchemical.Consumable",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Perfume (Exotic)"
         },
         {
           "name": "Pistol",
           "doneness": "done",
           "type_facet": "Weapon.Resizable.Ranged.OneHanded.Exotic.Standard.Bludgeoning.Piercing.Container.Projectile.Firearm",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Pistol"
         },
         {
           "name": "Powder Horn",
           "doneness": "done",
           "type_facet": "Goods.General.Container",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Powder Horn"
         },
         {
           "name": "Sawtooth Sabre",
           "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.OneHanded.Exotic.Standard.Slashing",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Sawtooth Sabre"
         },
         {
           "name": "Stoneplate",
           "doneness": "done",
           "type_facet": "Armor.Heavy.ArmorProfHeavy.Suit.Standard",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Stoneplate"
         },
         {
           "name": "Sun Orchid Elixir",
           "doneness": "done",
           "type_facet": "Magic.Artifact.Minor.Consumable",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Sun Orchid Elixir"
         },
         {
           "name": "Unguent of Revivification",
           "doneness": "done",
           "type_facet": "Magic.Wondrous.Consumable",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Unguent of Revivification"
         },
         {
           "name": "Urumi",
           "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.OneHanded.Exotic.Standard.Slashing",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Urumi"
         },
         {
           "name": "War Razor",
           "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.Light.Finesseable.Martial.Standard.Slashing",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "War Razor"
         },
         {
           "name": "Wardstone",
           "doneness": "done",
           "type_facet": "Magic.Artifact.Minor",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Wardstone"
         },
         {
           "name": "Wayfinder",
           "doneness": "done",
           "type_facet": "Magic.Wondrous.Wayfinder.Compass.Container",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Wayfinder"
         },
         {
           "name": "Zoic Fetish (Amphibian)",
           "doneness": "done",
           "type_facet": "Magic.Wondrous",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Zoic Fetish (Amphibian)"
         },
         {
           "name": "Zoic Fetish (Bird)",
           "doneness": "done",
           "type_facet": "Magic.Wondrous",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Zoic Fetish (Bird)"
         },
         {
           "name": "Zoic Fetish (Fish)",
           "doneness": "done",
           "type_facet": "Magic.Wondrous",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Zoic Fetish (Fish)"
         },
         {
           "name": "Zoic Fetish (Mammal)",
           "doneness": "done",
           "type_facet": "Magic.Wondrous",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Zoic Fetish (Mammal)"
         },
         {
           "name": "Zoic Fetish (Reptile)",
           "doneness": "done",
           "type_facet": "Magic.Wondrous",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Zoic Fetish (Reptile)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Weapon.Resizable.Melee.OneHanded.Exotic.Standard.Slashing.Aldori.Finesseable",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Weapon.Resizable.Melee.OneHanded.Exotic.Standard.Slashing.Aldori.Finesseable)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Weapon.Resizable.Ranged.Thrown.Exotic.Standard.Bludgeoning.Piercing",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Weapon.Resizable.Ranged.Thrown.Exotic.Standard.Bludgeoning.Piercing)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Goods.Poison.Consumable",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Goods.Poison.Consumable)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Goods.Tools.Entertainment.CardDeck",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Goods.Tools.Entertainment.CardDeck)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Armor.Heavy.ArmorProfHeavy.Suit.Standard.HellknightPlate",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Armor.Heavy.ArmorProfHeavy.Suit.Standard.HellknightPlate)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Goods.Book",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Goods.Book)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Magic.Shield.Heavy.Nonmetal.Artifact.Major",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Magic.Shield.Heavy.Nonmetal.Artifact.Major)"
         }
       ]
     },
@@ -1406,37 +1629,43 @@
           "name": "LEAF",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "LEAF"
         },
         {
           "name": "Leaf",
           "doneness": "partial",
           "type_facet": "BaseMaterial.Mundane.Ammunition.Armor.Shield.Weapon.Instruments.Tools.Goods",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Leaf"
         },
         {
           "name": "PAUELIEL",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "PAUELIEL"
         },
         {
           "name": "Paueliel Wood",
           "doneness": "done",
           "type_facet": "BaseMaterial.MasterworkQuality.Ammunition.Weapon.Shield",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Paueliel Wood"
         },
         {
           "name": "STONE",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "STONE"
         },
         {
           "name": "Stone",
           "doneness": "partial",
           "type_facet": "BaseMaterial.Mundane.Armor.Weapon",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Stone"
         }
       ]
     },
@@ -1458,223 +1687,260 @@
           "name": "Altitude Affinity",
           "doneness": "done",
           "type_facet": "General",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Altitude Affinity"
         },
         {
           "name": "Arcane Vendetta",
           "doneness": "done",
           "type_facet": "General",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Arcane Vendetta"
         },
         {
           "name": "Careful Speaker",
           "doneness": "not-started",
           "type_facet": "General",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Careful Speaker"
         },
         {
           "name": "Cypher Magic",
           "doneness": "not-started",
           "type_facet": "General",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Cypher Magic"
         },
         {
           "name": "Cypher Script",
           "doneness": "not-started",
           "type_facet": "General",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Cypher Script"
         },
         {
           "name": "Demon Hunter",
           "doneness": "not-started",
           "type_facet": "Combat",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Demon Hunter"
         },
         {
           "name": "Dervish Dance",
           "doneness": "not-started",
           "type_facet": "Combat",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Dervish Dance"
         },
         {
           "name": "Desert Dweller",
           "doneness": "done",
           "type_facet": "General",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Desert Dweller"
         },
         {
           "name": "Desperate Battler",
           "doneness": "done",
           "type_facet": "Combat",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Desperate Battler"
         },
         {
           "name": "Eye of the Arclord",
           "doneness": "not-started",
           "type_facet": "General",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Eye of the Arclord"
         },
         {
           "name": "Fey Foundling",
           "doneness": "done",
           "type_facet": "General",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Fey Foundling"
         },
         {
           "name": "Flagbearer",
           "doneness": "not-started",
           "type_facet": "Combat",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Flagbearer"
         },
         {
           "name": "Focused Discipline",
           "doneness": "done",
           "type_facet": "Combat",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Focused Discipline"
         },
         {
           "name": "Fortune Teller",
           "doneness": "done",
           "type_facet": "General",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Fortune Teller"
         },
         {
           "name": "Free Spirit",
           "doneness": "not-started",
           "type_facet": "General",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Free Spirit"
         },
         {
           "name": "Godless Healing",
           "doneness": "not-started",
           "type_facet": "General",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Godless Healing"
         },
         {
           "name": "Green Faith Acolyte",
           "doneness": "done",
           "type_facet": "General",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Green Faith Acolyte"
         },
         {
           "name": "Hamatulatsu",
           "doneness": "done",
           "type_facet": "Combat",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Hamatulatsu"
         },
         {
           "name": "Harmonic Spell",
           "doneness": "done",
           "type_facet": "General",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Harmonic Spell"
         },
         {
           "name": "Harrowed",
           "doneness": "not-started",
           "type_facet": "General",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Harrowed"
         },
         {
           "name": "Necromantic Affinity",
           "doneness": "done",
           "type_facet": "General",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Necromantic Affinity"
         },
         {
           "name": "Noble Scion",
           "doneness": "not-started",
           "type_facet": "General",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Noble Scion"
         },
         {
           "name": "Rugged Northerner",
           "doneness": "done",
           "type_facet": "General",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Rugged Northerner"
         },
         {
           "name": "Scholar",
           "doneness": "not-started",
           "type_facet": "General",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Scholar"
         },
         {
           "name": "Secret Signs",
           "doneness": "not-started",
           "type_facet": "General",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Secret Signs"
         },
         {
           "name": "Shrewd Tactician",
           "doneness": "not-started",
           "type_facet": "Combat",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Shrewd Tactician"
         },
         {
           "name": "Stoic",
           "doneness": "done",
           "type_facet": "General",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Stoic"
         },
         {
           "name": "Storm-Lashed",
           "doneness": "done",
           "type_facet": "General",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Storm-Lashed"
         },
         {
           "name": "Survivor",
           "doneness": "done",
           "type_facet": "General",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Survivor"
         },
         {
           "name": "Totem Spirit",
           "doneness": "not-started",
           "type_facet": "General",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Totem Spirit"
         },
         {
           "name": "Wand Dancer",
           "doneness": "not-started",
           "type_facet": "General",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Wand Dancer"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Combat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Combat)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "General",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (General)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "General",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (General) #3"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "General",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (General) #4"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Combat",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Combat) #5"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "General",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (General) #6"
         }
       ]
     },
@@ -1696,181 +1962,211 @@
           "name": "Aligned Strike",
           "doneness": "not-started",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Aligned Strike"
         },
         {
           "name": "Aura of Corruption",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural.Aura",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Aura of Corruption"
         },
         {
           "name": "Bay",
           "doneness": "not-started",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Bay"
         },
         {
           "name": "Breath Weapon",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Breath Weapon (SpecialAttack.Supernatural)"
         },
         {
           "name": "Breath Weapon",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Breath Weapon (SpecialAttack.Extraordinary)"
         },
         {
           "name": "Defensive Slam",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Defensive Slam"
         },
         {
           "name": "Defoliation",
           "doneness": "not-started",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Defoliation"
         },
         {
           "name": "Desecrate",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike.Aura",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Desecrate"
         },
         {
           "name": "Difficult to Create",
           "doneness": "not-started",
           "type_facet": "SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Difficult to Create"
         },
         {
           "name": "Disease",
           "doneness": "not-started",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Disease"
         },
         {
           "name": "Energy Absorption",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Energy Absorption"
         },
         {
           "name": "Fast Healing",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHp",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Fast Healing"
         },
         {
           "name": "Grant Spells",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Grant Spells"
         },
         {
           "name": "Great Claw",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Great Claw"
         },
         {
           "name": "Hellfire Breath",
           "doneness": "not-started",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Hellfire Breath"
         },
         {
           "name": "Immunity to Magic",
           "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Immunity to Magic"
         },
         {
           "name": "Kick",
           "doneness": "not-started",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Kick"
         },
         {
           "name": "Magic Weapon",
           "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Magic Weapon"
         },
         {
           "name": "Paralysis",
           "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Paralysis"
         },
         {
           "name": "Ray Deflection",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Ray Deflection"
         },
         {
           "name": "Regeneration",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Regeneration"
         },
         {
           "name": "Shrieking Frenzy",
           "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Shrieking Frenzy"
         },
         {
           "name": "Soul Shriek",
           "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Soul Shriek"
         },
         {
           "name": "Spells",
           "doneness": "not-started",
           "type_facet": "SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Spells"
         },
         {
           "name": "Spines",
           "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Spines"
         },
         {
           "name": "Suspend Animation",
           "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Suspend Animation"
         },
         {
           "name": "Swift Reactions",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Swift Reactions"
         },
         {
           "name": "Thrown-Weapon Mastery",
           "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Thrown-Weapon Mastery"
         },
         {
           "name": "Water Breathing",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Water Breathing"
         },
         {
           "name": "Winding",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Winding"
         }
       ]
     },
@@ -1892,85 +2188,99 @@
           "name": "Aluum",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Aluum"
         },
         {
           "name": "Calikang",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Calikang"
         },
         {
           "name": "Charau-ka",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Charau-ka"
         },
         {
           "name": "Dragon (Spine)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Dragon (Spine)"
         },
         {
           "name": "Fennec (Firefoot)",
           "doneness": "partial",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Fennec (Firefoot)"
         },
         {
           "name": "Gecko (Giant)",
           "doneness": "partial",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Gecko (Giant)"
         },
         {
           "name": "Rat (Donkey)",
           "doneness": "partial",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Rat (Donkey)"
         },
         {
           "name": "Shark (Jigsaw)",
           "doneness": "partial",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Shark (Jigsaw)"
         },
         {
           "name": "Spider (Drain)",
           "doneness": "partial",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Spider (Drain)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI]"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #2"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #3"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #4"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #5"
         }
       ]
     },
@@ -1992,325 +2302,379 @@
           "name": "+2 Constitution, +2 Charisma, -2 Wisdom",
           "doneness": "done",
           "type_facet": "RacialTraits.Gillman Racial Trait.Gillman Racial Default.SpecialQuality.Racial Ability Scores",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "+2 Constitution, +2 Charisma, -2 Wisdom"
         },
         {
           "name": "+2 Dexterity, -2 Charisma",
           "doneness": "done",
           "type_facet": "RacialTraits.Strix Racial Trait.Strix Racial Default.SpecialQuality.Racial Ability Scores",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "+2 Dexterity, -2 Charisma"
         },
         {
           "name": "Aluum ~ Immunity to Magic",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Aluum ~ Immunity to Magic"
         },
         {
           "name": "Aluum ~ Paralysis",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Aluum ~ Paralysis"
         },
         {
           "name": "Aluum ~ Soul Shriek",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Aluum ~ Soul Shriek"
         },
         {
           "name": "Amphibious",
           "doneness": "done",
           "type_facet": "RacialTraits.Gillman Racial Trait.Gillman Racial Default.SpecialQuality.Special Quality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Amphibious"
         },
         {
           "name": "Aquatic",
           "doneness": "done",
           "type_facet": "RacialTraits.Gillman Racial Trait.Gillman Racial Default.SpecialQuality.Racial Type",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Aquatic"
         },
         {
           "name": "Calikang ~ Breath Weapon",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Calikang ~ Breath Weapon"
         },
         {
           "name": "Calikang ~ Defensive Slam",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Calikang ~ Defensive Slam"
         },
         {
           "name": "Calikang ~ Energy Absorption",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Calikang ~ Energy Absorption"
         },
         {
           "name": "Calikang ~ Fast Healing",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Calikang ~ Fast Healing"
         },
         {
           "name": "Calikang ~ Suspend Animation",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Calikang ~ Suspend Animation"
         },
         {
           "name": "Charau-ka ~ Shrieking Frenzy",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Charau-ka ~ Shrieking Frenzy"
         },
         {
           "name": "Charau-ka ~ Thrown-Weapon Mastery",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Charau-ka ~ Thrown-Weapon Mastery"
         },
         {
           "name": "Clockwork ~ Difficult to Create",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Clockwork ~ Difficult to Create"
         },
         {
           "name": "Clockwork ~ Swift Reactions",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Clockwork ~ Swift Reactions"
         },
         {
           "name": "Clockwork ~ Winding",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Clockwork ~ Winding"
         },
         {
           "name": "Constant ~ Desecrate",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Constant ~ Desecrate"
         },
         {
           "name": "Constant ~ Magic Weapon",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Constant ~ Magic Weapon"
         },
         {
           "name": "Constant ~ Water Breathing",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Constant ~ Water Breathing"
         },
         {
           "name": "Darkvision",
           "doneness": "done",
           "type_facet": "RacialTraits.Strix Racial Trait.Strix Racial Default.SpecialQuality.Racial Vision",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Darkvision"
         },
         {
           "name": "Enchantment Resistance",
           "doneness": "partial",
           "type_facet": "RacialTraits.Gillman Racial Trait.Gillman Racial Default.SpecialQuality.Special Ability",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Enchantment Resistance"
         },
         {
           "name": "Flight",
           "doneness": "done",
           "type_facet": "RacialTraits.Strix Racial Trait.Strix Racial Default.SpecialQuality.Racial Speed",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Flight"
         },
         {
           "name": "Gillman",
           "doneness": "not-started",
           "type_facet": "AdoptiveRace",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Gillman"
         },
         {
           "name": "Hatred",
           "doneness": "done",
           "type_facet": "RacialTraits.Strix Racial Trait.Strix Racial Default.SpecialAttack.Special Attack.Special Ability.Extraordinary",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Hatred"
         },
         {
           "name": "Humanoid (Aquatic)",
           "doneness": "not-started",
           "type_facet": "RangerClassFeatures.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Humanoid (Aquatic)"
         },
         {
           "name": "Humanoid (Strix)",
           "doneness": "not-started",
           "type_facet": "RangerClassFeatures.FavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Humanoid (Strix)"
         },
         {
           "name": "Languages",
           "doneness": "done",
           "type_facet": "RacialTraits.Gillman Racial Trait.Gillman Racial Default.SpecialQuality.Racial Language",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Languages (RacialTraits.Gillman Racial Trait.Gillman Racial Default.SpecialQuality.Racial Language)"
         },
         {
           "name": "Languages",
           "doneness": "done",
           "type_facet": "RacialTraits.Strix Racial Trait.Strix Racial Default.SpecialQuality.Racial Language",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Languages (RacialTraits.Strix Racial Trait.Strix Racial Default.SpecialQuality.Racial Language)"
         },
         {
           "name": "Low-Light Vision",
           "doneness": "done",
           "type_facet": "RacialTraits.Strix Racial Trait.Strix Racial Default.SpecialQuality.Racial Vision",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Low-Light Vision"
         },
         {
           "name": "Medium",
           "doneness": "done",
           "type_facet": "RacialTraits.Gillman Racial Trait.Gillman Racial Default.SpecialQuality.Racial Size",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Medium (RacialTraits.Gillman Racial Trait.Gillman Racial Default.SpecialQuality.Racial Size)"
         },
         {
           "name": "Medium",
           "doneness": "done",
           "type_facet": "RacialTraits.Strix Racial Trait.Strix Racial Default.SpecialQuality.Racial Size",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Medium (RacialTraits.Strix Racial Trait.Strix Racial Default.SpecialQuality.Racial Size)"
         },
         {
           "name": "Nascent Demon Lord ~ Aligned Strike",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Nascent Demon Lord ~ Aligned Strike"
         },
         {
           "name": "Nascent Demon Lord ~ Grant Spells",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Nascent Demon Lord ~ Grant Spells"
         },
         {
           "name": "Nocturnal",
           "doneness": "done",
           "type_facet": "RacialTraits.Strix Racial Trait.Strix Racial Default.SpecialQuality.Special Quality.Special Ability.Extraordinary",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Nocturnal"
         },
         {
           "name": "Normal Speed",
           "doneness": "partial",
           "type_facet": "RacialTraits.Gillman Racial Trait.Gillman Racial Default.SpecialQuality.Racial Speed",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Normal Speed (RacialTraits.Gillman Racial Trait.Gillman Racial Default.SpecialQuality.Racial Speed)"
         },
         {
           "name": "Normal Speed",
           "doneness": "done",
           "type_facet": "RacialTraits.Strix Racial Trait.Strix Racial Default.SpecialQuality.Racial Speed",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Normal Speed (RacialTraits.Strix Racial Trait.Strix Racial Default.SpecialQuality.Racial Speed)"
         },
         {
           "name": "Servitor",
           "doneness": "done",
           "type_facet": "RacialTraits.Gillman Racial Trait.Gillman Racial Default.SpecialQuality.Special Quality",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Servitor"
         },
         {
           "name": "Spine Dragon ~ Breath Weapon",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Spine Dragon ~ Breath Weapon"
         },
         {
           "name": "Spine Dragon ~ Ray Deflection",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Spine Dragon ~ Ray Deflection"
         },
         {
           "name": "Spine Dragon ~ Spines",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Spine Dragon ~ Spines"
         },
         {
           "name": "Strix",
           "doneness": "not-started",
           "type_facet": "AdoptiveRace",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Strix (AdoptiveRace)"
         },
         {
           "name": "Strix",
           "doneness": "done",
           "type_facet": "RacialTraits.Strix Racial Trait.Strix Racial Default.SpecialQuality.Racial Type",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Strix (RacialTraits.Strix Racial Trait.Strix Racial Default.SpecialQuality.Racial Type)"
         },
         {
           "name": "Suspicious",
           "doneness": "done",
           "type_facet": "RacialTraits.Strix Racial Trait.Strix Racial Default.SpecialQuality",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Suspicious"
         },
         {
           "name": "Water Dependent",
           "doneness": "done",
           "type_facet": "RacialTraits.Gillman Racial Trait.Gillman Racial Default.SpecialQuality.Weakness.Special Ability",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Water Dependent"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI]"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #2"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #3"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #4"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #5"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #6"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #7"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #8"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #9"
         }
       ]
     },
@@ -2331,85 +2695,99 @@
           "name": "Aluum",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Aluum"
         },
         {
           "name": "Calikang",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Calikang"
         },
         {
           "name": "Charau-ka",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Charau-ka"
         },
         {
           "name": "Dragon (Spine)",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Dragon (Spine)"
         },
         {
           "name": "Fennec (Firefoot)",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Fennec (Firefoot)"
         },
         {
           "name": "Gecko (Giant)",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Gecko (Giant)"
         },
         {
           "name": "Rat (Donkey)",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Rat (Donkey)"
         },
         {
           "name": "Shark (Jigsaw)",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Shark (Jigsaw)"
         },
         {
           "name": "Spider (Drain)",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Spider (Drain)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "[redacted PI]"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "[redacted PI] #2"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "[redacted PI] #3"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "[redacted PI] #4"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "[redacted PI] #5"
         }
       ]
     },
@@ -2431,133 +2809,155 @@
           "name": "Ancestral Memory",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Ancestral Memory"
         },
         {
           "name": "Animal Growth (Reptiles Only)",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Animal Growth (Reptiles Only)"
         },
         {
           "name": "Animal Shapes (Reptiles Only)",
           "doneness": "not-started",
           "type_facet": "Divine",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Animal Shapes (Reptiles Only)"
         },
         {
           "name": "Covetous Aura",
           "doneness": "not-started",
           "type_facet": "Arcane",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Covetous Aura"
         },
         {
           "name": "Dirge of the Victorious Knights",
           "doneness": "not-started",
           "type_facet": "Arcane",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Dirge of the Victorious Knights"
         },
         {
           "name": "Harrowing",
           "doneness": "not-started",
           "type_facet": "Arcane",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Harrowing"
         },
         {
           "name": "Infernal Healing",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Infernal Healing"
         },
         {
           "name": "Infernal Healing (Greater)",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Infernal Healing (Greater)"
         },
         {
           "name": "Interplanetary Teleport",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Interplanetary Teleport"
         },
         {
           "name": "Lover's Vengeance",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Lover's Vengeance"
         },
         {
           "name": "Quickened Dispel Magic (Greater)",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Quickened Dispel Magic (Greater)"
         },
         {
           "name": "Summon Demons (Nascent Demon Lord)",
           "doneness": "not-started",
           "type_facet": "Divine",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Summon Demons (Nascent Demon Lord)"
         },
         {
           "name": "Summon Mantis",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Summon Mantis"
         },
         {
           "name": "Teleport Trap",
           "doneness": "not-started",
           "type_facet": "Arcane",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Teleport Trap"
         },
         {
           "name": "Unbreakable Heart",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Unbreakable Heart"
         },
         {
           "name": "Vermin Shape I",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Vermin Shape I"
         },
         {
           "name": "Vermin Shape II",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Vermin Shape II"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Arcane.Divine)"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Arcane.Divine) #2"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Arcane.Divine) #3"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Arcane.Divine) #4"
         },
         {
           "name": "[redacted PI]",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Arcane.Divine) #5"
         }
       ]
     }

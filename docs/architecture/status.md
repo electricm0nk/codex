@@ -304,7 +304,96 @@ unit ids added or removed, **zero demotions**.
   passable only from that one tree and committed a home directory into the Cloudflare-published
   `site/` (`OPEN-ISSUES.md` row 285).
 
-## Stubbed / partially wired / deferred today
+## Corpus coverage, corpus-wide — re-derived 2026-08-19 (SD-31 wave 16, integration cycle)
+
+The section above is wave 15's snapshot and is kept for its history. **These are the live
+figures**, re-derived at this wave's integration tip on `tranche/11` after merging all six wave-16
+lanes, building the merged tree, and re-running the guarded regen pipeline — never transcribed from
+a lane receipt. Oracle pin `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`.
+
+| quantity | value | how |
+|---|---:|---|
+| board units (in scope, `beginner_box` excluded) | **38,372** (down 149 from 38,521) | `docs/work-inventory.json`, replayed through `pf1e_dashboard_producer.doneness_verdict()` |
+| board `done` | **12,864 (33.5244 %)** | same replay; was 12,748 / 33.0936 % before this wave |
+| verification stamps | **8,103** (6,436 literal-verified + 1,667 fixture-verified) | `Counter(u['status'] …)` over the same document; was 8,052 |
+| `derived` fixture coverage | **1,750 units cleared over 2,504 fixture rows**, 0 failed, 0 not ingested | `cargo run --locked --bin derived_evaluator_fixture_check`; was 1,699 / 2,364 |
+| corpus literal sweep | 26,105 records examined, **0 findings** | `cargo run --locked --bin corpus_literal_sweep` |
+| reachable ceiling | **98.94 %** | `python3 scripts/reachability_audit.py`; was 98.95 % (denominator moved) |
+
+By doneness bucket: `done` 12,864 · `held` 1,204 · `in-progress` 1,280 · `not-started` 17,910 ·
+`unmeasurable` 5,076 · `deferred` 38.
+
+**The denominator moved for the first time since it was frozen, and by exactly two named causes —
+never blurred together:**
+
+* **-116, operator ruling §16 (`decisions.md §9`/§16, `artifacts/OPERATOR-RULINGS-2026-08-19.md`):
+  `core_essentials` residuals not found in print are deleted, not flagged.** 128 residual units
+  split: 12 `race_trait` re-attributed to `ultimate_wilderness` (Ghoran's own native declaration in
+  `uw_races.lst`), and 116 deleted outright as hallucinations until they appear in print (`main`'s
+  classify loop, `is_core_essentials_residual`) — the file's 23 pre-directive rows and 6
+  `SOURCELONG:Universal Rules` rows in `ce_abilities_race.lst`, Ghoran's own duplicate `race`-kind
+  chassis row (withheld rather than re-attributed, since `ultimate_wilderness:race:ghoran` already
+  exists natively — re-attributing would have minted a second unit for one game object), and 86
+  units across the 7 remaining races with no race declaration in any book but `core_essentials`
+  (Android, Aquatic Elf, Gathlain, Lashunta, Monkey Goblin, Syrinx, Triaxian). **`core_essentials`
+  no longer appears as a key in `docs/work-inventory.json`'s `books` map at all — `decisions.md
+  §9`'s condition is discharged.** None of the 128 was `done`-capable (128/128 `not-ingested`), so
+  zero credit moved. A production-path ceiling (`CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING = 117`,
+  asserted every real run of `v06_work_inventory`, not just `cargo test`) was added this cycle after
+  adversarial review found the original predicate unbounded — see below.
+* **-33, operator ruling §17: confirmed duplicate-chooser display names removed.** Case-by-case
+  confirmation over the 787-unit chooser-facet population (not the 180-unit heuristic upper bound)
+  found real pairs in exactly one shape — the Sorcerer/Bloodrager bloodline chooser+feature idiom —
+  all 33 `class_feature`, none `companion` or `race_trait`. None was `done`-capable, so zero credit
+  moved. Landed as a bounded, evidenced id list (`DUPLICATE_CHOOSER_DISPLAY_NAME_UNIT_IDS`) with a
+  hard `exit(1)` drift guard, never a live heuristic filter.
+
+**Doneness movement is unrelated to the denominator change and moved on three independent seams,
+summing to the full +116 `done`:**
+
+* **+62 `in-progress`→`done` and +3 `unmeasurable`→`done` (equipment_modifier), +1
+  `unmeasurable`→`held`.** `arms_armor.rs`'s `armor_class_bonus` recognition widened to
+  `TYPE=ArmorEnhancement`/`ShieldEnhancement`, plus an `EQMARMOR`-chain fallback for
+  `max_dex`/`spell_failure`/`armor_check_penalty` consulted only when the bare token is absent —
+  masterwork/material/magic armor-enhancement records the probe previously could not resolve
+  standalone.
+* **+45 `held`→`done` (companion).** A new `BONUS:SKILL|Climb,Swim|DEX-STR` evaluator seam
+  (`companion_skill_entries`, 134 fixture rows) — full chassis field, transcriber, Rust
+  parse/evaluate/format, bar-check, DTO and `CompanionCatalogScreen.tsx` render. Adversarial review
+  found the bar check compared arithmetic only, never which two abilities the shipped record named
+  (a mutated `DEX-STR`→`CHA-INT` left the gate green) — fixed this integration cycle:
+  `CompanionSkillFixture` now carries `plus_ability`/`minus_ability` and the bar check fails if the
+  evaluator's parsed abilities disagree with the fixture's pinned pair.
+* **+6 `held`→`done` (monster_ability).** A second save-DC evaluator sub-seam
+  (`monster_ability_formula_entries`, 6 fixture rows) for rows stating the FULL Universal Monster
+  Rule formula (`10+(HD/2)+<STAT>`) rather than a summed literal — reuses (and mutation-proves it
+  reuses) the same `universal_monster_rule_save_dc_base` the flat sub-seam already gates.
+
+### What wave 16 changed in the architecture, not just in the counts
+
+* **`is_core_essentials_residual`'s production path is now bounded, not just tested.** Wave-16
+  adversarial review mutated the predicate to `book.starts_with("core")` and found the full test
+  suite stayed green while the mutated `main()` would silently delete every `core_rulebook` unit
+  (5,223) on a real run — the pinned-baseline test only ever walks `core_essentials`'s own book
+  directory, so it cannot see an over-broad predicate pulling in units enumerated from elsewhere.
+  `CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING` (117, matching the existing test's own pin) is now
+  asserted in `main()` itself against every real regen, closing the hole between "tests pass" and
+  "a production run is safe."
+* **The `companion` skill-ability-diff bar check now verifies WHICH abilities, not just the
+  arithmetic.** See the movement note above — this was a real gate-vacuity finding (Decision 1(a):
+  "a gate that cannot fail is worse than no gate"), fixed in the same cycle it was found rather than
+  logged for later.
+* **Two fabricated/inaccurate citations in `decisions.md`'s §17 execution record were corrected**
+  (a quoted "§17 itself anticipated" sentence that appears nowhere in the actual ruling text, and a
+  "within 3 lines" claim contradicted by the section's own worked example four lines apart) — the
+  underlying 33-unit conclusion was unaffected in both cases; only the cited authority was wrong.
+* **`docs/work-inventory.json`'s denominator changed for the first time since it was frozen.**
+  Every prior wave since the freeze reported "the denominator did not move." This wave's two
+  changes are both operator-directed deletions of content ruled never to have existed in scope
+  (hallucinated `core_essentials` residuals, duplicate display-name artifacts of a picker+feature
+  idiom) — never a cost-based exclusion, which remains forbidden.
+
+
 
 Grouped by the plane each item lives in. Every row was re-verified directly
 against the cited source, not carried over from a sibling doc unchecked.

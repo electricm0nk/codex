@@ -188,19 +188,28 @@ INDEPENDENTLY from the pinned PCGen oracle's `.lst` bytes.*
    evaluator computes. A family that can only pin a value read off the same row it parses is
    weaker, and says so.
 
-**Eight families as of wave 15** (`run_bar_check` in
-`src/rules_core/derived_evaluator_fixture_check.rs` runs all eight and unions their results):
+**Ten families as of wave 16** (`run_bar_check` in
+`src/rules_core/derived_evaluator_fixture_check.rs` runs all ten and unions their results):
 
 | array | kind | magnitude | rows |
 |---|---|---|---:|
 | `entries` | equipment | `BONUS:STAT` | 94 |
 | `monster_entries` | monster | `BONUS:VAR\|SLA_CL\|` caster level | 77 |
 | `monster_sla_entries` | monster | spell-like-ability save DC → the granted spell's LEVEL | 314 |
-| `monster_ability_entries` | monster_ability | Universal Monster Rule save-DC base | 92 |
+| `monster_ability_entries` | monster_ability | Universal Monster Rule save-DC base (summed literal) | 92 |
+| `monster_ability_formula_entries` | monster_ability | Universal Monster Rule save-DC base (full formula, `10+(HD/2)+<STAT>`) | 6 |
 | `companion_entries` | companion | natural-attack Strength damage | 117 |
+| `companion_skill_entries` | companion | `BONUS:SKILL\|Climb,Swim\|DEX-STR` ability-diff | 134 |
 | `spell_entries` | spell | caster-level-linear DURATION | 898 |
 | `spell_range_entries` | spell | `RANGE:` keyword → ft/level/divisor | 760 |
 | `class_feature_entries` | class_feature | per-level scaling `BONUS:VAR` | 12 |
+
+**`companion_skill_entries`'s bar check compares two things, not one** (wave-16 adversarial review
+finding, fixed the same cycle): the arithmetic `(plus_modifier, minus_modifier) → skill_bonus`
+triples AND, independently, that the evaluator parsed the SAME two named abilities the fixture's
+`plus_ability`/`minus_ability` pin — without the second check, a shipped record's formula could be
+mutated to name different abilities entirely (`DEX-STR` → `CHA-INT`) and the bar check would stay
+green, since the pinned arithmetic triples never named which ability was which.
 
 **Rows and units are not the same count, and the tool says so.** `monster_sla` emits one row per
 GRANTED SPELL and clears a unit only when every one of its rows clears; `spell_entries` and

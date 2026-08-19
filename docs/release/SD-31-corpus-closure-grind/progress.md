@@ -29649,3 +29649,246 @@ failed, including the new anti-gaming test; `npm run typecheck` clean; `npm test
 Auto-emitted verification receipts (verify.sh's own instrumentation, not hand-written) committed at
 `docs/retro/events/sd31-w16-companion.jsonl` (the full-gate PASS) and
 `docs/retro/events/wf_b9c2a3a2-9da-5.jsonl` (the post-baseline-update `--only root-lib` re-check).
+
+## `SD31-W16-INTEGRATE-001` — wave 16 integration cycle (2026-08-19)
+
+**Branch:** `tranche/11`, base `7485b31ea` (confirmed: `git log --oneline -1` at cycle start
+matched the dispatched tip; `ls docs data scripts schemas` all present). **Oracle pin:**
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/fetch-pcgen-oracle.sh
+--check` → `pcgen-oracle: OK 7f818006e3…`, run first per loop-instruction override 8). **Own
+`CARGO_TARGET_DIR`:** `/home/ubuntu/cargo-targets/w16-integrate`, deleted at cycle close. **Six
+lane branches merged (two operator-ruling-execution lanes + four seam/probe lanes), three
+adversarial reviews returning six lane verdicts, none GAMED.**
+
+### 1. The board, replayed and never asserted
+
+```
+python3 -c "
+import json, collections, sys
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+U=[u for u in json.load(open('docs/work-inventory.json'))['units'] if u['book'] not in P.EXCLUDED_BOOKS]
+c=collections.Counter(P.doneness_verdict(u['wiring_class'],u['status'],u['kind']) for u in U)
+print(dict(c), len(U), '%.4f%%'%(100*c['done']/len(U)))
+"
+```
+
+| | BEFORE (`generated_at` 2026-08-19T14:06:36Z) | AFTER (`generated_at` 2026-08-19T18:06:59Z) |
+|---|---:|---:|
+| **done** | **12,748 (33.0936 %)** | **12,864 (33.5244 %)** |
+| held | 1,254 | 1,204 |
+| in-progress | 1,342 | 1,280 |
+| not-started | 18,030 | 17,910 |
+| unmeasurable | 5,109 | 5,076 |
+| deferred | 38 | 38 |
+| **denominator** | **38,521** | **38,372** |
+
+**+116 done. -149 denominator. These are two DIFFERENT movements and must not be blurred**
+(explicit instruction): the denominator shrank from two operator-directed deletions (rulings §16
+and §17), and doneness moved on three unrelated seams. Neither caused the other; both are reported
+separately below, with every unit traced to a named cause in both directions.
+
+`site/dashboard/PF1e-dashboard.json`'s `work_inventory.mandate_headline`, re-published with a
+forced-fresh cache (`PF1E_WORK_INVENTORY_MAX_AGE=0`, since the shared `~/swarm-observer` cache was
+stale from an earlier standalone lane run): `done: 12864, denominator: 38372`. Matches the replay
+exactly. `status_sources_agree` is **false** (per loop-instruction override 9, named by source):
+`work_inventory.by_status` (`generated_at` 2026-08-19T18:14:57Z) and `work_inventory.by_doneness`
+(`doneness_source_generated_at` 2026-08-19T18:06:59Z) both sum to the same 38,372 denominator and
+the same 12,864 `done` — the two sources carry different `generated_at` stamps without the figures
+actually disagreeing, exactly the benign pattern the override describes, not a real disagreement.
+
+### 2. Denominator change traced to two named causes — never one blurred figure
+
+**-116 net, operator ruling §16 (`decisions.md §9`/`§16`, `artifacts/OPERATOR-RULINGS-2026-08-19.md`):
+`core_essentials` residuals not found in print are deleted.** Re-derived per row against the pinned
+oracle (not trusted from the ruling's own estimate, which its own text said to re-derive):
+
+| group | units | disposition |
+|---|---:|---|
+| Ghoran `race_trait` rows | 12 | RE-ATTRIBUTE to `ultimate_wilderness` (own native declaration, `uw_races.lst`) |
+| Ghoran `race`-kind chassis row | 1 | WITHHELD (not re-attributed): `ultimate_wilderness:race:ghoran` already exists natively; re-attributing too would duplicate one game object |
+| `ce_abilities_race.lst` rows preceding the file's first `SOURCELONG:` directive | 23 | DELETE (no book attribution possible; within the ruling's general verbatim principle, outside its own two-bucket worked table — flagged to the operator, `OPEN-ISSUES.md` row 299) |
+| `ce_abilities_race.lst` rows under `SOURCELONG:Universal Rules` | 6 | DELETE (PCGen internal construct, not a Paizo book) |
+| Android, Aquatic Elf, Gathlain, Lashunta, Monkey Goblin, Syrinx, Triaxian | 86 | DELETE (no race declaration outside `core_essentials` at the pinned oracle, corpus-wide) |
+
+`python3 -c "import json; print(sum(1 for u in json.load(open('docs/work-inventory.json'))['units'] if u.get('book')=='core_essentials'))"`
+→ **0**. `core_essentials` absent as a key from `docs/work-inventory.json`'s `books` map entirely.
+**`decisions.md §9`'s condition is discharged.** All 128 residual units were `not-ingested` before
+disposition (128/128), so zero credit moved from this change. Total units: 38,540 → 38,424 (-116).
+
+**-33, operator ruling §17: confirmed duplicate-chooser display names removed.** Case-by-case
+confirmation (not the 180-unit heuristic bound) over the 787-unit chooser-facet population found
+real pairs in exactly one shape — the Sorcerer/Bloodrager bloodline chooser+feature idiom — 33
+units, all `class_feature`, zero `companion`/`race_trait`. None was `done`-capable (`status`
+`unknown`/`not-ingested` only), so zero credit moved. Total units: 38,424 → 38,391 (-33).
+
+**Combined: 38,540 → 38,391 real units; 38,521 → 38,372 denominator (excl. `beginner_box`, 19
+units, untouched by either change).**
+
+### 3. Doneness movement traced to three independent seams, summing to the full +116
+
+| n | kind | transition | seam | branch |
+|---:|---|---|---|---|
+| 62 | equipment_modifier | in-progress → done | armor-enhancement `TYPE=ArmorEnhancement`/`ShieldEnhancement` recognition + `EQMARMOR`-chain fallback | `worktree-wf_b9c2a3a2-9da-6` |
+| 45 | companion | held → done | `BONUS:SKILL\|Climb,Swim\|DEX-STR` ability-diff evaluator seam | `worktree-wf_b9c2a3a2-9da-5` |
+| 6 | monster_ability | held → done | Universal Monster Rule full-formula save-DC sub-seam (`10+(HD/2)+<STAT>`) | `worktree-wf_b9c2a3a2-9da-4` |
+| 3 | equipment_modifier | unmeasurable → done | same armor-enhancement widening (records previously flagged "no description to show") | `worktree-wf_b9c2a3a2-9da-6` |
+| 1 | equipment_modifier | unmeasurable → held | same widening, one record resolves to `held` not `done` | `worktree-wf_b9c2a3a2-9da-6` |
+
+`62+45+6+3=116`; the `held` move nets to zero doneness change. Independently re-derived from the
+merged, regenerated `docs/work-inventory.json` by joining base vs. after per unit id and grouping on
+`(kind, book)`: reproduces exactly, restated below with total-population context.
+
+| kind | total (before) | total (after) | done (before) | done (after) | delta |
+|---|---:|---:|---:|---:|---:|
+| class | 185 | 185 | 27 (14.5946%) | 27 (14.5946%) | +0 |
+| class_feature | 15,472 | 15,439 | 134 (0.8661%) | 134 (0.8681%) | +0 |
+| companion | 1,696 | 1,696 | 801 (47.2288%) | 846 (49.8821%) | **+45** |
+| equipment | 6,208 | 6,208 | 5,311 (85.5509%) | 5,311 (85.5509%) | +0 |
+| equipment_modifier | 1,580 | 1,580 | 438 (27.7215%) | 503 (31.8354%) | **+65** |
+| feat | 2,610 | 2,610 | 1,459 (55.9004%) | 1,459 (55.9004%) | +0 |
+| monster | 1,270 | 1,270 | 973 (76.6142%) | 973 (76.6142%) | +0 |
+| monster_ability | 2,951 | 2,942 | 1,548 (52.4568%) | 1,554 (52.8212%) | **+6** |
+| race | 103 | 95 | 34 (33.0097%) | 34 (35.7895%) | +0 |
+| race_trait | 3,603 | 3,504 | 520 (14.4324%) | 520 (14.8402%) | +0 |
+| spell | 2,843 | 2,843 | 1,503 (52.8667%) | 1,503 (52.8667%) | +0 |
+| **TOTAL** | **38,521** | **38,372** | **12,748 (33.0936%)** | **12,864 (33.5244%)** | **+116** |
+
+### 4. What was merged, on whose figure
+
+All six lane branches merged onto `tranche/11`; **none was marked GAMED by any reviewer**. Where a
+reviewer stated `corrected_units`, that figure is what is banked (no lane's own count was taken on
+trust).
+
+| lane | branch | reviewer verdict | corrected units | banked |
+|---|---|---|---:|---:|
+| ruling-16-ce (core_essentials deletion) | `worktree-wf_b9c2a3a2-9da-1` | PARTIAL | 0 (units_claimed) | -116 net denominator |
+| ruling-17-dupes (duplicate chooser dedup) | `worktree-wf_b9c2a3a2-9da-2` | PARTIAL | 0 (units_claimed) | -33 denominator |
+| monster (kind=monster seam) | (no worktree; investigation only) | PARTIAL | 0 | 0 |
+| monster_ability (formula sub-seam) | `worktree-wf_b9c2a3a2-9da-4` | SOUND | 6 | 6 |
+| companion + spell + class_feature | `worktree-wf_b9c2a3a2-9da-5` | PARTIAL | 45 | 45 |
+| equipment_modifier | `worktree-wf_b9c2a3a2-9da-6` | SOUND | 65 | 65 |
+
+Both PARTIAL verdicts on the seam/probe lanes (companion+spell+class_feature) kept their full unit
+count — the reviewer's finding (the companion_skill bar check verified arithmetic only, not WHICH
+abilities) was fixed at integration (§5 below), not withdrawn against.
+
+### 5. Merge mechanics: source code merged clean, generated artifacts regenerated fresh
+
+Merge order: lane 1 (ruling-16-ce, clean, no conflicts) → lane 2 (ruling-17-dupes: conflicts only
+in generated JSON, resolved by taking `ours` since all such files are regenerated in §7; both
+lanes' additions to `src/bin/v06_work_inventory.rs`'s classify loop composed correctly, confirmed
+by reading the merged file) → lane 4 (monster_ability, clean except generated JSON) → lane 5
+(companion+spell+class_feature: one real conflict, `derived_evaluator_fixture_check.rs`'s
+`fixtures_total` sum — both lanes' `+= monster_ability_formula.fixtures_total` and
+`+= companion_skill.fixtures_total` terms kept; the shared generated fixture file
+`tests/fixtures/rules_core/derived-evaluator-fixtures.json` was resolved by taking one lane's
+version then RE-RUNNING the other lane's own generator script against it — both generators only
+ever read-modify-write their own named top-level key, proven by inspection, so this reproduces the
+exact byte-correct union) → lane 6 (equipment_modifier, clean except generated JSON).
+
+**Build the merged tree BEFORE gating, per instruction — found nothing.** `cargo build --locked
+--jobs 8 --lib --bins` and `--tests` both compiled clean (only pre-existing dead-code warnings, no
+errors) before any regen or gate run. No merge-created compile break this wave (unlike wave 15's).
+
+### 6. CONFIRMED findings fixed this cycle
+
+1. **`is_core_essentials_residual`'s production path was unbounded (HIGH, adversarial review).**
+   The pinned-baseline test only walks `core_essentials`'s own directory and cannot see an
+   over-broad predicate pulling in units enumerated elsewhere; mutating it to
+   `book.starts_with("core")` left the full suite green while a real run would silently delete
+   5,223 `core_rulebook` units. Fixed: `CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING = 117` (matching
+   the existing test's own pin) is now asserted in `main()` itself, on every real regen — proven by
+   this cycle's own real run reporting `core_essentials residuals deleted: 116` and passing the
+   assertion.
+2. **Fabricated/inaccurate citations in `decisions.md`'s §17 execution record (MEDIUM, adversarial
+   review).** A quoted "§17 itself anticipated ... a smaller correct number beats a bigger wrong
+   one" sentence appears nowhere in the actual ruling text or the pre-wave-16 decisions.md; a
+   "within 3 lines" claim was contradicted by the section's own worked example (4 lines apart).
+   Both corrected in place; the underlying 33-unit conclusion is unaffected in both cases.
+3. **`companion_skill` bar check compared arithmetic only, never WHICH abilities (MEDIUM,
+   adversarial review — a real Decision 1(a) gate-vacuity finding).** Mutating a shipped record's
+   formula `DEX-STR` → `CHA-INT` left the gate green, since `evaluate_companion_skill_ability_diff`
+   discards its `formula` argument and the loader never read `expected.plus_ability`/
+   `minus_ability`. Fixed: `CompanionSkillFixture` now carries both fields (already written by the
+   generator, just never read); the bar check fails if `parsed.plus`/`parsed.minus` disagree with
+   the fixture's pinned pair — mirroring `run_companion_bar_check`'s existing `shape_name`
+   comparison for the sibling seam. Re-ran the full guarded regen after the fix: still 1,750 units
+   cleared over 2,504 rows, 0 failed — the fix adds a real check without breaking any real record.
+4. **`every_corpus_book_appears_in_the_inventory` (the merge's own consequence, caught by
+   `root-full`, not by any lane).** Ruling §16's execution correctly drove `core_essentials`'s
+   residual to 0 — but this pre-existing test asserted every non-`out_of_scope` book in the roster
+   contributes at least one unit, and `core_essentials` (scope `shared_library`) now legitimately
+   contributes none. Fixed: `shared_library` is exempted alongside `out_of_scope` — a shared-library
+   packaging directory exists precisely so its content attributes to the books that include it (or
+   is deleted as unattributable), so zero self-owned units is that ruling's SUCCESS condition, not
+   a silently-skipped book. Gate run 1 caught this (see §8); run 2 confirms the fix.
+
+### 7. Guarded regen, run for real
+
+```
+CORPUS_LITERAL_SWEEP_REPORT=$S/sweep.json DERIVED_FIXTURE_CHECK_REPORT=$S/fixture.json \
+CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/w16-integrate PCGEN_CORPUS_ROOT=... \
+cargo run --locked --jobs 8 --bin corpus_literal_sweep -- --json-out $S/sweep.json
+# corpus-literal-sweep: 26105 records examined of 26741 read, 0 findings, CLEAN
+cargo run --locked --jobs 8 --bin derived_evaluator_fixture_check -- --json-out $S/fixture.json
+# derived-evaluator-fixture-check: 1750 unit(s) cleared over 2504 fixture row(s); 0 failed; 0 not ingested
+CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... cargo run --locked --jobs 8 --bin v06_work_inventory
+# exit 0; stderr: "core_essentials residuals deleted (decisions.md §16): 116"
+```
+
+Never `--allow-stamp-loss` (not needed; nothing refused). `docs/work-inventory.json` regenerated:
+`generated_at` 2026-08-19T18:06:59Z, 38,391 total units (was 38,540).
+
+Fixture coverage: **1,699 → 1,750 units cleared over 2,364 → 2,504 rows, 0 failed** (companion_skill
++134 rows/+45 units net of a small overlap check, monster_ability_formula +6 rows/+6 units — see
+§3's per-transition table for the exact unit counts). Verification stamps: **8,052 → 8,103**
+(6,436 literal-verified unchanged + 1,616 → 1,667 fixture-verified, +51 = 45 companion_skill + 6
+monster_ability_formula).
+
+### 8. Site publish
+
+`./scripts/publish-site-dashboard.sh --check` (before a forced-fresh regen) reported the known
+shared-checkout caching hazard (`WARNING: mandate_headline sanity check failed: ladder sum (38372)
++ unmapped (0) = 38372 != denominator (38405)`) — the ~/swarm-observer work-inventory cache was
+stale from an earlier standalone lane's isolated run (denominator 38,405 = only ruling §16 applied,
+not §17). Re-ran with `PF1E_WORK_INVENTORY_MAX_AGE=0` to force a fresh subprocess read: clean, no
+warning, `mandate_headline.denominator == 38372` exactly. **`core_essentials` confirmed absent from
+the published book list**: `'core_essentials' in [b['id'] for b in dashboard['work_inventory']['books']]`
+→ False.
+
+`site/status-data.json`: 30 books, 36,008 items total (post-dedup, post-deletion). Both PI gates
+clean (1,612 declared-PI names, zero leaked, both the dashboard shard and the public status
+projection).
+
+### 9. Full gate — two runs, run 1 catching a real merge-consequence finding
+
+**Run 1** (`artifacts/SD31-W16-INTEGRATE-001-verify-run1.log`): `RESULT: FAIL`. 33/34 stages passed;
+`root-full` failed on exactly one test — `every_corpus_book_appears_in_the_inventory`, the merge's
+own consequence of ruling §16's execution (§6 item 4). `root-lib` 2084 passed (stale baseline note:
+2081 recorded, 2084 measured — 3 new tests, the ceiling-assertion doc/const plus its own logic
+being covered by the existing test, no new test file). `desktop` 470 passed, `reach` 29 passed,
+`corpus-sweep` 0 findings, `supersession-gate` 116 objects clean, `frontend-test` 99/99,
+`frontend-typecheck` clean, `clippy` root:51 desktop:7 warnings/0 errors (baselines unchanged),
+`class-dump` 31/31.
+
+**Run 2** (`artifacts/SD31-W16-INTEGRATE-001-verify-run2.log`), after the one-line fix (§6 item 4):
+**`RESULT: PASS`, 34/34 stages.** `root-full` now `7,144 passed across 573 suites, all 536
+tests/*.rs suites executed` (the fixed test, plus 573 unchanged suites otherwise). `root-lib` 2,084
+passed (unchanged from run 1). `desktop` 470 passed, `reach` 29 passed, `corpus-sweep` 0 findings
+(26,105 records examined), `supersession-gate` 116 objects clean, `frontend-test` 99/99,
+`frontend-typecheck` clean, `clippy` root:51 desktop:7 warnings/0 errors, `class-dump` 31/31.
+Both PI gates (dashboard + public-status) zero leaked against 1,612 declared-PI names.
+
+`scripts/verify-baselines.env` updated (measured floors only ever raised, never lowered):
+`BASELINE_ROOT_LIB_TESTS` 2,081 → 2,084 (+3: the new `CORE_ESSENTIALS_RESIDUAL_DELETION_CEILING`
+production-path guard's own coverage inside the existing test module — no new test file).
+`BASELINE_ROOT_FULL_TESTS` 7,130 → 7,144 (+14: the same +3 lib-test delta, since `root-full`
+counts the lib target too, plus net new integration tests across the six merged lane branches).
+`BASELINE_ROOT_TEST_BINARIES` (573) and `BASELINE_DESKTOP_TESTS` (470) unchanged (no new test
+file this wave); `CLIPPY_WARNINGS_ROOT` (51), `CLIPPY_WARNINGS_DESKTOP` (7) and
+`COMPUTED_CLASSES` (31) all unchanged.
+
+### 10. Cleanup
+
+`/home/ubuntu/cargo-targets/w16-integrate` deleted at cycle close. All six wave-16 worktrees
+(`wf_b9c2a3a2-9da-1` through `-9`) removed after merge confirmation.
