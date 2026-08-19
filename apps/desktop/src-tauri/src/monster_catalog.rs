@@ -48,7 +48,9 @@ use serde::{Deserialize, Serialize};
 use codex::rules_core::rules_tables::beastiary1::{
     self, natural_attack_provenance, MonsterId, MonsterStatBlock,
 };
-use codex::rules_core::derived_evaluator_fixture_check::spell_like_ability_caster_level;
+use codex::rules_core::derived_evaluator_fixture_check::{
+    spell_like_ability_caster_level, spell_like_ability_save_dc,
+};
 use codex::rules_core::rules_tables::monster_chassis::{self, MonsterBook};
 use codex::rules_core::rules_tables::RuleSetId;
 
@@ -411,6 +413,47 @@ pub struct MonsterCatalogEntryDto {
     /// [`map_monster`]'s Bestiary 1 half, whose ingest does not capture
     /// abilities at all and so cannot honestly answer either way.
     pub spell_like_ability_caster_level: Option<i32>,
+    /// Every spell this creature's row grants as a spell-like ability, in row
+    /// order, each carrying the derived spell level
+    /// `derived_evaluator_fixture_check::spell_like_ability_save_dc` reads out
+    /// of the row's own save-DC token (SD31-W15-MONSTER-SLA-001).
+    ///
+    /// Empty for every record served by [`map_monster`]'s Bestiary 1 half,
+    /// whose SD-22-era ingest captures no `SPELLS:` tokens at all — an empty
+    /// list there says "this half of the ingest does not carry them", the same
+    /// honest-absence posture `abilities` already takes.
+    pub spell_like_abilities: Vec<MonsterSpellLikeAbilityDto>,
+}
+
+/// One granted spell-like ability, as the screen renders it.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct MonsterSpellLikeAbilityDto {
+    /// The spell's name as the corpus row states it, scope qualifiers
+    /// included (`Invisibility (self only)`).
+    pub spell: String,
+    /// How often, verbatim from the row's `TIMES=` segment (`3`, `ATWILL`),
+    /// paired with `time_unit` when the row states one.
+    pub times: Option<String>,
+    pub time_unit: Option<String>,
+    /// The row's `CASTERLEVEL=` value verbatim — a flat literal or a PCGen
+    /// formula. Never resolved here; a formula is shown as the row states it
+    /// rather than as an invented number.
+    pub caster_level_token: Option<String>,
+    /// The row's save-DC token verbatim (`15+CHA`). `None` for a spell the
+    /// row states no save for.
+    pub save_dc_token: Option<String>,
+    /// The spell's own level, derived from `save_dc_token` by PF1's
+    /// Spell-Like Abilities universal monster rule (`DC = 10 + spell level +
+    /// ability modifier`). `None` when the row states no DC, or states one
+    /// this repo refuses to read rather than guess at.
+    pub derived_spell_level: Option<i32>,
+    /// The ability whose modifier the DC scales with (`CHA`, or `INT` for the
+    /// monsters whose rows exercise the rule's "unless otherwise noted"
+    /// clause). Deliberately NOT resolved to a number: a monster's ability
+    /// scores are not a corpus-stated fact in this repo (`SD31-E6-F1-002`),
+    /// so the screen shows the formula, never a fabricated DC.
+    pub save_dc_ability: Option<String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -536,6 +579,10 @@ fn map_monster(monster_id: MonsterId) -> MonsterCatalogEntryDto {
         // simply never captured. `None` is the honest answer to a question
         // this half of the ingest cannot answer, not a claim that none exist.
         spell_like_ability_caster_level: None,
+        // Same reason: Bestiary 1's SD-22 half captures no `SPELLS:` tokens,
+        // so an empty list is the honest answer rather than a claim the
+        // creature grants none.
+        spell_like_abilities: Vec::new(),
     }
 }
 
@@ -692,6 +739,22 @@ fn map_chassis_monster(
             .map(|r| (*r).to_owned())
             .collect(),
         spell_like_ability_caster_level: spell_like_ability_caster_level(block),
+        spell_like_abilities: block
+            .spell_like_abilities
+            .iter()
+            .map(|sla| {
+                let derived = spell_like_ability_save_dc(sla);
+                MonsterSpellLikeAbilityDto {
+                    spell: sla.spell.to_owned(),
+                    times: sla.times.map(str::to_owned),
+                    time_unit: sla.time_unit.map(str::to_owned),
+                    caster_level_token: sla.caster_level_token.map(str::to_owned),
+                    save_dc_token: sla.save_dc_token.map(str::to_owned),
+                    derived_spell_level: derived.as_ref().map(|d| d.spell_level),
+                    save_dc_ability: derived.map(|d| d.ability),
+                }
+            })
+            .collect(),
     }
 }
 

@@ -17438,5 +17438,2993 @@
         "class_level_alias": "NinjaLVL"
       }
     }
+  ],
+  "monster_sla_token_family": "SPELLS:<label>|TIMES=<n>|CASTERLEVEL=<v>|<spell>,<constant>+<ABILITY> (the spell-like-ability save DC)",
+  "monster_sla_derivation": "PF1 Universal Monster Rules, Spell-Like Abilities: a spell-like ability's save DC is 10 + the spell's level + the creature's ability modifier. The modifier is NEVER resolved -- a monster's ability SCORES are not a corpus-stated fact in this repo (SD31-E6-F1-002) and inventing one would be fabrication. expected.spell_level and expected.ability restate the FORMULA's own parameters, matching the DURATION/RANGE seams' posture.",
+  "monster_sla_independence": "expected.spell_level is read from a DIFFERENT FILE than the one the evaluator parses: the granted spell's own PCGen record, whose CLASSES:<classes>=<level> token states the level directly (spell_level_lst / spell_level_line / spell_level_corpus_field pin it, with its own sha256). scripts/derive_monster_sla_spell_level_fixtures.py re-reads the pinned upstream .lst bytes for both files, splits the SPELLS: token with its own from-scratch parser, opens no file under src/rules_core/rules_tables/, and imports no engine module. expected.spell_level is TRANSCRIBED from that record, never computed from the DC token under test, so a fixture row only exists where the spell's own CLASSES: token determines exactly ONE level. A unit is banked when at least one of its DC tokens is verified that way and NONE of them contradicts a stated single level; monster_sla_coverage states how many tokens fell in each bucket.",
+  "monster_sla_coverage": {
+    "dc_tokens_seen": 287,
+    "dc_tokens_verified": 190,
+    "dc_tokens_contradicting": 8,
+    "dc_tokens_undetermined_multi_level": 80,
+    "dc_tokens_undetermined_spell_absent": 9,
+    "dc_tokens_undetermined_shape": 0,
+    "units_banked": 63,
+    "units_refused_for_a_contradiction": 8,
+    "units_with_no_determinable_token": 7,
+    "target_units_with_no_dc_token_at_all": 219,
+    "target_units_with_no_ingested_corpus_record": 19
+  },
+  "monster_sla_entries": [
+    {
+      "unit_id": "bestiary:monster:aboleth",
+      "book": "bestiary",
+      "record_key": "Aboleth",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 7,
+      "spell": "Hypnotic Pattern",
+      "corpus_field": "12+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 311,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=2",
+      "expected": {
+        "spell_level": 2,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:aboleth",
+      "book": "bestiary",
+      "record_key": "Aboleth",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 7,
+      "spell": "Illusory Wall",
+      "corpus_field": "14+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 319,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=4",
+      "expected": {
+        "spell_level": 4,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:aboleth",
+      "book": "bestiary",
+      "record_key": "Aboleth",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 7,
+      "spell": "Mirage Arcana",
+      "corpus_field": "15+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 400,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=5",
+      "expected": {
+        "spell_level": 5,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:aboleth",
+      "book": "bestiary",
+      "record_key": "Aboleth",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 7,
+      "spell": "Persistent Image",
+      "corpus_field": "15+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 429,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=5",
+      "expected": {
+        "spell_level": 5,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:aboleth",
+      "book": "bestiary",
+      "record_key": "Aboleth",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 7,
+      "spell": "Programmed Image",
+      "corpus_field": "16+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 461,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=6",
+      "expected": {
+        "spell_level": 6,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:aboleth",
+      "book": "bestiary",
+      "record_key": "Aboleth",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 7,
+      "spell": "Veil",
+      "corpus_field": "16+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 653,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=6",
+      "expected": {
+        "spell_level": 6,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:aboleth",
+      "book": "bestiary",
+      "record_key": "Aboleth",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 7,
+      "spell": "Dominate Monster",
+      "corpus_field": "19+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 187,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=9",
+      "expected": {
+        "spell_level": 9,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:angel_astral_deva",
+      "book": "bestiary",
+      "record_key": "Angel (Astral Deva)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 8,
+      "spell": "Holy Aura",
+      "corpus_field": "18+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 306,
+      "spell_level_corpus_field": "CLASSES:Cleric=8",
+      "expected": {
+        "spell_level": 8,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:angel_astral_deva",
+      "book": "bestiary",
+      "record_key": "Angel (Astral Deva)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 8,
+      "spell": "Holy Smite",
+      "corpus_field": "14+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 307,
+      "spell_level_corpus_field": "CLASSES:Cleric=4",
+      "expected": {
+        "spell_level": 4,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:angel_astral_deva",
+      "book": "bestiary",
+      "record_key": "Angel (Astral Deva)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 8,
+      "spell": "Holy Word",
+      "corpus_field": "17+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 309,
+      "spell_level_corpus_field": "CLASSES:Cleric=7",
+      "expected": {
+        "spell_level": 7,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:angel_astral_deva",
+      "book": "bestiary",
+      "record_key": "Angel (Astral Deva)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 8,
+      "spell": "Blade Barrier",
+      "corpus_field": "16+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 56,
+      "spell_level_corpus_field": "CLASSES:Cleric=6",
+      "expected": {
+        "spell_level": 6,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:angel_solar",
+      "book": "bestiary",
+      "record_key": "Angel (Solar)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 10,
+      "spell": "Holy Smite",
+      "corpus_field": "14+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 307,
+      "spell_level_corpus_field": "CLASSES:Cleric=4",
+      "expected": {
+        "spell_level": 4,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:angel_solar",
+      "book": "bestiary",
+      "record_key": "Angel (Solar)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 10,
+      "spell": "Imprisonment",
+      "corpus_field": "19+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 322,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=9",
+      "expected": {
+        "spell_level": 9,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:angel_solar",
+      "book": "bestiary",
+      "record_key": "Angel (Solar)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 10,
+      "spell": "Speak with Dead",
+      "corpus_field": "13+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 561,
+      "spell_level_corpus_field": "CLASSES:Cleric=3",
+      "expected": {
+        "spell_level": 3,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:angel_solar",
+      "book": "bestiary",
+      "record_key": "Angel (Solar)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 10,
+      "spell": "Blade Barrier",
+      "corpus_field": "16+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 56,
+      "spell_level_corpus_field": "CLASSES:Cleric=6",
+      "expected": {
+        "spell_level": 6,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:angel_solar",
+      "book": "bestiary",
+      "record_key": "Angel (Solar)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 10,
+      "spell": "Earthquake",
+      "corpus_field": "18+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 196,
+      "spell_level_corpus_field": "CLASSES:Cleric,Druid=8",
+      "expected": {
+        "spell_level": 8,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:angel_solar",
+      "book": "bestiary",
+      "record_key": "Angel (Solar)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 10,
+      "spell": "Prismatic Spray",
+      "corpus_field": "17+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 456,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=7",
+      "expected": {
+        "spell_level": 7,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:azata_bralani",
+      "book": "bestiary",
+      "record_key": "Azata (Bralani)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 30,
+      "spell": "Charm Person",
+      "corpus_field": "11+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 87,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=1",
+      "expected": {
+        "spell_level": 1,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:azata_bralani",
+      "book": "bestiary",
+      "record_key": "Azata (Bralani)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 30,
+      "spell": "Gust of Wind",
+      "corpus_field": "12+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 280,
+      "spell_level_corpus_field": "CLASSES:Druid,Sorcerer,Wizard=2",
+      "expected": {
+        "spell_level": 2,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:azata_bralani",
+      "book": "bestiary",
+      "record_key": "Azata (Bralani)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 30,
+      "spell": "Lightning Bolt",
+      "corpus_field": "13+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 354,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=3",
+      "expected": {
+        "spell_level": 3,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:azata_lillend",
+      "book": "bestiary",
+      "record_key": "Azata (Lillend)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 32,
+      "spell": "Hallucinatory Terrain",
+      "corpus_field": "14+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 285,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=4",
+      "expected": {
+        "spell_level": 4,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:azata_lillend",
+      "book": "bestiary",
+      "record_key": "Azata (Lillend)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 32,
+      "spell": "Charm Person",
+      "corpus_field": "11+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 87,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=1",
+      "expected": {
+        "spell_level": 1,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:demon_dretch",
+      "book": "bestiary",
+      "record_key": "Demon (Dretch)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 94,
+      "spell": "Cause Fear",
+      "corpus_field": "11+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 80,
+      "spell_level_corpus_field": "CLASSES:Bard,Cleric,Sorcerer,Wizard=1",
+      "expected": {
+        "spell_level": 1,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:demon_dretch",
+      "book": "bestiary",
+      "record_key": "Demon (Dretch)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 94,
+      "spell": "Stinking Cloud",
+      "corpus_field": "13+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 576,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=3",
+      "expected": {
+        "spell_level": 3,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:demon_hezrou",
+      "book": "bestiary",
+      "record_key": "Demon (Hezrou)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 96,
+      "spell": "Chaos Hammer",
+      "corpus_field": "14+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 83,
+      "spell_level_corpus_field": "CLASSES:Cleric=4",
+      "expected": {
+        "spell_level": 4,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:demon_hezrou",
+      "book": "bestiary",
+      "record_key": "Demon (Hezrou)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 96,
+      "spell": "Unholy Blight",
+      "corpus_field": "14+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 647,
+      "spell_level_corpus_field": "CLASSES:Cleric=4",
+      "expected": {
+        "spell_level": 4,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:demon_hezrou",
+      "book": "bestiary",
+      "record_key": "Demon (Hezrou)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 96,
+      "spell": "Blasphemy",
+      "corpus_field": "17+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 57,
+      "spell_level_corpus_field": "CLASSES:Cleric=7",
+      "expected": {
+        "spell_level": 7,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:demon_nabasu",
+      "book": "bestiary",
+      "record_key": "Demon (Nabasu)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 98,
+      "spell": "Telekinesis",
+      "corpus_field": "15+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 619,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=5",
+      "expected": {
+        "spell_level": 5,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:demon_nabasu",
+      "book": "bestiary",
+      "record_key": "Demon (Nabasu)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 98,
+      "spell": "Silence",
+      "corpus_field": "12+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 547,
+      "spell_level_corpus_field": "CLASSES:Bard,Cleric=2",
+      "expected": {
+        "spell_level": 2,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:demon_nabasu",
+      "book": "bestiary",
+      "record_key": "Demon (Nabasu)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 98,
+      "spell": "Hold Person (Mass)",
+      "corpus_field": "17+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 304,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=7",
+      "expected": {
+        "spell_level": 7,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:demon_shadow",
+      "book": "bestiary",
+      "record_key": "Demon (Shadow)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 101,
+      "spell": "Telekinesis",
+      "corpus_field": "15+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 619,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=5",
+      "expected": {
+        "spell_level": 5,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:demon_shadow",
+      "book": "bestiary",
+      "record_key": "Demon (Shadow)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 101,
+      "spell": "Shadow Conjuration",
+      "corpus_field": "14+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 530,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=4",
+      "expected": {
+        "spell_level": 4,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:demon_shadow",
+      "book": "bestiary",
+      "record_key": "Demon (Shadow)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 101,
+      "spell": "Shadow Evocation",
+      "corpus_field": "15+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 532,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=5",
+      "expected": {
+        "spell_level": 5,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:demon_shadow",
+      "book": "bestiary",
+      "record_key": "Demon (Shadow)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 101,
+      "spell": "Magic Jar",
+      "corpus_field": "15+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 379,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=5",
+      "expected": {
+        "spell_level": 5,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:demon_vrock",
+      "book": "bestiary",
+      "record_key": "Demon (Vrock)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 103,
+      "spell": "Telekinesis",
+      "corpus_field": "15+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 619,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=5",
+      "expected": {
+        "spell_level": 5,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:devil_barbed",
+      "book": "bestiary",
+      "record_key": "Devil (Barbed)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 105,
+      "spell": "Major Image",
+      "corpus_field": "13+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 387,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=3",
+      "expected": {
+        "spell_level": 3,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:devil_barbed",
+      "book": "bestiary",
+      "record_key": "Devil (Barbed)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 105,
+      "spell": "Pyrotechnics",
+      "corpus_field": "12+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 471,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=2",
+      "expected": {
+        "spell_level": 2,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:devil_barbed",
+      "book": "bestiary",
+      "record_key": "Devil (Barbed)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 105,
+      "spell": "Order's Wrath",
+      "corpus_field": "14+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 418,
+      "spell_level_corpus_field": "CLASSES:Cleric=4",
+      "expected": {
+        "spell_level": 4,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:devil_barbed",
+      "book": "bestiary",
+      "record_key": "Devil (Barbed)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 105,
+      "spell": "Unholy Blight",
+      "corpus_field": "14+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 647,
+      "spell_level_corpus_field": "CLASSES:Cleric=4",
+      "expected": {
+        "spell_level": 4,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:devil_horned",
+      "book": "bestiary",
+      "record_key": "Devil (Horned)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 109,
+      "spell": "Dispel Good",
+      "corpus_field": "15+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 176,
+      "spell_level_corpus_field": "CLASSES:Cleric=5",
+      "expected": {
+        "spell_level": 5,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:devil_horned",
+      "book": "bestiary",
+      "record_key": "Devil (Horned)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 109,
+      "spell": "Persistent Image",
+      "corpus_field": "15+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 429,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=5",
+      "expected": {
+        "spell_level": 5,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:devil_horned",
+      "book": "bestiary",
+      "record_key": "Devil (Horned)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 109,
+      "spell": "Fireball",
+      "corpus_field": "13+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 233,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=3",
+      "expected": {
+        "spell_level": 3,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:devil_horned",
+      "book": "bestiary",
+      "record_key": "Devil (Horned)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 109,
+      "spell": "Lightning Bolt",
+      "corpus_field": "13+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 354,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=3",
+      "expected": {
+        "spell_level": 3,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:devourer",
+      "book": "bestiary",
+      "record_key": "Devourer",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 114,
+      "spell": "Control Undead",
+      "corpus_field": "17+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 113,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=7",
+      "expected": {
+        "spell_level": 7,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:devourer",
+      "book": "bestiary",
+      "record_key": "Devourer",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 114,
+      "spell": "Death Knell",
+      "corpus_field": "12+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 142,
+      "spell_level_corpus_field": "CLASSES:Cleric=2",
+      "expected": {
+        "spell_level": 2,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:devourer",
+      "book": "bestiary",
+      "record_key": "Devourer",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 114,
+      "spell": "Ghoul Touch",
+      "corpus_field": "12+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 264,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=2",
+      "expected": {
+        "spell_level": 2,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:devourer",
+      "book": "bestiary",
+      "record_key": "Devourer",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 114,
+      "spell": "Inflict Serious Wounds",
+      "corpus_field": "13+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 330,
+      "spell_level_corpus_field": "CLASSES:Cleric=3",
+      "expected": {
+        "spell_level": 3,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:devourer",
+      "book": "bestiary",
+      "record_key": "Devourer",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 114,
+      "spell": "Planar Ally (Lesser)",
+      "corpus_field": "14+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 436,
+      "spell_level_corpus_field": "CLASSES:Cleric=4",
+      "expected": {
+        "spell_level": 4,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:devourer",
+      "book": "bestiary",
+      "record_key": "Devourer",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 114,
+      "spell": "Ray of Enfeeblement",
+      "corpus_field": "11+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 479,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=1",
+      "expected": {
+        "spell_level": 1,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:devourer",
+      "book": "bestiary",
+      "record_key": "Devourer",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 114,
+      "spell": "Spectral Hand",
+      "corpus_field": "12+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 563,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=2",
+      "expected": {
+        "spell_level": 2,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:devourer",
+      "book": "bestiary",
+      "record_key": "Devourer",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 114,
+      "spell": "Vampiric Touch",
+      "corpus_field": "13+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 652,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=3",
+      "expected": {
+        "spell_level": 3,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:genie_djinni",
+      "book": "bestiary",
+      "record_key": "Genie (Djinni)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 190,
+      "spell": "Persistent Image",
+      "corpus_field": "15+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 429,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=5",
+      "expected": {
+        "spell_level": 5,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:genie_djinni_noble",
+      "book": "bestiary",
+      "record_key": "Genie (Djinni/Noble)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 191,
+      "spell": "Persistent Image",
+      "corpus_field": "15+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 429,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=5",
+      "expected": {
+        "spell_level": 5,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:genie_shaitan",
+      "book": "bestiary",
+      "record_key": "Genie (Shaitan)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 198,
+      "spell": "Glitterdust",
+      "corpus_field": "12+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 269,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=2",
+      "expected": {
+        "spell_level": 2,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:genie_shaitan_noble",
+      "book": "bestiary",
+      "record_key": "Genie (Shaitan/Noble)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 199,
+      "spell": "Glitterdust",
+      "corpus_field": "12+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 269,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=2",
+      "expected": {
+        "spell_level": 2,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:giant_storm",
+      "book": "bestiary",
+      "record_key": "Giant (Storm)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 209,
+      "spell": "Call Lightning",
+      "corpus_field": "13+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 74,
+      "spell_level_corpus_field": "CLASSES:Druid=3",
+      "expected": {
+        "spell_level": 3,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:giant_storm",
+      "book": "bestiary",
+      "record_key": "Giant (Storm)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 209,
+      "spell": "Chain Lightning",
+      "corpus_field": "16+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 81,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=6",
+      "expected": {
+        "spell_level": 6,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:gray_ooze_id_ooze",
+      "book": "bestiary",
+      "record_key": "Gray Ooze (Id Ooze)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 223,
+      "spell": "Confusion (Lesser)",
+      "corpus_field": "11+INT",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 106,
+      "spell_level_corpus_field": "CLASSES:Bard=1",
+      "expected": {
+        "spell_level": 1,
+        "ability": "INT"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:green_hag",
+      "book": "bestiary",
+      "record_key": "Green Hag",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 224,
+      "spell": "Alter Self",
+      "corpus_field": "12+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 17,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=2",
+      "expected": {
+        "spell_level": 2,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:green_hag",
+      "book": "bestiary",
+      "record_key": "Green Hag",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 224,
+      "spell": "Ghost Sound",
+      "corpus_field": "10+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 263,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=0",
+      "expected": {
+        "spell_level": 0,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:green_hag",
+      "book": "bestiary",
+      "record_key": "Green Hag",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 224,
+      "spell": "Pyrotechnics",
+      "corpus_field": "12+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 471,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=2",
+      "expected": {
+        "spell_level": 2,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:intellect_devourer",
+      "book": "bestiary",
+      "record_key": "Intellect Devourer",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 247,
+      "spell": "Daze Monster",
+      "corpus_field": "12+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 141,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=2",
+      "expected": {
+        "spell_level": 2,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:intellect_devourer",
+      "book": "bestiary",
+      "record_key": "Intellect Devourer",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 247,
+      "spell": "Inflict Serious Wounds",
+      "corpus_field": "13+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 330,
+      "spell_level_corpus_field": "CLASSES:Cleric=3",
+      "expected": {
+        "spell_level": 3,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:lamia",
+      "book": "bestiary",
+      "record_key": "Lamia",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 266,
+      "spell": "Major Image",
+      "corpus_field": "13+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 387,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=3",
+      "expected": {
+        "spell_level": 3,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:lamia",
+      "book": "bestiary",
+      "record_key": "Lamia",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 266,
+      "spell": "Deep Slumber",
+      "corpus_field": "13+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 145,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=3",
+      "expected": {
+        "spell_level": 3,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:mite",
+      "book": "bestiary",
+      "record_key": "Mite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 295,
+      "spell": "Doom",
+      "corpus_field": "11+INT",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 189,
+      "spell_level_corpus_field": "CLASSES:Cleric=1",
+      "expected": {
+        "spell_level": 1,
+        "ability": "INT"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:neothelid",
+      "book": "bestiary",
+      "record_key": "Neothelid",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 305,
+      "spell": "Detect Thoughts",
+      "corpus_field": "12+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 162,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=2",
+      "expected": {
+        "spell_level": 2,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:neothelid",
+      "book": "bestiary",
+      "record_key": "Neothelid",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 305,
+      "spell": "Telekinesis",
+      "corpus_field": "15+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 619,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=5",
+      "expected": {
+        "spell_level": 5,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:satyr",
+      "book": "bestiary",
+      "record_key": "Satyr",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 347,
+      "spell": "Charm Person",
+      "corpus_field": "11+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 87,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=1",
+      "expected": {
+        "spell_level": 1,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:satyr",
+      "book": "bestiary",
+      "record_key": "Satyr",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 347,
+      "spell": "Ghost Sound",
+      "corpus_field": "10+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 263,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=0",
+      "expected": {
+        "spell_level": 0,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:satyr",
+      "book": "bestiary",
+      "record_key": "Satyr",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 347,
+      "spell": "Sleep",
+      "corpus_field": "11+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 551,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=1",
+      "expected": {
+        "spell_level": 1,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary:monster:sphinx_gynosphinx",
+      "book": "bestiary",
+      "record_key": "Sphinx (Gynosphinx)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+      "upstream_lst_sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+      "upstream_line": 371,
+      "spell": "Clairaudience/Clairvoyance",
+      "corpus_field": "13+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 91,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=3",
+      "expected": {
+        "spell_level": 3,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:aeon_akhana",
+      "book": "bestiary_2",
+      "record_key": "Aeon (Akhana)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 16,
+      "spell": "Inflict Serious Wounds",
+      "corpus_field": "13+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 330,
+      "spell_level_corpus_field": "CLASSES:Cleric=3",
+      "expected": {
+        "spell_level": 3,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:aeon_akhana",
+      "book": "bestiary_2",
+      "record_key": "Aeon (Akhana)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 16,
+      "spell": "Sanctuary",
+      "corpus_field": "11+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 512,
+      "spell_level_corpus_field": "CLASSES:Cleric=1",
+      "expected": {
+        "spell_level": 1,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:aeon_akhana",
+      "book": "bestiary_2",
+      "record_key": "Aeon (Akhana)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 16,
+      "spell": "Slay Living",
+      "corpus_field": "15+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 550,
+      "spell_level_corpus_field": "CLASSES:Cleric=5",
+      "expected": {
+        "spell_level": 5,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:aeon_bythos",
+      "book": "bestiary_2",
+      "record_key": "Aeon (Bythos)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 20,
+      "spell": "Slow",
+      "corpus_field": "13+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 553,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=3",
+      "expected": {
+        "spell_level": 3,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:aeon_bythos",
+      "book": "bestiary_2",
+      "record_key": "Aeon (Bythos)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 20,
+      "spell": "Temporal Stasis",
+      "corpus_field": "18+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 626,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=8",
+      "expected": {
+        "spell_level": 8,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:aeon_paracletus",
+      "book": "bestiary_2",
+      "record_key": "Aeon (Paracletus)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 23,
+      "spell": "Sanctuary",
+      "corpus_field": "11+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 512,
+      "spell_level_corpus_field": "CLASSES:Cleric=1",
+      "expected": {
+        "spell_level": 1,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:aeon_paracletus",
+      "book": "bestiary_2",
+      "record_key": "Aeon (Paracletus)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 23,
+      "spell": "Calm Emotions",
+      "corpus_field": "12+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 77,
+      "spell_level_corpus_field": "CLASSES:Bard,Cleric=2",
+      "expected": {
+        "spell_level": 2,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:aeon_theletos",
+      "book": "bestiary_2",
+      "record_key": "Aeon (Theletos)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 35,
+      "spell": "Command",
+      "corpus_field": "11+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 97,
+      "spell_level_corpus_field": "CLASSES:Cleric=1",
+      "expected": {
+        "spell_level": 1,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:aeon_theletos",
+      "book": "bestiary_2",
+      "record_key": "Aeon (Theletos)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 35,
+      "spell": "Doom",
+      "corpus_field": "11+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 189,
+      "spell_level_corpus_field": "CLASSES:Cleric=1",
+      "expected": {
+        "spell_level": 1,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:aeon_theletos",
+      "book": "bestiary_2",
+      "record_key": "Aeon (Theletos)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 35,
+      "spell": "Sanctuary",
+      "corpus_field": "11+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 512,
+      "spell_level_corpus_field": "CLASSES:Cleric=1",
+      "expected": {
+        "spell_level": 1,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:aeon_theletos",
+      "book": "bestiary_2",
+      "record_key": "Aeon (Theletos)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 35,
+      "spell": "Enthrall",
+      "corpus_field": "12+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 208,
+      "spell_level_corpus_field": "CLASSES:Bard,Cleric=2",
+      "expected": {
+        "spell_level": 2,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:aeon_theletos",
+      "book": "bestiary_2",
+      "record_key": "Aeon (Theletos)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 35,
+      "spell": "Touch of Idiocy",
+      "corpus_field": "12+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 631,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=2",
+      "expected": {
+        "spell_level": 2,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:aeon_theletos",
+      "book": "bestiary_2",
+      "record_key": "Aeon (Theletos)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 35,
+      "spell": "Geas (Lesser)",
+      "corpus_field": "14+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 261,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=4",
+      "expected": {
+        "spell_level": 4,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:agathion_cetaceal",
+      "book": "bestiary_2",
+      "record_key": "Agathion (Cetaceal)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 37,
+      "spell": "Detect Thoughts",
+      "corpus_field": "12+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 162,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=2",
+      "expected": {
+        "spell_level": 2,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:agathion_cetaceal",
+      "book": "bestiary_2",
+      "record_key": "Agathion (Cetaceal)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 37,
+      "spell": "Lightning Bolt",
+      "corpus_field": "13+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 354,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=3",
+      "expected": {
+        "spell_level": 3,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:agathion_cetaceal",
+      "book": "bestiary_2",
+      "record_key": "Agathion (Cetaceal)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 37,
+      "spell": "Cone of Cold",
+      "corpus_field": "15+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 104,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=5",
+      "expected": {
+        "spell_level": 5,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:agathion_draconal",
+      "book": "bestiary_2",
+      "record_key": "Agathion (Draconal)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 44,
+      "spell": "Command",
+      "corpus_field": "11+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 97,
+      "spell_level_corpus_field": "CLASSES:Cleric=1",
+      "expected": {
+        "spell_level": 1,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:agathion_draconal",
+      "book": "bestiary_2",
+      "record_key": "Agathion (Draconal)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 44,
+      "spell": "Lightning Bolt",
+      "corpus_field": "13+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 354,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=3",
+      "expected": {
+        "spell_level": 3,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:agathion_leonal",
+      "book": "bestiary_2",
+      "record_key": "Agathion (Leonal)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 48,
+      "spell": "Fireball",
+      "corpus_field": "13+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 233,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=3",
+      "expected": {
+        "spell_level": 3,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:agathion_vulpinal",
+      "book": "bestiary_2",
+      "record_key": "Agathion (Vulpinal)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 59,
+      "spell": "Holy Smite",
+      "corpus_field": "14+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 307,
+      "spell_level_corpus_field": "CLASSES:Cleric=4",
+      "expected": {
+        "spell_level": 4,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:agathion_vulpinal",
+      "book": "bestiary_2",
+      "record_key": "Agathion (Vulpinal)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 59,
+      "spell": "Major Image",
+      "corpus_field": "13+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 387,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=3",
+      "expected": {
+        "spell_level": 3,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:angel_monadic_deva",
+      "book": "bestiary_2",
+      "record_key": "Angel (Monadic Deva)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 81,
+      "spell": "Holy Smite",
+      "corpus_field": "14+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 307,
+      "spell_level_corpus_field": "CLASSES:Cleric=4",
+      "expected": {
+        "spell_level": 4,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:angel_monadic_deva",
+      "book": "bestiary_2",
+      "record_key": "Angel (Monadic Deva)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 81,
+      "spell": "Holy Word",
+      "corpus_field": "17+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 309,
+      "spell_level_corpus_field": "CLASSES:Cleric=7",
+      "expected": {
+        "spell_level": 7,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:angel_monadic_deva",
+      "book": "bestiary_2",
+      "record_key": "Angel (Monadic Deva)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 81,
+      "spell": "Holy Aura",
+      "corpus_field": "18+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 306,
+      "spell_level_corpus_field": "CLASSES:Cleric=8",
+      "expected": {
+        "spell_level": 8,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:angel_movanic_deva",
+      "book": "bestiary_2",
+      "record_key": "Angel (Movanic Deva)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 84,
+      "spell": "Holy Smite",
+      "corpus_field": "14+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 307,
+      "spell_level_corpus_field": "CLASSES:Cleric=4",
+      "expected": {
+        "spell_level": 4,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:angel_movanic_deva",
+      "book": "bestiary_2",
+      "record_key": "Angel (Movanic Deva)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 84,
+      "spell": "Holy Aura",
+      "corpus_field": "18+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 306,
+      "spell_level_corpus_field": "CLASSES:Cleric=8",
+      "expected": {
+        "spell_level": 8,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:animate_dream",
+      "book": "bestiary_2",
+      "record_key": "Animate Dream",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 86,
+      "spell": "Deep Slumber",
+      "corpus_field": "13+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 145,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=3",
+      "expected": {
+        "spell_level": 3,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:animate_dream",
+      "book": "bestiary_2",
+      "record_key": "Animate Dream",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 86,
+      "spell": "Nightmare",
+      "corpus_field": "15+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 413,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=5",
+      "expected": {
+        "spell_level": 5,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:animate_dream",
+      "book": "bestiary_2",
+      "record_key": "Animate Dream",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 86,
+      "spell": "Phantasmal Killer",
+      "corpus_field": "14+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 430,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=4",
+      "expected": {
+        "spell_level": 4,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:archon_star",
+      "book": "bestiary_2",
+      "record_key": "Archon (Star)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 102,
+      "spell": "Sunbeam",
+      "corpus_field": "17+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 604,
+      "spell_level_corpus_field": "CLASSES:Druid=7",
+      "expected": {
+        "spell_level": 7,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:archon_star",
+      "book": "bestiary_2",
+      "record_key": "Archon (Star)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 102,
+      "spell": "Meteor Swarm",
+      "corpus_field": "19+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 394,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=9",
+      "expected": {
+        "spell_level": 9,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:archon_star",
+      "book": "bestiary_2",
+      "record_key": "Archon (Star)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 102,
+      "spell": "Polar Ray",
+      "corpus_field": "18+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 446,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=8",
+      "expected": {
+        "spell_level": 8,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:archon_star",
+      "book": "bestiary_2",
+      "record_key": "Archon (Star)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 102,
+      "spell": "Prismatic Spray",
+      "corpus_field": "17+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 456,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=7",
+      "expected": {
+        "spell_level": 7,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:archon_star",
+      "book": "bestiary_2",
+      "record_key": "Archon (Star)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 102,
+      "spell": "Sunburst",
+      "corpus_field": "18+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 605,
+      "spell_level_corpus_field": "CLASSES:Druid,Sorcerer,Wizard=8",
+      "expected": {
+        "spell_level": 8,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:axiomite",
+      "book": "bestiary_2",
+      "record_key": "Axiomite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 114,
+      "spell": "Lightning Bolt",
+      "corpus_field": "13+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 354,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=3",
+      "expected": {
+        "spell_level": 3,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:axiomite",
+      "book": "bestiary_2",
+      "record_key": "Axiomite",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 114,
+      "spell": "Telekinesis",
+      "corpus_field": "15+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 619,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=5",
+      "expected": {
+        "spell_level": 5,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:azata_brijidine",
+      "book": "bestiary_2",
+      "record_key": "Azata (Brijidine)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 119,
+      "spell": "Flaming Sphere",
+      "corpus_field": "12+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 237,
+      "spell_level_corpus_field": "CLASSES:Druid,Sorcerer,Wizard=2",
+      "expected": {
+        "spell_level": 2,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:azata_brijidine",
+      "book": "bestiary_2",
+      "record_key": "Azata (Brijidine)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 119,
+      "spell": "Heat Metal",
+      "corpus_field": "12+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 292,
+      "spell_level_corpus_field": "CLASSES:Druid=2",
+      "expected": {
+        "spell_level": 2,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:azata_brijidine",
+      "book": "bestiary_2",
+      "record_key": "Azata (Brijidine)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 119,
+      "spell": "Spike Stones",
+      "corpus_field": "14+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 571,
+      "spell_level_corpus_field": "CLASSES:Druid=4",
+      "expected": {
+        "spell_level": 4,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:azata_lyrakien",
+      "book": "bestiary_2",
+      "record_key": "Azata (Lyrakien)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 123,
+      "spell": "Daze",
+      "corpus_field": "10+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 140,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=0",
+      "expected": {
+        "spell_level": 0,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:azata_lyrakien",
+      "book": "bestiary_2",
+      "record_key": "Azata (Lyrakien)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 123,
+      "spell": "Ventriloquism",
+      "corpus_field": "11+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 654,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=1",
+      "expected": {
+        "spell_level": 1,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:azata_lyrakien",
+      "book": "bestiary_2",
+      "record_key": "Azata (Lyrakien)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 123,
+      "spell": "Confusion (Lesser)",
+      "corpus_field": "11+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 106,
+      "spell_level_corpus_field": "CLASSES:Bard=1",
+      "expected": {
+        "spell_level": 1,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:azata_lyrakien",
+      "book": "bestiary_2",
+      "record_key": "Azata (Lyrakien)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 123,
+      "spell": "Silent Image",
+      "corpus_field": "11+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 548,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=1",
+      "expected": {
+        "spell_level": 1,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:brownie",
+      "book": "bestiary_2",
+      "record_key": "Brownie",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 150,
+      "spell": "Confusion (Lesser)",
+      "corpus_field": "11+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 106,
+      "spell_level_corpus_field": "CLASSES:Bard=1",
+      "expected": {
+        "spell_level": 1,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:brownie",
+      "book": "bestiary_2",
+      "record_key": "Brownie",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 150,
+      "spell": "Ventriloquism",
+      "corpus_field": "11+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 654,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=1",
+      "expected": {
+        "spell_level": 1,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:dark_slayer",
+      "book": "bestiary_2",
+      "record_key": "Dark Slayer",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 256,
+      "spell": "Bleed",
+      "corpus_field": "10+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 58,
+      "spell_level_corpus_field": "CLASSES:Cleric,Sorcerer,Wizard=0",
+      "expected": {
+        "spell_level": 0,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:dark_slayer",
+      "book": "bestiary_2",
+      "record_key": "Dark Slayer",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 256,
+      "spell": "Chill Touch",
+      "corpus_field": "11+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 89,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=1",
+      "expected": {
+        "spell_level": 1,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:dark_slayer",
+      "book": "bestiary_2",
+      "record_key": "Dark Slayer",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 256,
+      "spell": "Daze Monster",
+      "corpus_field": "12+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 141,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=2",
+      "expected": {
+        "spell_level": 2,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:dark_slayer",
+      "book": "bestiary_2",
+      "record_key": "Dark Slayer",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 256,
+      "spell": "Death Knell",
+      "corpus_field": "12+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 142,
+      "spell_level_corpus_field": "CLASSES:Cleric=2",
+      "expected": {
+        "spell_level": 2,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:dark_slayer",
+      "book": "bestiary_2",
+      "record_key": "Dark Slayer",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 256,
+      "spell": "Inflict Moderate Wounds",
+      "corpus_field": "12+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 328,
+      "spell_level_corpus_field": "CLASSES:Cleric=2",
+      "expected": {
+        "spell_level": 2,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:devil_belier",
+      "book": "bestiary_2",
+      "record_key": "Devil (Belier)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 273,
+      "spell": "Persistent Image",
+      "corpus_field": "15+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 429,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=5",
+      "expected": {
+        "spell_level": 5,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:devil_belier",
+      "book": "bestiary_2",
+      "record_key": "Devil (Belier)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 273,
+      "spell": "Blasphemy",
+      "corpus_field": "17+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 57,
+      "spell_level_corpus_field": "CLASSES:Cleric=7",
+      "expected": {
+        "spell_level": 7,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:devil_belier",
+      "book": "bestiary_2",
+      "record_key": "Devil (Belier)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 273,
+      "spell": "Demand",
+      "corpus_field": "18+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 149,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=8",
+      "expected": {
+        "spell_level": 8,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:devil_belier",
+      "book": "bestiary_2",
+      "record_key": "Devil (Belier)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 273,
+      "spell": "Magic Jar",
+      "corpus_field": "15+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 379,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=5",
+      "expected": {
+        "spell_level": 5,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:gremlin_pugwampi",
+      "book": "bestiary_2",
+      "record_key": "Gremlin (Pugwampi)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 432,
+      "spell": "Shatter",
+      "corpus_field": "12+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 537,
+      "spell_level_corpus_field": "CLASSES:Bard,Cleric,Sorcerer,Wizard=2",
+      "expected": {
+        "spell_level": 2,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:grig",
+      "book": "bestiary_2",
+      "record_key": "Grig",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 443,
+      "spell": "Entangle",
+      "corpus_field": "11+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 207,
+      "spell_level_corpus_field": "CLASSES:Druid,Ranger=1",
+      "expected": {
+        "spell_level": 1,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:grig",
+      "book": "bestiary_2",
+      "record_key": "Grig",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 443,
+      "spell": "Pyrotechnics",
+      "corpus_field": "12+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 471,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=2",
+      "expected": {
+        "spell_level": 2,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:hound_of_tindalos",
+      "book": "bestiary_2",
+      "record_key": "Hound of Tindalos",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 497,
+      "spell": "Slow",
+      "corpus_field": "13+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 553,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=3",
+      "expected": {
+        "spell_level": 3,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:korred",
+      "book": "bestiary_2",
+      "record_key": "Korred",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 554,
+      "spell": "Shatter",
+      "corpus_field": "12+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 537,
+      "spell_level_corpus_field": "CLASSES:Bard,Cleric,Sorcerer,Wizard=2",
+      "expected": {
+        "spell_level": 2,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:lamia_matriarch",
+      "book": "bestiary_2",
+      "record_key": "Lamia Matriarch",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 569,
+      "spell": "Ventriloquism",
+      "corpus_field": "11+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 654,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=1",
+      "expected": {
+        "spell_level": 1,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:lamia_matriarch",
+      "book": "bestiary_2",
+      "record_key": "Lamia Matriarch",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 569,
+      "spell": "Deep Slumber",
+      "corpus_field": "13+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 145,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=3",
+      "expected": {
+        "spell_level": 3,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:lamia_matriarch",
+      "book": "bestiary_2",
+      "record_key": "Lamia Matriarch",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 569,
+      "spell": "Major Image",
+      "corpus_field": "13+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 387,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=3",
+      "expected": {
+        "spell_level": 3,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:leng_spider",
+      "book": "bestiary_2",
+      "record_key": "Leng Spider",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 576,
+      "spell": "Major Image",
+      "corpus_field": "13+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 387,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=3",
+      "expected": {
+        "spell_level": 3,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:leng_spider",
+      "book": "bestiary_2",
+      "record_key": "Leng Spider",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 576,
+      "spell": "Insanity",
+      "corpus_field": "17+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 332,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=7",
+      "expected": {
+        "spell_level": 7,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:leng_spider",
+      "book": "bestiary_2",
+      "record_key": "Leng Spider",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 576,
+      "spell": "Mirage Arcana",
+      "corpus_field": "15+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 400,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=5",
+      "expected": {
+        "spell_level": 5,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:leng_spider",
+      "book": "bestiary_2",
+      "record_key": "Leng Spider",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 576,
+      "spell": "Veil",
+      "corpus_field": "16+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 653,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=6",
+      "expected": {
+        "spell_level": 6,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:qlippoth_shoggti",
+      "book": "bestiary_2",
+      "record_key": "Qlippoth (Shoggti)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 726,
+      "spell": "Command",
+      "corpus_field": "11+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 97,
+      "spell_level_corpus_field": "CLASSES:Cleric=1",
+      "expected": {
+        "spell_level": 1,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:qlippoth_shoggti",
+      "book": "bestiary_2",
+      "record_key": "Qlippoth (Shoggti)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 726,
+      "spell": "Charm Person",
+      "corpus_field": "11+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 87,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=1",
+      "expected": {
+        "spell_level": 1,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:sard",
+      "book": "bestiary_2",
+      "record_key": "Sard",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 756,
+      "spell": "Storm of Vengeance",
+      "corpus_field": "19+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 581,
+      "spell_level_corpus_field": "CLASSES:Cleric,Druid=9",
+      "expected": {
+        "spell_level": 9,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:sard",
+      "book": "bestiary_2",
+      "record_key": "Sard",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 756,
+      "spell": "Whirlwind",
+      "corpus_field": "18+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 671,
+      "spell_level_corpus_field": "CLASSES:Druid=8",
+      "expected": {
+        "spell_level": 8,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:sard",
+      "book": "bestiary_2",
+      "record_key": "Sard",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 756,
+      "spell": "Chain Lightning",
+      "corpus_field": "16+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 81,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=6",
+      "expected": {
+        "spell_level": 6,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:sard",
+      "book": "bestiary_2",
+      "record_key": "Sard",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 756,
+      "spell": "Lightning Bolt",
+      "corpus_field": "13+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 354,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=3",
+      "expected": {
+        "spell_level": 3,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:seugathi",
+      "book": "bestiary_2",
+      "record_key": "Seugathi",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 781,
+      "spell": "Detect Thoughts",
+      "corpus_field": "12+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 162,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=2",
+      "expected": {
+        "spell_level": 2,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:seugathi",
+      "book": "bestiary_2",
+      "record_key": "Seugathi",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 781,
+      "spell": "Mind Fog",
+      "corpus_field": "15+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 396,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=5",
+      "expected": {
+        "spell_level": 5,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:seugathi",
+      "book": "bestiary_2",
+      "record_key": "Seugathi",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 781,
+      "spell": "Phantasmal Killer",
+      "corpus_field": "14+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 430,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=4",
+      "expected": {
+        "spell_level": 4,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:siren",
+      "book": "bestiary_2",
+      "record_key": "Siren",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 801,
+      "spell": "Cause Fear",
+      "corpus_field": "11+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 80,
+      "spell_level_corpus_field": "CLASSES:Bard,Cleric,Sorcerer,Wizard=1",
+      "expected": {
+        "spell_level": 1,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:siren",
+      "book": "bestiary_2",
+      "record_key": "Siren",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 801,
+      "spell": "Charm Person",
+      "corpus_field": "11+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 87,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=1",
+      "expected": {
+        "spell_level": 1,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:siren",
+      "book": "bestiary_2",
+      "record_key": "Siren",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 801,
+      "spell": "Deep Slumber",
+      "corpus_field": "13+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 145,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=3",
+      "expected": {
+        "spell_level": 3,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:siren",
+      "book": "bestiary_2",
+      "record_key": "Siren",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 801,
+      "spell": "Shout",
+      "corpus_field": "14+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 545,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=4",
+      "expected": {
+        "spell_level": 4,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:titan_elysian",
+      "book": "bestiary_2",
+      "record_key": "Titan (Elysian)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 847,
+      "spell": "Meteor Swarm",
+      "corpus_field": "19+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 394,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=9",
+      "expected": {
+        "spell_level": 9,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:urdefhan",
+      "book": "bestiary_2",
+      "record_key": "Urdefhan",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 887,
+      "spell": "Death Knell",
+      "corpus_field": "12+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 142,
+      "spell_level_corpus_field": "CLASSES:Cleric=2",
+      "expected": {
+        "spell_level": 2,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:urdefhan",
+      "book": "bestiary_2",
+      "record_key": "Urdefhan",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 887,
+      "spell": "Ray of Enfeeblement",
+      "corpus_field": "11+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 479,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=1",
+      "expected": {
+        "spell_level": 1,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bestiary_2:monster:wendigo",
+      "book": "bestiary_2",
+      "record_key": "Wendigo",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+      "upstream_lst_sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+      "upstream_line": 901,
+      "spell": "Nightmare",
+      "corpus_field": "15+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 413,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=5",
+      "expected": {
+        "spell_level": 5,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bonus_bestiary:monster:hag_annis",
+      "book": "bonus_bestiary",
+      "record_key": "Hag (Annis)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bonus_bestiary/bb_races.lst",
+      "upstream_lst_sha256": "14ef1129bc2ea0a5055d56d3a09dda0b93c8740a14f97c1b448114edf6189bef",
+      "upstream_line": 14,
+      "spell": "Disguise Self",
+      "corpus_field": "11+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 171,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=1",
+      "expected": {
+        "spell_level": 1,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bonus_bestiary:monster:hag_annis",
+      "book": "bonus_bestiary",
+      "record_key": "Hag (Annis)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bonus_bestiary/bb_races.lst",
+      "upstream_lst_sha256": "14ef1129bc2ea0a5055d56d3a09dda0b93c8740a14f97c1b448114edf6189bef",
+      "upstream_line": 14,
+      "spell": "Fog Cloud",
+      "corpus_field": "12+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 242,
+      "spell_level_corpus_field": "CLASSES:Druid,Sorcerer,Wizard=2",
+      "expected": {
+        "spell_level": 2,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bonus_bestiary:monster:huecuva",
+      "book": "bonus_bestiary",
+      "record_key": "Huecuva",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bonus_bestiary/bb_races.lst",
+      "upstream_lst_sha256": "14ef1129bc2ea0a5055d56d3a09dda0b93c8740a14f97c1b448114edf6189bef",
+      "upstream_line": 15,
+      "spell": "Disguise Self",
+      "corpus_field": "11+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 171,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=1",
+      "expected": {
+        "spell_level": 1,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bonus_bestiary:monster:lammasu",
+      "book": "bonus_bestiary",
+      "record_key": "Lammasu",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bonus_bestiary/bb_races.lst",
+      "upstream_lst_sha256": "14ef1129bc2ea0a5055d56d3a09dda0b93c8740a14f97c1b448114edf6189bef",
+      "upstream_line": 16,
+      "spell": "Dimension Door",
+      "corpus_field": "14+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 165,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=4",
+      "expected": {
+        "spell_level": 4,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "bonus_bestiary:monster:nixie",
+      "book": "bonus_bestiary",
+      "record_key": "Nixie",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/bonus_bestiary/bb_races.lst",
+      "upstream_lst_sha256": "14ef1129bc2ea0a5055d56d3a09dda0b93c8740a14f97c1b448114edf6189bef",
+      "upstream_line": 18,
+      "spell": "Charm Person",
+      "corpus_field": "11+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 87,
+      "spell_level_corpus_field": "CLASSES:Bard,Sorcerer,Wizard=1",
+      "expected": {
+        "spell_level": 1,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "book_of_the_damned_volume_2:monster:demon_vermlek",
+      "book": "book_of_the_damned_volume_2",
+      "record_key": "Demon (Vermlek)",
+      "upstream_lst": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_races.lst",
+      "upstream_lst_sha256": "837eb03a72aedd5790bab3fc53ffd3a19f7e66f3d75e32fdad653697abef6dd7",
+      "upstream_line": 7,
+      "spell": "Inflict Light Wounds (Mass)",
+      "corpus_field": "15+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 327,
+      "spell_level_corpus_field": "CLASSES:Cleric=5",
+      "expected": {
+        "spell_level": 5,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "book_of_the_damned_volume_2:monster:demon_vermlek",
+      "book": "book_of_the_damned_volume_2",
+      "record_key": "Demon (Vermlek)",
+      "upstream_lst": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_races.lst",
+      "upstream_lst_sha256": "837eb03a72aedd5790bab3fc53ffd3a19f7e66f3d75e32fdad653697abef6dd7",
+      "upstream_line": 7,
+      "spell": "Spider Climb",
+      "corpus_field": "12+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 569,
+      "spell_level_corpus_field": "CLASSES:Druid,Sorcerer,Wizard=2",
+      "expected": {
+        "spell_level": 2,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "inner_sea_world_guide:monster:dragon_spine",
+      "book": "inner_sea_world_guide",
+      "record_key": "Dragon (Spine)",
+      "upstream_lst": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races.lst",
+      "upstream_lst_sha256": "d4ce7298dc71c3527171e3b3b4591974432bdd0d41fc20f8002197b0d5bcf8d8",
+      "upstream_line": 15,
+      "spell": "Spike Stones",
+      "corpus_field": "14+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 571,
+      "spell_level_corpus_field": "CLASSES:Druid=4",
+      "expected": {
+        "spell_level": 4,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "inner_sea_world_guide:monster:dragon_spine",
+      "book": "inner_sea_world_guide",
+      "record_key": "Dragon (Spine)",
+      "upstream_lst": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races.lst",
+      "upstream_lst_sha256": "d4ce7298dc71c3527171e3b3b4591974432bdd0d41fc20f8002197b0d5bcf8d8",
+      "upstream_line": 15,
+      "spell": "Telekinesis",
+      "corpus_field": "15+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 619,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=5",
+      "expected": {
+        "spell_level": 5,
+        "ability": "CHA"
+      }
+    },
+    {
+      "unit_id": "inner_sea_world_guide:monster:dragon_spine",
+      "book": "inner_sea_world_guide",
+      "record_key": "Dragon (Spine)",
+      "upstream_lst": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races.lst",
+      "upstream_lst_sha256": "d4ce7298dc71c3527171e3b3b4591974432bdd0d41fc20f8002197b0d5bcf8d8",
+      "upstream_line": 15,
+      "spell": "Telekinetic Sphere",
+      "corpus_field": "18+CHA",
+      "spell_level_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "spell_level_lst_sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+      "spell_level_line": 620,
+      "spell_level_corpus_field": "CLASSES:Sorcerer,Wizard=8",
+      "expected": {
+        "spell_level": 8,
+        "ability": "CHA"
+      }
+    }
   ]
 }

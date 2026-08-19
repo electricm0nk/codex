@@ -27014,3 +27014,249 @@ Moving in the right direction; the population is still its own card (row 246).
   promotions**, for the reason `SD31-E6-F5-005` recorded and this cycle did not overturn: the
   desktop app's corpus loader is a bounded fixture bundle, so those specific records cannot be
   driven through `driver.sh` on this box. Row 242 — operator ruling.
+
+## `SD31-W15-MONSTER-SLA-001` — wave 15 monster lane: a SECOND derived-evaluator seam for `monster`, the spell-like-ability save DC (**+63 `done`**)
+
+**Actor:** `RETRO_ACTOR=sd31-w15-monster-seam`. **Branch:** `worktree-wf_0628906e-65b-1`.
+**Base:** `tranche/11` @ `45273fd3b`. **Oracle pin:** `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
+(`./scripts/fetch-pcgen-oracle.sh --check` → `pcgen-oracle: OK 7f818006e...`).
+
+### 0. Checkout assertion — the worktree was cut from the WRONG commit, and recovered
+
+The dispatch named `tranche/11` @ `45273fd3b`; `git rev-parse HEAD` in the worktree read
+`37a80141e`, a `site-publish/*` merge on a **different lineage that carries no `docs/`, `data/`,
+`scripts/`, `schemas/` or `tools/` tree at all** (`git ls-tree --name-only 37a80141e` → 12 entries;
+`45273fd3b` → 18). Every required read named by the dispatch was absent. The tree was clean
+(`git status --porcelain` empty), so `git reset --hard 45273fd3b` recovered it. **All five sibling
+wave-15 worktrees were cut from the same wrong commit** (`git worktree list`) — this is a dispatch
+defect, not a one-off. Recorded per SD-30 `loop-instruction.md` cycle step 0−, whose own text says
+the event log under-counts this defect 3×. `retro.py incident` emitted.
+
+### 1. The lane, and why the existing monster seam could not serve it
+
+The lane was the 316 `monster` units at `wiring_class=derived, status=grounded` that
+`doneness_verdict()` caps at `held`. Wave 13's `kind=monster` seam derives a
+spell-like-ability CASTER LEVEL from `BONUS:VAR|SLA_CL|` + `MONSTERCLASS:<type>:<HD>`.
+Re-derived against the pinned oracle over all 316 rows: **exactly ONE carries a
+`BONUS:VAR|SLA_CL|` token.** That seam is exhausted for this population, and extending
+its fixture set would have banked one unit.
+
+The derived signals actually present, re-derived from the oracle rows (not from a doc):
+
+| triggering field | rows |
+|---|---:|
+| `SPELLS:` (a DC formula, or a non-literal `CASTERLEVEL=`) | 151 |
+| `BONUS:WEAPONPROF=<attack>\|DAMAGE\|<STR formula>` | 178 |
+| `BONUS:VAR\|<x>BonusDamage\|<STR formula>` | 67 |
+| `BONUS:SKILL\|Climb,Swim\|DEX-STR` and kin | 15 |
+| `SR:10+TL` | 1 |
+
+### 2. The seam that was REFUSED, and why — natural-attack Strength damage
+
+The largest single family (178 rows) is the natural-attack Strength-to-damage adjustment:
+`max(0,(STR/2))` ×125, `-STR`/`-1*(STR)` ×22, `-(STR/2)`/`-ceil(STR/2)` ×11, `STR` ×2.
+It looks like a clean application of PF1's printed rule (1½× Str for a lone natural attack,
+1× primary, ½× secondary, none for a swarm), and three worked examples fit it exactly.
+
+**It was not built, because the expected value cannot be derived independently.** These tokens
+are ADJUSTMENTS relative to a baseline PCGen computes at runtime, and that baseline is not
+constant: Jabberwock's `BONUS:WEAPONPROF=Tail Slap|DAMAGE|STR` would imply 2× Str against a
+1× baseline, while its printed stat block gives the tail slap 1½× — so the baseline for that
+attack is not 1×. Deriving the multiplier would have meant reverse-engineering PCGen's baseline
+FROM the corpus and then asserting it back against the corpus, which is exactly the circular
+fixture Decision 1(a) forbids. Recorded as an open finding rather than banked.
+
+### 3. The seam that was BUILT — the spell-like-ability save DC
+
+**The rule** (PF1 Bestiary Appendix 1, "Universal Monster Rules", *Spell-Like Abilities*;
+verified against the public PRD mirror): a spell-like ability's save DC is
+**10 + the spell's level + the creature's ability modifier**. PCGen encodes it per-spell as the
+trailing `,<constant>+<ABILITY>` of a `SPELLS:` grant.
+
+**The evaluator** — `derived_evaluator_fixture_check::spell_like_ability_save_dc` — never
+resolves the modifier (a monster's ability SCORES are not a corpus-stated fact here;
+`SD31-E6-F1-002` refused that family). Exactly as the spell `DURATION` seam does, it derives the
+FORMULA's own parameters: the scaling ability, and — running the rule backwards over the
+corpus-stated constant — **the spell's own level**.
+
+**What makes this seam non-circular, and it is stronger than its siblings.** Every other seam in
+this family reads its expected value out of the SAME corpus field the evaluator parses. This one
+reads it out of a **different file**: the granted spell's own PCGen record, whose
+`CLASSES:<classes>=<level>` token states the level directly. The evaluator never opens that file.
+Two independently authored corpus facts, in two files, joined only by the printed rule.
+`monster_sla_expected_value_is_transcribed_from_the_spell_record_not_the_dc_token` asserts that
+property as a test (`spell_level_lst != upstream_lst`) rather than leaving it as prose.
+
+**`expected.spell_level` is TRANSCRIBED, never computed.** A row is emitted only where the
+spell's own record determines exactly ONE level. Where a spell is printed at different levels for
+different classes, the spell file alone cannot say which printing this creature used, and **no
+rule recovers it** — re-derived over this population's own 81 such tokens, the DC matches
+`max(levels)` 62 times, `min(levels)` 17, an interior value once, and neither once. A
+"take the highest" rule would have been a 77 %-accurate guess dressed as a derivation. Those 81
+tokens were counted and banked nothing.
+
+### 4. What was refused, in numbers (`monster_sla_coverage`, shipped inside the fixture)
+
+```json
+{"dc_tokens_seen": 287, "dc_tokens_verified": 190, "dc_tokens_contradicting": 8,
+ "dc_tokens_undetermined_multi_level": 80, "dc_tokens_undetermined_spell_absent": 9,
+ "dc_tokens_undetermined_shape": 0, "units_banked": 63,
+ "units_refused_for_a_contradiction": 8, "units_with_no_determinable_token": 7,
+ "target_units_with_no_dc_token_at_all": 219,
+ "target_units_with_no_ingested_corpus_record": 19}
+```
+
+**A unit is banked when ≥1 of its DC tokens is verified against an independently-stated single
+level AND none of its DC tokens contradicts one.** The 8 contradictions each disqualify their
+whole unit, not just the offending token:
+
+| unit | spell | DC states | the spell's record states |
+|---|---|---:|---:|
+| `bestiary:monster:angel_planetar` | Blade Barrier | level 4 | 6 |
+| `bestiary:monster:devil_pit_fiend` | Hold Monster (Mass) | 5 | 9 |
+| `bestiary:monster:kraken` | Dominate Animal | 9 | 3 |
+| `bestiary_2:monster:aeon_pleroma` | Wish | 8 | 9 |
+| `bestiary_2:monster:crysmal` | Sanctuary | 2 | 1 |
+| `bestiary_2:monster:decapus` | Minor Image | 1 | 2 |
+| `bestiary_2:monster:shining_child` | Mirage Arcana | 3 | 5 |
+| `bestiary_2:monster:witchfire` | Pyrotechnics | 1 | 2 |
+
+These are a real corpus finding, left in `--report` output and OUT of the fixture. They are new
+`OPEN-ISSUES` material, not something to paper over by loosening the check.
+
+### 5. A pre-existing ingest gap this seam surfaced (TDD red, then guarded)
+
+The first run of the new suite went **red** on Derro, Doppelganger and Dryad: `"Derro" does not
+resolve` against the chassis registry. Root cause, re-derived: **46 of Bestiary 1's 326 ingested
+`monster` records carry no `data.corpus_key`**, and those 46 are exactly the records the compiled
+`monster_chassis` registry does not define — they reach `grounded` only through the older SD-22
+`beastiary1` `MonsterId` table, whose stat-block type carries no `SPELLS:` data at all
+(`grep -c 'key: "' src/rules_core/rules_tables/bestiary/monster_data.rs` → 679 fields over
+**280** stat blocks, against 326 inventory units; 326 − 280 = 46). The derivation script now
+refuses any unit whose ingested record's `corpus_key` does not match the inventory's, which is
+what keeps those three out of the fixture instead of shipping three rows that fail the gate.
+**This is a standing finding: 46 Bestiary 1 monster units are `grounded` on a table that cannot
+carry the fields any derived seam needs.** New `OPEN-ISSUES` row.
+
+### 6. Mutation proof — Decision 1(a), performed on the thing the gate guards
+
+The rule this seam applies is one constant. Changing `SPELL_LIKE_ABILITY_SAVE_DC_BASE` from `10`
+to `11` in `src/rules_core/derived_evaluator_fixture_check.rs` and re-running:
+
+```
+cargo test --locked -j 4 --lib derived_evaluator_fixture_check
+#   -> test result: FAILED. 56 passed; 2 failed
+#      run_monster_sla_bar_check_clears_every_committed_monster_sla_fixture FAILED,
+#      listing ALL 63 banked units as failures
+cargo test --locked -j 4 --test derived_evaluator_fixture_check_monster_sla
+#   -> test result: FAILED. 6 passed; 2 failed
+```
+
+Reverted, and both suites are green again (58 passed / 0 failed; 8 passed / 0 failed).
+`moving_the_save_dc_base_constant_makes_every_committed_fixture_fail` makes the same statement in
+a form that runs on every gate, so the seam cannot silently become vacuous later. Four further
+end-to-end mutation tests drive the production `run_monster_sla_bar_check` against a scratch
+fixture root: a wrong level fails, a correct one clears, **one wrong row disqualifies a unit whose
+other rows are right**, and a spell the record does not grant is a failure rather than a silent
+skip.
+
+### 7. Board movement — replayed, never asserted
+
+`doneness_verdict()` replayed over `docs/work-inventory.json` with `EXCLUDED_BOOKS={'beginner_box'}`:
+
+| | before (`generated_at 2026-08-19T01:10:47Z`) | after (`2026-08-19T11:43:15Z`) |
+|---|---:|---:|
+| done | 12,277 (31.87 %) | **12,340 (32.03 %)** |
+| held | 1,677 | **1,614** |
+| not-started | 18,030 | 18,030 |
+| unmeasurable | 5,110 | 5,110 |
+| in-progress | 1,389 | 1,389 |
+| deferred | 38 | 38 |
+| **denominator** | **38,521** | **38,521** |
+
+`monster` kind: held 332 → **269**; the `derived`+`grounded` held population 316 → **253**.
+
+The diff is exactly 63 units, one field each:
+
+```
+ids only in HEAD : 0        ids only in new : 0
+units changed: 63           fields that changed: {'status': 63}
+status transitions: {('grounded', 'fixture-verified'): 63}
+kinds: {'monster': 63}
+books: bestiary_2 31, bestiary 26, bonus_bestiary 4, inner_sea_world_guide 1,
+       book_of_the_damned_volume_2 1
+changed ids == fixture units: True (63)
+stamps lost: 0
+```
+
+**Nothing left the denominator, no unit was reclassified, and no bar was moved.**
+
+### 8. Commands behind every figure
+
+```bash
+./scripts/fetch-pcgen-oracle.sh --check
+#   pcgen-oracle: OK 7f818006e371188e5717fd18d74d18a420747fc6
+
+# the board, before and after — doneness_verdict() replayed, not asserted
+python3 - <<'PY'
+import json, collections, sys
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+U=json.load(open('docs/work-inventory.json'))['units']
+c=collections.Counter(P.doneness_verdict(u['wiring_class'],u['status'],u['kind'])
+                      for u in U if u['book']!='beginner_box')
+print(dict(c), sum(c.values()), '%.2f%%'%(100*c['done']/sum(c.values())))
+PY
+
+# the fixture census, and the fixture itself
+python3 scripts/derive_monster_sla_spell_level_fixtures.py --report
+python3 scripts/derive_monster_sla_spell_level_fixtures.py
+#   wrote 165 monster_sla_entries over 63 units (8 units refused for a contradiction)
+
+# the tables, regenerated for all 13 registered monster books
+for b in bonus_bestiary monster_codex book_of_the_damned_volume_1 \
+         book_of_the_damned_volume_2 inner_sea_world_guide bestiary_2 bestiary_3 \
+         bestiary_4 inner_sea_bestiary inner_sea_gods bestiary ultimate_psionics \
+         horror_adventures; do python3 scripts/transcribe_monster_tables.py "$b"; done
+
+# the guarded regen (never a plain one — a plain run drops every stamp)
+cargo run --locked --bin corpus_literal_sweep -- --json-out "$SCRATCH/sweep-w15.json"
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out "$SCRATCH/fixture-w15.json"
+CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... \
+  cargo run --locked --bin v06_work_inventory      # REGEN_EXIT=0
+
+# override 10: docs/work-inventory.json moved, so the public feed was republished
+./scripts/publish-site-dashboard.sh
+#   site/status-data.json (30 books, overall 36.9%) + 30 book-detail files, 36028 items
+```
+
+**Generator determinism was proved BEFORE the change**, not assumed: re-running all 13 book
+transcriptions against the unmodified tree left `git status --porcelain` empty.
+
+### 9. Production wiring — not a fixture-only path
+
+`MonsterStatBlock` gained `spell_like_abilities: &[MonsterSpellLikeAbility]` (every field a
+verbatim substring of the cited row, per the transcriber's standing contract), and
+`apps/desktop/src-tauri/src/monster_catalog.rs` serves it as
+`MonsterSpellLikeAbilityDto { spell, times, timeUnit, casterLevelToken, saveDcToken,
+derivedSpellLevel, saveDcAbility }`. The derived spell level reaches the monster catalog the
+desktop app renders; it is not a value only a test can see (`no-stub-mvp-doctrine.md`).
+
+**PI screening was extended with the field**, which is the part that would have been a silent
+gap: `transcribe_monster_tables.py`'s `monster_pi_reason` screens exactly the values it EMITS, so
+every label, times, caster-level token, spell name and DC token now goes through `pi_hits`
+alongside the existing name/size/type/attack values. Regeneration dropped and redacted exactly the
+same rows as before the change (Inner Sea World Guide: 5 monster + 3 ability rows).
+
+### 10. What this cycle could NOT do
+
+* **The 178-row natural-attack Strength-damage family** (§2). Its expected value is not
+  independently derivable without PCGen's runtime baseline. Real, named, not attempted.
+* **The 80 multi-level DC tokens** (§3). No rule recovers which class's level a monster's
+  printing used; 62/17/1/1 across max/min/interior/none.
+* **The 8 contradicting units** (§4). Left held. Whether the corpus row or the spell record is
+  wrong is a corpus question this cycle did not have the printed stat blocks to settle.
+* **The 46 Bestiary 1 records with no `corpus_key`** (§5), 3 of which carry a DC token. They need
+  the chassis ingest extended to cover them before ANY derived seam can reach them.
+* **DoD item 8 (on-screen verification)** was not performed. The value reaches a real production
+  DTO (§9) and the desktop crate's own tests cover the mapping, but no `driver.sh` run was made
+  on this box in this cycle.

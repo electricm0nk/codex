@@ -1,8 +1,8 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-08-19T01:10:47Z",
-  "source_document": "/home/ubuntu/workspace/repos/codex/docs/work-inventory.json",
+  "generated_at": "2026-08-19T11:43:15Z",
+  "source_document": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0628906e-65b-1/docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
     "name",
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 38521,
-  "proven_units": 6202,
+  "proven_units": 6139,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 420,
   "category_labels_redacted": 3,
@@ -7202,21 +7202,21 @@
     },
     "monster": {
       "units": 1270,
-      "proven": 339,
+      "proven": 276,
       "by_status": {
-        "grounded": 339,
+        "fixture-verified": 140,
+        "grounded": 276,
         "literal-verified": 826,
-        "fixture-verified": 77,
         "not-ingested": 28
       },
       "shard": "PF1e-units-monster.json",
-      "bytes": 109004,
+      "bytes": 109508,
       "doneness_unmapped": {},
       "categories": {
         "none": {
           "label": "Uncategorised",
-          "done": 466,
-          "held": 283,
+          "done": 529,
+          "held": 220,
           "in-progress": 0,
           "not-started": 13,
           "unmeasurable": 0,

@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-08-19T01:14:14Z",
+  "generated_at": "2026-08-19T11:46:05Z",
   "doneness_values": [
     "done",
     "partial",
     "not-started"
   ],
   "overall": {
-    "done": 10825,
-    "partial": 2572,
+    "done": 10885,
+    "partial": 2512,
     "not_started": 16093,
     "denominator": 29490,
-    "pct": 36.7,
+    "pct": 36.9,
     "excluded_from_percentage": 9031,
     "standing_breakdown": {
       "origin": 29490,
@@ -162,11 +162,11 @@
     {
       "id": "bestiary",
       "title": "Bestiary",
-      "done": 492,
-      "partial": 190,
+      "done": 518,
+      "partial": 164,
       "not_started": 452,
       "denominator": 1134,
-      "pct": 43.4,
+      "pct": 45.7,
       "excluded_from_percentage": 519,
       "standing_breakdown": {
         "origin": 1134,
@@ -204,11 +204,11 @@
     {
       "id": "bestiary_2",
       "title": "Bestiary 2",
-      "done": 423,
-      "partial": 208,
+      "done": 454,
+      "partial": 177,
       "not_started": 286,
       "denominator": 917,
-      "pct": 46.1,
+      "pct": 49.5,
       "excluded_from_percentage": 343,
       "standing_breakdown": {
         "origin": 917,
@@ -288,11 +288,11 @@
     {
       "id": "book_of_the_damned_volume_2",
       "title": "Book of the Damned, Vol. 2",
-      "done": 18,
-      "partial": 3,
+      "done": 19,
+      "partial": 2,
       "not_started": 210,
       "denominator": 231,
-      "pct": 7.8,
+      "pct": 8.2,
       "excluded_from_percentage": 23,
       "standing_breakdown": {
         "origin": 231,
@@ -344,11 +344,11 @@
     {
       "id": "inner_sea_world_guide",
       "title": "Inner Sea World Guide",
-      "done": 44,
-      "partial": 11,
+      "done": 45,
+      "partial": 10,
       "not_started": 121,
       "denominator": 176,
-      "pct": 25.0,
+      "pct": 25.6,
       "excluded_from_percentage": 224,
       "standing_breakdown": {
         "unclassified": 224,
@@ -427,11 +427,11 @@
     {
       "id": "bonus_bestiary",
       "title": "Bonus Bestiary",
-      "done": 8,
-      "partial": 1,
+      "done": 9,
+      "partial": 0,
       "not_started": 3,
       "denominator": 12,
-      "pct": 66.7,
+      "pct": 75.0,
       "excluded_from_percentage": 22,
       "standing_breakdown": {
         "origin": 12,

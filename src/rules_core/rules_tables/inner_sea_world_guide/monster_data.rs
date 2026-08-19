@@ -46,7 +46,7 @@
 //!   * `iswg_abilities_race.lst:97`
 //!   * `iswg_abilities_race.lst:98`
 
-use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
+use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterSpellLikeAbility, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
 
 /// Every inner_sea_world_guide monster stat block (9 rows).
 pub(super) static MONSTERS: &[MonsterStatBlock] = &[
@@ -66,6 +66,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         stat_adjustments: &[StatAdjustment { ability: "DEX", amount: 6 }, StatAdjustment { ability: "CON", amount: 2 }, StatAdjustment { ability: "WIS", amount: 2 }, StatAdjustment { ability: "INT", amount: -8 }, StatAdjustment { ability: "CHA", amount: -6 }],
         has_spell_like_abilities: false,
         sla_cl_token: None,
+        spell_like_abilities: &[],
         source_file: "iswg_races_bestiary.lst",
         source_line: 8,
     },
@@ -85,6 +86,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: -8 }, StatAdjustment { ability: "DEX", amount: 2 }, StatAdjustment { ability: "CHA", amount: -8 }],
         has_spell_like_abilities: false,
         sla_cl_token: None,
+        spell_like_abilities: &[],
         source_file: "iswg_races_bestiary.lst",
         source_line: 9,
     },
@@ -104,6 +106,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 16 }, StatAdjustment { ability: "DEX", amount: 2 }, StatAdjustment { ability: "CHA", amount: -10 }],
         has_spell_like_abilities: false,
         sla_cl_token: None,
+        spell_like_abilities: &[],
         source_file: "iswg_races.lst",
         source_line: 10,
     },
@@ -123,6 +126,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 2 }, StatAdjustment { ability: "DEX", amount: 2 }, StatAdjustment { ability: "CON", amount: 4 }, StatAdjustment { ability: "INT", amount: -8 }, StatAdjustment { ability: "WIS", amount: 2 }, StatAdjustment { ability: "CHA", amount: -4 }],
         has_spell_like_abilities: false,
         sla_cl_token: None,
+        spell_like_abilities: &[],
         source_file: "iswg_races_bestiary.lst",
         source_line: 10,
     },
@@ -142,6 +146,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 14 }, StatAdjustment { ability: "DEX", amount: 4 }, StatAdjustment { ability: "WIS", amount: 4 }, StatAdjustment { ability: "CON", amount: 10 }, StatAdjustment { ability: "INT", amount: -2 }, StatAdjustment { ability: "CHA", amount: 6 }],
         has_spell_like_abilities: true,
         sla_cl_token: Some("(max(TL,1))"),
+        spell_like_abilities: &[MonsterSpellLikeAbility { label: "Innate", times: Some("3"), time_unit: None, caster_level_token: Some("(max(TL,1))"), spell: "Lightning Bolt", save_dc_token: Some("13+CHA") }, MonsterSpellLikeAbility { label: "Innate", times: Some("1"), time_unit: None, caster_level_token: Some("(max(TL,1))"), spell: "Chain Lightning", save_dc_token: Some("16+CHA") }],
         source_file: "iswg_races.lst",
         source_line: 11,
     },
@@ -161,6 +166,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 6 }, StatAdjustment { ability: "CON", amount: 6 }, StatAdjustment { ability: "DEX", amount: 4 }, StatAdjustment { ability: "INT", amount: -8 }, StatAdjustment { ability: "WIS", amount: 2 }, StatAdjustment { ability: "CHA", amount: -4 }],
         has_spell_like_abilities: false,
         sla_cl_token: None,
+        spell_like_abilities: &[],
         source_file: "iswg_races_bestiary.lst",
         source_line: 11,
     },
@@ -180,6 +186,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 4 }, StatAdjustment { ability: "CON", amount: 4 }, StatAdjustment { ability: "DEX", amount: 2 }, StatAdjustment { ability: "WIS", amount: 2 }, StatAdjustment { ability: "INT", amount: -2 }],
         has_spell_like_abilities: false,
         sla_cl_token: None,
+        spell_like_abilities: &[],
         source_file: "iswg_races.lst",
         source_line: 12,
     },
@@ -199,6 +206,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 6 }, StatAdjustment { ability: "DEX", amount: 2 }, StatAdjustment { ability: "CON", amount: 2 }, StatAdjustment { ability: "WIS", amount: 2 }, StatAdjustment { ability: "INT", amount: -10 }, StatAdjustment { ability: "CHA", amount: -8 }],
         has_spell_like_abilities: false,
         sla_cl_token: None,
+        spell_like_abilities: &[],
         source_file: "iswg_races_bestiary.lst",
         source_line: 12,
     },
@@ -218,6 +226,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 22 }, StatAdjustment { ability: "DEX", amount: 4 }, StatAdjustment { ability: "CON", amount: 18 }, StatAdjustment { ability: "INT", amount: 6 }, StatAdjustment { ability: "WIS", amount: 12 }, StatAdjustment { ability: "CHA", amount: 8 }],
         has_spell_like_abilities: false,
         sla_cl_token: None,
+        spell_like_abilities: &[MonsterSpellLikeAbility { label: "Innate", times: Some("3"), time_unit: None, caster_level_token: Some("(max(TL,1))"), spell: "Spike Growth", save_dc_token: Some("13+CHA") }, MonsterSpellLikeAbility { label: "Innate", times: Some("3"), time_unit: None, caster_level_token: Some("(max(TL,1))"), spell: "Spike Stones", save_dc_token: Some("14+CHA") }, MonsterSpellLikeAbility { label: "Innate", times: Some("3"), time_unit: None, caster_level_token: Some("(max(TL,1))"), spell: "Telekinesis", save_dc_token: Some("15+CHA") }, MonsterSpellLikeAbility { label: "Innate", times: Some("1"), time_unit: None, caster_level_token: Some("(max(TL,1))"), spell: "Telekinetic Sphere", save_dc_token: Some("18+CHA") }, MonsterSpellLikeAbility { label: "Innate", times: Some("1"), time_unit: None, caster_level_token: Some("(max(TL,1))"), spell: "Wall of Force", save_dc_token: None }],
         source_file: "iswg_races.lst",
         source_line: 15,
     },

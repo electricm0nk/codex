@@ -1877,11 +1877,11 @@
     {
       "kind": "monster",
       "label": "Monsters",
-      "done": 3,
-      "partial": 6,
+      "done": 4,
+      "partial": 5,
       "not_started": 0,
       "denominator": 9,
-      "pct": 33.3,
+      "pct": 44.4,
       "excluded_from_percentage": 5,
       "standing_breakdown": {
         "origin": 9,
@@ -1908,7 +1908,7 @@
         },
         {
           "name": "Dragon (Spine)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },

@@ -622,6 +622,74 @@ def parse_sla_cl_token(row: list[str]) -> str | None:
     return value.strip() or None
 
 
+def parse_spell_like_abilities(row: list[str]) -> list[tuple]:
+    """Every spell the row grants as a spell-like ability, one tuple per SPELL,
+    read from the row's `SPELLS:` tokens.
+
+    PCGen shape::
+
+        SPELLS:<label>|TIMES=<n>|[TIMEUNIT=<unit>|]CASTERLEVEL=<v>|<spell>[,<dc>]|<spell>[,<dc>]
+
+    A single token routinely grants several spells sharing one label,
+    frequency and caster level, so a token expands to N tuples, not one.
+
+    Returns ``(label, times, time_unit, caster_level, spell, save_dc)`` with
+    every element a verbatim substring of the row and ``None`` for a segment
+    the row does not carry.  Nothing is computed: the ``,<dc>`` tail is split
+    off the spell name and handed on unparsed, and
+    ``derived_evaluator_fixture_check::spell_like_ability_save_dc`` is what
+    applies PF1's universal monster rule to it.
+
+    A segment carrying a `PRE`-guard or an unrecognised `<TAG>=` pair is
+    skipped rather than mistaken for a spell name -- guards are conditions,
+    never grants, and a tag this parser does not know is not a spell.
+    """
+    known_tags = ("TIMES=", "TIMEUNIT=", "CASTERLEVEL=", "SPELLBOOK=", "DC=",
+                  "DCBASE=", "CASTERLEVELFORMULA=")
+    out: list[tuple] = []
+    for field in row:
+        if not field.startswith("SPELLS:"):
+            continue
+        segments = field[len("SPELLS:"):].split("|")
+        if not segments:
+            continue
+        label = segments[0].strip()
+        if not label:
+            continue
+        times = time_unit = caster_level = None
+        spells: list[tuple[str, str | None]] = []
+        for segment in segments[1:]:
+            segment = segment.strip()
+            if not segment:
+                continue
+            if segment.startswith("TIMES="):
+                times = segment[len("TIMES="):].strip() or None
+                continue
+            if segment.startswith("TIMEUNIT="):
+                time_unit = segment[len("TIMEUNIT="):].strip() or None
+                continue
+            if segment.startswith("CASTERLEVEL="):
+                caster_level = segment[len("CASTERLEVEL="):].strip() or None
+                continue
+            if segment.startswith("PRE") or segment.startswith("!PRE"):
+                continue
+            if any(segment.startswith(tag) for tag in known_tags):
+                continue
+            if "=" in segment.split(",")[0]:
+                # An unrecognised `<TAG>=<value>` pair. Skipping is the honest
+                # reading: it is certainly not a spell name, and guessing which
+                # tag it is would put a fabricated value on the record.
+                continue
+            name, comma, dc = segment.partition(",")
+            name = name.strip()
+            if not name:
+                continue
+            spells.append((name, dc.strip() or None if comma else None))
+        for name, dc in spells:
+            out.append((label, times, time_unit, caster_level, name, dc))
+    return out
+
+
 def parse_special_ability_refs(row: list[str]) -> list[str]:
     """Keys named by the row's `ABILITY:Special Ability|AUTOMATIC|…` tokens."""
     refs: list[str] = []
@@ -972,6 +1040,14 @@ def transcribe(book: str) -> str:
             token(row, "SOURCEPAGE:"),
             *(m for m, _ in parse_speeds(row)),
             *(n for n, _ in parse_natural_attacks(row)),
+            # Every value the `spell_like_abilities` field emits. Added with
+            # the field itself (SD31-W15-MONSTER-SLA-001): a spell name, a
+            # spell-book label or a caster-level variable name is emitted text
+            # like any other, and `pi_table_sweep` rejects a Product Identity
+            # term anywhere under `rules_tables/` regardless of which field it
+            # sits in. Omitting these would have opened exactly the silent gap
+            # the `DESCISPI:` comment above exists to say is NOT open.
+            *(v for sla in parse_spell_like_abilities(row) for v in sla if v),
             *monster_ability_keys[unit["corpus_key"]],
             *external[unit["corpus_key"]],
         )
@@ -1500,10 +1576,24 @@ def transcribe(book: str) -> str:
         for unit in unscreenable_shipping:
             out.append(f"//!   * `{unit['source_file']}:{unit['source_line']}` ({unit['corpus_key']})")
     out.append("")
+    # `MonsterSpellLikeAbility` is imported only when this book actually
+    # constructs one. Four registered books (Monster Codex, both Book of the
+    # Damned volumes, Horror Adventures) carry no `SPELLS:` grant on any
+    # monster row at all, and an unconditional import there is an
+    # `unused_imports` warning in a generated file -- which is noise the next
+    # reader has to re-diagnose, not a harmless extra line.
+    imports = [
+        "MonsterAbilityDelivery",
+        "MonsterAbilityFacet",
+        "MonsterAbilityRecord",
+    ]
+    if any(parse_spell_like_abilities(monster_rows[u["corpus_key"]]) for u in monsters):
+        imports.append("MonsterSpellLikeAbility")
+    imports += ["MonsterStatBlock", "NaturalAttack", "Speed", "StatAdjustment"]
     out.append(
         "use crate::rules_core::rules_tables::monster_chassis::{"
-        "MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, "
-        "NaturalAttack, Speed, StatAdjustment};"
+        + ", ".join(imports)
+        + "};"
     )
     out.append("")
     out.append(f"/// Every {book} monster stat block ({len(monsters)} rows).")
@@ -1556,6 +1646,21 @@ def transcribe(book: str) -> str:
             f"        has_spell_like_abilities: {'true' if has_spell_like_abilities else 'false'},"
         )
         out.append(f"        sla_cl_token: {rust_opt(sla_cl_token)},")
+        out.append(
+            "        spell_like_abilities: &["
+            + ", ".join(
+                "MonsterSpellLikeAbility { "
+                f"label: {rust_str(label)}, "
+                f"times: {rust_opt(times)}, "
+                f"time_unit: {rust_opt(time_unit)}, "
+                f"caster_level_token: {rust_opt(caster_level)}, "
+                f"spell: {rust_str(spell)}, "
+                f"save_dc_token: {rust_opt(save_dc)} }}"
+                for label, times, time_unit, caster_level, spell, save_dc
+                in parse_spell_like_abilities(row)
+            )
+            + "],"
+        )
         out.append(f"        source_file: {rust_str(unit['source_file'])},")
         out.append(f"        source_line: {unit['source_line']},")
         out.append("    },")

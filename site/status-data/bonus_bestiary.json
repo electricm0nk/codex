@@ -156,11 +156,11 @@
     {
       "kind": "monster",
       "label": "Monsters",
-      "done": 4,
-      "partial": 1,
+      "done": 5,
+      "partial": 0,
       "not_started": 0,
       "denominator": 5,
-      "pct": 80.0,
+      "pct": 100.0,
       "excluded_from_percentage": 9,
       "standing_breakdown": {
         "unclassified": 9,
@@ -217,19 +217,19 @@
         },
         {
           "name": "Hag (Annis)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "Huecuva",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified"
         },
         {
           "name": "Lammasu",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified"
         },
@@ -241,7 +241,7 @@
         },
         {
           "name": "Nixie",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified"
         },
