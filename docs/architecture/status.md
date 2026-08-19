@@ -1,7 +1,7 @@
 # Status
 
 > Scope: what is real, working product surface today across the whole repo, and what is stubbed, partially wired, or deferred — superseding the root README's "Current state" section.
-> Last verified: **2026-08-18 against `tranche/11`** (SD-31 wave 14, `SD31-W14-INTEGRATE-001`) for the §"Corpus coverage, corpus-wide — re-derived 2026-08-18" section, the `RuleSetId::Ce` row, and the companion-ceiling row; every other row still carries its 2026-08-13 `tranche/9` verification and is unchanged. Prior full pass: 2026-08-13 against `tranche/9` (SD-29 **real** closure, Epic 11 run 3). The 2026-08-11 pass belonged to a closure the operator rescinded the same day (`SD-29 decisions.md §42`); every figure it wrote has been re-derived here rather than carried. The rows re-derived in full this pass are the `RuleSetId` catalog count, the JSON-corpus-cache count, the monster/companion/race-trait chassis rows, and the whole §"Corpus coverage, corpus-wide" section; every other row carries its prior 2026-08-07/tranche-8 verification and is unchanged by SD-29.
+> Last verified: **2026-08-19 against `tranche/11`** (SD-31 wave 15, `SD31-W15-INTEGRATE-001`) for the §"Corpus coverage, corpus-wide — re-derived 2026-08-19" section; the 2026-08-18 wave-14 pass for the §"Corpus coverage, corpus-wide — re-derived 2026-08-18" section, the `RuleSetId::Ce` row, and the companion-ceiling row; every other row still carries its 2026-08-13 `tranche/9` verification and is unchanged. Prior full pass: 2026-08-13 against `tranche/9` (SD-29 **real** closure, Epic 11 run 3). The 2026-08-11 pass belonged to a closure the operator rescinded the same day (`SD-29 decisions.md §42`); every figure it wrote has been re-derived here rather than carried. The rows re-derived in full this pass are the `RuleSetId` catalog count, the JSON-corpus-cache count, the monster/companion/race-trait chassis rows, and the whole §"Corpus coverage, corpus-wide" section; every other row carries its prior 2026-08-07/tranche-8 verification and is unchanged by SD-29.
 > Maintenance: pre-PR truth-up cycle per [README.md](./README.md) §Maintenance contract — fires before every PR via the architecture-truth-up skill
 
 ## Posture
@@ -241,6 +241,68 @@ By doneness bucket: `done` 12,277 · `held` 1,677 · `in-progress` 1,389 · `not
   unit's own key.** `EngineFacts::holds_unit_by_key` is the strict twin of `holds_unit`; the
   name fallback is a convenience for kinds whose identity really is their display name and is
   wrong as an attribution signal for a `<Group> ~ <Facet>`-keyed row.
+
+## Corpus coverage, corpus-wide — re-derived 2026-08-19 (SD-31 wave 15, `SD31-W15-INTEGRATE-001`)
+
+The section above is wave 14's snapshot and is kept for its history. **These are the live
+figures**, replayed at this wave's integration tip on `tranche/11` — never transcribed from a lane
+receipt. Oracle pin `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`.
+
+| quantity | value | how |
+|---|---:|---|
+| board units (in scope, `beginner_box` excluded) | **38,521** | `docs/work-inventory.json` (`generated_at` 2026-08-19T14:06:36Z), replayed through `pf1e_dashboard_producer.doneness_verdict()` |
+| board `done` | **12,748 (33.0936 %)** | same replay; was 12,277 / 31.8709 % before this wave |
+| verification stamps | **8,052** (6,436 literal-verified + 1,616 fixture-verified) | `Counter(u['status'] …)` over the same document; was 7,629 |
+| `derived` fixture coverage | **1,699 units cleared over 2,364 fixture rows**, 0 failed, 0 not ingested | `cargo run --locked --bin derived_evaluator_fixture_check` |
+| corpus literal sweep | 26,105 records examined, **0 findings** | `cargo run --locked --bin corpus_literal_sweep` |
+| reachable ceiling | **98.95 %** | `python3 scripts/reachability_audit.py` |
+
+By doneness bucket: `done` 12,748 · `held` 1,254 · `in-progress` 1,342 · `not-started` 18,030 ·
+`unmeasurable` 5,109 · `deferred` 38. The denominator did not move: 38,521 in, 38,521 out, zero
+unit ids added or removed, **zero demotions**.
+
+### What wave 15 changed in the architecture, not just in the counts
+
+* **The `derived` done rung tripled its reach: three new evaluator seams.** See
+  [testing.md](./testing.md) §"The derived-evaluator fixture seam" for the full contract.
+  `monster_sla` (spell-like-ability save DC run BACKWARDS over PF1's Universal Monster Rule to
+  derive the granted spell's LEVEL), `monster_ability` (the same rule's `10 + ½ racial HD` base,
+  cross-checked against the owner's own `MONSTERCLASS:` row in a different file), and `companion`
+  (PF1 CRB p.182's single-natural-attack 1½× Strength rule, encoded by PCGen as
+  `max(0,(STR/2))`). Eight families now; a unit failing any seam is removed from `cleared`.
+* **New chassis fields, all carrying the corpus token VERBATIM rather than a computed number.**
+  `monster_chassis::MonsterStatBlock.spell_like_abilities` (with `save_dc_token`),
+  `companion_chassis::NaturalAttackDamageBonus` on `CompanionRecord`, and
+  `race_creation::RaceCreationChassis.ability_adjustments_source_trait_key`.
+* **A consumer can now NAME the record whose magnitude it read.** That last field is the pattern:
+  `race_creation_chassis` returns the key of the `~ Ability Scores` row it actually used, so
+  `v06_work_inventory`'s probe credits THAT record and nothing else. It is the record-level
+  precedent for narrowing the remaining coarse race-level credits (`OPEN-ISSUES.md` row 272).
+* **Two player surfaces render a derived formula, and refuse to resolve it.**
+  `MonsterCatalogScreen` prints `3/day — blade barrier (6th, DC 16 + Cha)` — the DC ships as the
+  FORMULA, never a resolved number, because a monster's ability MODIFIER is not a corpus fact in
+  this repo; that anti-fabrication rule is pinned as a test. `CompanionCatalogScreen` prints
+  `Bite +1/2 Str modifier (minimum +0)`, and prints an uninterpretable or `PRE`-gated token
+  verbatim with `(formula not interpreted)` rather than guessing.
+* **`probe_equipment_effect_wiring` no longer iterates a hand-maintained book list.** It reads
+  `data/corpus/*/equipment/` directly (`equipment_probe_book_dirs()`). Thirteen books carrying 903
+  real cited equipment records had never been opened by it — the THIRD recurrence of
+  `OPEN-ISSUES.md` row 12's shape. Widening what is ASKED, never what counts as an answer:
+  `equipment_key_is_wired` is untouched and `mythic_adventures`, the largest newly-opened book at
+  252 catalog keys, still observes ZERO.
+* **`classify()`'s equipment arm consults the consumer-delta probe ABOVE the `text-complete`
+  rung**, so a unit whose computed delta was actually observed is no longer reported on strictly
+  weaker evidence.
+* **`wiring_class_reason` is a LEXICOGRAPHIC tie-break and must never be used as a filter.**
+  `wiring_class.rs:1290` takes `sigs.iter().filter(…).min()` over a `BTreeSet`, so a unit carrying
+  both `derived:prose_expr` and `derived:range_keyword` can never REPORT `range_keyword`
+  ("p" < "r") however plainly its own row reads `RANGE:Close`. 151 spell units were invisible to
+  their own generator on that alphabetical accident alone.
+* **Published feeds are checkout-independent.** `pf1e_dashboard_producer.publishable_document_path()`
+  records `unit_index.source_document` relative to the enclosing git checkout. It previously held
+  the absolute path of whichever tree published, which made `verify.sh`'s `site-dashboard-check`
+  passable only from that one tree and committed a home directory into the Cloudflare-published
+  `site/` (`OPEN-ISSUES.md` row 285).
 
 ## Stubbed / partially wired / deferred today
 

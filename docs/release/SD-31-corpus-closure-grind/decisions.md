@@ -1382,3 +1382,96 @@ name matcher (wave 11). `retro.py correction` emitted against row 55's "impossib
 
 **Authority:** operator direction 2026-08-17; finding derived and verified by the orchestrating
 session against the pinned oracle `7f818006e371188e5717fd18d74d18a420747fc6`.
+
+## Decision 16 — Core Essentials residuals not found in print are DELETED, not flagged (operator ruling 2026-08-19)
+
+**Operator, verbatim:** *"for any unit from core essentials that you can not find in printed books
+- remove them completely. dont just flag them as escaped or unmeasurable - delete them. I consider
+them hallucinations until they appear in print."*
+
+Recorded by the orchestrator during wave 15 and folded in here by
+`SD31-W15-INTEGRATE-001`, the designated writer for this file. The full ruling text, its
+four-way split of the 128 residual units and its worked caveats live at
+`artifacts/OPERATOR-RULINGS-2026-08-19.md`; it is quoted rather than restated so the operator's
+own words stay the artifact.
+
+**What it settles.** It supersedes `OPEN-ISSUES.md` row 263's options (b) and (c). Deletion is the
+disposition, and **no Structural Exclusion Register entry is needed for the deleted population**:
+`§3`'s register excludes a REAL unit from the denominator, whereas these are being ruled not to
+exist. The register therefore remains EMPTY and `§3` is untouched.
+
+**"Found in print" is decided by evidence, not memory** (`§10`'s binding rule): does any book OTHER
+than `core_essentials` carry a real race DECLARATION row for it at the pinned oracle? A mention
+inside another book's `PRETEMPLATE:`/prerequisite is NOT a declaration.
+
+| group | units | disposition |
+|---|---|---|
+| Ghoran | 13 | RE-ATTRIBUTE to `ultimate_wilderness` (declared in `uw_races.lst`) |
+| `ce_abilities_race.lst` rows naming a Bestiary | ~28 | RE-ATTRIBUTE per each row's own `SOURCELONG:` |
+| rows under `SOURCELONG:Universal Rules` | ~1 | DELETE — "Universal Rules" is a PCGen construct, not a Paizo book |
+| Android, Aquatic Elf, Gathlain, Lashunta, Monkey Goblin, Syrinx, Triaxian | 86 | DELETE |
+
+Net roughly **87 deleted, 41 rescued**. All 128 are `not-started` and none is `done`, so **no unit
+of credit is lost by any disposition here** and the board percentage can only rise as the
+denominator shrinks.
+
+### NOT EXECUTED BY WAVE 15, and deliberately so
+
+`SD31-W15-INTEGRATE-001` folded this ruling in as a RECORD and did **not** execute it. Reasons,
+stated rather than assumed:
+
+* Wave 15's dispatch carries the standing constraint *"nothing has ever left the denominator and
+  nothing may leave it in this wave"*, and executing `§16` changes the denominator by ~87 units.
+  An integration cycle is not the right writer for that, and the wave's own `+471` movement must
+  be readable against a denominator that did not move underneath it.
+* The ruling itself says **"Execute against re-derived figures, not these"** — the
+  Bestiary-vs-Universal-Rules split inside the 29-row file must be read per row, which is real
+  derivation work with its own receipt, not a fold-in.
+* A deletion is the one board operation that cannot be undone by a later measurement. It gets its
+  own card, its own re-derivation and its own mutation proof that the deletion is confined to the
+  ruled population.
+
+**Owed:** a wave-16 card that (a) re-derives the four groups per row at the pinned oracle,
+(b) re-attributes the ~41 rescued units, (c) deletes the ~87 ruled-not-to-exist units,
+(d) reports the denominator change as its own number per `§14` invariant 7, and (e) confirms the
+`core_essentials` label reaches ZERO, which finally discharges `§9`'s condition. Until it lands,
+`core_essentials` stays OUT of `EXCLUDED_BOOKS` (`OPEN-ISSUES` row 263) even though it is already
+absent from `BOOK_TITLES` and from the published book list.
+
+**Authority:** operator ruling, 2026-08-19, verbatim above and in full at
+`artifacts/OPERATOR-RULINGS-2026-08-19.md`.
+
+## Decision 17 — Duplicate display names: a drill-down defect, with one real double-counted subset (operator ruling 2026-08-19)
+
+**Operator, verbatim:** *"I was looking at the dashboard drill down and noticed some things listed
+twice. ie: core rules class features lists aberrant bloodline twice and not started. this kind of
+duplication could be skewing our numbers if they are not legit"*
+
+Investigated at ruling time; full working at `artifacts/OPERATOR-RULINGS-2026-08-19.md`.
+
+**The headline concern is mostly NOT a counting defect.** Corpus-wide, 2,325 `(book, kind, name)`
+groups hold more than one unit — an excess of 4,266 units, 11.07 % of the denominator. **That
+figure is not the double-count and must never be quoted as one:** **0** of those groups share a
+`corpus_key` and **0** share a `source_file` + `source_line`. Every unit is a distinct printed row.
+`advanced_class_guide` `class_feature` "Bloodline Powers" appears 11 times because eleven different
+bloodlines each print their own row. Collapsing those would destroy real content. This is a
+**drill-down DISPLAY defect** — the page shows a bare `name` that is not unique — and the fix is a
+disambiguator (`type_facet` or corpus key), not a merge.
+
+**The operator's own example is the real subset.** `core_rulebook` `class_feature`
+`cr_abilities_class.lst:2333` = `Sorcerer Bloodline ~ Aberrant` (the feature) and `:2334` =
+`Aberrant Bloodline`, facet `SorcererBloodlineChoice` (the picker entry that selects it). Adjacent
+lines, one file: PCGen's paired feature + chooser shape. Two printed rows, arguably one game
+concept. **Bounded population: 787 units carry a chooser facet; 180 have an adjacent matching
+feature row and are the double-count candidates** (`companion` 108, `class_feature` 70,
+`race_trait` 2). All 180 are `not-started` (121) or `unmeasurable` (59) — **none is `done`** — so
+removing them shrinks the denominator without withdrawing any credit.
+
+**Owed work, not executed by wave 15** (same reasoning as `§16`: a denominator change is not an
+integration cycle's to make): confirm the 180 case by case — adjacency is a heuristic, not proof,
+and a chooser whose paired feature is a genuinely separate mechanic must STAY — then remove the
+confirmed ones from the unit ledger; and separately fix the drill-down to disambiguate same-named
+rows so the page stops looking wrong where it is right.
+
+**Authority:** operator ruling, 2026-08-19, verbatim above.
+

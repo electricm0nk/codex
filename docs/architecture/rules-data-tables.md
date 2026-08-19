@@ -1,7 +1,7 @@
 # Rules Data Tables
 
 > Scope: the hand-transcribed, per-book Paizo table store rules-core queries for class chassis, race traits, feats, spells, equipment, and monster stat blocks.
-> Last verified: 2026-08-07 against tranche/8 (wiring_class/PI-screening convergence cycle)
+> Last verified: **2026-08-19 against `tranche/11`** (SD-31 wave 15, `SD31-W15-INTEGRATE-001`) for §"Chassis fields carry the TOKEN, never a computed number"; prior pass 2026-08-07 against tranche/8 (wiring_class/PI-screening convergence cycle)
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Purpose
@@ -287,6 +287,33 @@ row are transcribed (e.g. `MonsterStatBlock` excludes AC/HP/saves,
 which PCGen computes at runtime rather than publishing as row tokens;
 `class_witch.rs` transcribes only the BAB/save chassis, not named
 per-level features).
+
+### Chassis fields carry the TOKEN, never a computed number (extended 2026-08-19, SD-31 wave 15)
+
+The "only fields literally present as tokens" rule above has a second half that wave 15 made
+load-bearing across three chassis at once: where a field exists to feed a DERIVED magnitude, it
+stores the corpus token **verbatim** and the arithmetic lives in an evaluator that a fixture can
+be run against — never a number baked into the table.
+
+* `monster_chassis::MonsterStatBlock.spell_like_abilities` — each grant carries a
+  `save_dc_token` (`"16+CHA"`), not a DC. The creature's ability MODIFIER is not a corpus-stated
+  fact in this repo (`stat_adjustments` carries ADJUSTMENTS, never scores), so resolving the DC to
+  a number would be fabrication. `MonsterCatalogScreen` ships the formula to the player for the
+  same reason, and a test pins that it does.
+* `companion_chassis::NaturalAttackDamageBonus` on `CompanionRecord` — carries
+  `BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))` as written. `parse_/evaluate_/format_companion_
+  strength_damage` interpret it; an unclamped `STR/2`, a `-(STR/2)` and every `PRE`-gated bonus
+  are REFUSED rather than guessed at, and reach the screen verbatim labelled
+  `(formula not interpreted)`.
+* `race_creation::RaceCreationChassis.ability_adjustments_source_trait_key` — not a magnitude at
+  all, but the same discipline applied to PROVENANCE: the consumer records the KEY of the record
+  whose magnitude it read, so a probe can credit that record and nothing else. This is the
+  record-level pattern replacing coarse "some record of this race has a seam" credits.
+
+**The corollary a transcriber must not miss:** the count-pinning tests, `corpus_literal_sweep`
+and the derived-evaluator fixtures all read these fields, so adding one to a chassis means
+re-running the book's transcriber for EVERY registered book, not only the one that motivated it.
+Wave 15's companion field touched all 16.
 
 The feat catalogs deviate from pure hand-transcription: `crb/feats.rs`,
 `apg/feats.rs` and `acg/feats.rs` all state their catalogs are

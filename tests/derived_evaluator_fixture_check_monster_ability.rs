@@ -761,6 +761,13 @@ fn synthetic_monster(monster_class: Option<&'static str>) -> MonsterStatBlock {
         stat_adjustments: &[],
         has_spell_like_abilities: false,
         sla_cl_token: None,
+        // Added by SD31-W15-INTEGRATE-001: wave 15's `monster` lane
+        // (SD31-W15-MONSTER-SLA-001) added this field to `MonsterStatBlock` in a
+        // sibling branch of the same wave, so neither lane's tree saw the other's
+        // change and this literal only stopped compiling at the merge. Empty is
+        // the honest value here — this synthetic block exists to exercise the
+        // MONSTERCLASS racial-HD reader, and grants no spell-like abilities.
+        spell_like_abilities: &[],
         ability_keys: &[],
         external_ability_refs: &[],
         source_file: "scratch.lst",
