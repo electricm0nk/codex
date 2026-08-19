@@ -180,16 +180,38 @@ def damage_tokens(fields: list[str]) -> list[tuple[str, str]]:
     return out
 
 
+# BOTH statuses, and the second one is what makes this generator IDEMPOTENT.
+#
+# `apply_done_rung_stamps()` rewrites a covered unit's status from `grounded`
+# to `fixture-verified`, so a selection of `grounded` ALONE picks the target
+# population on the first run and the EMPTY SET on every run after it -- and
+# the write below REPLACES `companion_entries` rather than merging, so a second
+# run silently erases every committed row and withdraws its credit at the next
+# regen. Found by SD31-W15-INTEGRATE-001 by actually re-running this generator
+# on the post-stamp tree (`wrote 0 companion_entries (62 skipped)`), which is
+# the same defect the wave-15 adversarial review confirmed in
+# `derive_monster_ability_save_dc_fixtures.py` and lane 1 had already fixed in
+# `derive_monster_sla_spell_level_fixtures.py`. Three of the wave's four new
+# generators had it; only the one whose author re-ran it did not.
+#
+# A stamp is never treated as EVIDENCE here: every emitted row is still
+# re-derived from the pinned oracle bytes on every run. The stamp only says
+# "this unit is in the population", which is what it meant before it was
+# stamped.
+TARGET_STATUSES = {"grounded", "fixture-verified"}
+
+
 def selected_units() -> list[dict]:
-    """The `kind=companion, wiring_class=derived, status=grounded` population,
-    from `docs/work-inventory.json`. Identity and selection only."""
+    """The `kind=companion, wiring_class=derived` population at a status the
+    `derived` done rung can act on, from `docs/work-inventory.json`. Identity
+    and selection only."""
     doc = json.loads(INVENTORY_PATH.read_text())
     return [
         u
         for u in doc["units"]
         if u["kind"] == "companion"
         and u["wiring_class"] == "derived"
-        and u["status"] == "grounded"
+        and u["status"] in TARGET_STATUSES
         and u["book"] != "beginner_box"
     ]
 
