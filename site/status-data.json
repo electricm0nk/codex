@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-08-19T21:36:06Z",
+  "generated_at": "2026-08-19T22:42:55Z",
   "doneness_values": [
     "done",
     "partial",
     "not-started"
   ],
   "overall": {
-    "done": 11352,
-    "partial": 2061,
+    "done": 11357,
+    "partial": 2056,
     "not_started": 16097,
     "denominator": 29510,
     "pct": 38.5,
@@ -21,11 +21,11 @@
     {
       "id": "core_rulebook",
       "title": "Core Rulebook",
-      "done": 3033,
-      "partial": 620,
+      "done": 3038,
+      "partial": 615,
       "not_started": 840,
       "denominator": 4493,
-      "pct": 67.5,
+      "pct": 67.6,
       "excluded_from_percentage": 720,
       "standing_breakdown": {
         "origin": 4493,

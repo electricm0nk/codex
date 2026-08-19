@@ -105,7 +105,7 @@
 
 use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;
 use crate::rules_core::character_input::{ActiveState, CharacterInput};
-use crate::rules_core::equipment_effects::EquipmentEffects;
+use crate::rules_core::equipment_effects::{is_natural_attack_weapon, EquipmentEffects};
 use crate::rules_core::equipment_resolver::{equipment_id_resolve, equipment_key_token};
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
 use crate::rules_core::rules_tables::crb::feats::{feat_tables, FeatEffectBonus};
@@ -351,6 +351,21 @@ pub struct DamageRollWeaponEnhancement {
 /// resolvable weapon with no matching enhancement equipmod in the
 /// loadout yields real `0` bonuses (an honest zero contribution — the
 /// weapon is real, its enhancement value is genuinely nil), not `None`.
+///
+/// **`SD31-W17-INTEGRATE-001` fix (OPEN-ISSUES row 309, SD-31 wave 18):**
+/// a `WeaponEnhancementBonus` whose `natural_attack_only` field is `true`
+/// (the Amulet of Mighty Fists family's `WEAPONPROF=TYPE.Natural` chain,
+/// `equipment_effects::equipmods`) now only contributes when
+/// `weapon_item_id` itself resolves to a real natural-attack weapon
+/// (`equipment_effects::is_natural_attack_weapon` — e.g. CRB's `Unarmed
+/// Strike`). Wave 17 shipped this same loadout-wide sum with no such
+/// check at all, so an equipped Amulet wrongly bonused every weapon in
+/// the loadout, not just natural attacks; reverted at merge time and
+/// re-landed correctly here. An ordinary `natural_attack_only: false`
+/// bonus (a true magic "+N" weapon, a masterwork/material chain) is
+/// unaffected by this check and still applies to whichever single weapon
+/// this bounded model attaches it to (see this function's own doc
+/// comment above on the no-attachment-model scope).
 pub fn resolve_weapon_enhancement_modifier(
     weapon_item_id: &str,
     corpus: &SourcePackageContent,
@@ -360,6 +375,7 @@ pub fn resolve_weapon_enhancement_modifier(
     let weapon_record_key = equipment_key_token(record)
         .unwrap_or(&record.name)
         .to_string();
+    let weapon_is_natural_attack = is_natural_attack_weapon(record);
 
     let mut attack_bonus: i16 = 0;
     let mut damage_bonus: i16 = 0;
@@ -367,6 +383,9 @@ pub fn resolve_weapon_enhancement_modifier(
         let Some(bonus) = &item.weapon_enhancement_bonus else {
             continue;
         };
+        if bonus.natural_attack_only && !weapon_is_natural_attack {
+            continue;
+        }
         if bonus.affects.contains("TOHIT") {
             attack_bonus += bonus.bonus;
         }
@@ -953,6 +972,76 @@ Adamantine\tKEY:Material ~ Adamantine ~ Weapon\tTYPE:BaseMaterial.MasterworkQual
             &effects
         )
         .is_none());
+    }
+
+    /// `SD31-W17-INTEGRATE-001` fix (OPEN-ISSUES row 309, SD-31 wave 18):
+    /// real verbatim tokens for `KEY:Unarmed Strike`
+    /// (`core_rulebook/cr_equip_arms_armor.lst` line 296, a real
+    /// natural-attack weapon -- carries the `Natural` `TYPE:` segment) plus
+    /// `KEY:Special Ability ~ +1 ~ Amulet of Mighty Fists`
+    /// (`WEAPONPROF=TYPE.Natural`). The Amulet's bonus applies to the
+    /// natural attack.
+    #[test]
+    fn amulet_of_mighty_fists_applies_to_a_real_natural_attack() {
+        let text = "Unarmed Strike\tKEY:Unarmed Strike\tTYPE:Weapon.Resizable.Melee.Special.Unarmed.Monk.Bludgeoning.Finesseable.Close.Weapon Group Close.Weapon Group Monk.Weapon Group Natural.Natural.Light\tCOST:0\tWT:0\tCRITMULT:x2\tCRITRANGE:1\tDAMAGE:1d3\tWIELD:Light\n\
++1 to Hit and Damage\tKEY:Special Ability ~ +1 ~ Amulet of Mighty Fists\tTYPE:Amulet of Mighty Fists\tPLUS:1\tBONUS:WEAPONPROF=TYPE.Natural|TOHIT,DAMAGE|1|TYPE=Enhancement\n";
+        let corpus = corpus_from(text);
+        let equipped = vec![
+            selection("Unarmed Strike"),
+            selection("Special Ability ~ +1 ~ Amulet of Mighty Fists"),
+        ];
+        let effects = compute_equipment_effects(&equipped, &corpus);
+
+        let resolved = resolve_weapon_enhancement_modifier("Unarmed Strike", &corpus, &effects)
+            .expect("Unarmed Strike must resolve");
+        assert_eq!(resolved.attack_bonus, 1, "a natural attack must receive the Amulet's bonus");
+        assert_eq!(resolved.damage_bonus, 1);
+    }
+
+    /// The exact regression wave 17 shipped and review reverted: an
+    /// equipped Amulet of Mighty Fists must NOT bonus an ordinary weapon.
+    /// Same fixture as the passing case above, but resolved against the
+    /// Longsword instead of the Unarmed Strike in the SAME loadout.
+    #[test]
+    fn amulet_of_mighty_fists_does_not_apply_to_an_ordinary_weapon() {
+        let text = "Longsword\tKEY:Longsword (Base)\tTYPE:Weapon.Melee.Martial\tCOST:15\tWT:4\tCRITMULT:x2\tCRITRANGE:2\tDAMAGE:1d8\n\
+Unarmed Strike\tKEY:Unarmed Strike\tTYPE:Weapon.Resizable.Melee.Special.Unarmed.Monk.Bludgeoning.Finesseable.Close.Weapon Group Close.Weapon Group Monk.Weapon Group Natural.Natural.Light\tCOST:0\tWT:0\tCRITMULT:x2\tCRITRANGE:1\tDAMAGE:1d3\tWIELD:Light\n\
++1 to Hit and Damage\tKEY:Special Ability ~ +1 ~ Amulet of Mighty Fists\tTYPE:Amulet of Mighty Fists\tPLUS:1\tBONUS:WEAPONPROF=TYPE.Natural|TOHIT,DAMAGE|1|TYPE=Enhancement\n";
+        let corpus = corpus_from(text);
+        let equipped = vec![
+            selection("Longsword (Base)"),
+            selection("Unarmed Strike"),
+            selection("Special Ability ~ +1 ~ Amulet of Mighty Fists"),
+        ];
+        let effects = compute_equipment_effects(&equipped, &corpus);
+
+        let resolved = resolve_weapon_enhancement_modifier("Longsword (Base)", &corpus, &effects)
+            .expect("Longsword (Base) must resolve");
+        assert_eq!(
+            resolved.attack_bonus, 0,
+            "the Amulet of Mighty Fists must not bonus an ordinary weapon -- SD31-W17-INTEGRATE-001 row 309"
+        );
+        assert_eq!(resolved.damage_bonus, 0);
+    }
+
+    /// An ordinary (non-natural-attack-scoped) enhancement bonus is
+    /// unaffected by the natural-attack-scope check -- proves the fix is
+    /// additive, not a regression on the existing `WEAPON`-subject path.
+    #[test]
+    fn an_ordinary_enhancement_bonus_still_applies_regardless_of_natural_attack_scope() {
+        let text = "Longsword\tKEY:Longsword (Base)\tTYPE:Weapon.Melee.Martial\tCOST:15\tWT:4\tCRITMULT:x2\tCRITRANGE:2\tDAMAGE:1d8\n\
++1 (Enhancement to Weapon)\tKEY:Special Ability ~ +1 ~ Weapon\tTYPE:Weapon\tPLUS:1\tCOST:0\tBONUS:WEAPON|DAMAGE,TOHIT|1|TYPE=Enhancement\n";
+        let corpus = corpus_from(text);
+        let equipped = vec![
+            selection("Longsword (Base)"),
+            selection("Special Ability ~ +1 ~ Weapon"),
+        ];
+        let effects = compute_equipment_effects(&equipped, &corpus);
+
+        let resolved = resolve_weapon_enhancement_modifier("Longsword (Base)", &corpus, &effects)
+            .expect("Longsword (Base) must resolve");
+        assert_eq!(resolved.attack_bonus, 1);
+        assert_eq!(resolved.damage_bonus, 1);
     }
 
     /// Real verbatim tokens copied from `KEY:Longsword (Base)` in
