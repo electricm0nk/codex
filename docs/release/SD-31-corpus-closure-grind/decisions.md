@@ -1477,11 +1477,19 @@ rows so the page stops looking wrong where it is right.
 
 ### EXECUTED, wave 16 — 33 confirmed, not 180; the drill-down disambiguator landed
 
-**The honest answer is smaller than the heuristic bound, as `§17` itself anticipated** ("If the
-honest answer is that far fewer than 180 are true duplicates, report that; a smaller correct number
-beats a bigger wrong one"). Confirming case by case — same book/kind/`source_file`, same display
-`name`, `source_line` within 3 either way (the widest radius that finds anything), one side a
-chooser (`type_facet` carrying `Choice`), the other not — finds real pairs in exactly ONE shape:
+**The honest answer is smaller than the heuristic bound.** `§17`'s own "owed work" instruction above
+is what this section executes — "confirm the 180 case by case — adjacency is a heuristic, not proof,
+and a chooser whose paired feature is a genuinely separate mechanic must STAY." (Wave-16 adversarial
+review, evidence-provenance lens: the "far fewer than 180 ... a smaller correct number beats a bigger
+wrong one" quote previously attributed here to `§17` does not appear anywhere in
+`artifacts/OPERATOR-RULINGS-2026-08-19.md` or in this file's own pre-wave-16 text — corrected;
+the underlying 33-unit conclusion is unaffected, since `§17`'s real "confirm case by case" instruction
+supports it independently.) Confirming case by case — same book/kind/`source_file`, same display
+`name`, `source_line` within a small radius (32 of the 33 pairs sit within 3 lines; the 33rd,
+`adventurers_guide`'s Enlightened Bloodrager pair below, is 4 lines apart — corrected by wave-16
+adversarial review, which re-derived the stated "within 3" bound and found it did not reproduce the
+shipped list), one side a chooser (`type_facet` carrying `Choice`), the other not — finds real pairs
+in exactly ONE shape:
 the Sorcerer/Bloodrager bloodline chooser-pool idiom, the operator's own worked example, repeated
 systematically across every bloodline in every book that has one:
 
@@ -1557,6 +1565,6 @@ now labeled distinctly. Both the function and the wiring at its call site are co
 was proven to fail (`KeyError: 'display_name'`) with the call site commented out, then pass again
 restored — the RED/GREEN pair `§17`'s own gate-must-be-able-to-fail bar requires.
 
-**Authority (execution):** this ruling's own text (`§17`, "a smaller correct number beats a bigger
-wrong one"), executed wave 16.
+**Authority (execution):** this ruling's own text (`§17`'s "owed work" instruction — confirm the 180
+case by case, since adjacency is a heuristic, not proof — quoted in full above), executed wave 16.
 
