@@ -25931,3 +25931,366 @@ receipt does not claim otherwise** — the card cannot be marked `COMPLETE` on D
 239 is fixed by the lane that owns those files. What this cycle can and does assert is narrower and
 checkable: every stage that exercises the work it did is green, and every failure it introduced was
 found, attributed and fixed rather than excused.
+---
+
+## SD31-E1-F3-001 — the `race` kind's six-wave stall, closed by pointing its verdict at the product
+
+**Card:** `epic-1-race-chassis` (wave 14). **Branch:** `worktree-wf_1ad13e3b-085-4` (own worktree,
+cut from `tranche/11` at `12f1f5c94`). **Date:** 2026-08-18.
+
+### 0. Cycle preconditions
+
+**Checkout assertion (SD-30 cycle mechanics step 0−).** The dispatch worktree was cut from the
+**deploy branch**, not `tranche/11` — `git log --oneline -1` read `37a80141e Merge pull request #371
+from electricm0nk/site-publish/20260818-070155`, `ls docs/…` found no `docs/` tree at all, and
+`git merge-base --is-ancestor tranche/11 HEAD` returned false. Recovered on a clean tree
+(`git status --porcelain` empty) with `git fetch origin tranche/11 && git reset --hard 12f1f5c94`.
+Recorded here because the log under-counts this defect 3× when cycles recover silently.
+
+**Oracle pin (SD-31 override 8).** `./scripts/fetch-pcgen-oracle.sh --check` →
+`pcgen-oracle: OK 7f818006e371188e5717fd18d74d18a420747fc6`. Every figure below is against
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`.
+
+**Disk / box, re-derived this cycle (not inherited):**
+
+```
+df -B1G /   -> 968 total / 266 used / 702 avail / 28%
+nproc       -> 24
+free -h     -> 167Gi total / 159Gi available
+./scripts/verify.sh --only preflight-disk -> RESULT: PASS
+```
+
+**PI gate:** not applicable as a per-book precondition — this cycle ingested no book and shipped no
+new corpus record. `data/corpus/` is byte-unchanged (`git status --porcelain` lists no path under
+it).
+
+### 1. What was wrong
+
+`race` sat at **7 `done` of 103 for six consecutive waves**, unmoved by four real chassis batches.
+`OPEN-ISSUES.md` rows 170, 207 and 226 each traced it one unit deep to the same cause and each named
+the same remedy without being able to take it, because the fix crossed a lane's file territory:
+
+`v06_work_inventory.rs`'s `Kind::Race` verdict answered "is this race modelled?" by testing
+membership in `crb::race_tables::RaceId::ALL` — the **original seven-variant CRB enum**
+(`Human`/`Dwarf`/`Elf`/`Gnome`/`HalfElf`/`HalfOrc`/`Halfling`). The product stopped using that enum
+for race identity at SD-29: it loads `data/corpus/<book>/race/*.json` through
+`race_resolver::load_race_corpus` and serves the result from the `list_race_creation_roster` Tauri
+command (registered `main.rs:220`, invoked `raceRoster.ts:148`, rendered by `CreateCharacterForm`).
+So every non-CRB race verdicted `race_absent_from_RaceId_ALL` **no matter how real its chassis was**.
+
+Row 207 additionally established that the obvious fix — widening `RaceId::ALL` — is the *wrong*
+fix, because that enum's only real consumers are 7 hand-authored `explain_<race>_race_seam`
+functions, so adding a variant would be an enum-presence credit with no computation behind it.
+That analysis is correct and this cycle did not touch `RaceId`.
+
+### 2. What was changed
+
+**New shared module `src/rules_core/race_creation.rs`.** The character-creation chassis predicate —
+`race_creation_chassis(&ResolvedRace) -> Result<RaceCreationChassis, String>` plus its four private
+helpers — was **moved** out of `apps/desktop/src-tauri/src/character_hub.rs`, where it was a private
+helper of `build_race_creation_roster`, into the headless rules crate. Behaviour is unchanged: the
+existing regression pin `the_seven_previously_offered_races_keep_their_shipped_values` (7 races
+pinned field-by-field against the values the pre-corpus `RACE_OPTIONS` table shipped) passes
+untouched after the move.
+
+The move exists so that a **second, independent** consumer can reach it: `src/bin/v06_work_inventory.rs`
+lives in this crate and cannot depend on the desktop crate. **The predicate is shared, never
+re-implemented** — re-deriving "would this race be offered?" inside the inventory would be an
+instrument asserting the product's behaviour instead of observing it, which is the exact failure
+`probe_race_trait_corpus`'s own doc comment exists to prevent.
+
+**`character_hub.rs`** now calls the shared predicate and does only the wire-DTO mapping
+(165 lines deleted, 24 added).
+
+**`v06_work_inventory.rs`**: new `probe_race_creation_roster(repo_root)` loads the same books the app
+loads (`app_race_corpus_books`, parsed from `race_catalog.rs`'s own `RACE_CORPUS_BOOKS` declaration,
+never a hand-copied list), resolves each race with `resolve(key, &[])` — exactly what
+`build_race_creation_roster` passes — and calls the shared predicate. `Kind::Race`'s verdict consults
+it **first**, falling back to the `RaceId::ALL` rule, and `holds_key` takes the same union. An
+unreadable corpus yields an empty map, so the verdict degrades to the old rule and the inventory
+under-claims rather than over-claims.
+
+### 3. Why this is not a lowered bar (Decision 1(a))
+
+The predicate refuses a race that does not state, readably, **all** of: a creature size (never a
+defaulted Medium), a base land speed, senses that parse, **and a real ability-score magnitude** —
+a `BONUS:STAT` set or a floating "+N to one ability score" pool. That last clause is what makes it a
+**consumer-delta** observation rather than the load observation `SD31-W12-INTEGRATE-001` demoted 251
+`race_trait` units for. The numbers it reads are the ones
+`composeCreateCharacterRequest.ts`'s `applyRacialAbilityAdjustments` bakes into the ability scores
+submitted at character creation — verified unconditional and race-agnostic at its call site
+(`CreateCharacterForm.tsx:511`), with no allowlist and no seam gating, which is precisely how race
+*chassis* differ from race *traits* (whose magnitudes do need the hand-written `explain_*_race_seam`
+functions the 13-race pin tracks).
+
+**The `done` credit is mostly not mine to give.** Replaying `doneness_verdict` for `kind=race`:
+`static`+`grounded` and `derived`+`grounded` are **`held`, not `done`**. 27 of the 30 promoted units
+are `static`; they reach `done` only because `corpus_literal_sweep` **independently byte-verified**
+each record against the pinned oracle and `apply_done_rung_stamps` promoted `grounded` →
+`literal-verified`. The verdict change only unblocks that stamp (the stamper refuses any unit not
+already `ingested-magnitude|grounded|text-complete`); it cannot produce it.
+
+Only **3** units — Aasimar, Tiefling, Changeling, all `wiring_class: computed`, for which
+`grounded` → `done` directly — rest on the observation alone. Their magnitudes are therefore pinned
+by name in a new desktop test, transcribed from the rows that declare them, not from the engine:
+Aasimar `BONUS:STAT|WIS,CHA|2`; Tiefling `BONUS:STAT|DEX,INT|2` + `BONUS:STAT|CHA|-2`; Changeling
+`BONUS:STAT|WIS,CHA|2` + `BONUS:STAT|CON|-2`.
+
+**Proof the new rung can fail.** `the_same_race_is_not_grounded_when_the_roster_observes_nothing`
+classifies the *same* Catfolk unit against an empty roster and asserts `not-ingested`.
+`a_monster_template_race_row_with_no_chassis_stays_not_ingested` asserts `Skeleton` — one of the
+monster-template `RACE:` rows sharing this kind — stays refused.
+`the_creation_roster_covers_a_minority_of_the_boards_race_rows` bounds the promotion rate, so the
+"100 % promotion" shape that got `SD28-E14-F1`'s spell probe retracted goes red rather than shipping.
+`every_raceid_all_race_is_also_offered_by_the_creation_roster` proves the roster-first ordering can
+only add, never demote.
+
+### 4. What was measured
+
+Guarded regen, per SD-30 loop-instruction DoD item 4 (not a bare run):
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out <sp>/sweep.json
+#   25688 records examined of 26736 read, 249119 tokens compared, 0 findings -- CLEAN
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out <sp>/fixture.json
+#   1275 of 1276 covered units cleared; 1 failed
+#   (advanced_players_guide:equipment:spindle_of_perfect_knowledge -- PRE-EXISTING,
+#    already logged in OPEN-ISSUES.md and progress.md; untouched by this cycle)
+CORPUS_LITERAL_SWEEP_REPORT=… DERIVED_FIXTURE_CHECK_REPORT=… \
+  cargo run --locked --bin v06_work_inventory     # zero stamp loss, no --allow-stamp-loss
+```
+
+Board, by replaying the live producer's own `doneness_verdict()` over `docs/work-inventory.json`
+with `EXCLUDED_BOOKS` applied — never asserted:
+
+```
+python3 -c "import json,sys,collections; sys.path.insert(0,'scripts/observer');
+import pf1e_dashboard_producer as P;
+U=[u for u in json.load(open('docs/work-inventory.json'))['units'] if u.get('book') not in P.EXCLUDED_BOOKS];
+c=collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U);
+print(c, len(U))"
+```
+
+| figure | before | after | delta |
+|---|---:|---:|---:|
+| board `done` / 38,521 | 11,829 (30.71 %) | **11,859 (30.79 %)** | **+30** |
+| `race` `done` / 103 | 7 | **37** | **+30** |
+| `race` `not-started` | 96 | **66** | −30 |
+| `race_trait` `done` / 3,603 | 497 | 497 | 0 |
+| `held` | 1,886 | 1,886 | 0 |
+
+**Movement reported in both directions (Decision 1(a) / 1(e) clause 3).** A unit-by-unit diff of the
+committed baseline (`git show HEAD:docs/work-inventory.json`) against the regen, bucketed through
+`doneness_verdict`:
+
+```
+units whose doneness bucket moved: 30
+  race   not-started -> done   30
+DEMOTIONS out of done: 0
+promotions into done: 30   (by kind: {'race': 30})
+ids only in base: 0   only in now: 0
+```
+
+Nothing outside `kind=race` moved a bucket. 70 further units changed only their `evidence` string
+(63 refused races now read `race_absent_from_the_character_creation_roster` instead of the
+now-inaccurate `race_absent_from_RaceId_ALL`; the 7 CRB races read
+`race_offered_by_the_real_character_creation_roster`) with no bucket change.
+
+The 30: Aasimar, Catfolk, Drow, Duergar, Fetchling, Gillman, Goblin, Grippli, Hobgoblin, Ifrit,
+Kobold, Merfolk, Orc, Oread, Ratfolk, Strix, Suli, Svirfneblin, Sylph, Tengu, Tiefling, Undine,
+Vanara, Vishkanya (all `advanced_race_guide`), Changeling, Kitsune, Nagaji, Samsaran, Wayang
+(`bestiary_4`), Skinwalker (`bestiary_5`).
+
+**The 66 that did not move are correctly refused**, and the cycle split them by the corpus's own
+`TYPE` token rather than by eye — the split is the honest statement of what `race` headroom actually
+remains:
+
+```
+python3 -c "... rest = board race units with no shipped chassis;
+            pc = [u for u in rest if 'PC' in (u['type_facet'] or '').split('.')]"
+# remaining 66 of which TYPE carries .PC. (playable): 22
+```
+
+- **22 carry `.PC.`** — genuinely playable races with **no chassis record on disk yet**: Dhampir;
+  Kasatha, Trox, Wyrwood, Wyvaran (`bestiary_4`); Astomoi, Caligni, Deep One Hybrid, Orang-Pendak,
+  Reptoid, Shabti (`bestiary_5`); Rougarou (`bestiary_6`); Android, Elf Aquatic, Gathlain, Ghoran,
+  Monkey Goblin, Lashunta, Syrinx, Triaxian (`core_essentials`); Ghoran, Vine Leshy
+  (`ultimate_wilderness`). 21 distinct races — `Ghoran` is the board's only duplicate `race` name,
+  declared by two books. **This is Epic 1's remaining real work for the `race` kind.**
+- **44 carry no `PC` type at all** — monster-template and companion `RACE:` rows (Skeleton, Zombie,
+  the four Iron Cobra materials, Golem (Stained Glass), Treerazer, the `occult_adventures` Ghost
+  Mount/Phantom rows, `ultimate_combat`'s three Companion (Bird …) rows). 38 of the 44 carry no
+  `type_facet` at all. These are correctly `not-started` and are not chassis work.
+
+The corpus/board intersection is exact and was re-derived: 37 shipped `data/corpus/*/race/*.json`
+records ↔ 37 board `race` units, no name left unmatched in either direction.
+
+### 5. Site feed (loop-instruction override 10)
+
+This cycle touched `docs/work-inventory.json`, so `./scripts/publish-site-dashboard.sh` was run for
+real (not `--check`) and its output committed: `site/dashboard/PF1e-dashboard.json` regenerated from
+the live producer, plus `site/status-data.json` + 30 book-detail files
+(`30 books, overall 35.4%`, 36,028 items).
+
+### 6. Corrections emitted
+
+Two `retro.py correction` events (`docs/retro/events/sd31-w14-epic1-race-chassis.jsonl`):
+
+1. **`OPEN-ISSUES.md` row 22's unit ids are stale.** It names the 7 done races as
+   `core_essentials:race:dwarf` etc.; they are `advanced_race_guide:race:dwarf` etc., because
+   `RACE_NEWEST_PRINTING` (`corpus_literal_sweep.rs:525`) re-attributes all 32 per-race
+   `core_essentials` chassis files to `advanced_race_guide`. The finding itself stands; only the ids
+   moved. Verified: `[u['id'] for u in units if u['kind']=='race' and u['name']=='Dwarf']` →
+   `['advanced_race_guide:race:dwarf']`.
+2. **Row 207's routing note undercounts the payoff.** It predicted "7/103 toward 34/103"; the real
+   figure is **37/103**. The 34 predates `SD31-E6-F4-007`'s Changeling + Samsaran batch.
+
+### 7. What this cycle could NOT do
+
+- **`race` is not closed.** 66 of 103 remain `not-started`. **22 of them carry `.PC.`** (the 21
+  distinct playable races enumerated in §4) and need a real chassis ingest — the same per-race work
+  Epic 1's earlier batches did. **Not deferred, just not done here**, and logged as an Epic 1
+  follow-on rather than proposed for a Structural Exclusion Register entry: cost is never an
+  exclusion reason. The other 44 are monster-template / companion `RACE:` rows and are correctly
+  `not-started`.
+- **The Geneiekin/Dhampir/Skinwalker heritage mechanism** (`OPEN-ISSUES.md` rows 13, 18, and the
+  Skinwalker 65-row note) is untouched; it remains the named blocker for those batches.
+- **`derived_evaluator_fixture_check`'s one standing failure** was reproduced, not fixed —
+  pre-existing, already logged, and outside this card.
+
+### 8. Wired-integration four-check audit
+
+Run against the **staged diff** (`git diff --unified=0 --cached`), not `12f1f5c94..HEAD` — at audit
+time `HEAD` is still the base commit, so the doctrine's literal `develop...HEAD` form would have
+compared nothing and passed vacuously. The sanity line above the checks prints the diffstat being
+audited (4 files, 761 insertions / 163 deletions), and the run ends by firing the same check-1 regex
+at a synthetic `// TODO: placeholder` line to prove the pattern still matches when a token is
+present.
+
+```
+### sanity: the diff under audit is non-empty ###
+ apps/desktop/src-tauri/src/character_hub.rs | 238 ++++++-----------
+ src/bin/v06_work_inventory.rs               | 302 +++++++++++++++++++++-
+ src/rules_core/mod.rs                       |   1 +
+ src/rules_core/race_creation.rs             | 383 ++++++++++++++++++++++++++++
+ 4 files changed, 761 insertions(+), 163 deletions(-)
+
+=== check 1: stub/mock/todo tokens ===   OK_NO_TOKENS
+=== check 2: no-op click handlers ===    OK_NO_NOOP_HANDLERS
+=== check 3: mock leaks ===              OK_NO_MOCK_LEAKS
+=== check 4: 'Would ...' strings ===     OK_NO_WOULD_STRINGS
+
+### proof the audit can fail ###
+1:+    // TODO: placeholder     (the pattern fires when a token is present)
+```
+
+### 9. Full gate
+
+**First launch produced no verdict and was reported honestly rather than inferred.** The wrapper was
+killed by the harness's own 600 s ceiling: `VERIFY_EXIT=143` = `128 + 15` = SIGTERM, with **no
+`SUMMARY` block in the log at all**. Per SD-30 cycle mechanics 4b that is a wrapper timeout, not a
+red gate — and equally, it is not a green one. Relaunched detached (`setsid nohup`) so the sweep
+outlives the wrapper, log at
+`<scratchpad>/verify2.log`, exit code captured in the same shell statement that ran it and never
+through a pipe.
+
+Stage-by-stage results are in that log. At commit time the run had passed `preflight-*`,
+`site-dashboard-check`, `site-dashboard-pi-gate`, `site-public-status-check`,
+`site-public-status-pi-gate`, `audit-selftest`, `reclaim-selftest` and was inside `driver-selftest`;
+the long `root-full` / desktop stages had not returned. The commit and this receipt landed first, per
+cycle mechanics 4a — a receipt saying "gate launched, log at `<path>`, exit code not yet obtained" is
+honest and resumable; a card left in flight with nothing written is not.
+
+Targeted suites run to green before the commit, each with its own scratch `CARGO_TARGET_DIR`:
+
+```
+cargo test --locked --lib rules_core::race_creation          #  7 passed
+cargo test --locked --bin v06_work_inventory -- race          # 35 passed  (5 new)
+cargo test --locked --bin v06_work_inventory -- race_trait_grounding_tests   # 21 passed (7 new)
+(apps/desktop/src-tauri) cargo test --locked character_hub::tests::the_       #  6 passed (1 new)
+```
+
+The desktop run is the one that matters for the function move:
+`the_seven_previously_offered_races_keep_their_shipped_values` — the field-by-field regression pin
+for all 7 originally-offered races against the values the pre-corpus `RACE_OPTIONS` table shipped —
+passes unchanged, which is the evidence that moving the predicate into `rules_core` changed no
+product behaviour.
+
+### 10. Full-gate verdict — RED, and the red is entirely pre-existing on `tranche/11`
+
+The isolated run (own `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/sd31-w14-race-chassis`, log dir
+`/tmp/codex-verify-wjDJS5`) reported:
+
+```
+FAIL  root-full  (cargo exit 101; 7022 passed across 566 suites)
+FAIL  desktop    (cargo exit 101; 457 passed, 6 failed)
+FAIL  reach      (cargo exit 101)
+```
+
+**Every `test result: FAILED` line is attributed back to its suite by name — no bucket, per
+`AGENTS.md` §Concurrency.** Fourteen distinct failures:
+
+| suite | failing test |
+|---|---|
+| `--bin ingest_apg_race_traits` | `already_ingested_keys_reads_real_keys_off_disk_not_a_hand_list` |
+| `--bin ingest_race_traits` | `no_committed_trait_description_leaks_pcgen_syntax_in_any_declared_book` |
+| `--test sd27_ability_automatic_granted_race_traits` | `the_ability_automatic_grant_shape_is_exactly_two_records_corpus_wide` |
+| `--test sd27_alternate_racial_trait_reachability` | `the_three_dependent_rows_are_not_offered_as_choices_and_the_menu_is_exactly_the_alternates` |
+| `--test sd27_book_license_record_counts` | `every_owned_books_stated_record_count_equals_the_records_on_disk`, `every_owned_books_stated_redaction_count_equals_the_redactions_on_disk` |
+| `--test sd_governance_stub_registry_divergence` | `registry_book_stub_entries_match_stub_artifacts_exactly` |
+| desktop / reach | `companion_catalog::tests::every_served_key_matches_a_corpus_record_file`, `reach_gate::tests::{core_essentials_heritage_racial_traits_reach_a_player, args_alternate_racial_traits_are_visible_only_because_the_corpus_is_scanned, every_declared_claim_actually_carries_the_records, unreached_records_are_exactly_the_recorded_findings, unsurfaced_families_are_exactly_the_recorded_findings}` |
+
+**All fourteen were reproduced at the base commit `12f1f5c94` with none of this cycle's changes
+present** — not argued from the diff, run. A detached worktree was cut at `12f1f5c94`
+(`git worktree add --detach`), given its own `CARGO_TARGET_DIR`, and the six suites re-run there:
+
+```
+--- cargo test --locked --test sd_governance_stub_registry_divergence ---   FAILED (1)
+--- cargo test --locked --test sd27_book_license_record_counts ---          FAILED (2)
+--- cargo test --locked --test sd27_ability_automatic_granted_race_traits --- FAILED (1)
+--- cargo test --locked --test sd27_alternate_racial_trait_reachability --- FAILED (1)
+--- cargo test --locked --bin ingest_apg_race_traits ---                    FAILED (1)
+--- cargo test --locked --bin ingest_race_traits ---                        FAILED (1)
+(apps/desktop/src-tauri) cargo test --locked -j 2   ->  456 passed; 6 failed
+```
+
+Same six desktop tests, same eight root tests, same assertion values. This branch's desktop run is
+**457 passed / 6 failed** against base's **456 / 6** — the +1 pass is this cycle's own new pin.
+
+**Root cause, traced:** commit `d8175d817` "site: stop publishing Core Essentials as a sourcebook"
+(operator-authored, 2026-08-18, an ancestor of `12f1f5c94`) relocated corpus records between book
+directories — Advanced Race Guide `race_trait` went **350 → 414** on disk, APG's licensed record
+count 2,735 → 2,743, ARG's PI-redaction count 1 → 10, `data/corpus/core_essentials/race_trait/`
+disappeared, eight APG familiar `companion` records moved and now reach no surface — **without
+updating the count-pinning files, the `reach_gate` claims, or the stub registry.** That is exactly
+the standing "a record-count change compiles clean but leaves other files' hardcoded assertions red"
+hazard. Re-derived: `len(glob('data/corpus/advanced_race_guide/race_trait/*/*.json'))` → **414**.
+
+**This cycle changed no file any of the fourteen reads:**
+`git diff --name-only 12f1f5c94..HEAD -- data/` → **0**; `-- tests/` → **0**.
+
+**A second, contaminated run must not be mistaken for a third finding.** A later run appearing in the
+same log file (`-j 8`, log dir `/tmp/codex-verify-4Cn2v0`) additionally reported
+`FAIL site-dashboard-check` and `FAIL root-lib` (`beastiary1::companion_tests::
+the_book_defines_twenty_four_companions_and_thirty_five_abilities`). **Neither reproduces**, in this
+worktree or at base:
+
+```
+./scripts/publish-site-dashboard.sh --check
+#   site/dashboard/PF1e-dashboard.json is current
+#   OK: status-data.json and status-data/*.json are up to date        EXIT=0
+cargo test --locked --lib beastiary1::companion_tests   # 5 passed, 0 failed  (here AND at 12f1f5c94)
+```
+
+`pgrep -af verify.sh` at that moment showed **four concurrent `verify.sh` sweeps** on this box,
+including a sibling worktree agent running `./scripts/verify.sh -j 10` and others with no visible
+per-agent `CARGO_TARGET_DIR`. That is precisely `AGENTS.md`'s recorded hazard — a shared target
+directory "produces a plausible wrong number rather than an error." Logged as `OPEN-ISSUES.md` row
+239. The trustworthy verdict for this card is the isolated `wjDJS5` run above.
+
+**Disposition.** The gate is RED and this cycle did not make it red; it also did not fix it, because
+repairing fourteen count pins across `tests/`, `src/bin/ingest_*.rs`, `reach_gate.rs`'s claim
+register, three `LICENSE.json` artifacts and the stub registry is a different card's work and touches
+files this one does not own. **Recorded as a blocker on `tranche/11` itself (`OPEN-ISSUES.md` row
+239), not excused as a background condition** — `AGENTS.md`: "a verification stage red for more than
+one run is a blocker."

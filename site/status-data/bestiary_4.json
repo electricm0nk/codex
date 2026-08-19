@@ -7741,11 +7741,11 @@
     {
       "kind": "race",
       "label": "Races",
-      "done": 0,
+      "done": 5,
       "partial": 0,
-      "not_started": 9,
+      "not_started": 4,
       "denominator": 9,
-      "pct": 0.0,
+      "pct": 55.6,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 9
@@ -7753,7 +7753,7 @@
       "items": [
         {
           "name": "Changeling",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC.Uncommon",
           "standing": "origin"
         },
@@ -7765,19 +7765,19 @@
         },
         {
           "name": "Kitsune",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC.Uncommon",
           "standing": "origin"
         },
         {
           "name": "Nagaji",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC.Uncommon",
           "standing": "origin"
         },
         {
           "name": "Samsaran",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC.Uncommon",
           "standing": "origin"
         },
@@ -7789,7 +7789,7 @@
         },
         {
           "name": "Wayang",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC.Uncommon",
           "standing": "origin"
         },

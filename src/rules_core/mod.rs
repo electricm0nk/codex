@@ -28,6 +28,7 @@ pub mod pilot_compute;
 pub mod pilot_compute_corpus;
 pub mod pilot_failure;
 pub mod pilot_view_model;
+pub mod race_creation;
 pub mod race_resolver;
 pub mod rules_tables;
 pub mod shape_b_v1;

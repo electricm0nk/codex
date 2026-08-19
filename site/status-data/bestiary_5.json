@@ -1511,11 +1511,11 @@
     {
       "kind": "race",
       "label": "Races",
-      "done": 0,
+      "done": 1,
       "partial": 0,
-      "not_started": 7,
+      "not_started": 6,
       "denominator": 7,
-      "pct": 0.0,
+      "pct": 14.3,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 7
@@ -1559,7 +1559,7 @@
         },
         {
           "name": "Skinwalker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC",
           "standing": "origin"
         }

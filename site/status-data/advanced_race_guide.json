@@ -8828,11 +8828,11 @@
     {
       "kind": "race",
       "label": "Races",
-      "done": 7,
+      "done": 31,
       "partial": 0,
-      "not_started": 26,
+      "not_started": 2,
       "denominator": 33,
-      "pct": 21.2,
+      "pct": 93.9,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 33
@@ -8840,13 +8840,13 @@
       "items": [
         {
           "name": "Aasimar",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC.Featured",
           "standing": "origin"
         },
         {
           "name": "Catfolk",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC.Featured",
           "standing": "origin"
         },
@@ -8858,13 +8858,13 @@
         },
         {
           "name": "Drow",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC.Featured",
           "standing": "origin"
         },
         {
           "name": "Duergar",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC.Uncommon",
           "standing": "origin"
         },
@@ -8882,13 +8882,13 @@
         },
         {
           "name": "Fetchling",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC.Featured",
           "standing": "origin"
         },
         {
           "name": "Gillman",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC.Uncommon",
           "standing": "origin"
         },
@@ -8900,13 +8900,13 @@
         },
         {
           "name": "Goblin",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC.Featured",
           "standing": "origin"
         },
         {
           "name": "Grippli",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC.Uncommon",
           "standing": "origin"
         },
@@ -8930,7 +8930,7 @@
         },
         {
           "name": "Hobgoblin",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC.Featured",
           "standing": "origin"
         },
@@ -8942,31 +8942,31 @@
         },
         {
           "name": "Ifrit",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC.Featured",
           "standing": "origin"
         },
         {
           "name": "Kobold",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC.Featured",
           "standing": "origin"
         },
         {
           "name": "Merfolk",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC.Uncommon",
           "standing": "origin"
         },
         {
           "name": "Orc",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC.Featured",
           "standing": "origin"
         },
         {
           "name": "Oread",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC.Featured",
           "standing": "origin"
         },
@@ -8978,61 +8978,61 @@
         },
         {
           "name": "Ratfolk",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC.Featured",
           "standing": "origin"
         },
         {
           "name": "Strix",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC.Uncommon",
           "standing": "origin"
         },
         {
           "name": "Suli",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC.Uncommon",
           "standing": "origin"
         },
         {
           "name": "Svirfneblin",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC.Uncommon",
           "standing": "origin"
         },
         {
           "name": "Sylph",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC.Featured",
           "standing": "origin"
         },
         {
           "name": "Tengu",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC.Featured",
           "standing": "origin"
         },
         {
           "name": "Tiefling",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC.Featured",
           "standing": "origin"
         },
         {
           "name": "Undine",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC.Featured",
           "standing": "origin"
         },
         {
           "name": "Vanara",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC.Uncommon",
           "standing": "origin"
         },
         {
           "name": "Vishkanya",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC.Uncommon",
           "standing": "origin"
         }
