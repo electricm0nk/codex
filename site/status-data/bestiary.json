@@ -1129,8 +1129,8 @@
       "kind": "equipment",
       "label": "Equipment",
       "done": 2,
-      "partial": 1,
-      "not_started": 2,
+      "partial": 3,
+      "not_started": 0,
       "denominator": 5,
       "pct": 40.0,
       "excluded_from_percentage": 2,
@@ -1159,7 +1159,7 @@
         },
         {
           "name": "Poison (Violet Venom)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Goods.Poison.Consumable",
           "standing": "unclassified"
         },
@@ -1171,13 +1171,13 @@
         },
         {
           "name": "Rock (Medium)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Weapon.Simple.Ranged.Standard.Bludgeoning.Thrown.Rock",
           "standing": "origin"
         },
         {
           "name": "Rock (Small)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Weapon.Simple.Ranged.Standard.Bludgeoning.Thrown.Rock",
           "standing": "origin"
         }
@@ -1291,11 +1291,11 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 136,
-      "partial": 19,
-      "not_started": 240,
+      "done": 178,
+      "partial": 24,
+      "not_started": 193,
       "denominator": 395,
-      "pct": 34.4,
+      "pct": 45.1,
       "excluded_from_percentage": 329,
       "standing_breakdown": {
         "origin": 395,
@@ -1352,7 +1352,7 @@
         },
         {
           "name": "Aberration Traits Output",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin"
         },
@@ -1484,7 +1484,7 @@
         },
         {
           "name": "All-Around Vision",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Sense",
           "standing": "unclassified"
         },
@@ -1502,13 +1502,13 @@
         },
         {
           "name": "Amphibious",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified"
         },
         {
           "name": "Animal Traits Output",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin"
         },
@@ -1628,7 +1628,7 @@
         },
         {
           "name": "Breath Weapon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.BreathWeapon",
           "standing": "unclassified"
         },
@@ -1712,7 +1712,7 @@
         },
         {
           "name": "Breath Weapon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.BreathWeapon",
           "standing": "unclassified"
         },
@@ -1832,7 +1832,7 @@
         },
         {
           "name": "Burn",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin"
         },
@@ -1856,7 +1856,7 @@
         },
         {
           "name": "Can't Be Tripped",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin"
         },
@@ -1916,7 +1916,7 @@
         },
         {
           "name": "Change Shape",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified"
         },
@@ -2000,7 +2000,7 @@
         },
         {
           "name": "Channel Resistance",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.Defensive",
           "standing": "unclassified"
         },
@@ -2090,7 +2090,7 @@
         },
         {
           "name": "Constrict",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified"
         },
@@ -2354,7 +2354,7 @@
         },
         {
           "name": "Disease",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified"
         },
@@ -2420,7 +2420,7 @@
         },
         {
           "name": "Distraction",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin"
         },
@@ -2780,7 +2780,7 @@
         },
         {
           "name": "Ferocity",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.Defensive",
           "standing": "unclassified"
         },
@@ -2876,7 +2876,7 @@
         },
         {
           "name": "Flight",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin"
         },
@@ -2918,7 +2918,7 @@
         },
         {
           "name": "Frightful Presence",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.Aura",
           "standing": "unclassified"
         },
@@ -2990,7 +2990,7 @@
         },
         {
           "name": "Grab",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified"
         },
@@ -3134,7 +3134,7 @@
         },
         {
           "name": "Immunity to Ability Damage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin"
         },
@@ -3146,7 +3146,7 @@
         },
         {
           "name": "Immunity to Acid",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin"
         },
@@ -3164,7 +3164,7 @@
         },
         {
           "name": "Immunity to Blindness",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin"
         },
@@ -3176,43 +3176,43 @@
         },
         {
           "name": "Immunity to Charm",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin"
         },
         {
           "name": "Immunity to Cold",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "unclassified"
         },
         {
           "name": "Immunity to Compulsion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin"
         },
         {
           "name": "Immunity to Critical Hits",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin"
         },
         {
           "name": "Immunity to Curse Effects",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin"
         },
         {
           "name": "Immunity to Deafness",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin"
         },
         {
           "name": "Immunity to Death Effects",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin"
         },
@@ -3224,13 +3224,13 @@
         },
         {
           "name": "Immunity to Disease",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin"
         },
         {
           "name": "Immunity to Electricity",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin"
         },
@@ -3248,7 +3248,7 @@
         },
         {
           "name": "Immunity to Energy Drain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin"
         },
@@ -3266,19 +3266,19 @@
         },
         {
           "name": "Immunity to Fear",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin"
         },
         {
           "name": "Immunity to Fire",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin"
         },
         {
           "name": "Immunity to Flanking",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin"
         },
@@ -3350,7 +3350,7 @@
         },
         {
           "name": "Immunity to Mind-Affecting Effects",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin"
         },
@@ -3374,7 +3374,7 @@
         },
         {
           "name": "Immunity to Paralysis",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin"
         },
@@ -3392,7 +3392,7 @@
         },
         {
           "name": "Immunity to Petrification",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin"
         },
@@ -3410,19 +3410,19 @@
         },
         {
           "name": "Immunity to Poison",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin"
         },
         {
           "name": "Immunity to Polymorph",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin"
         },
         {
           "name": "Immunity to Precision Damage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin"
         },
@@ -3434,25 +3434,25 @@
         },
         {
           "name": "Immunity to Slashing and Piercing Damage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin"
         },
         {
           "name": "Immunity to Sleep",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin"
         },
         {
           "name": "Immunity to Sneak Attacks",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin"
         },
         {
           "name": "Immunity to Sonic",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin"
         },
@@ -3464,7 +3464,7 @@
         },
         {
           "name": "Immunity to Stunning",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin"
         },
@@ -3602,7 +3602,7 @@
         },
         {
           "name": "Light Blindness",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Weakness",
           "standing": "origin"
         },
@@ -3632,7 +3632,7 @@
         },
         {
           "name": "Light Sensitivity",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Weakness",
           "standing": "origin"
         },
@@ -3686,7 +3686,7 @@
         },
         {
           "name": "Magical Beast Traits Output",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin"
         },
@@ -3872,7 +3872,7 @@
         },
         {
           "name": "Ooze Traits Output",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin"
         },
@@ -3884,7 +3884,7 @@
         },
         {
           "name": "Oversized Weapon",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.OversizedWeapon",
           "standing": "origin"
         },
@@ -4298,7 +4298,7 @@
         },
         {
           "name": "Pounce",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified"
         },
@@ -4310,7 +4310,7 @@
         },
         {
           "name": "Powerful Charge",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "origin"
         },
@@ -4352,7 +4352,7 @@
         },
         {
           "name": "Pull",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "origin"
         },
@@ -4400,7 +4400,7 @@
         },
         {
           "name": "Rake",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "origin"
         },
@@ -4418,7 +4418,7 @@
         },
         {
           "name": "Regeneration",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified"
         },
@@ -4442,7 +4442,19 @@
         },
         {
           "name": "Regeneration",
-          "doneness": "not-started",
+          "doneness": "partial",
+          "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Regeneration",
+          "doneness": "partial",
+          "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Regeneration",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified"
         },
@@ -4454,7 +4466,13 @@
         },
         {
           "name": "Regeneration",
-          "doneness": "not-started",
+          "doneness": "partial",
+          "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Regeneration",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified"
         },
@@ -4466,31 +4484,13 @@
         },
         {
           "name": "Regeneration",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified"
         },
         {
           "name": "Regeneration",
-          "doneness": "not-started",
-          "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
-          "standing": "unclassified"
-        },
-        {
-          "name": "Regeneration",
-          "doneness": "not-started",
-          "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
-          "standing": "unclassified"
-        },
-        {
-          "name": "Regeneration",
-          "doneness": "not-started",
-          "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
-          "standing": "unclassified"
-        },
-        {
-          "name": "Regeneration",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified"
         },
@@ -4526,7 +4526,7 @@
         },
         {
           "name": "Rend",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified"
         },
@@ -4598,13 +4598,13 @@
         },
         {
           "name": "Rock Catching",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Defensive",
           "standing": "origin"
         },
         {
           "name": "Rock Throwing",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "origin"
         },
@@ -4652,7 +4652,7 @@
         },
         {
           "name": "Scent",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Sense",
           "standing": "unclassified"
         },
@@ -4664,7 +4664,7 @@
         },
         {
           "name": "See in Darkness",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Sense",
           "standing": "unclassified"
         },
@@ -4970,7 +4970,7 @@
         },
         {
           "name": "Stampede",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin"
         },
@@ -5132,7 +5132,7 @@
         },
         {
           "name": "Swallow Whole",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified"
         },
@@ -5210,7 +5210,7 @@
         },
         {
           "name": "Telepathy",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural.Communicate",
           "standing": "unclassified"
         },
@@ -5264,7 +5264,7 @@
         },
         {
           "name": "Trample",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified"
         },
@@ -5312,7 +5312,7 @@
         },
         {
           "name": "Trip",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified"
         },
@@ -5426,7 +5426,7 @@
         },
         {
           "name": "Vermin Traits Output",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin"
         },
@@ -5462,7 +5462,7 @@
         },
         {
           "name": "Vulnerability to Cold",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Weakness.VulnerabilityEnergy",
           "standing": "origin"
         },
@@ -5474,7 +5474,7 @@
         },
         {
           "name": "Vulnerability to Fire",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Weakness.VulnerabilityEnergy",
           "standing": "origin"
         },
@@ -5576,7 +5576,7 @@
         },
         {
           "name": "Web",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified"
         },
@@ -5606,7 +5606,7 @@
         },
         {
           "name": "Whirlwind",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.AttackOption",
           "standing": "origin"
         },

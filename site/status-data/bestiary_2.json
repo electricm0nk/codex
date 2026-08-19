@@ -180,11 +180,11 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 218,
-      "partial": 31,
-      "not_started": 107,
+      "done": 232,
+      "partial": 61,
+      "not_started": 63,
       "denominator": 356,
-      "pct": 61.2,
+      "pct": 65.2,
       "excluded_from_percentage": 242,
       "standing_breakdown": {
         "unclassified": 242,
@@ -301,7 +301,7 @@
         },
         {
           "name": "Air Walk",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike.ModifyMovement",
           "standing": "origin"
         },
@@ -349,7 +349,7 @@
         },
         {
           "name": "Arcane Sight",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike.Sense",
           "standing": "origin"
         },
@@ -361,7 +361,7 @@
         },
         {
           "name": "Attach",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Universal Monster Rule.SpecialAttack.Extraordinary",
           "standing": "unclassified"
         },
@@ -445,13 +445,13 @@
         },
         {
           "name": "Blink",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin"
         },
         {
           "name": "Blood Drain",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified"
         },
@@ -469,7 +469,7 @@
         },
         {
           "name": "Blood Rage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified"
         },
@@ -481,7 +481,7 @@
         },
         {
           "name": "Blur",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin"
         },
@@ -535,7 +535,7 @@
         },
         {
           "name": "Breath Weapon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified"
         },
@@ -637,7 +637,7 @@
         },
         {
           "name": "Capsize",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified"
         },
@@ -673,7 +673,7 @@
         },
         {
           "name": "Cat's Luck",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin"
         },
@@ -799,7 +799,7 @@
         },
         {
           "name": "Cloak of Chaos",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin"
         },
@@ -865,7 +865,7 @@
         },
         {
           "name": "Cold",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified"
         },
@@ -919,7 +919,7 @@
         },
         {
           "name": "Compression",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin"
         },
@@ -949,7 +949,7 @@
         },
         {
           "name": "Confusion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -1123,7 +1123,7 @@
         },
         {
           "name": "Deathwatch",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike.Sense",
           "standing": "origin"
         },
@@ -1159,31 +1159,31 @@
         },
         {
           "name": "Detect Chaos",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike.Sense",
           "standing": "origin"
         },
         {
           "name": "Detect Evil",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike.Sense",
           "standing": "unclassified"
         },
         {
           "name": "Detect Good",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike.Sense",
           "standing": "unclassified"
         },
         {
           "name": "Detect Law",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike.Sense",
           "standing": "origin"
         },
         {
           "name": "Detect Magic",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike.Sense",
           "standing": "unclassified"
         },
@@ -1255,7 +1255,7 @@
         },
         {
           "name": "Disease",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified"
         },
@@ -1363,7 +1363,7 @@
         },
         {
           "name": "Electrical Burst",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin"
         },
@@ -1381,13 +1381,13 @@
         },
         {
           "name": "Electricity",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack",
           "standing": "origin"
         },
         {
           "name": "Electricity",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack",
           "standing": "origin"
         },
@@ -1423,7 +1423,7 @@
         },
         {
           "name": "Engulf",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified"
         },
@@ -1447,7 +1447,7 @@
         },
         {
           "name": "Entrap",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin"
         },
@@ -1459,7 +1459,7 @@
         },
         {
           "name": "Entropic Shield",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin"
         },
@@ -1513,7 +1513,7 @@
         },
         {
           "name": "Fast Swallow",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin"
         },
@@ -1573,7 +1573,7 @@
         },
         {
           "name": "Fire Shield",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin"
         },
@@ -1597,7 +1597,7 @@
         },
         {
           "name": "Floating Disk",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin"
         },
@@ -1609,7 +1609,7 @@
         },
         {
           "name": "Fly",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "unclassified"
         },
@@ -1627,7 +1627,7 @@
         },
         {
           "name": "Foresight",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin"
         },
@@ -1639,13 +1639,13 @@
         },
         {
           "name": "Freedom of Movement",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike.Defensive",
           "standing": "unclassified"
         },
         {
           "name": "Freeze",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified"
         },
@@ -1711,79 +1711,79 @@
         },
         {
           "name": "Grab",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified"
         },
         {
           "name": "Grab",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified"
         },
         {
           "name": "Grab",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified"
         },
         {
           "name": "Grab",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified"
         },
         {
           "name": "Grab",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified"
         },
         {
           "name": "Grab",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified"
         },
         {
           "name": "Grab",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified"
         },
         {
           "name": "Grab",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified"
         },
         {
           "name": "Grab",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified"
         },
         {
           "name": "Grab",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified"
         },
         {
           "name": "Grab",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified"
         },
         {
           "name": "Grab",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified"
         },
         {
           "name": "Grab",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified"
         },
@@ -1807,7 +1807,7 @@
         },
         {
           "name": "Heat",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified"
         },
@@ -1831,7 +1831,7 @@
         },
         {
           "name": "Heroic Strength",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -1843,19 +1843,19 @@
         },
         {
           "name": "Hide from Undead",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin"
         },
         {
           "name": "Hold Breath",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified"
         },
         {
           "name": "Holy Aura",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike.Aura",
           "standing": "origin"
         },
@@ -1879,7 +1879,7 @@
         },
         {
           "name": "Horrific Appearance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified"
         },
@@ -1939,7 +1939,7 @@
         },
         {
           "name": "Ice Glide",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin"
         },
@@ -1951,7 +1951,7 @@
         },
         {
           "name": "Icewalking",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified"
         },
@@ -2029,7 +2029,7 @@
         },
         {
           "name": "Know Direction",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin"
         },
@@ -2053,7 +2053,7 @@
         },
         {
           "name": "Lava Puddle",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -2083,7 +2083,7 @@
         },
         {
           "name": "Locate Inevitable",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin"
         },
@@ -2101,7 +2101,7 @@
         },
         {
           "name": "Mage Armor",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin"
         },
@@ -2113,7 +2113,7 @@
         },
         {
           "name": "Magic Fang",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.SpellLike",
           "standing": "origin"
         },
@@ -2155,7 +2155,7 @@
         },
         {
           "name": "Metal Mastery",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin"
         },
@@ -2215,19 +2215,19 @@
         },
         {
           "name": "No Breath",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified"
         },
         {
           "name": "Nondetection",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin"
         },
         {
           "name": "Numbing Cold",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin"
         },
@@ -2311,7 +2311,7 @@
         },
         {
           "name": "Pass without Trace",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin"
         },
@@ -2323,7 +2323,7 @@
         },
         {
           "name": "Perfect Memory",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin"
         },
@@ -2419,7 +2419,7 @@
         },
         {
           "name": "Poison",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified"
         },
@@ -2593,7 +2593,7 @@
         },
         {
           "name": "Poison",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified"
         },
@@ -2719,7 +2719,13 @@
         },
         {
           "name": "Regeneration",
-          "doneness": "not-started",
+          "doneness": "partial",
+          "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
+          "standing": "unclassified"
+        },
+        {
+          "name": "Regeneration",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified"
         },
@@ -2731,19 +2737,13 @@
         },
         {
           "name": "Regeneration",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified"
         },
         {
           "name": "Regeneration",
-          "doneness": "not-started",
-          "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
-          "standing": "unclassified"
-        },
-        {
-          "name": "Regeneration",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified"
         },
@@ -2773,7 +2773,7 @@
         },
         {
           "name": "Resist Energy (one at a time)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin"
         },
@@ -2863,7 +2863,7 @@
         },
         {
           "name": "See Invisibility",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike.Sense",
           "standing": "unclassified"
         },
@@ -2917,7 +2917,7 @@
         },
         {
           "name": "Shillelagh",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin"
         },
@@ -3067,7 +3067,7 @@
         },
         {
           "name": "Soul Lock",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified"
         },
@@ -3103,7 +3103,7 @@
         },
         {
           "name": "Spark Leap",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin"
         },
@@ -3127,7 +3127,7 @@
         },
         {
           "name": "Spectral Mist",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin"
         },
@@ -3163,7 +3163,7 @@
         },
         {
           "name": "Spell Turning",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin"
         },
@@ -3187,7 +3187,7 @@
         },
         {
           "name": "Spider Climb",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "unclassified"
         },
@@ -3217,7 +3217,7 @@
         },
         {
           "name": "Spores",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified"
         },
@@ -3259,7 +3259,7 @@
         },
         {
           "name": "Starlight Blast",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified"
         },
@@ -3289,7 +3289,7 @@
         },
         {
           "name": "Strangle",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified"
         },
@@ -3397,7 +3397,7 @@
         },
         {
           "name": "Telepathy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Communicate",
           "standing": "unclassified"
         },
@@ -3511,7 +3511,7 @@
         },
         {
           "name": "Tongues",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike.Communicate",
           "standing": "origin"
         },
@@ -3529,7 +3529,7 @@
         },
         {
           "name": "Traveler's Friend",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin"
         },
@@ -3541,7 +3541,7 @@
         },
         {
           "name": "Trip",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified"
         },
@@ -3553,7 +3553,7 @@
         },
         {
           "name": "True Seeing",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike.Sense",
           "standing": "origin"
         },
@@ -3571,7 +3571,7 @@
         },
         {
           "name": "Undersized Weapons",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified"
         },
@@ -3583,7 +3583,7 @@
         },
         {
           "name": "Unholy Aura",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike.Aura",
           "standing": "origin"
         },
@@ -3595,7 +3595,7 @@
         },
         {
           "name": "Unseen Servant",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin"
         },
@@ -3691,7 +3691,7 @@
         },
         {
           "name": "Water Walk",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike.ModifyMovement",
           "standing": "unclassified"
         },

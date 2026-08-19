@@ -8828,11 +8828,11 @@
     {
       "kind": "race",
       "label": "Races",
-      "done": 31,
-      "partial": 0,
+      "done": 29,
+      "partial": 2,
       "not_started": 2,
       "denominator": 33,
-      "pct": 93.9,
+      "pct": 87.9,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 33
@@ -8840,7 +8840,7 @@
       "items": [
         {
           "name": "Aasimar",
-          "doneness": "done",
+          "doneness": "partial",
           "type_facet": "Base.PC.Featured",
           "standing": "origin"
         },
@@ -9014,7 +9014,7 @@
         },
         {
           "name": "Tiefling",
-          "doneness": "done",
+          "doneness": "partial",
           "type_facet": "Base.PC.Featured",
           "standing": "origin"
         },

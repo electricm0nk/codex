@@ -7741,11 +7741,11 @@
     {
       "kind": "race",
       "label": "Races",
-      "done": 5,
-      "partial": 0,
+      "done": 4,
+      "partial": 1,
       "not_started": 4,
       "denominator": 9,
-      "pct": 55.6,
+      "pct": 44.4,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 9
@@ -7753,7 +7753,7 @@
       "items": [
         {
           "name": "Changeling",
-          "doneness": "done",
+          "doneness": "partial",
           "type_facet": "Base.PC.Uncommon",
           "standing": "origin"
         },

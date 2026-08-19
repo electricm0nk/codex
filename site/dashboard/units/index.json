@@ -1,8 +1,8 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-08-18T22:55:20Z",
-  "source_document": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_1ad13e3b-085-6/docs/work-inventory.json",
+  "generated_at": "2026-08-19T01:10:47Z",
+  "source_document": "/home/ubuntu/workspace/repos/codex/docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
     "name",
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 38521,
-  "proven_units": 6052,
+  "proven_units": 6202,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 420,
   "category_labels_redacted": 3,
@@ -4844,15 +4844,15 @@
     },
     "companion": {
       "units": 1696,
-      "proven": 823,
+      "proven": 828,
       "by_status": {
-        "not-ingested": 774,
+        "not-ingested": 769,
         "literal-verified": 99,
         "text-complete": 165,
-        "grounded": 658
+        "grounded": 663
       },
       "shard": "PF1e-units-companion.json",
-      "bytes": 227266,
+      "bytes": 227246,
       "doneness_unmapped": {},
       "categories": {
         "none": {
@@ -4884,28 +4884,28 @@
         },
         "specialquality": {
           "label": "Special Qualities",
-          "done": 85,
+          "done": 86,
           "held": 21,
           "in-progress": 0,
-          "not-started": 53,
+          "not-started": 52,
           "unmeasurable": 0,
           "deferred": 0
         },
         "tempevolutionchoice": {
           "label": "Temporary Evolution Choice",
-          "done": 0,
+          "done": 3,
           "held": 0,
           "in-progress": 0,
-          "not-started": 121,
+          "not-started": 118,
           "unmeasurable": 0,
           "deferred": 0
         },
         "evolutionchoice": {
           "label": "Evolution Choice",
           "done": 0,
-          "held": 0,
+          "held": 1,
           "in-progress": 0,
-          "not-started": 103,
+          "not-started": 102,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -5510,17 +5510,17 @@
       "units": 6208,
       "proven": 338,
       "by_status": {
-        "ingested-magnitude": 330,
+        "ingested-magnitude": 333,
         "literal-verified": 5099,
         "grounded": 157,
         "unknown": 205,
         "not-started": 164,
-        "not-ingested": 61,
+        "not-ingested": 58,
         "text-complete": 181,
         "fixture-verified": 11
       },
       "shard": "PF1e-units-equipment.json",
-      "bytes": 832957,
+      "bytes": 832975,
       "doneness_unmapped": {},
       "categories": {
         "magic": {
@@ -5535,18 +5535,18 @@
         "goods": {
           "label": "Adventuring Gear",
           "done": 951,
-          "held": 1,
+          "held": 2,
           "in-progress": 9,
-          "not-started": 35,
+          "not-started": 34,
           "unmeasurable": 1,
           "deferred": 0
         },
         "weapon": {
           "label": "Weapon",
           "done": 428,
-          "held": 19,
+          "held": 21,
           "in-progress": 14,
-          "not-started": 10,
+          "not-started": 8,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -6815,26 +6815,26 @@
     },
     "feat": {
       "units": 2610,
-      "proven": 1570,
+      "proven": 1547,
       "by_status": {
-        "text-complete": 1462,
-        "unknown": 542,
+        "text-complete": 1439,
+        "unknown": 565,
         "grounded": 108,
         "not-started": 97,
         "not-ingested": 399,
         "deferred-with-reason": 2
       },
       "shard": "PF1e-units-feat.json",
-      "bytes": 258188,
+      "bytes": 258050,
       "doneness_unmapped": {},
       "categories": {
         "general": {
           "label": "General",
           "done": 519,
-          "held": 52,
+          "held": 51,
           "in-progress": 1,
           "not-started": 58,
-          "unmeasurable": 210,
+          "unmeasurable": 211,
           "deferred": 0
         },
         "combat": {
@@ -6866,11 +6866,11 @@
         },
         "psionic": {
           "label": "Psionic",
-          "done": 82,
+          "done": 81,
           "held": 1,
           "in-progress": 0,
           "not-started": 0,
-          "unmeasurable": 70,
+          "unmeasurable": 71,
           "deferred": 0
         },
         "teamwork": {
@@ -6911,11 +6911,11 @@
         },
         "story": {
           "label": "Story",
-          "done": 18,
-          "held": 7,
+          "done": 3,
+          "held": 1,
           "in-progress": 0,
           "not-started": 0,
-          "unmeasurable": 0,
+          "unmeasurable": 21,
           "deferred": 2
         },
         "itemcreation": {
@@ -7353,41 +7353,41 @@
     },
     "monster_ability": {
       "units": 2951,
-      "proven": 1537,
+      "proven": 1705,
       "by_status": {
-        "not-ingested": 1312,
-        "grounded": 596,
-        "text-complete": 941,
+        "not-ingested": 1144,
+        "text-complete": 1006,
+        "grounded": 699,
         "literal-verified": 102
       },
       "shard": "PF1e-units-monster_ability.json",
-      "bytes": 355956,
+      "bytes": 355609,
       "doneness_unmapped": {},
       "categories": {
         "specialquality": {
           "label": "Special Qualities",
-          "done": 639,
-          "held": 85,
+          "done": 693,
+          "held": 138,
           "in-progress": 0,
-          "not-started": 906,
+          "not-started": 799,
           "unmeasurable": 0,
           "deferred": 0
         },
         "specialattack": {
           "label": "Special Attacks",
-          "done": 730,
-          "held": 185,
+          "done": 762,
+          "held": 213,
           "in-progress": 0,
-          "not-started": 378,
+          "not-started": 318,
           "unmeasurable": 0,
           "deferred": 0
         },
         "universalmonsterrule": {
           "label": "Universal Monster Rule",
-          "done": 0,
+          "done": 1,
           "held": 0,
           "in-progress": 0,
-          "not-started": 28,
+          "not-started": 27,
           "unmeasurable": 0,
           "deferred": 0
         }
@@ -7398,20 +7398,21 @@
       "units": 103,
       "proven": 0,
       "by_status": {
-        "not-ingested": 93,
-        "literal-verified": 7,
+        "ingested-magnitude": 3,
+        "literal-verified": 34,
+        "not-ingested": 63,
         "not-started": 3
       },
       "shard": "PF1e-units-race.json",
-      "bytes": 9971,
+      "bytes": 10097,
       "doneness_unmapped": {},
       "categories": {
         "base": {
           "label": "Base",
-          "done": 0,
+          "done": 27,
           "held": 0,
-          "in-progress": 0,
-          "not-started": 44,
+          "in-progress": 3,
+          "not-started": 14,
           "unmeasurable": 0,
           "deferred": 0
         },
