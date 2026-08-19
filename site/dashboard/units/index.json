@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-08-19T21:32:33Z",
+  "generated_at": "2026-08-19T22:40:20Z",
   "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 38372,
-  "proven_units": 5857,
+  "proven_units": 5862,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 420,
   "category_labels_redacted": 3,
@@ -6078,17 +6078,17 @@
     },
     "equipment_modifier": {
       "units": 1580,
-      "proven": 604,
+      "proven": 609,
       "by_status": {
-        "grounded": 152,
+        "grounded": 157,
         "unknown": 416,
         "text-complete": 452,
-        "ingested-magnitude": 462,
+        "ingested-magnitude": 457,
         "literal-verified": 35,
         "not-started": 63
       },
       "shard": "PF1e-units-equipment_modifier.json",
-      "bytes": 168941,
+      "bytes": 168891,
       "doneness_unmapped": {},
       "categories": {
         "none": {
@@ -6129,9 +6129,9 @@
         },
         "amuletofmightyfists": {
           "label": "Amulet Of Mighty Fists",
-          "done": 66,
+          "done": 71,
           "held": 0,
-          "in-progress": 12,
+          "in-progress": 7,
           "not-started": 0,
           "unmeasurable": 4,
           "deferred": 0

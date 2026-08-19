@@ -23,15 +23,15 @@
 //! pipe order of the canonical records, proving the affected-roll set
 //! must accept both orders, not just `DAMAGE,TOHIT`).
 //!
-//! **NOT recognized, deliberately (`SD31-W17-INTEGRATE-001`, wave-17
-//! adversarial review):** the Amulet of Mighty Fists family's own
+//! **Re-landed correctly (`SD31-W17-INTEGRATE-001` OPEN-ISSUES row 309,
+//! SD-31 wave 18):** the Amulet of Mighty Fists family's own
 //! `BONUS:WEAPONPROF=TYPE.Natural|TOHIT,DAMAGE|<n>|TYPE=Enhancement`
 //! chain (`KEY:Special Ability ~ +1 ~ Amulet of Mighty Fists` through
-//! `~ +5 ~`) was widened into this same match in wave 17 and then
-//! reverted here after review: `WEAPONPROF=TYPE.Natural` scopes the
-//! bonus to NATURAL attacks only, but `WeaponEnhancementBonus` carries no
-//! field able to represent that scope, and the live consumer
-//! (`damage_total::resolve_weapon_enhancement_modifier`) sums every
+//! `~ +5 ~`) was widened into the same match as a bare `WEAPON` chain in
+//! wave 17 and reverted after review: `WEAPONPROF=TYPE.Natural` scopes the
+//! bonus to NATURAL attacks only, but `WeaponEnhancementBonus` carried no
+//! field able to represent that scope, and the consumer
+//! (`damage_total::resolve_weapon_enhancement_modifier`) summed every
 //! equipped item's `weapon_enhancement_bonus` into EVERY weapon a
 //! character wields — so treating this chain the same as a bare `WEAPON`
 //! chain gave an equipped Amulet of Mighty Fists +5 a wrongful +5
@@ -39,11 +39,14 @@
 //! desktop app (proven live: `apps/desktop/src-tauri/src/
 //! character_hub.rs`'s `attach_equipment_modifier_at_root` gates only on
 //! catalog recognition, target-equipped and funds, no legality check).
-//! Recognizing this family correctly needs a NEW field (a natural-attack
-//! scope flag) plus a NEW consumer that applies it only to natural
-//! weapons — real, new engine capability, not a probe widen. Logged as
-//! an engineering follow-up rather than re-attempted here; the Amulet of
-//! Mighty Fists family's `equipment_modifier` units stay `held`.
+//! Wave 18 adds the missing piece both review findings named: this
+//! module now sets `WeaponEnhancementBonus::natural_attack_only` (real,
+//! distinct from a bare `WEAPON` chain, never guessed), and
+//! `damage_total::resolve_weapon_enhancement_modifier` now checks
+//! `equipment_effects::is_natural_attack_weapon` on the specific weapon
+//! being resolved before applying a natural-attack-only bonus to it — an
+//! ordinary longsword no longer receives the Amulet's bonus, only a real
+//! natural-attack weapon (e.g. CRB's `Unarmed Strike`) does.
 //!
 //! Deliberately requires the trailing `TYPE=Enhancement` qualifier — this
 //! excludes the `BONUS:WEAPON|WIELDCATEGORY|...` chains (Wield Size
@@ -82,24 +85,34 @@ pub struct WeaponEnhancementBonus {
     /// or `"TOHIT,DAMAGE"`.
     pub affects: String,
     pub bonus: i16,
+    /// `true` when the source chain's qualifier[0] subject is
+    /// `WEAPONPROF=TYPE.Natural` (the Amulet of Mighty Fists family) —
+    /// real, verbatim from the token, not inferred. `damage_total::
+    /// resolve_weapon_enhancement_modifier` (`SD31-W17-INTEGRATE-001`
+    /// OPEN-ISSUES row 309) must only apply a `true` bonus to a weapon
+    /// `equipment_effects::is_natural_attack_weapon` confirms is a real
+    /// natural attack. `false` for a bare `WEAPON` chain, which applies to
+    /// any weapon per PF1's ordinary enhancement rule.
+    pub natural_attack_only: bool,
 }
 
 /// Resolve one `equipmods` corpus record's weapon-enhancement-bonus
 /// contribution.
 ///
-/// Reads the record's first `BONUS:WEAPON|<TOHIT|DAMAGE|DAMAGE,TOHIT|
-/// TOHIT,DAMAGE>|<n>|TYPE=Enhancement` chain, if any. A record with no
-/// such chain (the majority of `equipmods` records) yields `None`: that
-/// means this record's raw tokens do not carry the field, not that its
-/// value is zero. `BONUS:WEAPON|WIELDCATEGORY|...` chains,
-/// `TYPE=Enhancement`-less `BONUS:WEAPON|...` chains, and
-/// `BONUS:WEAPONPROF=...` chains (natural-attack-scoped; see module doc
-/// comment) are deliberately not matched.
+/// Reads the record's first `BONUS:<WEAPON|WEAPONPROF=TYPE.Natural>|
+/// <TOHIT|DAMAGE|DAMAGE,TOHIT|TOHIT,DAMAGE>|<n>|TYPE=Enhancement` chain, if
+/// any. A record with no such chain (the majority of `equipmods` records)
+/// yields `None`: that means this record's raw tokens do not carry the
+/// field, not that its value is zero. `BONUS:WEAPON|WIELDCATEGORY|...`
+/// chains and `TYPE=Enhancement`-less `BONUS:WEAPON|...` chains are
+/// deliberately not matched (see module doc comment).
 pub fn compute_equipmods_effect(record: &EquipmentRecord) -> Option<WeaponEnhancementBonus> {
     record.bonus_chains.iter().find_map(|bonus| {
         let qualifiers = &bonus.qualifiers;
+        let natural_attack_only = qualifiers.first().map(String::as_str) == Some("WEAPONPROF=TYPE.Natural");
+        let is_weapon_subject = qualifiers.first().map(String::as_str) == Some("WEAPON") || natural_attack_only;
         let is_weapon_enhancement_bonus = qualifiers.len() >= 4
-            && qualifiers[0] == "WEAPON"
+            && is_weapon_subject
             && matches!(
                 qualifiers[1].as_str(),
                 "TOHIT" | "DAMAGE" | "DAMAGE,TOHIT" | "TOHIT,DAMAGE"
@@ -111,6 +124,7 @@ pub fn compute_equipmods_effect(record: &EquipmentRecord) -> Option<WeaponEnhanc
         qualifiers[2].parse::<i16>().ok().map(|bonus_value| WeaponEnhancementBonus {
             affects: qualifiers[1].clone(),
             bonus: bonus_value,
+            natural_attack_only,
         })
     })
 }
@@ -135,6 +149,7 @@ mod tests {
             Some(WeaponEnhancementBonus {
                 affects: "DAMAGE,TOHIT".to_string(),
                 bonus: 1,
+                natural_attack_only: false,
             })
         );
     }
@@ -154,6 +169,7 @@ mod tests {
             Some(WeaponEnhancementBonus {
                 affects: "TOHIT".to_string(),
                 bonus: 1,
+                natural_attack_only: false,
             })
         );
     }
@@ -176,6 +192,7 @@ mod tests {
             Some(WeaponEnhancementBonus {
                 affects: "TOHIT,DAMAGE".to_string(),
                 bonus: 3,
+                natural_attack_only: false,
             })
         );
     }
@@ -221,17 +238,41 @@ mod tests {
         assert_eq!(effect, None);
     }
 
-    /// `SD31-W17-INTEGRATE-001`: the Amulet of Mighty Fists family's own
-    /// `WEAPONPROF=TYPE.Natural` chain must NEVER match — recognizing it
-    /// the same as a bare `WEAPON` chain was tried in wave 17 and
-    /// reverted after review found it applies the bonus to every equipped
-    /// weapon, not just natural attacks (see module doc comment). This is
-    /// the negative control that guards against that regression
-    /// recurring: real verbatim tokens copied from `KEY:Special Ability ~
-    /// +1 ~ Amulet of Mighty Fists`.
+    /// `SD31-W17-INTEGRATE-001` (OPEN-ISSUES row 309), re-landed wave 18:
+    /// the Amulet of Mighty Fists family's own `WEAPONPROF=TYPE.Natural`
+    /// chain now resolves to a real bonus, correctly tagged
+    /// `natural_attack_only: true` — real verbatim tokens copied from
+    /// `KEY:Special Ability ~ +1 ~ Amulet of Mighty Fists`. Wave 17
+    /// recognized this chain without the tag and without a scope-aware
+    /// consumer, which wrongly bonused every equipped weapon; the scope
+    /// itself (this test) is now real, and
+    /// `damage_total::resolve_weapon_enhancement_modifier`'s own tests
+    /// prove the consumer honours it.
     #[test]
-    fn amulet_of_mighty_fists_weaponprof_chain_has_no_weapon_enhancement_bonus() {
+    fn amulet_of_mighty_fists_weaponprof_chain_yields_a_natural_attack_only_bonus() {
         let text = "+1 to Hit and Damage\tKEY:Special Ability ~ +1 ~ Amulet of Mighty Fists\tTYPE:Amulet of Mighty Fists\tPLUS:1\tBONUS:WEAPONPROF=TYPE.Natural|TOHIT,DAMAGE|1|TYPE=Enhancement\n";
+        let result = parse_equipment_entries("cr_equipmods.lst", text);
+        let record = &result.entries[0];
+
+        let effect = compute_equipmods_effect(record);
+        assert_eq!(
+            effect,
+            Some(WeaponEnhancementBonus {
+                affects: "TOHIT,DAMAGE".to_string(),
+                bonus: 1,
+                natural_attack_only: true,
+            })
+        );
+    }
+
+    /// A `WEAPONPROF=` subject other than `TYPE.Natural` (e.g. a
+    /// hypothetical class-specific proficiency scope) must not be treated
+    /// as the natural-attack family — only the exact literal
+    /// `WEAPONPROF=TYPE.Natural` string this family's real corpus records
+    /// carry is recognized, never a substring or prefix match.
+    #[test]
+    fn a_different_weaponprof_subject_has_no_weapon_enhancement_bonus() {
+        let text = "Proxy\tKEY:Special Quality ~ WeaponProf Proxy\tTYPE:Weapon\tBONUS:WEAPONPROF=TYPE.Bow|TOHIT,DAMAGE|1|TYPE=Enhancement\n";
         let result = parse_equipment_entries("cr_equipmods.lst", text);
         let record = &result.entries[0];
 
