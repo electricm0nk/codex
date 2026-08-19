@@ -5695,11 +5695,11 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 2,
-      "partial": 6,
+      "done": 3,
+      "partial": 5,
       "not_started": 210,
       "denominator": 218,
-      "pct": 0.9,
+      "pct": 1.4,
       "excluded_from_percentage": 98,
       "standing_breakdown": {
         "unclassified": 98,
@@ -5714,19 +5714,19 @@
         },
         {
           "name": "+2 Dexterity, +2 Charisma, -2 Wisdom",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Fetchling Racial Trait.Fetchling Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "unclassified"
         },
         {
           "name": "+2 Dexterity, +2 Charisma, -2 Wisdom",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Ifrit Racial Trait.Ifrit Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "unclassified"
         },
         {
           "name": "+2 Dexterity, +2 Intelligence, -2 Constitution",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Sylph Racial Trait.Sylph Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "unclassified"
         },
@@ -5738,13 +5738,13 @@
         },
         {
           "name": "+2 Dexterity, +2 Wisdom, -2 Strength",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Undine Racial Trait.Undine Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "origin"
         },
         {
           "name": "+2 Strength, +2 Wisdom, -2 Charisma",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Oread Racial Trait.Oread Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "unclassified"
         },

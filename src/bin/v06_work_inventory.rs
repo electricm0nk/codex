@@ -2528,6 +2528,19 @@ impl EngineFacts {
         self.race_trait_probe.consumer_verified.contains(&coordinate)
     }
 
+    /// Whether the shipped character-creation chassis read **this exact
+    /// record's** `BONUS:STAT` magnitudes -- `SD31-W15-RACETRAIT-001`, see
+    /// [`RaceTraitProbe::creation_chassis_consumed`].
+    ///
+    /// Reported separately from [`Self::race_trait_has_verified_consumer`] so
+    /// the verdict can name the observation that actually fired. Where both
+    /// hold, this one is the stronger claim (a named record, not a race) and
+    /// is the one the evidence token quotes.
+    fn race_trait_magnitude_read_by_creation_chassis(&self, unit: &CorpusUnit) -> bool {
+        let coordinate = (unit.provenance.file.clone(), unit.provenance.line);
+        self.race_trait_probe.creation_chassis_consumed.contains(&coordinate)
+    }
+
     /// Whether one book really holds this unit. Delegates to
     /// [`Self::holds_key`] for every kind whose identity is its name, and
     /// uses the source-coordinate join for race traits, which is the only
@@ -3106,6 +3119,20 @@ struct RaceTraitProbe {
     /// claiming to verify the finer trait-key-level question for a race
     /// that has SOME seam; see OPEN-ISSUES for the narrower remaining gap.
     consumer_verified: BTreeSet<(String, usize)>,
+    /// Coordinates of the exact record whose own `BONUS:STAT` magnitudes the
+    /// shipped character-creation chassis read -- `SD31-W15-RACETRAIT-001`.
+    ///
+    /// A RECORD-level observation, kept in its own set rather than folded into
+    /// [`Self::consumer_verified`] because the two answer different questions
+    /// and the verdict's evidence token must name **which one** was consulted.
+    /// Folding them would restate a per-record consumer observation as
+    /// `race_trait_applied_by_the_race_corpus_the_app_loads`, an evidence
+    /// string describing a load -- the exact wrong-reason defect
+    /// `race_absent_from_RaceId_ALL` was corrected for above.
+    ///
+    /// Populated at the bottom of [`probe_race_trait_corpus`]; see that block
+    /// for what it observes and what it deliberately refuses.
+    creation_chassis_consumed: BTreeSet<(String, usize)>,
 }
 
 /// Every race the product's OWN character-creation roster would offer a
@@ -3217,7 +3244,133 @@ fn probe_race_trait_corpus(repo_root: &Path) -> RaceTraitProbe {
             probe.reachable.insert(coordinate, record.book_id.clone());
         }
     }
+
+    // ------------------------------------------------------------------
+    // SECOND, INDEPENDENT consumer observation -- at RECORD level, not race
+    // level (`SD31-W15-RACETRAIT-001`).
+    //
+    // The race-level `is_seamed` rule above is deliberately coarse: wave 12
+    // introduced it to demote the unambiguous population (a race with no seam
+    // anywhere) and explicitly did NOT claim to answer the finer, per-record
+    // question. This block answers that finer question for one exact
+    // population, and only for that population.
+    //
+    // **What is observed.** `corpus.resolve(race, &[])` then
+    // `race_creation_chassis(..)` is, verbatim, what
+    // `character_hub::build_race_creation_roster` runs to serve the
+    // `list_race_creation_roster` Tauri command -- the race picker on the real
+    // Create Character screen. The chassis it returns NAMES the `race_trait`
+    // record whose own `BONUS:STAT` chains its `ability_adjustments` were read
+    // from (`RaceCreationChassis::ability_adjustments_source_trait_key`). The
+    // desktop form then folds exactly those numbers into the displayed ability
+    // score (`CreateCharacterForm.tsx:316`), prints them as `+2 DEX / -2 CON`
+    // text (`:1042`), and bakes them into the submitted scores through
+    // `applyRacialAbilityAdjustments` (`:511`). So the named record's own
+    // magnitude reaches a number the player reads.
+    //
+    // **Why this is not the shape wave 12 demoted.** That defect credited a
+    // record because a DIFFERENT record of the same race was computed. Here
+    // the consumer reports the identity of the row it read, and only that row
+    // is credited -- the other 19 Drow trait rows are not, and neither is any
+    // record of a race the chassis refuses.
+    //
+    // **Why it is not a gate that cannot fail.** `SD31-W14-INTEGRATE-001`
+    // found `race_creation_chassis` refuses nothing over the `race` kind (all
+    // 37 races state a magnitude, so 37 of 37 pass). Over the `race_trait`
+    // kind the same call is sharply discriminating, because what is credited
+    // is not "the race passed" but "this record supplied the numbers": one row
+    // per race, 37 of 3,603 records -- it refuses 99.0 % of the kind,
+    // including every other record of every race it credits one row of.
+    //
+    // **What it deliberately does NOT credit.** `resolve(race, &[])` passes NO
+    // alternate selections, exactly as the shipped roster does, so a heritage
+    // ability-score row (`Archon-Blooded ~ Ability Scores`, 16 of them) is
+    // never read by the product today and is never credited here. Those rows
+    // are a real remaining gap, recorded in `OPEN-ISSUES.md`, not quietly
+    // rounded up.
+    for race in corpus.race_keys() {
+        let Some(resolved) = corpus.resolve(race, &[]) else { continue };
+        let Ok(chassis) = race_creation_chassis(&resolved) else { continue };
+        for record in corpus.traits_for(race) {
+            if record.data.key != chassis.ability_adjustments_source_trait_key {
+                continue;
+            }
+            let Some(file) = Path::new(&record.source_path).file_name() else { continue };
+            probe.creation_chassis_consumed.insert((
+                file.to_string_lossy().into_owned(),
+                record.source_line as usize,
+            ));
+        }
+    }
+
     probe
+}
+
+#[cfg(test)]
+mod race_trait_creation_chassis_consumer_tests {
+    use super::*;
+
+    fn repo_root() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    /// The record the real character-creation consumer reads is credited, and
+    /// its nineteen siblings are not.
+    ///
+    /// Drow is the control case on purpose: it is **not** in
+    /// `race_ids_with_a_magnitude_consumer()`, so before
+    /// `SD31-W15-RACETRAIT-001` not one of its twenty records was
+    /// consumer-verified — including the one whose `BONUS:STAT|DEX,CHA|2` /
+    /// `BONUS:STAT|CON|-2` the Create Character screen has been printing all
+    /// along.
+    ///
+    /// Coordinates re-derived from the corpus, not remembered:
+    /// `python3 -c "import json,glob,os; [print(json.load(open(p))['data']['key'],
+    /// os.path.basename(json.load(open(p))['source']['path']),
+    /// json.load(open(p))['source']['line']) for p in
+    /// glob.glob('data/corpus/*/race_trait/drow/*.json')]"`
+    #[test]
+    fn the_ability_scores_row_of_an_unseamed_race_is_credited_and_its_siblings_are_not() {
+        let probe = probe_race_trait_corpus(&repo_root());
+        assert!(
+            probe.creation_chassis_consumed.contains(&("drow_abilities_race.lst".to_owned(), 14)),
+            "`Drow ~ Ability Scores` (drow_abilities_race.lst:14) is the row \
+             `race_creation_chassis` reads for Drow; it must be consumer-verified"
+        );
+        for (label, line) in
+            [("Drow ~ Poison Use", 24), ("Drow ~ Keen Senses", 20), ("Drow ~ Size", 16)]
+        {
+            assert!(
+                !probe.creation_chassis_consumed.contains(&("drow_abilities_race.lst".to_owned(), line)),
+                "{label} is not read by any magnitude consumer and must NOT be \
+                 credited by this record-level observation"
+            );
+        }
+    }
+
+    /// The heritage ability-score rows are NOT credited, because the shipped
+    /// roster resolves every race with no alternate selections. Pinning the
+    /// refusal keeps a later widening of the product honest: the day
+    /// `build_race_creation_roster` starts passing selections, this test goes
+    /// red and the credit is re-derived rather than assumed.
+    ///
+    /// `Archon-Blooded ~ Ability Scores` lives at
+    /// `aasimar_abilities_race_subrace.lst:46` (re-derived, see this module's
+    /// sibling test for the command shape).
+    #[test]
+    fn a_heritage_ability_scores_row_the_shipped_roster_never_resolves_is_refused() {
+        let probe = probe_race_trait_corpus(&repo_root());
+        let coordinate = ("aasimar_abilities_race_subrace.lst".to_owned(), 46);
+        assert!(
+            probe.loaded.contains(&coordinate),
+            "the record must be loaded, or this test proves nothing about the refusal"
+        );
+        assert!(
+            !probe.creation_chassis_consumed.contains(&coordinate),
+            "`Archon-Blooded ~ Ability Scores` is only read when a player selects the \
+             Archon-Blooded heritage, which `build_race_creation_roster` never does"
+        );
+    }
 }
 
 // SUPERSEDED 2026-08-13 (SD-32 `spell-consumer-delta-probe`), in its
@@ -5827,7 +5980,25 @@ fn classify(
                 // no verified consumer delta" fallback above already uses --
                 // `in-progress` under both `display` and `computed`, never
                 // `done`.
-                if universal_sheet_modifier || !facts.race_trait_has_verified_consumer(unit) {
+                //
+                // SD31-W15-RACETRAIT-001 adds a SECOND, INDEPENDENT and
+                // strictly narrower observation alongside the race-level one:
+                // the shipped character-creation chassis names the exact
+                // record whose `BONUS:STAT` magnitudes it read
+                // (`RaceCreationChassis::ability_adjustments_source_trait_key`),
+                // and that record -- one per race, 37 of 3,603 -- is credited
+                // on its own account, whether or not its race has a
+                // `pilot_compute` seam. It is a union, never a replacement:
+                // the race-level rule below is unchanged, so nothing this
+                // cycle does can demote a unit, and nothing is credited on a
+                // DIFFERENT record's computation, which is the specific defect
+                // wave 12 demoted 251 units for.
+                let chassis_read_this_record =
+                    facts.race_trait_magnitude_read_by_creation_chassis(unit);
+                if universal_sheet_modifier
+                    || !(chassis_read_this_record
+                        || facts.race_trait_has_verified_consumer(unit))
+                {
                     return Verdict {
                         status: "ingested-magnitude",
                         evidence: if universal_sheet_modifier {
@@ -5843,7 +6014,17 @@ fn classify(
                 }
                 return Verdict {
                     status: "grounded",
-                    evidence: "race_trait_applied_by_the_race_corpus_the_app_loads".to_string(),
+                    // The token names what was actually consulted. Where both
+                    // observations hold, the record-level one is quoted: it is
+                    // the stronger claim, and reporting the race-level string
+                    // for a record the chassis demonstrably read would describe
+                    // a load where a magnitude was observed.
+                    evidence: if chassis_read_this_record {
+                        "race_trait_ability_magnitude_read_by_the_character_creation_chassis"
+                            .to_string()
+                    } else {
+                        "race_trait_applied_by_the_race_corpus_the_app_loads".to_string()
+                    },
                     reason: None,
                     engine_book: engine_book_for_verdict,
                 };

@@ -7646,11 +7646,11 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 24,
-      "partial": 22,
+      "done": 28,
+      "partial": 18,
       "not_started": 79,
       "denominator": 125,
-      "pct": 19.2,
+      "pct": 22.4,
       "excluded_from_percentage": 152,
       "standing_breakdown": {
         "unclassified": 152,
@@ -7701,7 +7701,7 @@
         },
         {
           "name": "+2 Constitution, +2 Wisdom, -4 Charisma",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Duergar Racial Trait.Duergar Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "origin"
         },
@@ -7719,7 +7719,7 @@
         },
         {
           "name": "+2 Dexterity, +2 Charisma, -2 Constitution",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Drow Racial Trait.Drow Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "unclassified"
         },
@@ -7743,13 +7743,13 @@
         },
         {
           "name": "+2 Dexterity, +2 Constitution, +2 Charisma",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Merfolk Racial Trait.Merfolk Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "origin"
         },
         {
           "name": "+2 Dexterity, +2 Intelligence, -2 Charisma",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Tiefling Racial Trait.Tiefling Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "unclassified"
         },
@@ -7767,7 +7767,7 @@
         },
         {
           "name": "+2 Dexterity, +2 Wisdom, -2 Constitution",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Tengu Racial Trait.Tengu Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "origin"
         },
@@ -7869,7 +7869,7 @@
         },
         {
           "name": "+4 Strength, -2 Intelligence, -2 Wisdom, -2 Charisma",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Orc Racial Trait.Orc Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "origin"
         },

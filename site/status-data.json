@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-08-19T01:14:14Z",
+  "generated_at": "2026-08-19T11:41:16Z",
   "doneness_values": [
     "done",
     "partial",
     "not-started"
   ],
   "overall": {
-    "done": 10825,
-    "partial": 2572,
+    "done": 10835,
+    "partial": 2562,
     "not_started": 16093,
     "denominator": 29490,
     "pct": 36.7,
@@ -162,11 +162,11 @@
     {
       "id": "bestiary",
       "title": "Bestiary",
-      "done": 492,
-      "partial": 190,
+      "done": 496,
+      "partial": 186,
       "not_started": 452,
       "denominator": 1134,
-      "pct": 43.4,
+      "pct": 43.7,
       "excluded_from_percentage": 519,
       "standing_breakdown": {
         "origin": 1134,
@@ -176,11 +176,11 @@
     {
       "id": "bestiary_4",
       "title": "Bestiary 4",
-      "done": 537,
-      "partial": 165,
+      "done": 538,
+      "partial": 164,
       "not_started": 325,
       "denominator": 1027,
-      "pct": 52.3,
+      "pct": 52.4,
       "excluded_from_percentage": 309,
       "standing_breakdown": {
         "unclassified": 309,
@@ -190,11 +190,11 @@
     {
       "id": "bestiary_3",
       "title": "Bestiary 3",
-      "done": 320,
-      "partial": 20,
+      "done": 323,
+      "partial": 17,
       "not_started": 604,
       "denominator": 944,
-      "pct": 33.9,
+      "pct": 34.2,
       "excluded_from_percentage": 348,
       "standing_breakdown": {
         "origin": 944,
@@ -204,11 +204,11 @@
     {
       "id": "bestiary_2",
       "title": "Bestiary 2",
-      "done": 423,
-      "partial": 208,
+      "done": 424,
+      "partial": 207,
       "not_started": 286,
       "denominator": 917,
-      "pct": 46.1,
+      "pct": 46.2,
       "excluded_from_percentage": 343,
       "standing_breakdown": {
         "origin": 917,
@@ -372,11 +372,11 @@
     {
       "id": "bestiary_5",
       "title": "Bestiary 5",
-      "done": 38,
-      "partial": 13,
+      "done": 39,
+      "partial": 12,
       "not_started": 114,
       "denominator": 165,
-      "pct": 23.0,
+      "pct": 23.6,
       "excluded_from_percentage": 85,
       "standing_breakdown": {
         "unclassified": 85,

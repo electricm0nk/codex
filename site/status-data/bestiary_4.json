@@ -6597,11 +6597,11 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 6,
-      "partial": 10,
+      "done": 7,
+      "partial": 9,
       "not_started": 101,
       "denominator": 117,
-      "pct": 5.1,
+      "pct": 6.0,
       "excluded_from_percentage": 71,
       "standing_breakdown": {
         "unclassified": 71,
@@ -6610,7 +6610,7 @@
       "items": [
         {
           "name": "+2 Dexterity, +2 Charisma, -2 Strength",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Kitsune Racial Trait.Kitsune Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "unclassified"
         },
@@ -6622,7 +6622,7 @@
         },
         {
           "name": "+2 Dexterity, +2 Intelligence, -2 Wisdom",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Wayang Racial Trait.Wayang Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "unclassified"
         },
@@ -6640,19 +6640,19 @@
         },
         {
           "name": "+2 Intelligence, +2 Wisdom, -2 Constitution",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Samsaran Racial Trait.Samsaran Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "unclassified"
         },
         {
           "name": "+2 Strength, +2 Charisma, -2 Intelligence",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Nagaji Racial Trait.Nagaji Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "unclassified"
         },
         {
           "name": "+2 Wisdom, +2 Charisma, -2 Constitution",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Changeling Racial Trait.Changeling Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "origin"
         },

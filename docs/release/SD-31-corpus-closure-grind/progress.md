@@ -27014,3 +27014,163 @@ Moving in the right direction; the population is still its own card (row 246).
   promotions**, for the reason `SD31-E6-F5-005` recorded and this cycle did not overturn: the
   desktop app's corpus loader is a bounded fixture bundle, so those specific records cannot be
   driven through `driver.sh` on this box. Row 242 — operator ruling.
+
+## Cycle `SD31-W15-RACETRAIT-001` (`RETRO_ACTOR=sd31-w15-racetrait`) — 2026-08-19, wave 15 `race_trait` lane: the character-creation chassis now names the record it reads (**+23 `done`**, 0 demoted, denominator unchanged)
+
+**Lane:** the 286 `in-progress` `race_trait` units. **Branch:** `worktree-wf_0628906e-65b-6`,
+cut from `tranche/11` at `45273fd3b`. **Own `CARGO_TARGET_DIR`:**
+`/home/ubuntu/cargo-targets/sd31-w15-racetrait`.
+
+**Checkout assertion (cycle-mechanics step 0−).** The dispatch worktree was cut at `37a80141e` —
+the **site-deploy** branch tip, whose tree has no `docs/`, `data/`, `scripts/` or `src/` at all, so
+not one of this card's required reads existed. Recovered on a clean tree
+(`git status --porcelain` empty) with `git reset --hard 45273fd3b`, which is the tip named in the
+dispatch. Recorded rather than silently fixed; `retro.py incident` emitted. Two of the six wave-15
+worktrees were cut correctly (`…-5` at `45273fd3b`), four at the deploy tip — worth checking
+before the next fan-out.
+
+**Oracle pin, first command after the checkout assertion** (override 8):
+`./scripts/verify.sh --only preflight-oracle` → `PASS (oracle at pin
+7f818006e371188e5717fd18d74d18a420747fc6)`. Every figure below is derived against that pin.
+
+### 1. The 286, re-derived and split by what actually blocks them
+
+Replaying `doneness_verdict()` over the inherited `docs/work-inventory.json`
+(`generated_at 2026-08-19T01:10:47Z`, `EXCLUDED_BOOKS={'beginner_box'}`), the board reproduced the
+dispatch figure exactly — `12,277 / 38,521 = 31.87 %` — and `race_trait` reproduced
+`3,603 = 497 done + 1 held + 286 in-progress + 2,819 not-started`.
+
+The 286 are **one cell**, not a mixture: `('computed','ingested-magnitude') 273` and
+`('display','ingested-magnitude') 13`. By evidence: **278**
+`race_trait_applied_by_the_race_corpus_but_no_verified_consumer` and **8**
+`race_trait_states_a_universal_sheet_modifier_pending_compute`. So all 278 are refused by exactly
+one predicate — `EngineFacts::race_trait_has_verified_consumer`, which was
+`race_ids_with_a_magnitude_consumer()` membership: **a race-level test**, wave 12's deliberately
+coarse correction.
+
+Joining all 286 to their own `data/corpus/*/race_trait/*/*.json` records' `raw_bonus_chains` (the
+whole record, not a filtered field):
+
+| what the record declares | units |
+|---|---:|
+| no `BONUS:` chain at all | 80 |
+| plain-integer `BONUS:STAT` | 39 |
+| plain-integer `BONUS:SKILL` on a named skill | 44 |
+| plain-integer `BONUS:SAVE` | **0** |
+| `BONUS:VAR` / `CASTERLEVEL` / `DC` / `SITUATION` / formula-valued | the rest |
+
+The `BONUS:SAVE` lever is exhausted (`ALTERNATE_TRAIT_SAVE_BONUSES` already holds all five that
+exist corpus-wide) and **not one** of the 44 skill bonuses names a skill this engine computes a
+total for — full breakdown in `OPEN-ISSUES.md` row 267.
+
+### 2. The one lever that was real, and inside this lane
+
+39 of the 286 are `Racial Ability Scores`-typed rows, and their magnitudes are **already read by a
+shipped, player-visible consumer**: `race_creation::race_creation_chassis` parses that row's
+`BONUS:STAT` chains into `ability_adjustments`, `character_hub::build_race_creation_roster` serves
+them through the `list_race_creation_roster` Tauri command, and `CreateCharacterForm.tsx` shows the
+adjusted ability total (`:316`), prints the `+2 DEX / −2 CON` text (`:1042`) and bakes the numbers
+into the submitted scores through `applyRacialAbilityAdjustments` (`:511`).
+
+The inventory could not see it, because the consumer never said which record it read.
+
+**The fix is that the consumer now says so.** `RaceCreationChassis` gained
+`ability_adjustments_source_trait_key: String` — the corpus key of the row its numbers came from —
+and `probe_race_trait_corpus` runs the product's own call (`corpus.resolve(race, &[])` then
+`race_creation_chassis(..)`, verbatim what `build_race_creation_roster` runs) and credits **that
+named record's coordinate**, nothing else. No re-implementation of the selection rule, no
+re-derivation of the parse: the instrument observes, it does not assert.
+
+**Why this is not the shape wave 12 demoted.** That defect credited a record because a *different*
+record of the same race was computed. Here the consumer reports the identity of the row it read,
+and only that row is credited — the other 19 Drow trait rows are not.
+
+**Why it is not a gate that cannot fail.** `SD31-W14-INTEGRATE-001` found `race_creation_chassis`
+refuses nothing over the `race` kind (37 of 37 pass). Over `race_trait` the same call is sharply
+discriminating, because what is credited is not *"the race passed"* but *"this record supplied the
+numbers"*: one row per race, **37 of 3,603 records — it refuses 99.0 % of the kind.**
+
+**What it deliberately does not credit.** `resolve(race, &[])` passes no alternate selections,
+exactly as the shipped roster does, so the 16 heritage `~ Ability Scores` rows are never read by
+the product and are never credited here. Pinned by a standing test so the day the roster starts
+passing selections, the refusal goes red and the credit is re-derived. Row 265.
+
+### 3. Anti-gaming: both halves of the gate mutation-proven RED
+
+| mutation | what it breaks | result |
+|---|---|---|
+| `race_creation.rs`: `ability_adjustments_source_trait_key` ← `format!("MUTANT {}", row.key)` | the consumer misreports the row it read | `the_ability_scores_row_of_an_unseamed_race_is_credited_and_its_siblings_are_not` **FAILED**; `the_chassis_names_…` + `the_named_source_row_…` **FAILED** |
+| `v06_work_inventory.rs`: `if false && record.data.key != chassis.…` | the probe credits every trait of a passing race (i.e. reverts to race-level) | `…_and_its_siblings_are_not` **FAILED** (`Drow ~ Poison Use` wrongly credited); `a_heritage_ability_scores_row_…_is_refused` **FAILED** |
+
+Both mutations reverted, both suites green after. The gate can fail in **both** directions — over-
+credit and under-credit — which is the property that matters, not just that it is red for one.
+
+### 4. Movement, measured by replaying `doneness_verdict()`, never asserted
+
+Guarded regen, the sanctioned three-command form (DoD item 4):
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out <scratch>/sweep.json
+      # 26105 records examined, 0 findings, CLEAN
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out <scratch>/fixture.json
+      # 1276 of 1276 covered units cleared; 0 failed
+CORPUS_LITERAL_SWEEP_REPORT=… DERIVED_FIXTURE_CHECK_REPORT=… \
+  cargo run --locked --bin v06_work_inventory       # EXIT=0 — the stamp guard passed
+```
+
+**Stamp preservation, checked not assumed:** `literal-verified 6436 + fixture-verified 1193 = 7629`
+before, `7629` after. **Idempotence:** a second regen changed `generated_at` and nothing else
+(every other top-level key compared equal).
+
+| | before | after | Δ |
+|---|---:|---:|---:|
+| board `done` | 12,277 | **12,300** | **+23** |
+| board `in-progress` | 1,389 | 1,366 | −23 |
+| board denominator | 38,521 | 38,521 | **0** |
+| `not-started` / `unmeasurable` / `held` / `deferred` | 18,030 / 5,110 / 1,677 / 38 | identical | 0 |
+| `race_trait` `done` | 497 | **520** | **+23** |
+| `race_trait` `in-progress` | 286 | 263 | −23 |
+
+Diffed unit by unit against the prior committed inventory: **37 records changed, 0 ids added, 0
+removed, and every one of the 37 is a `race_trait`.** 23 are the board movement
+(`ingested-magnitude → grounded`); the other 14 are evidence-token corrections only, no verdict
+change (13 seamed races' own ability rows plus `aasimar_ability_scores`, which was already `done`
+on the `static` literal rung). **No unit was demoted by this cycle and no unit of any other kind
+moved.**
+
+**The evidence token names what was consulted.** A new token,
+`race_trait_ability_magnitude_read_by_the_character_creation_chassis`, is emitted where the
+record-level observation fired; the race-level string
+`race_trait_applied_by_the_race_corpus_the_app_loads` is kept for the units it really describes.
+Collapsing both into the older string would have described a *load* where a *magnitude* was
+observed — the same wrong-reason defect `race_absent_from_RaceId_ALL` was corrected for.
+
+### 5. The honest residuals, measured at full size
+
+* **293 of the 520 `done` `race_trait` units still rest on the coarse race-level rule alone** —
+  the residual wave 12 explicitly declined to answer, quantified here for the first time. Row 266.
+  Narrowing it is a **~200-unit honest DECREASE** and its own card; this cycle's change is a strict
+  union beside the unchanged race-level rule, so it cannot have eaten any of it.
+* **20 heritage units are browse-only** — a product gap, not an instrument gap. Row 265.
+* **The 263 that remain `in-progress`** are blocked on the engine computing only six totals. Row 267.
+
+### 6. DoD item 8 (on-screen)
+
+**Not performed, and not claimed.** No family was newly *surfaced* by this cycle — the Create
+Character screen has been printing these 37 races' ability adjustments all along; what changed is
+the inventory's ability to see that it does. The reach claim is proven at the level below the
+screen by a standing test that calls the exact Tauri-command path
+(`build_race_creation_roster`'s own `resolve` + `race_creation_chassis`), and the frontend consumer
+is cited by file and line above rather than driven. A cycle that wants the screenshot should drive
+`race:drow` through `driver.sh` and read the ability block.
+
+### 7. Files
+
+* `src/rules_core/race_creation.rs` — `RaceCreationChassis::ability_adjustments_source_trait_key`, 2 tests.
+* `src/bin/v06_work_inventory.rs` — `RaceTraitProbe::creation_chassis_consumed`, the record-level
+  observation block in `probe_race_trait_corpus`, `race_trait_magnitude_read_by_creation_chassis`,
+  the union + evidence split in `Kind::RaceTrait`'s verdict, 2 tests.
+* `docs/work-inventory.json` — regenerated, guarded, idempotent.
+* `site/dashboard/PF1e-dashboard.json`, `site/dashboard/units/*`, `site/status-data*` —
+  `./scripts/publish-site-dashboard.sh` (real publish, per override 10).
+* `docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md` — rows 265, 266, 267.

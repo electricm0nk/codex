@@ -93,6 +93,26 @@ pub struct RaceCreationChassis {
     /// Points the player distributes freely — PF1's "+2 to one ability
     /// score" races. `0` for a race with no such pool.
     pub floating_bonus_points: u8,
+    /// **The `race_trait` record this chassis' ability magnitude was read
+    /// from**, by its corpus [`ResolvedTrait::key`] (e.g.
+    /// `"Drow ~ Ability Scores"`).
+    ///
+    /// Not `Option`: [`race_creation_chassis`] refuses a race stating no
+    /// ability magnitude at all, so an `Ok` chassis always has a source row,
+    /// and the type says so rather than leaving a caller to unwrap a `None`
+    /// that cannot happen.
+    ///
+    /// # Why a consumer reports what it read (`SD31-W15-RACETRAIT-001`)
+    ///
+    /// `src/bin/v06_work_inventory.rs` needs to answer, per `race_trait`
+    /// record, "did a real magnitude consumer read **this record's own**
+    /// numbers?" — the question wave 12 demoted 251 units for getting wrong
+    /// by answering a coarser one ("does this record's *race* have a seam
+    /// somewhere?"). It could re-implement [`racial_ability_scores_trait`]'s
+    /// selection rule to guess the answer; every time this program has done
+    /// that, the re-implementation and the product drifted. So the consumer
+    /// states it instead, and the inventory observes rather than asserts.
+    pub ability_adjustments_source_trait_key: String,
 }
 
 /// The race's ability-modifier trait, if it declares one.
@@ -225,7 +245,8 @@ pub fn race_creation_chassis(race: &ResolvedRace) -> Result<RaceCreationChassis,
         .walk_speed_ft
         .ok_or_else(|| format!("{}: declares no readable base land speed", race.race_key))?;
     let vision = vision_reading(race)?;
-    let (ability_adjustments, floating_bonus_points) = match racial_ability_scores_trait(race) {
+    let ability_scores_row = racial_ability_scores_trait(race);
+    let (ability_adjustments, floating_bonus_points) = match ability_scores_row {
         Some(ability_trait) => {
             (fixed_ability_adjustments(ability_trait)?, floating_ability_bonus_points(ability_trait)?)
         }
@@ -246,6 +267,15 @@ pub fn race_creation_chassis(race: &ResolvedRace) -> Result<RaceCreationChassis,
         base_speed_ft,
         ability_adjustments,
         floating_bonus_points,
+        // Unreachable `None`: the refusal above already returned for every
+        // race whose ability-scores row is absent or states no magnitude, so
+        // an `Ok` chassis always has one. Named rather than defaulted, for
+        // the same reason every other field here is.
+        ability_adjustments_source_trait_key: ability_scores_row
+            .map(|row| row.key.clone())
+            .ok_or_else(|| {
+                format!("{}: an ability magnitude was read from no row", race.race_key)
+            })?,
     })
 }
 
@@ -362,6 +392,45 @@ mod tests {
             .push(ability_trait("Some Bonus", &[("ABILITYPOOL", "Ability Bonus", "1")]));
         let err = race_creation_chassis(&race).unwrap_err();
         assert!(err.contains("must state its magnitude in its own name"), "unexpected: {err}");
+    }
+
+    /// A trait carrying no `Racial Ability Scores` type token — the shape
+    /// every ordinary racial trait has.
+    fn plain_trait(name: &str) -> ResolvedTrait {
+        let mut plain = ability_trait(name, &[("STAT", "STR", "9")]);
+        plain.type_tokens = vec!["Special Quality".to_owned()];
+        plain
+    }
+
+    /// **The chassis NAMES the record its ability magnitude was read from.**
+    ///
+    /// `SD31-W15-RACETRAIT-001`. Without this, a second consumer asking "which
+    /// `race_trait` record did the character-creation path actually read?" has
+    /// to re-implement [`racial_ability_scores_trait`]'s selection rule and
+    /// [`fixed_ability_adjustments`]' parsing — an instrument *asserting* this
+    /// module's behaviour instead of *observing* it, which is exactly the
+    /// failure this module's own header comment exists to prevent. The
+    /// consumer reports what it read; nobody guesses.
+    #[test]
+    fn the_chassis_names_the_trait_record_its_ability_magnitude_came_from() {
+        let mut race = bare_race("Named");
+        race.traits.push(ability_trait("Named Ability Scores", &[("STAT", "CON,WIS", "2")]));
+        let chassis = race_creation_chassis(&race).expect("a real magnitude is stated");
+        assert_eq!(chassis.ability_adjustments_source_trait_key, "Test ~ Named Ability Scores");
+    }
+
+    /// …and it names the row that really supplied the numbers, not merely the
+    /// first trait the race applies. A positional answer would credit whichever
+    /// record happened to sort first, which is the "credit resting on a
+    /// DIFFERENT record" shape wave 12 demoted 251 units for.
+    #[test]
+    fn the_named_source_row_is_the_ability_scores_row_not_merely_the_first_trait() {
+        let mut race = bare_race("Two");
+        race.traits.push(plain_trait("Decoy"));
+        race.traits.push(ability_trait("Two Ability Scores", &[("STAT", "STR", "2")]));
+        let chassis = race_creation_chassis(&race).expect("a real magnitude is stated");
+        assert_eq!(chassis.ability_adjustments_source_trait_key, "Test ~ Two Ability Scores");
+        assert_eq!(chassis.ability_adjustments.get("strength"), Some(&2));
     }
 
     /// Modifiers that cancel to zero do not count as a magnitude: a race
