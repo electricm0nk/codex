@@ -44,11 +44,11 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 53,
-      "partial": 14,
+      "done": 56,
+      "partial": 11,
       "not_started": 2,
       "denominator": 69,
-      "pct": 76.8,
+      "pct": 81.2,
       "excluded_from_percentage": 11,
       "standing_breakdown": {
         "origin": 69,
@@ -243,7 +243,7 @@
         },
         {
           "name": "Familiar (Archaeopteryx)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "origin"
         },
@@ -255,13 +255,13 @@
         },
         {
           "name": "Familiar (Dodo)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "unclassified"
         },
         {
           "name": "Familiar (Giant Flea)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Vermin",
           "standing": "origin"
         },
@@ -291,7 +291,7 @@
         },
         {
           "name": "Familiar (Platypus)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "unclassified"
         },
@@ -321,7 +321,7 @@
         },
         {
           "name": "Familiar (Tuatara)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "origin"
         },

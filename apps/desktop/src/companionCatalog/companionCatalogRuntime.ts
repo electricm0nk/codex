@@ -35,6 +35,9 @@ function buildPreviewCatalog(): CompanionCatalogEntryDto[] {
       monsterClass: 'Companion:2',
       typeSegments: [],
       naturalAttacks: [{ name: 'Bite', damageDice: null }],
+      naturalAttackDamageBonuses: [
+        { attack: 'Bite', bonus: '+1/2 Str modifier (minimum +0)', unparsedFormula: null },
+      ],
       statAdjustments: [
         { ability: 'STR', amount: 6 },
         { ability: 'DEX', amount: 4 },
@@ -89,6 +92,7 @@ function buildPreviewCatalog(): CompanionCatalogEntryDto[] {
       monsterClass: 'Construct:1',
       typeSegments: ['Companion', 'Familiar', 'Construct'],
       naturalAttacks: [{ name: 'Slam', damageDice: null }],
+      naturalAttackDamageBonuses: [],
       statAdjustments: [{ ability: 'DEX', amount: 2 }],
       naturalArmor: null,
       sourcePage: 'p.47',

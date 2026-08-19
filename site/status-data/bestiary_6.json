@@ -129,11 +129,11 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 24,
-      "partial": 2,
+      "done": 25,
+      "partial": 1,
       "not_started": 0,
       "denominator": 26,
-      "pct": 92.3,
+      "pct": 96.2,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 26
@@ -285,7 +285,7 @@
         },
         {
           "name": "Familiar (Coral Capuchin)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Magical Beast",
           "standing": "origin"
         },

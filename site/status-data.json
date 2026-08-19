@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-08-19T01:14:14Z",
+  "generated_at": "2026-08-19T11:54:56Z",
   "doneness_values": [
     "done",
     "partial",
     "not-started"
   ],
   "overall": {
-    "done": 10825,
-    "partial": 2572,
+    "done": 10927,
+    "partial": 2470,
     "not_started": 16093,
     "denominator": 29490,
-    "pct": 36.7,
+    "pct": 37.1,
     "excluded_from_percentage": 9031,
     "standing_breakdown": {
       "origin": 29490,
@@ -36,11 +36,11 @@
     {
       "id": "advanced_players_guide",
       "title": "Advanced Player's Guide",
-      "done": 661,
-      "partial": 137,
+      "done": 664,
+      "partial": 134,
       "not_started": 1524,
       "denominator": 2322,
-      "pct": 28.5,
+      "pct": 28.6,
       "excluded_from_percentage": 920,
       "standing_breakdown": {
         "origin": 2322,
@@ -78,11 +78,11 @@
     {
       "id": "ultimate_wilderness",
       "title": "Ultimate Wilderness",
-      "done": 395,
-      "partial": 132,
+      "done": 470,
+      "partial": 57,
       "not_started": 1089,
       "denominator": 1616,
-      "pct": 24.4,
+      "pct": 29.1,
       "excluded_from_percentage": 246,
       "standing_breakdown": {
         "origin": 1616,
@@ -134,11 +134,11 @@
     {
       "id": "ultimate_magic",
       "title": "Ultimate Magic",
-      "done": 338,
-      "partial": 80,
+      "done": 349,
+      "partial": 69,
       "not_started": 893,
       "denominator": 1311,
-      "pct": 25.8,
+      "pct": 26.6,
       "excluded_from_percentage": 446,
       "standing_breakdown": {
         "origin": 1311,
@@ -176,11 +176,11 @@
     {
       "id": "bestiary_4",
       "title": "Bestiary 4",
-      "done": 537,
-      "partial": 165,
+      "done": 540,
+      "partial": 162,
       "not_started": 325,
       "denominator": 1027,
-      "pct": 52.3,
+      "pct": 52.6,
       "excluded_from_percentage": 309,
       "standing_breakdown": {
         "unclassified": 309,
@@ -204,11 +204,11 @@
     {
       "id": "bestiary_2",
       "title": "Bestiary 2",
-      "done": 423,
-      "partial": 208,
+      "done": 429,
+      "partial": 202,
       "not_started": 286,
       "denominator": 917,
-      "pct": 46.1,
+      "pct": 46.8,
       "excluded_from_percentage": 343,
       "standing_breakdown": {
         "origin": 917,
@@ -372,11 +372,11 @@
     {
       "id": "bestiary_5",
       "title": "Bestiary 5",
-      "done": 38,
-      "partial": 13,
+      "done": 41,
+      "partial": 10,
       "not_started": 114,
       "denominator": 165,
-      "pct": 23.0,
+      "pct": 24.8,
       "excluded_from_percentage": 85,
       "standing_breakdown": {
         "unclassified": 85,
@@ -400,11 +400,11 @@
     {
       "id": "bestiary_6",
       "title": "Bestiary 6",
-      "done": 24,
-      "partial": 2,
+      "done": 25,
+      "partial": 1,
       "not_started": 17,
       "denominator": 43,
-      "pct": 55.8,
+      "pct": 58.1,
       "excluded_from_percentage": 29,
       "standing_breakdown": {
         "origin": 43,

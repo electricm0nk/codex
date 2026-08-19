@@ -26,6 +26,7 @@ use std::path::{Path, PathBuf};
 use crate::rules_core::character_input::{ActiveState, EquipmentSelection};
 use crate::rules_core::corpus_loader::{BookCorpusRoot, load_equipment_corpus};
 use crate::rules_core::equipment_effects::compute_equipment_effects;
+use crate::rules_core::rules_tables::companion_chassis::companion_book;
 use crate::rules_core::rules_tables::monster_chassis::{MonsterStatBlock, MONSTER_BOOKS};
 
 pub const FIXTURE_RELATIVE_PATH: &str = "tests/fixtures/rules_core/derived-evaluator-fixtures.json";
@@ -109,21 +110,25 @@ pub fn run_bar_check(repo_root: &Path) -> BarCheckReport {
     let spell = run_spell_bar_check(repo_root);
     let spell_range = run_spell_range_bar_check(repo_root);
     let class_feature = run_class_feature_bar_check(repo_root);
+    let companion = run_companion_bar_check(repo_root);
     let mut cleared = equipment.cleared;
     cleared.extend(monster.cleared);
     cleared.extend(spell.cleared);
     cleared.extend(spell_range.cleared);
     cleared.extend(class_feature.cleared);
+    cleared.extend(companion.cleared);
     let mut failures = equipment.failures;
     failures.extend(monster.failures);
     failures.extend(spell.failures);
     failures.extend(spell_range.failures);
     failures.extend(class_feature.failures);
+    failures.extend(companion.failures);
     let mut not_ingested = equipment.not_ingested;
     not_ingested.extend(monster.not_ingested);
     not_ingested.extend(spell.not_ingested);
     not_ingested.extend(spell_range.not_ingested);
     not_ingested.extend(class_feature.not_ingested);
+    not_ingested.extend(companion.not_ingested);
     BarCheckReport {
         cleared,
         failures,
@@ -132,7 +137,8 @@ pub fn run_bar_check(repo_root: &Path) -> BarCheckReport {
             + monster.fixtures_total
             + spell.fixtures_total
             + spell_range.fixtures_total
-            + class_feature.fixtures_total,
+            + class_feature.fixtures_total
+            + companion.fixtures_total,
     }
 }
 
@@ -1403,6 +1409,647 @@ fn run_class_feature_bar_check(repo_root: &Path) -> BarCheckReport {
     }
 
     BarCheckReport { cleared, failures, not_ingested, fixtures_total }
+}
+
+
+// ---------------------------------------------------------------------------
+// `kind = companion` — the evaluator seam this cycle (SD31-W15-COMPANION-001)
+// builds. Everything below is new; nothing above this line changed shape.
+// ---------------------------------------------------------------------------
+
+/// What a companion creature row's `BONUS:WEAPONPROF=<attack>|DAMAGE|<formula>`
+/// token means, as a value this repo can evaluate.
+///
+/// # The rule this exists to serve
+///
+/// PF1 CRB p.182, *Natural Attacks*: **"If a creature has only one natural
+/// attack, it adds 1-1/2 times its Strength bonus on damage rolls."** PCGen
+/// encodes the *extra half* as a separate `BONUS:…|DAMAGE|max(0,(STR/2))`
+/// token, because the base attack already applies the full modifier. The
+/// `max(0,…)` wrapper is why a Strength PENALTY is never multiplied: the rule
+/// is stated about a Strength *bonus*, and a penalty applies once, in full,
+/// through the base attack alone.
+///
+/// # The rule is NOT a corpus invariant, and this type does not pretend it is
+///
+/// Re-derived corpus-wide 2026-08-19 over all 927 ingested `companion` records
+/// (`data/corpus/*/companion/*.json`), crossing natural-attack count against
+/// half-Strength-token presence:
+///
+/// ```text
+/// (natural attacks, half-STR tokens) -> records
+///   (0,0)  54    (0,1)   2
+///   (1,0) 129    (1,1) 185
+///   (2,0)  74    (2,1)   3
+///   (3,0)   3
+/// ```
+///
+/// **129 single-attack rows carry no such token at all**, and 5 rows carry one
+/// where the count rule does not call for it. Upstream PCGen simply does not
+/// state this rule uniformly. So the token's PRESENCE is never inferred from
+/// the attack count anywhere in this seam — not by the chassis, not by the
+/// catalog, and not by the fixture generator. What is evaluated is the formula
+/// the row actually states, and what the fixture pins is what PF1's own
+/// halve-and-round-down convention makes of that formula. A seam that derived
+/// presence from the count would report 129 false failures and would be
+/// asserting a rule against data that does not follow it.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum CompanionStrengthDamage {
+    /// `max(0,(STR/2))` / `max(0,STR/2)` — half the Strength MODIFIER, rounded
+    /// down (PF1 CRB p.9: *"whenever you are asked to halve a number, round
+    /// down"*), never below zero. 115 of the 227 held `derived` companion units
+    /// carry exactly this and nothing else.
+    HalfStrengthNeverNegative,
+    /// `STR` — the full Strength modifier.
+    FullStrength,
+    /// `-STR` — the full Strength modifier, negated.
+    NegatedFullStrength,
+    /// A flat integer literal (`5`, `-5`) — no Strength term at all.
+    Flat(i32),
+}
+
+impl CompanionStrengthDamage {
+    /// The wire/fixture token for this shape. Spelled once, here, so the
+    /// fixture's `expected.shape` and any consumer name the same string.
+    pub fn shape_name(self) -> &'static str {
+        match self {
+            CompanionStrengthDamage::HalfStrengthNeverNegative => "half_strength_never_negative",
+            CompanionStrengthDamage::FullStrength => "full_strength",
+            CompanionStrengthDamage::NegatedFullStrength => "negated_full_strength",
+            CompanionStrengthDamage::Flat(_) => "flat",
+        }
+    }
+}
+
+/// Parses one `BONUS:WEAPONPROF=<attack>|DAMAGE|` token's formula half.
+///
+/// **Refuses rather than guesses.** `STR/2` and `-(STR/2)` — 3 rows corpus-wide
+/// — are deliberately NOT parsed: an unclamped halving's value at a NEGATIVE
+/// odd Strength modifier depends on whether PCGen's formula engine floors or
+/// truncates, this repo has no proof of which, and a wrong number in a damage
+/// column is worse than an absent one (`companion_chassis`'s own
+/// `parse_stat_adjustments` doctrine). `max(0,…)` has no such ambiguity: the
+/// clamp decides every negative case and floor == truncate for every positive
+/// one, so the clamped shape is exact over all integers.
+pub fn parse_companion_strength_damage(formula: &str) -> Option<CompanionStrengthDamage> {
+    let f: String = formula.chars().filter(|c| !c.is_whitespace()).collect();
+    match f.as_str() {
+        "max(0,(STR/2))" | "max(0,STR/2)" => {
+            Some(CompanionStrengthDamage::HalfStrengthNeverNegative)
+        }
+        "STR" => Some(CompanionStrengthDamage::FullStrength),
+        "-STR" => Some(CompanionStrengthDamage::NegatedFullStrength),
+        other => other.parse::<i32>().ok().map(CompanionStrengthDamage::Flat),
+    }
+}
+
+/// The extra damage the token grants at a given Strength MODIFIER.
+///
+/// `div_euclid(2)` rather than `/ 2`: Rust's `/` truncates toward zero, PF1
+/// rounds DOWN, and the two disagree on every negative odd modifier. The clamp
+/// hides that disagreement for [`CompanionStrengthDamage::HalfStrengthNeverNegative`]
+/// specifically, so this is belt-and-braces there — but it is the rounding this
+/// program's rule doctrine states, written once, where a later unclamped shape
+/// would inherit it rather than re-decide it.
+pub fn evaluate_companion_strength_damage(
+    damage: CompanionStrengthDamage,
+    strength_modifier: i32,
+) -> i32 {
+    match damage {
+        CompanionStrengthDamage::HalfStrengthNeverNegative => {
+            strength_modifier.div_euclid(2).max(0)
+        }
+        CompanionStrengthDamage::FullStrength => strength_modifier,
+        CompanionStrengthDamage::NegatedFullStrength => -strength_modifier,
+        CompanionStrengthDamage::Flat(n) => n,
+    }
+}
+
+/// The player-facing rendering of the same parsed token — the PRODUCTION half
+/// of this seam, called by `apps/desktop/src-tauri/src/companion_catalog.rs`.
+///
+/// A catalog browser has no character, so it cannot show the evaluated number;
+/// it shows what the row grants, in the rule's own words. Same posture as
+/// `format_spell_range_formula`, which `spell_catalog` calls for a formula
+/// whose caster level is likewise not known at browse time.
+pub fn format_companion_strength_damage(damage: CompanionStrengthDamage) -> String {
+    match damage {
+        CompanionStrengthDamage::HalfStrengthNeverNegative => {
+            "+1/2 Str modifier (minimum +0)".to_string()
+        }
+        CompanionStrengthDamage::FullStrength => "+Str modifier".to_string(),
+        CompanionStrengthDamage::NegatedFullStrength => "-Str modifier".to_string(),
+        CompanionStrengthDamage::Flat(n) if n >= 0 => format!("+{n}"),
+        CompanionStrengthDamage::Flat(n) => format!("{n}"),
+    }
+}
+
+/// One `kind=companion` fixture row. A sibling top-level `companion_entries`
+/// array in the same committed fixture JSON, for the reason
+/// [`MonsterFixture`] states about `monster_entries`: a forced-generic union
+/// with equipment's `expected.abilities`/`expected.bonus` would mean nothing
+/// here.
+#[derive(Debug, Clone)]
+pub struct CompanionFixture {
+    pub unit_id: String,
+    pub book: String,
+    pub record_key: String,
+    /// The `WEAPONPROF=` selector the token names — which is NOT guaranteed to
+    /// be one of the record's natural attacks (`companion_chassis::
+    /// NaturalAttackDamageBonus`'s own Parrot finding).
+    pub attack: String,
+    pub upstream_lst: String,
+    pub upstream_lst_sha256: String,
+    pub upstream_line: u64,
+    pub corpus_field: String,
+    pub expected_shape: String,
+    /// `(strength_modifier, damage_bonus)` pairs, computed by
+    /// `scripts/derive_companion_strength_damage_fixtures.py` from PF1's
+    /// halve-and-round-down convention — never read back from this repo's
+    /// evaluator.
+    pub expected_at: Vec<(i32, i32)>,
+}
+
+/// Reads the `companion_entries` array of the same committed fixture file
+/// [`load_fixtures`] reads `entries` from.
+pub fn load_companion_fixtures(repo_root: &Path) -> Vec<CompanionFixture> {
+    let path = repo_root.join(FIXTURE_RELATIVE_PATH);
+    let text = std::fs::read_to_string(&path)
+        .unwrap_or_else(|e| panic!("the committed fixture must be readable at {path:?}: {e}"));
+    let doc: serde_json::Value =
+        serde_json::from_str(&text).expect("the committed fixture must be valid JSON");
+    let Some(entries) = doc.get("companion_entries").and_then(|v| v.as_array()) else {
+        return Vec::new();
+    };
+    entries
+        .iter()
+        .map(|e| {
+            let expected = &e["expected"];
+            CompanionFixture {
+                unit_id: e["unit_id"].as_str().expect("unit_id").to_string(),
+                book: e["book"].as_str().expect("book").to_string(),
+                record_key: e["record_key"].as_str().expect("record_key").to_string(),
+                attack: e["attack"].as_str().expect("attack").to_string(),
+                upstream_lst: e["upstream_lst"].as_str().expect("upstream_lst").to_string(),
+                upstream_lst_sha256: e["upstream_lst_sha256"]
+                    .as_str()
+                    .expect("upstream_lst_sha256")
+                    .to_string(),
+                upstream_line: e["upstream_line"].as_u64().expect("upstream_line"),
+                corpus_field: e["corpus_field"].as_str().expect("corpus_field").to_string(),
+                expected_shape: expected["shape"].as_str().expect("expected.shape").to_string(),
+                expected_at: expected["damage_bonus_at_strength_modifier"]
+                    .as_array()
+                    .expect("expected.damage_bonus_at_strength_modifier")
+                    .iter()
+                    .map(|p| {
+                        (
+                            i32::try_from(p["strength_modifier"].as_i64().expect("strength_modifier"))
+                                .expect("a Strength modifier fits in i32"),
+                            i32::try_from(p["damage_bonus"].as_i64().expect("damage_bonus"))
+                                .expect("a damage bonus fits in i32"),
+                        )
+                    })
+                    .collect(),
+            }
+        })
+        .collect()
+}
+
+/// The `kind=companion` half of [`run_bar_check`].
+///
+/// Runs against the SHIPPED tables (`companion_chassis::COMPANION_BOOKS`) —
+/// the same records `companion_catalog` serves and the reach gate judges —
+/// rather than against `data/corpus/`, so a transcription that dropped the
+/// token fails here rather than passing on a corpus file no player reads.
+/// Same choice `run_monster_bar_check` makes, and for the same reason.
+fn run_companion_bar_check(repo_root: &Path) -> BarCheckReport {
+    let fixtures = load_companion_fixtures(repo_root);
+    let fixtures_total = fixtures.len();
+
+    let mut cleared = BTreeSet::new();
+    let mut failures: BTreeMap<String, String> = BTreeMap::new();
+    let mut not_ingested: BTreeMap<String, String> = BTreeMap::new();
+
+    for fixture in &fixtures {
+        let Some(book) = companion_book(&fixture.book) else {
+            not_ingested.insert(fixture.unit_id.clone(), fixture.book.clone());
+            continue;
+        };
+        // Resolved by `.key` (the corpus `KEY:` identity), never by `.name` --
+        // `Familiar (Fox)`'s key and name differ from the bare species in
+        // several books, the same false-negative `run_monster_bar_check`
+        // records for Gremlin (Grimple).
+        let Some(record) = book.companion_resolve(&fixture.record_key) else {
+            failures.insert(
+                fixture.unit_id.clone(),
+                format!(
+                    "{:?} does not resolve against {}'s registered companions",
+                    fixture.record_key, fixture.book
+                ),
+            );
+            continue;
+        };
+        let Some(bonus) =
+            record.natural_attack_damage_bonuses.iter().find(|b| b.attack == fixture.attack)
+        else {
+            failures.insert(
+                fixture.unit_id.clone(),
+                format!(
+                    "corpus row states {} but the shipped record carries no \
+                     BONUS:WEAPONPROF={}|DAMAGE| token at all",
+                    fixture.corpus_field, fixture.attack
+                ),
+            );
+            continue;
+        };
+        let Some(parsed) = parse_companion_strength_damage(bonus.formula) else {
+            failures.insert(
+                fixture.unit_id.clone(),
+                format!(
+                    "corpus row states {} but the evaluator could not parse a Strength-damage \
+                     shape from {:?}",
+                    fixture.corpus_field, bonus.formula
+                ),
+            );
+            continue;
+        };
+        if parsed.shape_name() != fixture.expected_shape {
+            failures.insert(
+                fixture.unit_id.clone(),
+                format!(
+                    "corpus row {:?} states shape {:?}, evaluator produced {:?}",
+                    fixture.corpus_field,
+                    fixture.expected_shape,
+                    parsed.shape_name()
+                ),
+            );
+            continue;
+        }
+        let mut mismatch = None;
+        for &(strength_modifier, expected_bonus) in &fixture.expected_at {
+            let got = evaluate_companion_strength_damage(parsed, strength_modifier);
+            if got != expected_bonus {
+                mismatch = Some(format!(
+                    "corpus row {:?} at Strength modifier {strength_modifier}: expected damage \
+                     bonus {expected_bonus}, evaluator produced {got}",
+                    fixture.corpus_field
+                ));
+                break;
+            }
+        }
+        match mismatch {
+            Some(message) => {
+                failures.insert(fixture.unit_id.clone(), message);
+            }
+            None if fixture.expected_at.is_empty() => {
+                // A fixture that pins no evaluated value asserts nothing about
+                // the evaluator. Refused rather than counted -- a gate that
+                // cannot fail is worse than no gate (`decisions.md` Decision
+                // 1(a)).
+                failures.insert(
+                    fixture.unit_id.clone(),
+                    format!(
+                        "fixture for {:?} pins no (strength_modifier, damage_bonus) pair at all, \
+                         so it asserts nothing",
+                        fixture.corpus_field
+                    ),
+                );
+            }
+            None => {
+                cleared.insert(fixture.unit_id.clone());
+            }
+        }
+    }
+
+    BarCheckReport { cleared, failures, not_ingested, fixtures_total }
+}
+
+#[cfg(test)]
+mod companion_seam_tests {
+    use super::*;
+
+    // --- parser unit tests: one TDD red/green anchor per corpus-observed shape ---
+
+    #[test]
+    fn the_parenthesised_half_strength_clamp_parses() {
+        // Arctic Fox, `BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))`
+        // (`ultimate_wilderness/uw_races_companion.lst:135`) -- 114 of the 117
+        // pinned rows carry exactly this spelling.
+        assert_eq!(
+            parse_companion_strength_damage("max(0,(STR/2))"),
+            Some(CompanionStrengthDamage::HalfStrengthNeverNegative)
+        );
+    }
+
+    #[test]
+    fn the_paren_free_half_strength_clamp_is_the_same_shape() {
+        // Familiar (Cassisian), `BONUS:WEAPONPROF=Slam|DAMAGE|max(0,STR/2)`
+        // (`bestiary_2/b2_races_familiar.lst:11`). PCGen spells the same thing
+        // two ways and both ship verbatim on the record; only the PARSE
+        // normalises them.
+        assert_eq!(
+            parse_companion_strength_damage("max(0,STR/2)"),
+            Some(CompanionStrengthDamage::HalfStrengthNeverNegative)
+        );
+    }
+
+    #[test]
+    fn a_bare_and_a_negated_strength_term_each_parse() {
+        assert_eq!(
+            parse_companion_strength_damage("STR"),
+            Some(CompanionStrengthDamage::FullStrength)
+        );
+        assert_eq!(
+            parse_companion_strength_damage("-STR"),
+            Some(CompanionStrengthDamage::NegatedFullStrength)
+        );
+    }
+
+    #[test]
+    fn an_integer_literal_parses_as_flat() {
+        assert_eq!(parse_companion_strength_damage("5"), Some(CompanionStrengthDamage::Flat(5)));
+        assert_eq!(parse_companion_strength_damage("-5"), Some(CompanionStrengthDamage::Flat(-5)));
+    }
+
+    // TDD red/green anchors: shapes this seam deliberately refuses rather than
+    // guesses at, because an unclamped halving's value at a negative odd
+    // Strength modifier depends on PCGen's floor-vs-truncate behaviour, which
+    // this repo has no proof of.
+    #[test]
+    fn an_unclamped_halving_refuses_rather_than_guesses() {
+        // `bestiary_4:companion:companion_dinosaur_diplodocus_tail_lash`.
+        assert_eq!(parse_companion_strength_damage("STR/2"), None);
+        assert_eq!(parse_companion_strength_damage("-(STR/2)"), None);
+    }
+
+    #[test]
+    fn a_clamped_full_strength_term_refuses_rather_than_guesses() {
+        // `bestiary:companion:tyrannosaurus_powerful_bite`, `max(0,STR)` -- a
+        // real corpus shape, and NOT the same rule as `max(0,(STR/2))`.
+        assert_eq!(parse_companion_strength_damage("max(0,STR)"), None);
+    }
+
+    // --- the rules arithmetic itself ---
+
+    #[test]
+    fn half_strength_rounds_down_and_never_goes_below_zero() {
+        // PF1 CRB p.9 ("whenever you are asked to halve a number, round down")
+        // and CRB p.182 (the 1-1/2x rule is stated about a Strength BONUS, so a
+        // PENALTY is never multiplied -- which is what `max(0,...)` encodes).
+        let d = CompanionStrengthDamage::HalfStrengthNeverNegative;
+        assert_eq!(evaluate_companion_strength_damage(d, -4), 0);
+        assert_eq!(evaluate_companion_strength_damage(d, -3), 0);
+        assert_eq!(evaluate_companion_strength_damage(d, -1), 0);
+        assert_eq!(evaluate_companion_strength_damage(d, 0), 0);
+        assert_eq!(evaluate_companion_strength_damage(d, 1), 0);
+        assert_eq!(evaluate_companion_strength_damage(d, 2), 1);
+        assert_eq!(evaluate_companion_strength_damage(d, 3), 1);
+        assert_eq!(evaluate_companion_strength_damage(d, 7), 3);
+    }
+
+    #[test]
+    fn the_non_halving_shapes_evaluate_verbatim() {
+        assert_eq!(
+            evaluate_companion_strength_damage(CompanionStrengthDamage::FullStrength, 5),
+            5
+        );
+        assert_eq!(
+            evaluate_companion_strength_damage(CompanionStrengthDamage::NegatedFullStrength, 5),
+            -5
+        );
+        assert_eq!(evaluate_companion_strength_damage(CompanionStrengthDamage::Flat(-5), 99), -5);
+    }
+
+    #[test]
+    fn the_rendered_text_names_the_rule_rather_than_a_number() {
+        // The PRODUCTION half. A catalog browser has no character, so a number
+        // here would be invented; the rule's own words are not.
+        assert_eq!(
+            format_companion_strength_damage(CompanionStrengthDamage::HalfStrengthNeverNegative),
+            "+1/2 Str modifier (minimum +0)"
+        );
+        assert_eq!(
+            format_companion_strength_damage(CompanionStrengthDamage::Flat(5)),
+            "+5"
+        );
+        assert_eq!(
+            format_companion_strength_damage(CompanionStrengthDamage::Flat(-5)),
+            "-5"
+        );
+    }
+
+    // --- the corpus facts this seam rests on, asserted rather than assumed ---
+
+    /// The single-natural-attack rule is NOT a corpus invariant, and this test
+    /// pins that finding so a later cycle cannot quietly "fix" the seam by
+    /// inferring the token's presence from the attack count. Re-derived over
+    /// every registered book's shipped companion records.
+    #[test]
+    fn upstream_does_not_state_the_single_attack_rule_uniformly() {
+        use crate::rules_core::rules_tables::companion_chassis::COMPANION_BOOKS;
+        let mut one_attack_with_token = 0usize;
+        let mut one_attack_without_token = 0usize;
+        let mut multi_attack_with_token = 0usize;
+        for book in COMPANION_BOOKS {
+            for c in book.companions {
+                let half = c
+                    .natural_attack_damage_bonuses
+                    .iter()
+                    .filter(|b| {
+                        parse_companion_strength_damage(b.formula)
+                            == Some(CompanionStrengthDamage::HalfStrengthNeverNegative)
+                    })
+                    .count();
+                match (c.natural_attacks.len(), half) {
+                    (1, 1) => one_attack_with_token += 1,
+                    (1, 0) => one_attack_without_token += 1,
+                    (n, 1) if n >= 2 => multi_attack_with_token += 1,
+                    _ => {}
+                }
+            }
+        }
+        assert!(
+            one_attack_with_token > 0 && one_attack_without_token > 0,
+            "both sides of the non-invariance must be non-empty for this finding to mean \
+             anything: with={one_attack_with_token} without={one_attack_without_token}"
+        );
+        assert!(
+            multi_attack_with_token > 0,
+            "the rule is violated in BOTH directions upstream; if this reaches zero the corpus \
+             changed and the seam's own doc comment must be re-derived"
+        );
+    }
+
+    /// The Parrot finding, pinned: a `WEAPONPROF=` selector is NOT guaranteed
+    /// to name one of the record's own natural attacks, so nothing in this seam
+    /// may join the two and drop the misses.
+    #[test]
+    fn a_damage_bonus_selector_need_not_name_one_of_the_records_natural_attacks() {
+        use crate::rules_core::rules_tables::companion_chassis::companion_book;
+        let apg = companion_book("advanced_players_guide").expect("APG companions are registered");
+        let parrot = apg.companion_resolve("Parrot").expect("APG ships a Parrot");
+        assert!(
+            parrot.natural_attack_damage_bonuses.iter().any(|b| b.attack == "Claw"),
+            "Parrot's row states BONUS:WEAPONPROF=Claw|DAMAGE|…"
+        );
+        assert!(
+            !parrot.natural_attacks.iter().any(|a| a.name == "Claw"),
+            "…and Parrot has no Claw attack. If this ever becomes false the corpus changed and \
+             `NaturalAttackDamageBonus`'s doc comment must be re-derived, not silently amended."
+        );
+    }
+
+    // --- the bar check itself ---
+
+    #[test]
+    fn run_companion_bar_check_clears_every_committed_companion_fixture() {
+        let repo_root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+        let report = run_companion_bar_check(&repo_root);
+        assert!(
+            report.fixtures_total > 0,
+            "the committed fixture must carry at least one companion_entries row"
+        );
+        assert!(
+            report.not_ingested.is_empty(),
+            "every committed companion fixture's book must be registered, got: {:?}",
+            report.not_ingested
+        );
+        assert!(
+            report.failures.is_empty(),
+            "every committed companion fixture must clear the bar, got {} failures, first few: \
+             {:?}",
+            report.failures.len(),
+            report.failures.iter().take(5).collect::<Vec<_>>()
+        );
+        assert_eq!(report.cleared.len(), report.fixtures_total);
+    }
+
+    /// A scratch `repo_root` carrying one fixture the caller controls, pointed
+    /// at a REAL shipped record (`ultimate_wilderness`'s Arctic Fox, whose row
+    /// states `BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))`), so a test drives
+    /// the REAL `run_companion_bar_check` end to end without touching the
+    /// committed fixture. Same pattern as `ScratchMonsterFixtureRoot`.
+    struct ScratchCompanionRoot {
+        root: PathBuf,
+    }
+
+    impl ScratchCompanionRoot {
+        fn new(name: &str, attack: &str, shape: &str, pairs: &[(i32, i32)]) -> Self {
+            let root = std::env::temp_dir()
+                .join(format!("codex_companion_mutation_proof_{name}_{}", std::process::id()));
+            let _ = std::fs::remove_dir_all(&root);
+            let fixture_dir = root.join("tests/fixtures/rules_core");
+            std::fs::create_dir_all(&fixture_dir).unwrap();
+            let at = pairs
+                .iter()
+                .map(|(m, b)| {
+                    format!("{{\"strength_modifier\":{m},\"damage_bonus\":{b}}}")
+                })
+                .collect::<Vec<_>>()
+                .join(",");
+            std::fs::write(
+                fixture_dir.join("derived-evaluator-fixtures.json"),
+                format!(
+                    r#"{{"companion_entries":[{{
+                        "unit_id":"scratch:companion:arctic_fox",
+                        "book":"ultimate_wilderness",
+                        "record_key":"Arctic Fox",
+                        "attack":"{attack}",
+                        "upstream_lst":"scratch.lst",
+                        "upstream_lst_sha256":"0",
+                        "upstream_line":1,
+                        "corpus_field":"BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))",
+                        "expected":{{"shape":"{shape}","damage_bonus_at_strength_modifier":[{at}]}}
+                    }}]}}"#
+                ),
+            )
+            .unwrap();
+            ScratchCompanionRoot { root }
+        }
+    }
+
+    impl Drop for ScratchCompanionRoot {
+        fn drop(&mut self) {
+            let _ = std::fs::remove_dir_all(&self.root);
+        }
+    }
+
+    /// The positive control, first: a fixture stating the TRUE values for the
+    /// real, resolved Arctic Fox must clear the bar -- otherwise every mutation
+    /// test below would pass for the wrong reason.
+    #[test]
+    fn a_correct_companion_fixture_clears_run_companion_bar_check() {
+        let scratch = ScratchCompanionRoot::new(
+            "correct",
+            "Bite",
+            "half_strength_never_negative",
+            &[(-3, 0), (0, 0), (3, 1), (6, 3)],
+        );
+        let report = run_companion_bar_check(&scratch.root);
+        assert!(report.failures.is_empty(), "failures: {:?}", report.failures);
+        assert_eq!(report.cleared.len(), 1);
+        assert!(report.cleared.contains("scratch:companion:arctic_fox"));
+    }
+
+    /// MUTATION PROOF 1 -- a wrong evaluated value. This is the assertion the
+    /// whole seam rests on: had the evaluator dropped the `max(0,…)` clamp it
+    /// would produce `-2` at a Strength modifier of `-3`, so a fixture claiming
+    /// `-2` must be reported as a failure rather than cleared.
+    #[test]
+    fn a_wrong_expected_damage_bonus_makes_run_companion_bar_check_report_a_failure() {
+        let scratch = ScratchCompanionRoot::new(
+            "wrongvalue",
+            "Bite",
+            "half_strength_never_negative",
+            &[(-3, -2)],
+        );
+        let report = run_companion_bar_check(&scratch.root);
+        assert!(report.cleared.is_empty(), "cleared: {:?}", report.cleared);
+        assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
+        assert!(report.failures.contains_key("scratch:companion:arctic_fox"));
+    }
+
+    /// MUTATION PROOF 2 -- a wrong SHAPE. `full_strength` and
+    /// `half_strength_never_negative` agree at a Strength modifier of 0, so a
+    /// seam that compared only the numbers at a lazily-chosen ladder could pass
+    /// on a mis-parsed shape.
+    #[test]
+    fn a_wrong_expected_shape_makes_run_companion_bar_check_report_a_failure() {
+        let scratch =
+            ScratchCompanionRoot::new("wrongshape", "Bite", "full_strength", &[(0, 0)]);
+        let report = run_companion_bar_check(&scratch.root);
+        assert!(report.cleared.is_empty(), "cleared: {:?}", report.cleared);
+        assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
+    }
+
+    /// MUTATION PROOF 3 -- a token the shipped record does not carry. This is
+    /// the case that catches a transcription regression: if a later regen
+    /// dropped `natural_attack_damage_bonuses`, every fixture would land here.
+    #[test]
+    fn an_absent_damage_token_makes_run_companion_bar_check_report_a_failure() {
+        let scratch = ScratchCompanionRoot::new(
+            "notoken",
+            "Gore",
+            "half_strength_never_negative",
+            &[(6, 3)],
+        );
+        let report = run_companion_bar_check(&scratch.root);
+        assert!(report.cleared.is_empty(), "cleared: {:?}", report.cleared);
+        assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
+    }
+
+    /// MUTATION PROOF 4 -- a fixture that asserts NOTHING. A row pinning an
+    /// empty ladder would otherwise clear the bar vacuously, which is exactly
+    /// the "gate that cannot fail" Decision 1(a) forbids.
+    #[test]
+    fn a_fixture_pinning_no_values_at_all_is_refused_rather_than_cleared() {
+        let scratch =
+            ScratchCompanionRoot::new("empty", "Bite", "half_strength_never_negative", &[]);
+        let report = run_companion_bar_check(&scratch.root);
+        assert!(report.cleared.is_empty(), "cleared: {:?}", report.cleared);
+        assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
+    }
 }
 
 #[cfg(test)]

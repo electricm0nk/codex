@@ -6462,11 +6462,11 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 30,
-      "partial": 16,
+      "done": 41,
+      "partial": 5,
       "not_started": 134,
       "denominator": 180,
-      "pct": 16.7,
+      "pct": 22.8,
       "excluded_from_percentage": 18,
       "standing_breakdown": {
         "unclassified": 18,
@@ -6649,7 +6649,7 @@
         },
         {
           "name": "Blue-Ringed Octopus",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -6829,7 +6829,7 @@
         },
         {
           "name": "Familiar (Blue-Ringed Octopus)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -6841,7 +6841,7 @@
         },
         {
           "name": "Familiar (Goat)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -6853,31 +6853,31 @@
         },
         {
           "name": "Familiar (Pig)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "Familiar (Thrush)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "Familiar (Turtle)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "Fox",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified"
         },
         {
           "name": "Goat",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified"
         },
@@ -6925,7 +6925,7 @@
         },
         {
           "name": "House Centipede",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -7387,7 +7387,7 @@
         },
         {
           "name": "Pig",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified"
         },
@@ -7447,13 +7447,13 @@
         },
         {
           "name": "Scarlet Spider",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "Scorpion (Greensting))",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -7525,7 +7525,7 @@
         },
         {
           "name": "Thrush",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -7537,7 +7537,7 @@
         },
         {
           "name": "Turtle",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },

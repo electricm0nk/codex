@@ -5,11 +5,11 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 37,
-      "partial": 11,
+      "done": 40,
+      "partial": 8,
       "not_started": 2,
       "denominator": 50,
-      "pct": 74.0,
+      "pct": 80.0,
       "excluded_from_percentage": 7,
       "standing_breakdown": {
         "origin": 50,
@@ -270,7 +270,7 @@
         },
         {
           "name": "Familiar (Chicken)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "unclassified"
         },
@@ -306,7 +306,7 @@
         },
         {
           "name": "Familiar (Flying Fox)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "origin"
         },
@@ -318,25 +318,25 @@
         },
         {
           "name": "Familiar (Penguin)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "unclassified"
         },
         {
           "name": "Familiar (Red Panda)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "origin"
         },
         {
           "name": "Familiar (Seal)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "unclassified"
         },
         {
           "name": "Familiar (Trilobite)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Vermin",
           "standing": "origin"
         },

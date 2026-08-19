@@ -47,6 +47,9 @@
 
 use serde::{Deserialize, Serialize};
 
+use codex::rules_core::derived_evaluator_fixture_check::{
+    format_companion_strength_damage, parse_companion_strength_damage,
+};
 use codex::rules_core::rules_tables::companion_chassis::{self, CompanionRecord};
 
 /// Wire code for a companion book's corpus directory.
@@ -124,6 +127,46 @@ pub struct CompanionAttackDto {
     /// The die expression only. `None` means the corpus names the attack and
     /// prices it nowhere — the screen prints the name alone, never a stand-in.
     pub damage_dice: Option<String>,
+}
+
+/// One `BONUS:WEAPONPROF=<attack>|DAMAGE|<formula>` token the creature's row
+/// states — extra damage on a named attack.
+///
+/// # Why the screen shows a rule and not a number
+///
+/// The dominant corpus formula is `max(0,(STR/2))`, PCGen's encoding of PF1 CRB
+/// p.182's *"if a creature has only one natural attack, it adds 1-1/2 times its
+/// Strength bonus on damage rolls"* — the base attack applies the full modifier
+/// and this token adds the other half, clamped at zero because the rule is
+/// stated about a Strength BONUS and a penalty is never multiplied. A catalog
+/// browser has no character, so it has no Strength modifier to evaluate the
+/// formula at; serving a number here would be inventing one. The engine's
+/// `derived_evaluator_fixture_check::format_companion_strength_damage` renders
+/// the rule in words instead, and it is the SAME parse
+/// (`parse_companion_strength_damage`) whose evaluated values 117 committed
+/// fixtures pin — so this column and that gate can never drift apart.
+///
+/// # `attack` is the token's own selector, not a join
+///
+/// It is NOT guaranteed to name one of `naturalAttacks`
+/// (`companion_chassis::NaturalAttackDamageBonus`'s Parrot finding), so this is
+/// served as its own list rather than folded into the attack rows — folding it
+/// would silently drop what the corpus actually says.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase")]
+pub struct CompanionDamageBonusDto {
+    /// The `WEAPONPROF=` selector verbatim: `"Bite"`, `"Claw"`, `"Slam"`, …
+    pub attack: String,
+    /// The rule in words: `"+1/2 Str modifier (minimum +0)"`, `"+Str modifier"`,
+    /// `"+5"`, …
+    pub bonus: String,
+    /// The token's formula half verbatim, for a row whose shape the engine
+    /// refuses to interpret (`STR/2`, `-(STR/2)` — an unclamped halving whose
+    /// negative-odd rounding PCGen does not state). `None` once `bonus` carries
+    /// the rendered rule; `Some` is the honest "the corpus says this and we
+    /// will not guess what it means" state, and the screen prints it as the raw
+    /// token it is.
+    pub unparsed_formula: Option<String>,
 }
 
 /// One `BONUS:STAT` token. An adjustment, never a score — see the module doc.
@@ -229,6 +272,10 @@ pub struct CompanionCatalogEntryDto {
     /// carry no `TYPE:` token at all.
     pub type_segments: Vec<String>,
     pub natural_attacks: Vec<CompanionAttackDto>,
+    /// Every `BONUS:WEAPONPROF=<attack>|DAMAGE|` token on the creature's row.
+    /// Empty for most rows, which is a real corpus state — see
+    /// [`CompanionDamageBonusDto`].
+    pub natural_attack_damage_bonuses: Vec<CompanionDamageBonusDto>,
     /// `BONUS:STAT` adjustments from the creature's own row.
     pub stat_adjustments: Vec<CompanionStatAdjustmentDto>,
     /// `BONUS:VAR|AC_Natural_Armor|n|TYPE=Base`, when the row carries one.
@@ -542,6 +589,27 @@ fn map_companion(
                 damage_dice: a.damage_dice.map(str::to_owned),
             })
             .collect(),
+        natural_attack_damage_bonuses: record
+            .natural_attack_damage_bonuses
+            .iter()
+            .map(|b| match parse_companion_strength_damage(b.formula) {
+                Some(parsed) => CompanionDamageBonusDto {
+                    attack: b.attack.to_owned(),
+                    bonus: format_companion_strength_damage(parsed),
+                    unparsed_formula: None,
+                },
+                // The engine refuses this shape rather than guessing at it
+                // (`parse_companion_strength_damage`'s own doc). Serving the
+                // token verbatim, labelled as unparsed, is the honest state —
+                // dropping the row would tell the player the corpus says
+                // nothing, which is false.
+                None => CompanionDamageBonusDto {
+                    attack: b.attack.to_owned(),
+                    bonus: b.formula.to_owned(),
+                    unparsed_formula: Some(b.formula.to_owned()),
+                },
+            })
+            .collect(),
         stat_adjustments: record
             .stat_adjustments
             .iter()
@@ -593,6 +661,64 @@ mod tests {
             .join("../../..")
             .canonicalize()
             .expect("the repo root resolves")
+    }
+
+    /// Every `BONUS:WEAPONPROF=…|DAMAGE|` token the shipped tables carry
+    /// reaches the wire — count for count. Derived from the registry rather
+    /// than pinned to a number, so a regen that dropped the transcription
+    /// fails here as well as in the fixture bar check.
+    #[test]
+    fn every_transcribed_damage_bonus_reaches_the_wire() {
+        let response = build_companion_catalog();
+        let served: usize =
+            response.entries.iter().map(|e| e.natural_attack_damage_bonuses.len()).sum();
+        let expected: usize = companion_chassis::COMPANION_BOOKS
+            .iter()
+            .flat_map(|b| b.companions.iter())
+            .map(|c| c.natural_attack_damage_bonuses.len())
+            .sum();
+        assert_eq!(served, expected);
+        assert!(expected > 0, "a wire carrying zero damage bonuses asserts nothing");
+    }
+
+    /// The rendered text is the RULE, not a number, and it is the shared
+    /// `derived_evaluator_fixture_check` parse that produces it — the same one
+    /// the committed fixtures pin. Checked on a real, resolved record whose
+    /// corpus row is quoted in `companion_chassis::NaturalAttackDamageBonus`.
+    #[test]
+    fn a_half_strength_damage_bonus_reaches_the_screen_as_the_rule_it_states() {
+        let response = build_companion_catalog();
+        let fox = response
+            .entries
+            .iter()
+            .find(|e| e.key == "ultimate_wilderness:companion:arctic_fox")
+            .expect("Ultimate Wilderness ships an Arctic Fox");
+        assert_eq!(fox.natural_attack_damage_bonuses.len(), 1);
+        let bonus = &fox.natural_attack_damage_bonuses[0];
+        assert_eq!(bonus.attack, "Bite");
+        assert_eq!(bonus.bonus, "+1/2 Str modifier (minimum +0)");
+        assert_eq!(bonus.unparsed_formula, None);
+    }
+
+    /// A formula the engine refuses to interpret reaches the screen VERBATIM
+    /// and labelled, never dropped and never rendered as if understood.
+    #[test]
+    fn an_uninterpretable_formula_reaches_the_wire_verbatim_and_labelled() {
+        let response = build_companion_catalog();
+        let unparsed: Vec<&CompanionDamageBonusDto> = response
+            .entries
+            .iter()
+            .flat_map(|e| e.natural_attack_damage_bonuses.iter())
+            .filter(|b| b.unparsed_formula.is_some())
+            .collect();
+        assert!(
+            !unparsed.is_empty(),
+            "the corpus carries formulas this engine refuses (STR/2, -(STR/2)); if none reaches \
+             the wire, either the transcription or the refusal changed"
+        );
+        for b in unparsed {
+            assert_eq!(b.unparsed_formula.as_deref(), Some(b.bonus.as_str()));
+        }
     }
 
     /// Every registered creature reaches the wire. Derived from the registry

@@ -78,6 +78,7 @@ IMPORTABLE = (
     "CompanionDescriptionVariant",
     "CompanionRecord",
     "NaturalAttack",
+    "NaturalAttackDamageBonus",
     "Speed",
     "StatAdjustment",
 )
@@ -202,6 +203,36 @@ def parse_natural_attacks(row: list[str]) -> list[tuple[str, str | None]]:
                 seen.add(name)
                 attacks.append((name, None))
     return attacks
+
+
+def parse_natural_attack_damage_bonuses(row: list[str]) -> list[tuple[str, str]]:
+    """`BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))` -> [("Bite", "max(0,(STR/2))")].
+
+    The token, verbatim — the attack selector and the formula half, neither
+    normalised nor evaluated. Interpreting it is
+    `derived_evaluator_fixture_check::parse_companion_strength_damage`'s job;
+    transcribing it is this function's, exactly as `parse_stat_adjustments`
+    transcribes `BONUS:STAT` without computing a score.
+
+    Only the `|DAMAGE|` sub-token is read. A row's other `BONUS:WEAPONPROF=`
+    tokens state different quantities (`|DAMAGESIZE|1` is a damage-DIE size
+    step, not a damage bonus, and `bestiary_3`'s companion rows carry it where
+    they carry no `|DAMAGE|` at all) and folding them together would report one
+    quantity under another's name.
+    """
+    out: list[tuple[str, str]] = []
+    for field in row:
+        if not field.startswith("BONUS:WEAPONPROF="):
+            continue
+        parts = field.split("|")
+        if len(parts) < 3 or parts[1].strip() != "DAMAGE":
+            continue
+        attack = parts[0][len("BONUS:WEAPONPROF=") :].strip()
+        formula = "|".join(parts[2:]).strip()
+        if not attack or not formula:
+            continue
+        out.append((attack, formula))
+    return out
 
 
 def parse_stat_adjustments(row: list[str]) -> list[tuple[str, int]]:
@@ -1052,6 +1083,7 @@ def transcribe(book: str) -> str:
         speeds = parse_speeds(row)
         attacks = parse_natural_attacks(row)
         adjustments = parse_stat_adjustments(row)
+        damage_bonuses = parse_natural_attack_damage_bonuses(row)
         reach = parse_reach(row)
         armor = parse_natural_armor(row)
         out.append("    CompanionRecord {")
@@ -1073,6 +1105,14 @@ def transcribe(book: str) -> str:
             + ", ".join(
                 f"NaturalAttack {{ name: {rust_str(n)}, damage_dice: {rust_opt(d)} }}"
                 for n, d in attacks
+            )
+            + "],"
+        )
+        out.append(
+            "        natural_attack_damage_bonuses: &["
+            + ", ".join(
+                f"NaturalAttackDamageBonus {{ attack: {rust_str(a)}, formula: {rust_str(f)} }}"
+                for a, f in damage_bonuses
             )
             + "],"
         )

@@ -5,11 +5,11 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 4,
-      "partial": 12,
+      "done": 10,
+      "partial": 6,
       "not_started": 0,
       "denominator": 16,
-      "pct": 25.0,
+      "pct": 62.5,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 16
@@ -35,7 +35,7 @@
         },
         {
           "name": "Familiar (Cassisian)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Outsider",
           "standing": "origin"
         },
@@ -53,25 +53,25 @@
         },
         {
           "name": "Familiar (Elemental (Ice/Small))",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Outsider",
           "standing": "origin"
         },
         {
           "name": "Familiar (Elemental (Lightning/Small))",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Outsider",
           "standing": "origin"
         },
         {
           "name": "Familiar (Elemental (Magma/Small))",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Outsider",
           "standing": "origin"
         },
         {
           "name": "Familiar (Elemental (Mud/Small))",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Outsider",
           "standing": "origin"
         },
@@ -95,7 +95,7 @@
         },
         {
           "name": "Familiar (Snapping Turtle)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Animal",
           "standing": "origin"
         },

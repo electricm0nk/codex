@@ -120,6 +120,37 @@ pub struct StatAdjustment {
     pub amount: i16,
 }
 
+/// One `BONUS:WEAPONPROF=<attack>|DAMAGE|<formula>` token from a creature row —
+/// the extra damage that row states for one of its named attacks.
+///
+/// **The token, verbatim; never a computed number.** Same discipline
+/// [`StatAdjustment`] and [`CompanionRecord::monster_class`] already state, and
+/// the same one `monster_chassis::MonsterStatBlock::sla_cl_token` states for the
+/// monster lane's own derived seam: this chassis transcribes what the row says,
+/// and `derived_evaluator_fixture_check::parse_companion_strength_damage`
+/// interprets it. The dominant corpus spelling is `max(0,(STR/2))` — PCGen's
+/// encoding of PF1's "a creature with only one natural attack adds 1½ × its
+/// Strength BONUS to damage" rule (CRB p.182): the base attack already applies
+/// the full modifier, this token adds the other half, and `max(0,…)` is why a
+/// Strength PENALTY is never multiplied.
+///
+/// **`attack` is the token's own selector, and it is NOT guaranteed to name one
+/// of [`CompanionRecord::natural_attacks`].** Re-derived corpus-wide 2026-08-19
+/// over all 927 ingested companion records: `advanced_players_guide:companion:
+/// parrot` (`ce_races_familiar_apg.lst:17`) states
+/// `BONUS:WEAPONPROF=Claw|DAMAGE|max(0,(STR/2))` while its only natural attack
+/// is `Bite`. Carried as the row states it rather than joined-and-dropped —
+/// inventing the join would hide a real corpus fact.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct NaturalAttackDamageBonus {
+    /// The `WEAPONPROF=` selector verbatim: `"Bite"`, `"Claw"`, `"Slam"`, …
+    pub attack: &'static str,
+    /// The token's trailing formula half, verbatim: `"max(0,(STR/2))"`,
+    /// `"STR"`, `"-STR"`, `"5"`, … Never normalised — `max(0,(STR/2))` and
+    /// `max(0,STR/2)` are two real corpus spellings and both ship as written.
+    pub formula: &'static str,
+}
+
 /// Which modelled facet of `companion` an ability row is, read from the row's
 /// `TYPE:` segments.
 ///
@@ -268,6 +299,10 @@ pub struct CompanionRecord {
     /// `TYPE:` token at all.
     pub type_segments: &'static [&'static str],
     pub natural_attacks: &'static [NaturalAttack],
+    /// Every `BONUS:WEAPONPROF=<attack>|DAMAGE|<formula>` token on the row, in
+    /// row order — see [`NaturalAttackDamageBonus`]. Empty for the majority of
+    /// rows, which is a real corpus state and not a gap this chassis fills.
+    pub natural_attack_damage_bonuses: &'static [NaturalAttackDamageBonus],
     /// `BONUS:STAT` tokens on the creature's own row. Adjustments, never scores.
     pub stat_adjustments: &'static [StatAdjustment],
     /// `BONUS:VAR|AC_Natural_Armor|<n>|TYPE=Base`, when the row carries one.

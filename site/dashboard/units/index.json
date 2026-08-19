@@ -1,8 +1,8 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-08-19T01:10:47Z",
-  "source_document": "/home/ubuntu/workspace/repos/codex/docs/work-inventory.json",
+  "generated_at": "2026-08-19T11:48:45Z",
+  "source_document": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0628906e-65b-3/docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
     "name",
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 38521,
-  "proven_units": 6202,
+  "proven_units": 6085,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 420,
   "category_labels_redacted": 3,
@@ -4844,21 +4844,22 @@
     },
     "companion": {
       "units": 1696,
-      "proven": 828,
+      "proven": 711,
       "by_status": {
         "not-ingested": 769,
         "literal-verified": 99,
         "text-complete": 165,
-        "grounded": 663
+        "grounded": 546,
+        "fixture-verified": 117
       },
       "shard": "PF1e-units-companion.json",
-      "bytes": 227246,
+      "bytes": 228182,
       "doneness_unmapped": {},
       "categories": {
         "none": {
           "label": "Uncategorised",
-          "done": 130,
-          "held": 18,
+          "done": 144,
+          "held": 4,
           "in-progress": 0,
           "not-started": 49,
           "unmeasurable": 0,
@@ -4866,8 +4867,8 @@
         },
         "companion": {
           "label": "Companion",
-          "done": 93,
-          "held": 96,
+          "done": 154,
+          "held": 35,
           "in-progress": 0,
           "not-started": 2,
           "unmeasurable": 0,
@@ -4965,8 +4966,8 @@
         },
         "animal": {
           "label": "Animal",
-          "done": 19,
-          "held": 39,
+          "done": 51,
+          "held": 7,
           "in-progress": 0,
           "not-started": 0,
           "unmeasurable": 0,
@@ -5019,8 +5020,8 @@
         },
         "vermin": {
           "label": "Vermin",
-          "done": 0,
-          "held": 9,
+          "done": 6,
+          "held": 3,
           "in-progress": 0,
           "not-started": 0,
           "unmeasurable": 0,
@@ -5046,8 +5047,8 @@
         },
         "plant": {
           "label": "Plant",
-          "done": 0,
-          "held": 7,
+          "done": 4,
+          "held": 3,
           "in-progress": 0,
           "not-started": 0,
           "unmeasurable": 0,
