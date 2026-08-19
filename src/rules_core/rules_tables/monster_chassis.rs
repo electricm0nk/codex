@@ -79,6 +79,46 @@ pub struct NaturalAttack {
     pub damage_dice: Option<&'static str>,
 }
 
+/// One spell a monster row grants as a spell-like ability, read from a
+/// `SPELLS:<label>|TIMES=<n>|[TIMEUNIT=<unit>|]CASTERLEVEL=<value>|<spell>[,<dc
+/// formula>]|<spell>[,<dc formula>]…` token. One record per *spell*, not per
+/// token: a single `SPELLS:` token routinely grants several spells that share
+/// the token's label, frequency and caster level.
+///
+/// **Every field is a verbatim substring of the cited row** —
+/// `transcribe_monster_tables.py`'s standing contract. Nothing here is
+/// computed; the rule application lives in
+/// `derived_evaluator_fixture_check::spell_like_ability_save_dc`.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct MonsterSpellLikeAbility {
+    /// The token's first segment (`Innate`, `Neothelid`, …) — PCGen's own
+    /// name for the spell-book this grant files under.
+    pub label: &'static str,
+    /// The `TIMES=` segment's value verbatim (`3`, `ATWILL`), `None` when the
+    /// token carries none.
+    pub times: Option<&'static str>,
+    /// The `TIMEUNIT=` segment's value verbatim (`Week`, `Year`), `None` when
+    /// the token carries none — PCGen omits it for the near-universal
+    /// per-day default rather than spelling it out.
+    pub time_unit: Option<&'static str>,
+    /// The `CASTERLEVEL=` segment's value verbatim — a flat literal (`12`) or
+    /// a formula (`(max(TL,1))`, `SLA_CL`, `NabasuCasterLevel`). Never
+    /// resolved here; `spell_like_ability_caster_level` is the rule
+    /// application for the `BONUS:VAR|SLA_CL|` half of the same universal
+    /// monster rule.
+    pub caster_level_token: Option<&'static str>,
+    /// The spell's name as the row spells it, with any trailing `,<dc
+    /// formula>` stripped off into [`Self::save_dc_token`]. PCGen's own
+    /// parenthesised scope qualifiers are kept (`Invisibility (self only)`) —
+    /// they are part of the name the row states.
+    pub spell: &'static str,
+    /// The trailing `,<dc formula>` half of the spell segment, verbatim and
+    /// without the leading comma (`15+CHA`, `11+INT`). `None` when the row
+    /// states no save DC for this spell, which is the honest reading of a
+    /// spell that allows no save.
+    pub save_dc_token: Option<&'static str>,
+}
+
 /// Which of `monster_ability`'s facets a record is, read from the first segment
 /// of its corpus `TYPE:` token.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -241,6 +281,19 @@ pub struct MonsterStatBlock {
     /// of the 7 already-committed fixtures, all of which happen to be the
     /// bare-`HD` case and so never surfaced the gap).
     pub sla_cl_token: Option<&'static str>,
+    /// Every spell this row grants as a spell-like ability, one record per
+    /// spell, read from the row's `SPELLS:` tokens
+    /// ([`MonsterSpellLikeAbility`]).
+    ///
+    /// Distinct from [`Self::has_spell_like_abilities`]/[`Self::sla_cl_token`],
+    /// which are about the row's `BONUS:VAR|SLA_CL|` token — the two encode
+    /// different halves of PF1's Spell-Like Abilities universal monster rule
+    /// and a row may carry either without the other. Linnorm (Crag)
+    /// (`b1_races.lst:269`) carries `BONUS:VAR|SLA_CL|HD` and **no** `SPELLS:`
+    /// token at all; Aboleth (`b1_races.lst:7`) carries `SPELLS:` grants and
+    /// **no** `BONUS:VAR|SLA_CL|` token. Neither field may be derived from the
+    /// other.
+    pub spell_like_abilities: &'static [MonsterSpellLikeAbility],
     /// Keys into this book's `monster_abilities`, in row order.
     pub ability_keys: &'static [&'static str],
     /// Ability names this row cites that this book does not define.

@@ -5651,11 +5651,11 @@
     {
       "kind": "monster",
       "label": "Monsters",
-      "done": 187,
-      "partial": 139,
+      "done": 213,
+      "partial": 113,
       "not_started": 4,
       "denominator": 330,
-      "pct": 56.7,
+      "pct": 64.5,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 330
@@ -5663,13 +5663,13 @@
       "items": [
         {
           "name": "Aboleth",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "Angel (Astral Deva)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -5681,7 +5681,7 @@
         },
         {
           "name": "Angel (Solar)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -5801,7 +5801,7 @@
         },
         {
           "name": "Azata (Bralani)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -5813,7 +5813,7 @@
         },
         {
           "name": "Azata (Lillend)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -6131,7 +6131,7 @@
         },
         {
           "name": "Demon (Dretch)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -6143,7 +6143,7 @@
         },
         {
           "name": "Demon (Hezrou)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -6155,7 +6155,7 @@
         },
         {
           "name": "Demon (Nabasu)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -6167,7 +6167,7 @@
         },
         {
           "name": "Demon (Shadow)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -6179,7 +6179,7 @@
         },
         {
           "name": "Demon (Vrock)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -6191,7 +6191,7 @@
         },
         {
           "name": "Devil (Barbed)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -6215,7 +6215,7 @@
         },
         {
           "name": "Devil (Horned)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -6239,7 +6239,7 @@
         },
         {
           "name": "Devourer",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -6611,13 +6611,13 @@
         },
         {
           "name": "Genie (Djinni)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "Genie (Djinni/Noble)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -6659,13 +6659,13 @@
         },
         {
           "name": "Genie (Shaitan)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "Genie (Shaitan/Noble)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -6719,7 +6719,7 @@
         },
         {
           "name": "Giant (Storm)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -6803,13 +6803,13 @@
         },
         {
           "name": "Gray Ooze (Id Ooze)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "Green Hag",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -6893,7 +6893,7 @@
         },
         {
           "name": "Intellect Devourer",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -6935,7 +6935,7 @@
         },
         {
           "name": "Lamia",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -7031,7 +7031,7 @@
         },
         {
           "name": "Mite",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -7073,7 +7073,7 @@
         },
         {
           "name": "Neothelid",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -7241,7 +7241,7 @@
         },
         {
           "name": "Satyr",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -7385,7 +7385,7 @@
         },
         {
           "name": "Sphinx (Gynosphinx)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },

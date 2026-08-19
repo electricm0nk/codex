@@ -106,30 +106,45 @@ pub struct BarCheckReport {
 pub fn run_bar_check(repo_root: &Path) -> BarCheckReport {
     let equipment = run_equipment_bar_check(repo_root);
     let monster = run_monster_bar_check(repo_root);
+    let monster_sla = run_monster_sla_bar_check(repo_root);
     let spell = run_spell_bar_check(repo_root);
     let spell_range = run_spell_range_bar_check(repo_root);
     let class_feature = run_class_feature_bar_check(repo_root);
     let mut cleared = equipment.cleared;
     cleared.extend(monster.cleared);
+    cleared.extend(monster_sla.cleared);
     cleared.extend(spell.cleared);
     cleared.extend(spell_range.cleared);
     cleared.extend(class_feature.cleared);
     let mut failures = equipment.failures;
     failures.extend(monster.failures);
+    failures.extend(monster_sla.failures);
     failures.extend(spell.failures);
     failures.extend(spell_range.failures);
     failures.extend(class_feature.failures);
     let mut not_ingested = equipment.not_ingested;
     not_ingested.extend(monster.not_ingested);
+    not_ingested.extend(monster_sla.not_ingested);
     not_ingested.extend(spell.not_ingested);
     not_ingested.extend(spell_range.not_ingested);
     not_ingested.extend(class_feature.not_ingested);
+    // A unit that FAILED any seam must never be reported cleared by another
+    // one. `cleared` is a union across seams and `failures` is keyed by
+    // `unit_id`, so a unit covered by two seams could otherwise be stamped on
+    // the strength of the seam it passed while the seam it failed only ever
+    // showed up in a report nothing reads. Subtracting here keeps
+    // `apply_done_rung_stamps`'s input honest for every seam added later, not
+    // just today's.
+    for id in failures.keys().chain(not_ingested.keys()) {
+        cleared.remove(id);
+    }
     BarCheckReport {
         cleared,
         failures,
         not_ingested,
         fixtures_total: equipment.fixtures_total
             + monster.fixtures_total
+            + monster_sla.fixtures_total
             + spell.fixtures_total
             + spell_range.fixtures_total
             + class_feature.fixtures_total,
@@ -1405,6 +1420,263 @@ fn run_class_feature_bar_check(repo_root: &Path) -> BarCheckReport {
     BarCheckReport { cleared, failures, not_ingested, fixtures_total }
 }
 
+// ---------------------------------------------------------------------------
+// `kind = monster`, second seam — the spell-like-ability SAVE DC
+// (SD31-W15-MONSTER-SLA-001). Sibling of `run_monster_bar_check` above, which
+// covers the `BONUS:VAR|SLA_CL|` half of the SAME universal monster rule;
+// this half covers the `SPELLS:…|<spell>,<dc>` half.
+//
+// **The caster-level seam is exhausted for the still-held population, and the
+// evidence is stronger than a bare count.** Of the 316 `monster` units held at
+// `derived`+`grounded` when this seam was built, exactly TWO carry a
+// `BONUS:VAR|SLA_CL|` token at all — and `spell_like_ability_caster_level`
+// can bank NEITHER of them:
+//   * `bestiary:monster:dryad` is one of the 46 Bestiary 1 records that carry
+//     no `corpus_key` and so do not resolve against `MONSTER_BOOKS` at all
+//     (`OPEN-ISSUES.md` row 266);
+//   * `book_of_the_damned_volume_2:monster:demon_vermlek` carries
+//     `BONUS:VAR|SLA_CL|HD*3/4`, which that function already refuses as
+//     unparseable rather than guessing at — see its own doc comment.
+// So a second, genuinely different magnitude was needed, not a wider fixture
+// set over the same one.
+// ---------------------------------------------------------------------------
+
+/// PF1's Spell-Like Abilities universal monster rule fixes the constant part
+/// of a spell-like ability's save DC at **10**.
+///
+/// Pathfinder Roleplaying Game Bestiary, Appendix 1 "Universal Monster
+/// Rules", *Spell-Like Abilities* (verified against the public PRD mirror
+/// `legacy.aonprd.com/bestiary/universalMonsterRules.html`): *"The save DC
+/// is Charisma-based unless otherwise noted"*, against the Core Rulebook's
+/// own general statement of the same formula — a spell-like ability's save
+/// DC is **10 + the spell's level + the creature's ability modifier**.
+///
+/// Named rather than inlined because it is the single number
+/// [`spell_like_ability_save_dc`] applies, and therefore the single thing a
+/// mutation test has to move to prove the seam can go red.
+pub const SPELL_LIKE_ABILITY_SAVE_DC_BASE: i32 = 10;
+
+/// The structural parameters PF1's spell-like-ability save-DC rule states for
+/// one granted spell.
+///
+/// **What this deliberately does NOT do.** It does not resolve the DC to a
+/// number. A monster's ability MODIFIER is not a corpus-stated fact in this
+/// repo — `MonsterStatBlock::stat_adjustments` carries adjustments, never
+/// scores, and `SD31-E6-F1-002` already refused to compute the score family
+/// rather than fabricate one. Resolving `15+CHA` to a DC would be exactly
+/// that fabrication. What IS derivable, with no live creature at all, is the
+/// formula's own parameters: the ability the DC scales with, and — by the
+/// rule above, run backwards over the corpus-stated constant — **the spell's
+/// own level**. Same posture as [`parse_caster_level_linear_duration`]'s
+/// `per_level`/`unit`: a structural derivation, not a resolved magnitude.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct SpellLikeAbilitySaveDc {
+    /// The granted spell's own level, derived from the DC token's constant
+    /// part by [`SPELL_LIKE_ABILITY_SAVE_DC_BASE`].
+    pub spell_level: i32,
+    /// The ability whose modifier the DC scales with, spelled exactly as the
+    /// row spells it (`CHA`; `INT` for the handful of monsters whose rows
+    /// exercise the rule's own "unless otherwise noted" clause).
+    pub ability: String,
+}
+
+/// Applies the rule above to one [`MonsterSpellLikeAbility`]'s
+/// `save_dc_token`.
+///
+/// Refuses (`None`) rather than guessing on: a spell the row states no save
+/// for (`save_dc_token` is `None` — a spell that allows no save is a real,
+/// honest absence, not missing data); a token whose constant part is not a
+/// plain integer; a token with no `+<ability>` tail; and a constant below
+/// [`SPELL_LIKE_ABILITY_SAVE_DC_BASE`], which would imply a negative spell
+/// level and therefore means the token is not this shape at all.
+pub fn spell_like_ability_save_dc(
+    sla: &crate::rules_core::rules_tables::monster_chassis::MonsterSpellLikeAbility,
+) -> Option<SpellLikeAbilitySaveDc> {
+    let raw = sla.save_dc_token?.trim();
+    let (constant, ability) = raw.split_once('+')?;
+    let constant: i32 = constant.trim().parse().ok()?;
+    let ability = ability.trim();
+    if ability.is_empty() || !ability.chars().all(|c| c.is_ascii_alphabetic()) {
+        return None;
+    }
+    let spell_level = constant - SPELL_LIKE_ABILITY_SAVE_DC_BASE;
+    if spell_level < 0 {
+        return None;
+    }
+    Some(SpellLikeAbilitySaveDc { spell_level, ability: ability.to_string() })
+}
+
+/// One `kind=monster` spell-like-ability save-DC fixture row. Deliberately
+/// carries the INDEPENDENT provenance of the expected value — the spell's own
+/// upstream `.lst` file, line and sha256, which is a DIFFERENT FILE from the
+/// monster row the evaluator reads. That separation is the whole
+/// non-circularity argument for this seam: the expected spell level is read
+/// off PCGen's own spell definition, never off the monster row the evaluator
+/// parses.
+#[derive(Debug, Clone)]
+pub struct MonsterSlaFixture {
+    pub unit_id: String,
+    pub book: String,
+    pub record_key: String,
+    pub upstream_lst: String,
+    pub upstream_lst_sha256: String,
+    pub upstream_line: u64,
+    /// The granted spell, spelled as the monster row spells it — the key this
+    /// fixture resolves against `MonsterStatBlock::spell_like_abilities`.
+    pub spell: String,
+    /// The monster row's own DC token, verbatim (`15+CHA`).
+    pub corpus_field: String,
+    /// Where the expected spell level was read from — the SPELL's `.lst`.
+    pub spell_level_lst: String,
+    pub spell_level_lst_sha256: String,
+    pub spell_level_line: u64,
+    /// The spell record's own `CLASSES:` token, verbatim, which is what
+    /// states the level.
+    pub spell_level_corpus_field: String,
+    pub expected_spell_level: i32,
+    pub expected_ability: String,
+}
+
+/// Reads the `monster_sla_entries` array of the committed fixture file.
+pub fn load_monster_sla_fixtures(repo_root: &Path) -> Vec<MonsterSlaFixture> {
+    let path = repo_root.join(FIXTURE_RELATIVE_PATH);
+    let text = std::fs::read_to_string(&path)
+        .unwrap_or_else(|e| panic!("the committed fixture must be readable at {path:?}: {e}"));
+    let doc: serde_json::Value =
+        serde_json::from_str(&text).expect("the committed fixture must be valid JSON");
+    let Some(entries) = doc.get("monster_sla_entries").and_then(|v| v.as_array()) else {
+        return Vec::new();
+    };
+    entries
+        .iter()
+        .map(|e| {
+            let expected = &e["expected"];
+            MonsterSlaFixture {
+                unit_id: e["unit_id"].as_str().expect("unit_id").to_string(),
+                book: e["book"].as_str().expect("book").to_string(),
+                record_key: e["record_key"].as_str().expect("record_key").to_string(),
+                upstream_lst: e["upstream_lst"].as_str().expect("upstream_lst").to_string(),
+                upstream_lst_sha256: e["upstream_lst_sha256"]
+                    .as_str()
+                    .expect("upstream_lst_sha256")
+                    .to_string(),
+                upstream_line: e["upstream_line"].as_u64().expect("upstream_line"),
+                spell: e["spell"].as_str().expect("spell").to_string(),
+                corpus_field: e["corpus_field"].as_str().expect("corpus_field").to_string(),
+                spell_level_lst: e["spell_level_lst"]
+                    .as_str()
+                    .expect("spell_level_lst")
+                    .to_string(),
+                spell_level_lst_sha256: e["spell_level_lst_sha256"]
+                    .as_str()
+                    .expect("spell_level_lst_sha256")
+                    .to_string(),
+                spell_level_line: e["spell_level_line"].as_u64().expect("spell_level_line"),
+                spell_level_corpus_field: e["spell_level_corpus_field"]
+                    .as_str()
+                    .expect("spell_level_corpus_field")
+                    .to_string(),
+                expected_spell_level: i32::try_from(
+                    expected["spell_level"].as_i64().expect("expected.spell_level"),
+                )
+                .expect("a spell level fits in i32"),
+                expected_ability: expected["ability"]
+                    .as_str()
+                    .expect("expected.ability")
+                    .to_string(),
+            }
+        })
+        .collect()
+}
+
+/// The save-DC half of the `kind=monster` bar. Resolves each fixture entry
+/// through the SAME `monster_chassis::MONSTER_BOOKS` registry
+/// `run_monster_bar_check` and `v06_work_inventory`'s own `grounded` verdict
+/// for `monster` already read.
+///
+/// **A unit clears only when EVERY fixture row naming it clears.** A monster
+/// routinely grants a dozen spell-like abilities and the derivation script
+/// emits one row per spell with a save DC; banking the unit on the first row
+/// that happened to agree would be exactly the "evidence weaker than its
+/// class requires" the anti-gaming rule forbids.
+fn run_monster_sla_bar_check(repo_root: &Path) -> BarCheckReport {
+    let fixtures = load_monster_sla_fixtures(repo_root);
+    let fixtures_total = fixtures.len();
+
+    let mut candidates: BTreeSet<String> = BTreeSet::new();
+    let mut failures: BTreeMap<String, String> = BTreeMap::new();
+    let mut not_ingested: BTreeMap<String, String> = BTreeMap::new();
+
+    for fixture in &fixtures {
+        candidates.insert(fixture.unit_id.clone());
+        let registry_book = monster_registry_book(&fixture.book);
+        let Some(monster_book) = MONSTER_BOOKS.iter().find(|b| b.corpus_book == registry_book)
+        else {
+            not_ingested.insert(fixture.unit_id.clone(), fixture.book.clone());
+            continue;
+        };
+        let Some(monster) = monster_book.monster_resolve(&fixture.record_key) else {
+            failures.insert(
+                fixture.unit_id.clone(),
+                format!(
+                    "{:?} does not resolve against {registry_book}'s registered monsters",
+                    fixture.record_key
+                ),
+            );
+            continue;
+        };
+        let Some(sla) =
+            monster.spell_like_abilities.iter().find(|s| s.spell == fixture.spell)
+        else {
+            failures.insert(
+                fixture.unit_id.clone(),
+                format!(
+                    "{:?} grants no spell-like ability named {:?}",
+                    fixture.record_key, fixture.spell
+                ),
+            );
+            continue;
+        };
+        match spell_like_ability_save_dc(sla) {
+            None => {
+                failures.insert(
+                    fixture.unit_id.clone(),
+                    format!(
+                        "corpus row states {} for {:?} but the evaluator produced no save DC \
+                         at all",
+                        fixture.corpus_field, fixture.spell
+                    ),
+                );
+            }
+            Some(dc)
+                if dc.spell_level == fixture.expected_spell_level
+                    && dc.ability == fixture.expected_ability => {}
+            Some(dc) => {
+                failures.insert(
+                    fixture.unit_id.clone(),
+                    format!(
+                        "corpus row states {} for {:?}; {} states spell level {} ({}), \
+                         evaluator produced spell level {} ({})",
+                        fixture.corpus_field,
+                        fixture.spell,
+                        fixture.spell_level_lst,
+                        fixture.expected_spell_level,
+                        fixture.expected_ability,
+                        dc.spell_level,
+                        dc.ability
+                    ),
+                );
+            }
+        }
+    }
+
+    let cleared: BTreeSet<String> = candidates
+        .into_iter()
+        .filter(|id| !failures.contains_key(id) && !not_ingested.contains_key(id))
+        .collect();
+    BarCheckReport { cleared, failures, not_ingested, fixtures_total }
+}
+
 #[cfg(test)]
 mod class_feature_seam_tests {
     use super::*;
@@ -2224,6 +2496,7 @@ mod monster_seam_tests {
             stat_adjustments: &[],
             has_spell_like_abilities,
             sla_cl_token,
+            spell_like_abilities: &[],
             source_file: "test.lst",
             source_line: 1,
         }
@@ -2451,5 +2724,130 @@ mod monster_seam_tests {
         assert!(report.failures.is_empty(), "failures: {:?}", report.failures);
         assert_eq!(report.cleared.len(), 1);
         assert!(report.cleared.contains("scratch:monster:demon_balor"));
+    }
+
+    // --- the SAVE DC seam (SD31-W15-MONSTER-SLA-001) ---
+
+    #[test]
+    fn run_monster_sla_bar_check_clears_every_committed_monster_sla_fixture() {
+        let repo_root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+        let report = run_monster_sla_bar_check(&repo_root);
+        assert!(
+            report.fixtures_total > 0,
+            "the committed fixture must carry at least one monster_sla_entries row"
+        );
+        assert!(
+            report.failures.is_empty(),
+            "every committed monster_sla fixture must clear the bar, got failures: {:?}",
+            report.failures
+        );
+        assert!(
+            report.not_ingested.is_empty(),
+            "every committed monster_sla fixture's book must be ingested, got: {:?}",
+            report.not_ingested
+        );
+    }
+
+    /// A scratch `repo_root` carrying ONLY custom `monster_sla_entries` rows.
+    /// Like [`ScratchMonsterFixtureRoot`], `repo_root` only ever controls
+    /// which FIXTURE file is read — the real Aboleth stat block resolves out
+    /// of the compiled registry regardless.
+    struct ScratchSlaFixtureRoot {
+        root: PathBuf,
+    }
+
+    impl ScratchSlaFixtureRoot {
+        /// One row per `(spell, expected_level)` pair, all naming the same
+        /// real Bestiary 1 Aboleth.
+        fn new(name: &str, rows: &[(&str, i32)]) -> Self {
+            let root = std::env::temp_dir()
+                .join(format!("codex_monster_sla_mutation_proof_{name}_{}", std::process::id()));
+            let _ = std::fs::remove_dir_all(&root);
+            let fixture_dir = root.join("tests/fixtures/rules_core");
+            std::fs::create_dir_all(&fixture_dir).unwrap();
+            let entries: Vec<String> = rows
+                .iter()
+                .map(|(spell, level)| {
+                    format!(
+                        r#"{{"unit_id":"scratch:monster:aboleth","book":"bestiary",
+                            "record_key":"Aboleth","upstream_lst":"scratch.lst",
+                            "upstream_lst_sha256":"0","upstream_line":1,
+                            "spell":"{spell}","corpus_field":"scratch",
+                            "spell_level_lst":"scratch_spells.lst",
+                            "spell_level_lst_sha256":"0","spell_level_line":1,
+                            "spell_level_corpus_field":"CLASSES:Wizard={level}",
+                            "expected":{{"spell_level":{level},"ability":"CHA"}}}}"#
+                    )
+                })
+                .collect();
+            std::fs::write(
+                fixture_dir.join("derived-evaluator-fixtures.json"),
+                format!(r#"{{"monster_sla_entries":[{}]}}"#, entries.join(",")),
+            )
+            .unwrap();
+            ScratchSlaFixtureRoot { root }
+        }
+    }
+
+    impl Drop for ScratchSlaFixtureRoot {
+        fn drop(&mut self) {
+            let _ = std::fs::remove_dir_all(&self.root);
+        }
+    }
+
+    // Positive control: the real Aboleth's `Hypnotic Pattern` grant carries
+    // `12+CHA`, and hypnotic pattern is a 2nd-level spell, so the rule
+    // produces 2. Proves the synthetic harness can pass.
+    #[test]
+    fn a_correct_expected_spell_level_clears_run_monster_sla_bar_check() {
+        let scratch = ScratchSlaFixtureRoot::new("correct", &[("Hypnotic Pattern", 2)]);
+        let report = run_monster_sla_bar_check(&scratch.root);
+        assert!(report.failures.is_empty(), "failures: {:?}", report.failures);
+        assert_eq!(report.cleared.len(), 1);
+        assert!(report.cleared.contains("scratch:monster:aboleth"));
+    }
+
+    // MUTATION PROOF, driving the production function end to end: a wrong
+    // expected level against the same real record must report a failure and
+    // clear nothing.
+    #[test]
+    fn a_wrong_expected_spell_level_makes_run_monster_sla_bar_check_report_a_failure() {
+        let scratch = ScratchSlaFixtureRoot::new("wrong", &[("Hypnotic Pattern", 3)]);
+        let report = run_monster_sla_bar_check(&scratch.root);
+        assert!(
+            report.cleared.is_empty(),
+            "a fixture asserting a wrong spell level must never clear, got {:?}",
+            report.cleared
+        );
+        assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
+        assert!(report.failures.contains_key("scratch:monster:aboleth"));
+    }
+
+    // The all-or-nothing rule, which is the difference between this seam and
+    // every earlier one: a unit with one CORRECT row and one WRONG row must
+    // not clear on the strength of the correct one.
+    #[test]
+    fn one_wrong_row_disqualifies_a_unit_whose_other_rows_are_right() {
+        let scratch = ScratchSlaFixtureRoot::new(
+            "mixed",
+            &[("Hypnotic Pattern", 2), ("Illusory Wall", 9)],
+        );
+        let report = run_monster_sla_bar_check(&scratch.root);
+        assert!(
+            report.cleared.is_empty(),
+            "a unit with a failing row must not be banked on its passing rows, got {:?}",
+            report.cleared
+        );
+        assert!(report.failures.contains_key("scratch:monster:aboleth"));
+    }
+
+    // A spell the resolved record does not grant is a failure, never a
+    // silent skip — otherwise a fixture naming a typo'd spell would vanish.
+    #[test]
+    fn a_spell_the_record_does_not_grant_is_a_failure() {
+        let scratch = ScratchSlaFixtureRoot::new("absent", &[("Wish", 9)]);
+        let report = run_monster_sla_bar_check(&scratch.root);
+        assert!(report.cleared.is_empty());
+        assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
     }
 }

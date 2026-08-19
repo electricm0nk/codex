@@ -1,8 +1,8 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-08-19T11:39:34Z",
-  "source_document": "/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_0628906e-65b-6/docs/work-inventory.json",
+  "generated_at": "2026-08-19T01:10:47Z",
+  "source_document": "/home/ubuntu/workspace/repos/codex/docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
     "name",
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 38521,
-  "proven_units": 6225,
+  "proven_units": 6202,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 420,
   "category_labels_redacted": 3,
@@ -7493,23 +7493,23 @@
     },
     "race_trait": {
       "units": 3603,
-      "proven": 507,
+      "proven": 484,
       "by_status": {
         "not-ingested": 2819,
-        "grounded": 326,
-        "ingested-magnitude": 264,
+        "grounded": 303,
+        "ingested-magnitude": 287,
         "text-complete": 181,
         "literal-verified": 13
       },
       "shard": "PF1e-units-race_trait.json",
-      "bytes": 519752,
+      "bytes": 519982,
       "doneness_unmapped": {},
       "categories": {
         "racialtraits": {
           "label": "Racial Traits",
-          "done": 509,
+          "done": 486,
           "held": 1,
-          "in-progress": 256,
+          "in-progress": 279,
           "not-started": 523,
           "unmeasurable": 0,
           "deferred": 0
