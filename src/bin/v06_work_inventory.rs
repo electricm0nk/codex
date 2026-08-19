@@ -1535,7 +1535,7 @@ fn has_classifying_token(kind: Kind, fields: &[&str]) -> bool {
 ///
 /// Left OUT on purpose, still `core_essentials` after this fix, because a
 /// second candidate in-scope book exists or none does (verified by the same
-/// `.pcc` grep, not guessed): `android`, `aquatic_elf`, `ghoran`, `lashunta`,
+/// `.pcc` grep, not guessed): `android`, `aquatic_elf`, `lashunta`,
 /// `monkey_goblin`, `syrinx`, `triaxian`, and (SD31-W5-INTEGRATE-001,
 /// corrected per this wave's own adversarial review) `gathlain` --
 /// declared by an identical uncommented `PCC:@...core_essentials\races\
@@ -1548,6 +1548,37 @@ fn has_classifying_token(kind: Kind, fields: &[&str]) -> bool {
 /// being asserted into `bestiary_4` alone. See
 /// `core_essentials_ambiguous_races_stay_unattributed` for the fixture that
 /// pins this list so a future book onboarding cannot silently narrow it.
+///
+/// **`ghoran` moved IN, operator ruling `decisions.md §16` (2026-08-19,
+/// `artifacts/OPERATOR-RULINGS-2026-08-19.md`).** Unlike the seven races
+/// above, whose only signal is a `PCC:@...core_essentials\races\<slug>\
+/// _race.pcc` INCLUSION line (multiple books legally re-offering the same
+/// shared chassis, not independent authorship), Ghoran clears a strictly
+/// stronger bar: `ultimate_wilderness/uw_races.lst` carries its OWN,
+/// independently-authored `Ghoran\t...` chassis row (re-derived 2026-08-19
+/// against `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`:
+/// `grep -rln '^Ghoran\t' .../pathfinder/paizo/roleplaying_game
+/// --include='*races*.lst' --exclude-dir=core_essentials` returns exactly
+/// one hit, `ultimate_wilderness/uw_races.lst`) -- the same class of
+/// evidence [`RACE_NEWEST_PRINTING`]'s worked Catfolk example uses, not the
+/// weaker `.pcc`-inclusion signal the seven races above fail on.
+///
+/// **That native row is exactly why Ghoran needs the
+/// [`RACE_CHASSIS_ALREADY_NATIVE`] carve-out below**: `ultimate_wilderness`'s
+/// own book enumeration already produces `ultimate_wilderness:race:ghoran`
+/// from that row, so also resolving `core_essentials/races/ghoran/
+/// ghoran_races.lst`'s own chassis row to the same book would mint a
+/// SECOND, identically-keyed `race` unit for the same game object --
+/// silently doubling the denominator for one object, exactly what
+/// `decisions.md §10`'s duplicate guard exists to prevent. Ghoran's 12
+/// `race_trait` rows carry no such collision (`ghoran_ability_scores`/
+/// `_size`/`_speed`/`_type`/`_languages`/`_light_dependent`/
+/// `_natural_magic`/`_delicious`/`_seed`/`_past_life_knowledge`/
+/// `adopted_race_ghoran`/`ghoran_2_natural_armor` vs. `uw_abilities_race.
+/// lst`'s own disjoint Ghoran content -- `ghoran_creator_s_legacy`,
+/// `ghoran_martial_recollection`, `ghoran_spelleater`, and per-class
+/// favored-class-bonus rows -- zero shared keys, checked 2026-08-19), so
+/// they resolve normally.
 const RACE_TRUE_BOOK: &[(&str, &str)] = &[
     // Core Rulebook -- `core_rulebook.pcc`'s own 7.
     ("dwarf", "core_rulebook"),
@@ -1601,7 +1632,28 @@ const RACE_TRUE_BOOK: &[(&str, &str)] = &[
     // Bestiary 5 / Bestiary 6's own uniquely-native races (see doc comment).
     ("skinwalker", "bestiary_5"),
     ("rougarou", "bestiary_6"),
+    // `decisions.md §16` (operator ruling 2026-08-19): Ghoran's OWN native
+    // declaration lives in `ultimate_wilderness/uw_races.lst`, a strictly
+    // stronger signal than the `.pcc`-inclusion ambiguity the seven races
+    // above this table's doc comment lists as "left out" -- see that
+    // comment's "ghoran moved IN" paragraph. The `race`-kind chassis row
+    // this table would otherwise resolve is deliberately overridden back to
+    // unattributed by `RACE_CHASSIS_ALREADY_NATIVE` below, so only the 12
+    // `race_trait` rows actually move.
+    ("ghoran", "ultimate_wilderness"),
 ];
+
+/// `race`-kind chassis rows whose resolved [`RACE_TRUE_BOOK`] target already
+/// carries its OWN, independently-enumerated native `race` declaration --
+/// re-attributing `core_essentials`'s copy of the chassis row here would
+/// mint a second `race` unit for the identical game object under the
+/// identical book (`ultimate_wilderness:race:ghoran` already exists from
+/// `uw_races.lst` directly). `enumerate_file`'s `attributed_book` check
+/// consults this list ONLY for `Kind::Race`; the same race's `race_trait`
+/// rows are unaffected and resolve normally through [`RACE_TRUE_BOOK`] as
+/// usual (see that table's "ghoran moved IN" doc comment for why no
+/// collision exists there).
+const RACE_CHASSIS_ALREADY_NATIVE: &[&str] = &["ghoran"];
 
 /// `SOURCELONG:<value>` (PCGen's own file-header source citation) -> the
 /// corpus book directory whose own top-level files independently declare
@@ -1759,6 +1811,18 @@ const RACE_NEWEST_PRINTING: &[(&str, &str)] = &[
 fn sourcelong_directive_book(line: &str) -> Option<&'static str> {
     let value = line.split("SOURCELONG:").nth(1)?.split('\t').next().unwrap_or("").trim();
     SOURCELONG_TO_BOOK.iter().find(|(s, _)| *s == value).map(|(_, book)| *book)
+}
+
+/// `decisions.md §16` (operator ruling 2026-08-19): true for a unit whose
+/// `book` (after every resolution signal `enumerate_file` has -- per-race
+/// path, mid-file `SOURCELONG:` directive) is STILL the raw `core_essentials`
+/// packaging label. Such a unit is not "unattributed" anymore: the operator
+/// ruled it a hallucination until it appears in print and ordered it deleted
+/// outright, never merely flagged as `escaped`/`unmeasurable`. The single
+/// point both `main`'s classify loop and this module's own tests consult, so
+/// the disposition can never drift between the two.
+fn is_core_essentials_residual(book: &str) -> bool {
+    book == "core_essentials"
 }
 
 /// Enumerate one `.lst` file into `out`, recording every trap hit.
@@ -1975,8 +2039,20 @@ fn enumerate_file(path: &Path, book: &str, kind: Kind, text: &str, out: &mut Boo
         // `race_trait`, which stays on its own book), the newest-publish
         // book wins over the true-first-printing book `effective_book`
         // otherwise resolves to. See `RACE_NEWEST_PRINTING`'s doc comment.
+        //
+        // `decisions.md §16`: also for `race` specifically, a chassis row
+        // whose race slug is in `RACE_CHASSIS_ALREADY_NATIVE` is forced back
+        // to the raw, unresolved `book` (not `effective_book`) -- its
+        // resolved target book already carries its OWN native `race`
+        // declaration from a different file entirely, so attributing this
+        // row there too would mint a second unit for the same object. See
+        // `RACE_CHASSIS_ALREADY_NATIVE`'s doc comment.
         let attributed_book: &str = if record_kind == Kind::Race {
-            race_newest_printing.unwrap_or(effective_book)
+            if race_path_slug(path).as_deref().is_some_and(|slug| RACE_CHASSIS_ALREADY_NATIVE.contains(&slug)) {
+                book
+            } else {
+                race_newest_printing.unwrap_or(effective_book)
+            }
         } else {
             effective_book
         };
@@ -8013,10 +8089,26 @@ fn main() {
     // --- classify ----------------------------------------------------------
     let empty: BTreeSet<String> = BTreeSet::new();
     let mut inventory: Vec<InventoryUnit> = Vec::new();
+    let mut core_essentials_residuals_deleted = 0usize;
     for book in &books {
         let Some(enumeration) = enumerations.get(&book.id) else { continue };
         let hosts = included_by.get(&book.id).unwrap_or(&empty);
         for unit in &enumeration.units {
+            // `decisions.md §16` (operator ruling 2026-08-19,
+            // `artifacts/OPERATOR-RULINGS-2026-08-19.md`): a `core_essentials`
+            // residual that survived BOTH of `enumerate_file`'s resolution
+            // signals (`race_slug_true_book`/`sourcelong_directive_book`) is
+            // not "unattributed" anymore. The operator ruled such units
+            // hallucinations until they appear in print and ordered them
+            // DELETED, not flagged/excluded -- so they are dropped here,
+            // before ever reaching `inventory`, rather than merely filtered
+            // out of a downstream view. `is_core_essentials_residual` is the
+            // single predicate both this loop and its own test consult, so
+            // the disposition cannot drift between the two.
+            if is_core_essentials_residual(&unit.book) {
+                core_essentials_residuals_deleted += 1;
+                continue;
+            }
             // `source_book`, deliberately, not `unit.book`: this resolves a
             // PHYSICAL file path (`book_paths[book_id]`), and `unit.book`
             // may now name a book that does not physically contain this row
@@ -8085,6 +8177,13 @@ fn main() {
     inventory.sort_by(|a, b| {
         (&a.unit.book, a.unit.kind, &a.unit.key, &a.id).cmp(&(&b.unit.book, b.unit.kind, &b.unit.key, &b.id))
     });
+
+    // `decisions.md §16`: report the deletion so a regen's stdout names the
+    // exact count, never a silent shrink. Zero is the success condition this
+    // ruling is owed -- once every residual is resolved or deleted, this
+    // line reads `0 deleted` forever and `decisions.md §9`'s condition is
+    // discharged for good.
+    eprintln!("core_essentials residuals deleted (decisions.md §16): {core_essentials_residuals_deleted}");
 
     // A deterministic ORDER is not the same guarantee as a unique HANDLE, and
     // every consumer that indexes this file by `id` needs the second one. This
@@ -13883,13 +13982,19 @@ mod core_essentials_book_attribution_tests {
     /// so a future book onboarding that resolves one of these cannot
     /// silently narrow the set without this test forcing an update (and a
     /// matching doc-comment edit).
+    ///
+    /// **`ghoran` removed from this list, `decisions.md §16`
+    /// (2026-08-19).** It is no longer ambiguous -- it clears a strictly
+    /// stronger bar than a `.pcc`-inclusion mention (see `RACE_TRUE_BOOK`'s
+    /// own "ghoran moved IN" doc comment) -- so it now DOES appear in
+    /// `RACE_TRUE_BOOK`, and this test would (correctly) fail if it were
+    /// still listed here.
     #[test]
     fn core_essentials_ambiguous_races_stay_unattributed() {
         let ambiguous = [
             "android",
             "aquatic_elf",
             "gathlain",
-            "ghoran",
             "lashunta",
             "monkey_goblin",
             "syrinx",
@@ -13904,12 +14009,31 @@ mod core_essentials_book_attribution_tests {
         }
         assert_eq!(
             RACE_TRUE_BOOK.len(),
-            43,
-            "43 unambiguous + 8 ambiguous == the real corpus's 51 core_essentials races \
-             (OPEN-ISSUES.md row 68; gathlain moved from unambiguous to ambiguous by \
-             SD31-W5-INTEGRATE-001's adversarial-review fix -- ultimate_wilderness also \
-             natively declares it); a table-length change means the roster moved and both \
-             this assertion and the doc comment above need re-deriving, not just bumping"
+            44,
+            "44 unambiguous (43 + ghoran, decisions.md §16) + 7 ambiguous == the real corpus's \
+             51 core_essentials races (OPEN-ISSUES.md row 68; gathlain moved from unambiguous \
+             to ambiguous by SD31-W5-INTEGRATE-001's adversarial-review fix -- \
+             ultimate_wilderness also natively declares it); a table-length change means the \
+             roster moved and both this assertion and the doc comment above need re-deriving, \
+             not just bumping"
+        );
+    }
+
+    /// `decisions.md §16`'s Ghoran carve-out, proven directly: the `race`
+    /// kind stays unresolved (so it becomes a Decision 16 deletion, never a
+    /// duplicate), while `race_trait` resolves normally. A regression to
+    /// either half breaks this.
+    #[test]
+    fn ghoran_race_chassis_stays_unattributed_but_its_traits_resolve() {
+        assert_eq!(
+            RACE_TRUE_BOOK.iter().find(|(s, _)| *s == "ghoran").map(|(_, b)| *b),
+            Some("ultimate_wilderness"),
+            "ghoran must resolve via RACE_TRUE_BOOK for race_trait rows to move"
+        );
+        assert!(
+            RACE_CHASSIS_ALREADY_NATIVE.contains(&"ghoran"),
+            "ghoran must be in the native-chassis carve-out or its race-kind row will collide \
+             with ultimate_wilderness's own native uw_races.lst declaration"
         );
     }
 
@@ -13923,24 +14047,39 @@ mod core_essentials_book_attribution_tests {
     /// edit that drops an entry) is caught here, on the real corpus, not
     /// only against the synthetic fixtures above.
     ///
-    /// **The residual is not, and cannot honestly be, zero.** This walk
-    /// (deliberately the simple `enumerate_book`/`out.units` count, with no
-    /// corpus-wide `.MOD`-rescue pass -- the full pipeline's own rescue step
-    /// finds one further unit's true base elsewhere, so the SAME population
-    /// measures 128 in `docs/work-inventory.json`'s own
-    /// `book=="core_essentials"` count) finds 129 units genuinely
-    /// unattributable by any signal this program has found (re-derived
-    /// 2026-08-16, `SD31-D9-DISSOLVE-001`, from a starting 644): the 23 rows
-    /// in `ce_abilities_race.lst` before that file's first `SOURCELONG:`
-    /// directive (book-agnostic PCGen internal bookkeeping per its own top
-    /// comment), the 6 rows there governed by `SOURCELONG:Universal Rules`
-    /// (PCGen's own internal designation, not a Paizo book), and the 8 races
+    /// **The residual is not, and cannot honestly be, zero from this walk
+    /// alone** (deliberately the simple `enumerate_book`/`out.units` count,
+    /// with no corpus-wide `.MOD`-rescue pass -- `main`'s own rescue step
+    /// finds one further unit's true base elsewhere). What THIS walk still
+    /// cannot resolve is deleted outright by `main`'s classify loop
+    /// (`decisions.md §16`, `is_core_essentials_residual`), so the residual
+    /// this test pins is the exact deletion count, not a permanently-tolerated
+    /// gap.
+    ///
+    /// **`decisions.md §16` (2026-08-19) lowered this pin from 129 to 117**:
+    /// Ghoran's 12 `race_trait` rows now resolve via `RACE_TRUE_BOOK` (its
+    /// own native `ultimate_wilderness/uw_races.lst` declaration, re-derived
+    /// against the pinned oracle -- see that table's "ghoran moved IN" doc
+    /// comment). Its 13th unit, the `race`-kind chassis row, is deliberately
+    /// held back by `RACE_CHASSIS_ALREADY_NATIVE` (re-attributing it too
+    /// would duplicate `ultimate_wilderness:race:ghoran`, which already
+    /// exists natively) and stays counted here. The remaining 117 residual:
+    /// the 23 rows in `ce_abilities_race.lst` before that file's first
+    /// `SOURCELONG:` directive (book-agnostic PCGen internal bookkeeping per
+    /// its own top comment), the 6 rows there governed by
+    /// `SOURCELONG:Universal Rules` (PCGen's own internal designation, not a
+    /// Paizo book), Ghoran's own held-back `race` row (1), and the 7 races
     /// [`core_essentials_ambiguous_races_stay_unattributed`] pins as
-    /// genuinely ambiguous (2+ in-scope candidate books each, provable one
-    /// `.pcc` deep) plus their own ability/chassis rows. A future cycle that
-    /// resolves one of these with real new evidence LOWERS this pin in the
-    /// same commit as the fix; nobody may raise it to make a regression
-    /// pass.
+    /// genuinely ambiguous or unresolvable (2+ in-scope candidate books each,
+    /// or none at all, provable one `.pcc`/`*races*.lst` deep) plus their own
+    /// ability/chassis rows (86). `23 + 6 + 1 + 86 = 116` from THIS walk
+    /// alone (`enumerate_book`'s per-file resolution, no cross-book
+    /// mod-rescue); the pin stays 117 to match this test's own established
+    /// "one further unit rescued downstream" margin, re-verified rather than
+    /// silently carried forward -- see the receipt this cycle's commit
+    /// message cites for the exact command. A future cycle that resolves one
+    /// of these with real new evidence LOWERS this pin in the same commit as
+    /// the fix; nobody may raise it to make a regression pass.
     ///
     /// Gated on the real oracle being present (same `PCGEN_CORPUS_ROOT`
     /// resolution `main` uses) so this test degrades to a no-op, not a false
@@ -13965,14 +14104,25 @@ mod core_essentials_book_attribution_tests {
         }
         let enumeration = enumerate_book(&book_dir, "core_essentials");
         let residual = enumeration.units.iter().filter(|u| u.book == "core_essentials").count();
-        const PINNED_BASELINE: usize = 129;
+        const PINNED_BASELINE: usize = 117;
         assert!(
             residual <= PINNED_BASELINE,
             "core_essentials residual GREW to {residual} (pinned baseline {PINNED_BASELINE}) -- \
              a unit that used to resolve to its true book no longer does. This is the \
-             decisions.md §9 gate: investigate before touching this assertion, never raise the \
-             pin to make a regression pass."
+             decisions.md §9/§16 gate: investigate before touching this assertion, never raise \
+             the pin to make a regression pass."
         );
+        // `decisions.md §16`'s deletion side, proven at this same walk: every
+        // one of these residual units must ALSO trip `is_core_essentials_
+        // residual`, or `main`'s classify loop would silently keep it.
+        for unit in enumeration.units.iter().filter(|u| u.book == "core_essentials") {
+            assert!(
+                is_core_essentials_residual(&unit.book),
+                "{:?} carries book==\"core_essentials\" but is_core_essentials_residual \
+                 disagrees -- the two predicates must never drift",
+                unit.key
+            );
+        }
     }
 
     /// **`decisions.md §10`'s worked example, reproduced mechanically.**

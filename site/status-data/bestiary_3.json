@@ -2642,13 +2642,13 @@
       "label": "Race Traits",
       "done": 9,
       "partial": 8,
-      "not_started": 567,
-      "denominator": 584,
+      "not_started": 568,
+      "denominator": 585,
       "pct": 1.5,
-      "excluded_from_percentage": 282,
+      "excluded_from_percentage": 281,
       "standing_breakdown": {
-        "origin": 584,
-        "unclassified": 282
+        "origin": 585,
+        "unclassified": 281
       },
       "items": [
         {
@@ -3399,7 +3399,7 @@
           "name": "Claw",
           "doneness": "not-started",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "origin"
         },
         {
           "name": "Climb",

@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-08-19T14:06:36Z",
+  "generated_at": "2026-08-19T16:24:36Z",
   "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
@@ -12,7 +12,7 @@
     "source_file",
     "type_facet"
   ],
-  "total_units": 38521,
+  "total_units": 38405,
   "proven_units": 5886,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 420,
@@ -7353,17 +7353,17 @@
       "category_axis_label": "Category"
     },
     "monster_ability": {
-      "units": 2951,
+      "units": 2942,
       "proven": 1613,
       "by_status": {
-        "not-ingested": 1144,
+        "not-ingested": 1135,
         "text-complete": 1006,
         "grounded": 607,
         "literal-verified": 102,
         "fixture-verified": 92
       },
       "shard": "PF1e-units-monster_ability.json",
-      "bytes": 356345,
+      "bytes": 355248,
       "doneness_unmapped": {},
       "categories": {
         "specialquality": {
@@ -7371,7 +7371,7 @@
           "done": 708,
           "held": 123,
           "in-progress": 0,
-          "not-started": 799,
+          "not-started": 790,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -7397,33 +7397,33 @@
       "category_axis_label": "Category"
     },
     "race": {
-      "units": 103,
+      "units": 95,
       "proven": 0,
       "by_status": {
         "ingested-magnitude": 3,
         "literal-verified": 34,
-        "not-ingested": 63,
+        "not-ingested": 55,
         "not-started": 3
       },
       "shard": "PF1e-units-race.json",
-      "bytes": 10097,
+      "bytes": 9355,
       "doneness_unmapped": {},
       "categories": {
-        "base": {
-          "label": "Base",
-          "done": 27,
-          "held": 0,
-          "in-progress": 3,
-          "not-started": 14,
-          "unmeasurable": 0,
-          "deferred": 0
-        },
         "none": {
           "label": "Uncategorised",
           "done": 0,
           "held": 0,
           "in-progress": 0,
           "not-started": 38,
+          "unmeasurable": 0,
+          "deferred": 0
+        },
+        "base": {
+          "label": "Base",
+          "done": 27,
+          "held": 0,
+          "in-progress": 3,
+          "not-started": 6,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -7494,17 +7494,17 @@
       "category_axis_label": "Category"
     },
     "race_trait": {
-      "units": 3603,
+      "units": 3504,
       "proven": 507,
       "by_status": {
-        "not-ingested": 2819,
+        "not-ingested": 2720,
         "grounded": 326,
         "ingested-magnitude": 264,
         "text-complete": 181,
         "literal-verified": 13
       },
       "shard": "PF1e-units-race_trait.json",
-      "bytes": 519752,
+      "bytes": 502957,
       "doneness_unmapped": {},
       "categories": {
         "racialtraits": {
@@ -7512,7 +7512,7 @@
           "done": 509,
           "held": 1,
           "in-progress": 256,
-          "not-started": 523,
+          "not-started": 455,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -7548,7 +7548,7 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 75,
+          "not-started": 69,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -7561,15 +7561,6 @@
           "unmeasurable": 0,
           "deferred": 0
         },
-        "adoptiverace": {
-          "label": "Adoptive Race",
-          "done": 0,
-          "held": 0,
-          "in-progress": 0,
-          "not-started": 51,
-          "unmeasurable": 0,
-          "deferred": 0
-        },
         "defensive": {
           "label": "Defensive",
           "done": 0,
@@ -7579,21 +7570,21 @@
           "unmeasurable": 0,
           "deferred": 0
         },
+        "adoptiverace": {
+          "label": "Adoptive Race",
+          "done": 0,
+          "held": 0,
+          "in-progress": 0,
+          "not-started": 44,
+          "unmeasurable": 0,
+          "deferred": 0
+        },
         "supernatural": {
           "label": "Supernatural",
           "done": 0,
           "held": 0,
           "in-progress": 0,
           "not-started": 37,
-          "unmeasurable": 0,
-          "deferred": 0
-        },
-        "raceability": {
-          "label": "Race Ability",
-          "done": 0,
-          "held": 0,
-          "in-progress": 0,
-          "not-started": 35,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -7633,21 +7624,21 @@
           "unmeasurable": 0,
           "deferred": 0
         },
-        "rangerclassfeatures": {
-          "label": "Ranger Class Features",
-          "done": 0,
-          "held": 0,
-          "in-progress": 0,
-          "not-started": 29,
-          "unmeasurable": 0,
-          "deferred": 0
-        },
         "skinwalkerracialtrait": {
           "label": "Skinwalker Racial Trait",
           "done": 0,
           "held": 0,
           "in-progress": 0,
           "not-started": 26,
+          "unmeasurable": 0,
+          "deferred": 0
+        },
+        "rangerclassfeatures": {
+          "label": "Ranger Class Features",
+          "done": 0,
+          "held": 0,
+          "in-progress": 0,
+          "not-started": 25,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -7671,6 +7662,15 @@
         },
         "weakness": {
           "label": "Weakness",
+          "done": 0,
+          "held": 0,
+          "in-progress": 0,
+          "not-started": 21,
+          "unmeasurable": 0,
+          "deferred": 0
+        },
+        "raceability": {
+          "label": "Race Ability",
           "done": 0,
           "held": 0,
           "in-progress": 0,

@@ -26206,15 +26206,15 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 15,
+      "done": 19,
       "partial": 0,
       "not_started": 114,
-      "denominator": 129,
-      "pct": 11.6,
-      "excluded_from_percentage": 79,
+      "denominator": 133,
+      "pct": 14.3,
+      "excluded_from_percentage": 75,
       "standing_breakdown": {
-        "unclassified": 79,
-        "origin": 129
+        "unclassified": 75,
+        "origin": 133
       },
       "items": [
         {
@@ -26371,7 +26371,7 @@
           "name": "Bonus Feat",
           "doneness": "done",
           "type_facet": "RacialTraits.Human Racial Trait.Human Racial Default.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "origin"
         },
         {
           "name": "Burning Hands",
@@ -26617,19 +26617,19 @@
           "name": "Elven Immunities",
           "doneness": "done",
           "type_facet": "RacialTraits.Elf Racial Trait.Elf Racial Default.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "origin"
         },
         {
           "name": "Elven Immunities",
           "doneness": "done",
           "type_facet": "RacialTraits.Half-Elf Racial Trait.Half-Elf Racial Default.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "origin"
         },
         {
           "name": "Elven Magic",
           "doneness": "done",
           "type_facet": "RacialTraits.Elf Racial Trait.Elf Racial Default.SpecialQuality.Special Quality.Elven Magic",
-          "standing": "unclassified"
+          "standing": "origin"
         },
         {
           "name": "Enlarge Person",

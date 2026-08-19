@@ -4263,13 +4263,13 @@
       "label": "Race Traits",
       "done": 0,
       "partial": 0,
-      "not_started": 73,
-      "denominator": 73,
+      "not_started": 74,
+      "denominator": 74,
       "pct": 0.0,
-      "excluded_from_percentage": 54,
+      "excluded_from_percentage": 53,
       "standing_breakdown": {
-        "origin": 73,
-        "unclassified": 54
+        "origin": 74,
+        "unclassified": 53
       },
       "items": [
         {
@@ -4642,7 +4642,7 @@
           "name": "Frightful Presence",
           "doneness": "not-started",
           "type_facet": "Unchained Evolution.SpecialQuality.Extraordinary",
-          "standing": "unclassified"
+          "standing": "origin"
         },
         {
           "name": "Gills",

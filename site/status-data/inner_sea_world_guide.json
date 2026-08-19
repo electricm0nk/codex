@@ -1977,15 +1977,15 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 5,
+      "done": 6,
       "partial": 1,
       "not_started": 24,
-      "denominator": 30,
-      "pct": 16.7,
-      "excluded_from_percentage": 24,
+      "denominator": 31,
+      "pct": 19.4,
+      "excluded_from_percentage": 23,
       "standing_breakdown": {
-        "unclassified": 24,
-        "origin": 30
+        "unclassified": 23,
+        "origin": 31
       },
       "items": [
         {
@@ -2196,7 +2196,7 @@
           "name": "Nocturnal",
           "doneness": "done",
           "type_facet": "RacialTraits.Strix Racial Trait.Strix Racial Default.SpecialQuality.Special Quality.Special Ability.Extraordinary",
-          "standing": "unclassified"
+          "standing": "origin"
         },
         {
           "name": "Normal Speed",

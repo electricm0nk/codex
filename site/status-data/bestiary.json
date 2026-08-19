@@ -7646,15 +7646,15 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 28,
+      "done": 30,
       "partial": 18,
       "not_started": 79,
-      "denominator": 125,
-      "pct": 22.4,
-      "excluded_from_percentage": 152,
+      "denominator": 127,
+      "pct": 23.6,
+      "excluded_from_percentage": 150,
       "standing_breakdown": {
-        "unclassified": 152,
-        "origin": 125
+        "unclassified": 150,
+        "origin": 127
       },
       "items": [
         {
@@ -8309,13 +8309,13 @@
           "name": "Goblinoid",
           "doneness": "done",
           "type_facet": "RacialTraits.Goblin Racial Trait.Goblin Racial Default.SpecialQuality.Racial Type",
-          "standing": "unclassified"
+          "standing": "origin"
         },
         {
           "name": "Goblinoid",
           "doneness": "done",
           "type_facet": "RacialTraits.Hobgoblin Racial Trait.Hobgoblin Racial Default.SpecialQuality.Racial Type",
-          "standing": "unclassified"
+          "standing": "origin"
         },
         {
           "name": "Goblinoid Traits",
