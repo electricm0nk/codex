@@ -4996,6 +4996,84 @@ fn class_feature_owner<'a, I: Iterator<Item = &'a String>>(key: &str, classes: I
     best
 }
 
+/// Extracts every `"<Name> Class Feature"` marker a `type_facet` string
+/// embeds, in the order they appear, as candidate class-name TEXT for
+/// [`class_feature_owner`]'s own matching (never a class id -- the SAME
+/// natural-language form the corpus_key's own group prefix already supplies
+/// to that function, so no new comparison shape is introduced).
+///
+/// WHY this exists (`SD31-W17-CLASSFEATURE-001`, wave-17 `unmeasurable`
+/// characterization): [`class_feature_owner`] only ever inspects the
+/// corpus_key's own leading `" ~ "` group segment (e.g. "Rage Power",
+/// "Domain Power") -- for a magnitude-bearing option-pool/archetype record
+/// whose group text is NOT the owning class's own name, that check can
+/// never succeed, however wired the record is. `type_facet` frequently
+/// carries the owning class's name anyway, spelled out literally as PCGen's
+/// own dot-delimited `"<Class> Class Feature"` taxonomy segment (alongside
+/// unrelated segments like `SpecialQuality`/`Supernatural`) -- re-derived
+/// 2026-08-19 against `docs/work-inventory.json`: 811 of the 3,864
+/// `class_feature_group_names_no_class_at_all` units carry at least one
+/// such marker.
+///
+/// A compound facet can carry more than one candidate (an archetype AND its
+/// base class, e.g. `"Animist Class Feature.Shaman Class Feature..."` --
+/// Animist is Shaman's own archetype, never a registered class on its own):
+/// every candidate is returned, in order, so the caller can try each against
+/// the real class registry and take the first that resolves. A candidate
+/// that is not a real class simply never matches downstream and costs
+/// nothing -- this function itself makes no registry judgement.
+///
+/// The bare `"Class Feature"` segment some facets carry with no name prefix
+/// at all (`"Class Feature.Bloodrager Class Feature...."`'s own first
+/// segment) is correctly excluded: `strip_suffix(" Class Feature")` (a
+/// *leading-space* suffix) fails on a string that IS only `"Class
+/// Feature"`, so it never yields an empty-name candidate.
+fn class_feature_type_facet_owner_candidates(type_facet: Option<&str>) -> Vec<String> {
+    const MARKER: &str = " Class Feature";
+    let Some(type_facet) = type_facet else {
+        return Vec::new();
+    };
+    type_facet
+        .split('.')
+        .filter_map(|segment| segment.trim().strip_suffix(MARKER))
+        .map(|name| name.trim().to_string())
+        .filter(|name| !name.is_empty())
+        .collect()
+}
+
+/// Resolves an owner via [`class_feature_type_facet_owner_candidates`],
+/// trying each extracted candidate against `classes` in order and returning
+/// the first that [`class_feature_owner`] itself resolves. A pure fallback:
+/// callers use `.or_else()` after the existing corpus_key-based
+/// `class_feature_owner(&unit.key, ...)` call, never in its place.
+///
+/// **Safety (why this can never widen what GROUNDS a record).** Every
+/// downstream grounding check in `classify()`'s `Kind::ClassFeature` arm
+/// (`class_feature_exact_suffix_grounded`, `suffix_stripped_grounded`)
+/// requires the corpus_key's OWN group text to literally equal the resolved
+/// owner's name (`class_feature_exact_suffix_grounded`'s own
+/// `group.eq_ignore_ascii_case(&class_name_as_group_text(owner))` guard,
+/// checked FIRST, unconditionally). An option-pool/archetype group like
+/// "Rage Power" or "Aberrant Bloodline" can never equal a class's own name
+/// like "barbarian"/"sorcerer" -- if it did, the PRIOR, corpus_key-only
+/// `class_feature_owner` call would already have matched it and this
+/// fallback would never run at all. So recovering an owner this way can
+/// only ever route a record to `not-ingested` or, if a genuine per-class
+/// engine diagnostic separately names it, `deferred-with-reason` -- never
+/// `grounded`/`done`. `class_feature_type_facet_owner_fallback_tests::
+/// a_type_facet_recovered_owner_can_never_ground_a_pool_record_even_with_a_
+/// matching_explanation_id` proves this directly, with a real explanation
+/// id planted specifically to try to defeat the guard.
+fn class_feature_owner_via_type_facet<'a, I: Iterator<Item = &'a String>>(
+    type_facet: Option<&str>,
+    classes: I,
+) -> Option<String> {
+    let classes: Vec<&'a String> = classes.collect();
+    class_feature_type_facet_owner_candidates(type_facet)
+        .into_iter()
+        .find_map(|candidate| class_feature_owner(&candidate, classes.iter().copied()))
+}
+
 /// The exact magnitude-descriptor suffix words `OPEN-ISSUES.md` row 78's own
 /// scale-estimate regex named (`_(bonus|count|dc|...)$`), reused verbatim
 /// rather than re-derived, so this list stays auditable against the finding
@@ -6394,15 +6472,36 @@ fn classify(
                 };
             }
             let group = unit.key.split(" ~ ").next().unwrap_or(&unit.key);
-            let Some(owner) = class_feature_owner(&unit.key, facts.class_books.keys()) else {
+            // `SD31-W17-CLASSFEATURE-001`: the corpus_key group prefix is
+            // tried first (unchanged); only when it fails to name an
+            // engine-modelled class do we ALSO try `type_facet`'s own
+            // `"<Class> Class Feature"` marker, when the record carries one
+            // -- a pure fallback, never a replacement (see
+            // `class_feature_owner_via_type_facet`'s doc comment for the
+            // safety argument: this can never cause a false `grounded`).
+            let Some(owner) = class_feature_owner(&unit.key, facts.class_books.keys())
+                .or_else(|| {
+                    class_feature_owner_via_type_facet(
+                        unit.type_facet.as_deref(),
+                        facts.class_books.keys(),
+                    )
+                })
+            else {
                 // The group names no class this engine models. Before calling
                 // it unclassifiable, ask whether the CORPUS declares a class by
                 // that name anywhere: if it does, this is a feature of a class
                 // nobody has ingested yet, which is a real `not-ingested` gap
                 // rather than a mystery.
-                if let Some(corpus_class) =
-                    class_feature_owner(&unit.key, facts.corpus_class_names.iter())
-                {
+                if let Some(corpus_class) = class_feature_owner(
+                    &unit.key,
+                    facts.corpus_class_names.iter(),
+                )
+                .or_else(|| {
+                    class_feature_owner_via_type_facet(
+                        unit.type_facet.as_deref(),
+                        facts.corpus_class_names.iter(),
+                    )
+                }) {
                     return Verdict {
                         status: "not-ingested",
                         evidence: format!(
@@ -11433,6 +11532,164 @@ mod class_feature_text_complete_rung_tests {
              status={} evidence={}",
             verdict.status, verdict.evidence
         );
+    }
+}
+
+/// SD31-W17-CLASSFEATURE-001 (wave-17 `unmeasurable` characterization,
+/// `docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md`): a
+/// magnitude-bearing `class_feature` record whose corpus_key's `" ~ "` group
+/// prefix names an option pool or archetype (e.g. "Rage Power", "Aberrant
+/// Bloodline") -- never the owning class's own name -- can never resolve an
+/// owner through `class_feature_owner(&unit.key, ...)` alone, however wired
+/// the record is, and lands `unknown` with `class_feature_group_names_no_
+/// class_at_all`. Re-derived corpus-wide 2026-08-19: 811 of the 3,864 such
+/// units carry the owning class's name anyway, embedded in `type_facet` as
+/// PCGen's own dot-delimited `"<Class> Class Feature"` taxonomy segment.
+/// `class_feature_type_facet_owner_candidates`/`class_feature_owner_via_
+/// type_facet` recover that signal as a FALLBACK, tried only when the
+/// existing corpus_key check already failed -- never a replacement for it.
+#[cfg(test)]
+mod class_feature_type_facet_owner_fallback_tests {
+    use super::*;
+
+    fn classes(names: &[&str]) -> Vec<String> {
+        names.iter().map(|s| s.to_string()).collect()
+    }
+
+    #[test]
+    fn a_single_class_feature_marker_resolves_to_that_class() {
+        let names = classes(&["bloodrager"]);
+        assert_eq!(
+            class_feature_owner_via_type_facet(
+                Some(
+                    "Class Feature.Bloodrager Class Feature.Aberrant Bloodrager Bloodline ~ \
+                     Power LVL 20.Bloodrager Bloodline Power.SpecialQuality.Supernatural"
+                ),
+                names.iter()
+            ),
+            Some("bloodrager".to_string())
+        );
+    }
+
+    /// The real reproduced compound shape: an archetype's own name
+    /// ("Animist") appears FIRST in the dot-chain, ahead of its base class
+    /// ("Shaman") -- Animist is never itself a registered class, so it must
+    /// be skipped rather than returned as a false owner, and the second,
+    /// real candidate must still be tried.
+    #[test]
+    fn a_compound_marker_skips_a_non_class_archetype_candidate_and_resolves_the_real_class() {
+        let names = classes(&["shaman"]);
+        assert_eq!(
+            class_feature_owner_via_type_facet(
+                Some("Animist Class Feature.Shaman Class Feature.SpecialQuality.SpellLike"),
+                names.iter()
+            ),
+            Some("shaman".to_string())
+        );
+    }
+
+    /// The bare `"Class Feature"` segment some facets carry with no class
+    /// name prefix at all (`"Class Feature.Bloodrager Class Feature...."`'s
+    /// own first segment) must never be misread as a candidate named `""`.
+    #[test]
+    fn a_bare_class_feature_segment_with_no_name_prefix_yields_no_candidate() {
+        assert_eq!(
+            class_feature_type_facet_owner_candidates(Some("Class Feature.SpecialQuality")),
+            Vec::<String>::new()
+        );
+    }
+
+    /// No marker at all (the common case -- most `type_facet` values are a
+    /// single PCGen choice-facet word like `"SorcererBloodlineChoice"`, not
+    /// a dot-delimited taxonomy) must resolve nothing, silently.
+    #[test]
+    fn a_type_facet_with_no_class_feature_marker_resolves_nothing() {
+        let names = classes(&["sorcerer"]);
+        assert_eq!(
+            class_feature_owner_via_type_facet(Some("SorcererBloodlineChoice"), names.iter()),
+            None
+        );
+        assert_eq!(class_feature_owner_via_type_facet(None, names.iter()), None);
+    }
+
+    /// A marker naming a class that is NOT in the candidate set resolves to
+    /// nothing -- the fallback must not invent a match the registry does not
+    /// contain, the same discipline `class_feature_owner` itself already
+    /// holds.
+    #[test]
+    fn a_marker_naming_an_unregistered_class_resolves_to_nothing() {
+        let names = classes(&["sorcerer"]);
+        assert_eq!(
+            class_feature_owner_via_type_facet(
+                Some("Occultist Class Feature.SpecialQuality"),
+                names.iter()
+            ),
+            None
+        );
+    }
+
+    /// INTEGRATION, PROVE THE SAFETY ARGUMENT: recovering an owner this way
+    /// must NEVER be able to ground a record. The record's own corpus_key
+    /// group ("Aberrant Bloodline") can never equal the resolved owner's
+    /// name ("sorcerer") under `class_name_as_group_text`, so even a real,
+    /// matching `explanation_id` for the SAME slug/owner in `facts` must
+    /// still fail `class_feature_exact_suffix_grounded`'s own group-equality
+    /// guard and fall through to `not_ingested`, never `grounded`.
+    #[test]
+    fn a_type_facet_recovered_owner_can_never_ground_a_pool_record_even_with_a_matching_explanation_id(
+    ) {
+        let mut facts = EngineFacts::default();
+        facts.class_books.insert("sorcerer".to_string(), "core_rulebook");
+        // A real explanation id that WOULD ground a genuine `"Sorcerer ~
+        // Aberrant Bloodline"` record -- deliberately planted to prove the
+        // guard, not because this id is expected to exist for real.
+        facts.explanation_ids.insert("class_feature.sorcerer.aberrant_bloodline".to_string());
+        let unit = CorpusUnit {
+            book: "advanced_class_guide".to_string(),
+            source_book: "advanced_class_guide".to_string(),
+            kind: Kind::ClassFeature,
+            key: "Aberrant Bloodline".to_string(),
+            name: "Aberrant Bloodline".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "acg_abilities_class.lst".to_string(), line: 156 },
+            magnitude_token_count: 1,
+            type_facet: Some("Sorcerer Class Feature.SorcererBloodlineChoice".to_string()),
+            visible: true,
+        };
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_ne!(verdict.status, "unknown", "the owner must be recovered via type_facet");
+        assert_ne!(
+            verdict.status, "grounded",
+            "a type_facet-recovered owner must never ground a record: status={} evidence={}",
+            verdict.status, verdict.evidence
+        );
+        assert_eq!(verdict.status, "not-ingested");
+        assert_eq!(verdict.evidence, "no_explanation_id_and_no_diagnostic_names_this_feature");
+    }
+
+    /// NEGATIVE CONTROL: without the type_facet fix, a record with no
+    /// class-name signal anywhere still reads `unknown` -- the fallback is
+    /// additive, it does not change behaviour for the genuinely
+    /// unattributable population.
+    #[test]
+    fn a_record_with_no_class_signal_anywhere_still_reads_unknown() {
+        let mut facts = EngineFacts::default();
+        facts.class_books.insert("sorcerer".to_string(), "core_rulebook");
+        let unit = CorpusUnit {
+            book: "advanced_class_guide".to_string(),
+            source_book: "advanced_class_guide".to_string(),
+            kind: Kind::ClassFeature,
+            key: "Domain Power".to_string(),
+            name: "Domain Power".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "acg_abilities_class.lst".to_string(), line: 200 },
+            magnitude_token_count: 1,
+            type_facet: Some("SomeUnrelatedFacet".to_string()),
+            visible: true,
+        };
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(verdict.status, "unknown");
+        assert_eq!(verdict.evidence, "class_feature_group_names_no_class_at_all");
     }
 }
 
