@@ -113,6 +113,7 @@ pub fn run_bar_check(repo_root: &Path) -> BarCheckReport {
     let class_feature = run_class_feature_bar_check(repo_root);
     let monster_ability = run_monster_ability_bar_check(repo_root);
     let companion = run_companion_bar_check(repo_root);
+    let companion_skill = run_companion_skill_bar_check(repo_root);
     let mut cleared = equipment.cleared;
     cleared.extend(monster.cleared);
     cleared.extend(monster_sla.cleared);
@@ -121,6 +122,7 @@ pub fn run_bar_check(repo_root: &Path) -> BarCheckReport {
     cleared.extend(class_feature.cleared);
     cleared.extend(monster_ability.cleared);
     cleared.extend(companion.cleared);
+    cleared.extend(companion_skill.cleared);
     let mut failures = equipment.failures;
     failures.extend(monster.failures);
     failures.extend(monster_sla.failures);
@@ -129,6 +131,7 @@ pub fn run_bar_check(repo_root: &Path) -> BarCheckReport {
     failures.extend(class_feature.failures);
     failures.extend(monster_ability.failures);
     failures.extend(companion.failures);
+    failures.extend(companion_skill.failures);
     let mut not_ingested = equipment.not_ingested;
     not_ingested.extend(monster.not_ingested);
     not_ingested.extend(monster_sla.not_ingested);
@@ -137,6 +140,7 @@ pub fn run_bar_check(repo_root: &Path) -> BarCheckReport {
     not_ingested.extend(class_feature.not_ingested);
     not_ingested.extend(monster_ability.not_ingested);
     not_ingested.extend(companion.not_ingested);
+    not_ingested.extend(companion_skill.not_ingested);
     // A unit that FAILED any seam must never be reported cleared by another
     // one. `cleared` is a union across seams and `failures` is keyed by
     // `unit_id`, so a unit covered by two seams could otherwise be stamped on
@@ -158,7 +162,8 @@ pub fn run_bar_check(repo_root: &Path) -> BarCheckReport {
             + spell_range.fixtures_total
             + class_feature.fixtures_total
             + monster_ability.fixtures_total
-            + companion.fixtures_total,
+            + companion.fixtures_total
+            + companion_skill.fixtures_total,
     }
 }
 
@@ -3372,6 +3377,266 @@ pub fn format_companion_strength_damage(damage: CompanionStrengthDamage) -> Stri
     }
 }
 
+/// A PF1 skill-check bonus computed as the DIFFERENCE between two ability
+/// modifiers -- PCGen's `BONUS:SKILL|<skills>|<A>-<B>` encoding.
+///
+/// # Why a subtraction needs its own type rather than reusing arithmetic inline
+///
+/// The formula names two DISTINCT ability scores (never the same one twice in
+/// the 136 corpus-wide occurrences, re-derived 2026-08-19), so evaluating it
+/// needs two modifiers, not one -- structurally different from
+/// [`CompanionStrengthDamage`]'s single-Strength-term family. Keeping the two
+/// ability names on the parsed value (rather than resolving immediately to a
+/// number) is what lets [`format_companion_skill_ability_diff`] name them in
+/// the catalog browser, which has no character and therefore no modifiers to
+/// subtract.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct SkillAbilityDiffFormula {
+    /// The ability whose modifier is added: `"DEX"` in `DEX-STR`.
+    pub plus: &'static str,
+    /// The ability whose modifier is subtracted: `"STR"` in `DEX-STR`.
+    pub minus: &'static str,
+}
+
+/// The six PF1 ability abbreviations this parser accepts as either operand.
+/// Refusing an unrecognised three-letter token (rather than accepting any
+/// three uppercase letters) is what keeps a corrupted or novel corpus
+/// spelling from silently parsing as a formula it is not.
+const ABILITY_ABBREVIATIONS: [&str; 6] = ["STR", "DEX", "CON", "INT", "WIS", "CHA"];
+
+/// Parses one `BONUS:SKILL|<skills>|` token's formula half.
+///
+/// **Refuses rather than guesses.** Accepts only `<ABBR>-<ABBR>` where both
+/// sides are one of the six PF1 ability abbreviations and the two differ --
+/// `companion_chassis::SkillAbilityDiffBonus`'s transcription already drops
+/// anything with no `-` at all (a flat `TYPE=Racial` number), so a formula
+/// reaching this parser is either exactly this shape or a corpus spelling
+/// this seam has never seen and should refuse rather than mis-evaluate.
+pub fn parse_companion_skill_ability_diff(formula: &str) -> Option<SkillAbilityDiffFormula> {
+    let f: String = formula.chars().filter(|c| !c.is_whitespace()).collect();
+    let (plus, minus) = f.split_once('-')?;
+    if plus == minus {
+        return None;
+    }
+    let plus = ABILITY_ABBREVIATIONS.iter().find(|&&a| a == plus)?;
+    let minus = ABILITY_ABBREVIATIONS.iter().find(|&&a| a == minus)?;
+    Some(SkillAbilityDiffFormula { plus, minus })
+}
+
+/// The skill-check bonus at the two given ability MODIFIERS (never scores --
+/// same discipline `companion_chassis::StatAdjustment` states).
+///
+/// No rounding question arises here (unlike
+/// [`evaluate_companion_strength_damage`]'s halving): a difference of two
+/// already-integer modifiers is exact.
+pub fn evaluate_companion_skill_ability_diff(
+    formula: SkillAbilityDiffFormula,
+    plus_modifier: i32,
+    minus_modifier: i32,
+) -> i32 {
+    let _ = formula; // the ability NAMES only select which modifier is which; the caller supplies both.
+    plus_modifier - minus_modifier
+}
+
+/// The player-facing rendering of the parsed token — the PRODUCTION half of
+/// this seam, called by `apps/desktop/src-tauri/src/companion_catalog.rs`.
+/// Same posture as [`format_companion_strength_damage`]: a catalog browser
+/// has no character and therefore no modifiers to subtract, so it shows the
+/// rule in words.
+pub fn format_companion_skill_ability_diff(formula: SkillAbilityDiffFormula) -> String {
+    let plus_word = ability_word(formula.plus);
+    let minus_word = ability_word(formula.minus);
+    format!("{plus_word} modifier \u{2212} {minus_word} modifier")
+}
+
+fn ability_word(abbr: &str) -> &'static str {
+    match abbr {
+        "STR" => "Str",
+        "DEX" => "Dex",
+        "CON" => "Con",
+        "INT" => "Int",
+        "WIS" => "Wis",
+        "CHA" => "Cha",
+        _ => "?",
+    }
+}
+
+/// One `kind=companion` skill-bonus fixture row. A sibling top-level
+/// `companion_skill_entries` array in the same committed fixture JSON, kept
+/// separate from `companion_entries` for the reason [`MonsterFixture`] states
+/// about `monster_entries`: `(strength_modifier, damage_bonus)` pairs and
+/// `(plus_modifier, minus_modifier, skill_bonus)` triples are different
+/// shapes and a forced-generic union would mean nothing for either.
+#[derive(Debug, Clone)]
+pub struct CompanionSkillFixture {
+    pub unit_id: String,
+    pub book: String,
+    pub record_key: String,
+    /// Every skill the token names, e.g. `["Climb", "Swim"]`.
+    pub skills: Vec<String>,
+    pub upstream_lst: String,
+    pub upstream_lst_sha256: String,
+    pub upstream_line: u64,
+    pub corpus_field: String,
+    /// `(plus_modifier, minus_modifier, expected_bonus)` triples, computed by
+    /// `scripts/derive_companion_skill_bonus_fixtures.py` from a plain
+    /// integer subtraction — never read back from this repo's evaluator.
+    pub expected_at: Vec<(i32, i32, i32)>,
+}
+
+/// Reads the `companion_skill_entries` array of the same committed fixture
+/// file [`load_fixtures`] reads `entries` from.
+pub fn load_companion_skill_fixtures(repo_root: &Path) -> Vec<CompanionSkillFixture> {
+    let path = repo_root.join(FIXTURE_RELATIVE_PATH);
+    let text = std::fs::read_to_string(&path)
+        .unwrap_or_else(|e| panic!("the committed fixture must be readable at {path:?}: {e}"));
+    let doc: serde_json::Value =
+        serde_json::from_str(&text).expect("the committed fixture must be valid JSON");
+    let Some(entries) = doc.get("companion_skill_entries").and_then(|v| v.as_array()) else {
+        return Vec::new();
+    };
+    entries
+        .iter()
+        .map(|e| {
+            let expected = &e["expected"];
+            CompanionSkillFixture {
+                unit_id: e["unit_id"].as_str().expect("unit_id").to_string(),
+                book: e["book"].as_str().expect("book").to_string(),
+                record_key: e["record_key"].as_str().expect("record_key").to_string(),
+                skills: e["skills"]
+                    .as_array()
+                    .expect("skills")
+                    .iter()
+                    .map(|s| s.as_str().expect("skill").to_string())
+                    .collect(),
+                upstream_lst: e["upstream_lst"].as_str().expect("upstream_lst").to_string(),
+                upstream_lst_sha256: e["upstream_lst_sha256"]
+                    .as_str()
+                    .expect("upstream_lst_sha256")
+                    .to_string(),
+                upstream_line: e["upstream_line"].as_u64().expect("upstream_line"),
+                corpus_field: e["corpus_field"].as_str().expect("corpus_field").to_string(),
+                expected_at: expected["skill_bonus_at_modifiers"]
+                    .as_array()
+                    .expect("expected.skill_bonus_at_modifiers")
+                    .iter()
+                    .map(|p| {
+                        (
+                            i32::try_from(p["plus_modifier"].as_i64().expect("plus_modifier"))
+                                .expect("a modifier fits in i32"),
+                            i32::try_from(p["minus_modifier"].as_i64().expect("minus_modifier"))
+                                .expect("a modifier fits in i32"),
+                            i32::try_from(p["skill_bonus"].as_i64().expect("skill_bonus"))
+                                .expect("a skill bonus fits in i32"),
+                        )
+                    })
+                    .collect(),
+            }
+        })
+        .collect()
+}
+
+/// The `kind=companion` skill-bonus half of [`run_bar_check`]. Runs against
+/// the SHIPPED tables, exactly as [`run_companion_bar_check`] does and for
+/// the same reason: a transcription that dropped the token must fail here,
+/// not pass silently against a corpus file no player reads.
+fn run_companion_skill_bar_check(repo_root: &Path) -> BarCheckReport {
+    let fixtures = load_companion_skill_fixtures(repo_root);
+    let fixtures_total = fixtures.len();
+
+    let mut cleared = BTreeSet::new();
+    let mut failures: BTreeMap<String, String> = BTreeMap::new();
+    let mut not_ingested: BTreeMap<String, String> = BTreeMap::new();
+
+    for fixture in &fixtures {
+        // Unlike `run_companion_bar_check` (whose own comment explains why it
+        // deliberately does not apply this alias — no committed
+        // Strength-damage fixture had ever named `bestiary`), this seam DOES
+        // pin a real `bestiary:companion:rat_dire` entry, so the spelling gap
+        // `monster_registry_book` exists for is no longer merely theoretical
+        // here. Reused rather than duplicated: `companion_chassis::
+        // COMPANION_BOOKS` keys Bestiary 1 `beastiary` (spelled that way
+        // since SD-22) while the work-inventory `book` field for the same
+        // records is `bestiary`, the exact one-alias gap that function
+        // states.
+        let Some(book) = companion_book(monster_registry_book(&fixture.book)) else {
+            not_ingested.insert(fixture.unit_id.clone(), fixture.book.clone());
+            continue;
+        };
+        let Some(record) = book.companion_resolve(&fixture.record_key) else {
+            failures.insert(
+                fixture.unit_id.clone(),
+                format!(
+                    "{:?} does not resolve against {}'s registered companions",
+                    fixture.record_key, fixture.book
+                ),
+            );
+            continue;
+        };
+        let Some(bonus) = record
+            .skill_ability_diff_bonuses
+            .iter()
+            .find(|b| b.skills.iter().map(|s| s.to_string()).collect::<Vec<_>>() == fixture.skills)
+        else {
+            failures.insert(
+                fixture.unit_id.clone(),
+                format!(
+                    "corpus row states {} but the shipped record carries no matching \
+                     BONUS:SKILL|{}|… token at all",
+                    fixture.corpus_field,
+                    fixture.skills.join(",")
+                ),
+            );
+            continue;
+        };
+        let Some(parsed) = parse_companion_skill_ability_diff(bonus.formula) else {
+            failures.insert(
+                fixture.unit_id.clone(),
+                format!(
+                    "corpus row states {} but the evaluator could not parse an ability-diff shape \
+                     from {:?}",
+                    fixture.corpus_field, bonus.formula
+                ),
+            );
+            continue;
+        };
+        let mut mismatch = None;
+        for &(plus_modifier, minus_modifier, expected_bonus) in &fixture.expected_at {
+            let got = evaluate_companion_skill_ability_diff(parsed, plus_modifier, minus_modifier);
+            if got != expected_bonus {
+                mismatch = Some(format!(
+                    "corpus row {:?} at modifiers ({plus_modifier}, {minus_modifier}): expected \
+                     skill bonus {expected_bonus}, evaluator produced {got}",
+                    fixture.corpus_field
+                ));
+                break;
+            }
+        }
+        match mismatch {
+            Some(message) => {
+                failures.insert(fixture.unit_id.clone(), message);
+            }
+            None if fixture.expected_at.is_empty() => {
+                // A fixture that pins no evaluated value asserts nothing about
+                // the evaluator. Refused rather than counted (Decision 1(a)).
+                failures.insert(
+                    fixture.unit_id.clone(),
+                    format!(
+                        "fixture for {:?} pins no (plus_modifier, minus_modifier, skill_bonus) \
+                         triple at all, so it asserts nothing",
+                        fixture.corpus_field
+                    ),
+                );
+            }
+            None => {
+                cleared.insert(fixture.unit_id.clone());
+            }
+        }
+    }
+
+    BarCheckReport { cleared, failures, not_ingested, fixtures_total }
+}
+
 /// One `kind=companion` fixture row. A sibling top-level `companion_entries`
 /// array in the same committed fixture JSON, for the reason
 /// [`MonsterFixture`] states about `monster_entries`: a forced-generic union
@@ -3886,6 +4151,273 @@ mod companion_seam_tests {
         let scratch =
             ScratchCompanionRoot::new("empty", "Bite", "half_strength_never_negative", &[]);
         let report = run_companion_bar_check(&scratch.root);
+        assert!(report.cleared.is_empty(), "cleared: {:?}", report.cleared);
+        assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
+    }
+}
+
+#[cfg(test)]
+mod companion_skill_seam_tests {
+    use super::*;
+
+    // --- parser unit tests: one TDD red/green anchor per corpus-observed shape ---
+
+    #[test]
+    fn the_dex_minus_str_shape_parses() {
+        // `BONUS:SKILL|Climb,Swim|DEX-STR` -- 136 of the 136 corpus-wide
+        // occurrences carry exactly this spelling (re-derived 2026-08-19).
+        assert_eq!(
+            parse_companion_skill_ability_diff("DEX-STR"),
+            Some(SkillAbilityDiffFormula { plus: "DEX", minus: "STR" })
+        );
+    }
+
+    #[test]
+    fn whitespace_around_the_operator_is_tolerated() {
+        assert_eq!(
+            parse_companion_skill_ability_diff(" DEX - STR "),
+            Some(SkillAbilityDiffFormula { plus: "DEX", minus: "STR" })
+        );
+    }
+
+    #[test]
+    fn every_other_ability_pairing_also_parses() {
+        // The parser accepts any two DISTINCT PF1 ability abbreviations, not
+        // just the one pairing the corpus happens to state today -- the same
+        // discipline `companion_chassis::SkillAbilityDiffBonus`'s doc comment
+        // states about not hard-coding the one spelling seen.
+        assert_eq!(
+            parse_companion_skill_ability_diff("WIS-CHA"),
+            Some(SkillAbilityDiffFormula { plus: "WIS", minus: "CHA" })
+        );
+    }
+
+    // TDD red/green anchors: shapes this seam deliberately refuses rather than
+    // guesses at.
+
+    #[test]
+    fn a_flat_racial_bonus_refuses_rather_than_guesses() {
+        // `BONUS:SKILL|Perception|4|TYPE=Racial` -- a different, already-static
+        // quantity `transcribe_companion_tables.py`'s
+        // `parse_skill_ability_diff_bonuses` never transcribes into this field
+        // at all, but the parser refuses it too, belt-and-braces.
+        assert_eq!(parse_companion_skill_ability_diff("4|TYPE=Racial"), None);
+    }
+
+    #[test]
+    fn an_unrecognised_ability_abbreviation_refuses() {
+        assert_eq!(parse_companion_skill_ability_diff("FOO-STR"), None);
+        assert_eq!(parse_companion_skill_ability_diff("DEX-BAR"), None);
+    }
+
+    #[test]
+    fn the_same_ability_on_both_sides_refuses() {
+        // A difference of an ability with itself is always zero and states no
+        // real rule; refusing it rather than "correctly" computing zero keeps
+        // this parser from silently accepting a corpus typo.
+        assert_eq!(parse_companion_skill_ability_diff("STR-STR"), None);
+    }
+
+    #[test]
+    fn no_operator_at_all_refuses() {
+        assert_eq!(parse_companion_skill_ability_diff("DEX"), None);
+        assert_eq!(parse_companion_skill_ability_diff(""), None);
+    }
+
+    // --- the rules arithmetic itself ---
+
+    #[test]
+    fn the_skill_bonus_is_the_plain_difference_of_the_two_modifiers() {
+        let f = SkillAbilityDiffFormula { plus: "DEX", minus: "STR" };
+        assert_eq!(evaluate_companion_skill_ability_diff(f, 3, 1), 2);
+        assert_eq!(evaluate_companion_skill_ability_diff(f, 1, 3), -2);
+        assert_eq!(evaluate_companion_skill_ability_diff(f, 0, 0), 0);
+        assert_eq!(evaluate_companion_skill_ability_diff(f, -3, 5), -8);
+        assert_eq!(evaluate_companion_skill_ability_diff(f, 5, -3), 8);
+    }
+
+    #[test]
+    fn the_rendered_text_names_the_rule_rather_than_a_number() {
+        // The PRODUCTION half. A catalog browser has no character, so a number
+        // here would be invented; the rule's own words are not.
+        assert_eq!(
+            format_companion_skill_ability_diff(SkillAbilityDiffFormula {
+                plus: "DEX",
+                minus: "STR"
+            }),
+            "Dex modifier \u{2212} Str modifier"
+        );
+        assert_eq!(
+            format_companion_skill_ability_diff(SkillAbilityDiffFormula {
+                plus: "WIS",
+                minus: "CHA"
+            }),
+            "Wis modifier \u{2212} Cha modifier"
+        );
+    }
+
+    // --- the corpus fact this seam rests on, asserted rather than assumed ---
+
+    /// Pins the zero-variance finding the module doc and the fixture
+    /// generator's doc comment both state, so a later cycle cannot quietly
+    /// "simplify" the parser to a hard-coded `"DEX-STR"` string match without
+    /// this test forcing a re-derivation first.
+    #[test]
+    fn every_registered_skill_ability_diff_bonus_states_the_same_formula_and_skills() {
+        use crate::rules_core::rules_tables::companion_chassis::COMPANION_BOOKS;
+        let mut total = 0usize;
+        for book in COMPANION_BOOKS {
+            for c in book.companions {
+                for b in c.skill_ability_diff_bonuses {
+                    total += 1;
+                    assert_eq!(
+                        b.formula, "DEX-STR",
+                        "{}:{:?} states a skill-ability-diff formula other than DEX-STR -- the \
+                         module doc's zero-variance claim needs re-deriving",
+                        book.corpus_book, c.key
+                    );
+                    assert_eq!(b.skills, ["Climb", "Swim"]);
+                }
+            }
+        }
+        assert!(
+            total > 0,
+            "no registered companion carries a skill-ability-diff bonus at all; this test would \
+             then be asserting nothing"
+        );
+    }
+
+    // --- the bar check itself ---
+
+    #[test]
+    fn run_companion_skill_bar_check_clears_every_committed_companion_skill_fixture() {
+        let repo_root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+        let report = run_companion_skill_bar_check(&repo_root);
+        assert!(
+            report.fixtures_total > 0,
+            "the committed fixture must carry at least one companion_skill_entries row"
+        );
+        assert!(
+            report.not_ingested.is_empty(),
+            "every committed companion_skill fixture's book must be registered, got: {:?}",
+            report.not_ingested
+        );
+        assert!(
+            report.failures.is_empty(),
+            "every committed companion_skill fixture must clear the bar, got {} failures, first \
+             few: {:?}",
+            report.failures.len(),
+            report.failures.iter().take(5).collect::<Vec<_>>()
+        );
+        assert_eq!(report.cleared.len(), report.fixtures_total);
+    }
+
+    /// A scratch `repo_root` carrying one fixture the caller controls, pointed
+    /// at a REAL shipped record (`ultimate_wilderness`'s Arctic Fox, whose row
+    /// states `BONUS:SKILL|Climb,Swim|DEX-STR` -- the same record the sibling
+    /// Strength-damage seam's own scratch tests use), so a test drives the
+    /// REAL `run_companion_skill_bar_check` end to end without touching the
+    /// committed fixture.
+    struct ScratchCompanionSkillRoot {
+        root: PathBuf,
+    }
+
+    impl ScratchCompanionSkillRoot {
+        fn new(name: &str, skills: &[&str], triples: &[(i32, i32, i32)]) -> Self {
+            let root = std::env::temp_dir().join(format!(
+                "codex_companion_skill_mutation_proof_{name}_{}",
+                std::process::id()
+            ));
+            let _ = std::fs::remove_dir_all(&root);
+            let fixture_dir = root.join("tests/fixtures/rules_core");
+            std::fs::create_dir_all(&fixture_dir).unwrap();
+            let skills_json =
+                skills.iter().map(|s| format!("\"{s}\"")).collect::<Vec<_>>().join(",");
+            let at = triples
+                .iter()
+                .map(|(p, m, b)| {
+                    format!(
+                        "{{\"plus_modifier\":{p},\"minus_modifier\":{m},\"skill_bonus\":{b}}}"
+                    )
+                })
+                .collect::<Vec<_>>()
+                .join(",");
+            std::fs::write(
+                fixture_dir.join("derived-evaluator-fixtures.json"),
+                format!(
+                    r#"{{"companion_skill_entries":[{{
+                        "unit_id":"scratch:companion:arctic_fox_skill",
+                        "book":"ultimate_wilderness",
+                        "record_key":"Arctic Fox",
+                        "skills":[{skills_json}],
+                        "upstream_lst":"scratch.lst",
+                        "upstream_lst_sha256":"0",
+                        "upstream_line":1,
+                        "corpus_field":"BONUS:SKILL|Climb,Swim|DEX-STR",
+                        "expected":{{"plus_ability":"DEX","minus_ability":"STR","skill_bonus_at_modifiers":[{at}]}}
+                    }}]}}"#
+                ),
+            )
+            .unwrap();
+            ScratchCompanionSkillRoot { root }
+        }
+    }
+
+    impl Drop for ScratchCompanionSkillRoot {
+        fn drop(&mut self) {
+            let _ = std::fs::remove_dir_all(&self.root);
+        }
+    }
+
+    /// The positive control, first: a fixture stating the TRUE values for the
+    /// real, resolved Arctic Fox must clear the bar.
+    #[test]
+    fn a_correct_companion_skill_fixture_clears_run_companion_skill_bar_check() {
+        let scratch = ScratchCompanionSkillRoot::new(
+            "correct",
+            &["Climb", "Swim"],
+            &[(3, 1, 2), (0, 0, 0), (-3, 5, -8)],
+        );
+        let report = run_companion_skill_bar_check(&scratch.root);
+        assert!(report.failures.is_empty(), "failures: {:?}", report.failures);
+        assert_eq!(report.cleared.len(), 1);
+        assert!(report.cleared.contains("scratch:companion:arctic_fox_skill"));
+    }
+
+    /// MUTATION PROOF 1 -- a wrong evaluated value. Had the evaluator SWAPPED
+    /// the two operands (computed `minus - plus` instead of `plus - minus`),
+    /// it would produce `-2` rather than the true `2` at (plus=3, minus=1), so
+    /// a fixture claiming `-2` must be reported as a failure.
+    #[test]
+    fn a_wrong_expected_skill_bonus_makes_run_companion_skill_bar_check_report_a_failure() {
+        let scratch =
+            ScratchCompanionSkillRoot::new("wrongvalue", &["Climb", "Swim"], &[(3, 1, -2)]);
+        let report = run_companion_skill_bar_check(&scratch.root);
+        assert!(report.cleared.is_empty(), "cleared: {:?}", report.cleared);
+        assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
+        assert!(report.failures.contains_key("scratch:companion:arctic_fox_skill"));
+    }
+
+    /// MUTATION PROOF 2 -- a skill list the shipped record does not carry.
+    /// This is the case that catches a transcription regression: if a later
+    /// regen dropped `skill_ability_diff_bonuses` or renamed a skill, every
+    /// fixture naming it would land here.
+    #[test]
+    fn a_skill_list_the_record_does_not_carry_makes_run_companion_skill_bar_check_report_a_failure()
+    {
+        let scratch = ScratchCompanionSkillRoot::new("wrongskills", &["Climb"], &[(3, 1, 2)]);
+        let report = run_companion_skill_bar_check(&scratch.root);
+        assert!(report.cleared.is_empty(), "cleared: {:?}", report.cleared);
+        assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
+    }
+
+    /// MUTATION PROOF 3 -- a fixture that asserts NOTHING. A row pinning an
+    /// empty ladder would otherwise clear the bar vacuously, which is exactly
+    /// the "gate that cannot fail" Decision 1(a) forbids.
+    #[test]
+    fn a_fixture_pinning_no_values_at_all_is_refused_rather_than_cleared() {
+        let scratch = ScratchCompanionSkillRoot::new("empty", &["Climb", "Swim"], &[]);
+        let report = run_companion_skill_bar_check(&scratch.root);
         assert!(report.cleared.is_empty(), "cleared: {:?}", report.cleared);
         assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
     }

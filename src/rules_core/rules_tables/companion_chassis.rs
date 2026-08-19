@@ -151,6 +151,31 @@ pub struct NaturalAttackDamageBonus {
     pub formula: &'static str,
 }
 
+/// One `BONUS:SKILL|<skills>|<formula>` token whose formula half is an
+/// ability-score DIFFERENCE expression (`"DEX-STR"`), never a flat
+/// `TYPE=Racial` number — those are a different, static quantity this field
+/// deliberately does not carry (`scripts/transcribe_companion_tables.py`'s
+/// `parse_skill_ability_diff_bonuses` reads only the arithmetic shape).
+///
+/// **The token, verbatim; never a computed number.** Same discipline
+/// [`NaturalAttackDamageBonus`] states: this chassis transcribes what the row
+/// says, and `derived_evaluator_fixture_check::parse_companion_skill_ability_diff`
+/// interprets it. The single corpus spelling, re-derived 2026-08-19 over
+/// every registered book's creature rows (136 occurrences, zero variance):
+/// `BONUS:SKILL|Climb,Swim|DEX-STR` — familiars and small companions whose
+/// Dexterity typically exceeds their Strength get their Climb and Swim
+/// checks computed from the DIFFERENCE between the two modifiers rather than
+/// from Strength alone, which is what Climb and Swim otherwise key off.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct SkillAbilityDiffBonus {
+    /// Every skill the token names, in row order: `["Climb", "Swim"]`.
+    pub skills: &'static [&'static str],
+    /// The token's trailing formula half, verbatim: `"DEX-STR"`. Never
+    /// normalised — a future book stating the terms in the other order or
+    /// naming different abilities ships exactly as its row spells it.
+    pub formula: &'static str,
+}
+
 /// Which modelled facet of `companion` an ability row is, read from the row's
 /// `TYPE:` segments.
 ///
@@ -303,6 +328,11 @@ pub struct CompanionRecord {
     /// row order — see [`NaturalAttackDamageBonus`]. Empty for the majority of
     /// rows, which is a real corpus state and not a gap this chassis fills.
     pub natural_attack_damage_bonuses: &'static [NaturalAttackDamageBonus],
+    /// `BONUS:SKILL|<skills>|<ability-diff-formula>` tokens on the creature's
+    /// row — see [`SkillAbilityDiffBonus`]. Empty for the majority of rows: a
+    /// flat `TYPE=Racial` skill bonus is a different, static quantity this
+    /// field does not carry.
+    pub skill_ability_diff_bonuses: &'static [SkillAbilityDiffBonus],
     /// `BONUS:STAT` tokens on the creature's own row. Adjustments, never scores.
     pub stat_adjustments: &'static [StatAdjustment],
     /// `BONUS:VAR|AC_Natural_Armor|<n>|TYPE=Base`, when the row carries one.

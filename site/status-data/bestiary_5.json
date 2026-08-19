@@ -5,11 +5,11 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 40,
-      "partial": 8,
+      "done": 48,
+      "partial": 0,
       "not_started": 2,
       "denominator": 50,
-      "pct": 80.0,
+      "pct": 96.0,
       "excluded_from_percentage": 7,
       "standing_breakdown": {
         "origin": 50,
@@ -252,13 +252,13 @@
         },
         {
           "name": "Familiar (Aether Wysp)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Outsider",
           "standing": "origin"
         },
         {
           "name": "Familiar (Air Wysp)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Outsider",
           "standing": "origin"
         },
@@ -282,25 +282,25 @@
         },
         {
           "name": "Familiar (Clockwork Familiar)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Construct",
           "standing": "unclassified"
         },
         {
           "name": "Familiar (Earth Wysp)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Outsider",
           "standing": "origin"
         },
         {
           "name": "Familiar (Esipil)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Outsider",
           "standing": "origin"
         },
         {
           "name": "Familiar (Fire Wysp)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Outsider",
           "standing": "origin"
         },
@@ -312,7 +312,7 @@
         },
         {
           "name": "Familiar (Liminal Sprite)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Fey",
           "standing": "origin"
         },
@@ -342,13 +342,13 @@
         },
         {
           "name": "Familiar (Water Wysp)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Outsider",
           "standing": "origin"
         },
         {
           "name": "Familiar (Xiao)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Magical Beast",
           "standing": "origin"
         },

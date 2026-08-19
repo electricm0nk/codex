@@ -429,11 +429,11 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 12,
-      "partial": 1,
+      "done": 13,
+      "partial": 0,
       "not_started": 0,
       "denominator": 13,
-      "pct": 92.3,
+      "pct": 100.0,
       "excluded_from_percentage": 2,
       "standing_breakdown": {
         "unclassified": 2,
@@ -520,7 +520,7 @@
         },
         {
           "name": "Familiar (Sootwing Bat)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Undead",
           "standing": "origin"
         },

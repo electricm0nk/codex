@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-08-19T14:12:06Z",
+  "generated_at": "2026-08-19T16:39:15Z",
   "doneness_values": [
     "done",
     "partial",
     "not-started"
   ],
   "overall": {
-    "done": 11218,
-    "partial": 2180,
+    "done": 11261,
+    "partial": 2137,
     "not_started": 16092,
     "denominator": 29490,
-    "pct": 38.0,
+    "pct": 38.2,
     "excluded_from_percentage": 9031,
     "standing_breakdown": {
       "origin": 29490,
@@ -78,11 +78,11 @@
     {
       "id": "ultimate_wilderness",
       "title": "Ultimate Wilderness",
-      "done": 470,
-      "partial": 57,
+      "done": 497,
+      "partial": 30,
       "not_started": 1089,
       "denominator": 1616,
-      "pct": 29.1,
+      "pct": 30.8,
       "excluded_from_percentage": 246,
       "standing_breakdown": {
         "origin": 1616,
@@ -134,11 +134,11 @@
     {
       "id": "ultimate_magic",
       "title": "Ultimate Magic",
-      "done": 367,
-      "partial": 51,
+      "done": 370,
+      "partial": 48,
       "not_started": 893,
       "denominator": 1311,
-      "pct": 28.0,
+      "pct": 28.2,
       "excluded_from_percentage": 446,
       "standing_breakdown": {
         "origin": 1311,
@@ -162,11 +162,11 @@
     {
       "id": "bestiary",
       "title": "Bestiary",
-      "done": 522,
-      "partial": 160,
+      "done": 523,
+      "partial": 159,
       "not_started": 452,
       "denominator": 1134,
-      "pct": 46.0,
+      "pct": 46.1,
       "excluded_from_percentage": 519,
       "standing_breakdown": {
         "origin": 1134,
@@ -176,11 +176,11 @@
     {
       "id": "bestiary_4",
       "title": "Bestiary 4",
-      "done": 606,
-      "partial": 96,
+      "done": 607,
+      "partial": 95,
       "not_started": 325,
       "denominator": 1027,
-      "pct": 59.0,
+      "pct": 59.1,
       "excluded_from_percentage": 309,
       "standing_breakdown": {
         "unclassified": 309,
@@ -316,11 +316,11 @@
     {
       "id": "inner_sea_intrigue",
       "title": "Inner Sea Intrigue",
-      "done": 43,
-      "partial": 3,
+      "done": 44,
+      "partial": 2,
       "not_started": 144,
       "denominator": 190,
-      "pct": 22.6,
+      "pct": 23.2,
       "excluded_from_percentage": 66,
       "standing_breakdown": {
         "origin": 190,
@@ -330,11 +330,11 @@
     {
       "id": "monster_codex",
       "title": "Monster Codex",
-      "done": 74,
-      "partial": 5,
+      "done": 75,
+      "partial": 4,
       "not_started": 107,
       "denominator": 186,
-      "pct": 39.8,
+      "pct": 40.3,
       "excluded_from_percentage": 21,
       "standing_breakdown": {
         "origin": 186,
@@ -372,11 +372,11 @@
     {
       "id": "bestiary_5",
       "title": "Bestiary 5",
-      "done": 42,
-      "partial": 9,
+      "done": 50,
+      "partial": 1,
       "not_started": 114,
       "denominator": 165,
-      "pct": 25.5,
+      "pct": 30.3,
       "excluded_from_percentage": 85,
       "standing_breakdown": {
         "unclassified": 85,
@@ -400,11 +400,11 @@
     {
       "id": "bestiary_6",
       "title": "Bestiary 6",
-      "done": 25,
-      "partial": 1,
+      "done": 26,
+      "partial": 0,
       "not_started": 17,
       "denominator": 43,
-      "pct": 58.1,
+      "pct": 60.5,
       "excluded_from_percentage": 29,
       "standing_breakdown": {
         "origin": 43,

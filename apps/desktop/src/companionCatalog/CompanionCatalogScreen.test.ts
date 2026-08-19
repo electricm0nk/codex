@@ -2,6 +2,7 @@ import {
   BOOK_LABELS,
   SIZE_LABELS,
   DAMAGE_BONUS_CAPTION,
+  SKILL_BONUS_CAPTION,
   STAT_ADJUSTMENT_CAPTION,
   formatAbilityHeading,
   formatBook,
@@ -12,6 +13,7 @@ import {
   formatReach,
   formatServedBooks,
   formatSize,
+  formatSkillBonus,
   formatSpeedClause,
   formatStatAdjustment,
 } from './CompanionCatalogScreen';
@@ -89,6 +91,7 @@ function entry(overrides: Partial<CompanionCatalogEntryDto>): CompanionCatalogEn
     typeSegments: [],
     naturalAttacks: [],
     naturalAttackDamageBonuses: [],
+    skillAbilityDiffBonuses: [],
     statAdjustments: [],
     naturalArmor: null,
     sourcePage: null,
@@ -295,6 +298,31 @@ function testADamageBonusPrintsTheRuleAndAnUnparsedOneSaysSo() {
   );
 }
 
+/**
+ * The skill-bonus block's twin of the damage-bonus test above: the same
+ * parsed-vs-refused distinction, and the skills list joined into the label.
+ */
+function testASkillBonusPrintsTheRuleAndAnUnparsedOneSaysSo() {
+  assertEqual(
+    formatSkillBonus({
+      skills: ['Climb', 'Swim'],
+      bonus: 'Dex modifier − Str modifier',
+      unparsedFormula: null,
+    }),
+    'Climb, Swim: Dex modifier − Str modifier',
+    'a parsed token prints the rule the corpus states, with every named skill'
+  );
+  assertEqual(
+    formatSkillBonus({ skills: ['Climb'], bonus: 'CON-INT-WIS', unparsedFormula: 'CON-INT-WIS' }),
+    'Climb: CON-INT-WIS (formula not interpreted)',
+    'a refused formula prints verbatim AND says it was not interpreted'
+  );
+  assert(
+    SKILL_BONUS_CAPTION.includes('BONUS:SKILL'),
+    'the caption names the corpus token so the reader knows it is a corpus fact'
+  );
+}
+
 function main() {
   testEveryServedBookHasARealName();
   testEverySizeCodeTheRosterCarriesHasALabel();
@@ -306,6 +334,7 @@ function main() {
   testAStatAdjustmentKeepsItsSignAndItsCaption();
   testAnAttackWithNoCorpusDicePrintsItsNameAlone();
   testADamageBonusPrintsTheRuleAndAnUnparsedOneSaysSo();
+  testASkillBonusPrintsTheRuleAndAnUnparsedOneSaysSo();
   testAnAbilityHeadingReadsTheWayTheBookPrintsIt();
   testAnUnmodelledFacetFallsBackToItsVerbatimSegments();
   testTheBlurbNamesTheBooksTheResponseActuallyContains();
