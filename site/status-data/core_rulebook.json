@@ -21008,11 +21008,11 @@
     {
       "kind": "equipment_modifier",
       "label": "Equipment Modifiers",
-      "done": 155,
-      "partial": 301,
-      "not_started": 214,
+      "done": 188,
+      "partial": 270,
+      "not_started": 212,
       "denominator": 670,
-      "pct": 23.1,
+      "pct": 28.1,
       "excluded_from_percentage": 6,
       "standing_breakdown": {
         "origin": 670,
@@ -21027,13 +21027,13 @@
         },
         {
           "name": "+1 (Enhancement to Armor)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Armor",
           "standing": "origin"
         },
         {
           "name": "+1 (Enhancement to Shield)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Shield",
           "standing": "origin"
         },
@@ -21057,13 +21057,13 @@
         },
         {
           "name": "+2 (Enhancement to Armor)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Armor",
           "standing": "origin"
         },
         {
           "name": "+2 (Enhancement to Shield)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Shield",
           "standing": "origin"
         },
@@ -21087,13 +21087,13 @@
         },
         {
           "name": "+3 (Enhancement to Armor)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Armor",
           "standing": "origin"
         },
         {
           "name": "+3 (Enhancement to Shield)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Shield",
           "standing": "origin"
         },
@@ -21117,13 +21117,13 @@
         },
         {
           "name": "+4 (Enhancement to Armor)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Armor",
           "standing": "origin"
         },
         {
           "name": "+4 (Enhancement to Shield)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Shield",
           "standing": "origin"
         },
@@ -21147,13 +21147,13 @@
         },
         {
           "name": "+5 (Enhancement to Armor)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Armor",
           "standing": "origin"
         },
         {
           "name": "+5 (Enhancement to Shield)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Shield",
           "standing": "origin"
         },
@@ -21177,19 +21177,19 @@
         },
         {
           "name": "ADAMANT_ARMR_HVY",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "ADAMANT_ARMR_LT",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "ADAMANT_ARMR_MED",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -21273,19 +21273,19 @@
         },
         {
           "name": "Adamantine",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BaseMaterial.MasterworkQuality.Armor",
           "standing": "origin"
         },
         {
           "name": "Adamantine",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BaseMaterial.MasterworkQuality.Armor",
           "standing": "origin"
         },
         {
           "name": "Adamantine",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BaseMaterial.MasterworkQuality.Armor",
           "standing": "origin"
         },
@@ -21303,19 +21303,19 @@
         },
         {
           "name": "Adamantine (Heavy Armor)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "Adamantine (Light Armor)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "Adamantine (Medium Armor)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -22089,7 +22089,7 @@
         },
         {
           "name": "Dragonhide",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin"
         },
@@ -23523,19 +23523,19 @@
         },
         {
           "name": "MITHRAL_ARMR_HVY",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "MITHRAL_ARMR_LT",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "MITHRAL_ARMR_MED",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -23547,7 +23547,7 @@
         },
         {
           "name": "MITHRAL_SHLD",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -23559,7 +23559,7 @@
         },
         {
           "name": "MWORKA",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -23679,7 +23679,7 @@
         },
         {
           "name": "Masterwork (Armor or Shield)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "MasterworkQuality.Armor.Shield",
           "standing": "origin"
         },
@@ -23733,25 +23733,25 @@
         },
         {
           "name": "Mithral",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BaseMaterial.MasterworkQuality.Armor",
           "standing": "origin"
         },
         {
           "name": "Mithral",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BaseMaterial.MasterworkQuality.Armor",
           "standing": "origin"
         },
         {
           "name": "Mithral",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BaseMaterial.MasterworkQuality.Armor",
           "standing": "origin"
         },
         {
           "name": "Mithral",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BaseMaterial.MasterworkQuality.Shield",
           "standing": "origin"
         },
@@ -23763,7 +23763,7 @@
         },
         {
           "name": "Mithral (Heavy Armor)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -23775,19 +23775,19 @@
         },
         {
           "name": "Mithral (Light Armor)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "Mithral (Medium Armor)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "Mithral (Shield)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },

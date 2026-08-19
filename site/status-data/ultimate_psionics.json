@@ -10761,11 +10761,11 @@
     {
       "kind": "equipment_modifier",
       "label": "Equipment Modifiers",
-      "done": 53,
-      "partial": 95,
+      "done": 61,
+      "partial": 87,
       "not_started": 73,
       "denominator": 221,
-      "pct": 24.0,
+      "pct": 27.6,
       "excluded_from_percentage": 5,
       "standing_breakdown": {
         "origin": 221,
@@ -11176,25 +11176,25 @@
         },
         {
           "name": "FUSE_ARMR_HVY",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "FUSE_ARMR_LT",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "FUSE_ARMR_MED",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "FUSE_ARMR_SHLD",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -11212,25 +11212,25 @@
         },
         {
           "name": "Fusing",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Armor",
           "standing": "origin"
         },
         {
           "name": "Fusing",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Armor",
           "standing": "origin"
         },
         {
           "name": "Fusing",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Armor",
           "standing": "origin"
         },
         {
           "name": "Fusing",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Shield",
           "standing": "origin"
         },

@@ -5231,11 +5231,11 @@
     {
       "kind": "equipment_modifier",
       "label": "Equipment Modifiers",
-      "done": 7,
+      "done": 9,
       "partial": 11,
-      "not_started": 4,
+      "not_started": 2,
       "denominator": 22,
-      "pct": 31.8,
+      "pct": 40.9,
       "excluded_from_percentage": 7,
       "standing_breakdown": {
         "origin": 22,
@@ -5274,13 +5274,13 @@
         },
         {
           "name": "DLEAF_ARMR_LGT",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
         {
           "name": "DLEAF_ARMR_MED",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin"
         },
@@ -5298,13 +5298,13 @@
         },
         {
           "name": "Darkleaf Cloth",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BaseMaterial.MasterworkQuality.Armor",
           "standing": "unclassified"
         },
         {
           "name": "Darkleaf Cloth",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BaseMaterial.MasterworkQuality.Armor",
           "standing": "unclassified"
         },

@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-08-19T14:12:06Z",
+  "generated_at": "2026-08-19T16:27:02Z",
   "doneness_values": [
     "done",
     "partial",
     "not-started"
   ],
   "overall": {
-    "done": 11218,
-    "partial": 2180,
-    "not_started": 16092,
+    "done": 11281,
+    "partial": 2121,
+    "not_started": 16088,
     "denominator": 29490,
-    "pct": 38.0,
+    "pct": 38.3,
     "excluded_from_percentage": 9031,
     "standing_breakdown": {
       "origin": 29490,
@@ -22,11 +22,11 @@
     {
       "id": "core_rulebook",
       "title": "Core Rulebook",
-      "done": 2996,
-      "partial": 651,
-      "not_started": 842,
+      "done": 3029,
+      "partial": 620,
+      "not_started": 840,
       "denominator": 4489,
-      "pct": 66.7,
+      "pct": 67.5,
       "excluded_from_percentage": 734,
       "standing_breakdown": {
         "origin": 4489,
@@ -50,11 +50,11 @@
     {
       "id": "ultimate_psionics",
       "title": "Ultimate Psionics",
-      "done": 496,
-      "partial": 136,
+      "done": 504,
+      "partial": 128,
       "not_started": 1632,
       "denominator": 2264,
-      "pct": 21.9,
+      "pct": 22.3,
       "excluded_from_percentage": 231,
       "standing_breakdown": {
         "origin": 2264,
@@ -148,11 +148,11 @@
     {
       "id": "advanced_race_guide",
       "title": "Advanced Race Guide",
-      "done": 417,
+      "done": 419,
       "partial": 205,
-      "not_started": 601,
+      "not_started": 599,
       "denominator": 1223,
-      "pct": 34.1,
+      "pct": 34.3,
       "excluded_from_percentage": 355,
       "standing_breakdown": {
         "origin": 1223,
@@ -246,11 +246,11 @@
     {
       "id": "pathfinder_unchained",
       "title": "Pathfinder Unchained",
-      "done": 24,
-      "partial": 25,
+      "done": 44,
+      "partial": 5,
       "not_started": 399,
       "denominator": 448,
-      "pct": 5.4,
+      "pct": 9.8,
       "excluded_from_percentage": 378,
       "standing_breakdown": {
         "origin": 448,

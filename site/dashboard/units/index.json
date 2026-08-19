@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-08-19T14:06:36Z",
+  "generated_at": "2026-08-19T16:24:51Z",
   "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 38521,
-  "proven_units": 5886,
+  "proven_units": 5934,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 420,
   "category_labels_redacted": 3,
@@ -6078,26 +6078,26 @@
     },
     "equipment_modifier": {
       "units": 1580,
-      "proven": 556,
+      "proven": 604,
       "by_status": {
-        "grounded": 86,
-        "unknown": 420,
-        "text-complete": 470,
-        "ingested-magnitude": 506,
+        "grounded": 152,
+        "unknown": 416,
+        "text-complete": 452,
+        "ingested-magnitude": 462,
         "literal-verified": 35,
         "not-started": 63
       },
       "shard": "PF1e-units-equipment_modifier.json",
-      "bytes": 169467,
+      "bytes": 168941,
       "doneness_unmapped": {},
       "categories": {
         "none": {
           "label": "Uncategorised",
-          "done": 165,
-          "held": 2,
-          "in-progress": 169,
+          "done": 186,
+          "held": 3,
+          "in-progress": 151,
           "not-started": 4,
-          "unmeasurable": 299,
+          "unmeasurable": 295,
           "deferred": 0
         },
         "weapon": {
@@ -6111,18 +6111,18 @@
         },
         "armor": {
           "label": "Armor",
-          "done": 31,
+          "done": 49,
           "held": 1,
-          "in-progress": 104,
+          "in-progress": 86,
           "not-started": 1,
           "unmeasurable": 14,
           "deferred": 0
         },
         "basematerial": {
           "label": "Base Material",
-          "done": 8,
+          "done": 17,
           "held": 2,
-          "in-progress": 75,
+          "in-progress": 66,
           "not-started": 0,
           "unmeasurable": 0,
           "deferred": 0
@@ -6156,9 +6156,9 @@
         },
         "shield": {
           "label": "Shield",
-          "done": 10,
+          "done": 26,
           "held": 1,
-          "in-progress": 29,
+          "in-progress": 13,
           "not-started": 0,
           "unmeasurable": 5,
           "deferred": 0
@@ -6201,9 +6201,9 @@
         },
         "masterworkquality": {
           "label": "Masterwork Quality",
-          "done": 4,
+          "done": 5,
           "held": 0,
-          "in-progress": 5,
+          "in-progress": 4,
           "not-started": 0,
           "unmeasurable": 0,
           "deferred": 0
