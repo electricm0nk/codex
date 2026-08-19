@@ -20,120 +20,138 @@
           "name": "Chastisement",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Chastisement"
         },
         {
           "name": "Dark Tapestry Subdomain",
           "doneness": "not-started",
           "type_facet": "InquisitorDomain",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Dark Tapestry Subdomain"
         },
         {
           "name": "Dragon Subdomain",
           "doneness": "not-started",
           "type_facet": "InquisitorDomain",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Dragon Subdomain"
         },
         {
           "name": "Dragonbreath",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DomainPower",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Dragonbreath"
         },
         {
           "name": "Feed on Fear",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Feed on Fear"
         },
         {
           "name": "Guarded Mind",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.DomainPower",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Guarded Mind"
         },
         {
           "name": "Hasten the End",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Hasten the End"
         },
         {
           "name": "Intense Celebration",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Intense Celebration"
         },
         {
           "name": "It Came From Beyond",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DomainPower",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "It Came From Beyond"
         },
         {
           "name": "Part the Veil",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Part the Veil"
         },
         {
           "name": "Scalykind",
           "doneness": "not-started",
           "type_facet": "InquisitorDomain",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Scalykind"
         },
         {
           "name": "Serpent Companion",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.DomainPower.Animal Companion",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Serpent Companion"
         },
         {
           "name": "Stars Subdomain",
           "doneness": "not-started",
           "type_facet": "InquisitorDomain",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Stars Subdomain"
         },
         {
           "name": "The Stars Are Right",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.DomainPower",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "The Stars Are Right"
         },
         {
           "name": "Tyrannical Strike",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Tyrannical Strike"
         },
         {
           "name": "Venomous Saliva",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Venomous Saliva"
         },
         {
           "name": "Venomous Stare",
           "doneness": "not-started",
           "type_facet": "SpecialAttack.SpellLike.DomainPower",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Venomous Stare"
         },
         {
           "name": "Void",
           "doneness": "not-started",
           "type_facet": "InquisitorDomain",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Void"
         }
       ]
     },
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 24,
-      "partial": 2,
+      "done": 26,
+      "partial": 0,
       "not_started": 0,
       "denominator": 26,
-      "pct": 92.3,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 26
@@ -143,157 +161,183 @@
           "name": "Companion (Amargasaurus)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Companion (Amargasaurus)"
         },
         {
           "name": "Companion (Brontotherium)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Companion (Brontotherium)"
         },
         {
           "name": "Companion (Deinotherium)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Companion (Deinotherium)"
         },
         {
           "name": "Companion (Devil Monkey)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Companion (Devil Monkey)"
         },
         {
           "name": "Companion (Dunkleosteus)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Companion (Dunkleosteus)"
         },
         {
           "name": "Companion (Elasmotherium)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Companion (Elasmotherium)"
         },
         {
           "name": "Companion (Giganotosaurus)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Companion (Giganotosaurus)"
         },
         {
           "name": "Companion (Kentrosaurus)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Companion (Kentrosaurus)"
         },
         {
           "name": "Companion (Mokele-Mbembe)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Companion (Mokele-Mbembe)"
         },
         {
           "name": "Companion (Quetzalcoatlus)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Companion (Quetzalcoatlus)"
         },
         {
           "name": "Companion (Raven (Giant))",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Companion (Raven (Giant))"
         },
         {
           "name": "Companion (Titanoboa)",
           "doneness": "done",
           "type_facet": null,
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Companion (Titanoboa)"
         },
         {
           "name": "Companion Advancement (Amargasaurus)",
           "doneness": "done",
           "type_facet": "CompanionAdvancement",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Companion Advancement (Amargasaurus)"
         },
         {
           "name": "Companion Advancement (Brontotherium)",
           "doneness": "done",
           "type_facet": "CompanionAdvancement",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Companion Advancement (Brontotherium)"
         },
         {
           "name": "Companion Advancement (Deinotherium)",
           "doneness": "done",
           "type_facet": "CompanionAdvancement",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Companion Advancement (Deinotherium)"
         },
         {
           "name": "Companion Advancement (Devil Monkey)",
           "doneness": "done",
           "type_facet": "CompanionAdvancement",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Companion Advancement (Devil Monkey)"
         },
         {
           "name": "Companion Advancement (Dunkleosteus)",
           "doneness": "done",
           "type_facet": "CompanionAdvancement",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Companion Advancement (Dunkleosteus)"
         },
         {
           "name": "Companion Advancement (Elasmotherium)",
           "doneness": "done",
           "type_facet": "CompanionAdvancement",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Companion Advancement (Elasmotherium)"
         },
         {
           "name": "Companion Advancement (Giganotosaurus)",
           "doneness": "done",
           "type_facet": "CompanionAdvancement",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Companion Advancement (Giganotosaurus)"
         },
         {
           "name": "Companion Advancement (Kentrosaurus)",
           "doneness": "done",
           "type_facet": "CompanionAdvancement",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Companion Advancement (Kentrosaurus)"
         },
         {
           "name": "Companion Advancement (Mokele-Mbembe)",
           "doneness": "done",
           "type_facet": "CompanionAdvancement",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Companion Advancement (Mokele-Mbembe)"
         },
         {
           "name": "Companion Advancement (Quetzalcoatlus)",
           "doneness": "done",
           "type_facet": "CompanionAdvancement",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Companion Advancement (Quetzalcoatlus)"
         },
         {
           "name": "Companion Advancement (Raven (Giant))",
           "doneness": "done",
           "type_facet": "CompanionAdvancement",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Companion Advancement (Raven (Giant))"
         },
         {
           "name": "Companion Advancement (Titanoboa)",
           "doneness": "done",
           "type_facet": "CompanionAdvancement",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Companion Advancement (Titanoboa)"
         },
         {
           "name": "Familiar (Coral Capuchin)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Magical Beast",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Familiar (Coral Capuchin)"
         },
         {
           "name": "Familiar (Mockingfey)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Fey",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Familiar (Mockingfey)"
         }
       ]
     },
@@ -315,97 +359,113 @@
           "name": "Cursed Bite",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural.CoralCapuchinRacialTrait",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Cursed Bite"
         },
         {
           "name": "Defensive Spikes",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.KentrosaurusRacialTrait",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Defensive Spikes"
         },
         {
           "name": "Ferocity",
           "doneness": "not-started",
           "type_facet": "Universal Monster Rule.SpecialQuality.Extraordinary.Defensive",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Ferocity"
         },
         {
           "name": "Gulp",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.DunkleosteusRacialTrait",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Gulp"
         },
         {
           "name": "Impaling Horn",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.ElasmotheriumRacialTrait",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Impaling Horn"
         },
         {
           "name": "Impaling Strike",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.KentrosaurusRacialTrait",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Impaling Strike"
         },
         {
           "name": "Mock",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Supernatural.MockingfeyRacialTrait",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Mock"
         },
         {
           "name": "Moisture Dependency",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.CoralCapuchinRacialTrait",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Moisture Dependency"
         },
         {
           "name": "Negative Energy Affinity",
           "doneness": "not-started",
           "type_facet": "Universal Monster Rule.SpecialQuality.Extraordinary.Defensive",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Negative Energy Affinity"
         },
         {
           "name": "Puncture Armor",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.DevilMonkeyRacialTrait",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Puncture Armor"
         },
         {
           "name": "Razor-Sharp Beak",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.QuetzalcoatlusRacialTrait",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Razor-Sharp Beak"
         },
         {
           "name": "Scavenger",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.GiantRavenRacialTrait",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Scavenger"
         },
         {
           "name": "Scent",
           "doneness": "not-started",
           "type_facet": "Universal Monster Rule.SpecialQuality.Extraordinary.Sense",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Scent"
         },
         {
           "name": "Spell-Like Abilities",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.SpellLike.MockingfeyRacialTrait",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Spell-Like Abilities"
         },
         {
           "name": "Sweep",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.DeinotheriumRacialTrait",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Sweep"
         },
         {
           "name": "Whip Tail",
           "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.MokeleMbembeRacialTrait",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Whip Tail"
         }
       ]
     },
@@ -427,55 +487,64 @@
           "name": "+2 Strength, +2 Wisdom, -2 Intelligence",
           "doneness": "not-started",
           "type_facet": "RacialTraits.Rougarou Racial Trait.Rougarou Racial Default.SpecialQuality.Racial Ability Scores",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "+2 Strength, +2 Wisdom, -2 Intelligence"
         },
         {
           "name": "Change Shape",
           "doneness": "not-started",
           "type_facet": "RacialTraits.Rougarou Racial Trait.Rougarou Racial Default.SpecialQuality.Special Quality.Supernatural",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Change Shape"
         },
         {
           "name": "Languages",
           "doneness": "not-started",
           "type_facet": "RacialTraits.Rougarou Racial Trait.Rougarou Racial Default.SpecialQuality.Racial Language",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Languages"
         },
         {
           "name": "Medium",
           "doneness": "not-started",
           "type_facet": "RacialTraits.Rougarou Racial Trait.Rougarou Racial Default.SpecialQuality.Racial Size",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Medium"
         },
         {
           "name": "Natural Weapon",
           "doneness": "not-started",
           "type_facet": "RacialTraits.Rougarou Racial Trait.Rougarou Racial Default.SpecialQuality",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Natural Weapon"
         },
         {
           "name": "Normal Speed",
           "doneness": "not-started",
           "type_facet": "RacialTraits.Rougarou Racial Trait.Rougarou Racial Default.SpecialQuality.Racial Speed",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Normal Speed"
         },
         {
           "name": "Rougarou",
           "doneness": "not-started",
           "type_facet": "AdoptiveRace",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Rougarou"
         },
         {
           "name": "Senses",
           "doneness": "not-started",
           "type_facet": "RacialTraits.Rougarou Racial Trait.Rougarou Racial Default.SpecialQuality.Racial Vision",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Senses"
         },
         {
           "name": "Shapechanger",
           "doneness": "not-started",
           "type_facet": "RacialTraits.Rougarou Racial Trait.Rougarou Racial Default.SpecialQuality.Racial Type",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Shapechanger"
         }
       ]
     },
@@ -496,7 +565,8 @@
           "name": "Rougarou",
           "doneness": "not-started",
           "type_facet": "Base.PC",
-          "standing": "origin"
+          "standing": "origin",
+          "display_name": "Rougarou"
         }
       ]
     },
@@ -517,13 +587,15 @@
           "name": "Animal Growth (Reptiles Only)",
           "doneness": "not-started",
           "type_facet": "Arcane.Divine",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Animal Growth (Reptiles Only)"
         },
         {
           "name": "Animal Shapes (Reptiles Only)",
           "doneness": "not-started",
           "type_facet": "Divine",
-          "standing": "unclassified"
+          "standing": "unclassified",
+          "display_name": "Animal Shapes (Reptiles Only)"
         }
       ]
     }

@@ -1,8 +1,8 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-08-17T20:14:10Z",
-  "source_document": "/home/ubuntu/workspace/repos/codex/docs/work-inventory.json",
+  "generated_at": "2026-08-19T18:06:59Z",
+  "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
     "name",
@@ -12,8 +12,8 @@
     "source_file",
     "type_facet"
   ],
-  "total_units": 38521,
-  "proven_units": 5993,
+  "total_units": 38372,
+  "proven_units": 5883,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 420,
   "category_labels_redacted": 3,
@@ -89,20 +89,20 @@
       "category_axis_label": "Category"
     },
     "class_feature": {
-      "units": 15472,
-      "proven": 150,
+      "units": 15439,
+      "proven": 146,
       "by_status": {
-        "unknown": 3893,
-        "not-ingested": 10439,
+        "unknown": 3864,
+        "not-ingested": 10436,
         "deferred-with-reason": 36,
-        "grounded": 95,
+        "grounded": 91,
         "text-complete": 55,
-        "fixture-verified": 8,
+        "fixture-verified": 12,
         "literal-verified": 17,
-        "not-started": 929
+        "not-started": 928
       },
       "shard": "PF1e-units-class_feature.json",
-      "bytes": 2339408,
+      "bytes": 2335504,
       "doneness_unmapped": {},
       "categories": {
         "specialquality": {
@@ -260,8 +260,8 @@
         },
         "paladinclassfeatures": {
           "label": "Paladin Class Features",
-          "done": 6,
-          "held": 2,
+          "done": 7,
+          "held": 1,
           "in-progress": 0,
           "not-started": 134,
           "unmeasurable": 29,
@@ -465,15 +465,6 @@
           "unmeasurable": 24,
           "deferred": 0
         },
-        "sorcererbloodlinechoice": {
-          "label": "Sorcerer Bloodline Choice",
-          "done": 0,
-          "held": 0,
-          "in-progress": 0,
-          "not-started": 7,
-          "unmeasurable": 74,
-          "deferred": 0
-        },
         "hunterclassfeatures": {
           "label": "Hunter Class Feature",
           "done": 1,
@@ -557,8 +548,8 @@
         },
         "ninjaclassfeatures": {
           "label": "Ninja Class Features",
-          "done": 3,
-          "held": 1,
+          "done": 4,
+          "held": 0,
           "in-progress": 0,
           "not-started": 50,
           "unmeasurable": 1,
@@ -602,8 +593,8 @@
         },
         "slayerclassfeatures": {
           "label": "Slayer Class Feature",
-          "done": 4,
-          "held": 2,
+          "done": 5,
+          "held": 1,
           "in-progress": 0,
           "not-started": 28,
           "unmeasurable": 17,
@@ -616,6 +607,15 @@
           "in-progress": 0,
           "not-started": 41,
           "unmeasurable": 9,
+          "deferred": 0
+        },
+        "sorcererbloodlinechoice": {
+          "label": "Sorcerer Bloodline Choice",
+          "done": 0,
+          "held": 0,
+          "in-progress": 0,
+          "not-started": 4,
+          "unmeasurable": 45,
           "deferred": 0
         },
         "arcanistschoolchoice": {
@@ -1340,8 +1340,8 @@
         },
         "samuraiclassfeatures": {
           "label": "Samurai Class Features",
-          "done": 2,
-          "held": 1,
+          "done": 3,
+          "held": 0,
           "in-progress": 0,
           "not-started": 12,
           "unmeasurable": 0,
@@ -3705,15 +3705,6 @@
           "unmeasurable": 2,
           "deferred": 0
         },
-        "enlightenedbloodragerfeatchoice": {
-          "label": "Enlightened Bloodrager Feat Choice",
-          "done": 0,
-          "held": 0,
-          "in-progress": 0,
-          "not-started": 2,
-          "unmeasurable": 0,
-          "deferred": 0
-        },
         "rage": {
           "label": "Rage",
           "done": 0,
@@ -4308,6 +4299,15 @@
           "unmeasurable": 0,
           "deferred": 0
         },
+        "enlightenedbloodragerfeatchoice": {
+          "label": "Enlightened Bloodrager Feat Choice",
+          "done": 0,
+          "held": 0,
+          "in-progress": 0,
+          "not-started": 1,
+          "unmeasurable": 0,
+          "deferred": 0
+        },
         "goldenlegionnairebodyguard": {
           "label": "Golden Legionnaire Bodyguard",
           "done": 0,
@@ -4844,21 +4844,22 @@
     },
     "companion": {
       "units": 1696,
-      "proven": 823,
+      "proven": 666,
       "by_status": {
-        "not-ingested": 774,
+        "not-ingested": 769,
         "literal-verified": 99,
         "text-complete": 165,
-        "grounded": 658
+        "grounded": 501,
+        "fixture-verified": 162
       },
       "shard": "PF1e-units-companion.json",
-      "bytes": 227266,
+      "bytes": 228542,
       "doneness_unmapped": {},
       "categories": {
         "none": {
           "label": "Uncategorised",
-          "done": 130,
-          "held": 18,
+          "done": 147,
+          "held": 1,
           "in-progress": 0,
           "not-started": 49,
           "unmeasurable": 0,
@@ -4866,8 +4867,8 @@
         },
         "companion": {
           "label": "Companion",
-          "done": 93,
-          "held": 96,
+          "done": 182,
+          "held": 7,
           "in-progress": 0,
           "not-started": 2,
           "unmeasurable": 0,
@@ -4884,28 +4885,28 @@
         },
         "specialquality": {
           "label": "Special Qualities",
-          "done": 85,
+          "done": 86,
           "held": 21,
           "in-progress": 0,
-          "not-started": 53,
+          "not-started": 52,
           "unmeasurable": 0,
           "deferred": 0
         },
         "tempevolutionchoice": {
           "label": "Temporary Evolution Choice",
-          "done": 0,
+          "done": 3,
           "held": 0,
           "in-progress": 0,
-          "not-started": 121,
+          "not-started": 118,
           "unmeasurable": 0,
           "deferred": 0
         },
         "evolutionchoice": {
           "label": "Evolution Choice",
           "done": 0,
-          "held": 0,
+          "held": 1,
           "in-progress": 0,
-          "not-started": 103,
+          "not-started": 102,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -4965,8 +4966,8 @@
         },
         "animal": {
           "label": "Animal",
-          "done": 19,
-          "held": 39,
+          "done": 58,
+          "held": 0,
           "in-progress": 0,
           "not-started": 0,
           "unmeasurable": 0,
@@ -5019,8 +5020,8 @@
         },
         "vermin": {
           "label": "Vermin",
-          "done": 0,
-          "held": 9,
+          "done": 9,
+          "held": 0,
           "in-progress": 0,
           "not-started": 0,
           "unmeasurable": 0,
@@ -5046,8 +5047,8 @@
         },
         "plant": {
           "label": "Plant",
-          "done": 0,
-          "held": 7,
+          "done": 7,
+          "held": 0,
           "in-progress": 0,
           "not-started": 0,
           "unmeasurable": 0,
@@ -5487,8 +5488,8 @@
         },
         "construct": {
           "label": "Construct",
-          "done": 0,
-          "held": 1,
+          "done": 1,
+          "held": 0,
           "in-progress": 0,
           "not-started": 0,
           "unmeasurable": 0,
@@ -5508,45 +5509,45 @@
     },
     "equipment": {
       "units": 6208,
-      "proven": 320,
+      "proven": 347,
       "by_status": {
-        "ingested-magnitude": 635,
-        "literal-verified": 4812,
-        "grounded": 139,
+        "ingested-magnitude": 324,
+        "literal-verified": 5099,
+        "grounded": 166,
         "unknown": 205,
         "not-started": 164,
-        "not-ingested": 61,
+        "not-ingested": 58,
         "text-complete": 181,
         "fixture-verified": 11
       },
       "shard": "PF1e-units-equipment.json",
-      "bytes": 833711,
+      "bytes": 832885,
       "doneness_unmapped": {},
       "categories": {
         "magic": {
           "label": "Magic",
-          "done": 2712,
-          "held": 219,
-          "in-progress": 160,
+          "done": 2872,
+          "held": 80,
+          "in-progress": 139,
           "not-started": 135,
           "unmeasurable": 1,
           "deferred": 0
         },
         "goods": {
           "label": "Adventuring Gear",
-          "done": 859,
-          "held": 93,
+          "done": 951,
+          "held": 2,
           "in-progress": 9,
-          "not-started": 35,
+          "not-started": 34,
           "unmeasurable": 1,
           "deferred": 0
         },
         "weapon": {
           "label": "Weapon",
-          "done": 390,
-          "held": 57,
+          "done": 428,
+          "held": 21,
           "in-progress": 14,
-          "not-started": 10,
+          "not-started": 8,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -5570,9 +5571,9 @@
         },
         "armor": {
           "label": "Armor",
-          "done": 112,
+          "done": 117,
           "held": 0,
-          "in-progress": 7,
+          "in-progress": 2,
           "not-started": 5,
           "unmeasurable": 0,
           "deferred": 0
@@ -5588,8 +5589,8 @@
         },
         "artifact": {
           "label": "Artifact",
-          "done": 57,
-          "held": 9,
+          "done": 66,
+          "held": 0,
           "in-progress": 3,
           "not-started": 3,
           "unmeasurable": 0,
@@ -5606,8 +5607,8 @@
         },
         "ammunition": {
           "label": "Ammunition",
-          "done": 49,
-          "held": 9,
+          "done": 58,
+          "held": 0,
           "in-progress": 1,
           "not-started": 0,
           "unmeasurable": 0,
@@ -6077,62 +6078,62 @@
     },
     "equipment_modifier": {
       "units": 1580,
-      "proven": 513,
+      "proven": 604,
       "by_status": {
-        "grounded": 68,
-        "unknown": 461,
-        "text-complete": 445,
-        "ingested-magnitude": 508,
+        "grounded": 152,
+        "unknown": 416,
+        "text-complete": 452,
+        "ingested-magnitude": 462,
         "literal-verified": 35,
         "not-started": 63
       },
       "shard": "PF1e-units-equipment_modifier.json",
-      "bytes": 169321,
+      "bytes": 168941,
       "doneness_unmapped": {},
       "categories": {
         "none": {
           "label": "Uncategorised",
-          "done": 149,
-          "held": 2,
-          "in-progress": 184,
+          "done": 186,
+          "held": 3,
+          "in-progress": 151,
           "not-started": 4,
-          "unmeasurable": 300,
+          "unmeasurable": 295,
           "deferred": 0
         },
         "weapon": {
           "label": "Weapon",
-          "done": 87,
+          "done": 96,
           "held": 2,
           "in-progress": 114,
           "not-started": 0,
-          "unmeasurable": 65,
+          "unmeasurable": 56,
           "deferred": 0
         },
         "armor": {
           "label": "Armor",
-          "done": 29,
+          "done": 49,
           "held": 1,
-          "in-progress": 104,
+          "in-progress": 86,
           "not-started": 1,
-          "unmeasurable": 16,
+          "unmeasurable": 14,
           "deferred": 0
         },
         "basematerial": {
           "label": "Base Material",
-          "done": 6,
+          "done": 17,
           "held": 2,
-          "in-progress": 77,
+          "in-progress": 66,
           "not-started": 0,
           "unmeasurable": 0,
           "deferred": 0
         },
         "amuletofmightyfists": {
           "label": "Amulet Of Mighty Fists",
-          "done": 50,
+          "done": 66,
           "held": 0,
           "in-progress": 12,
           "not-started": 0,
-          "unmeasurable": 20,
+          "unmeasurable": 4,
           "deferred": 0
         },
         "mythic": {
@@ -6146,20 +6147,20 @@
         },
         "ammunition": {
           "label": "Ammunition",
-          "done": 18,
+          "done": 28,
           "held": 0,
           "in-progress": 9,
           "not-started": 0,
-          "unmeasurable": 20,
+          "unmeasurable": 10,
           "deferred": 0
         },
         "shield": {
           "label": "Shield",
-          "done": 7,
+          "done": 26,
           "held": 1,
-          "in-progress": 29,
+          "in-progress": 13,
           "not-started": 0,
-          "unmeasurable": 8,
+          "unmeasurable": 5,
           "deferred": 0
         },
         "goods": {
@@ -6200,9 +6201,9 @@
         },
         "masterworkquality": {
           "label": "Masterwork Quality",
-          "done": 4,
+          "done": 5,
           "held": 0,
-          "in-progress": 5,
+          "in-progress": 4,
           "not-started": 0,
           "unmeasurable": 0,
           "deferred": 0
@@ -6815,26 +6816,26 @@
     },
     "feat": {
       "units": 2610,
-      "proven": 1570,
+      "proven": 1547,
       "by_status": {
-        "text-complete": 1462,
-        "unknown": 542,
+        "text-complete": 1439,
+        "unknown": 565,
         "grounded": 108,
         "not-started": 97,
         "not-ingested": 399,
         "deferred-with-reason": 2
       },
       "shard": "PF1e-units-feat.json",
-      "bytes": 258188,
+      "bytes": 258050,
       "doneness_unmapped": {},
       "categories": {
         "general": {
           "label": "General",
           "done": 519,
-          "held": 52,
+          "held": 51,
           "in-progress": 1,
           "not-started": 58,
-          "unmeasurable": 210,
+          "unmeasurable": 211,
           "deferred": 0
         },
         "combat": {
@@ -6866,11 +6867,11 @@
         },
         "psionic": {
           "label": "Psionic",
-          "done": 82,
+          "done": 81,
           "held": 1,
           "in-progress": 0,
           "not-started": 0,
-          "unmeasurable": 70,
+          "unmeasurable": 71,
           "deferred": 0
         },
         "teamwork": {
@@ -6911,11 +6912,11 @@
         },
         "story": {
           "label": "Story",
-          "done": 18,
-          "held": 7,
+          "done": 3,
+          "held": 1,
           "in-progress": 0,
           "not-started": 0,
-          "unmeasurable": 0,
+          "unmeasurable": 21,
           "deferred": 2
         },
         "itemcreation": {
@@ -7202,21 +7203,21 @@
     },
     "monster": {
       "units": 1270,
-      "proven": 339,
+      "proven": 276,
       "by_status": {
-        "grounded": 339,
+        "fixture-verified": 140,
+        "grounded": 276,
         "literal-verified": 826,
-        "fixture-verified": 77,
         "not-ingested": 28
       },
       "shard": "PF1e-units-monster.json",
-      "bytes": 109004,
+      "bytes": 109508,
       "doneness_unmapped": {},
       "categories": {
         "none": {
           "label": "Uncategorised",
-          "done": 466,
-          "held": 283,
+          "done": 529,
+          "held": 220,
           "in-progress": 0,
           "not-started": 13,
           "unmeasurable": 0,
@@ -7352,42 +7353,43 @@
       "category_axis_label": "Category"
     },
     "monster_ability": {
-      "units": 2951,
-      "proven": 1537,
+      "units": 2942,
+      "proven": 1607,
       "by_status": {
-        "not-ingested": 1312,
-        "grounded": 596,
-        "text-complete": 941,
-        "literal-verified": 102
+        "not-ingested": 1135,
+        "text-complete": 1006,
+        "grounded": 601,
+        "literal-verified": 102,
+        "fixture-verified": 98
       },
       "shard": "PF1e-units-monster_ability.json",
-      "bytes": 355956,
+      "bytes": 355296,
       "doneness_unmapped": {},
       "categories": {
         "specialquality": {
           "label": "Special Qualities",
-          "done": 639,
-          "held": 85,
+          "done": 708,
+          "held": 123,
           "in-progress": 0,
-          "not-started": 906,
+          "not-started": 790,
           "unmeasurable": 0,
           "deferred": 0
         },
         "specialattack": {
           "label": "Special Attacks",
-          "done": 730,
-          "held": 185,
+          "done": 845,
+          "held": 130,
           "in-progress": 0,
-          "not-started": 378,
+          "not-started": 318,
           "unmeasurable": 0,
           "deferred": 0
         },
         "universalmonsterrule": {
           "label": "Universal Monster Rule",
-          "done": 0,
+          "done": 1,
           "held": 0,
           "in-progress": 0,
-          "not-started": 28,
+          "not-started": 27,
           "unmeasurable": 0,
           "deferred": 0
         }
@@ -7395,32 +7397,33 @@
       "category_axis_label": "Category"
     },
     "race": {
-      "units": 103,
+      "units": 95,
       "proven": 0,
       "by_status": {
-        "not-ingested": 93,
-        "literal-verified": 7,
+        "ingested-magnitude": 3,
+        "literal-verified": 34,
+        "not-ingested": 55,
         "not-started": 3
       },
       "shard": "PF1e-units-race.json",
-      "bytes": 9971,
+      "bytes": 9355,
       "doneness_unmapped": {},
       "categories": {
-        "base": {
-          "label": "Base",
-          "done": 0,
-          "held": 0,
-          "in-progress": 0,
-          "not-started": 44,
-          "unmeasurable": 0,
-          "deferred": 0
-        },
         "none": {
           "label": "Uncategorised",
           "done": 0,
           "held": 0,
           "in-progress": 0,
           "not-started": 38,
+          "unmeasurable": 0,
+          "deferred": 0
+        },
+        "base": {
+          "label": "Base",
+          "done": 27,
+          "held": 0,
+          "in-progress": 3,
+          "not-started": 6,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -7491,25 +7494,25 @@
       "category_axis_label": "Category"
     },
     "race_trait": {
-      "units": 3603,
-      "proven": 484,
+      "units": 3504,
+      "proven": 507,
       "by_status": {
-        "not-ingested": 2819,
-        "grounded": 303,
-        "ingested-magnitude": 287,
+        "not-ingested": 2720,
+        "grounded": 326,
+        "ingested-magnitude": 264,
         "text-complete": 181,
         "literal-verified": 13
       },
       "shard": "PF1e-units-race_trait.json",
-      "bytes": 519982,
+      "bytes": 502957,
       "doneness_unmapped": {},
       "categories": {
         "racialtraits": {
           "label": "Racial Traits",
-          "done": 486,
+          "done": 509,
           "held": 1,
-          "in-progress": 279,
-          "not-started": 523,
+          "in-progress": 256,
+          "not-started": 455,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -7545,7 +7548,7 @@
           "done": 0,
           "held": 0,
           "in-progress": 0,
-          "not-started": 75,
+          "not-started": 69,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -7558,15 +7561,6 @@
           "unmeasurable": 0,
           "deferred": 0
         },
-        "adoptiverace": {
-          "label": "Adoptive Race",
-          "done": 0,
-          "held": 0,
-          "in-progress": 0,
-          "not-started": 51,
-          "unmeasurable": 0,
-          "deferred": 0
-        },
         "defensive": {
           "label": "Defensive",
           "done": 0,
@@ -7576,21 +7570,21 @@
           "unmeasurable": 0,
           "deferred": 0
         },
+        "adoptiverace": {
+          "label": "Adoptive Race",
+          "done": 0,
+          "held": 0,
+          "in-progress": 0,
+          "not-started": 44,
+          "unmeasurable": 0,
+          "deferred": 0
+        },
         "supernatural": {
           "label": "Supernatural",
           "done": 0,
           "held": 0,
           "in-progress": 0,
           "not-started": 37,
-          "unmeasurable": 0,
-          "deferred": 0
-        },
-        "raceability": {
-          "label": "Race Ability",
-          "done": 0,
-          "held": 0,
-          "in-progress": 0,
-          "not-started": 35,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -7630,21 +7624,21 @@
           "unmeasurable": 0,
           "deferred": 0
         },
-        "rangerclassfeatures": {
-          "label": "Ranger Class Features",
-          "done": 0,
-          "held": 0,
-          "in-progress": 0,
-          "not-started": 29,
-          "unmeasurable": 0,
-          "deferred": 0
-        },
         "skinwalkerracialtrait": {
           "label": "Skinwalker Racial Trait",
           "done": 0,
           "held": 0,
           "in-progress": 0,
           "not-started": 26,
+          "unmeasurable": 0,
+          "deferred": 0
+        },
+        "rangerclassfeatures": {
+          "label": "Ranger Class Features",
+          "done": 0,
+          "held": 0,
+          "in-progress": 0,
+          "not-started": 25,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -7668,6 +7662,15 @@
         },
         "weakness": {
           "label": "Weakness",
+          "done": 0,
+          "held": 0,
+          "in-progress": 0,
+          "not-started": 21,
+          "unmeasurable": 0,
+          "deferred": 0
+        },
+        "raceability": {
+          "label": "Race Ability",
           "done": 0,
           "held": 0,
           "in-progress": 0,
@@ -10767,25 +10770,25 @@
     },
     "spell": {
       "units": 2843,
-      "proven": 230,
+      "proven": 156,
       "by_status": {
-        "fixture-verified": 1097,
-        "ingested-magnitude": 382,
+        "fixture-verified": 1244,
+        "ingested-magnitude": 309,
         "literal-verified": 211,
         "text-complete": 33,
         "not-started": 112,
         "not-ingested": 785,
-        "grounded": 197,
+        "grounded": 123,
         "unknown": 26
       },
       "shard": "PF1e-units-spell.json",
-      "bytes": 329067,
+      "bytes": 329513,
       "doneness_unmapped": {},
       "categories": {
         "arcane": {
           "label": "Arcane",
-          "done": 635,
-          "held": 188,
+          "done": 733,
+          "held": 90,
           "in-progress": 83,
           "not-started": 415,
           "unmeasurable": 23,
@@ -10793,8 +10796,8 @@
         },
         "none": {
           "label": "Uncategorised",
-          "done": 427,
-          "held": 135,
+          "done": 448,
+          "held": 114,
           "in-progress": 74,
           "not-started": 401,
           "unmeasurable": 0,
@@ -10802,8 +10805,8 @@
         },
         "divine": {
           "label": "Divine",
-          "done": 218,
-          "held": 66,
+          "done": 244,
+          "held": 40,
           "in-progress": 11,
           "not-started": 80,
           "unmeasurable": 3,
@@ -10811,8 +10814,8 @@
         },
         "psychic": {
           "label": "Psychic",
-          "done": 76,
-          "held": 6,
+          "done": 78,
+          "held": 4,
           "in-progress": 1,
           "not-started": 1,
           "unmeasurable": 0,
@@ -10823,8 +10826,8 @@
       "school_categories": {
         "Transmutation": {
           "label": "Transmutation",
-          "done": 353,
-          "held": 73,
+          "done": 379,
+          "held": 47,
           "in-progress": 54,
           "not-started": 139,
           "unmeasurable": 6,
@@ -10841,8 +10844,8 @@
         },
         "Conjuration": {
           "label": "Conjuration",
-          "done": 188,
-          "held": 98,
+          "done": 236,
+          "held": 50,
           "in-progress": 10,
           "not-started": 84,
           "unmeasurable": 15,
@@ -10850,8 +10853,8 @@
         },
         "Evocation": {
           "label": "Evocation",
-          "done": 152,
-          "held": 62,
+          "done": 174,
+          "held": 40,
           "in-progress": 10,
           "not-started": 44,
           "unmeasurable": 0,
@@ -10859,8 +10862,8 @@
         },
         "Enchantment": {
           "label": "Enchantment",
-          "done": 175,
-          "held": 26,
+          "done": 183,
+          "held": 18,
           "in-progress": 9,
           "not-started": 44,
           "unmeasurable": 2,
@@ -10868,8 +10871,8 @@
         },
         "Abjuration": {
           "label": "Abjuration",
-          "done": 158,
-          "held": 26,
+          "done": 164,
+          "held": 20,
           "in-progress": 12,
           "not-started": 30,
           "unmeasurable": 0,
@@ -10877,8 +10880,8 @@
         },
         "Necromancy": {
           "label": "Necromancy",
-          "done": 118,
-          "held": 45,
+          "done": 131,
+          "held": 32,
           "in-progress": 8,
           "not-started": 41,
           "unmeasurable": 1,
@@ -10886,8 +10889,8 @@
         },
         "Divination": {
           "label": "Divination",
-          "done": 106,
-          "held": 39,
+          "done": 112,
+          "held": 33,
           "in-progress": 5,
           "not-started": 27,
           "unmeasurable": 1,
@@ -10895,8 +10898,8 @@
         },
         "Illusion": {
           "label": "Illusion",
-          "done": 100,
-          "held": 24,
+          "done": 118,
+          "held": 6,
           "in-progress": 10,
           "not-started": 32,
           "unmeasurable": 0,
