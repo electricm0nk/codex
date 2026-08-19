@@ -151,6 +151,59 @@ fn granted_rows_are_not_offered_as_selectable_alternates() {
     }
 }
 
+/// Aasimar's and Tiefling's 48 heritage grant edges: 16 selectable heritages,
+/// each naming its own three replacement rows.
+///
+/// **These edges are not new; this TEST is newly able to see them.** They are
+/// the same `ABILITY:<Race> Racial Trait|AUTOMATIC|<key>` shape the eleven
+/// literal entries above are, and they have been on disk since the SD-29
+/// race-trait lane's round 4. `corpus()` above loads three book directories,
+/// and until `SD31-CE-COMPANION-001` (2026-08-18) these records lived in a
+/// fourth, `data/corpus/core_essentials/race_trait/`, which this file never
+/// loaded -- so a test whose own name says "corpus-wide" was measuring 11 of 59
+/// edges. `decisions.md §9` retired that book id and re-filed the records under
+/// `advanced_race_guide`, which this file DOES load, and the shortfall surfaced
+/// immediately. Recorded rather than absorbed: the count moved 11 -> 59 because
+/// the denominator was wrong, not because the corpus grew.
+///
+/// Built from the 16 heritage names rather than written out as 48 literals, so
+/// a heritage gaining or losing a replacement row still fails this assertion --
+/// the three row names are fixed by the corpus (`aasimar_abilities_race_subrace.lst`
+/// and `tiefling_abilities_race_subrace.lst` each replace exactly ability
+/// scores, the skill bonus and the spell-like ability) and a fourth would not
+/// be generated here.
+fn heritage_grant_edges() -> impl Iterator<Item = (String, String)> {
+    const AASIMAR: &[&str] = &[
+        "Agathion-Blooded",
+        "Angel-Blooded",
+        "Archon-Blooded",
+        "Azata-Blooded",
+        "Garuda-Blooded",
+        "Peri-Blooded",
+    ];
+    const TIEFLING: &[&str] = &[
+        "Asura-Spawn",
+        "Daemon-Spawn",
+        "Demodand-Spawn",
+        "Demon-Spawn",
+        "Devil-Spawn",
+        "Div-Spawn",
+        "Kyton-Spawn",
+        "Oni-Spawn",
+        "Qlippoth-Spawn",
+        "Rakshasa-Spawn",
+    ];
+    const REPLACED: &[&str] = &["Ability Scores", "Skilled", "Spell-Like Ability"];
+
+    [("Aasimar", AASIMAR), ("Tiefling", TIEFLING)].into_iter().flat_map(|(race, heritages)| {
+        heritages.iter().flat_map(move |heritage| {
+            REPLACED
+                .iter()
+                .map(move |row| (format!("{heritage} ~ {row}"), format!("{race} ~ {heritage}")))
+        })
+    })
+}
+
 /// Derived, not transcribed: scan every loaded race-trait record's `ABILITY:`
 /// tokens for `AUTOMATIC` grants that name another *loaded race-trait record*,
 /// and require the result to be exactly the two known edges.
@@ -204,6 +257,7 @@ fn the_ability_automatic_grant_shape_is_exactly_two_records_corpus_wide() {
     ]
     .into_iter()
     .map(|(a, b)| (a.to_owned(), b.to_owned()))
+    .chain(heritage_grant_edges())
     .collect();
 
     assert_eq!(

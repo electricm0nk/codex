@@ -4949,7 +4949,47 @@ fn classify(
             }
         }
     };
-    let engine_book_field = if own_engine_book.is_some() {
+    // ---- `decisions.md §9` re-attribution widening (`SD31-CE-COMPANION-001`) ----
+    //
+    // The `source_book` lookup above is correct and stays first, for the reason
+    // its own comment gives. It has one blind spot, and it is not hypothetical:
+    // when a re-attribution MOVES the engine table as well as the reporting
+    // label, `source_book` resolves to a rule set that no longer has a table
+    // for this kind, and the verdict arm below falls to its terminal
+    // `..._has_no_engine_table` branch while the row is sitting, served, in
+    // another book's table.
+    //
+    // Measured, not predicted: retiring the `core_essentials` companion
+    // registration and re-filing its 102 rows under the books their own `.lst`
+    // headers name (`SOURCELONG:Bestiary` / `Ultimate Magic` / `Advanced
+    // Player's Guide`) moved 97 units from ingested to
+    // `companion_content_has_no_engine_table` -- bestiary +67, ultimate_magic
+    // +27, advanced_players_guide +3 -- on the same run in which
+    // `reach_gate::companions_reach` went from 102 unreachable records to zero.
+    // Two instruments, opposite directions, and the board's was the wrong one.
+    //
+    // **This can only ever widen.** It fires only when the `source_book`-derived
+    // book does NOT hold the unit and the re-attributed `book` DOES, so the
+    // 16-unit downgrade the comment above records (using `unit.book` outright)
+    // cannot recur: that downgrade happened because Bestiary 1 had no companion
+    // table of its own, and an OBSERVED hit is exactly the condition that was
+    // missing. It is the same "credited to a host only when that host's own
+    // table is observed to hold it" rule the shared-library branch above
+    // already applies, asked of the re-attributed book instead of a pcc host.
+    let reattributed_engine_book = engine_book_for(&unit.book).filter(|reattributed| {
+        *reattributed != engine_book
+            && !facts.holds_unit(&engine_book, unit)
+            && facts.holds_unit(reattributed, unit)
+    });
+    let engine_book = match reattributed_engine_book {
+        Some(b) => b.to_string(),
+        None => engine_book,
+    };
+    // Report the book that actually answered whenever it is not the unit's own
+    // `source_book` rule set -- a receipt reader has to be able to see which
+    // table was consulted, and after a widening that is no longer derivable
+    // from `source_book`.
+    let engine_book_field = if own_engine_book.is_some() && reattributed_engine_book.is_none() {
         None
     } else {
         Some(engine_book.clone())

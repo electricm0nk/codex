@@ -173,7 +173,7 @@
       "AnimalCompanion"
     ]
   },
-  "ingested_at": "2026-08-13T02:26:54Z",
+  "ingested_at": "2026-08-18T22:35:19Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
@@ -187,7 +187,6 @@
   },
   "wiring_class": "computed",
   "wiring_class_signals": [
-    "computed:pre_guard",
-    "derived:bonus"
+    "computed:pre_guard"
   ]
 }

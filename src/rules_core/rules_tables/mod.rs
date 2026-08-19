@@ -29,7 +29,6 @@ pub mod book_of_the_damned_volume_1;
 pub mod book_of_the_damned_volume_2;
 pub mod class_spell_levels;
 pub mod companion_chassis;
-pub mod core_essentials;
 pub mod crb;
 pub mod equipment_gap_tables;
 pub mod feat_gap_tables;

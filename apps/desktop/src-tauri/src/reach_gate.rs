@@ -595,12 +595,6 @@ const CORPUS_BOOK_IDS: &[(&str, &str)] = &[
     ("inner_sea_races", "inner_sea_races"),
     // SD-29 Epic 6 round 3 (race-trait lane, extend). Same again.
     ("horror_adventures", "horror_adventures"),
-    // SD-29 Epic 6 round 4 (race-trait lane, extend). Same again -- and note
-    // that this book id names a real corpus directory of its own only because
-    // Aasimar's and Tiefling's heritage traits belong to no other book; the
-    // book's shared racial-trait files are still attributed to `core_rulebook`
-    // and `beastiary` by `ingest_races`.
-    ("core_essentials", "core_essentials"),
     // SD-29 Epic 5 extend, round 2 (monster lane). Same again -- the corpus
     // directory and the book id are the same string for both volumes.
     ("book_of_the_damned_volume_1", "book_of_the_damned_volume_1"),
@@ -818,6 +812,21 @@ fn corpus_record_keys(book_dir: &str, kind_dir: &str) -> BTreeSet<String> {
 /// call site below.
 fn corpus_record_ids(book_dir: &str, kind_dir: &str) -> BTreeSet<String> {
     corpus_record_field(book_dir, kind_dir, "id")
+}
+
+/// Every `data.key` under one exact directory, rather than under a whole
+/// `<book>/<kind>/` tree. Used where a claim needs a SUBSET of a book's kind to
+/// fail independently -- the Aasimar/Tiefling heritage records inside ARG's
+/// much larger `race_trait/` tree are the case that needed it.
+fn corpus_record_keys_in(dir: &Path) -> BTreeSet<String> {
+    json_files_under(dir)
+        .into_iter()
+        .filter_map(|path| {
+            let text = fs::read_to_string(&path).ok()?;
+            let value: serde_json::Value = serde_json::from_str(&text).ok()?;
+            value.get("data")?.get("key")?.as_str().map(str::to_owned)
+        })
+        .collect()
 }
 
 fn corpus_record_field(book_dir: &str, kind_dir: &str, field: &str) -> BTreeSet<String> {
@@ -1302,21 +1311,6 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // asserts the full pass by exact count rather than leaving it unstated.
         ("horror_adventures", "race_traits") => Some(race_traits_reach("HA", "horror_adventures")),
         // SD-29 Epic 6 round 4 (race-trait lane, extend, 2026-08-12,
-        // `decisions.md §49`). Core Essentials' 64 heritage records --
-        // Aasimar's 6 and Tiefling's 10 selectable heritages, plus the 48
-        // replacement rows those heritages grant -- served by exactly the two
-        // commands ARG's, APG's, Monster Codex's, ISR's and HA's claims run.
-        //
-        // **This is the first book in the lane whose records are majority
-        // `flagGranted` rather than `Alternate`, and the claim is therefore
-        // load-bearing in a way the earlier ones were not.** 48 of the 64 are
-        // reached only through the third arm of `race_traits_reach` -- the one
-        // that selects each alternate in turn and reads what comes in with it.
-        // A regression that broke the heritage grant link would leave the
-        // other five books' claims completely green and drop this one from 64
-        // to 16, which is exactly the granularity this claim exists to have.
-        ("core_essentials", "race_traits") => Some(race_traits_reach("CE", "core_essentials")),
-
         // Weapons: `list_weapon_targets` serves WEAPON_TABLE to the chooser
         // feat's "which weapon?" step, each row carrying the record's damage
         // die and threat range as a rendered detail line
@@ -1588,25 +1582,6 @@ fn reach_of(family: &Family) -> Option<Reach> {
         ("ultimate_wilderness", "companions") => {
             Some(companions_reach("ultimate_wilderness", "UW"))
         }
-
-        // SD-29 Epic 7 round 7. Core Essentials's companions and familiars —
-        // the SECOND claim this book carries, beside the 64 heritage
-        // `race_traits` the race-trait lane landed (`("core_essentials",
-        // "race_traits")` above, same `CE` wire code, same corpus directory).
-        // `CORPUS_BOOK_IDS` already names the directory for that reason and
-        // needed no entry this round.
-        //
-        // 103 of the book's 145 companion units ship — its whole `reachable
-        // remainder` per `scripts/classify_companion_rows.py`. The 42 that do
-        // not are not in this gate's denominator, because they were never
-        // ingested: 22 `.COPY=` CREATURE delta rows (`decisions.md §63.1`, the
-        // first companion book to carry the delta shape on its creature half),
-        // the 4 `.MOD` ability overlays `§59.2` predicted this book would first
-        // exercise, and 16 orphans. They stay counted in
-        // `docs/work-inventory.json`, and get no `OPEN_FINDINGS` entry for the
-        // reason `§61.2` states: that list is keyed by FAMILY, and this family
-        // does reach a player.
-        ("core_essentials", "companions") => Some(companions_reach("core_essentials", "CE")),
 
         // SD-29 Epic 7 round 8. Core Rulebook's companions and familiars — the
         // SIXTH family this book carries, beside its classes, races, spells,
@@ -3333,8 +3308,8 @@ mod tests {
         let ingested = corpus_record_keys("advanced_race_guide", "race_trait");
         assert_eq!(
             ingested.len(),
-            350,
-            "ARG's 350 ingested race-trait records, counted on disk (156 -> 201 by SD-31 Epic \
+            414,
+            "ARG's 414 ingested race-trait records, counted on disk (156 -> 201 by SD-31 Epic \
              1-F2, 2026-08-15, Bestiary 2's 6-race batch; 201 -> 259 by SD-31-E6-F4-002, \
              2026-08-16, ingest_races.rs's own 6-race batch of 58 standard-tier records for \
              Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang, sharing this book directory with this \
@@ -3348,10 +3323,14 @@ mod tests {
              Vanara 3, Vishkanya 2 = 11; 332 -> 350 by SD31-E6-F4-007, 2026-08-17, \
              ingest_races.rs's own 2-race follow-on batch of 18 standard-tier records for \
              Changeling/Samsaran, closing arg_races.lst's full 37-row playable-race roster -- \
-             no alternate-trait batch for these 2, neither race has ARG alternate content)"
+             no alternate-trait batch for these 2, neither race has ARG alternate content; \
+             350 -> 414 by the Core Essentials removal, 2026-08-18, which re-filed Aasimar's \
+             and Tiefling's 64 heritage records here -- 16 selectable heritages (6 Aasimar + \
+             10 Tiefling) and the 48 `<Race> Racial Trait`-typed replacement rows they grant, \
+             previously read out of data/corpus/core_essentials/race_trait/)"
         );
         match reach_of(&arg_traits).expect("ARG race traits have a declared claim") {
-            Reach::Surfaced { records, .. } => assert_eq!(records, 350),
+            Reach::Surfaced { records, .. } => assert_eq!(records, 414),
             other => panic!("every ARG race-trait record must reach a player, got {other:?}"),
         }
     }
@@ -3490,12 +3469,18 @@ mod tests {
         }
     }
 
-    /// Core Essentials' heritage traits reach a player, all 64 of them.
+    /// Aasimar's and Tiefling's heritage traits reach a player, all 64 of them.
     ///
-    /// SD-29 race-trait lane round 4 (`decisions.md §49`). This is the last
-    /// entry in the lane's 553-unit ceiling that is ordinary content, and it
-    /// is the only book whose records are **majority granted rather than
-    /// chosen**: 16 heritages a player picks and 48 replacement rows that
+    /// SD-29 race-trait lane round 4 (`decisions.md §49`) landed these under a
+    /// `core_essentials` book id. `decisions.md §9` removed that label -- Core
+    /// Essentials is not a Pathfinder book -- and the records were re-filed
+    /// under `advanced_race_guide`, which is where the Aasimar/Tiefling variant
+    /// heritages are actually published and where the same two races' other ARG
+    /// alternate-trait records already lived. This test is unchanged in what it
+    /// proves; only the book id and the wire code moved.
+    ///
+    /// They are the only records in the lane that are **majority granted rather
+    /// than chosen**: 16 heritages a player picks and 48 replacement rows that
     /// arrive with whichever heritage was picked.
     ///
     /// The count is asserted in both halves, not just in total, because the
@@ -3504,24 +3489,41 @@ mod tests {
     /// `<race>_abilities_globalvar_subrace.lst` would drop it to 16 while
     /// leaving 16 perfectly selectable records that change nothing on the
     /// sheet -- the browse-only stub class `decisions.md §44.2` describes, and
-    /// the precise failure this book's shape invites.
+    /// the precise failure this shape invites.
     #[test]
-    fn core_essentials_heritage_racial_traits_reach_a_player() {
-        let ce_traits = Family::new("core_essentials", "race_traits");
+    fn aasimar_and_tiefling_heritage_racial_traits_reach_a_player() {
+        let arg_traits = Family::new("advanced_race_guide", "race_traits");
         assert!(
-            corpus_inventory().0.contains(&ce_traits),
-            "the data/corpus scan must see data/corpus/core_essentials/race_trait/"
+            corpus_inventory().0.contains(&arg_traits),
+            "the data/corpus scan must see data/corpus/advanced_race_guide/race_trait/"
         );
-        assert!(full_inventory().contains(&ce_traits), "and it must reach the gate's inventory");
+        assert!(full_inventory().contains(&arg_traits), "and it must reach the gate's inventory");
 
-        let ingested = corpus_record_keys("core_essentials", "race_trait");
+        // Counted on disk from the two directories the heritage records live
+        // in, so this half still fails independently of ARG's other 350 rows.
+        let heritage: BTreeSet<String> = ["aasimar", "tiefling"]
+            .into_iter()
+            .flat_map(|race| {
+                corpus_record_keys_in(
+                    &repo_root()
+                        .join("data/corpus/advanced_race_guide/race_trait")
+                        .join(race),
+                )
+            })
+            .collect();
+        let subrace: BTreeSet<&String> = heritage
+            .iter()
+            .filter(|key| {
+                key.contains(" ~ ") && SUBRACE_HERITAGE_KEYS.iter().any(|k| key.contains(k))
+            })
+            .collect();
         assert_eq!(
-            ingested.len(),
+            subrace.len(),
             64,
-            "Core Essentials' 64 ingested heritage-trait records, counted on disk: 16 selectors \
-             (6 Aasimar + 10 Tiefling) and the 48 `<Race> Racial Trait`-typed replacement rows \
-             they grant. races/skinwalker/ carries the same shape and is out of scope -- \
-             Skinwalker is not one of the 18 races this project models"
+            "the 64 ingested heritage-trait records, counted on disk: 16 selectors (6 Aasimar + \
+             10 Tiefling) and the 48 `<Race> Racial Trait`-typed replacement rows they grant. \
+             races/skinwalker/ carries the same shape and is out of scope -- Skinwalker is not \
+             one of the 18 races this project models. Got {subrace:?}"
         );
 
         // The half that a broken grant link would silently leave standing.
@@ -3530,7 +3532,7 @@ mod tests {
             .races
             .iter()
             .flat_map(|race| race.alternates.iter())
-            .filter(|row| row.book == "CE")
+            .filter(|row| subrace.iter().any(|key| *key == &row.key))
             .map(|row| row.key.clone())
             .collect();
         assert_eq!(
@@ -3540,16 +3542,39 @@ mod tests {
              the player picks and are never menu rows. Got {selectable:?}"
         );
 
-        match reach_of(&ce_traits).expect("CE race traits have a declared claim") {
+        match reach_of(&arg_traits).expect("ARG race traits have a declared claim") {
             Reach::Surfaced { .. } => {}
             other => panic!(
-                "every CE heritage record must reach a player; got {other:?}. A shortfall here \
+                "every heritage record must reach a player; got {other:?}. A shortfall here \
                  of exactly 48 means the `ABILITY:<Race> Racial Trait|AUTOMATIC|<key>` grant \
                  links derived from <race>_abilities_globalvar_subrace.lst stopped being \
                  written by src/bin/ingest_race_traits.rs"
             ),
         }
     }
+
+    /// The 16 heritage names, spelled as the corpus spells them. Named rather
+    /// than pattern-matched so the 64-record assertion above cannot be
+    /// satisfied by some other 64 records that happen to land in the same two
+    /// directories.
+    const SUBRACE_HERITAGE_KEYS: &[&str] = &[
+        "Agathion-Blooded",
+        "Angel-Blooded",
+        "Archon-Blooded",
+        "Azata-Blooded",
+        "Garuda-Blooded",
+        "Peri-Blooded",
+        "Asura-Spawn",
+        "Daemon-Spawn",
+        "Demodand-Spawn",
+        "Demon-Spawn",
+        "Devil-Spawn",
+        "Div-Spawn",
+        "Kyton-Spawn",
+        "Qlippoth-Spawn",
+        "Oni-Spawn",
+        "Rakshasa-Spawn",
+    ];
 
     /// The other half of the same blind spot: `pathfinder_unchained` hid
     /// behind accessor functions, so a `pub const`-only scanner reported an

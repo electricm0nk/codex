@@ -80,17 +80,16 @@ const LOADED_BOOKS: &[&str] = &[
     "inner_sea_races",
     // SD-29 race-trait lane round 3.
     "horror_adventures",
-    // SD-29 race-trait lane round 4: Core Essentials' Aasimar and Tiefling
-    // heritages (`decisions.md §49`). Loadable like the four books above it
-    // and, like them, contributing no racial default -- its 64 records are 16
-    // heritages a player picks and the 48 replacement rows they grant.
+    // `core_essentials` was here from SD-29 race-trait lane round 4 until
+    // `SD31-CE-COMPANION-001` (2026-08-18). `decisions.md §9` retired the book
+    // id: Aasimar's and Tiefling's 64 heritage records now live under
+    // `advanced_race_guide` (already in this list, three entries up), so the
+    // app's `RACE_CORPUS_BOOKS` dropped the entry and this copy follows.
     //
-    // Round 4 added the book to the app's `RACE_CORPUS_BOOKS` before adding it
-    // here, so this copy drifted again -- the SECOND time this exact test
-    // caught this exact omission from this exact lane, the first being round
-    // 2's (see `inner_sea_races` above). Widened rather than relaxed, both
-    // times.
-    "core_essentials",
+    // The two comments this replaces recorded that this same test caught this
+    // same lane adding a book here twice, in rounds 2 and 4. It has now caught
+    // a REMOVAL too, on the same day, from the same list -- which is the point:
+    // the check is on set equality, not on growth.
     // SD-31 Epic 1-F2 (2026-08-15): Bestiary 2's 6-race chassis batch. THIRD
     // time this exact test has caught this exact omission -- this copy is
     // edited in the same commit that adds a book to `RACE_CORPUS_BOOKS` from

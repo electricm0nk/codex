@@ -486,19 +486,6 @@ fn ultimate_wilderness_counts() -> BTreeMap<String, u32> {
     counts
 }
 
-/// Core Essentials: SD-29 Epic 7 round 7 (`SD29-E7-F2-008`) — this book's
-/// `companion` family, 102 records (58 creature rows + 44 ability rows).
-///
-/// Its 64 heritage `race_trait` records are served OFF DISK from
-/// `data/corpus/core_essentials/race_trait/` by the race-trait lane
-/// (`RuleSetId::Ce`, `decisions.md §49`) rather than out of a compiled table,
-/// so they are not readable from `rules_tables` and are deliberately not
-/// counted here — this function reports what this book landed IN
-/// `src/rules_core/rules_tables/`, which is the companion family alone.
-fn core_essentials_counts() -> BTreeMap<String, u32> {
-    companion_book_counts("core_essentials")
-}
-
 /// Ultimate Combat: SD-28 Epic 27 (`epic-27-uc-complete`) from-scratch
 /// book ingest, first slice. 263 feat records -- see
 /// `ultimate_combat::feat_tables`'s own doc comment for the catalog.
@@ -809,16 +796,6 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
             ultimate_wilderness_counts(),
             &races,
         ),
-        // SD-29 Epic 7 round 7. Core Essentials — the NINTH registration point
-        // this lane pays per book, and the first round to discover it, because
-        // it is the first companion book whose directory did not already exist
-        // in `rules_tables/` for another family's sake.
-        book_status(
-            "core_essentials",
-            "src/rules_core/rules_tables/core_essentials",
-            core_essentials_counts(),
-            &races,
-        ),
         book_status(
             "ultimate_combat",
             "src/rules_core/rules_tables/ultimate_combat",
@@ -987,9 +964,6 @@ mod tests {
                 "ultimate_intrigue",
                 "ultimate_equipment",
                 "ultimate_wilderness",
-                // SD-29 Epic 7 round 7 -- companions only; this book's 64
-                // heritage race traits are served off disk, not from a table.
-                "core_essentials",
                 "ultimate_combat",
                 "ultimate_magic",
                 "ultimate_psionics",
@@ -1203,7 +1177,13 @@ mod tests {
             // reason every prior batch's weren't -- they ARE counted in
             // `reported` (ARG's `races` row moved `Some(10)` -> `Some(12)`
             // this cycle).
-            ("advanced_race_guide", "advanced_race_guide", 1008u32),
+            // 1008 -> 1072 by `SD31-CE-COMPANION-001` (2026-08-18): `decisions.md §9`
+            // retired the `core_essentials` book id and Aasimar's and Tiefling's 64
+            // heritage `race_trait` records moved into this book's own corpus directory.
+            // They are corpus-only by construction -- `decisions.md §24` rules out the
+            // formula interpreter a compiled race-trait table would need, so they are
+            // served off disk and this diagnostic's `rules_tables` half cannot see them.
+            ("advanced_race_guide", "advanced_race_guide", 1072u32),
             ("pathfinder_unchained", "pathfinder_unchained", 0),
         ] {
             let response = build_corpus_ingest_diagnostic();

@@ -25247,3 +25247,276 @@ ever carries it, or a stable pre-redaction hash — rather than the possibly-red
 
 Launched early, exit captured directly to
 `docs/release/SD-31-corpus-closure-grind/artifacts/FIX-DASHBOARD-PI-verify.log`. No Rust touched.
+
+## Cycle `SD31-CE-COMPANION-001` (`RETRO_ACTOR=sd31-ce-companion`) -- 2026-08-18, wave 14 REPAIR lane: finish the Core Essentials removal
+
+**Oracle pin, checked first, per `loop-instruction.md` override 8:**
+`./scripts/verify.sh --only preflight-oracle` -> `PASS preflight-oracle (oracle at pin
+7f818006e371188e5717fd18d74d18a420747fc6)`. `scripts/pcgen-oracle-pin.env`'s
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`. Every figure below is derived against
+that commit.
+
+**Branch-state check found the worktree on the wrong base and fixed it before any write.** The
+isolated worktree was cut from `origin/main` at `37a80141e` (a site-publish merge), not from
+`tranche/11`: `git diff --stat 37a80141e tranche/11` reported `30227 files changed`, and the tree
+had no `docs/`, `scripts/`, `data/` or `programs/` at all. Reset to `tranche/11`'s tip
+`12f1f5c94` (`git status --porcelain` clean first, no other writer's work at risk) before reading
+anything else. A cycle that had started work on that base would have been writing against a tree
+with no corpus in it.
+
+### What was broken
+
+`d8175d817` ("site: stop publishing Core Essentials as a sourcebook") did two things its own commit
+message describes only one of. It removed the site allow-list entry -- correct, `decisions.md §9` --
+and it also MOVED 166 corpus records out of `data/corpus/core_essentials/` into other books'
+directories, deleting the directory. The engine tables were not moved with them, and every pinned
+count that named the old shape was left behind.
+
+The repo was RED at `12f1f5c94`, 14 failures, every one attributable:
+
+* `reach` (5): `core_essentials_heritage_racial_traits_reach_a_player`,
+  `args_alternate_racial_traits_are_visible_only_because_the_corpus_is_scanned`,
+  `every_declared_claim_actually_carries_the_records`,
+  `unreached_records_are_exactly_the_recorded_findings`,
+  `unsurfaced_families_are_exactly_the_recorded_findings`.
+* `root-full` (9): 4 ARG `350`-count pins (`ingest_apg_race_traits.rs:776`,
+  `ingest_race_traits.rs:1951`, `sd27_alternate_racial_trait_reachability.rs:265`,
+  `v06_work_inventory.rs:457`), the `ABILITY|AUTOMATIC` grant-edge map
+  (`sd27_ability_automatic_granted_race_traits.rs:209`), two `LICENSE.json` count guards
+  (`sd27_book_license_record_counts.rs:253`/`:297`), and the stub-registry divergence gate
+  (`sd_governance_stub_registry_divergence.rs:153`).
+
+**One of them was a real user-facing regression, not a pin.** `reach_gate` measured it exactly:
+
+```
+crb/companions: 67 of 151 ingested records never appear in `list_companion_catalog`
+```
+
+with `ultimate_magic` 27 and `advanced_players_guide` 8 in the same shape -- **102 companion records
+on disk, reaching no player surface at all**, because the engine served them out of a
+`core_essentials` table no book's reach claim reads while their corpus records sat under three other
+books' directories.
+
+### The finding the repair turned on: the filename is not the book
+
+`d8175d817` sent 67 records to `data/corpus/core_rulebook/companion/` on the strength of the `_cr`
+in `ce_races_familiar_cr.lst`. That file's own header says otherwise:
+
+```
+grep -o 'SOURCELONG:[^\t]*' $PCGEN_CORPUS_ROOT/pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_cr.lst
+-> SOURCELONG:Bestiary
+```
+
+`_cr` names the Core Rulebook CLASSES whose familiar list the file is; the stat blocks in it are the
+Bestiary's. `docs/work-inventory.json` had this right already (`v06_work_inventory.rs`'s
+`SOURCELONG_TO_BOOK`, whose own doc comment names this exact file as the reason the filename is
+never trusted). Per-file headers for all eight `ce_*familiar*` files, read from the pinned oracle:
+
+| file | `SOURCELONG:` | destination |
+|---|---|---|
+| `ce_races_familiar_cr.lst` | `Bestiary` | `beastiary` (31 creature rows) |
+| `ce_abilities_familiar_race_cr.lst` | `Bestiary` | `beastiary` (36 ability rows) |
+| `ce_races_familiar_um.lst` | `Ultimate Magic` | `ultimate_magic` (19) |
+| `ce_abilities_familiar_race_um.lst` | `Ultimate Magic` | `ultimate_magic` (8) |
+| `ce_races_familiar_apg.lst` | `Advanced Player's Guide` | `advanced_players_guide` (8) |
+| `ce_abilities_familiar_cr.lst` | `Core Rulebook` | `core_rulebook` (14, all orphans -- row 238) |
+
+### What was done
+
+1. **`scripts/classify_companion_rows.py`** -- added the `core_essentials` fallback to
+   `resolve_source_file`, term for term the same rule `transcribe_monster_tables.py`'s
+   `_CORE_ESSENTIALS_DIR` and `gen_book_cache.rs`'s `CORE_ESSENTIALS_RELATIVE` already carry. Before
+   it, `python3 scripts/transcribe_companion_tables.py bestiary` died with
+   `ce_races_familiar_cr.lst is nowhere under .../roleplaying_game/bestiary` -- the identical failure
+   `SD31-E6-F9-002` hit in the monster lane.
+2. **Re-transcribed four books' engine tables** (`python3 scripts/transcribe_companion_tables.py
+   <book>`): `beastiary1` 59 -> 126, `ultimate_magic` 32 -> 59, `apg` 4 -> 17, `crb` 84 -> 84
+   (unchanged, correctly keeping only its own rows).
+3. **`src/bin/gen_book_cache.rs`** -- deleted the `core_essentials` `CompanionBookSpec`, added the
+   `ce_*` files to the three real books' specs, and gave `gen_companion_book` the same
+   `load_corpus_file_rel_with_fallback` + `WiringClassIndex::build_with_extra` treatment
+   `gen_monster_book` already had.
+4. **Regenerated the corpus** for the four books, then re-ran `enrich_companion_raw_tokens` to
+   restore `raw_tokens` (see "what nearly went wrong" below).
+5. **Retired `core_essentials` everywhere it was still a book:** the `COMPANION_BOOKS` row, the
+   `rules_tables/core_essentials/` module, `CORPUS_BOOK_IDS`, both `reach_gate` claim arms,
+   `race_catalog::RACE_CORPUS_BOOKS` + `BOOK_CE`, `companion_catalog`'s wire code, the ingest
+   diagnostic's book row, `ingest_race_traits.rs`'s `BookSource`, and the stub registry's entry
+   `0012` (retired in place, keeping the operator justification on the record).
+6. **`v06_work_inventory.rs` -- the re-attribution widening** (see "the honest decrease that wasn't"
+   below).
+
+### What nearly went wrong: a PI un-redaction, caught by diffing rather than by reading
+
+Re-running `ingest_race_traits` after the `BookSource` merge reported success --
+`descriptions redacted by DESCISPI:YES : 9` -- while `git diff data/corpus/advanced_race_guide` showed
+nine `-"[redacted PI]"` -> `+<Golarion place-name prose>` changes inside `data.raw_tokens` (Cheliax,
+Nidal, Tian Xia, Vudra, Abaddon). `data.description` was correctly redacted; `raw_tokens` was a
+verbatim copy of the row and had never been screened. This is `OPEN-ISSUES.md` row 219's shape
+(`enrich_equipment_raw_tokens.rs`) in a second, unswept binary. Fixed in the binary (row 236), not
+worked around. After the fix the same re-run reproduces the committed corpus **byte-identically** --
+`git diff` over all 300 touched files reports zero changed lines other than `ingested_at`, which is
+why those files are reverted rather than committed as churn.
+
+The same hazard, in the other direction, hit the companion regeneration: `gen_companion_book`
+does not write `raw_tokens`, so regenerating stripped them from 286 already-enriched records.
+Restored by re-running the real enricher (`cargo run --bin enrich_companion_raw_tokens` -> `286
+enriched, 0 citation misses`); `git diff` on a pre-existing record then shows `ingested_at` alone.
+Both halves are the standing "generated artifacts mutated post-hoc" hazard, and neither was caught
+by a test -- only by diffing every changed file.
+
+### The honest decrease that wasn't -- and the 189-unit correction behind it
+
+Fixing the engine tables made the board WORSE before it made it better, and the measurement is the
+point. `cargo run --bin v06_work_inventory -- --summary`, compared per book/kind against the
+committed document's own `not-ingested` tally:
+
+```
+advanced_players_guide companion  208 -> 211   (+3)
+bestiary               companion   28 ->  95  (+67)
+ultimate_magic         companion  139 -> 166  (+27)
+TOTAL not-ingested                16840 -> 16937  (+97)
+```
+
+97 units moved to `not-ingested` on the same run that took `reach_gate`'s unreachable-companion
+count from 102 to 0. Root cause, traced rather than guessed: `classify()` resolves `engine_book`
+from `unit.source_book` (deliberately, and its own comment explains why), and every one of these
+rows has `source_book == "core_essentials"`. With the `core_essentials` table retired, the
+`Kind::Companion` guard evaluated against a rule set that no longer has a table and fell to
+`companion_content_has_no_engine_table` -- **regardless of what the tables actually hold.** That is
+`OPEN-ISSUES.md` row 212's mechanism exactly, seen on a second kind.
+
+Fixed with a **re-attribution widening** that can only ever widen: when the `source_book`-derived
+book does NOT hold the unit and the unit's re-attributed `book` DOES, the re-attributed book
+answers. The condition is an OBSERVED `facts.holds_unit` hit, which is the same rule the
+shared-library branch above it already applies to pcc hosts -- so the 16-unit downgrade the existing
+comment warns about (using `unit.book` outright) cannot recur, because that downgrade happened
+precisely when no table held the row.
+
+Re-measured after the widening, same command:
+
+```
+advanced_players_guide companion       208 -> 203   (-5)
+bestiary               equipment         3 ->   0   (-3)
+bestiary               monster_ability 392 -> 303  (-89)
+bestiary_2             monster_ability 196 -> 104  (-92)
+TOTAL not-ingested                    16840 -> 16651  (-189)
+```
+
+The companion books return to their committed figures, APG gains 5, and **184 units of a different
+kind unblock as a side effect** -- the `ce_abilities_race.lst`-origin `monster_ability` population
+row 212 named as blocked, whose records `SD31-E6-F9-005` had already made real and
+desktop-app-reachable. They are credited here only because the chassis table is observed to hold
+them, which is the evidence row 212 said was missing rather than absent. No second registry entry
+was added, so the duplication risk row 212 declined to take blind is not taken here either.
+
+**docs/work-inventory.json and the site feed are deliberately NOT regenerated in this cycle** --
+see the blockers section.
+
+### What the doneness claim is measured by, not asserted
+
+**`reach_gate` replayed, not quoted.** `cargo test --locked reach_gate` in
+`apps/desktop/src-tauri` executes the real `list_companion_catalog` /
+`list_alternate_racial_traits` IPC builders against the real `data/corpus/` denominator.
+
+* Before: `every_declared_claim_actually_carries_the_records` FAILED with
+  `crb/companions: 67 of 151 ingested records never appear in list_companion_catalog`, plus
+  `core_essentials/companions: nothing is ingested for this family, so the inventory that named it
+  is wrong`; `unreached_records_are_exactly_the_recorded_findings` FAILED naming all 67 keys;
+  `unsurfaced_families_are_exactly_the_recorded_findings` FAILED naming
+  `core_essentials/companions, crb/companions`.
+* After: see the gate log referenced below. The claim is `0 unreachable companion records across
+  `beastiary`/`core_rulebook`/`ultimate_magic`/`advanced_players_guide``, and it is the gate's own
+  verdict, not a count this cycle computed.
+
+**Every pin moved with its derivation, and both halves of a split are pinned separately** so a
+future re-attribution cannot be absorbed by a total:
+
+* `beastiary1::companion_tests` -- renamed to
+  `the_book_defines_fifty_five_companions_and_seventy_one_abilities`, and it now asserts the
+  `b1_*` half (24 + 35) and the `ce_*` half (31 + 36) independently as well as in total.
+* `companion_chassis` -- `an_ability_with_no_modelled_facet_still_states_its_type_segments` 35 -> 39
+  (the 11 `ce_*` unmodelled-facet rows re-split 10 `beastiary` / 1 `ultimate_magic`, pinned per
+  book, plus 4 APG evolution-choice rows the re-attribution un-orphaned).
+  `core_essentials_ships_no_copy_delta_creature_row` ->
+  `the_reattributed_familiar_file_ships_no_copy_delta_creature_row`, same 22 `.COPY=` keys asserted
+  by name, now against `beastiary`.
+* ARG `race_trait` 350 -> 414 in all five places that pin it, each with the 64-record derivation in
+  its own message.
+* `data/corpus/advanced_race_guide/LICENSE.json` -- `records_processed` 1514 -> 1578,
+  `records_redacted` 1 -> 10, both re-derived from disk by the test's own method rather than
+  transcribed. The `records_processed` half was a MASKED failure: `advanced_players_guide` sorts
+  first and `assert_eq!` stops there, so ARG's 64-record drift had never been reported.
+
+### Governance sub-task: the stub registry
+
+`data/stubs/core_essentials.json` was deleted by `d8175d817`; registry entry `0012` still declared
+it, so `sd_governance_stub_registry_divergence.rs` failed with
+`registry contains book_stub entry/entries with no matching data/stubs/*.json artifact:
+["core_essentials"]`. **Retired in place rather than deleted.** The heading drops the `book_stub`
+marker the gate parses (so the registration ends) and keeps the 2026-07-21 operator justification
+verbatim underneath, with a note explaining that `decisions.md §9` supersedes it rather than
+contradicting it: the 2009 entry correctly described a book-shaped gap, under the belief that Core
+Essentials was a book. An operator-granted registry is not a file a cycle should silently shrink.
+
+### Blockers and open questions logged this cycle
+
+`OPEN-ISSUES.md` rows 235-240:
+
+* **235 RULING-NEEDED** -- the 64 Aasimar/Tiefling heritage `race_trait` records: their two files
+  carry NO `SOURCELONG:` at all, so `decisions.md §9`'s own method is silent, and
+  `v06_work_inventory.rs`'s two race tables point different ways (`RACE_TRUE_BOOK` -> `bestiary`,
+  `RACE_NEWEST_PRINTING` -> `advanced_race_guide`). Kept `d8175d817`'s ARG placement, stated the
+  three reasons, and named the mechanical reversal if the operator rules the other way.
+* **236 RESOLVED** -- the `raw_tokens` PI un-redaction, fixed in `ingest_race_traits.rs`.
+* **237 NOTE** -- 5 corpus records re-derived `derived` -> `static`, which is the CORRECT current
+  value (`SD31-E2-F2-001-wiringfix`'s own two false-positive fixes); flagged because a wiring-class
+  move is a doneness-path move, and because every un-regenerated book carries the same staleness.
+* **238 NOTE** -- a real, named 14-unit lever: `ce_abilities_familiar_cr.lst`'s generic
+  `Familiar ~ ...` rows are Core Rulebook's, their owners are Bestiary 1's familiar creature rows,
+  and `transcribe_companion_tables.py` resolves ownership strictly within one book's unit set. Not
+  fixed here -- widening it is a specification change to a shared generator every registered book
+  depends on.
+* **239 NOTE** -- publishing from a worktree writes a per-checkout ABSOLUTE PATH into
+  `site/dashboard/units/index.json`'s `source_document`, so that regeneration was reverted. The row
+  also carries this cycle's own self-correction: it was filed as a BLOCKER claiming
+  `site-dashboard-check` was RED at this tip, which one intermediate run showed and the final
+  full-gate run refutes (`PASS site-dashboard-check`).
+* **240 RULING-NEEDED** -- `docs/work-inventory.json` not regenerated: doing it correctly needs the
+  corpus-wide sweep + fixture reports, and `--allow-stamp-loss` would have destroyed 7,315 real
+  verification stamps to move one number.
+
+### Units
+
+**102 companion records restored to reachability** -- the lane's whole estimate, measured by
+`reach_gate` rather than claimed. **No units were withdrawn.** The 97-unit board decrease this
+cycle's own intermediate state produced was an instrument defect, traced and fixed rather than
+absorbed; the corrected measurement is **-189 `not-ingested`** corpus-wide, of which 184 belong to
+the monster lane's previously-blocked `ce_abilities_race.lst` population (row 212) and are credited
+only on an observed table hit.
+
+### Full gate
+
+`./scripts/verify.sh -j 10` at this cycle's tip: **`RESULT: PASS`, all 34 stages**, including
+`root-full (7016 passed across 566 suites, all 530 tests/*.rs suites executed)`,
+`desktop (462 passed)`, `reach (27 passed)`, `frontend-test (99/99 files)`,
+`corpus-sweep (25693 records examined of 26741 read, 249175 tokens compared, 26316 digests
+checked, 0 findings)`, `declared-pi-audit (clean)`,
+`site-dashboard-pi-gate (13 file(s) scanned against 1612 declared-PI name(s), zero leaked)`,
+`clippy (root:51 desktop:7 warnings, 0 errors)`.
+
+The repo was RED at `12f1f5c94` with **15** attributable failures, not the 14 the dispatch named --
+`frontend-test`'s `raceCreationCoverage.test.ts` carries a sixth copy of the ARG race-trait count
+(`525` -> `589`, i.e. CRB 67 + B1 108 + ARG 414) and was not in the dispatch's list. Every one is
+green now, and none was made green by relaxing an assertion: each pin moved to a re-derived value
+carrying the command that produced it, and three of them (`beastiary1`'s companion counts, the
+`ce_*` unmodelled-facet split, the `.COPY=` delta keys) are now pinned in BOTH halves rather than in
+total.
+
+Three assertions caught things the counts alone would have accepted, which is worth recording as
+evidence that this repo's own guard style works: `companion_catalog`'s named unmodelled-SHAPE list
+failed on the first desktop run and named
+`advanced_players_guide:companion:temp_evolution_constrict` after its sibling COUNT pin had already
+been updated; `sd_governance_stub_registry_divergence` refused a registry entry with no artifact;
+and `sd27_book_license_record_counts` turned out to have been MASKING a second failure
+(`advanced_race_guide` sorts after `advanced_players_guide`, and `assert_eq!` stops at the first).

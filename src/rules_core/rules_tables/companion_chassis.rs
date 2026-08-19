@@ -458,20 +458,6 @@ pub const COMPANION_BOOKS: &[CompanionBook] = &[
         companions: super::ultimate_wilderness::companions_static(),
         companion_abilities: super::ultimate_wilderness::companion_abilities_static(),
     },
-    // SD-29 Epic 7 round 7 (`SD29-E7-F2-008`). Core Essentials — the book that
-    // carries the `.COPY=` shape on its CREATURE rows, which no registered book
-    // had (`decisions.md §63.1`). 103 of its 145 rows ship; the 42 that do not
-    // are 22 `.COPY=` creature deltas, the 4 `.MOD` ability overlays `§59.2`
-    // predicted this book would be the first to exercise, and 16 orphans.
-    //
-    // No new `RuleSetId`: `RuleSetId::Ce` was compiled by the race-trait lane
-    // in `§49`. The dispatching row said this book "needs a NEW `RuleSetId`"
-    // and told the round to check rather than assume; checked, and it does not.
-    CompanionBook {
-        corpus_book: "core_essentials",
-        companions: super::core_essentials::companions_static(),
-        companion_abilities: super::core_essentials::companion_abilities_static(),
-    },
     // SD-29 Epic 7 round 8 (`SD29-E7-F2-009`). Core Rulebook — the book the
     // lane's transcriber had been REFUSING by name since round 1
     // (`decisions.md §65.1`), and the first registered book whose engine module
@@ -704,16 +690,20 @@ mod tests {
             }
         }
         assert_eq!(
-            unmodelled, 35,
+            unmodelled, 39,
             "expected Inner Sea Intrigue's three ClockworkFamiliarInstalledItem rows, \
              Bestiary 4's two `TYPE:Communicate.SpellLike` rows, Ultimate Wilderness's \
              15 `TYPE:SpecialQuaility` rows -- an UPSTREAM TYPO of the modelled \
              `SpecialQuality`, deliberately not corrected into the facet \
-             (`decisions.md §61.4`) -- Core Essentials's 11 (round 7), Core \
-             Rulebook's single `TYPE:NaturalAttack.…` row (round 8, `§65.2`), and \
+             (`decisions.md §61.4`) -- the 11 `ce_*_familiar_*` rows (10 now \
+             Bestiary 1's, 1 now Ultimate Magic's, re-attributed by \
+             `SD31-CE-COMPANION-001`), Core \
+             Rulebook's single `TYPE:NaturalAttack.…` row (round 8, `§65.2`), \
              round 9's three: Advanced Race Guide's two \
              `TYPE:RaceAbility.SpecialAbility` rows and the Advanced Player's \
-             Guide's one `TYPE:SkillChoice` row; \
+             Guide's one `TYPE:SkillChoice` row, and the four APG evolution-choice \
+             rows (`TYPE:EvolutionChoice` x1, `TYPE:TempEvolutionChoice` x3) that \
+             the same re-attribution gave an owner for the first time; \
              a change here means a book's shape moved"
         );
         // Round 9's three, named so the count above cannot be satisfied by a
@@ -749,22 +739,34 @@ mod tests {
             assert!(ability.facet.is_none(), "{key} now states a modelled facet");
             assert_eq!(ability.type_segments, segments, "{key}");
         }
-        // Core Essentials's 11, derived rather than inferred from the delta:
-        // `python3` over its own generated table, grouping the `facet: None`
+        // The 11 `ce_*_familiar_*` rows, derived rather than inferred from the
+        // delta: `python3` over the generated tables, grouping the `facet: None`
         // rows by `type_segments`, reports 10 x ("Special Ability",
-        // "Extraordinary") and 1 x ("Weakness", "Extraordinary"). Neither
-        // leading segment is a `CompanionAbilityFacet` variant -- the enum
-        // models `CompanionAdvancement`, `SpecialQuality` and `SpecialAttack`
-        // -- and `Special Ability` is PCGen's CATEGORY name appearing in a
-        // `TYPE:` token, not a misspelling of one of them. Carried verbatim in
+        // "Extraordinary") under `beastiary` and 1 x ("Weakness",
+        // "Extraordinary") under `ultimate_magic`. Neither leading segment is a
+        // `CompanionAbilityFacet` variant -- the enum models
+        // `CompanionAdvancement`, `SpecialQuality` and `SpecialAttack` -- and
+        // `Special Ability` is PCGen's CATEGORY name appearing in a `TYPE:`
+        // token, not a misspelling of one of them. Carried verbatim in
         // `type_segments` for the same reason `SpecialQuaility` is.
-        let ce = companion_book("core_essentials").expect("registered book");
-        let ce_unmodelled = ce
-            .companion_abilities
-            .iter()
-            .filter(|a| a.facet.is_none())
-            .count();
-        assert_eq!(ce_unmodelled, 11, "Core Essentials's unmodelled-facet rows");
+        //
+        // They used to sit under a `core_essentials` registration.
+        // `decisions.md §9` is why they no longer do, and the split is stated by
+        // the corpus rather than chosen: `ce_abilities_familiar_race_cr.lst`
+        // declares `SOURCELONG:Bestiary` in its own header and
+        // `ce_abilities_familiar_race_um.lst` declares `SOURCELONG:Ultimate
+        // Magic`. The two counts are pinned separately, so a re-attribution
+        // that moved rows between the two books could not be absorbed by the
+        // total.
+        for (book_id, expected) in [("beastiary", 10), ("ultimate_magic", 1)] {
+            let book = companion_book(book_id).expect("registered book");
+            let n = book
+                .companion_abilities
+                .iter()
+                .filter(|a| a.facet.is_none() && a.source_file.starts_with("ce_"))
+                .count();
+            assert_eq!(n, expected, "{book_id}'s re-attributed unmodelled-facet rows");
+        }
         // Ultimate Wilderness's typoed segment, pinned by count and by
         // spelling. A successor that decides to model the typo must delete this
         // assertion deliberately rather than discover it as a mystery failure.
@@ -1147,20 +1149,29 @@ mod tests {
     /// declared in Core Rulebook rather than here — so dropping the deltas
     /// drops no creature this book actually defines.
     #[test]
-    fn core_essentials_ships_no_copy_delta_creature_row() {
-        let book = companion_book("core_essentials").expect("Core Essentials is registered");
-        assert_eq!(book.companions.len(), 58, "58 declared creature rows ship");
-        assert_eq!(book.companion_abilities.len(), 44, "44 owned ability rows ship");
+    fn the_reattributed_familiar_file_ships_no_copy_delta_creature_row() {
+        // `ce_races_familiar_cr.lst` / `ce_abilities_familiar_race_cr.lst` both
+        // declare `SOURCELONG:Bestiary`, so `decisions.md §9` re-attribution
+        // files their rows under Bestiary 1 and there is no longer a
+        // `core_essentials` registration to ask (`SD31-CE-COMPANION-001`). The
+        // property this test was written for is unchanged and is asserted on
+        // the same rows, now reached through their real book.
+        let book = companion_book("beastiary").expect("Bestiary 1 is registered");
+        let ce_creatures =
+            book.companions.iter().filter(|c| c.source_file.starts_with("ce_")).count();
+        let ce_abilities = book
+            .companion_abilities
+            .iter()
+            .filter(|a| a.source_file.starts_with("ce_"))
+            .count();
+        assert_eq!(ce_creatures, 31, "31 declared creature rows ship");
+        assert_eq!(ce_abilities, 36, "36 owned ability rows ship");
+        assert_eq!(ce_creatures + ce_abilities, 67);
 
-        // 145 corpus units - 22 `.COPY=` creatures - 4 `.MOD` abilities - 16
-        // orphans = 103, which is `classify_companion_rows.py`'s own `reachable
-        // remainder` for this book. **102 ship, not 103**, and the one-row gap
-        // is a stated finding rather than a miscount: `Pseudodragon ~ Tail` is
-        // OWNED — the classifier is right — and states nothing this chassis
-        // models, so `decisions.md §63.3` drops it. Reachability is a fact
-        // about ownership; shippability is a fact about the record type, and
-        // this is the first book where the two differ.
-        assert_eq!(book.companions.len() + book.companion_abilities.len(), 102);
+        // `Pseudodragon ~ Tail` is OWNED — `classify_companion_rows.py` is
+        // right — and states nothing this chassis models, so `decisions.md
+        // §63.3` drops it. Reachability is a fact about ownership;
+        // shippability is a fact about the record type.
         assert!(
             book.companion_ability_resolve("Pseudodragon ~ Tail").is_none(),
             "`Pseudodragon ~ Tail` carries no TYPE:, no DESC: and no BONUS: — only an \

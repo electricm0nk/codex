@@ -136,9 +136,37 @@ def read_row(path: str, line_no: int) -> list[str]:
 # raise when it is nowhere under the book.
 _RESOLVED: dict[tuple[str, str], str] = {}
 
+# `decisions.md §9`: `core_essentials` is not a book.  `SD31-ATTRIB-*` moves a
+# unit's REPORTING `book` field to the book its own `SOURCELONG:` header names
+# (`ce_races_familiar_cr.lst` says `SOURCELONG:Bestiary`, so its 53 rows report
+# `bestiary`), but the unit's `source_file` names a physical file that never
+# moves -- it stays under `core_essentials`'s own PCGen directory forever.
+#
+# Without the fallback below, `resolve_source_file` walks only the reporting
+# book's own root and a re-attributed unit's file is unreachable under ANY
+# book's root.  Confirmed live before this widening:
+#
+#   python3 scripts/transcribe_companion_tables.py bestiary
+#   -> "ce_races_familiar_cr.lst is nowhere under .../roleplaying_game/bestiary"
+#
+# which is the identical failure `SD31-E6-F9-002` hit in the monster lane and
+# fixed the identical way (`transcribe_monster_tables.py`'s `_CORE_ESSENTIALS_DIR`
+# / `gen_book_cache.rs`'s `CORE_ESSENTIALS_RELATIVE`).  Term for term the same
+# rule, so the two transcribers and the Rust generator can never disagree about
+# which file a citation names.
+_CORE_ESSENTIALS_DIR = "pathfinder/paizo/roleplaying_game/core_essentials"
+
 
 def resolve_source_file(directory: str, source_file: str) -> str:
-    """`<book>/<basename>` if it exists, else the one match anywhere below it."""
+    """`<book>/<basename>` if it exists, else the one match anywhere below it.
+
+    Falls back to `core_essentials`'s own directory when the name is absent from
+    `directory` entirely -- the one other place a `decisions.md §9`-re-attributed
+    unit's real file can live.  The book's own root always wins (two separate
+    passes, never one merged walk), so a book that legitimately owns a
+    same-named file is never redirected to `core_essentials`' copy, and
+    `core_essentials` never falls back to itself.
+    """
     cached = _RESOLVED.get((directory, source_file))
     if cached is not None:
         return cached
@@ -151,6 +179,14 @@ def resolve_source_file(directory: str, source_file: str) -> str:
         for parent, _dirs, files in os.walk(directory)
         if source_file in files
     ]
+    if not hits:
+        ce_root = os.path.join(corpus_root(), _CORE_ESSENTIALS_DIR)
+        if os.path.abspath(ce_root) != os.path.abspath(directory):
+            hits = [
+                os.path.join(parent, source_file)
+                for parent, _dirs, files in os.walk(ce_root)
+                if source_file in files
+            ]
     if not hits:
         raise SystemExit(f"{source_file} is nowhere under {directory}")
     if len(hits) > 1:

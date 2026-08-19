@@ -136,11 +136,67 @@ struct BookSource {
 /// candidate whose `race_trait`-kinded rows are genuine *player-race* alternate
 /// racial traits rather than monster or eidolon abilities filed under a
 /// `_abilities_race` filename.
+/// PCGen's physical storage directory for files `decisions.md §9`
+/// re-attribution has moved the REPORTING book of. Re-attribution never moves
+/// the file, so a citation into this directory is normal and permanent; term
+/// for term the same constant `gen_book_cache.rs` carries.
+const CORE_ESSENTIALS_RELATIVE: &str = "pathfinder/paizo/roleplaying_game/core_essentials";
+
 const BOOK_SOURCES: &[BookSource] = &[
+    // Advanced Race Guide -- its own `arg_abilities_race.lst`, PLUS Aasimar's
+    // and Tiefling's *heritage* (subrace) files, which PCGen stores under
+    // `core_essentials/races/<race>/`.
+    //
+    // Those four files used to be a `BookSource` of their own, writing to
+    // `data/corpus/core_essentials/race_trait/`. `decisions.md §9` removed that
+    // book id -- Core Essentials is a PCGen packaging bundle, not a Pathfinder
+    // book -- and the 64 records it wrote are now this book's. The variant
+    // Aasimar and Tiefling heritages ARE Advanced Race Guide content, and the
+    // same two races' other ARG alternate-trait rows already write into the
+    // same `advanced_race_guide/race_trait/{aasimar,tiefling}/` directories, so
+    // this is a merge into an existing destination rather than a new one.
+    //
+    // A record's citation `path` still names `core_essentials/...`, because
+    // re-attribution moves the reporting book, never the physical file
+    // (`gen_book_cache.rs`'s `CORE_ESSENTIALS_RELATIVE`,
+    // `transcribe_monster_tables.py`'s `_CORE_ESSENTIALS_DIR`, and
+    // `classify_companion_rows.py`'s own copy of the same rule). That is why
+    // the wiring-class index below is built with the `core_essentials`
+    // directory as an EXTRA book root: without it every heritage record stamps
+    // `wiring_class: "ambiguous"` regardless of its real corpus shape.
+    //
+    // 48 of the 64 rows are the only rows in this lane whose swap is not
+    // declared on the row itself. Each is gated
+    // `PREABILITY:1,CATEGORY=Special Ability,<Race> ~ <Heritage>` on a
+    // *selector* row typed `TYPE:<Race> Subrace`, and which standard trait it
+    // replaces is stated in a third file. Both halves are read here: the
+    // selectors become the records a player picks, and [`subrace_grants`]
+    // supplies the replace-flags and the `ABILITY:...|AUTOMATIC|...` grant
+    // links that make the 48 apply.
+    //
+    // Classified before the round that first ingested them committed to them,
+    // per `decisions.md §45.1`:
+    // `python3 scripts/classify_race_trait_rows.py aasimar_abilities_race_subrace.lst tiefling_abilities_race_subrace.lst`
+    // -> aasimar: `in-scope rows 18 | alternate 0 | flag_granted 18`;
+    //    tiefling: `in-scope rows 30 | alternate 0 | flag_granted 30`.
+    // Zero of the 48 are self-gating alternates, which is exactly why the
+    // third file is not optional.
+    //
+    // **`races/skinwalker/` is deliberately not listed.** It carries the same
+    // subrace shape, but Skinwalker is not one of the races this project
+    // models, so `IN_SCOPE_RACES` would drop every row and
+    // `RaceCorpus::resolve` would return `None` for the chassis regardless.
     BookSource {
         corpus_book: "advanced_race_guide",
-        lst_relatives: &["pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst"],
-        subrace_globalvar_relatives: &[],
+        lst_relatives: &[
+            "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+            "pathfinder/paizo/roleplaying_game/core_essentials/races/aasimar/aasimar_abilities_race_subrace.lst",
+            "pathfinder/paizo/roleplaying_game/core_essentials/races/tiefling/tiefling_abilities_race_subrace.lst",
+        ],
+        subrace_globalvar_relatives: &[
+            "pathfinder/paizo/roleplaying_game/core_essentials/races/aasimar/aasimar_abilities_globalvar_subrace.lst",
+            "pathfinder/paizo/roleplaying_game/core_essentials/races/tiefling/tiefling_abilities_globalvar_subrace.lst",
+        ],
         pcgen_book_relative: "pathfinder/paizo/roleplaying_game/advanced_race_guide",
     },
     // Advanced Player's Guide -- INVESTIGATED and deliberately NOT added as a
@@ -228,43 +284,6 @@ const BOOK_SOURCES: &[BookSource] = &[
         lst_relatives: &["pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst"],
         subrace_globalvar_relatives: &[],
         pcgen_book_relative: "pathfinder/paizo/roleplaying_game/horror_adventures",
-    },
-    // Core Essentials' Aasimar and Tiefling *heritage* traits, SD-29's
-    // race-trait lane round 4 -- the last of the 553-unit ceiling that is
-    // ordinary content rather than a chassis problem (`decisions.md` 47.8).
-    //
-    // 48 rows across two files, and they are the only rows in this lane whose
-    // swap is not declared on the row itself. Each is gated
-    // `PREABILITY:1,CATEGORY=Special Ability,<Race> ~ <Heritage>` on a
-    // *selector* row typed `TYPE:<Race> Subrace`, and which standard trait it
-    // replaces is stated in a third file. Both halves are read here: the
-    // selectors become the records a player picks, and
-    // [`subrace_grants`] supplies the replace-flags and the
-    // `ABILITY:...|AUTOMATIC|...` grant links that make the 48 apply.
-    //
-    // Classified before the round committed to the book, per `decisions.md`
-    // 45.1:
-    // `python3 scripts/classify_race_trait_rows.py aasimar_abilities_race_subrace.lst tiefling_abilities_race_subrace.lst`
-    // -> aasimar: `in-scope rows 18 | alternate 0 | flag_granted 18`;
-    //    tiefling: `in-scope rows 30 | alternate 0 | flag_granted 30`.
-    // Zero of the 48 are self-gating alternates, which is exactly why the
-    // third file is not optional.
-    //
-    // **`races/skinwalker/` is deliberately not listed.** It carries the same
-    // subrace shape, but Skinwalker is not one of the 18 races this project
-    // models, so `IN_SCOPE_RACES` would drop every row and
-    // `RaceCorpus::resolve` would return `None` for the chassis regardless.
-    BookSource {
-        corpus_book: "core_essentials",
-        lst_relatives: &[
-            "pathfinder/paizo/roleplaying_game/core_essentials/races/aasimar/aasimar_abilities_race_subrace.lst",
-            "pathfinder/paizo/roleplaying_game/core_essentials/races/tiefling/tiefling_abilities_race_subrace.lst",
-        ],
-        subrace_globalvar_relatives: &[
-            "pathfinder/paizo/roleplaying_game/core_essentials/races/aasimar/aasimar_abilities_globalvar_subrace.lst",
-            "pathfinder/paizo/roleplaying_game/core_essentials/races/tiefling/tiefling_abilities_globalvar_subrace.lst",
-        ],
-        pcgen_book_relative: "pathfinder/paizo/roleplaying_game/core_essentials",
     },
 ];
 
@@ -1144,7 +1163,23 @@ fn ingest_book(book: &BookSource) {
         PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("data/corpus").join(corpus_book).join("race_trait");
     let ingested_at = ingested_at_now();
     let pcgen_book_dir = data_root.join(pcgen_book_relative);
-    let wiring_index = WiringClassIndex::build(corpus_book, &pcgen_book_dir);
+    // A `decisions.md §9`-re-attributed row's citation `path` names
+    // `core_essentials/...`, the directory PCGen physically stores it in, so an
+    // index over this book's own root alone cannot find the row and every such
+    // record silently stamps `wiring_class: "ambiguous"`. Indexing that
+    // directory under its own key is the same fix `gen_book_cache.rs` applies
+    // for the monster and companion chassis (`SD31-E6-F9-005`). Added only when
+    // this book actually cites a file there, so no other book pays for it.
+    let ce_dir = data_root.join(CORE_ESSENTIALS_RELATIVE);
+    let cites_core_essentials = lst_relatives
+        .iter()
+        .chain(subrace_globalvar_relatives.iter())
+        .any(|rel| rel.starts_with(CORE_ESSENTIALS_RELATIVE));
+    let wiring_index = if cites_core_essentials && ce_dir != pcgen_book_dir {
+        WiringClassIndex::build_with_extra(corpus_book, &pcgen_book_dir, "core_essentials", &ce_dir)
+    } else {
+        WiringClassIndex::build(corpus_book, &pcgen_book_dir)
+    };
     let mut wiring_lines = wiring_index.lines();
 
     let in_scope: BTreeSet<&str> = IN_SCOPE_RACES.into_iter().collect();
@@ -1356,8 +1391,24 @@ fn ingest_book(book: &BookSource) {
         *per_race.entry(row.race_key.clone()).or_default() += 1;
         *per_race_flags.entry(row.race_key.clone()).or_default() += row.sets_replace_flags.len();
 
-        let (wiring_class, wiring_class_signals) = wiring_index.wiring_class_for(
+        // Resolve the citation against the book whose directory the file
+        // PHYSICALLY lives in, which for a `decisions.md §9`-re-attributed row
+        // is `core_essentials` and not `corpus_book`. Getting this wrong is not
+        // an error, it is a SILENT wrong answer: `CorpusLines::line` returns
+        // `None` for a file absent from the book root it was handed, and every
+        // such record stamps `wiring_class: "ambiguous"` with a
+        // `no_corpus_line` signal regardless of the row's real token closure.
+        // Caught live this cycle -- the 64 heritage records regressed
+        // `display` -> `ambiguous` on the first re-ingest after the merge, with
+        // the run reporting success.
+        let citation_book = if lst_relative.starts_with(CORE_ESSENTIALS_RELATIVE) {
+            "core_essentials"
+        } else {
+            corpus_book
+        };
+        let (wiring_class, wiring_class_signals) = wiring_index.wiring_class_for_book(
             &mut wiring_lines,
+            citation_book,
             lst_basename,
             row.line_number,
             &row.key,
@@ -1385,6 +1436,32 @@ fn ingest_book(book: &BookSource) {
         if declared.description {
             pi_declared_descriptions += 1;
         }
+        // **The raw tokens carry the same prose, and must carry the same
+        // redaction.** `data.description` above is redacted; `data.raw_tokens`
+        // is a verbatim copy of the row, so a redacted record was still
+        // shipping the un-redacted `DESC:` text one field over. That is
+        // precisely the leak `src/bin/declared_pi_shipping_audit.rs` exists to
+        // catch (`a_redacted_description_with_an_unredacted_raw_tokens_desc_is_a_violation`),
+        // and it is why the committed records carry the marker in BOTH places
+        // while a re-run of this binary un-redacted 9 of them.
+        //
+        // Found live, `SD31-CE-COMPANION-001` 2026-08-18, by re-running this
+        // binary after merging the heritage files into the ARG `BookSource`
+        // and diffing the corpus: nine tiefling heritage records lost their
+        // `raw_tokens` `DESC` redaction (Cheliax / Nidal / Tian Xia / Vudra /
+        // Abaddon place names) while the run reported success. The `DESC` key
+        // is the only raw token this record type ever redacts, because
+        // `description` is the only free-text field it screens -- a name is
+        // dropped rather than redacted (see the `NAMEISPI:YES` branch above),
+        // so no raw token can be carrying a redacted name.
+        let mut raw_tokens = row.raw_tokens.clone();
+        if pi_marker.is_some() {
+            for token in raw_tokens.iter_mut() {
+                if token.key == "DESC" {
+                    token.value = codex::rules_core::shape_b_v1::REDACTED_PI_MARKER.to_string();
+                }
+            }
+        }
         let record = CorpusRecordV1 {
             population: Population::InScope,
             completeness: Completeness::Full,
@@ -1400,7 +1477,7 @@ fn ingest_book(book: &BookSource) {
                 sets_replace_flags: row.sets_replace_flags.clone(),
                 description: stored_desc,
                 source_page: row.source_page.clone(),
-                raw_tokens: row.raw_tokens.clone(),
+                raw_tokens,
                 raw_bonus_chains: row.raw_bonus_chains.clone(),
             },
             source: CorpusSource::LstToken {
@@ -1897,17 +1974,10 @@ mod tests {
         // -> 350.
         let expected: BTreeMap<&str, usize> =
             [
-                ("advanced_race_guide", 350usize),
+                ("advanced_race_guide", 414usize),
                 ("monster_codex", 5),
                 ("inner_sea_races", 82),
                 ("horror_adventures", 43),
-                // Core Essentials' Aasimar and Tiefling heritage traits
-                // (race-trait lane round 4): 16 heritage selectors + the 48
-                // replacement rows they grant, across the book's two subrace
-                // files. Re-derived on disk rather than transcribed:
-                // `find data/corpus/core_essentials/race_trait -name '*.json'
-                // | wc -l` -> 64.
-                ("core_essentials", 64),
             ]
                 .into_iter()
                 .collect();
@@ -1970,7 +2040,7 @@ mod tests {
         assert_eq!(
             total,
             544,
-            "350 ARG (of which 114 are `ingest_races.rs`'s own standard-tier batches: \
+            "414 ARG (of which 114 are `ingest_races.rs`'s own standard-tier batches: \
              58 from Catfolk/Kitsune/Ratfolk/Strix/Suli/Wayang, SD-31-E6-F4-002, plus 38 \
              from Gillman/Nagaji/Vanara/Vishkanya, SD31-E6-F4-004, plus 18 from Changeling/\
              Samsaran, SD31-E6-F4-007 -- closing arg_races.lst's full 37-row playable-race \

@@ -1,12 +1,14 @@
 {
   "completeness": "chassis_only",
   "data": {
-    "ability_keys": [],
+    "ability_keys": [
+      "advanced_players_guide:companion:temp_evolution_constrict",
+      "advanced_players_guide:companion:temp_evolution_grab",
+      "advanced_players_guide:companion:evolution_constrict"
+    ],
     "corpus_key": "Familiar (Crab (Giant King))",
     "external_ability_refs": [
-      "Constrict",
-      "Crab Companion ~ Water Dependency",
-      "Grab"
+      "Crab Companion ~ Water Dependency"
     ],
     "key": "advanced_players_guide:companion:familiar_crab_giant_king",
     "monster_class": "Vermin:1",
@@ -171,7 +173,7 @@
       "Familiar"
     ]
   },
-  "ingested_at": "2026-08-15T01:24:11Z",
+  "ingested_at": "2026-08-18T22:35:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
@@ -185,7 +187,6 @@
   },
   "wiring_class": "derived",
   "wiring_class_signals": [
-    "derived:bonus",
-    "derived:cr"
+    "derived:bonus"
   ]
 }

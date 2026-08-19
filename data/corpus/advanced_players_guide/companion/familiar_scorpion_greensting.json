@@ -157,7 +157,7 @@
       "Familiar"
     ]
   },
-  "ingested_at": "2026-08-15T01:24:11Z",
+  "ingested_at": "2026-08-18T22:35:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
@@ -169,9 +169,8 @@
     "record_key": "Familiar (Scorpion (Greensting))",
     "sha256": "2503bc54689a1f20beedf12c51d9563f24e91b74788d24bc73567c483fa004ec"
   },
-  "wiring_class": "derived",
+  "wiring_class": "static",
   "wiring_class_signals": [
-    "derived:bonus",
-    "derived:cr"
+    "static:literal_magnitudes_only"
   ]
 }

@@ -103,7 +103,7 @@
     ],
     "type_segments": []
   },
-  "ingested_at": "2026-08-13T09:20:39Z",
+  "ingested_at": "2026-08-18T22:35:20Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
@@ -115,8 +115,8 @@
     "record_key": "Eidolon",
     "sha256": "7dd281344db05468229b28af3273f65d51fba31e5c954d63b8805e5866f11473"
   },
-  "wiring_class": "derived",
+  "wiring_class": "static",
   "wiring_class_signals": [
-    "derived:bonus"
+    "static:literal_magnitudes_only"
   ]
 }

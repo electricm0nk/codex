@@ -1549,7 +1549,23 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
     let root = companion_book_corpus_root(spec);
     let out_root = Path::new(env!("CARGO_MANIFEST_DIR")).join("data/corpus").join(book_id);
     let ingested_at = ingested_at_now();
-    let wiring_index = WiringClassIndex::build(book_id, &root);
+    // Index `core_essentials`'s own directory under its own book key too, for
+    // the reason `gen_monster_book` states: a `decisions.md §9`-re-attributed
+    // row's citation `path` names that directory, and without the extra index
+    // `wiring_class_for_source` cannot find the row and stamps `ambiguous`
+    // regardless of the row's real corpus shape.
+    let wiring_data_root = companion_book_corpus_data_root(spec);
+    let wiring_index = match &wiring_data_root {
+        Some(data_root) => {
+            let ce_dir = data_root.join(CORE_ESSENTIALS_RELATIVE);
+            if ce_dir == root {
+                WiringClassIndex::build(book_id, &root)
+            } else {
+                WiringClassIndex::build_with_extra(book_id, &root, "core_essentials", &ce_dir)
+            }
+        }
+        None => WiringClassIndex::build(book_id, &root),
+    };
     let mut wiring_lines = wiring_index.lines();
 
     let dir = out_root.join("companion");
@@ -1559,15 +1575,41 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
 
     // Keyed by file name, because a record's `source_line` is only meaningful
     // together with its `source_file` -- see `CompanionRecord::source_file`.
+    //
+    // Loaded through the `core_essentials` fallback: a `decisions.md §9`
+    // re-attributed row reports its real book (`ce_races_familiar_cr.lst` says
+    // `SOURCELONG:Bestiary`, so its rows report `bestiary`) while its physical
+    // file never leaves `core_essentials`' PCGen directory. Same rule, same
+    // term, as `transcribe_companion_tables`'s own resolver.
     let races_files: HashMap<&'static str, CorpusFile> = spec
         .races_lsts
         .iter()
-        .map(|name| (*name, load_corpus_file_rel(&root, spec.book_relative, name)))
+        .map(|name| {
+            (
+                *name,
+                load_corpus_file_rel_with_fallback(
+                    &root,
+                    spec.book_relative,
+                    wiring_data_root.as_deref(),
+                    name,
+                ),
+            )
+        })
         .collect();
     let abilities_files: HashMap<&'static str, CorpusFile> = spec
         .abilities_lsts
         .iter()
-        .map(|name| (*name, load_corpus_file_rel(&root, spec.book_relative, name)))
+        .map(|name| {
+            (
+                *name,
+                load_corpus_file_rel_with_fallback(
+                    &root,
+                    spec.book_relative,
+                    wiring_data_root.as_deref(),
+                    name,
+                ),
+            )
+        })
         .collect();
 
     let mut pi_hits: Vec<String> = Vec::new();
@@ -1887,11 +1929,24 @@ const COMPANION_BOOK_SPECS: &[CompanionBookSpec] = &[
     // load-bearing: writing `data/corpus/bestiary/` would split the book's
     // corpus in half, giving it a second LICENSE.json and a monster/equipment
     // half the new companion half could never be judged against.
+    //
+    // `SD31-CE-COMPANION-001` added the two `ce_*` files below. They physically
+    // live under `core_essentials/`, and both declare `SOURCELONG:Bestiary` in
+    // their own headers -- so `decisions.md §9` re-attribution reports their 95
+    // rows as this book's, and `v06_work_inventory`'s `SOURCELONG_TO_BOOK` has
+    // said so since 2026-08-16. The filename suffix `_cr` is NOT the signal and
+    // must never be read as one: `ce_races_familiar_cr.lst` means "the Core
+    // Rulebook classes' familiar list", and the stat blocks in it are the
+    // Bestiary's. `load_corpus_file_rel_with_fallback` is what lets a spec name
+    // a file that is not under its own `book_relative`.
     CompanionBookSpec {
         corpus_book: "beastiary",
         book_relative: "pathfinder/paizo/roleplaying_game/bestiary",
-        races_lsts: &["b1_races_companion.lst"],
-        abilities_lsts: &["b1_abilities_companion.lst"],
+        races_lsts: &["b1_races_companion.lst", "ce_races_familiar_cr.lst"],
+        abilities_lsts: &[
+            "b1_abilities_companion.lst",
+            "ce_abilities_familiar_race_cr.lst",
+        ],
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own bestiary.pcc carries a live COPYRIGHT block plus a real OGL.txt",
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E7-F2-004",
@@ -1953,48 +2008,6 @@ const COMPANION_BOOK_SPECS: &[CompanionBookSpec] = &[
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Ultimate Wilderness, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E7-F2-007",
     },
-    // SD-29 Epic 7 round 7. Core Essentials.
-    //
-    // The two citation fields below are the ONLY ones in this table that do not
-    // use the "the book's own `<x>.pcc` carries a live COPYRIGHT block plus a
-    // real OGL.txt" formula, and that is deliberate: for this book the formula
-    // is FALSE. `_core_essentials.pcc` has its `ISOGL:YES` (line 16) and every
-    // one of its `COPYRIGHT:` lines (19 onward) prefixed with `#` — commented
-    // out, not absent — and the directory ships no `OGL.txt` at all
-    // (`ls ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/core_essentials/ | grep -i ogl`
-    // → nothing). Read alone the book makes no active declaration.
-    //
-    // What makes it recoverable is the inclusion path, which the race-trait
-    // lane derived and recorded in this book's existing `LICENSE.json`
-    // (`SD29-E6-F2-005`): `core_rulebook.pcc` line 43 unconditionally includes
-    // `_core_essentials.pcc`, and Core Rulebook carries its own live `ISOGL:YES`
-    // and `COPYRIGHT` block. These strings restate that derivation rather than
-    // asserting a stronger one.
-    //
-    // In practice the generator will use NEITHER: `gen_companion_book`
-    // preserves a prior `license_declaration` (`decisions.md §54.4`) and this
-    // book has one. They are written correctly anyway, because a fallback that
-    // is only correct while it stays unreached is how `§59.2`'s `mod_only` half
-    // sat wrong-and-unexercised for two rounds.
-    CompanionBookSpec {
-        corpus_book: "core_essentials",
-        book_relative: "pathfinder/paizo/roleplaying_game/core_essentials",
-        races_lsts: &[
-            "ce_races_familiar_apg.lst",
-            "ce_races_familiar_cr.lst",
-            "ce_races_familiar_um.lst",
-        ],
-        abilities_lsts: &[
-            "ce_abilities_familiar_apg.lst",
-            "ce_abilities_familiar_cr.lst",
-            "ce_abilities_familiar_race_cr.lst",
-            "ce_abilities_familiar_race_um.lst",
-            "ce_abilities_familiar_um.lst",
-        ],
-        open_game_content: "OGL 1.0a (Wizards of the Coast), inherited from the including core_rulebook.pcc per docs/governance/license-matrix.md §'Unestablished: 1 of 37'. core_essentials' own _core_essentials.pcc has its ISOGL:YES (line 16) and every COPYRIGHT: line (19 onward) commented out and ships no OGL.txt, so read alone it makes no active declaration; core_rulebook.pcc line 43 includes it unconditionally and carries a live declaration of its own.",
-        product_identity_source: "Paizo Pathfinder Roleplaying Game Core Rulebook, OGL §15 Product Identity section (core_essentials is distributed as part of that book's data set)",
-        classified_by_cycle: "SD29-E7-F2-008",
-    },
     // SD-29 Epic 7 round 8. Core Rulebook.
     //
     // Back to the standard formula, and CHECKED rather than assumed after
@@ -2033,11 +2046,17 @@ const COMPANION_BOOK_SPECS: &[CompanionBookSpec] = &[
     // they are written correctly anyway, per `§63`'s note that a fallback which
     // is only correct while it stays unreached is how `§59.2`'s `mod_only` half
     // sat wrong for two rounds.
+    // The two `ce_*` files below both declare `SOURCELONG:Ultimate Magic` in
+    // their own headers (`SD31-CE-COMPANION-001`); see `beastiary`'s row above
+    // for why the header, never the filename, decides.
     CompanionBookSpec {
         corpus_book: "ultimate_magic",
         book_relative: "pathfinder/paizo/roleplaying_game/ultimate_magic",
-        races_lsts: &["um_races_companion.lst"],
-        abilities_lsts: &["um_abilities_companion.lst"],
+        races_lsts: &["um_races_companion.lst", "ce_races_familiar_um.lst"],
+        abilities_lsts: &[
+            "um_abilities_companion.lst",
+            "ce_abilities_familiar_race_um.lst",
+        ],
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own ultimate_magic.pcc carries a live COPYRIGHT block plus a real OGL.txt",
         product_identity_source: "Paizo Pathfinder Roleplaying Game Ultimate Magic, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E7-F2-010",
@@ -2051,10 +2070,15 @@ const COMPANION_BOOK_SPECS: &[CompanionBookSpec] = &[
         product_identity_source: "Paizo Pathfinder Roleplaying Game Advanced Race Guide, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E7-F2-010",
     },
+    // `ce_races_familiar_apg.lst` declares `SOURCELONG:Advanced Player's Guide`
+    // for the block its 8 transcribed rows sit in (`SD31-CE-COMPANION-001`).
+    // Adding those 8 familiars also gave five previously-orphan
+    // `apg_abilities_companion.lst` rows an owner, which is why this book's
+    // shipped table moved 4 -> 17 and not 4 -> 12.
     CompanionBookSpec {
         corpus_book: "advanced_players_guide",
         book_relative: "pathfinder/paizo/roleplaying_game/advanced_players_guide",
-        races_lsts: &["apg_races_companion.lst"],
+        races_lsts: &["apg_races_companion.lst", "ce_races_familiar_apg.lst"],
         abilities_lsts: &["apg_abilities_companion.lst"],
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own advanced_players_guide.pcc carries a live COPYRIGHT block plus a real OGL.txt",
         product_identity_source: "Paizo Pathfinder Roleplaying Game Advanced Player's Guide, OGL §15 Product Identity section",
@@ -2086,6 +2110,23 @@ fn companion_book_corpus_root(spec: &CompanionBookSpec) -> PathBuf {
     let home = std::env::var("HOME")
         .expect("HOME must be set to locate the default PCGen corpus checkout");
     PathBuf::from(home).join("workspace/repos/pcgen/data").join(spec.book_relative)
+}
+
+/// The directory ABOVE `pathfinder/...` for a companion book, i.e. the base the
+/// `core_essentials` fallback in [`load_corpus_file_rel_with_fallback`] is
+/// computed from. `None` when a per-book `PCGEN_CORPUS_ROOT_<BOOK>` override is
+/// in effect, because an override points at a book directory directly and the
+/// data root above it is not derivable -- the same rule and the same shape as
+/// [`monster_book_corpus_data_root`], which the monster lane added in
+/// `SD31-E6-F9-005` for exactly this reason.
+fn companion_book_corpus_data_root(spec: &CompanionBookSpec) -> Option<PathBuf> {
+    let override_var = format!("PCGEN_CORPUS_ROOT_{}", spec.corpus_book.to_uppercase());
+    if std::env::var(&override_var).is_ok() {
+        return None;
+    }
+    let home = std::env::var("HOME")
+        .expect("HOME must be set to locate the default PCGen corpus checkout");
+    Some(PathBuf::from(home).join("workspace/repos/pcgen/data"))
 }
 
 /// Where one monster book's two `.lst` files live and what its OGL notice

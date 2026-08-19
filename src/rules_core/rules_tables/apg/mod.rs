@@ -21,11 +21,21 @@
 //! `MODULE_DIR` already carried the mapping, added by round 8 in anticipation
 //! of exactly this round.
 //!
-//! 4 of the book's 212 `companion` corpus rows ship (1 creature row -- the
-//! `Eidolon` itself -- and 3 ability rows), which is exactly the
-//! `reachable remainder`
+//! 17 of the book's 220 `companion` corpus rows ship (9 creature rows and 8
+//! ability rows), which is exactly the `reachable remainder`
 //! `python3 scripts/classify_companion_rows.py advanced_players_guide` prints.
 //! No new `RuleSetId`: `RuleSetId::Apg` predates this lane.
+//!
+//! **4 -> 17 by `SD31-CE-COMPANION-001` (2026-08-18), and only 8 of the 13 are
+//! new rows.** `decisions.md §9` retired the `core_essentials` book id, and
+//! `ce_races_familiar_apg.lst` -- which declares `SOURCELONG:Advanced Player's
+//! Guide` in its own header -- brought this book 8 familiar creature rows that
+//! had been served out of a `core_essentials` table while their corpus records
+//! sat, unreachable, in this book's own `data/corpus/` directory. Adding those
+//! 8 owners then gave FIVE previously-orphan `apg_abilities_companion.lst`
+//! rows an owner for the first time, which is the other half of the move: an
+//! ability row's shippability is a fact about whether a shipped creature
+//! reaches it, so importing owners can un-orphan rows nothing else touched.
 //!
 //! **This is the lane's most lopsided book: 208 of its 212 rows do not ship,
 //! and they are ONE finding.** They are the summoner's evolution pool --

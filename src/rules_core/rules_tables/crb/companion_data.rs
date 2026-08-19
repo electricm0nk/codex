@@ -101,6 +101,20 @@
 //!   * `Companion ~ Share Spells`
 //!   * `Companion ~ Spell Resistance (AC)`
 //!   * `Companion ~ Spell Resistance (SM)`
+//!   * `Familiar Alertness Choice ~ Alertness Active`
+//!   * `Familiar Alertness Choice ~ Alertness Inactive`
+//!   * `Familiar ~ Alertness`
+//!   * `Familiar ~ Deliver Touch Spells`
+//!   * `Familiar ~ Empathic Link`
+//!   * `Familiar ~ Improved Evasion`
+//!   * `Familiar ~ Intelligence Score`
+//!   * `Familiar ~ Natural Armor Bonus`
+//!   * `Familiar ~ Scry on Familiar`
+//!   * `Familiar ~ Share Spells`
+//!   * `Familiar ~ Speak One Language`
+//!   * `Familiar ~ Speak with Animals of Its Kind`
+//!   * `Familiar ~ Speak with Master`
+//!   * `Familiar ~ Spell Resistance`
 //!
 //! NOT transcribed -- `*_classes_companion.lst` CLASS rows (`decisions.md
 //! §65.1`). A PCGen monster class is the hit-dice progression a creature

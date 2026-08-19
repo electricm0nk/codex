@@ -287,8 +287,8 @@ function verifiesTheCorpusIsReallyOnDiskAndCarriesEighteenRaces() {
   );
   assertEqual(
     loadTraits().length,
-    525,
-    'race trait records across all three books (CRB 67 + B1 108 + ARG 350; ARG 156 -> 201 by ' +
+    589,
+    'race trait records across all three books (CRB 67 + B1 108 + ARG 414; ARG 156 -> 201 by ' +
       'SD-31 Epic 1-F2, 2026-08-15, 201 -> 259 by SD-31-E6-F4-002\'s own 6-race chassis batch, ' +
       '259 -> 283 by SD-31-E6-F4-003\'s own 24-record alternate-trait batch for those same 6 ' +
       'races, both 2026-08-16, 283 -> 321 by SD31-E6-F4-004\'s own 4-race chassis batch ' +
@@ -297,7 +297,10 @@ function verifiesTheCorpusIsReallyOnDiskAndCarriesEighteenRaces() {
       'own 2-race chassis batch (18 standard-tier records: Changeling, Samsaran), 2026-08-17, ' +
       'closing arg_races.lst\'s full 37-row playable-race roster -- this test only loads ' +
       'CRB/B1/ARG, so Bestiary 2/5\'s new chassis is out of its scope, but ARG\'s own growth ' +
-      'still moves this total)',
+      'still moves this total; 350 -> 414 by the Core Essentials removal, 2026-08-18 ' +
+      '(SD31-CE-COMPANION-001, decisions.md 9): Aasimar\'s and Tiefling\'s 64 heritage records ' +
+      '-- 16 selectable heritages plus the 48 replacement rows they grant -- re-filed here from ' +
+      'data/corpus/core_essentials/race_trait/, which this test never loaded)',
   );
   const standard = loadStandardTraits();
   assertEqual(standard.length, 175, 'standard racial trait records (CRB 67 + B1 108)');
