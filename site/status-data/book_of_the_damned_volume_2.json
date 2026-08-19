@@ -1505,11 +1505,11 @@
     {
       "kind": "monster",
       "label": "Monsters",
-      "done": 4,
-      "partial": 0,
+      "done": 3,
+      "partial": 1,
       "not_started": 0,
       "denominator": 4,
-      "pct": 100.0,
+      "pct": 75.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 4
@@ -1535,7 +1535,7 @@
         },
         {
           "name": "Demon (Vermlek)",
-          "doneness": "done",
+          "doneness": "partial",
           "type_facet": null,
           "standing": "origin"
         }

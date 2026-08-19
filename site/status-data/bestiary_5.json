@@ -619,11 +619,11 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 1,
-      "partial": 1,
+      "done": 0,
+      "partial": 2,
       "not_started": 81,
       "denominator": 83,
-      "pct": 1.2,
+      "pct": 0.0,
       "excluded_from_percentage": 63,
       "standing_breakdown": {
         "unclassified": 63,
@@ -722,7 +722,7 @@
         },
         {
           "name": "+2 Wisdom, -2 Intelligence, +2 to One Physical Ability Score While in Bestial Form",
-          "doneness": "done",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Skinwalker Racial Trait.Skinwalker Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "origin"
         },

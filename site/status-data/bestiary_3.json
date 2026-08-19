@@ -2640,11 +2640,11 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 9,
-      "partial": 8,
+      "done": 6,
+      "partial": 11,
       "not_started": 567,
       "denominator": 584,
-      "pct": 1.5,
+      "pct": 1.0,
       "excluded_from_percentage": 282,
       "standing_breakdown": {
         "origin": 584,
@@ -2689,31 +2689,31 @@
         },
         {
           "name": "+2 Dexterity, +2 Charisma, -2 Wisdom",
-          "doneness": "done",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Vishkanya Racial Trait.Vishkanya Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "unclassified"
         },
         {
           "name": "+2 Dexterity, +2 Charisma, \u20132 Wisdom",
-          "doneness": "done",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Catfolk Racial Trait.Catfolk Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "origin"
         },
         {
           "name": "+2 Dexterity, +2 Intelligence, -2 Strength",
-          "doneness": "done",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Ratfolk Racial Trait.Ratfolk Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "origin"
         },
         {
           "name": "+2 Dexterity, +2 Wisdom, -2 Charisma",
-          "doneness": "done",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Vanara Racial Trait.Vanara Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "origin"
         },
         {
           "name": "+2 Strength, +2 Charisma, -2 Intelligence",
-          "doneness": "done",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Suli Racial Trait.Suli Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "unclassified"
         },

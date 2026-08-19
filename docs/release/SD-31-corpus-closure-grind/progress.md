@@ -27303,6 +27303,7 @@ concurrent lanes. Loop-instruction override 10's trigger ("a cycle that touches
 `docs/work-inventory.json` or `site/dashboard/units/*.json`") is not met — this cycle touched
 neither. **Integration cycle: publish once, after the sanctioned regen.** `retro.py correction`
 emitted for the attribution.
+
 ## Cycle `SD31-W15-RACETRAIT-001` (`RETRO_ACTOR=sd31-w15-racetrait`) — 2026-08-19, wave 15 `race_trait` lane: the character-creation chassis now names the record it reads (**+23 `done`**, 0 demoted, denominator unchanged)
 
 **Lane:** the 286 `in-progress` `race_trait` units. **Branch:** `worktree-wf_0628906e-65b-6`,
@@ -27349,7 +27350,7 @@ whole record, not a filtered field):
 
 The `BONUS:SAVE` lever is exhausted (`ALTERNATE_TRAIT_SAVE_BONUSES` already holds all five that
 exist corpus-wide) and **not one** of the 44 skill bonuses names a skill this engine computes a
-total for — full breakdown in `OPEN-ISSUES.md` row 267.
+total for — full breakdown in `OPEN-ISSUES.md` row 273.
 
 ### 2. The one lever that was real, and inside this lane
 
@@ -27471,6 +27472,61 @@ through a pipe:
 
 ```
 RESULT: PASS        VERIFY_EXIT=0        logs in /tmp/codex-verify-Ws5QQP
+passed: 34   preflight-disk preflight-oracle oracle-pin-selftest producer-selftest
+             pi-redaction-selftest provenance-selftest site-dashboard-selftest
+             site-dashboard-check site-dashboard-pi-gate build-public-status-selftest
+             site-public-status-check site-public-status-pi-gate site-asset-stamp-check
+             reachability-audit-selftest reachability-audit groundtruth-guard-selftest
+             supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest
+             reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full
+             desktop reach corpus-sweep supersession-gate frontend-install frontend-test
+             frontend-typecheck clippy class-dump
+```
+
+Stages that bear directly on this cycle: `root-lib` 2044 passed; `root-full` **7056 passed across
+568 suites, all 531 `tests/*.rs` suites executed**; `desktop` 463 passed (the separate cargo
+workspace a root sweep does not reach); `reach` 27 passed; `corpus-sweep` 0 findings;
+`site-dashboard-pi-gate` and `site-public-status-pi-gate` both clean over the republished feeds;
+`supersession-gate` 116 objects clean (**the register is untouched by this cycle and still
+PROPOSED, NOT APPLIED**); `reachability-audit` reachable ceiling 98.95 %; `clippy` root 51 /
+desktop 7, unchanged ceilings.
+
+**Baseline movement, as its own reviewable commit** (DoD item 7), carrying the gate's own
+`BASELINE NOTES` verbatim: `BASELINE_ROOT_LIB_TESTS` 2042 → 2044 (the 2 new
+`rules_core::race_creation` tests) and `BASELINE_ROOT_FULL_TESTS` 7052 → 7056 (those 2 plus the 2
+new `race_trait_creation_chassis_consumer_tests`). `BASELINE_ROOT_TEST_BINARIES` deliberately NOT
+raised — both new bin tests live in the existing `v06_work_inventory` target, and the gate measured
+568, matching. Every other baseline matched its stage output with no stale note.
+
+### 9. Two incidents recorded
+
+* **`wrong-base-worktree`** — four of the six wave-15 worktrees were cut at the site-deploy tip
+  `37a80141e` instead of `tranche/11` at `45273fd3b`; that tree has no `docs/`, `data/`, `scripts/`
+  or `src/`, so none of the card's required reads existed. This is the same defect SD-29 hit six
+  times and the event log under-recorded by 3×. Recovered with `git reset --hard 45273fd3b` on a
+  verified-clean tree.
+* **`shared-scratchpad-clobber` (SILENT)** — the harness scratchpad is shared by all six lanes, and
+  another lane overwrote this lane's `receipt.md` and `msg.txt` **in place** while both were live.
+  Nothing was lost here only because this lane had already appended its receipt to `progress.md`
+  and committed its message; a lane that had not yet committed would have published another lane's
+  text as its own, silently and plausibly. This lane's `gate.log` survived only because its name
+  happened not to collide.
+
+### 10. What this cycle could NOT do
+
+* **The 293-unit race-level residual is reported, not corrected** (row 272). Narrowing
+  `consumer_verified` from a race to a trait key is a ~200-unit honest DECREASE resting on a
+  per-seam attribution that has to be derived seam by seam, and a demotion derived wrongly is as
+  much a defect as the over-credit it corrects. Dispatched as its own card, with the demotion
+  expected and budgeted, is the right shape.
+* **The 20 browse-only heritage units** need a product ruling on whether choosing a heritage
+  re-resolves the creation chassis (row 271). The rules-correct answer is plainly yes; the question
+  is whose lane builds the picker, and it is not this one's grant.
+* **DoD item 8 was not performed** — see §6. No family was newly surfaced; what changed is the
+  inventory's ability to see a screen that has been printing these numbers all along.
+* **Nothing in this cycle touched race attribution, the Supersession Register, or the denominator.**
+  The register stays PROPOSED, NOT APPLIED; attribution stays FROZEN; 38,521 in, 38,521 out.
+
 ## `SD31-W15-MONSTER-SLA-001` — wave 15 monster lane: a SECOND derived-evaluator seam for `monster`, the spell-like-ability save DC (**+63 `done`**)
 
 **Actor:** `RETRO_ACTOR=sd31-w15-monster-seam`. **Branch:** `worktree-wf_0628906e-65b-1`.
@@ -27496,7 +27552,7 @@ spell-like-ability CASTER LEVEL from `BONUS:VAR|SLA_CL|` + `MONSTERCLASS:<type>:
 Re-derived against the pinned oracle over all 316 rows: **exactly TWO carry a
 `BONUS:VAR|SLA_CL|` token, and `spell_like_ability_caster_level` can bank NEITHER of them.**
 `bestiary:monster:dryad` is one of the 46 Bestiary 1 records with no `corpus_key`, so it does not
-resolve against `MONSTER_BOOKS` at all (§5, `OPEN-ISSUES` row 266);
+resolve against `MONSTER_BOOKS` at all (§5, `OPEN-ISSUES` row 275);
 `book_of_the_damned_volume_2:monster:demon_vermlek` carries `BONUS:VAR|SLA_CL|HD*3/4`, which that
 function already refuses as unparseable rather than guessing at. **That seam is exhausted for this
 population — extending its fixture set would have banked ZERO units**, so a second, genuinely
@@ -27864,51 +27920,6 @@ passed: 34   preflight-disk preflight-oracle oracle-pin-selftest producer-selfte
              frontend-typecheck clippy class-dump
 ```
 
-<<<<<<< HEAD
-Stages that bear directly on this cycle: `root-lib` 2044 passed; `root-full` **7056 passed across
-568 suites, all 531 `tests/*.rs` suites executed**; `desktop` 463 passed (the separate cargo
-workspace a root sweep does not reach); `reach` 27 passed; `corpus-sweep` 0 findings;
-`site-dashboard-pi-gate` and `site-public-status-pi-gate` both clean over the republished feeds;
-`supersession-gate` 116 objects clean (**the register is untouched by this cycle and still
-PROPOSED, NOT APPLIED**); `reachability-audit` reachable ceiling 98.95 %; `clippy` root 51 /
-desktop 7, unchanged ceilings.
-
-**Baseline movement, as its own reviewable commit** (DoD item 7), carrying the gate's own
-`BASELINE NOTES` verbatim: `BASELINE_ROOT_LIB_TESTS` 2042 → 2044 (the 2 new
-`rules_core::race_creation` tests) and `BASELINE_ROOT_FULL_TESTS` 7052 → 7056 (those 2 plus the 2
-new `race_trait_creation_chassis_consumer_tests`). `BASELINE_ROOT_TEST_BINARIES` deliberately NOT
-raised — both new bin tests live in the existing `v06_work_inventory` target, and the gate measured
-568, matching. Every other baseline matched its stage output with no stale note.
-
-### 9. Two incidents recorded
-
-* **`wrong-base-worktree`** — four of the six wave-15 worktrees were cut at the site-deploy tip
-  `37a80141e` instead of `tranche/11` at `45273fd3b`; that tree has no `docs/`, `data/`, `scripts/`
-  or `src/`, so none of the card's required reads existed. This is the same defect SD-29 hit six
-  times and the event log under-recorded by 3×. Recovered with `git reset --hard 45273fd3b` on a
-  verified-clean tree.
-* **`shared-scratchpad-clobber` (SILENT)** — the harness scratchpad is shared by all six lanes, and
-  another lane overwrote this lane's `receipt.md` and `msg.txt` **in place** while both were live.
-  Nothing was lost here only because this lane had already appended its receipt to `progress.md`
-  and committed its message; a lane that had not yet committed would have published another lane's
-  text as its own, silently and plausibly. This lane's `gate.log` survived only because its name
-  happened not to collide.
-
-### 10. What this cycle could NOT do
-
-* **The 293-unit race-level residual is reported, not corrected** (row 266). Narrowing
-  `consumer_verified` from a race to a trait key is a ~200-unit honest DECREASE resting on a
-  per-seam attribution that has to be derived seam by seam, and a demotion derived wrongly is as
-  much a defect as the over-credit it corrects. Dispatched as its own card, with the demotion
-  expected and budgeted, is the right shape.
-* **The 20 browse-only heritage units** need a product ruling on whether choosing a heritage
-  re-resolves the creation chassis (row 265). The rules-correct answer is plainly yes; the question
-  is whose lane builds the picker, and it is not this one's grant.
-* **DoD item 8 was not performed** — see §6. No family was newly surfaced; what changed is the
-  inventory's ability to see a screen that has been printing these numbers all along.
-* **Nothing in this cycle touched race attribution, the Supersession Register, or the denominator.**
-  The register stays PROPOSED, NOT APPLIED; attribution stays FROZEN; 38,521 in, 38,521 out.
-=======
 Headline stages: `root-lib` 2047 passed; `root-full` **7065 passed across 569 suites, all 532
 `tests/*.rs` suites executed**; `desktop` 465 passed; `reach` 27 passed; `corpus-sweep` 26105
 records examined, **0 findings**; `pi-sweep` 10 hits over `rules_tables`, 10 baseline rows (the
@@ -27941,4 +27952,274 @@ passed, and the clippy re-count -> exactly 51.
   (§9), the rendering is mutation-proved, and the browser preview carries a real record that
   exercises it — but no `driver.sh` / screenshot run was made on this box. What is missing is
   the driver, not the wiring.
->>>>>>> worktree-wf_0628906e-65b-1
+
+---
+
+## SD31-W15-MONSTER-ABILITY-001 — the `monster_ability` save-DC evaluator seam (2026-08-19)
+
+**Lane:** wave-15 seam lane, `kind=monster_ability`. **Branch:** `worktree-wf_0628906e-65b-2`,
+cut from `tranche/11` `45273fd3b`. **Oracle pin:** `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
+(`./scripts/fetch-pcgen-oracle.sh --check` → `pcgen-oracle: OK 7f818006e3…`).
+**Own `CARGO_TARGET_DIR`:** `/home/ubuntu/cargo-targets/sd31-w15-monster-ability`.
+
+### 0−. Checkout assertion — the SD-30 step-0− defect recurred again
+
+The dispatch worktree was cut at `37a80141e`, **the deploy branch's tip** (`site: publish site/ from
+tranche/11`), not at the dispatched `tranche/11` `45273fd3b`: the tree carried no `docs/`, `data/`,
+`scripts/` or `schemas/` at all, so none of the card's required reads existed. Same defect
+`OPEN-ISSUES` row 250 recorded for `SD31-E1-F3-001` one wave earlier; `git worktree list` shows
+three of this wave's six lanes (`-2`, `-4`, `-6`) got the wrong base and three (`-3`, `-5`) got the
+right one. Recovered on a provably clean tree:
+
+```
+git status --porcelain     # empty
+git reset --hard 45273fd3b # -> HEAD is now at 45273fd3b chore(sd31): wave-14 verify.sh auto-emitted retro events
+```
+
+`retro.py incident` emitted. **This is now a two-wave, four-worktree pattern, not a one-off.**
+
+### 1. The seam
+
+PF1, `Bestiary` Appendix 1 (Universal Monster Rules): *"The save DC against a monster's special
+ability is equal to 10 + 1/2 the monster's racial HD + the monster's relevant ability modifier."*
+
+PCGen states the already-summed `10 + 1/2 racial HD` term **on the ability row**, as the `DESC:`
+token's argument for the `%N` its prose introduces with the word `DC`
+(`…succeed at a DC %1 Will save…|15+WIS`), and states the racial HD itself **on a different row in a
+different file** as the tail of `MONSTERCLASS:<type>:<HD>`. The ability-modifier term stays
+symbolic: it needs the creature's live ability SCORE, and this ingest carries only `BONUS:STAT`
+ADJUSTMENTS (`SD31-E6-F1-002`, row 44) — resolving it would be that finding's refused fabrication.
+
+**Why this fixture is not circular, and why it is stronger than the four seams before it.** Every
+earlier seam in this family pins an expected value read off the SAME row the evaluator parses, so
+its independence rests entirely on the two readings arriving through different artifacts. Here the
+expected value is ALSO fixed by a second corpus row the evaluator never reads, tied to the first by
+the printed rule. An entry is emitted **only when both derivations agree**; a disagreement credits
+nothing. Full derivation, evidence table and the excluded rows:
+`artifacts/SD31-W15-MONSTER-ABILITY-save-dc-seam.md`.
+
+**The linked-ability requirement is enforced structurally.** The owner is resolved from PCGen's own
+`<Monster> ~ <Ability>` key namespacing against the ability file's **own book directory** — never
+from the engine's `owners` field. An orphan (no monster row of its own book) has no racial HD to
+apply the rule to and is excluded; one row fell out that way. The engine side resolves strictly by
+`MonsterBook::monster_ability_resolve` (`a.key == key`), so none of these 92 is exposed to the
+`holds_key` name-fallback shape `OPEN-ISSUES` row 261 found and row 261's 9 residuals still carry.
+
+### 2. Files
+
+| file | what |
+|---|---|
+| `scripts/derive_monster_ability_save_dc_fixtures.py` | NEW. Reads upstream `.lst` bytes for every value; opens no file under `data/corpus/`; reads `docs/work-inventory.json` for identity only. `--report` publishes every exclusion. |
+| `src/rules_core/derived_evaluator_fixture_check.rs` | `monster_ability_save_dc()` (the evaluator), `universal_monster_rule_save_dc_base()` (the printed rule), `MonsterAbilitySaveDc`, `MonsterAbilityFixture`, `load_monster_ability_fixtures()`, `run_monster_ability_bar_check()`, merged into `run_bar_check()`. |
+| `tests/derived_evaluator_fixture_check_monster_ability.rs` | NEW. The four guarantees + two mutation proofs, 8 tests. |
+| `tests/fixtures/rules_core/derived-evaluator-fixtures.json` | +92 `monster_ability_entries` and their three provenance keys. Pure addition: `git diff --numstat` → `1937 0`, and a key-by-key comparison against `HEAD` shows **zero pre-existing key changed**. |
+
+### 3. The derivation, verbatim
+
+```
+export PCGEN_CORPUS_ROOT=/home/ubuntu/workspace/repos/pcgen/data
+python3 scripts/derive_monster_ability_save_dc_fixtures.py --report
+```
+```
+monster_ability derived+grounded units considered: 264
+  no_DC_slot_with_int_plus_stat_argument         146
+  EMITTED                                         92
+  two_derivations_disagree                        23
+  row_states_no_DESC                               2
+  orphan_no_owner_monster_row_in_this_book         1
+```
+
+**All 92 are `bestiary_4`, and that is a corpus fact, not a lane choice.** The inline
+`<base>+<STAT>` spelling of a save-DC argument is a Bestiary 4 convention; the other books in the
+population spell the same fact as a NAMED variable (`…|ClingDC` plus
+`BONUS:VAR|ClingDC|10+(HD/2)+CON`), which lands in the 146 uncovered. That second spelling is a
+real second sub-seam and it was deliberately NOT taken this cycle: there the ability row states the
+FORMULA rather than a value, so the only number available is the one the evaluator itself computes
+from the owner's HD, and a fixture pinning it would be the weak, same-fact-twice shape this wave's
+brief warns against. Recorded rather than banked.
+
+### 4. Mutation proof — the gate genuinely fails
+
+Both mutations were applied to the real source, the suite re-run, and the source restored
+byte-identically (`diff -q` against a pre-mutation copy → identical).
+
+```
+# MUTATION 1, the evaluator (half 1 of the bar)
+MonsterAbilitySaveDc { base, .. }  ->  MonsterAbilitySaveDc { base: base + 1, .. }
+cargo test --locked -j 4 --test derived_evaluator_fixture_check_monster_ability
+# -> test result: FAILED. 6 passed; 2 failed   "92 mismatch(es)"
+
+# MUTATION 2, the printed rule (half 2 — the half that makes half 1 non-circular)
+Some(10 + hd / 2)  ->  Some(10 + hd / 3)
+# -> test result: FAILED. 6 passed; 2 failed   "88 mismatch(es)"
+#    (the 4 survivors are owners with racial HD <= 2, where hd/2 == hd/3)
+
+# RESTORED
+# -> test result: ok. 8 passed; 0 failed; 0 ignored
+```
+
+### 5. Guarded regen — the measured delta
+
+```
+cp docs/work-inventory.json <scratch>/work-inventory-BEFORE.json
+cargo run --locked -j 4 --bin corpus_literal_sweep -- --json-out <scratch>/sweep-w15.json
+# -> 26105 records examined of 26741 read, 252158 tokens compared, 0 findings, CLEAN
+cargo run --locked -j 4 --bin derived_evaluator_fixture_check -- --json-out <scratch>/fixture-w15.json
+# -> 1368 of 1368 covered units cleared; 0 failed; 0 not ingested   (92 of them monster_ability)
+CORPUS_LITERAL_SWEEP_REPORT=<scratch>/sweep-w15.json \
+DERIVED_FIXTURE_CHECK_REPORT=<scratch>/fixture-w15.json \
+  cargo run --locked -j 4 --bin v06_work_inventory     # REGEN_EXIT=0, zero stamp loss reported
+```
+
+`git diff -- docs/work-inventory.json` → **exactly 92 units flip `grounded` → `fixture-verified`**,
+all `bestiary_4` `monster_ability`, nothing else moves (cross-tab `fixture-verified` 1193 → 1285,
+`grounded` 2657 → 2565; per-kind `monster_ability` gains `fixture-verified: 92` and drops
+`grounded` 163 → 71).
+
+**Board delta, measured by replaying the dashboard producer's own `doneness_verdict()` over
+`docs/work-inventory.json` with `EXCLUDED_BOOKS={'beginner_box'}` — never asserted:**
+
+```
+python3 - <<'PY'
+import json, sys, collections
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+before = json.load(open('<scratch>/work-inventory-BEFORE.json'))
+after  = json.load(open('docs/work-inventory.json'))
+def tally(d):
+    U = [u for u in d['units'] if u.get('book') not in P.EXCLUDED_BOOKS]
+    c = collections.Counter(P.doneness_verdict(u.get('wiring_class'),u.get('status'),u.get('kind')) for u in U)
+    return len(U), c
+nb, cb = tally(before); na, ca = tally(after)
+print('BEFORE', nb, dict(cb), round(100*cb['done']/nb,4))
+print('AFTER ', na, dict(ca), round(100*ca['done']/na,4))
+PY
+```
+→ **BEFORE** 38,521 units · `done` **12,277 (31.8709 %)** · `held` 1,677 — reproducing the
+orchestrator's dispatch board exactly.
+→ **AFTER** 38,521 units · `done` **12,369 (32.1098 %)** · `held` **1,585**.
+→ **delta: +92 `done`, −92 `held`.** `not-started` 18,030, `unmeasurable` 5,110, `in-progress`
+1,389, `deferred` 38 — all four identical before and after. Nothing left the denominator; no race
+attribution touched; no Supersession Register entry applied.
+
+Per-kind: `monster_ability` `done` 1,456 → 1,548, `held` **351 → 259**, `not-started` 1,144
+unchanged.
+
+**Override 9 compliance (`status_sources_agree`).** The live dashboard reads
+`work_inventory.status_sources_agree: false` on this commit (`generated_at 2026-08-19T10:47:10Z`
+vs. `doneness_source_generated_at 2026-08-19T11:33:31Z` — the producer's own fresh `--summary` run
+and the committed full document are different corpus snapshots). **No figure in this receipt is
+quoted from the dashboard JSON.** Every number above is a replay of `doneness_verdict()` directly
+over `docs/work-inventory.json` at `generated_at 2026-08-19T11:33:31Z`, which is the same document
+the `doneness_source_generated_at` stamp names.
+
+**Public feed refreshed on the same commit** per loop-instruction override 10:
+`./scripts/publish-site-dashboard.sh` (real publish, exit 0) → `site/dashboard/PF1e-dashboard.json`,
+`site/dashboard/units/PF1e-units-monster_ability.json`, `site/dashboard/units/index.json`,
+`site/status-data.json` (30 books, overall 36.9 %) and `site/status-data/bestiary_4.json`.
+
+### 6. The gate — run 1 RED on this cycle's own clippy warning; run 2 GREEN (all 34 stages, VERIFY_EXIT=0)
+
+**Run 1** (`artifacts/SD31-W15-MONSTER-ABILITY-001-verify-run1.log`, at commit `e82896387`):
+`RESULT: FAIL`, `VERIFY_EXIT=1`. **33 of 34 stages PASS; exactly one stage red, and it was this
+cycle's own**, not one of `OPEN-ISSUES` row 251's 14 pre-existing failures (all of which wave 14
+repaired — this run's `root-full`, `desktop` and `reach` are green):
+
+```
+FAIL  clippy  (root:52 desktop:7 — logs in /tmp/codex-verify-1Umkmq)
+      root: 52 warnings exceeds recorded ceiling 51
+      -> clippy-root.log: "this `if` statement can be collapsed"
+         src/rules_core/derived_evaluator_fixture_check.rs:1557  (dc_placeholder_slots)
+```
+
+Every other stage green, including the three that carry this cycle's own artifacts:
+`root-full  (7060 passed across 569 suites, all 532 tests/*.rs suites executed)` — up from the
+recorded floors `ROOT_FULL_TESTS 7052` / `ROOT_TEST_BINARIES 568`, which is this cycle's new test
+binary and its tests; test counts are FLOORS in `scripts/verify-baselines.env`, so growth prints a
+STALE notice and never fails. `desktop (463 passed)`, `reach (27 passed)`,
+`corpus-sweep (26105 records, 0 findings)`, `supersession-gate (116 objects, all clean)`,
+`site-dashboard-pi-gate (13 files vs 1612 declared-PI names, zero leaked)`,
+`site-public-status-pi-gate (31 files, zero leaked)`, `frontend-test (99/99)`,
+`class-dump (31/31 computing)`.
+
+**Fixed**, by collapsing the `if` into a let-chain (the shape `pcgen_desc.rs` already uses).
+Re-measured the way `verify.sh` itself counts —
+`grep '^warning:' clippy.log | grep -v 'generated [0-9]* warning' | wc -l` → **51**, back at the
+recorded ceiling, with this cycle's ~250 added test lines included in the lint.
+
+**Also added in the same fix pass, because run 1 exposed the gap:** the four tests that drive the
+CREDIT-MINTING path itself. The suite as first committed proved the EVALUATOR reproduces every
+fixture; it did not gate `run_monster_ability_bar_check`, the function that decides
+`cleared` vs. `failures` and therefore the function `apply_done_rung_stamps()` reads. A wrapper that
+routed everything to `cleared` would have been a gate that cannot fail — Decision 1(a)'s exact
+prohibition. Driven through the public `run_bar_check` against a scratch fixture root and the REAL
+resolved Bakekujira records:
+
+| test | asserts |
+|---|---|
+| `the_correct_expectation_clears_the_monster_ability_bar_check` | positive control — the real expectation clears |
+| `a_wrong_expected_save_dc_base_is_refused_by_the_bar_check` | base 23 vs. the real 22 → `failures`, `cleared` empty |
+| `a_wrong_expected_ability_is_refused_by_the_bar_check` | `CON` vs. the real `CHA` → refused |
+| `an_ability_whose_owner_does_not_resolve_is_refused_by_the_bar_check` | **the linked-ability rule on the engine side**: an orphan owner is refused, never credited on half 1 alone |
+
+plus two evaluator-refusal tables (`the_evaluator_reads_only_a_dc_slot_with_a_flat_base_plus_ability_argument`,
+`the_universal_monster_rule_rounds_the_half_hit_die_down_and_refuses_what_it_cannot_read`) covering
+the damage-term, `MDC`, named-variable, full-formula, `<ABBREV>SCORE` and missing-argument shapes.
+
+```
+cargo test --locked -j 4 --test derived_evaluator_fixture_check_monster_ability
+# -> test result: ok. 14 passed; 0 failed; 0 ignored   (was 8)
+```
+
+**Run 2 — `RESULT: PASS`, `VERIFY_EXIT=0`, all 34 stages, 0 FAIL**
+(`artifacts/SD31-W15-MONSTER-ABILITY-001-verify-run2.log`, over the tree of commit `dd7c76d82`;
+same runner script `artifacts/run-verify-sd31-w15-monster-ability.sh`, exit code captured in the
+same shell statement that ran the gate and never through a pipe):
+
+```
+PASS  root-lib          (2042 passed)
+PASS  root-full         (7066 passed across 569 suites, all 532 tests/*.rs suites executed)
+PASS  desktop           (463 passed)
+PASS  reach             (27 passed)
+PASS  clippy            (root:51 desktop:7 warnings, 0 errors)   <- back at the ceiling
+PASS  corpus-sweep      (26105 records examined of 26741 read, 0 findings)
+PASS  supersession-gate (116 objects, all clean)
+PASS  frontend-test     (99/99 files)
+PASS  class-dump        (31/31 computing)
+RESULT: PASS
+VERIFY_EXIT=0
+```
+
+`root-full` moved 7060 → 7066 between the two runs: this fix pass's six added tests. Both figures
+are above `scripts/verify-baselines.env`'s `ROOT_FULL_TESTS` floor of 7052, and `ROOT_TEST_BINARIES`
+is 569 against a floor of 568 — test counts are FLOORS in that file, so growth prints a STALE
+notice and never fails. The floors are left as they are rather than restated here: moving a baseline
+is its own reviewable commit, and the integration cycle owns it once every wave-15 lane has landed.
+
+### 7. What this cycle could NOT do
+
+* **The 23 `bestiary_4` rows whose two derivations disagree are not credited and not resolved.**
+  Every one is `bestiary_4`; every other book agrees 100 %; the offsets are not uniform (−6 to +2),
+  so this is not one systematic rule. Either the printed stat blocks deviate, or Bestiary 4's
+  racial-HD attribution is wrong. All 23 published with both values. Row 265.
+* **The verified DC is still not on a player's screen.** `render_pcgen_desc` drops a `%N` it cannot
+  resolve to an INTEGER, and `15+WIS` is not one, so `monster_catalog.rs::serve_ability_description`
+  renders *"must succeed at a DC Will save"* for these 92 rows today. `PcgenDisplayValues` is an
+  integer table and cannot carry "15 + the creature's Wisdom modifier"; closing it needs a
+  `save_dc` DTO field, a frontend render, a reach-gate claim and a DoD-8 pass — outside this lane's
+  stated write scope, and `monster_catalog.rs` is also held by the wave-15 seam-monster lane. Row
+  266. **The `done` credit does not rest on this**: these 92 were already `grounded` on a
+  REACHABILITY fact — the ability record resolves in the compiled chassis registry, which registers
+  only owner-having rows, and its description is served unconditionally to the Monster Catalog
+  screen — and what the fixture adds is evaluator fidelity. **Stated precisely because the repo's
+  own instrument disagrees with the comfortable reading**:
+  `monster_ability_desc_leaks_unresolved_argument()` returns `true` for all 92 (its first line is
+  `if !record.description_variables.is_empty() { return true }`) and the `text-complete` rung uses
+  it to REFUSE promotion for exactly this reason. These 92 reach `done` by a different rung, on
+  engine evidence, while a render defect the repo already tracks persists on the same rows. Whether
+  that is the intended reading of `derived` + `fixture-verified` -> `done` is a doctrine question,
+  not an engineering one; row 278 puts it to the operator with three answers and takes the
+  literal-table default rather than deciding it.
+* **The named-variable spelling (the other ~39 `BONUS:VAR|<name>|10+(HD/2)+<STAT>` rows) was not
+  fixtured**, on purpose — see §3.
+* **DoD item 8 (on-screen driving) was not performed**, for the same reason: this cycle adds no new
+  player-visible magnitude. It adds an evaluator and its verification.
