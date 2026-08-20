@@ -1,0 +1,72 @@
+[
+  {
+    "key": "Sorcerer ~ Cantrips",
+    "class": "Sorcerer",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 309
+    }
+  },
+  {
+    "key": "Sorcerer ~ Eschew Materials",
+    "class": "Sorcerer",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 310
+    }
+  },
+  {
+    "key": "Sorcerer ~ Spells",
+    "class": "Sorcerer",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 307
+    }
+  },
+  {
+    "key": "Sorcerer ~ Standard Bloodline",
+    "class": "Sorcerer",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 308
+    }
+  },
+  {
+    "key": "Sorcerer ~ Weapon and Armor Proficiency",
+    "class": "Sorcerer",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 306
+    }
+  }
+]

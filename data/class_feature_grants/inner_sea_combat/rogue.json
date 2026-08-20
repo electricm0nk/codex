@@ -1,0 +1,100 @@
+[
+  {
+    "key": "Bekyar Kidnapper ~ Abductor",
+    "class": "Rogue",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 18
+    }
+  },
+  {
+    "key": "Bekyar Kidnapper ~ Clean Capture",
+    "class": "Rogue",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 18
+    }
+  },
+  {
+    "key": "Kintargo Rebel ~ Misdirection",
+    "class": "Rogue",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 25
+    }
+  },
+  {
+    "key": "Kintargo Rebel ~ Sophisticated Stealth",
+    "class": "Rogue",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 25
+    }
+  },
+  {
+    "key": "Oheno Liberator ~ Bond Breaker",
+    "class": "Rogue",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 27
+    }
+  },
+  {
+    "key": "Oheno Liberator ~ Catch Off-Guard",
+    "class": "Rogue",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 27
+    }
+  },
+  {
+    "key": "Oheno Liberator ~ Covert Commander",
+    "class": "Rogue",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 27
+    }
+  }
+]

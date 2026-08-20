@@ -12,6 +12,7 @@ pub mod acg;
 pub mod apg;
 pub mod beastiary1;
 pub mod class_feature;
+pub mod class_feature_grants;
 pub mod equipment_gap;
 pub mod hand_authored_equipment;
 pub mod lst_provenance_repair;

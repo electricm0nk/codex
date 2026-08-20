@@ -1,0 +1,198 @@
+[
+  {
+    "key": "Summoner ~ Bond Senses",
+    "class": "Summoner",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+      "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+      "line": 752
+    }
+  },
+  {
+    "key": "Summoner ~ Cantrips",
+    "class": "Summoner",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+      "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+      "line": 748
+    }
+  },
+  {
+    "key": "Summoner ~ Eidolon",
+    "class": "Summoner",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+      "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+      "line": 749
+    }
+  },
+  {
+    "key": "Summoner ~ Gate",
+    "class": "Summoner",
+    "level": 19,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+      "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+      "line": 761
+    }
+  },
+  {
+    "key": "Summoner ~ Greater Aspect",
+    "class": "Summoner",
+    "level": 18,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+      "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+      "line": 760
+    }
+  },
+  {
+    "key": "Summoner ~ Greater Shield Ally",
+    "class": "Summoner",
+    "level": 12,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+      "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+      "line": 757
+    }
+  },
+  {
+    "key": "Summoner ~ Life Bond",
+    "class": "Summoner",
+    "level": 14,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+      "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+      "line": 758
+    }
+  },
+  {
+    "key": "Summoner ~ Life Link",
+    "class": "Summoner",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+      "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+      "line": 750
+    }
+  },
+  {
+    "key": "Summoner ~ Maker's Call",
+    "class": "Summoner",
+    "level": 6,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+      "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+      "line": 754
+    }
+  },
+  {
+    "key": "Summoner ~ Merge Forms",
+    "class": "Summoner",
+    "level": 16,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+      "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+      "line": 759
+    }
+  },
+  {
+    "key": "Summoner ~ Summon Monster",
+    "class": "Summoner",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+      "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+      "line": 751
+    }
+  },
+  {
+    "key": "Summoner ~ Transposition",
+    "class": "Summoner",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+      "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+      "line": 755
+    }
+  },
+  {
+    "key": "Summoner ~ Twin Eidolon",
+    "class": "Summoner",
+    "level": 20,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+      "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+      "line": 762
+    }
+  },
+  {
+    "key": "Summoner ~ Weapon and Armor Proficiency",
+    "class": "Summoner",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst",
+      "sha256": "fab93d7178fc730992d62c21262dd2e9f8ff709304059478a38d860a912e58e3",
+      "line": 747
+    }
+  }
+]

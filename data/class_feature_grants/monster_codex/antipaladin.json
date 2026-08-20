@@ -1,0 +1,86 @@
+[
+  {
+    "key": "Cruelty ~ Dazed",
+    "class": "Antipaladin",
+    "level": 6,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+      "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+      "line": 43
+    }
+  },
+  {
+    "key": "Cruelty ~ Frightened",
+    "class": "Antipaladin",
+    "level": 9,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+      "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+      "line": 43
+    }
+  },
+  {
+    "key": "Cruelty ~ Panicked",
+    "class": "Antipaladin",
+    "level": 12,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+      "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+      "line": 43
+    }
+  },
+  {
+    "key": "Cruelty ~ Shaken",
+    "class": "Antipaladin",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+      "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+      "line": 43
+    }
+  },
+  {
+    "key": "Fearmonger ~ Feed on Fear",
+    "class": "Antipaladin",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+      "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+      "line": 40
+    }
+  },
+  {
+    "key": "Fearmonger ~ Frightening Cruelty",
+    "class": "Antipaladin",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+      "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+      "line": 40
+    }
+  }
+]

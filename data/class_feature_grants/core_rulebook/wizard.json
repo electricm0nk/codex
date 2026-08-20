@@ -1,0 +1,128 @@
+[
+  {
+    "key": "Wizard ~ Arcane Bond",
+    "class": "Wizard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 318
+    }
+  },
+  {
+    "key": "Wizard ~ Arcane School",
+    "class": "Wizard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 319
+    }
+  },
+  {
+    "key": "Wizard ~ Bonus Feats",
+    "class": "Wizard",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 322
+    }
+  },
+  {
+    "key": "Wizard ~ Bonus Languages",
+    "class": "Wizard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 317
+    }
+  },
+  {
+    "key": "Wizard ~ Cantrips",
+    "class": "Wizard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 320
+    }
+  },
+  {
+    "key": "Wizard ~ Class Skills",
+    "class": "Wizard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 314
+    }
+  },
+  {
+    "key": "Wizard ~ Scribe Scroll",
+    "class": "Wizard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 321
+    }
+  },
+  {
+    "key": "Wizard ~ Spells",
+    "class": "Wizard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 316
+    }
+  },
+  {
+    "key": "Wizard ~ Weapon and Armor Proficiency",
+    "class": "Wizard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 315
+    }
+  }
+]
