@@ -18,6 +18,12 @@
 
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
 use crate::rules_core::rules_tables::RuleSetId;
+use crate::rules_core::rules_tables::acg::spell_list::{
+    Pf1SchoolId as AcgPf1SchoolId, SPELL_LIST as ACG_SPELL_LIST,
+};
+use crate::rules_core::rules_tables::apg::spell_list::{
+    Pf1SchoolId as ApgPf1SchoolId, SPELL_LIST as APG_SPELL_LIST,
+};
 use crate::rules_core::rules_tables::crb::spell_list::{Pf1SchoolId, SPELL_LIST};
 
 /// One resolved Divination spell's effect: its level and effect text,
@@ -37,20 +43,62 @@ pub struct DivinationSpellEffect {
 /// owns the table store; this function reads it, it never fabricates an
 /// entry for a KEY the table store doesn't have.
 pub fn resolve_divination_spell_effect(spell_id: &str) -> Option<DivinationSpellEffect> {
-    let entry = SPELL_LIST
+    if let Some(entry) =
+        SPELL_LIST.iter().find(|entry| entry.key == spell_id && entry.school == Pf1SchoolId::Divination)
+    {
+        return Some(DivinationSpellEffect {
+            spell_id: spell_id.to_string(),
+            level: entry.level,
+            effect_text: entry.description.to_string(),
+            table_cell: TableCellRef {
+                rule_set: RuleSetId::Crb,
+                table: "spell_list".to_string(),
+                row_key: spell_id.to_string(),
+                column_key: String::new(),
+            },
+        });
+    }
+    // W21-SPELL-001: CRB's table has no record of this key -- but the
+    // per-class level tables that route spells here (e.g.
+    // `crb::wizard_spell_list::wizard_spell_level`) already span CRB + APG
+    // + ACG. Widen the search to those same two books rather than leaving
+    // an already-resolved level with no `SpellEffect` to attach to,
+    // exactly the `duration`/`range` book-roster gap this program has
+    // already found twice (`OPEN-ISSUES.md` rows 324/325) -- same shape,
+    // a different seam.
+    if let Some(entry) = APG_SPELL_LIST
         .iter()
-        .find(|entry| entry.key == spell_id && entry.school == Pf1SchoolId::Divination)?;
-    Some(DivinationSpellEffect {
-        spell_id: spell_id.to_string(),
-        level: entry.level,
-        effect_text: entry.description.to_string(),
-        table_cell: TableCellRef {
-            rule_set: RuleSetId::Crb,
-            table: "spell_list".to_string(),
-            row_key: spell_id.to_string(),
-            column_key: String::new(),
-        },
-    })
+        .find(|entry| entry.key == spell_id && entry.school == Some(ApgPf1SchoolId::Divination))
+    {
+        return Some(DivinationSpellEffect {
+            spell_id: spell_id.to_string(),
+            level: entry.level?,
+            effect_text: entry.description?.to_string(),
+            table_cell: TableCellRef {
+                rule_set: RuleSetId::Apg,
+                table: "spell_list".to_string(),
+                row_key: spell_id.to_string(),
+                column_key: String::new(),
+            },
+        });
+    }
+    if let Some(entry) = ACG_SPELL_LIST
+        .iter()
+        .find(|entry| entry.key == spell_id && entry.school == AcgPf1SchoolId::Divination)
+    {
+        return Some(DivinationSpellEffect {
+            spell_id: spell_id.to_string(),
+            level: entry.level,
+            effect_text: entry.description.to_string(),
+            table_cell: TableCellRef {
+                rule_set: RuleSetId::Acg,
+                table: "spell_list".to_string(),
+                row_key: spell_id.to_string(),
+                column_key: String::new(),
+            },
+        });
+    }
+    None
 }
 
 #[cfg(test)]
@@ -83,5 +131,33 @@ mod tests {
     #[test]
     fn returns_none_for_an_unknown_spell_id() {
         assert!(resolve_divination_spell_effect("Not A Real Spell").is_none());
+    }
+
+    /// W21-SPELL-001: "Heightened Awareness" is a real
+    /// `acg::spell_list::SPELL_LIST` Divination record, absent from CRB's
+    /// own table (`advanced_class_guide:spell:heightened_awareness`,
+    /// `wiring_class: computed`, stuck at `ingested-magnitude` before this
+    /// widening — see `spellbook::transmutation`'s identical fix for the
+    /// full explanation).
+    #[test]
+    fn resolves_a_real_acg_divination_spell_the_crb_table_does_not_carry() {
+        let effect = resolve_divination_spell_effect("Heightened Awareness")
+            .expect("Heightened Awareness is a real ACG Divination record, not in CRB's own table");
+        assert_eq!(effect.level, 1);
+        assert!(
+            effect.effect_text.contains("heightened state of awareness"),
+            "effect text must come from ACG's own SPELL_LIST description: {}",
+            effect.effect_text
+        );
+        assert_eq!(effect.table_cell.rule_set, RuleSetId::Acg);
+    }
+
+    /// The CRB table still wins on a name collision -- never shadowed by
+    /// the wider search.
+    #[test]
+    fn crb_resolution_takes_priority_over_the_wider_search() {
+        let effect = resolve_divination_spell_effect("Comprehend Languages")
+            .expect("Comprehend Languages is a real CRB Divination record");
+        assert_eq!(effect.table_cell.rule_set, RuleSetId::Crb);
     }
 }

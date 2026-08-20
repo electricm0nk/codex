@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-08-20T07:28:48Z",
+  "generated_at": "2026-08-20T08:49:53Z",
   "doneness_values": [
     "done",
     "partial",
     "not-started"
   ],
   "overall": {
-    "done": 11424,
-    "partial": 2047,
+    "done": 11444,
+    "partial": 2027,
     "not_started": 16039,
     "denominator": 29510,
-    "pct": 38.7,
+    "pct": 38.8,
     "excluded_from_percentage": 8862,
     "standing_breakdown": {
       "origin": 29510,
@@ -35,11 +35,11 @@
     {
       "id": "advanced_players_guide",
       "title": "Advanced Player's Guide",
-      "done": 680,
-      "partial": 118,
+      "done": 687,
+      "partial": 111,
       "not_started": 1524,
       "denominator": 2322,
-      "pct": 29.3,
+      "pct": 29.6,
       "excluded_from_percentage": 910,
       "standing_breakdown": {
         "origin": 2322,
@@ -63,11 +63,11 @@
     {
       "id": "advanced_class_guide",
       "title": "Advanced Class Guide",
-      "done": 442,
-      "partial": 102,
+      "done": 455,
+      "partial": 89,
       "not_started": 1416,
       "denominator": 1960,
-      "pct": 22.6,
+      "pct": 23.2,
       "excluded_from_percentage": 1176,
       "standing_breakdown": {
         "origin": 1960,
