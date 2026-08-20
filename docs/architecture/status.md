@@ -144,15 +144,24 @@ workable rows and structurally-unreachable ones, and each classifier is the
 citation for the split — not a receipt's prose.
 
 - **Race chassis is the `race_trait` ceiling.** `scripts/race_trait_ceiling.py`
-  derives a ceiling of **571** rows (553 `TYPE:<Race> Racial Trait` + 18
-  `TYPE:<Race> Subrace` heritage selectors) over the **18** races the ingest
+  derives a ceiling of **833** rows (815 `TYPE:<Race> Racial Trait` + 18
+  `TYPE:<Race> Subrace` heritage selectors) over the **34** races the ingest
   chassis models (`src/bin/ingest_race_traits.rs`'s
-  `IN_SCOPE_RACES: [&str; 18]`, asserted by that file's own test). **513 of
-  the 571 are `grounded`**; the 58 that are not each carry a recorded
-  finding, and **2,876** of the 3,447 units are chassis-blocked residue that
-  no race-trait ingest can ever ground. The engine's separate
-  `crb::race_tables::race_traits()` still models 7 races — that is the
-  *compute* surface, not the ingest surface, and the two must not be
+  `IN_SCOPE_RACES: [&str; 34]`, asserted by that file's own test) —
+  re-derived 2026-08-20 (SD-31 wave-21) after correcting the ceiling
+  script's own `IN_SCOPE_RACES`, which had drifted stale at 18 races across
+  three later widenings (18→24→30→34) that never touched this Python copy;
+  it now reads the Rust declaration at import time instead of
+  re-transcribing it. **2,671** of the 3,504 `race_trait` units are
+  chassis-blocked residue that no race-trait ingest can ever ground
+  (3,504 − 833); of the 833-row ceiling, the script's own join against
+  `docs/work-inventory.json` by `(book, source_file, source_line)` matches
+  439 to a recorded unit (394 ceiling rows have no match — an open,
+  unresolved join gap in the script itself, not yet root-caused) and finds
+  224 `grounded`, 119 `ingested-magnitude`, 74 `not-ingested`, 14
+  `text-complete`, 8 `literal-verified` among those 439. The engine's
+  separate `crb::race_tables::race_traits()` still models 7 races — that is
+  the *compute* surface, not the ingest surface, and the two must not be
   conflated as the 2026-08-11 pass did.
 - **Orphan ability rows are the `monster_ability` ceiling.**
   `scripts/classify_monster_ability_rows.py` splits the 1,506 remaining
