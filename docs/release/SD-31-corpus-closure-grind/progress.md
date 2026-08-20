@@ -31951,3 +31951,134 @@ precedent for its rejected `roster-engine` branch.
 force-deleted. `sd31/racetrait4-SD31-E6-F4-005` -- untouched, not gated, not merged, per standing
 instruction (confirmed by `git branch -a | grep racetrait4` before and after this cycle: unchanged,
 still pointing at `d65e168a5`).
+
+## Cycle `SD31-W22-MONSTER-001` (`RETRO_ACTOR=sd31-w22-monster`) -- 2026-08-20, wave 22 `monster`/`monster_ability` lane
+
+**Branch:** `worktree-wf_247631fc-31a-5` (this worktree), base `353293b3c` (tranche/11 tip -- the
+dispatch base did not match at cycle start; `git log --oneline -1` showed a site-publish merge
+commit with no `docs/`/`data/`/`scripts/`/`schemas/` tree, tree was clean, so `git reset --hard
+353293b3c` per the dispatch's own instruction; confirmed after reset). **Oracle pin:**
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/verify.sh --only
+preflight-oracle` PASS). **Own `CARGO_TARGET_DIR`:** `/home/ubuntu/cargo-targets/w22-monster`,
+never shared with any other tree.
+
+**Investigation-only cycle. 0 units banked, 0 lines of production code changed.** Read the required
+docs (Decision 7 and its REFINED clarification, the wave-20/21 GAMED rows, row 330), extended wave
+20/21's own `monster`/`monster_ability` work per the dispatch's instruction to "read what those lanes
+did and extend rather than starting fresh" rather than re-deriving from zero.
+
+### 1. Row 314 closed (raw_tokens gap resolved as a side effect of wave 20's `book_dir_of` fix)
+
+Row 314 (wave 18) found all 21 `ultimate_psionics:monster:*` corpus records carried no `raw_tokens`
+field, permanently capping them below `literal-verified`. Wave 20's unrelated `enrich_monster_raw_
+tokens.rs`/`enrich_monster_ability_raw_tokens.rs` `book_dir_of` fix re-ran both enrichment tools and
+its own receipt notes "enriching 202 records... for the first time" without naming row 314
+specifically. Verified directly this cycle: all 21 now carry `raw_tokens`
+(`grep -l raw_tokens data/corpus/ultimate_psionics/monster/*.json` -> 21/21). Replayed
+`doneness_verdict()`: **16 of the 21 are now `static`+`literal-verified` (`done`)**; the other 5
+(`Astral Construct (1st..4th Level)`, `Astral Swarm`) correctly stay `derived`+`grounded` (`held`) --
+`derived`'s done rungs are `fixture-verified`/`literal-verified` only (Decision 2's rung table), and
+these 5 carry the same natural-armor/ability-score/natural-attack-Strength-damage shape row 313's
+already-refused 11-unit `monster` bucket carries (no live `MonsterCatalogEntryDto` consumer; Str-damage
+refused since row 267/276) -- not reopened, no new evidence. `OPEN-ISSUES.md` row 338, RULING
+WITHDRAWN.
+
+### 2. `monster_ability`'s 930-unit not-started population, characterised fresh
+
+Per the dispatch's own instruction ("characterise what you cannot move: distinct causes, counts each,
+instrument gaps versus genuinely unwired content"), re-ran `scripts/classify_monster_ability_rows.py`
+and `scripts/scan_monster_ability_bundle_rows.py` corpus-wide against the pinned oracle (both scripts
+pre-existing, program-accepted, from the wave-15/16 `monster` lane's own SD-29 Epic-5 provenance):
+
+```
+python3 scripts/classify_monster_ability_rows.py
+# remaining monster+monster_ability units     : 958
+# orphan monster_ability rows                 : 856
+#   of which in ZERO-monster books            : 171 across 8 books
+#   of which in monster-EXHAUSTED books       : 171 across 4 books
+# Product Identity rows (never shippable)      : 32
+# `.COPY=` delta rows (no stat block of their own): 2
+# reachable remainder (units - orphans - PI - COPY): 68 (61 monster_ability-only)
+```
+
+The 930-unit `not-ingested` population (evidence-string cross-tab, `python3` replay of
+`docs/work-inventory.json`): 363 `monster_ability_has_no_engine_table` (book unregistered in
+`monster_chassis::MONSTER_BOOKS`), 567 `monster_ability_absent_from_<book>_monster_abilities`
+(book registered, key not held) -- `bestiary_4` 191, `bestiary_1` 133, `horror_adventures` 65,
+`ultimate_psionics` 64, `bestiary_2` 49, `inner_sea_bestiary` 38, `inner_sea_world_guide` 16,
+`inner_sea_gods` 7, `bestiary_3` 4.
+
+**Real lever found and precisely bounded, NOT built this cycle: Bestiary 1's 53-unit cross-table
+residue.** `bestiary`/`bestiary_1` is documented (`monster_chassis.rs`, `transcribe_monster_
+tables.py`) as the only book served by TWO compiled monster tables -- legacy `rules_tables::
+beastiary1` (SD-22, 46 hand-modelled monsters) and the newer, generator-transcribed `rules_tables::
+bestiary` (deliberately the 234-monster complement). `transcribe_monster_tables.py`'s own docstring
+already names the residue: "607 ship; the 54-unit residue is the cross-table class". Re-derived
+independently: **53 currently not-started `monster_ability` units** (e.g. `Ankheg ~ Acid Bite`/
+`Spit Acid`, `Boggard ~ *` x4, `Choker ~ *` x2, `Doppelganger ~ *` x2, `Gelatinous Cube ~ *` x4,
+`Vargouille ~ *` x3) whose sole real owner is one of the 46 legacy monsters -- hand-verified one
+(`Ankheg`, `b1_races.lst:18`) against the pinned oracle directly. **Root cause traced to the
+desktop-rendering layer, not only the chassis layer**: `apps/desktop/src-tauri/src/
+monster_catalog.rs`'s `map_beastiary1_monster` hardcodes `abilities: Vec::new()` (own doc comment:
+"Bestiary 1's SD-22 half does not ingest `monster_ability` records at all... `None` is the honest
+answer, not a claim that none exist") and an existing test asserts Ankheg's DTO carries zero
+abilities on exactly that ground. A real fix needs an ability-linkage field on `beastiary1`'s own
+(different, minimal) `MonsterStatBlock`, rewiring `map_beastiary1_monster`, updating the now-false
+"Ankheg has zero abilities" test, and re-verifying the `no_creature_is_served_by_both_bestiary_1_
+tables` invariant -- a multi-file, corpus-chassis/desktop-DTO-crossing change. **Not attempted this
+cycle**: this program's own history (rows 330/334, two GAMED verdicts in the sibling `class_feature`
+kind from insufficiently-verified cross-cutting mechanisms) argues for a dedicated TDD cycle, not a
+rider on an investigation pass.
+
+**Two smaller sub-findings, both hand-verified against the pinned oracle:** (1) `scan_monster_
+ability_bundle_rows.py`'s bundle-hop predicate (the same mechanism wave 21 wired for +208 units)
+still finds 48 orphans reachable beyond what ships today, across `bestiary`(2)/`bestiary_4`(44)/
+`inner_sea_gods`(2). `bestiary`'s 2 (`Copper Dragon ~ Slow Aura`/`Trap Master`) are genuinely owned
+(`Dragon (Copper)`'s row, `b1_races.lst:135`, carries the exact `ABILITY:Internal|AUTOMATIC|Racial
+Traits ~ Copper Dragon` bundle ref, resolved at `b1_abilities_race.lst:474`) but blocked on a real,
+narrow, already-named `parse_desc` gap (a sixth DESC-token shape: unconditional base + a
+self-describing `PREVARGTEQ`-gated conditional addendum) -- 2 units corpus-wide, not built (yield too
+small to justify a new general parsing rule without wider evidence). `bestiary_4`'s 44 trace to
+`NAMEISPI:YES`-declared monster rows (`Empyreal Lord`, `b4_races.lst:66-68`, hand-checked) --
+permanently PI-blocked owners, so the bundle-hop scan's own "ceiling correction, not equality"
+caveat is right: at least part of this 44 is PI residue, not workable content, and this cycle's
+finding corrects that script's implied yield rather than banking it. (2) 5 more reachable-remainder
+units (`inner_sea_bestiary`'s `Chemnosit ~ *`/`Volnagur ~ *`) are row-named by real rows but their
+owning monsters are not yet transcribed at all -- a small, separate, un-investigated monster-ingest
+gap.
+
+Row 310/313's already-twice-refused 11-unit `monster` flat-literal bucket was NOT reopened -- no new
+evidence found, per the dispatch's own standing instruction.
+
+`OPEN-ISSUES.md` row 339, RULING NOT YET NEEDED for the engineering lever (scoping question, not
+doctrine); row 335's still-open `computed`+`grounded` doctrine question is re-surfaced, not answered,
+by this cycle's own findings (the 16 row-314 units are all `static`+`literal-verified`, unrelated to
+that rung).
+
+### 3. Verification
+
+Guarded regen, isolated `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/w22-monster`:
+
+```
+cargo run --locked -j 8 --bin corpus_literal_sweep -- --json-out $S/sweep.json
+# corpus-literal-sweep: 26368 records examined of 26802 read, 254626 tokens compared, 0 findings, CLEAN
+cargo run --locked -j 8 --bin derived_evaluator_fixture_check -- --json-out $S/fixture.json
+# derived-evaluator-fixture-check: 1821 unit(s) cleared over 2561 fixture row(s); 0 failed
+CORPUS_LITERAL_SWEEP_REPORT=$S/sweep.json DERIVED_FIXTURE_CHECK_REPORT=$S/fixture.json \
+  cargo run --locked -j 8 --bin v06_work_inventory
+```
+
+Never `--allow-stamp-loss`, no stamp-loss warning printed. `docs/work-inventory.json`'s only diff
+after the regen was its own `generated_at` timestamp (`git diff` confirmed, `2 changed lines -> 1
+insertion 1 deletion`, both the timestamp) -- 0 ids added/removed, 0 `doneness_verdict` transitions
+in either direction, confirming this cycle's investigation genuinely banked nothing and broke
+nothing. Discarded (`git checkout -- docs/work-inventory.json`) per the wave rule. `cargo test
+--locked --lib -j 8`: **2,166 passed, 0 failed, 3 ignored** -- byte-identical to the wave-21 baseline
+(no production code touched, so no count could move). Full `verify.sh` gate not run this cycle
+(investigation-only, zero production/corpus-JSON changes, matching row 313's own precedent for a
+0-code-change monster-lane cycle).
+
+### 4. Cleanup
+
+`CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/w22-monster` deleted at cycle close. No other scratch
+directory used. `sd31/racetrait4-SD31-E6-F4-005` -- untouched, not read, not gated.
