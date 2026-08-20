@@ -24,9 +24,10 @@
 //! the missing precondition directly: "no generic class_feature catalog
 //! exists anywhere in this engine, unlike feat/spell/equipment"
 //! (`decisions.md §42`). This module, and the shared lib catalog it wraps,
-//! is that catalog -- for the one registered pool
-//! (`class_feature_pool_catalog::REGISTERED_POOL_GROUPS`) this cycle proved
-//! end to end.
+//! is that catalog -- for the registered pools
+//! (`class_feature_pool_catalog::REGISTERED_POOL_GROUPS`: Rogue Talent,
+//! wave 22; Rage Power, `SD31-W23-POOLMEMBER-002`) proved end to end so
+//! far.
 //!
 //! # No new corpus data
 //!

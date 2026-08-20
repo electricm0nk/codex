@@ -32475,3 +32475,191 @@ Wave-22 worktrees (`worktree-wf_247631fc-31a-{1..9}`) and their branches removed
 rejected `-3` (anti-fabrication-gate) branch — its content stays recoverable from
 `bf5a82c63` in reflog/`OPEN-ISSUES.md`'s own citation, per the standing "log why, don't merge"
 convention. `sd31/racetrait4-SD31-E6-F4-005` — untouched, not read, not gated.
+
+## Cycle `SD31-W23-POOLMEMBER-002` (`RETRO_ACTOR=sd31-w23-poolmember`) — 2026-08-20, wave 23 pool-membership lane
+
+**Branch:** `worktree-wf_861de0ba-35d-4` (this worktree). **Base:** `3229f9e2b` (tranche/11 tip —
+the dispatched worktree tip was `275581bf0`, a site-publish merge with no `docs/`/`data/`/
+`scripts/`/`schemas/` tree; tree was clean, so `git reset --hard 3229f9e2b` per the standing
+instruction; confirmed after reset). **Oracle pin:**
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`
+(`scripts/fetch-pcgen-oracle.sh --check` → OK). **Own `CARGO_TARGET_DIR`s, all deleted at cycle
+close:** `/home/ubuntu/cargo-targets/w23-poolmember`, `/home/ubuntu/cargo-targets/w23-poolmember-full`,
+`/home/ubuntu/cargo-targets/w23-poolmember-desktop`, `/home/ubuntu/cargo-targets/w23-poolmember-desktop-test`.
+
+**LANE:** option/choice-pool `class_feature` records. Read wave 22's pool lane findings first per
+dispatch — wave 22 had already built the option-pool reference catalog mechanism
+(`class_feature_pool_catalog.rs`, `SD31-W22-POOLMEMBER-001`) end to end for ONE pool, Rogue Talent
+(79 banked units), and named the next step precisely: "did not attempt to widen
+`REGISTERED_POOL_GROUPS` beyond Rogue Talent... each of the other 26 pools needs its own per-pool
+corpus spot-check first." This cycle did exactly that for a second pool, Rage Power (Barbarian).
+
+### 1. Rage Power spot-check, before touching code
+
+170 real `class_feature` corpus records carry `data.class == "Rage Power"` across 7 books
+(`advanced_players_guide` 48, `advanced_class_guide` 32, `ultimate_combat` 32, `core_rulebook` 28,
+`ultimate_wilderness` 18, `horror_adventures` 7, `adventurers_guide` 3), all under a `rage_power/`
+directory — homogeneous, no cross-source contamination. Hand-verified 6 CRB records
+(`Knockback`/`Strength Surge`/`Clear Mind`/`Terrifying Howl`/`Raging Climber`/`Animal Fury`) byte-for-
+byte against the pinned oracle's `cr_abilities_class.lst` before writing any code — same `%N`/
+`BONUS:`/`ABILITY:` token shapes Rogue Talent already has, confirming the existing render-and-refuse
+and engine-effect-token gates generalize.
+
+### 2. The real blocker: Rage Power is an UNOWNED group, unlike Rogue Talent
+
+"Rogue Talent" resolves an owner via `v06_work_inventory.rs`'s `class_feature_owner` because it
+literally starts with "Rogue " (the class's own name as text). "Rage Power" shares no prefix/suffix
+with "barbarian", so `class_feature_owner` and its `type_facet` fallback (`class_feature_owner_via_
+type_facet` — the record's `TYPE:` token is `BarbarianClassFeatures...`, one camelCase word, no
+space before "ClassFeatures" for the marker to strip) both resolve `None`. `classify()`'s "no owner
+resolved" branch (the `else` of `let Some(owner) = ... else { ... }`) hard-coded `not_ingested` for
+every `text_only` record in that branch, UNCONDITIONALLY — never consulting the pool catalog at
+all. Wave 22's own fix only reached the SIBLING "owner resolved but not grounded" branch. Confirmed
+by TDD: wrote `an_unowned_pool_member_the_catalog_renders_also_reaches_text_complete` (using a
+synthetic "Rage Power ~ Clear Mind" fixture), watched it fail RED against the un-fixed classifier,
+then added the identical three-guard + catalog-holds check the owned branch already has to the
+unowned branch, watched it go GREEN. A second test
+(`an_unowned_pool_member_the_catalog_does_not_hold_stays_not_ingested`) proves the branch still
+refuses correctly when the catalog does not hold the record. Both tests additionally
+mutation-proven: reverted the fix (`&& false &&`), re-ran, confirmed RED for the right assertion,
+reverted the mutation.
+
+Without this fix, registering "Rage Power" in `REGISTERED_POOL_GROUPS` alone would have banked
+**zero** units — the module doc comment (`class_feature_pool_catalog.rs`) now names this explicitly
+as the thing any future pool must check first: does its group text share a prefix/suffix with its
+class's name (Rogue Talent shape) or not (Rage Power/Discovery/Hex/Bloodline/Domain/Mystery shape).
+
+### 3. A second defect, found only by DoD-8 on-screen inspection
+
+Registered "Rage Power" and ran the guarded regen; before trusting the +126 movement, drove the real
+desktop app (`RUN_DESKTOP_AGENT=w23poolmember`), created a level-3 Dwarf Barbarian, and read the
+Actions tab's new "Available Rage Powers (reference)" section by eye. `Elemental Blood, Greater`
+rendered as the literal sentence fragment **"While raging, the barbarian gains"** — grammatically
+truncated, with nothing after "gains". Root-caused: the real oracle row carries FIVE `DESC:` tab
+fields (a lead-in clause plus four `PREVAREQ:`-gated per-element continuations, one per element the
+character chose at level 4); the pre-existing ingestion this catalog reads
+(`cache_gen::class_feature`, outside this lane's file territory) keeps only the first `DESC:` token
+as `data.description`. The lead-in clause happens to carry neither an unresolved `%N` (caught by the
+existing render-and-refuse gate) nor an engine-effect token (caught by `has_no_engine_effect_token`)
+— it "renders clean" by every existing syntax-level check while being semantically incomplete.
+Corpus-wide check: only 2 of 170 Rage Power records carry >1 `DESC:` token (`Draconic Blood
+(Greater)`, already refused via its own unresolved `%1d6`; `Elemental Blood (Greater)`, the one
+that escaped); 1 of Rogue Talent's 130 (`Slippery Mind`) also has the shape but was already refused
+via its own `ABILITY`/`BONUS` tokens.
+
+Fixed narrowly, scoped to this catalog alone (not the shared `pcgen_desc.rs` renderer every other
+catalog also calls, which would silently widen every caller's behaviour — out of this lane's file
+territory): `raw_tokens_carry_more_than_one_desc_segment` refuses any record whose `raw_tokens`
+carries more than one `DESC:` key. TDD'd (`elemental_blood_greater_is_refused_for_a_silently_
+truncated_multi_desc_row`, RED before the fix) and separately mutation-proven (`&& false &&`,
+RED, reverted). Re-verified on screen post-fix: `Elemental Blood, Greater` no longer appears in the
+Rage Power reference list at all (correctly withdrawn, not correctly truncated).
+
+### 4. Independent verification, two methods
+
+**Python re-implementation of the whole catalog gate** (render-and-refuse + engine-effect-token +
+bare-percent-no-pipe + multi-DESC), run directly over `data/corpus/`, reproduced the Rust catalog's
+exact key set byte-for-byte both before (211 entries, 0 keys differing) and is consistent with the
+multi-DESC fix (which the Python re-implementation does not model separately since it was written to
+validate the PRE-multi-DESC-fix Rust output as its own cross-check). **Oracle cross-check**: an
+independent script compared all 168 non-null-description Rage Power records' `data.description`
+against the pinned oracle's own `DESC:` field verbatim — 168/168 byte-match (the 2 apparent
+"not found" were the script's own crude line-parsing missing a reordered-token row, confirmed by
+hand-reading the oracle line directly, not a real corpus/oracle divergence).
+
+### 5. Consumer: `CharacterSheet.tsx` generalized, not duplicated
+
+`ClassFeaturePoolReferenceSection` was hardcoded to Rogue Talent/`rogue` alone. Replaced with a
+small `POOL_REFERENCE_SECTIONS` config table (`{poolGroup, classSlug, heading, note}`) the component
+maps over, so Rage Power's own section (gated on holding a `barbarian` level) needed one new row,
+not a new component or a second copy-pasted function. `list_class_feature_pool_options`
+(`class_feature_pool_picker.rs`, the Tauri command) needed NO changes at all — it was already
+generic over `REGISTERED_POOL_GROUPS`.
+
+### 6. A fixture-pinning collision, found and fixed (not box contention)
+
+A first, `tail`-truncated capture of `cargo test --no-fail-fast` (full root workspace) showed only
+`error: 1 target failed: --test v06_work_inventory` with the real cause scrolled off. A hasty
+isolated re-run of `--bin v06_work_inventory` (a DIFFERENT compiled target — the bin crate's own
+`#[cfg(test)]` module, not the separate `tests/v06_work_inventory.rs` integration file) came back
+291/291 green and was briefly mistaken for proof of box contention from a concurrent sibling-agent
+`cargo test` process. Wrong: re-running the SAME target that failed (`--test v06_work_inventory`)
+reproduced a real, deterministic failure —
+`zero_magnitude_option_pool_class_features_are_not_ingested_not_unknown` pinned
+`rage_power_abyssal_blood`/`_lesser` as permanently `not-ingested`, on the (pre-this-cycle-true)
+premise that no catalog exists for Rage Power's individual options. Exactly the premise this
+cycle's own fix falsifies (`advanced_class_guide:class_feature:rage_power_abyssal_blood` is now
+`text-complete`). Fixed by re-picking the fixture to two Discovery (alchemist) records
+(`discovery_combine_extracts`/`discovery_concentrate_poison`, `apg_abilities_class.lst:123`/`124`,
+hand-verified against the pinned oracle) — a pool this catalog still does not register — with a doc
+comment naming the swap and warning the next registered pool needs the identical re-pick. Logged as
+`OPEN-ISSUES.md` row 344's own lesson: an isolated single-target re-run is not equivalent to the
+failing invocation unless it re-runs the SAME target.
+
+### 7. Guarded regen (isolated `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/w23-poolmember`, run
+twice — once immediately after the classify() fix, once more after the multi-DESC fix)
+
+```
+corpus-literal-sweep: 26368 records examined of 26802 read, 254626 tokens compared, 0 findings — CLEAN
+  (byte-identical to wave 22's baseline both runs)
+derived-evaluator-fixture-check: 1821 unit(s) cleared over 2561 fixture row(s); 0 failed
+  (unchanged both runs — no lane touched data/corpus/)
+v06_work_inventory, replayed via pf1e_dashboard_producer.doneness_verdict() (not asserted):
+  ids added: 0   ids removed: 0   denominator: 38,372 (unchanged, frozen)
+  newly done: 125   newly undone (regression): 0
+  100% of the 125 share evidence=class_feature_pool_catalog_serves_a_rendered_description,
+  status=text-complete, wiring_class=display — single-cause traceability, confirmed by direct
+  Python cross-tab over the regenerated docs/work-inventory.json, not asserted.
+```
+
+**Board: 13,253/38,372 (34.5382%) → 13,378/38,372 (34.8640%), +125, denominator unchanged.**
+`class_feature`: 213 → 338 (+125). Every other kind: +0.
+
+### 8. Full test suites
+
+- `cargo test --locked --lib -j8` (root, isolated dir): **2,201 passed, 0 failed, 13 ignored** —
+  above `BASELINE_ROOT_LIB_TESTS=2166` (+6 over wave 22's own 2,195: 4 new
+  `class_feature_pool_catalog` tests, 2 more from the multi-DESC fix).
+- `cargo test --locked -j8 --no-fail-fast` (root, full workspace, fresh isolated dir, UNTRUNCATED
+  capture the second time, after §6's fixture fix): **577 test binaries, 7,306 passed, 0 failed,
+  exit 0** — above `BASELINE_ROOT_FULL_TESTS=7263`/`BASELINE_ROOT_TEST_BINARIES=575`; see §6 for
+  the one real failure this cycle found and fixed before this final, clean run.
+- `cargo test --locked -j4` (`apps/desktop/src-tauri`, own isolated dir): **493 passed, 0 failed**
+  — unchanged from wave 22 (no new desktop-crate tests, doc comments only).
+- `npm run typecheck` (`apps/desktop`): clean. `npm run test`: **100/100 test files passed**.
+- `cargo clippy --locked --tests -j8` (root): **50 warnings** — exactly at the recorded ceiling,
+  unchanged; confirmed by direct `grep -B1` on the clippy log that zero new warnings appear in
+  either touched file (`class_feature_pool_catalog.rs`, `v06_work_inventory.rs`).
+  `apps/desktop/src-tauri`: **7 warnings** — unchanged.
+
+### 9. What this cycle could NOT do / left open
+
+- Did not widen `REGISTERED_POOL_GROUPS` past two entries. The module doc now states precisely what
+  a third pool needs: register the name, spot-check 2-4 records against the pinned oracle for the
+  same shapes checked here, confirm whether the group is owned (Rogue-Talent-shape) or unowned
+  (Rage-Power-shape, now both proven to reach the board), run the guarded regen, and re-run DoD-8 on
+  a character of that class. No further engine-side work is anticipated — both structural gaps this
+  cycle found (the unowned-branch classify() gap, the multi-DESC truncation gap) are now closed for
+  every pool, not just Rage Power.
+- Did not touch the grant parser, the gates lane files, `wiring_class.rs`, or `cache_gen/
+  class_feature.rs`, per dispatch. The multi-DESC truncation gap is very likely present in OTHER
+  `cache_gen`-produced catalogs that read `data.description` the same way (feat/spell/race_trait
+  descriptions) — not investigated here (out of file territory), flagged in `OPEN-ISSUES.md` row 344
+  for whoever owns that ingestion surface.
+- Did not run `scripts/publish-site-dashboard.sh` — per loop-instruction override 10, a per-card/
+  lane cycle is not expected to; that is the next integration cycle's job.
+
+### 10. DoD-8, on-screen verification
+
+`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-W23-POOLMEMBER-002/dod8-available-rage-
+powers-reference.png` — a live level-3 Dwarf Barbarian's ("Grukk Ragef") Actions tab, "AVAILABLE
+RAGE POWERS (REFERENCE)" section, real prose for ~25 real Rage Powers rendering, `Elemental Blood,
+Greater` confirmed absent (post-fix). `dod8-character-sheet-barbarian3.png` — the same character's
+top-of-sheet stat block, proving the class/level/race context the reference section is gated on.
+Both captured via `run-desktop`'s `driver.sh` under `RUN_DESKTOP_AGENT=w23poolmember`.
+
+### 11. Cleanup
+
+All four `CARGO_TARGET_DIR`s used this cycle deleted at close (listed at the top of this receipt).
+`run-desktop` app stopped (`driver.sh stop`). `sd31/racetrait4-SD31-E6-F4-005` — untouched, not
+read, not gated.
