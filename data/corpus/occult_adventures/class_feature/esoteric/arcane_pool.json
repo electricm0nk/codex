@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Esoteric ~ Arcane Pool",
     "name": "Arcane Pool",
-    "class": "Esoteric",
+    "class": "Magus",
     "description": "At 1st level, an esoteric can use his arcane pool to enhance his unarmed strikes as if they were manufactured weapons. At 5th level, he can use these bonuses to add any of the following weapon special abilities to his weapons or unarmed strikes: defending, flaming, flaming burst, frost, icy burst, impactUM, shock, shocking burst, speed, or thundering. This ability alters arcane pool.",
     "raw_tokens": [
       {

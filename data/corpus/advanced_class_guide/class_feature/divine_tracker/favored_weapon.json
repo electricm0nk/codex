@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Divine Tracker ~ Favored Weapon",
     "name": "Favored Weapon",
-    "class": "Divine Tracker",
+    "class": "Ranger",
     "description": "A divine tracker becomes proficient with the favored weapon of his deity. If his deity's favored weapon is unarmed strike, he instead gains Improved Unarmed Strike as a bonus feat.",
     "raw_tokens": [
       {

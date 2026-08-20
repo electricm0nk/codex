@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Discipline Pain ~ Agonizing Wound",
     "name": "Agonizing Wound",
-    "class": "Psychic Discipline Pain",
+    "class": "Psychic",
     "description": "At 13th level, whenever you cast a spell that deals damage to a creature, you can also make that creature frightened or sickened (your choice) for a number of rounds equal to your Charisma modifier. If you expend two uses of this ability, you can instead have the creature become dazed, nauseated, or panicked for 1 round. The creature can attempt a Will saving throw to negate this effect. You can use this ability a number of times per day equal to 3 + your Charisma modifier. This is a mind-affecting painUM effect.",
     "raw_tokens": [
       {

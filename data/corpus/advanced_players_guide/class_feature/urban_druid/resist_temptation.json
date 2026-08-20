@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Urban Druid ~ Resist Temptation",
     "name": "Resist Temptation",
-    "class": "Urban Druid",
+    "class": "Druid",
     "description": "At 4th level, an urban druid gains a +2 bonus on saves vs. divinations and enchantments. This replaces the resist nature's lure ability.",
     "raw_tokens": [
       {

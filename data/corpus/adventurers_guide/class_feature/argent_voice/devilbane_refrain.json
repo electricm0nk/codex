@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Argent Voice ~ Devilbane Refrain",
     "name": "Devilbane Refrain",
-    "class": "Argent Voice",
+    "class": "Bard",
     "description": "The argent voice learns how to mimic aspects of the magical \"Song of Silver\" with his performance, enhancing his allies' ability to combat devils and similar fiends. To be affected, a creature must be able to hear the argent voice's singing and be within 30 feet of him. Natural and manufactured weapons wielded by affected allies are treated as though they were silver for the purpose of bypassing damage reduction.",
     "raw_tokens": [
       {

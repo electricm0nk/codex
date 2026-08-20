@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Road Keeper ~ Take the High Road",
     "name": "Take the High Road",
-    "class": "Road Keeper",
+    "class": "Druid",
     "description": "A road keeper travels over roads and paths at an accelerated rate. She and her allies can hustle for 2 hours without taking nonlethal damage, instead of 1, provided they travel along a road or path. Additionally, as long as they travel on a road or path, the road keeper and her allies count as traveling along a highway regardless of the quality of the road or path on which they travel. Allies must remain within 30 feet of the road keeper to benefit from this ability.",
     "raw_tokens": [
       {

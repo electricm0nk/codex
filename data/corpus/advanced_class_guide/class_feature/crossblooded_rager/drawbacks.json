@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Crossblooded Rager ~ Drawbacks",
     "name": "Drawbacks",
-    "class": "Crossblooded Rager",
+    "class": "Bloodrager",
     "description": "The furious mix of arcane power inside a crossblooded rager forces him to constantly expend mental effort to remain focused on his current situation and needs. This leaves him with less mental resolve available to deal with external threats. A crossblooded rager takes a -2 penalty to all Will saving throws at all times, and does not gain the +2 morale bonus on Will saving throws while bloodraging--though he does gain a +1 morale bonus on Will saving throws when he gains the greater bloodrage class feature, which increases to a +2 morale bonus when he gains the mighty bloodrage class feature.",
     "raw_tokens": [
       {

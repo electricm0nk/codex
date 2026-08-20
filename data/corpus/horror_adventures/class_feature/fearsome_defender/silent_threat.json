@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fearsome Defender ~ Silent Threat",
     "name": "Silent Threat",
-    "class": "Fearsome Defender",
+    "class": "Barbarian",
     "description": "A fearsome defender exudes hostility, creating a threatening atmosphere in her presence. The fearsome defender gains a +%1 bonus on Intimidate checks, and the DCs of Intimidate checks to demoralize her allies within 30 feet increase by %1.|FearsomeDefenderSilentThreat",
     "raw_tokens": [
       {

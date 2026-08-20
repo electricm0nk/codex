@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dinosaur Druid ~ Dinosaur Bond",
     "name": "Dinosaur Bond",
-    "class": "Dinosaur Druid",
+    "class": "Druid",
     "description": "A dinosaur druid must choose an animal companion as her nature's bond, and the animal companion must be a dinosaur (including those detailed in Pathfinder RPG Bestiary volumes). This alters nature's bond.",
     "raw_tokens": [
       {

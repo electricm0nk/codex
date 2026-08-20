@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Desert Raider ~ Desert Tracker",
     "name": "Desert Tracker",
-    "class": "Desert Raider",
+    "class": "Rogue",
     "description": "A desert raider is immune to the dazzled condition. A desert raider adds a +%1 bonus on Survival skill checks to follow or identify tracks in desert terrain.|max(1,RogueLVL/2)",
     "raw_tokens": [
       {

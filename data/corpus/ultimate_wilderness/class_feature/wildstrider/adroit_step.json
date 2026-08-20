@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wildstrider ~ Adroit Step",
     "name": "Adroit Step",
-    "class": "Wildstrider",
+    "class": "Swashbuckler",
     "description": "A wildstrider can use a swift action to treat a 5-foot square of difficult terrain as if it were normal terrain. If she also spends a panache point, she can treat all difficult terrain as though it were normal terrain until the end of her turn.",
     "raw_tokens": [
       {

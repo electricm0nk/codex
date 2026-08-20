@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Winter Witch ~ Hexes",
     "name": "Hexes",
-    "class": "Winter Witch",
+    "class": "Witch",
     "description": "The following hexes complement the winter witch archetype: beast eye*, blight, cook people*, evil eye, feral speech*, hag's eye, hoarfrost*, ice tomb*, witch's hut.* An asterisk (*) indicates a hex detailed in Ultimate Magic.&nl;A winter witch can select the following hexes: Frostfoot and Frozen Caress.",
     "raw_tokens": [
       {

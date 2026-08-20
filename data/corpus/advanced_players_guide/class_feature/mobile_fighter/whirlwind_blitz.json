@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mobile Fighter ~ Whirlwind Blitz",
     "name": "Whirlwind Blitz",
-    "class": "Mobile Fighter",
+    "class": "Fighter",
     "description": "At 20th level, a mobile fighter can make a full-attack action as a standard action. He may also use the Whirlwind Attack feat as a standard action. This ability replaces weapon mastery.",
     "raw_tokens": [
       {

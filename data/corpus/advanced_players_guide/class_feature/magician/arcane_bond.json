@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Magician ~ Arcane Bond",
     "name": "Arcane Bond",
-    "class": "Magician",
+    "class": "Bard",
     "description": "At 5th level, a magician gains the arcane bond ability as a wizard. He may not choose a familiar or a weapon as a bonded item. This ability replaces lore master.",
     "raw_tokens": [
       {

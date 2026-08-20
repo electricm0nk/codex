@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Warlord ~ Intimidated Push",
     "name": "Intimidated Push",
-    "class": "Warlord",
+    "class": "Skald",
     "description": "A warlord inspires fear in his cohort and followers, ensuring they do not fail and thus suffer his wrath. When he uses inspired rage, his cohort increases her morale bonus on Will saves from inspired rage by 1 and his followers increase their morale bonuses on Will saves from inspired rage by 2.",
     "raw_tokens": [
       {

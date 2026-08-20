@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mysterious Avenger ~ Avenger Finesse",
     "name": "Avenger Finesse",
-    "class": "Mysterious Avenger",
+    "class": "Swashbuckler",
     "description": "A mysterious avenger gains all of the benefits of the swashbuckler's finesse class feature, and gains the ability to use a whip in place of a light or one-handed piercing melee weapon for all swashbuckler class features and deeds. This ability alters swashbuckler finesse.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Silver Balladeer ~ Silver Mastery",
     "name": "Silver Mastery",
-    "class": "Silver Balladeer",
+    "class": "Bard",
     "description": "At 2nd level, a silver balladeer treats silver weapons as if they were also cold iron for the purpose of overcoming damage reduction. Also, alchemical silver weapons do not impose a penalty on damage rolls when wielded by a silver balladeer, and a silver balladeer gains a +1 bonus on attack rolls made with mithral weapons. This ability replaces the 2nd-level versatile performance.",
     "raw_tokens": [
       {

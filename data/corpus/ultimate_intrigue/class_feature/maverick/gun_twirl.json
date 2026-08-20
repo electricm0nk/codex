@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Maverick ~ Gun Twirl",
     "name": "Gun Twirl",
-    "class": "Maverick",
+    "class": "Gunslinger",
     "description": "As long as the maverick has at least 1 grit point, she can use flashy gunplay to intimidate her opponents. She gains the Dazzling Display feat and can use it with any firearm, even if she doesn't have Weapon Focus in that firearm.",
     "raw_tokens": [
       {

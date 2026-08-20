@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spire Defender ~ Arcane Augmentation",
     "name": "Arcane Augmentation",
-    "class": "Spire Defender",
+    "class": "Magus",
     "description": "A magus can expend 1 point from his arcane pool as a swift action to grant himself a +%1 competence bonus for 1 minute to one of the following skills: Acrobatics, Climb, Escape Artist, Perception, Stealth, and Swim.|5+(MagusLVL-4)/3",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Hunt Caller ~ Inspire Scent",
     "name": "Inspire Scent",
-    "class": "Hunt Caller",
+    "class": "Skald",
     "description": "The hunt caller gains the scent rage power. Her song of the senses and inspired rage raging songs both grant affected allies this rage power.",
     "raw_tokens": [
       {

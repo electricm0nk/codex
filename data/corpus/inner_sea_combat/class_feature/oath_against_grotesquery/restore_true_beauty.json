@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Oath against Grotesquery ~ Restore True Beauty",
     "name": "Restore True Beauty",
-    "class": "Oath against Grotesquery",
+    "class": "Paladin",
     "description": "At i4th level, a paladin can expend two uses of her lay on hands ability to attempt to dispel any non-harmless transmutation effect on a target, as break enchantment. Additionally, the paladin can expend two uses of her lay on hands ability to remove all of the target's temporary Charisma damage and restore all points drained from its Charisma score, as restoration. This ability replaces aura of faith.",
     "raw_tokens": [
       {

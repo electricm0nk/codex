@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Feral Hunter ~ Wild Shape",
     "name": "Wild Shape",
-    "class": "Feral Hunter",
+    "class": "Hunter",
     "description": "A feral hunter gains the ability to change shape. This ability functions like the druid wild shape ability, except the hunter can take only animal forms (not elemental or plant forms). The hunter's effective druid level is equal to her class level.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Weapon Adept ~ Perfect Strike",
     "name": "Perfect Strike",
-    "class": "Weapon Adept",
+    "class": "Monk",
     "description": "At 1st level, a weapon adept gains Perfect Strike as a bonus feat, even if he does not meet the prerequisites. At 10th level, the monk can roll his attack roll three times and take the higher result. If one of these rolls is a critical threat, he can choose which one of his other two rolls to use as his confirmation roll. This ability replaces Stunning Fist.",
     "raw_tokens": [
       {

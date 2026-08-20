@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mounted Fury ~ Furious Charge",
     "name": "Furious Charge",
-    "class": "Mounted Fury",
+    "class": "Vigilante",
     "description": "A mounted fury learns to make more accurate charge attacks while mounted. The mounted fury and his mount receive a +4 bonus on melee attack rolls on a charge while mounted (instead of the normal +2). In addition, the mounted fury and his mount don't take any penalty to AC after making a charge attack while mounted.",
     "raw_tokens": [
       {

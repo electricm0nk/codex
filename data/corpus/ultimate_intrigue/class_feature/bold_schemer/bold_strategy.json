@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bold Schemer ~ Bold Strategy",
     "name": "Bold Strategy",
-    "class": "Bold Schemer",
+    "class": "Skald",
     "description": "A bold schemer can tailor her plans and observations so they are able to assist her allies as well. As long as they can see or hear the bold schemer while inside the observed location, all of her allies gain half the insight bonus she gains from the skald of twists and turns ability.",
     "raw_tokens": [
       {

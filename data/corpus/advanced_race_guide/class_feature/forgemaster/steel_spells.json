@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Forgemaster ~ Steel Spells",
     "name": "Steel Spells",
-    "class": "Forgemaster",
+    "class": "Cleric",
     "description": "A forgemaster adds the following spells to her spell list: 1st-crafter's curse, crafter's fortune, lead blades; 2nd-chill metal, heat metal, shatter; 3rd-keen edge, versatile weapon; 8th-iron body, repel metal or stone.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sister-in-Arms ~ Halfhearted Challenge",
     "name": "Halfhearted Challenge",
-    "class": "Sister-in-Arms",
+    "class": "Cavalier",
     "description": "Sisters-in-arms vigilantly protect their allies, weakening their focus on their challenged foe. A sister-in-arms adds only half her cavalier level (minimum 1) to damage rolls against her challenge target. This ability alters challenge.",
     "raw_tokens": [
       {

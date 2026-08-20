@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Archivist ~ Probable Path",
     "name": "Probable Path",
-    "class": "Archivist",
+    "class": "Bard",
     "description": "At 10th level, an archivist can calculate the action likely to bring success with the least risk. %1/day, he can take 10 on any d20 roll. He may use this ability one additional time per day for every three levels after 10th. This ability replaces jack of all trades.|(BardLVL-7)/3",
     "raw_tokens": [
       {

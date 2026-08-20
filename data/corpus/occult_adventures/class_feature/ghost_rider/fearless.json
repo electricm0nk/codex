@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ghost Rider ~ Fearless",
     "name": "Fearless",
-    "class": "Ghost Rider",
+    "class": "Cavalier",
     "description": "At 3rd level, a ghost rider becomes immune to fear. Each ally within 10 feet of the ghost rider gains a +4 morale bonus on saving throws against fear effects. This ability functions only while the ghost rider is conscious, not if she is unconscious or dead. This ability replaces cavalier's charge.",
     "raw_tokens": [
       {

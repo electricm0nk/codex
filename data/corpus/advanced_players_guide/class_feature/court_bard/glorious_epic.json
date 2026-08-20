@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Court Bard ~ Glorious Epic",
     "name": "Glorious Epic",
-    "class": "Court Bard",
+    "class": "Bard",
     "description": "A court bard of 8th level or higher can weave captivating tales that engross those who hear them. Enemies within 30 feet become flat-footed unless they succeed at a Will save DC %1 (DC 10 + 1/2 the bard's level + the bard's Cha modifier). A save renders them immune to this ability for 24 hours. Glorious epic is a language-dependent, mind-affecting ability that uses audible components. This performance replaces dirge of doom.|10+CHA+(BardLVL/2)",
     "raw_tokens": [
       {

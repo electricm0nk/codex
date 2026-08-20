@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Daring Infiltrator ~ Class Skills",
     "name": "Class Skills",
-    "class": "Daring Infiltrator",
+    "class": "Swashbuckler",
     "description": "A daring infiltrator gains Disguise and Stealth as class skills, but does not gain Diplomacy, Perform, and Profession as class skills. This alters the swashbuckler's class skill list.",
     "raw_tokens": [
       {

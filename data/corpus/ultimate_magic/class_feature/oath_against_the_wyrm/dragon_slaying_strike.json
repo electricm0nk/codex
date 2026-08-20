@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Oath against the Wyrm ~ Dragon-Slaying Strike",
     "name": "Dragon-Slaying Strike",
-    "class": "Oath against the Wyrm",
+    "class": "Paladin",
     "description": "You become a conduit of holy power.  Your DR increases to 10/evil. Whenever you use smite evil and successfully strikes a dragon, the dragon is also subject to a single-target holy word (caster level %1). After the banishment effect and the damage from the attack are resolved, the smite immediately ends. In addition, whenever you use lay on hands to heal a creature, you heal the maximum possible amount.|DragonSlayingStrikeCL",
     "raw_tokens": [
       {

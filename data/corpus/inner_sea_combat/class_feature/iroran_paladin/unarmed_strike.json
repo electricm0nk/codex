@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Iroran Paladin ~ Unarmed Strike",
     "name": "Unarmed Strike",
-    "class": "Iroran Paladin",
+    "class": "Paladin",
     "description": "You gain Improved Unarmed Strike as a bonus feat. In addition, you gain the unarmed strike monk ability, treating your monk level as half your paladin level (minimum 1) for calculating your unarmed strike damage.",
     "raw_tokens": [
       {

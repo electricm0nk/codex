@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spellscar Drifter ~ Have Gun",
     "name": "Have Gun",
-    "class": "Spellscar Drifter",
+    "class": "Cavalier",
     "description": "At 1st level, the Spellscar drifter gains Amateur Gunslinger ( Ultimate Combat 8 9) and Gunsmithing (Ultimate Combat 103) as bonus feats. The Spellscar drifter uses his Charisma modifier (minimum 1) in place of his Wisdom modifier when determining his maximum grit points and for any other abilities which use grit. Additionally, he also gains a battered gun identical to the one gained by the gunslinger. This ability replaces tactician.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fighter Weapon Master ~ Reliable Strike",
     "name": "Reliable Strike",
-    "class": "Fighter Weapon Master",
+    "class": "Fighter",
     "description": "You may reroll an attack roll, critical hit confirmation roll, miss chance check, or damage roll as an immediate action. You must accept the second roll even if it is worse.",
     "raw_tokens": [
       {

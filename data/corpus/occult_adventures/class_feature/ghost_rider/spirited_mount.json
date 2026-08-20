@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ghost Rider ~ Spirited Mount",
     "name": "Spirited Mount",
-    "class": "Ghost Rider",
+    "class": "Cavalier",
     "description": "At 5th level, the ghost rider's mount ignores difficult terrain. At 8th level, it gains the ability to use water walk at will. This ability replaces expert trainer and banner.",
     "raw_tokens": [
       {

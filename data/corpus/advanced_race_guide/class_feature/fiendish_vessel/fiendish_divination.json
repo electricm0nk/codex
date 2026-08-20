@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fiendish Vessel ~ Fiendish Divination",
     "name": "Fiendish Divination",
-    "class": "Fiendish Vessel",
+    "class": "Cleric",
     "description": "The fiendish vessel can use a more powerful form of divination to gain intelligence from her patron through her fiendish familiar. This ability acts like the divination spell, with a caster level equal to the fiendish vessel's level; the familiar acts as the mouthpiece for the spell. This ability can be used once per day.",
     "raw_tokens": [
       {

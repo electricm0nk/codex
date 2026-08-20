@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "God Caller ~ Guidance",
     "name": "Guidance",
-    "class": "God Caller",
+    "class": "Summoner",
     "description": "A god caller's eidolon has a tiny spark of divinity. It can use guidance as a spell-like ability at will. However, the eidolon and the god caller must remain within 50 feet of one another for the eidolon to remain at full strength. If the eidolon is beyond 50 feet but closer than 1,000 feet, its current and maximum hit point totals are reduced by half. This ability alters life link.",
     "raw_tokens": [
       {

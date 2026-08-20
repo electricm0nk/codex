@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Order Of The Eastern Star ~ Edicts",
     "name": "Edicts",
-    "class": "Order Of The Eastern Star",
+    "class": "Cavalier",
     "description": "The cavalier must preserve the secrets of his order while acting to protect civilization against occult threats. He must thwart the schemes of otherworldly horrors and must give his order a full accounting of any potential threats.",
     "raw_tokens": [
       {

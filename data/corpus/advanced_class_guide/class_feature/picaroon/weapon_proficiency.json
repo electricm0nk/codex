@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Picaroon ~ Weapon Proficiency",
     "name": "Weapon Proficiency",
-    "class": "Picaroon",
+    "class": "Swashbuckler",
     "description": "A picaroon gains proficiency with all simple weapons and martial weapons, as well as one-handed firearms.",
     "raw_tokens": [
       {

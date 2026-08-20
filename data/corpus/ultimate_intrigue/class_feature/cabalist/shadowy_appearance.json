@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cabalist ~ Shadowy Appearance",
     "name": "Shadowy Appearance",
-    "class": "Cabalist",
+    "class": "Vigilante",
     "description": "A cabalist becomes cloaked in shadow while in his vigilante identity. He gains a continuous 20%% miss chance (as per blur). The cabalist can deactivate or reactivate this effect as a standard action. Once per day, he can spend an immediate action to gain the benefits of greater invisibility for 1d6 rounds.",
     "raw_tokens": [
       {

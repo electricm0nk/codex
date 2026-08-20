@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Kami Medium ~ Ask the Kami",
     "name": "Ask the Kami",
-    "class": "Kami Medium",
+    "class": "Medium",
     "description": "A kami medium can ask the local kami for information, as commune with nature. While he can do so any number of times per day, he can ask questions of the kami in any particular area only once per day. Afterward, he must move to a non-overlapping area to use this ability again.",
     "raw_tokens": [
       {

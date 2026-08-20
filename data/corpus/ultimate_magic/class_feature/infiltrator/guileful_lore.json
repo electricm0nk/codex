@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Infiltrator ~ Guileful Lore",
     "name": "Guileful Lore",
-    "class": "Infiltrator",
+    "class": "Inquisitor",
     "description": "Your will is bent toward subterfuge and deception.  You add +%1 on Bluff and Diplomacy skill checks in addition to the normal ability score modifiers.|WIS",
     "raw_tokens": [
       {

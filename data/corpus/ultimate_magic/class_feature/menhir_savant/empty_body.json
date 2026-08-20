@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Menhir Savant ~ Empty Body",
     "name": "Empty Body",
-    "class": "Menhir Savant",
+    "class": "Druid",
     "description": "You can become ethereal as a standard action, as if using ethereal jaunt. You can remain ethereal for %1 rounds per day. These rounds do not need to be consecutive.|EmptyBodyRounds",
     "raw_tokens": [
       {

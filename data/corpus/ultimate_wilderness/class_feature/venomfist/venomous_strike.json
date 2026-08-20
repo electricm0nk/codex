@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Venomfist ~ Venomous Strike",
     "name": "Venomous Strike",
-    "class": "Venomfist",
+    "class": "Brawler",
     "description": "A venomfist's unarmed strikes deal damage as a creature one size category smaller (1d4 at first level for Medium venomfists). If she hits with her first unarmed strike in a round, the target must succeed at a Fortitude saving throw (DC %1) or take an additional %2 points damage. The venomfist is immune to this toxin.|10+BrawlerLVL/2+CON|CON",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Undead Master ~ Lich-Loved",
     "name": "Lich-Loved",
-    "class": "Undead Master",
+    "class": "Wizard",
     "description": "An undead master gains the benefits of the undead sorcerer bloodline's one of us ability.",
     "raw_tokens": [
       {

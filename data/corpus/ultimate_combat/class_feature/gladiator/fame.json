@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Gladiator ~ Fame",
     "name": "Fame",
-    "class": "Gladiator",
+    "class": "Fighter",
     "description": "At 2nd level, when a gladiator begins a performance combat (see page 153), he always starts with at least 1 victory point. If he already has victory points, he gains 1 extra victory point. At 10th level, the gladiator starts out with at least 2 victory points. If he already has victory points, he gains 2 extra victory points. This ability replaces bravery.",
     "raw_tokens": [
       {

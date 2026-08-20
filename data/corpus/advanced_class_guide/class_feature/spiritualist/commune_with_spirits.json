@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spiritualist ~ Commune with Spirits",
     "name": "Commune with Spirits",
-    "class": "Spiritualist",
+    "class": "Investigator",
     "description": "Instead of relying on alchemical research to find clues, a spiritualist relies on communion with the world beyond death. A spiritualist gains the ability to use comprehend languages, detect secret doors,",
     "raw_tokens": [
       {

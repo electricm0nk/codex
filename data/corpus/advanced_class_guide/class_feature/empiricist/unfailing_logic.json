@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Empiricist ~ Unfailing Logic",
     "name": "Unfailing Logic",
-    "class": "Empiricist",
+    "class": "Investigator",
     "description": "An empiricist's grasp of facts and data teaches him to anchor himself in reality, granting resistance to even the most potent illusions. At 4th level, an empiricist gains a +2 insight bonus on all Will saving throws against illusion spells or spell-like abilities that allow a save to disbelieve their effects. In addition he can spend one point from his inspiration pool as an immediate action to use his Intelligence bonus instead of her Wisdom bonus on all such saves for one round. At 8th level, the empiricist's insight bonus increases to +4. At 16th level, he gains immunity to all illusion spells and spell-like abilities that allow a save to disbelieve the effects. This ability replaces swift alchemy.",
     "raw_tokens": [
       {

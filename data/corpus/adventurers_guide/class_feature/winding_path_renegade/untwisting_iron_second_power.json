@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Winding Path Renegade ~ Untwisting Iron Second Power",
     "name": "Untwisting Iron Second Power",
-    "class": "Winding Path Renegade",
+    "class": "Brawler",
     "description": "The winding path renegade gains a +%1 bonus on Craft checks involving metal, and she gains the benefits of the Master Craftsman and Craft Arms and Armor feats when crafting items made of metal.|BrawlerLVL/2",
     "raw_tokens": [
       {

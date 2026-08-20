@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fighter Crossbowman ~ Deadshot",
     "name": "Deadshot",
-    "class": "Fighter Crossbowman",
+    "class": "Fighter",
     "description": "At 3rd level, when a crossbowman attacks with a crossbow as a readied action, he may add 1/2 his Dexterity bonus (minimum +1) on his damage roll. This ability replaces armor training 1.",
     "raw_tokens": [
       {

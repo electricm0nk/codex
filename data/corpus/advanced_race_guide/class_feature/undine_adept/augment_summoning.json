@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Undine Adept ~ Augment Summoning",
     "name": "Augment Summoning",
-    "class": "Undine Adept",
+    "class": "Druid",
     "description": "Any creature with the water subtype the undine adept summons with either summon monster or summon nature's ally gains the benefits of the Augment Summoning feat.",
     "raw_tokens": [
       {

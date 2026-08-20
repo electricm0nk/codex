@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Iroran Paladin ~ Sense Perfection",
     "name": "Sense Perfection",
-    "class": "Iroran Paladin",
+    "class": "Paladin",
     "description": "At will, you can detect life forces as if using a paladin's detect evil class ability; however, instead of sensing evil creatures, you sense creatures that have a ki pool. Each such creature has an aura like a cleric of an aligned deity, and treats its current number of ki points as its Hit Dice for the purposes of this ability.",
     "raw_tokens": [
       {

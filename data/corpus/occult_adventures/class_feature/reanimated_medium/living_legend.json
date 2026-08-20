@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Reanimated Medium ~ Living Legend",
     "name": "Living Legend",
-    "class": "Reanimated Medium",
+    "class": "Medium",
     "description": "The reanimated medium reaches the legendary potential from which he borrowed so long ago and becomes a living embodiment of his legend. Any ally in the reanimated medium's presence can perform a seance to channel the reanimated medium (the seance takes 1 hour and is subject to the other rules for a medium's seance). Each ally can do this only once per day. At the end of the seance, the reanimated medium can choose to reduce his influence by 1 point. If the reanimated medium does so, some of his spirit seeps into that ally, which can then spend that 1 point of influence to use any of the reanimated medium's abilities that decrease influence.",
     "raw_tokens": [
       {

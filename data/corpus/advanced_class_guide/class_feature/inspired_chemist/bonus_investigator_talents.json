@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Inspired Chemist ~ Bonus Investigator Talents",
     "name": "Bonus Investigator Talents",
-    "class": "Inspired Chemist",
+    "class": "Alchemist",
     "description": "An inspired chemist can select any two investigator talents in place of a discovery, but can only use these talents while under the effect of an inspiring cognatogen.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Feral Champion ~ Sacred Claws",
     "name": "Sacred Claws",
-    "class": "Feral Champion",
+    "class": "Swashbuckler",
     "description": "Rather than empowering a physical weapon, a feral champion grows claws as primary natural weapons on each hand. These claws deal damage as a warpriest's sacred weapon and can be enhanced as such. This alters sacred weapon.",
     "raw_tokens": [
       {

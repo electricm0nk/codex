@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Archivist ~ Magic Lore",
     "name": "Magic Lore",
-    "class": "Archivist",
+    "class": "Bard",
     "description": "At 2nd level, an archivist gains a bonus on Spellcraft checks to identify magic items or decipher scrolls and may take 10 on such checks. An archivist can use Disable Device to disarm magical traps as per a rogue's trapfinding ability and gains a +4 bonus on saves against magical traps, language-dependent effects, and symbols, glyphs, and magical writings of any kind. This ability replaces well-versed.",
     "raw_tokens": [
       {

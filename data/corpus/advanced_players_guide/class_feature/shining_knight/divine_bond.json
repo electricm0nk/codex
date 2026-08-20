@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Shining Knight ~ Divine Bond",
     "name": "Divine Bond",
-    "class": "Shining Knight",
+    "class": "Paladin",
     "description": "Upon reaching 5th level, a shining knight must form a bond with a mount. This ability otherwise functions as the paladin ability.",
     "raw_tokens": [
       {

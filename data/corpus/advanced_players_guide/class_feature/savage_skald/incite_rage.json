@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Savage Skald ~ Incite Rage",
     "name": "Incite Rage",
-    "class": "Savage Skald",
+    "class": "Bard",
     "description": "At 6th level, a savage skald can induce a furious rage in one creature within 30 feet. This effect functions as a rage spell that lasts as long as the target can hear the bard's performance; however, unwilling creatures can be affected if they fail a Will save DC %1 (DC 10 + 1/2 the bard's level + the bard's Cha modifier). Success renders the target immune to this power for 24 hours. The bard cannot target himself with this ability. If the target has the rage class feature, it can instead immediately rage and stay in this rage without consuming rounds of rage per day as long as the bard continues performing. This mind-affecting effect requires audible components. This performance replaces suggestion.|10+CHA+(BardLVL/2)",
     "raw_tokens": [
       {

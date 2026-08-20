@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fell Rider ~ Brute Steed",
     "name": "Brute Steed",
-    "class": "Fell Rider",
+    "class": "Cavalier",
     "description": "A fell rider's mount is unusually large and fierce. It gains a +2 bonus to Strength, but takes a -2 penalty to Dexterity. This otherwise works like the cavalier's mount ability and alters that ability.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Buccaneer ~ Deeds",
     "name": "Deeds",
-    "class": "Buccaneer",
+    "class": "Gunslinger",
     "description": "A buccaneer swaps four of the normal gunslinger deeds for the following deeds.",
     "raw_tokens": [
       {

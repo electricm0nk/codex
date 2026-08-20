@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dandy ~ Hobnob",
     "name": "Hobnob",
-    "class": "Dandy",
+    "class": "Ranger",
     "description": "A dandy must choose his allies as his hunter's bond, not an animal companion. In addition to the usual hunter's bond ability, the dandy can spend 10 minutes at a particular event or party hobnobbing and introducing his allies to the right people in order to provide them with half the skill bonuses of his favored nation (though not the bonuses on attack and damage rolls) for the duration of the event. This ability alters hunter's bond.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Daring General ~ Supreme Tactician",
     "name": "Supreme Tactician",
-    "class": "Daring General",
+    "class": "Cavalier",
     "description": "Whenever the daring general uses his tactician ability, he can grant any number of teamwork feats that he knows to his allies, and when he uses his tactician ability as a standard action in combat, it does not count against his daily uses of tactician.",
     "raw_tokens": [
       {

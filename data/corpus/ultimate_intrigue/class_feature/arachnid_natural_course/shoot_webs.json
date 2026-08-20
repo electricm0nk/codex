@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Arachnid Natural Course ~ Shoot Webs",
     "name": "Shoot Webs",
-    "class": "Arachnid Natural Course",
+    "class": "Vigilante",
     "description": "An arachnid wildsoul's wrists can produce thick, sticky webbing that he can shoot at his enemies. Shooting webbing is a ranged touch attack with a range increment of 10 feet. The webbing acts as a tanglefoot bag when it hits a creature, except the DC of the Reflex save to avoid being glued to the floor or unable to fly is %1. Like a tanglefoot bag, the webbing does not work underwater. The arachnid wildsoul can shoot webs %2 times per day.|10+VigilanteLVL/2+CON|3+CON",
     "raw_tokens": [
       {

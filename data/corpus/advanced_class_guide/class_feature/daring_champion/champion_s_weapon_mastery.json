@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Daring Champion ~ Champion's Weapon Mastery",
     "name": "Champion's Weapon Mastery",
-    "class": "Daring Champion",
+    "class": "Cavalier",
     "description": "When a daring champion threatens a critical hit with a light or onehanded piercing melee weapon, that critical is automatically confirmed. Furthermore, the critical modifier of those weapons increases by 1 (x2 becomes x3, for example).",
     "raw_tokens": [
       {

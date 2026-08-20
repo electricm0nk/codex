@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Flowing Monk ~ Flowing Dodge",
     "name": "Flowing Dodge",
-    "class": "Flowing Monk",
+    "class": "Monk",
     "description": "At 3rd level, a flowing monk gains a +1 dodge bonus to AC for each enemy adjacent to him, up to a maximum bonus equal to his Wisdom modifier (minimum 1). This ability replaces fast movement.",
     "raw_tokens": [
       {

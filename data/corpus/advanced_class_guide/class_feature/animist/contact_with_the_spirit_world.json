@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Animist ~ Contact with the Spirit World",
     "name": "Contact with the Spirit World",
-    "class": "Animist",
+    "class": "Shaman",
     "description": "The animist can interact with incorporeal entities as if his unarmed strikes and melee weapons had the ghost touch weapon special ability. While using this ability, he can also see nearby ethereal entities and likewise strike at them as if they were incorporeal. He can use this ability for %1 rounds per day. The rounds need not be consecutive.|ShamanLVL",
     "raw_tokens": [
       {

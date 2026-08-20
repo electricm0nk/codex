@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Blighted Myrmidon ~ Feed on Decay",
     "name": "Feed on Decay",
-    "class": "Blighted Myrmidon",
+    "class": "Antipaladin",
     "description": "A blighted myrmidon draws strength from corrupting the natural world. When the blighted myrmidon damages a creature with her smite nature ability, she gains a +1 morale bonus on attack rolls, damage rolls, and saving throws for 1 round.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Verminous Hunter ~ Master Hunter",
     "name": "Master Verminous Hunter",
-    "class": "Verminous Hunter",
+    "class": "Hunter",
     "description": "A verminous hunter becomes a master verminous hunter. She can always move at full speed while using Survival to follow tracks without penalty. Each day when the hunter regains her spell slots, she chooses one vermin focus to be active on herself for the entire day. This focus is in addition to using her vermin focus class ability.",
     "raw_tokens": [
       {

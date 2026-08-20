@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Monk of the Seven Forms ~ Bonus Feats",
     "name": "Bonus Feats",
-    "class": "Monk of the Seven Forms",
+    "class": "Monk",
     "description": "A monk of the seven forms loses the ability to take Improved Disarm, Improved Feint, Improved Grapple, and Improved Trip as bonus feats. He adds Nimble Moves to his list of bonus feats. At 6th level, he also adds Acrobatic Steps and Wind Stance to his list of bonus feats. At 10th level, he adds Lightning Stance to his list of bonus feats.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Battle Scion ~ Courtly Presence",
     "name": "Courtly Presence",
-    "class": "Battle Scion",
+    "class": "Skald",
     "description": "A battle scion's bearing radiates command and presence, allowing her to tower over her opponents in social situations. The battle scion adds %1 to Intimidate checks, and she starts any verbal duel (see page 176) with an extra edge that she can use for the presence tactic so long as she is not at a significant or extreme disadvantage in the duel. However, her bardic knowledge ability applies to only Knowledge (geography), Knowledge (history), Knowledge (local), and Knowledge (nobility).|CourtlyPresenceSkillBonus",
     "raw_tokens": [
       {

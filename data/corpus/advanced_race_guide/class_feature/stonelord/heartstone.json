@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Stonelord ~ Heartstone",
     "name": "Heartstone",
-    "class": "Stonelord",
+    "class": "Paladin",
     "description": "A stonelord's flesh becomes progressively rockier. She gains a +%1 natural armor bonus to AC and DR %2/adamantine. These benefits are halved when not touching the ground or a stone structure. This ability replaces divine grace.|1+(PaladinLVL-2)/4|HeartStoneDRLevel",
     "raw_tokens": [
       {

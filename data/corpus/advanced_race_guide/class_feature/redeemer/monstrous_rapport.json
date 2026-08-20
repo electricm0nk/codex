@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Redeemer ~ Monstrous Rapport",
     "name": "Monstrous Rapport",
-    "class": "Redeemer",
+    "class": "Paladin",
     "description": "Redeemers gain a +2 bonus on Diplomacy checks to influence creatures who are commonly considered monstrous. This includes but is not limited to \"monstrous\" races such as goblins and orcs, monstrous humanoids, and other intelligent nonhumanoid monsters.",
     "raw_tokens": [
       {

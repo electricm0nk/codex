@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sea Singer ~ Still Water",
     "name": "Still Water",
-    "class": "Sea Singer",
+    "class": "Bard",
     "description": "At 3rd level, a sea singer can use performance to calm rough waters within 30 feet, reducing the DC for Profession (sailor) and Swim checks, as well as for Acrobatics and Climb checks aboard ship, by an amount equal to the bard's level (to a minimum of DC 10) for as long he continues to perform. He can extend this duration to 1 hour by playing for 10 consecutive rounds. This ability requires audible components. This performance replaces inspire competence.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tanglebriar Demonslayer ~ Favored Enemy",
     "name": "Favored Enemy",
-    "class": "Tanglebriar Demonslayer",
+    "class": "Ranger",
     "description": "At 1st level, a Tanglebriar demonslayer must choose favored enemy (evil outsider). At 5th level and every time he advances his favored enemy bonus, the demonslayer must advance his bonus against evil outsiders. In addition to the normal benefits of favored enemy, a Tanglebriar demonslayer gains a bonus equal to 1/2 his favored enemy bonus on saving throws against spells, spell-like abilities, and supernatural abilities of evil outsiders. This ability is otherwise identical to and replaces the favored enemy ranger class ability.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Nimble Guardian ~ Guardian Feline",
     "name": "Guardian Feline",
-    "class": "Nimble Guardian",
+    "class": "Monk",
     "description": "The nimble guardian can transform himself into a feline creature by spending 2 ki points. The effect lasts for 1 hour or until the nimble guardian changes back. Changing form (to animal or back) is a standard action and does not provoke an attack of opportunity. The chosen form must be some form of feline (cheetah, lion, etc.). This ability is otherwise identical to beast shape II. At 9th level, this ability functions as beast shape III.",
     "raw_tokens": [
       {

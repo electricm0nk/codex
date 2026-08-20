@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Shadow Caller ~ Shadow Summoning",
     "name": "Shadow Summoning",
-    "class": "Shadow Caller",
+    "class": "Summoner",
     "description": "When a shadow caller uses his summon monster ability or casts the summon monster spell, he typically summons creatures from the Shadow Plane or creatures closely associated with shadow. When a creature on the summon monster spell list indicates that it is summoned with either the celestial or the fiendish template based on the alignment of the caster, the creature summoned by the shadow caller has the shadow creature template instead. Furthermore, the summon monster lists are modified in the following ways (these changes also apply to using a higher-level summon spell to summon multiple creatures from a lower-level list). Summon Monster I: No changes. Summon Monster II: A shadow caller cannot summon Small elementals or lemures, but instead can summon zoogs. Summon Monster III: A shadow caller cannot summon dretches or lantern archons, but can summon augur kytons. Summon Monster IV: A shadow caller cannot summon Medium elementals, hell hounds, hound archons, or mephits, but can summon allips, gloomwings, and shadows. Summon Monster V: A shadow caller cannot summon babau, bearded devils, bralani azatas, Large elementals, salamanders, or xills, but can summon shadow mastiffs and shae. Summon Monster VI: A shadow caller cannot summon Huge elementals, erinyes, lillend azatas, or succubi, but can summon cloakers. Summon Monster VII: A shadow caller cannot summon bebiliths, bone devils, greater elementals, or vrocks, but can summon greater shadows. Summon Monster VIII: A shadow caller can only summon derghodaemons and young umbral dragons. Summon Monster IX: A shadow caller can only summon interlocutor kytons and nightwings.",
     "raw_tokens": [
       {

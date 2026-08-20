@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Occultist ~ Planar Spells",
     "name": "Planar Spells",
-    "class": "Occultist",
+    "class": "Arcanist",
     "description": "[NOT IMPLEMENTED] An occultist adds all planar ally spells to her spell list (using her arcanist level as the cleric level), and treats plane shift as a 5th-level arcanist spell.",
     "raw_tokens": [
       {

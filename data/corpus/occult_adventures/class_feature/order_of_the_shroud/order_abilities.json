@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Order Of The Shroud ~ Order Abilities",
     "name": "Order Abilities",
-    "class": "Order Of The Shroud",
+    "class": "Cavalier",
     "description": "A cavalier belonging to the order of the shroud gains the following abilities as he increases in level.",
     "raw_tokens": [
       {

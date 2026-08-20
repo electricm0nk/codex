@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Chameleon ~ Effortless Sneak",
     "name": "Effortless Sneak",
-    "class": "Chameleon",
+    "class": "Rogue",
     "description": "At 3rd level, the chameleon chooses a single terrain from the ranger's favored terrain class feature. While she is within that terrain, she can take 10 on any Stealth check she can make within that terrain. When the chameleon reaches 6th level, and every three levels thereafter, she chooses a new type of terrain from the ranger's favored terrain list. She gains this ability with the newly picked terrain. This ability replaces trap sense.",
     "raw_tokens": [
       {

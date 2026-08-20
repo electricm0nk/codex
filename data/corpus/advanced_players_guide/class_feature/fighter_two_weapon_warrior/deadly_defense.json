@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fighter Two-Weapon Warrior ~ Deadly Defense",
     "name": "Deadly Defense",
-    "class": "Fighter Two-Weapon Warrior",
+    "class": "Fighter",
     "description": "At 19th level, when a two-weapon warrior makes a full attack with both weapons, every creature that hits him with a melee attack before the beginning of his next turn provokes an attack of opportunity from the warrior. This ability replaces armor mastery.",
     "raw_tokens": [
       {

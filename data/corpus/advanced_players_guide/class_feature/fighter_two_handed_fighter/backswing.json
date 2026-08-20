@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fighter Two-Handed Fighter ~ Backswing",
     "name": "Backswing",
-    "class": "Fighter Two-Handed Fighter",
+    "class": "Fighter",
     "description": "At 7th level, when a two-handed fighter makes a full attack with a two-handed weapon, he adds double his Strength bonus on damage rolls for all attacks after the first. This ability replaces armor training 2.",
     "raw_tokens": [
       {

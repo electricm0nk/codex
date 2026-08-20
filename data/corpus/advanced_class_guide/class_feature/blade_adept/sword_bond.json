@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Blade Adept ~ Sword Bond",
     "name": "Sword Bond",
-    "class": "Blade Adept",
+    "class": "Arcanist",
     "description": "At 1st level, a blade adept develops a bond with a blade and infuses it with arcane power. This ability works like a wizard's arcane bond ability save that the blade adept must bond to a one-handed piercing or slashing melee weapon. Additionally, the blade adept gains proficiency with the weapon if it is a simple or martial weapon. This ability replaces the arcanist exploits gained at 1st and 9th levels.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Deed ~ Blind Shot",
     "name": "Blind Shot",
-    "class": "Deed",
+    "class": "Investigator",
     "description": "A steel hound can spend 1 grit point to ignore all miss chances due to concealment when making firearm attacks. This effect lasts until the end of his turn. This ability allows the steel hound to ignore concealment, but does not reveal or allow him to see the enemy. This ability replaces swift alchemy.",
     "raw_tokens": [
       {

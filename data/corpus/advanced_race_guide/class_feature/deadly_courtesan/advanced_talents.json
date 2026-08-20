@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Deadly Courtesan ~ Advanced Talents",
     "name": "Advanced Talents",
-    "class": "Deadly Courtesan",
+    "class": "Rogue",
     "description": "The following advanced rogue talents complement the deadly courtesan archetype: slippery mind (Core Rulebook); master of disguise (Advanced Player's Guide); rumormonger, unwitting ally (Ultimate Combat).",
     "raw_tokens": [
       {

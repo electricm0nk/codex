@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Gulch Gunner ~ Deeds",
     "name": "Deeds",
-    "class": "Gulch Gunner",
+    "class": "Gunslinger",
     "description": "A gulch gunner has some unique deeds, which replace some of the standard gunslinger deeds as listed in each entry. These deeds follow all the general rules and restrictions of gunslinger deeds.",
     "raw_tokens": [
       {

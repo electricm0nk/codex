@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Guildbreaker ~ Crowd Stride",
     "name": "Crowd Stride",
-    "class": "Guildbreaker",
+    "class": "Ranger",
     "description": "A guildbreaker can slip through crowded streets with ease. His movement speed is not reduced when moving through a crowd.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Guerrilla ~ Skilled Liar",
     "name": "Skilled Liar",
-    "class": "Guerrilla",
+    "class": "Rogue",
     "description": "Whenever a guerrilla uses Bluff to attempt to deceive someone, she gains a bonus on the opposed roll equal to 1/2 her rogue level (minimum +1). A guerrilla can still use Disable Device to disarm magic traps. BONUS:SITUATION|Bluff=Lie,Bluff=Fool Someone|min(1,RogueLVL/2)",
     "raw_tokens": [
       {

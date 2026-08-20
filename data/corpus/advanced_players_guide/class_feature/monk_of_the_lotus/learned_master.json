@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Monk of the Lotus ~ Learned Master",
     "name": "Learned Master",
-    "class": "Monk of the Lotus",
+    "class": "Monk",
     "description": "At 17th level, a monk of the lotus gains all Knowledge skills and the Linguistics skill as class skills. The monk uses Wisdom instead of Intelligence as the key ability for these skills. This ability replaces tongue of the sun and the moon.",
     "raw_tokens": [
       {

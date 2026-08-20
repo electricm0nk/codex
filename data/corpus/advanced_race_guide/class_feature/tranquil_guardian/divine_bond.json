@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tranquil Guardian ~ Divine Bond",
     "name": "Divine Bond",
-    "class": "Tranquil Guardian",
+    "class": "Paladin",
     "description": "A tranquil guardian who chooses a weapon as her divine bond may only increase her weapon's enhancement bonus or add the following properties to her weapon: conductive, defending, disruptive, grayflame, or merciful.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Vanguard ~ Vanguard's Bond",
     "name": "Vanguard's Bond",
-    "class": "Vanguard",
+    "class": "Slayer",
     "description": "A vanguard forms a bond with his fighting companions. As a move action, he can choose one of his current studied targets and grant half his studied target bonus against that target to all allies within 30 feet who can see or hear him. This bonus lasts for %1 rounds. This bonus does not stack with any favored enemy or studied target bonuses possessed by his allies; they use whichever bonus is higher.|max(1,INT)",
     "raw_tokens": [
       {

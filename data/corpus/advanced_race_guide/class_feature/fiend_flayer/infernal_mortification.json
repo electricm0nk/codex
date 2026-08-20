@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fiend Flayer ~ Infernal Mortification",
     "name": "Infernal Mortification",
-    "class": "Fiend Flayer",
+    "class": "Magus",
     "description": "A fiend flayer can sacrifice some of his own infernal blood to add to his arcane pool. Sacrificing blood in this way is a standard action. For every 2 points of Constitution damage the fiend flayer takes in this way, his arcane pool increases by 1 point. Any arcane pool points gained in this way and not spent disappear the next time the magus prepares his spells. Unlike normal ability score damage, this damage cannot be healed by way of lesser restoration. Only time can heal the Constitution damage taken by way of infernal mortification. This ability cannot be used if the fiend flayer's Constitution damage is equal to or greater than %1.|CONSCORE/2",
     "raw_tokens": [
       {

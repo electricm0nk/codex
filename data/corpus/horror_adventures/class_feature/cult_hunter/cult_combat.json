@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cult Hunter ~ Cult Combat",
     "name": "Cult Combat",
-    "class": "Cult Hunter",
+    "class": "Investigator",
     "description": "A cult hunter's bonuses on attack and damage rolls when using studied combat increase by 1 against followers of the cult he chose with his cultic study ability and decrease by 1 against other targets. This ability alters studied combat.",
     "raw_tokens": [
       {

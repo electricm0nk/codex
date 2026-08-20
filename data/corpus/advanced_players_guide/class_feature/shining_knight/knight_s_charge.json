@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Shining Knight ~ Knight's Charge",
     "name": "Knight's Charge",
-    "class": "Shining Knight",
+    "class": "Paladin",
     "description": "At 11th level, whenever a mounted shining knight charges a foe, her movement does not provoke attacks of opportunity, for either her or her mount. In addition, if her target is also the target of her smite evil ability and the charge attack hits, the target must make a Will save DC %1 or be panicked for a number of rounds equal to %2 [1/2 the shining knight's level]. The DC of this save is equal to 10 + 1/2 the shining knight's level + the shining knight's Charisma modifier. This ability replaces aura of justice.|ShiningKnightDC|ShiningKnightDuration",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Duelist ~ Punishing Thought-form",
     "name": "Punishing Thought-form",
-    "class": "Psychic Duelist",
+    "class": "Psychic",
     "description": "The psychic duelist can spend 1 point from her phrenic pool to increase the damage die size of an offensive manifestation by one step (d4 to d6, d6 to d8, or d8 to d10). This amplification can be linked only to offensive manifestations.",
     "raw_tokens": [
       {

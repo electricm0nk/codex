@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Guardian of Immortality ~ Liar's Familiarity",
     "name": "Liar's Familiarity",
-    "class": "Guardian of Immortality",
+    "class": "Investigator",
     "description": "[redacted PI]",
     "raw_tokens": [
       {

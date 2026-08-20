@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Magic Warrior ~ Nameless Mask",
     "name": "Nameless Mask",
-    "class": "Magic Warrior",
+    "class": "Magus",
     "description": "A magic warrior gains strength in hiding her identity behind an animalistic mask, but also suffers drawbacks from doing so. While wearing her mask, a magic warrior gains a +2 bonus on saving throws against divinations in the scrying subschool. However, NPCs who are unfamiliar with or have a poor opinion of the magic warrior tradition have a starting attitude of unfriendly toward the magic warrior while she wears her mask. If using the influence system (Ultimate Intrigue 102), it takes one additional success to increase her influence level over such an NPC. The magic warrior cannot reveal her name or remove her mask in front of anyone she has never met before or in front of anyone she does not trust. If she violates this taboo, she must discard her mask and create or obtain a new mask and wear it before she can gain any benefits that result from wearing her mask.",
     "raw_tokens": [
       {

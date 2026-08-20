@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ironskin Monk ~ Ki Pool",
     "name": "Ki Pool",
-    "class": "Ironskin Monk",
+    "class": "Monk",
     "description": "An ironskin monk can spend 1 point from his ki pool to gain a damage bonus equal to %1 against objects and constructs for 1 round.|IronMonkKiPoolBonus",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cultivator ~ Resist Nature's Lure",
     "name": "Resist Nature's Lure",
-    "class": "Cultivator",
+    "class": "Bard",
     "description": "You gain a +%1 bonus on saving throws against the spell-like and supernatural abilities of fey. This bonus also applies to spells and effects that utilize and target plants, such as Blight, Entangle, Spike Growth, and Warp Wood.|CultivatorResistLureBonus",
     "raw_tokens": [
       {

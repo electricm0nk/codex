@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Verdant Shifter ~ Verdant Body",
     "name": "Verdant Body",
-    "class": "Verdant Shifter",
+    "class": "Shifter",
     "description": "A verdant shifter takes on plant qualities as vines grow over her body, flowers bloom in her hair, and bark grows from her skin. The verdant shifter is treated as both her normal creature type and a plant creature for purposes of spells or effects that target a creature by type (such as bane weapons and a ranger's favored enemy). Verdant body also grants the verdant shifter a",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ancient Guardian ~ Undo Artifice",
     "name": "Undo Artifice",
-    "class": "Ancient Guardian",
+    "class": "Druid",
     "description": "An ancient guardian gains the ability to reduce a nonliving item to its component raw materials. This acts as the spell polymorph any object, but works on magical or nonmagical nonliving objects. The duration is always permanent. Unlike polymorph any object, this ability can't be used to mimic the effects of other spells. Items subject to this effect receive a Fortitude saving throw to negate the effect (DC %1). Magic items receive a circumstance bonus on this save equal to +1 for every 5,000 gp of the item's value. An ancient guardian can use undo artifice %2 times per day.|10+DruidLVL/2+WIS|3+WIS",
     "raw_tokens": [
       {

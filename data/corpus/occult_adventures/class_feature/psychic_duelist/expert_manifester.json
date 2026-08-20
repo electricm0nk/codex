@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Duelist ~ Expert Manifester",
     "name": "Expert Manifester",
-    "class": "Psychic Duelist",
+    "class": "Psychic",
     "description": "At 17th level, a psychic duelist doesn't have to expend as many resources to create manifestations. She gains 1 additional MP each time she creates a psychic manifestation, in addition to the MP she gains by sacrificing resources. This doesn't increase the maximum number of points she can spend per manifestation, but does allow her to create a manifestation costing 1 MP without sacrificing any resources. This ability replaces telepathy.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Soul Sentinel ~ Reprieve",
     "name": "Reprieve",
-    "class": "Soul Sentinel",
+    "class": "Paladin",
     "description": "A soul sentinel relieves manic and tortured souls exposed to the harsh evil of the world. When the soul sentinel uses her lay on hands ability to heal a living creature, she can remove confusion effects in place of applying one of her other mercies. If used on a creature suffering from a permanent confusion effect, this removes the effect for only 1 minute.",
     "raw_tokens": [
       {

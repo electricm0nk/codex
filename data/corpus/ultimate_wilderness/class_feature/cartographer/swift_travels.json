@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cartographer ~ Swift Travels",
     "name": "Swift Travels",
-    "class": "Cartographer",
+    "class": "Investigator",
     "description": "While in studied terrain, a cartographer intuitively knows the easiest, shortest, and fastest way through the wilderness. For the purpose of determining overland speed, the cartographer treats any trackless terrain as though he were on a trail, and he treats any terrain with a road or trail as though it were a highway. He can extend the benefit to up to %1 creatures traveling with him.|InvestigatorLVL",
     "raw_tokens": [
       {

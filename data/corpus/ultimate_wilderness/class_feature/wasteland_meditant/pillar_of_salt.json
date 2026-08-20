@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wasteland Meditant ~ Pillar of Salt",
     "name": "Pillar of Salt",
-    "class": "Wasteland Meditant",
+    "class": "Monk",
     "description": "A wasteland meditant can transform a creature's body into a column of crumbling salt with a touch. He can use pillar of salt once per day as part of an unarmed strike, and he must announce his intent before making his attack roll. Creatures immune to critical hits or transmutation effects cannot be affected. A creature successfully damaged by the wasteland meditant's unarmed strike must succeed at a Fortitude saving throw (DC %1) or begin to calcify. Each round thereafter, the target of pillar of salt takes 2 points of Strength and Dexterity drain and gains a +1 bonus to its natural armor as a crust of salt begins to cover its body and restrict movement. These effects take place every round at the start of the wasteland meditant's turn and continue for %1 rounds. If the target is reduced to 0 Strength or Dexterity at any time during this duration, the creature is instantly killed and its body is transformed into a pillar of salt. A creature killed in this way can't be brought back to life except by miracle, true resurrection, or wish. Total immersion in water suppresses the ongoing effects of pillar of salt but resets the accumulated natural armor bonus to zero. As long as the target lives, the ongoing effect of pillar of salt can be ended via a heal spell.|10+MonkLVL/2+WIS|MonkLVL",
     "raw_tokens": [
       {

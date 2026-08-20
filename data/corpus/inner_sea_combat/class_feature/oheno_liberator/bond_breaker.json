@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Oheno Liberator ~ Bond Breaker",
     "name": "Bond Breaker",
-    "class": "Oheno Liberator",
+    "class": "Rogue",
     "description": "An Okeno liberator adds 1/2 her class level to Escape Artist checks, and never takes a penalty on Disable Device checks when using improvised tools to open locks. This ability replaces trapfinding.",
     "raw_tokens": [
       {

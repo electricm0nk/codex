@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fiendflesh Shifter ~ Greater Chimeric Fiend",
     "name": "Greater Chimeric Fiend",
-    "class": "Fiendflesh Shifter",
+    "class": "Shifter",
     "description": "A fiendflesh shifter's chimeric fiend ability grants her additional bonuses as noted below. [Daemon] The shifter gains a +4 enhancement bonus to her Constitution score and immunity to disease. [Demon] The shifter gains a +4 enhancement bonus to her Strength score and increases the damage die of all natural attacks by one step. [Devil] The shifter gains a +4 enhancement bonus to her Dexterity score and see in darkness as per the universal monster rule.",
     "raw_tokens": [
       {

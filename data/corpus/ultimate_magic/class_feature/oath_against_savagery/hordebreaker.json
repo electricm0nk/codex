@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Oath against Savagery ~ Hordebreaker",
     "name": "Hordebreaker",
-    "class": "Oath against Savagery",
+    "class": "Paladin",
     "description": "When you hit an evil humanoid with an attack of opportunity, you deal an additional 1d6 points of damage. When using holy reach, you may make %1 additional attacks of opportunity per round. This increase stacks with similar increases from other sources such as Combat Reflexes.|HordebreakerAttacks",
     "raw_tokens": [
       {

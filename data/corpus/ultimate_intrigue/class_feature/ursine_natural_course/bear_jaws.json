@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ursine Natural Course ~ Bear Jaws",
     "name": "Bear Jaws",
-    "class": "Ursine Natural Course",
+    "class": "Vigilante",
     "description": "An ursine wildsoul gains a bite attack while in his vigilante identity. This is a primary natural attack that deals 1d4 points of damage if he is Medium or 1d3 if he is Small.",
     "raw_tokens": [
       {

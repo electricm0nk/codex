@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sea Witch ~ Sea Creature Empathy",
     "name": "Sea Creature Empathy",
-    "class": "Sea Witch",
+    "class": "Witch",
     "description": "You can influence the attitude of water-dwelling animals and animals that live along coasts and shores, including birds, as if using wild empathy. You use your witch level as your druid level for this ability. If you have wild empathy from another class, your witch levels stack with the other class's levels to determine your wild empathy bonus for these kinds of creatures.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tower Shield Specialist ~ Tower Shield Specialist",
     "name": "Tower Shield Specialist",
-    "class": "Tower Shield Specialist",
+    "class": "Fighter",
     "description": "At 5th level, when a tower shield specialist employs a tower shield in combat, he does not take the -2 penalty on attack rolls because of the shield's encumbrance. This ability replaces weapon training 1.",
     "raw_tokens": [
       {

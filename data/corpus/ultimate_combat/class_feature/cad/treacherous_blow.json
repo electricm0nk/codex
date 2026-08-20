@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cad ~ Treacherous Blow",
     "name": "Treacherous Blow",
-    "class": "Cad",
+    "class": "Fighter",
     "description": "At 15th level, when a cad confirms a critical hit, he can attempt a dirty trick combat maneuver as part of that attack as an immediate action. This ability replaces armor training 4.",
     "raw_tokens": [
       {

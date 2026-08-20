@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Vivisectionist ~ Torturous Transformation",
     "name": "Torturous Transformation",
-    "class": "Vivisectionist",
+    "class": "Alchemist",
     "description": "You add Anthropomorphic Animal to your formula book as a 2nd-level extract.  When you use this extract, you inject it into an animal as part of a 2-hour surgical procedure.  By using multiple doses of this extract as part of the surgery, you multiply the duration by the number of extracts used.",
     "raw_tokens": [
       {

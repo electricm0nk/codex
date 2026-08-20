@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Discipline Faith ~ Deity",
     "name": "Deity",
-    "class": "Psychic Discipline Faith",
+    "class": "Psychic",
     "description": "At 1st level, choose a deity to worship. Your alignment must remain within one step of your deity's or you lose access to all this discipline's bonus spells and discipline powers.",
     "raw_tokens": [
       {

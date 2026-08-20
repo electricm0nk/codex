@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tempest Druid ~ Eyes of the Storm",
     "name": "Eyes of the Storm",
-    "class": "Tempest Druid",
+    "class": "Druid",
     "description": "A tempest druid can see through %1 feet of magical fog, mist, rain, wind, or similar inclement weather conditions, ignoring any concealment such conditions might grant.|TempestDruidStormSight",
     "raw_tokens": [
       {

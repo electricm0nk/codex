@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sword of Valor ~ First Into Battle",
     "name": "First Into Battle",
-    "class": "Sword of Valor",
+    "class": "Paladin",
     "description": "A sword of valor can spend 1 use of smite evil or lay on hands to act in the surprise round, even if she is surprised. When the paladin makes an Initiative check, she gains a +%1 bonus to the check.|CHA",
     "raw_tokens": [
       {

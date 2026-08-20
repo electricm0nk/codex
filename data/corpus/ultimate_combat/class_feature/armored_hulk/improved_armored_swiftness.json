@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Armored Hulk ~ Improved Armored Swiftness",
     "name": "Improved Armored Swiftness",
-    "class": "Armored Hulk",
+    "class": "Barbarian",
     "description": "At 5th level, an armored hulk's land speed is faster than the norm for her race by +10 feet. This benefit applies when she is wearing any armor, including heavy armor, but not while carrying a heavy load. Apply this bonus before modifying the armored hulk's speed because of any load carried or armor worn. This bonus stacks with any other bonuses to the barbarian's land speed. This ability replaces improved uncanny dodge(Encumbered=%1)(WearingArmor=%2)(MoveBonus=%3).|EncumberedHeavy|WearingArmor|IASMoveBonus",
     "raw_tokens": [
       {

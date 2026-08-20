@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fiendflesh Shifter ~ Fiendish Resilience",
     "name": "Fiendish Resilience",
-    "class": "Fiendflesh Shifter",
+    "class": "Shifter",
     "description": "A fiendflesh shifter gains a +%1 natural armor bonus to her AC and resistance %2 to electricity and fire, but only while unencumbered and either wearing no armor or wearing light or medium nonmetal armor.|FiendfleshShifterACBonus|FiendfleshShifterResistance",
     "raw_tokens": [
       {

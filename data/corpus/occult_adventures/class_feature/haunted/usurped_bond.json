@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Haunted ~ Usurped Bond",
     "name": "Usurped Bond",
-    "class": "Haunted",
+    "class": "Spiritualist",
     "description": "At 17th level, the haunted's phantom can use usurp manifestation for a number of rounds per day equal to 3 + double the haunted's spiritualist level. This ability replaces dual bond.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cult Hunter ~ Student of the Beyond",
     "name": "Student of the Beyond",
-    "class": "Cult Hunter",
+    "class": "Investigator",
     "description": "A cult hunter gains a +%1 bonus on Knowledge and Spellcraft checks made to recognize any calling and summoning spells, portals, rifts, and planar travel.|InvestigatorLVL/2",
     "raw_tokens": [
       {

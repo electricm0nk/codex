@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Deed ~ Inspired Strike",
     "name": "Inspired Strike",
-    "class": "Deed",
+    "class": "Swashbuckler",
     "description": "An inspired blade can spend 1 panache point when making an attack with a rapier to gain a +%1 insight bonus on that attack roll. When an inspired blade hits with an attack augmented by inspired strike, she can spend 1 additional panache point to make the hit a critical threat, though if she does so, she does not regain panache if she confirms that critical threat. The cost of this deed cannot be reduced by abilities such as Signature Deed.|max(INT,1)",
     "raw_tokens": [
       {

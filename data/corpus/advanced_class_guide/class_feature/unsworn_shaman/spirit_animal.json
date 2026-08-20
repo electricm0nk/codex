@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Unsworn Shaman ~ Spirit Animal",
     "name": "Spirit Animal",
-    "class": "Unsworn Shaman",
+    "class": "Shaman",
     "description": "An unsworn shaman's spirit animal gains the spirit animal bonus from one of her wandering spirits (see below). This bonus can be changed each day when the shaman prepares spells, but it must correspond to one of the shaman's wandering spirits. This ability alters spirit animal.",
     "raw_tokens": [
       {

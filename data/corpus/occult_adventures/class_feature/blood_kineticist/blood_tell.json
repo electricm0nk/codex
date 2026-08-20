@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Blood Kineticist ~ Blood Tell",
     "name": "Blood Tell",
-    "class": "Blood Kineticist",
+    "class": "Kineticist",
     "description": "At 6th level, a blood kineticist's connection to blood allows her to learn much from the blood of another. This works as blood biographyAPG, except the blood kineticist suddenly knows the information, rather than having it appear on a parchment. This is a 3rd-level utility wild talent and costs 0 points of burn. She can accept 1 point of burn to reduce the casting time to a standard action instead of 1 minute. This ability replaces the 6th-level utility wild talent.",
     "raw_tokens": [
       {

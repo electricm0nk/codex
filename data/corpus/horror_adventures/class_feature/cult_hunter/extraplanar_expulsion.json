@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cult Hunter ~ Extraplanar Expulsion",
     "name": "Extraplanar Expulsion",
-    "class": "Cult Hunter",
+    "class": "Investigator",
     "description": "A cult hunter can grant himself the ability to use dispel chaos, dispel evil, dispel good, or dispel law as a spell-like ability (using his investigator level as his caster level and his Intelligence to determine the DCs) by sacrificing an unused 5th- or 6th-level extract for the day. He is able to use this ability as many times as he likes, but only so long as he continues to have unused 5th- or 6th-level extract slots to expend.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spirit Warden ~ Rebuke Spirits",
     "name": "Rebuke Spirits",
-    "class": "Spirit Warden",
+    "class": "Shaman",
     "description": "The spirit warden gains the ability to channel positive energy as a cleric of her level. Regardless of her alignment, she can only use this ability to harm undead creatures. The spirit warden can use this ability %1 times per day.|3+CHA",
     "raw_tokens": [
       {

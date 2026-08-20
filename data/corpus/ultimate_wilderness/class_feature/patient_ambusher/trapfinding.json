@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Patient Ambusher ~ Trapfinding",
     "name": "Trapfinding",
-    "class": "Patient Ambusher",
+    "class": "Hunter",
     "description": "A patient ambusher adds %1 on Perception checks to locate traps and on Disable Device skill checks. A patient ambusher can use Disable Device to disarm magic traps.|TrapfindingBonus",
     "raw_tokens": [
       {

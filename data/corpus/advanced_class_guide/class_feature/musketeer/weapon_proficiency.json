@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Musketeer ~ Weapon Proficiency",
     "name": "Weapon Proficiency",
-    "class": "Musketeer",
+    "class": "Swashbuckler",
     "description": "A musketeer gains proficiency with all simple weapons and martial weapons, as well as onehanded and two-handed firearms. This ability replaces the swashbuckler's weapon proficiencies.",
     "raw_tokens": [
       {

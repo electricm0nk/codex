@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tatterdemalion ~ Cantrips",
     "name": "Cantrips",
-    "class": "Tatterdemalion",
+    "class": "Witch",
     "description": "A tatterdemalion must choose mage hand, open/close, and prestidigitation as her prepared cantrips at 1st level, and they require a piece of cloth, string, rope, or other woven material (including clothing) as a focus. Any action she takes with these cantrips must involve the focus. Starting at 2nd level, she can choose any cantrip for her remaining cantrip. This alters the witch's cantrips.",
     "raw_tokens": [
       {

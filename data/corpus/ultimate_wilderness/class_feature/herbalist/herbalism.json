@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Herbalist ~ Herbalism",
     "name": "Herbalism",
-    "class": "Herbalist",
+    "class": "Alchemist",
     "description": "An herbalist's studies allow him a unique method of creating alchemical discoveries. He can attempt Profession (herbalist) checks in place of Craft (alchemy) checks for all purposes, and he gains a competence bonus equal to half his alchemist level on Profession (herbalist) checks to create alchemical items and to forage for and process herbs (see page 152). [NOT IMPLEMENTED] An herbalist uses his Wisdom score instead of his Intelligence score for all alchemist class abilities. This alters alchemy and the alchemist's key ability score.",
     "raw_tokens": [
       {

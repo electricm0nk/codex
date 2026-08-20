@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Clone Master ~ Lesser Simulacrum",
     "name": "Lesser Simulacrum",
-    "class": "Clone Master",
+    "class": "Alchemist",
     "description": "You add Lesser Simulacrum to your formula book as a 3rd-level extract.",
     "raw_tokens": [
       {

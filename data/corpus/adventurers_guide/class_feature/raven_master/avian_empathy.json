@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Raven Master ~ Avian Empathy",
     "name": "Avian Empathy",
-    "class": "Raven Master",
+    "class": "Ranger",
     "description": "A raven master's wild empathy affects only birds. This alters wild empathy.",
     "raw_tokens": [
       {

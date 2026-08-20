@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Storm Dreamer ~ Storm Seer",
     "name": "Storm Seer",
-    "class": "Storm Dreamer",
+    "class": "Medium",
     "description": "A storm dreamer gains a supernatural link to the weather and can sense her surroundings more clearly. While in her storm trance, she gains blindsense 10 feet and cannot be flanked. If the weather conditions are stormy, these senses become blindsight with a range of 30 feet.",
     "raw_tokens": [
       {

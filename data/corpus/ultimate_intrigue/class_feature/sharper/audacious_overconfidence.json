@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sharper ~ Audacious Overconfidence",
     "name": "Audacious Overconfidence",
-    "class": "Sharper",
+    "class": "Rogue",
     "description": "After failing an attack roll, skill check, or saving throw, a sharper can reduce her saving throw bonus from lucky save by 1 for 24 hours in order to reroll the failed roll. She can use this ability",
     "raw_tokens": [
       {

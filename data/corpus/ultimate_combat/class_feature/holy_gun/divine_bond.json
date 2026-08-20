@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Holy Gun ~ Divine Bond",
     "name": "Divine Bond",
-    "class": "Holy Gun",
+    "class": "Paladin",
     "description": "At 5th level, a holy gun forms a bond with her deity. This functions as the paladin's divine bond ability, except the bond must always take the form of a firearm. In addition to the listed abilities, a holy gun can add the distance, reliable, or seeking special abilities to her weapon, but she cannot add the defending or disruption special abilities. This ability replaces the standard paladin's divine bond.",
     "raw_tokens": [
       {

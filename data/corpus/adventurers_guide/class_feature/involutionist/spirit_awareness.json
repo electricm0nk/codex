@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Involutionist ~ Spirit Awareness",
     "name": "Spirit Awareness",
-    "class": "Involutionist",
+    "class": "Spiritualist",
     "description": "An involutionist gains great insight into the spiritual influence people invest into the world around them. She can cast detect psychic significance as a spell-like ability at will and analyze aura once per day as a spell-like ability.",
     "raw_tokens": [
       {

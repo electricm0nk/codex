@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Studious Librarian ~ One with the Library",
     "name": "One with the Library",
-    "class": "Studious Librarian",
+    "class": "Bard",
     "description": "The studious librarian can replace one of her spells known with any bard spell from a scroll once per day by studying the scroll for 1 hour. Doing so erases the spell from the scroll.",
     "raw_tokens": [
       {

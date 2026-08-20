@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Exemplar Brawler ~ Inspiring Prowess",
     "name": "Inspiring Prowess",
-    "class": "Exemplar Brawler",
+    "class": "Brawler",
     "description": "An exemplar gains the ability to use certain bardic performances. She can use this ability %1 rounds per day. The exemplar's effective bard level for this ability is equal to her brawler level - 2. Instead of the Perform skill, she activates this ability with impressive flourishes and displays of martial talent (this uses visual components). This ability otherwise functions as bardic performance; feats and other effects that affect bardic performance (such as the Extra Performance feat) apply to it.|BardicPerformanceDuration",
     "raw_tokens": [
       {

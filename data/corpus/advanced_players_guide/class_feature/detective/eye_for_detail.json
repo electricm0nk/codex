@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Detective ~ Eye for Detail",
     "name": "Eye for Detail",
-    "class": "Detective",
+    "class": "Bard",
     "description": "A detective gains a bonus equal to half his level on Knowledge (local), Perception, and Sense Motive checks, as well as Diplomacy checks to gather information (minimum +1). This ability replaces bardic knowledge.|min(1,BardLVL/2)",
     "raw_tokens": [
       {

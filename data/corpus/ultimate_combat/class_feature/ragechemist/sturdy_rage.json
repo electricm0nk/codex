@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ragechemist ~ Sturdy Rage",
     "name": "Sturdy Rage",
-    "class": "Ragechemist",
+    "class": "Alchemist",
     "description": "At 6th level, whenever a ragechemist uses his rage mutagen, he also gains a +4 bonus to natural armor, but the penalty on Will saving throws and to Intelligence for taking damage increases to -4. This ability replaces swift poisoning.",
     "raw_tokens": [
       {

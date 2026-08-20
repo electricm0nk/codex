@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Flowing Monk ~ Bonus Feat",
     "name": "Bonus Feat",
-    "class": "Flowing Monk",
+    "class": "Monk",
     "description": "A flowing monk replaces the normal monk bonus feats with the following - Agile Maneuvers, Combat Reflexes, Deflect Arrows, Dodge, Improved Reposition*, Improved Trip, Nimble Moves, and Weapon Finesse. At 6th level, the following feats are also available - Acrobatic Steps, Bodyguard*, Improved Disarm, Improved Feint, Ki Throw*, Mobility, Second Chance*, and Sidestep*. At 10th level, the following feats are added - In Harm's Way*, Repositioning Strike*, Snatch Arrows, Spring Attack, and Tripping Strike*. (Asterisks denotes feats from the Advanced Player's Guide.)",
     "raw_tokens": [
       {

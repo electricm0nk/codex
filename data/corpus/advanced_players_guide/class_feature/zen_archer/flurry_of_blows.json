@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Zen Archer ~ Flurry of Blows",
     "name": "Flurry of Blows",
-    "class": "Zen Archer",
+    "class": "Monk",
     "description": "Starting at 1st level, a zen archer can make a flurry of blows as a full-attack action, but only when using a bow (even though it is a ranged weapon). He may not make a flurry of blows with his unarmed attacks or any other weapons. A zen archer does not apply his Strength bonus on damage rolls made with flurry of blows unless he is using a composite bow with a Strength rating. A zen archer's flurry of blows otherwise functions as normal for a monk of his level. A zen archer cannot use Rapid Shot or Manyshot when making a flurry of blows with his bow.",
     "raw_tokens": [
       {

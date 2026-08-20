@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Umbral Stalker ~ Dark Descent",
     "name": "Dark Descent",
-    "class": "Umbral Stalker",
+    "class": "Inquisitor",
     "description": "An umbral stalker gains the Darkness domain with the Night subdomain, even if her deity normally doesn't offer it. This ability alters domain.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Buccaneer ~ Captain's Curse 2",
     "name": "Captain's Curse",
-    "class": "Buccaneer",
+    "class": "Gunslinger",
     "description": "A buccaneer can spend 2 grit points to use black mark as a spell-like ability. The caster level for this spell-like ability is equal to %1, and the save DC is equal to %2.|GunslingerLVL|10+GunslingerLVL+CHA",
     "raw_tokens": [
       {

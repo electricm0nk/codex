@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Deed ~ Sleuth's Initiative",
     "name": "Sleuth's Initiative",
-    "class": "Deed",
+    "class": "Investigator",
     "description": "At 1st level, as long as the sleuth has at least 1 luck point, he gains a +2 bonus on initiative checks. Furthermore, if he has the Quick Draw feat, his hands are free and unrestrained, and the weapon is not hidden, he can draw a single light or one-handed melee weapon as part of the initiative check. (Unlike with swashbuckler deeds, this does not have to be a piercing weapon.)",
     "raw_tokens": [
       {

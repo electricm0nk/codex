@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Discipline Rivethun ~ Spirit Channeling",
     "name": "Spirit Channeling",
-    "class": "Psychic Discipline Rivethun",
+    "class": "Psychic",
     "description": "As your self-awareness expands, you become increasingly attuned to the spirit world around you. As part of your meditation to initiate metamorphosis, you can invite a wandering spirit to share your body as if you were a shaman (Advanced Class Guide 37). You gain the associated 1st-level spirit ability as long as you maintain your altered form, but your metamorphosis form also exhibits some aspect of the spirit you host, such as vivid red hair for a flame spirit or gauntness for a bone spirit.",
     "raw_tokens": [
       {

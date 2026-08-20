@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sky Druid ~ Sky's Embrace",
     "name": "Sky's Embrace",
-    "class": "Sky Druid",
+    "class": "Druid",
     "description": "A sky druid no longer takes falling damage, as though she were constantly under the effect of feather fall. Additionally, she may take ranks in the Fly skill regardless of whether she has a natural fly speed, and may use her Fly skill in place of Acrobatics when making jump checks.",
     "raw_tokens": [
       {

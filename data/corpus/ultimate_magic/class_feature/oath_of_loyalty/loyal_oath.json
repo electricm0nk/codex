@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Oath of Loyalty ~ Loyal Oath",
     "name": "Loyal Oath",
-    "class": "Oath of Loyalty",
+    "class": "Paladin",
     "description": "As a swift action, you can choose a willing creature within line of sight as the target of your loyal oath. When you are adjacent to the target of your loyal oath, you grant the target a +%1 sacred bonus on saving throws and to Armor Class. The loyal oath lasts 1 minute, or until you dismiss it (a free action) or discharge it (see below), whichever comes first. If the target is struck by an enemy and you are adjacent to that enemy, as an immediate action you may make a single melee attack against that enemy; making this attack ends the loyal oath. You may use your loyal oath %2/day.|LoyalOathBonus|LoyalOathTimes",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fighter Crossbowman ~ Meteor Shot",
     "name": "Meteor Shot",
-    "class": "Fighter Crossbowman",
+    "class": "Fighter",
     "description": "At 17th level, as a standard action, a crossbowman can make one attack with a crossbow at a -4 penalty. If the attack hits, it inflicts damage normally and the target is subject to a bull rush or a trip maneuver using the attack roll as the combat maneuver check. The crossbowman must decide which maneuver to attempt before making his attack roll. This ability replaces weapon training 4.",
     "raw_tokens": [
       {

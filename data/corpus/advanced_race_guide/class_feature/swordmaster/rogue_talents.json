@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Swordmaster ~ Rogue Talents",
     "name": "Rogue Talents",
-    "class": "Swordmaster",
+    "class": "Rogue",
     "description": "The following rogue talents complement the swordmaster archetype: combat trick, stand up, surprise attack, weapon training (Core Rulebook); befuddling strike, positioning strike (Advanced Player's Guide).",
     "raw_tokens": [
       {

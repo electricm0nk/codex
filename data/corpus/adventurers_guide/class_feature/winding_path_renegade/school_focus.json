@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Winding Path Renegade ~ School Focus",
     "name": "School Focus",
-    "class": "Winding Path Renegade",
+    "class": "Brawler",
     "description": "A winding path renegade continues the training she left behind, gaining the benefits of the mystery taught at her old monastery. As the winding path renegade progresses in her self-guided training, she gains deeper understanding of her chosen monastery's mystery, which grants her new powers.",
     "raw_tokens": [
       {

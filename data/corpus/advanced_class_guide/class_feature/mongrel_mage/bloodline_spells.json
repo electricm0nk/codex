@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mongrel Mage ~ Bloodline Spells",
     "name": "Bloodline Spells",
-    "class": "Mongrel Mage",
+    "class": "Sorcerer",
     "description": "Each day when she selects her bloodline, a mongrel mage adds the 1st-, 2nd-, and 3rd-level spells from her selected bloodline to her current list of spells known.|PREVARLT:SorcererLVL,13",
     "raw_tokens": [
       {

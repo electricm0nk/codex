@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wit ~ On the Ball",
     "name": "On the Ball",
-    "class": "Wit",
+    "class": "Bard",
     "description": "Rather than roll for initiative, the wit can treat his roll as if it was a %1 (adding any modifiers as usual). The wit can use this ability %2/day.|(1+(BardLVL>=20))*10|(BardLVL+1)/6",
     "raw_tokens": [
       {

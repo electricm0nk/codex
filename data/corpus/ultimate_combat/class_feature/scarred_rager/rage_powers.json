@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Scarred Rager ~ Rage Powers",
     "name": "Rage Powers",
-    "class": "Scarred Rager",
+    "class": "Barbarian",
     "description": "The following rage powers complement the scarred rager archetype - auspicious mark*, body bludgeon*, come and get me**, increased damage reduction, inspire ferocity**, internal fortitude, intimidating glare, reckless abandon**, regenerative vigor*, renewed life*, renewed vigor, renewed vitality*, roused anger, and terrifying howl.",
     "raw_tokens": [
       {

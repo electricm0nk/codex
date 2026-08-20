@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fiendflesh Shifter ~ Infernal Claws",
     "name": "Infernal Claws",
-    "class": "Fiendflesh Shifter",
+    "class": "Shifter",
     "description": "A fiendflesh shifter's claws are infused with the unholy power of the evil Outer Planes. A fiendflesh shifter's claws are treated as evil weapons for the purpose of overcoming damage reduction. This ability otherwise functions as the shifter claws class feature. This alters shifter claws.",
     "raw_tokens": [
       {

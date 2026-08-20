@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Veiled Blade ~ Instant Unveil",
     "name": "Instant Unveil",
-    "class": "Veiled Blade",
+    "class": "Swashbuckler",
     "description": "At 7th level, when she uses her swashbuckler's initiative deed to draw a light or one-handed piercing weapon as part of an initiative check, she can draw that weapon even if it is hidden.",
     "raw_tokens": [
       {

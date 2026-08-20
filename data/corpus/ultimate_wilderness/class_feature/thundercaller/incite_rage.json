@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Thundercaller ~ Incite Rage",
     "name": "Incite Rage",
-    "class": "Thundercaller",
+    "class": "Bard",
     "description": "The thundercaller can induce a furious rage in one creature within 30 feet. This effect functions as the rage spell and lasts as long as the target can hear the thundercaller's performance. Any unwilling creature targeted is affected if it fails a Will saving throw (DC %1). A target that succeeds at its saving throw is immune to this power for 24 hours. The thundercaller cannot target herself with this ability. If the target has the rage class feature, it can instead immediately rage and stay in this rage without consuming rounds of rage per day as long as the thundercaller continues performing. This performance is a mind-affecting effect and relies on audible components.|10+BardLVL/2+CHA",
     "raw_tokens": [
       {

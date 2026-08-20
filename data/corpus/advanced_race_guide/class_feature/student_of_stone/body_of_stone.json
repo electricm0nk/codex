@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Student of Stone ~ Body of Stone",
     "name": "Body of Stone",
-    "class": "Student of Stone",
+    "class": "Monk",
     "description": "A student of stone gains the benefits of the light fortification armor property.  (When a critical hit or sneak attack is scored on the wearer, there is a 25%% chance that the critical hit or sneak attack is negated and damage is instead rolled normally.)",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Living Avalanche ~ Unyielding",
     "name": "Unyielding",
-    "class": "Living Avalanche",
+    "class": "Brawler",
     "description": "When a living avalanche wears light armor or no armor, she gains DR %1/adamantine.|LivingAvalancheDR",
     "raw_tokens": [
       {

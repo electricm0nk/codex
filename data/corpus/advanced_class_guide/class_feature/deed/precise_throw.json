@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Deed ~ Precise Throw",
     "name": "Precise Throw",
-    "class": "Deed",
+    "class": "Swashbuckler",
     "description": "As long as she has at least 1 panache point, a flying blade can use her precise strike with a thrown dagger or starknife as long as the target is within 60 feet of her, and she increases the range increment of these weapons by 5 feet. She can spend 1 panache point when she throws a dagger or a starknife to ignore all range increment penalties with that ranged attack. This deed replaces menacing swordplay.",
     "raw_tokens": [
       {

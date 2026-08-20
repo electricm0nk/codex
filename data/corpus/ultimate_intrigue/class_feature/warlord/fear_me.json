@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Warlord ~ Fear Me",
     "name": "Fear Me",
-    "class": "Warlord",
+    "class": "Skald",
     "description": "The warlord can remind his allies that failing him is far more frightening than the opposition. This raging song works like distraction, except that it applies to saving throws against fear effects instead of patterns and figments, and the warlord attempts an Intimidate check with a -10 penalty instead of a Perform check. Additionally, the warlord's allies can use the warlord's Intimidate check result (with the -10 penalty) as the DC for attempts to demoralize them using Intimidate.",
     "raw_tokens": [
       {

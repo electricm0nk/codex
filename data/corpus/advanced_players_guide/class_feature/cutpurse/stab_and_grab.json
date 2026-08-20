@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cutpurse ~ Stab and Grab",
     "name": "Stab and Grab",
-    "class": "Cutpurse",
+    "class": "Rogue",
     "description": "At 3rd level, as a full-round action, a cutpurse can make an attack and also make a Sleight of Hand check to steal something from the target of the attack. If the attack deals sneak attack damage, the rogue can use Sleight of Hand to take an item from the creature during combat; otherwise this ability can only be used in a surprise round before the target has acted. If the attack is successful, the target takes a -5 penalty on the Perception check to notice the theft. This ability replaces trap sense.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Alchemical Trapper ~ Trapfinding",
     "name": "Trapfinding",
-    "class": "Alchemical Trapper",
+    "class": "Alchemist",
     "description": "An alchemical trapper can find and disable traps, as the rogue class feature of the same name.",
     "raw_tokens": [
       {

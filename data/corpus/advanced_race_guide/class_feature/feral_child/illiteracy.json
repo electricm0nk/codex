@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Feral Child ~ Illiteracy",
     "name": "Illiteracy",
-    "class": "Feral Child",
+    "class": "Druid",
     "description": "A feral child is unable to read and write, though she may learn by taking 1 rank of Linguistics. She does not gain Druidic as a free language and cannot select Sylvan as a bonus language.",
     "raw_tokens": [
       {

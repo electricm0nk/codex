@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tatterdemalion ~ Lace Weaver",
     "name": "Lace Weaver",
-    "class": "Tatterdemalion",
+    "class": "Witch",
     "description": "A tatterdemalion can create cloth as per minor creation or create %1 5-foot cubes of tangled skeins of cloth, affecting the target areas as per web, %2 times per day.|WitchLVL|WitchLVL/4",
     "raw_tokens": [
       {

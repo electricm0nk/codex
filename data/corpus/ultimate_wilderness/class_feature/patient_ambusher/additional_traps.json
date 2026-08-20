@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Patient Ambusher ~ Additional Traps",
     "name": "Additional Traps",
-    "class": "Patient Ambusher",
+    "class": "Hunter",
     "description": "At 3rd level and every 3 hunter levels thereafter, a patient ambusher can learn a new type of trap, selected from the list of ranger traps presented on pages 64-65 of Ultimate Magic. Once a trap is learned, it can't be unlearned and replaced with a different type of trap. The patient ambusher cannot learn an individual trap more than once.",
     "raw_tokens": [
       {

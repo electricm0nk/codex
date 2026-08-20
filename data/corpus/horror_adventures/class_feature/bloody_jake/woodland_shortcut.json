@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bloody Jake ~ Woodland Shortcut",
     "name": "Woodland Shortcut",
-    "class": "Bloody Jake",
+    "class": "Slayer",
     "description": "A bloody jake can move with supernatural ease among the trees once per day, as if using tree stride with a caster level equal to his slayer level.",
     "raw_tokens": [
       {

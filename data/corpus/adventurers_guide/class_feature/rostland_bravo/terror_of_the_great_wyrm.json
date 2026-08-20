@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Rostland Bravo ~ Terror of the Great Wyrm",
     "name": "Terror of the Great Wyrm",
-    "class": "Rostland Bravo",
+    "class": "Swashbuckler",
     "description": "[redacted PI]",
     "raw_tokens": [
       {

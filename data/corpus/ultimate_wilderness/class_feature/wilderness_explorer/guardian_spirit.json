@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wilderness Explorer ~ Guardian Spirit",
     "name": "Guardian Spirit",
-    "class": "Wilderness Explorer",
+    "class": "Ranger",
     "description": "A wilderness explorer gains the aid of indigenous spirits, which favor him when he is defending himself against multiple foes that surround him. He gains improved uncanny dodge; this ability functions only while the ranger is within one of his favored terrains. This further alters favored terrain.",
     "raw_tokens": [
       {

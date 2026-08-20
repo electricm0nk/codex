@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Deadly Courtesan ~ Rogue Talents",
     "name": "Rogue Talents",
-    "class": "Deadly Courtesan",
+    "class": "Rogue",
     "description": "The following rogue talents complement the deadly courtesan archetype: finesse rogue, stand up (Core Rulebook); charmer, coax information, fast fingers, honeyed words (Advanced Player's Guide); convincing lie, deft palm (Ultimate Combat).",
     "raw_tokens": [
       {

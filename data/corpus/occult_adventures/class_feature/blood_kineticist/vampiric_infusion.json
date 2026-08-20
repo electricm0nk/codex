@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Blood Kineticist ~ Vampiric Infusion",
     "name": "Vampiric Infusion",
-    "class": "Blood Kineticist",
+    "class": "Kineticist",
     "description": "At 11th level, a blood kineticist can drain the vitality from her enemy's blood to restore her own. If her blast hits (or the enemy fails its saving throw against a blast without an attack roll) the blood kineticist can activate the kinetic healer utility wild talent on herself by accepting its burn cost; she doesn't need to take an action to do so. If she doesn't possess the kinetic healer utility wild talent, she can still use this ability, but it heals only half as much. This is a 5th-level substance infusion that costs 3 points of burn and can be used with water and blood blasts. This ability replaces the 11th-level infusion.",
     "raw_tokens": [
       {

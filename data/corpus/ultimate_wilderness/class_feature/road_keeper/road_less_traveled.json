@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Road Keeper ~ Road Less Traveled",
     "name": "Road Less Traveled",
-    "class": "Road Keeper",
+    "class": "Druid",
     "description": "A road keeper can discourage creatures from entering or exiting the wild. Once per day as a standard action, she can target a creature within 30 feet and curse it with clumsiness and disorientation. The road keeper chooses whether to punish her target for entering the wild from a road or building, or vice versa. If her target is entering the wild, it treats every square of wilderness not on a road or in a building as difficult terrain. If her target is exiting the wild, it treats every square on a road or inside a building as difficult terrain. In either case, the ground feels uneven and the target suffers extreme vertigo during movement. The victim of this curse can attempt a Will saving throw (DC %1) at the beginning of its turn each round to end the effect. The effect lasts until the target successfully saves or for %2 minutes. A creature's movement isn't affected if it is burrowing, climbing, earth gliding, flying, or swimming. This is a mind-affecting curse effect. At 6th level and every 2 levels thereafter, the road keeper can target an additional creature per day with this ability (to a maximum number of nine targets per day at 20th level). She can target more than one creature with a single use of this ability or the same target more than once in the same day (though its effects do not stack), but her total number of targets per day cannot exceed this daily maximum. If she targets more than one creature at one time, each target must be within 30 feet of the road keeper.|10+DruidLVL/2+WIS|DruidLVL",
     "raw_tokens": [
       {

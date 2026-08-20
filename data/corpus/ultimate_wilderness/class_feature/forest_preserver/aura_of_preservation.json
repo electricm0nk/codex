@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Forest Preserver ~ Aura of Preservation",
     "name": "Aura of Preservation",
-    "class": "Forest Preserver",
+    "class": "Paladin",
     "description": "A forest preserver grants animals and plants within 10 feet spell resistance %1. This spell resistance doesn't apply against harmless effects created by the forest preserver or allies within 10 feet of her. This ability functions only if the forest preserver is conscious.|11+PaladinLVL",
     "raw_tokens": [
       {

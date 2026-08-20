@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Deep Bomber ~ Discoveries",
     "name": "Discoveries",
-    "class": "Deep Bomber",
+    "class": "Alchemist",
     "description": "The following discoveries complement the deep bomber archetype: delayed bomb, dispelling bomb, fast bombs, infusion, madness bomb, poison bomb.",
     "raw_tokens": [
       {

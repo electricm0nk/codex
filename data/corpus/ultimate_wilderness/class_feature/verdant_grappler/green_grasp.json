@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Verdant Grappler ~ Green Grasp",
     "name": "Green Grasp",
-    "class": "Verdant Grappler",
+    "class": "Brawler",
     "description": "A verdant grappler gains Improved Grapple as a bonus feat.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Gunmaster ~ Nimble",
     "name": "Nimble",
-    "class": "Gunmaster",
+    "class": "Vigilante",
     "description": "A gunmaster gains a +1 dodge bonus to AC while wearing light or no armor. Anything that causes the gunmaster to lose her Dexterity bonus to AC also causes the gunmaster to lose this dodge bonus.|GunmasterDodgeBonus",
     "raw_tokens": [
       {

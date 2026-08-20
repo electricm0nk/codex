@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Alchemical Sapper ~ Selective Detonation",
     "name": "Selective Detonation",
-    "class": "Alchemical Sapper",
+    "class": "Alchemist",
     "description": "When an alchemical sapper plants a trip mine, he can designate up to %1 allies, allowing the designated allies to pass safely through an armed trip mine's square without causing it to detonate. If another creature triggers the trip mine while an ally is nearby, the ally still takes damage as normal.|INT",
     "raw_tokens": [
       {

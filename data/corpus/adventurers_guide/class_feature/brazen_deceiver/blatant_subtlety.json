@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Brazen Deceiver ~ Blatant Subtlety",
     "name": "Blatant Subtlety",
-    "class": "Brazen Deceiver",
+    "class": "Bard",
     "description": "A brazen deceiver has mastered the art of using magic without being detected. The brazen deceiver gains Spellsong as a bonus feat. Observers do not automatically recognize his bardic performances as anything other than ordinary speech or performance. Those specifically looking for abnormal effects must succeed at a Sense Motive check (DC %1) to detect his performances.|10+BardLVL/2+CHA",
     "raw_tokens": [
       {

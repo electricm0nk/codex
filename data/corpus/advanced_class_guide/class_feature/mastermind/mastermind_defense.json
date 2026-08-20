@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mastermind ~ Mastermind Defense",
     "name": "Mastermind Defense",
-    "class": "Mastermind",
+    "class": "Investigator",
     "description": "At 4th level, a mastermind can, as an immediate action, expend two uses of inspiration to make an inspired defense. He rolls his inspiration die and applies the result as a penalty on an attack roll made against him. If the mastermind has the combat inspiration talent, he can expend one use of inspiration instead of two. This ability replaces swift alchemy.",
     "raw_tokens": [
       {

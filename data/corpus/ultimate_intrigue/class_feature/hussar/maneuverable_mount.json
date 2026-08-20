@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Hussar ~ Maneuverable Mount",
     "name": "Maneuverable Mount",
-    "class": "Hussar",
+    "class": "Cavalier",
     "description": "A hussar is able to maneuver his mount with exceptional grace and poise, even in areas that would normally be a difficult fit for such a creature. Any creature that the hussar is riding can squeeze into a space that is at least half as wide as its normal space without taking the normal penalties on attack rolls and AC for doing so, though it still moves at half speed. If the mount attempts to squeeze into a space less than half its space's width, it must use the Escape Artist skill to do so, and takes the normal penalties.",
     "raw_tokens": [
       {

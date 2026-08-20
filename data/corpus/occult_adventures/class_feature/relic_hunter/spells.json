@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Relic Hunter ~ Spells",
     "name": "Spells",
-    "class": "Relic Hunter",
+    "class": "Inquisitor",
     "description": "A relic hunter casts divine spells drawn from the inquisitor spell list, but her chosen relic schools (see Relics below) limit her to schools she knows, similar in function to an occultist's implements. Any spell or orison gained by the relic hunter has a relic component (see Relics below), and is not considered to be on the relic hunter's spell list until she selects its school though the relics alternate class feature. Once she chooses a school, all spells and orisons of that school are considered to be on the relic hunter's class spell list, allowing her to use spell trigger and spell completion magic items of those spells. A relic hunter's spells per day, daily spell allotment, Difficulty Class, and minimum Wisdom score requirements remain unchanged from the inquisitor's normal spellcasting class feature. This ability alters the inquisitor's spellcasting.",
     "raw_tokens": [
       {

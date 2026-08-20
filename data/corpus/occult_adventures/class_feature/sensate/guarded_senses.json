@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sensate ~ Guarded Senses",
     "name": "Guarded Senses",
-    "class": "Sensate",
+    "class": "Fighter",
     "description": "At 2nd level, a sensate gains a +1 bonus on saves against sonic effects, figments, glamers, patterns, gaze attacks, and scent-based attacks. This bonus increases by 1 for every 4 levels the sensate possesses beyond 2nd. This ability replaces bravery.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spirit Ranger ~ Wisdom of the Spirits",
     "name": "Wisdom of the Spirits",
-    "class": "Spirit Ranger",
+    "class": "Ranger",
     "description": "At 12th level, the spirit ranger can use his augury spell-like ability even when he is not in one of his favored terrains. If he is within one of his favored terrains, the ranger can cast divination (Pathfinder RPG Core Rulebook 273) instead. Like augury, the caster level of the divination is equal to the ranger's level. This ability replaces camouflage.",
     "raw_tokens": [
       {

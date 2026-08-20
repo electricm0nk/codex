@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Zen Archer ~ Bonus Feats",
     "name": "Bonus Feats",
-    "class": "Zen Archer",
+    "class": "Monk",
     "description": "A zen archer's bonus feats must be taken from the following list: Combat Reflexes, Deflect Arrows, Dodge, Far Shot, Point-Blank Shot, Precise Shot, and Rapid Shot. At 6th level, the following feats are added to the list: Focused Shot*, Improved Precise Shot, Manyshot, Mobility, and Parting Shot*. At 10th level, the following feats are added to the list: Improved Critical, Pinpoint Targeting, Shot on the Run, and Snatch Arrows. A monk need not have any of the prerequisites normally required for these feats to select them. These feats replace the monk's normal bonus feats.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dandy ~ Favored Terrain",
     "name": "Favored Terrain",
-    "class": "Dandy",
+    "class": "Ranger",
     "description": "A dandy gains favored terrain (urban), and though the ability continues to increase at the same levels, he doesn't add additional terrains.",
     "raw_tokens": [
       {

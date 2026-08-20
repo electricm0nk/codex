@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cloistered Cleric ~ Breadth of Knowledge",
     "name": "Breadth of Knowledge",
-    "class": "Cloistered Cleric",
+    "class": "Cleric",
     "description": "You gain a +%1 bonus on Knowledge skill checks and can make Knowledge checks untrained.|BreadthOfKnowledgeBonus",
     "raw_tokens": [
       {

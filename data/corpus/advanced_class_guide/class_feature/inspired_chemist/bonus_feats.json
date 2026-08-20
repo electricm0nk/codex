@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Inspired Chemist ~ Bonus Feats",
     "name": "Bonus Feats",
-    "class": "Inspired Chemist",
+    "class": "Alchemist",
     "description": "An inspired chemist can select Skill Focus (Disable Device, Disguise, Heal, any Knowledge skill, Sense Motive, Spellcraft, or Use Magic Device) in place of a discovery.",
     "raw_tokens": [
       {

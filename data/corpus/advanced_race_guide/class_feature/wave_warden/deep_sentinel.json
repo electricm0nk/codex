@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wave Warden ~ Deep Sentinel",
     "name": "Deep Sentinel",
-    "class": "Wave Warden",
+    "class": "Ranger",
     "description": "A wave warden adds %1 on Perception checks made to notice creatures underwater.|1+(RangerLVL-1)/2",
     "raw_tokens": [
       {

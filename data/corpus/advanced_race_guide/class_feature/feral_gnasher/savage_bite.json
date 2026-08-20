@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Feral Gnasher ~ Savage Bite",
     "name": "Savage Bite",
-    "class": "Feral Gnasher",
+    "class": "Barbarian",
     "description": "The feral gnasher gains a savage bite attack. This is a primary natural attack. If the goblin already has the hard head, big teeth racial trait, the damage increases.",
     "raw_tokens": [
       {

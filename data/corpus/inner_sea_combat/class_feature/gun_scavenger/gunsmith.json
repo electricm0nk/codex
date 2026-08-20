@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Gun Scavenger ~ Gunsmith",
     "name": "Gunsmith",
-    "class": "Gun Scavenger",
+    "class": "Gunslinger",
     "description": "The gun scavenger's starting weapon is a mishmash of pieces that even other gunpowder enthusiasts fail to comprehend. Anyone other than the gun scavenger treats her starting weapon as broken, even if she uses the Gunsmithing feat (Ultimate Combat io3) to repair it. This ability works in all other ways like the gunslinger's gunsmith class feature.",
     "raw_tokens": [
       {

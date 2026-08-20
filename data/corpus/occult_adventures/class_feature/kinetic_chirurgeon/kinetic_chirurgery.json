@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Kinetic Chirurgeon ~ Kinetic Chirurgery",
     "name": "Kinetic Chirurgery",
-    "class": "Kinetic Chirurgeon",
+    "class": "Kineticist",
     "description": "A kinetic chirurgeon must select either aether or water as her primary element. She gains kinetic healer as a bonus wild talent at 1st level. At 3rd level and every 2 levels thereafter, the kinetic chirurgeon can select any one paladin mercy that a paladin of that level could select. Each time she uses kinetic healer, she can apply one of these mercies to the target of the healing. A kinetic chirurgeon can never use infusions. This ability replaces infusions.",
     "raw_tokens": [
       {

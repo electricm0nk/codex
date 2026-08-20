@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Disenchanter ~ Bonus Feats",
     "name": "Bonus Feats",
-    "class": "Disenchanter",
+    "class": "Warpriest",
     "description": "Whenever a disenchanter gains a bonus feat, he must choose from a special list. He need not meet the prerequisites for these feats. This ability alters bonus feats.",
     "raw_tokens": [
       {

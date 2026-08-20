@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Discipline Dream ~ Mind Heist",
     "name": "Mind Heist",
-    "class": "Psychic Discipline Dream",
+    "class": "Psychic",
     "description": "At 5th level, you can delve into the subconscious mind of a sleeping target. You can cast detect thoughts as a spell-like ability on any adjacent sleeping creature. Additionally, you can gain the benefit of detect thoughts on a target of your dream, minor dreamARG, or nightmare spells as if you had studied the target for 3 rounds. If you cast dream scan (see page 166), you know whether you received false information from the dream. A successful Will save negates mind heist. You can use this ability a number of times per day equal to your Charisma modifier.",
     "raw_tokens": [
       {

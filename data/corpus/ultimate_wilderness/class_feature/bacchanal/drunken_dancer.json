@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bacchanal ~ Drunken Dancer",
     "name": "Drunken Dancer",
-    "class": "Bacchanal",
+    "class": "Skald",
     "description": "While maintaining a raging song, a bacchanal can consume a berry affected by goodberry, a potion, or a serving of alcohol as a move action that does not provoke attacks of opportunity. A berry affected by goodberry or a potion has its normal effect, while an alcoholic drink or a berry affected by goodberry via fermented fruit allows the skald to maintain his raging song that round without expending a round of raging song for the day (instead of the normal effects of the alcohol or fermented berry). For each alcoholic drink or fermented berry consumed while raging, the skald is nauseated for 1 round after his raging song ends. The internal fortitude rage power prevents this nauseated condition from occurring.",
     "raw_tokens": [
       {

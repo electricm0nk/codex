@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Falconine Natural Course ~ Eagle Eye",
     "name": "Eagle Eye",
-    "class": "Falconine Natural Course",
+    "class": "Vigilante",
     "description": "A falconine wildsoul hones his visual senses. He gains a +%1 competence bonus on visual Perception checks.|VigilanteLVL/2",
     "raw_tokens": [
       {

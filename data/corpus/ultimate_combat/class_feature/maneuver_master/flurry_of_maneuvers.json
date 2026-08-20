@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Maneuver Master ~ Flurry of Maneuvers",
     "name": "Flurry of Maneuvers",
-    "class": "Maneuver Master",
+    "class": "Monk",
     "description": "At 1st level, as part of a full attack action, a maneuver master can make one additional combat maneuver, regardless of whether the maneuver normally replaces a melee attack or requires a standard action. The maneuver master uses his monk level in place of his base attack bonus to determine his CMB for the bonus maneuvers, though all combat maneuver checks suffer a -2 penalty when using a flurry. At 8th level, a maneuver master may attempt a second additional combat maneuver, with an additional -3 penalty on combat maneuver checks. At 15th level, a maneuver master may attempt a third additional combat maneuver, with an additional -7 penalty on combat maneuver checks. A maneuver master loses this ability when wearing armor, using a shield, or carrying a medium or heavy load. This ability replaces flurry of blows.",
     "raw_tokens": [
       {

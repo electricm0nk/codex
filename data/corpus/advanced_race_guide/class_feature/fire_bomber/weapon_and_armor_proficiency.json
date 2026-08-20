@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fire Bomber ~ Weapon and Armor Proficiency",
     "name": "Weapon and Armor Proficiency",
-    "class": "Fire Bomber",
+    "class": "Alchemist",
     "description": "A fire bomber treats torches as a simple weapon.",
     "raw_tokens": [
       {

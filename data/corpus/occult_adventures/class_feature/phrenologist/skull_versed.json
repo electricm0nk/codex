@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Phrenologist ~ Skull-Versed",
     "name": "Skull-Versed",
-    "class": "Phrenologist",
+    "class": "Bard",
     "description": "Starting at 2nd level, a phrenologist can use knowledge gleaned from a creature's skull to tailor a performance. All creatures on which the phrenologist has successfully used his phrenology skill unlock take a -2 penalty on all saving throws against the phrenologist's bardic performances. This ability replaces well-versed.",
     "raw_tokens": [
       {

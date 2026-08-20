@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tortured Crusader ~ Torment",
     "name": "Torment",
-    "class": "Tortured Crusader",
+    "class": "Paladin",
     "description": "A tortured crusader's great suffering in the face of inevitable horror strengthens her faith and resolve, even as it makes her introverted and far less personable than most paladins. A tortured crusader uses Wisdom instead of Charisma as her key spellcasting ability score (to determine her spell DCs, bonus spells per day, bonus on concentration checks, and so on), and to determine the effects of lay on hands. This ability alters the paladin's spellcasting, smite evil, and lay on hands.",
     "raw_tokens": [
       {

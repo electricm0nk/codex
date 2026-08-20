@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Street Performer ~ Disappearing Act",
     "name": "Disappearing Act",
-    "class": "Street Performer",
+    "class": "Bard",
     "description": "A street performer can use performance to divert attention from an ally. All creatures within 30 feet that fail a Will save DC %1 (DC 10 + 1/2 the bard's level + the bard's Cha modifier) treat one creature chosen by the bard as if it were invisible. This performance affects one additional creature at 5th level and every 6 levels thereafter. If the targets take any action that would cause them to become visible, they become visible to everyone. The bard cannot use this ability on himself. This ability is a mind-affecting effect that requires visual components. This performance replaces inspire courage.|10+CHA+(BardLVL/2)",
     "raw_tokens": [
       {

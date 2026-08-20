@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Underfoot Adept ~ Improved Underfoot Grace",
     "name": "Improved Underfoot Grace",
-    "class": "Underfoot Adept",
+    "class": "Monk",
     "description": "An underfoot adept's ability to avoid attacks of opportunity against those he passes improves. When using the Acrobatics skill to avoid attacks of opportunity, while moving through a threatened area or through an enemy's space, he takes no penalty when doing so at full speed.",
     "raw_tokens": [
       {

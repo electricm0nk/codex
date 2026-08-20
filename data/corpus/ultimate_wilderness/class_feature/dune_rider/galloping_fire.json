@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dune Rider ~ Galloping Fire",
     "name": "Galloping Fire",
-    "class": "Dune Rider",
+    "class": "Slayer",
     "description": "The penalties for the dune rider's ranged attacks while mounted decrease by",
     "raw_tokens": [
       {

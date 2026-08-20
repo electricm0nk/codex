@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Perfect Scholar ~ Lore",
     "name": "Lore",
-    "class": "Perfect Scholar",
+    "class": "Monk",
     "description": "The perfect scholar gains a +%1 bonus on Knowledge checks and can attempt Knowledge checks untrained.|MonkLVL/2",
     "raw_tokens": [
       {

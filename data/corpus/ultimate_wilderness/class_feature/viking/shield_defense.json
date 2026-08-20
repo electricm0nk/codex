@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Viking ~ Shield Defense",
     "name": "Shield Defense",
-    "class": "Viking",
+    "class": "Fighter",
     "description": "A viking learns the art of fighting with a shield. Whenever she is wearing medium, light, or no armor and using a shield, the viking's shield bonus to AC increases by %1.|VikingACBonus",
     "raw_tokens": [
       {

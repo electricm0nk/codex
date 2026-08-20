@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Swamp Druid ~ Marshwight",
     "name": "Marshwight",
-    "class": "Swamp Druid",
+    "class": "Druid",
     "description": "At 2nd level, a swamp druid gains a bonus on Initiative checks and Knowledge (geography), Perception, Stealth, Swim, and Survival checks equal to 1/2 her druid level in swamp terrain, and she cannot be tracked in such an environment. This ability replaces woodland stride.",
     "raw_tokens": [
       {

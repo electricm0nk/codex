@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Commando ~ Trap Shot",
     "name": "Trap Shot",
-    "class": "Commando",
+    "class": "Gunslinger",
     "description": "The commando can spend 1 point of grit and target a 5-foot square with her firearm. If she succeeds at an attack against an AC of 10, she triggers a single trap within that 5-foot square, even if she is unaware of the trap. If there are multiple traps within the same 5-foot square, the commando must declare which trap she is triggering; otherwise it is determined randomly. If a creature is occupying the same square as the triggered trap, the trap affects the creature as if it had triggered the trap.",
     "raw_tokens": [
       {

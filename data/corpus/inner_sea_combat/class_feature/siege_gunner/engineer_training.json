@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Siege Gunner ~ Engineer Training",
     "name": "Engineer Training",
-    "class": "Siege Gunner",
+    "class": "Gunslinger",
     "description": "A siege gunner is trained in all aspects of siegecraft, including the workings of siege engines and knowledge of the structures that are often the target of their assaults. Starting at 2nd level, a siege gunner gains a bonus on Knowledge (engineering) checks equal to i/2 her gunslinger level. This ability replaces nimble.",
     "raw_tokens": [
       {

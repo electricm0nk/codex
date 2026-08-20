@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Guildbreaker ~ Favored Organization",
     "name": "Favored Organization",
-    "class": "Guildbreaker",
+    "class": "Ranger",
     "description": "When a guildbreaker selects a favored enemy, he can opt to select a specific organization, such as a particular thieves' guild, in lieu of a specific creature type. The guildbreaker must select this option for his first favored enemy, but he can choose either option for his later favored enemies. The guildbreaker's bonuses from favored enemy apply against official members of this organization regardless of their creature type, but not against the organization's allies, paid mercenaries, or forced labor. This ability only applies if the guildbreaker knows that the target is a member of the organization. This ability alters favored enemy.",
     "raw_tokens": [
       {

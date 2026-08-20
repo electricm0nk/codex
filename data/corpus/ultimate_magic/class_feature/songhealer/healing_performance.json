@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Songhealer ~ Healing Performance",
     "name": "Healing Performance",
-    "class": "Songhealer",
+    "class": "Bard",
     "description": "You can use your performance to create an effect equivalent to heal on a living target (or harm on an undead target), using your level as the caster level. Using this ability requires 5 rounds of continuous performance, and the target must be able to see and hear the bard throughout the performance. The healing performance relies on audible and visual components.",
     "raw_tokens": [
       {

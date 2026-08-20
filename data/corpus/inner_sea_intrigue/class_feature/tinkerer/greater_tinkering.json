@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tinkerer ~ Greater Tinkering",
     "name": "Greater Tinkering",
-    "class": "Tinkerer",
+    "class": "Alchemist",
     "description": "A tinkerer can spend 1 hour working on her familiar to enhance it with one of the options from the list on page 47. A tinkerer can change the enhancement applied to her familiar, but doing so takes 1 hour.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Shadow Puppeteer ~ Shadow Puppets",
     "name": "Shadow Puppets",
-    "class": "Shadow Puppeteer",
+    "class": "Bard",
     "description": "The shadow puppeteer can use bardic performance to create one quasi-real shadowy creature resembling a monster from the summon monster %2 list. These shadowy creatures otherwise work like shadow conjuration, and targets interacting with them get a Will saving throw (DC %1) to treat them as only 20%% real.|10+BardLVL/2+CHA|1+(BardLVL-1)/3",
     "raw_tokens": [
       {

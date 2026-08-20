@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spell Warrior ~ Improved Counterspell",
     "name": "Improved Counterspell",
-    "class": "Spell Warrior",
+    "class": "Skald",
     "description": "The spell warrior receives the Improved Counterspell feat as a bonus feat.",
     "raw_tokens": [
       {

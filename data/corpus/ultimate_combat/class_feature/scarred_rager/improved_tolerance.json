@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Scarred Rager ~ Improved Tolerance",
     "name": "Improved Tolerance",
-    "class": "Scarred Rager",
+    "class": "Barbarian",
     "description": "At 5th level, a scarred rager's tolerance ability also applies to effects that would cause her to become dazed, frightened, shaken, or stunned. This replaces improved uncanny dodge.",
     "raw_tokens": [
       {

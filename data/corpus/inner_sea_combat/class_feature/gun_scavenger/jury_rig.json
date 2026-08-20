@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Gun Scavenger ~ Jury-Rig",
     "name": "Jury-Rig",
-    "class": "Gun Scavenger",
+    "class": "Gunslinger",
     "description": "At 7th level, as a standard action, a gun scavenger can adjust a firearm she is currently wielding to fire in an unconventional way. She can spend 1 grit point to grant her firearm one of the following magic weapon enhancements for 1 round per gunslinger level: distance, flaming, glamered, or thundering. If she spends 2 grit points, she can instead grant the firearm flaming burst or stalking. Multiple uses of this ability don't stack with themselves. This deed replaces the targeting deed.",
     "raw_tokens": [
       {

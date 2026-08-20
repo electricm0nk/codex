@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sorrowsoul ~ Lyric Sorrow",
     "name": "Lyric Sorrow",
-    "class": "Sorrowsoul",
+    "class": "Bard",
     "description": "A sorrowsoul draws upon grief, rage, and tragedy to fuel his bardic performances. When a sorrowsoul begins a bardic performance, he can choose to alter its effects with lyric sorrow. If he does so, he uses twice the number of rounds of his bardic performance ability as normal, and even if the sorrowsoul has the Lingering Performance feat, the performance's effects do not last for any additional rounds. A sorrowsoul can use his lyric sorrow in conjunction with inspire courage. When he chooses to do so, he increases his bonuses on saving throws and on weapon attack and damage rolls from +1 to +%1, but his other allies receive no benefit.|SorrowsoulInspiredCourageBonus",
     "raw_tokens": [
       {

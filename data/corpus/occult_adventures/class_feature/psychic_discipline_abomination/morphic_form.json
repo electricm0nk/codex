@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Discipline Abomination ~ Morphic Form",
     "name": "Morphic Form",
-    "class": "Psychic Discipline Abomination",
+    "class": "Psychic",
     "description": "At 5th level, while manifesting your dark half, you gain DR 5. This damage reduction can be overcome by a random type of damage each time you manifest your dark half, determined by rolling on the table below.",
     "raw_tokens": [
       {

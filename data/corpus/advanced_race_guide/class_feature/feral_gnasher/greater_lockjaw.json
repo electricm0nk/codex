@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Feral Gnasher ~ Greater Lockjaw",
     "name": "Greater Lockjaw",
-    "class": "Feral Gnasher",
+    "class": "Barbarian",
     "description": "The size of a creature a feral gnasher is able to use her lockjaw's grab ability on increases by %1.|FeralGnasherLockjawSize",
     "raw_tokens": [
       {

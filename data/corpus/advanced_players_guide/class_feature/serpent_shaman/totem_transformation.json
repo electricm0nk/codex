@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Serpent Shaman ~ Totem Transformation",
     "name": "Totem Transformation",
-    "class": "Serpent Shaman",
+    "class": "Druid",
     "description": "At 2nd level, a serpent shaman may adopt an aspect of the snake while retaining her normal form. This ability functions as the bear shaman ability, but the druid may select from the following bonuses: movement (climb speed 20 feet, swim speed 20 feet), scales (+2 natural armor bonus to AC), senses (low-light vision, scent), or natural weapons (bite [1d4], poison [ frequency 1 round (6), effect 1 Con damage, Cure 1 save, Con-based DC] for a Medium druid, +2 CMB to grapple). While using totem transformation, the serpent shaman may speak normally and can cast speak with animals (reptiles only) at will.",
     "raw_tokens": [
       {

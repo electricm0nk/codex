@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Foehammer ~ Rhythmic Blows",
     "name": "Rhythmic Blows",
-    "class": "Foehammer",
+    "class": "Fighter",
     "description": "Each time that a foehammer hits a target, he gains a +1 bonus on attack rolls against that target. This bonus stacks with each hit against that target, but lasts only until the end of the foehammer's turn.",
     "raw_tokens": [
       {

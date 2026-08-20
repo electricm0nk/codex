@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mantis Zealot ~ Aspect of the Mantis",
     "name": "Aspect of the Mantis",
-    "class": "Mantis Zealot",
+    "class": "Warpriest",
     "description": "When using aspect of war, instead of moving at full speed regardless of his armor or encumbrance, a mantis zealot deals %1 points of bleed damage on each attack.|DEX",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wild Rager ~ Rage Powers",
     "name": "Rage Powers",
-    "class": "Wild Rager",
+    "class": "Barbarian",
     "description": "The following rage powers complement the wild rager archetype - animal fury, bloody blow*, body bludgeon*, brawler**, crippling blow*, greater brawler**, intimidating glare, mighty swing*, no escape, powerful blow, and quick reflexes.",
     "raw_tokens": [
       {

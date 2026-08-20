@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Saurian Shaman ~ Wild Empathy",
     "name": "Wild Empathy",
-    "class": "Saurian Shaman",
+    "class": "Druid",
     "description": "You can use your wild empathy ability with dinosaurs and reptiles as a full-round action with a +4 bonus.",
     "raw_tokens": [
       {

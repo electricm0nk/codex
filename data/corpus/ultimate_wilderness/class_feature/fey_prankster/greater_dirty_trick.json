@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fey Prankster ~ Greater Dirty Trick",
     "name": "Greater Dirty Trick",
-    "class": "Fey Prankster",
+    "class": "Rogue",
     "description": "The fey prankster gains Greater Dirty Trick as a bonus feat. He does not need to meet the prerequisites.",
     "raw_tokens": [
       {

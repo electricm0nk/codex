@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ectochymist ~ Swift Ectochymistry",
     "name": "Swift Ectochymistry",
-    "class": "Ectochymist",
+    "class": "Alchemist",
     "description": "At 6th level, an ectochymist can use ectoplasmic blanche on one of his own weapons as a swift action. When coated on a weapon wielded by the ectochymist, ectoplasmic blanche lasts for a number of attacks equal to the ectochymist's Intelligence modifier (minimum 1 attack). This ability replaces swift poisoning.",
     "raw_tokens": [
       {

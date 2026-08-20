@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Urban Druid ~ Lorekeeper",
     "name": "Lorekeeper",
-    "class": "Urban Druid",
+    "class": "Druid",
     "description": "At 2nd level, an urban druid adds Diplomacy, Knowledge (history), Knowledge (local), and Knowledge (nobility) skills. She also receives a +2 bonus on these skill checks. This ability replaces a druid's woodland stride and trackless step abilities.",
     "raw_tokens": [
       {

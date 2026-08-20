@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ancient Guardian ~ Dispel Hostility",
     "name": "Dispel Hostility",
-    "class": "Ancient Guardian",
+    "class": "Druid",
     "description": "An ancient guardian can channel stored spell energy into a spell capable of dispelling hostile thoughts and strong emotions. She can \"lose\" a prepared spell in order to cast calm emotions. Instead of the normal Will saving throw for that spell, the DC of a calm emotions spell cast with this ability is %1.|10+DruidLVL/2+WIS",
     "raw_tokens": [
       {

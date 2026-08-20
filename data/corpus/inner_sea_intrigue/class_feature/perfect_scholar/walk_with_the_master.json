@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Perfect Scholar ~ Walk with the Master",
     "name": "Walk with the Master",
-    "class": "Perfect Scholar",
+    "class": "Monk",
     "description": "The perfect scholar has mastered his spiritual resonance, allowing him to travel as if using etherealness, plane shift, or shadow walk at his monk level by spending only 1 point from his ki pool. He cannot bring other creatures with him. He is treated as an outsider rather than his original type, although he can be brought back to life as if he were still of his former type.",
     "raw_tokens": [
       {

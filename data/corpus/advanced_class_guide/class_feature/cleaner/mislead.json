@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cleaner ~ Mislead",
     "name": "Mislead",
-    "class": "Cleaner",
+    "class": "Slayer",
     "description": "A cleaner can cast misdirection on himself at will. This lasts until the cleaner uses the ability again or ends the effect as a standard action.",
     "raw_tokens": [
       {

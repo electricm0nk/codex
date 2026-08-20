@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Master Of Many Styles ~ Bonus Feat",
     "name": "Bonus Feat",
-    "class": "Master Of Many Styles",
+    "class": "Monk",
     "description": "At 1st level, 2nd level, and every four levels thereafter, a master of many styles may select a bonus style feat or the Elemental Fist feat (Advanced Player's Guide 158). He does not need to meet the prerequisites of that feat, except the Elemental Fist feat. Starting at 6th level, a master of many styles can choose to instead gain a wildcard style slot. Whenever he enters one or more styles, he can spend his wildcard style slots to gain feats in those styles' feat paths (such as Earth Child Topple) as long as he meets the prerequisites. Each time he changes styles, he can also change these wildcard style slots. This ability replaces a monk's standard bonus feats. The master of many styles currently has %1 wildcard slots available|MonkWildcardSlot",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Treestrider ~ Tree Stride",
     "name": "Tree Stride",
-    "class": "Treestrider",
+    "class": "Hunter",
     "description": "A treestrider can use a full-round action to move between two trees, as per the spell tree stride. Unlike the spell, this ability has a duration of instantaneous and the treestrider can make only a single transfer. She can bring her animal companion with her, but if she does, her companion can't take any actions that round. Tree stride can be used %1 times per day.|3+WIS",
     "raw_tokens": [
       {

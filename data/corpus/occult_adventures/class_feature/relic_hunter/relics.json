@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Relic Hunter ~ Relics",
     "name": "Relics",
-    "class": "Relic Hunter",
+    "class": "Inquisitor",
     "description": "At 1st level, a relic hunter gains the occultist's implements class feature (see page 47) and learns to use two occultist implement schools as relic schools. At 4th level and every 3 levels thereafter, the relic hunter learns to use one additional relic school drawn from the same source, gaining access to that school's resonant power and base focus power and opening up that school's focus powers for her to select. Like an occultist, a relic hunter can select the same school twice, but it is far less useful for her to do so. Relics do not need to be magic items, and nonmagical relics do not take up a magic item slot. Relics that are not magic items are often of some religious significance to the relic hunter or her church, such as the battered shield of a saint, a bishop's robe, or the finger bone of a church martyr. This ability replaces judgment.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Broodmaster ~ Brood Bond",
     "name": "Brood Bond",
-    "class": "Broodmaster",
+    "class": "Summoner",
     "description": "At 14th level, your life becomes linked to your brood. This functions as the life bond ability, except you can only transfer damage to one eidolon in the brood at a time. If that eidolon takes enough damage to send it back to its home plane, all excess damage remains with you, killing you.",
     "raw_tokens": [
       {

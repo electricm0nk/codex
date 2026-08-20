@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Eldritch Font ~ Eldritch Surge",
     "name": "Eldritch Surge",
-    "class": "Eldritch Font",
+    "class": "Arcanist",
     "description": "An eldritch font can, as a swift action, pour more power into her spells and abilities. She can add 2 to the caster level and DC of a spell, or increase her effective arcanist level by 2 when using an arcanist exploit. She becomes fatigued upon using this ability. If she is already fatigued, she becomes exhausted. If she's already exhausted, or something would prevent her from becoming fatigued or exhausted, she cannot use this ability. This ability does not stack with spending points from her arcane reservoir to increase the spell's caster level or DC (as the arcane reservoir class feature). Only rest can remove fatigue or exhaustion caused by an eldritch surge-spells and abilities have no effect.",
     "raw_tokens": [
       {

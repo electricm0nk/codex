@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Detective ~ Psychic Detective Spells",
     "name": "Psychic Detective Spells",
-    "class": "Psychic Detective",
+    "class": "Investigator",
     "description": "A psychic detective has the following spells on her spell list, in addition to psychic spells of 6th level or lower. 1st-Detect chaos, detect evil, detect good, detect law, find traps. 3rd-Calm spirit*, daylight. 4th-Modify memory. 6th-Banishment, moment of prescience, scrying (greater). This ability replaces alchemy.",
     "raw_tokens": [
       {

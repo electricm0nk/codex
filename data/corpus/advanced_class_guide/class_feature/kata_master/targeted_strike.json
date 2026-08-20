@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Kata Master ~ Targeted Strike",
     "name": "Targeted Strike",
-    "class": "Kata Master",
+    "class": "Monk",
     "description": "A kata master gains the swashbuckler's targeted strike deed.",
     "raw_tokens": [
       {

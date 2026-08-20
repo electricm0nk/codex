@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Naga Aspirant ~ Aspirant's Enlightenment",
     "name": "Aspirant's Enlightenment",
-    "class": "Naga Aspirant",
+    "class": "Druid",
     "description": "A naga aspirant gains a +4 bonus on saving throws against the spell-like abilities, supernatural abilities, and poison of nagas. This ability replaces resist nature's lure.",
     "raw_tokens": [
       {

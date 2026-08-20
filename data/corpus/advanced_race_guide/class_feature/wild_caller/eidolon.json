@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wild Caller ~ Eidolon",
     "name": "Eidolon",
-    "class": "Wild Caller",
+    "class": "Summoner",
     "description": "The eidolon of a wild caller tends to take more natural and more savage forms than other summoners' eidolons. A wild caller gains 1/4 his class level as bonus evolution points in his eidolon's evolution pool, but his eidolon cannot take the following evolutions: magic attacks, skilled (while the eidolon can select this evolution, it can only do so with the following skills: Acrobatics, Climb, Escape Artist, Fly, Intimidate, Perception, Survival, and Swim), energy attacks, immunity, weapon training, damage reduction, frightful presence, breath weapon, spell resistance, basic magic, unnatural aura, channel resistance, head, minor magic, undead appearance, major magic, dimension door, incorporeal form, lifesense, no breath, ultimate magic.",
     "raw_tokens": [
       {

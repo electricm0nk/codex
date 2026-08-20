@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spellscar Drifter ~ Infamous Deeds",
     "name": "Infamous Deeds",
-    "class": "Spellscar Drifter",
+    "class": "Cavalier",
     "description": "At 17th level, a Spellscar drifter can select two additional gunslinger deeds which he can use with his Amateur Gunslinger feat. The Spellscar drifter can choose one deed from the list of deeds available to 7th-level gunslingers and one from the list available to 11th-level gunslingers. This ability replaces master tactician.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Horse Lord ~ Spiritual Bond",
     "name": "Spiritual Bond",
-    "class": "Horse Lord",
+    "class": "Ranger",
     "description": "At 17th level, the horse lord can grant his animal companion temporary hit points equal to his ranger level once per day. While these temporary hit points last, when his mount is within 30 feet of the him, he can choose to share the damage taken by his mount as if using shield other. This ability replaces hide in plain sight.",
     "raw_tokens": [
       {

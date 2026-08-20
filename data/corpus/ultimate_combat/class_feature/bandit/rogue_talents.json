@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bandit ~ Rogue Talents",
     "name": "Rogue Talents",
-    "class": "Bandit",
+    "class": "Rogue",
     "description": "The following rogue talents complement the bandit archetype - assault leader **, combat trick, cunning trigger**, snap shot**, strong impression**, surprise attack, terrain master*, underhanded*, and weapon training.",
     "raw_tokens": [
       {

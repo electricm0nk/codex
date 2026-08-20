@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Holy Tactician ~ Masterful Presence",
     "name": "Masterful Presence",
-    "class": "Holy Tactician",
+    "class": "Paladin",
     "description": "At 20th level, a tactician gains the ability to grant a different bonus feat to each ally affected by her battlefield presence. In addition, all critical threats made by her and her allies against creatures affected by her weal's champion ability are automatically confirmed (no confirmation roll is needed). This ability replaces holy champion.",
     "raw_tokens": [
       {

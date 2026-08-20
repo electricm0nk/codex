@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Family Hunter ~ Disrupt Teamwork",
     "name": "Disrupt Teamwork",
-    "class": "Family Hunter",
+    "class": "Slayer",
     "description": "A family hunter's studied target never counts as an ally to its allies for the purpose of flanking the family hunter or using teamwork feats or the aid another action against the family hunter.",
     "raw_tokens": [
       {

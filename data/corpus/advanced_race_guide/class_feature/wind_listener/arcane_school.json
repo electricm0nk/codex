@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wind Listener ~ Arcane School",
     "name": "Arcane School",
-    "class": "Wind Listener",
+    "class": "Wizard",
     "description": "A wind listener cannot select divination or illusion as a prohibited school.",
     "raw_tokens": [
       {

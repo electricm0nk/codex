@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "River Soul ~ River Flow",
     "name": "River Flow",
-    "class": "River Soul",
+    "class": "Oracle",
     "description": "As a free action while you are underwater, you can negate the penalties you take for making bludgeoning, piercing, and slashing melee attacks underwater. You can use this ability %1 rounds per day. The rounds do not have to be used consecutively.|max(1,1+CHA)",
     "raw_tokens": [
       {

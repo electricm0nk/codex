@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Winding Path Renegade ~ Unblinking Flame First Power",
     "name": "Unblinking Flame First Power",
-    "class": "Winding Path Renegade",
+    "class": "Brawler",
     "description": "The winding path renegade increases her land speed by 10 feet (this is treated as an enhancement bonus). If she uses her monk moves class ability to gain fast movement, the abilities stack with each other.",
     "raw_tokens": [
       {

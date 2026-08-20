@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Eldritch Scion ~ Greater Spell Combat",
     "name": "Greater Spell Combat",
-    "class": "Eldritch Scion",
+    "class": "Magus",
     "description": "At 18th level, an eldritch scion gains the greater spell combat Class Feature. This ability alters greater spell combat.",
     "raw_tokens": [
       {

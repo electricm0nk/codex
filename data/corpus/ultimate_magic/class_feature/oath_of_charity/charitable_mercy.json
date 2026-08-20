@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Oath of Charity ~ Charitable Mercy",
     "name": "Charitable Mercy",
-    "class": "Oath of Charity",
+    "class": "Paladin",
     "description": "You are more flexible with your mercies than other paladins. At the start of each day, you can select your mercies anew from the list of available mercies.",
     "raw_tokens": [
       {

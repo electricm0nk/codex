@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Hooded Champion ~ Dead Aim",
     "name": "Dead Aim",
-    "class": "Hooded Champion",
+    "class": "Ranger",
     "description": "The hooded champion can spend 1 panache point when making a single ranged attack (not a full attack) with a bow to make a ranged touch attack instead. The target must be in the bow's first range increment.",
     "raw_tokens": [
       {

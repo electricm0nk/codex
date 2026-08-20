@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wilderness Explorer ~ Indigenous Spirit",
     "name": "Indigenous Spirit",
-    "class": "Wilderness Explorer",
+    "class": "Ranger",
     "description": "A wilderness explorer attracts the aid of native spirits, which reward his appreciation of their home with whispered warnings. The wilderness explorer gains uncanny dodge as long as he remains within one of his chosen favored terrains. This works like the barbarian ability of the same name. This alters favored terrain.",
     "raw_tokens": [
       {

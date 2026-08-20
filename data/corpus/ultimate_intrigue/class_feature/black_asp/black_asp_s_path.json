@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Black Asp ~ Black Asp's Path",
     "name": "Black Asp's Path",
-    "class": "Black Asp",
+    "class": "Monk",
     "description": "A black asp is trained in the use of poison and cannot accidentally poison himself when applying poison to a weapon or when rolling a natural 1 on an attack roll with a poisoned weapon.",
     "raw_tokens": [
       {

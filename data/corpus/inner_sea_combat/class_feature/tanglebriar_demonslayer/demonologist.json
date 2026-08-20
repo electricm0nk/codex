@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tanglebriar Demonslayer ~ Demonologist",
     "name": "Demonologist",
-    "class": "Tanglebriar Demonslayer",
+    "class": "Ranger",
     "description": "At 3rd level, a Tanglebriar demonslayer gains insight into his Abyssal enemies. The demonslayer gains a bonus equal to i/2 his class level on Knowledge (planes) checks that relate to demons, Perception checks to pierce a demon's disguise, and Survival checks while tracking demons. This bonus stacks with any bonuses from favored enemy. This ability replaces endurance.",
     "raw_tokens": [
       {

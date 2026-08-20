@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Menhir Savant ~ Walk the Lines",
     "name": "Walk the Lines",
-    "class": "Menhir Savant",
+    "class": "Druid",
     "description": "You can use your connection to ley lines to cast transport via plants %1 times per day.|WalkTheLinesTimes",
     "raw_tokens": [
       {

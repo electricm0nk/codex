@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bogborn Alchemist ~ Discoveries",
     "name": "Discoveries",
-    "class": "Bogborn Alchemist",
+    "class": "Alchemist",
     "description": "The following discoveries complement the bogborn alchemist archetype: chameleon (Advanced Race Guide); concentrate poison, sticky poison (Advanced Player's Guide); nauseating flesh, poison conversion (Ultimate Combat); bottled ooze, tanglefoot bomb, tentacle (Ultimate Magic).",
     "raw_tokens": [
       {

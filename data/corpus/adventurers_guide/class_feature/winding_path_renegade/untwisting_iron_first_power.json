@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Winding Path Renegade ~ Untwisting Iron First Power",
     "name": "Untwisting Iron First Power",
-    "class": "Winding Path Renegade",
+    "class": "Brawler",
     "description": "Metal weapons and armor in the winding path renegade's possession are treated as masterwork unless they have the broken condition.",
     "raw_tokens": [
       {

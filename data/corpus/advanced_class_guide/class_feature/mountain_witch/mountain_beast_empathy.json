@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mountain Witch ~ Mountain Beast Empathy",
     "name": "Mountain Beast Empathy",
-    "class": "Mountain Witch",
+    "class": "Witch",
     "description": "At 2nd level, a mountain witch can influence the attitude of mountain-dwelling animals, as the druid's wild empathy class feature but only on animals native to mountainous environments. The mountain witch uses her witch level as her druid level for this ability. This ability replaces the hex gained at 2nd level.",
     "raw_tokens": [
       {

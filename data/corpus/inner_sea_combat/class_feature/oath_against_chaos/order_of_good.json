@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Oath against Chaos ~ Order of Good",
     "name": "Order of Good",
-    "class": "Oath against Chaos",
+    "class": "Paladin",
     "description": "When an oathbound paladin reaches 4th level, she gains the ability to spend one use of her lay on hands ability when using her smite chaos ability to instead smite evil, as the paladin ability of the same name. This ability replaces channel positive energy.",
     "raw_tokens": [
       {

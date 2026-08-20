@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Shoanti Burn Rider ~ Cinder Sight",
     "name": "Cinder Sight",
-    "class": "Shoanti Burn Rider",
+    "class": "Barbarian",
     "description": "At 2nd level, a Shoanti burn rider can see through fire, fog, and smoke without penalty as long as the light is sufficient to allow her to see normally. This ability replaces uncanny dodge.",
     "raw_tokens": [
       {

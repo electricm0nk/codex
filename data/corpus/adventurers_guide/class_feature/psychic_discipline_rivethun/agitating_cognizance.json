@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Discipline Rivethun ~ Agitating Cognizance",
     "name": "Agitating Cognizance",
-    "class": "Psychic Discipline Rivethun",
+    "class": "Psychic",
     "description": "Whenever you are not maintaining an altered form via metamorphosis (including the 24 hours normally required to assume a new form), your maximum number of points in your phrenic pool increases by 1.",
     "raw_tokens": [
       {

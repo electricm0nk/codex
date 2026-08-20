@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Shigenjo ~ Recommended Mysteries",
     "name": "Recommended Mysteries",
-    "class": "Shigenjo",
+    "class": "Oracle",
     "description": "ancestor, battle, fire, heavens, lore, metal, nature, stone, time, waves, wood.",
     "raw_tokens": [
       {

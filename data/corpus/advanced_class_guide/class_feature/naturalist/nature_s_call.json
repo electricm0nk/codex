@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Naturalist ~ Nature's Call",
     "name": "Nature's Call",
-    "class": "Naturalist",
+    "class": "Summoner",
     "description": "You can cast summon nature's ally %1 as a spell-like ability %2 times per day as a standard action and the creatures remain for %3 minutes (instead of %3 rounds).  You can only use this ability to summon creatures of the animal, magical beast, or vermin type. Drawing upon this ability uses up the same power you use to call your eidolon. As a result, you can only use this ability when your eidolon is not summoned.|NaturalistSummonNaturesAllyLVL|NaturalistSummonNaturesAllyTimes|NaturalistSummonNaturesAllyDuration",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sea Reaver ~ Sure-Footed",
     "name": "Sure-Footed",
-    "class": "Sea Reaver",
+    "class": "Barbarian",
     "description": "At 5th level, a sea reaver takes no penalties when moving across slick surfaces, whether natural or magical (e.g., grease, ice storm, and sleet storm). She is not at risk of falling, is not denied her Dexterity bonus when moving across such areas, and does not treat them as difficult terrain. This ability replaces improved uncanny dodge.",
     "raw_tokens": [
       {

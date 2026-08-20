@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Elder Mythos Cultist ~ Channel the Void",
     "name": "Channel the Void",
-    "class": "Elder Mythos Cultist",
+    "class": "Cleric",
     "description": "When an Elder Mythos cultist channels energy, he taps into the unthinkable void between the stars. This is similar to channeling negative energy, but instead of healing undead, this blast of energy deals %1d%2 points of positive energy damage, while it harms and devours living beings, corporeal non-skeletal undead, and constructs crafted from flesh (such as flesh golems). This is not negative energy damage; instead, the damage manifests in the form of wounds from supernatural deterioration and rot. A creature that would take damage from this energy can attempt a Fortitude save (DC %3) to halve the damage, rather than a Will save. You can use this ability %4 times per day.|ElderMythosCultistChannelEnergyDice|ElderMythosCultistChannelEnergyDieSize|ElderMythosCultistChannelEnergyDC|ClericChannelEnergyTimes",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Herb Witch ~ Patron Spells",
     "name": "Patron Spells",
-    "class": "Herb Witch",
+    "class": "Witch",
     "description": "[NOT IMPLEMENTED] An herb witch must choose a patron with a theme compatible with the needs of the natural world, selected from the following list: ancestors, animals, death, elements, healing, plague, strength, time, water, winter, wisdom, or woodlands. This alters the witch's patron spells.",
     "raw_tokens": [
       {

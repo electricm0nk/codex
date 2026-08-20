@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Leshy Warden ~ Leshy Familiar",
     "name": "Leshy Familiar",
-    "class": "Leshy Warden",
+    "class": "Druid",
     "description": "A leshy warden forms an intimate bond with a nature spirit, incarnating the spirit as a leaf leshy. She gains a leaf leshy as a familiar and treats her druid level as her effective wizard level for the purpose of this ability. If the leshy dies, the leshy warden can incarnate the same spirit again by paying the normal cost to replace a familiar. So long as the leshy lives, the leshy warden gains access to the Plant domain as if through a druid's nature bond class feature, but she can't choose the Decay subdomain.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Daring Champion ~ Panache and Deeds",
     "name": "Panache and Deeds",
-    "class": "Daring Champion",
+    "class": "Cavalier",
     "description": "A daring champion gains the swashbuckler's panache class feature, along with the following swashbuckler deeds: dodging panache, precise strike, and swashbuckler initiative.",
     "raw_tokens": [
       {

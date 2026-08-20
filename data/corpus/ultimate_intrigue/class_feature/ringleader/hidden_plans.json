@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ringleader ~ Hidden Plans",
     "name": "Hidden Plans",
-    "class": "Ringleader",
+    "class": "Bard",
     "description": "A ringleader becomes a master of discretion. The ringleader gains a +4 bonus on saving throws against effects that would read his thoughts or compel him to tell the truth.",
     "raw_tokens": [
       {

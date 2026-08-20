@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Brute ~ Brute Form",
     "name": "Brute Form",
-    "class": "Brute",
+    "class": "Vigilante",
     "description": "Though it is sometimes difficult to maintain, a brute has a measure of control over his abilities. While in his vigilante identity, a brute becomes one size category larger, gaining no ability score adjustments but otherwise gaining all adjustments for his new size, including additional reach, if appropriate. A brute's vigilante identity is savage and dangerous. While in his vigilante identity, the brute takes a -2 penalty to AC, as well as to all ability checks and skill checks that rely on Charisma, Dexterity, or Intelligence. Furthermore, the brute cannot use any Charisma-, Dexterity-, or Intelligence-based skill (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration (such as spellcasting). &nl;When a brute is in mortal peril, such as when combat starts, if he is in his social identity, he must succeed at a Will save (DC %1) or enter his vigilante identity. Entering his vigilante identity in this way is a horrifying and painful process that takes 1 full round, during which he is flat-footed, and it typically allows his enemies to see his transformation and learn his identity. The brute's vigilante identity can't always tell friend from foe. While he still attacks enemies preferentially during a battle, when there are no more enemies around, each round he must succeed at a Will save (DC %2) or continue fighting against his allies or bystanders. Allies can use the aid another action to assist this saving throw with skills like Diplomacy, as they attempt to calm him down. On a successful save, he slowly turns back to his social identity over the course of 1 minute (or shorter if he has a social talent that reduces that time). &nl;A brute uses his vigilante level as his base attack bonus, but only while he is in his vigilante identity.|10+VigilanteLVL/2|20+VigilanteLVL/2",
     "raw_tokens": [
       {

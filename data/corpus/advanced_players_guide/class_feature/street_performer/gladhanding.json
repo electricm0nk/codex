@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Street Performer ~ Gladhanding",
     "name": "Gladhanding",
-    "class": "Street Performer",
+    "class": "Bard",
     "description": "A street performer earns double the normal amount of money from Perform checks. As a standard action, he may use a Bluff check in place of a Diplomacy check to improve a creature's attitude for 1 minute, after which its attitude becomes one step worse than originally. This ability replaces countersong.",
     "raw_tokens": [
       {

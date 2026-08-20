@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Geist Channeler ~ Spectral Protection",
     "name": "Spectral Protection",
-    "class": "Geist Channeler",
+    "class": "Spiritualist",
     "description": "At 12th level as a standard action, while a geist channeler's phantom is confined within his psyche, he can call upon its power to project an aura of spectral energy that prevents incorporeal creatures from approaching him. This takes the form of a 30-foot-radius emanation centered on the geist channeler. Any incorporeal creature attempting to enter this area must succeed at a Will save (DC = 10 + 1/2 the geist channeler's spiritualist class level + the geist channeler's Wisdom modifier) or be unable to do so. This ability can be used only defensively, not aggressively; forcing the aura against an incorporeal creature collapses the aura. The geist channeler can use this ability for a number of minutes per day equal to his spiritualist level. The minutes don't need to be continuous, but must be spent in 1-minute increments.",
     "raw_tokens": [
       {

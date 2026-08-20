@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mindblade ~ Psychic Access",
     "name": "Psychic Access",
-    "class": "Mindblade",
+    "class": "Magus",
     "description": "At 4th level, the mindblade gains access to an expanded spell list. She adds two spells from the psychic class spell list to her magus spell list as magus spells of the same spell level. These must be spells of levels the mindblade is able to cast. At 7th, 11th, 14th, and 19th levels, she adds two more psychic class spells to her spell list, following the same restrictions. When a mindblade takes the spell blending arcana, she gains spells from the psychic class spell list instead of the wizard spell list. This ability replaces spell recall, knowledge pool, improved spell recall, greater spell combat, and greater spell access.",
     "raw_tokens": [
       {

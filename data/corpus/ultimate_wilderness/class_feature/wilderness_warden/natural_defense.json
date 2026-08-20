@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wilderness Warden ~ Natural Defense",
     "name": "Natural Defense",
-    "class": "Wilderness Warden",
+    "class": "Paladin",
     "description": "Once per day, a wilderness warden can grant herself energy resistance %1 to cold, electricity, or fire and a +%2 insight bonus to her CMD for %3 minutes.|WildernessWardenResistanceBonus|WildernessWardenCMDBonus|PaladinLVLDEFINE:WildernessWardenResistanceBonus|0",
     "raw_tokens": [
       {

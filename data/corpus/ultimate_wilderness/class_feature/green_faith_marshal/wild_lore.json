@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Green Faith Marshal ~ Wild Lore",
     "name": "Wild Lore",
-    "class": "Green Faith Marshal",
+    "class": "Inquisitor",
     "description": "The Green Faith marshal adds her Wisdom modifier on Knowledge (nature) skill checks, in addition to her Intelligence modifier.",
     "raw_tokens": [
       {

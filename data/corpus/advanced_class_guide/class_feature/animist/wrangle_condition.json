@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Animist ~ Wrangle Condition",
     "name": "Wrangle Condition",
-    "class": "Animist",
+    "class": "Shaman",
     "description": "The animist interacts directly with unwholesome spirits of the ills that trouble him or his people. The animist can attempt to persuade the spirit to leave its victim alone, thus performing a miraculous healing.  The animist can attempt a Diplomacy check to persuade the condition's spirit to leave. Each category of condition has an accompanying Diplomacy DC (see below). The animist cannot take 10 or 20 on the check or receive aid from any creature except another shaman. Failure by 5 or less means the condition spirit is willing to leave the target and transfer to the animist for the rest of the duration or until cured; this happens only if the animist is willing. Failure by 10 or more means that not only is the target inflicted with the condition, but the animist is as well (whether or not he is willing) for the remaining duration or until cured. Minor Conditions (DC 15): Fatigued, shaken, and sickened. Major Conditions (DC 20): Dazed and staggered. Severe Conditions (DC 25): Exhausted, frightened, and nauseated. Dire Conditions (DC 30): Blinded, deafened, paralyzed, and stunned. The animist can use this ability %1 times per day. Using this ability is a standard action that requires no contact or shared language with the target, but it relies on audible components and the target must be within 30 feet. If a target is afflicted with multiple conditions, the animist targets one condition at a time (of her choosing). The animist cannot use this ability on himself. At 5th level, the animist can use this ability to exorcise minor conditions without needing to attempt a Diplomacy check. He can dispatch major conditions without a roll at 9th level, severe conditions at 13th level, and dire conditions at 17th level. Doing so still requires one use of this ability per condition.|floor(ShamanLVL/2)+WIS",
     "raw_tokens": [
       {

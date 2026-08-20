@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Noble Fencer ~ Unshakable Presence",
     "name": "Unshakable Presence",
-    "class": "Noble Fencer",
+    "class": "Swashbuckler",
     "description": "At 11th level, a noble fencer cloaks himself in the combined bravado of a swashbuckler and a noble, girding himself against anything that attempts to shake his impossible confidence. While he has at least 1 panache point, he cannot be demoralized by the Intimidate skill.",
     "raw_tokens": [
       {

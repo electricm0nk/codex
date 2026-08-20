@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Crossblooded ~ Crossblooded Bloodline",
     "name": "Bloodline",
-    "class": "Crossblooded",
+    "class": "Sorcerer",
     "description": "A crossblooded bloodline combines the powers of two distinct heritages. In most cases, sorcerers with this bloodline are the offspring of two sorcerers from different ancestries, but occasionally a crossblooded sorcerer arises from the conjunction of other powers.&nl;A crossblooded sorcerer selects two different bloodlines. The sorcerer may gain access to the skills, feats, and some of the powers of both bloodlines she is descended from, but at the cost of reduced mental clarity and choice.&nl;A crossblooded sorcerer has one fewer spell known at each spell level (including cantrips) than normal and always takes a -2 penalty on Will saves.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Chameleon Adept ~ Animal Shape",
     "name": "Animal Shape",
-    "class": "Chameleon Adept",
+    "class": "Hunter",
     "description": "As a standard action, a chameleon adept can assume a form superficially identical to her animal companion's animal form. She gains no bonuses or natural attacks while in this form, only forms of movement. Her size category does not change. This is a polymorph effect. She can assume this form for %1 minutes per day, in 1-minute increments. She can dismiss this ability at any point as a standard action.|HunterLVL",
     "raw_tokens": [
       {

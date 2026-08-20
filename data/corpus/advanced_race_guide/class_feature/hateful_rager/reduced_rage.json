@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Hateful Rager ~ Reduced Rage",
     "name": "Reduced Rage",
-    "class": "Hateful Rager",
+    "class": "Barbarian",
     "description": "A hateful rager only gains 1 additional round of rage per day instead of the normal 2 additional rounds of rage per day.",
     "raw_tokens": [
       {

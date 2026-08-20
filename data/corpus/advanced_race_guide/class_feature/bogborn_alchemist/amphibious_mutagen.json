@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bogborn Alchemist ~ Amphibious Mutagen",
     "name": "Amphibious Mutagen",
-    "class": "Bogborn Alchemist",
+    "class": "Alchemist",
     "description": "When a bogborn alchemist uses a mutagen, he may choose to have his mutagen form enhanced for aquatic movement. This gives him the amphibious special quality, his feet elongate, and the webbing between his fingers and toes expands, granting a swim speed of 15 feet.",
     "raw_tokens": [
       {

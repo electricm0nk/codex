@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Community Guardian ~ Spirit of Community",
     "name": "Spirit of Community",
-    "class": "Community Guardian",
+    "class": "Oracle",
     "description": "As a move action, you call upon the spirits of community. For the next round, you grant every ally within 30 feet a +1 competence bonus on a single skill check (of the ally's choice) that it makes before the end of this revelation's duration. Furthermore, allies within 30 feet can, as a free action, choose to forgo this bonus, and instead grant a single ally a +1 increase to its competence bonus granted by this ability (maximum +5). You can use this ability %1 times per day.|CHA+3",
     "raw_tokens": [
       {

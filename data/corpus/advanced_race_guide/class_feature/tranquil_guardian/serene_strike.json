@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tranquil Guardian ~ Serene Strike",
     "name": "Serene Strike",
-    "class": "Tranquil Guardian",
+    "class": "Paladin",
     "description": "When a tranquil guardian confirms a critical hit, she may convert all damage from her attack to nonlethal damage, and when she does, she can activate Touch of Serenity through her weapon or unarmed strike. Using serene strike is a free action.",
     "raw_tokens": [
       {

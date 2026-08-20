@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Summit Sentinel ~ Roots of the Mountain",
     "name": "Roots of the Mountain",
-    "class": "Summit Sentinel",
+    "class": "Ranger",
     "description": "A summit sentinel gains Toughness as a bonus feat. Additionally, as a move action, she can enter a defensive stance for 1 minute. While in this stance, the summit sentinel's speed is reduced to 5 feet, she gains a +%1 enhancement bonus to her natural armor, and she gains a +%2 bonus to her CMD against maneuvers that would move her or knock her prone. If the ranger loses contact with the ground or other solid surface, the stance ends immediately. The ranger can enter this stance %3 times per day.|1+SummitSentinelStanceBonus|SummitSentinelStanceBonus*2|3+CON",
     "raw_tokens": [
       {

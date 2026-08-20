@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spirit Summoner ~ Hex",
     "name": "Hex",
-    "class": "Spirit Summoner",
+    "class": "Summoner",
     "description": "A spirit summoner can select a shaman hex that is appropriate to his spirit, chosen from the general list of shaman hexes or the specific hexes allowed by his spirit. This otherwise functions as a shaman's hex, and uses his summoner level as his shaman level. Like a shaman, a spirit summoner uses his Wisdom modifier to determine hex DCs. At 8th, 10th, and 16th levels, the summoner can select another hex.",
     "raw_tokens": [
       {

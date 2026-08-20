@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Unbreakable ~ Heroic Defiance",
     "name": "Heroic Defiance",
-    "class": "Unbreakable",
+    "class": "Fighter",
     "description": "At 9th level, an unbreakable gains the Heroic Defiance feat (Advanced Player's Guide 162) as a bonus feat, if he does not have it already. If he already has this feat, the unbreakable can choose any combat feat instead. In addition, he may use this feat one additional time per day for every four levels after 9th (to a maximum of 3 times per day at 19th level). This ability replaces weapon training 2.",
     "raw_tokens": [
       {

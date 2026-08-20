@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Umbral Stalker ~ Swift and Silent",
     "name": "Swift and Silent",
-    "class": "Umbral Stalker",
+    "class": "Inquisitor",
     "description": "Umbral stalkers often descend upon their prey with deadly grace and efficiency. An umbral stalker gains a morale bonus on all Acrobatics and Stealth checks equal to half her inquisitor level (minimum +1).|UmbralStalkerSwiftAndSilentBonus",
     "raw_tokens": [
       {

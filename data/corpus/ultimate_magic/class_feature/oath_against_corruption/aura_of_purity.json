@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Oath against Corruption ~ Aura of Purity",
     "name": "Aura of Purity",
-    "class": "Oath against Corruption",
+    "class": "Paladin",
     "description": "You gain a +4 sacred bonus on saves against spells and effects from creatures of the aberration type. Allies within 10 feet gain a +1 sacred bonus on these saves. This ability functions only while you are conscious, not if you are unconscious or dead.",
     "raw_tokens": [
       {

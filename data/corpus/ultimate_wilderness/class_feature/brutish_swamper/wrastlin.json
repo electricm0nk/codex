@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Brutish Swamper ~ Wrastlin'",
     "name": "Wrastlin'",
-    "class": "Brutish Swamper",
+    "class": "Barbarian",
     "description": "While raging, a brutish swamper gains a +2 bonus to her CMD against grapple combat maneuvers and a +2 bonus on damage rolls made as part of successful grapple combat maneuver checks.",
     "raw_tokens": [
       {

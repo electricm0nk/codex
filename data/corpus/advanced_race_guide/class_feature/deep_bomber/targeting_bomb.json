@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Deep Bomber ~ Targeting Bomb",
     "name": "Targeting Bomb*",
-    "class": "Deep Bomber",
+    "class": "Alchemist",
     "description": "When the deep bomber creates a bomb, he can choose to have its detonation include a faerie fire effect that applies to all creatures within the splash radius (including the target, if any).",
     "raw_tokens": [
       {

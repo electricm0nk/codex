@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Oath against Chaos ~ Detect Chaos",
     "name": "Detect Chaos",
-    "class": "Oath against Chaos",
+    "class": "Paladin",
     "description": "This ability works like the standard paladin ability to detect evil, except as detect chaos instead of detect evil. This ability replaces detect evil.",
     "raw_tokens": [
       {

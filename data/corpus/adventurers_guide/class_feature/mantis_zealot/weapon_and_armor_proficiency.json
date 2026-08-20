@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mantis Zealot ~ Weapon and Armor Proficiency",
     "name": "Weapon and Armor Proficiency",
-    "class": "Mantis Zealot",
+    "class": "Warpriest",
     "description": "Mantis zealots are proficient with all simple and martial weapons, as well as with the sawtooth sabre, and with light armor. They are not proficient with shields.",
     "raw_tokens": [
       {

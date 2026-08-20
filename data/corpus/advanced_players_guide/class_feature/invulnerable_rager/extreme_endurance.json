@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Invulnerable Rager ~ Extreme Endurance",
     "name": "Extreme Endurance",
-    "class": "Invulnerable Rager",
+    "class": "Barbarian",
     "description": "At 3rd level, the invulnerable rager is inured to either hot or cold climate effects (choose one) as if using endure elements. In addition, the barbarian gains 1 point of fire or cold resistance for every three levels beyond 3rd. This ability replaces trap sense.",
     "raw_tokens": [
       {

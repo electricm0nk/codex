@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Hateful Rager ~ Amplified by Hate",
     "name": "Amplified by Hate",
-    "class": "Hateful Rager",
+    "class": "Barbarian",
     "description": "A hateful rager adds half her favored enemy bonus to the DC of any rage power she uses against a favored enemy.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Season Sage ~ Season's Veil",
     "name": "Season's Veil",
-    "class": "Season Sage",
+    "class": "Druid",
     "description": "A season sage can radiate an aura of seasonal power as a standard action %1 times per day. This affects a %2-foot-radius burst centered on the season sage and lasts in that area for 10 minutes, regardless of where the season sage moves afterward.|(DruidLVL-4)/2|SeasonsVeilRadius",
     "raw_tokens": [
       {

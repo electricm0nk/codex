@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tempest Druid ~ Nature Bond",
     "name": "Nature Bond",
-    "class": "Tempest Druid",
+    "class": "Druid",
     "description": "As a result of his beliefs, a tempest druid has little connection to the spirituality of animals or plants. He can't choose an animal companion, and must instead select a domain or subdomain from the following list when he gains the nature bond ability: Air, Aquatic, Cloud, Storm, Swamp, Weather, or Wind. This alters nature bond.",
     "raw_tokens": [
       {

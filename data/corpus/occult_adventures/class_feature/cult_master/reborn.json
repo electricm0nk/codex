@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cult Master ~ Reborn",
     "name": "Reborn",
-    "class": "Cult Master",
+    "class": "Mesmerist",
     "description": "A cult master can ensure his own survival upon his death. The cult master can perform a 1-hour ceremony costing 5,000 gp in rare materials in which he uses his psychic powers to implant a small portion of his essence into his cohort, who must be a minimum of 17th level. When the cult master dies, in 7 days the cohort physically and mentally transforms into the cult master as if clone had been cast, except that the cohort's body takes the place of the inert body. The cult master can't use this ability again until he gains new cohort of at least 17th level and performs the necessary ceremony. The cohort can't be brought back to life except through miracle or wish.",
     "raw_tokens": [
       {

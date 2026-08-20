@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Elemental Annihilator ~ Omnicide",
     "name": "Omnicide",
-    "class": "Elemental Annihilator",
+    "class": "Kineticist",
     "description": "At 20th level, an elemental annihilator can unleash omnicide, a unique physical composite blast. Omnicide deals 10d6+10 points of bludgeoning damage, 10d6+10 points of cold damage, 10d6+10 points of electricity damage, 10d6+10 points of fire damage, and 10d6+10 points of force damage, and counts as a blast of all five elements. Omnicide costs 4 points of burn, which can be reduced by composite specialization as normal. This ability replaces omnikinesis and the 20th-level utility wild talent.",
     "raw_tokens": [
       {

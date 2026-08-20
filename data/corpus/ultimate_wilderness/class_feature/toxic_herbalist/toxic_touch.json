@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Toxic Herbalist ~ Toxic Touch",
     "name": "Toxic Touch",
-    "class": "Toxic Herbalist",
+    "class": "Ranger",
     "description": "A toxic herbalist studies the safe handling of deadly substances. He cannot accidentally poison himself when he applies poison to a weapon.",
     "raw_tokens": [
       {

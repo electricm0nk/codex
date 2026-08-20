@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Commando ~ Trapsmith",
     "name": "Trapsmith",
-    "class": "Commando",
+    "class": "Gunslinger",
     "description": "A commando can learn how to create one ranger trap (Ultimate Magic p.64) in place of gaining the next level of gun training. A commando can use a known trap %1 times per day. The DC for a commando's trap is %2, and it lasts %3 days. A commando can set only extraordinary ranger traps with this ability; as with extraordinary ranger traps, the trap DC for these traps has a -2 penalty. This alters gun training.|MAX(1,WIS)|10+GunslingerLVL/2+WIS|GunslingerLVL/2",
     "raw_tokens": [
       {

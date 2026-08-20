@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cad ~ Razor-Sharp Chair Leg",
     "name": "Razor-Sharp Chair Leg",
-    "class": "Cad",
+    "class": "Fighter",
     "description": "At 9th level, as a swift action, a cad may alter the type of damage dealt by an improvised weapon to bludgeoning, piercing, or slashing damage. In addition, the cad has a critical threat range of 19-20/x2 with any improvised melee weapon. This ability replaces weapon training 2.",
     "raw_tokens": [
       {

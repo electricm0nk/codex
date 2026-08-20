@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Siege Gunner ~ Grit",
     "name": "Grit",
-    "class": "Siege Gunner",
+    "class": "Gunslinger",
     "description": "[Not Implemented] A siege gunner relies less on luck and intuition and more on cold calculation and wit. The number of grit points a siege gunner gains each day and her maximum grit are based on the siege gunner's Intelligence modifier rather than her Wisdom modifier.",
     "raw_tokens": [
       {

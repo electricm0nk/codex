@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Thundercaller ~ Call Lightning",
     "name": "Call Lightning",
-    "class": "Thundercaller",
+    "class": "Bard",
     "description": "The thundercaller can use her performance to summon bolts of lightning, as per the spell call lightning. The lightning storm lasts for as long as she continues her performance, calling down one bolt of lightning per round as a standard action. The damage of these lightning bolts can be increased in stormy areas or can be limited as call lightning describes.",
     "raw_tokens": [
       {

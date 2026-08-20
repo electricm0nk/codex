@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sensate ~ Perfect Senses",
     "name": "Perfect Senses",
-    "class": "Sensate",
+    "class": "Fighter",
     "description": "At 19th level, a sensate's senses reach perfection, and he can easily notice illusions and unseen foes by combining his senses. While centered, he gains the effects of true seeing as well as blindsense 60 feet. An unseen creature that makes no sound and leaves no scent (such as a creature under the effects of invisibility, silence, and negate aroma) can still avoid both the true seeing and the blindsense. This ability replaces armor mastery.",
     "raw_tokens": [
       {

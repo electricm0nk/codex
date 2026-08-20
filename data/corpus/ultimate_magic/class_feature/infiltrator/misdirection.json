@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Infiltrator ~ Misdirection",
     "name": "Misdirection",
-    "class": "Infiltrator",
+    "class": "Inquisitor",
     "description": "Each day when you prepares spells, you may choose an alignment. You detect as that alignment as if you had used misdirection on a creature with that alignment (this does not change any divination results about her other than her alignment).",
     "raw_tokens": [
       {

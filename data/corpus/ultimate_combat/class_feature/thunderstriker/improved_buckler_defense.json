@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Thunderstriker ~ Improved Buckler Defense",
     "name": "Improved Buckler Defense",
-    "class": "Thunderstriker",
+    "class": "Fighter",
     "description": "At 19th level, a thunderstriker does not forfeit his shield bonus to AC from a buckler when fighting two-handed. This ability replaces armor mastery.",
     "raw_tokens": [
       {

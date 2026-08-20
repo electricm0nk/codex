@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Infiltrator ~ Forbidden Lore",
     "name": "Forbidden Lore",
-    "class": "Infiltrator",
+    "class": "Inquisitor",
     "description": "While other inquisitors learned to track unbelievers, you learn how to cast their spells. You can cast spells of an alignment opposed to you or your deity (ignoring the restriction in the Chaotic, Evil, Good, and Lawful Spells class ability).",
     "raw_tokens": [
       {

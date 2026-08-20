@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fiendflesh Shifter ~ Fiendish Aspect",
     "name": "Fiendish Aspect",
-    "class": "Fiendflesh Shifter",
+    "class": "Shifter",
     "description": "A fiendflesh shifter can temporarily transform her body into an amalgam of otherworldly evil creatures as a swift action. While in this form, the fiendflesh shifter gains darkvision out to a range of 60 feet (or doubles the range of her darkvision if she already has it), a gore natural attack that deals 1d6 points of damage (1d4 points of damage if the shifter is Small), and DR %1/good. A fiendflesh shifter can maintain this form for %2 minutes per day. The duration does not need to be consecutive but must be spent in 1-minute increments.|FiendfleshShifterDR|3+ShifterLVL",
     "raw_tokens": [
       {

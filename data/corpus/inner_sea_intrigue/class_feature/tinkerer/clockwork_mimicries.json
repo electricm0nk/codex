@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tinkerer ~ Clockwork Mimicries",
     "name": "Clockwork Mimicries",
-    "class": "Tinkerer",
+    "class": "Alchemist",
     "description": "A tinkerer can use her mechanical mastery to create clockwork mimicries of powerful magic items. Doing so takes 1 hour of uninterrupted work, and allows the tinkerer to create a wondrous item that functions for %1 hours per day. When creating such a clockwork item, the tinkerer must use materials worth an amount equal to the wondrous item's construction cost. She need not meet any of the item's other creation requirements. A tinkerer cannot create a mimicry of a consumable wondrous item or a wondrous item with finite charges, and she can have only one mimicry at a time. The clockwork item never functions as a wondrous item for any other creature. The tinkerer can spend 1 hour disassembling a clockwork mimicry and reassembling it into a mimicry of a different wondrous item. When she disassembles a clockwork mimicry, she can salvage parts worth half of the mimicry's creation cost. She still must pay the full creation cost for the new mimicry. This resets the duration the mimicry functions per day.|AlchemistLVL",
     "raw_tokens": [
       {

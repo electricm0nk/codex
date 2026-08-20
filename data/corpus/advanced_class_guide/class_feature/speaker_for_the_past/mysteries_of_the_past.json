@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Speaker for the Past ~ Mysteries of the Past",
     "name": "Mysteries of the Past",
-    "class": "Speaker for the Past",
+    "class": "Shaman",
     "description": "A speaker for the past gains Linguistics, Knowledge (history), Knowledge (local), Perception, and Use Magic Device as class skills. She also adds the spells from the ancestorUM and timeUM oracle mysteries to her class spell list (as the cleric level for those spells). This ability replaces the shaman's familiar. The speaker for the past must choose a time when she must spend 1 hour each day in quiet contemplation to regain her daily allotment of spells, but does not need to commune with a familiar during this time. Because she has no familiar, she does not gain a spirit familiar feature from any spirit she bonds with.",
     "raw_tokens": [
       {

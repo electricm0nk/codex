@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Beastmorph ~ Greater Beastform Mutagen",
     "name": "Greater Beastform Mutagen",
-    "class": "Beastmorph",
+    "class": "Alchemist",
     "description": "At 10th level, a beastmorph's mutagen grants him three of the abilities listed in the beast shape II spell, which persist as long as the mutagen. He may select three different abilities each time he creates a mutagen. This ability replaces poison resistance +2, +4, and +6, as well as poison immunity.",
     "raw_tokens": [
       {

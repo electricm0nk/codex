@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Winter Witch ~ Patron",
     "name": "Patron",
-    "class": "Winter Witch",
+    "class": "Witch",
     "description": "A winter witch must choose her patron from one of the following patron themes: ancestors*, deception, enchantment*, endurance, moon*, occult*, portents*, stars*, transformation, trickery, vengeance*, water, winter*, or wisdom. An asterisk (*) indicates a patron theme detailed in Ultimate Magic.",
     "raw_tokens": [
       {

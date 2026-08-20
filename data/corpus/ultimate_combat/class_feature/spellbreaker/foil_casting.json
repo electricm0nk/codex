@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spellbreaker ~ Foil Casting",
     "name": "Foil Casting",
-    "class": "Spellbreaker",
+    "class": "Inquisitor",
     "description": "At 3rd level, when an opponent tries to cast an arcane spell within a spellbreaker's threatened area, the DC for that caster to cast defensively increases by 2. This increase stacks with the effects of the Disruptive feat (see page 112 of the Core Rulebook). Furthermore, the spellbreaker knows where to hit foes to foil casting from a distance. Each time she hits an arcane spellcaster or a creature that uses spell-like abilities with a ranged weapon attack, the DC of any Concentration checks the caster makes increases by 2 for 1 round. This ability replaces solo tactics.",
     "raw_tokens": [
       {

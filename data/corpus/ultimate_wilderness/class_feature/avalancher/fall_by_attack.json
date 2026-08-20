@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Avalancher ~ Fall-By Attack",
     "name": "Fall-By Attack",
-    "class": "Avalancher",
+    "class": "Slayer",
     "description": "If the avalancher makes a single jump of at least 20 feet in any direction and lands at an elevation at least 10 feet lower than his starting elevation, he can make ranged or melee attacks during his fall as if he were making a full-round attack. He can make any number of attacks in any combination of squares along this single jump, up to his maximum number of attacks, but he can attack a given creature once at most. If the avalancher attempts a jump but fails the Acrobatics check, he makes no attacks and suffers the consequences of his failed jump normally.",
     "raw_tokens": [
       {

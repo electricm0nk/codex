@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "God Caller ~ Overwhelming Presence",
     "name": "Overwhelming Presence",
-    "class": "God Caller",
+    "class": "Summoner",
     "description": "A god caller's eidolon can use overwhelming presence (Ultimate Magic 230) three times per day. The save DC is equal to 19 + the eidolon's Charisma modifier.",
     "raw_tokens": [
       {

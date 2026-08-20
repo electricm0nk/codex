@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cult Hunter ~ Ambush Defenses",
     "name": "Ambush Defenses",
-    "class": "Cult Hunter",
+    "class": "Investigator",
     "description": "A cult hunter gains a +%1 insight bonus during a surprise round triggered by his enemies on Reflex saves and to his AC.|InvestigatorLVL/3",
     "raw_tokens": [
       {

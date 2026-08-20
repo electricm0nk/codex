@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fighter Two-Handed Fighter ~ Greater Power Attack",
     "name": "Greater Power Attack",
-    "class": "Fighter Two-Handed Fighter",
+    "class": "Fighter",
     "description": "At 15th level, when using Power Attack with a two-handed melee weapon, the bonus damage from Power Attack is doubled (+100%%) instead of increased by half (+50%%). This ability replaces armor training 4.",
     "raw_tokens": [
       {

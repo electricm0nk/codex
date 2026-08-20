@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mooncursed ~ Hybrid Rage",
     "name": "Hybrid Rage",
-    "class": "Mooncursed",
+    "class": "Barbarian",
     "description": "A mooncursed can choose to assume a hybrid of her base type and alternate form instead of her usual alternate form during her shifting rage. If she does, the animal's forelimbs (or pectoral fins for the shark) remain hands able to manipulate objects and wield weapons as well as human hands do, she can walk on two legs (the shark's tail fins remain legs), and she can talk.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fighter Two-Weapon Warrior ~ Improved Balance",
     "name": "Improved Balance",
-    "class": "Fighter Two-Weapon Warrior",
+    "class": "Fighter",
     "description": "At 11th level, the attack penalties for fighting with two weapons are reduced by -1 for a two-weapon warrior. Alternatively, he may use a one-handed weapon in his off-hand, treating it as if it were a light weapon with the normal light weapon penalties. This ability replaces armor training 3.",
     "raw_tokens": [
       {

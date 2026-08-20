@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sandman ~ Sneak Attack",
     "name": "Sneak Attack",
-    "class": "Sandman",
+    "class": "Bard",
     "description": "At 5th level, a sandman inflicts +%1d6 points of damage against targets within 30 feet that he flanks or that are denied their Dex bonus to AC against him. This damage increases by +1d6 every five levels after 5th. This ability replaces lore master.|(BardLVL/5)+1",
     "raw_tokens": [
       {

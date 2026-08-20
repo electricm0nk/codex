@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Phrenologist ~ Skull Sonata",
     "name": "Skull Sonata",
-    "class": "Phrenologist",
+    "class": "Bard",
     "description": "At 1st level, a phrenologist learns to use the resonance of other creatures' skulls to increase sonic damage. All enemies within 30 feet of the phrenologist that have skulls take an amount of additional sonic damage equal to half the phrenologist's bard level (minimum 1) each time they take sonic damage. Skull sonata relies on audible components. This ability replaces inspire courage.",
     "raw_tokens": [
       {

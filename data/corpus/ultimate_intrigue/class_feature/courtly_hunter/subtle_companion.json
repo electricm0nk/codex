@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Courtly Hunter ~ Subtle Companion",
     "name": "Subtle Companion",
-    "class": "Courtly Hunter",
+    "class": "Hunter",
     "description": "A courtly hunter can transform her animal companion into a similar Tiny animal to allow it hide easily or even blend in and act as a spy. For instance, a tiger could be transformed into a housecat, a wolf could be transformed into a Tiny dog, a dire bat could be transformed into a Tiny flying fox, and so on. This functions as a polymorph effect, and the animal companion gains a +2 size bonus to Dexterity and a -4 size penalty to Strength (use the polymorph table on page 212 of the Pathfinder RPG Core Rulebook to adjust its ability score if the animal companion is larger than Medium). As a standard action, the courtly hunter can touch her animal companion to transform it.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Judgment ~ Stalking",
     "name": "Judgment / Stalking",
-    "class": "Judgment",
+    "class": "Inquisitor",
     "description": "The umbral stalker gains a +%1 sacred bonus on attack rolls against creatures that are unaware of her presence (typically because she is invisible or using Stealth).|(1+InquisitorLVL/5)*2",
     "raw_tokens": [
       {

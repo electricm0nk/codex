@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ironskin Monk ~ Iron Skin",
     "name": "Iron Skin",
-    "class": "Ironskin Monk",
+    "class": "Monk",
     "description": "The ironskin monk gains a +%1 bonus to his natural armor. This bonus stacks with any existing natural armor the ironskin monk already has. At 4th level, and every 4 levels thereafter, this bonus increases by +1. This ability replaces the monk's AC bonus ability and the ability to add his Wisdom bonus to his AC.|IronskinMonkIronSkinBonus",
     "raw_tokens": [
       {

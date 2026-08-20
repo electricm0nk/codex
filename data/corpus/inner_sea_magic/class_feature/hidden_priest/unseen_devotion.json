@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Hidden Priest ~ Unseen Devotion",
     "name": "Unseen Devotion",
-    "class": "Hidden Priest",
+    "class": "Cleric",
     "description": "A hidden priest can apply the Silent Spell and Still Spell feats to a spell he is about to cast %1 times per day. This does not alter the level of the spell or the casting time. This ability replaces one of the cleric's two 8th-level domain powers (his choice).|(1+floor((classlevel(\"Cleric\")-8)/4))",
     "raw_tokens": [
       {

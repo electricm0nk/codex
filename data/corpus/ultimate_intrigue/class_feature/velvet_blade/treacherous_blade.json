@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Velvet Blade ~ Treacherous Blade",
     "name": "Treacherous Blade",
-    "class": "Velvet Blade",
+    "class": "Slayer",
     "description": "A velvet blade can capitalize on how others underestimate her and allow her close to them, assuming she is harmless. She gains the Betrayer feat as a bonus feat, whether or not she meets the prerequisites. Additionally, when making her first attack against a studied target that believes her to be harmless or to be an ally, the attack counts as a sneak attack, even if the target isn't flanked or denied its Dexterity bonus to AC, and the velvet blade gains +%1d6 sneak attack damage. Even if she immediately attacks the target again (such as by continuing a full attack), only the first attack gains these benefits, since the target immediately realizes the velvet blade is something more than she seemed.|1+SlayerLVL/5",
     "raw_tokens": [
       {

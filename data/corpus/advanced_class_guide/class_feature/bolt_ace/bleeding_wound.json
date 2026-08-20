@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bolt Ace ~ Bleeding Wound",
     "name": "Bleeding Wound",
-    "class": "Bolt Ace",
+    "class": "Gunslinger",
     "description": "When the bolt ace hits a living creature with a crossbow attack, she can spend 1 grit point as a free action to have that attack deal extra bleed damage. The amount of bleed damage is equal to the bolt ace's Dexterity modifier. Alternatively, the bolt ace can spend 2 grit points to deal 1 point of Strength, Dexterity, or Constitution bleed damage (bolt ace's choice) instead. Creatures that are immune to sneak attacks are also immune to these types of bleed damage.",
     "raw_tokens": [
       {

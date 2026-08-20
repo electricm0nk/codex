@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cavern Sniper ~ Sniper Training",
     "name": "Sniper Training",
-    "class": "Cavern Sniper",
+    "class": "Fighter",
     "description": "The cavern sniper chooses the bow or crossbow weapon group and gains a bonus on attack rolls and damage rolls.",
     "raw_tokens": [
       {

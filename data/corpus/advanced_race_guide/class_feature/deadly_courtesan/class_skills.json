@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Deadly Courtesan ~ Class Skills",
     "name": "Class Skills",
-    "class": "Deadly Courtesan",
+    "class": "Rogue",
     "description": "A deadly courtesan adds Knowledge (history) and Knowledge (nobility) to her list of class skills and removes Knowledge (dungeoneering) from her list of class skills.",
     "raw_tokens": [
       {

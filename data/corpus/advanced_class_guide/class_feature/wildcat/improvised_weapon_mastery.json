@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wildcat ~ Improvised Weapon Mastery",
     "name": "Improvised Weapon Mastery",
-    "class": "Wildcat",
+    "class": "Monk",
     "description": "Starting at 4th level, a wildcat's damage with improvised weapons increases. When wielding an improvised weapon, he uses the unarmed strike damage of a monk four levels lower instead of the base damage for that weapon (minimum monk level 1). For example, a 6th-level Medium wildcat wielding a broken bottle deals 1d6 points of damage instead of the weapon's normal 1d4. If the weapon normally deals more damage than this, its damage is unchanged. This increase in damage does not affect any other aspect of the weapon. The wildcat can decide to use the weapon's base damage instead of his adjusted unarmed strike damage. This must be declared before the attack roll is attempted. This ability replaces all instances of slow fall.",
     "raw_tokens": [
       {

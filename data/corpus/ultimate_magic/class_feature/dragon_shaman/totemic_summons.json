@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dragon Shaman ~ Totemic Summons",
     "name": "Totemic Summons",
-    "class": "Dragon Shaman",
+    "class": "Druid",
     "description": "You may cast summon nature's ally as a standard action when summoning lizards, and summoned lizards gain %1 temporary hit points. You can apply the young template to any lizard to reduce the level of the summoning spell required by one. You can also increase the level of summoning required by one in order to apply either the advanced or the giant template, or increase it by two to apply both the advanced and giant templates.|TotemicSummonsTempHP",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Daring Champion ~ Weapon and Armor Proficiency",
     "name": "Weapon and Armor Proficiency",
-    "class": "Daring Champion",
+    "class": "Cavalier",
     "description": "Daring champions are proficient with all simple and martial weapons, light and medium armor, and bucklers. This replaces the cavalier's weapon and armor proficiencies.",
     "raw_tokens": [
       {

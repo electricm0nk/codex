@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Overwhelming Soul ~ Overwhelming Power",
     "name": "Overwhelming Power",
-    "class": "Overwhelming Soul",
+    "class": "Kineticist",
     "description": "At 3rd level, an overwhelming soul gains a +1 bonus on attack rolls and damage rolls with her kinetic blasts. The damage bonus doesn't apply to kinetic blade, kinetic whip, or other infusions that don't apply the damage bonus from elemental overflow. This bonus increases by 1 at 6th level and every 3 levels thereafter. This ability replaces elemental overflow.",
     "raw_tokens": [
       {

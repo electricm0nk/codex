@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Urban Barbarian ~ Crowd Control",
     "name": "Crowd Control",
-    "class": "Urban Barbarian",
+    "class": "Barbarian",
     "description": "At 1st level, an urban barbarian gains a +1 bonus on attack rolls and a +1 dodge bonus to AC when adjacent to two or more enemies. In addition, her movement is not impeded by crowds, and she gains a bonus equal to 1/2 her barbarian level on Intimidate checks to influence crowds (Core Rulebook 436). This ability replaces fast movement",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tactical Leader ~ Battle Acumen",
     "name": "Battle Acumen",
-    "class": "Tactical Leader",
+    "class": "Inquisitor",
     "description": "A tactical leader can grant his judgment benefits to a single other ally within 30 feet who can see and hear the tactical leader as an immediate action. These benefits last until the beginning of the tactical leader's next turn. A tactical leader must have a judgment active to use this ability and the benefits granted are the same as those selected by his judgment. A tactical leader can use this ability %1 times per day.|max(1,WIS)",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spiritualist ~ Spirit Sense",
     "name": "Spirit Sense",
-    "class": "Spiritualist",
+    "class": "Investigator",
     "description": "When a spiritualist attempts a saving throw against an ability or an effect delivered by an incorporeal creature, he can expend one use of his inspiration instead of two to augment that saving throw. If the spiritualist has the combat inspiration investigator talent, he need not spend any inspiration to augment such saving throws.",
     "raw_tokens": [
       {

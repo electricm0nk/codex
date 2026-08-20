@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Filidh ~ Natural Magic",
     "name": "Natural Magic",
-    "class": "Filidh",
+    "class": "Bard",
     "description": "A filidh casts spells as a bard, but the spells are divine, not arcane, and therefore not subject to arcane spell failure. A filidh must use a holy symbol or a musical instrument as a divine focus when a spell includes such a component. He still uses the bard spell list. This alters the bard's spellcasting.",
     "raw_tokens": [
       {

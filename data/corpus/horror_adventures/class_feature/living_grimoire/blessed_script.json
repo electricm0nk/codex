@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Living Grimoire ~ Blessed Script",
     "name": "Blessed Script",
-    "class": "Living Grimoire",
+    "class": "Inquisitor",
     "description": "A living grimoire can permanently tattoo one spell of 2nd level or lower from his holy book onto his body. The tattooed spell cannot have an expensive material component or focus. The living grimoire can prepare any tattooed spell without needing his holy book, and can cast his tattooed spells as a spell-like ability once per day.",
     "raw_tokens": [
       {

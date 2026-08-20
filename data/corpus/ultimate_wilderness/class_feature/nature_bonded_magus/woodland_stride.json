@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Nature-Bonded Magus ~ Woodland Stride",
     "name": "Woodland Stride",
-    "class": "Nature-Bonded Magus",
+    "class": "Magus",
     "description": "A nature-bonded magus can move through any sort of undergrowth (such as natural briars, overgrown areas, thorns, and similar terrain) at his normal speed and without taking damage or suffering any other impairment. Briars, overgrown areas, and thorns that are enchanted or magically manipulated to impede motion, however, still affect him.",
     "raw_tokens": [
       {

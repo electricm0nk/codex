@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dashing Thief ~ Swaying Charm Deed",
     "name": "Swaying Charm Deed",
-    "class": "Dashing Thief",
+    "class": "Swashbuckler",
     "description": "A dashing thief eventually becomes truly irresistible. When a dashing thief successfully dazes a creature using her dazing charm deed, she can instead charm the target for 1 day (as per charm monster). Only one creature can be charmed this way at a time; if the dashing thief charms another creature this way, the first charm effect immediately ends.",
     "raw_tokens": [
       {

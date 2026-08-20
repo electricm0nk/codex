@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Life Channeler ~ Plant Preservation",
     "name": "Plant Preservation",
-    "class": "Life Channeler",
+    "class": "Druid",
     "description": "A life channeler must choose the Plant domain with her nature bond (she can select the Growth subdomain if she wishes). When she performs a coup de grace that kills a sentient humanoid creature (not a summoned creature), she can do so ritualistically in order to affect the area centered on the body with the enrichment version of plant growth. The sacrifice is a death effect. This ability alters nature bond.",
     "raw_tokens": [
       {

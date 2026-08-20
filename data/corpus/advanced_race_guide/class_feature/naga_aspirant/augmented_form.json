@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Naga Aspirant ~ Augmented Form",
     "name": "Augmented Form",
-    "class": "Naga Aspirant",
+    "class": "Druid",
     "description": "A naga aspirant can choose one of the augmented form selections to enhance her naga form. Once chosen, this augmentation cannot be changed and always applies to her naga form. The caster level for these abilities is equal to %1, and unless otherwise stated, the DC is equal to %2.|DruidLVL|10+DruidLVL/2+CHA",
     "raw_tokens": [
       {

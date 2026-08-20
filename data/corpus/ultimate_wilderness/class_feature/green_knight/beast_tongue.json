@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Green Knight ~ Beast Tongue",
     "name": "Beast Tongue",
-    "class": "Green Knight",
+    "class": "Cavalier",
     "description": "A green knight can use Diplomacy to improve an animal's attitude. Beast tongue otherwise functions like the druid's wild empathy ability, using the green knight's Diplomacy modifier and using her cavalier level as her effective druid level, and it counts as that ability for the purpose of other effects (such as feat prerequisites or effects that alter or improve wild empathy).",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Gray Disciple ~ Born in Darkness",
     "name": "Born in Darkness",
-    "class": "Gray Disciple",
+    "class": "Monk",
     "description": "As a standard action, the gray disciple can radiate darkness (as the spell, except originating from the disciple's person) for %1 rounds by spending 1 ki point.|MonkLVL",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spiritualist ~ Whispering Spirits",
     "name": "Whispering Spirits",
-    "class": "Spiritualist",
+    "class": "Investigator",
     "description": "The spiritualist can open a conduit with the spirit world that can aid him in combat for a short time. He can expend one use of his commune with spirits ability in order to gain a +%1 insight bonus to both AC and saving throws for 1 minute.|max(1,WIS)",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Discipline Pain ~ Power from Pain",
     "name": "Power from Pain",
-    "class": "Psychic Discipline Pain",
+    "class": "Psychic",
     "description": "If your painful reminder deals at least 5 points of damage, you regain 1 point in your phrenic pool. The maximum number of points you can regain in this way per day is equal to your Wisdom modifier.",
     "raw_tokens": [
       {

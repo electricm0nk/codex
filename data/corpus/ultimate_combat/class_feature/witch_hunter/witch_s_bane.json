@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Witch Hunter ~ Witch's Bane",
     "name": "Witch's Bane",
-    "class": "Witch Hunter",
+    "class": "Inquisitor",
     "description": "Any creature that casts an arcane spell within 30 feet of the witch hunter takes a -2 penalty to AC against her attacks and a -2 penalty on saving throws against her spells while this judgment remains in effect. This ability replaces exploit weakness.",
     "raw_tokens": [
       {

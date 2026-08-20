@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Consigliere ~ Combat Advisor",
     "name": "Combat Advisor",
-    "class": "Consigliere",
+    "class": "Rogue",
     "description": "Whenever a consigliere misses with a melee attack against an opponent, he can designate an ally within 30 feet of the target to receive a +%1 insight bonus on her next attack roll against that opponent before the consigliere's next turn.|ConsigliereCombatAdvisorBonus",
     "raw_tokens": [
       {

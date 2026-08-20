@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tree Soul ~ Armor Proficiency",
     "name": "Weapon and Armor Proficiency",
-    "class": "Tree Soul",
+    "class": "Oracle",
     "description": "Tree souls are proficient with light and medium armor but are prohibited from wearing metal armor. A tree soul can also wear wooden armor that has been altered by the ironwood spell so that it functions as though it were steel. Tree souls are proficient with shields (except tower shields) but can use only those crafted from wood. A tree soul who wears prohibited armor or uses a prohibited shield is unable to cast oracle spells or use any of her supernatural or spell-like class abilities while doing so and for 24 hours thereafter.",
     "raw_tokens": [
       {

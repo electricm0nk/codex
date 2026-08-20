@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Hunt Caller ~ Wilderness Magic",
     "name": "Wilderness Magic",
-    "class": "Hunt Caller",
+    "class": "Skald",
     "description": "[NOT IMPLEMENTED] At 5th level and again at 11th level and 17th level, the hunt caller adds two spells of any level she can cast from the druid spell list to her class spell list and list of skald spells known.",
     "raw_tokens": [
       {

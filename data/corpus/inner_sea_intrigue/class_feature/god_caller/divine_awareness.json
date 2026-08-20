@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "God Caller ~ Divine Awareness",
     "name": "Divine Awareness",
-    "class": "God Caller",
+    "class": "Summoner",
     "description": "After 10 minutes of concentration, a god caller's eidolon can see from afar as per clairaudience/clairvoyance. The eidolon can do this %1 times per day.|min(3,(SummonerLVL-6)/4)",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Toxitician ~ Deft Fingers",
     "name": "Deft Fingers",
-    "class": "Toxitician",
+    "class": "Mesmerist",
     "description": "A toxitician adds %1 as a bonus on all Sleight of Hands checks.|TDeftFingersBonus",
     "raw_tokens": [
       {

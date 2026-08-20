@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Discipline Psychedelia ~ Warped Brain",
     "name": "Warped Brain",
-    "class": "Psychic Discipline Psychedelia",
+    "class": "Psychic",
     "description": "At 5th level, your mind becomes difficult to comprehend. When another creature uses a mind-affecting spell or ability against you, that creature must attempt a Will save. If it fails, it becomes nauseated for 1 round. This ability triggers even if you succeed at your save (or are otherwise unaffected by the spell or ability), but doesn't apply if you're a willing subject of the spell. This is a mind-affecting effect.",
     "raw_tokens": [
       {

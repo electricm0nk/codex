@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Pack Hunter ~ Bonus Feats",
     "name": "Bonus Feats",
-    "class": "Pack Hunter",
+    "class": "Barbarian",
     "description": "Whenever a pack hunter would gain a new rage power, she can instead select a teamwork feat. She must still meet the prerequisites for the teamwork feat. This alters rage power.",
     "raw_tokens": [
       {

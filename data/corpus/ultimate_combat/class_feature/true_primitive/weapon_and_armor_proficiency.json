@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "True Primitive ~ Weapon and Armor Proficiency",
     "name": "Weapon and Armor Proficiency",
-    "class": "True Primitive",
+    "class": "Barbarian",
     "description": "A true primitive is proficient with hide armor and armors made from bone (see page 146). A true primitive is also proficient with bone shields and the following weapons - battleaxe, blowgun, club, greatclub, handaxe, longspear, shortspear, sling, and spear.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fighter Archer ~ Ranged Defense",
     "name": "Ranged Defense",
-    "class": "Fighter Archer",
+    "class": "Fighter",
     "description": "At 19th level, an archer gains DR 5/- against ranged attacks. In addition, as an immediate action, he can catch an arrow fired at him and shoot it any target he chooses, as if he had the Snatch Arrows feat. This ability replaces armor mastery.",
     "raw_tokens": [
       {

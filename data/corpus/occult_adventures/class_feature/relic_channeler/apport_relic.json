@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Relic Channeler ~ Apport Relic",
     "name": "Apport Relic",
-    "class": "Relic Channeler",
+    "class": "Medium",
     "description": "A relic channeler can call one of her relics to her once per day as though she had cast apport object on it and was mentally completing the spell. Furthermore, if the relic channeler gains the apport object spell, she can use it to receive her relics without casting it on them in advance in the same way. The range at which the relic channeler can apport her relics (both with this ability and the spell) increases by an additional %1 feet.|5*((MediumLVL-5)/2)",
     "raw_tokens": [
       {

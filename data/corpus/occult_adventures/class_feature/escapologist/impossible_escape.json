@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Escapologist ~ Impossible Escape",
     "name": "Impossible Escape",
-    "class": "Escapologist",
+    "class": "Rogue",
     "description": "At 8th level, as an immediate action, an escapologist can attempt an Escape Artist check at a -10 penalty and apply the result in place of either a failed Reflex save or her AC against an attack that would have hit her. If she succeeds, her contortions let her avoid the attack or effect entirely. Using this ability leaves the escapologist staggered until the end of her next turn. If the escapologist can't become staggered, she can't use impossible escape. This ability replaces improved uncanny dodge.",
     "raw_tokens": [
       {

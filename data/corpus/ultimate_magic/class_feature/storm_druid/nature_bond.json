@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Storm Druid ~ Nature's Bond",
     "name": "Nature Bond",
-    "class": "Storm Druid",
+    "class": "Druid",
     "description": "You may not choose an animal companion. You must choose the Air or Weather domain, or the Cloud, Storm, or Wind subdomain.",
     "raw_tokens": [
       {

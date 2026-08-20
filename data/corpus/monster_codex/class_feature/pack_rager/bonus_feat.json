@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Pack Rager ~ Bonus Feat",
     "name": "Bonus Feat",
-    "class": "Pack Rager",
+    "class": "Barbarian",
     "description": "At 2nd level and every 4 levels thereafter, the pack rager can take a bonus teamwork feat. This teamwork feat must also be a combat feat.",
     "raw_tokens": [
       {

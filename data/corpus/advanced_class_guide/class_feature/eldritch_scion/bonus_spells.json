@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Eldritch Scion ~ Bonus Spells",
     "name": "Bonus Spells",
-    "class": "Eldritch Scion",
+    "class": "Magus",
     "description": "At 7th level, an eldritch scion gains the bonus spell from his bloodrager bloodline that is normally gained at 10th level. He gains the next three bonus spells from his bloodline at 9th, 11th, and 13th levels, respectively. This ability replaces knowledge pool.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Patient Ambusher ~ Snare Trap",
     "name": "Snare Trap",
-    "class": "Patient Ambusher",
+    "class": "Hunter",
     "description": "A patient ambusher learns how to create a snare trap. The patient ambusher can use this and other learned traps a total of %1 times per day. This snare trap otherwise functions the same as the ranger snare trap detailed in Pathfinder RPG Ultimate Magic (DC %2).|TrapTimes|TrapDC",
     "raw_tokens": [
       {

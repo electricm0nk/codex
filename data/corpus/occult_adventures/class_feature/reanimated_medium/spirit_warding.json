@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Reanimated Medium ~ Spirit Warding",
     "name": "Spirit Warding",
-    "class": "Reanimated Medium",
+    "class": "Medium",
     "description": "The reanimated medium can ward himself from other spirits and the grave's call.",
     "raw_tokens": [
       {

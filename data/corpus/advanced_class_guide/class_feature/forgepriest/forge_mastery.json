@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Forgepriest ~ Forge Mastery",
     "name": "Forge Mastery",
-    "class": "Forgepriest",
+    "class": "Warpriest",
     "description": "The forgepriest adds a +%1 bonus equal to half his level to all Craft checks to make metal items, armor, and weapons.|TL/2",
     "raw_tokens": [
       {

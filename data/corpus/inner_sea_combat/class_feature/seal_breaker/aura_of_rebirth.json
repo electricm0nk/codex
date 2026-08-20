@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Seal-Breaker ~ Aura of Rebirth",
     "name": "Aura of Rebirth",
-    "class": "Seal-Breaker",
+    "class": "Antipaladin",
     "description": "At 11th level, if a living creature is slain within 10 feet of the seal-breaker, the seal-breaker can spend two uses of his smite good ability at the start of his next turn as a standard action to summon the spirit of a dead murderer to reanimate the corpse as a mohrg. The mohrg immediately rises and attacks the seal breaker's foes, acting under the antipaladin's command. After 1 minute, the murderer's soul leaves the body, which collapses, again lifeless. At 15th level, the seal-breaker can activate this ability as a move action. At 19th level, he can activate this ability as a swift action. This ability replaces aura of vengeance.",
     "raw_tokens": [
       {

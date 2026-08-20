@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Pack Hunter ~ In and Out",
     "name": "In and Out",
-    "class": "Pack Hunter",
+    "class": "Barbarian",
     "description": "A pack hunter gains a +%1 dodge bonus to AC against attacks of opportunity.|PackHunterDodgeBonus",
     "raw_tokens": [
       {

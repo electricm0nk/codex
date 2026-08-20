@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Rageshaper ~ Terrible Slam",
     "name": "Terrible Slam",
-    "class": "Rageshaper",
+    "class": "Shifter",
     "description": "A rageshaper can deliver blows that demolish his foes. This functions as the shifter claws class ability, except his natural weapons are treated as slam attacks. Additionally, rather than granting the ability to bypass different kinds of damage reduction, the rageshaper's terrible slam ignores some of an object's hardness. Terrible slam ignores %1 points of an object's hardness. This alters shifter claws.|RageshaperTerribleSlam",
     "raw_tokens": [
       {

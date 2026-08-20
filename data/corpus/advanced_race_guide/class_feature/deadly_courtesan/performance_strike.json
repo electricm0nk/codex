@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Deadly Courtesan ~ Performance Strike",
     "name": "Performance Strike",
-    "class": "Deadly Courtesan",
+    "class": "Rogue",
     "description": "As a swift action, a deadly courtesan may expend rounds of bardic performance to gain a morale bonus on one attack roll. The amount of the bonus is equal to the number of bardic performance rounds expended (maximum bonus equal to %1).|RogueLVL/2",
     "raw_tokens": [
       {

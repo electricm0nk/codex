@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spirit Walker ~ Spells",
     "name": "Spells",
-    "class": "Spirit Walker",
+    "class": "Mesmerist",
     "description": "A spirit walker adds additional spells to his spell list at the spell levels indicated: hide from undead (1st), command undead (2nd), halt undead (3rd), and speak with haunt (4th). He can choose these as spells known, but doesn't gain them automatically.",
     "raw_tokens": [
       {

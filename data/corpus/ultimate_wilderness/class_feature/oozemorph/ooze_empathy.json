@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Oozemorph ~ Ooze Empathy",
     "name": "Ooze Empathy",
-    "class": "Oozemorph",
+    "class": "Shifter",
     "description": "An oozemorph gains the shifter's wild empathy class feature, but she can use it only to influence the attitude of oozes with an Intelligence score of 2 or lower. An oozemorph can use this ability on mindless oozes; when she does so, she imparts a modicum of intellect to the ooze to allow it to respond to her commands. This alters wild empathy.",
     "raw_tokens": [
       {

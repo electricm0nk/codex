@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ironskin Monk ~ Bonus Feat",
     "name": "Bonus Feat",
-    "class": "Ironskin Monk",
+    "class": "Monk",
     "description": "An ironskin monk adds Power Attack to his list of bonus feats. At 6th level, he adds Improved Sunder to the list. At 10th level, he adds Greater Sunder to the list. These bonus feat choices replace Dodge, Mobility, and Spring Attack on his bonus feat list.",
     "raw_tokens": [
       {

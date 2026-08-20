@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Guild Agent ~ Guild Connections",
     "name": "Guild Connections",
-    "class": "Guild Agent",
+    "class": "Rogue",
     "description": "A guild agent gains the black market connections rogue talent. Furthermore, he can ask his guild for tips about the local scene, granting him a bonus equal to half his rogue level on Knowledge (local) checks and Diplomacy checks to gather information, as long as the information in question pertains to the guild agent's base of operations.",
     "raw_tokens": [
       {

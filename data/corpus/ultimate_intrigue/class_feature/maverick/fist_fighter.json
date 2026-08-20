@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Maverick ~ Fist Fighter",
     "name": "Fist Fighter",
-    "class": "Maverick",
+    "class": "Gunslinger",
     "description": "As long as the maverick has at least 1 grit point, she gains the benefit of the Improved Unarmed Strike feat.",
     "raw_tokens": [
       {

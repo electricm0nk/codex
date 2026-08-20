@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Purifier ~ Celestial Master",
     "name": "Celestial Master",
-    "class": "Purifier",
+    "class": "Oracle",
     "description": "The purifier may use her sacred scourge to compel good outsiders to serve her, as if using the Command Undead feat against undead.",
     "raw_tokens": [
       {

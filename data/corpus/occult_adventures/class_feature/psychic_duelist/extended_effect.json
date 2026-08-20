@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Duelist ~ Extended Effect",
     "name": "Extended Effect",
-    "class": "Psychic Duelist",
+    "class": "Psychic",
     "description": "The psychic duelist can spend points from her phrenic pool to increase the duration of a condition by 1 round per point spent. She can spend a maximum of 1 phrenic pool point in this way; this maximum increases to 2 points at 11th level, to 3 points at 15th level, and to 4 points at 19th level. If the target succeeds at its saving throw, this amplification has no effect (though the points are still lost). This amplification can be linked only to offensive manifestations that impose conditions.",
     "raw_tokens": [
       {

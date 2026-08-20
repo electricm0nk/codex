@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Undine Adept ~ Commune with Water Spirits",
     "name": "Commune with Water Spirits",
-    "class": "Undine Adept",
+    "class": "Druid",
     "description": "An undine adept adds commune to her druid spell list. She may use this spell whether she worships a deity or elemental forces.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Commando ~ Sniping Shot",
     "name": "Sniping Shot",
-    "class": "Commando",
+    "class": "Gunslinger",
     "description": "The commando can spend 1 point of grit as a swift action to negate the -20 penalty on Stealth checks when sniping until the start of her next turn.",
     "raw_tokens": [
       {

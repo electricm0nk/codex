@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Beastmorph ~ Grand Beastform Mutagen",
     "name": "Grand Beastform Mutagen",
-    "class": "Beastmorph",
+    "class": "Alchemist",
     "description": "At 14th level, a beastmorph's mutagen grants him four of the abilities listed in the beast shape III spell, which persist as long as the mutagen. He may select four different abilities each time he creates a mutagen. This ability replaces persistent mutagen.",
     "raw_tokens": [
       {

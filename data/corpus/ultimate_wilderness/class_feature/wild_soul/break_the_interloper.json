@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wild Soul ~ Break the Interloper",
     "name": "Break the Interloper",
-    "class": "Wild Soul",
+    "class": "Ranger",
     "description": "When a wild soul hits an arcane spellcaster, a creature with extract slots, or a creature with grit (but not grit-like pools such as panache) with a weapon attack, the target either loses its highest-level available spell or extract slot or loses 1 point of grit, and the wild soul gains 5 temporary hit points. A target of this ability can negate this effect with a successful Fortitude save (DC %1). Regardless of the outcome of the saving throw, the target is immune to this ability for 24 hours.|10+RangerLVL/2+WIS",
     "raw_tokens": [
       {

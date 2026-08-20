@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Necroccultist ~ Necromantic Bond",
     "name": "Necromantic Bond",
-    "class": "Necroccultist",
+    "class": "Occultist",
     "description": "[not enforced]At 1st level, a necroccultist gains access to only the necromancy school of implements. He must select necromancy for his implement mastery. Each time he gains an occultist level, a necroccultist can add one necromancy spell from the wizard spell list to his occultist spell list and his list of spells known. The necroccultist can't choose a spell of a higher level than he is able to cast, and he adds the spell at the same spell level it appears on the wizard spell list. At 14th level, he doesn't gain an additional school of implements. Instead, at 14th level, the DCs of saving throws to resist a necroccultist's necromancy spells and necromancy focus powers increase by 2. This ability alters implements and implement mastery.",
     "raw_tokens": [
       {

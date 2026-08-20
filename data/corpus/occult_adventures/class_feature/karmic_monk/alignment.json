@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Karmic Monk ~ Alignment",
     "name": "Alignment",
-    "class": "Karmic Monk",
+    "class": "Monk",
     "description": "A karmic monk must be true neutral or of any lawful alignment. This alters the monk's alignment requirement.",
     "raw_tokens": [
       {

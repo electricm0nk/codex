@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dreadnought ~ Fearless Killer",
     "name": "Fearless Killer",
-    "class": "Dreadnought",
+    "class": "Barbarian",
     "description": "A dreadnought becomes implacable in her pursuit of slaughter. While in rage, she is immune to fear effects.",
     "raw_tokens": [
       {

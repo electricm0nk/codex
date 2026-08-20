@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Hallowed Necromancer ~ Turn Undead",
     "name": "Turn Undead",
-    "class": "Hallowed Necromancer",
+    "class": "Wizard",
     "description": "A hallowed necromancer must select Turn Undead as a bonus feat with her power over undead arcane school ability. This alters power over undead.",
     "raw_tokens": [
       {

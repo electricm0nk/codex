@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Aerie Protector ~ Wild Shape",
     "name": "Wild Shape",
-    "class": "Aerie Protector",
+    "class": "Druid",
     "description": "An aerie protector gains this ability at 6th level, except her effective druid level is her druid level -2. If she takes on the form of a flying animal, she instead uses her druid level +2.",
     "raw_tokens": [
       {

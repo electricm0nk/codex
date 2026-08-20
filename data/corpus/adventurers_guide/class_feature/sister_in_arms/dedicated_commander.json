@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sister-in-Arms ~ Dedicated Commander",
     "name": "Dedicated Commander",
-    "class": "Sister-in-Arms",
+    "class": "Cavalier",
     "description": "A sister-in-arms can inspire and direct allies with great efficiency. The sister-in-arms can use lion's call or strategy order as a move action, rather than as a standard action.|!PRECLASS:1,Cavalier=20",
     "raw_tokens": [
       {

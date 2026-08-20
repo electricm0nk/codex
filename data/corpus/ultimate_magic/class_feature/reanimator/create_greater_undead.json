@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Reanimator ~ Create Greater Undead",
     "name": "Create Greater Undead",
-    "class": "Reanimator",
+    "class": "Alchemist",
     "description": "You add Create Greater Undead to your formula book as a 5th-level extract.  This otherwise acts similarly to a Create Undead extract.",
     "raw_tokens": [
       {

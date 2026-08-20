@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Discipline Lore ~ Superior Automatic Writing",
     "name": "Superior Automatic Writing",
-    "class": "Psychic Discipline Lore",
+    "class": "Psychic",
     "description": "At 5th level, when attempting checks for the automatic writing occult skill unlock (see page 194), you can treat your psychic level + your Wisdom bonus as your number of Linguistics skill ranks. At 8th level, you gain an additional option when using automatic writing, and can attempt a DC 35 check to gain information as though you'd used commune instead of augury or divination. This type of commune requires no material component, and the duration equals 1 round per psychic class level you possess. You connect to a distant being of great intellect, a fragment of the Akashic Record (see page 244), or a similar bastion of knowledge instead of to a deity.",
     "raw_tokens": [
       {

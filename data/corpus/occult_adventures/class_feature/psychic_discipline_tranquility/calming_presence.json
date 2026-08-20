@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Discipline Tranquility ~ Calming Presence",
     "name": "Calming Presence",
-    "class": "Psychic Discipline Tranquility",
+    "class": "Psychic",
     "description": "At 5th level, you become a calming force. You can use calm emotions as a spell-like ability a number of times per day equal to your Wisdom modifier.",
     "raw_tokens": [
       {

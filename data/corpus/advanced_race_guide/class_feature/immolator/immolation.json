@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Immolator ~ Immolation",
     "name": "Immolation",
-    "class": "Immolator",
+    "class": "Inquisitor",
     "description": "The immolator channels purifying flame to consume her enemies. When dealing fire damage to an opponent, she treats the target's fire resistance as %1 lower than normal (minimum 0).|(1+(InquisitorLVL-1)/5)*5",
     "raw_tokens": [
       {

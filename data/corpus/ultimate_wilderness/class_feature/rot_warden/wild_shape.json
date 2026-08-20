@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Rot Warden ~ Wild Shape",
     "name": "Wild Shape",
-    "class": "Rot Warden",
+    "class": "Druid",
     "description": "A rot warden gains this ability at 6th level, except his effective druid level is his druid level - 2. He cannot take the form of an elemental. At 8th level, a rot warden can assume the form of a Small or Medium vermin as if using vermin shape I. At 10th level, the rot warden can assume the shape of a Tiny or Large vermin as if using vermin shape II. At 12th level, he can take the form of a Huge vermin as if using vermin shape III. This alters wild shape.",
     "raw_tokens": [
       {

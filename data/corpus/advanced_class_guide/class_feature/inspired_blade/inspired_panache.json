@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Inspired Blade ~ Inspired Panache",
     "name": "Inspired Panache",
-    "class": "Inspired Blade",
+    "class": "Swashbuckler",
     "description": "Each day, an inspired blade gains %1 panache points. Unlike other swashbucklers, an inspired blade gains no panache from a killing blow. She gains panache only from scoring a critical hit with a rapier. This ability alters the panache class feature.|PanachePoints",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Formless Adept ~ Formless Body",
     "name": "Formless Body",
-    "class": "Formless Adept",
+    "class": "Psychic",
     "description": "A formless adept gradually sheds his body, taking on increasingly nebulous forms. A formless adept can assume a formless body as a standard action. He can remain in each formless body type for a number of rounds per day equal to 3 + his Charisma modifier. The rounds don't have to be used consecutively, but must be used in 1-round increments. Resuming his physical form takes another standard action; otherwise, the formless adept continues spending rounds of formless body until he runs out of them. The formless adept must return to his physical form before assuming a different formless body.",
     "raw_tokens": [
       {

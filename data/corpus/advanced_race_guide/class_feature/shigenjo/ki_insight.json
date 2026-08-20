@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Shigenjo ~ Ki Insight",
     "name": "Ki Insight",
-    "class": "Shigenjo",
+    "class": "Oracle",
     "description": "Spend 1 Ki Point to gain a +4 insight bonus on Spellcraft checks for 1 round.",
     "raw_tokens": [
       {

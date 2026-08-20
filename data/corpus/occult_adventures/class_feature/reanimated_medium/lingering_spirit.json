@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Reanimated Medium ~ Lingering Spirit",
     "name": "Lingering Spirit",
-    "class": "Reanimated Medium",
+    "class": "Medium",
     "description": "A reanimated medium's spirit lingers for up to 1 round after death before departing if the medium spends 1 point of influence. If the reanimated medium died of hit point damage, healing works on his body during the intervening round and can bring him back to life. Once the spirit departs, the breath of life spell continues to work for 1 additional round, even though the reanimated medium has been dead for more than 1 round.",
     "raw_tokens": [
       {

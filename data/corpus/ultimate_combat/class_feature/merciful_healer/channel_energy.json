@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Merciful Healer ~ Channel Energy",
     "name": "Channel Energy",
-    "class": "Merciful Healer",
+    "class": "Cleric",
     "description": "As the cleric ability, save that a merciful healer must channel positive energy, and when she does, she cannot choose to target undead. This ability is otherwise identical to the cleric ability of the same name.",
     "raw_tokens": [
       {

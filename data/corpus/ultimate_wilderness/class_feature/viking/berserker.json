@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Viking ~ Berserker",
     "name": "Berserker",
-    "class": "Viking",
+    "class": "Fighter",
     "description": "A viking gains the rage ability as the barbarian class feature, but her barbarian level is considered to be her fighter level -3.",
     "raw_tokens": [
       {

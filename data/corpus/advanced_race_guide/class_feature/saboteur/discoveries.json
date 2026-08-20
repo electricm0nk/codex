@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Saboteur ~ Discoveries",
     "name": "Discoveries",
-    "class": "Saboteur",
+    "class": "Alchemist",
     "description": "The following discoveries complement the saboteur archetype: acid bomb, concussive bomb, delayed bomb, explosive bomb, fast bombs, inferno bomb, madness bomb, precise bombs, smoke bomb, stink bomb (Advanced Player's Guide); explosive missile, immolation bomb, siege bomb (Ultimate Combat); blinding bomb, cognatogen, confusion bomb, tanglefoot bomb (Ultimate Magic).",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Forest Preserver ~ Sacred Botany",
     "name": "Sacred Botany",
-    "class": "Forest Preserver",
+    "class": "Paladin",
     "description": "A forest preserver adds the following spells to her spell list: 1st-detect animals or plants, entangle, goodberry, shillelagh; 2nd-barkskin, eagle eye, tree shape, warp wood, wood shape; 3rd-diminish plants, plant growth, snare, speak with plants, spike growth; 4th-antiplant shell, awaken (trees only), blight, command plants, commune with nature, thorn body, tree stride, wall of thorns. In addition, she treats her caster level as 1 higher when casting these spells in her favored terrain.",
     "raw_tokens": [
       {

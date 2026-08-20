@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fighter Roughrider ~ Unavoidable Onslaught",
     "name": "Unavoidable Onslaught",
-    "class": "Fighter Roughrider",
+    "class": "Fighter",
     "description": "At 15th level, a roughrider's mounted charge is not blocked by friendly creatures or difficult terrain. This ability replaces armor training 4.",
     "raw_tokens": [
       {

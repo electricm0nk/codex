@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Knife Master ~ Rogue Talents",
     "name": "Rogue Talents",
-    "class": "Knife Master",
+    "class": "Rogue",
     "description": "The following rogue talents complement the knife master archetype - befuddling strike**, combat trick, offensive defense**, surprise attack, underhanded*, and weapon training.",
     "raw_tokens": [
       {

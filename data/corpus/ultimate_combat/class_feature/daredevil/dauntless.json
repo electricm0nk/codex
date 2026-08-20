@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Daredevil ~ Dauntless",
     "name": "Dauntless",
-    "class": "Daredevil",
+    "class": "Bard",
     "description": "At 2nd level, a daredevil gains a +1 morale bonus on saving throws against mind-affecting effects, including all fear effects. This bonus increases by +1 for every four levels gained after 2nd level, to a maximum of +5 at 18th level. This ability replaces well-versed.",
     "raw_tokens": [
       {

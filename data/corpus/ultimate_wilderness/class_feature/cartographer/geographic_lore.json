@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cartographer ~ Geographic Lore",
     "name": "Geographic Lore",
-    "class": "Cartographer",
+    "class": "Investigator",
     "description": "A cartographer gains a deeper understanding of wilderness terrain. Whenever he is on the Material Plane, he can determine where true north is as a full-round action. Furthermore, he can create and sell maps to earn a number of gold pieces per week of dedicated work equal to half his Knowledge (geography) check result per week.",
     "raw_tokens": [
       {

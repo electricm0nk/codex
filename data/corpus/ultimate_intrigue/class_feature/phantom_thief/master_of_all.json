@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Phantom Thief ~ Master of All",
     "name": "Master of All",
-    "class": "Phantom Thief",
+    "class": "Rogue",
     "description": "A phantom thief can reroll any skill check as long as it is a class skill in which she is trained. She must take the second result, even if it is worse. She can use this ability no more than once per minute.",
     "raw_tokens": [
       {

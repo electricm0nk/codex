@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Velvet Blade ~ Courtly Graces",
     "name": "Courtly Graces",
-    "class": "Velvet Blade",
+    "class": "Slayer",
     "description": "A velvet blade spends long hours memorizing etiquette and family lineages of royalty and other prominent families. She gains a +%1 bonus on Knowledge (nobility) checks.",
     "raw_tokens": [
       {

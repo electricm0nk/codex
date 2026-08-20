@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cabalist ~ Bloodbound Spell",
     "name": "Bloodbound Spell",
-    "class": "Cabalist",
+    "class": "Vigilante",
     "description": "A cabalist gets an advantage when casting spells against bleeding foes. Whenever the cabalist casts a spell against a foe that is taking bleed damage, the foe takes a -1 penalty on its saving throw against the spell (or to its AC if the spell requires an attack roll). This penalty increases to -2 if the spell is from the necromancy school.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Evolutionist ~ Evolve Base Form",
     "name": "Evolve Base Form",
-    "class": "Evolutionist",
+    "class": "Summoner",
     "description": "Whenever you gain a level, you can change your eidolon's base form to a new base form. Once chosen, this base form is set until you gain another summoner level.",
     "raw_tokens": [
       {

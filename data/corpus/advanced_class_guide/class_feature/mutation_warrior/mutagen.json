@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mutation Warrior ~ Mutagen",
     "name": "Mutagen",
-    "class": "Mutation Warrior",
+    "class": "Fighter",
     "description": "A mutation warrior discovers how to create a mutagen that he can imbibe in order to heighten his physical prowess at the cost of his personality. This ability functions as the alchemist's mutagen ability (APG p.28), using his fighter level as his alchemist level. This ability replaces armor training 1.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dragon Yapper ~ Yapping Song",
     "name": "Yapping Song",
-    "class": "Dragon Yapper",
+    "class": "Bard",
     "description": "A dragon yapper can use performance to annoy those that hear it, causing them to take a -%1 penalty on attack and damage rolls (minimum 1) and a -%1 penalty on saves against fear effects and charm effects as long as the dragon yapper continues performing. Yapping song is a mind-affecting ability that uses audible components, but is not language-dependent.|1+((BardLVL+1)/6)",
     "raw_tokens": [
       {

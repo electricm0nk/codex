@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Chirurgeon ~ Anaesthetic",
     "name": "Anaesthetic",
-    "class": "Chirurgeon",
+    "class": "Alchemist",
     "description": "You know how to supplement uses of the Heal skill with pain-killing drugs. You gain Skill Focus (Heal) as a bonus feat. Any use of the Heal skill that has a risk of harming the patient (such as extracting a barb) only deals the minimum damage when performed by you.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Halcyon Druid ~ Bonded Mask",
     "name": "Bonded Mask",
-    "class": "Halcyon Druid",
+    "class": "Druid",
     "description": "A halcyon druid forms a powerful bond with a mask, which functions identically to a wizard's bonded object except that it can be used to cast druid spells (including those gained from class abilities) instead of wizard spells. A bonded mask must be worn to have an effect, and it occupies the head slot. A halcyon druid can enhance her mask with abilities appropriate for a head slot item, and can designate an existing head slot item as her bonded mask (but only if it covers her face).",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spirit Warden ~ Unnatural Mien",
     "name": "Unnatural Mien",
-    "class": "Spirit Warden",
+    "class": "Shaman",
     "description": "The spirit warden's dealings with the spirit world give her an unsettling demeanor. Diplomacy and Handle Animal are not class skills for a spirit warden. Intimidate is added as a class skill, and she gains a +2 bonus on Intimidate checks to demoralize a foe.",
     "raw_tokens": [
       {

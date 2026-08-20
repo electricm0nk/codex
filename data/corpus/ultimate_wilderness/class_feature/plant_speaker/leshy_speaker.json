@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Plant Speaker ~ Leshy Speaker",
     "name": "Leshy Speaker",
-    "class": "Plant Speaker",
+    "class": "Bard",
     "description": "The plant speaker can speak to its disembodied brethren, the spirits of nature that become leshys. He performs for 10 minutes and spends 7 rounds of bardic performance to gain the effects of commune with nature.",
     "raw_tokens": [
       {

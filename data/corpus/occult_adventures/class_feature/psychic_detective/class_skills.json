@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Detective ~ Class Skills",
     "name": "Class Skills",
-    "class": "Psychic Detective",
+    "class": "Investigator",
     "description": "The psychic detective does not receive Acrobatics, Climb, or Perform as class skills. This alters the investigator's class skills.",
     "raw_tokens": [
       {

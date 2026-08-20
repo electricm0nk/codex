@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bouncer ~ Bar Fight Mastery",
     "name": "Bar Fight Mastery",
-    "class": "Bouncer",
+    "class": "Brawler",
     "description": "In addition to the benefits of close weapon mastery, when a bouncer confirms a critical hit against a major participant in a bar fight, she also reduces the tenacity of the crowd by her normal brawling damage amount (this amount isn't doubled). This alters close weapon mastery.",
     "raw_tokens": [
       {

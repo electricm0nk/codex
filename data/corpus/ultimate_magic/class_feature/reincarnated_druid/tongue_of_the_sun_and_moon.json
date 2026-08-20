@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Reincarnated Druid ~ Tongue of the Sun and Moon",
     "name": "Tongue of the Sun and Moon",
-    "class": "Reincarnated Druid",
+    "class": "Druid",
     "description": "You can speak with any living creature.",
     "raw_tokens": [
       {

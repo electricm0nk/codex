@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Chameleon Adept ~ Shifting Companion",
     "name": "Shifting Companion",
-    "class": "Chameleon Adept",
+    "class": "Hunter",
     "description": "As a standard action, a chameleon adept can cause her companion to assume a humanoid form of the same race as herself. This functions as alter self, except it is used on an adjacent animal companion to have it assume a humanoid form. The companion always assumes the same form, selected when the hunter reaches 3rd level. The hunter can change this form when she gains a new level, but the companion loses the old form and can't resume it unless the chameleon adept chooses that form when she reaches a new level. The companion is no more intelligent or less savage than normal; the hunter still needs to control it as normal, and it still can't activate magic items or wield manufactured weapons. The hunter can use this ability for %1 minutes per day. This duration does not need to be consecutive, but it must be spent in 10-minute increments.|10*HunterLVL",
     "raw_tokens": [
       {

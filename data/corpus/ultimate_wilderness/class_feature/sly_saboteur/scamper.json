@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sly Saboteur ~ Scamper",
     "name": "Scamper",
-    "class": "Sly Saboteur",
+    "class": "Rogue",
     "description": "A sly saboteur can move through %1 feet of difficult terrain each round as if it were normal terrain. This ability allows the sly saboteur to take a 5-foot step into difficult terrain. This ability applies only when she is wearing light armor or no armor and carrying no more than a light load, and it stacks with the Acrobatic Steps and Nimble Moves feats.|5*(min(6,RogueLVL/3))",
     "raw_tokens": [
       {

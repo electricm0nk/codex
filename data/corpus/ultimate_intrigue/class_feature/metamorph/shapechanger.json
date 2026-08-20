@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Metamorph ~ Shapechanger",
     "name": "Shapechanger",
-    "class": "Metamorph",
+    "class": "Alchemist",
     "description": "A metamorph gains the ability to transform herself into another form. This ability functions like",
     "raw_tokens": [
       {

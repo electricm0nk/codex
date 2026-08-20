@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Scarred Witch Doctor ~ Scarshield",
     "name": "Scarshield",
-    "class": "Scarred Witch Doctor",
+    "class": "Witch",
     "description": "A scarred witch doctor learns how to harden her mutilated skin, gaining an enhancement bonus to her natural armor bonus equal to %1. She can use this ability for %2 minutes per day. These minutes do not need to be consecutive but she must spend them in 1-minute increments. This ability replaces the witch's 1st-level hex.|ScarredWitchNaturalArmorBonus|ScarredWithDoctorNaturalArmorDuration",
     "raw_tokens": [
       {

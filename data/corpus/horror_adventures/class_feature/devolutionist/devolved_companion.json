@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Devolutionist ~ Devolved Companion",
     "name": "Devolved Companion",
-    "class": "Devolutionist",
+    "class": "Druid",
     "description": "A devolutionist must choose a devolved humanoid as an animal companion for her nature bond. Use the stats for an ape animal companion, but at 4th level, the devolved humanoid doesn't increase to size Large (it still gains all the other benefits at 4th level). This ability alters nature bond.",
     "raw_tokens": [
       {

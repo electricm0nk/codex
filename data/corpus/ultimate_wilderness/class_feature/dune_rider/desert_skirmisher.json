@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dune Rider ~ Desert Skirmisher",
     "name": "Desert Skirmisher",
-    "class": "Dune Rider",
+    "class": "Slayer",
     "description": "The dune rider excels in combat in warm deserts, hills, and mountains. While in such terrain, he gains a +%1 bonus on initiative, Perception, and Stealth checks, and a +%2 bonus on attack and damage rolls.|DuneRiderSkirmisherBonus*2|DuneRiderSkirmisherBonus",
     "raw_tokens": [
       {

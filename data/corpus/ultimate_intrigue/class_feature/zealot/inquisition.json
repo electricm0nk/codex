@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Zealot ~ Inquisition",
     "name": "Inquisition",
-    "class": "Zealot",
+    "class": "Vigilante",
     "description": "A zealot picks a deity and picks a single inquisition (Ultimate Magic p41) tied to that deity. He uses his vigilante level as his inquisitor level to determine level dependent inquisition abilities.",
     "raw_tokens": [
       {

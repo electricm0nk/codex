@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Relic Channeler ~ Connection Specialty",
     "name": "Connection Specialty",
-    "class": "Relic Channeler",
+    "class": "Medium",
     "description": "A relic channeler gains connection channel and can use that ability as a normal medium, despite not possessing location channel. She requires familiarity to use this ability, even if she is in an appropriate location. This ability alters connection channel.",
     "raw_tokens": [
       {

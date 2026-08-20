@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Savage Skald ~ Battle Song",
     "name": "Battle Song",
-    "class": "Savage Skald",
+    "class": "Bard",
     "description": "At 18th level, a savage skald can affect all allies within 30 feet when using performance to incite rage. This performance replaces mass suggestion.",
     "raw_tokens": [
       {

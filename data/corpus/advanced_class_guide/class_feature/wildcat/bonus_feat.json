@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wildcat ~ Bonus Feat",
     "name": "Bonus Feat",
-    "class": "Wildcat",
+    "class": "Monk",
     "description": "A wildcat adds the following feats to his list of bonus feats at 6th level: Improved Dirty Trick, Improved Reposition, Improved Steal. He adds the following feats to his list of bonus feats at 10th level: Quick Dirty Trick, Quick Reposition, Quick Steal.",
     "raw_tokens": [
       {

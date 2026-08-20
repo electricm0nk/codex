@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Enlightened Bloodrager ~ Bloodline Powers ~ AG",
     "name": "Bloodline Powers",
-    "class": "Enlightened Bloodrager",
+    "class": "Bloodrager",
     "description": "At 8th level, an enlightened bloodrager gains the bloodline power normally granted at 1st level. At 12th level she gains the bloodline power normally granted at 4th level, at 16th level she gains the bloodline power normally granted at 8th level, and at 20th level she gains the bloodline power normally gained at 12th level. She still uses her full bloodrager level when making level-based calculations in regard to these abilities. This alters the bloodrager's bloodline powers.",
     "raw_tokens": [
       {

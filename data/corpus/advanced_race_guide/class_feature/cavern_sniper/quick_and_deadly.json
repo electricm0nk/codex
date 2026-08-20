@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cavern Sniper ~ Quick and Deadly",
     "name": "Quick and Deadly",
-    "class": "Cavern Sniper",
+    "class": "Fighter",
     "description": "The cavern sniper can move at full speed while using Stealth at no penalty and can apply poison to a single arrow or crossbow bolt as a swift action.",
     "raw_tokens": [
       {

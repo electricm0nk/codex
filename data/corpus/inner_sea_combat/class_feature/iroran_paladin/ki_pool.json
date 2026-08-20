@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Iroran Paladin ~ Ki Pool",
     "name": "Ki Pool",
-    "class": "Iroran Paladin",
+    "class": "Paladin",
     "description": "You have a pool of %1 ki points, supernatural energy you can use to accomplish amazing feats.  By spending 1 point from your ki pool, you can ignore any damage reduction possessed by the target of your personal trial ability for 1 round.  This ability otherwise functions as the monk ki pool ability.|KiPoints",
     "raw_tokens": [
       {

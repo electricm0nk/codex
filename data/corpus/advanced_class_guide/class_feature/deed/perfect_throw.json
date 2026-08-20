@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Deed ~ Perfect Throw",
     "name": "Perfect Throw",
-    "class": "Deed",
+    "class": "Swashbuckler",
     "description": "A flying blade can pool all of her attack potential into a single attack. This deed functions as the swashbuckler's perfect strike deed, but the flying blade must use this deed when making ranged attacks with either a dagger or a starknife, and she can use this deed only on targets within 60 feet of her. This deed replaces perfect thrust.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Hedge Witch ~ Spontaneous Healing",
     "name": "Spontaneous Healing",
-    "class": "Hedge Witch",
+    "class": "Witch",
     "description": "You can channel stored spell energy into healing spells that you did not prepare ahead of time. You can 'lose' any prepared spell that is not an orison in order to cast any cure spell of the same spell level or lower, even if you don't know that cure spell.",
     "raw_tokens": [
       {

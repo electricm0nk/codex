@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Occultist ~ Planar Contact",
     "name": "Planar Contact",
-    "class": "Occultist",
+    "class": "Arcanist",
     "description": "An occultist can cast augury once per day and contact other plane once per week, using her arcanist level as her caster level.",
     "raw_tokens": [
       {

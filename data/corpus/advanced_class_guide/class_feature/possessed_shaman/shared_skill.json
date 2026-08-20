@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Possessed Shaman ~ Shared Skill",
     "name": "Shared Skill",
-    "class": "Possessed Shaman",
+    "class": "Shaman",
     "description": "[NOT IMPLEMENTED] At 1st level, a possessed shaman selects two skills. Both of these skills must use the same ability score. The possessed shaman treats these skills as if she had a number of ranks in them equal to her shaman level, and uses her Wisdom modifier in place of the ability modifier the skills would normally use. If either of the skills are class skills, she receives the usual +3 bonus on those skill checks for having ranks in those skills. These ranks do not stack with her other skill ranks (only the higher number of ranks applies). This ability replaces spirit magic.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Eagle Shaman ~ Totemic Summons",
     "name": "Totemic Summons",
-    "class": "Eagle Shaman",
+    "class": "Druid",
     "description": "At 5th level, an eagle shaman may cast summon nature's ally as a standard action when summoning eagles, rocs, and giant eagles (added to the 4th level list), and these summoned creatures gain temporary hit points equal to her druid level. This ability otherwise functions as the bear shaman ability.",
     "raw_tokens": [
       {

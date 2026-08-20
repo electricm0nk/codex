@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bonded Investigator ~ Familiar",
     "name": "Familiar",
-    "class": "Bonded Investigator",
+    "class": "Investigator",
     "description": "A bonded investigator gains a familiar to aid him. This familiar functions as the wizard arcane bond class feature, using the bonded investigator's class level to determine the familiar's special abilities. The bonded investigator's extracts are considered spells for the purposes of familiar abilities like share spell and deliver touch spells.",
     "raw_tokens": [
       {

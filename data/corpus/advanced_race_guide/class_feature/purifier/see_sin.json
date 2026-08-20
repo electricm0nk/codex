@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Purifier ~ See Sin",
     "name": "See Sin",
-    "class": "Purifier",
+    "class": "Oracle",
     "description": "The purifier gains a bonus of %1 on Sense Motive checks to sense enchantments, which she can make as a full-round action. She also gains a bonus of %1 on Spellcraft checks to identify enchantment school spells and spells with the curse or emotion descriptor.|OracleLVL/2",
     "raw_tokens": [
       {

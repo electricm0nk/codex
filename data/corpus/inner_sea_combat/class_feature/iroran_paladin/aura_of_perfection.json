@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Iroran Paladin ~ Aura of Perfection",
     "name": "Aura of Perfection",
-    "class": "Iroran Paladin",
+    "class": "Paladin",
     "description": "Whenever you or any ally within 10 feet would reroll a die and take the second result even if it is lower, you or they can roll an additional die as part of the reroll and use the higher of the two as the result of the reroll. This ability functions only while you are conscious.",
     "raw_tokens": [
       {

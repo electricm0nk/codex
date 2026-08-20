@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mouser ~ Deeds",
     "name": "Deeds",
-    "class": "Mouser",
+    "class": "Swashbuckler",
     "description": "The mouser gains the following deeds, each of which replaces an existing deed. Underfoot Assault, Quick Steal, Hamstring, and Cat's Charge.",
     "raw_tokens": [
       {

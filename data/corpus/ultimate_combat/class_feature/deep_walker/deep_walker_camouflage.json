@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Deep Walker ~ Deep Walker Camouflage",
     "name": "Deep Walker Camouflage",
-    "class": "Deep Walker",
+    "class": "Ranger",
     "description": "At 12th level, a deep walker can use the Stealth skill to hide in underground environments, even if the terrain does not grant cover or concealment. This ability replaces camouflage.",
     "raw_tokens": [
       {

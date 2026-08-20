@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Strangler Brawler ~ Sleeper Hold",
     "name": "Sleeper Hold",
-    "class": "Strangler Brawler",
+    "class": "Brawler",
     "description": "%1 times per day, a strangler can instantly render a pinned opponent unconscious. If you perform a successful grapple combat maneuver check against the pinned opponent, the target must succeed at a Fortitude saving throw (DC %2) or fall unconscious for 1d6 rounds. Each round on its turn, the unconscious target may attempt a new saving throw to end the effect as a full-round action that does not provoke attacks of opportunity. Creatures that do not need to breathe, are immune to critical hits, or are immune to nonlethal damage are immune to this ability.|SleeperHoldTimes|SleeperHoldDC",
     "raw_tokens": [
       {

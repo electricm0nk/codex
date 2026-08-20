@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tome Eater ~ Word Sense",
     "name": "Word Sense (Sp/Su)",
-    "class": "Tome Eater",
+    "class": "Occultist",
     "description": "At 5th level, a tome eater is constantly under the effect of read magic. Additionally, she can automatically detect the general topic of a piece of writing, and whether that writing is a magical scroll or tome, simply by looking at it. If she spends 1 round concentrating on a text within 30 feet per 100 pages of the text, she can gain a sense of a text's contents as if she had skimmed the text. This ability replaces aura sight.",
     "raw_tokens": [
       {

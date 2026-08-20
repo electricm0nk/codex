@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fiendish Vessel ~ Alignment",
     "name": "Alignment",
-    "class": "Fiendish Vessel",
+    "class": "Cleric",
     "description": "Unlike normal clerics, a fiendish vessel's alignment must match her patron's.",
     "raw_tokens": [
       {

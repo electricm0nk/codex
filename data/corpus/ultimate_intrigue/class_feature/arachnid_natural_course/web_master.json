@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Arachnid Natural Course ~ Web Master",
     "name": "Web Master",
-    "class": "Arachnid Natural Course",
+    "class": "Vigilante",
     "description": "An arachnid wildsoul can use web specialist without spending a daily use of shoot webs. Additionally, he can create numerous web-ropes as he is moving and swing from rope to rope, essentially allowing him to move at his base speed through the air as long as he always uses at least one hand to hold the webbing and continues to have tether points within 50 feet and above him. The web ropes he creates in this way dissolve as soon as he is done using them to swing.",
     "raw_tokens": [
       {

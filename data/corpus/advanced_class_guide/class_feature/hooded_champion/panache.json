@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Hooded Champion ~ Panache",
     "name": "Panache",
-    "class": "Hooded Champion",
+    "class": "Ranger",
     "description": "The hooded champion gains the swashbuckler's panache class feature. His panache goes up or down throughout the day, but usually cannot go higher than %1. He regains panache through critical hits and killing blows when using a bow of any kind, rather than when using a light or one-handed piercing melee weapon. If the hooded champion has this ability and the panache ability from another class or archetype, the panache points from the two sources do not stack, but the hooded champion regains panache in any way either class feature allows him to.At the start of each day, a hooded champion gains %1 panache points.|max(1,CHA)",
     "raw_tokens": [
       {

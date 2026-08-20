@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Snoop ~ Master of Whispers",
     "name": "Master of Whispers",
-    "class": "Snoop",
+    "class": "Rogue",
     "description": "A snoop receives the rumormonger advanced rogue talent.",
     "raw_tokens": [
       {

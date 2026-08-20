@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Lion Shaman ~ Totem Transformation",
     "name": "Totem Transformation",
-    "class": "Lion Shaman",
+    "class": "Druid",
     "description": "At 2nd level, a lion shaman may adopt an aspect of the lion while retaining her normal form. This ability functions as the bear shaman ability, but the druid may select from the following bonuses: movement (+20 enhancement bonus to land speed), senses (low-light vision, scent), or natural weapons (bite [1d4], 2 claws [1d4] for a Medium druid, rake, +2 CMB to grapple). While using totem transformation, the lion shaman may speak normally and can cast speak with animals (felines only) at will.",
     "raw_tokens": [
       {

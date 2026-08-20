@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dusk Stalker ~ Dark Sight",
     "name": "Dark Sight",
-    "class": "Dusk Stalker",
+    "class": "Ranger",
     "description": "The dusk stalker gains the see in darkness ability.",
     "raw_tokens": [
       {

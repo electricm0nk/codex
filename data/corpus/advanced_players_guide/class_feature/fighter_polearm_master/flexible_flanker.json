@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fighter Polearm Master ~ Flexible Flanker",
     "name": "Flexible Flanker",
-    "class": "Fighter Polearm Master",
+    "class": "Fighter",
     "description": "At 9th level, a polearm master may choose any square adjacent to him and treat that square as his location for determining who he is flanking, even if that square is occupied by a creature, object, or solid barrier. This ability replaces weapon training 2.",
     "raw_tokens": [
       {

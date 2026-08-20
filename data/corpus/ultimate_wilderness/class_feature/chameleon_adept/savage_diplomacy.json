@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Chameleon Adept ~ Savage Diplomacy",
     "name": "Savage Diplomacy",
-    "class": "Chameleon Adept",
+    "class": "Hunter",
     "description": "While in humanoid form, a chameleon adept's animal companion grants its master a +%1 circumstance bonus on Diplomacy and Intimidate checks. Savage diplomacy functions only as long as the creature being influenced can see both the companion and the master.|MIN(6,2+((HunterLVL-1)/4))",
     "raw_tokens": [
       {

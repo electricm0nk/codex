@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ancient Lorekeeper ~ Elven Arcana",
     "name": "Elven Arcana",
-    "class": "Ancient Lorekeeper",
+    "class": "Oracle",
     "description": "The ancient lorekeeper's mastery of elven legends and philosophy has allowed her to master spells used by elven wizards. These spells are treated as one level higher than their true level for all purposes.",
     "raw_tokens": [
       {

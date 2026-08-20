@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wild Caller ~ Summon Nature's Ally I",
     "name": "Summon Nature's Ally",
-    "class": "Wild Caller",
+    "class": "Summoner",
     "description": "Starting at 1st level, a wild caller can cast summon nature's ally %1 times per day. At 3rd level and every 2 levels thereafter, the power of this ability increases by one spell level, allowing him to summon more powerful creatures (to a maximum of summon nature's ally IX at 17th level). Furthermore, at 19th level, the wild caller cannot use gate as a spell-like ability, but can use either summon elder worm or summon froghemoth instead.|3+CHA",
     "raw_tokens": [
       {

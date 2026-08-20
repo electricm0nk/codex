@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Toxic Herbalist ~ Sudden Onset",
     "name": "Sudden Onset",
-    "class": "Toxic Herbalist",
+    "class": "Ranger",
     "description": "A toxic herbalist can administer a poultice he created via nature's mercy or poison a weapon as a swift action.",
     "raw_tokens": [
       {

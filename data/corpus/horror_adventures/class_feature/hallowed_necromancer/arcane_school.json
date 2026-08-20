@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Hallowed Necromancer ~ Arcane School",
     "name": "Arcane School",
-    "class": "Hallowed Necromancer",
+    "class": "Wizard",
     "description": "A hallowed necromancer must specialize in the school of necromancy and swear never to create undead. This alters arcane school and spells.",
     "raw_tokens": [
       {

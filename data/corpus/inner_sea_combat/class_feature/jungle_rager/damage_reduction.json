@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Jungle Rager ~ Damage Reduction",
     "name": "Damage Reduction",
-    "class": "Jungle Rager",
+    "class": "Barbarian",
     "description": "A jungle rager gains this ability at 8th level, except her effective barbarian level for the ability is equal to her barbarian level -1. In addition, this damage reduction is doubled against damage dealt by creatures with the swarm subtype. This ability otherwise functions as the barbarian ability of the same name.",
     "raw_tokens": [
       {

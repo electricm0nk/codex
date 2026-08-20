@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Witch Killer ~ Lingering Thrust",
     "name": "Lingering Thrust",
-    "class": "Witch Killer",
+    "class": "Slayer",
     "description": "When a witch killer's attack against an arcane spellcaster in the midst of casting forces the spellcaster to attempt a concentration check, the witch killer adds half his slayer level to the check's DC. When he makes a sneak attack against an arcane spellcaster, up to 1 point of sneak attack damage per slayer level counts as ongoing damage for the purpose of forcing the spellcaster to attempt concentration checks (the witch killer does not add half his slayer level to this DC).",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Detective ~ Psychic Meddler",
     "name": "Psychic Meddler",
-    "class": "Psychic Detective",
+    "class": "Investigator",
     "description": "At 2nd level, a psychic detective receives a +1 bonus on saves against psychic spells and spell-like abilities. This bonus increases by 1 at 5th level and every 3 levels thereafter, to a maximum of +6 at 17th level. Starting at 5th level, the psychic investigator adds half this bonus on caster level checks to dispel psychic effects. This ability replaces poison lore, poison resistance, swift alchemy, and poison immunity.",
     "raw_tokens": [
       {

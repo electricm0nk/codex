@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sharper ~ Scam Artist",
     "name": "Scam Artist",
-    "class": "Sharper",
+    "class": "Rogue",
     "description": "A sharper gains a bonus equal to half her rogue level (minimum +1) on all Bluff and Sleight of Hand checks.",
     "raw_tokens": [
       {

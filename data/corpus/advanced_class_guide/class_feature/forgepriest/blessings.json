@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Forgepriest ~ Blessings",
     "name": "Blessings",
-    "class": "Forgepriest",
+    "class": "Warpriest",
     "description": "A forgepriest selects only one blessing. This alters the blessings class feature.",
     "raw_tokens": [
       {

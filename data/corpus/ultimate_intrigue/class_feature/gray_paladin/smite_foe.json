@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Gray Paladin ~ Smite Foe",
     "name": "Smite Foe",
-    "class": "Gray Paladin",
+    "class": "Paladin",
     "description": "A gray paladin can spend two uses of smite evil in order to smite a nongood creature that is not evil and gain her full benefits. The gray paladin must truly believe that the creature she smites is an opponent to the cause of good. Even if this nonevil foe is an outsider, undead, or dragon, she doesn't add increased damage to her first attack. This ability alters smite evil.",
     "raw_tokens": [
       {

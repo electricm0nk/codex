@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Unarmed Fighter ~ Eye Gouge",
     "name": "Eye Gouge",
-    "class": "Unarmed Fighter",
+    "class": "Fighter",
     "description": "If you confirm a critical hit with his unarmed strike or begin your turn grappled, you may attempt a dirty trick maneuver to blind his target as a swift action that does not provoke attacks of opportunity. A target more than one size category larger is unaffected.",
     "raw_tokens": [
       {

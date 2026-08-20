@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cruoromancer ~ Desecrating Infusion",
     "name": "Desecrating Infusion",
-    "class": "Cruoromancer",
+    "class": "Wizard",
     "description": "When the cruoromancer uses this infusion, he can choose to center a desecrate effect on himself or a single target of the spell modified by this infusion (he chooses upon casting). This effect is like the desecrate spell, but lasts for %1 minutes and does not interact with altars, shrines, or permanent fixtures that boost the desecrate effect.|CruoromancerDesecrateInfusionTime",
     "raw_tokens": [
       {

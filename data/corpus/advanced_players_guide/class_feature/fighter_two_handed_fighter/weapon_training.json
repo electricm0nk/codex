@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fighter Two-Handed Fighter ~ Weapon Training",
     "name": "Weapon Training",
-    "class": "Fighter Two-Handed Fighter",
+    "class": "Fighter",
     "description": "As the fighter class feature, but the bonuses only apply when wielding two-handed melee weapons.",
     "raw_tokens": [
       {

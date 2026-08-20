@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Karmic Monk ~ Balanced Mind",
     "name": "Balanced Mind",
-    "class": "Karmic Monk",
+    "class": "Monk",
     "description": "At 3rd level, a karmic monk receives a +2 bonus on saving throws against effects with the chaos, evil, good, or law subtype. He also receives this bonus against the abilities and effects of creatures of the listed subtypes. This ability replaces still mind.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Provocateur ~ Damning Performance",
     "name": "Damning Performance",
-    "class": "Provocateur",
+    "class": "Bard",
     "description": "A provocateur can cause all observers fascinated by her fascinate performance to become less friendly to a target creature or group of her choice for",
     "raw_tokens": [
       {

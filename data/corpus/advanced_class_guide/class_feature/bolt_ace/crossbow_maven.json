@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bolt Ace ~ Crossbow Maven",
     "name": "Crossbow Maven",
-    "class": "Bolt Ace",
+    "class": "Gunslinger",
     "description": "A bolt ace is proficient with all crossbows instead of all firearms and begins play with a masterwork crossbow of her choice. This ability alters the gunslinger's weapon proficiencies and replaces gunsmith.",
     "raw_tokens": [
       {

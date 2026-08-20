@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Skulking Slayer ~ Rogue Talents",
     "name": "Rogue Talents",
-    "class": "Skulking Slayer",
+    "class": "Rogue",
     "description": "The following rogue talents complement the skulking slayer archetype: combat trick, surprise attack (Core Rulebook); combat swipe, powerful sneak (Advanced Player's Guide); terrain mastery (Ultimate Combat).",
     "raw_tokens": [
       {

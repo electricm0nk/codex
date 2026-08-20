@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Karmic Monk ~ Harmonic Self",
     "name": "Harmonic Self",
-    "class": "Karmic Monk",
+    "class": "Monk",
     "description": "At 20th level, a karmic monk is truly in tune with the harmonic balance of the universe. He gains the abilities of perfect self, except that instead of DR 10/chaotic, he gains DR 10 that is overcome only by attacks that do not count as chaotic, evil, good, or lawful. This ability alters perfect self.",
     "raw_tokens": [
       {

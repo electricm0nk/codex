@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mountain Druid ~ Mountain Stance",
     "name": "Mountain Stance",
-    "class": "Mountain Druid",
+    "class": "Druid",
     "description": "At 9th level, a mountain druid gains immunity to petrification and receives a +4 bonus on saving throws or to CMD to resist any attempt to push, pull, bull rush, or drag her, or to resist any other effect that would physically move her from her position (e.g., repel wood, reverse gravity, or being blown away by high winds). This does not protect her against being tripped, grappled, or overrun. This ability replaces venom immunity.",
     "raw_tokens": [
       {

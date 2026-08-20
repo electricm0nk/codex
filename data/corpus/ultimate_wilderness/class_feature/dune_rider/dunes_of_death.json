@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dune Rider ~ Dunes of Death",
     "name": "Dunes of Death",
-    "class": "Dune Rider",
+    "class": "Slayer",
     "description": "A dune rider can use the desert's heat to finish off his foes. As a standard action, he can make a single attack at his full base attack bonus while in warm desert, hills, or mountains, choosing one of the following effects: kill, knock unconscious for 1d4 hours, or paralyze for 2d6 rounds. If the attack hits, the target takes damage normally and must succeed at a Fortitude save (DC %1) or suffer the additional effect. Whether or not the target succeeds, it can't be targeted by this ability again for 24 hours.|20+INT",
     "raw_tokens": [
       {

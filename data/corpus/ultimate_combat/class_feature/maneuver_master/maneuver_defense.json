@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Maneuver Master ~ Maneuver Defense",
     "name": "Maneuver Defense",
-    "class": "Maneuver Master",
+    "class": "Monk",
     "description": "At 3rd level, if a maneuver master has an Improved combat maneuver feat, any creature attempting that maneuver against the maneuver master provokes an attack of opportunity, even if it would not normally do so. This ability replaces still mind.",
     "raw_tokens": [
       {

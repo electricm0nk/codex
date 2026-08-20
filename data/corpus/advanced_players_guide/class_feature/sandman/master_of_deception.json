@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sandman ~ Master of Deception",
     "name": "Master of Deception",
-    "class": "Sandman",
+    "class": "Bard",
     "description": "A sandman gains a bonus [+%1] equal to half his level on Bluff, Sleight of Hand, and Stealth checks. He may also disarm magical traps with Disable Device as a rogue's trapfinding ability. This ability replaces bardic knowledge.|BardLVL/2",
     "raw_tokens": [
       {

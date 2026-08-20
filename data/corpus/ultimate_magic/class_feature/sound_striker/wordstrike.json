@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sound Striker ~ Wordstrike",
     "name": "Wordstrike",
-    "class": "Sound Striker",
+    "class": "Bard",
     "description": "You can spend 1 round of bardic performance as a standard action to direct a burst of sonically charged words at a creature or object. This performance deals 1d4+%1 points of damage to an object, or half this damage to a living creature.|WordstrikeBonusDamage",
     "raw_tokens": [
       {

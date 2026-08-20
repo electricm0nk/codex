@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Discipline Faith ~ Resilience of the Faithful",
     "name": "Resilience of the Faithful",
-    "class": "Psychic Discipline Faith",
+    "class": "Psychic",
     "description": "At 5th level, you gain a +2 resistance bonus on all saving throws. This bonus increases by 1 for every 5 levels you possess beyond 5th.",
     "raw_tokens": [
       {

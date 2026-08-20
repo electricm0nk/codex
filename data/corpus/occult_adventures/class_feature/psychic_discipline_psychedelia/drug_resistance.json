@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Discipline Psychedelia ~ Drug Resistance",
     "name": "Drug Resistance",
-    "class": "Psychic Discipline Psychedelia",
+    "class": "Psychic",
     "description": "When you ingest drugs, you take half as much ability damage (minimum 1). You also gain a +4 bonus on saving throws to avoid becoming addicted to a drug or to overcome being addicted (Pathfinder RPG GameMastery Guide 236).",
     "raw_tokens": [
       {

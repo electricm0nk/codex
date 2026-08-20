@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Discipline Dream ~ Waking Dream",
     "name": "Waking Dream",
-    "class": "Psychic Discipline Dream",
+    "class": "Psychic",
     "description": "At 13th level, as a standard action, you can take control of the body of a sleeping creature within 30 feet for 1 hour per level. This ability functions like magic jar, except that your soul travels directly into the sleeping target with no receptacle necessary and the target creature's consciousness remains dreaming and unaware of its body's actions. When waking dream ends or the host body is destroyed, you immediately wake up in your body regardless of the distance from the host body, provided your body hasn't been destroyed. You can use this ability a number of times per day equal to your Charisma bonus. Creatures that don't dream are immune to this effect.",
     "raw_tokens": [
       {

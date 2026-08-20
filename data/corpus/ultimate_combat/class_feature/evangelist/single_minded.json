@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Evangelist ~ Single-Minded",
     "name": "Single-Minded",
-    "class": "Evangelist",
+    "class": "Cleric",
     "description": "An evangelist focuses her skills and learning on proclamation rather than the fine details of the church's deeper mysteries or martial training. Thus, she may select only one domain and does not gain medium armor proficiency or shield proficiency.",
     "raw_tokens": [
       {

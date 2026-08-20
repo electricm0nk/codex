@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Street Performer ~ Slip through the Crowd",
     "name": "Slip through the Crowd",
-    "class": "Street Performer",
+    "class": "Bard",
     "description": "At 15th level, a street performer's disappearing act enables affected creatures to move through crowd squares and enemy-occupied squares without impediment. Affected creatures are treated as if having greater invisibility, but enemies gain a new saving throw to notice them each time they are attacked. This performance replaces inspire heroics.",
     "raw_tokens": [
       {

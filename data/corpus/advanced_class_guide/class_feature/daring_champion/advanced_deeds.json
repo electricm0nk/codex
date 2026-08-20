@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Daring Champion ~ Advanced Deeds",
     "name": "Advanced Deeds",
-    "class": "Daring Champion",
+    "class": "Cavalier",
     "description": "A daring champion gains the following swashbuckler deeds: superior feint, targeted strike, subtle blade, and dizzying defense.",
     "raw_tokens": [
       {

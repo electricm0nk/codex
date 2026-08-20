@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Snakebite Striker Brawler ~ Snake Feint",
     "name": "Snake Feint",
-    "class": "Snakebite Striker Brawler",
+    "class": "Brawler",
     "description": "A snakebite striker who uses a standard action to move can combine that move with a feint. If she is able to feint as a move action (such as from having the Improved Feint feat), she can combine a move action to move with her feint.",
     "raw_tokens": [
       {

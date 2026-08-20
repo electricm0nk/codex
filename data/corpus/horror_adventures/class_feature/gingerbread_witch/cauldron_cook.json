@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Gingerbread Witch ~ Cauldron Cook",
     "name": "Cauldron Cook",
-    "class": "Gingerbread Witch",
+    "class": "Witch",
     "description": "A gingerbread witch gains the cauldron and child-scent hexes. When brewing potions with her cauldron, she can create small candies, pastries, or similar edible items identical in effect and application to normal potions.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Gulch Gunner ~ Class Skills",
     "name": "Class Skills",
-    "class": "Gulch Gunner",
+    "class": "Gunslinger",
     "description": "A gulch gunner adds Disable Device, Escape Artist, and Knowledge (dungeoneering) to her list of class skills and removes Knowledge (local), Ride, and Swim from her list of class skills.",
     "raw_tokens": [
       {

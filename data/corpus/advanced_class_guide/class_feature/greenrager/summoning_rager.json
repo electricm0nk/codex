@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Greenrager ~ Summoning Rager",
     "name": "Summoning Rager",
-    "class": "Greenrager",
+    "class": "Bloodrager",
     "description": "A greenrager's magic unlocks the secrets of summoning allies from nature. He adds summon nature's ally I to his list of 1st-level bloodrager spells known as a bonus spell, as if it were a bonus bloodrager spell. At 7th level, he adds summon nature's ally II as a bonus 2nd-level bloodrager spell, at 10th level he adds summon nature's ally III as a bonus 3rd level bloodrager spell, and at 13th level he adds summon nature's ally IV as a bonus 4th-level bloodrager spell.",
     "raw_tokens": [
       {

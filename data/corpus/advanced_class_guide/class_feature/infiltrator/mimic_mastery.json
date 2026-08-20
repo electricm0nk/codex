@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Infiltrator ~ Mimic Mastery",
     "name": "Mimic Mastery",
-    "class": "Infiltrator",
+    "class": "Investigator",
     "description": "At 2nd level, when an infiltrator uses disguise self or any polymorph extracts on himself, he is treated as 2 investigator levels higher for the purpose of determining the duration of that extract's effect. He can use these extracts to take the appearance of specific individuals of the type of form he chooses, gaining a +10 to Disguise checks even if that extract does not typically grant such a bonus. Furthermore, these extracts grant the infiltrator a +10 bonus to Disguise checks made as part of his voice mimicry ability. This ability replaces poison resistance.",
     "raw_tokens": [
       {

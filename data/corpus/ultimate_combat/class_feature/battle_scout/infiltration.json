@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Battle Scout ~ Infiltration",
     "name": "Infiltration",
-    "class": "Battle Scout",
+    "class": "Ranger",
     "description": "At 10th level, once per day, a battle scout can choose a single terrain type that is not his favored terrain. For the next hour per ranger level, he treats that terrain as if it were one of his favored terrains. This ability replaces the ranger's third favorite enemy.",
     "raw_tokens": [
       {

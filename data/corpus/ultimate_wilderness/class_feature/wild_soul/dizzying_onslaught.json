@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wild Soul ~ Dizzying Onslaught",
     "name": "Dizzying Onslaught",
-    "class": "Wild Soul",
+    "class": "Ranger",
     "description": "A wild soul lands punishing blows that devastate his nemeses' ability to focus. When he confirms a critical hit against a creature against whom his nemesis bonus applies, for 1 minute the target must succeed at a concentration check (DC = 20 + the wild soul's Wisdom modifier + twice the spell's level) to cast an arcane spell, create an extract, or use an alchemist's bomb, and the target can't spend or gain grit.",
     "raw_tokens": [
       {

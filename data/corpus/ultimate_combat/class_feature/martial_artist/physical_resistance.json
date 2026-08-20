@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Martial Artist ~ Physical Resistance",
     "name": "Physical Resistance",
-    "class": "Martial Artist",
+    "class": "Monk",
     "description": "At 7th level, if a martial artist suffers any effect that causes ability damage, ability drain, or temporary ability score penalties, the effect is reduced by 1 point. This reduction increases by 1 for every three levels beyond 7th (to a maximum reduction of 5 at 19th level). This ability replaces wholeness of body, timeless body, and tongue of sun and moon.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Feral Gnasher ~ Rage Powers",
     "name": "Rage Powers",
-    "class": "Feral Gnasher",
+    "class": "Barbarian",
     "description": "The following rage powers complement the feral gnasher archetype: increased damage reduction, scent, superstition (Core Rulebook); beast totem, beast totem (greater), beast totem (lesser) (Advanced Player's Guide); eater of magic, ghost rager (Ultimate Combat).",
     "raw_tokens": [
       {

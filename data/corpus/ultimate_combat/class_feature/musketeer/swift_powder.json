@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Musketeer ~ Swift Powder",
     "name": "Swift Powder",
-    "class": "Musketeer",
+    "class": "Cavalier",
     "description": "At 4th level, the musketeer gains Rapid Reload (musket) or Rapid Reload (pistol) as a bonus feat. At 14th level, each time the musketeer issues a challenge, he may reload a wielded firearm as a free action. This ability replaces expert trainer.",
     "raw_tokens": [
       {

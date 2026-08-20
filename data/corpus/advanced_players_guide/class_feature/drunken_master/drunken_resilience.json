@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Drunken Master ~ Drunken Resilience",
     "name": "Drunken Resilience",
-    "class": "Drunken Master",
+    "class": "Monk",
     "description": "At 13th level, a drunken master gains DR 1/- as long as he has at least 1 point of drunken ki. At 16th level, the DR increases to 2/-. At 19th level, it increases to 3/-. This ability replaces diamond soul.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Maneuver Master ~ Sweeping Maneuver",
     "name": "Sweeping Maneuver",
-    "class": "Maneuver Master",
+    "class": "Monk",
     "description": "At 11th level, a maneuver master can make two combat maneuvers as a standard action, as long as neither maneuver requires the maneuver master to move. He may perform two identical maneuvers against two adjacent enemies, or he may perform two different combat maneuvers against the same target. This ability replaces diamond body.",
     "raw_tokens": [
       {

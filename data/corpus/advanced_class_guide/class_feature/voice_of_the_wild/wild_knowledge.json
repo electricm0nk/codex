@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Voice of the Wild ~ Wild Knowledge",
     "name": "Wild Knowledge",
-    "class": "Voice of the Wild",
+    "class": "Bard",
     "description": "A voice of the wild adds %1 to all Knowledge (nature) checks. He can use Knowledge (geography) and Knowledge (nature) untrained.|max(floor(BardLVL/2))",
     "raw_tokens": [
       {

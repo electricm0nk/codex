@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Divine Strategist ~ Master Tactician",
     "name": "Master Tactician",
-    "class": "Divine Strategist",
+    "class": "Cleric",
     "description": "A divine strategist can always act in a surprise round even if she fails to make a Perception check to notice enemies, though she is considered flat-footed until she acts. In addition, the divine strategist gains a bonus on initiative checks equal to +%1. At 20th level, a divine strategist's initiative roll is automatically a natural 20. Allies able to see and hear the divine strategist gain a bonus on initiative checks equal to +%2. This is a language-dependent ability. This ability replaces channel energy.|MasterTacticianInitiativeBonus|MasterTacticianInitiativeBonus/2",
     "raw_tokens": [
       {

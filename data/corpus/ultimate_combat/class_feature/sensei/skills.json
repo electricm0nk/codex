@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sensei ~ Skills",
     "name": "Skills",
-    "class": "Sensei",
+    "class": "Monk",
     "description": "A sensei gains Diplomacy, Linguistics, and all Knowledge skills as class skills.",
     "raw_tokens": [
       {

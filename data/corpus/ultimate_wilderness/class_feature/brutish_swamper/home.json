@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Brutish Swamper ~ Home",
     "name": "Home",
-    "class": "Brutish Swamper",
+    "class": "Barbarian",
     "description": "A brutish swamper gains a +%1 bonus on initiative checks and Knowledge (geography), Perception, Stealth, and Survival checks when in swamps.|BrutishSwamperHomeBonus",
     "raw_tokens": [
       {

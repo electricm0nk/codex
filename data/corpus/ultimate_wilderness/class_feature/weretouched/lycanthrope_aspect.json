@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Weretouched ~ Lycanthrope Aspect",
     "name": "Lycanthrope Aspect",
-    "class": "Weretouched",
+    "class": "Shifter",
     "description": "A weretouched gains the shifter aspect ability, except the animal aspect chosen is the only animal aspect the weretouched can gain. This alters her other class features, as detailed in each relevant class feature. Otherwise, this ability functions identically to shifter aspect.",
     "raw_tokens": [
       {

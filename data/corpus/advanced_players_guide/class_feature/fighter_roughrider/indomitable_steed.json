@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fighter Roughrider ~ Indomitable Steed",
     "name": "Indomitable Steed",
-    "class": "Fighter Roughrider",
+    "class": "Fighter",
     "description": "At 19th level, a roughrider and his steed gain DR 5/- when mounted. This ability replaces armor mastery.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Student of Stone ~ Bonus Feat",
     "name": "Bonus Feat",
-    "class": "Student of Stone",
+    "class": "Monk",
     "description": "A student of stone adds Elemental Fist (Advanced Player's Guide) to his list of available bonus feats. If the student of stone selects Elemental Fist as a bonus feat, he may only deal acid damage when using the feat.",
     "raw_tokens": [
       {

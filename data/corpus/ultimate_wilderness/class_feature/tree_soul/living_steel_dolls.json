@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tree Soul ~ Living Steel Dolls",
     "name": "Living Steel Dolls",
-    "class": "Tree Soul",
+    "class": "Oracle",
     "description": "You add animate objects to your list of spells known. When you cast this spell on wooden objects, the objects' wooden parts immediately transform into living steel. If the objects are destroyed or the duration ends, the wooden parts revert back to their original material.",
     "raw_tokens": [
       {

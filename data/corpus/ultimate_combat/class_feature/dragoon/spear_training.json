@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dragoon ~ Spear Training",
     "name": "Spear Training",
-    "class": "Dragoon",
+    "class": "Fighter",
     "description": "At 5th level, a dragoon must select weapon training with the spear group. The dragoon's weapon training bonus with spears improves by +1 on attack rolls and +2 on damage rolls for every four levels beyond 5th (to a maximum of +4 on attack rolls and +8 on damage rolls at 17th level). The dragoon does not gain weapon training in any other groups as he increases in level.",
     "raw_tokens": [
       {

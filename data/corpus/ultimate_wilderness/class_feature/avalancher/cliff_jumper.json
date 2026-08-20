@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Avalancher ~ Cliff Jumper",
     "name": "Cliff Jumper",
-    "class": "Avalancher",
+    "class": "Slayer",
     "description": "An avalancher adds half his level on Acrobatics checks to jump or soften a fall. Whenever he attempts an Acrobatics check to soften an intentional fall, he reduces the falling damage he takes by an additional 1d6 for every increment of 10 by which his Acrobatics check result exceeds the DC (a 2d6 reduction at DC 25, 3d6 at DC 35, and so on).",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fey Prankster ~ Steal Appearance",
     "name": "Steal Appearance",
-    "class": "Fey Prankster",
+    "class": "Rogue",
     "description": "The fey prankster can exchange the appearance of two adjacent items of the same size. He can also exchange the appearance of two creatures if at least one is willing and both are adjacent. Affecting an unwilling creature or an item it wears or carries requires a successful dirty trick combat maneuver against that creature. If he succeeds, the objects or creatures are each disguised as the other as if with veil cast at his rogue level. The Will save DC to resist or disbelieve the illusion is %1.|10+RogueLVL/2+INT",
     "raw_tokens": [
       {

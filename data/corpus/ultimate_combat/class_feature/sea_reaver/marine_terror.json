@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sea Reaver ~ Marine Terror",
     "name": "Marine Terror",
-    "class": "Sea Reaver",
+    "class": "Barbarian",
     "description": "A sea reaver can hold her breath for a number of rounds equal to four times her Constitution score (currently %1 rounds). In addition, a sea reaver can move normally though squares of standing water or bog that is 1 foot deep. It does not cost her extra movement to traverse these terrains. Lastly, a sea reaver ignores the normal cover bonus to AC when attacking creatures that are partially immersed in water. This ability replaces fast movement.|CONSCORE*4",
     "raw_tokens": [
       {

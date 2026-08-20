@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Deed ~ Opportunistic Evasion",
     "name": "Opportunistic Evasion",
-    "class": "Deed",
+    "class": "Investigator",
     "description": "At 1st level, when a sleuth succeeds at a Reflex saving throw against an effect that still deals damage on a successful save, he can spend 1 luck point as an immediate action to instead take no damage for that effect.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ursine Natural Course ~ Thick Hide",
     "name": "Thick Hide",
-    "class": "Ursine Natural Course",
+    "class": "Vigilante",
     "description": "An ursine wildsoul in his vigilante identity has skin that bristles with thick hair like that of a bear's. He gains a natural armor bonus of +%1.|UrsineWildsoulArmorBonus",
     "raw_tokens": [
       {

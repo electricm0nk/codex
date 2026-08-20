@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Zen Archer ~ Reflexive Shot",
     "name": "Reflexive Shot",
-    "class": "Zen Archer",
+    "class": "Monk",
     "description": "At 9th level, a zen archer can make attacks of opportunity with arrows from his bow. The monk still threatens squares he could reach with unarmed strikes, and can still only make one attack of opportunity per round (unless he has Combat Reflexes). This ability replaces improved evasion.",
     "raw_tokens": [
       {

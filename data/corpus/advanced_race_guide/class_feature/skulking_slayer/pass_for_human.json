@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Skulking Slayer ~ Pass for Human",
     "name": "Pass for Human",
-    "class": "Skulking Slayer",
+    "class": "Rogue",
     "description": "When trying to conceal her half-orc heritage, a skulking slayer gains a bonus on Disguise checks equal to half her level. When using disguise to appear as a specific individual, skulking stalkers ignore the normal -2 penalty to appear as another race.",
     "raw_tokens": [
       {

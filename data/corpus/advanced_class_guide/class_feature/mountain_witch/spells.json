@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mountain Witch ~ Spells",
     "name": "Spells",
-    "class": "Mountain Witch",
+    "class": "Witch",
     "description": "A mountain witch replaces some of her patron spells with the following: 2nd-magic stone, 4th-stone callAPG, 6th- meld into stone, 8th-stoneskin, 10th-wall of stone, 12th-stone tell, 14th-statue, 16th-repel metal or stone, 18th-clashing rocksAPG.",
     "raw_tokens": [
       {

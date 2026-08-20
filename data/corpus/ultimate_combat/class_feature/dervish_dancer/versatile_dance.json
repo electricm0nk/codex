@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dervish Dancer ~ Versatile Dance",
     "name": "Versatile Dance",
-    "class": "Dervish Dancer",
+    "class": "Bard",
     "description": "At 2nd level, a dervish dancer gains a bonus equal to half his level on Perform (dance) checks. He can use his bonus for his Perform (dance) skill in place of his bonus for Acrobatics. This ability replaces versatile performance.",
     "raw_tokens": [
       {

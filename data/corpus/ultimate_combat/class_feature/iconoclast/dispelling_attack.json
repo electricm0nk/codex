@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Iconoclast ~ Dispelling Attack",
     "name": "Dispelling Attack",
-    "class": "Iconoclast",
+    "class": "Inquisitor",
     "description": "At 5th level, once per day as a standard action, an iconoclast can make a melee or ranged attack against an opponent, and if she hits, she can affect that opponent as if she had cast dispel magic, using the targeted dispel option. If she misses, this ability is wasted. Use her inquisitor level as the caster level of the dispel magic effect. This ability replaces discern lies.",
     "raw_tokens": [
       {

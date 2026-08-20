@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Gingerbread Witch ~ Gruesome Gobbler",
     "name": "Gruesome Gobbler",
-    "class": "Gingerbread Witch",
+    "class": "Witch",
     "description": "A gingerbread witch gains a bite attack that deals 1d6 points of damage for a Medium witch. As a full-round action, she can make a single bite attack that deals double base damage (2d6 for a Medium witch) and functions as if she had the grab and swallow whole special attacks, allowing her to grab and swallow a creature of her size or smaller. Her stomach doesn't deal damage to swallowed creatures, but a living creature she swallows must succeed at a Fortitude save (DC %1) at the beginning of each of its turns or become nauseated for 1 round. If a gingerbread witch successfully swallows a creature, her torso distends grotesquely and she is treated as if she were carrying a heavy load if the creature is the same size and a medium load if it's one size smaller; regardless, she can swallow only one such creature at a time. Creatures two or more sizes smaller do not distend her belly, though every four creatures of a smaller size count as one creature one size category larger (she can swallow 4 Tiny, 16 Diminutive, or 64 Fine creatures). She can regurgitate a swallowed creature of her choice as a move action, leaving it prone in an adjacent open square. If she is struck with a confirmed critical hit while she has a creature swallowed, the swallowed creatures each take half as much damage as the witch does (this doesn't reduce the damage the gingerbread witch takes).|10+WitchLVL/2+CON",
     "raw_tokens": [
       {

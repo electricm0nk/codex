@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Witch Killer ~ Scent Magic",
     "name": "Scent Magic",
-    "class": "Witch Killer",
+    "class": "Slayer",
     "description": "A witch killer can detect arcane magic by scent. He can use detect magic at will (as per a paladin's ability to detect evil), but only against arcane magic, and the ability is scent-based and thus defeated by effects like negate aroma. Even when he isn't concentrating on using his magic scent, when a creature within scent range casts an arcane spell (including arcane spell-like abilities or magic item effects), the witch killer automatically pinpoints the caster's location.",
     "raw_tokens": [
       {

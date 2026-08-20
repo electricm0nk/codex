@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Blood Kineticist ~ Bleeding Infusion",
     "name": "Bleeding Infusion",
-    "class": "Blood Kineticist",
+    "class": "Kineticist",
     "description": "At 5th level, a blood kineticist can infuse her blasts with a vicious power that causes internal or external bleeding. On a failed Fortitude save, the target takes 1 point of bleed damage for every die of the blast's damage. A target that fails its saving throw against the wrack form infusion does not receive a saving throw to avoid the bleed damage from bleeding infusion on the same blast. This is a 2nd-level substance infusion that costs 2 points of burn and can be used with water and blood blasts. This ability replaces the 5th-level infusion.",
     "raw_tokens": [
       {

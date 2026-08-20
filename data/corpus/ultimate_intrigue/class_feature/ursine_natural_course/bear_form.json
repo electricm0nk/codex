@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ursine Natural Course ~ Bear Form",
     "name": "Bear Form",
-    "class": "Ursine Natural Course",
+    "class": "Vigilante",
     "description": "An ursine wildsoul has learned how to take a bear's form. He can change into bear form as a standard action, at will, and the transformation lasts until he changes back. While transformed, he becomes a grizzly bear (Bestiary p31) as beast shape II. An ursine wildsoul loses his ability to speak while in bear form and is limited to the sounds that a normal bear can make, though he can communicate normally with other bears, as speak with animal.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bloody Jake ~ Something's Not Right",
     "name": "Something's Not Right",
-    "class": "Bloody Jake",
+    "class": "Slayer",
     "description": "As a move action,|!PRECLASS:1,Slayer=12",
     "raw_tokens": [
       {

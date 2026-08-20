@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Battle Scout ~ Hunter's Bond",
     "name": "Hunter's Bond",
-    "class": "Battle Scout",
+    "class": "Ranger",
     "description": "At 4th level, when a battle scout gains the hunter's bond ability, he must choose to bond with his companions. Battle scouts do not have animal companions.",
     "raw_tokens": [
       {

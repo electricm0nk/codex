@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Guardian of Immortality ~ Desert Survivor",
     "name": "Desert Survivor",
-    "class": "Guardian of Immortality",
+    "class": "Investigator",
     "description": "A guardian of immortality is trained by the druids of Duwwor to survive the hazards of the desert. He gains Endurance as a bonus feat and does not treat sand as difficult terrain.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Jungle Rager ~ Jungle Endurance",
     "name": "Jungle Endurance",
-    "class": "Jungle Rager",
+    "class": "Barbarian",
     "description": "At 3rd level, a jungle rager gains a +1 bonus on Fortitude saves to resist the effects of hot weather and diseases. This bonus increases by +1 every 3 barbarian levels after 3rd. This ability replaces trap sense.",
     "raw_tokens": [
       {

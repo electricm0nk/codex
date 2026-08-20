@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Voice of the Wild ~ Song of the Wild",
     "name": "Song of the Wild",
-    "class": "Voice of the Wild",
+    "class": "Bard",
     "description": "The voice of the wild can use bardic performance to grant an animal aspect to an ally, as if using the hunter's animal focus class feature. The ally must be able to hear or see the performance. The voice of the wild uses his bard level as his hunter level for determining the effect of the animal aspect. The bard can affect a second ally with this performance at 10th level and a third at 17th level.",
     "raw_tokens": [
       {

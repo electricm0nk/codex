@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wanderer ~ Light Step",
     "name": "Light Step",
-    "class": "Wanderer",
+    "class": "Monk",
     "description": "A wanderer leaves no trail and cannot be tracked, though he can leave a trail if desired. By spending 1 point from his ki pool, he can use ant haul, feather step, pass without trace, or tireless pursuit as a spell-like ability (with a caster level equal to his monk level).",
     "raw_tokens": [
       {

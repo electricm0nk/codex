@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Vampire Hunter ~ Silversmith",
     "name": "Silversmith",
-    "class": "Vampire Hunter",
+    "class": "Inquisitor",
     "description": "A vampire hunter learns the secrets of crafting silver into dangerous weapons. She adds a +%1 bonus on any Craft or Spellcraft check made to create a silver item that bypasses DR/silver, such as alchemical silver, silversheen, or silver weapon blanch.|InquisitorLVL",
     "raw_tokens": [
       {

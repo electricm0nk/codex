@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Majordomo ~ Delegate",
     "name": "Delegate",
-    "class": "Majordomo",
+    "class": "Investigator",
     "description": "In order to perform all the necessary tasks of her household, a majordomo quickly learns how to delegate. At 1st level and every 3 investigator levels thereafter, a majordomo gains a bonus teamwork feat.",
     "raw_tokens": [
       {

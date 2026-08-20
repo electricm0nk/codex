@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Chirurgeon ~ Infused Curative",
     "name": "Infused Curative",
-    "class": "Chirurgeon",
+    "class": "Alchemist",
     "description": "Your extracts of cure spells automatically act as infusions, and can be used by non-alchemists. When you prepare your extracts, you may choose to render any or all of your infused curatives inert and prepare other extracts to replace them (unlike infusions, which continue to occupy your daily extract slots until consumed or used).",
     "raw_tokens": [
       {

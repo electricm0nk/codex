@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Elemental Ascetic ~ Elemental Flurry",
     "name": "Elemental Flurry",
-    "class": "Elemental Ascetic",
+    "class": "Kineticist",
     "description": "At 1st level, an elemental ascetic gains Improved Unarmed Strike as a bonus feat. He gains the kinetic fist form infusion and it costs 0 points of burn instead of 1 point of burn. When using the kinetic fist form infusion with a full attack, he can make a flurry of blows as the monk class feature. He must use only his fists to make this flurry, no matter what other abilities he possesses. Like a monk, he can use this ability only when unarmored, not using a shield, and unencumbered. He can't use his kinetic blast without a form infusion, nor can he ever use his kinetic blast with the chain, extended range, extreme range, foe throw, flurry of blasts, many throw, or snake form infusions, or with any other form infusion that requires a ranged attack roll or ranged touch attack roll. This ability alters kinetic blast and replaces elemental overflow.",
     "raw_tokens": [
       {

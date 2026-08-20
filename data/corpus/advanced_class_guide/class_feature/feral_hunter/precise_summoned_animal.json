@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Feral Hunter ~ Precise Summoned Animal",
     "name": "Precise Summoned Animal",
-    "class": "Feral Hunter",
+    "class": "Hunter",
     "description": "This functions like the precise companion class ability, except the hunter grants all her teamwork feats to all animals she summons with summon nature's ally.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dirge Bard ~ Haunting Refrain",
     "name": "Haunting Refrain",
-    "class": "Dirge Bard",
+    "class": "Bard",
     "description": "You are able to stir primal terrors in the hearts of listeners. You can use a Perform (keyboard) or Perform (percussion) check in place of an Intimidate check to demoralize an opponent, with a +%1 bonus. In addition, saving throws against any fear effect you create are made with a -%2 penalty.|HauntingRefrainBonus|HauntingRefrainPenalty",
     "raw_tokens": [
       {

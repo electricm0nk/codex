@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Eldritch Font ~ Bottomless Well",
     "name": "Bottomless Well",
-    "class": "Eldritch Font",
+    "class": "Arcanist",
     "description": "An eldritch font can spend 1 hour studying her spellbook to refuel herself. Doing so allows her to prepare new spells and regain upto %1 points of arcane reservoir. She can use this ability multiple times per day, however she still only regains spell slots once per day.|floor(ArcanistLVL/2)",
     "raw_tokens": [
       {

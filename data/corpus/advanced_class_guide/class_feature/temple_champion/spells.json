@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Temple Champion ~ Spells",
     "name": "Spells",
-    "class": "Temple Champion",
+    "class": "Paladin",
     "description": "A temple champion does not gain access to paladin spells, and does not have a paladin caster level or spell list. This is not considered a spellcasting class.",
     "raw_tokens": [
       {

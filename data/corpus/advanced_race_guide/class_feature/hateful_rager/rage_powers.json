@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Hateful Rager ~ Rage Power",
     "name": "Rage Powers",
-    "class": "Hateful Rager",
+    "class": "Barbarian",
     "description": "The following rage powers complement the hateful rager archetype: intimidating glare, roused anger, terrifying howl (Core Rulebook); come and get me, inspire ferocity, overbearing advance, reckless abandon (Advanced Player's Guide).",
     "raw_tokens": [
       {

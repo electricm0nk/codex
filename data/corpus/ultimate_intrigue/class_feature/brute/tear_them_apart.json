@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Brute ~ Tear Them Apart",
     "name": "Tear Them Apart",
-    "class": "Brute",
+    "class": "Vigilante",
     "description": "At 20th level, a brute has learned how to tear at his enemies' bodies when he hits with multiple attacks. When he takes a full attack action while in his vigilante identity, if a brute hits an opponent with at least two attacks, he deals an additional 1d10 points of damage plus 1-1/2 times his Strength modifier. If he hits an opponent with four attacks during a full attack action while in his vigilante identity, he instead deals an additional 3d10 points of damage plus 1-1/2 times his Strength modifier. The damage occurs after he has taken his last attack with the full attack action. This counts as a rend and does not stack with other abilities that grant rend.",
     "raw_tokens": [
       {

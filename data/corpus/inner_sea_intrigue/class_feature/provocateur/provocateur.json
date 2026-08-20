@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Provocateur ~ Provocateur",
     "name": "Provocateur",
-    "class": "Provocateur",
+    "class": "Bard",
     "description": "A provocateur adds 1/2 his bard level on skill checks to reduce a target's influence (Ultimate Intrigue 102) and on skill checks to reduce a target's attitude toward another creature or organization.",
     "raw_tokens": [
       {

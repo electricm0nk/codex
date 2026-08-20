@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cruoromancer ~ Blood Command",
     "name": "Blood Command",
-    "class": "Cruoromancer",
+    "class": "Wizard",
     "description": "The cruoromancer can control up to %1 Hit Dice worth of undead creatures when casting the animate dead spell.|WizardLVL*5",
     "raw_tokens": [
       {

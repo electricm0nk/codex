@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tidal Hunter ~ Aquatic Mastery",
     "name": "Aquatic Mastery",
-    "class": "Tidal Hunter",
+    "class": "Ranger",
     "description": "A tidal hunter must select water as his favored terrain, and he doesn't gain additional favored terrains. At 8th level and every 5 levels thereafter, the bonus from this favored terrain increases by 2. This alters favored terrain.",
     "raw_tokens": [
       {

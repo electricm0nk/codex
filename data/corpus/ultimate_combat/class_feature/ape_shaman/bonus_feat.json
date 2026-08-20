@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ape Shaman ~ Bonus Feat",
     "name": "Bonus Feat",
-    "class": "Ape Shaman",
+    "class": "Druid",
     "description": "At 9th level and every four levels thereafter, an ape shaman gains one of the following bonus feats: Diehard, Endurance, Great Fortitude, Improved Bull Rush, and Toughness. She must meet the prerequisites for these bonus feats. This ability replaces venom immunity.",
     "raw_tokens": [
       {

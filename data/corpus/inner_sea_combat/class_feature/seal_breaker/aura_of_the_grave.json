@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Seal-Breaker ~ Aura of the Grave",
     "name": "Aura of the Grave",
-    "class": "Seal-Breaker",
+    "class": "Antipaladin",
     "description": "At 3rd level, a seal-breaker is constantly surrounded by the chill of death. Mindless undead within 10 feet of the seal-breaker will not attack him unless directly ordered to, and even then only after succeeding at a Will save (DC = 10 + 1 /2 the seal-breaker's level + his Charisma modifier). This ability replaces aura of cowardice.",
     "raw_tokens": [
       {

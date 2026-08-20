@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ape Shaman ~ Wild Empathy",
     "name": "Wild Empathy",
-    "class": "Ape Shaman",
+    "class": "Druid",
     "description": "An ape shaman can use wild empathy with apes and other primates as a full-round action with a +4 bonus.",
     "raw_tokens": [
       {

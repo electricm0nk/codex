@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Enlightened Bloodrager ~ Enlightened Bloodrage ~ AG",
     "name": "Enlightened Bloodrage",
-    "class": "Enlightened Bloodrager",
+    "class": "Bloodrager",
     "description": "While bloodraging, an enlightened bloodrager can still use Intelligence-, Dexterity-, and Charisma-based skills and can use abilities that require patience or concentration. This ability alters bloodrage.",
     "raw_tokens": [
       {

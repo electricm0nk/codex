@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Witch Killer ~ Studied Witch",
     "name": "Studied Witch",
-    "class": "Witch Killer",
+    "class": "Slayer",
     "description": "A witch killer's studied combat bonus applies on Spellcraft checks and saving throws against arcane spells and spell-like abilities and hexes. This bonus is reduced by 1 (minimum 0) if the target is not an arcane spellcaster, or a being called or summoned by arcane magic. He does not gain the increases to the maximum number of studied targets he can have at a time normally attained at 5th, 10th, 15th, and 20th levels, but his bonuses still increase at those levels. This ability alters studied target.",
     "raw_tokens": [
       {

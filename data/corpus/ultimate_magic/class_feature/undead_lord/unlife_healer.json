@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Undead Lord ~ Unlife Healer",
     "name": "Unlife Healer",
-    "class": "Undead Lord",
+    "class": "Cleric",
     "description": "Your spells, spell-like abilities, and supernatural abilities used to heal undead are Empowered.|!PRECLASS:1,Cleric=16",
     "raw_tokens": [
       {

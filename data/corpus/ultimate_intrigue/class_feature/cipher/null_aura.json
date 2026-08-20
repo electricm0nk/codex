@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cipher ~ Null Aura",
     "name": "Null Aura",
-    "class": "Cipher",
+    "class": "Investigator",
     "description": "A cipher becomes much harder to notice with divinations. He gains a +4 bonus on saving throws against divination spells, spell-like abilities, and effects. Attempts to locate the cipher with scrying and other spells that share the knowledge and connection rules with scrying function only if the caster has firsthand or familiar knowledge of the cipher, or has one of his body parts (not from secondhand knowledge, possession, or a likeness of the cipher). If the caster does not meet these conditions, or if the cipher succeeds at a saving throw to negate such an effect, the spell or effect reveals nothing but darkness as if the target was invalid or did not exist; unlike normal, even if she is using a spell with a single target, the caster of the divination effect does not discover that her target succeeded at a saving throw.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tribal Fighter ~ Tribal Weapon Training",
     "name": "Tribal Weapon Training",
-    "class": "Tribal Fighter",
+    "class": "Fighter",
     "description": "When a tribal fighter gains the weapon training ability, he must choose the tribal weapon group and doesn't later gain additional weapon groups, though the weapon training bonus for tribal weapons still improves at 9th level and every 4 levels thereafter. [NOT IMPLEMENTED] Additionally, if the tribal fighter has combat feats that apply to a specific weapon type (such as Improved Critical or Weapon Focus) and he has selected a weapon that belongs to the tribal weapon group, he can apply the benefits of that feat to all weapons that belong to the tribal weapon group that would legally apply (for instance, a feat that applies only to throwing weapons wouldn't apply to greatclubs). This benefit applies only to feats selected as fighter bonus feats. This alters weapon training.",
     "raw_tokens": [
       {

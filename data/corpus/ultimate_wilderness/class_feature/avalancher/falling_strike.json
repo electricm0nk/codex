@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Avalancher ~ Falling Strike",
     "name": "Falling Strike",
-    "class": "Avalancher",
+    "class": "Slayer",
     "description": "An avalancher excels at dropping onto opponents from higher ground. He gains a +%1 bonus on Stealth checks and attack and damage rolls when he falls at least 10 feet before attacking an opponent. These bonuses stack with any bonuses the avalancher receives for charging or attacking from higher ground.",
     "raw_tokens": [
       {

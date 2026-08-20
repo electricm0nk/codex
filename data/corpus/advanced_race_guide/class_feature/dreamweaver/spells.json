@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dreamweaver ~ Spells",
     "name": "Spells",
-    "class": "Dreamweaver",
+    "class": "Witch",
     "description": "A dreamweaver replaces some of her patron's spells with the following: 2nd-sow thoughts (see below), 4th-dust of twilight (Pathfinder RPG Advanced Player's Guide), 6th-deep slumber, 8th-modify memory, 10th-dream, 12th- cloak of dreams (Advanced Player's Guide), 14th-ethereal jaunt, 16th-moment of prescience, 18th-astral projection.",
     "raw_tokens": [
       {

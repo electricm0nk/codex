@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Green Faith Initiate ~ Mediator's Ear",
     "name": "Mediator's Ear",
-    "class": "Green Faith Initiate",
+    "class": "Druid",
     "description": "A Green Faith initiate is respected for her neutrality and even-handed attitude toward all people as well as other living things. She quickly develops some sense for others' attitudes, much as she does with animals. A Green Faith initiate gains a +%1 bonus on Diplomacy and Sense Motive checks.|floor(DruidLVL/2)",
     "raw_tokens": [
       {

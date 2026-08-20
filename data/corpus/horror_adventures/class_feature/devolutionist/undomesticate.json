@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Devolutionist ~ Undomesticate",
     "name": "Undomesticate",
-    "class": "Devolutionist",
+    "class": "Druid",
     "description": "A devolutionist can spend 1 minute with a willing or restrained domesticated animal to undo the effects of domestication, transforming it into a wild animal and causing it to lose any tricks it knew. The animal no longer recognizes any humanoids as friends or allies and gladly tears former playmates apart for food. Handle Animal checks don't work on an undomesticated creature, though wild empathy does. This ability doesn't function on animal companions, special mounts, or the like, and other exceptional domesticated animals can attempt a Will save (DC %1) to negate the effect and become immune to it for 24 hours. Though this ability is instantaneous, break enchantment, limited wish, miracle, or wish can reverse the effects.|10+DruidLVL/2+WIS",
     "raw_tokens": [
       {

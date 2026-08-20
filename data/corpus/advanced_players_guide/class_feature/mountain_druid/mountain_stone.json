@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mountain Druid ~ Mountain Stone",
     "name": "Mountain Stone",
-    "class": "Mountain Druid",
+    "class": "Druid",
     "description": "At 13th level, a mountain druid can transform her body into a weathered stone outcrop and back at will. This effect functions as statue. This ability replaces a thousand faces.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Packmaster ~ Teamwork Feat",
     "name": "Teamwork Feat",
-    "class": "Packmaster",
+    "class": "Hunter",
     "description": "At 3rd level or any level at which a packmaster would gain a bonus teamwork feat, she can instead increase the number of her animal companions that gain the benefits of her precise companion, woodland stride, and teamwork feats by 1. The current number of animal companions that can benefit from precise companion is %1. She can select this ability multiple times. This ability alters teamwork feats.|PackmasterPreciseCompanionAnimals",
     "raw_tokens": [
       {

@@ -354,6 +354,74 @@ fn desc_value(tokens: &[RawToken]) -> Option<String> {
     tokens.iter().find(|t| t.key == "DESC").map(|t| t.value.clone())
 }
 
+/// One resolved fact from `cache_gen::class_feature_grants`' own output
+/// (`data/class_feature_grants/<book>/<class-slug>.json`) -- read here as
+/// plain data, never through that module's own types, per this package's
+/// disjoint-file-touch convention (module doc comment). Only the two
+/// fields this generator needs are extracted; every other field on the
+/// real record (`level`, `level_explicit`, `gate`, `corpus_record_exists`,
+/// `source`) is ignored.
+#[derive(Debug, Clone, serde::Deserialize)]
+struct GrantFactClassOnly {
+    key: String,
+    class: String,
+}
+
+/// Builds the `key -> true granting class` map for one book from every
+/// `data/class_feature_grants/<book>/*.json` file, so [`generate`] can
+/// correct `ClassFeatureData.class` instead of deriving it from the key's
+/// own text (`OPEN-ISSUES.md` row 334's closing note; wave 22's
+/// `class_feature_grants.rs` module doc comment, "A related, pre-existing,
+/// OUT-OF-SCOPE defect this cycle found and did NOT fix").
+///
+/// A missing `grants_root/<book>` directory (5 of the 21
+/// [`BOOK_PRIMARY_FILES`] books have no grant data yet) returns an empty
+/// map -- every record in that book falls back to the old key-prefix
+/// split, unchanged.
+///
+/// **Ambiguity is refused, not guessed.** If two different grant facts in
+/// the same book claim the SAME `key` under DIFFERENT classes, that key is
+/// left OUT of the map entirely (falls back to the key-prefix split) rather
+/// than picking one arbitrarily -- verified against the real corpus this
+/// cycle to occur zero times today (`python3` cross-check, see cycle
+/// receipt), but a future grant-data regen could introduce one, and a
+/// silent pick would be exactly the "correctness proof narrower than the
+/// real data" shape this program's own history (waves 20/21) keeps
+/// punishing.
+fn true_class_by_key(grants_root: &Path, book: &str) -> BTreeMap<String, String> {
+    let book_dir = grants_root.join(book);
+    let mut resolved: BTreeMap<String, String> = BTreeMap::new();
+    let mut ambiguous: BTreeSet<String> = BTreeSet::new();
+    let Ok(entries) = std::fs::read_dir(&book_dir) else {
+        return resolved;
+    };
+    let mut files: Vec<PathBuf> = entries.filter_map(|e| e.ok()).map(|e| e.path()).collect();
+    files.sort();
+    for file in files {
+        if file.extension().and_then(|e| e.to_str()) != Some("json") {
+            continue;
+        }
+        let Ok(text) = std::fs::read_to_string(&file) else { continue };
+        let Ok(facts) = serde_json::from_str::<Vec<GrantFactClassOnly>>(&text) else { continue };
+        for fact in facts {
+            if ambiguous.contains(&fact.key) {
+                continue;
+            }
+            match resolved.get(&fact.key) {
+                None => {
+                    resolved.insert(fact.key, fact.class);
+                }
+                Some(existing) if *existing == fact.class => {}
+                Some(_) => {
+                    resolved.remove(&fact.key);
+                    ambiguous.insert(fact.key);
+                }
+            }
+        }
+    }
+    resolved
+}
+
 /// Redacts the `DESC` token in `raw_tokens` in place whenever `description`
 /// classified as PI-redacted (declared `DESCISPI:Yes` OR blacklist-detected
 /// via [`pi_screening::classify_field`]) -- otherwise `data.raw_tokens`
@@ -374,10 +442,13 @@ fn redact_desc_token_if_pi(tokens: &mut [RawToken], license: crate::rules_core::
 /// Generates the `class_feature` cache for exactly the units passed in
 /// (already scoped to [`BOOK_PRIMARY_FILES`] by
 /// [`units_from_inventory_json`], or an equivalent caller-built list).
-/// `corpus_root` is a PCGen `data/` checkout; `out_dir` is
-/// `data/corpus` (one call covers every book the unit list names).
+/// `corpus_root` is a PCGen `data/` checkout; `grants_root` is
+/// `data/class_feature_grants` (wave 22's trustworthy per-record grant-fact
+/// tree -- see [`true_class_by_key`]); `out_dir` is `data/corpus` (one call
+/// covers every book the unit list names).
 pub fn generate(
     corpus_root: &Path,
+    grants_root: &Path,
     out_dir: &Path,
     ingested_at: &str,
     units: &[ClassFeatureSourceUnit],
@@ -402,6 +473,7 @@ pub fn generate(
         let mut sha_by_file: HashMap<String, String> = HashMap::new();
         let mut used: BTreeSet<String> = BTreeSet::new();
         let class_feature_dir = out_dir.join(book).join("class_feature");
+        let true_class = true_class_by_key(grants_root, book);
 
         for unit in book_units {
             let Some(raw_row) = lines.line(book, &unit.source_file, unit.source_line as usize) else {
@@ -445,7 +517,20 @@ pub fn generate(
                 &unit.key,
             );
             let completeness = if stored_desc.is_some() { Completeness::Full } else { Completeness::ChassisOnly };
-            let class = unit.key.split_once(" ~ ").map(|(owner, _)| owner.to_string());
+            // The key's own owner segment (`Sigilus ~ Inscribe Rune` ->
+            // `Sigilus`) -- kept ONLY as the directory-naming fallback and
+            // for the `class` fallback below, never shipped as the data
+            // field's value when the grant data resolves. This is the SAME
+            // split the field used to derive `class` from outright, which
+            // this cycle found is wrong whenever the key's owner segment is
+            // an archetype name rather than the real class.
+            let key_owner = unit.key.split_once(" ~ ").map(|(owner, _)| owner.to_string());
+            // `true_class` (wave 22's grant-fact ground truth, this cycle's
+            // own fix -- `OPEN-ISSUES.md` row 334's closing note) wins when
+            // it resolves this key; the key-prefix split is only a fallback
+            // for the population the grant data does not yet cover. See
+            // module doc comment / `true_class_by_key`.
+            let class = true_class.get(&unit.key).cloned().or_else(|| key_owner.clone());
 
             let record = CacheRecord {
                 population: Population::InScope,
@@ -471,7 +556,12 @@ pub fn generate(
                 pi_marker,
             };
 
-            let class_dir_slug = slugify(class.as_deref().unwrap_or(&unit.name), &mut BTreeSet::new());
+            // Directory placement stays keyed on the key's OWN owner segment
+            // (never the corrected `class`) so this cycle's fix changes
+            // exactly one field's VALUE and nothing about a record's path --
+            // per the guarded-regen discipline, the only expected diff
+            // against the pre-image is `data.class` (plus `ingested_at`).
+            let class_dir_slug = slugify(key_owner.as_deref().unwrap_or(&unit.name), &mut BTreeSet::new());
             let feature_slug = {
                 let key_for_used = format!("{class_dir_slug}/");
                 let mut scoped: BTreeSet<String> = used
@@ -612,5 +702,109 @@ mod tests {
             vec![RawToken { key: "DESC".to_string(), value: "Ordinary open-content prose.".to_string() }];
         redact_desc_token_if_pi(&mut tokens, crate::rules_core::shape_b_v1::License::Ogl);
         assert_eq!(tokens[0].value, "Ordinary open-content prose.");
+    }
+
+    // ------------------------------------------------------------------
+    // `true_class_by_key` -- SD-31 wave 23, `OPEN-ISSUES.md` row 334's
+    // closing note: `ClassFeatureData.class` must prefer the real
+    // granting class from `data/class_feature_grants/`, not the key's
+    // own owner-segment text (which is wrong whenever that segment names
+    // an archetype rather than the real class).
+    // ------------------------------------------------------------------
+
+    fn write_grant_file(dir: &Path, class_slug: &str, facts: &[(&str, &str)]) {
+        std::fs::create_dir_all(dir).unwrap();
+        let body: Vec<Value> = facts
+            .iter()
+            .map(|(key, class)| {
+                serde_json::json!({
+                    "key": key,
+                    "class": class,
+                    "level": 1,
+                    "level_explicit": true,
+                    "gate": "preclass",
+                    "corpus_record_exists": true,
+                    "source": {"kind": "class_feature_grant", "path": "x.lst", "sha256": "abc", "line": 1}
+                })
+            })
+            .collect();
+        std::fs::write(dir.join(format!("{class_slug}.json")), serde_json::to_string_pretty(&body).unwrap())
+            .unwrap();
+    }
+
+    /// The live defect this cycle fixes, reproduced as a unit test: a key
+    /// whose OWN text names an archetype (`Sigilus`) must resolve to the
+    /// real granting class (`Magus`) once a grant fact states it -- the
+    /// exact `sigilus/inscribe_rune.json` shape `OPEN-ISSUES.md` row 334
+    /// cites. Mutating `true_class_by_key` to always return an empty map
+    /// (i.e. deleting the grant-data lookup) turns this red, since the
+    /// assertion requires the CORRECTED class, not the key-prefix guess.
+    #[test]
+    fn true_class_by_key_resolves_an_archetype_owned_key_to_the_real_class() {
+        let tmp = std::env::temp_dir().join(format!("cf-grants-test-{}", std::process::id()));
+        let book_dir = tmp.join("adventurers_guide");
+        write_grant_file(&book_dir, "magus", &[("Sigilus ~ Inscribe Rune", "Magus")]);
+        let map = true_class_by_key(&tmp, "adventurers_guide");
+        assert_eq!(map.get("Sigilus ~ Inscribe Rune").map(String::as_str), Some("Magus"));
+        std::fs::remove_dir_all(&tmp).ok();
+    }
+
+    /// A key with no matching grant fact must be simply ABSENT from the
+    /// map (never guessed) so [`generate`]'s own fallback -- the key-prefix
+    /// split -- is what runs for it.
+    #[test]
+    fn true_class_by_key_omits_keys_with_no_grant_fact() {
+        let tmp = std::env::temp_dir().join(format!("cf-grants-test-nogrant-{}", std::process::id()));
+        let book_dir = tmp.join("adventurers_guide");
+        write_grant_file(&book_dir, "magus", &[("Sigilus ~ Inscribe Rune", "Magus")]);
+        let map = true_class_by_key(&tmp, "adventurers_guide");
+        assert!(map.get("Some Other Key ~ Feature").is_none());
+        std::fs::remove_dir_all(&tmp).ok();
+    }
+
+    /// A book with no `data/class_feature_grants/<book>/` directory at all
+    /// (5 of the 21 in-scope books have none yet) must return an empty
+    /// map, not error -- every record in that book keeps the old
+    /// key-prefix-split fallback.
+    #[test]
+    fn true_class_by_key_returns_empty_map_for_a_book_with_no_grant_directory() {
+        let tmp = std::env::temp_dir().join(format!("cf-grants-test-missing-{}", std::process::id()));
+        let map = true_class_by_key(&tmp, "book_of_the_damned_volume_1");
+        assert!(map.is_empty());
+    }
+
+    /// Two grant facts in the SAME book claiming the SAME key under
+    /// DIFFERENT classes must be refused (key absent from the map, not an
+    /// arbitrary pick) -- the anti-gaming shape this cycle's own doc
+    /// comment names explicitly. Mutating the `Some(_) => ...` ambiguity
+    /// arm to `resolved.insert(fact.key, fact.class)` (last write wins)
+    /// turns this red.
+    #[test]
+    fn true_class_by_key_refuses_a_key_claimed_by_two_different_classes() {
+        let tmp = std::env::temp_dir().join(format!("cf-grants-test-ambiguous-{}", std::process::id()));
+        let book_dir = tmp.join("core_rulebook");
+        write_grant_file(&book_dir, "fighter", &[("Shared ~ Feature", "Fighter")]);
+        write_grant_file(&book_dir, "paladin", &[("Shared ~ Feature", "Paladin")]);
+        let map = true_class_by_key(&tmp, "core_rulebook");
+        assert!(map.get("Shared ~ Feature").is_none(), "an ambiguous key must not resolve to either class");
+        std::fs::remove_dir_all(&tmp).ok();
+    }
+
+    /// Two grant facts in the SAME book agreeing on the SAME key/class
+    /// (e.g. two different feature entries in the same class's grant file
+    /// citing the class consistently) must resolve normally -- agreement
+    /// is not ambiguity.
+    #[test]
+    fn true_class_by_key_resolves_when_multiple_facts_agree() {
+        let tmp = std::env::temp_dir().join(format!("cf-grants-test-agree-{}", std::process::id()));
+        let book_dir = tmp.join("core_rulebook");
+        write_grant_file(
+            &book_dir,
+            "fighter",
+            &[("Fighter ~ Bravery", "Fighter"), ("Weapon Master ~ Bravery", "Fighter")],
+        );
+        let map = true_class_by_key(&tmp, "core_rulebook");
+        assert_eq!(map.get("Weapon Master ~ Bravery").map(String::as_str), Some("Fighter"));
+        std::fs::remove_dir_all(&tmp).ok();
     }
 }

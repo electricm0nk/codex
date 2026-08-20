@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spirit Walker ~ Continued Animation",
     "name": "Continued Animation",
-    "class": "Spirit Walker",
+    "class": "Mesmerist",
     "description": "When a spirit walker is using hypnotic stare on a",
     "raw_tokens": [
       {

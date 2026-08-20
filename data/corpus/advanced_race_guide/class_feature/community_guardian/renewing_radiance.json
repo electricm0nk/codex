@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Community Guardian ~ Renewing Radiance",
     "name": "Renewing Radiance",
-    "class": "Community Guardian",
+    "class": "Oracle",
     "description": "Once per day you can produce a burst of swirling white light that provides a measure of protection and renewal to allies within 30 feet for 1 round. On their turn, the allies can choose either to gain a +%1 sacred bonus to AC for 1 round or to heal a number of hit points equal to %1d6 + %2 (their choice). If an ally is dying, it is stabilized instead.|1+OracleLVL/7|CHA",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Shaitan Binder ~ Stone Curse",
     "name": "Stone Curse",
-    "class": "Shaitan Binder",
+    "class": "Summoner",
     "description": "The shaitan binder may select stone curse as a 4-point evolution. This allows the eidolon to trap creatures in stone like the shaitan stone curse ability (Bestiary 143). The DC to resist or break free of the stone curse is 10 + 1/2 the eidolon's Hit Dice + the eidolon's Strength score.",
     "raw_tokens": [
       {

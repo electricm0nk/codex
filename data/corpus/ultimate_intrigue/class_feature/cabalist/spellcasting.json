@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cabalist ~ Spellcasting",
     "name": "Spellcasting",
-    "class": "Cabalist",
+    "class": "Vigilante",
     "description": "[NOT IMPLEMENTED] A cabalist casts arcane spells and cantrips as a magus. He prepares spells using a spellbook, choosing them from the 6th-level and lower spells from the witch spell list; higher-level witch spells are not on the cabalist's spell list.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sacred Huntsmaster ~ Hunter Tactics",
     "name": "Hunter Tactics",
-    "class": "Sacred Huntsmaster",
+    "class": "Inquisitor",
     "description": "A sacred huntsmaster automatically grants her teamwork feats to her animal companion. The companion doesn't need to meet the prerequisites of these teamwork feats.",
     "raw_tokens": [
       {

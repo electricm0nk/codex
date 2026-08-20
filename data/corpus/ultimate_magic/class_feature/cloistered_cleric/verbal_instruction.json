@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cloistered Cleric ~ Verbal Instruction",
     "name": "Verbal Instruction",
-    "class": "Cloistered Cleric",
+    "class": "Cleric",
     "description": "You can use the aid another action to assist %1 allies within 30 feet on a skill or ability check. The ally must be able to hear and understand your instructions. If all allies are not engaged in the same task, using this ability is a full-round action rather than a standard action.|VerbalInstructionAllies",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wanderer ~ Disappear Unnoticed",
     "name": "Disappear Unnoticed",
-    "class": "Wanderer",
+    "class": "Monk",
     "description": "The wanderer may use Stealth to hide even while being directly observed or when no cover or concealment is available, as long as he is adjacent to at least one creature of his size or larger, by spending 1 point from his ki pool. This effect lasts until the beginning of the wanderer's next turn and may be continued in consecutive rounds by spending 1 ki point each round.",
     "raw_tokens": [
       {

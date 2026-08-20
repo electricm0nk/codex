@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Arctic Druid ~ Snowcaster",
     "name": "Snowcaster",
-    "class": "Arctic Druid",
+    "class": "Druid",
     "description": "At 9th level, an arctic druid can see normally in ice storm, sleet storm, or similar natural snowstorms. In addition, she can prepare any druid spell with the fire subtype as a cold spell, with an identical effect but inflicting cold damage instead of fire damage. This ability replaces venom immunity.",
     "raw_tokens": [
       {

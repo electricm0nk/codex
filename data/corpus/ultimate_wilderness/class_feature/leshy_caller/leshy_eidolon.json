@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Leshy Caller ~ Leshy Eidolon",
     "name": "Leshy Eidolon",
-    "class": "Leshy Caller",
+    "class": "Summoner",
     "description": "When a leshy caller summons her eidolon, the eidolon's body is created from extraplanar plant material and imbued with the intelligence of a leshy spirit. Its statistics are changed from those of a standard eidolon as follows. An unchained summoner uses the plant eidolon subtype (see page 95) instead of one of the subtypes listed in Pathfinder RPG Pathfinder Unchained. [Type] The eidolon is still an outsider, and its statistics don't change, but it also counts as a plant. As it isn't truly a plant, it doesn't gain the plant immunities. Base Form: The leshy caller chooses one of the base forms listed below for her eidolon. When the eidolon is summoned in an environment matching one of these base forms, the leshy caller can change the eidolon's base form to the matching form by sacrificing one daily use of her summon nature's ally ability as a free action. Plant eidolon base forms are as follows. Cactus (Desert), Conifer (Forest, Mountain), Fungus (Swamp, Underground), Leaf (Forest, Jungle, Swamp), Seaweed (Aquatic). This alters the summoner's eidolon.",
     "raw_tokens": [
       {

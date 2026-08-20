@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Foehammer ~ Hammer Master",
     "name": "Hammer Master",
-    "class": "Foehammer",
+    "class": "Fighter",
     "description": "Any combat feats a foehammer has learned with any weapon from the hammer weapon training group (e.g., Improved Critical, Weapon Focus) apply to all weapons from that group.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Beast-Bonded ~ Twin Soul",
     "name": "Twin Soul",
-    "class": "Beast-Bonded",
+    "class": "Witch",
     "description": "If you or your familiar is gravely injured or about to die, the soul of the dying one immediately transfers to the other's body. The two souls share the surviving body peaceably, can communicate freely, and both retain their ability to think and reason. The host may allow the guest soul to take over the body temporarily or reclaim it as a move action. They can persist in this state indefinitely, or the guest can return to its own body (if available) by touch, transfer into a suitable vessel (such as a clone), or take over another body as if using magic jar (with no receptacle).",
     "raw_tokens": [
       {

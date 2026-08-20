@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fiendish Vessel ~ Domains",
     "name": "Domains",
-    "class": "Fiendish Vessel",
+    "class": "Cleric",
     "description": "A fiendish vessel must select the Daemon, Demon, or Devil subdomain (Advanced Player's Guide 88- 90) as one of her domain choices, based on the fiendish patron she chooses to serve.",
     "raw_tokens": [
       {

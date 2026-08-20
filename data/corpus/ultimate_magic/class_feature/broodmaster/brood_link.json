@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Broodmaster ~ Brood Link",
     "name": "Brood Link",
-    "class": "Broodmaster",
+    "class": "Summoner",
     "description": "You form a close bond with your eidolons. This ability works like the standard summoner life link ability, except you can only sacrifice hit points to prevent damage to one eidolon in the brood at a time. If two or more eidolons in the brood take enough damage to send them back to their home plane, you can only sacrifice hit points to prevent damage to one of them.",
     "raw_tokens": [
       {

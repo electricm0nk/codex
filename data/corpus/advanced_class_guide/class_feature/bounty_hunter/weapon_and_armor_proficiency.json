@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bounty Hunter ~ Weapon and Armor Proficiency",
     "name": "Weapon and Armor Proficiency",
-    "class": "Bounty Hunter",
+    "class": "Slayer",
     "description": "A bounty hunter is proficient with all simple and martial weapons plus the aklys, bolas, dan bong, lasso, and net. Bounty hunters are proficient with light armor, light shields, and bucklers, but not heavy shields or tower shields. This ability replaces the slayer's weapon and armor proficiencies.",
     "raw_tokens": [
       {

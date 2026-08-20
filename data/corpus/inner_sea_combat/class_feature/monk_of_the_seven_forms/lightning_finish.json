@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Monk of the Seven Forms ~ Lightning Finish",
     "name": "Lightning Finish",
-    "class": "Monk of the Seven Forms",
+    "class": "Monk",
     "description": "At 1st level, as an immediate action, a monk of the seven forms can make a single attack with a manufactured light or one-handed slashing weapon he is currently wielding against any target he has successfully hit at least twice with his unarmed strike during his turn. This attack deals normal damage but without the normal Strength bonus to damage. At 4th level, he can take a 5-foot step before or after performing a lightning finish so long as he ends adjacent to his target, though if he takes this step, he cannot perform a 5-foot step during his next turn. At 8th level, he applies his full Strength bonus to his damage roll for the extra attack, even if he made the attack with an offhand weapon or with a weapon wielded in two hands. At 12th level, if he hit the target at least three times with his unarmed strike during his turn, taking the 5-foot step granted by lightning finish does not prevent him from taking a 5-foot step during his next turn. A monk of the seven forms can use this ability a number of times per day equal to his monk level, but no more than once per round. This ability replaces stunning fist.",
     "raw_tokens": [
       {

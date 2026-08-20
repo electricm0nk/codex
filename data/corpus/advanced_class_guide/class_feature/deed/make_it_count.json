@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Deed ~ Make It Count",
     "name": "Make It Count",
-    "class": "Deed",
+    "class": "Investigator",
     "description": "When a sleuth uses studied strike, he can spend 1 luck point to apply an investigator talent that he doesn't already know and which affects studied strike to his studied strike. He must be able to fulfill that talent's prerequisites.",
     "raw_tokens": [
       {

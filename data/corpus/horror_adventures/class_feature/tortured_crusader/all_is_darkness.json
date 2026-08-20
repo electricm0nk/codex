@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tortured Crusader ~ All Is Darkness",
     "name": "All Is Darkness",
-    "class": "Tortured Crusader",
+    "class": "Paladin",
     "description": "Everything around a tortured crusader is so bleak that detecting evil only reminds her that the odds are always against her. A tortured crusader doesn't gain the detect evil or divine grace class features. At 1st level, a tortured crusader gains the smite evil ability, but she doesn't add her Charisma bonus to attack rolls or a deflection bonus equal to her Charisma bonus to her AC against the target of her smite. At 2nd level, she adds a +4 bonus to attack rolls and a +4 deflection bonus to AC against the target of her smite. This ability alters smite evil.",
     "raw_tokens": [
       {

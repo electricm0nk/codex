@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Vampire Hunter ~ Sun Strike",
     "name": "Sun Strike",
-    "class": "Vampire Hunter",
+    "class": "Inquisitor",
     "description": "A vampire hunter can infuse a single weapon she wields with the purifying light of the sun as a swift action for %1 rounds per day. These rounds do not need to be consecutive. While a weapon is infused with the sun, it deals +1d6 points of damage to any creature that is susceptible or vulnerable to sunlight, including many types of undead (particularly spectres, vampires, and wraiths). This additional damage also applies to oozes and fungus-based monsters. A weapon infused with sun strike sheds illumination as if it were a sunrod.|InquisitorLVL",
     "raw_tokens": [
       {

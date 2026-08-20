@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mad Scientist ~ Mad Mutagen",
     "name": "Mad Mutagen",
-    "class": "Mad Scientist",
+    "class": "Alchemist",
     "description": "A mad scientist can brew a mad mutagen in place of a normal mutagen. If she does so, she need not make any decisions about the mutagen (including whether to make it a cognatogen or another variant mutagen if she has the appropriate discoveries) when she brews it. When the mad scientist drinks her mad mutagen, she makes those decisions on the fly, but she also takes",
     "raw_tokens": [
       {

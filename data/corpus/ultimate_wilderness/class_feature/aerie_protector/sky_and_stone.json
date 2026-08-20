@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Aerie Protector ~ Sky and Stone",
     "name": "Sky and Stone",
-    "class": "Aerie Protector",
+    "class": "Druid",
     "description": "An aerie protector gains a bonus equal to half her level on Knowledge (geography) and Survival checks involving mountainous terrain or high altitudes, and she cannot be tracked in such an environment.",
     "raw_tokens": [
       {

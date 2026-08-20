@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ki Mystic ~ Ki Mystic",
     "name": "Ki Mystic",
-    "class": "Ki Mystic",
+    "class": "Monk",
     "description": "At 3rd level, a ki mystic gains a pool of ki points equal to his Wisdom modifier. The pool increases to 1/2 his monk level + his Wisdom modifier + 2 at level 4. If the monk has at least 1 point of ki in his ki pool, he gains a +2 bonus on all Knowledge skill checks. As a swift action, the monk can spend 1 ki point immediately before making an ability, or skill check to gain a +4 insight bonus on the check. This ability replaces still mind.[Ki Points %1]|KiPoints",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Flamewarden ~ Touch of Flame",
     "name": "Touch of Flame",
-    "class": "Flamewarden",
+    "class": "Ranger",
     "description": "A flamewarden can cause his weapons to burst into flame. As a standard action, the ranger can grant a single weapon he holds the flaming",
     "raw_tokens": [
       {

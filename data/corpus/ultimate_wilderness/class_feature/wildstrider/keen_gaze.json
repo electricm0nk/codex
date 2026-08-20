@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wildstrider ~ Keen Gaze",
     "name": "Keen Gaze",
-    "class": "Wildstrider",
+    "class": "Swashbuckler",
     "description": "While a wildstrider has at least 1 panache point, she can ignore the miss chance from concealment (but not total concealment) caused by normal and magical fog, smoke, and undergrowth, but not other sources of concealment or a miss chance, such as blur.",
     "raw_tokens": [
       {

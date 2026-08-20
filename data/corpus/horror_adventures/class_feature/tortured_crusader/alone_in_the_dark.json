@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tortured Crusader ~ Alone in the Dark",
     "name": "Alone in the Dark",
-    "class": "Tortured Crusader",
+    "class": "Paladin",
     "description": "Faced with endless foes, a tortured crusader can't ask others to confront the same horrors she does. She can't use her lay on hands ability to heal others or to channel energy, though starting at 4th level, she can convert two uses of lay on hands into an additional use of smite evil. Her aura of courage, aura of resolve, aura of faith, and aura of righteousness affect only her, not her allies. When she selects a divine bond, it must be with a weapon, not a mount. This ability alters lay on hands, channel energy, divine bond, aura of courage, aura of resolve, aura of faith, and aura of righteousness.",
     "raw_tokens": [
       {

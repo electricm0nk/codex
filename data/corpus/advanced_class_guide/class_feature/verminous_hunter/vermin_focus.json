@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Verminous Hunter ~ Vermin Focus",
     "name": "Vermin Focus",
-    "class": "Verminous Hunter",
+    "class": "Hunter",
     "description": "You can take on the aspect of a vermin as a swift action, gaining a bonus or special ability based on the type of vermin emulated. The ability is usable %1 minutes per day. The vermin companion gets a constant benefit.|HunterVerminFocusMinutes",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Flame Dancer ~ Fan the Flames",
     "name": "Fan the Flames",
-    "class": "Flame Dancer",
+    "class": "Bard",
     "description": "A fire dancer adds burning hands, flaming sphere, and fireball to his list of bard spells known (as 1st-, 2nd-, and 3rd-level spells, respectively).",
     "raw_tokens": [
       {

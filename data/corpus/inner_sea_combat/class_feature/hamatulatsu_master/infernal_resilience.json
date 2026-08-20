@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Hamatulatsu Master ~ Infernal Resilience",
     "name": "Infernal Resilience",
-    "class": "Hamatulatsu Master",
+    "class": "Monk",
     "description": "At 5th level, a hamatulatsu master gains immunity to all spells, spell-like abilities, and effects with the pain descriptor, as well as a +2 bonus on saving throws against effects that would sicken, nauseate, stagger, or stun her. This ability replaces purity of body.",
     "raw_tokens": [
       {

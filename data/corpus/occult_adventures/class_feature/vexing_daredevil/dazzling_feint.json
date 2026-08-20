@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Vexing Daredevil ~ Dazzling Feint",
     "name": "Dazzling Feint",
-    "class": "Vexing Daredevil",
+    "class": "Mesmerist",
     "description": "Each time a vexing daredevil successfully feints against a creature under the effect of her hypnotic stare, she also chooses one of her dazzling feint benefits to activate. Unless otherwise stated, a dazzling feint's benefit applies only on the vexing daredevil's next attack this round. The DC for any saving throw against a dazzling feint's effect is %1.|DazzlingFeintDC",
     "raw_tokens": [
       {

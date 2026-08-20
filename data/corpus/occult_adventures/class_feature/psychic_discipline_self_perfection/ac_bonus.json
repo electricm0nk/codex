@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Discipline Self-Perfection ~ AC Bonus",
     "name": "AC Bonus",
-    "class": "Psychic Discipline Self-Perfection",
+    "class": "Psychic",
     "description": "When unarmored and unencumbered, you add your Wisdom bonus (if any) to your AC and CMD. The bonus to AC applies even against touch attacks or when you're flat-footed. You lose these bonuses when you're immobilized or helpless, when you wear any armor, when you carry a shield, or when you carry a medium or heavy load.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Deliverer ~ True Believer",
     "name": "True Believer",
-    "class": "Deliverer",
+    "class": "Slayer",
     "description": "Mortal wounds cannot stop a deliverer from performing his divine duty. On any round in which he attacks an opponent whose alignment is at least two steps away from his own (see Determined Zeal, above) while benefiting from the Diehard feat, he isn't staggered from having negative hit points, nor does he automatically lose 1 hit point per round.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Iroran Paladin ~ Confident Defense",
     "name": "Confident Defense",
-    "class": "Iroran Paladin",
+    "class": "Paladin",
     "description": "When wearing light or no armor and not using a shield, you add 1 point of your Charisma bonus (if any) per paladin level to your Dexterity bonus to your Armor Class; you lose this bonus whenever you are denied your Dexterity bonus.  This ability is currently increasing your effective dexterity modifier to AC by %1.|ConfidentDefenseGain",
     "raw_tokens": [
       {

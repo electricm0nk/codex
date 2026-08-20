@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ironskin Monk ~ Unbreakable",
     "name": "Unbreakable",
-    "class": "Ironskin Monk",
+    "class": "Monk",
     "description": "An ironskin monk sets aside many of the frailties of mortal flesh. He becomes immune to death effects and stunning. He is not subject to ability damage or ability drain, and has a 75%% chance of ignoring the extra damage dealt by critical hits and sneak attacks. This ability replaces perfect self.",
     "raw_tokens": [
       {

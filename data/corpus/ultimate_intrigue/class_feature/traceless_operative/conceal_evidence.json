@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Traceless Operative ~ Conceal Evidence",
     "name": "Conceal Evidence",
-    "class": "Traceless Operative",
+    "class": "Inquisitor",
     "description": "A traceless operative knows how to clean up and obscure the evidence of foul play. It takes her 1d3 x 10 minutes to conceal or alter evidence in a 10-foot-by-10-foot area. She uses Disguise to alter evidence or Stealth to conceal it, though bonuses and penalties based on her abilities or effects that disguise or hide her own body (such as from disguise self, a cloak of elvenkind, or the size modifier on Stealth checks) do not apply. A creature attempting to investigate the scene using Perception must succeed at the original Perception DC or a DC equal to the traceless operative's check, whichever is higher, in order to discover the true evidence. A creature who fails against a traceless operative's Disguise check potentially also derives the false evidence planted by the traceless operative.",
     "raw_tokens": [
       {

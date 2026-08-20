@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Master Of Many Styles ~ Perfect Style",
     "name": "Perfect Style",
-    "class": "Master Of Many Styles",
+    "class": "Monk",
     "description": "At 20th level, a master of many styles can have the stances of five style feats active at once, and can change those stances as a free action. This ability replaces perfect self.",
     "raw_tokens": [
       {

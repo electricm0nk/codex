@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wild Soul ~ Nemesis Defense",
     "name": "Nemesis Defense",
-    "class": "Wild Soul",
+    "class": "Ranger",
     "description": "A wild soul adds his nemesis bonus on saving throws against advanced technology, alchemical items (including an alchemist's bombs and extracts), and arcane spells. He also adds this bonus to his AC against advanced technological items, alchemical items (including alchemist bombs), arcane spells that require attack rolls, and firearms.",
     "raw_tokens": [
       {

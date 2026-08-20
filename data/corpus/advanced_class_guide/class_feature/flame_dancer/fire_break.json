@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Flame Dancer ~ Fire Break",
     "name": "Fire Break",
-    "class": "Flame Dancer",
+    "class": "Bard",
     "description": "A fire dancer's performance can bend flames away from others. Any ally within 30 feet of the bard who can hear or see the bardic performance gains resist fire 20 as long as the performance is maintained. At 11th level, this resistance increases to 30.",
     "raw_tokens": [
       {

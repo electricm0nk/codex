@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Living Grimoire ~ Word of God",
     "name": "Word of God",
-    "class": "Living Grimoire",
+    "class": "Inquisitor",
     "description": "A living grimoire can smite his foes with the holy word of his deity. Up to seven times per day, the inquisitor can make a single melee attack with his holy book against a target. If the attack hits, it deals damage normally and the target must succeed at a Fortitude save or die (DC %1). Regardless of whether the save is successful, the target creature is immune to the living grimoire's word of god ability for 24 hours. Once the living grimoire uses this ability, he can't use it again for 1d4 rounds.|10+InquisitorLVL/2+INT",
     "raw_tokens": [
       {

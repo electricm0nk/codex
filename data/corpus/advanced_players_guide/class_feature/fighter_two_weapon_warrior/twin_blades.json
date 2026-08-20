@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fighter Two-Weapon Warrior ~ Twin Blades",
     "name": "Twin Blades",
-    "class": "Fighter Two-Weapon Warrior",
+    "class": "Fighter",
     "description": "At 5th level, a two-weapon warrior gains a +1 bonus on attack and damage rolls when making a full attack with two weapons or a double weapon. This bonus increases by +1 for every four levels after 5th. This ability replaces weapon training 1.",
     "raw_tokens": [
       {

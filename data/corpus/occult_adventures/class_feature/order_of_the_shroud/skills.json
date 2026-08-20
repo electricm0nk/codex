@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Order Of The Shroud ~ Skills",
     "name": "Skills",
-    "class": "Order Of The Shroud",
+    "class": "Cavalier",
     "description": "An order of the shroud cavalier adds Knowledge (local) (Int) and Knowledge (religion) (Int) to his list of class skills. An order of the shroud cavalier can attempt Knowledge (religion) checks untrained. If he has ranks in that skill, as long as a Knowledge (religion) check involves undead or haunts, he receives a bonus on the check equal to 1/2 his cavalier level (minimum +1).",
     "raw_tokens": [
       {

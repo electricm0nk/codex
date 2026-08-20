@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spy ~ Skilled Liar",
     "name": "Skilled Liar",
-    "class": "Spy",
+    "class": "Rogue",
     "description": "Whenever a spy uses Bluff to attempt to deceive someone, she gains a +%1 bonus on the opposed roll. This bonus does not apply to feint attempts or attempts to pass secret messages. This ability replaces trapfinding.|max(RogueLVL/2,1)",
     "raw_tokens": [
       {

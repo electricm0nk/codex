@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sensate ~ Evasion",
     "name": "Evasion",
-    "class": "Sensate",
+    "class": "Fighter",
     "description": "At 11th level, a sensate gains evasion while using centered senses. This functions as the rogue ability of the same name, except that it is supernatural in nature and works regardless of the sensate's armor and encumbrance. This ability replaces armor training 3.",
     "raw_tokens": [
       {

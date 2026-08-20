@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Flowing Monk ~ Unbalancing Counter",
     "name": "Unbalancing Counter",
-    "class": "Flowing Monk",
+    "class": "Monk",
     "description": "At 2nd level, a flowing monk's attacks of opportunity render a struck creature flat-footed until the end of the flowing monk's next turn (Reflex DC 10 + 1/2 the monk's level + Wisdom modifier negates). This ability replaces the bonus feat gained at 2nd level.",
     "raw_tokens": [
       {

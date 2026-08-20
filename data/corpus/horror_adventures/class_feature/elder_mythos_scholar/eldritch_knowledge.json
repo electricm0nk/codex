@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Elder Mythos Scholar ~ Eldritch Knowledge",
     "name": "Eldritch Knowledge",
-    "class": "Elder Mythos Scholar",
+    "class": "Wizard",
     "description": "An Elder Mythos scholar gains two fewer daily uses of his 1st-level arcane school ability, which is normally used a number of times per day equal to 3 + his Intelligence modifier. If he has no such ability, he can't take this archetype. When an Elder Mythos scholar attempts a Will save against confusion, fear, insanity, or madness (see page 12), whether magical or mundane, he can spend 2 daily uses of that arcane school ability to apply his Intelligence modifier instead of his Wisdom modifier to the save. However, whenever he uses this ability, he is affected by a nightmare the next time he sleeps, with no saving throw. Until he sleeps and experiences the nightmare, he can't recover the spent uses of the arcane school ability by any means. This ability alters the 1st-level arcane school ability.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cult Leader ~ Hide in Plain Sight",
     "name": "Hide in Plain Sight",
-    "class": "Cult Leader",
+    "class": "Warpriest",
     "description": "A cult leader can use the Stealth skill even while being observed. As long as he is within 10 feet of an area of dim light, a cult leader can hide himself from view in the open without anything to actually hide behind. He cannot, however, hide in his own shadow.",
     "raw_tokens": [
       {

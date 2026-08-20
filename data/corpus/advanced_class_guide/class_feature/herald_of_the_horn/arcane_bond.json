@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Herald of the Horn ~ Arcane Bond",
     "name": "Arcane Bond",
-    "class": "Herald of the Horn",
+    "class": "Skald",
     "description": "A herald of the horn forms a powerful bond with a horn (musical instrument). This functions like an arcane bloodline sorcerer's arcane bond with an object. Like a weapon, wand, or staff, the horn must be held in one hand when the herald of the horn casts skald spells.",
     "raw_tokens": [
       {

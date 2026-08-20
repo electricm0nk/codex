@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Grenadier ~ Alchemical Weapon",
     "name": "Alchemical Weapon",
-    "class": "Grenadier",
+    "class": "Alchemist",
     "description": "A grenadier can infuse a weapon or piece of ammunition with a single harmful alchemical liquid or powder, such as alchemist's fire or sneezing powder,",
     "raw_tokens": [
       {

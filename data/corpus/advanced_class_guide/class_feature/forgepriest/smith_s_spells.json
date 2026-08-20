@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Forgepriest ~ Smith's Spells",
     "name": "Smith's Spells",
-    "class": "Forgepriest",
+    "class": "Warpriest",
     "description": "[NOT IMPLEMENTED] A forgepriest adds the following spells to his spell list: 1st-jury rig, shield; 2nd-heat metal, shatter; 3rd-keen edge, quench, versatile weapon; 4th-wreath of blades; 5th-fabricate, major creation; 6th-mage's sword.",
     "raw_tokens": [
       {

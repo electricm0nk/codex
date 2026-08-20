@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Rot Warden ~ Nature Bond",
     "name": "Nature Bond",
-    "class": "Rot Warden",
+    "class": "Druid",
     "description": "A rot warden who chooses a cleric domain as his nature bond must choose from the Destruction, Erosion, Repose, or Vermin domains. This alters nature bond.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Clone Master ~ Rebirth",
     "name": "Rebirth",
-    "class": "Clone Master",
+    "class": "Alchemist",
     "description": "You can prepare a clone of yourself that awakens if you are slain. Creating the clone costs 5,000 gp, takes 1 week of work, and requires 3 additional weeks for the clone to grow to maturity. If you die, the clone awakens as if you had used the Clone spell on yourself. You can have one inert of yourself at a time. Unused clones you create do not rot.",
     "raw_tokens": [
       {

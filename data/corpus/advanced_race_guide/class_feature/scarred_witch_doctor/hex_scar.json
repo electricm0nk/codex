@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Scarred Witch Doctor ~ Hex Scar",
     "name": "Hex Scar",
-    "class": "Scarred Witch Doctor",
+    "class": "Witch",
     "description": "Whenever a scarred witch doctor learns a hex, she must carve or brand a symbol in her flesh to represent this hex. She can disguise these scars with mundane or magical means, but they cannot be permanently removed.",
     "raw_tokens": [
       {

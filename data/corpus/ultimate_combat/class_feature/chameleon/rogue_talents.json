@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Chameleon ~ Rogue Talents",
     "name": "Rogue Talents",
-    "class": "Chameleon",
+    "class": "Rogue",
     "description": "The following rogue talents complement the chameleon archetype - camouflage**, fast stealth, quick disguise**, and terrain mastery*.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Battle Host ~ Heroic Splendor",
     "name": "Heroic Splendor",
-    "class": "Battle Host",
+    "class": "Occultist",
     "description": "[not implemented as a temp bonus]At 6th level, a battle host can draw power from his bonded item to imbue himself with superhuman strength, agility, or resilience. As a swift action, a battle host can grant himself a +4 insight bonus to Strength, Dexterity, or Constitution for 1 minute. The battle host can use this ability once per day at 6th level, plus one additional time per day for every 4 occultist levels he possesses beyond 6th. If he activates heroic splendor again before the duration expires, the new use of heroic splendor replaces the old use. This ability replaces outside contact.",
     "raw_tokens": [
       {

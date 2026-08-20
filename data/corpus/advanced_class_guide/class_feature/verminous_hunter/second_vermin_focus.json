@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Verminous Hunter ~ Second Vermin Focus",
     "name": "Second Vermin Focus",
-    "class": "Verminous Hunter",
+    "class": "Hunter",
     "description": "Whenever a hunter uses her animal focus ability, she selects two different animal aspects for herself instead of one, and can assign two aspects to her companion instead of one.",
     "raw_tokens": [
       {

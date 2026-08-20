@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Lantern Bearer ~ Poison Resistance",
     "name": "Poison Resistance",
-    "class": "Lantern Bearer",
+    "class": "Ranger",
     "description": "A lantern bearer gains a +4 bonus on saving throws against poison.",
     "raw_tokens": [
       {

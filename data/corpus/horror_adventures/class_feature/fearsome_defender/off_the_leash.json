@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fearsome Defender ~ Off the Leash",
     "name": "Off the Leash",
-    "class": "Fearsome Defender",
+    "class": "Barbarian",
     "description": "A fearsome defender simmers on the edge of bloody combat. Whenever she begins a rage, she can also draw an unconcealed weapon as part of the free action to begin raging.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mindchemist ~ Cognatogen",
     "name": "Cognatogen",
-    "class": "Mindchemist",
+    "class": "Alchemist",
     "description": "You learn how to create a cognatogen, as the cognatogen discovery.",
     "raw_tokens": [
       {

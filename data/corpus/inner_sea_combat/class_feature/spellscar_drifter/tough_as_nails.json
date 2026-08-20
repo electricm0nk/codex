@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spellscar Drifter ~ Tough as Nails",
     "name": "Tough as Nails",
-    "class": "Spellscar Drifter",
+    "class": "Cavalier",
     "description": "At 20th level, a Spellscar drifter is able to select three additional deeds for use with his Amateur Gunslinger feat-two from the list of deeds available to i5th-level gunslingers, and one from the list available to i9th-level gunslingers. In addition, if the Spells car drifter confirms a critical hit on an attack made with a firearm, the target is stunned for id4 rounds. A successful Will saving throw (DC = 10 + the Spellscar drifter's base attack bonus) reduces this effect to staggered instead of stunned. This ability replaces supreme charge.",
     "raw_tokens": [
       {

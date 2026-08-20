@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sister-in-Arms ~ Maiden's Loyalty",
     "name": "Maiden's Loyalty",
-    "class": "Sister-in-Arms",
+    "class": "Cavalier",
     "description": "The loyalty of a sister-in-arms is absolute. A sister-in-arms gains a +%1 bonus on Will saves against any effect that would compel her to attack or betray her allies.|SisterInArmsLoyaltyBonus",
     "raw_tokens": [
       {

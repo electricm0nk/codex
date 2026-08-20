@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mixologist ~ Alcoholic Alchemy",
     "name": "Alcoholic Alchemy",
-    "class": "Mixologist",
+    "class": "Alchemist",
     "description": "A mixologist can infuse potions and extracts he creates with alcohol, increasing their potency. When a mixologist brews a potion, he can spend an additional 10 gp in raw materials to increase his caster level by 1 for the purpose of the potion's effects, but the potion counts as a strong alcoholic drink (see the sidebar on page 55). When a mixologist creates his extracts, he can spend 1 extra minute doing so to increase his caster level by 1 for the purpose of that extract's effects, but the extract counts as a strong alcoholic drink. A mixologist can prepare one alcoholic extract for each level of extracts he can prepare. A mixologist can't ever gain a mutagen or discoveries that alter mutagens. This alters alchemy and brew potion.",
     "raw_tokens": [
       {

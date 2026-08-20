@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Storm Druid ~ Stormvoice",
     "name": "Stormvoice",
-    "class": "Storm Druid",
+    "class": "Druid",
     "description": "Your voice can magically carry over howling winds and peals of thunder. Whenever a Perception check is needed to hear your voice, the DC is reduced by %1.|StormVoiceReduction",
     "raw_tokens": [
       {

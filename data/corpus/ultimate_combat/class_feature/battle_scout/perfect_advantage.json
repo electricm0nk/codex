@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Battle Scout ~ Perfect Advantage",
     "name": "Perfect Advantage",
-    "class": "Battle Scout",
+    "class": "Ranger",
     "description": "At 20th level, when using his advantageous terrain ability, a battle scout needs only to study the terrain as a standard action to gain all of the benefits. Furthermore, the area of his advantageous terrain increases to a 1-mile-radius spread from the single square within line of sight. This ability replaces master hunter.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cipher ~ Hide in Plain Sight",
     "name": "Hide in Plain Sight",
-    "class": "Cipher",
+    "class": "Investigator",
     "description": "A cipher can use the Stealth skill to hide even while being observed; as long as his observer is within range of his inattention blindness ability (even if it is not affected by inattention blindness), he can hide without anything to actually hide behind.",
     "raw_tokens": [
       {

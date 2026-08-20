@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Crossblooded Rager ~ Bloodline Powers",
     "name": "Bloodline Powers",
-    "class": "Crossblooded Rager",
+    "class": "Bloodrager",
     "description": "At 1st, 4th, 8th, 12th, 16th, and 20th levels, a crossblooded rager gains one of the two new bloodline powers available to him at that level. He can instead select a lower-level bloodline power he did not choose in place of one of these high-level powers.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Unarmed Fighter ~ Trick Throw",
     "name": "Trick Throw",
-    "class": "Unarmed Fighter",
+    "class": "Fighter",
     "description": "When you successfully trip an opponent with an unarmed attack, you can attempt a dirty trick combat maneuver against that creature (before the opponent becomes prone) as an immediate action that does not provoke attacks of opportunity. This ability replaces the 8th-level bonus feat.",
     "raw_tokens": [
       {

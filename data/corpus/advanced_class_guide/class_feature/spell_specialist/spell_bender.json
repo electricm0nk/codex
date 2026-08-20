@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spell Specialist ~ Spell Bender",
     "name": "Spell Bender",
-    "class": "Spell Specialist",
+    "class": "Arcanist",
     "description": "The spell specialist can bend the line of a spell that has a line area of effect up to 90 degrees at any single point along the line's length.",
     "raw_tokens": [
       {

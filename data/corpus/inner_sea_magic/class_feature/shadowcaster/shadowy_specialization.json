@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Shadowcaster ~ Shadowy Specialization",
     "name": "Shadowy Specialization",
-    "class": "Shadowcaster",
+    "class": "Wizard",
     "description": "When a shadowcaster casts shades, shadow conjuration, shadow evocation, and similar illusion spells that have a listed fraction of the strength of real effects, he increases the percentage of damage caused by the spell's effect or summoned creatures by one-fifth (+20%%) against creatures that make their saving throws against the effect, up to a maximum of 100%% of the strength. For example, shadow evocation and shadow conjuration deal 40%% normal damage on a successful save instead of 20%%.",
     "raw_tokens": [
       {

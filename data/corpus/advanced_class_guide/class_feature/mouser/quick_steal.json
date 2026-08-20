@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mouser ~ Quick Steal",
     "name": "Quick Steal",
-    "class": "Mouser",
+    "class": "Swashbuckler",
     "description": "As a swift action the mouser can spend 1 panache point when she hits a for larger than her size with a light or one-handed piercing melee weapon to attempt a steal combat maneuver check against the creature she hit. Using this deed does not provoke an attack of opportunity. This deed replaces menacing swordplay.",
     "raw_tokens": [
       {

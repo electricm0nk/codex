@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dinosaur Druid ~ Primeval Voice",
     "name": "Primeval Voice",
-    "class": "Dinosaur Druid",
+    "class": "Druid",
     "description": "A dinosaur druid gains the ability to speak with dinosaurs (as per speak with animals) at all times. This replaces resist nature's lure.",
     "raw_tokens": [
       {

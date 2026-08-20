@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spiritualist ~ Strong Life",
     "name": "Strong Life",
-    "class": "Spiritualist",
+    "class": "Investigator",
     "description": "At 2nd level, his dealings with the other side and knowledge of what lies beyond strengthens the spiritualist's will. He gains a +%1 bonus on saving throws against death effects and negative energy damage.|StrongLifeBonus",
     "raw_tokens": [
       {

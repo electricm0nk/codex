@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cutthroat ~ Stab and Grab",
     "name": "Stab and Grab",
-    "class": "Cutthroat",
+    "class": "Slayer",
     "description": "As a swift action a cutthroat can attempt a steal combat maneuver against a dead or unconscious target or a studied target he has just confirmed a critical hit against. A dead or unconscious opponent takes a -10 penalty to its CMD against this maneuver.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tactician ~ Tactician",
     "name": "Tactician",
-    "class": "Tactician",
+    "class": "Fighter",
     "description": "At 5th level, a tactician gains this ability as the cavalier class feature (Advanced Player's Guide 33). He may use this ability once per day at 5th level, plus one additional time for every five levels after 5th (to a maximum of four times at 20th level). If the tactician also has cavalier levels, these levels stack for determining the number of uses per day, and he can take the better progression. This ability replaces weapon training 1.",
     "raw_tokens": [
       {

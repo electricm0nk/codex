@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tower Shield Specialist ~ Tower Shield Evasion",
     "name": "Tower Shield Evasion",
-    "class": "Tower Shield Specialist",
+    "class": "Fighter",
     "description": "At 16th level, while using a tower shield, the tower shield specialist gains evasion, as the rogue class ability. At 20th level, the shield specialist gains improved evasion, as the rogue advanced talent, while using a tower shield. This ability replaces both weapon training 4 and weapon mastery.",
     "raw_tokens": [
       {

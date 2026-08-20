@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tinkerer ~ Clockwork Bond",
     "name": "Clockwork Bond",
-    "class": "Tinkerer",
+    "class": "Alchemist",
     "description": "A tinkerer forms a bond with one of her creations, and begins play with it at no cost. This functions as the familiar option of the wizard's arcane bond class feature, with the tinkerer's effective wizard level equal to her alchemist level. If a tinkerer would gain a familiar through another class, those levels stack for purposes of determining the familiar's abilities. A tinkerer's familiar can take any shape the tinkerer wishes, but its statistics and abilities are identical to a clockwork spy (Bestiary 3 58) with the normal adjustments and abilities for a familiar applied, and it is a construct with the clockwork subtype.",
     "raw_tokens": [
       {

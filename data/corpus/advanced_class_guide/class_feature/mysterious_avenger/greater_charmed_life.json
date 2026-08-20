@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mysterious Avenger ~ Greater Charmed Life",
     "name": "Greater Charmed Life",
-    "class": "Mysterious Avenger",
+    "class": "Swashbuckler",
     "description": "The mysterious avenger gains three extra uses of charmed life. As an immediate action, she can expend one use of charmed life to gain a +%1 bonus to her AC. She must choose to do this before the attack roll is made against her.|max(1,CHA)",
     "raw_tokens": [
       {

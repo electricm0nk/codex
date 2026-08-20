@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tempest Druid ~ Sodden Shore Sense",
     "name": "Sodden Shore Sense",
-    "class": "Tempest Druid",
+    "class": "Druid",
     "description": "A tempest druid gains a +4 bonus on Knowledge (nature) and Survival checks in coastal or marshy lands.",
     "raw_tokens": [
       {

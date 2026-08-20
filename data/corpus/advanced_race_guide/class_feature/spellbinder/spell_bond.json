@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spellbinder ~ Spell Bond",
     "name": "Spell Bond",
-    "class": "Spellbinder",
+    "class": "Wizard",
     "description": "The spellbinder selects any one spell that he knows as a bonded spell. As a full-round action, the spellbinder may replace a spell of the same or higher level as his bonded spell with his bonded spell.",
     "raw_tokens": [
       {

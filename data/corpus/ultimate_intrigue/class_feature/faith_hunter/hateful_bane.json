@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Faith Hunter ~ Hateful Bane",
     "name": "Hateful Bane",
-    "class": "Faith Hunter",
+    "class": "Inquisitor",
     "description": "A faith hunter's bane ability functions only against creatures that are both the selected creature type and her sworn enemy alignment. This ability alters bane.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Gravewalker ~ Possess Undead",
     "name": "Possess Undead",
-    "class": "Gravewalker",
+    "class": "Witch",
     "description": "You may take direct control of one of your undead minions within your aura of desecration, as if using magic jar; your poppet acts as the soul receptacle for this ability. The minion gets no saving throw against this ability.",
     "raw_tokens": [
       {

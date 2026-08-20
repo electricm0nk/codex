@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Turfer ~ Terrain Mastery",
     "name": "Terrain Mastery",
-    "class": "Turfer",
+    "class": "Brawler",
     "description": "A turfer gains the benefits of endure elements and a +%1-foot enhancement bonus to her base speed, but only in her favored terrains. In addition, she can move through difficult terrain in her favored terrains at her normal speed without taking damage or suffering any other impairment, but she can't do so through difficult terrain that has been magically manipulated.|FavoredTurfMoveBonus",
     "raw_tokens": [
       {

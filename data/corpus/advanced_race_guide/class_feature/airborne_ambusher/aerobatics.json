@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Airborne Ambusher ~ Aerobatics",
     "name": "Aerobatics",
-    "class": "Airborne Ambusher",
+    "class": "Fighter",
     "description": "An airborne ambusher may make a Fly check instead of an Acrobatics check to move through a threatened area or an enemy's space.",
     "raw_tokens": [
       {

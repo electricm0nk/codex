@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wit ~ Way with Words",
     "name": "Way with Words",
-    "class": "Wit",
+    "class": "Bard",
     "description": "A wit gains a +%1 bonus on Bluff, Diplomacy, Intimidate, Linguistics, and Sense Motive checks. He also gains %1 edges at the beginning of any verbal duel (see Ultimate Intrigue pages 176-181).|WitWayWithWordsBonus",
     "raw_tokens": [
       {

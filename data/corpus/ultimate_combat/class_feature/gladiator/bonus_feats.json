@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Gladiator ~ Bonus Feats",
     "name": "Bonus Feats",
-    "class": "Gladiator",
+    "class": "Fighter",
     "description": "A gladiator may choose to take combat or performance feats as bonus feats.",
     "raw_tokens": [
       {

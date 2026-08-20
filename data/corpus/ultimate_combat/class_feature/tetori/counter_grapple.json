@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tetori ~ Counter-Grapple",
     "name": "Counter-Grapple",
-    "class": "Tetori",
+    "class": "Monk",
     "description": "At 4th level, a tetori wrestler may make an attack of opportunity against a creature attempting to grapple him. This ability does not allow the tetori to make an attack of opportunity against a creature with the Greater Grapple feat. At 6th level, he may use counter-grapple even if his attacker has concealment or total concealment, at 8th level even if he is flat-footed, and at 10th level even if his attacker has exceptional reach. This ability replaces slow fall.",
     "raw_tokens": [
       {

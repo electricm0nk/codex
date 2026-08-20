@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Weretouched ~ Lycanthropic Empathy",
     "name": "Lycanthropic Empathy",
-    "class": "Weretouched",
+    "class": "Shifter",
     "description": "A weretouched gains wild empathy and a +4 bonus on wild empathy checks, but this ability works only on the type of animal she chose for her lycanthrope aspect. This alters wild empathy.",
     "raw_tokens": [
       {

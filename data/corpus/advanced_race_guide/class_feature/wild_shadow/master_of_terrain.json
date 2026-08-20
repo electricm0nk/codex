@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wild Shadow ~ Master of Terrain",
     "name": "Master of Terrain",
-    "class": "Wild Shadow",
+    "class": "Ranger",
     "description": "A wild shadow can use his harrying attack against creatures other than his favored enemy or he can spend a standard action to designate up to two of his favored enemies as his harried prey instead.",
     "raw_tokens": [
       {

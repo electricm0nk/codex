@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Free Hand Fighter ~ Reversal",
     "name": "Reversal",
-    "class": "Free Hand Fighter",
+    "class": "Fighter",
     "description": "At 19th level, a free hand fighter can make a disarm combat maneuver against a creature he threatens as an immediate action when he is the target of a melee attack from another creature. If successful, the attack changes to target the target of the free hand fighter's maneuver instead of the free hand fighter himself. This ability replaces armor mastery.",
     "raw_tokens": [
       {

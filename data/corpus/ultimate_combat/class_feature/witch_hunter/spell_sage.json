@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Witch Hunter ~ Spell Sage",
     "name": "Spell Sage",
-    "class": "Witch Hunter",
+    "class": "Inquisitor",
     "description": "At 1st level, a witch hunter adds her Wisdom modifier on Spellcraft checks in addition to her Intelligence modifier when attempting to identify a spell as it is being cast, to identify the properties of a magic item using detect magic, or to decipher a scroll. This ability replaces monster lore.",
     "raw_tokens": [
       {

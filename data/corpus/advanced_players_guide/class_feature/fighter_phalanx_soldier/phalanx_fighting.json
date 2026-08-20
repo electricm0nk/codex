@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fighter Phalanx Soldier ~ Phalanx Fighting",
     "name": "Phalanx Fighting",
-    "class": "Fighter Phalanx Soldier",
+    "class": "Fighter",
     "description": "At 3rd level, when a phalanx soldier wields a shield, he can use any polearm or spear of his size as a one-handed weapon. This ability replaces armor training 1.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Elementalist Oracle ~ Elemental Revelation",
     "name": "Elemental Revelation",
-    "class": "Elementalist Oracle",
+    "class": "Oracle",
     "description": "You fully harness the power of the elements. You can apply the Elemental Spell metamagic feat (APGuide p.158) to spells you cast without increasing the level or casting time. You can choose acid, cold, electricity, or fire each time you use this ability. Whenever you score a critical hit with an attack that deals energy damage, you ignore the target's energy resistance (if any). If you score such a critical hit against a creature that has immunity to the energy type you are attacking with, the creature takes half damage from the attack.",
     "raw_tokens": [
       {

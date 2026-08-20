@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Oath of Chastity ~ Pure of Body",
     "name": "Pure of Body",
-    "class": "Oath of Chastity",
+    "class": "Paladin",
     "description": "You havea 50%% chance to turn any critical hit or sneak attack against you into a normal hit, as if you were wearing fortification armor.",
     "raw_tokens": [
       {

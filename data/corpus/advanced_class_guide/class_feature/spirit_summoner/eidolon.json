@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spirit Summoner ~ Eidolon",
     "name": "Eidolon",
-    "class": "Spirit Summoner",
+    "class": "Summoner",
     "description": "A spirit summoner begins play with a powerful outsider called an eidolon. The eidolon's form and abilities must be appropriate to his chosen spirit, at the GM's discretion-for example, a summoner with the flame spirit cannot have an eidolon with ice or water abilities, a summoner with a heavens spirit cannot have a fiend-like eidolon, and so on. The summoner can use temporary effects (such as evolution surge) to alter the eidolon into an inappropriate form, but cannot use permanent effects (such as transmogrify) to do so. This ability alters the eidolon Class Feature.",
     "raw_tokens": [
       {

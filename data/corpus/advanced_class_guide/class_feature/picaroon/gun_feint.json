@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Picaroon ~ Gun Feint",
     "name": "Gun Feint",
-    "class": "Picaroon",
+    "class": "Swashbuckler",
     "description": "A picaroon can use the ferocious reputation of firearms to her advantage. A picaroon with at least 1 panache point can feint instead of attacking with her firearm as part of a full attack. She can spend 1 panache point to gain a +5 bonus on this check. This deed replaces superior feint.",
     "raw_tokens": [
       {

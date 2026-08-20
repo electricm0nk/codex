@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Herald of the Horn ~ Horn Call",
     "name": "Horn Call",
-    "class": "Herald of the Horn",
+    "class": "Skald",
     "description": "A herald's horn enhances his sonic spells. If a skald spell with the sonic descriptor is cast using the horn, its DC increases by %1.|1+(SkaldLVL>=13)+(SkaldLVL>=19)",
     "raw_tokens": [
       {

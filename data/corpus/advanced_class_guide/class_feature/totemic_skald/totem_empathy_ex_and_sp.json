@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Totemic Skald ~ Totem Empathy",
     "name": "Totem Empathy (Ex and Sp)",
-    "class": "Totemic Skald",
+    "class": "Skald",
     "description": "The totemic skald can improve the attitude of animals of the same type as his totem. This ability functions just like a Diplomacy check to improve the attitude of a person. The skald rolls 1d20 and adds his skald level and his Charisma modifier to determine the totem empathy check result. The typical domestic animal has a starting attitude of indifferent, while wild animals are usually unfriendly. In addition, the totemic skald can cast charm animal as a spell-like ability. This only functions against animals that are of the same type as his totem animal (subject to GM discretion).",
     "raw_tokens": [
       {

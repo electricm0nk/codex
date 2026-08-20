@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Student of Stone ~ Bones of Stone 3",
     "name": "Bones of Stone",
-    "class": "Student of Stone",
+    "class": "Monk",
     "description": "As a swift action, a student of stone can spend 1 ki point to gain DR 5/chaotic until his next turn.",
     "raw_tokens": [
       {

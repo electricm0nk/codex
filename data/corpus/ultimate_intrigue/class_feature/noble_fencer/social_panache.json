@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Noble Fencer ~ Social Panache",
     "name": "Social Panache",
-    "class": "Noble Fencer",
+    "class": "Swashbuckler",
     "description": "At 1st level, a noble fencer can spend 1 panache point when he attempts a Bluff, Diplomacy, Intimidate, or Sense Motive check to roll 1d6 and add the result to the check. He can do this after he rolls the check but before the result is revealed. If the result of the d6 roll is a natural 6, he rolls another 1d6 and adds it to the check. He can continue to do this as long as he rolls natural 6s, up to %1 times. Just before a verbal duel (see pages 176-181), a noble fencer can spend up to 4 panache points. For each point he spends, he selects a tactic for which he has chosen Bluff, Diplomacy, Intimidate, or Sense Motive as an associated skill and gains an edge he can only use with that tactic.|max(1,CHA)",
     "raw_tokens": [
       {

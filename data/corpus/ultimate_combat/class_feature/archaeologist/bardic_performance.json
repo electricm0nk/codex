@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Archaeologist ~ Bardic Performance",
     "name": "Bardic Performance",
-    "class": "Archaeologist",
+    "class": "Bard",
     "description": "Archaeologists do not gain the bardic performance ability or any of its performance types.",
     "raw_tokens": [
       {

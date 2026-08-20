@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Saurian Champion ~ Savage Combatant",
     "name": "Savage Combatant",
-    "class": "Saurian Champion",
+    "class": "Cavalier",
     "description": "A saurian champion does not rely on lethal charges or firing from afar as more \"civilized\" cavaliers do, preferring to rampage among his foes instead. Saurian champions do not deal double damage when charging with a lance (or similar weapon) while mounted. While mounted, a saurian champion cannot attack with ranged weapons other than thrown weapons.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Green Faith Initiate ~ Zephyr Message",
     "name": "Zephyr Message",
-    "class": "Green Faith Initiate",
+    "class": "Druid",
     "description": "Once per day, the Green Faith initiate can cast whispering wind as a spell-like ability, treating her druid level as her caster level.",
     "raw_tokens": [
       {

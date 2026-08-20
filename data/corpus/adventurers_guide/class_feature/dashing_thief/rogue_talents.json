@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dashing Thief ~ Rogue Talents",
     "name": "Rogue Talents",
-    "class": "Dashing Thief",
+    "class": "Swashbuckler",
     "description": "Council training grants a dashing thief numerous opportunities to learn trade secrets from fellow scoundrels. At 4th level and every 4 levels thereafter, a dashing thief gains a rogue talent, treating her class level as her rogue level when determining the talents' benefits. Starting at 12th level, the dashing thief can choose advanced rogue talents.",
     "raw_tokens": [
       {

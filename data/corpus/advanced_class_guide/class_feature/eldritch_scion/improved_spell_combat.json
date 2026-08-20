@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Eldritch Scion ~ Improved Spell Combat",
     "name": "Improved Spell Combat",
-    "class": "Eldritch Scion",
+    "class": "Magus",
     "description": "At 14th level, an eldritch scion gains the improved spell combat Class Feature. This ability alters improved spell combat.",
     "raw_tokens": [
       {

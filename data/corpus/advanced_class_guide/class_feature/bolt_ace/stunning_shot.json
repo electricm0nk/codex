@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bolt Ace ~ Stunning Shot",
     "name": "Stunning Shot",
-    "class": "Bolt Ace",
+    "class": "Gunslinger",
     "description": "When a bolt ace hits a creature, she can spend 2 grit points to stun the creature for 1 round. The creature must make a Fortitude saving throw (the DC = 10 + 1/2 the bolt ace's level + the bolt ace's Wisdom modifier). If the creature fails, it is stunned for 1 round. Creatures that are immune to critical hits are also immune to this effect.",
     "raw_tokens": [
       {

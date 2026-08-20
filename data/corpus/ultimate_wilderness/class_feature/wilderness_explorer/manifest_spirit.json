@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wilderness Explorer ~ Manifest Spirit",
     "name": "Manifest Spirit",
-    "class": "Wilderness Explorer",
+    "class": "Ranger",
     "description": "A wilderness explorer is shielded from magic by those guardian spirits that favor him. He gains spell resistance %1. This ability functions only while the wilderness explorer is within one of his favored terrains. This alters favored terrain even further.|11+RangerLVL",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Holy Gun ~ Holy Slinger",
     "name": "Holy Slinger",
-    "class": "Holy Gun",
+    "class": "Paladin",
     "description": "This ability function like the holy champion paladin class feature, but the banishment occurs when she hits an evil outsider with the smiting shot deed.",
     "raw_tokens": [
       {

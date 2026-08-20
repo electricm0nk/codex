@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychonaut ~ Remote Consciousness",
     "name": "Remote Consciousness",
-    "class": "Psychonaut",
+    "class": "Alchemist",
     "description": "You add Dream, Lesser Astral Projection, Nightmare, Plane Shift, Sending, and Telepathic Bond to your formula book as 4th-level extracts (a Plane Shift extract does not require a focus component).",
     "raw_tokens": [
       {

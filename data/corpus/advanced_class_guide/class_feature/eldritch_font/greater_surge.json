@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Eldritch Font ~ Greater Surge",
     "name": "Greater Surge",
-    "class": "Eldritch Font",
+    "class": "Arcanist",
     "description": "An eldritch font can use her eldritch surge ability to force a creature to reroll a saving throw against one spell or arcanist exploit and take the lower value. The eldritch font must declare the use of this ability before the result of that creature's saving throw is revealed. If the spell or arcanist exploit affects more than one target, only one target is affected by this ability.",
     "raw_tokens": [
       {

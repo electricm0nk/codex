@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Steelblood ~ Weapon and Armor Proficiency",
     "name": "Weapon and Armor Proficiency",
-    "class": "Steelblood",
+    "class": "Bloodrager",
     "description": "A steelblood gains proficiency in heavy armor. A steelblood can cast bloodrager spells while wearing heavy armor without incurring an arcane spell failure chance.",
     "raw_tokens": [
       {

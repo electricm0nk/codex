@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Urban Druid ~ Wild Shape",
     "name": "Wild Shape",
-    "class": "Urban Druid",
+    "class": "Druid",
     "description": "An urban druid gains this ability at 8th level, except that her effective druid level for the ability is equal to her druid level - 4.",
     "raw_tokens": [
       {

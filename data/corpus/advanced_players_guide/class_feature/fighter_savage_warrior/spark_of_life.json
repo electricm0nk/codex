@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fighter Savage Warrior ~ Spark of Life",
     "name": "Spark of Life",
-    "class": "Fighter Savage Warrior",
+    "class": "Fighter",
     "description": "At 2nd level, a savage warrior gains a +1 bonus on saving throws made against energy drain and death effects. This bonus increases by +1 for every four levels beyond 2nd. This ability replaces bravery.",
     "raw_tokens": [
       {

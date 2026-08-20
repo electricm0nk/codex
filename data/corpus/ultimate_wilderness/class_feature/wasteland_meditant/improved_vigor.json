@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wasteland Meditant ~ Improved Vigor",
     "name": "Improved Vigor",
-    "class": "Wasteland Meditant",
+    "class": "Monk",
     "description": "A wasteland meditant's vigor ability improves. He still takes no damage on a successful Fortitude saving throw against attacks, but henceforth he takes only half damage on a failed save.",
     "raw_tokens": [
       {

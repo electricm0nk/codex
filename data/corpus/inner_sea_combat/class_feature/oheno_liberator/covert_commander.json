@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Oheno Liberator ~ Covert Commander",
     "name": "Covert Commander",
-    "class": "Oheno Liberator",
+    "class": "Rogue",
     "description": "An Okeno liberator grants all allies within 30 feet who are in her line of sight (but not herself) a +i competence bonus on Disguise and Stealth checks. This bonus increases by 1 for every 3 levels beyond 3rd. This ability replaces trap sense.",
     "raw_tokens": [
       {

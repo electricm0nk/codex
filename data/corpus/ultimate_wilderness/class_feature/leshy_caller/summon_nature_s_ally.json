@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Leshy Caller ~ Summon Nature's Ally",
     "name": "Summon Nature's Ally",
-    "class": "Leshy Caller",
+    "class": "Summoner",
     "description": "A leshy caller can cast summon nature's ally as a spell-like ability %1 times per day. At levels where a regular summoner would gain access to a new level of summon monster as a spell-like ability, the leshy caller instead gains the equivalent summon nature's ally spell; at 19th level, she can cast summon nature's ally IX or gate. When a leshy caller gains a summon nature's ally spell as a spell-like ability, she adds it to her class spell list (though she must still select it as a spell known if she wants to gain the ability to cast it as a normal spell). She adds leaf leshys (B3), gourd leshys (B3), fungus leshys (B3),seaweed leshys (B3), and lotus leshys (B5) to her list of creatures for summon nature's ally I, II, III, IV, and V, respectively. This alters summon monster|3+CHA",
     "raw_tokens": [
       {

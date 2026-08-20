@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Standard Bearer ~ Mount",
     "name": "Mount",
-    "class": "Standard Bearer",
+    "class": "Cavalier",
     "description": "At 5th level, a standard bearer gains the service of a loyal and trusted mount. This mount is identical in all ways to the standard cavalier's mount. This ability replaces the standard cavalier's banner ability.",
     "raw_tokens": [
       {

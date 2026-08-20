@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Eldritch Scion ~ Eldritch Pool",
     "name": "Eldritch Pool",
-    "class": "Eldritch Scion",
+    "class": "Magus",
     "description": "An eldritch scion gains an eldritch pool of personal magical energy, equal to 1/2 his magus level (minimum 1) + his Charisma modifier. As a swift action, he can spend a point of eldritch energy to enter a state of mystical focus for 2 rounds. This allows him to use abilities from his bloodrager bloodline as though he were in a bloodrage, though he gains none of the other benefits or drawbacks of bloodraging. At 4th level, an eldritch scion can also use his eldritch pool as an arcane pool, gaining all the benefits listed with the magus's arcane pool Class Feature.Magus Class Feature. Additionally, any magus's class feature or spell from the magus spell list that normally uses a calculation based on Intelligence is instead based on Charisma for an eldritch scion. For example, an eldritch scion with the arcane accuracy magus arcana grants himself an insight bonus on attacks equal to his Charisma bonus, not his Intelligence bonus. This has no effect on the eldritch scion's skills or skill points. This ability replaces arcane pool, and abilities that modify arcane pool also modify eldritch pool.",
     "raw_tokens": [
       {

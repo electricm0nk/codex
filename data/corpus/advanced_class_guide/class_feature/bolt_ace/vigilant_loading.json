@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bolt Ace ~ Vigilant Loading",
     "name": "Vigilant Loading",
-    "class": "Bolt Ace",
+    "class": "Gunslinger",
     "description": "As long as a bolt ace has at least 1 grit point, she does not provoke attacks of opportunity when loading a crossbow.",
     "raw_tokens": [
       {

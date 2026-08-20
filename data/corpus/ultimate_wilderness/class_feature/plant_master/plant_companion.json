@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Plant Master ~ Plant Companion",
     "name": "Plant Companion",
-    "class": "Plant Master",
+    "class": "Hunter",
     "description": "A plant master forms a mystic bond with a plant companion. A plant master can begin play with any plant companion. Except for the companion being a creature of the plant type, this ability otherwise works like the druid's animal companion.",
     "raw_tokens": [
       {

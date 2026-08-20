@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Oath of Chastity ~ Pure of Mind",
     "name": "Pure of Mind",
-    "class": "Oath of Chastity",
+    "class": "Paladin",
     "description": "You gain a +4 sacred bonus on saves against charm effects and figments, and gain a +%1 bonus on Will saving throws.|PureOfMindBonus",
     "raw_tokens": [
       {

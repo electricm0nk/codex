@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Silver Balladeer ~ Pure Heart",
     "name": "Pure Heart",
-    "class": "Silver Balladeer",
+    "class": "Bard",
     "description": "At 2nd level, a silver balladeer gains a +4 bonus on saving throws against curses, hexes, and charm effects. This ability replaces well-versed.",
     "raw_tokens": [
       {

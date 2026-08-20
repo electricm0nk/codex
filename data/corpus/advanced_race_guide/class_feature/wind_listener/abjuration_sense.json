@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wind Listener ~ Abjuration Sense",
     "name": "Abjuration Sense",
-    "class": "Wind Listener",
+    "class": "Wizard",
     "description": "A wind listener develops a sixth sense for spotting spells designed to guard against his investigations. He gains a +%1 bonus on Perception checks to notice spells of the abjuration school and on Spellcraft checks to identify abjuration effects, spells, and magic items.|WizardLVL/2",
     "raw_tokens": [
       {

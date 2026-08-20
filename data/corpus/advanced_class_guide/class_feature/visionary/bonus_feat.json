@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Visionary ~ Bonus Feat",
     "name": "Bonus Feat",
-    "class": "Visionary",
+    "class": "Shaman",
     "description": "The visionary gains Diviner's Delving as a bonus feat, even if she does not meet the prerequisites.",
     "raw_tokens": [
       {

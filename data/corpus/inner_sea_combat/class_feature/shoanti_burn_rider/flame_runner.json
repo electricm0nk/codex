@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Shoanti Burn Rider ~ Flame Runner",
     "name": "Flame Runner",
-    "class": "Shoanti Burn Rider",
+    "class": "Barbarian",
     "description": "At lst level, once per rage, a burn rider can goad her mount into a burst of incredible speed. The mount's speed increases by 10 feet until the end of the burn rider's turn. This bonus to speed increases by 10 feet at 9th level and again at 15th level. This ability replaces fast movement.",
     "raw_tokens": [
       {

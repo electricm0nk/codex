@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Leshy Warden ~ Leshy Summoner",
     "name": "Leshy Summoner",
-    "class": "Leshy Warden",
+    "class": "Druid",
     "description": "A leshy warden is an expert at summoning and growing leshys. She counts as a plant creature for the purpose of growing leshys. She adds leaf leshys, gourd leshys, fungus leshys, seaweed leshys, and lotus leshys to her list of creatures she can summon with summon nature's ally I, II, III, IV, and V, respectively.",
     "raw_tokens": [
       {

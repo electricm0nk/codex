@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Titan Mauler ~ Jotungrip",
     "name": "Jotungrip",
-    "class": "Titan Mauler",
+    "class": "Barbarian",
     "description": "At 2nd level, a titan mauler may choose to wield a two-handed melee weapon in one hand with a -2 penalty on attack rolls while doing so. The weapon must be appropriately sized for her, and it is treated as onehanded when determining the effect of Power Attack, Strength bonus to damage, and the like. This ability replaces uncanny dodge.",
     "raw_tokens": [
       {

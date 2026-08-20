@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wild Child Brawler ~ Wild Tricks",
     "name": "Wild Tricks",
-    "class": "Wild Child Brawler",
+    "class": "Brawler",
     "description": "The wild child has learned a number of tricks to aid his allies and his animal companion, as well as to hinder his opponents. He cannot choose any tricks that rely on ranged attacks. The wild child can use these tricks %1 times per day. This ability otherwise follows the rules of the hunter's tricks ability, including all action costs.|WildTricksTimes",
     "raw_tokens": [
       {

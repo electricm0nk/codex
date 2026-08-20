@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Oath against Savagery ~ Holy Reach",
     "name": "Holy Reach",
-    "class": "Oath against Savagery",
+    "class": "Paladin",
     "description": "You can expend one use of your smite evil ability to extend your natural reach by 5 feet for 1 minute. This does not stack with the Lunge feat.",
     "raw_tokens": [
       {

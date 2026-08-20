@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Brawler ~ No Escape",
     "name": "No Escape",
-    "class": "Brawler",
+    "class": "Fighter",
     "description": "At 9th level, taking a 5-foot step out of the area of a brawler's menacing stance or moving out of the area of a brawler's menacing stance with a withdraw action provokes an attack of opportunity from the brawler. This ability replaces weapon training 3 and 4.",
     "raw_tokens": [
       {

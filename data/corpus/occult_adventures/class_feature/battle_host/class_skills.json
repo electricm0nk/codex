@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Battle Host ~ Class Skills",
     "name": "Class Skills",
-    "class": "Battle Host",
+    "class": "Occultist",
     "description": "A battle host adds Knowledge (local) (Int) and Knowledge (nobility) (Int) as class skills. This alters the occultist's class skills.",
     "raw_tokens": [
       {

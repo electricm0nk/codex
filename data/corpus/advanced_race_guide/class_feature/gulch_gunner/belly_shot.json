@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Gulch Gunner ~ Belly Shot",
     "name": "Belly Shot",
-    "class": "Gulch Gunner",
+    "class": "Gunslinger",
     "description": "A gulch gunner can press her firearm directly against a vulnerable location of an adjacent target, dealing additional damage. When the gulch gunner successfully hits an adjacent target with a ranged firearm attack, she deals +%1d6 points of damage. Creatures immune to precision damage, critical hits, or sneak attacks do not take this additional damage.|1+(GunslingerLVL-9)/4",
     "raw_tokens": [
       {

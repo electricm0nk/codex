@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Road Keeper ~ Road Bond",
     "name": "Road Bond",
-    "class": "Road Keeper",
+    "class": "Druid",
     "description": "If the road keeper chooses a cleric domain as her nature bond, she must choose from the Community, Liberation, Protection, Travel, or Weather domains. The road keeper can also choose any subdomain associated with these domains. This alters nature bond.",
     "raw_tokens": [
       {

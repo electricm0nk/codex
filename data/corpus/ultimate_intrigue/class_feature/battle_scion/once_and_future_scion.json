@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Battle Scion ~ Once and Future Scion",
     "name": "Once and Future Scion",
-    "class": "Battle Scion",
+    "class": "Skald",
     "description": "A battle scion becomes extremely difficult to kill. Whenever she is slain, as long as her body isn't destroyed, she enters a deathlike sleep for 3 days, after which she returns to life as per raise dead, except that it can restore her even if she was slain by a death effect. Spells that would restore her to life function as if she were dead during this time, allowing her to recover sooner.",
     "raw_tokens": [
       {

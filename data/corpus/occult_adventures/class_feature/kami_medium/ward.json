@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Kami Medium ~ Ward",
     "name": "Ward",
-    "class": "Kami Medium",
+    "class": "Medium",
     "description": "A kami medium can declare an area or object that's an appropriate place to contact his channeled kami as his ward. This grants the kami medium the ward and merge with ward abilities of the kami subtype. For large areas such as lakes or storms, a kami medium's ward encompasses a radius of up to %1 feet.|5*MediumLVL",
     "raw_tokens": [
       {

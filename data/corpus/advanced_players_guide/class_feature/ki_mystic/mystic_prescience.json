@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ki Mystic ~ Mystic Prescience",
     "name": "Mystic Prescience",
-    "class": "Ki Mystic",
+    "class": "Monk",
     "description": "At 13th level, a ki mystic gains a +2 insight bonus to AC and CMD. At 20th level, the bonus increases to +4. This ability replaces diamond soul.",
     "raw_tokens": [
       {

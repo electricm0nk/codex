@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sea Reaver ~ Savage Sailor",
     "name": "Savage Sailor",
-    "class": "Sea Reaver",
+    "class": "Barbarian",
     "description": "At 3rd level, a sea reaver gains a +1 bonus on Acrobatics, Climb, Profession (sailor), Survival, and Swim checks made in aquatic terrain, including aboard a ship or along shorelines (currently +%1). These bonuses improve by +1 every three levels after 3rd. This ability replaces trap sense.|ReaverSavageBonus",
     "raw_tokens": [
       {

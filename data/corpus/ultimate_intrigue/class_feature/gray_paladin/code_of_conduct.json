@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Gray Paladin ~ Code of Conduct",
     "name": "Code of Conduct",
-    "class": "Gray Paladin",
+    "class": "Paladin",
     "description": "A gray paladin must be of lawful good, lawful neutral, or neutral good alignment and loses all class features except proficiencies if she ever willingly commits an evil act (for example, casting a spell with the evil descriptor). She should strive to act with honor and uphold the tenets of her faith, but failing to do so is not a violation of her code, and other than evil actions, she can do whatever else she feels is necessary to uphold the causes of law and good. This ability replaces the paladin's code of conduct and associated abilities and alters the section on ex-paladins.",
     "raw_tokens": [
       {

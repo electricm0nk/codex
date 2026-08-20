@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Daring Champion ~ Nimble",
     "name": "Nimble",
-    "class": "Daring Champion",
+    "class": "Cavalier",
     "description": "A daring champion gains a +%1 dodge bonus to AC when wearing light or no armor and carrying no more than a light load. Anything that causes the daring champion to lose his Dexterity bonus to AC also causes him to lose this dodge bonus.|DaringChampionAC",
     "raw_tokens": [
       {

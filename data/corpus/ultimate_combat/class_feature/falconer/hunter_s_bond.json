@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Falconer ~ Hunter's Bond",
     "name": "Hunter's Bond",
-    "class": "Falconer",
+    "class": "Ranger",
     "description": "At 4th level, a falconer must select an animal companion when he gains hunter's bond. He does not gain a new companion at 4th level; rather, his feathered companion gains full hit points.",
     "raw_tokens": [
       {

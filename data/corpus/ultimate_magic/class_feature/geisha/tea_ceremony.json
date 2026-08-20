@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Geisha ~ Tea Ceremony",
     "name": "Tea Ceremony",
-    "class": "Geisha",
+    "class": "Bard",
     "description": "By spending 10 minutes preparing an elaborate tea ceremony, you may affect your allies with inspire courage, inspire competence, inspire greatness, or inspire heroics. The ceremony's effects last 10 minutes. You must spend 4 rounds of bardic performance for each creature to be affected.",
     "raw_tokens": [
       {

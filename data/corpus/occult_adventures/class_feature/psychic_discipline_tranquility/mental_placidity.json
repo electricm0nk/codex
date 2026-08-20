@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Discipline Tranquility ~ Mental Placidity",
     "name": "Mental Placidity",
-    "class": "Psychic Discipline Tranquility",
+    "class": "Psychic",
     "description": "As an immediate action, you can gain a +2 bonus on a Will saving throw you are about to attempt. This bonus increases to +4 against an enchantment spell or effect. Any ally who attempts a saving throw against the same effect gains a +1 bonus on the Will save, or a +2 bonus if the effect is an enchantment. If you succeed at the saving throw, you regain 1 point in your phrenic pool. You can use this ability a number of times per day equal to your Wisdom modifier.",
     "raw_tokens": [
       {

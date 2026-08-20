@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mountain Witch ~ Stone Spirit Hex",
     "name": "Stone Spirit Hex",
-    "class": "Mountain Witch",
+    "class": "Witch",
     "description": "A mountain witch can select hexes from the shaman's stone spirit (see page 44) as if they were witch hexes. She uses her witch level as her shaman level to determine the effect of the hex, and Intelligence instead of Wisdom to determine its DC. This ability alters hex.",
     "raw_tokens": [
       {

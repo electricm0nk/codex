@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Charlatan ~ Rogue Talents",
     "name": "Rogue Talents",
-    "class": "Charlatan",
+    "class": "Rogue",
     "description": "The following rogue talents complement the charlatan archetype - black market connections*, coax information**, cunning lie*, honeyed words**, and underhanded*.",
     "raw_tokens": [
       {

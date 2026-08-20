@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Roof Runner ~ Shingle Stride",
     "name": "Shingle Stride",
-    "class": "Roof Runner",
+    "class": "Hunter",
     "description": "A roof runner and her animal companion can move at full speed without penalty when using Acrobatics to cross narrow or uneven surfaces, and climb at half speed (instead of one-quarter speed) without taking the -5 penalty.",
     "raw_tokens": [
       {

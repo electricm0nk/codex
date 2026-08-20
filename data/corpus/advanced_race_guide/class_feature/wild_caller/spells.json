@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wild Caller ~ Spells",
     "name": "Spells",
-    "class": "Wild Caller",
+    "class": "Summoner",
     "description": "A wild caller does not have access to summon monster spells. Instead, he swaps out those spells on his spell list with summon nature's ally spells of the same level.",
     "raw_tokens": [
       {

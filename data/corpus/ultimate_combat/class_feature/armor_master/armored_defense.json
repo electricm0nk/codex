@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Armor Master ~ Armored Defense",
     "name": "Armored Defense",
-    "class": "Armor Master",
+    "class": "Fighter",
     "description": "An armor master gains DR 1/- when wearing light armor, DR 2/- when wearing medium armor, and DR 3/- when wearing heavy armor.|PREVARLT:FighterLVL,19",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Hunting Paladin ~ Spells",
     "name": "Spells",
-    "class": "Hunting Paladin",
+    "class": "Paladin",
     "description": "[NOT IMPLEMENTED] For each level of spell she can cast, a hunting paladin can prepare and cast one spell per day from the ranger spell list rather than the paladin spell list. This alters spells.",
     "raw_tokens": [
       {

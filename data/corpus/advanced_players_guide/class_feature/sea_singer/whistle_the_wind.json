@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sea Singer ~ Whistle the Wind",
     "name": "Whistle the Wind",
-    "class": "Sea Singer",
+    "class": "Bard",
     "description": "A sea singer of 6th level or higher can use performance to create a gust of wind. This wind lasts for as long as he continues his performance. He can extend this duration to 1 minute by playing for 5 consecutive rounds. This performance replaces suggestion.",
     "raw_tokens": [
       {

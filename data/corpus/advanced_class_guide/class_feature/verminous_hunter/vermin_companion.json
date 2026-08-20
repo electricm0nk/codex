@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Verminous Hunter ~ Vermin Companion",
     "name": "Vermin Companion",
-    "class": "Verminous Hunter",
+    "class": "Hunter",
     "description": "A verminous hunter must choose a vermin companion instead of an animal companion. The hunter tactics class ability allows a verminous hunter to grant her teamwork feats to a mindless vermin companion.",
     "raw_tokens": [
       {

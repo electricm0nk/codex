@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Plains Druid ~ Savanna Ambush",
     "name": "Savanna Ambush",
-    "class": "Plains Druid",
+    "class": "Druid",
     "description": "At 4th level, a plains druid gains concealment whenever she is prone in natural surroundings, and can make Stealth checks at no penalty when prone and not moving or at -5 when crawling. A plains druid can stand up from prone as an immediate action during a surprise round. This ability replaces resist nature's lure.",
     "raw_tokens": [
       {

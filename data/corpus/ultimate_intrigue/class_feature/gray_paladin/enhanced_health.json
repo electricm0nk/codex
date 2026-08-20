@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Gray Paladin ~ Enhanced Health",
     "name": "Enhanced Health",
-    "class": "Gray Paladin",
+    "class": "Paladin",
     "description": "A gray paladin is far less a stranger to poisons than a normal paladin. She gains a +4 sacred bonus on all saving throws against poisons and diseases.",
     "raw_tokens": [
       {

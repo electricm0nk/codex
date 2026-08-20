@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sea Reaver ~ Rage Powers",
     "name": "Rage Powers",
-    "class": "Sea Reaver",
+    "class": "Barbarian",
     "description": "The following rage powers complement the sea reaver archetype - bestial leaper, bestial swimmer, come and get me**, hurling charge**, raging leaper*, raging swimmer*, rolling dodge*, and smasher**.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Overwhelming Soul ~ Mind Over Matter",
     "name": "Mind Over Matter",
-    "class": "Overwhelming Soul",
+    "class": "Kineticist",
     "description": "An overwhelming soul uses her Charisma modifier instead of her Constitution modifier to determine her damage with wild talents, the DCs of Constitution based wild talents, the duration of wild talents with a Constitution-based duration, her bonus on concentration checks for wild talents, and the other Constitutionbased effects of all her wild talents. She adds Bluff and Diplomacy to her list of kineticist class skills. This ability alters the kineticist's class skills and the key ability score of wild talents.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tribal Fighter ~ Battle Focus",
     "name": "Battle Focus",
-    "class": "Tribal Fighter",
+    "class": "Fighter",
     "description": "A tribal fighter learns to fight with his bare hands and wield traditional tribal weapons so effortlessly that they are almost extensions of his arms. He gains Improved Unarmed Strike as a bonus feat. [NOT IMPLEMENTED] For the purpose of meeting the prerequisites of style feats and feats that have style feats as prerequisites, the tribal fighter counts as having a number of skill ranks equal to his fighter level in all skills in which he is trained.",
     "raw_tokens": [
       {

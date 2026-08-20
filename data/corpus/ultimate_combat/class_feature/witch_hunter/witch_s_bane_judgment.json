@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Witch Hunter ~ Witch's Bane Judgment",
     "name": "Witch's Bane Judgment",
-    "class": "Witch Hunter",
+    "class": "Inquisitor",
     "description": "At 14th level, a witch hunter gains the following judgment.",
     "raw_tokens": [
       {

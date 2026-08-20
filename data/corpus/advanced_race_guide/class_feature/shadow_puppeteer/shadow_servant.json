@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Shadow Puppeteer ~ Shadow Servant",
     "name": "Shadow Servant",
-    "class": "Shadow Puppeteer",
+    "class": "Bard",
     "description": "At 1st level, the puppeteer can create a shadow servant to perform simple tasks. The shadow servant is identical to an unseen servant (caster level %1), except it appears as a formless shadow. Shadow servant relies on visual components.|BardLVL",
     "raw_tokens": [
       {

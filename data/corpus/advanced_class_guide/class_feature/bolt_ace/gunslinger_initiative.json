@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bolt Ace ~ Gunslinger Initiative",
     "name": "Gunslinger Initiative",
-    "class": "Bolt Ace",
+    "class": "Gunslinger",
     "description": "As long as the bolt ace has at least 1 grit point, she gains the following benefits. First, she gains a +%1 bonus on initiative checks. Furthermore, if she has the Quick Draw feat, her hands are free and unrestrained, and the crossbow is not hidden, she can draw a single crossbow as part of the initiative check.|BoltAceInitiative",
     "raw_tokens": [
       {

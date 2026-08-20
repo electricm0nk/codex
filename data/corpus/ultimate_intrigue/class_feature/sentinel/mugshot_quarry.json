@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sentinel ~ Mugshot Quarry",
     "name": "Mugshot Quarry",
-    "class": "Sentinel",
+    "class": "Ranger",
     "description": "The sentinel can activate her quarry ability (and her improved quarry ability at 19th level) against any of the targets she has memorized with the mugshot ability, even if the creature in question is not within her line of sight. This ability alters quarry and improved quarry.",
     "raw_tokens": [
       {

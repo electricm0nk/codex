@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Swamp Druid ~ Pond Scum",
     "name": "Pond Scum",
-    "class": "Swamp Druid",
+    "class": "Druid",
     "description": "At 4th level, a swamp druid gains a +4 bonus on saves against disease and the exceptional, supernatural, and spell-like abilities of monstrous humanoids. A swamp druid also gains DR/- equal to half her druid level against attacks by swarms. If this damage resistance prevents damage, the druid is unaffected by distraction or other special attacks of the swarm. This ability replaces resist nature's lure.",
     "raw_tokens": [
       {

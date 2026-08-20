@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Drunken Master ~ Drunken Strength",
     "name": "Drunken Strength",
-    "class": "Drunken Master",
+    "class": "Monk",
     "description": "At 5th level, a drunken master can spend 1 point of ki as a swift action to inflict 1d6 extra points of damage on a single successful melee attack. The monk can choose to apply the damage after the attack roll is made. At 10th level, the monk may spend 2 drunken ki points to increase the extra damage to 2d6. At 15th level, the monk may spend 3 drunken ki points to increase the extra damage to 3d6. At 20th level, the monk may spend 4 drunken ki points to increase the extra damage to 4d6. The monk must have at least 1 drunken ki point to use this ability. This ability replaces purity of body.",
     "raw_tokens": [
       {

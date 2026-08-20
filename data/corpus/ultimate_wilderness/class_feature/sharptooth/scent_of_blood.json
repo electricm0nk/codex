@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sharptooth ~ Scent of Blood",
     "name": "Scent of Blood",
-    "class": "Sharptooth",
+    "class": "Barbarian",
     "description": "A sharptooth gains scent as per the universal monster rule.",
     "raw_tokens": [
       {

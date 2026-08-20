@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Lantern Lighter ~ Stunning Light",
     "name": "Stunning Light",
-    "class": "Lantern Lighter",
+    "class": "Ranger",
     "description": "A lantern lighter learns to increase the effectiveness of bright light on creatures with light blindness. Daylight spells cast by the lantern lighter or other sources of bright light wielded by him cause creatures with light blindness within the area of bright light to become stunned for 1 round in addition to being blinded.",
     "raw_tokens": [
       {

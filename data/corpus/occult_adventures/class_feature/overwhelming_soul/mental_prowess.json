@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Overwhelming Soul ~ Mental Prowess",
     "name": "Mental Prowess",
-    "class": "Overwhelming Soul",
+    "class": "Kineticist",
     "description": "An overwhelming soul's mind is strong enough to protect her body from the stress of channeling the elements. However, in exchange, she is unable to push her limits quite as far as other kineticists. She can't choose to accept burn, though she can use wild talents with a burn cost if she can reduce that cost to 0 points with abilities such as gather power and infusion specialization. If she would be forced to accept burn against her will (for example, if she fails a concentration check), instead of taking burn she takes 1 temporary negative level, which never kills her and can't be removed with restoration or greater restoration, but which disappears automatically after 24 hours. At 6th level, once per day, she can reduce the total burn cost of any wild talent by 1. She can use this ability an additional time per day at 10th level and every 4 levels thereafter. This ability alters burn and replaces internal buffer.",
     "raw_tokens": [
       {

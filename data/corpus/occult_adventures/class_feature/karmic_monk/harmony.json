@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Karmic Monk ~ Harmony",
     "name": "Harmony",
-    "class": "Karmic Monk",
+    "class": "Monk",
     "description": "At 9th level, as an immediate action, a karmic monk can shift his alignment by one step for the purpose of all effects dependent on alignment until the beginning of his next turn. This does not actually alter the karmic monk's alignment. This ability replaces improved evasion.",
     "raw_tokens": [
       {

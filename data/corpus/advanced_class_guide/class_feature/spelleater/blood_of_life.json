@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spelleater ~ Blood of Life",
     "name": "Blood of Life",
-    "class": "Spelleater",
+    "class": "Bloodrager",
     "description": "A spelleater's blood empowers him to slowly recover from his wounds. While bloodraging, a spelleater gains fast healing %1 (Bestiary p.300). If the spelleater gains an increase to damage reduction from a bloodline, feat, or other ability, he is considered to have an effective damage reduction of 0, and the increase is added to this effective damage reduction.|max(1,min(6,floor((CASTERLEVEL-1)/3)))",
     "raw_tokens": [
       {

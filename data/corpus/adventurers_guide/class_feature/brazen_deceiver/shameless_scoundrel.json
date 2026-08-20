@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Brazen Deceiver ~ Shameless Scoundrel",
     "name": "Shameless Scoundrel",
-    "class": "Brazen Deceiver",
+    "class": "Bard",
     "description": "A brazen deceiver adds half his level (minimum +1) on Bluff, Disguise, and Stealth checks.",
     "raw_tokens": [
       {

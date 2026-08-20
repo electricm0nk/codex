@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mountain Druid ~ Wild Shape",
     "name": "Wild Shape",
-    "class": "Mountain Druid",
+    "class": "Druid",
     "description": "A mountain druid gains this ability at 6th level, except that her effective druid level for the ability is equal to her druid level - 2. A mountain druid cannot use wild shape to adopt a plant form. However, at 12th level she can assume the form of a Large giant as if using giant form I. At 16th level, she may assume the form of a Huge giant as if using giant form II.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Scrollmaster ~ Improved Scroll Casting",
     "name": "Improved Scroll Casting",
-    "class": "Scrollmaster",
+    "class": "Wizard",
     "description": "You can cast a wizard spell from a scroll and use your own Intelligence score and relevant feats to set the DC for the spell, and can use your own caster level if it is higher than that of the scroll (similar to a caster using a staff). You must have already deciphered the writing on the scroll to use this ability.",
     "raw_tokens": [
       {

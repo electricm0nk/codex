@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wasteland Meditant ~ Desert Strider",
     "name": "Desert Strider",
-    "class": "Wasteland Meditant",
+    "class": "Monk",
     "description": "A wasteland meditant ignores movement penalties for difficult terrain when in desert terrain. Additionally, he kicks up dust around his body whenever he performs a double move action in desert terrain. This dust grants the wasteland meditant concealment. The miss chance granted by this concealment is %1%%. This concealment lasts until the start of the meditant's next turn and stacks with any concealment provided by movement, such as from the Wind Stance feat.|min(80,10*((MonkLVL-2)/2))",
     "raw_tokens": [
       {

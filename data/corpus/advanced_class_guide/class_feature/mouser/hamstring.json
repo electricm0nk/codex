@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mouser ~ Hamstring",
     "name": "Hamstring",
-    "class": "Mouser",
+    "class": "Swashbuckler",
     "description": "As long as a mouser has at least 1 panache point when she hits a foe whose size is larger than her own with a light or one-handed piercing melee weapon, she can as a swift action attempt a dirty trick combat maneuver check. Instead of the normal conditions that can be applied with dirty trick, this deed can only stagger the target if the check is successful. This deed replaces targeted strike.",
     "raw_tokens": [
       {

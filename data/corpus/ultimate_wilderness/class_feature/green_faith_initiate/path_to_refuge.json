@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Green Faith Initiate ~ Path to Refuge",
     "name": "Path to Refuge",
-    "class": "Green Faith Initiate",
+    "class": "Druid",
     "description": "A Green Faith initiate can travel as if with transport via plants to any major Green Faith druid circle or important holy site. Each of these sites is marked with special standing stones that allow all Green Faith followers within range using transport via plants or tree stride to sense their distance from it and the direction to it. A Green Faith initiate can use this ability",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Gingerbread Witch ~ Confection Conjuring",
     "name": "Confection Conjuring",
-    "class": "Gingerbread Witch",
+    "class": "Witch",
     "description": "A gingerbread witch can use shadow conjuration as a spell-like ability. Items and creatures she conjures appear to be made of fanciful foodstuffs, and because of this, sentient creatures gain a +2 bonus on Will saves to disbelieve the illusion. However, they otherwise function as described for the shadow conjuration spell.",
     "raw_tokens": [
       {

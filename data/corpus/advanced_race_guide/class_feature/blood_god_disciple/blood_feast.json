@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Blood God Disciple ~ Blood Feast",
     "name": "Blood Feast",
-    "class": "Blood God Disciple",
+    "class": "Summoner",
     "description": "A blood god disciple can feed a recently fallen foe to his eidolon, allowing the outsider to channel some of its power into the summoner. The eidolon must spend a standard action to eat some of the opponent, which must be a living, corporeal creature killed or knocked unconscious by the eidolon or summoner in the past minute. This eating deals damage to the target as if the eidolon had attacked it with one natural attack (typically a bite). The fallen creature must have at least half as many Hit Dice as the summoner. Once the feeding is complete, the summoner may manifest %1 evolution points. This lasts for 1 minute. The evolution's effects use the summoner's Hit Dice and ability scores rather than the eidolon's. The blood god disciple can use this ability %2 times per day. He may only apply one use of this ability at a time (using it a second time replaces any evolution manifested with this ability), and can only manifest evolutions his eidolon has.|1+(SummonerLVL-1)/4|3+CHA",
     "raw_tokens": [
       {

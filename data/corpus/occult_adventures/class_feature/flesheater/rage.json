@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Flesheater ~ Rage",
     "name": "Rage",
-    "class": "Flesheater",
+    "class": "Barbarian",
     "description": "In additional to the standard bonuses and penalties of rage, a flesheater takes a -2 penalty to Intelligence while raging. The additional benefits and penalties from a flesheater's abilities last only as long as her rage does, and she cannot use these abilities if they would bring the total penalty to Intelligence to an amount equal to or greater than her Intelligence score. This ability alters the rage ability.",
     "raw_tokens": [
       {

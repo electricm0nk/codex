@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dashing Thief ~ Thief's Confidence",
     "name": "Thief's Confidence",
-    "class": "Dashing Thief",
+    "class": "Swashbuckler",
     "description": "A dashing thief's panache is fueled by bold acts of thievery. Whenever a dashing thief uses the steal combat maneuver to steal an object worth at least %1 gp from an opponent, she regains 1 panache point. She cannot regain panache in this way from a given opponent more than once per day. This ability alters panache and replaces the swashbuckler's ability to regain panache from a killing blow.|100*SwashbucklerLVL",
     "raw_tokens": [
       {

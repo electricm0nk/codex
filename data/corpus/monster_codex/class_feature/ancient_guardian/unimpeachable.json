@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ancient Guardian ~ Unimpeachable",
     "name": "Unimpeachable",
-    "class": "Ancient Guardian",
+    "class": "Druid",
     "description": "An ancient guardian gains a +4 bonus on saves against enchantments.",
     "raw_tokens": [
       {

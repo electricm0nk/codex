@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Order Of The Eastern Star ~ Skills",
     "name": "Skills",
-    "class": "Order Of The Eastern Star",
+    "class": "Cavalier",
     "description": "A cavalier belonging to the order of the eastern star adds Knowledge (arcana) and Knowledge (planes) to his class skills. He can attempt Knowledge (arcana) and Knowledge (planes) checks untrained. If he has ranks in these skills, as long as a check involves knowledge of the occult or supernatural, he receives a bonus on the check equal to 1/2 his cavalier level (minimum +1).",
     "raw_tokens": [
       {

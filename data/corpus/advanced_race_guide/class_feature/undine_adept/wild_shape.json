@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Undine Adept ~ Wild Shape",
     "name": "Wild Shape",
-    "class": "Undine Adept",
+    "class": "Druid",
     "description": "An undine adept gains the ability to use wild shape. When an undine takes the form of a creature with the aquatic or water subtype, this ability functions at level %1. For all other forms, her effective druid level for the ability is equal to her actual undine adept level.|DruidLVL+1",
     "raw_tokens": [
       {

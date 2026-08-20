@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ringleader ~ Inspire Competence",
     "name": "Inspire Competence",
-    "class": "Ringleader",
+    "class": "Bard",
     "description": "A ringleader gains an altered version of inspire competence that grants greater effects at higher levels. He can use his performance to help an ally succeed at a task.",
     "raw_tokens": [
       {

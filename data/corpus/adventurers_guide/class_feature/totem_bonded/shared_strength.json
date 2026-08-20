@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Totem-Bonded ~ Shared Strength",
     "name": "Shared Strength",
-    "class": "Totem-Bonded",
+    "class": "Hunter",
     "description": "The connection the totem-bonded has with her animal companion allows them to draw upon one another's strength. The totem-bonded can activate this ability as a swift action, and she can use it for %1 minutes per day. This duration does not need to be consecutive, but it must be spent in 1-minute increments. The effect ends immediately if the animal companion is ever more than 100 feet away from the totem-bonded. While the shared strength ability is active, the totem-bonded manifests one aspect of her animal companion drawn from the following list: low-light vision, scent, +1 bonus to natural armor, +10-foot bonus to speed, climb speed 30 feet, swim speed 40 feet, 2 claws (1d4), bite (1d6), gore (1d6), or slam (1d6); the natural attacks are all primary attacks, and the listed damage is for a Medium creature. The totem-bonded can select only a movement speed or natural attack that her animal companion also has, and an aspect cannot cause her speed or size to exceed that of her animal companion with this ability.|HunterLVL|!PRECLASS:1,Hunter=8",
     "raw_tokens": [
       {

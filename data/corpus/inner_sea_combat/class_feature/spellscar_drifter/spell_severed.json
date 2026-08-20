@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spellscar Drifter ~ Spell Severed",
     "name": "Spell Severed",
-    "class": "Spellscar Drifter",
+    "class": "Cavalier",
     "description": "At 12th level, a Spellscar drifter becomes permanently marked by long exposure to the Spellscar Desert. The Spellscar drifter gains spell resistance equal to io + his character level. The Spellscar drifter can drop this spell resistance for 1 round as a standard action, or he can spend 1 grit point to drop it as a swift action. This ability replaces demanding challenge.",
     "raw_tokens": [
       {

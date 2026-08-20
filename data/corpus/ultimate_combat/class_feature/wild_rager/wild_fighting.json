@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wild Rager ~ Wild Fighting",
     "name": "Wild Fighting",
-    "class": "Wild Rager",
+    "class": "Barbarian",
     "description": "At 2nd level, even when not raging, wild ragers often fight with reckless, savage abandon. A wild rager using the full-attack action can make one extra attack per round at her highest base attack bonus. Until the beginning of her next turn, however, she takes a -2 penalty on attack rolls and -4 penalty to AC. This ability replaces uncanny dodge.",
     "raw_tokens": [
       {

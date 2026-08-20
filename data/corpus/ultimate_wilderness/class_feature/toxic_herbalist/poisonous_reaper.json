@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Toxic Herbalist ~ Poisonous Reaper",
     "name": "Poisonous Reaper",
-    "class": "Toxic Herbalist",
+    "class": "Ranger",
     "description": "A single dose of poison on a toxic herbalist's weapon remains potent for the entirety of a full attack, instead of for a single strike.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Vexing Daredevil ~ Shimmering Body",
     "name": "Shimmering Body",
-    "class": "Vexing Daredevil",
+    "class": "Mesmerist",
     "description": "When a vexing daredevil moves in a round, until the beginning of her next turn, any target of her hypnotic stare sees her as a constantly shimmering form of light and treats her as if she were under a blur spell.",
     "raw_tokens": [
       {

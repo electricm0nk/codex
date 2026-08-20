@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Thunderstriker ~ Strapped Shield",
     "name": "Strapped Shield",
-    "class": "Thunderstriker",
+    "class": "Fighter",
     "description": "At 3rd level, a thunderstriker takes no penalty on attack rolls when using a weapon in two hands while wearing a buckler. This ability replaces armor training 1.",
     "raw_tokens": [
       {

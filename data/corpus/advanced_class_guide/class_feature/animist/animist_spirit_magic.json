@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Animist ~ Animist Spirit Magic",
     "name": "Animist Spirit Magic",
-    "class": "Animist",
+    "class": "Shaman",
     "description": "[NOT IMPLEMENTED] The animist adds the following spells to the list of spells he can cast using spirit magic: speak with animals (1st), skinsend (2nd), speak with plants (3rd), malfunction (4th), dream (5th), speak with stone (6th), control construct (7th), trap the soul (8th), soul bind (9th). This ability replaces the spirit magic spells gained from the shaman's spirit.",
     "raw_tokens": [
       {

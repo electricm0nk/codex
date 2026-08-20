@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Deed ~ Targeted Throw",
     "name": "Targeted Throw",
-    "class": "Deed",
+    "class": "Swashbuckler",
     "description": "A flying blade can target individual body parts. This deed functions as the swashbuckler's targeted strike deed, but the flying blade can also use this deed when making ranged attacks with either a dagger or a starknife as long as the target is within 60 feet of the flying blade. This deed replaces targeted strike.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Acrobat ~ Expert Acrobat",
     "name": "Expert Acrobat",
-    "class": "Acrobat",
+    "class": "Rogue",
     "description": "At 1st level, an acrobat does not suffer any armor check penalties on Acrobatics, Climb, Fly, Sleight of Hand, or Stealth skill checks while wearing light armor. When she is not wearing armor, she gains a +2 competency bonus on Acrobatics and Fly skill checks. This ability replaces trapfinding.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Skirmisher ~ Reconnaissance Training",
     "name": "Reconnaissance Training",
-    "class": "Skirmisher",
+    "class": "Fighter",
     "description": "A skirmisher operating in heavily trapped or naturally hazardous areas learns to expertly avoid them. He gains a +%1 bonus on Reflex saving throws to avoid traps, natural hazards, and environmental effects.|(FighterLVL+2)/4",
     "raw_tokens": [
       {

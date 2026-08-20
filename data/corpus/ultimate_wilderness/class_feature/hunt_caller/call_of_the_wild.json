@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Hunt Caller ~ Call of the Wild",
     "name": "Call of the Wild",
-    "class": "Hunt Caller",
+    "class": "Skald",
     "description": "The hunt caller's raging song can transform herself and her allies within 60 feet into animalistic shapes, as per",
     "raw_tokens": [
       {

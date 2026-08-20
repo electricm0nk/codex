@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Forgemaster ~ Artificer",
     "name": "Artificer",
-    "class": "Forgemaster",
+    "class": "Cleric",
     "description": "A forgemaster gains only one domain, which must be the Artifice domain (not including subdomains). If she worships a deity, it must grant the Artifice domain.",
     "raw_tokens": [
       {

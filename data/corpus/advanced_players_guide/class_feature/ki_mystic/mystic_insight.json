@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ki Mystic ~ Mystic Insight",
     "name": "Mystic Insight",
-    "class": "Ki Mystic",
+    "class": "Monk",
     "description": "At 5th level, a ki mystic becomes apt at giving just the right word of advice in just the nick of time. As an immediate action, the monk can spend 2 ki points to grant an ally within 30 feet the ability to reroll a single attack roll or saving throw. The ally must be able to hear the monk to gain the reroll benefit. This ability replaces purity of body.",
     "raw_tokens": [
       {

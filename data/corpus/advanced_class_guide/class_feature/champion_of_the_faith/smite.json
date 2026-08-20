@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Champion of the Faith ~ Smite",
     "name": "Smite",
-    "class": "Champion of the Faith",
+    "class": "Warpriest",
     "description": "A champion of the faith can focus his powers against his chosen foes. As a swift action, the champion of the faith chooses one target within sight to smite. If this target is",
     "raw_tokens": [
       {

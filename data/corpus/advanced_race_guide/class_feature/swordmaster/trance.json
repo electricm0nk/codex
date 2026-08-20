@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Swordmaster ~ Trance",
     "name": "Trance",
-    "class": "Swordmaster",
+    "class": "Rogue",
     "description": "A swordmaster learns to focus her martial prowess using an intense meditative trance. Under the influence of a trance, the swordmaster can perform fantastic martial feats. Entering a trance is a full-round action that provokes attacks of opportunity. The swordmaster can maintain the trance for %1 rounds per day. She can end her trance as a free action. Following a trance, the swordmaster is fatigued for a number of rounds equal to 2 x the number of rounds she spent in the trance. A swordmaster cannot enter a new trance while fatigued but can otherwise enter a trance multiple times during a single encounter or combat. If a swordmaster falls unconscious, her trance immediately ends. She can only use one type of trance at a time.|4+WIS+RogueLVL-3",
     "raw_tokens": [
       {

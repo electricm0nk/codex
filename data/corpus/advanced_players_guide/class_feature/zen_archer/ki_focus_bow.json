@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Zen Archer ~ Ki Focus Bow",
     "name": "Ki Focus Bow",
-    "class": "Zen Archer",
+    "class": "Monk",
     "description": "At 17th level, as long as he has at least 1 point of ki in his ki pool, a zen archer may treat arrows fired from his bow as if they were ki focus weapons, allowing him to use his special ki attacks as if his arrows were unarmed attacks. This ability replaces tongue of the sun and moon.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sage Counselor ~ Feinting Flurry",
     "name": "Feinting Flurry",
-    "class": "Sage Counselor",
+    "class": "Monk",
     "description": "A sage counselor can spend 1 ki point while performing a flurry of blows to feint an opponent as a swift action, but he can't spend 1 ki point to make an additional attack when making a flurry of blows.",
     "raw_tokens": [
       {

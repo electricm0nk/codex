@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Steel Hound ~ Packing Heat",
     "name": "Packing Heat",
-    "class": "Steel Hound",
+    "class": "Investigator",
     "description": "At 2nd level, the steel hound gains both the Amateur Gunslinger and Gunsmithing feats as bonus feats. He also gains a battered gun identical to the one gained by the gunslinger. This ability replaces poison lore.",
     "raw_tokens": [
       {

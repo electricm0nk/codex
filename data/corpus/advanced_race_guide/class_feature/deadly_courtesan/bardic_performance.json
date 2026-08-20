@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Deadly Courtesan ~ Bardic Performance",
     "name": "Bardic Performance",
-    "class": "Deadly Courtesan",
+    "class": "Rogue",
     "description": "A deadly courtesan gains the bardic performance ability and the fascinate bardic performance. Her fascinate DC is %1. She can use this bardic performance for %2 rounds per day. If the courtesan also has bard levels, she may use these rounds for either class's fascinate bardic performance, and her bard and rogue levels stack for determining her fascinate DC.|10+RogueLVL/2+CHA|1+CHA+RogueLVL-2",
     "raw_tokens": [
       {

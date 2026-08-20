@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Studious Librarian ~ Comparative Arcane Studies",
     "name": "Comparative Arcane Studies",
-    "class": "Studious Librarian",
+    "class": "Bard",
     "description": "The studious librarian is exposed to a wide variety of magical writing, and can use his own magic to duplicate spells from other classes' spell lists. %1 times per day, a studious librarian can cast any spell from the bard, sorcerer/wizard, or witch spell lists from a scroll or spellbook in hand as if it were one of his bard spells known, expending a bard spell slot of the same spell level to cast the desired spell. Casting a spell from a scroll this way does not cause the spell to vanish from the scroll. A spell cast in this way cannot be modified by metamagic.|min(4,(BardLVL-2)/4)",
     "raw_tokens": [
       {

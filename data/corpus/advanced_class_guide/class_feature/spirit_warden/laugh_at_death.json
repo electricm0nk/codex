@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spirit Warden ~ Laugh at Death",
     "name": "Laugh at Death",
-    "class": "Spirit Warden",
+    "class": "Shaman",
     "description": "The spirit warden's familiarity with the dead has filled her with contempt for death itself. She gains a +4 insight bonus on saving throws against death effects and to avoid or remove negative levels.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Plague Bringer ~ Discoveries",
     "name": "Discoveries",
-    "class": "Plague Bringer",
+    "class": "Alchemist",
     "description": "The following discoveries complement the plague bringer archetype: explosive bomb, precise bombs, smoke bomb (Advanced Player's Guide); breath weapon bomb, fast bomb, nauseating bomb (Ultimate Combat); plague bomb (Ultimate Magic).",
     "raw_tokens": [
       {

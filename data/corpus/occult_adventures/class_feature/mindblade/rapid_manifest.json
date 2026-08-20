@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mindblade ~ Rapid Manifest",
     "name": "Rapid Manifest",
-    "class": "Mindblade",
+    "class": "Magus",
     "description": "At 8th level, a mindblade can manifest a psychic weapon as a swift action. This ability replaces improved spell combat.",
     "raw_tokens": [
       {

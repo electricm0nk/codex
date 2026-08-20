@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Involutionist ~ Spirit Phantom",
     "name": "Spirit Phantom",
-    "class": "Involutionist",
+    "class": "Spiritualist",
     "description": "An involutionist's phantom is manifested from her own psyche and invested into the spirit-stuff of the world around her. Rather than an emotional focus, the involutionist selects a spirit from those available to the shaman (Advanced Class Guide p35). A spirit phantom always has good Fortitude and Reflex saves, and it gains a number of ranks equal to the phantom's Hit Dice in two skills depending on the spirit it represents. When fully manifested, the involutionist's spirit phantom gains the special ability normally applied to a shaman's spirit animal. The spirit phantom also gains a single hex from the list of those provided by that spirit. At 7th, 12th, and 17th levels, the spirit phantom gains one additional hex from this list. This ability alters phantom and replaces its emotional focus abilities.",
     "raw_tokens": [
       {

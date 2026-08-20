@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bardic Performance ~ Song of Subterfuge",
     "name": "Song of Subterfuge",
-    "class": "Bardic Performance",
+    "class": "Bard",
     "description": "An impervious messenger learns to use his performances to project various thoughts into his own mind to disrupt divination attempts. This acts similarly to distraction, except it only affects the impervious messenger and allows him to use the result of his Perform check in place of saving throws against attempts to read his mind, such as detect thoughts.",
     "raw_tokens": [
       {

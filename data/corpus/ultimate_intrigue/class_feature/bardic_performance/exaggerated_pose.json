@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bardic Performance ~ Exaggerated Pose",
     "name": "Exaggerated Pose",
-    "class": "Bardic Performance",
+    "class": "Bard",
     "description": "A masked performer can enhance her own physical and social abilities by simply altering her posture. When she starts this performance, the masked performer chooses a Strength-, Dexterity-, or Charisma-based skill and gains a +%1 competence bonus on checks with that skill as long as she maintains this performance. The masked performer can change the chosen skill as a swift action. Exaggerated pose is an emotion effect and relies on visual components.|ExaggeratedPoseBonus",
     "raw_tokens": [
       {

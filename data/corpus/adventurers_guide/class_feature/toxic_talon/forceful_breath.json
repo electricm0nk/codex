@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Toxic Talon ~ Forceful Breath",
     "name": "Forceful Breath",
-    "class": "Toxic Talon",
+    "class": "Rogue",
     "description": "A toxic talon is proficient with blowguns instead of hand crossbows. He can use a blowgun without penalty while prone. This alters the rogue's weapon proficiencies.",
     "raw_tokens": [
       {

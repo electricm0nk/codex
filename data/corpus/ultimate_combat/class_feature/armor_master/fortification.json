@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Armor Master ~ Fortification",
     "name": "Fortification",
-    "class": "Armor Master",
+    "class": "Fighter",
     "description": "An armor master can use his armor to shield critical areas from injury.",
     "raw_tokens": [
       {

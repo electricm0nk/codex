@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Elemental Annihilator ~ Increased Range",
     "name": "Increased Range",
-    "class": "Elemental Annihilator",
+    "class": "Kineticist",
     "description": "At 3rd level, an elemental annihilator gains the extended range infusion. At 9th level, she gains the extreme range infusion. This ability replaces the 3rd- and 9th-level infusions.",
     "raw_tokens": [
       {

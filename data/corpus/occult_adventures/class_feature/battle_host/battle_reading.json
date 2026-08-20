@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Battle Host ~ Battle Reading",
     "name": "Battle Reading",
-    "class": "Battle Host",
+    "class": "Occultist",
     "description": "At 2nd level, a battle host can use object reading on only weapons, armor, and shields. This ability alters object reading.",
     "raw_tokens": [
       {

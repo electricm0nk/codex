@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Totem-Bonded ~ Primeval Companion",
     "name": "Primeval Companion",
-    "class": "Totem-Bonded",
+    "class": "Hunter",
     "description": "The totem-bonded adopts a powerful animal native to the region-often one suited to the cold tundra-selected.",
     "raw_tokens": [
       {

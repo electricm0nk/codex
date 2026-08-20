@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Airborne Ambusher ~ Flying Dodger",
     "name": "Flying Dodger",
-    "class": "Airborne Ambusher",
+    "class": "Fighter",
     "description": "When an airborne ambusher flies at least half its fly speed on its turn, it gains a +%1 dodge bonus to AC for 1 round.|1+if(FighterLVL>=17,3,if(FighterLVL>=11,1,0))",
     "raw_tokens": [
       {

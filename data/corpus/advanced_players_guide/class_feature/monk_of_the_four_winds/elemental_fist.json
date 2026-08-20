@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Monk of the Four Winds ~ Elemental Fist",
     "name": "Elemental Fist",
-    "class": "Monk of the Four Winds",
+    "class": "Monk",
     "description": "At 1st level, a monk of the four winds gains Elemental Fist as a bonus feat, even if he does not meet the prerequisites. At 5th level, and every five levels thereafter, the monk increases the damage of his Elemental Fist by 1d6 (2d6 at 5th level, 3d6 at 10th level, and so on). This ability replaces Stunning Fist.",
     "raw_tokens": [
       {

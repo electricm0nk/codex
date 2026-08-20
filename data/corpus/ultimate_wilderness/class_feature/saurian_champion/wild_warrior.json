@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Saurian Champion ~ Wild Warrior",
     "name": "Wild Warrior",
-    "class": "Saurian Champion",
+    "class": "Cavalier",
     "description": "A saurian champion hails from primeval lands where the civilized orders hold little sway. He does not select an order or gain any order-related benefits.",
     "raw_tokens": [
       {

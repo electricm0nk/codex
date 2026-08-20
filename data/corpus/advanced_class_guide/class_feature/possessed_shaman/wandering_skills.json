@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Possessed Shaman ~ Wandering Skills",
     "name": "Wandering Skills",
-    "class": "Possessed Shaman",
+    "class": "Shaman",
     "description": "[NOT IMPLEMENTED] At 6th level, a possessed shaman is able to make room for another spirit. When choosing her wandering spirit for the day, the possessed shaman chooses one skill. The possessed shaman treats this skill as if she had a number of ranks in it equal to her shaman level, and uses her Wisdom modifier in place of the ability modifier the skill would normally use. If the skill is a class skill, she receives the usual +3 bonus on skill checks for having ranks in that skill. Each time the possessed shaman changes her wandering spirit, she can also change the skill gained through this ability. These ranks do not stack with her other skill ranks (only the higher number of ranks applies). This ability replaces the wandering hex gained at 6th level.",
     "raw_tokens": [
       {

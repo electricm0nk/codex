@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Green Faith Initiate ~ A Thousand Voices",
     "name": "A Thousand Voices",
-    "class": "Green Faith Initiate",
+    "class": "Druid",
     "description": "The Green Faith initiate can communicate with any creature with a language or any stone, as if using tonnues and stone tell, for up to (CASTERLEVEL) minutes per day. These minutes do not need to be consecutive, but must be spent in 1-minute increments.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Disenchanter ~ Banish Enchantment",
     "name": "Banish Enchantment",
-    "class": "Disenchanter",
+    "class": "Warpriest",
     "description": "A disenchanter learns to focus his mystic interference. As a standard action, he can consume two uses of his fervor ability to target a single creature within 30 feet with a targeted dispel magic.",
     "raw_tokens": [
       {

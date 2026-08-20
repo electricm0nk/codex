@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Hunting Paladin ~ Tireless Aura",
     "name": "Tireless Aura",
-    "class": "Hunting Paladin",
+    "class": "Paladin",
     "description": "A hunting paladin becomes immune to fatigue and sleep effects, and allies within 10 feet gain a +4 bonus on saving throws to avoid becoming fatigued or falling asleep.",
     "raw_tokens": [
       {

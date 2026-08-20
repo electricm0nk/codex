@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sage Counselor ~ Deceptive Ki",
     "name": "Deceptive Ki",
-    "class": "Sage Counselor",
+    "class": "Monk",
     "description": "The sage counselor can spend 1 point from his ki pool as a swift action to give himself a +4 insight bonus on his next Bluff check. The sage counselor does not gain the ability to spend ki to increase his speed by 20 feet for 1 round. This ability further alters ki pool.",
     "raw_tokens": [
       {

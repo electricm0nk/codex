@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Totemic Skald ~ Totem",
     "name": "Totem",
-    "class": "Totemic Skald",
+    "class": "Skald",
     "description": "The totemic skald chooses one animal from the hunter's animal focus list (see page 27). Once selected, this choice cannot be changed. This animal becomes the skald's personal totem animal and influences his later abilities.",
     "raw_tokens": [
       {

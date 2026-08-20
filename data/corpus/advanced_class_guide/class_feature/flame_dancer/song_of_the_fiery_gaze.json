@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Flame Dancer ~ Song of the Fiery Gaze",
     "name": "Song of the Fiery Gaze",
-    "class": "Flame Dancer",
+    "class": "Bard",
     "description": "A fire dancer can allow allies to see through flames without any distortion. Any ally within 30 feet of the bard who can hear the performance can see through fire, fog, and smoke without penalty as long as the light is sufficient to allow him to see normally, as with the base effect of the gaze of flames oracle revelation (APG p.47).",
     "raw_tokens": [
       {

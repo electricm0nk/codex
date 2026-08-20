@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Breaker ~ Destructive",
     "name": "Destructive",
-    "class": "Breaker",
+    "class": "Barbarian",
     "description": "Whenever the breaker barbarian makes a melee attack that targets an unattended object or makes a sunder combat maneuver, she adds +%1 on the damage roll.|DestructiveDamage",
     "raw_tokens": [
       {

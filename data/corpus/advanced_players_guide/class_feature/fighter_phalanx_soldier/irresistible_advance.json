@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fighter Phalanx Soldier ~ Irresistible Advance",
     "name": "Irresistible Advance",
-    "class": "Fighter Phalanx Soldier",
+    "class": "Fighter",
     "description": "At 15th level, a phalanx fighter gains a bonus on bull rush and overrun CMB checks. This bonus depends on the type of shield used: +1 with a buckler, +2 with a light shield, +3 with a heavy shield, or +4 with a tower shield. This ability replaces armor training 4.",
     "raw_tokens": [
       {

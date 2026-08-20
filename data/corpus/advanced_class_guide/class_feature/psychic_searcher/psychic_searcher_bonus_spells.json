@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Searcher ~ Bonus Spells",
     "name": "Psychic Searcher ~ Bonus Spells",
-    "class": "Psychic Searcher",
+    "class": "Oracle",
     "description": "Several of the oracle's normal mystery bonus spells are replaced.",
     "raw_tokens": [
       {

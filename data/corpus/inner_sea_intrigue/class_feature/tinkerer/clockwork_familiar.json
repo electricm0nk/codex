@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tinkerer ~ Clockwork Familiar",
     "name": "Clockwork Familiar",
-    "class": "Tinkerer",
+    "class": "Alchemist",
     "description": "The tinkerer turns her familiar into a clockwork familiar (Bestiary 5 p57) that takes any form she wishes. She must choose which type of item is installed in the clockwork familiar. She gains the clockwork familiar at no cost, as if she were a 7th-level spellcaster with the Improved Familiar feat.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Stonelord ~ Stonebane",
     "name": "Stonebane",
-    "class": "Stonelord",
+    "class": "Paladin",
     "description": "When using stonestrike, a stonelord's attack gains the bane weapon special ability against creatures with the earth subtype and constructs or objects made of earth or stone.",
     "raw_tokens": [
       {

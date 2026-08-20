@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Daring Infiltrator ~ Bonus Feats",
     "name": "Bonus Feats",
-    "class": "Daring Infiltrator",
+    "class": "Swashbuckler",
     "description": "In addition to combat feats, a daring infiltrator's bonus feats at 4th, 8th, 12th, 16th and 20th level can come from the following list: Alertness, Antagonize, Cosmopolitan, Deceitful, Deft Hands, Disarming Threat, Persuasive, Prodigy, and Skill Focus.",
     "raw_tokens": [
       {

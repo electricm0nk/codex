@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bloody Jake ~ The Woods Have Eyes",
     "name": "The Woods Have Eyes",
-    "class": "Bloody Jake",
+    "class": "Slayer",
     "description": "A bloody jake in his favored terrain can spend one use of cruel tricks as a swift action to gain blindsense in a 30-foot radius for 1 round; this blindsense is sound-based.",
     "raw_tokens": [
       {

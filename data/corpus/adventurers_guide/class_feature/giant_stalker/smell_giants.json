@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Giant Stalker ~ Smell Giants",
     "name": "Smell Giants",
-    "class": "Giant Stalker",
+    "class": "Barbarian",
     "description": "A giant stalker gains the scent special ability, but with regard only to humanoids with the giant subtype.",
     "raw_tokens": [
       {

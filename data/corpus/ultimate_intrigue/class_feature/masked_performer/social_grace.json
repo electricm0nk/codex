@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Masked Performer ~ Social Grace",
     "name": "Social Grace",
-    "class": "Masked Performer",
+    "class": "Bard",
     "description": "A masked performer gains the social grace vigilante social talent. She gains an additional skill with social grace 1 level later than a vigilante (at 6th level, 10th level, and so on).",
     "raw_tokens": [
       {

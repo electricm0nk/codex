@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Stygian Slayer ~ Shadowy Mist Form",
     "name": "Shadowy Mist Form",
-    "class": "Stygian Slayer",
+    "class": "Slayer",
     "description": "A stygian slayer can transform into an inky black cloud of mist. This functions as gaseous form, except it also obscures vision as fog cloud. The slayer can use this ability for %1 minutes per day. These minutes need not be consecutive, but must be used in 1-minute increments.|SlayerLVL",
     "raw_tokens": [
       {

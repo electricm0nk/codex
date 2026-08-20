@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Green Knight ~ Oaken Vitality",
     "name": "Oaken Vitality",
-    "class": "Green Knight",
+    "class": "Cavalier",
     "description": "Nature protects a green knight from many afflictions. The green knight becomes immune to disease, infestations (GameMastery Guide 245), and poison.",
     "raw_tokens": [
       {

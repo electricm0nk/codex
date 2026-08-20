@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Undine Adept ~ Domains",
     "name": "Domains",
-    "class": "Undine Adept",
+    "class": "Druid",
     "description": "An undine adept who chooses a domain must choose the Community or Water domain, or any subdomain of those domains.",
     "raw_tokens": [
       {

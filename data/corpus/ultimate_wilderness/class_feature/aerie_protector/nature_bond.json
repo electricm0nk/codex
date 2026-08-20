@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Aerie Protector ~ Nature Bond",
     "name": "Nature Bond",
-    "class": "Aerie Protector",
+    "class": "Druid",
     "description": "If the aerie protector chooses an animal companion as her nature bond, she must choose an animal with a fly speed. She can use spells or other effects to alter her companion's fly speed, but it must be able to fly on its own before it becomes her companion. If the aerie protector chooses a domain as her nature bond, she must choose the Air, Eagle, Earth, Mountain, or Weather domain. This alters nature bond.",
     "raw_tokens": [
       {

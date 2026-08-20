@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Family Hunter ~ Kinslayer",
     "name": "Kinslayer",
-    "class": "Family Hunter",
+    "class": "Slayer",
     "description": "A family hunter's sneak attack deals an additional 1d6 points of damage to any creature with a blood relation to the family line she seeks to cleanse. This ability alters sneak attack.",
     "raw_tokens": [
       {

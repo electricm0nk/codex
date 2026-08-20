@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Courtly Hunter ~ Alternate Form",
     "name": "Alternate Form",
-    "class": "Courtly Hunter",
+    "class": "Hunter",
     "description": "The courtly hunter's animal companion learns an additional subtle form. When the courtly hunter gains this ability, she chooses a Tiny animal. When under the effects of the subtle companion ability, the courtly hunter's animal companion can change between a shrunken, more innocuous version of its original shape or the shape of the chosen animal as a standard action. When it transforms, it loses abilities dependent on its original shape and gains abilities from its new shape as beast shape II. At 13th and 19th levels, the courtly hunter can select an additional form to add to the animal companion's list of choices while it is in its polymorphed form.",
     "raw_tokens": [
       {

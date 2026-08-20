@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Studious Librarian ~ Perfect Recollection",
     "name": "Perfect Recollection",
-    "class": "Studious Librarian",
+    "class": "Bard",
     "description": "The studious librarian can always take 20 on Knowledge checks.",
     "raw_tokens": [
       {

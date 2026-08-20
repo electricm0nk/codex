@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Blighted Myrmidon ~ Smite Nature",
     "name": "Smite Nature",
-    "class": "Blighted Myrmidon",
+    "class": "Antipaladin",
     "description": "A blighted myrmidon can drain the life from a creature tied to nature. As a swift action, the blighted myrmidon chooses one target within sight to smite. Regardless of its alignment, if the target is an animal, plant, or vermin, the blighted myrmidon adds +%1 on her attack rolls and adds +%2 on damage rolls against the target of her smite. If the target of smite nature is an elemental, a fey, or a creature with levels of druid, hunter, ranger, or shifter, the bonus on damage on the first successful attack increases to %3 points of damage. This ability otherwise functions as smite good. This alters smite good.|max(0,CHA)|AntipaladinLVL|AntipaladinLVL*2",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wild Talent ~ Extreme Range",
     "name": "Extreme Range",
-    "class": "Wild Talent",
+    "class": "Kinesticist",
     "description": "Element universal; Type form infusion; Level 3; Burn 2",
     "raw_tokens": [
       {

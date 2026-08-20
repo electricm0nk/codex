@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Frozen Shadow ~ Track Victim",
     "name": "Track Victim",
-    "class": "Frozen Shadow",
+    "class": "Ninja",
     "description": "A frozen shadow adds half his ninja level on Survival checks to follow tracks and on Perception checks to see through disguises. Additionally, if the frozen shadow sees a creature that has changed its appearance using the Disguise skill, he can always attempt a Perception check to see through the disguise, even if the disguised creature did nothing to draw attention to itself. The frozen shadow also gains a +2 bonus to Will saving throws when attempting to disbelieve an illusion affecting a creature or creatures.",
     "raw_tokens": [
       {

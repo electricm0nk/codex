@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Forester ~ Breath of Life",
     "name": "Breath of Life",
-    "class": "Forester",
+    "class": "Hunter",
     "description": "A forester can cast breath of life once per day as a spell-like ability.",
     "raw_tokens": [
       {

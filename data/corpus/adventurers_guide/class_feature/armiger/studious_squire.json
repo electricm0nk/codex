@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Armiger ~ Studious Squire",
     "name": "Studious Squire",
-    "class": "Armiger",
+    "class": "Fighter",
     "description": "An armiger gains 2 additional skill ranks at each level. These ranks must be put into Intimidate and Knowledge (planes). In addition, the armiger treats Knowledge (local) and Knowledge (planes) as class skills. This alters the fighter's class skills and skill points per level.",
     "raw_tokens": [
       {

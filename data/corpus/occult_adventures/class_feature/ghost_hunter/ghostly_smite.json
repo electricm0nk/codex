@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ghost Hunter ~ Ghostly Smite",
     "name": "Ghostly Smite",
-    "class": "Ghost Hunter",
+    "class": "Paladin",
     "description": "A ghost hunter's smite evil ability does not automatically bypass DR (other than DR/good). However, she treats her weapon as a ghost touch weapon against the target of her smite. She does not deal extra damage on the first attack against evil outsiders and evil dragons, but she deals 3 points of damage per paladin level she possesses to undead creatures on the first attack (instead of 2 points). This ability alters smite evil.",
     "raw_tokens": [
       {

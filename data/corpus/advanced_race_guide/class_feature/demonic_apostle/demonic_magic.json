@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Demonic Apostle ~ Demonic Magic",
     "name": "Demonic Magic",
-    "class": "Demonic Apostle",
+    "class": "Cleric",
     "description": "A demonic apostle must choose to channel negative energy, and must select either the Chaos or Evil domain or the Demon subdomain (Advanced Player's Guide 89) as her sole domain.",
     "raw_tokens": [
       {

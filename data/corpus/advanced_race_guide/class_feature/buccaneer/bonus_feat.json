@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Buccaneer ~ Bonus Feat",
     "name": "Bonus Feat",
-    "class": "Buccaneer",
+    "class": "Gunslinger",
     "description": "In addition to combat and grit feats, a buccaneer can select from the following feats as her bonus feats: Expert Driver (water vehicles only; Ultimate Combat 100), Master Siege Engineer (Ultimate Combat 109), Siege Engineer (Ultimate Combat 118), Siege Gunner (Ultimate Combat 118), Skilled Driver (water vehicles only; Ultimate Combat 119).",
     "raw_tokens": [
       {

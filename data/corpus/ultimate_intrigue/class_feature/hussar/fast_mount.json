@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Hussar ~ Fast Mount",
     "name": "Fast Mount",
-    "class": "Hussar",
+    "class": "Cavalier",
     "description": "A hussar is able to spur on any mount that he rides to faster speeds than other riders. The base speed of any creature that the hussar is riding increases by %1 feet. This applies to all forms of movement that the mount possesses.|HussarFastMountBonus",
     "raw_tokens": [
       {

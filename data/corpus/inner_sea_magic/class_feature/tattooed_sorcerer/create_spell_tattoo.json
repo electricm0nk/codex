@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tattooed Sorcerer ~ Create Spell Tattoo",
     "name": "Create Spell Tattoo",
-    "class": "Tattooed Sorcerer",
+    "class": "Sorcerer",
     "description": "A tattooed sorcerer can create a spell tattoo %1 times per day with a single touch as a standard action. The recipient of the spell tattoo must be willing to receive the spell tattoo. If she gives the spell tattoo to herself, it does not count against the regular limit of magic tattoos she can have. The spell tattoo must be of a spell that she knows that has no material or focus component. She can maintain one spell tattoo created by this ability at a time---if she uses this ability again, the previous spell tattoo she created fades away. Spell tattoos she creates with Inscribe Magic Tattoo do not count against this limit. This ability replaces the bloodline feat gained at 7th level.|TattooedSorcererCreateSpellTattooTimes",
     "raw_tokens": [
       {

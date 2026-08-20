@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Feral Gnasher ~ Lockjaw",
     "name": "Lockjaw",
-    "class": "Feral Gnasher",
+    "class": "Barbarian",
     "description": "The feral gnasher gains the grab ability with her bite attack. A feral gnasher can use this ability on a creature up to one size category larger than she is.",
     "raw_tokens": [
       {

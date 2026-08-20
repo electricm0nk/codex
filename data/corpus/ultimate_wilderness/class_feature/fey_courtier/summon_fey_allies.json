@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fey Courtier ~ Summon Fey Allies",
     "name": "Summon Fey Allies",
-    "class": "Fey Courtier",
+    "class": "Bard",
     "description": "The fey courtier gains Augment Summoning as a bonus feat and can call upon natural allies who owe him favors. He adds summon nature's ally I to his list of 1st-level bard spells known. Whenever he gains access to another spell level, he adds the next-higher summon nature's ally spell to his list of bard spells known. The fey courtier adds the following creatures to the summon nature's ally list: 1st-grimple (gremlin) B4, mite, sprite B3 ; 2nd-atomie B3, fuath (gremlin) B3, nixie B3; 3rd-leprechaun B2, nuglub (gremlin) B2, pooka B4; 4th-kelpie B2, korred B2, twigjack B2; 5th-lampad B4, lurker in light B2, swan maiden B4; 6th-cold rider B3, oceanid B4, sangoi B5.",
     "raw_tokens": [
       {

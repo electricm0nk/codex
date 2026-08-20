@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mastermind ~ Impregnable Mind",
     "name": "Impregnable Mind",
-    "class": "Mastermind",
+    "class": "Investigator",
     "description": "At 9th level, a mastermind's secrecy, obscurity, and mental conditioning reach superhuman levels. He becomes immune to any divination spell, spell-like ability, or effect that allows a saving throw (though he can still allow a divination effect to affect him if he wishes). Even divination effects that do not allow a saving throw have difficulty piercing a mastermind's barriers, as a mastermind can now choose to think in any language he speaks. Unless the opponent reading a mastermind's thoughts speaks all of the mastermind's languages, attempts at thought reading automatically fail. This ability replaces the investigator talent gained at 9th level.",
     "raw_tokens": [
       {

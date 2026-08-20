@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wishcrafter ~ Perfect Wishcraft",
     "name": "Perfect Wishcraft",
-    "class": "Wishcrafter",
+    "class": "Sorcerer",
     "description": "The wishcrafter perfects her ability to manipulate reality. Once per day, she may cast any spell on the sorcerer/wizard spell list as if it were on her list of spells known. Using this ability otherwise has all of the benefits and limitations of the wishbound arcana ability.",
     "raw_tokens": [
       {

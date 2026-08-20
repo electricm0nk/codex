@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Chameleon Adept ~ One with the Wild",
     "name": "One with the Wild",
-    "class": "Chameleon Adept",
+    "class": "Hunter",
     "description": "When the companion is using wild shape to appear as a different type of animal, it counts as being in that animal focus for the purpose of one with the wild.",
     "raw_tokens": [
       {

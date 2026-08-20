@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Guide ~ Ranger's Focus",
     "name": "Ranger's Focus",
-    "class": "Guide",
+    "class": "Ranger",
     "description": "At 1st level, once per day, the guide can focus on a single enemy within line of sight as a swift action. That creature remains the ranger's focus until it is reduced to 0 or fewer hit points or surrenders, or until the ranger designates a new focus, whichever occurs first. The ranger gains a +2 bonus on attack and damage rolls against the target of his focus. At 5th level, and every five levels thereafter, this bonus increases by +2. At 4th level, and every 3 levels thereafter, the ranger can use this ability one additional time per day. This ability replaces favored enemy.",
     "raw_tokens": [
       {

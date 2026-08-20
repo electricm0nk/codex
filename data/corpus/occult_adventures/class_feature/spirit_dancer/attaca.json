@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spirit Dancer ~ Attaca",
     "name": "Attaca",
-    "class": "Spirit Dancer",
+    "class": "Medium",
     "description": "A spirit dancer learns how to shift rapidly into the next movement of his dance. He no longer takes a penalty after his spirit dance ends and can enter another spirit dance immediately.",
     "raw_tokens": [
       {

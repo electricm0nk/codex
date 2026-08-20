@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Hussar ~ Skillful Rider",
     "name": "Skillful Rider",
-    "class": "Hussar",
+    "class": "Cavalier",
     "description": "A hussar and his mount work in tandem to achieve amazing accomplishments of dexterity while riding. As long as the hussar is mounted, whenever he or his mount is required to attempt an Acrobatics, Climb, Escape Artist, Fly, Stealth, or Swim check, he can use his own modifier or his mount's, whichever is higher. Additionally, regardless of whose bonus is used, the hussar gains an additional +%1 bonus on all skill checks to overcome obstacles as part of a chase.|(CavalierLVL/6)*2",
     "raw_tokens": [
       {

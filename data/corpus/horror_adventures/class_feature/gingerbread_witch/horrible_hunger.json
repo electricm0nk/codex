@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Gingerbread Witch ~ Horrible Hunger",
     "name": "Horrible Hunger",
-    "class": "Gingerbread Witch",
+    "class": "Witch",
     "description": "A gingerbread witch can affect a target as if she had cast feast of ashes (APG) on it, but with her hex DC instead of the spell's DC. This hunger is so intense that any creature can offer the target food as a standard action and the target is compelled to eat it, as if the creature offering it had cast beguiling gift (APG) (with a DC and caster level equal to that of the witch's hexes). She can use this ability %1 times per day.|WitchLVL/4",
     "raw_tokens": [
       {

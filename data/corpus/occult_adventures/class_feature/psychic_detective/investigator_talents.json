@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Detective ~ Investigator Talents",
     "name": "Investigator Talents",
-    "class": "Psychic Detective",
+    "class": "Investigator",
     "description": "A psychic detective selects investigator talents as normal, except she cannot select the alchemist discovery investigator talent. She can select the Expanded Phrenic Pool* feat as a discovery even though she doesn't meet that feat's prerequisites, and she can select an extra phrenic amplification once as a discovery. The following investigator talents, which can be found on pages 32-34 of the Pathfinder RPG Advanced Class Guide, complement the psychic detective archetype: confusing strike, device talent, effortless aid, hidden agendas, inspired intelligence, item lore, and unconventional inspiration. This ability alters investigator talents.",
     "raw_tokens": [
       {

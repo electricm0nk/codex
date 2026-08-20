@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Transporter ~ Smuggler's Bond",
     "name": "Smuggler's Bond",
-    "class": "Transporter",
+    "class": "Ranger",
     "description": "A transporter must choose his allies as his hunter's bond, not an animal companion. Instead of granting the transporter's favored enemy bonus to his allies as a move action, he instead grants his plot course bonus to his allies constantly. This ability alters hunter's bond.",
     "raw_tokens": [
       {

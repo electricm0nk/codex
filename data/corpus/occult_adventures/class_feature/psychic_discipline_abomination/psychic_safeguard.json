@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Discipline Abomination ~ Psychic Safeguard",
     "name": "Psychic Safeguard",
-    "class": "Psychic Discipline Abomination",
+    "class": "Psychic",
     "description": "At 13th level, you project constant mental defenses, gaining spell resistance equal to 8 + your caster level. While manifesting your dark half, this spell resistance increases to 16 + your caster level.",
     "raw_tokens": [
       {

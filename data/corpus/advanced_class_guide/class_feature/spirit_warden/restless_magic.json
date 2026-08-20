@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spirit Warden ~ Restless Magic",
     "name": "Restless Magic",
-    "class": "Spirit Warden",
+    "class": "Shaman",
     "description": "[NOT IMPLEMENTED] The spirit warden adds the following spells to the list of spells she can cast using spirit magic: detect undead (1st), command undead (2nd), halt undead (3rd), death ward (4th), possess object (5th), undead to death (6th), ethereal jaunt (7th), control undead (8th), foresight (9th). This ability replaces the spirit magic spells gained from the shaman's spirit.",
     "raw_tokens": [
       {

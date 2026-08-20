@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sacred Huntsmaster ~ Raise Animal Companion",
     "name": "Raise Animal Companion",
-    "class": "Sacred Huntsmaster",
+    "class": "Inquisitor",
     "description": "A sacred huntsmaster gains raise animal companion as a spelllike ability (not restricted to her own animal companion). Using this ability gives the sacred huntsmaster a negative level that cannot be overcome in any way (including by restoration), but automatically ends after 24 hours. This functions as resurrection instead of raise dead, but otherwise operates as normal.",
     "raw_tokens": [
       {

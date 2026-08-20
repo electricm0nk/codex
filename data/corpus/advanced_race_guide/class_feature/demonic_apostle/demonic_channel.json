@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Demonic Apostle ~ Demonic Channel",
     "name": "Demonic Channel",
-    "class": "Demonic Apostle",
+    "class": "Cleric",
     "description": "The demonic apostle can channel demonic energy to damage creatures of lawful and good alignment, or, at higher levels, bolster the abilities of chaotic evil allies. Channeling this energy causes a 30-foot-radius burst centered on the cleric. Creatures within the burst that are lawful or good take %1d6 points of damage. Creatures that take damage from the channeled demonic energy receive a Fortitude save to halve the damage. The DC of this save is %2. Lawful good creatures take a -2 penalty on this saving throw. At 5th level, chaotic evil allies within the burst are affected as if targeted by a rage spell with a duration of 1 round. At 9th level, lawful or good enemies are also sickened for 1d6 rounds if they fail their saving throw against the demonic channel. Channeling demonic energy is a standard action that does not provoke attacks of opportunity.|DemonicApostleChannelEnergyDmg|DemonicApostleChannelEnergySave",
     "raw_tokens": [
       {

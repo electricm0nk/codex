@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Leafshifter ~ Leafshifter's Aspect",
     "name": "Leafshifter's Aspect",
-    "class": "Leafshifter",
+    "class": "Shifter",
     "description": "This ability functions as the shifter aspect ability of the standard shifter, except a leafshifter doesn't gain the minor forms of her aspects. Instead, whenever she gains a new aspect, she chooses one of the plant focus abilities from the plant master hunter archetype (see page 53) to associate with her new aspect. This choice cannot be changed once made. This alters shifter aspect.",
     "raw_tokens": [
       {

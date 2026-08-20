@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bat Shaman ~ Totem Transformation",
     "name": "Totem Transformation",
-    "class": "Bat Shaman",
+    "class": "Druid",
     "description": "At 2nd level, a bat shaman may adopt an aspect of the bat while retaining her normal form. This ability functions as the ape shaman ability, but the druid may select from the following sets of bonuses and abilities - movement (fly speed 30 ft. [average]; the druid must be at least 5th level to select this bonus), natural weapons (bite [1d4 for a Medium shaman]), or senses (blindsense 20 ft.). While using totem transformation, the bat shaman may speak normally and can cast speak with animals (bats only) at will. This ability replaces woodland stride.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Frozen Shadow ~ Hardy Killer",
     "name": "Hardy Killer",
-    "class": "Frozen Shadow",
+    "class": "Ninja",
     "description": "A frozen shadow has become incredibly inured to his surrounding climate. At the beginning of any day, the frozen shadow can spend 1 point from his ki pool to benefit from the effects of an endure elements spell. The frozen shadow does not treat any Acrobatics skill check to jump as if he had a running start, and at 10th level he cannot reduce the DC of Acrobatics skill checks made to jump by half. This ability alters ki pool.",
     "raw_tokens": [
       {

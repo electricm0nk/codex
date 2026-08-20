@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Flying Blade ~ Flying Blade Mastery",
     "name": "Flying Blade Mastery",
-    "class": "Flying Blade",
+    "class": "Swashbuckler",
     "description": "When an attack that a flying blade makes with a dagger or starknife threatens a critical hit, that critical hit is automatically confirmed. Furthermore, the critical modifiers of daggers and starknives increase by 1 (x2 becomes x3, and so on).",
     "raw_tokens": [
       {

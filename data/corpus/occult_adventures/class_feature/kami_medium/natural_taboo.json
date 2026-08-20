@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Kami Medium ~ Natural Taboo",
     "name": "Natural Taboo",
-    "class": "Kami Medium",
+    "class": "Medium",
     "description": "Regardless of which kami he channels, each day he must accept the hierophant taboo to strongly revere nature and avoid metal armor. The kami medium gains two free uses of spirit surge from accepting this taboo, as normal.",
     "raw_tokens": [
       {

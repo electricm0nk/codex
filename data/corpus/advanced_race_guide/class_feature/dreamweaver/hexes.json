@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dreamweaver ~ Hexes",
     "name": "Hexes",
-    "class": "Dreamweaver",
+    "class": "Witch",
     "description": "The following hexes complement the dreamweaver archetype: charm, slumber (Advanced Player's Guide); beast of ill-omen (Ultimate Magic).",
     "raw_tokens": [
       {

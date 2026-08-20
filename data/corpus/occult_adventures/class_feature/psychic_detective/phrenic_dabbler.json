@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Detective ~ Phrenic Dabbler",
     "name": "Phrenic Dabbler",
-    "class": "Psychic Detective",
+    "class": "Investigator",
     "description": "At 3rd level, a psychic detective gains a small pool of phrenic points equal to 1/2 her psychic detective level, as well as one phrenic amplification, as the psychic class feature. This does not allow the psychic detective to qualify for the Extra Amplification feat. This ability replaces the investigator talent gained at 3rd level.",
     "raw_tokens": [
       {

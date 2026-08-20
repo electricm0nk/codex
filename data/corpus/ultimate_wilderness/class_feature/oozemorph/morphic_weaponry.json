@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Oozemorph ~ Morphic Weaponry",
     "name": "Morphic Weaponry",
-    "class": "Oozemorph",
+    "class": "Shifter",
     "description": "An oozemorph can create a number of natural weapons to fight with from any portion of her body, regardless of her current form. At 1st level, as a move action, an oozemorph can form %1 primary natural attacks that each deal 1d6 points of bludgeoning, piercing, or slashing damage, chosen by the oozemorph when she forms them. An oozemorph can change the damage type of any number of her natural weapons as a swift action. The total number of natural attacks an oozemorph has at any given time includes those gained via her current form. For example, an 8th-level oozemorph who has taken the form of a wolf with beast shape I has a bite attack as part of that form; she can create only two additional natural attacks via morphic weaponry, for a total of three attacks available to her at that level. If the oozemorph later reverts to a humanoid form with no natural weapons, she can instead create three morphic weapons. |2+(ShifterLVL>=6)+(ShifterLVL>=15)",
     "raw_tokens": [
       {

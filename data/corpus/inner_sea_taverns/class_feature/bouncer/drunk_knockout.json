@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bouncer ~ Drunk Knockout",
     "name": "Drunk Knockout",
-    "class": "Bouncer",
+    "class": "Brawler",
     "description": "A bouncer can use one use of her knockout ability to attempt a similar maneuver in a bar fight against a major participant who is drunk or worse. She must declare her intent before attempting her brawling check, and if she hits and reduces the target's tenacity, that target must succeed at a Fortitude saving throw (DC %1) or immediately be reduced to 0 tenacity.|10+BrawlerLVL/2+max(STR,DEX)",
     "raw_tokens": [
       {

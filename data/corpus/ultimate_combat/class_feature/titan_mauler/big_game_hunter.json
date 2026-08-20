@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Titan Mauler ~ Big Game Hunter",
     "name": "Big Game Hunter",
-    "class": "Titan Mauler",
+    "class": "Barbarian",
     "description": "A titan mauler gains a +1 bonus on attack rolls and a +1 dodge bonus to AC in melee with creatures larger than themselves. This ability replaces fast movement.",
     "raw_tokens": [
       {

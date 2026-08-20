@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Esoteric ~ Diminished Spellcasting",
     "name": "Diminished Spellcasting",
-    "class": "Esoteric",
+    "class": "Magus",
     "description": "[Not implemented]An esoteric has one fewer spell slot of each level than a regular magus. If this reduces his number of spell slots of a particular level to zero, he can cast spells of that level only if his Intelligence allows bonus spells of that level. This ability alters the magus's spellcasting.",
     "raw_tokens": [
       {

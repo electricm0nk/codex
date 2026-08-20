@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Geist Channeler ~ Unnerving Touch",
     "name": "Unnerving Touch",
-    "class": "Geist Channeler",
+    "class": "Spiritualist",
     "description": "As a standard action, a geist channeler's phantom can make a melee touch attack against a living creature, even if that creature is corporeal. If the attack hits, the target is shaken for 1d4+1 rounds. A successful Will save (DC = 10 + 1/2 the phantom's Hit Dice + the phantom's Charisma modifier) negates this effect. At 5th level, when the phantom can damage corporeal creatures with its slam attack, its slam attacks against living corporeal creatures gain this ability. Multiple attacks against the same creature don't cause the creature to become frightened. This is a mind-affecting fear effect.",
     "raw_tokens": [
       {

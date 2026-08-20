@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cipher ~ Tenuous Threat",
     "name": "Tenuous Threat",
-    "class": "Cipher",
+    "class": "Investigator",
     "description": "A cipher's opponents tend to forget that he is a threat. The first time each day that he successfully hits an opponent who is not the target of his studied combat with a melee attack, the opponent must succeed at a Will save (DC %1) or be affected by the cipher's studied strike. This is a mind-affecting effect. This ability alters studied strike.|10+InvestigatorLVL/2+INT",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Courtly Hunter ~ Courtly Companion",
     "name": "Courtly Companion",
-    "class": "Courtly Hunter",
+    "class": "Hunter",
     "description": "A courtly hunter's animal companion was touched by either the fey or the nature spirits that form leshys and answer to commune with nature, granting it its own intelligence. The companion's type changes to magical beast (augmented animal), but his doesn't change any of its statistics and it counts as an animal, not as a magical beast, for the purposes of determining all effects, prerequisites, and so on. It does not learn tricks, but it does have an Intelligence score equal to that of a familiar belonging to a wizard of the courtly hunter's hunter level. Levels in other classes that grant animal companions do not stack with levels of courtly hunter for the purpose of determining the abilities of her courtly companion. [Change to magical beast and stacking restriction not yet implemented] This ability alters animal companion.",
     "raw_tokens": [
       {

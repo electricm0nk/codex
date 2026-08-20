@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Saurian Champion ~ Fierce Devotion",
     "name": "Fierce Devotion",
-    "class": "Saurian Champion",
+    "class": "Cavalier",
     "description": "A saurian champion's mount gains the devotion ability, and its effects also apply against emotion and fear effects. The mount is immune to the effects of unnatural aura (Bestiary 2 303).",
     "raw_tokens": [
       {

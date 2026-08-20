@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Lantern Bearer ~ Enhanced Vision",
     "name": "Enhanced Vision",
-    "class": "Lantern Bearer",
+    "class": "Ranger",
     "description": "A lantern bearer hones his senses to better combat subterranean enemies. He gains low-light vision. If the lantern bearer already has low-light vision, he can instead see three times as far as humans in areas of dim light.",
     "raw_tokens": [
       {

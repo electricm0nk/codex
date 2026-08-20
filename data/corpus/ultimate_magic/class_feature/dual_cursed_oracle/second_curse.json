@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dual-Cursed Oracle ~ Second Curse",
     "name": "Second Curse",
-    "class": "Dual-Cursed Oracle",
+    "class": "Oracle",
     "description": "You must choose two curses at 1st level. One of these curses (oracle's choice) never changes its abilities as you gain levels; for example, an oracle with clouded vision never gains darkvision 60 feet, blindsense, or blindsight. The other curse comes with its normal benefits.",
     "raw_tokens": [
       {

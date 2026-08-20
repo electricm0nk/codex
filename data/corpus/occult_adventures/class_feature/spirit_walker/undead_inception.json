@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spirit Walker ~ Undead Inception",
     "name": "Undead Inception",
-    "class": "Spirit Walker",
+    "class": "Mesmerist",
     "description": "A spirit walker can affect undead creatures with his hypnotic stare as the psychic inception bold stare ability. This allows him to affect only undead: he must actually choose the psychic inception bold stare improvement if he wants to also affect other mindless creatures.",
     "raw_tokens": [
       {

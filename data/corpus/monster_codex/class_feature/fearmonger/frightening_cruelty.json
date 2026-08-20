@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fearmonger ~ Frightening Cruelty",
     "name": "Frightening Cruelty",
-    "class": "Fearmonger",
+    "class": "Antipaladin",
     "description": "The fearmonger must select shaken as his 3rd-level cruelty, dazed as his 6th-level cruelty, and frightened as his 9th-level cruelty. At 12th level, the fearmonger gains the panicked cruelty.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Deep Walker ~ Deep Knowledge",
     "name": "Deep Knowledge",
-    "class": "Deep Walker",
+    "class": "Ranger",
     "description": "At 3rd level, a deep walker gains a +2 bonus on initiative checks and Knowledge (dungeoneering), Perception, Stealth, and Survival skill checks while underground (in caves and dungeons). Every 5 levels thereafter, the deep walker gains an additional +3 on each of those checks while underground (to a maximum of +11 at 18th level). This ability replaces favored terrain. The current bonus is %1.|DeepWalkerDeepKnowledgeBonus",
     "raw_tokens": [
       {

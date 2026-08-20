@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Brutish Swamper ~ Stubborn",
     "name": "Stubborn",
-    "class": "Brutish Swamper",
+    "class": "Barbarian",
     "description": "A brutish swamper resists any attempts to change her attitude or compel her to action. Diplomacy and Intimidate checks against her take a -%1 penalty, and no result can shift her attitude more than one step in a 24-hour period.|BrutishSwamperStubbornPenalty",
     "raw_tokens": [
       {

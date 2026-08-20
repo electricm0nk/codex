@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Kami Medium ~ Kami Channeler",
     "name": "Kami Channeler",
-    "class": "Kami Medium",
+    "class": "Medium",
     "description": "A kami medium channels the kami at locations different from where a normal medium channels his spirits. The kami medium does not have access to the archmage legend.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Rageshaper ~ Invulnerable Defenses",
     "name": "Invulnerable Defenses",
-    "class": "Rageshaper",
+    "class": "Shifter",
     "description": "A rageshaper becomes difficult to harm in his devastating form. Whenever the rageshaper takes on his devastating form and is unencumbered and either wearing no armor or wearing light or medium nonmetal armor, he gains a +2 natural armor bonus to his AC and DR 2/-.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Verdant Grappler ~ Thorny Embrace",
     "name": "Thorny Embrace",
-    "class": "Verdant Grappler",
+    "class": "Brawler",
     "description": "When a verdant grappler uses green grasp to tie up a creature, she can have the roots and vines grow vicious thorns that automatically damage the tied-up creature each round at the start of the verdant grappler's turn.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Beast-Bonded ~ Transfer Feats",
     "name": "Transfer Feats",
-    "class": "Beast-Bonded",
+    "class": "Witch",
     "description": "Whenever you are capable of learning a new feat, you may choose to instead have your familiar learn the feat as a bonus feat. The familiar must meet the prerequisites for any feats that it learns this way. If your familiar is lost or dies, you can reclaim the feat slots and select new feats for yourself, or apply the slots toward your new familiar.",
     "raw_tokens": [
       {

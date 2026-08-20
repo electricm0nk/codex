@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Nature-Bonded Magus ~ Plant Familiar",
     "name": "Plant Familiar",
-    "class": "Nature-Bonded Magus",
+    "class": "Magus",
     "description": "A nature-bonded magus gains the familiar magus arcana. A nature-bonded magus must choose a plant familiar (see page 190) as his familiar.",
     "raw_tokens": [
       {

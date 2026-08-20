@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sacred Huntsmaster ~ Animal Focus",
     "name": "Animal Focus",
-    "class": "Sacred Huntsmaster",
+    "class": "Inquisitor",
     "description": "A sacred huntsmaster can take on the aspects of an animal as a swift action, gaining a bonus or special ability based on the type of animal emulated. The ability is usable %1 minutes per day. The animal companion gets a constant benefit. This ability works as the hunter's animal focus class feature, with her inquisitor level serving as her hunter level.|HunterAnimalFocusMinutes",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Perfect Scholar ~ Learn from Failure",
     "name": "Learn from Failure",
-    "class": "Perfect Scholar",
+    "class": "Monk",
     "description": "When the perfect scholar misses with an attack roll or fails a Research check (Ultimate Intrigue 148), he gains a +%1 insight bonus on his next attack roll or Research check against the same target attempted in the next 24 hours. An individual target cannot be affected by this ability more than once in a 24-hour period.|(MonkLVL-2)/2",
     "raw_tokens": [
       {

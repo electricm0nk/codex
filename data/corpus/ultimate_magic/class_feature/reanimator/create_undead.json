@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Reanimator ~ Create Undead",
     "name": "Create Undead",
-    "class": "Reanimator",
+    "class": "Alchemist",
     "description": "You add Create Undead to your formula book as a 4th-level extract.  When you use this extract, rather than drinking it, you inject it into the corpse you intend to animate, which rises as an uncontrolled undead 1 hour later.  This extract can only create corporeal undead.",
     "raw_tokens": [
       {

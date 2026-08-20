@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tactical Leader ~ Tactician",
     "name": "Tactician",
-    "class": "Tactical Leader",
+    "class": "Inquisitor",
     "description": "At 3rd level, 9th level, and 18th level, a tactical leader gains a teamwork feat as a bonus feat. He must meet the prerequisites for this feat.",
     "raw_tokens": [
       {

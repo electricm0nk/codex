@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Undead Master ~ Reanimator",
     "name": "Reanimator",
-    "class": "Undead Master",
+    "class": "Wizard",
     "description": "An undead master adds the following spells to his spellbook at the given wizard levels: 1st-repair undead; 3rd-lesser animate dead; 5th-animate dead; 7th-undead anatomy I; 9th-create undead; 11th-undeath to death; 13th-create greater undead; 15th-undead anatomy IV; 17th-cursed earth. He can spontaneously cast any of these spells by sacrificing a prepared spell of the same level or higher. The undead master can cast lesser animate dead, animate dead, create undead, and create greater undead as if they were 1 level lower than their normal wizard spell level; this does not alter their level for the purpose of item crafting and the like.",
     "raw_tokens": [
       {

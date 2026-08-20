@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Eldritch Font ~ Font of Power",
     "name": "Font of Power",
-    "class": "Eldritch Font",
+    "class": "Arcanist",
     "description": "An eldritch font gains one additional spell slot for each level of arcanist spell she can cast. However, the number of spells of each level that she can prepare reduces by 1. If this reduces her spells prepared for a level to 0, she still gains spell slots of that level, which can be consumed using the consume spells class feature to fuel her arcane reservoir or cast spells using metamagic feats.",
     "raw_tokens": [
       {

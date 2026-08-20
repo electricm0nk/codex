@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Formless Adept ~ Formless Spell",
     "name": "Formless Spell",
-    "class": "Formless Adept",
+    "class": "Psychic",
     "description": "[not implemented]At 1st level, a formless adept gains the formless spell phrenic amplification. He can spend 1 point from his phrenic pool to cast a spell with a standard-action casting time as part of the action he uses to assume his formless body, expending the spell slot as normal. This ability replaces the 1st-level phrenic amplification.",
     "raw_tokens": [
       {
