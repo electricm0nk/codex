@@ -13164,29 +13164,52 @@ mod spell_probe_tests {
         );
     }
 
-    /// A record that resolves against the corpus but that the engine's own
-    /// per-school table store does not hold produces no `SpellEffect`, so no
-    /// level and no DC. It must stay ungrounded. This is the population every
-    /// non-CRB book's spells fall into: the spellbook engine's nine per-school
-    /// resolvers read `crb::spell_list::SPELL_LIST` and nothing else.
+    /// W21-SPELL-001 (this cycle) widened the spellbook engine's nine
+    /// per-school table stores to also read `apg::spell_list::SPELL_LIST`
+    /// and `acg::spell_list::SPELL_LIST` — the per-class level tables that
+    /// route spells here (e.g. `crb::wizard_spell_list::wizard_spell_level`)
+    /// already spanned those same two books, and a record they route to but
+    /// the per-school resolver could not find produced `NoTableEffect`
+    /// forever regardless of how complete the ACG/APG data was
+    /// (`OPEN-ISSUES.md` rows 324/325 found the identical book-roster-lag
+    /// shape twice already, on `duration`/`range`). "Aggressive
+    /// Thundercloud" is `acg::spell_list::SPELL_LIST`'s own real Evocation
+    /// record — this test used to be this population's proof of refusal;
+    /// it is now the proof that a genuinely foreign-book record is STILL
+    /// refused (`ForeignBookTable`, not a promotion) when probed under the
+    /// wrong book, and IS wired under its true one — the cross-book
+    /// discipline `the_probe_never_grounds_one_books_unit_on_another_books_table`
+    /// already pins for a same-name CRB collision, now proven against a
+    /// real, non-CRB corpus record for the first time (before this
+    /// widening, no real record outside CRB's own table could ever resolve
+    /// far enough to exercise this guard).
     #[test]
-    fn the_probe_never_promotes_a_record_the_table_store_does_not_hold() {
-        // A real APG spell on the real Wizard list, resolved against a corpus
-        // that holds it — but absent from the CRB table store.
+    fn the_probe_still_refuses_a_widened_table_records_effect_under_the_wrong_book() {
         let book =
             ScratchSpellBook::new("notable", &[("Aggressive Thundercloud", Some("Evocation"))]);
+        let corpus = book.corpus();
         assert!(
             crb_wizard_spell_list::wizard_spell_level("Aggressive Thundercloud").is_some(),
             "this anchor must really be on the Wizard list, else the test proves nothing"
         );
         assert!(
             !crb_spell_list::SPELL_LIST.iter().any(|e| e.key == "Aggressive Thundercloud"),
-            "this anchor must really be absent from the CRB table store"
+            "this anchor must really be absent from the CRB table store -- the ACG table store \
+             is the one that now resolves it"
         );
         assert_eq!(
-            probe_spell_key(&fixture(), "Aggressive Thundercloud", &book.corpus(), RuleSetId::Crb),
-            SpellProbeOutcome::NoTableEffect
+            probe_spell_key(&fixture(), "Aggressive Thundercloud", &corpus, RuleSetId::Crb),
+            SpellProbeOutcome::ForeignBookTable,
+            "the widened search DOES resolve this record now (via ACG's table), so the refusal \
+             must be the provenance mismatch, not a missing SpellEffect"
         );
+        // Control: probed under its real book, the same record IS wired --
+        // proving the refusal above is the provenance gate, not a broken
+        // resolver.
+        assert!(matches!(
+            probe_spell_key(&fixture(), "Aggressive Thundercloud", &corpus, RuleSetId::Acg),
+            SpellProbeOutcome::Wired { level: 2, .. }
+        ));
     }
 
     /// A record whose `SCHOOL:` the engine does not recognize dispatches to no

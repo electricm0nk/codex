@@ -21043,11 +21043,11 @@
     {
       "kind": "spell",
       "label": "Spells",
-      "done": 112,
-      "partial": 23,
+      "done": 125,
+      "partial": 10,
       "not_started": 0,
       "denominator": 135,
-      "pct": 83.0,
+      "pct": 92.6,
       "excluded_from_percentage": 9,
       "standing_breakdown": {
         "origin": 135,
@@ -21105,7 +21105,7 @@
         },
         {
           "name": "Air Step",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Air Step"
@@ -21126,7 +21126,7 @@
         },
         {
           "name": "Anchored Step",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Anchored Step"
@@ -21203,7 +21203,7 @@
         },
         {
           "name": "Blessed Fist",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Blessed Fist"
@@ -21217,7 +21217,7 @@
         },
         {
           "name": "Blood Armor",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Blood Armor"
@@ -21364,7 +21364,7 @@
         },
         {
           "name": "Extreme Flexibility",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Extreme Flexibility"
@@ -21455,7 +21455,7 @@
         },
         {
           "name": "Heightened Awareness",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heightened Awareness"
@@ -21532,7 +21532,7 @@
         },
         {
           "name": "Longstrider (Greater)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Longstrider (Greater)"
@@ -21546,7 +21546,7 @@
         },
         {
           "name": "Mantle of Calm",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mantle of Calm"
@@ -21616,7 +21616,7 @@
         },
         {
           "name": "Muffle Sound",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Muffle Sound"
@@ -21721,7 +21721,7 @@
         },
         {
           "name": "Shield Companion",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Shield Companion"
@@ -21833,14 +21833,14 @@
         },
         {
           "name": "Stunning Barrier",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Stunning Barrier"
         },
         {
           "name": "Stunning Barrier (Greater)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Stunning Barrier (Greater)"
@@ -22001,7 +22001,7 @@
         },
         {
           "name": "Unliving Rage",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Unliving Rage"

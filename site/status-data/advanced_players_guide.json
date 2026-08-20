@@ -20689,11 +20689,11 @@
     {
       "kind": "spell",
       "label": "Spells",
-      "done": 213,
-      "partial": 71,
+      "done": 220,
+      "partial": 64,
       "not_started": 0,
       "denominator": 284,
-      "pct": 75.0,
+      "pct": 77.5,
       "excluded_from_percentage": 9,
       "standing_breakdown": {
         "origin": 284,
@@ -20751,7 +20751,7 @@
         },
         {
           "name": "Ant Haul",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Ant Haul"
@@ -20786,7 +20786,7 @@
         },
         {
           "name": "Aspect of the Falcon",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Aspect of the Falcon"
@@ -21591,7 +21591,7 @@
         },
         {
           "name": "Gravity Bow",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Gravity Bow"
@@ -21773,7 +21773,7 @@
         },
         {
           "name": "Lead Blades",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Lead Blades"
@@ -22368,7 +22368,7 @@
         },
         {
           "name": "Strong Jaw",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Strong Jaw"
@@ -22718,7 +22718,7 @@
         },
         {
           "name": "Weapon of Awe",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Weapon of Awe"
@@ -22746,7 +22746,7 @@
         },
         {
           "name": "Wrathful Mantle",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Wrathful Mantle"

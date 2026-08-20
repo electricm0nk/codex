@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-08-20T08:39:23Z",
+  "generated_at": "2026-08-20T08:29:33Z",
   "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 38372,
-  "proven_units": 5814,
+  "proven_units": 5862,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 420,
   "category_labels_redacted": 3,
@@ -5509,11 +5509,11 @@
     },
     "equipment": {
       "units": 6208,
-      "proven": 349,
+      "proven": 348,
       "by_status": {
-        "ingested-magnitude": 322,
+        "ingested-magnitude": 323,
         "literal-verified": 5099,
-        "grounded": 168,
+        "grounded": 167,
         "unknown": 205,
         "not-started": 164,
         "not-ingested": 58,
@@ -5521,14 +5521,14 @@
         "fixture-verified": 11
       },
       "shard": "PF1e-units-equipment.json",
-      "bytes": 832865,
+      "bytes": 832875,
       "doneness_unmapped": {},
       "categories": {
         "magic": {
           "label": "Magic",
-          "done": 2874,
+          "done": 2873,
           "held": 80,
-          "in-progress": 137,
+          "in-progress": 138,
           "not-started": 135,
           "unmeasurable": 1,
           "deferred": 0
@@ -6078,24 +6078,24 @@
     },
     "equipment_modifier": {
       "units": 1580,
-      "proven": 613,
+      "proven": 609,
       "by_status": {
-        "grounded": 165,
+        "grounded": 157,
         "unknown": 416,
-        "text-complete": 448,
-        "ingested-magnitude": 453,
+        "text-complete": 452,
+        "ingested-magnitude": 457,
         "literal-verified": 35,
         "not-started": 63
       },
       "shard": "PF1e-units-equipment_modifier.json",
-      "bytes": 168831,
+      "bytes": 168891,
       "doneness_unmapped": {},
       "categories": {
         "none": {
           "label": "Uncategorised",
-          "done": 190,
+          "done": 186,
           "held": 3,
-          "in-progress": 147,
+          "in-progress": 151,
           "not-started": 4,
           "unmeasurable": 295,
           "deferred": 0
@@ -6111,9 +6111,9 @@
         },
         "armor": {
           "label": "Armor",
-          "done": 53,
+          "done": 49,
           "held": 1,
-          "in-progress": 82,
+          "in-progress": 86,
           "not-started": 1,
           "unmeasurable": 14,
           "deferred": 0
@@ -10770,19 +10770,19 @@
     },
     "spell": {
       "units": 2843,
-      "proven": 156,
+      "proven": 209,
       "by_status": {
         "fixture-verified": 1288,
-        "ingested-magnitude": 320,
+        "grounded": 176,
         "literal-verified": 217,
+        "ingested-magnitude": 267,
         "text-complete": 33,
         "not-started": 112,
         "not-ingested": 724,
-        "grounded": 123,
         "unknown": 26
       },
       "shard": "PF1e-units-spell.json",
-      "bytes": 329779,
+      "bytes": 329249,
       "doneness_unmapped": {},
       "categories": {
         "arcane": {
@@ -10796,9 +10796,9 @@
         },
         "none": {
           "label": "Uncategorised",
-          "done": 448,
+          "done": 468,
           "held": 114,
-          "in-progress": 74,
+          "in-progress": 54,
           "not-started": 401,
           "unmeasurable": 0,
           "deferred": 0
@@ -10826,9 +10826,9 @@
       "school_categories": {
         "Transmutation": {
           "label": "Transmutation",
-          "done": 407,
+          "done": 419,
           "held": 48,
-          "in-progress": 59,
+          "in-progress": 47,
           "not-started": 105,
           "unmeasurable": 6,
           "deferred": 0
@@ -10853,54 +10853,54 @@
         },
         "Evocation": {
           "label": "Evocation",
-          "done": 177,
+          "done": 178,
           "held": 40,
-          "in-progress": 10,
+          "in-progress": 9,
           "not-started": 41,
           "unmeasurable": 0,
           "deferred": 0
         },
         "Enchantment": {
           "label": "Enchantment",
-          "done": 185,
+          "done": 186,
           "held": 18,
-          "in-progress": 9,
+          "in-progress": 8,
           "not-started": 42,
           "unmeasurable": 2,
           "deferred": 0
         },
         "Abjuration": {
           "label": "Abjuration",
-          "done": 166,
+          "done": 169,
           "held": 20,
-          "in-progress": 12,
+          "in-progress": 9,
           "not-started": 28,
           "unmeasurable": 0,
           "deferred": 0
         },
         "Necromancy": {
           "label": "Necromancy",
-          "done": 132,
+          "done": 133,
           "held": 32,
-          "in-progress": 8,
+          "in-progress": 7,
           "not-started": 40,
           "unmeasurable": 1,
           "deferred": 0
         },
         "Divination": {
           "label": "Divination",
-          "done": 114,
+          "done": 115,
           "held": 34,
-          "in-progress": 6,
+          "in-progress": 5,
           "not-started": 23,
           "unmeasurable": 1,
           "deferred": 0
         },
         "Illusion": {
           "label": "Illusion",
-          "done": 120,
+          "done": 121,
           "held": 6,
-          "in-progress": 10,
+          "in-progress": 9,
           "not-started": 30,
           "unmeasurable": 0,
           "deferred": 0
