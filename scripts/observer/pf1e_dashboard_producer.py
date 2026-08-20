@@ -2876,9 +2876,16 @@ SPELL_SHARD_FIELDS = UNIT_SHARD_FIELDS + ("school",)
 # serving `"Helm of the Serpent King"`, `"Varisian Pilgrim Domain"` and
 # every other word-boundary leak this fix closes indefinitely.
 SHARD_SCHEMA = 15
+# Wave-21 fix (OPEN-ISSUES.md row 336): this default used to hardcode the
+# shared checkout and never consulted CODEX_REPO_ROOT (read above, at line
+# 110, for an unrelated purpose) -- so a lane running in its own isolated
+# worktree with CODEX_REPO_ROOT set would still publish a DIFFERENT,
+# concurrently-running lane's board under its own commit. PF1E_WORK_INVENTORY_
+# DOC remains the explicit, highest-priority override for any caller that
+# still wants to point at a specific file regardless of worktree.
 WORK_INVENTORY_FULL_DOC = os.environ.get(
     "PF1E_WORK_INVENTORY_DOC",
-    os.path.expanduser("~/workspace/repos/codex/docs/work-inventory.json"),
+    os.path.join(DEFAULT_REPO_ROOT, "docs", "work-inventory.json"),
 )
 
 
