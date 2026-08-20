@@ -75,6 +75,30 @@ use crate::rules_core::pcgen_desc::{leaked_pcgen_syntax, render_pcgen_desc};
 /// why the list is one entry long today.
 pub const REGISTERED_POOL_GROUPS: &[&str] = &["Rogue Talent"];
 
+/// `raw_tokens` keys that carry a real, player-facing engine effect --
+/// wave-22 adversarial review CONFIRMED (finding, severity high) that 9 of
+/// the lane's 88 originally-banked records carry one of these alongside a
+/// clean-rendering description (e.g. `Finesse Rogue`'s own `ABILITY:FEAT|
+/// VIRTUAL|Weapon Finesse`, `Skill Mastery`'s `SELECT:3+INT`). Decision 7
+/// condition 1 ("prose only, not a mechanic") and condition 2 ("nothing to
+/// compute") both fail for a record carrying any of these -- the render-
+/// and-refuse gate above only catches an UNRESOLVED `%N` inside the prose
+/// itself, never a wholly separate mechanical token the description text
+/// never mentions at all. Refused here, at the corpus-row level, per
+/// Decision 7's own binding PROXY WARNING (hand-verify the WHOLE row, not
+/// a magnitude-token proxy, before banking a zero-magnitude unit).
+const ENGINE_EFFECT_TOKEN_KEYS: &[&str] =
+    &["ABILITY", "CSKILL", "SELECT", "AUTO", "SAB", "BONUS", "DEFINE", "ADD", "SPELLS", "DR", "SR"];
+
+/// `true` when `raw_tokens` carries no [`ENGINE_EFFECT_TOKEN_KEYS`] entry --
+/// i.e. the record is genuinely prose-only, not merely prose-renders-clean.
+fn has_no_engine_effect_token(raw_tokens: &Value) -> bool {
+    let Some(tokens) = raw_tokens.as_array() else { return true };
+    !tokens.iter().any(|t| {
+        t.get("key").and_then(|k| k.as_str()).is_some_and(|k| ENGINE_EFFECT_TOKEN_KEYS.contains(&k))
+    })
+}
+
 /// One option-pool member's real corpus row, with a description proven to
 /// render with nothing missing.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -164,6 +188,9 @@ pub fn load_pool_catalog(repo_root: &Path) -> Vec<PoolCatalogEntry> {
             if !is_real_description_value(raw_desc) {
                 continue;
             }
+            if !has_no_engine_effect_token(&data["raw_tokens"]) {
+                continue;
+            }
             let rendered = render_pcgen_desc(raw_desc);
             // The render-and-refuse gate: an unresolved `%N` means a real
             // computation this catalog cannot perform is still missing from
@@ -175,11 +202,20 @@ pub fn load_pool_catalog(repo_root: &Path) -> Vec<PoolCatalogEntry> {
             if leaked_pcgen_syntax(&rendered.text).is_some() {
                 continue;
             }
+            // Strip raw PCGen footnote markers (`**`, `*`) that leaked
+            // into the shipped `name` field -- adversarial review
+            // confirmed `leaked_pcgen_syntax` was applied to `description`
+            // only, never `name` (e.g. "Deadly Sneak**" reaching the
+            // sheet verbatim). `name` never carries `%N`/`|`-arg syntax,
+            // only trailing footnote asterisks, so a plain trim suffices
+            // here (the description's own render-and-refuse gate already
+            // handles the richer PCGen syntax shapes).
+            let clean_name = name.trim_end_matches('*').trim().to_string();
             out.push(PoolCatalogEntry {
                 book: book.clone(),
                 pool_group: class.to_string(),
                 key: key.to_string(),
-                name: name.to_string(),
+                name: clean_name,
                 description: rendered.text,
             });
         }
@@ -278,6 +314,44 @@ mod tests {
         assert!(checked > 10, "no real descriptions were checked; the check proved nothing");
     }
 
+    /// Wave-22 integration fix: 9 of the lane's originally-banked 88
+    /// records carry a real engine-effect `raw_tokens` entry alongside a
+    /// clean-rendering description and must be withdrawn (adversarial
+    /// review, confirmed finding, severity high). `Finesse Rogue` is one
+    /// of the 9 named -- `ABILITY:FEAT|VIRTUAL|Weapon Finesse`.
+    #[test]
+    fn a_record_with_a_real_engine_effect_token_is_refused_even_though_its_prose_renders_clean() {
+        let entries = load_pool_catalog(&repo_root());
+        for withdrawn_key in [
+            "Rogue Talent ~ Finesse Rogue",
+            "Rogue Talent ~ Improved Evasion",
+            "Rogue Talent ~ Skill Mastery",
+            "Rogue Talent ~ Combat Swipe",
+            "Rogue Talent ~ Strong Impression",
+            "Rogue Talent ~ Survivalist",
+            "Rogue Talent ~ Firearm Training",
+            "Rogue Talent ~ Getaway Artist",
+            "Rogue Talent ~ Thrill of the Chase",
+        ] {
+            assert!(
+                !entries.iter().any(|e| e.key == withdrawn_key),
+                "{withdrawn_key} carries a real engine-effect token and must not reach the catalog"
+            );
+        }
+        // The refusal is scoped to these records, not the whole catalog.
+        assert!(entries.iter().any(|e| e.book == "core_rulebook"));
+    }
+
+    #[test]
+    fn has_no_engine_effect_token_refuses_ability_and_select_but_allows_a_plain_desc_only_record() {
+        let clean = serde_json::json!([{"key": "KEY", "value": "x"}, {"key": "DESC", "value": "x"}]);
+        assert!(has_no_engine_effect_token(&clean));
+        let with_ability = serde_json::json!([{"key": "ABILITY", "value": "FEAT|VIRTUAL|Weapon Finesse"}]);
+        assert!(!has_no_engine_effect_token(&with_ability));
+        let with_select = serde_json::json!([{"key": "SELECT", "value": "3+INT"}]);
+        assert!(!has_no_engine_effect_token(&with_select));
+    }
+
     #[test]
     fn pool_catalog_index_is_keyed_by_book_and_key() {
         let entries = load_pool_catalog(&repo_root());
@@ -289,3 +363,4 @@ mod tests {
         assert!(index.get(&("core_rulebook".to_string(), "Rogue Talent ~ Bleeding Attack".to_string())).is_none());
     }
 }
+
