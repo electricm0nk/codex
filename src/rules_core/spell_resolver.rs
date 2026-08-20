@@ -18,8 +18,8 @@ use crate::rules_core::pilot_compute_corpus::TableCellRef;
 use crate::rules_core::rules_tables::crb::spell_list::SPELL_LIST;
 use crate::rules_core::rules_tables::RuleSetId;
 use crate::rules_core::rules_tables::{
-    acg, advanced_race_guide, apg, crb, inner_sea_gods, occult_adventures, ultimate_combat,
-    ultimate_intrigue, ultimate_magic, ultimate_wilderness,
+    acg, advanced_race_guide, apg, bestiary_6, crb, inner_sea_gods, occult_adventures,
+    ultimate_combat, ultimate_intrigue, ultimate_magic, ultimate_wilderness,
 };
 use crate::rules_core::source_content::{SourceContentKind, SourcePackageContent};
 
@@ -56,6 +56,12 @@ pub const SPELL_BOOK_ISG: &str = "ISG";
 /// this book's `spell`-kind `not-ingested` population. See
 /// `src/bin/ingest_ultimate_wilderness_spells.rs` for the ingest path.
 pub const SPELL_BOOK_UW: &str = "UW";
+/// SD-31 wave-24 (`bestiary_6` book-auditor lane): Bestiary 6, the eleventh
+/// book -- both of its 2 base spell declarations (`b6_spells.lst`), the
+/// whole of this book's `spell`-kind `not-ingested` population. See
+/// `rules_tables::bestiary_6::spell_list`'s doc comment for the two rows'
+/// verbatim reprint inside Ultimate Wilderness's own `uw_spells.lst`.
+pub const SPELL_BOOK_B6: &str = "B6";
 
 /// One ingested spell record, normalized across every book's own
 /// `spell_list` table.
@@ -202,6 +208,13 @@ pub fn spell_catalog_rows() -> &'static [SpellCatalogRow] {
             level: entry.level,
             description: entry.description,
         });
+        let b6_rows = bestiary_6::spell_list::SPELL_LIST.iter().map(|entry| SpellCatalogRow {
+            book: SPELL_BOOK_B6,
+            key: entry.key,
+            school: entry.school.map(|school| format!("{school:?}")),
+            level: entry.level,
+            description: entry.description,
+        });
         crb_rows
             .chain(apg_rows)
             .chain(acg_rows)
@@ -212,6 +225,7 @@ pub fn spell_catalog_rows() -> &'static [SpellCatalogRow] {
             .chain(uc_rows)
             .chain(isg_rows)
             .chain(uw_rows)
+            .chain(b6_rows)
             .collect()
     })
 }
@@ -375,5 +389,45 @@ mod spell_catalog_rows_tests {
             spell_catalog_rows().iter().filter(|row| row.key == "Share Language (Communal)").collect();
         assert_eq!(matches.len(), 1, "expected exactly one served row for this cross-book collision");
         assert_eq!(matches[0].book, SPELL_BOOK_OA, "OA's fuller record must be the one that ships");
+    }
+
+    /// SD-31 wave-24 (`bestiary_6` lane): Bestiary 6 is the eleventh book
+    /// chained into `spell_catalog_rows()`. A real, non-empty row set proves
+    /// the chain actually wired the new book in, not merely that the
+    /// constant compiles.
+    #[test]
+    fn bestiary_6_is_chained_into_the_catalog() {
+        let b6_rows: Vec<&SpellCatalogRow> =
+            spell_catalog_rows().iter().filter(|row| row.book == SPELL_BOOK_B6).collect();
+        assert_eq!(b6_rows.len(), 2, "expected exactly the book's 2 real spell rows: {b6_rows:?}");
+        assert!(
+            b6_rows.iter().any(|row| row.key == "Animal Growth (Reptiles Only)"
+                && row.level == Some(5)),
+            "expected the real corpus row 'Animal Growth (Reptiles Only)' (b6_spells.lst) among \
+             Bestiary 6's rows: {b6_rows:?}"
+        );
+    }
+
+    /// Bestiary 6's own two spells are ALSO reprinted verbatim inside
+    /// Ultimate Wilderness's `uw_spells.lst` (`bestiary_6::spell_list`'s own
+    /// doc comment). Both books' rows must ship, each carrying its own
+    /// `book` provenance -- this is a genuine cross-book reprint, not the
+    /// "thinner duplicate" shape `share_language_communal_...` above pins,
+    /// and Decision 10's Supersession Register is proposed, not applied, so
+    /// neither row may be silently dropped here.
+    #[test]
+    fn bestiary_6_and_ultimate_wilderness_both_ship_the_scalykind_reprints() {
+        for key in ["Animal Growth (Reptiles Only)", "Animal Shapes (Reptiles Only)"] {
+            let books: Vec<&str> = spell_catalog_rows()
+                .iter()
+                .filter(|row| row.key == key)
+                .map(|row| row.book)
+                .collect();
+            assert_eq!(
+                books,
+                vec![SPELL_BOOK_UW, SPELL_BOOK_B6],
+                "{key} must ship once from each book that really prints it"
+            );
+        }
     }
 }

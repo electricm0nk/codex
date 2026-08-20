@@ -2437,6 +2437,15 @@ fn spell_book_slug_for(short_code: &str) -> &'static str {
         // attribution or measurement logic. See
         // `src/bin/ingest_ultimate_wilderness_spells.rs`.
         "UW" => "ultimate_wilderness",
+        // SD-31 wave-24 (`bestiary_6` book-auditor lane): B6 joins
+        // `spell_resolver::spell_catalog_rows()` as the catalog's 11th book.
+        // Same additive, single-line registration every prior spell-lane
+        // cycle made here before it -- this function is a closed-set lookup
+        // table with its own dedicated test
+        // (`spell_book_slug_for_covers_every_catalog_book`), not
+        // attribution or measurement logic. See
+        // `rules_tables::bestiary_6::spell_list`.
+        "B6" => "bestiary_6",
         other => panic!(
             "spell_resolver::spell_catalog_rows() now carries an unmapped book code {other:?} \
              -- add it to spell_book_slug_for so the spell classifier does not silently drop \

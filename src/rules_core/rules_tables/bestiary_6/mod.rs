@@ -1,4 +1,5 @@
-//! Bestiary 6 (`SOURCESHORT:B6`) — `companion`.
+//! Bestiary 6 (`SOURCESHORT:B6`) — `companion` and `spell` (SD-31 wave 24:
+//! see `spell_list` for the book's 2 Scalykind-subdomain spell rows).
 //!
 //! # The second monster-less bestiary, and the cleanest one-to-one book in the lane
 //!
@@ -25,6 +26,7 @@
 //! reader that "balanced" the two counts would be inventing records.
 
 mod companion_data;
+pub mod spell_list;
 
 pub use super::companion_chassis::{
     CompanionAbilityDelivery, CompanionAbilityFacet, CompanionAbilityRecord, CompanionRecord,
