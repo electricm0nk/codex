@@ -124,11 +124,25 @@ impl ItemAlignment {
 /// corpus value (see module doc comment); a record contributing nothing
 /// to this family yields `None` from `compute_intelligent_item_effect`
 /// rather than a zeroed struct.
+///
+/// **`ego_bonus` is a PARTIAL sum, never a resolved total Ego score**
+/// (integration-cycle adversarial review, SD-31 wave 18, MEDIUM). The
+/// Base record's own `IntelligentItemEgo` chain is a `BaseCostTracker`
+/// formula this module deliberately skips rather than fabricates (see
+/// module doc comment and `the_base_record_skips_its_own_formula_ego_chain_
+/// and_its_conditional_chains`) — so summing every OTHER attached
+/// modifier's literal `ego_bonus` (as `resolve_intelligent_item_contribution`
+/// in `equipment_effects.rs` does) systematically UNDERSTATES a real
+/// item's true Ego. A future consumer must not render this field as "the
+/// item's Ego" without also resolving the Base contribution; it is safe
+/// only as "this modifier's own literal Ego delta."
 #[derive(Debug, Clone, Copy, Default, PartialEq)]
 pub struct IntelligentItemContribution {
     pub intelligence_bonus: i16,
     pub wisdom_bonus: i16,
     pub charisma_bonus: i16,
+    /// See the struct's own doc comment: a partial sum, not a resolved
+    /// total Ego score.
     pub ego_bonus: i16,
     pub alignment: Option<ItemAlignment>,
 }

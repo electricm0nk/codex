@@ -302,7 +302,7 @@ fn family_for_key(key: &str) -> String {
         return "Base".to_string();
     }
     if key.contains('~') {
-        let after_tilde = key.splitn(2, '~').nth(1).unwrap_or("").trim();
+        let after_tilde = key.split_once('~').map(|x| x.1).unwrap_or("").trim();
         // Mythic keys carry a second `Intelligent Item ~` segment
         // (`Legendary Item ~ Intelligent Item ~ Ability Score / ...`); strip
         // it so both books share one family taxonomy.

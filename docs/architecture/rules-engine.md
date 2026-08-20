@@ -242,17 +242,41 @@ subset of CRB feats only.
 
 **`src/rules_core/equipment_effects.rs`** (Epic 5) + submodules + `src/rules_core/equipment_resolver.rs` + `src/rules_core/spell_resolver.rs` —
 `compute_equipment_effects(equipped: &[EquipmentSelection], corpus) -> EquipmentEffects` dispatches
-across four category submodules under `src/rules_core/equipment_effects/`: `src/rules_core/equipment_effects/arms_armor.rs`
+across category submodules under `src/rules_core/equipment_effects/`: `src/rules_core/equipment_effects/arms_armor.rs`
 (AC/max-dex/spell-failure — the fields `EquipmentStatEffect` is shaped to carry),
 `src/rules_core/equipment_effects/general.rs` (per-item skill-check circumstance bonuses, via
 `ResolvedEquipmentEffect::skill_bonus`), `src/rules_core/equipment_effects/magic_items.rs` (per-item ability-score enhancement
-bonuses, via `ResolvedEquipmentEffect::ability_bonus`), and `src/rules_core/equipment_effects/equipmods.rs` (per-item weapon
-to-hit/damage enhancement bonuses, via `ResolvedEquipmentEffect::weapon_enhancement_bonus`) — all
-four landed. Corpus identity resolution for both equipment and spells is centralized, not duplicated
-per engine: `equipment_resolver::equipment_id_resolve` and `spell_resolver::spell_id_resolve` are
-the sole lookup functions every corpus-aware engine (`src/rules_core/pilot_compute_corpus.rs`,
-`src/rules_core/equipment_effects.rs`, `src/rules_core/spellbook.rs`, `src/rules_core/damage_total.rs`) calls to turn a chosen
+bonuses, via `ResolvedEquipmentEffect::ability_bonus`), `src/rules_core/equipment_effects/equipmods.rs` (per-item weapon
+to-hit/damage enhancement bonuses, via `ResolvedEquipmentEffect::weapon_enhancement_bonus`) — the original four Epic 5
+categories — plus, added SD-31 wave 18 (operator ruling 2026-08-19, intelligent-item subsystem
+in scope): `src/rules_core/equipment_effects/intelligent_item.rs` (a selection-scoped
+Intelligence/Wisdom/Charisma/Ego/alignment contribution, via `ResolvedEquipmentEffect::intelligent_item`
+— reads the CRB/Mythic Adventures `Intelligent Item ~ ...` `BONUS:VAR` chains directly; the Base
+record's own `BaseCostTracker`-formula Ego contribution is honestly skipped, not fabricated; the
+`Intelligent Item ~ Power/Purpose` families' own headline mechanics remain unresolved). A scoped
+`WeaponEnhancementBonus::natural_attack_only` field (equipmods.rs) marks the Amulet of Mighty Fists
+family's bonus as natural-attack-only; **both** live consumers — `damage_total::
+resolve_weapon_enhancement_modifier` (the top-level-selection `weapon_enhancement_bonus` path) and
+`equipment_effects::resolve_weapon_to_hit_bonus` (the `applied_modifiers`-attachment path the
+shipped desktop app's `attach_equipment_modifier_at_root` actually uses) — check
+`equipment_effects::is_natural_attack_weapon` on the specific weapon being resolved before applying
+it (`OPEN-ISSUES.md` rows 309/318 — the first consumer was fixed in wave 17/18, the second leaked
+until wave 18's own integration cycle closed it). Corpus identity resolution for both equipment and
+spells is centralized, not duplicated per engine: `equipment_resolver::equipment_id_resolve` and
+`spell_resolver::spell_id_resolve` are the sole lookup functions every corpus-aware engine
+(`src/rules_core/pilot_compute_corpus.rs`, `src/rules_core/equipment_effects.rs`,
+`src/rules_core/spellbook.rs`, `src/rules_core/damage_total.rs`) calls to turn a chosen
 `item_id`/`spell_id` into a real corpus record plus an optional `TableCellRef`.
+
+The intelligent-item resolver's own DTO shape has a real desktop-facing surface —
+`apps/desktop/src-tauri/src/intelligent_item_catalog.rs` (SD-31 wave 18) serves 152 intelligent-item
+component records (98 core_rulebook + 71 mythic_adventures, minus 17 `VISIBLE:NO` trigger rows)
+grouped by family, each mechanic transcribed with a friendly label/formula/translated prerequisite —
+see [desktop-app.md](./desktop-app.md). The two surfaces are independent: the catalog reads raw
+corpus equipmods directly (a static component reference), not `compute_equipment_effects`'s
+resolved output (a specific character's equipped item); reconciling them into one
+per-character "equipped intelligent item" view is a named, un-staffed follow-on
+(`OPEN-ISSUES.md` row 318's `next_lever`, `progress.md` `SD31-W18-INTEGRATE-001`).
 
 **`src/rules_core/damage_total.rs`** (Epic 6) — a single flat file (no per-category subdirectory), because per its
 own doc comment the full damage-modifier picture is one sequential computation rather than a
