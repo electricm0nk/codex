@@ -1,0 +1,76 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "This spell functions as fey form I, except it also allows you to assume the form of a Tiny or Large creature of the fey type. Your base speed can't increase above 90 feet this way. If the form you assume has any of the following abilities, you gain those abilities: burrow speed 30 feet, climb speed 90 feet, fly speed 60 feet (good maneuverability), swim speed 60 feet, all-around vision, blindsense 30 feet, darkvision 60 feet, low-light vision, scent, see in darkness, abduct, animated hair, bleed, blood rage, boot stomp, burn, compression, constrict, crushing leap, DR 2/cold iron, grab, heavy weapons, icewalking, kneecapper, nasal spray, no shadow, oversized weapons, poison, putrid vomit, rock throwing (50 feet, 1d6 damage), sound mimicry, trackless step, trample, tree meld, undersized weapons, and woodland stride. If the creature has immunity to mind-affecting effects or poison, you gain a +4 resistance bonus on saves against those effects. If the creature has any weaknesses, you gain them. [Tiny Fey] If you assume this form, you gain a +6 size bonus to your Dexterity score and take a -2 penalty to your Strength score. [Large Fey] If you assume this form, you gain a +4 size bonus to your Strength and Constitution scores and take a -2 penalty to your Dexterity score.",
+    "key": "Fey Form II",
+    "level": 5,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist,Druid,Shaman=5|Magus,Sorcerer,Witch,Wizard=6"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M"
+      },
+      {
+        "key": "DESC",
+        "value": "Assume the form of a Tiny or Large fey creature.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell functions as fey form I, except it also allows you to assume the form of a Tiny or Large creature of the fey type. Your base speed can't increase above 90 feet this way. If the form you assume has any of the following abilities, you gain those abilities: burrow speed 30 feet, climb speed 90 feet, fly speed 60 feet (good maneuverability), swim speed 60 feet, all-around vision, blindsense 30 feet, darkvision 60 feet, low-light vision, scent, see in darkness, abduct, animated hair, bleed, blood rage, boot stomp, burn, compression, constrict, crushing leap, DR 2/cold iron, grab, heavy weapons, icewalking, kneecapper, nasal spray, no shadow, oversized weapons, poison, putrid vomit, rock throwing (50 feet, 1d6 damage), sound mimicry, trackless step, trample, tree meld, undersized weapons, and woodland stride. If the creature has immunity to mind-affecting effects or poison, you gain a +4 resistance bonus on saves against those effects. If the creature has any weaknesses, you gain them. [Tiny Fey] If you assume this form, you gain a +6 size bonus to your Dexterity score and take a -2 penalty to your Strength score. [Large Fey] If you assume this form, you gain a +4 size bonus to your Strength and Constitution scores and take a -2 penalty to your Dexterity score.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.229"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Polymorph"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-20T01:55:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 21,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+    "record_key": "Fey Form II",
+    "sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "derived:prose_expr"
+  ]
+}

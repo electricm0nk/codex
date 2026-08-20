@@ -1,0 +1,83 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You strike the ground and unleash a tremor of seismic force, hurling up earth, rock, and sand. You choose whether the earth tremor affects a 30-foot line, a 20-foot cone-shaped spread, or a 10-foot-radius spread centered on you. The space you occupy is not affected by earth tremor. The area you choose becomes dense rubble that costs 2 squares of movement to enter. Dense rubble adds 5 to the DC of Acrobatics checks and adds 2 to the DC of Stealth checks. Creatures on the ground in the area take (min(10,CASTERLEVEL))d4 points of bludgeoning damage or half damage on a successful save. Medium or smaller creatures that fail their saves are knocked prone. This spell can be cast only on a surface of earth, sand, or stone. It has no effect if you are in a wooden or metal structure or if you are not touching the ground.",
+    "key": "Earth Tremor",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bloodrager,Druid,Magus,Shaman,Sorcerer,Witch,Wizard=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S"
+      },
+      {
+        "key": "DESC",
+        "value": "Unleash a tremor that creates difficult terrain and can knock foes down and damage them.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You strike the ground and unleash a tremor of seismic force, hurling up earth, rock, and sand. You choose whether the earth tremor affects a 30-foot line, a 20-foot cone-shaped spread, or a 10-foot-radius spread centered on you. The space you occupy is not affected by earth tremor. The area you choose becomes dense rubble that costs 2 squares of movement to enter. Dense rubble adds 5 to the DC of Acrobatics checks and adds 2 to the DC of Stealth checks. Creatures on the ground in the area take (min(10,CASTERLEVEL))d4 points of bludgeoning damage or half damage on a successful save. Medium or smaller creatures that fail their saves are knocked prone. This spell can be cast only on a surface of earth, sand, or stone. It has no effect if you are in a wooden or metal structure or if you are not touching the ground.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Earth"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous"
+      },
+      {
+        "key": "RANGE",
+        "value": "Up to 30 ft.; see text"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Throw Reflex half; see text"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.228"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "30-ft. line, 20-ft. cone-shaped spread, or 10-ft.-radius spread; see text"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-20T01:55:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 17,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+    "record_key": "Earth Tremor",
+    "sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

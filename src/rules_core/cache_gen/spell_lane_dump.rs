@@ -63,6 +63,7 @@ use crate::rules_core::pi_screening::{
 use crate::rules_core::shape_b_v1::{License, PI_MARKER_REDACTED, REDACTED_PI_MARKER};
 use crate::rules_core::rules_tables::{
     inner_sea_gods, occult_adventures, ultimate_combat, ultimate_intrigue, ultimate_magic,
+    ultimate_wilderness,
 };
 
 // ---------------------------------------------------------------------
@@ -206,6 +207,29 @@ fn book_specs() -> Vec<BookSpec> {
             dir: "pathfinder/paizo/campaign_setting/inner_sea_gods",
             spell_file: "isg_spells.lst",
             entries: inner_sea_gods::spell_list::SPELL_LIST
+                .iter()
+                .map(|e| NormalizedEntry {
+                    key: e.key,
+                    school: e.school.map(|s| format!("{s:?}")),
+                    level: e.level,
+                    description: e.description,
+                })
+                .collect(),
+        },
+        // W19-INTEGRATE (wave-19 adversarial review, confirmed finding on
+        // the `ultimate_wilderness` lane): the lane wired the book's 61
+        // spells into `spell_resolver::spell_catalog_rows()` and the
+        // desktop `spell_catalog` screen, but stopped short of also
+        // writing a `data/corpus/ultimate_wilderness/spell/` cache --
+        // without it, `corpus_literal_sweep`/`derived_evaluator_fixture_check`
+        // have nothing to verify against, so no unit can reach the
+        // `literal-verified`/`fixture-verified` `done` rung no matter how
+        // complete its data is. Same shape as every `BookSpec` above.
+        BookSpec {
+            book_id: "ultimate_wilderness",
+            dir: "pathfinder/paizo/roleplaying_game/ultimate_wilderness",
+            spell_file: "uw_spells.lst",
+            entries: ultimate_wilderness::spell_list::SPELL_LIST
                 .iter()
                 .map(|e| NormalizedEntry {
                     key: e.key,

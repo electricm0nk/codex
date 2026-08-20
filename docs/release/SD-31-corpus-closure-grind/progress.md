@@ -30966,3 +30966,268 @@ worktree remove --force` where needed; branches deleted after merge confirmation
 the confirmed-rejected classifier branch (its content is fully preserved in `OPEN-ISSUES.md` row 315
 and in the (unmerged) commit object itself, retrievable by SHA `69d6e894e` if ever needed again).
 `sd31/racetrait4-SD31-E6-F4-005` untouched, not gated, not merged, per standing instruction.
+
+## `SD31-W19-INTEGRATE-001` — wave 19 integration cycle (2026-08-20)
+
+**Branch:** `tranche/11`, base `7f5ad2a61` (confirmed: `git log --oneline -1` matched the dispatched
+tip; `ls docs data scripts schemas` all present). **Oracle pin:**
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`. **Own `CARGO_TARGET_DIR`:**
+`/home/ubuntu/cargo-targets/w19-integrate` (root+desktop), deleted at cycle close, never shared with
+any lane worktree. **Six lane results dispatched (one book per lane, per this wave's own
+"onboarding is per-file not per-record" framing), all `units_claimed=0`. Two lane branches carried a
+commit (`ultimate_combat`, docs-only retro event; `ultimate_wilderness`, a real feature commit).
+Three adversarial-review passes returning eight lane verdicts: two SOUND, six PARTIAL, zero GAMED.**
+
+### 1. Merge decision, and why
+
+| lane | branch | reviewer verdict | action |
+|---|---|---|---|
+| `ultimate_wilderness` | `worktree-wf_d247aa87-dae-6` (`1c8a65933`) | PARTIAL (real code, one finding actionable) | **MERGED**, then extended at merge time — see §2 |
+| `ultimate_combat` | `worktree-wf_d247aa87-dae-5` (`4864ea7a4`) | PARTIAL (narrative corrections only) | **MERGED**, docs-only (2 retro-event JSONL lines) |
+| `ultimate_psionics` | (no branch) | SOUND, 0 claimed | nothing to merge |
+| `core_rulebook` | (no branch) | SOUND, 0 claimed | nothing to merge |
+| `advanced_class_guide` | (no branch) | PARTIAL, 0 claimed | nothing to merge |
+| `advanced_players_guide` | (no branch) | PARTIAL, 0 claimed | nothing to merge |
+
+No lane was GAMED this wave — every one of the four zero-branch lanes independently investigated
+its book's `not-ingested` population before ingesting anything and correctly declined to bank false
+credit; see §5 for what that investigation converged on across all six. Merge order: `ultimate_combat`
+(clean, docs-only) → `ultimate_wilderness` (clean, `git cherry-pick`, zero conflicts — both lanes
+touch disjoint files, no collision materialized despite this wave's own "six lanes changing record
+counts is the highest count-pin collision risk yet" warning).
+
+### 2. `ultimate_wilderness` — merged, then extended at merge time to close its own reviewer's
+confirmed finding
+
+The lane wired its 61 new spells into `spell_resolver::spell_catalog_rows()` and the desktop Spell
+Catalog screen, but had not yet built a `data/corpus/ultimate_wilderness/spell/` cache. Reviewer's
+confirmed, high-severity finding: without that cache, `corpus_literal_sweep`/
+`derived_evaluator_fixture_check` have nothing to verify a `static`/`derived` unit's magnitude
+against, so none of the 61 could ever reach the `literal-verified`/`fixture-verified` `done` rung no
+matter how complete their data was — `SPELL_CORPUS_BOOK_DIRS`/`spell_book_corpus_dir_for_short_code`
+(`src/rules_core/derived_evaluator_fixture_check.rs`) and `enrich_spell_raw_tokens.rs`'s
+`TARGET_BOOKS` both had no `ultimate_wilderness` entry.
+
+**Fixed at merge time.** Added an `ultimate_wilderness` `BookSpec` to `cache_gen::spell_lane_dump`
+(mirroring the existing `occult_adventures` entry) and ran the real generator against the pinned
+oracle. First attempt also silently regenerated the OTHER five books' spell caches and stripped
+their post-hoc `raw_tokens`/`raw_bonus_chains` enrichment — caught via `git diff --stat` before
+staging anything (144-file `occult_adventures` diff, ~68 lines removed per file), reverted the other
+five books (`git checkout --`), kept only the new `ultimate_wilderness/` files. Ran
+`enrich_spell_raw_tokens.rs` (widened `TARGET_BOOKS` 9→10) to restore `raw_tokens` on the 61 new
+files — confirmed idempotent on all 9 pre-existing books (`0 enriched` / "already-enriched" each).
+Registered `ultimate_wilderness` in `SPELL_CORPUS_BOOK_DIRS` + `spell_book_corpus_dir_for_short_code`.
+
+**Found live while fixing this**: `inner_sea_gods` had a real, already-`raw_tokens`-enriched spell
+cache (92 files) but was ALSO missing from both lookup tables — the identical gap shape, silently
+serving `duration: null`/`range: null` for every ISG catalog row with no gate ever firing (unlike its
+sibling `spell_book_slug_for_covers_every_catalog_book`, no coverage test existed for this lookup).
+Fixed in the same commit: registered `inner_sea_gods`/`"ISG"`, and added
+`spell_book_corpus_dir_coverage_tests` (mirrors the sibling test's shape) — mutation-proved
+(temporarily removed the `"ISG"` arm, confirmed RED naming ISG by exactly the described failure
+mode, reverted, confirmed GREEN). This fix moved no `done` count (ISG's spells were already reaching
+`literal-verified` via a separate path); it only stops two previously-null player-facing fields from
+being served blank.
+
+Also fixed a second, load-bearing count-pin gap flagged by wave-19's own dispatch: the lane's
+`data/corpus/ultimate_wilderness/LICENSE.json` still stated `records_processed=1207` after this
+integration cycle's own 61-file write — `every_owned_books_stated_record_count_equals_the_records_
+on_disk` correctly failed red (`1268 on disk`); restated `1207 -> 1268`, screening_method_note
+appended (not rewritten — append-only convention, matching every prior LICENSE.json fix in this
+program).
+
+Result of the guarded regen (see §8): **+6 `done`**, `spell` `ultimate_wilderness:spell:{bleed_for_
+your_master, green_caress, sea_of_dust, signs_of_the_land, vigilant_rest, wandering_weather}`
+(`ingested-magnitude` → `literal-verified`), the remaining 55 of the book's 61 spells moved
+`not-started` → `held`(47)/`in-progress`(8) — magnitude exists, no wired consumer has yet computed a
+matching delta, an honest reachability improvement, not a claimed `done`.
+
+### 3. A real, live PI-exposure defect found and fixed in `cache_gen::class_feature`
+
+Adversarial review on the zero-claim `advanced_class_guide` lane found its stated ACG PI-clearance
+grep was case-sensitive (`DESCISPI:YES` vs. the corpus's actual `DESCISPI:Yes`) and, chasing that,
+found the generator itself has a live defect: `data.description` is correctly PI-screened
+(`pi_screening::classify_optional_field_declared`), but `data.raw_tokens`' own `DESC` entry is
+shipped completely unscreened. Reproduced live in an isolated `CARGO_TARGET_DIR`: regenerating
+`ecclesitheurge/domain_mastery.json` (a real `DESCISPI:Yes`-declared record) re-exposed the record's
+full Product-Identity prose through `raw_tokens`, while `data.description` correctly carried
+`[redacted PI]`. The already-committed corpus file on disk was NOT affected (a prior on-disk repair
+already fixed it) — the exposure only reproduces on a FUTURE regen of this generator, which is
+exactly why it had survived undetected all wave: no lane this cycle regenerated ACG's class_feature
+cache for real.
+
+**Fixed.** Extracted a pure `redact_desc_token_if_pi()` helper mirroring `enrich_equipment_raw_
+tokens.rs::screen_field_value`'s existing precedent for the identical defect shape (`OPEN-ISSUES.md`
+row 63) — the generator now redacts `raw_tokens`' `DESC` entry whenever `description`'s own PI
+classification is `PiRedacted` (declared OR blacklist-detected), leaving every other token
+untouched. 2 new unit tests; mutation-proved (temporarily neutered the helper to a no-op, confirmed
+the new test goes RED with the exact leaked prose as `left`, reverted, confirmed GREEN). No corpus
+data changed by this fix — it closes the exposure on the NEXT regen, corpus-wide, for every book
+this generator serves, not just ACG. Full detail: `OPEN-ISSUES.md` row 323.
+
+### 4. Reporting-accuracy corrections logged, not fixed as code (no board impact)
+
+Three adversarial-review passes surfaced roughly a dozen narrative-accuracy findings across the four
+zero-branch lanes and the two zero-claim halves of the merged lanes — miscounted evidence-code
+buckets, an inverted matcher-fix payoff estimate, a headline operator-facing proposal refuted by the
+very function's own safety test, a fabricated-in-the-literal-sense verification claim whose OWN
+OTHER finding predicted the correct (opposite) result, and several "real, non-empty description"
+counts overstated by not excluding empty-string descriptions. None changed any lane's
+`units_claimed` (all were already 0) and none moved the board. Logged, consolidated by lane cluster
+rather than one row per micro-finding, in `OPEN-ISSUES.md` rows 298-300; the most consequential is a
+correction to the `advanced_players_guide` lane's headline lever ("widen `class_feature_owner_via_
+type_facet` to tolerate CamelCase"), explicitly **retracted** because a test written specifically to
+prevent it proves the widening can only ever move a record's evidence STRING, never its verdict.
+
+### 5. The wave's own thesis, answered (instruction 8)
+
+**No — attacking the `status == not-ingested` mass directly did NOT out-produce waves 15-18's
+seam-grinding, and the honest per-book accounting says why.**
+
+| book | units_claimed | root cause found |
+|---|---:|---|
+| `advanced_class_guide` | 0 | Corpus JSON already exists with real prose for 425/2,396 class_feature units and most of the rest; the classifier's `has_real_description`/grounding path for this kind never reads that JSON — it needs a per-class engine roster mechanism that exists only for Pathfinder Unchained. |
+| `advanced_players_guide` | 0 | Same shape: 1,576/1,577 not-ingested class_feature units already have corpus JSON; blocked by `class_feature_owner()`'s exact-class-name match, unresolved option-pool records, and unmodelled prestige classes — all engine-side. |
+| `core_rulebook` | 0 | 448/448 not-ingested class_feature units already have corpus JSON; blocked by the SAME class-name-match requirement plus unmodelled NPC/prestige classes and un-computed Sorcerer bloodlines. `companion`/`race_trait`/`class` genuinely lack corpus JSON, but most of that content is PCGen internal machinery (a shared "Racial Spell-Like Ability" library, an "Animal Companion" pseudo-class), not real per-book content to ingest. |
+| `ultimate_combat` | 0 | Identical class_feature shape; the classifier does not read `class_feature` corpus JSON AT ALL for ANY book (only `equipment`/`spell` have the JSON-reading fallback) — so writing more corpus JSON here moves zero board units regardless of completeness. |
+| `ultimate_psionics` | 0 | Every UPsi class/prestige-class name is entirely unmodelled by the engine's class-chassis enums; the book's 8 new PC races are misclassified `Kind::Monster` (a shared classifier rule triggered by Dreamscarred Press's own CR: convention) rather than `Kind::Race`. Both are real, named, cross-cutting engine gaps, not book-scoped ingest gaps. |
+| `ultimate_wilderness` | 0 (but see §2) | 570 of 570 display+not-ingested units blocked by the SAME missing generic class_feature display catalog, or by documented, deliberate architecture exclusions (companion archetypes). Its OWN real lever turned out to be a `spell`-kind ingest gap — a genuinely different shape from the other five books' finding. |
+
+**Yield: 0+0+0+0+0+6 = 6 `done` units**, entirely from the one book whose blocker was a `spell`-kind
+ingest gap — the one `kind` where corpus JSON completeness genuinely does gate doneness. Compare
+waves 15-18's yields: **+471, +116, +28, +5.** The thesis FAILED for `class_feature` — corpus-wide,
+across every one of the six books dispatched, "not-ingested" for this kind measures whether the
+ENGINE holds a record (an explanation id, a roster membership, a modelled chassis), not whether
+`data/corpus/<book>/class_feature/*.json` exists with real prose. Four of six lanes independently
+confirmed the identical mechanism from independent code traces (`closure_has_real_description`
+reading the raw `.lst` directly, `corpus_json_has_real_description`'s JSON-reading fallback
+hard-scoped to `["equipment","spell"]` only) — this is not four coincidences, it is one true root
+cause found six times. **The real blocker is engine-side wiring** (a generic per-class explanation-id
+roster mechanism mirroring `push_pu_class_feature_records`, new class-chassis registrations for
+prestige/NPC/Dreamscarred-Press classes, magnitude computation for un-modelled Sorcerer bloodlines,
+a chooser-interaction primitive for option-pool records), **not book onboarding.** A future wave
+aimed at `not-ingested` should scope itself to `spell`-kind gaps specifically (confirmed productive
+this wave) or to a named, dedicated engine-wiring epic — not another book-per-lane bulk-ingest sweep.
+This is the wave's own "a clear negative result is a real deliverable... because the alternative is
+aiming five more waves at the wrong target" outcome, delivered as asked.
+
+### 6. Count-pin sweep on the merged tree (instruction 2)
+
+Grepped old and new spell-book counts (`1950`/`2011`, `1308`/`1369`) across `tests/`, `src/`,
+`apps/` on the MERGED tree, not per lane: both already correctly updated by the `ultimate_wilderness`
+lane's own commit, no drift found. The one count-pin break the merge DID produce —
+`ultimate_wilderness/LICENSE.json`'s `records_processed` going stale the moment THIS integration
+cycle (not the lane) wrote 61 new corpus JSON files — is exactly the "record-count change compiles
+clean but leaves other files' hardcoded assertions red" hazard this wave's own dispatch named; caught
+by `root-full`'s own `sd27_book_license_record_counts` suite on the FIRST full-gate run, not missed.
+Fixed, see §2.
+
+### 7. Guarded regen, run for real, fresh isolated `CARGO_TARGET_DIR`
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out $S/sweep.json
+# corpus-literal-sweep: 26166 records examined of 26802 read, 0 findings, CLEAN (was 26105)
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out $S/fixture.json
+# derived-evaluator-fixture-check: 1777 unit(s) cleared over 2506 fixture row(s); 0 failed (unchanged)
+CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... CODEX_REPO_ROOT=<this checkout> \
+  cargo run --locked --bin v06_work_inventory
+```
+
+Never `--allow-stamp-loss` — not needed. Full corpus-wide unit-id diff against the committed baseline
+(7f5ad2a61): 38,372 units both sides, 0 ids added/removed, **exactly 61 units changed status/wiring**
+(all `ultimate_wilderness:spell:*`), zero movement anywhere else — one-for-one with the book this
+wave's own fix touched, no unintended coupling. Denominator confirmed unchanged at every kind (see
+§8's table).
+
+### 8. Board reconciliation (instruction 7) — every unit of movement traced to a named cause
+
+| kind | total (wave 18) | total (wave 19) | done (wave 18) | done (wave 19) | delta |
+|---|---:|---:|---:|---:|---:|
+| class | 185 | 185 | 27 (14.5946%) | 27 (14.5946%) | +0 |
+| class_feature | 15,439 | 15,439 | 134 (0.8679%) | 134 (0.8679%) | +0 |
+| companion | 1,696 | 1,696 | 871 (51.3561%) | 871 (51.3561%) | +0 |
+| equipment | 6,208 | 6,208 | 5,312 (85.5670%) | 5,312 (85.5670%) | +0 |
+| equipment_modifier | 1,580 | 1,580 | 508 (32.1519%) | 508 (32.1519%) | +0 |
+| feat | 2,610 | 2,610 | 1,459 (55.9004%) | 1,459 (55.9004%) | +0 |
+| monster | 1,270 | 1,270 | 973 (76.6142%) | 973 (76.6142%) | +0 |
+| monster_ability | 2,942 | 2,942 | 1,556 (52.8892%) | 1,556 (52.8892%) | +0 |
+| race | 95 | 95 | 34 (35.7895%) | 34 (35.7895%) | +0 |
+| race_trait | 3,504 | 3,504 | 520 (14.8402%) | 520 (14.8402%) | +0 |
+| spell | 2,843 | 2,843 | 1,503 (52.8667%) | **1,509 (53.0777%)** | **+6** |
+| **TOTAL** | **38,372** | **38,372** | **12,897 (33.6104%)** | **12,903 (33.6261%)** | **+6** |
+
+**+6 spell, all `ultimate_wilderness`, fully named in §2.** By doneness bucket, corpus-wide: `done`
+12,897→12,903 (+6), `held` 1,177→1,224 (+47), `in-progress` 1,274→1,282 (+8), `not-started`
+18,711→18,650 (-61), `unmeasurable` 4,270→4,270 (+0), `deferred` 43→43 (+0). -61 not-started + 47
+held + 8 in-progress + 6 done = 0, confirming the 61 units accounted for exactly, no residue.
+**Denominator UNCHANGED — 38,372 = 38,372 — required this wave** (no Structural Exclusion Register
+entry was needed or written; `core_essentials` remains absent, 0 units, re-confirmed directly).
+
+### 9. Site publish, `core_essentials` re-confirmed absent
+
+`./scripts/publish-site-dashboard.sh` (real publish) — wrote `site/dashboard/PF1e-dashboard.json`
+and 30 `site/status-data/*.json` book-detail files (36,008 items, overall 38.5% — a DIFFERENT,
+reachability-weighted metric the producer also reports; the doneness board figure is §8's 33.63%).
+`--check` confirms both current. `core_essentials`: **0 units** in `docs/work-inventory.json`
+(`python3` count, direct), and absent from `site/status-data.json`'s `books` list (direct check, not
+a grep-for-the-string proxy) — both re-confirmed this wave, not carried over from a prior claim.
+
+### 10. Full gate — run 1 FAILED (two merge-only breaks, both anticipated by this wave's own
+dispatch), run 2 PASSED
+
+**Run 1: `RESULT: FAIL`.** `root-full` — `sd27_book_license_record_counts::every_owned_books_stated_
+record_count_equals_the_records_on_disk` (the `ultimate_wilderness` LICENSE.json count-pin, §2/§6).
+`site-dashboard-check` — stale (`docs/work-inventory.json` had moved, site feeds not yet
+regenerated). Both fixed; every other stage in run 1 had already passed (`root-lib` 2,136, `desktop`
+490, `reach` 30, `clippy` 50/7).
+
+**Run 2: `RESULT: PASS`, 34/34 stages.**
+
+```
+SUMMARY
+  passed:  34  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest
+  pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check
+  site-dashboard-pi-gate build-public-status-selftest site-public-status-check
+  site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest
+  reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep
+  declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest
+  root-lib root-full desktop reach corpus-sweep supersession-gate frontend-install
+  frontend-test frontend-typecheck clippy class-dump
+RESULT: PASS
+```
+
+`root-lib` **2,136 passed**. `root-full` **7,224 passed across 575 suites, all 537 `tests/*.rs`
+suites executed**. `desktop` **490 passed** (`apps/desktop/src-tauri`, its own separate cargo
+workspace, tested explicitly per instruction). `reach` **30 passed**. `corpus-sweep` **26,166
+records examined of 26,802 read, 0 findings**. `supersession-gate` **116 objects, all clean**.
+`frontend-test` **100/100 files**. `frontend-typecheck` clean. `clippy` **root:50 desktop:7
+warnings, 0 errors** — UNCHANGED from wave 18's recorded ceiling on both crates, no new lint
+introduced. Both PI gates zero-leaked against 1,612 declared-PI names. `reachability-audit`
+**98.94% reachable ceiling** (unchanged, denominator did not move).
+
+`scripts/verify-baselines.env` updated (measured, floors only raised): `BASELINE_ROOT_LIB_TESTS`
+2132→2136 (+4: 2 new `class_feature.rs` PI-redaction tests + 2 new `derived_evaluator_fixture_
+check.rs` coverage tests). `BASELINE_ROOT_FULL_TESTS` 7206→7224 (+18: the same +4 lib tests, plus
++14 from the merged `ultimate_wilderness` lane's own `ingest_ultimate_wilderness_spells.rs` inline
+test module, not yet counted in any prior baseline update). `BASELINE_ROOT_TEST_BINARIES` 574→575
+(+1: that same new `src/bin/*.rs` file). `BASELINE_CORPUS_LITERAL_RECORDS` 26105→26166 (+61).
+`BASELINE_DESKTOP_TESTS` (490), `BASELINE_FRONTEND_TEST_FILES` (100),
+`BASELINE_CLIPPY_WARNINGS_ROOT` (50), `BASELINE_CLIPPY_WARNINGS_DESKTOP` (7) and
+`BASELINE_COMPUTED_CLASSES` (31) UNCHANGED.
+
+### 11. Architecture docs refreshed
+
+`docs/architecture/status.md` — new "wave 19" corpus-coverage section (board table, bucket
+reconciliation, the +6 attribution, the thesis answer from §5). `docs/release/SD-31-corpus-closure-
+grind/artifacts/OPEN-ISSUES.md` — 5 new rows (298-300 reporting corrections; 323-324 the two real
+fixes, §2/§3).
+
+### 12. Cleanup
+
+`/home/ubuntu/cargo-targets/w19-integrate` deleted at cycle close (the only `CARGO_TARGET_DIR` this
+integration cycle used; every lane's own scratch dirs were already lane-owned and reported deleted
+in their own receipts). All ten wave-19 worktrees (`worktree-wf_d247aa87-dae-{1..9}`,
+`sd31/w19-core_rulebook`) removed via `git worktree remove --force`; all ten branches deleted —
+`git branch -d` (merge-ancestor-only) for the two merged (`worktree-wf_d247aa87-dae-5`, `-6`),
+`git branch -D` for the eight that carried no commit or were never merged.
+`sd31/racetrait4-SD31-E6-F4-005` untouched, not gated, not merged, per standing instruction.

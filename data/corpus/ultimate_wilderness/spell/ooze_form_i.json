@@ -1,0 +1,76 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You assume the form of a Small or Medium ooze. Regardless of the type of ooze you transform into, you gain base speed 10 feet, climb speed 10 feet, swim speed 20 feet, and blindsense 30 feet. You gain a +4 resistance bonus on saving throws against mind-affecting effects and poison. A wood or metal weapon that strikes you takes acid damage as if from your slam unless the wielder succeeds at a Reflex saving throw. [Small Ooze:] If you assume this form, you gain a +4 size bonus to your Constitution score, a slam attack (1d3 plus 1d3 acid), and constrict (1d3), and take , a -4 penalty to your Dexterity score. [Medium Ooze] If you assume this form, you gain a +6 size bonus to your Constitution score, a -6 penalty to your Dexterity score, a slam attack (1d4 plus 1d4 acid), and constrict (1d4).",
+    "key": "Ooze Form I",
+    "level": 5,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Alchemist,Magus,Sorcerer,Wizard=5"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M"
+      },
+      {
+        "key": "DESC",
+        "value": "Assume the form of a Small or Medium ooze creature.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You assume the form of a Small or Medium ooze. Regardless of the type of ooze you transform into, you gain base speed 10 feet, climb speed 10 feet, swim speed 20 feet, and blindsense 30 feet. You gain a +4 resistance bonus on saving throws against mind-affecting effects and poison. A wood or metal weapon that strikes you takes acid damage as if from your slam unless the wielder succeeds at a Reflex saving throw. [Small Ooze:] If you assume this form, you gain a +4 size bonus to your Constitution score, a slam attack (1d3 plus 1d3 acid), and constrict (1d3), and take , a -4 penalty to your Dexterity score. [Medium Ooze] If you assume this form, you gain a +6 size bonus to your Constitution score, a -6 penalty to your Dexterity score, a slam attack (1d4 plus 1d4 acid), and constrict (1d4).|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) minutes [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Personal"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Transmutation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.232"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Polymorph"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "You"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane"
+      }
+    ],
+    "school": "Transmutation"
+  },
+  "ingested_at": "2026-08-20T01:55:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 33,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+    "record_key": "Ooze Form I",
+    "sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "derived:prose_expr"
+  ]
+}

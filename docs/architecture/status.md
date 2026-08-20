@@ -466,6 +466,95 @@ scope-aware consumer, not attempted this cycle).
   sub-population) — logged as `OPEN-ISSUES.md` row 310 for the next `monster`-kind cycle to start
   from an accurate count.
 
+## Corpus coverage, corpus-wide — re-derived 2026-08-20 (SD-31 wave 19, integration cycle)
+
+The section above is wave 17's snapshot (wave 18 shipped no corpus-doneness movement recorded
+here — its integration cycle's own work, +5 `done` off an `intelligent_item` reachability fix,
+predates this refresh and is folded into this wave's "before" baseline below). **These are the
+live figures**, re-derived at this wave's integration tip on `tranche/11` after merging the two
+wave-19 lane branches carrying a commit (`ultimate_combat`, a docs-only retro-event commit with no
+code/data change; `ultimate_wilderness`, a real feature commit), building the merged tree (both
+the root workspace and `apps/desktop/src-tauri` as a separate crate), fixing confirmed
+adversarial-review findings, and re-running the guarded regen pipeline in a fresh isolated
+`CARGO_TARGET_DIR` — never transcribed from a lane receipt. Oracle pin
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`.
+
+| quantity | value | how |
+|---|---:|---|
+| board units (in scope, `beginner_box` excluded) | **38,372** (unchanged — required this wave) | `docs/work-inventory.json`, replayed through `pf1e_dashboard_producer.doneness_verdict()` |
+| board `done` | **12,903 (33.63 %)** | same replay; was 12,897 / 33.61 % before this wave |
+| corpus literal sweep | 26,166 records examined, **0 findings** | `cargo run --locked --bin corpus_literal_sweep`; was 26,105 |
+| `derived` fixture coverage | **1,777 units cleared over 2,506 fixture rows**, 0 failed, 0 not ingested | `cargo run --locked --bin derived_evaluator_fixture_check`; unchanged |
+| reachable ceiling | **98.94 %** | `python3 scripts/reachability_audit.py`; unchanged (denominator did not move) |
+
+By doneness bucket: `done` 12,903 · `held` 1,224 · `in-progress` 1,282 · `not-started` 18,650 ·
+`unmeasurable` 4,270 · `deferred` 43 (was `done` 12,897 · `held` 1,177 · `in-progress` 1,274 ·
+`not-started` 18,711 · `unmeasurable` 4,270 · `deferred` 43).
+
+**The denominator did NOT move this wave — 38,372 = 38,372.** No lane proposed, and no reviewer
+found, any content that should leave the denominator; `core_essentials` remains absent from
+`docs/work-inventory.json` (0 units) and from `site/status-data.json`'s book list, both
+re-confirmed directly this wave, not carried over from a prior claim.
+
+**All movement (+6 `done`, +47 `held`, +8 `in-progress`, -61 `not-started`) traces to exactly one
+cause: `ultimate_wilderness`'s 61 spells, newly reachable this wave.** The wave-19
+`ultimate_wilderness` lane wired the book's 61 spells into `spell_resolver::spell_catalog_rows()`
+and the desktop Spell Catalog screen but had not yet built a `data/corpus/ultimate_wilderness/
+spell/` cache — without one, no `static`/`derived` spell unit could reach the
+`literal-verified`/`fixture-verified` `done` rung regardless of data completeness, since
+`corpus_literal_sweep` had nothing on disk to byte-compare against. The integration cycle closed
+this: added an `ultimate_wilderness` `BookSpec` to `cache_gen::spell_lane_dump`, generated the 61
+records for real against the pinned oracle, restored `raw_tokens` via `enrich_spell_raw_tokens.rs`
+(widened 9→10 books), and registered the book in `derived_evaluator_fixture_check.rs`'s
+`SPELL_CORPUS_BOOK_DIRS`/`spell_book_corpus_dir_for_short_code`. Net: 6 of the book's `static`
+spells (`bleed_for_your_master`, `green_caress`, `sea_of_dust`, `signs_of_the_land`,
+`vigilant_rest`, `wandering_weather`) reached `literal-verified`/`done`; the remaining 55 reached
+`held`/`in-progress` (magnitude exists, no wired consumer has yet computed a matching delta) — an
+honest reachability improvement, not a claimed `done`. **Found live while wiring this**:
+`inner_sea_gods` had a real, already-`raw_tokens`-enriched spell cache (92 files) but was ALSO
+absent from both lookup tables — the identical gap shape, silently serving `duration: null`/
+`range: null` for every ISG catalog row with no gate ever firing. Fixed in the same commit and
+closed with a new coverage test (`spell_book_corpus_dir_coverage_tests`, mirroring the sibling
+`spell_book_slug_for_covers_every_catalog_book`'s shape) so an unmapped book code cannot silently
+recur; this fix moved no `done` count (ISG's spells were already reaching `literal-verified` via a
+separate path) — it only stopped two previously-null player-facing fields from being served blank.
+
+### What wave 19's integration cycle changed in the architecture, not just in the counts
+
+* **Answered the wave's own thesis, and the answer is a clear negative result: attacking the
+  `status == not-ingested` mass directly does NOT out-produce the seam-grinding waves it was
+  dispatched to replace.** All six wave-19 lanes (`advanced_class_guide`, `advanced_players_guide`,
+  `core_rulebook`, `ultimate_combat`, `ultimate_psionics`, `ultimate_wilderness`) independently
+  investigated their book's `not-ingested` population before ingesting anything and found the SAME
+  root cause every time: for `class_feature`/`class`/`race_trait`/`companion`/`monster_ability`,
+  "not-ingested" measures whether the ENGINE holds a record (an explanation id, a roster
+  membership, a modelled chassis), not whether `data/corpus/<book>/**/*.json` exists with real
+  prose. In four of the six books, the cited corpus JSON already carries real, non-empty
+  description text for the large majority of the "not-ingested" population — ingesting more would
+  not move a single unit, because the doneness classifier for these kinds never reads that JSON at
+  all (confirmed by direct code trace for `class_feature`'s `has_real_description`, which reads the
+  raw `.lst` `DESC:` field via `closure_has_real_description`, never `corpus_json_has_real_
+  description` — that fallback is hard-scoped to `equipment`/`spell` only). The wave's dispatched
+  yield across the 6 lanes: 0 + 0 + 0 + 0 + 0 + 6 = **6 `done` units**, all from the one lane
+  (`ultimate_wilderness`) whose blocker turned out to be a `spell`-kind ingest gap, the one kind
+  where corpus JSON genuinely does gate doneness. Compare waves 15-18's seam-grinding yields:
+  +471, +116, +28, +5. **Bulk `not-ingested` ingest is not a productive lane shape for
+  `class_feature`/`race_trait`/`companion`/`monster_ability`/`class`** — those kinds' remaining
+  populations need engine-side wiring (a generic per-class roster mechanism, new class chassis, new
+  race registrations, a chooser-interaction primitive for option-pool records), not book onboarding.
+  A future wave aimed at `not-ingested` should scope itself to `spell`-kind gaps specifically (the
+  one kind this wave confirmed the thesis for) or to a named engine-wiring epic, not another
+  book-per-lane ingest sweep. See `progress.md` `SD31-W19-INTEGRATE-001` for the full per-lane
+  accounting and `OPEN-ISSUES.md` rows 298-300/320-324 for the supporting corrections and fixes.
+* **A live PI-exposure defect was found and fixed in a generator that had shipped clean data by
+  accident.** `cache_gen::class_feature`'s generator screened `data.description` for declared/
+  blacklisted Product Identity but shipped `data.raw_tokens`' own `DESC` entry completely
+  unscreened — reproduced live (a `DESCISPI:Yes`-declared record's full PI prose re-exposed through
+  `raw_tokens` on a fresh regen, while `data.description` correctly showed `[redacted PI]`). The
+  already-committed corpus file was not affected (an earlier on-disk repair had already fixed it),
+  but any future regen of this generator would have re-shipped the leak. Fixed and mutation-proved
+  (`OPEN-ISSUES.md` row 323).
+
 Grouped by the plane each item lives in. Every row was re-verified directly
 against the cited source, not carried over from a sibling doc unchecked.
 

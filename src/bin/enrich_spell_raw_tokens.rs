@@ -81,6 +81,10 @@ const TARGET_BOOKS: &[&str] = &[
     "occult_adventures",
     "ultimate_combat",
     "inner_sea_gods",
+    // Widened 9 -> 10 (W19-INTEGRATE): `ultimate_wilderness` joined
+    // `cache_gen::spell_lane_dump`'s cache this wave (wave-19
+    // `ultimate_wilderness` lane + integration-cycle follow-up).
+    "ultimate_wilderness",
 ];
 
 fn pcgen_data_root() -> PathBuf {

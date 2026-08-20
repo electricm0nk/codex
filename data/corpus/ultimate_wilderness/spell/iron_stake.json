@@ -1,0 +1,84 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "This spell creates a 1-foot-long spike of cold iron that you fling at your target as a ranged touch attack. The stake is treated as a magic and cold iron weapon for the purpose of overcoming damage reduction, and deals (min(10,CASTERLEVEL/2))d6 points of piercing damage. Additionally, if a creature with DR/cold iron takes damage from this spell, it is sickened for 1 round and must attempt a Fortitude save. If it fails, for (CASTERLEVEL) rounds, it must succeed at a concentration check (in addition to any normally required concentration checks) to use any spells or spell-like abilities it has-the DC of this check is equal to 15 + twice the spell's level. If the creature fails this concentration check, its spell is wasted.",
+    "key": "Iron Stake",
+    "level": 2,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Inquisitor,Ranger=2|Cleric,Druid,Sorcerer,Witch,Wizard=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S,M"
+      },
+      {
+        "key": "DESC",
+        "value": "Hurl a spike of cold iron at a foe.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "This spell creates a 1-foot-long spike of cold iron that you fling at your target as a ranged touch attack. The stake is treated as a magic and cold iron weapon for the purpose of overcoming damage reduction, and deals (min(10,CASTERLEVEL/2))d6 points of piercing damage. Additionally, if a creature with DR/cold iron takes damage from this spell, it is sickened for 1 round and must attempt a Fortitude save. If it fails, for (CASTERLEVEL) rounds, it must succeed at a concentration check (in addition to any normally required concentration checks) to use any spells or spell-like abilities it has-the DC of this check is equal to 15 + twice the spell's level. If the creature fails this concentration check, its spell is wasted.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "Instantaneous or (CASTERLEVEL) rounds; see text"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Fortitude partial"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Conjuration"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.231"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "No"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Creation"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "See text"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine"
+      }
+    ],
+    "school": "Conjuration"
+  },
+  "ingested_at": "2026-08-20T01:55:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 29,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+    "record_key": "Iron Stake",
+    "sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

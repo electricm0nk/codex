@@ -1,0 +1,83 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You cause a sound heard in the target area up to 1 round ago and lasting up to 1 round in duration to repeat at a regular interval. The original sound need not have come from the area, but it echoes from the target area at its original full volume. Any special effects of the sound are not duplicated by this spell. If the area is naturally prone to echoes, such as a space surrounded on at least two sides by cliffs or high river banks, the spell's range is long. Otherwise, the spell's range is close. You can concentrate as a standard action to alter the echo. You can change it to be any sound audible in the area within the last 1 round, move the apparent source of the sound within the area, or attempt a Bluff check to create a distraction to hide with a +(CASTERLEVEL) bonus.",
+    "key": "Echo",
+    "level": 1,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Bard,Druid,Medium,Mesmerist,Occultist,Psychic,Ranger,Spiritualist,Witch=1"
+      },
+      {
+        "key": "COMPS",
+        "value": "S,F"
+      },
+      {
+        "key": "DESC",
+        "value": "Cause a sound to repeat itself.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You cause a sound heard in the target area up to 1 round ago and lasting up to 1 round in duration to repeat at a regular interval. The original sound need not have come from the area, but it echoes from the target area at its original full volume. Any special effects of the sound are not duplicated by this spell. If the area is naturally prone to echoes, such as a space surrounded on at least two sides by cliffs or high river banks, the spell's range is long. Otherwise, the spell's range is close. You can concentrate as a standard action to alter the echo. You can change it to be any sound audible in the area within the last 1 round, move the apparent source of the sound within the area, or attempt a Bluff check to create a distraction to hide with a +(CASTERLEVEL) bonus.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds [D]"
+      },
+      {
+        "key": "RANGE",
+        "value": "Close or Long; see text"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Will disbelief (if interacted with)"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Illusion"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.229"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes"
+      },
+      {
+        "key": "SUBSCHOOL",
+        "value": "Figment"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "(CASTERLEVEL) 10-ft. cubes [S]"
+      },
+      {
+        "key": "TYPE",
+        "value": "Arcane.Divine.Psychic"
+      }
+    ],
+    "school": "Illusion"
+  },
+  "ingested_at": "2026-08-20T01:55:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 18,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+    "record_key": "Echo",
+    "sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ]
+}

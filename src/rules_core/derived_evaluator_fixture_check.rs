@@ -666,6 +666,23 @@ const SPELL_CORPUS_BOOK_DIRS: &[&str] = &[
     "ultimate_magic",
     "occult_adventures",
     "ultimate_combat",
+    // W19-INTEGRATE: `inner_sea_gods` was found live, already carrying a
+    // real `data/corpus/inner_sea_gods/spell/` cache (92 files, already
+    // `raw_tokens`-enriched by `enrich_spell_raw_tokens.rs`'s own
+    // `TARGET_BOOKS` since `SD31-E6-F10-001`) but MISSING from this list --
+    // the exact same silent-gap shape the `ultimate_wilderness` entry below
+    // fixes, discovered while fixing it. Neither this book's own `spell`
+    // units nor a coverage test caught the gap before now; see
+    // `spell_book_corpus_dir_coverage_tests` below.
+    "inner_sea_gods",
+    // Widened 8 -> 10 (W19-INTEGRATE): `ultimate_wilderness` gained a real
+    // `data/corpus/ultimate_wilderness/spell/` cache this wave
+    // (`cache_gen::spell_lane_dump`, wave-19 `ultimate_wilderness` lane +
+    // integration-cycle follow-up) -- without this entry none of its 61
+    // spell units could ever reach the `literal-verified`/`fixture-verified`
+    // `done` rung, no matter how complete their data was (adversarial
+    // review, confirmed finding).
+    "ultimate_wilderness",
 ];
 
 /// `spell_resolver::SPELL_BOOK_*` wire-form short code (`"CRB"`, `"APG"`,
@@ -683,7 +700,45 @@ pub fn spell_book_corpus_dir_for_short_code(short_code: &str) -> Option<&'static
         "UM" => Some("ultimate_magic"),
         "OA" => Some("occult_adventures"),
         "UC" => Some("ultimate_combat"),
+        "ISG" => Some("inner_sea_gods"),
+        "UW" => Some("ultimate_wilderness"),
         _ => None,
+    }
+}
+
+/// W19-INTEGRATE (adversarial review, confirmed finding): unlike
+/// `v06_work_inventory::spell_book_slug_for` (its own dedicated
+/// `spell_book_slug_for_covers_every_catalog_book` test), this sibling
+/// lookup returns `Option` and silently yields `None` for an unmapped book
+/// code -- `apps/desktop/src-tauri/src/spell_catalog.rs`'s
+/// `duration_for()`/`range_for()` then serve `null` for every row of that
+/// book with no gate ever firing. This closed-set-coverage test is that
+/// missing gate: it must be updated in the SAME commit that adds a book to
+/// `spell_resolver::spell_catalog_rows()`, or it fails immediately.
+#[cfg(test)]
+mod spell_book_corpus_dir_coverage_tests {
+    use super::spell_book_corpus_dir_for_short_code;
+
+    #[test]
+    fn every_catalog_book_short_code_resolves_a_corpus_dir() {
+        // Mirrors `spell_resolver::SPELL_BOOK_*`'s full wire-form roster
+        // rather than importing it, so this test does not silently pass by
+        // construction if `spell_catalog_rows()` gains a book whose
+        // constant this list forgets to restate.
+        let codes = ["CRB", "APG", "ACG", "ARG", "UI", "UM", "OA", "UC", "ISG", "UW"];
+        for code in codes {
+            assert!(
+                spell_book_corpus_dir_for_short_code(code).is_some(),
+                "{code} has a spell_resolver::SPELL_BOOK_* constant but no \
+                 spell_book_corpus_dir_for_short_code entry -- duration/range \
+                 will silently serve null for every row of this book"
+            );
+        }
+    }
+
+    #[test]
+    fn an_unmapped_code_yields_none_rather_than_a_guess() {
+        assert_eq!(spell_book_corpus_dir_for_short_code("NOT-A-REAL-BOOK"), None);
     }
 }
 

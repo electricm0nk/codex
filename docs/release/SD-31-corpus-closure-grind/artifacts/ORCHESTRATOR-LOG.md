@@ -985,3 +985,80 @@ rejecting, not taken on the reviewer's word — `OPEN-ISSUES.md` row 315).
   ceiling `7`) — isolated to the exact one new lint, in the exact one file, via a controlled
   base-vs-merged clippy diff in disposable isolated target dirs, rather than guessed at or
   suppressed. Fixed, gate re-run, `RESULT: PASS` 34/34.
+
+## Board after wave 19 (`SD31-W19-INTEGRATE-001`, 2026-08-20)
+
+Re-derived live with the producer's own `doneness_verdict()` over the committed
+`docs/work-inventory.json` — the same command as every prior wave's table, never transcribed from a
+lane's own receipt. Oracle pin `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`.
+**Denominator UNCHANGED — 38,372 = 38,372 — as required this wave (no operator-signed Structural
+Exclusion Register entry was needed or written).**
+
+| kind | total (wave 18) | total (wave 19) | done (wave 18) | done (wave 19) | delta |
+|---|---:|---:|---:|---:|---:|
+| class | 185 | 185 | 27 (14.5946%) | 27 (14.5946%) | +0 |
+| class_feature | 15,439 | 15,439 | 134 (0.8679%) | 134 (0.8679%) | +0 |
+| companion | 1,696 | 1,696 | 871 (51.3561%) | 871 (51.3561%) | +0 |
+| equipment | 6,208 | 6,208 | 5,312 (85.5670%) | 5,312 (85.5670%) | +0 |
+| equipment_modifier | 1,580 | 1,580 | 508 (32.1519%) | 508 (32.1519%) | +0 |
+| feat | 2,610 | 2,610 | 1,459 (55.9004%) | 1,459 (55.9004%) | +0 |
+| monster | 1,270 | 1,270 | 973 (76.6142%) | 973 (76.6142%) | +0 |
+| monster_ability | 2,942 | 2,942 | 1,556 (52.8892%) | 1,556 (52.8892%) | +0 |
+| race | 95 | 95 | 34 (35.7895%) | 34 (35.7895%) | +0 |
+| race_trait | 3,504 | 3,504 | 520 (14.8402%) | 520 (14.8402%) | +0 |
+| spell | 2,843 | 2,843 | 1,503 (52.8667%) | **1,509 (53.0777%)** | **+6** |
+| **TOTAL** | **38,372** | **38,372** | **12,897 (33.6104%)** | **12,903 (33.6261%)** | **+6** |
+
+`+6 spell` — all `ultimate_wilderness` (`bleed_for_your_master`, `green_caress`, `sea_of_dust`,
+`signs_of_the_land`, `vigilant_rest`, `wandering_weather`), `ingested-magnitude` → `literal-verified`,
+banked after this integration cycle built the book's missing `data/corpus/ultimate_wilderness/
+spell/` cache and registered it in `derived_evaluator_fixture_check.rs`'s book-lookup tables — the
+lever the wave-19 lane itself wired the ingest for but had not yet closed (see `progress.md`
+`SD31-W19-INTEGRATE-001` §2). The remaining 55 of the book's 61 spells moved `not-started` →
+`held`(47)/`in-progress`(8), an honest reachability improvement with no `done` credit claimed. Zero
+`wiring_class` reclassification landed this wave — the +6 is pure doneness movement within an
+unchanged `wiring_class` (`static`, unchanged both sides) driven by a `status` transition
+(`ingested-magnitude` → `literal-verified`), itself driven by closing a real missing-cache gap, not
+by any bar being lowered.
+
+**Wave-19 thesis verdict: FAILED, cleanly, and the failure is the deliverable.** Six lanes,
+one book each, dispatched specifically to attack the 25,475-unit `not-ingested` mass instead of the
+`held`/`in-progress` seams waves 15-18 ground down (yields +471/+116/+28/+5). Combined wave-19 yield:
+**+6**, entirely from ONE book whose blocker turned out to be a `spell`-kind ingest gap — the one
+`kind` where corpus JSON completeness genuinely gates doneness. All five other books converged
+independently on the identical finding: for `class_feature` (the dominant `not-ingested` kind
+corpus-wide), the doneness classifier never reads `data/corpus/<book>/class_feature/*.json` at all —
+`has_real_description` for this kind is computed from the raw `.lst` `DESC:` field directly, and the
+one JSON-reading fallback that exists is hard-scoped to `equipment`/`spell` only. Corpus JSON already
+exists, with real prose, for the majority of every dispatched book's `class_feature` `not-ingested`
+population (425/2,396 ACG, 1,576/1,577 APG, 448/448 CRB, 692/1,095 UC) — writing more would move
+ZERO board units. The real blocker is a generic per-class engine explanation-id roster mechanism
+(exists today only for Pathfinder Unchained via `push_pu_class_feature_records`), new class-chassis
+registrations for prestige/NPC/Dreamscarred-Press classes, and un-computed magnitude for several
+Sorcerer bloodlines — engine-wiring work, not book onboarding. **Bulk `not-ingested` ingest is not a
+productive lane shape for `class_feature`/`race_trait`/`companion`/`monster_ability`/`class`; it IS
+productive for `spell`-kind gaps specifically** (this wave's own +6, and the identical shape waves
+13-16 already banked for UM/OA/UC/UI/ISG). A future wave should aim there, or at a named
+engine-wiring epic, not repeat this wave's book-per-lane shape against the same five kinds. Full
+per-lane accounting: `progress.md` `SD31-W19-INTEGRATE-001` §5.
+
+### What wave 19's integration cycle changed in the architecture, not just in the counts
+
+* **A live Product-Identity exposure was found and fixed in a generator that had shipped clean data
+  by accident, not by construction.** `cache_gen::class_feature` screened `data.description` for
+  declared/blacklisted PI but shipped `data.raw_tokens`' own `DESC` entry completely unscreened — a
+  future regen of this shared, 21-book generator would have re-exposed every `DESCISPI:`-declared
+  record's full PI prose through `raw_tokens` even while `data.description` correctly showed
+  `[redacted PI]`. No lane had regenerated this cache for real all wave, which is why it survived
+  undetected; found by an adversarial reviewer chasing a case-sensitivity gap in one lane's own PI
+  clearance claim, not by inspection. Fixed and mutation-proved (`OPEN-ISSUES.md` row 323).
+* **A second book (`inner_sea_gods`) was found silently serving `null` duration/range on its spell
+  catalog, with no gate able to catch it, while fixing the SAME gap for `ultimate_wilderness`.**
+  Both books are now registered in `spell_book_corpus_dir_for_short_code`, and a new coverage test
+  (mirroring the sibling `spell_book_slug_for_covers_every_catalog_book`'s already-proven shape)
+  closes the class of gap for any future book, not just these two (`OPEN-ISSUES.md` row 324).
+* **A count-pin break this wave's own dispatch explicitly warned to expect was caught by the gate on
+  its first run, not missed.** `ultimate_wilderness/LICENSE.json`'s `records_processed` went stale
+  the moment this integration cycle wrote 61 new corpus JSON files under a directory the lane's own
+  ingest binary deliberately had NOT touched — `sd27_book_license_record_counts`'s own test failed
+  red, named the exact book and the exact stale/real counts, and was fixed before the gate re-ran.

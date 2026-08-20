@@ -354,6 +354,23 @@ fn desc_value(tokens: &[RawToken]) -> Option<String> {
     tokens.iter().find(|t| t.key == "DESC").map(|t| t.value.clone())
 }
 
+/// Redacts the `DESC` token in `raw_tokens` in place whenever `description`
+/// classified as PI-redacted (declared `DESCISPI:Yes` OR blacklist-detected
+/// via [`pi_screening::classify_field`]) -- otherwise `data.raw_tokens`
+/// re-exposes the full Product-Identity prose verbatim even while
+/// `data.description` correctly carries `[redacted PI]`. Never touches any
+/// other token. No-op when `license` is not [`License::PiRedacted`].
+fn redact_desc_token_if_pi(tokens: &mut [RawToken], license: crate::rules_core::shape_b_v1::License) {
+    if license != crate::rules_core::shape_b_v1::License::PiRedacted {
+        return;
+    }
+    for t in tokens.iter_mut() {
+        if t.key == "DESC" {
+            t.value = crate::rules_core::shape_b_v1::REDACTED_PI_MARKER.to_string();
+        }
+    }
+}
+
 /// Generates the `class_feature` cache for exactly the units passed in
 /// (already scoped to [`BOOK_PRIMARY_FILES`] by
 /// [`units_from_inventory_json`], or an equivalent caller-built list).
@@ -406,13 +423,20 @@ pub fn generate(
                 report.name_pi_skipped += 1;
                 continue;
             }
-            let tokens = row_tokens(&raw_row);
+            let mut tokens = row_tokens(&raw_row);
             let description = desc_value(&tokens);
             let (license, pi_field, pi_marker, stored_desc) = pi_screening::classify_optional_field_declared(
                 "description",
                 description.as_deref(),
                 declared.description,
             );
+            // W19-INTEGRATE fix (adversarial review, OPEN-ISSUES.md row 63 follow-up):
+            // `description`/`stored_desc` above is correctly PI-screened, but `tokens`
+            // (below, shipped verbatim as `data.raw_tokens`) was NOT -- a declared
+            // DESCISPI:Yes row had its full Product-Identity prose re-exposed through
+            // raw_tokens even while `data.description` carried the redaction marker.
+            // Mirror `enrich_equipment_raw_tokens.rs::screen_field_value`'s precedent.
+            redact_desc_token_if_pi(&mut tokens, license);
             let (wiring_class, wiring_class_signals) = wiring_index.wiring_class_for(
                 &mut lines,
                 &unit.source_file,
@@ -557,5 +581,36 @@ mod tests {
         assert!(should_skip(true, "Ordinary Feature"), "row-declared NAMEISPI:YES must skip");
         assert!(should_skip(false, "Gorum"), "blacklisted name with no declaration must still skip");
         assert!(!should_skip(false, "Sneak Attack"), "an ordinary name must not skip");
+    }
+
+    /// W19-INTEGRATE (adversarial review, `advanced_class_guide` finding on
+    /// `ecclesitheurge/domain_mastery.json`): a PI-redacted description must
+    /// not survive verbatim inside `raw_tokens`'s own `DESC` entry -- that
+    /// was exactly the live leak this test guards. Mutating
+    /// `redact_desc_token_if_pi` to a no-op (or dropping its call site) must
+    /// turn this red; it is the mutation-proof this cycle's fix is real.
+    #[test]
+    fn redact_desc_token_if_pi_redacts_only_desc_when_license_says_pi_redacted() {
+        let mut tokens = vec![
+            RawToken { key: "KEY".to_string(), value: "Ecclesitheurge ~ Domain Mastery".to_string() },
+            RawToken { key: "DESC".to_string(), value: "Full Product-Identity prose goes here.".to_string() },
+            RawToken { key: "CATEGORY".to_string(), value: "Special Ability".to_string() },
+        ];
+        redact_desc_token_if_pi(&mut tokens, crate::rules_core::shape_b_v1::License::PiRedacted);
+        assert_eq!(
+            tokens.iter().find(|t| t.key == "DESC").map(|t| t.value.as_str()),
+            Some(crate::rules_core::shape_b_v1::REDACTED_PI_MARKER)
+        );
+        // Every non-DESC token is untouched.
+        assert_eq!(tokens[0].value, "Ecclesitheurge ~ Domain Mastery");
+        assert_eq!(tokens[2].value, "Special Ability");
+    }
+
+    #[test]
+    fn redact_desc_token_if_pi_is_a_no_op_when_license_is_not_pi_redacted() {
+        let mut tokens =
+            vec![RawToken { key: "DESC".to_string(), value: "Ordinary open-content prose.".to_string() }];
+        redact_desc_token_if_pi(&mut tokens, crate::rules_core::shape_b_v1::License::Ogl);
+        assert_eq!(tokens[0].value, "Ordinary open-content prose.");
     }
 }

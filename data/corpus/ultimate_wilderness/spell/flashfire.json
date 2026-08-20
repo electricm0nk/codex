@@ -1,0 +1,84 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You cause flames to spring up in the area of effect. These flames deal (min(5,CASTERLEVEL/3))d6 points of fire damage to each creature that enters a burning area or begins its turn in the area; these creatures also catch on fire. A creature that succeeds at a Reflex save negates the damage and avoids catching on fire. The area and all adjacent 5-foot squares are smoky, providing concealment within. You can concentrate as a standard action to ignite one 5-foot square adjacent to a currently burning square. Heavy precipitation (including sleet storm) ends the spell. Strong and severe winds spread each square of flashfire downwind by one square each round, but windstorm-force or stronger winds extinguish the fires.",
+    "key": "Flashfire",
+    "level": 3,
+    "raw_tokens": [
+      {
+        "key": "CASTTIME",
+        "value": "1 standard action"
+      },
+      {
+        "key": "CLASSES",
+        "value": "Druid,Shaman=3"
+      },
+      {
+        "key": "COMPS",
+        "value": "V,S"
+      },
+      {
+        "key": "DESC",
+        "value": "Cause smoky fires to spring up to burn foes and set them alight.|!PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESC",
+        "value": "You cause flames to spring up in the area of effect. These flames deal (min(5,CASTERLEVEL/3))d6 points of fire damage to each creature that enters a burning area or begins its turn in the area; these creatures also catch on fire. A creature that succeeds at a Reflex save negates the damage and avoids catching on fire. The area and all adjacent 5-foot squares are smoky, providing concealment within. You can concentrate as a standard action to ignite one 5-foot square adjacent to a currently burning square. Heavy precipitation (including sleet storm) ends the spell. Strong and severe winds spread each square of flashfire downwind by one square each round, but windstorm-force or stronger winds extinguish the fires.|PRERULE:1,DisplayFullSpell"
+      },
+      {
+        "key": "DESCRIPTOR",
+        "value": "Fire"
+      },
+      {
+        "key": "DURATION",
+        "value": "(CASTERLEVEL) rounds"
+      },
+      {
+        "key": "RANGE",
+        "value": "Medium"
+      },
+      {
+        "key": "SAVEINFO",
+        "value": "Reflex negates (object) and Fortitude negates"
+      },
+      {
+        "key": "SCHOOL",
+        "value": "Evocation"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.231"
+      },
+      {
+        "key": "SPELLRES",
+        "value": "Yes (object)"
+      },
+      {
+        "key": "TARGETAREA",
+        "value": "(CASTERLEVEL/2) five-foot squares"
+      },
+      {
+        "key": "TYPE",
+        "value": "Divine"
+      }
+    ],
+    "school": "Evocation"
+  },
+  "ingested_at": "2026-08-20T01:55:37Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 25,
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+    "record_key": "Flashfire",
+    "sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ]
+}

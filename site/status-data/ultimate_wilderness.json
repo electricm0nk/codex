@@ -12837,11 +12837,11 @@
     {
       "kind": "spell",
       "label": "Spells",
-      "done": 0,
-      "partial": 0,
-      "not_started": 57,
+      "done": 5,
+      "partial": 52,
+      "not_started": 0,
       "denominator": 57,
-      "pct": 0.0,
+      "pct": 8.8,
       "excluded_from_percentage": 4,
       "standing_breakdown": {
         "origin": 57,
@@ -12850,427 +12850,427 @@
       "items": [
         {
           "name": "Alpha Instinct",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Alpha Instinct"
         },
         {
           "name": "Animal Growth (Reptiles Only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "unclassified",
           "display_name": "Animal Growth (Reptiles Only)"
         },
         {
           "name": "Animal Shapes (Reptiles Only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "unclassified",
           "display_name": "Animal Shapes (Reptiles Only)"
         },
         {
           "name": "Aquatic Cavalry",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Aquatic Cavalry"
         },
         {
           "name": "Bleed for Your Master",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Bleed for Your Master"
         },
         {
           "name": "Callback",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Callback"
         },
         {
           "name": "Callback (Greater)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Callback (Greater)"
         },
         {
           "name": "Cave Fangs",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Cave Fangs"
         },
         {
           "name": "Companion Transposition",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Companion Transposition"
         },
         {
           "name": "Delectable Flesh",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Delectable Flesh"
         },
         {
           "name": "Earth Tremor",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Earth Tremor"
         },
         {
           "name": "Echo",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Echo"
         },
         {
           "name": "Explosion of Rot",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Explosion of Rot"
         },
         {
           "name": "Fey Form I",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Fey Form I"
         },
         {
           "name": "Fey Form II",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Fey Form II"
         },
         {
           "name": "Fey Form III",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Fey Form III"
         },
         {
           "name": "Fey Form IV",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Fey Form IV"
         },
         {
           "name": "Fey Gate",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Fey Gate"
         },
         {
           "name": "Flashfire",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Flashfire"
         },
         {
           "name": "Forest's Sense",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Forest's Sense"
         },
         {
           "name": "Grasping Vine",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Grasping Vine"
         },
         {
           "name": "Green Caress",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "unclassified",
           "display_name": "Green Caress"
         },
         {
           "name": "Greensight",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Greensight"
         },
         {
           "name": "Hidden Spring",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Hidden Spring"
         },
         {
           "name": "Iron Stake",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Iron Stake"
         },
         {
           "name": "Leshy Swarm",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Leshy Swarm"
         },
         {
           "name": "Magical Beast Shape",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Magical Beast Shape"
         },
         {
           "name": "Merge with Familiar",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Merge with Familiar"
         },
         {
           "name": "Mirage",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Mirage"
         },
         {
           "name": "Ooze Form I",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Ooze Form I"
         },
         {
           "name": "Ooze Form II",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Ooze Form II"
         },
         {
           "name": "Ooze Form III",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Ooze Form III"
         },
         {
           "name": "Pouncing Fury",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Pouncing Fury"
         },
         {
           "name": "Replay Tracks",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine.Psychic",
           "standing": "origin",
           "display_name": "Replay Tracks"
         },
         {
           "name": "Ropeweave",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine.Psychic",
           "standing": "origin",
           "display_name": "Ropeweave"
         },
         {
           "name": "Scamper",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Scamper"
         },
         {
           "name": "Sea Stallion",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Sea Stallion"
         },
         {
           "name": "Sea Steed",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Sea Steed"
         },
         {
           "name": "Sea of Dust",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Sea of Dust"
         },
         {
           "name": "Seed Spies",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Seed Spies"
         },
         {
           "name": "Shapechanger's Gift",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Shapechanger's Gift"
         },
         {
           "name": "Shapechanger's Gift (Greater)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Shapechanger's Gift (Greater)"
         },
         {
           "name": "Signs of the Land",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Signs of the Land"
         },
         {
           "name": "Sky Steed",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Sky Steed"
         },
         {
           "name": "Snowball",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Snowball"
         },
         {
           "name": "Soothing Mud",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Soothing Mud"
         },
         {
           "name": "Sturdy Tree Fort",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Sturdy Tree Fort"
         },
         {
           "name": "Tail Current",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Tail Current"
         },
         {
           "name": "Tailwind",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Tailwind"
         },
         {
           "name": "Tamer's Lash",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Tamer's Lash"
         },
         {
           "name": "Tidal Surge",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Tidal Surge"
         },
         {
           "name": "Verminous Transformation",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "unclassified",
           "display_name": "Verminous Transformation"
         },
         {
           "name": "Vigilant Rest",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Vigilant Rest"
         },
         {
           "name": "Vine Strike",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Vine Strike"
         },
         {
           "name": "Waft",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "Waft"
         },
         {
           "name": "Wandering Weather",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Wandering Weather"
         },
         {
           "name": "Wing Bounty",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Wing Bounty"
         },
         {
           "name": "Wing Thorns",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Wing Thorns"
         },
         {
           "name": "Winter Grasp",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Winter Grasp"
         },
         {
           "name": "With the Wind",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine.Psychic",
           "standing": "origin",
           "display_name": "With the Wind"
         },
         {
           "name": "Wooden Wing Shield",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Wooden Wing Shield"
