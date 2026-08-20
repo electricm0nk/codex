@@ -4445,7 +4445,42 @@ mod tests {
             .flat_map(|entry| entry.abilities.iter().map(|a| a.key.clone()))
             .collect();
         assert_eq!(served_monsters, monsters, "served monsters");
-        assert_eq!(served_abilities, abilities, "served abilities");
+        // `SD31-W21-MONSTER-001`: `served_abilities` now carries 18 MORE keys
+        // than `abilities` (the `data/corpus/bestiary_2/monster_ability/*.json`
+        // set) — every one owned via the `CATEGORY:Internal` bundle-row
+        // ownership hop (`transcribe_monster_tables.py::
+        // find_internal_bundle_ability_refs`), served by `list_monster_catalog`
+        // straight from the compiled `monster_chassis::MONSTER_BOOKS` table
+        // (`build_monster_catalog`, above), which never reads `data/corpus/`
+        // at all. Real, on-screen content with no JSON twin yet — asserted as
+        // a superset with the exact delta named, not silently widened to a
+        // bare `is_subset` that could absorb an unrelated future regression.
+        const BUNDLE_OWNED_NO_JSON_TWIN_YET: &[&str] = &[
+            "bestiary_2:monster_ability:breath_weapon_cone_of_negative_energy",
+            "bestiary_2:monster_ability:breath_weapon_cone_of_sound",
+            "bestiary_2:monster_ability:brine_dragon_capsize",
+            "bestiary_2:monster_ability:brine_dragon_desiccating_bite",
+            "bestiary_2:monster_ability:brine_dragon_painful_strikes",
+            "bestiary_2:monster_ability:cloud_dragon_cloud_breath",
+            "bestiary_2:monster_ability:cloud_dragon_cloud_form",
+            "bestiary_2:monster_ability:cloud_dragon_thundering_bite",
+            "bestiary_2:monster_ability:crystal_dragon_razor_sharp",
+            "bestiary_2:monster_ability:magma_dragon_magma_breath",
+            "bestiary_2:monster_ability:magma_dragon_magma_tomb",
+            "bestiary_2:monster_ability:magma_dragon_superheated",
+            "bestiary_2:monster_ability:umbral_dragon_create_shadows",
+            "bestiary_2:monster_ability:umbral_dragon_energy_drain",
+            "bestiary_2:monster_ability:umbral_dragon_ghost_bane",
+            "bestiary_2:monster_ability:umbral_dragon_shadow_breath",
+            "bestiary_2:monster_ability:umbral_dragon_umbral_scion",
+            "bestiary_2:monster_ability:water_breathing",
+        ];
+        let expected_served: BTreeSet<String> = abilities
+            .iter()
+            .cloned()
+            .chain(BUNDLE_OWNED_NO_JSON_TWIN_YET.iter().map(|s| s.to_string()))
+            .collect();
+        assert_eq!(served_abilities, expected_served, "served abilities");
 
         // The same live-blacklist property the Inner Sea World Guide claim
         // checks. Asserting "this book has no Product Identity" by citing a
@@ -4535,7 +4570,30 @@ mod tests {
             .flat_map(|entry| entry.abilities.iter().map(|a| a.key.clone()))
             .collect();
         assert_eq!(served_monsters, monsters, "served monsters");
-        assert_eq!(served_abilities, abilities, "served abilities");
+        // `SD31-W21-MONSTER-001`: `served_abilities` now carries 9 MORE keys
+        // than `abilities` (the `data/corpus/bestiary_3/monster_ability/*.json`
+        // set) — every one owned via the `CATEGORY:Internal` bundle-row
+        // ownership hop, served by `list_monster_catalog` straight from the
+        // compiled `monster_chassis::MONSTER_BOOKS` table, which never reads
+        // `data/corpus/` at all. Same shape as Bestiary 2's own claim above;
+        // see its comment for the full explanation.
+        const BUNDLE_OWNED_NO_JSON_TWIN_YET: &[&str] = &[
+            "bestiary_3:monster_ability:adhukait_dance_of_disaster",
+            "bestiary_3:monster_ability:adhukait_dual_mind",
+            "bestiary_3:monster_ability:adhukait_spell_like_abilities",
+            "bestiary_3:monster_ability:aghasura_attraction_aura",
+            "bestiary_3:monster_ability:aghasura_dual_wielder",
+            "bestiary_3:monster_ability:aghasura_infused_weapons",
+            "bestiary_3:monster_ability:aghasura_poison",
+            "bestiary_3:monster_ability:legion_archon_flames_of_faith",
+            "bestiary_3:monster_ability:legion_archon_second_skin",
+        ];
+        let expected_served: BTreeSet<String> = abilities
+            .iter()
+            .cloned()
+            .chain(BUNDLE_OWNED_NO_JSON_TWIN_YET.iter().map(|s| s.to_string()))
+            .collect();
+        assert_eq!(served_abilities, expected_served, "served abilities");
 
         // The same live-blacklist property every chassis book's claim checks:
         // a grep that returned 0 today is a statement about today, and this

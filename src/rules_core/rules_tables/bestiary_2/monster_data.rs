@@ -9,8 +9,8 @@
 //!
 //! Sources, with the line each record was read from carried per row:
 //!   * `b2_races.lst` -- 314 monster rows
-//!   * `b2_abilities_race.lst` -- 401 monster-ability rows
-//!   * `ce_abilities_race.lst` -- 92 monster-ability rows
+//!   * `b2_abilities_race.lst` -- 416 monster-ability rows
+//!   * `ce_abilities_race.lst` -- 95 monster-ability rows
 //!
 //! 2 monster row(s) of this book are `<Base>.COPY=<Variant>`
 //! derived rows and are NOT transcribed. A copy row states a DELTA on another
@@ -22,7 +22,7 @@
 //!   * `b2_races.lst:454`
 //!   * `b2_races.lst:594`
 //!
-//! 103 further ability row(s) in this book are ORPHANS -- no monster
+//! 85 further ability row(s) in this book are ORPHANS -- no monster
 //! row here claims them, so they are deliberately NOT transcribed (a record
 //! with no owner loads and is never shown). `not-ingested` is their honest status
 //! in the work inventory, and the round's receipt records them by key:
@@ -36,21 +36,6 @@
 //!   * `b2_abilities_race.lst:223`
 //!   * `b2_abilities_race.lst:224`
 //!   * `b2_abilities_race.lst:228`
-//!   * `b2_abilities_race.lst:472`
-//!   * `b2_abilities_race.lst:473`
-//!   * `b2_abilities_race.lst:474`
-//!   * `b2_abilities_race.lst:479`
-//!   * `b2_abilities_race.lst:480`
-//!   * `b2_abilities_race.lst:482`
-//!   * `b2_abilities_race.lst:487`
-//!   * `b2_abilities_race.lst:495`
-//!   * `b2_abilities_race.lst:496`
-//!   * `b2_abilities_race.lst:497`
-//!   * `b2_abilities_race.lst:502`
-//!   * `b2_abilities_race.lst:503`
-//!   * `b2_abilities_race.lst:504`
-//!   * `b2_abilities_race.lst:505`
-//!   * `b2_abilities_race.lst:506`
 //!   * `b2_abilities_race.lst:793`
 //!   * `b2_abilities_race.lst:795`
 //!   * `b2_abilities_race.lst:796`
@@ -92,12 +77,9 @@
 //!   * `b2_abilities_race.lst:1396`
 //!   * `b2_abilities_race.lst:1422`
 //!   * `ce_abilities_race.lst:1838`
-//!   * `ce_abilities_race.lst:1859`
-//!   * `ce_abilities_race.lst:1860`
 //!   * `ce_abilities_race.lst:1872`
 //!   * `ce_abilities_race.lst:1941`
 //!   * `ce_abilities_race.lst:1948`
-//!   * `ce_abilities_race.lst:1962`
 //!   * `ce_abilities_race.lst:1966`
 //!   * `ce_abilities_race.lst:1967`
 //!   * `ce_abilities_race.lst:1972`
@@ -2174,7 +2156,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: Some("Dragon:4"),
         source_page: Some("p.94"),
         natural_attacks: &[],
-        ability_keys: &[],
+        ability_keys: &["Water Breathing", "Brine Dragon ~ Capsize", "Brine Dragon ~ Desiccating Bite", "Brine Dragon ~ Painful Strikes"],
         external_ability_refs: &[],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 6 }, StatAdjustment { ability: "DEX", amount: 4 }, StatAdjustment { ability: "CON", amount: 0 }, StatAdjustment { ability: "INT", amount: 2 }, StatAdjustment { ability: "WIS", amount: 0 }],
         has_spell_like_abilities: false,
@@ -2194,7 +2176,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: Some("Dragon:6"),
         source_page: Some("p.96"),
         natural_attacks: &[],
-        ability_keys: &[],
+        ability_keys: &["Cloud Dragon ~ Cloud Breath", "Cloud Dragon ~ Cloud Form", "Cloud Dragon ~ Thundering Bite"],
         external_ability_refs: &[],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 0 }, StatAdjustment { ability: "DEX", amount: 2 }, StatAdjustment { ability: "CON", amount: 2 }, StatAdjustment { ability: "INT", amount: 2 }, StatAdjustment { ability: "WIS", amount: 4 }, StatAdjustment { ability: "CHA", amount: 2 }],
         has_spell_like_abilities: false,
@@ -2214,7 +2196,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: Some("Dragon:3"),
         source_page: Some("p.98"),
         natural_attacks: &[],
-        ability_keys: &[],
+        ability_keys: &["Breath Weapon ~ Cone of Sound", "Crystal Dragon ~ Razor Sharp"],
         external_ability_refs: &[],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: -2 }, StatAdjustment { ability: "DEX", amount: 6 }, StatAdjustment { ability: "CON", amount: 2 }, StatAdjustment { ability: "INT", amount: 0 }, StatAdjustment { ability: "WIS", amount: 0 }, StatAdjustment { ability: "CHA", amount: 6 }],
         has_spell_like_abilities: false,
@@ -2234,7 +2216,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: Some("Dragon:5"),
         source_page: Some("p.100"),
         natural_attacks: &[],
-        ability_keys: &[],
+        ability_keys: &["Magma Dragon ~ Magma Breath", "Magma Dragon ~ Magma Tomb", "Magma Dragon ~ Superheated"],
         external_ability_refs: &[],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 2 }, StatAdjustment { ability: "DEX", amount: 6 }, StatAdjustment { ability: "CON", amount: 2 }, StatAdjustment { ability: "INT", amount: 0 }, StatAdjustment { ability: "WIS", amount: 2 }],
         has_spell_like_abilities: true,
@@ -2254,7 +2236,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: Some("Dragon:7"),
         source_page: Some("p.102"),
         natural_attacks: &[],
-        ability_keys: &[],
+        ability_keys: &["Breath Weapon ~ Cone of Negative Energy", "Umbral Dragon ~ Umbral Scion", "Umbral Dragon ~ Shadow Breath", "Umbral Dragon ~ Create Shadows", "Umbral Dragon ~ Energy Drain", "Umbral Dragon ~ Ghost Bane"],
         external_ability_refs: &[],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 2 }, StatAdjustment { ability: "DEX", amount: 4 }, StatAdjustment { ability: "CON", amount: 2 }, StatAdjustment { ability: "INT", amount: 4 }, StatAdjustment { ability: "WIS", amount: 4 }, StatAdjustment { ability: "CHA", amount: 4 }],
         has_spell_like_abilities: false,
@@ -6425,7 +6407,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
     },
 ];
 
-/// Every bestiary_2 monster-ability record (493 rows).
+/// Every bestiary_2 monster-ability record (511 rows).
 pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "Achaierai ~ Black Cloud",
@@ -8259,6 +8241,201 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Drake (Sea)"],
         source_file: "b2_abilities_race.lst",
         source_line: 459,
+    },
+    MonsterAbilityRecord {
+        key: "Brine Dragon ~ Capsize",
+        name: "Capsize",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("An old or older brine dragon can attempt to capsize a boat or ship by ramming it as a charge attack and making a CMB check.  The DC of this check is 25 or the result of the boat captain's Profession (sailor) check, whichever is higher.  For each size category larger the ship is than the brine dragon's size, the dragon takes a cumulative -10 penalty on the check."),
+        description_variables: &[],
+        source_page: Some("p.94"),
+        owners: &["Dragon (Brine)"],
+        source_file: "b2_abilities_race.lst",
+        source_line: 472,
+    },
+    MonsterAbilityRecord {
+        key: "Brine Dragon ~ Desiccating Bite",
+        name: "Desiccating Bite",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("An ancient brine dragon's bite causes weakness, dealing 1d2 points of Strength drain in addition to its normal damage.  A great wyrm's bite deals 1d4 points of Strength drain.  A Fortitude save (DC %1) negates the Strength drain."),
+        description_variables: &["BreathWeaponDC"],
+        source_page: Some("p.94"),
+        owners: &["Dragon (Brine)"],
+        source_file: "b2_abilities_race.lst",
+        source_line: 473,
+    },
+    MonsterAbilityRecord {
+        key: "Brine Dragon ~ Painful Strikes",
+        name: "Painful Strikes",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("A great wyrm brine dragon's natural attacks are so laden with salt and acidic crystals that every time it strikes a creature with one of these attacks, the target must make a Fortitude save (DC %1) or be stunned for a round from the pain."),
+        description_variables: &["BreathWeaponDC"],
+        source_page: Some("p.94"),
+        owners: &["Dragon (Brine)"],
+        source_file: "b2_abilities_race.lst",
+        source_line: 474,
+    },
+    MonsterAbilityRecord {
+        key: "Cloud Dragon ~ Cloud Form",
+        name: "Cloud Form",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("An adult or older cloud dragon can change itself into a cloudy vapor as a swift action for %1 rounds per day.  This ability functions as gaseous form but the dragon's fly speed is unchanged."),
+        description_variables: &["TL"],
+        source_page: Some("p.96"),
+        owners: &["Dragon (Cloud)"],
+        source_file: "b2_abilities_race.lst",
+        source_line: 479,
+    },
+    MonsterAbilityRecord {
+        key: "Cloud Dragon ~ Cloud Breath",
+        name: "Cloud Breath",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("A great wyrm cloud dragon's breath weapon creates a cloud that persists in its cone shape for 1d4 rounds.  Treat this cloud as a fog cloud that deals electricity damage equal to half the dragon's breath weapon damage to any creature that ends its turn still within the cloud (Reflex save halves the damage - DC %1)."),
+        description_variables: &["BreathWeaponDC"],
+        source_page: Some("p.96"),
+        owners: &["Dragon (Cloud)"],
+        source_file: "b2_abilities_race.lst",
+        source_line: 480,
+    },
+    MonsterAbilityRecord {
+        key: "Cloud Dragon ~ Thundering Bite",
+        name: "Thundering Bite",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("An ancient or older cloud dragon's bite makes a thundering crash whenever it attacks, dealing an additional 2d6 points of sonic damage.  A great wyrm's thundering bite deals an additional 4d6 sonic damage."),
+        description_variables: &[],
+        source_page: Some("p.96"),
+        owners: &["Dragon (Cloud)"],
+        source_file: "b2_abilities_race.lst",
+        source_line: 482,
+    },
+    MonsterAbilityRecord {
+        key: "Crystal Dragon ~ Razor Sharp",
+        name: "Razor Sharp",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::SpellLike),
+        traits: &[],
+        description: Some("All of a crystal dragon's natural attacks deal slashing damage."),
+        description_variables: &[],
+        source_page: Some("p.98"),
+        owners: &["Dragon (Crystal)"],
+        source_file: "b2_abilities_race.lst",
+        source_line: 487,
+    },
+    MonsterAbilityRecord {
+        key: "Magma Dragon ~ Magma Tomb",
+        name: "Magma Tomb",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("Once per day, a great wyrm magma dragon can spit lava onto a target within 120 feet, dealing damage normally for its breath weapon. This magma cools instantly - it does not continue doing damage at this point but does entrap the victim (DC %1, 3d6 minutes, hardness 8, hp 45)."),
+        description_variables: &["MagmaDragonMagmaTombDC"],
+        source_page: Some("p.100"),
+        owners: &["Dragon (Magma)"],
+        source_file: "b2_abilities_race.lst",
+        source_line: 495,
+    },
+    MonsterAbilityRecord {
+        key: "Magma Dragon ~ Magma Breath",
+        name: "Magma Breath",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("Three times per day, an ancient or older magma dragon can breathe a cone of lava instead of fire. The damage is unchanged, but the magma clings to those it damages, dealing half damage each round thereafter for 1d3 rounds. After this magma cools, it crumbles to dust."),
+        description_variables: &[],
+        source_page: Some("p.100"),
+        owners: &["Dragon (Magma)"],
+        source_file: "b2_abilities_race.lst",
+        source_line: 496,
+    },
+    MonsterAbilityRecord {
+        key: "Magma Dragon ~ Superheated",
+        name: "Superheated",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("At young age and older, a magma dragon's bite attack deals additional fire damage equal to its age category."),
+        description_variables: &[],
+        source_page: Some("p.100"),
+        owners: &["Dragon (Magma)"],
+        source_file: "b2_abilities_race.lst",
+        source_line: 497,
+    },
+    MonsterAbilityRecord {
+        key: "Umbral Dragon ~ Create Shadows",
+        name: "Create Shadows",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("Any creature slain by an ancient or older umbral dragon rises as a shadow (if 8 HD or less) or greater shadow (if above 8 HD) under the umbral dragon's control 1d4 rounds later."),
+        description_variables: &[],
+        source_page: Some("p.102"),
+        owners: &["Dragon (Umbral)"],
+        source_file: "b2_abilities_race.lst",
+        source_line: 502,
+    },
+    MonsterAbilityRecord {
+        key: "Umbral Dragon ~ Energy Drain",
+        name: "Energy Drain",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("A great wyrm umbral dragon deals 1 negative level with each successful bite or claw attack (1 level, DC %1)."),
+        description_variables: &["UmbralDragonEnergyDrainDC"],
+        source_page: Some("p.102"),
+        owners: &["Dragon (Umbral)"],
+        source_file: "b2_abilities_race.lst",
+        source_line: 503,
+    },
+    MonsterAbilityRecord {
+        key: "Umbral Dragon ~ Ghost Bane",
+        name: "Ghost Bane",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("A young or older umbral dragon's physical attacks deal damage to incorporeal creatures normally."),
+        description_variables: &[],
+        source_page: Some("p.102"),
+        owners: &["Dragon (Umbral)"],
+        source_file: "b2_abilities_race.lst",
+        source_line: 504,
+    },
+    MonsterAbilityRecord {
+        key: "Umbral Dragon ~ Umbral Scion",
+        name: "Umbral Scion",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("Umbral dragons have negative energy affinity and are immune to energy drain and death effects."),
+        description_variables: &[],
+        source_page: Some("p.102"),
+        owners: &["Dragon (Umbral)"],
+        source_file: "b2_abilities_race.lst",
+        source_line: 505,
+    },
+    MonsterAbilityRecord {
+        key: "Umbral Dragon ~ Shadow Breath",
+        name: "Shadow Breath",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("Three times per day, an adult or older umbral dragon can breathe a cone of shadows.  Creatures who fail a Fortitude save are blinded for 1d4 rounds and take %1 points of Str drain.  A successful save negates the blindness and reduces Str drain to 1d4 points."),
+        description_variables: &["DragonAgeCategory"],
+        source_page: Some("p.102"),
+        owners: &["Dragon (Umbral)"],
+        source_file: "b2_abilities_race.lst",
+        source_line: 506,
     },
     MonsterAbilityRecord {
         key: "Draugr ~ Nausea",
@@ -11680,6 +11857,32 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         source_line: 1856,
     },
     MonsterAbilityRecord {
+        key: "Breath Weapon ~ Cone of Sound",
+        name: "Breath Weapon",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("%1' Cone of Cold %2d%3 cold, DC %4, usable every 1d4 rounds. Breath weapons allow a Reflex save for half damage. You are immune to your own breath weapon."),
+        description_variables: &["BreathWeaponCone", "BreathWeaponDice", "BreathWeaponDamageDie", "BreathWeaponDC"],
+        source_page: Some("p.298"),
+        owners: &["Dragon (Crystal)"],
+        source_file: "ce_abilities_race.lst",
+        source_line: 1859,
+    },
+    MonsterAbilityRecord {
+        key: "Breath Weapon ~ Cone of Negative Energy",
+        name: "Breath Weapon",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("%1' Cone of Negative Energy %2d%3 negative energy, DC %4, usable every 1d4 rounds. Breath weapons allow a Reflex save for half damage. You are immune to your own breath weapon.  Although it deals negative energy damage, this breath weapon does not heal undead creatures."),
+        description_variables: &["BreathWeaponCone", "BreathWeaponDice", "BreathWeaponDamageDie", "BreathWeaponDC"],
+        source_page: Some("p.298"),
+        owners: &["Dragon (Umbral)"],
+        source_file: "ce_abilities_race.lst",
+        source_line: 1860,
+    },
+    MonsterAbilityRecord {
         key: "Engulf",
         name: "Engulf",
         facet: MonsterAbilityFacet::SpecialAttack,
@@ -11860,6 +12063,19 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Lamia Matriarch", "Scylla"],
         source_file: "ce_abilities_race.lst",
         source_line: 1960,
+    },
+    MonsterAbilityRecord {
+        key: "Water Breathing",
+        name: "Water Breathing",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: None,
+        description_variables: &[],
+        source_page: Some("p.94"),
+        owners: &["Dragon (Brine)"],
+        source_file: "ce_abilities_race.lst",
+        source_line: 1962,
     },
     MonsterAbilityRecord {
         key: "Hippopotamus ~ Capsize",

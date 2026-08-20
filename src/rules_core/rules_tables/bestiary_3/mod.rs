@@ -4,17 +4,23 @@
 //! above this file's test module; it draws on four `.lst` files none of the
 //! monster text below mentions. The two families share only a `RuleSetId`.
 //!
-//! **261 of this book's 261 monster rows and 27 of its 40 ability rows ship.**
-//! Every exclusion is one class — an ability no monster row of this book owns —
-//! and there are 13 of them. No Product Identity row, no `.COPY=` delta, no
-//! monster excluded for any reason at all: this is the cleanest book the lane
-//! has taken.
+//! **261 of this book's 261 monster rows and 36 of its 40 ability rows ship.**
+//! 27 shipped before `SD31-W21-MONSTER-001`; that round's `CATEGORY:Internal`
+//! bundle-row ownership hop resolved 9 more (`Adhukait ~ …` x3, `Aghasura ~ …`
+//! x4, `Legion Archon ~ …` x2), leaving 4 genuine orphans. No Product Identity
+//! row, no `.COPY=` delta, no monster excluded for any reason at all: this is
+//! still the cleanest book the lane has taken.
 //!
 //! ```text
 //! python3 scripts/classify_monster_ability_rows.py bestiary_3
 //! book         mon  abil row-named prefix ORPHAN   PI COPY
 //! bestiary_3   261    40         0     27     13    0    0
 //! ```
+//!
+//! The classifier above has no awareness of the bundle hop
+//! (`scripts/scan_monster_ability_bundle_rows.py` is the instrument that
+//! does) — its `prefix`/`ORPHAN` columns are a pre-hop figure for this book,
+//! not what ships now.
 //!
 //! Corpus unit counts are the inventory's own, never a line count over the
 //! `.lst`:
@@ -31,11 +37,17 @@
 //! the LIVE blacklist rather than by the grep above, which is a statement about
 //! today.
 //!
-//! # The first book reached ENTIRELY by the namespaced-prefix link
+//! # The first book reached ENTIRELY by the namespaced-prefix link, pre-hop
 //!
-//! `row-named` is **0** and `prefix` is **27**: every shipped ability of this
-//! book is reached because its own `KEY:` is `<Monster> ~ <Ability>` and the
-//! prefix is a monster row here. The four books before it lean the other way.
+//! `row-named` is **0** and `prefix` is **27**: those 27 shipped abilities are
+//! each reached because their own `KEY:` is `<Monster> ~ <Ability>` and the
+//! prefix is a monster row here — the four books before it lean the other way.
+//! **This is no longer the whole shipped set** — `SD31-W21-MONSTER-001`'s
+//! `CATEGORY:Internal` bundle-row hop reaches 9 more whose namespace prefix is
+//! a DIFFERENT string than their real owner (`Adhukait`/`Aghasura`/`Legion
+//! Archon` versus `Asura (Adhukait)`/`Asura (Aghasura)`/`Archon (Legion)`) —
+//! `every_shipped_ability_is_reached_by_its_namespaced_key` below now excludes
+//! them by name rather than silently widening what it asserts.
 //!
 //! That 0 is not an absence of the token. `b3_races.lst` carries **100**
 //! `ABILITY:Special Ability|AUTOMATIC|` tokens
@@ -184,13 +196,17 @@ pub fn companion_abilities() -> &'static [CompanionAbilityRecord] {
 mod tests {
     use super::*;
 
-    /// What ships is 261 and 27, against corpus unit counts of 261 and 40.
-    /// Asserting 40 here would assert that this book ships thirteen records
+    /// What ships is 261 and 36, against corpus unit counts of 261 and 40.
+    /// Asserting 40 here would assert that this book ships four records
     /// nothing can reach.
+    ///
+    /// 27 -> 36 (SD31-W21-MONSTER-001, +9): the `CATEGORY:Internal` bundle-row
+    /// ownership hop resolved 9 previously-orphaned ability rows this book's
+    /// monsters name only indirectly.
     #[test]
-    fn the_book_ships_every_monster_and_twenty_seven_linked_abilities() {
+    fn the_book_ships_every_monster_and_thirty_six_linked_abilities() {
         assert_eq!(monsters().len(), 261);
-        assert_eq!(monster_abilities().len(), 27);
+        assert_eq!(monster_abilities().len(), 36);
     }
 
     /// The first book in the lane to lose NO monster row: no `NAMEISPI:YES`, no
@@ -237,20 +253,23 @@ mod tests {
         }
     }
 
-    /// The 13 orphan rows are pinned individually **by the corpus line each one
-    /// is**, so a regeneration that quietly pulls one back in fails here naming
-    /// the line that returned.
+    /// The remaining orphan rows are pinned individually **by the corpus line
+    /// each one is**, so a regeneration that quietly pulls one back in fails
+    /// here naming the line that returned.
     ///
     /// `b3_abilities_race.lst:1663` is in this list and is also the row that
     /// made the transcriber defer its `DESC:` refusal — see this module's
     /// header. If a future widening teaches `parse_desc` that shape, this test
     /// still holds: the row is excluded because nothing owns it, not because it
     /// could not be parsed.
+    ///
+    /// `SD31-W21-MONSTER-001` dropped 380, 381, 389, 390, 391, 394, 395, 396,
+    /// 397 from this list — all 9 now ship, owned via the `CATEGORY:Internal`
+    /// bundle-row hop (see the module header and
+    /// `every_shipped_ability_is_reached_by_its_namespaced_key` below).
     #[test]
-    fn the_thirteen_orphan_rows_are_not_records() {
-        for line in [
-            304u32, 380, 381, 389, 390, 391, 394, 395, 396, 397, 1150, 1448, 1663,
-        ] {
+    fn the_remaining_orphan_rows_are_not_records() {
+        for line in [304u32, 1150, 1448, 1663] {
             assert!(
                 !monster_abilities().iter().any(|a| a.source_line == line),
                 "b3_abilities_race.lst:{line} is owned by no monster row of this book and must \
@@ -260,17 +279,36 @@ mod tests {
     }
 
     /// Every shipped ability of this book is reached by the namespaced-prefix
-    /// link rather than by a monster row naming it — the first book in the lane
-    /// for which that is true, and the property that makes its `row-named`
-    /// column read 0 while `b3_races.lst` carries 100 `ABILITY:Special
-    /// Ability|AUTOMATIC|` tokens.
-    ///
-    /// Those 100 tokens name rows the inventory files under `race_trait`,
-    /// because `file_kind` reads only the first `TYPE:` segment. See this
-    /// module's header for the 341-unit scope finding that follows from it.
+    /// link rather than by a monster row naming it — EXCEPT the 9 named below,
+    /// added by `SD31-W21-MONSTER-001`'s `CATEGORY:Internal` bundle-row hop,
+    /// whose namespace prefix is a human-readable short name distinct from
+    /// their real owner's corpus `KEY:` (`Adhukait`/`Aghasura`/`Legion Archon`
+    /// versus `Asura (Adhukait)`/`Asura (Aghasura)`/`Archon (Legion)`). This
+    /// was the first book in the lane where the property held for the WHOLE
+    /// shipped set (`row-named` reads 0 against `b3_races.lst`'s 100
+    /// `ABILITY:Special Ability|AUTOMATIC|` tokens, which name rows the
+    /// inventory files under `race_trait` — `file_kind` reads only the first
+    /// `TYPE:` segment; see this module's header for the 341-unit scope
+    /// finding that follows from it) — it still holds for every OTHER shipped
+    /// ability, which this test now asserts explicitly rather than trusting
+    /// the exception list to stay exhaustive by construction.
     #[test]
     fn every_shipped_ability_is_reached_by_its_namespaced_key() {
+        const BUNDLE_OWNED_EXCEPTIONS: &[&str] = &[
+            "Legion Archon ~ Flames of Faith",
+            "Legion Archon ~ Second Skin",
+            "Adhukait ~ Dance of Disaster",
+            "Adhukait ~ Dual Mind",
+            "Adhukait ~ Spell-Like Abilities",
+            "Aghasura ~ Attraction Aura",
+            "Aghasura ~ Dual Wielder",
+            "Aghasura ~ Infused Weapons",
+            "Aghasura ~ Poison",
+        ];
         for ability in monster_abilities() {
+            if BUNDLE_OWNED_EXCEPTIONS.contains(&ability.key) {
+                continue;
+            }
             let (prefix, _) = ability
                 .key
                 .split_once(" ~ ")

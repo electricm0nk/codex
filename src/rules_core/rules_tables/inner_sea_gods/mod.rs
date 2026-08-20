@@ -3,18 +3,18 @@
 //!
 //! # What ships, and what the corpus holds
 //!
-//! **39 monsters + 77 monster abilities = 116 records**, against corpus unit
-//! counts of 39 and 161. Derived, never assumed:
-//! `python3 scripts/classify_monster_ability_rows.py inner_sea_gods` →
-//! `inner_sea_gods  39  161  0  77  81  3  0`, reachable remainder **116**.
+//! **39 monsters + 154 monster abilities = 193 records**, against corpus unit
+//! counts of 39 and 161. 116 shipped before `SD31-W21-MONSTER-001` (below);
+//! that round's `CATEGORY:Internal` bundle-row ownership hop resolved 77 more,
+//! leaving 2 genuine orphans (`Herald ~ Always Armed`/`Herald ~ Emissary`,
+//! neither bundle- nor row-/prefix-reachable) and 5 Product-Identity drops
+//! (unchanged by the hop — see Provenance below).
 //!
-//! 116 is exactly what ships, and the two screens reach it by different routes:
-//! the classifier counts 81 orphans and 3 Product Identity rows, the transcriber
-//! drops 79 orphans and 5 Product Identity rows. Both sum to 84 — the
-//! transcriber's Product Identity screen reads the values it is about to
-//! **emit** while the classifier reads the row's own key and name, so two rows
-//! move between the buckets without moving the total. `decisions.md §57.2`
-//! records the same predicate difference on `inner_sea_bestiary`.
+//! `python3 scripts/classify_monster_ability_rows.py inner_sea_gods` reports
+//! only the row-named/prefix ownership shapes and has no awareness of the
+//! bundle hop below (`scripts/scan_monster_ability_bundle_rows.py` is the
+//! instrument that does) — its own "orphan"/"reachable remainder" numbers are
+//! therefore a pre-hop figure for this book, not this header's live count.
 //!
 //! # The first book in this lane whose rows are not all at the book root
 //!
@@ -54,13 +54,16 @@
 //! `.lst` files themselves returns 0, so a lane that checks the file for its own
 //! gate concludes, wrongly, that it is ungated.
 //!
-//! # The 16 `Race Traits ~` bundle rows: a scope finding, not an ingest
+//! # The `Race Traits ~` bundle rows: RESOLVED (`SD31-W21-MONSTER-001`)
 //!
-//! **Zero of the sixteen `support/isg_abilities_races_b4.lst` ability rows
-//! ship**, and the reason is worth more than the rows. The classifier and the
-//! transcriber both call them orphans — no monster row of this book owns them —
-//! and by each screen's own predicate that is correct. But the corpus **does**
-//! state their owner, one hop further out than either screen looks:
+//! **This section used to explain why zero of the sixteen
+//! `support/isg_abilities_races_b4.lst` ability rows shipped. All sixteen now
+//! ship, along with 61 more of this book's abilities reached the same way —
+//! the mechanism this section names is wired, not merely recorded.**
+//!
+//! The corpus states an ability's owner one hop further out than a monster
+//! row's own `ABILITY:Special Ability|AUTOMATIC|` token or an ability's
+//! `<Monster> ~ <Ability>` namespace prefix can see:
 //!
 //! ```text
 //! support/isg_races_b4.lst:6    The First Blade
@@ -72,42 +75,28 @@
 //! ```
 //!
 //! The monster row names a `CATEGORY:Internal` **bundle** row, and that bundle
-//! row names the individual abilities. The transcriber's row-named pass reads
-//! `ABILITY:Special Ability|AUTOMATIC|` tokens **on monster rows**, and its
-//! prefix pass matches an ability's namespace against a monster **key** — and
-//! the namespaces here are the creature's short name (`First Blade`,
-//! `Skein Steward`, `Ahmuuth`) while the monster keys are longer
-//! (`The First Blade`, `Steward of the Skein`, `Psychopomp (Ahmuuth)`). So
-//! neither pass reaches them, and all sixteen fall out as orphans.
+//! row names the individual abilities. Neither of the transcriber's original
+//! two passes reads a bundle row at all — the row-named pass reads
+//! `ABILITY:Special Ability|AUTOMATIC|` tokens **on monster rows** only, and
+//! the prefix pass matches an ability's namespace against a monster **key** —
+//! and here the namespace is the creature's short name (`First Blade`,
+//! `Skein Steward`, `Ahmuuth`) while the monster key is longer (`The First
+//! Blade`, `Steward of the Skein`, `Psychopomp (Ahmuuth)`), so neither passes
+//! reaches them.
 //!
-//! This round did **not** widen the ownership pass to follow the bundle row, and
-//! the reason is deliberate rather than an omission: this round already widened
-//! file resolution, and a second mechanism change in the same gate is how a
-//! round goes red. It is recorded here with its corpus lines so the next round
-//! can execute it rather than re-derive it.
+//! `scripts/transcribe_monster_tables.py::find_internal_bundle_ability_refs`
+//! is the third pass this round added: for every monster row's
+//! `ABILITY:Internal|AUTOMATIC|<bundle_key>` reference, it finds the
+//! `CATEGORY:Internal` row named `bundle_key` in this book's own ability
+//! files and credits the monster with every ability THAT row names. Sized
+//! first by `scripts/scan_monster_ability_bundle_rows.py` (round 10,
+//! `decisions.md §64.1`, 229 units across six books) before being wired —
+//! this book alone accounted for 79 of the 81 orphans that scan found, and
+//! the transcriber reproduces that exact number.
 //!
-//! **The consequence for the lane's ceiling is that 16 units this round reports
-//! as unreachable are in fact reachable**, by a mechanism the corpus states and
-//! no screen currently follows. The lane's REAL ceiling is understated by at
-//! least that much, and the same shape may exist in other books: the predicate
-//! to look for is an `ABILITY:Internal|AUTOMATIC|` token on a monster row.
-//!
-//! ## CORRECTED by round 10 — the class is 229, and 79 of them are this book's
-//!
-//! The scan above asked for was run (`scripts/scan_monster_ability_bundle_rows.py`,
-//! checked in; `decisions.md §64.1`). **Sixteen is the
-//! `support/isg_abilities_races_b4.lst` subset, not this book's figure.** The
-//! hop reaches **79 of this book's 81 remaining orphans** — 63 of them in
-//! `isg_abilities_races.lst`, at the book root, which the section above does
-//! not mention at all — and **229 rows across six books**, five of them already
-//! registered.
-//!
-//! The correction is left beside the original rather than overwriting it,
-//! because the shape of the error is the transferable part: the finding was
-//! stated as a property of the *file being read* rather than of the corpus, and
-//! that is the third time this lane has paid for exactly that (`§60.3`,
-//! `§62.1`, `§64.1`). `no_support_directory_ability_ships_yet` below guards the
-//! subset, not the class.
+//! Two genuine orphans remain (`Herald ~ Always Armed`/`Herald ~ Emissary`) —
+//! neither names nor is named by a bundle row, so the hop correctly leaves
+//! them unshipped rather than guessing an owner.
 //!
 //! # Provenance
 //!
@@ -155,16 +144,28 @@ mod tests {
     use super::*;
     use std::collections::HashSet;
 
-    /// What ships is 39 and 77, against corpus unit counts of 39 and 161.
+    /// What ships is 39 and 154, against corpus unit counts of 39 and 161.
     ///
     /// The monster count is the whole corpus set — this is the first book in
     /// the registry to lose no monster row at all to any screen: no
     /// `NAMEISPI:YES`, no `.COPY=` delta, no `.MOD` overlay, and no cascade from
     /// a Product Identity ability it names.
+    ///
+    /// 77 -> 154 (SD31-W21-MONSTER-001, +77): the `CATEGORY:Internal`
+    /// bundle-row ownership hop (`transcribe_monster_tables.py::
+    /// find_internal_bundle_ability_refs`) resolved 77 of this book's 79
+    /// bundle-reachable orphans — this is the book the hop mechanism's own
+    /// docstring example (`ABILITY:Internal|AUTOMATIC|Race Traits ~ First
+    /// Blade`, `support/isg_races_b4.lst:6` / `support/
+    /// isg_abilities_races_b4.lst:8`) is drawn from. 5 more were newly-reached
+    /// abilities the pre-existing Product Identity screen correctly drops (a
+    /// named-deity term in an emitted value; see the Provenance section
+    /// below), and 2 remain genuinely orphaned (`Herald ~ Always Armed`/
+    /// `Herald ~ Emissary`, neither bundle- nor row-/prefix-reachable).
     #[test]
     fn the_shipped_counts_are_the_reachable_ones() {
         assert_eq!(monsters().len(), 39, "every corpus monster row of this book ships");
-        assert_eq!(monster_abilities().len(), 77);
+        assert_eq!(monster_abilities().len(), 154);
     }
 
     /// The three `support/` monster rows ship, and they are the reason this
@@ -245,27 +246,45 @@ mod tests {
         }
     }
 
-    /// The `Race Traits ~` bundle finding, pinned as an executing test rather
-    /// than as prose alone.
-    ///
-    /// The header explains why the sixteen `support/isg_abilities_races_b4.lst`
-    /// ability rows do not ship and records the corpus lines that state their
-    /// real owner. This asserts the *state* that explanation describes, so that
-    /// a later round which widens the ownership pass to follow the bundle row
-    /// is told by a failing test that the header is now stale — the failure
-    /// mode a comment alone cannot catch.
+    /// The `Race Traits ~` bundle finding, RESOLVED (`SD31-W21-MONSTER-001`):
+    /// all sixteen `support/isg_abilities_races_b4.lst` ability rows now ship,
+    /// owned by their real monster through the `CATEGORY:Internal` bundle-row
+    /// hop the module header describes. Was `no_support_directory_ability_
+    /// ships_yet`, asserting the PRE-hop emptiness; now asserts the sixteen
+    /// real keys by name, so a future regression (the hop breaking, or this
+    /// book's ownership shape changing upstream) is caught by name rather
+    /// than by a silent count-only pin.
     #[test]
-    fn no_support_directory_ability_ships_yet() {
-        let shipped: Vec<&str> = monster_abilities()
+    fn the_support_directory_bundle_abilities_ship() {
+        let shipped: std::collections::BTreeSet<&str> = monster_abilities()
             .iter()
             .filter(|a| a.source_file == "isg_abilities_races_b4.lst")
             .map(|a| a.key)
             .collect();
-        assert!(
-            shipped.is_empty(),
-            "support/isg_abilities_races_b4.lst rows now ship ({shipped:?}) -- the \
-             `Race Traits ~` bundle finding in this module's header is stale and must be \
-             rewritten, along with the lane's REAL-ceiling arithmetic that depends on it"
+        let expected: std::collections::BTreeSet<&str> = [
+            "First Blade ~ Powerful Blows (Slam)",
+            "First Blade ~ Regeneration",
+            "First Blade ~ Bladed Slam",
+            "First Blade ~ Swarm Form",
+            "First Blade ~ Lord of Battle",
+            "First Blade ~ Rage Aura",
+            "First Blade ~ Ironsense",
+            "Skein Steward ~ Immunity to Possession",
+            "Skein Steward ~ Fate Aura",
+            "Skein Steward ~ Gaze",
+            "Skein Steward ~ Change Shape",
+            "Skein Steward ~ Constant Spells",
+            "Skein Steward ~ Tugging Strands",
+            "Ahmuuth ~ Animated Shield",
+            "Ahmuuth ~ Death's Dagger",
+            "Ahmuuth ~ Ectoplasmic Focus",
+        ]
+        .into_iter()
+        .collect();
+        assert_eq!(
+            shipped, expected,
+            "support/isg_abilities_races_b4.lst's shipped set no longer matches the sixteen \
+             bundle-reached rows the module header names"
         );
     }
 }

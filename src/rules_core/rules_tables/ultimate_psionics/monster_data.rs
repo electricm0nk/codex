@@ -9,14 +9,12 @@
 //!
 //! Sources, with the line each record was read from carried per row:
 //!   * `up_races.lst` -- 21 monster rows
-//!   * `up_abilities_race.lst` -- 13 monster-ability rows
+//!   * `up_abilities_race.lst` -- 15 monster-ability rows
 //!
-//! 66 further ability row(s) in this book are ORPHANS -- no monster
+//! 64 further ability row(s) in this book are ORPHANS -- no monster
 //! row here claims them, so they are deliberately NOT transcribed (a record
 //! with no owner loads and is never shown). `not-ingested` is their honest status
 //! in the work inventory, and the round's receipt records them by key:
-//!   * `up_abilities_race.lst:11`
-//!   * `up_abilities_race.lst:12`
 //!   * `up_abilities_race.lst:646`
 //!   * `up_abilities_race.lst:647`
 //!   * `up_abilities_race.lst:648`
@@ -97,7 +95,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: None,
         source_page: Some("p.9"),
         natural_attacks: &[],
-        ability_keys: &[],
+        ability_keys: &["Psionic Aptitude", "Naturally Psionic"],
         external_ability_refs: &["Psionic"],
         stat_adjustments: &[StatAdjustment { ability: "INT", amount: 2 }, StatAdjustment { ability: "DEX", amount: 2 }, StatAdjustment { ability: "STR", amount: -2 }],
         has_spell_like_abilities: false,
@@ -117,7 +115,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: None,
         source_page: Some("p.10"),
         natural_attacks: &[],
-        ability_keys: &[],
+        ability_keys: &["Psionic Aptitude", "Naturally Psionic"],
         external_ability_refs: &["Psionic"],
         stat_adjustments: &[StatAdjustment { ability: "CHA", amount: 2 }, StatAdjustment { ability: "DEX", amount: 2 }, StatAdjustment { ability: "STR", amount: -2 }],
         has_spell_like_abilities: false,
@@ -137,7 +135,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: None,
         source_page: Some("p.12"),
         natural_attacks: &[],
-        ability_keys: &[],
+        ability_keys: &["Psionic Aptitude", "Naturally Psionic"],
         external_ability_refs: &["Light Sensitivity", "Psionic"],
         stat_adjustments: &[StatAdjustment { ability: "CON", amount: 2 }, StatAdjustment { ability: "WIS", amount: 2 }, StatAdjustment { ability: "CHA", amount: -2 }],
         has_spell_like_abilities: false,
@@ -157,7 +155,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: None,
         source_page: Some("p.13"),
         natural_attacks: &[],
-        ability_keys: &[],
+        ability_keys: &["Psionic Aptitude", "Naturally Psionic"],
         external_ability_refs: &["Psionic"],
         stat_adjustments: &[],
         has_spell_like_abilities: false,
@@ -177,7 +175,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: None,
         source_page: Some("p.15"),
         natural_attacks: &[],
-        ability_keys: &[],
+        ability_keys: &["Psionic Aptitude", "Naturally Psionic"],
         external_ability_refs: &["Psionic"],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 2 }, StatAdjustment { ability: "INT", amount: 2 }, StatAdjustment { ability: "CHA", amount: -4 }],
         has_spell_like_abilities: false,
@@ -197,7 +195,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: None,
         source_page: Some("p.16"),
         natural_attacks: &[],
-        ability_keys: &[],
+        ability_keys: &["Psionic Aptitude", "Naturally Psionic"],
         external_ability_refs: &["Psionic"],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 2 }, StatAdjustment { ability: "WIS", amount: 2 }, StatAdjustment { ability: "DEX", amount: -2 }],
         has_spell_like_abilities: false,
@@ -217,7 +215,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: None,
         source_page: Some("p.18"),
         natural_attacks: &[],
-        ability_keys: &[],
+        ability_keys: &["Psionic Aptitude", "Naturally Psionic"],
         external_ability_refs: &["Psionic"],
         stat_adjustments: &[],
         has_spell_like_abilities: false,
@@ -237,7 +235,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: None,
         source_page: Some("p.19"),
         natural_attacks: &[],
-        ability_keys: &[],
+        ability_keys: &["Psionic Aptitude", "Naturally Psionic"],
         external_ability_refs: &["Psionic"],
         stat_adjustments: &[StatAdjustment { ability: "CON", amount: 2 }, StatAdjustment { ability: "WIS", amount: 2 }, StatAdjustment { ability: "DEX", amount: -2 }],
         has_spell_like_abilities: false,
@@ -257,7 +255,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: None,
         source_page: Some("p.21"),
         natural_attacks: &[],
-        ability_keys: &[],
+        ability_keys: &["Psionic Aptitude", "Naturally Psionic"],
         external_ability_refs: &["Psionic"],
         stat_adjustments: &[StatAdjustment { ability: "DEX", amount: 2 }, StatAdjustment { ability: "WIS", amount: 2 }, StatAdjustment { ability: "CHA", amount: -2 }],
         has_spell_like_abilities: false,
@@ -277,7 +275,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: None,
         source_page: Some("p.23"),
         natural_attacks: &[],
-        ability_keys: &[],
+        ability_keys: &["Psionic Aptitude", "Naturally Psionic"],
         external_ability_refs: &["Psionic"],
         stat_adjustments: &[StatAdjustment { ability: "DEX", amount: 2 }, StatAdjustment { ability: "CHA", amount: 2 }, StatAdjustment { ability: "STR", amount: -2 }],
         has_spell_like_abilities: false,
@@ -508,8 +506,34 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
     },
 ];
 
-/// Every ultimate_psionics monster-ability record (13 rows).
+/// Every ultimate_psionics monster-ability record (15 rows).
 pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
+    MonsterAbilityRecord {
+        key: "Psionic Aptitude",
+        name: "Psionic Aptitude",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: None,
+        traits: &["PsionicAptitude", "ForgebornRacialTrait", "ForgebornRacialDefault", "NoralRacialTrait", "NoralRacialDefault", "BlueRacialTrait", "BlueRacialDefault", "DromiteRacialTrait", "DromiteRacialDefault", "DuergarDSPRacialTrait", "DuergarDSPRacialDefault", "ElanRacialTrait", "ElanRacialDefault", "Half-GiantRacialTrait", "Half-GiantRacialDefault", "MaenadRacialTrait", "MaenadRacialDefault", "OphiduanRacialTrait", "OphiduanRacialDefault", "XephRacialTrait", "XephRacialDefault"],
+        description: Some("Can gain 1 power point instead of 1 hit point or 1 skill rank when taking a level in a favored class."),
+        description_variables: &[],
+        source_page: Some("p.10"),
+        owners: &["Blue", "Dromite", "Duergar ~ Psionic", "Elan", "Forgeborn", "Half-Giant", "Maenad", "Noral", "Ophiduan", "Xeph"],
+        source_file: "up_abilities_race.lst",
+        source_line: 11,
+    },
+    MonsterAbilityRecord {
+        key: "Naturally Psionic",
+        name: "Naturally Psionic",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: None,
+        traits: &["NaturallyPsionic", "ForgebornRacialTrait", "ForgebornRacialDefault", "NoralRacialTrait", "NoralRacialDefault", "BlueRacialTrait", "BlueRacialDefault", "DromiteRacialTrait", "DromiteRacialDefault", "DuergarDSPRacialTrait", "DuergarDSPRacialDefault", "ElanRacialTrait", "ElanRacialDefault", "Half-GiantRacialTrait", "Half-GiantRacialDefault", "MaenadRacialTrait", "MaenadRacialDefault", "OphiduanRacialTrait", "OphiduanRacialDefault", "XephRacialTrait", "XephRacialDefault"],
+        description: Some("Gain the Wild Talent feat, or Psionic Talent if levels in a psionic class taken."),
+        description_variables: &[],
+        source_page: Some("p.10"),
+        owners: &["Blue", "Dromite", "Duergar ~ Psionic", "Elan", "Forgeborn", "Half-Giant", "Maenad", "Noral", "Ophiduan", "Xeph"],
+        source_file: "up_abilities_race.lst",
+        source_line: 12,
+    },
     MonsterAbilityRecord {
         key: "Astral Swarm ~ Ectoplasmic Poison",
         name: "Ectoplasmic Poison",

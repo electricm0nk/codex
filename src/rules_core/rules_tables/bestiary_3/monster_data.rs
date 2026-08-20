@@ -9,23 +9,14 @@
 //!
 //! Sources, with the line each record was read from carried per row:
 //!   * `b3_races.lst` -- 261 monster rows
-//!   * `b3_abilities_race.lst` -- 27 monster-ability rows
+//!   * `b3_abilities_race.lst` -- 36 monster-ability rows
 //!
-//! 44 further ability row(s) in this book are ORPHANS -- no monster
+//! 35 further ability row(s) in this book are ORPHANS -- no monster
 //! row here claims them, so they are deliberately NOT transcribed (a record
 //! with no owner loads and is never shown). `not-ingested` is their honest status
 //! in the work inventory, and the round's receipt records them by key:
 //!   * `vishkanya_abilities_race.lst:29`
 //!   * `b3_abilities_race.lst:304`
-//!   * `b3_abilities_race.lst:380`
-//!   * `b3_abilities_race.lst:381`
-//!   * `b3_abilities_race.lst:389`
-//!   * `b3_abilities_race.lst:390`
-//!   * `b3_abilities_race.lst:391`
-//!   * `b3_abilities_race.lst:394`
-//!   * `b3_abilities_race.lst:395`
-//!   * `b3_abilities_race.lst:396`
-//!   * `b3_abilities_race.lst:397`
 //!   * `b3_abilities_race.lst:1150`
 //!   * `b3_abilities_race.lst:1448`
 //!   * `b3_abilities_race.lst:1663`
@@ -275,7 +266,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: Some("Outsider (Fort/Will):8"),
         source_page: Some("p.19"),
         natural_attacks: &[],
-        ability_keys: &[],
+        ability_keys: &["Legion Archon ~ Flames of Faith", "Legion Archon ~ Second Skin"],
         external_ability_refs: &["Flight Maneuverability"],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 6 }, StatAdjustment { ability: "DEX", amount: 2 }, StatAdjustment { ability: "CON", amount: 8 }, StatAdjustment { ability: "INT", amount: 0 }, StatAdjustment { ability: "WIS", amount: 4 }, StatAdjustment { ability: "CHA", amount: 6 }],
         has_spell_like_abilities: false,
@@ -315,7 +306,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: Some("Outsider (Ref/Will):9"),
         source_page: Some("p.22"),
         natural_attacks: &[NaturalAttack { name: "Claw", damage_dice: None }],
-        ability_keys: &[],
+        ability_keys: &["Adhukait ~ Dance of Disaster", "Adhukait ~ Dual Mind", "Adhukait ~ Spell-Like Abilities"],
         external_ability_refs: &[],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 10 }, StatAdjustment { ability: "DEX", amount: 6 }, StatAdjustment { ability: "CON", amount: 6 }, StatAdjustment { ability: "INT", amount: 2 }, StatAdjustment { ability: "WIS", amount: 6 }, StatAdjustment { ability: "CHA", amount: 6 }],
         has_spell_like_abilities: false,
@@ -335,7 +326,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         monster_class: Some("Outsider (Fort/Will):14"),
         source_page: Some("p.23"),
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }],
-        ability_keys: &[],
+        ability_keys: &["Aghasura ~ Attraction Aura", "Aghasura ~ Dual Wielder", "Aghasura ~ Infused Weapons", "Aghasura ~ Poison"],
         external_ability_refs: &[],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 24 }, StatAdjustment { ability: "DEX", amount: 6 }, StatAdjustment { ability: "CON", amount: 12 }, StatAdjustment { ability: "INT", amount: 0 }, StatAdjustment { ability: "WIS", amount: 4 }, StatAdjustment { ability: "CHA", amount: 8 }],
         has_spell_like_abilities: false,
@@ -5286,7 +5277,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
     },
 ];
 
-/// Every bestiary_3 monster-ability record (27 rows).
+/// Every bestiary_3 monster-ability record (36 rows).
 pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "Adaro ~ Poison",
@@ -5588,6 +5579,32 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         source_line: 370,
     },
     MonsterAbilityRecord {
+        key: "Legion Archon ~ Flames of Faith",
+        name: "Flames of Faith",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("A legion archon can manifest a +1 flaming burst greatsword or +1 flaming javelin as a move-equivalent action. The legion archon's sword vanishes if it leaves its hand, and its javelin vanishes after striking or missing its target."),
+        description_variables: &[],
+        source_page: Some("p.19"),
+        owners: &["Archon (Legion)"],
+        source_file: "b3_abilities_race.lst",
+        source_line: 380,
+    },
+    MonsterAbilityRecord {
+        key: "Legion Archon ~ Second Skin",
+        name: "Second Skin",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("A legion archon is proficient in all forms of armor. It takes no reduction to its speed or any armor check penalties from wearing any sort of armor. Most legion archons wear full plate armor."),
+        description_variables: &[],
+        source_page: Some("p.19"),
+        owners: &["Archon (Legion)"],
+        source_file: "b3_abilities_race.lst",
+        source_line: 381,
+    },
+    MonsterAbilityRecord {
         key: "Ascomoid ~ Poison",
         name: "Poison",
         facet: MonsterAbilityFacet::SpecialQuality,
@@ -5612,6 +5629,97 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Ascomoid"],
         source_file: "b3_abilities_race.lst",
         source_line: 386,
+    },
+    MonsterAbilityRecord {
+        key: "Adhukait ~ Dance of Disaster",
+        name: "Dance of Disaster",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("Whenever an adhukait hits with a melee attack during a full-attack action, it can move 10 feet before making its next attack. The adhukait's normal speed does not limit this movement-it can move 10 feet after any successful hit among its four attacks, as long as it has another attack to make."),
+        description_variables: &[],
+        source_page: Some("p.22"),
+        owners: &["Asura (Adhukait)"],
+        source_file: "b3_abilities_race.lst",
+        source_line: 389,
+    },
+    MonsterAbilityRecord {
+        key: "Adhukait ~ Dual Mind",
+        name: "Dual Mind",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("An adhukait is a single creature with two distinct minds, so it can attempt two saving throws against mind-affecting effects. If either saving throw succeeds, the mind-affecting effect fails to affect the adhukait."),
+        description_variables: &[],
+        source_page: Some("p.22"),
+        owners: &["Asura (Adhukait)"],
+        source_file: "b3_abilities_race.lst",
+        source_line: 390,
+    },
+    MonsterAbilityRecord {
+        key: "Adhukait ~ Spell-Like Abilities",
+        name: "Spell-Like Abilities",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::SpellLike),
+        traits: &[],
+        description: Some("(CL 6th; concentration +9) At will- feather fall, greater teleport (self plus 50 lbs. of objects only), spider climb 3/day-blink, blur, mirror image, spike growth 1/day-summon (level 4, 1 adhukait 35%%)"),
+        description_variables: &[],
+        source_page: None,
+        owners: &["Asura (Adhukait)"],
+        source_file: "b3_abilities_race.lst",
+        source_line: 391,
+    },
+    MonsterAbilityRecord {
+        key: "Aghasura ~ Attraction Aura",
+        name: "Attraction Aura",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("An aghasura exudes a 50-foot aura whenever it remains motionless for at least 1 round. All nonevil creatures that enter this area must make a DC 21 Will save to avoid being compelled to move toward the aghasura's location. If the aghasura moves, the effect ends for all currently affected creatures. This is a mind-affecting compulsion. The save DC is Charisma-based."),
+        description_variables: &[],
+        source_page: Some("p.23"),
+        owners: &["Asura (Aghasura)"],
+        source_file: "b3_abilities_race.lst",
+        source_line: 394,
+    },
+    MonsterAbilityRecord {
+        key: "Aghasura ~ Dual Wielder",
+        name: "Dual Wielder",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("An aghasura does not take a penalty on attack or damage rolls when attacking with two weapons."),
+        description_variables: &[],
+        source_page: Some("p.23"),
+        owners: &["Asura (Aghasura)"],
+        source_file: "b3_abilities_race.lst",
+        source_line: 395,
+    },
+    MonsterAbilityRecord {
+        key: "Aghasura ~ Infused Weapons",
+        name: "Infused Weapons",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("Weapons an aghasura wields are considered to be magic for the purposes of overcoming damage reduction. In addition, such weapons gain the ability to deliver the aghasura's poison on a successful attack."),
+        description_variables: &[],
+        source_page: Some("p.23"),
+        owners: &["Asura (Aghasura)"],
+        source_file: "b3_abilities_race.lst",
+        source_line: 396,
+    },
+    MonsterAbilityRecord {
+        key: "Aghasura ~ Poison",
+        name: "Poison",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("Bite or weapon-injury; save Fort DC 23; frequency 1/round for 6 rounds; effect 1d4 Con damage; cure 2 consecutive saves."),
+        description_variables: &[],
+        source_page: Some("p.23"),
+        owners: &["Asura (Aghasura)"],
+        source_file: "b3_abilities_race.lst",
+        source_line: 397,
     },
     MonsterAbilityRecord {
         key: "Ecorche ~ Bleed",

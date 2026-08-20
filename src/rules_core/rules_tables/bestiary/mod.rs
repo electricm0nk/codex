@@ -153,7 +153,11 @@ mod tests {
     #[test]
     fn the_chassis_ships_the_books_complement() {
         assert_eq!(monsters().len(), 280);
-        assert_eq!(monster_abilities().len(), 399);
+        // 399 -> 467 (SD31-W21-MONSTER-001): the `CATEGORY:Internal` bundle-row
+        // ownership hop (`transcribe_monster_tables.py::find_internal_bundle_
+        // ability_refs`) resolved 68 previously-orphaned ability rows this
+        // book's monsters name only indirectly, through a bundle row.
+        assert_eq!(monster_abilities().len(), 467);
     }
 
     /// The four `.MOD`-only overlay rows are not records, pinned by the corpus
@@ -193,7 +197,9 @@ mod tests {
     /// direct pin, which cannot silently inherit the same blind spot again.
     #[test]
     fn the_shipped_total_is_the_books_real_measured_count() {
-        assert_eq!(monsters().len() + monster_abilities().len(), 679);
+        // 679 -> 747 (SD31-W21-MONSTER-001, +68 bundle-hop-owned abilities;
+        // see `the_chassis_ships_the_books_complement`'s own comment).
+        assert_eq!(monsters().len() + monster_abilities().len(), 747);
     }
 
     /// **The ruling, as a test.** Not one creature is served twice. This is the
