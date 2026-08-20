@@ -163,6 +163,7 @@ use super::rules_tables::RuleSetId;
 // modules, several thousand lines below, that call these functions via
 // `super::<name>` -- keeps resolving unqualified, name for name, with no
 // call site edited.
+mod class_feature_grant_consumer;
 mod class_slayer;
 mod class_ultimate_combat;
 use class_slayer::*;
@@ -8196,6 +8197,40 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     explain_selected_alternate_racial_traits(input, &mut explanations, &mut diagnostics);
 
     validate_fighter_feat_choice_legality(input, &mut diagnostics);
+
+    // SD31-W23-CLASSFEATURE-001: the generic GRANT-fact class_feature roster,
+    // deliberately called LAST -- after every per-class `explain_*_class_
+    // features`/`explain_*_level1_*` call above, most of which run OUTSIDE
+    // `compute_class_chassis` (e.g. `explain_fighter_class_features` at this
+    // function's own line ~8071, which pushes the real
+    // `class_feature.fighter.bravery` explanation well after
+    // `compute_class_chassis` already returned). An EARLIER call site inside
+    // `compute_class_chassis` itself was tried first and found live-broken:
+    // `sd20_contract_level_up_preview.rs::
+    // compute_level_up_preview_carries_real_fighter_level_2_grants` failed,
+    // because at that earlier point `explain_fighter_class_features` had not
+    // run yet, so this module's own already-computed-slug collision guard
+    // (see `class_feature_grant_consumer`'s doc comment, section on the
+    // Bravery collision) saw an empty set and could not suppress the
+    // colliding roster id. Calling this LAST, after every real explanation
+    // this function ever pushes, is what makes that guard actually work.
+    // Emitted only when `chassis_supported` (this function's own line ~8004)
+    // is true -- the brief's "supported chassis" precondition -- and only
+    // for the single-class case; see `class_feature_grant_consumer`'s doc
+    // comment for the full done-bar this satisfies and the anti-fabrication-
+    // gate/open-ended-choice-pool exclusions applied before anything is
+    // pushed. Pathfinder Unchained classes already push their own hand-
+    // curated roster from inside `compute_pu_class_chassis` (a DIFFERENT id
+    // namespace, `class_feature.pu.*`); this call is a no-op for them.
+    if chassis_supported {
+        if let [class_level] = input.chosen.class_levels.as_slice() {
+            class_feature_grant_consumer::push_generic_class_feature_grant_records(
+                &class_level.class_id,
+                class_level.level,
+                &mut explanations,
+            );
+        }
+    }
 
     PilotBaseChassisComputation {
         ability_modifiers,
