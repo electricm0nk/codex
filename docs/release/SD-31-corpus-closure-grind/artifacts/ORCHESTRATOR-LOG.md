@@ -922,3 +922,66 @@ roll-order widening). `class_feature`'s 809-unit internal reclassification (`unk
   arithmetic error, and an 11-unit previously-unexamined sub-population) — no code or board change
   resulted (the lane had banked 0 and carried no branch), but the corrected census is now the
   record for the next `monster`-kind cycle to start from (`OPEN-ISSUES.md` row 310).
+
+## Board after wave 18 (`SD31-W18-INTEGRATE-001`, 2026-08-19)
+
+Re-derived live with the producer's own `doneness_verdict()` over the committed
+`docs/work-inventory.json` — the same command as every prior wave's table, never transcribed from
+a lane's own receipt. Oracle pin `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`.
+**Denominator UNCHANGED — 38,372 = 38,372 — as required this wave (no operator-signed Structural
+Exclusion Register entry was needed or written).**
+
+| kind | total (wave 17) | total (wave 18) | done (wave 17) | done (wave 18) | delta |
+|---|---:|---:|---:|---:|---:|
+| class | 185 | 185 | 27 (14.5946%) | 27 (14.5946%) | +0 |
+| class_feature | 15,439 | 15,439 | 134 (0.8679%) | 134 (0.8679%) | +0 |
+| companion | 1,696 | 1,696 | 871 (51.3561%) | 871 (51.3561%) | +0 |
+| equipment | 6,208 | 6,208 | 5,312 (85.5670%) | 5,312 (85.5670%) | +0 |
+| equipment_modifier | 1,580 | 1,580 | 503 (31.8354%) | 508 (32.1519%) | **+5** |
+| feat | 2,610 | 2,610 | 1,459 (55.9004%) | 1,459 (55.9004%) | +0 |
+| monster | 1,270 | 1,270 | 973 (76.6142%) | 973 (76.6142%) | +0 |
+| monster_ability | 2,942 | 2,942 | 1,556 (52.8892%) | 1,556 (52.8892%) | +0 |
+| race | 95 | 95 | 34 (35.7895%) | 34 (35.7895%) | +0 |
+| race_trait | 3,504 | 3,504 | 520 (14.8402%) | 520 (14.8402%) | +0 |
+| spell | 2,843 | 2,843 | 1,503 (52.8667%) | 1,503 (52.8667%) | +0 |
+| **TOTAL** | **38,372** | **38,372** | **12,892 (33.5974%)** | **12,897 (33.6104%)** | **+5** |
+
+`+5 equipment_modifier` — the Amulet of Mighty Fists family (`core_rulebook:equipment_modifier:
+special_ability_{1..5}_amulet_of_mighty_fists`), `ingested-magnitude` → `grounded`, banked ONLY
+after this cycle's own merge-time fix closed a second consumer leak the merged lane's own re-land
+of OPEN-ISSUES row 309 left open (`resolve_weapon_to_hit_bonus`, the `applied_modifiers`-attachment
+path the shipped app actually uses — see `progress.md` §4). Zero `wiring_class` reclassification
+landed this wave (distinct from doneness movement, stated separately per instruction): the one lane
+that would have produced any — `wiring_class_classifier` — was independently re-verified GAMED and
+NOT merged (its own load-bearing acceptance gate, `decisions.md §1(e)`'s ground-truth-agreement
+test, regresses 170→169 on its own commit; re-confirmed myself in an isolated build before
+rejecting, not taken on the reviewer's word — `OPEN-ISSUES.md` row 315).
+
+### What wave 18 changed in the architecture, not just in the counts
+
+* **A shipped fix that only closed HALF of a known regression's two live consumer paths was caught
+  before merge, not after — the same failure shape wave 17 was burned by, at one more remove.**
+  Row 309 (Amulet of Mighty Fists' natural-attack scope) was re-opened for the SECOND time this
+  wave: the merged lane's own re-land guarded `damage_total::resolve_weapon_enhancement_modifier`
+  but left `equipment_effects::resolve_weapon_to_hit_bonus` — the function the shipped desktop app
+  actually calls via `applied_modifiers` attachment — leaking the bonus onto an ordinary weapon's
+  attack roll. Fixed at merge time with a matching guard, two new mutation-proved regression tests,
+  and a corrected module doc comment; the lane's 5 claimed units are banked only now that both
+  consumers are genuinely guarded (`OPEN-ISSUES.md` row 318).
+* **A wave-level adversarial-review finding that would have silently inflated the reported baseline
+  by 267 units was independently re-derived and refuted before it could distort the board.** The
+  finding — "a guarded regen at the unmodified base commit yields +267 done, so the frozen board
+  understates reality" — does not reproduce in an isolated, never-shared `CARGO_TARGET_DIR` (result:
+  byte-identical to the committed inventory). The board-before figure this cycle used, 12,892/38,372,
+  is the correct one. A downstream `race_trait` finding resting on the same contaminated measurement
+  (+52 units "recoverable from the regen alone") is corrected the same way (`OPEN-ISSUES.md` row 316).
+* **The intelligent-item subsystem the operator ruled in-scope now has one surface that genuinely
+  reaches a player on screen, independently driven and screenshotted this cycle** (`docs/architecture/
+  desktop-app.md`, `progress.md` §7) — a 152-record static component catalog — **and one that does
+  not yet**: the per-character engine resolver's own DTO field has no consuming screen anywhere in
+  the app. This is recorded plainly rather than credited as fully "done," per the dispatch's own
+  instruction that a resolver with no surface does not satisfy the ruling.
+* **A merge-only clippy break was caught and root-caused precisely** (run 1 FAILED, `desktop:8` vs.
+  ceiling `7`) — isolated to the exact one new lint, in the exact one file, via a controlled
+  base-vs-merged clippy diff in disposable isolated target dirs, rather than guessed at or
+  suppressed. Fixed, gate re-run, `RESULT: PASS` 34/34.

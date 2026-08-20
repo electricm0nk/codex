@@ -30679,3 +30679,290 @@ and their branches deleted after merge confirmation (`git branch -d`, requiring 
 ancestor of `tranche/11` — refuses silently on anything not actually merged, the same safety
 property `git branch -d` always provides).
 
+
+## `SD31-W18-INTEGRATE-001` — wave 18 integration cycle (2026-08-19)
+
+**Branch:** `tranche/11`, base `d39b66ad4` (confirmed: `git log --oneline -1` matched the dispatched
+tip; `ls docs data scripts schemas` all present — unlike waves 15/16/17's first attempt). **Oracle
+pin:** `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`. **Own `CARGO_TARGET_DIR`s:**
+`/home/ubuntu/cargo-targets/w18-integrate` (root+desktop), plus two throwaway isolated dirs used
+only to independently re-verify two disputed findings (`w18-integrate-classifier-check`,
+`w18-clippy-base`) — all deleted at cycle close. **Five lane results dispatched, three carried a
+commit (monster docs-only, intelligent_items:desktop, intelligent_items:engine); two banked 0 with
+no branch (class_feature, race_trait). Three adversarial reviews returning seven lane verdicts:
+three SOUND, two PARTIAL, two GAMED.**
+
+### 1. Merge/reject decision, and why
+
+| lane | branch | reviewer verdict | action |
+|---|---|---|---|
+| monster/monster_ability seam census | `worktree-wf_78ca9c19-55d-6` (`ec124f950`) | PARTIAL (one figure wrong, logged not fixed) | **MERGED**, docs-only |
+| intelligent_items:desktop | `worktree-wf_78ca9c19-55d-3` (`c94ad9d3e`) | SOUND | **MERGED** |
+| intelligent_items:engine | `worktree-wf_78ca9c19-55d-2` (`3254b7cae`) | GAMED (5 claimed units rest on a leaking fix) | **MERGED**, then the leak was closed at merge time — see §4 |
+| wiring_class_classifier | `worktree-wf_78ca9c19-55d-1` (`69d6e894e`) | GAMED | **NOT MERGED** — see §2 |
+| class_feature | (no branch) | SOUND, 0 claimed | nothing to merge |
+| race_trait | (no branch) | PARTIAL, 0 claimed | nothing to merge |
+
+Merge order: monster (clean) → intelligent_items:desktop (clean, no file overlap with the engine
+lane) → intelligent_items:engine (clean — `git merge --no-ff` on each, zero conflicts across all
+three; this wave's dispatch flagged the highest collision risk yet — a shared-infrastructure
+classifier plus a two-lane engine/UI split — and the collision never materialized because the
+classifier was rejected before merge and the desktop/engine lanes touch disjoint files).
+
+### 2. `wiring_class_classifier` REJECTED — independently re-verified, not taken on the reviewer's word
+
+Both reviewer-cited grounds were re-run myself, from scratch, in isolated `CARGO_TARGET_DIR`s never
+touched by any lane, before accepting the rejection:
+
+- **`decisions.md §1(e)`'s ground-truth-agreement gate — the classifier's ONLY acceptance
+  criterion — regresses.** `tests/sd31_e2_ground_truth_agreement.rs` (`#[ignore]`d, `--include-ignored`,
+  never run by `verify.sh`): at base `d39b66ad4`, fresh build → `ok, 170/185`. On the classifier's
+  own commit `69d6e894e` (same command, a second fresh isolated target dir) → **FAILS, `left: 169,
+  right: 170`** — one net new disagreement, `horror_adventures:class_feature:
+  occultist_archetype_haunt_collector`, hand-labelled `Computed` (confidence: high) against the
+  classifier's `Static`, the exact COST:0-archetype-grant shape its own new test asserts must be
+  Static.
+- Independently confirmed the counter-example that disproves the new constant's own doc claim:
+  `core_rulebook:equipment_modifier:special_ability_enhancement_cost` (`cr_equipmods.lst:153`)
+  really does carry `COST:%CHOICE` + `CHOOSE:NUMBER|...` (verified directly against the pinned
+  oracle) — a price that IS the player's choice, reclassified to `static:literal_magnitudes_only` →
+  done by the rejected commit.
+- OPEN-ISSUES row 268 (`does COST: count as a magnitude a guard can govern?`) has no operator ruling
+  anywhere in `decisions.md`/`OPERATOR-RULINGS-2026-08-19.md`; the commit answers it unilaterally
+  and banks 267 `done` units on that answer without ever touching row 268 itself.
+
+None of the classifier's branch content is merged. `docs/work-inventory.json` and the site feeds
+this cycle publishes reflect the classifier's PRE-image (wave 17's shipped `wiring_class.rs`), not
+this rejected lane's output. Full detail, plus the underlying real defect the lane was trying to
+fix (still open, unclaimed): `OPEN-ISSUES.md` row 315.
+
+### 3. A wave-level adversarial-review finding does NOT reproduce — corrected before it could distort the board
+
+One reviewer's "wave-level" confirmed finding claimed a guarded regen at the UNMODIFIED base commit
+yields `done=13,159` (+267 over committed `12,892`), and a second reviewer's `race_trait` PARTIAL
+verdict rested on the same shape (+52 units "recoverable from the regen alone, zero code touched").
+**Neither reproduces.** Ran the exact sanctioned sequence at base `d39b66ad4`, in a `CARGO_TARGET_DIR`
+created fresh for this cycle and never shared with any lane, oracle pin re-verified: result is
+**byte-identical to the committed `docs/work-inventory.json` except `generated_at`** — 0 changed
+verdicts, `done=12,892` both times. This matches (and vindicates) what the `class_feature` and
+`monster` lanes independently reported this same wave and the same review flagged as false. The
+reviewer's own +267/1,485-wiring_class-change signature is unit-for-unit, kind-for-kind identical
+to the classifier lane's own diff — the most likely mechanism is the AGENTS.md-documented
+`CARGO_TARGET_DIR` cross-contamination hazard (a shared/stale target dir serving one tree's compiled
+object code while nominally pointed at another). **Practical effect: this cycle's board-before,
+12,892/38,372 (33.5974%), is CONFIRMED correct** and used unchanged as the baseline below. Full
+detail: `OPEN-ISSUES.md` row 316.
+
+### 4. `intelligent_items:engine` — merged, then its row-309 re-land's SECOND leak was closed at merge time
+
+The lane's own re-land of OPEN-ISSUES row 309 (the Amulet of Mighty Fists natural-attack scope)
+guarded exactly one of the two live consumers: `damage_total::resolve_weapon_enhancement_modifier`
+(the top-level-selection `weapon_enhancement_bonus` path). It left `equipment_effects::
+resolve_weapon_to_hit_bonus` — the function actually called, via `selection.applied_modifiers`, for
+`to_hit_bonus`/`attack_bonus_delta`, the SAME attachment shape the shipped desktop app's
+`attach_equipment_modifier_at_root` uses — unguarded. Reproduced live before the fix: an Amulet of
+Mighty Fists +1 attached to a Longsword via `applied_modifiers` yielded `to_hit_bonus = Some(1)` /
+`attack_bonus_delta = Some(1)` — the same class of player-facing regression row 309 was originally
+opened for.
+
+**Fixed at merge time:** `resolve_weapon_to_hit_bonus` now takes the owning weapon's own
+`EquipmentRecord` and skips a `natural_attack_only` bonus unless the weapon being resolved is itself
+a real natural attack — the identical guard `resolve_weapon_enhancement_modifier` already used. Two
+new regression tests added (`amulet_of_mighty_fists_attached_as_a_modifier_does_not_leak_onto_an_
+ordinary_longsword` + its positive control), mutation-proved: removing the new guard line reproduces
+`left: Some(1), right: Some(0)`; restoring it returns 49/49 `equipment_effects` tests green. Module
+doc comment corrected to name both consumers. **With both consumers now genuinely guarded, the 5
+`equipment_modifier` units (Amulet of Mighty Fists family) are banked as `done`** — verified with the
+real driver (the same `compute_equipment_effects` end-to-end path the app calls, not the
+recognition-only `equipment_key_is_wired` probe alone). Full detail: `OPEN-ISSUES.md` row 318.
+
+Also fixed this cycle, from the same reviewer's confirmed findings: `IntelligentItemContribution.
+ego_bonus`'s doc comment now states plainly it is a partial sum, never a resolved total Ego score
+(the Base record's own `BaseCostTracker`-formula contribution is honestly skipped, not fabricated —
+MEDIUM finding, cheap doc-only fix, no behavior change). The PI-screening `mechanics[]` gap on the
+desktop catalog (LOW, 0 live exposure, reviewer-confirmed via mutation) was logged, not fixed this
+cycle — proportionate follow-on, not gate-closing-time-pressure work. `OPEN-ISSUES.md` row 319.
+
+### 5. The board, replayed and never asserted
+
+```
+python3 -c "
+import json, collections, sys
+sys.path.insert(0,'scripts/observer'); import pf1e_dashboard_producer as P
+U=[u for u in json.load(open('docs/work-inventory.json'))['units'] if u['book'] not in P.EXCLUDED_BOOKS]
+c=collections.Counter(P.doneness_verdict(u['wiring_class'],u['status'],u['kind']) for u in U)
+print(dict(c), len(U), '%.4f%%'%(100*c['done']/len(U)))
+"
+```
+
+| | BEFORE (`d39b66ad4`, dispatch board, independently re-confirmed §3) | AFTER (this cycle) |
+|---|---:|---:|
+| **done** | **12,892 (33.5974 %)** | **12,897 (33.6104 %)** |
+| held | 1,177 | 1,177 |
+| in-progress | 1,279 | 1,274 |
+| not-started | 18,711 | 18,711 |
+| unmeasurable | 4,270 | 4,270 |
+| deferred | 43 | 43 |
+| **denominator** | **38,372** | **38,372** |
+
+**+5 done. Denominator UNCHANGED — 38,372 = 38,372** (no Structural Exclusion Register entry needed
+or written). Per-kind identity-checked, not just arithmetic (`git show <base>:docs/work-inventory.json`
+vs. committed, joined on unit `id`): **exactly 5 ids changed status, all `core_rulebook:
+equipment_modifier:special_ability_{1..5}_amulet_of_mighty_fists`, `ingested-magnitude` →
+`grounded`, `computed` wiring_class unchanged, 0 other ids touched.** `wiring_class` field changes
+corpus-wide: **0** (the classifier lane, the only source of any this wave, was rejected). Zero units
+withdrawn from `done` in either direction.
+
+| kind | total | done (before) | done (after) | delta |
+|---|---:|---:|---:|---:|
+| class | 185 | 27 (14.5946%) | 27 (14.5946%) | +0 |
+| class_feature | 15,439 | 134 (0.8679%) | 134 (0.8679%) | +0 |
+| companion | 1,696 | 871 (51.3561%) | 871 (51.3561%) | +0 |
+| equipment | 6,208 | 5,312 (85.5670%) | 5,312 (85.5670%) | +0 |
+| equipment_modifier | 1,580 | 503 (31.8354%) | **508 (32.1519%)** | **+5** |
+| feat | 2,610 | 1,459 (55.9004%) | 1,459 (55.9004%) | +0 |
+| monster | 1,270 | 973 (76.6142%) | 973 (76.6142%) | +0 |
+| monster_ability | 2,942 | 1,556 (52.8892%) | 1,556 (52.8892%) | +0 |
+| race | 95 | 34 (35.7895%) | 34 (35.7895%) | +0 |
+| race_trait | 3,504 | 520 (14.8402%) | 520 (14.8402%) | +0 |
+| spell | 2,843 | 1,503 (52.8667%) | 1,503 (52.8667%) | +0 |
+| **TOTAL** | **38,372** | **12,892 (33.5974%)** | **12,897 (33.6104%)** | **+5** |
+
+**RECLASSIFICATION vs. DONENESS MOVEMENT, stated separately, per instruction:** zero `wiring_class`
+reclassification landed this wave (the only lane that would have produced any — the classifier — was
+rejected). The +5 is pure doneness movement within an unchanged `wiring_class` (`computed`,
+unchanged both sides) driven entirely by a `status` transition (`ingested-magnitude` → `grounded`),
+itself driven by closing a real engine-consumer defect (§4), not by any bar being lowered.
+
+### 6. Merged monster lane's own correction, and one figure fixed in it
+
+`OPEN-ISSUES.md` row 313 (the monster lane's own committed content) states `monster_ability` held as
+241; the shipped `doneness_verdict()` gives **251** — the `ambiguous`+`text-complete` sub-population
+(10 units) was silently dropped from the predicate used, the identical wave-17 row-311 failure
+shape. Corrected via a new append-only row (`OPEN-ISSUES.md` row 317) rather than editing row 313 in
+place. Row 314's own 21-unit `ultimate_psionics` finding (real ingest-gap diagnosis, RULING-NEEDED)
+is unaffected and untouched.
+
+### 7. Intelligent-item subsystem: does it reach a player on screen? (instruction 9)
+
+**Two genuinely separate surfaces, checked separately — one reaches a screen today, one does not.**
+
+- **The DESKTOP CATALOG (`intelligent_item_catalog.rs` + `IntelligentItemCatalogScreen.tsx`) DOES
+  reach a player on screen, independently re-verified with the real driver this cycle** (not merely
+  trusted from the lane's own screenshots or the reviewer's chain-trace): launched the actual Tauri
+  app under Xvfb (`RUN_DESKTOP_AGENT=w18integrate`), clicked Landing → "Browse Intelligent Item
+  Components", and captured a live screenshot showing all 152 real components (81 Core Rulebook + 71
+  Mythic Adventures) with the Base record's real price-bracket Ego formula rendered as prose; then
+  typed "Wisdom 15" into the live search box and confirmed it correctly filters to the 2 real
+  matching records, each showing the correct literal `Ego +2` / `Wisdom +5` — a value independently
+  cross-checked against the pinned oracle earlier this cycle. Both screenshots sent to the user this
+  cycle. This is a STATIC component reference (every possible Intelligent Item modifier PCGen
+  defines), not a per-character view.
+- **The ENGINE RESOLVER's own output (`ResolvedEquipmentEffect.intelligent_item`, a SPECIFIC
+  character's equipped item's resolved contribution) does NOT reach any screen.** Confirmed by
+  source read, not assumption: `grep -rn "intelligent_item" apps/desktop/src-tauri/src/
+  character_hub.rs apps/desktop/src/characterHub/*.tsx apps/desktop/src/characterHub/*.ts` returns
+  zero hits outside the catalog's own mode-routing wiring — no character-sheet surface reads this
+  field. This matches both lanes' own honest disclosure (the desktop lane could not coordinate with
+  the engine lane at dispatch time, so it built a self-contained corpus reader instead of consuming
+  the resolver's DTO) and is the correct application of DoD-8: a resolver with no consuming screen
+  does not itself satisfy the operator's in-scope ruling — only the catalog does, today. The engine
+  resolver's 5 banked units (§4) reached `done` via the shipped `equipment_key_is_wired` probe
+  (parser recognition against the real `compute_equipment_effects` path, now leak-free) and a
+  character build reading its OWN weapon's resolved `to_hit_bonus`/damage total on the existing
+  Character Sheet's Attack Bonus stat tile — a real, already-shipped screen — NOT via any new
+  intelligent-item-specific screen. The natural next step (named by both lanes, not attempted this
+  cycle, proportionate follow-on): reconcile the catalog's static reference against the resolver's
+  per-character output in a "this character's equipped intelligent item" view.
+
+### 8. Guarded regen, run for real (twice — merge-time and idempotency proof)
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out $S/sweep-merged.json
+# corpus-literal-sweep: 26105 records examined of 26741 read, 0 findings, CLEAN
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out $S/fixture-merged.json
+# derived-evaluator-fixture-check: 1777 unit(s) cleared over 2506 fixture row(s); 0 failed
+CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... CODEX_REPO_ROOT=<this checkout> \
+  cargo run --locked --bin v06_work_inventory
+```
+
+Never `--allow-stamp-loss` — not needed, no stamp-loss message appeared. **Idempotency proven**: two
+consecutive `v06_work_inventory` runs against the merged, post-fix tree produced byte-identical JSON
+excluding `generated_at` (`json.load` equality with `generated_at` popped from each — `True`).
+
+### 9. Site publish
+
+`./scripts/publish-site-dashboard.sh` (real publish, `CODEX_REPO_ROOT` pinned to this checkout) —
+wrote `site/dashboard/PF1e-dashboard.json` and 30 `site/status-data/*.json` book-detail files
+(36,008 items). `--check` confirms both current. **`core_essentials` confirmed absent from
+`docs/work-inventory.json`'s `books` map and 0 units** (`decisions.md §9`'s discharge, wave 16, has
+NOT regressed) — the 3 hits `grep` finds in `site/dashboard/PF1e-dashboard.json` are a SEPARATE,
+pre-existing (unchanged since `d39b66ad4`) book-onboarding matrix section (`status: "unassigned"`),
+not the unit-count doneness board; confirmed via `git show d39b66ad4:site/dashboard/PF1e-dashboard.json
+| grep -c core_essentials` → 3, identical count at base.
+
+### 10. Full gate — run 1 FAILED (merge-only break, as every prior wave's dispatch warned to expect), run 2 PASSED
+
+**Run 1: `RESULT: FAIL`.** `clippy` — `desktop:8 warnings exceeds recorded ceiling 7`. Isolated the
+exact new lint via a clean `d39b66ad4` clippy run in an untouched worktree + a fresh, unshared
+`CARGO_TARGET_DIR` (`/home/ubuntu/cargo-targets/w18-clippy-base`, deleted after use): base measured
+**7**, matching the recorded ceiling exactly; the merged tree measured **8** — exactly one new
+diagnostic, `clippy::manual_split_once` in the merged `intelligent_item_catalog.rs:305`
+(`key.splitn(2, '~').nth(1)` → `key.split_once('~').map(|x| x.1)`). Fixed, 16/16
+`intelligent_item_catalog` tests re-confirmed green, clippy re-measured at exactly 7/7 before
+restarting the gate. Every other stage in run 1 had already passed (`root-lib` 2,132, `root-full`
+7,206/574 suites, `desktop` 490, `reach` 30) — this was purely the clippy regression.
+
+**Run 2: `RESULT: PASS`, 34/34 stages.**
+
+```
+SUMMARY
+  passed:  34  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest
+  pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check
+  site-dashboard-pi-gate build-public-status-selftest site-public-status-check
+  site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest
+  reachability-audit groundtruth-guard-selftest supersession-gate-selftest pi-sweep
+  declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest
+  root-lib root-full desktop reach corpus-sweep supersession-gate frontend-install
+  frontend-test frontend-typecheck clippy class-dump
+RESULT: PASS
+```
+
+`root-lib` **2,132 passed** (root workspace `cargo test --locked --lib`). `root-full` **7,206 passed
+across 574 suites, all 537 `tests/*.rs` suites executed**. `desktop` **490 passed** (`apps/desktop/
+src-tauri`, its own separate cargo workspace, tested explicitly per instruction — this wave added a
+new desktop UI surface). `reach` **30 passed** (`reach_gate`). `corpus-sweep` **26,105 records
+examined of 26,741 read, 0 findings**. `supersession-gate` **116 objects, all clean**. `frontend-test`
+**100/100 files**. `frontend-typecheck` clean. `clippy` **root:50 desktop:7 warnings, 0 errors**.
+Both PI gates zero-leaked against 1,612 declared-PI names. `reachability-audit` **98.94% reachable
+ceiling**.
+
+`scripts/verify-baselines.env` updated (floors only ever raised, one ceiling deliberately
+tightened): `BASELINE_ROOT_LIB_TESTS` 2110→2132 (+22: the two merged lanes' own test modules plus
+this cycle's 2 new row-309 regression tests). `BASELINE_ROOT_FULL_TESTS` 7184→7206 (+22, same
+delta). `BASELINE_DESKTOP_TESTS` 474→490 (+16: `intelligent_item_catalog.rs`'s own 16 tests — the
+classifier lane's own would-be 61 never landed, correctly). `BASELINE_FRONTEND_TEST_FILES` 99→100
+(+1). `BASELINE_CLIPPY_WARNINGS_ROOT` ceiling tightened 51→50 (not traced to any file this wave).
+`BASELINE_ROOT_TEST_BINARIES` (574) and `BASELINE_CLIPPY_WARNINGS_DESKTOP` (7) unchanged.
+`BASELINE_COMPUTED_CLASSES` (31) unchanged.
+
+### 11. Architecture docs refreshed
+
+`docs/architecture/rules-engine.md` — the equipment-effects section now names the wave-18
+intelligent-item resolver (5th category beyond Epic 5's original four), the `natural_attack_only`
+field and its now-dual-guarded consumers, and the catalog/resolver reconciliation gap. `docs/
+architecture/desktop-app.md` — new `list_intelligent_item_catalog` command-table row, corrected the
+stale `Mode` union (had drifted, missing `monsterCatalog`/`companionCatalog` from an EARLIER wave,
+caught and fixed while touching this line), and the Landing-screen catalog list.
+
+### 12. Cleanup
+
+`/home/ubuntu/cargo-targets/w18-integrate`, `w18-integrate-desktop`,
+`w18-integrate-classifier-check`, `w18-clippy-base` all deleted at cycle close. All worktrees that
+carried a merged commit (`wf_78ca9c19-55d-2`, `-3`, `-6`) plus the rejected classifier worktree
+(`-1`) and every worktree that carried no commit (`-4`, `-5`, `-7`, `-8`, `-9`) removed via `git
+worktree remove --force` where needed; branches deleted after merge confirmation via `git branch -d`
+(refuses on anything not an ancestor of `tranche/11`) for merged branches, `git branch -D` only for
+the confirmed-rejected classifier branch (its content is fully preserved in `OPEN-ISSUES.md` row 315
+and in the (unmerged) commit object itself, retrievable by SHA `69d6e894e` if ever needed again).
+`sd31/racetrait4-SD31-E6-F4-005` untouched, not gated, not merged, per standing instruction.
