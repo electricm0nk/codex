@@ -152,14 +152,20 @@ citation for the split — not a receipt's prose.
   script's own `IN_SCOPE_RACES`, which had drifted stale at 18 races across
   three later widenings (18→24→30→34) that never touched this Python copy;
   it now reads the Rust declaration at import time instead of
-  re-transcribing it. **2,671** of the 3,504 `race_trait` units are
-  chassis-blocked residue that no race-trait ingest can ever ground
-  (3,504 − 833); of the 833-row ceiling, the script's own join against
+  re-transcribing it. Of the 833-row ceiling, the script's own join against
   `docs/work-inventory.json` by `(book, source_file, source_line)` matches
-  439 to a recorded unit (394 ceiling rows have no match — an open,
-  unresolved join gap in the script itself, not yet root-caused) and finds
-  224 `grounded`, 119 `ingested-magnitude`, 74 `not-ingested`, 14
-  `text-complete`, 8 `literal-verified` among those 439. The engine's
+  only **439** to a recorded board unit — the other 394 ceiling rows are all
+  `core_essentials`, a book with **zero** units of any kind in
+  `docs/work-inventory.json` (Decision 9 already rules it out of the board's
+  scope; corrected 2026-08-20 wave-21 integration, which found the prior
+  wording's "open, unresolved join gap" framing was refuted by the script's
+  own per-book breakdown). So **3,065** of the 3,504 `race_trait` units are
+  chassis-blocked residue that no race-trait ingest can ever ground
+  (3,504 − 439, not 3,504 − 833: the 394 `core_essentials` ceiling rows were
+  never members of the 3,504 `race_trait` board population and cannot be
+  subtracted from it). Among the 439 matched units: 224 `grounded`, 119
+  `ingested-magnitude`, 74 `not-ingested`, 14 `text-complete`, 8
+  `literal-verified`. The engine's
   separate `crb::race_tables::race_traits()` still models 7 races — that is
   the *compute* surface, not the ingest surface, and the two must not be
   conflated as the 2026-08-11 pass did.

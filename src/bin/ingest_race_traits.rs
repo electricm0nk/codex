@@ -74,7 +74,7 @@
 //!
 //! # A book's own race scope is not this binary's to widen
 //!
-//! [`IN_SCOPE_RACES`] is the 18 races whose chassis this project has ingested.
+//! [`IN_SCOPE_RACES`] is the 34 races whose chassis this project has ingested (widened 18 -> 24 -> 30 -> 34 across SD-31 waves; see the widening comments on the declaration itself).
 //! A row belonging to any other race is **counted and reported, never
 //! written** — Monster Codex's six Ratfolk alternates are the live instance.
 //! Writing them would create the only Ratfolk content in the repo, for a race
@@ -287,7 +287,7 @@ const BOOK_SOURCES: &[BookSource] = &[
     },
 ];
 
-/// The 18 in-scope races (`decisions.md §25.3`), spelled exactly as the corpus
+/// The 34 in-scope races (`decisions.md §25.3` plus subsequent SD-31 widenings), spelled exactly as the corpus
 /// spells them in its `TYPE:<Race> Racial Trait` component.
 // Widened 18 -> 24 by SD-31 Epic 1-F2 (2026-08-15): Bestiary 2's 6
 // non-heritage races (Dhampir excluded -- see `ingest_races.rs`'s
