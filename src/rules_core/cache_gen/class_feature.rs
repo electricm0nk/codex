@@ -807,4 +807,63 @@ mod tests {
         assert_eq!(map.get("Weapon Master ~ Bravery").map(String::as_str), Some("Fighter"));
         std::fs::remove_dir_all(&tmp).ok();
     }
+
+    /// End-to-end regression, wave-23 integration review finding: every
+    /// `true_class_by_key` test above exercises the helper in isolation --
+    /// none of them prove [`generate`] actually WIRES its result into the
+    /// shipped `data.class` field. A verbatim revert of `generate`'s one
+    /// load-bearing line (`true_class.get(&unit.key).cloned().or_else(||
+    /// key_owner.clone())` -> `key_owner.clone()`) left the entire lib
+    /// suite green, because nothing called `generate` with real grant data
+    /// and checked its OUTPUT. This does: a real `Sigilus ~ Inscribe Rune`
+    /// row (the exact `OPEN-ISSUES.md` row 334 example) goes through the
+    /// whole pipeline -- corpus row read, wiring-class index, PI screen,
+    /// directory placement -- and the written JSON file's `data.class` must
+    /// be `"Magus"`, not `"Sigilus"` (the key-prefix guess `generate` used
+    /// before this cycle, and what it falls back to for every key with no
+    /// grant fact).
+    #[test]
+    fn generate_writes_the_true_class_not_the_key_prefix_guess() {
+        let tmp = std::env::temp_dir().join(format!("cf-generate-e2e-{}", std::process::id()));
+        let corpus_root = tmp.join("corpus_root");
+        let grants_root = tmp.join("grants_root");
+        let out_dir = tmp.join("out");
+        std::fs::remove_dir_all(&tmp).ok();
+
+        let book_dir = corpus_root.join("pathfinder/paizo/roleplaying_game/adventurers_guide");
+        std::fs::create_dir_all(&book_dir).unwrap();
+        std::fs::write(
+            book_dir.join("ag_abilities_class.lst"),
+            "Inscribe Rune\t\tKEY:Sigilus ~ Inscribe Rune\t\tCATEGORY:Special Ability\tDESC:You inscribe a rune.\n",
+        )
+        .unwrap();
+
+        write_grant_file(&grants_root.join("adventurers_guide"), "magus", &[("Sigilus ~ Inscribe Rune", "Magus")]);
+
+        let units = vec![ClassFeatureSourceUnit {
+            book: "adventurers_guide".to_string(),
+            source_file: "ag_abilities_class.lst".to_string(),
+            source_line: 1,
+            key: "Sigilus ~ Inscribe Rune".to_string(),
+            name: "Inscribe Rune".to_string(),
+        }];
+
+        let report =
+            generate(&corpus_root, &grants_root, &out_dir, "2026-08-20T00:00:00Z", &units).expect("generate must succeed against a well-formed fixture");
+        assert_eq!(report.written, 1, "the one fixture unit must be written exactly once");
+
+        // Directory placement stays keyed on the key's own owner segment
+        // ("Sigilus") -- see `generate`'s own comment -- only the `class`
+        // field's VALUE is corrected.
+        let written = std::fs::read_to_string(out_dir.join("adventurers_guide/class_feature/sigilus/inscribe_rune.json"))
+            .expect("generate must write to the key-owner-keyed path even when `class` is corrected");
+        let json: Value = serde_json::from_str(&written).unwrap();
+        assert_eq!(
+            json["data"]["class"].as_str(),
+            Some("Magus"),
+            "generate() must ship the grant-fact-corrected class, not the key-prefix guess (\"Sigilus\"): {written}"
+        );
+
+        std::fs::remove_dir_all(&tmp).ok();
+    }
 }
