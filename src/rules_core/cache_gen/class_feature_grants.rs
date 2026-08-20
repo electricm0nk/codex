@@ -328,12 +328,17 @@ fn mod_row_class(field0: &str) -> Option<String> {
     if class.is_empty() { None } else { Some(class.to_string()) }
 }
 
+/// One `PRECLASS:` clause: `(class-name, explicit-level-if-any)` --
+/// factored out of `Gate::preclass` to satisfy clippy's `type_complexity`
+/// lint (integration-cycle fix, wave 22).
+type PreclassClause = (String, Option<u8>);
+
 /// One gate's parsed PRE* content, kept only as far as this module's
 /// resolution rules need.
 #[derive(Default)]
 struct Gate {
     /// `Some((count, [(class, level)]))` for a non-negated `PRECLASS:`.
-    preclass: Option<(u32, Vec<(String, Option<u8>)>)>,
+    preclass: Option<(u32, Vec<PreclassClause>)>,
     /// `Some((var, level))` for a non-negated `PREVARGTEQ:`.
     prevargteq: Option<(String, u8)>,
     /// Every other gate kind seen, negation-prefixed, for diagnostics.
@@ -350,7 +355,7 @@ fn parse_gate(gate_segments: &[&str]) -> Gate {
             "PRECLASS" if !negated => {
                 let mut parts = rest.split(',');
                 let count: u32 = parts.next().and_then(|s| s.parse().ok()).unwrap_or(0);
-                let clauses: Vec<(String, Option<u8>)> = parts
+                let clauses: Vec<PreclassClause> = parts
                     .map(|p| match p.split_once('=') {
                         Some((cls, lvl)) => (cls.to_string(), lvl.parse::<u8>().ok()),
                         None => (p.to_string(), None),
@@ -359,10 +364,10 @@ fn parse_gate(gate_segments: &[&str]) -> Gate {
                 gate.preclass = Some((count, clauses));
             }
             "PREVARGTEQ" if !negated => {
-                if let Some((var, n)) = rest.split_once(',') {
-                    if let Ok(n) = n.trim().parse::<u8>() {
-                        gate.prevargteq = Some((var.to_string(), n));
-                    }
+                if let Some((var, n)) = rest.split_once(',')
+                    && let Ok(n) = n.trim().parse::<u8>()
+                {
+                    gate.prevargteq = Some((var.to_string(), n));
                 }
             }
             _ => gate.other_kinds.push(format!("{}{name}", if negated { "!" } else { "" })),

@@ -360,7 +360,7 @@ mod tests {
             index.get(&("core_rulebook".to_string(), "Rogue Talent ~ Ledge Walker".to_string())),
             Some(&"This ability allows you to move along narrow surfaces at full speed using the Acrobatics skill without penalty. In addition, you are not flat-footed when using Acrobatics to move along narrow surfaces.".to_string())
         );
-        assert!(index.get(&("core_rulebook".to_string(), "Rogue Talent ~ Bleeding Attack".to_string())).is_none());
+        assert!(!index.contains_key(&("core_rulebook".to_string(), "Rogue Talent ~ Bleeding Attack".to_string())));
     }
 }
 
