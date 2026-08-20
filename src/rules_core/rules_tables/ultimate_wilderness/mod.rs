@@ -11,6 +11,7 @@
 pub mod archetype_tables;
 mod companion_data;
 pub mod feat_tables;
+pub mod spell_list;
 
 pub use super::companion_chassis::{CompanionAbilityRecord, CompanionRecord};
 

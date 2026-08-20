@@ -55,7 +55,7 @@ use codex::rules_core::pilot_compute::{
 use codex::rules_core::rules_tables::class_spell_levels;
 use codex::rules_core::rules_tables::{
     acg, advanced_race_guide, apg, crb, inner_sea_gods, occult_adventures, ultimate_combat,
-    ultimate_intrigue, ultimate_magic,
+    ultimate_intrigue, ultimate_magic, ultimate_wilderness,
 };
 
 const WIZARD_LEVEL_3_FIXTURE: &str =
@@ -126,6 +126,7 @@ fn full_desktop_spell_catalog() -> Vec<&'static str> {
         .chain(occult_adventures::spell_list::SPELL_LIST.iter().map(|e| e.key))
         .chain(ultimate_combat::spell_list::SPELL_LIST.iter().map(|e| e.key))
         .chain(inner_sea_gods::spell_list::SPELL_LIST.iter().map(|e| e.key))
+        .chain(ultimate_wilderness::spell_list::SPELL_LIST.iter().map(|e| e.key))
         .collect()
 }
 
@@ -173,12 +174,12 @@ fn every_catalog_row_off_the_wizard_list_is_refused() {
 
     assert_eq!(
         catalog.len(),
-        1950,
+        2011,
         "the desktop Add Spell picker serves this many records"
     );
     assert_eq!(
         off_list.len(),
-        1308,
+        1369,
         "this many of them are on no wizard list in any ingested book"
     );
 

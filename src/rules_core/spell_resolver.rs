@@ -19,7 +19,7 @@ use crate::rules_core::rules_tables::crb::spell_list::SPELL_LIST;
 use crate::rules_core::rules_tables::RuleSetId;
 use crate::rules_core::rules_tables::{
     acg, advanced_race_guide, apg, crb, inner_sea_gods, occult_adventures, ultimate_combat,
-    ultimate_intrigue, ultimate_magic,
+    ultimate_intrigue, ultimate_magic, ultimate_wilderness,
 };
 use crate::rules_core::source_content::{SourceContentKind, SourcePackageContent};
 
@@ -51,6 +51,11 @@ pub const SPELL_BOOK_UC: &str = "UC";
 /// `.lst` file of their own -- their residual is monster-intrinsic
 /// spell-like-ability data, a different shape, not a book-chaining gap.)
 pub const SPELL_BOOK_ISG: &str = "ISG";
+/// SD-31 wave-19 (`ultimate_wilderness` lane): Ultimate Wilderness, the
+/// tenth book -- 61 base spell declarations (`uw_spells.lst`), the whole of
+/// this book's `spell`-kind `not-ingested` population. See
+/// `src/bin/ingest_ultimate_wilderness_spells.rs` for the ingest path.
+pub const SPELL_BOOK_UW: &str = "UW";
 
 /// One ingested spell record, normalized across every book's own
 /// `spell_list` table.
@@ -190,6 +195,13 @@ pub fn spell_catalog_rows() -> &'static [SpellCatalogRow] {
             level: entry.level,
             description: entry.description,
         });
+        let uw_rows = ultimate_wilderness::spell_list::SPELL_LIST.iter().map(|entry| SpellCatalogRow {
+            book: SPELL_BOOK_UW,
+            key: entry.key,
+            school: entry.school.map(|school| format!("{school:?}")),
+            level: entry.level,
+            description: entry.description,
+        });
         crb_rows
             .chain(apg_rows)
             .chain(acg_rows)
@@ -199,6 +211,7 @@ pub fn spell_catalog_rows() -> &'static [SpellCatalogRow] {
             .chain(oa_rows)
             .chain(uc_rows)
             .chain(isg_rows)
+            .chain(uw_rows)
             .collect()
     })
 }

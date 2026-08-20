@@ -8,7 +8,9 @@
 //! (269, since SD31-E6-F2-002), `occult_adventures::spell_list`
 //! (144, since SD31-E6-F2-003), `ultimate_combat::spell_list` (146, since
 //! SD31-E6-F2-004) and, since SD31-E6-F10-001,
-//! `inner_sea_gods::spell_list` (92) — 1950 in total. This adapter
+//! `inner_sea_gods::spell_list` (92) and, since SD-31 wave-19
+//! (`ultimate_wilderness` lane), `ultimate_wilderness::spell_list` (61) —
+//! 2011 in total. This adapter
 //! never chains a book by hand; it reads `spell_resolver::spell_catalog_rows()`
 //! (see `build_spell_catalog` below), so a book widening that registry
 //! reaches this DTO automatically. The per-book count is still worth
@@ -75,7 +77,7 @@ use codex::rules_core::derived_evaluator_fixture_check::{
 use codex::rules_core::pcgen_desc::render_pcgen_desc;
 use codex::rules_core::rules_tables::{
     acg, advanced_race_guide, apg, crb, inner_sea_gods, occult_adventures, ultimate_combat,
-    ultimate_intrigue, ultimate_magic,
+    ultimate_intrigue, ultimate_magic, ultimate_wilderness,
 };
 use codex::rules_core::spell_resolver;
 
@@ -92,6 +94,7 @@ const BOOK_UM: &str = "UM";
 const BOOK_OA: &str = "OA";
 const BOOK_UC: &str = "UC";
 const BOOK_ISG: &str = "ISG";
+const BOOK_UW: &str = "UW";
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -342,6 +345,24 @@ fn map_isg_entry(entry: &inner_sea_gods::spell_list::SpellListEntry) -> SpellCat
     }
 }
 
+/// UW's table types `school`, `level` and `description` optionally, like
+/// UC's/ISG's -- SD-31 wave-19's `ultimate_wilderness` lane ingest found
+/// every one of the 61 base declarations carries all three, but the table
+/// keeps the `Option` shape every sibling per-book table uses rather than
+/// asserting non-optionality this book's own corpus happens not to
+/// exercise (`src/bin/ingest_ultimate_wilderness_spells.rs`).
+fn map_uw_entry(entry: &ultimate_wilderness::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_UW.to_string(),
+        school: entry.school.map(|school| format!("{school:?}")),
+        level: entry.level,
+        description: entry.description.map(serve_description),
+        duration: duration_for(BOOK_UW, entry.key),
+        range: range_for(BOOK_UW, entry.key),
+    }
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SpellCatalogResponse {
@@ -470,6 +491,7 @@ mod tests {
             .chain(occult_adventures::spell_list::SPELL_LIST.iter().map(map_oa_entry))
             .chain(ultimate_combat::spell_list::SPELL_LIST.iter().map(map_uc_entry))
             .chain(inner_sea_gods::spell_list::SPELL_LIST.iter().map(map_isg_entry))
+            .chain(ultimate_wilderness::spell_list::SPELL_LIST.iter().map(map_uw_entry))
             .collect();
         let actual = build_spell_catalog().entries;
         assert_eq!(actual.len(), expected.len());
@@ -485,7 +507,9 @@ mod tests {
     #[test]
     fn the_catalog_serves_every_ingested_book_not_only_crb() {
         let response = build_spell_catalog();
-        assert_eq!(response.entries.len(), 1950);
+        // SD-31 wave-19 (`ultimate_wilderness` lane): +61 UW spells, the
+        // tenth book, 1950 -> 2011.
+        assert_eq!(response.entries.len(), 2011);
         assert_eq!(book_entries(BOOK_CRB).len(), 664);
         assert_eq!(book_entries(BOOK_APG).len(), 297);
         assert_eq!(book_entries(BOOK_ACG).len(), 144);
@@ -495,6 +519,7 @@ mod tests {
         assert_eq!(book_entries(BOOK_OA).len(), 144);
         assert_eq!(book_entries(BOOK_UC).len(), 146);
         assert_eq!(book_entries(BOOK_ISG).len(), 92);
+        assert_eq!(book_entries(BOOK_UW).len(), 61);
     }
 
     #[test]
@@ -523,7 +548,7 @@ mod tests {
             assert!(
                 [
                     BOOK_CRB, BOOK_APG, BOOK_ACG, BOOK_ARG, BOOK_UI, BOOK_UM, BOOK_OA, BOOK_UC,
-                    BOOK_ISG
+                    BOOK_ISG, BOOK_UW
                 ]
                 .contains(&entry.book.as_str())
             );

@@ -39,6 +39,7 @@ export const BOOK_LABELS: Record<string, string> = {
   OA: 'Occult Adventures',
   UC: 'Ultimate Combat',
   ISG: 'Inner Sea Gods',
+  UW: 'Ultimate Wilderness',
 };
 
 /**
@@ -55,9 +56,10 @@ export const BOOK_LABELS: Record<string, string> = {
  * `SpellCatalogScreen.test.ts`'s header. UM (SD31-E6-F2-002), OA
  * (SD31-E6-F2-003), UC (SD31-E6-F2-004) and ISG (SD31-E6-F10-001) are added
  * here deliberately, in the same edit as their respective Rust widenings,
- * to not reproduce that exact defect a second time.
+ * to not reproduce that exact defect a second time. UW (SD-31 wave-19,
+ * `ultimate_wilderness` lane) is added the same way.
  */
-export const BOOK_ORDER = ['CRB', 'APG', 'ACG', 'ARG', 'UI', 'UM', 'OA', 'UC', 'ISG'] as const;
+export const BOOK_ORDER = ['CRB', 'APG', 'ACG', 'ARG', 'UI', 'UM', 'OA', 'UC', 'ISG', 'UW'] as const;
 
 /**
  * Renders book codes as a prose list of their display labels, so the

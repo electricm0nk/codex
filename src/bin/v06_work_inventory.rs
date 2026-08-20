@@ -2427,6 +2427,15 @@ fn spell_book_slug_for(short_code: &str) -> &'static str {
         // way. Logged in `OPEN-ISSUES.md` for this file's owning lane's
         // awareness.
         "ISG" => "inner_sea_gods",
+        // SD-31 wave-19 (`ultimate_wilderness` lane): UW joins
+        // `spell_resolver::spell_catalog_rows()` as the catalog's 10th
+        // book. Same additive, single-line registration every prior
+        // spell-lane cycle made here before it -- this function is a
+        // closed-set lookup table with its own dedicated test
+        // (`spell_book_slug_for_covers_every_catalog_book`), not
+        // attribution or measurement logic. See
+        // `src/bin/ingest_ultimate_wilderness_spells.rs`.
+        "UW" => "ultimate_wilderness",
         other => panic!(
             "spell_resolver::spell_catalog_rows() now carries an unmapped book code {other:?} \
              -- add it to spell_book_slug_for so the spell classifier does not silently drop \

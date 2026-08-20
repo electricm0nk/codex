@@ -1028,6 +1028,20 @@ fn reach_of(family: &Family) -> Option<Reach> {
                 .map(|entry| entry.key.to_owned())
                 .collect(),
         )),
+        // SD-31 wave-19 (`ultimate_wilderness` lane): UW joins
+        // `spell_resolver::spell_catalog_rows()` as the catalog's 10th
+        // book, the same `build_spell_catalog`/"All books" render path
+        // UM/OA/UC/ISG use -- this book's first `spell`-kind reach claim.
+        // Every one of the 61 base declarations carries a real `SCHOOL:`,
+        // `CLASSES:`/`DOMAINS:` level and `DESC:`, so `has_payload` is
+        // satisfied for all 61 (`src/bin/ingest_ultimate_wilderness_spells.rs`).
+        ("ultimate_wilderness", "spells") => Some(spells_reach(
+            "UW",
+            uw::spell_list::SPELL_LIST
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
 
         // Equipment: `list_equipment_catalog` / `list_equipment` serve every
         // ingested book's table since the SD-27 widening of
