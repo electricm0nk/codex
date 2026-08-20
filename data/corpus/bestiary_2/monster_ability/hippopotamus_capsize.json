@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-17T12:26:27Z",
   "data": {
     "corpus_key": "Hippopotamus ~ Capsize",
     "delivery": "Extraordinary",
@@ -14,19 +12,43 @@
       "bestiary_2:monster:hippopotamus",
       "bestiary_2:monster:hippopotamus_behemoth"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A hippopotamus can overturn a boat of its size or smaller by ramming it as a charge attack and making a CMB check.  The DC of this check is 25 or the result of the boat captain's Profession (sailor) check, whichever is higher."
+      },
+      {
+        "key": "KEY",
+        "value": "Hippopotamus ~ Capsize"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.157"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.157",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
-    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
-    "line": 2014,
-    "record_key": "Hippopotamus ~ Capsize"
-  },
+  "ingested_at": "2026-08-17T12:26:27Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2014,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Hippopotamus ~ Capsize",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

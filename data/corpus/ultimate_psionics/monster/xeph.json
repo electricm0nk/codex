@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-13T02:27:44Z",
   "data": {
     "ability_keys": [],
     "challenge_rating": "1/2",
@@ -15,6 +13,96 @@
     "natural_attacks": [],
     "race_subtype": null,
     "race_type": "Humanoid",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Xeph"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Psionic"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common|Xeph"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|CHA|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|IsPsionic|1"
+      },
+      {
+        "key": "CR",
+        "value": "1/2"
+      },
+      {
+        "key": "DEFINE",
+        "value": "IsPsionic|0"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|M"
+      },
+      {
+        "key": "FACT",
+        "value": "IsPC|true"
+      },
+      {
+        "key": "LANGBONUS",
+        "value": "Draconic,Elven,Gnoll,Goblin,Halfling,Sylvan"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Humanoid"
+      },
+      {
+        "key": "REACH",
+        "value": "5"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "a_base_pc"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.23"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Xeph"
+      },
+      {
+        "key": "TYPE",
+        "value": "Humanoid.Base.PC"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60')"
+      }
+    ],
     "size": "M",
     "source_page": "p.23",
     "speeds": [
@@ -24,16 +112,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_races.lst",
-    "sha256": "43c5f5c05027fb8b10b6f593b4adaeec437e249fb9948c426407a0bdf14bc59d",
-    "line": 23,
-    "record_key": "Xeph"
-  },
+  "ingested_at": "2026-08-13T02:27:44Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 23,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_races.lst",
+    "record_key": "Xeph",
+    "sha256": "43c5f5c05027fb8b10b6f593b4adaeec437e249fb9948c426407a0bdf14bc59d"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

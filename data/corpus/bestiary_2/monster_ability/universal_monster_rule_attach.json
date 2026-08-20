@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-17T12:26:27Z",
   "data": {
     "corpus_key": "Universal Monster Rule ~ Attach",
     "delivery": "Extraordinary",
@@ -13,21 +11,49 @@
     "owners": [
       "bestiary_2:monster:tick_giant"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "UMR_Attach_SpecificDesc|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The creature automatically latches onto its target when it successfully makes the listed attack. The creature is considered grappling, but the target is not. The target can attack or grapple the creature as normal, or break the attach with a successful grapple or Escape Artist check. Most creatures with this ability have a racial bonus to maintain a grapple (listed in its CMB entry).|PREVAREQ:UMR_Attach_SpecificDesc,0"
+      },
+      {
+        "key": "KEY",
+        "value": "Universal Monster Rule ~ Attach"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.294"
+      },
+      {
+        "key": "TYPE",
+        "value": "Universal Monster Rule.SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.294",
     "traits": [
       "Universal Monster Rule"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
-    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
-    "line": 2412,
-    "record_key": "Universal Monster Rule ~ Attach"
-  },
+  "ingested_at": "2026-08-17T12:26:27Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2412,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Universal Monster Rule ~ Attach",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard"

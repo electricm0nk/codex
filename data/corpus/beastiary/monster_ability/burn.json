@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-17T12:26:26Z",
   "data": {
     "corpus_key": "Burn",
     "delivery": "Extraordinary",
@@ -21,19 +19,71 @@
       "beastiary:monster:elemental_fire_greater",
       "beastiary:monster:elemental_fire_elder"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Burn"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1d%2, DC %3)|BurnDamageDice|BurnDamageDieSize|BurnDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BurnDC|10+(max(HD,CompanionHD)/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BurnDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Burn)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|BurnDamageDice|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BurnDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BurnDamageDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "BurnDamageDieSize|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You deal fire damage in addition to damage dealt on a successful hit in melee. Those affected by the burn ability must also succeed on a Reflex (DC %1) save or catch fire, taking %2d%3 damage for an additional 1d4 rounds at the start of its turn. A burning creature can attempt a new save as a full-round action. Dropping and rolling on the ground grants a +4 bonus on this save. Creatures that hit a burning creature with natural weapons or unarmed attacks take fire damage as though hit by the burning creature and must make a Reflex save to avoid catching on fire.|BurnDC|BurnDamageDice|BurnDamageDieSize"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.298"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.298",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
-    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
-    "line": 1327,
-    "record_key": "Burn"
-  },
+  "ingested_at": "2026-08-17T12:26:26Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1327,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Burn",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-17T12:26:26Z",
   "data": {
     "corpus_key": "Trample",
     "delivery": "Extraordinary",
@@ -28,21 +26,81 @@
       "beastiary:monster:shoggoth",
       "beastiary:monster:treant"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Trample"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1d%2+%3, DC %4)|TrampleDamageDice|TrampleDamageDieSize|TrampleDamageBonus|TrampleDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrampleDC|10+(HD/2)+STR"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrampleDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Trample)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrampleDamageBonus|STR*3/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TrampleDamageDice|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TrampleDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TrampleDamageBonus|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TrampleDamageDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TrampleDamageDieSize|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As a full-round action, you can attempt to overrun any creature that is at least one size category smaller than yourself. This works just like the overrun combat maneuver, but the trampling creature does not need to make a check, it merely has to move over opponents in its path. Targets of a trample take %1d%2+%3 points of damage. Targets of a trample can make an attack of opportunity, but at a -4 penalty. If targets forgo an attack of opportunity, they can attempt to avoid the trampling creature and receive a Reflex (DC %4) save to take half damage. You can only deal trampling damage to each target once per round, no matter how many times its movement takes it over a target creature.|TrampleDamageDice|TrampleDamageDieSize|TrampleDamageBonus|TrampleDC"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.305"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.AttackOption"
+      }
+    ],
     "source_page": "p.305",
     "traits": [
       "AttackOption"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
-    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
-    "line": 1532,
-    "record_key": "Trample"
-  },
+  "ingested_at": "2026-08-17T12:26:26Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1532,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Trample",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

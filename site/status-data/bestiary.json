@@ -1495,11 +1495,11 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 178,
-      "partial": 24,
+      "done": 182,
+      "partial": 20,
       "not_started": 193,
       "denominator": 395,
-      "pct": 45.1,
+      "pct": 46.1,
       "excluded_from_percentage": 329,
       "standing_breakdown": {
         "origin": 395,
@@ -2152,7 +2152,7 @@
         },
         {
           "name": "Can't Be Tripped",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Can't Be Tripped"
@@ -2320,7 +2320,7 @@
         },
         {
           "name": "Channel Resistance",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Defensive",
           "standing": "unclassified",
           "display_name": "Channel Resistance"
@@ -2425,7 +2425,7 @@
         },
         {
           "name": "Constrict",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Constrict (SpecialAttack.Extraordinary.AttackOption)"
@@ -3475,7 +3475,7 @@
         },
         {
           "name": "Grab",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Grab (SpecialAttack.Extraordinary.AttackOption) #6"
@@ -4518,7 +4518,7 @@
         },
         {
           "name": "Oversized Weapon",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.OversizedWeapon",
           "standing": "origin",
           "display_name": "Oversized Weapon"
@@ -5015,7 +5015,7 @@
         },
         {
           "name": "Powerful Charge",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "origin",
           "display_name": "Powerful Charge"
@@ -5120,7 +5120,7 @@
         },
         {
           "name": "Rake",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "origin",
           "display_name": "Rake (SpecialAttack.Extraordinary.AttackOption) #2"
@@ -5141,7 +5141,7 @@
         },
         {
           "name": "Regeneration",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP)"
@@ -5169,21 +5169,21 @@
         },
         {
           "name": "Regeneration",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP) #5"
         },
         {
           "name": "Regeneration",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP) #6"
         },
         {
           "name": "Regeneration",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP) #7"
@@ -5197,14 +5197,14 @@
         },
         {
           "name": "Regeneration",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP) #9"
         },
         {
           "name": "Regeneration",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP) #10"
@@ -5218,14 +5218,14 @@
         },
         {
           "name": "Regeneration",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP) #12"
         },
         {
           "name": "Regeneration",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP) #13"
@@ -5267,7 +5267,7 @@
         },
         {
           "name": "Rend",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Rend"
@@ -6065,7 +6065,7 @@
         },
         {
           "name": "Telepathy",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Communicate",
           "standing": "unclassified",
           "display_name": "Telepathy (SpecialQuality.Supernatural.Communicate) #2"

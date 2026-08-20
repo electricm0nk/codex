@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-13T02:27:44Z",
   "data": {
     "ability_keys": [
       "ultimate_psionics:monster_ability:astral_swarm_ectoplasmic_poison"
@@ -24,6 +22,72 @@
     ],
     "race_subtype": null,
     "race_type": "Construct",
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Astral Swarm ~ Ectoplasmic Poison|Distraction ~ Swarm|No Combat Maneuvers|Swarm Traits"
+      },
+      {
+        "key": "BONUS",
+        "value": "COMBAT|AC|2|TYPE=NaturalArmor"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|DEX|8"
+      },
+      {
+        "key": "BONUS",
+        "value": "STAT|STR|-9"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|Mindless|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Swarm|DAMAGE|-1*(STR)"
+      },
+      {
+        "key": "CR",
+        "value": "7"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|D"
+      },
+      {
+        "key": "MONSTERCLASS",
+        "value": "Construct:14"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "NATURALATTACKS",
+        "value": "Swarm,Weapon.Natural.Melee.Swarm.Poison,*1,4d6"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Construct"
+      },
+      {
+        "key": "REACH",
+        "value": "0"
+      },
+      {
+        "key": "SIZE",
+        "value": "D"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.447"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Swarm"
+      }
+    ],
     "size": "D",
     "source_page": "p.447",
     "speeds": [
@@ -33,16 +97,18 @@
       }
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_races.lst",
-    "sha256": "43c5f5c05027fb8b10b6f593b4adaeec437e249fb9948c426407a0bdf14bc59d",
-    "line": 44,
-    "record_key": "Astral Swarm"
-  },
+  "ingested_at": "2026-08-13T02:27:44Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 44,
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_races.lst",
+    "record_key": "Astral Swarm",
+    "sha256": "43c5f5c05027fb8b10b6f593b4adaeec437e249fb9948c426407a0bdf14bc59d"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus"

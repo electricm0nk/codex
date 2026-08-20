@@ -16283,11 +16283,11 @@
     {
       "kind": "monster",
       "label": "Monsters",
-      "done": 0,
-      "partial": 20,
+      "done": 15,
+      "partial": 5,
       "not_started": 0,
       "denominator": 20,
-      "pct": 0.0,
+      "pct": 75.0,
       "excluded_from_percentage": 1,
       "standing_breakdown": {
         "origin": 20,
@@ -16324,35 +16324,35 @@
         },
         {
           "name": "Astral Construct (5th Level)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Construct",
           "standing": "origin",
           "display_name": "Astral Construct (5th Level)"
         },
         {
           "name": "Astral Construct (6th Level)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Construct",
           "standing": "origin",
           "display_name": "Astral Construct (6th Level)"
         },
         {
           "name": "Astral Construct (7th Level)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Construct",
           "standing": "origin",
           "display_name": "Astral Construct (7th Level)"
         },
         {
           "name": "Astral Construct (8th Level)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Construct",
           "standing": "origin",
           "display_name": "Astral Construct (8th Level)"
         },
         {
           "name": "Astral Construct (9th Level)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Construct",
           "standing": "origin",
           "display_name": "Astral Construct (9th Level)"
@@ -16366,77 +16366,77 @@
         },
         {
           "name": "Blue",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Humanoid.Base.PC",
           "standing": "origin",
           "display_name": "Blue"
         },
         {
           "name": "Dromite",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Humanoid.Base.PC",
           "standing": "origin",
           "display_name": "Dromite"
         },
         {
           "name": "Duergar ~ Psionic",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Humanoid.Base.PC",
           "standing": "origin",
           "display_name": "Duergar ~ Psionic"
         },
         {
           "name": "Elan",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Humanoid.Base.PC",
           "standing": "origin",
           "display_name": "Elan"
         },
         {
           "name": "Forgeborn",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Humanoid.Base.PC",
           "standing": "origin",
           "display_name": "Forgeborn"
         },
         {
           "name": "Half-Giant",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Humanoid.Base.PC",
           "standing": "origin",
           "display_name": "Half-Giant"
         },
         {
           "name": "Maenad",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Humanoid.Base.PC",
           "standing": "unclassified",
           "display_name": "Maenad"
         },
         {
           "name": "Noral",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Humanoid.Base.PC",
           "standing": "origin",
           "display_name": "Noral"
         },
         {
           "name": "Ophiduan",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Humanoid.Base.PC",
           "standing": "origin",
           "display_name": "Ophiduan"
         },
         {
           "name": "Psicrystal",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Psicrystal"
         },
         {
           "name": "Xeph",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Humanoid.Base.PC",
           "standing": "origin",
           "display_name": "Xeph"

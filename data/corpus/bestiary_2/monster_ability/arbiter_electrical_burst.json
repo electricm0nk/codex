@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-17T12:26:27Z",
   "data": {
     "corpus_key": "Arbiter ~ Electrical Burst",
     "delivery": "Extraordinary",
@@ -15,19 +13,59 @@
     "owners": [
       "bestiary_2:monster:inevitable_arbiter"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Electrical Burst"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArbiterElectricalBurstDC|10+TL/2+CON"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ArbiterElectricalBurstDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Electrical Burst)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ArbiterElectricalBurstDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An arbiter can release electrical energy from its body in a 10-foot-radius burst that deals 3d6 electricity damage (DC %1 Reflex half).  Immediately following such a burst, the arbiter becomes stunned for 24 hours.|ArbiterElectricalBurstDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Arbiter ~ Electrical Burst"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.162"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.162",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
-    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
-    "line": 2144,
-    "record_key": "Arbiter ~ Electrical Burst"
-  },
+  "ingested_at": "2026-08-17T12:26:27Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2144,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Arbiter ~ Electrical Burst",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",
