@@ -15714,11 +15714,11 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 8,
+      "done": 10,
       "partial": 1,
-      "not_started": 54,
+      "not_started": 52,
       "denominator": 63,
-      "pct": 12.7,
+      "pct": 15.9,
       "excluded_from_percentage": 16,
       "standing_breakdown": {
         "origin": 63,
@@ -16049,7 +16049,7 @@
         },
         {
           "name": "Naturally Psionic",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.NaturallyPsionic.ForgebornRacialTrait.ForgebornRacialDefault.NoralRacialTrait.NoralRacialDefault.BlueRacialTrait.BlueRacialDefault.DromiteRacialTrait.DromiteRacialDefault.DuergarDSPRacialTrait.DuergarDSPRacialDefault.ElanRacialTrait.ElanRacialDefault.Half-GiantRacialTrait.Half-GiantRacialDefault.MaenadRacialTrait.MaenadRacialDefault.OphiduanRacialTrait.OphiduanRacialDefault.XephRacialTrait.XephRacialDefault",
           "standing": "origin",
           "display_name": "Naturally Psionic"
@@ -16091,7 +16091,7 @@
         },
         {
           "name": "Psionic Aptitude",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.PsionicAptitude.ForgebornRacialTrait.ForgebornRacialDefault.NoralRacialTrait.NoralRacialDefault.BlueRacialTrait.BlueRacialDefault.DromiteRacialTrait.DromiteRacialDefault.DuergarDSPRacialTrait.DuergarDSPRacialDefault.ElanRacialTrait.ElanRacialDefault.Half-GiantRacialTrait.Half-GiantRacialDefault.MaenadRacialTrait.MaenadRacialDefault.OphiduanRacialTrait.OphiduanRacialDefault.XephRacialTrait.XephRacialDefault",
           "standing": "origin",
           "display_name": "Psionic Aptitude"

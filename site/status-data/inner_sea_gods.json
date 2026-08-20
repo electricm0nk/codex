@@ -1107,11 +1107,11 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 38,
-      "partial": 3,
-      "not_started": 43,
+      "done": 71,
+      "partial": 10,
+      "not_started": 3,
       "denominator": 84,
-      "pct": 45.2,
+      "pct": 84.5,
       "excluded_from_percentage": 77,
       "standing_breakdown": {
         "unclassified": 77,
@@ -1127,14 +1127,14 @@
         },
         {
           "name": "Ablative Adaptation",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Ablative Adaptation"
         },
         {
           "name": "Acid Web",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Acid Web"
@@ -1148,7 +1148,7 @@
         },
         {
           "name": "Alluring Scent",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Aura",
           "standing": "origin",
           "display_name": "Alluring Scent"
@@ -1162,7 +1162,7 @@
         },
         {
           "name": "Animated Shield",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Animated Shield"
@@ -1183,14 +1183,14 @@
         },
         {
           "name": "Bardic Magic",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Bardic Magic"
         },
         {
           "name": "Bardic Performance",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Bardic Performance (SpecialQuality.Extraordinary)"
@@ -1211,7 +1211,7 @@
         },
         {
           "name": "Bladed Slam",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Bladed Slam"
@@ -1225,7 +1225,7 @@
         },
         {
           "name": "Breath Weapon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Breath Weapon (SpecialAttack.Supernatural) #2"
@@ -1260,21 +1260,21 @@
         },
         {
           "name": "Cascade of Spears",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Cascade of Spears"
         },
         {
           "name": "Chainstorm",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Aura",
           "standing": "origin",
           "display_name": "Chainstorm"
         },
         {
           "name": "Change Shape",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Change Shape (SpecialQuality.Supernatural)"
@@ -1302,7 +1302,7 @@
         },
         {
           "name": "Change Shape",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Change Shape (SpecialQuality.Supernatural) #5"
@@ -1323,7 +1323,7 @@
         },
         {
           "name": "Change Shape",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Change Shape (SpecialQuality.Supernatural) #8"
@@ -1337,21 +1337,21 @@
         },
         {
           "name": "Change Shape",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Change Shape (SpecialQuality.Supernatural) #10"
         },
         {
           "name": "Change Shape",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Change Shape (SpecialQuality.Supernatural) #11"
         },
         {
           "name": "Change Shape",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Change Shape (SpecialQuality.Supernatural) #12"
@@ -1365,14 +1365,14 @@
         },
         {
           "name": "Change Shape",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Change Shape (SpecialQuality.Supernatural) #14"
         },
         {
           "name": "Change Shape",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Change Shape (SpecialQuality.Supernatural) #15"
@@ -1393,7 +1393,7 @@
         },
         {
           "name": "Charming Aura",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Aura",
           "standing": "origin",
           "display_name": "Charming Aura"
@@ -1407,14 +1407,14 @@
         },
         {
           "name": "Constant Spells",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Constant Spells (SpecialQuality.SpellLike) #2"
         },
         {
           "name": "Death's Dagger",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Death's Dagger"
@@ -1428,7 +1428,7 @@
         },
         {
           "name": "Defender's Shield",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Defender's Shield"
@@ -1449,28 +1449,28 @@
         },
         {
           "name": "Detect Evil",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.Sense",
           "standing": "unclassified",
           "display_name": "Detect Evil (SpecialQuality.SpellLike.Sense)"
         },
         {
           "name": "Detect Evil",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.Sense",
           "standing": "unclassified",
           "display_name": "Detect Evil (SpecialQuality.SpellLike.Sense) #2"
         },
         {
           "name": "Detect Good",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.Sense",
           "standing": "unclassified",
           "display_name": "Detect Good"
         },
         {
           "name": "Detect Magic",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.Sense",
           "standing": "unclassified",
           "display_name": "Detect Magic"
@@ -1498,7 +1498,7 @@
         },
         {
           "name": "Divine Trigger",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Divine Trigger (SpecialQuality.Supernatural) #2"
@@ -1526,7 +1526,7 @@
         },
         {
           "name": "Ectoplasmic Focus",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Ectoplasmic Focus"
@@ -1575,14 +1575,14 @@
         },
         {
           "name": "Exaction",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Exaction"
         },
         {
           "name": "Eyeless",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Vision",
           "standing": "origin",
           "display_name": "Eyeless"
@@ -1596,14 +1596,14 @@
         },
         {
           "name": "Fast Healing",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Fast Healing"
         },
         {
           "name": "Fate Aura",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Aura",
           "standing": "origin",
           "display_name": "Fate Aura"
@@ -1638,7 +1638,7 @@
         },
         {
           "name": "Gaze",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Gaze (SpecialAttack.Supernatural) #2"
@@ -1659,28 +1659,28 @@
         },
         {
           "name": "Grim White Stag ~ Poison Resistance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Grim White Stag ~ Poison Resistance"
         },
         {
           "name": "Hammer Storm",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Hammer Storm"
         },
         {
           "name": "Heroes' Feast",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Heroes' Feast"
         },
         {
           "name": "Hexes",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural.AttackOption",
           "standing": "origin",
           "display_name": "Hexes"
@@ -1701,14 +1701,14 @@
         },
         {
           "name": "Horrific Appearance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Horrific Appearance"
         },
         {
           "name": "Howl of Despair",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Howl of Despair"
@@ -1722,7 +1722,7 @@
         },
         {
           "name": "Immunity to Possession",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin",
           "display_name": "Immunity to Possession"
@@ -1736,28 +1736,28 @@
         },
         {
           "name": "Implant",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Implant"
         },
         {
           "name": "Inspiration",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Inspiration"
         },
         {
           "name": "Ironsense",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.Vision",
           "standing": "origin",
           "display_name": "Ironsense"
         },
         {
           "name": "Languages",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural.Communicate",
           "standing": "origin",
           "display_name": "Languages (SpecialQuality.Supernatural.Communicate)"
@@ -1771,7 +1771,7 @@
         },
         {
           "name": "Lay on Hands",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural.LayOnHands.Lay on Hand",
           "standing": "origin",
           "display_name": "Lay on Hands (SpecialQuality.Supernatural.LayOnHands.Lay on Hand)"
@@ -1785,7 +1785,7 @@
         },
         {
           "name": "Lord of Battle",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Lord of Battle"
@@ -1799,7 +1799,7 @@
         },
         {
           "name": "Mind Control",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Mind Control"
@@ -1813,7 +1813,7 @@
         },
         {
           "name": "Murderer's Reward",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Murderer's Reward"
@@ -1841,7 +1841,7 @@
         },
         {
           "name": "Poison",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary)"
@@ -1855,28 +1855,28 @@
         },
         {
           "name": "Poison",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary) #3"
         },
         {
           "name": "Poison",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary) #4"
         },
         {
           "name": "Poison",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary) #5"
         },
         {
           "name": "Poison",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary) #6"
@@ -1911,14 +1911,14 @@
         },
         {
           "name": "Poison Resistance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Poison Resistance"
         },
         {
           "name": "Poison Stream",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Poison Stream"
@@ -1932,35 +1932,35 @@
         },
         {
           "name": "Powerful Blows (Slam)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Powerful Blows (Slam)"
         },
         {
           "name": "Protection from Evil",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Protection from Evil"
         },
         {
           "name": "Protective Aura",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Protective Aura"
         },
         {
           "name": "Radiance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Radiance"
         },
         {
           "name": "Rage Aura",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Aura",
           "standing": "origin",
           "display_name": "Rage Aura"
@@ -1974,14 +1974,14 @@
         },
         {
           "name": "Regeneration",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP)"
         },
         {
           "name": "Regeneration",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP) #2"
@@ -1995,7 +1995,7 @@
         },
         {
           "name": "Regeneration",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP) #4"
@@ -2023,7 +2023,7 @@
         },
         {
           "name": "Semi-Incorporeal",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Semi-Incorporeal"
@@ -2037,7 +2037,7 @@
         },
         {
           "name": "Shield Form",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Shield Form"
@@ -2100,14 +2100,14 @@
         },
         {
           "name": "Strength Damage",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Strength Damage"
         },
         {
           "name": "Stun",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Stun"
@@ -2121,14 +2121,14 @@
         },
         {
           "name": "Stunning Ray",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.AttackOption",
           "standing": "origin",
           "display_name": "Stunning Ray"
         },
         {
           "name": "Sudden Strike",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Sudden Strike"
@@ -2142,7 +2142,7 @@
         },
         {
           "name": "Swarm Form",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Swarm Form"
@@ -2163,35 +2163,35 @@
         },
         {
           "name": "Tugging Strands",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Tugging Strands"
         },
         {
           "name": "Uncanny Dodge",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Uncanny Dodge"
         },
         {
           "name": "Unearthly Grace",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Unearthly Grace"
         },
         {
           "name": "Unnerving Gaze",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Unnerving Gaze (SpecialAttack.Extraordinary)"
         },
         {
           "name": "Unnerving Gaze",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Unnerving Gaze (SpecialAttack.Extraordinary) #2"
@@ -2219,7 +2219,7 @@
         },
         {
           "name": "Vicious Critical",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Vicious Critical"
@@ -2240,7 +2240,7 @@
         },
         {
           "name": "Witchcraft",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Witchcraft"

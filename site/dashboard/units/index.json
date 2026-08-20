@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-08-20T08:29:33Z",
+  "generated_at": "2026-08-20T10:10:19Z",
   "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 38372,
-  "proven_units": 5862,
+  "proven_units": 6072,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 420,
   "category_labels_redacted": 3,
@@ -5509,11 +5509,11 @@
     },
     "equipment": {
       "units": 6208,
-      "proven": 348,
+      "proven": 349,
       "by_status": {
-        "ingested-magnitude": 323,
+        "ingested-magnitude": 322,
         "literal-verified": 5099,
-        "grounded": 167,
+        "grounded": 168,
         "unknown": 205,
         "not-started": 164,
         "not-ingested": 58,
@@ -5521,14 +5521,14 @@
         "fixture-verified": 11
       },
       "shard": "PF1e-units-equipment.json",
-      "bytes": 832875,
+      "bytes": 832865,
       "doneness_unmapped": {},
       "categories": {
         "magic": {
           "label": "Magic",
-          "done": 2873,
+          "done": 2874,
           "held": 80,
-          "in-progress": 138,
+          "in-progress": 137,
           "not-started": 135,
           "unmeasurable": 1,
           "deferred": 0
@@ -6078,24 +6078,24 @@
     },
     "equipment_modifier": {
       "units": 1580,
-      "proven": 609,
+      "proven": 613,
       "by_status": {
-        "grounded": 157,
+        "grounded": 165,
         "unknown": 416,
-        "text-complete": 452,
-        "ingested-magnitude": 457,
+        "text-complete": 448,
+        "ingested-magnitude": 453,
         "literal-verified": 35,
         "not-started": 63
       },
       "shard": "PF1e-units-equipment_modifier.json",
-      "bytes": 168891,
+      "bytes": 168831,
       "doneness_unmapped": {},
       "categories": {
         "none": {
           "label": "Uncategorised",
-          "done": 186,
+          "done": 190,
           "held": 3,
-          "in-progress": 151,
+          "in-progress": 147,
           "not-started": 4,
           "unmeasurable": 295,
           "deferred": 0
@@ -6111,9 +6111,9 @@
         },
         "armor": {
           "label": "Armor",
-          "done": 49,
+          "done": 53,
           "held": 1,
-          "in-progress": 86,
+          "in-progress": 82,
           "not-started": 1,
           "unmeasurable": 14,
           "deferred": 0
@@ -7354,33 +7354,33 @@
     },
     "monster_ability": {
       "units": 2942,
-      "proven": 1567,
+      "proven": 1772,
       "by_status": {
-        "not-ingested": 1135,
-        "text-complete": 1005,
-        "grounded": 562,
+        "not-ingested": 930,
+        "text-complete": 1102,
+        "grounded": 670,
         "literal-verified": 140,
         "fixture-verified": 100
       },
       "shard": "PF1e-units-monster_ability.json",
-      "bytes": 355611,
+      "bytes": 355276,
       "doneness_unmapped": {},
       "categories": {
         "specialquality": {
           "label": "Special Qualities",
-          "done": 725,
-          "held": 106,
+          "done": 819,
+          "held": 146,
           "in-progress": 0,
-          "not-started": 790,
+          "not-started": 656,
           "unmeasurable": 0,
           "deferred": 0
         },
         "specialattack": {
           "label": "Special Attacks",
-          "done": 868,
-          "held": 107,
+          "done": 917,
+          "held": 129,
           "in-progress": 0,
-          "not-started": 318,
+          "not-started": 247,
           "unmeasurable": 0,
           "deferred": 0
         },

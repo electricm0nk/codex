@@ -711,11 +711,11 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 357,
-      "partial": 51,
-      "not_started": 167,
+      "done": 366,
+      "partial": 60,
+      "not_started": 149,
       "denominator": 575,
-      "pct": 62.1,
+      "pct": 63.7,
       "excluded_from_percentage": 196,
       "standing_breakdown": {
         "origin": 575,
@@ -1221,21 +1221,21 @@
         },
         {
           "name": "Breath Weapon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.BreathWeapon",
           "standing": "unclassified",
           "display_name": "Breath Weapon (SpecialAttack.Supernatural.BreathWeapon)"
         },
         {
           "name": "Breath Weapon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.BreathWeapon",
           "standing": "unclassified",
           "display_name": "Breath Weapon (SpecialAttack.Supernatural.BreathWeapon) #3"
         },
         {
           "name": "Breath Weapon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.BreathWeapon",
           "standing": "unclassified",
           "display_name": "Breath Weapon (SpecialAttack.Supernatural.BreathWeapon) #4"
@@ -1900,14 +1900,14 @@
         },
         {
           "name": "Detect Scrying",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike.Senses",
           "standing": "origin",
           "display_name": "Detect Scrying"
         },
         {
           "name": "Detect Undead",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike.Senses",
           "standing": "origin",
           "display_name": "Detect Undead"
@@ -2264,7 +2264,7 @@
         },
         {
           "name": "Endure Elements",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Endure Elements"
@@ -2523,7 +2523,7 @@
         },
         {
           "name": "Feather Fall",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Feather Fall"
@@ -2649,7 +2649,7 @@
         },
         {
           "name": "Fortification",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality",
           "standing": "unclassified",
           "display_name": "Fortification"
@@ -2754,7 +2754,7 @@
         },
         {
           "name": "Grab",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Grab (SpecialAttack.Extraordinary.AttackOption)"
@@ -2796,7 +2796,7 @@
         },
         {
           "name": "Greater Invisibility",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Greater Invisibility"
@@ -2859,7 +2859,7 @@
         },
         {
           "name": "Haste (self only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike.ModifyMovement",
           "standing": "origin",
           "display_name": "Haste (self only)"
@@ -3062,14 +3062,14 @@
         },
         {
           "name": "Immunity to Calm Emotions",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin",
           "display_name": "Immunity to Calm Emotions"
         },
         {
           "name": "Immunity to Dazzled",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin",
           "display_name": "Immunity to Dazzled"
@@ -3083,14 +3083,14 @@
         },
         {
           "name": "Immunity to Effects Targeting Specific Numbers of Creatures",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin",
           "display_name": "Immunity to Effects Targeting Specific Numbers of Creatures"
         },
         {
           "name": "Immunity to Inhaled Poisons",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin",
           "display_name": "Immunity to Inhaled Poisons"
@@ -3125,21 +3125,21 @@
         },
         {
           "name": "Immunity to Nauseated",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin",
           "display_name": "Immunity to Nauseated"
         },
         {
           "name": "Immunity to Scent-Based Attacks",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin",
           "display_name": "Immunity to Scent-Based Attacks"
         },
         {
           "name": "Immunity to Sickened",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Immunity",
           "standing": "origin",
           "display_name": "Immunity to Sickened"
@@ -3468,7 +3468,7 @@
         },
         {
           "name": "Mage Hand",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Mage Hand"
@@ -4203,7 +4203,7 @@
         },
         {
           "name": "Powerful Blows (Bite)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Powerful Blows (Bite)"
@@ -4217,14 +4217,14 @@
         },
         {
           "name": "Powerful Blows (Hoof)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Powerful Blows (Hoof)"
         },
         {
           "name": "Powerful Blows (Slam)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Powerful Blows (Slam)"
@@ -4336,7 +4336,7 @@
         },
         {
           "name": "Protection from Evil",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Protection from Evil"
@@ -4350,7 +4350,7 @@
         },
         {
           "name": "Protection from Law",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Protection from Law"
@@ -4434,7 +4434,7 @@
         },
         {
           "name": "Read Magic",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Read Magic"
@@ -4525,21 +4525,21 @@
         },
         {
           "name": "Regeneration",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP) #5"
         },
         {
           "name": "Regeneration",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP) #6"
         },
         {
           "name": "Regeneration",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP) #7"
@@ -4840,7 +4840,7 @@
         },
         {
           "name": "Shield",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Shield"
@@ -5022,14 +5022,14 @@
         },
         {
           "name": "Smother",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Smother (SpecialAttack.Extraordinary)"
         },
         {
           "name": "Smother",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Smother (SpecialQuality.Extraordinary)"
@@ -5267,7 +5267,7 @@
         },
         {
           "name": "Starflight",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Starflight (SpecialQuality.Supernatural)"
@@ -5750,7 +5750,7 @@
         },
         {
           "name": "Unnatural Aura",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural.Aura",
           "standing": "unclassified",
           "display_name": "Unnatural Aura"
@@ -5995,7 +5995,7 @@
         },
         {
           "name": "Water Walk",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Water Walk"

@@ -204,11 +204,11 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 233,
-      "partial": 61,
-      "not_started": 63,
+      "done": 240,
+      "partial": 67,
+      "not_started": 50,
       "denominator": 357,
-      "pct": 65.3,
+      "pct": 67.2,
       "excluded_from_percentage": 241,
       "standing_breakdown": {
         "unclassified": 241,
@@ -602,14 +602,14 @@
         },
         {
           "name": "Breath Weapon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Breath Weapon (SpecialAttack.Supernatural) #2"
         },
         {
           "name": "Breath Weapon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Breath Weapon (SpecialAttack.Supernatural) #3"
@@ -728,7 +728,7 @@
         },
         {
           "name": "Capsize",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Capsize (SpecialAttack.Extraordinary)"
@@ -931,14 +931,14 @@
         },
         {
           "name": "Cloud Breath",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Cloud Breath"
         },
         {
           "name": "Cloud Form",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Cloud Form"
@@ -1162,7 +1162,7 @@
         },
         {
           "name": "Create Shadows",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Create Shadows"
@@ -1323,7 +1323,7 @@
         },
         {
           "name": "Desiccating Bite",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Desiccating Bite"
@@ -1638,7 +1638,7 @@
         },
         {
           "name": "Energy Drain",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Energy Drain (SpecialAttack.Supernatural) #3"
@@ -1939,7 +1939,7 @@
         },
         {
           "name": "Ghost Bane",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Ghost Bane"
@@ -2471,14 +2471,14 @@
         },
         {
           "name": "Magma Breath",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Magma Breath"
         },
         {
           "name": "Magma Tomb",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Magma Tomb"
@@ -2646,7 +2646,7 @@
         },
         {
           "name": "Painful Strikes",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Painful Strikes"
@@ -3136,7 +3136,7 @@
         },
         {
           "name": "Razor Sharp",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Razor Sharp"
@@ -3346,7 +3346,7 @@
         },
         {
           "name": "Shadow Breath",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Shadow Breath"
@@ -3892,7 +3892,7 @@
         },
         {
           "name": "Superheated",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Superheated"
@@ -4074,7 +4074,7 @@
         },
         {
           "name": "Thundering Bite",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Thundering Bite"
@@ -4151,7 +4151,7 @@
         },
         {
           "name": "Umbral Scion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Umbral Scion"
@@ -4263,7 +4263,7 @@
         },
         {
           "name": "Water Breathing",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Water Breathing"

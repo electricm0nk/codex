@@ -1495,11 +1495,11 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 182,
-      "partial": 20,
-      "not_started": 193,
+      "done": 214,
+      "partial": 38,
+      "not_started": 143,
       "denominator": 395,
-      "pct": 46.1,
+      "pct": 54.2,
       "excluded_from_percentage": 329,
       "standing_breakdown": {
         "origin": 395,
@@ -1634,14 +1634,14 @@
         },
         {
           "name": "Acid Pool",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Acid Pool"
         },
         {
           "name": "Acidic Bite",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Acidic Bite"
@@ -1767,7 +1767,7 @@
         },
         {
           "name": "Awaken Treants",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Awaken Treants"
@@ -1823,7 +1823,7 @@
         },
         {
           "name": "Blizzard",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Blizzard"
@@ -1893,14 +1893,14 @@
         },
         {
           "name": "Breath Weapon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.BreathWeapon",
           "standing": "unclassified",
           "display_name": "Breath Weapon (SpecialAttack.Supernatural.BreathWeapon) #3"
         },
         {
           "name": "Breath Weapon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.BreathWeapon",
           "standing": "unclassified",
           "display_name": "Breath Weapon (SpecialAttack.Supernatural.BreathWeapon) #4"
@@ -1921,7 +1921,7 @@
         },
         {
           "name": "Breath Weapon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.BreathWeapon",
           "standing": "unclassified",
           "display_name": "Breath Weapon (SpecialAttack.Supernatural.BreathWeapon) #7"
@@ -1949,7 +1949,7 @@
         },
         {
           "name": "Breath Weapon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.BreathWeapon",
           "standing": "unclassified",
           "display_name": "Breath Weapon (SpecialAttack.Supernatural.BreathWeapon) #11"
@@ -1963,21 +1963,21 @@
         },
         {
           "name": "Breath Weapon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.BreathWeapon",
           "standing": "unclassified",
           "display_name": "Breath Weapon (SpecialAttack.Supernatural.BreathWeapon) #13"
         },
         {
           "name": "Breath Weapon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.BreathWeapon",
           "standing": "unclassified",
           "display_name": "Breath Weapon (SpecialAttack.Supernatural.BreathWeapon) #14"
         },
         {
           "name": "Breath Weapon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.BreathWeapon",
           "standing": "unclassified",
           "display_name": "Breath Weapon (SpecialAttack.Supernatural.BreathWeapon) #15"
@@ -2145,7 +2145,7 @@
         },
         {
           "name": "Camouflage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Defensive",
           "standing": "unclassified",
           "display_name": "Camouflage (SpecialQuality.Extraordinary.Defensive) #2"
@@ -2327,7 +2327,7 @@
         },
         {
           "name": "Charm Reptiles",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Charm Reptiles"
@@ -2348,7 +2348,7 @@
         },
         {
           "name": "Climb Stone",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyMovement",
           "standing": "origin",
           "display_name": "Climb Stone"
@@ -2362,7 +2362,7 @@
         },
         {
           "name": "Cloudwalking",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.ModifyMovement",
           "standing": "origin",
           "display_name": "Cloudwalking"
@@ -2390,14 +2390,14 @@
         },
         {
           "name": "Cold Aura",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural.Aura",
           "standing": "origin",
           "display_name": "Cold Aura (SpecialAttack.Supernatural.Aura)"
         },
         {
           "name": "Cold Aura",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Aura",
           "standing": "origin",
           "display_name": "Cold Aura (SpecialQuality.Supernatural.Aura)"
@@ -2481,7 +2481,7 @@
         },
         {
           "name": "Corrupt Water",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Corrupt Water"
@@ -2586,7 +2586,7 @@
         },
         {
           "name": "Deadly Joke",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.SpellLike",
           "standing": "origin",
           "display_name": "Deadly Joke"
@@ -2663,14 +2663,14 @@
         },
         {
           "name": "Desert Thirst",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Desert Thirst"
         },
         {
           "name": "Desert Wind",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Desert Wind"
@@ -2691,7 +2691,7 @@
         },
         {
           "name": "Detect Gems",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.Sense",
           "standing": "origin",
           "display_name": "Detect Gems"
@@ -2817,7 +2817,7 @@
         },
         {
           "name": "Divine Aid",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Divine Aid"
@@ -2901,14 +2901,14 @@
         },
         {
           "name": "Electricity Aura",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Aura",
           "standing": "origin",
           "display_name": "Electricity Aura (SpecialQuality.Supernatural.Aura)"
         },
         {
           "name": "Electricity Aura",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Aura",
           "standing": "origin",
           "display_name": "Electricity Aura (SpecialQuality.Supernatural.Aura) #2"
@@ -3055,7 +3055,7 @@
         },
         {
           "name": "Fast Flight",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyMovement",
           "standing": "origin",
           "display_name": "Fast Flight"
@@ -3286,21 +3286,21 @@
         },
         {
           "name": "Fire Aura",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Aura",
           "standing": "origin",
           "display_name": "Fire Aura (SpecialQuality.Supernatural.Aura)"
         },
         {
           "name": "Fire Aura",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural.Aura",
           "standing": "origin",
           "display_name": "Fire Aura (SpecialQuality.Supernatural.Aura) #2"
         },
         {
           "name": "Fire Aura",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Aura",
           "standing": "origin",
           "display_name": "Fire Aura (SpecialQuality.Supernatural.Aura) #3"
@@ -3349,7 +3349,7 @@
         },
         {
           "name": "Fog Vision",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Sense",
           "standing": "origin",
           "display_name": "Fog Vision"
@@ -3370,7 +3370,7 @@
         },
         {
           "name": "Freezing Fog",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.SpellLike",
           "standing": "origin",
           "display_name": "Freezing Fog"
@@ -3496,7 +3496,7 @@
         },
         {
           "name": "Graceful Flight",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.ModifyMovement",
           "standing": "origin",
           "display_name": "Graceful Flight"
@@ -3615,21 +3615,21 @@
         },
         {
           "name": "Ice Shape",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Ice Shape"
         },
         {
           "name": "Ice Tomb",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.SpellLike",
           "standing": "origin",
           "display_name": "Ice Tomb"
         },
         {
           "name": "Icewalking",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Icewalking"
@@ -4077,7 +4077,7 @@
         },
         {
           "name": "Incinerate",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Incinerate"
@@ -4238,7 +4238,7 @@
         },
         {
           "name": "Luck",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.SpellLike.Aura",
           "standing": "origin",
           "display_name": "Luck"
@@ -4322,21 +4322,21 @@
         },
         {
           "name": "Manipulate Flames",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Manipulate Flames"
         },
         {
           "name": "Mass Laughter",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.SpellLike",
           "standing": "origin",
           "display_name": "Mass Laughter"
         },
         {
           "name": "Melt Stone",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Melt Stone"
@@ -4371,7 +4371,7 @@
         },
         {
           "name": "Miasma",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Miasma"
@@ -4413,7 +4413,7 @@
         },
         {
           "name": "Mirage",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Mirage"
@@ -4434,7 +4434,7 @@
         },
         {
           "name": "Move Sand",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Move Sand"
@@ -5127,7 +5127,7 @@
         },
         {
           "name": "Reflective Scales",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Defensive",
           "standing": "origin",
           "display_name": "Reflective Scales"
@@ -5281,7 +5281,7 @@
         },
         {
           "name": "Repulsion Breath",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Repulsion Breath"
@@ -5393,14 +5393,14 @@
         },
         {
           "name": "Sandstorm",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Sandstorm (SpecialAttack.Supernatural)"
         },
         {
           "name": "Sandstorm",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Sandstorm (SpecialAttack.Supernatural) #2"
@@ -5498,7 +5498,7 @@
         },
         {
           "name": "Sleep Breath",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Sleep Breath"
@@ -5582,28 +5582,28 @@
         },
         {
           "name": "Smoke Vision",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Sense",
           "standing": "origin",
           "display_name": "Smoke Vision"
         },
         {
           "name": "Snow Vision",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Sense",
           "standing": "unclassified",
           "display_name": "Snow Vision"
         },
         {
           "name": "Sound Imitation",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Sound Imitation"
         },
         {
           "name": "Speak with Reptiles",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.Communicate",
           "standing": "origin",
           "display_name": "Speak with Reptiles"
@@ -5841,7 +5841,7 @@
         },
         {
           "name": "Storm Breath",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Storm Breath"
@@ -5918,7 +5918,7 @@
         },
         {
           "name": "Summon Djinni",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Summon Djinni"
@@ -5988,7 +5988,7 @@
         },
         {
           "name": "Swamp Stride",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyMovement",
           "standing": "origin",
           "display_name": "Swamp Stride (SpecialQuality.Extraordinary.ModifyMovement)"
@@ -6107,7 +6107,7 @@
         },
         {
           "name": "Tidal Wave",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Tidal Wave"
@@ -6121,7 +6121,7 @@
         },
         {
           "name": "Trackless Step",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Trackless Step"
@@ -6198,7 +6198,7 @@
         },
         {
           "name": "True Courage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Defensive",
           "standing": "origin",
           "display_name": "True Courage"
@@ -6233,7 +6233,7 @@
         },
         {
           "name": "Uncanny Dodge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Defensive",
           "standing": "unclassified",
           "display_name": "Uncanny Dodge"
@@ -6331,7 +6331,7 @@
         },
         {
           "name": "Vortex",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Vortex (SpecialAttack.Extraordinary)"
@@ -6415,21 +6415,21 @@
         },
         {
           "name": "Water Breathing",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Water Breathing (SpecialQuality.Extraordinary)"
         },
         {
           "name": "Water Breathing",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Water Breathing (SpecialQuality.Extraordinary) #2"
         },
         {
           "name": "Water Breathing",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Water Breathing (SpecialQuality.Extraordinary) #3"
@@ -6478,7 +6478,7 @@
         },
         {
           "name": "Wave Mastery",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Supernatural.ModifyMovement",
           "standing": "origin",
           "display_name": "Wave Mastery"
@@ -6562,7 +6562,7 @@
         },
         {
           "name": "Woodland Stride",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Woodland Stride"
