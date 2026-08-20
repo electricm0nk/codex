@@ -705,6 +705,91 @@ def parse_special_ability_refs(row: list[str]) -> list[str]:
     return refs
 
 
+# ---------------------------------------------------------------------------
+# The `CATEGORY:Internal` bundle-row hop (SD-29 `decisions.md §62.4`, round
+# 10's `scripts/scan_monster_ability_bundle_rows.py`, sized corpus-wide at
+# 235 units but never wired into this transcriber's own ownership pass).
+#
+# A monster row may name its abilities INDIRECTLY, through a bundle row::
+#
+#     support/isg_races_b4.lst:6            The First Blade
+#         ABILITY:Internal|AUTOMATIC|Race Traits ~ First Blade
+#     support/isg_abilities_races_b4.lst:8  Race Traits ~ First Blade  CATEGORY:Internal
+#         ABILITY:Special Ability|AUTOMATIC|…|First Blade ~ Powerful Blows (Slam)|…
+#
+# `parse_special_ability_refs` and the `<Monster> ~ <Ability>` namespace
+# prefix (both above) never see this: the monster row's own `ABILITY:`
+# token is `Internal`, not `Special Ability`, and the real ability's
+# namespace (`First Blade ~ …`) does not match the monster's own KEY (`The
+# First Blade`). Two functions, mirroring `scan_monster_ability_bundle_rows.
+# py`'s already-proven regex shapes exactly rather than re-deriving them, so
+# the 235-unit count that script already validated against the live oracle
+# is what this pass reproduces, not a new, independently-fallible read of
+# the same tokens.
+_INTERNAL_BUNDLE_REF = re.compile(r"ABILITY:Internal\|AUTOMATIC\|([^\t|]*)")
+_CATEGORY_EQUALS_PREFIX = re.compile(r"^CATEGORY=[^|]*\|")
+
+
+def parse_internal_bundle_refs(row: list[str]) -> list[str]:
+    """Bundle keys named by the row's `ABILITY:Internal|AUTOMATIC|…` tokens.
+
+    The SAME token also names bare (non-namespaced) natural-attack cross
+    references (`parse_natural_attacks`'s own doc comment: `ABILITY:Internal|
+    AUTOMATIC|Bite`) -- this function does not try to tell the two apart by
+    shape; it returns every named entry, and [`transcribe`]'s caller only
+    credits an entry that turns out to resolve to a real `CATEGORY:Internal`
+    bundle ROW in this book's own ability files, which a bare attack name
+    never does. An entry that resolves to nothing is silently not a bundle
+    ref, exactly as it already silently was before this function existed.
+    """
+    refs: list[str] = []
+    for field in row:
+        if not field.startswith("ABILITY:Internal|AUTOMATIC|"):
+            continue
+        for name in field.split("|")[2:]:
+            name = name.strip()
+            if not name or is_prerequisite(name):
+                continue
+            if name not in refs:
+                refs.append(name)
+    return refs
+
+
+def find_internal_bundle_ability_refs(
+    ability_file_paths: list[str], bundle_keys: set[str]
+) -> dict[str, list[str]]:
+    """`bundle_key -> [ability_key, ...]`, read from every `CATEGORY:Internal`
+    row in `ability_file_paths` whose own leading field (`KEY:`-stripped
+    the same way a `.MOD` row's target is: a leading `CATEGORY=<x>|` prefix
+    removed, then everything before a trailing `.MOD` dropped) is one of
+    `bundle_keys`. Byte-identical selection logic to `scan_monster_ability_
+    bundle_rows.py::scan_book`'s own bundle-definition-row match, kept as a
+    second, independent typing of the same already-proven regexes rather
+    than imported, so a bug in one does not silently become a bug in both --
+    the discipline `resolve_book_file`'s own docstring calls "a second
+    spelling" for the same reason.
+    """
+    result: dict[str, list[str]] = {}
+    for path in ability_file_paths:
+        with open(path, encoding="utf-8", errors="replace") as handle:
+            for line in handle:
+                if not line.strip():
+                    continue
+                first_column = line.split("\t", 1)[0]
+                key = _CATEGORY_EQUALS_PREFIX.sub("", first_column).split(".MOD")[0].strip()
+                if key not in bundle_keys:
+                    continue
+                bucket = result.setdefault(key, [])
+                for token_text in re.findall(r"ABILITY:[^\t\n]*", line):
+                    for part in token_text.split("|")[2:]:
+                        part = part.strip()
+                        if not part or is_prerequisite(part):
+                            continue
+                        if part not in bucket:
+                            bucket.append(part)
+    return result
+
+
 def is_prerequisite(entry: str) -> bool:
     """Whether a `DESC:` trailing entry is a prerequisite rather than a variable.
 
@@ -970,6 +1055,7 @@ def transcribe(book: str) -> str:
     monster_ability_keys: dict[str, list[str]] = {}
     external: dict[str, list[str]] = {}
     monster_rows: dict[str, list[str]] = {}
+    internal_bundle_refs: dict[str, list[str]] = {}
     for unit in monsters:
         row = read_row(resolve_book_file(root, unit["source_file"]), unit["source_line"])
         monster_rows[unit["corpus_key"]] = row
@@ -979,6 +1065,9 @@ def transcribe(book: str) -> str:
         external[unit["corpus_key"]] = [n for n in named if n not in ability_keys]
         for key in mine:
             owners[key].append(unit["corpus_key"])
+        bundle_refs = parse_internal_bundle_refs(row)
+        if bundle_refs:
+            internal_bundle_refs[unit["corpus_key"]] = bundle_refs
     # Iterated in the abilities file's own row order, never over a set: the
     # emitted `ability_keys` slice is compared verbatim by tests and by the
     # generated corpus records, so a set's iteration order would make the
@@ -989,6 +1078,30 @@ def transcribe(book: str) -> str:
             if prefix in monster_keys and prefix not in owners[key]:
                 owners[key].append(prefix)
                 monster_ability_keys[prefix].append(key)
+
+    # ---- Third ownership pass: the `CATEGORY:Internal` bundle-row hop ----
+    #
+    # Deliberately AFTER the two direct passes above (whose ordering nothing
+    # here changes) and BEFORE the Product Identity screen (a bundle-reached
+    # ability must be screened exactly like a directly-owned one, not
+    # exempted by running later). Resolved corpus-wide, not per-monster: two
+    # monsters can legitimately name the same bundle key.
+    if internal_bundle_refs:
+        bundle_keys = {ref for refs in internal_bundle_refs.values() for ref in refs}
+        ability_file_paths = sorted(
+            {resolve_book_file(root, name) for name in {u["source_file"] for u in abilities}}
+        )
+        bundle_defs = find_internal_bundle_ability_refs(ability_file_paths, bundle_keys)
+        # Iterated in monster-row order (never over a dict/set), for the same
+        # run-to-run determinism reason the prefix pass above is.
+        for unit in monsters:
+            for bundle_key in internal_bundle_refs.get(unit["corpus_key"], []):
+                for ability_key in bundle_defs.get(bundle_key, []):
+                    if ability_key not in ability_keys:
+                        continue
+                    if unit["corpus_key"] not in owners[ability_key]:
+                        owners[ability_key].append(unit["corpus_key"])
+                        monster_ability_keys[unit["corpus_key"]].append(ability_key)
 
     # ---- Product Identity screen, applied BEFORE the orphan pass ----
     #

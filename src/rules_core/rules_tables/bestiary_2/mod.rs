@@ -257,7 +257,10 @@ mod tests {
     #[test]
     fn the_book_ships_every_stat_block_and_only_the_owned_abilities() {
         assert_eq!(monsters().len(), 314);
-        assert_eq!(monster_abilities().len(), 493);
+        // 493 -> 511 (SD31-W21-MONSTER-001, +18): the `CATEGORY:Internal`
+        // bundle-row ownership hop resolved 18 previously-orphaned ability
+        // rows this book's monsters name only indirectly.
+        assert_eq!(monster_abilities().len(), 511);
     }
 
     /// Every transcribed ability row is owned by a monster row of this book.
@@ -422,7 +425,14 @@ mod tests {
         // `b2_races.lst:594`, so it is an orphan BECAUSE that row is not
         // transcribed. Pinning it is what makes the cascade a checked property
         // rather than a sentence in a comment.
-        for line in [54u32, 55, 56, 80, 223, 472, 502, 805] {
+        //
+        // 472 (`Brine Dragon ~ Capsize`) and 502 (`Umbral Dragon ~ Create
+        // Shadows`) dropped from this list under `SD31-W21-MONSTER-001`: each
+        // is owned by its real dragon (`Dragon (Brine)` / `Dragon (Umbral)`)
+        // through the `CATEGORY:Internal` bundle-row ownership hop
+        // (`transcribe_monster_tables.py::find_internal_bundle_ability_refs`)
+        // and both now ship for real.
+        for line in [54u32, 55, 56, 80, 223, 805] {
             assert!(
                 !monster_abilities().iter().any(|a| a.source_line == line),
                 "b2_abilities_race.lst:{line} is owned by no monster row of this book \

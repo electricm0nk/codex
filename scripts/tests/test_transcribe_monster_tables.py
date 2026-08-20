@@ -148,6 +148,143 @@ class WriteBookDoesNotTruncateOnFailure(unittest.TestCase):
         self.assertEqual(self.target.read_text(), "// new content for fake_book\n")
 
 
+class InternalBundleAbilityHopIsResolved(unittest.TestCase):
+    """`ABILITY:Internal|AUTOMATIC|<bundle_key>` on a monster row is a hop
+    through a `CATEGORY:Internal` bundle row, not a direct ability reference
+    (SD-29 `decisions.md §62.4`; sized corpus-wide at 235 units by
+    `scripts/scan_monster_ability_bundle_rows.py`, round 10, but never wired
+    into the transcriber -- `transcribe()`'s ownership pass reads only
+    `ABILITY:Special Ability|AUTOMATIC|` tokens and the `<Monster> ~
+    <Ability>` namespace prefix, neither of which sees this shape, so every
+    ability reachable only through it stayed an orphan and `not-ingested`
+    forever regardless of how complete its own prose was).
+
+    Shape (real, from `inner_sea_gods`, `support/isg_races_b4.lst:6` /
+    `support/isg_abilities_races_b4.lst:8`, this program's own docstring for
+    `scan_monster_ability_bundle_rows.py`)::
+
+        Test Monster    ABILITY:Internal|AUTOMATIC|Race Traits ~ Test Bundle
+        Race Traits ~ Test Bundle    CATEGORY:Internal
+            ABILITY:Special Ability|AUTOMATIC|Special Bundle ~ Bundled Ability
+        Special Bundle ~ Bundled Ability    CATEGORY:Special Ability  DESC:...
+
+    Hermetic: a synthetic `bonus_bestiary`-shaped tree, mirroring
+    `UnscreenableRowIsDroppedNotFatal`'s fixture shape exactly.
+    """
+
+    def setUp(self) -> None:
+        self._tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self._tmp.cleanup)
+        self._old_cwd = os.getcwd()
+        self._old_pi_screen_rs = tmt.PI_SCREEN_RS
+        self._old_pi_marker_rs = tmt.PI_MARKER_RS
+        tmt.PI_SCREEN_RS = os.path.abspath(tmt.PI_SCREEN_RS)
+        tmt.PI_MARKER_RS = os.path.abspath(tmt.PI_MARKER_RS)
+        self.addCleanup(self._restore_pi_paths)
+        os.chdir(self._tmp.name)
+        self.addCleanup(os.chdir, self._old_cwd)
+
+        self.corpus_root = pathlib.Path(self._tmp.name) / "pcgen"
+        book_dir = (
+            self.corpus_root
+            / "pathfinder"
+            / "paizo"
+            / "roleplaying_game"
+            / "bonus_bestiary"
+        )
+        book_dir.mkdir(parents=True)
+        self._old_env = os.environ.get("PCGEN_CORPUS_ROOT")
+        os.environ["PCGEN_CORPUS_ROOT"] = str(self.corpus_root)
+        self.addCleanup(self._restore_env)
+
+        # The monster names a BUNDLE, not the ability directly.
+        races = book_dir / "bb_races.lst"
+        races.write_text(
+            "Test Monster\tKEY:Test Monster\tSIZE:M\t"
+            "ABILITY:Internal|AUTOMATIC|Race Traits ~ Test Bundle\t"
+            "SOURCEPAGE:p.1\n"
+        )
+        # The bundle row (CATEGORY:Internal) is the hop target; its own
+        # `ABILITY:Special Ability|AUTOMATIC|` token names the real ability.
+        # A second, genuinely-unreferenced ability row is included to prove
+        # the pass does not credit anything it was not told to.
+        abilities = book_dir / "bb_abilities.lst"
+        abilities.write_text(
+            "Race Traits ~ Test Bundle\tKEY:Race Traits ~ Test Bundle\t"
+            "CATEGORY:Internal\t"
+            "ABILITY:Special Ability|AUTOMATIC|Special Bundle ~ Bundled Ability\n"
+            "Bundled Ability\tKEY:Special Bundle ~ Bundled Ability\t"
+            "CATEGORY:Special Ability\tTYPE:SpecialQuality\t"
+            "DESC:A perfectly ordinary description.\tSOURCEPAGE:p.2\n"
+            "Unrelated Ability\tKEY:Other Monster ~ Unrelated Ability\t"
+            "CATEGORY:Special Ability\tTYPE:SpecialQuality\t"
+            "DESC:Nobody names this one.\tSOURCEPAGE:p.3\n"
+        )
+
+        os.makedirs("docs", exist_ok=True)
+        inventory = {
+            "units": [
+                {
+                    "book": "bonus_bestiary",
+                    "kind": "monster",
+                    "corpus_key": "Test Monster",
+                    "name": "Test Monster",
+                    "source_file": "bb_races.lst",
+                    "source_line": 1,
+                    "status": "not-ingested",
+                },
+                {
+                    "book": "bonus_bestiary",
+                    "kind": "monster_ability",
+                    "corpus_key": "Special Bundle ~ Bundled Ability",
+                    "name": "Bundled Ability",
+                    "source_file": "bb_abilities.lst",
+                    "source_line": 2,
+                    "status": "not-ingested",
+                },
+                {
+                    "book": "bonus_bestiary",
+                    "kind": "monster_ability",
+                    "corpus_key": "Other Monster ~ Unrelated Ability",
+                    "name": "Unrelated Ability",
+                    "source_file": "bb_abilities.lst",
+                    "source_line": 3,
+                    "status": "not-ingested",
+                },
+            ]
+        }
+        with open("docs/work-inventory.json", "w", encoding="utf-8") as handle:
+            import json
+
+            json.dump(inventory, handle)
+
+    def _restore_env(self) -> None:
+        if self._old_env is None:
+            os.environ.pop("PCGEN_CORPUS_ROOT", None)
+        else:
+            os.environ["PCGEN_CORPUS_ROOT"] = self._old_env
+
+    def _restore_pi_paths(self) -> None:
+        tmt.PI_SCREEN_RS = self._old_pi_screen_rs
+        tmt.PI_MARKER_RS = self._old_pi_marker_rs
+
+    def test_the_bundle_reached_ability_ships_owned_by_the_referencing_monster(
+        self,
+    ) -> None:
+        content = tmt.transcribe("bonus_bestiary")
+        self.assertIn('key: "Special Bundle ~ Bundled Ability"', content)
+        self.assertIn('owners: &["Test Monster"]', content)
+
+    def test_an_ability_no_bundle_names_stays_an_orphan_and_is_not_shipped(
+        self,
+    ) -> None:
+        """A row this pass does NOT resolve must not be silently credited
+        anyway -- proves the hop is scoped to what the bundle row actually
+        names, not "every remaining orphan in the book"."""
+        content = tmt.transcribe("bonus_bestiary")
+        self.assertNotIn("Unrelated Ability", content.split("MONSTER_ABILITIES")[1])
+
+
 class UnscreenableRowIsDroppedNotFatal(unittest.TestCase):
     """`transcribe()` used to `raise SystemExit` the instant ONE owned ability
     row carried a multi-`DESC:` shape `parse_desc` cannot resolve -- crashing

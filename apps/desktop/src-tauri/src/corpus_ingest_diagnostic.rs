@@ -1241,7 +1241,11 @@ mod tests {
         assert_eq!(bestiary.content_kind_counts["monsters"], 46 + 280);
         // SD31-E6-F9-005 (transcription lane, wave 12): 323 -> 399 (+76),
         // 76 new monster_ability records transcribed for this book.
-        assert_eq!(bestiary.content_kind_counts["monster_abilities"], 399);
+        // SD31-W21-MONSTER-001 (wave 21): 399 -> 467 (+68), the
+        // `CATEGORY:Internal` bundle-row ownership hop
+        // (`transcribe_monster_tables.py::find_internal_bundle_ability_refs`)
+        // resolved 68 previously-orphaned ability rows.
+        assert_eq!(bestiary.content_kind_counts["monster_abilities"], 467);
     }
 
     #[test]
