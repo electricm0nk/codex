@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-08-20T04:57:59Z",
+  "generated_at": "2026-08-20T06:52:22Z",
   "doneness_values": [
     "done",
     "partial",
     "not-started"
   ],
   "overall": {
-    "done": 11382,
-    "partial": 2088,
-    "not_started": 16040,
+    "done": 11424,
+    "partial": 2047,
+    "not_started": 16039,
     "denominator": 29510,
-    "pct": 38.6,
+    "pct": 38.7,
     "excluded_from_percentage": 8862,
     "standing_breakdown": {
       "origin": 29510,
@@ -77,11 +77,11 @@
     {
       "id": "ultimate_wilderness",
       "title": "Ultimate Wilderness",
-      "done": 510,
-      "partial": 74,
+      "done": 551,
+      "partial": 33,
       "not_started": 1039,
       "denominator": 1623,
-      "pct": 31.4,
+      "pct": 33.9,
       "excluded_from_percentage": 251,
       "standing_breakdown": {
         "origin": 1623,
@@ -119,11 +119,11 @@
     {
       "id": "ultimate_combat",
       "title": "Ultimate Combat",
-      "done": 424,
+      "done": 425,
       "partial": 29,
-      "not_started": 906,
+      "not_started": 905,
       "denominator": 1359,
-      "pct": 31.2,
+      "pct": 31.3,
       "excluded_from_percentage": 697,
       "standing_breakdown": {
         "origin": 1359,

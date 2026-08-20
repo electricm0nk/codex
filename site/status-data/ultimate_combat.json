@@ -9905,11 +9905,11 @@
     {
       "kind": "class",
       "label": "Classes",
-      "done": 0,
+      "done": 1,
       "partial": 0,
-      "not_started": 3,
+      "not_started": 2,
       "denominator": 3,
-      "pct": 0.0,
+      "pct": 33.3,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 3
@@ -9917,7 +9917,7 @@
       "items": [
         {
           "name": "Gunslinger",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC",
           "standing": "origin",
           "display_name": "Gunslinger"

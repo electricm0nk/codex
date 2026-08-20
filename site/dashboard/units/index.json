@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-08-20T04:48:37Z",
+  "generated_at": "2026-08-20T06:50:07Z",
   "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 38372,
-  "proven_units": 5808,
+  "proven_units": 5809,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 420,
   "category_labels_redacted": 3,
@@ -21,14 +21,14 @@
   "kinds": {
     "class": {
       "units": 185,
-      "proven": 27,
+      "proven": 28,
       "by_status": {
-        "grounded": 27,
-        "not-ingested": 130,
+        "grounded": 28,
+        "not-ingested": 129,
         "not-started": 28
       },
       "shard": "PF1e-units-class.json",
-      "bytes": 18599,
+      "bytes": 18595,
       "doneness_unmapped": {},
       "categories": {
         "pc": {
@@ -42,10 +42,10 @@
         },
         "base": {
           "label": "Base",
-          "done": 27,
+          "done": 28,
           "held": 0,
           "in-progress": 0,
-          "not-started": 33,
+          "not-started": 32,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -10772,8 +10772,8 @@
       "units": 2843,
       "proven": 156,
       "by_status": {
-        "fixture-verified": 1244,
-        "ingested-magnitude": 364,
+        "fixture-verified": 1288,
+        "ingested-magnitude": 320,
         "literal-verified": 217,
         "text-complete": 33,
         "not-started": 112,
@@ -10782,13 +10782,13 @@
         "unknown": 26
       },
       "shard": "PF1e-units-spell.json",
-      "bytes": 329867,
+      "bytes": 329779,
       "doneness_unmapped": {},
       "categories": {
         "arcane": {
           "label": "Arcane",
-          "done": 737,
-          "held": 124,
+          "done": 770,
+          "held": 91,
           "in-progress": 90,
           "not-started": 370,
           "unmeasurable": 23,
@@ -10805,8 +10805,8 @@
         },
         "divine": {
           "label": "Divine",
-          "done": 246,
-          "held": 53,
+          "done": 257,
+          "held": 42,
           "in-progress": 12,
           "not-started": 64,
           "unmeasurable": 3,
@@ -10826,8 +10826,8 @@
       "school_categories": {
         "Transmutation": {
           "label": "Transmutation",
-          "done": 382,
-          "held": 73,
+          "done": 407,
+          "held": 48,
           "in-progress": 59,
           "not-started": 105,
           "unmeasurable": 6,
@@ -10844,8 +10844,8 @@
         },
         "Conjuration": {
           "label": "Conjuration",
-          "done": 236,
-          "held": 61,
+          "done": 246,
+          "held": 51,
           "in-progress": 12,
           "not-started": 71,
           "unmeasurable": 15,
@@ -10853,8 +10853,8 @@
         },
         "Evocation": {
           "label": "Evocation",
-          "done": 174,
-          "held": 43,
+          "done": 177,
+          "held": 40,
           "in-progress": 10,
           "not-started": 41,
           "unmeasurable": 0,
@@ -10862,8 +10862,8 @@
         },
         "Enchantment": {
           "label": "Enchantment",
-          "done": 184,
-          "held": 19,
+          "done": 185,
+          "held": 18,
           "in-progress": 9,
           "not-started": 42,
           "unmeasurable": 2,
@@ -10871,8 +10871,8 @@
         },
         "Abjuration": {
           "label": "Abjuration",
-          "done": 165,
-          "held": 21,
+          "done": 166,
+          "held": 20,
           "in-progress": 12,
           "not-started": 28,
           "unmeasurable": 0,
@@ -10880,8 +10880,8 @@
         },
         "Necromancy": {
           "label": "Necromancy",
-          "done": 131,
-          "held": 33,
+          "done": 132,
+          "held": 32,
           "in-progress": 8,
           "not-started": 40,
           "unmeasurable": 1,
@@ -10889,8 +10889,8 @@
         },
         "Divination": {
           "label": "Divination",
-          "done": 113,
-          "held": 35,
+          "done": 114,
+          "held": 34,
           "in-progress": 6,
           "not-started": 23,
           "unmeasurable": 1,
@@ -10898,8 +10898,8 @@
         },
         "Illusion": {
           "label": "Illusion",
-          "done": 118,
-          "held": 8,
+          "done": 120,
+          "held": 6,
           "in-progress": 10,
           "not-started": 30,
           "unmeasurable": 0,
