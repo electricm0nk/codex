@@ -1,0 +1,156 @@
+[
+  {
+    "key": "Hexenhammer ~ Cunning Mind",
+    "class": "Inquisitor",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 123
+    }
+  },
+  {
+    "key": "Hexenhammer ~ Dark Trade",
+    "class": "Inquisitor",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 123
+    }
+  },
+  {
+    "key": "Hexenhammer ~ Hexcrafter",
+    "class": "Inquisitor",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 123
+    }
+  },
+  {
+    "key": "Hexenhammer ~ Pride and Penance",
+    "class": "Inquisitor",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 123
+    }
+  },
+  {
+    "key": "Hexenhammer ~ Witchcraft",
+    "class": "Inquisitor",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 123
+    }
+  },
+  {
+    "key": "Hexenhammer ~ Withering Gaze",
+    "class": "Inquisitor",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 123
+    }
+  },
+  {
+    "key": "Living Grimoire ~ Blessed Script",
+    "class": "Inquisitor",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 124
+    }
+  },
+  {
+    "key": "Living Grimoire ~ Holy Book",
+    "class": "Inquisitor",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 124
+    }
+  },
+  {
+    "key": "Living Grimoire ~ Sacred Word",
+    "class": "Inquisitor",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 124
+    }
+  },
+  {
+    "key": "Living Grimoire ~ Spells",
+    "class": "Inquisitor",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 124
+    }
+  },
+  {
+    "key": "Living Grimoire ~ Word of God",
+    "class": "Inquisitor",
+    "level": 20,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_class.lst",
+      "sha256": "9ba15401e64ac28268ffeaded221f6ff35d85c99a3255c295990f4de4435014d",
+      "line": 124
+    }
+  }
+]

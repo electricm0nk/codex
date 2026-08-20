@@ -1,0 +1,30 @@
+[
+  {
+    "key": "Ley Line Guardian ~ Conduit Surge",
+    "class": "Witch",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1918
+    }
+  },
+  {
+    "key": "Ley Line Guardian ~ Ley Line Powered",
+    "class": "Witch",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst",
+      "sha256": "4bbc05c20b141e732f4be20544406d31c73d42be8b445fb1d141c880d3368f3a",
+      "line": 1918
+    }
+  }
+]

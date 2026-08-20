@@ -1,0 +1,100 @@
+[
+  {
+    "key": "Flame Dancer ~ Fan the Flames",
+    "class": "Bard",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2684
+    }
+  },
+  {
+    "key": "Flame Dancer ~ Fire Break",
+    "class": "Bard",
+    "level": 6,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2684
+    }
+  },
+  {
+    "key": "Flame Dancer ~ Fire Dance",
+    "class": "Bard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2684
+    }
+  },
+  {
+    "key": "Flame Dancer ~ Song of the Fiery Gaze",
+    "class": "Bard",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2684
+    }
+  },
+  {
+    "key": "Voice of the Wild ~ Nature Magic",
+    "class": "Bard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2685
+    }
+  },
+  {
+    "key": "Voice of the Wild ~ Song of the Wild",
+    "class": "Bard",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2685
+    }
+  },
+  {
+    "key": "Voice of the Wild ~ Wild Knowledge",
+    "class": "Bard",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst",
+      "sha256": "21e4a425861ceed96c671e7bc5fbe53c6b6824f2663d322c41a2203588cc9d94",
+      "line": 2685
+    }
+  }
+]

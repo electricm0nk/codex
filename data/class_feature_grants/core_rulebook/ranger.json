@@ -1,0 +1,212 @@
+[
+  {
+    "key": "Ranger ~ Camouflage",
+    "class": "Ranger",
+    "level": 12,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 298
+    }
+  },
+  {
+    "key": "Ranger ~ Combat Style Feat",
+    "class": "Ranger",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 292
+    }
+  },
+  {
+    "key": "Ranger ~ Evasion",
+    "class": "Ranger",
+    "level": 9,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 296
+    }
+  },
+  {
+    "key": "Ranger ~ Favored Enemy",
+    "class": "Ranger",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 288
+    }
+  },
+  {
+    "key": "Ranger ~ Favored Terrain",
+    "class": "Ranger",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 289
+    }
+  },
+  {
+    "key": "Ranger ~ Hide in Plain Sight",
+    "class": "Ranger",
+    "level": 17,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 300
+    }
+  },
+  {
+    "key": "Ranger ~ Hunter's Bond",
+    "class": "Ranger",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 293
+    }
+  },
+  {
+    "key": "Ranger ~ Improved Evasion",
+    "class": "Ranger",
+    "level": 16,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 299
+    }
+  },
+  {
+    "key": "Ranger ~ Improved Quarry",
+    "class": "Ranger",
+    "level": 19,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 301
+    }
+  },
+  {
+    "key": "Ranger ~ Master Hunter",
+    "class": "Ranger",
+    "level": 20,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 302
+    }
+  },
+  {
+    "key": "Ranger ~ Quarry",
+    "class": "Ranger",
+    "level": 11,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 297
+    }
+  },
+  {
+    "key": "Ranger ~ Swift Tracker",
+    "class": "Ranger",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 295
+    }
+  },
+  {
+    "key": "Ranger ~ Track",
+    "class": "Ranger",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 290
+    }
+  },
+  {
+    "key": "Ranger ~ Wild Empathy",
+    "class": "Ranger",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 291
+    }
+  },
+  {
+    "key": "Ranger ~ Woodland Stride",
+    "class": "Ranger",
+    "level": 7,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 294
+    }
+  }
+]

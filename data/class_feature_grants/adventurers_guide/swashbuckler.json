@@ -1,0 +1,170 @@
+[
+  {
+    "key": "Dashing Thief ~ Bold Thief",
+    "class": "Swashbuckler",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 1075
+    }
+  },
+  {
+    "key": "Dashing Thief ~ Dazing Charm Deed",
+    "class": "Swashbuckler",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 1075
+    }
+  },
+  {
+    "key": "Dashing Thief ~ Rogue Talents",
+    "class": "Swashbuckler",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 1075
+    }
+  },
+  {
+    "key": "Dashing Thief ~ Swaying Charm Deed",
+    "class": "Swashbuckler",
+    "level": 15,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 1075
+    }
+  },
+  {
+    "key": "Dashing Thief ~ Thief's Confidence",
+    "class": "Swashbuckler",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 1075
+    }
+  },
+  {
+    "key": "Rostland Bravo ~ Aldori Swashbuckler",
+    "class": "Swashbuckler",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": false,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 1076
+    }
+  },
+  {
+    "key": "Rostland Bravo ~ Deeds",
+    "class": "Swashbuckler",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 1076
+    }
+  },
+  {
+    "key": "Rostland Bravo ~ Dragon's Rage",
+    "class": "Swashbuckler",
+    "level": 11,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 1076
+    }
+  },
+  {
+    "key": "Rostland Bravo ~ Inevitable Victory",
+    "class": "Swashbuckler",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 1076
+    }
+  },
+  {
+    "key": "Rostland Bravo ~ Sweeping Wind Feint",
+    "class": "Swashbuckler",
+    "level": 7,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 1076
+    }
+  },
+  {
+    "key": "Rostland Bravo ~ Terror of the Great Wyrm",
+    "class": "Swashbuckler",
+    "level": 15,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 1076
+    }
+  },
+  {
+    "key": "Runesage ~ Runic Focus",
+    "class": "Swashbuckler",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst",
+      "sha256": "d15d72867953b6bc5c6fccea0716d8d75281a8e3a690eb20383d00c500d5637e",
+      "line": 1130
+    }
+  }
+]

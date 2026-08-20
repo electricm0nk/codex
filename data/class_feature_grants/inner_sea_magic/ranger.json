@@ -1,0 +1,30 @@
+[
+  {
+    "key": "Nirmathi Irregular ~ Focused Terrain",
+    "class": "Ranger",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+      "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+      "line": 322
+    }
+  },
+  {
+    "key": "Nirmathi Irregular ~ Spells",
+    "class": "Ranger",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_abilities_class.lst",
+      "sha256": "1418b84b90da5d4c07818b7f309a5b3841578c9a8e1a8a405511b59470fc19d0",
+      "line": 322
+    }
+  }
+]

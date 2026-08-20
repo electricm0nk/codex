@@ -1,0 +1,128 @@
+[
+  {
+    "key": "Cloistered Cleric ~ Breadth of Knowledge",
+    "class": "Cleric",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1001
+    }
+  },
+  {
+    "key": "Cloistered Cleric ~ Diminished Spellcasting",
+    "class": "Cleric",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1001
+    }
+  },
+  {
+    "key": "Cloistered Cleric ~ Verbal Instruction",
+    "class": "Cleric",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1001
+    }
+  },
+  {
+    "key": "Cloistered Cleric ~ Well-Read",
+    "class": "Cleric",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1001
+    }
+  },
+  {
+    "key": "Separatist ~ Forbidden Rites",
+    "class": "Cleric",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1002
+    }
+  },
+  {
+    "key": "Theologian ~ Domain Secret",
+    "class": "Cleric",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1003
+    }
+  },
+  {
+    "key": "Theologian ~ Focused Domain",
+    "class": "Cleric",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1003
+    }
+  },
+  {
+    "key": "Undead Lord ~ Corpse Companion",
+    "class": "Cleric",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1005
+    }
+  },
+  {
+    "key": "Undead Lord ~ Unlife Healer",
+    "class": "Cleric",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1005
+    }
+  }
+]

@@ -1,0 +1,100 @@
+[
+  {
+    "key": "Ancient Guardian ~ Ancient Arms",
+    "class": "Druid",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+      "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+      "line": 69
+    }
+  },
+  {
+    "key": "Ancient Guardian ~ Ancient Ways",
+    "class": "Druid",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+      "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+      "line": 69
+    }
+  },
+  {
+    "key": "Ancient Guardian ~ Community Bond",
+    "class": "Druid",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+      "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+      "line": 69
+    }
+  },
+  {
+    "key": "Ancient Guardian ~ Dispel Hostility",
+    "class": "Druid",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+      "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+      "line": 69
+    }
+  },
+  {
+    "key": "Ancient Guardian ~ Patience of Nature",
+    "class": "Druid",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+      "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+      "line": 69
+    }
+  },
+  {
+    "key": "Ancient Guardian ~ Undo Artifice",
+    "class": "Druid",
+    "level": 13,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+      "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+      "line": 69
+    }
+  },
+  {
+    "key": "Ancient Guardian ~ Unimpeachable",
+    "class": "Druid",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_class.lst",
+      "sha256": "b143c311cf7414689d98b84441509f56d6155bc7f048e5b2bd34ee5383af6e3d",
+      "line": 69
+    }
+  }
+]

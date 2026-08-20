@@ -1,0 +1,310 @@
+[
+  {
+    "key": "Oath against Corruption ~ Aura of Purity",
+    "class": "Paladin",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1521
+    }
+  },
+  {
+    "key": "Oath against Corruption ~ Cast into the Void",
+    "class": "Paladin",
+    "level": 20,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1521
+    }
+  },
+  {
+    "key": "Oath against Corruption ~ Cleansing Flame",
+    "class": "Paladin",
+    "level": 11,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1521
+    }
+  },
+  {
+    "key": "Oath against Fiends ~ Anchoring Aura",
+    "class": "Paladin",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1522
+    }
+  },
+  {
+    "key": "Oath against Fiends ~ Holy Vessel",
+    "class": "Paladin",
+    "level": 9,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1522
+    }
+  },
+  {
+    "key": "Oath against Savagery ~ Holy Reach",
+    "class": "Paladin",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1523
+    }
+  },
+  {
+    "key": "Oath against Savagery ~ Hordebreaker",
+    "class": "Paladin",
+    "level": 11,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1523
+    }
+  },
+  {
+    "key": "Oath against Undeath ~ Aura of Life",
+    "class": "Paladin",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1524
+    }
+  },
+  {
+    "key": "Oath against Undeath ~ Detect Undead",
+    "class": "Paladin",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1524
+    }
+  },
+  {
+    "key": "Oath against Undeath ~ Ghost Touch Aura",
+    "class": "Paladin",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1524
+    }
+  },
+  {
+    "key": "Oath against Undeath ~ Superior Channeler",
+    "class": "Paladin",
+    "level": 11,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1524
+    }
+  },
+  {
+    "key": "Oath against the Wyrm ~ Breath Evasion",
+    "class": "Paladin",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1525
+    }
+  },
+  {
+    "key": "Oath against the Wyrm ~ Divine Bond",
+    "class": "Paladin",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1525
+    }
+  },
+  {
+    "key": "Oath against the Wyrm ~ Dragon-Slaying Strike",
+    "class": "Paladin",
+    "level": 20,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1525
+    }
+  },
+  {
+    "key": "Oath of Charity ~ Charitable Hands",
+    "class": "Paladin",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1526
+    }
+  },
+  {
+    "key": "Oath of Charity ~ Charitable Mercy",
+    "class": "Paladin",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1526
+    }
+  },
+  {
+    "key": "Oath of Chastity ~ Pure of Body",
+    "class": "Paladin",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1527
+    }
+  },
+  {
+    "key": "Oath of Chastity ~ Pure of Mind",
+    "class": "Paladin",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1527
+    }
+  },
+  {
+    "key": "Oath of Loyalty ~ Loyal Guardian",
+    "class": "Paladin",
+    "level": 8,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1528
+    }
+  },
+  {
+    "key": "Oath of Loyalty ~ Loyal Oath",
+    "class": "Paladin",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1528
+    }
+  },
+  {
+    "key": "Oath of Vengeance ~ Channel Wrath",
+    "class": "Paladin",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1529
+    }
+  },
+  {
+    "key": "Oath of Vengeance ~ Powerful Justice",
+    "class": "Paladin",
+    "level": 11,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst",
+      "sha256": "73578b75b7e7b99212a08cbb7b42a0d1098c0fba4154e85f3a33d1d99ec4ee0e",
+      "line": 1529
+    }
+  }
+]

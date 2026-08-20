@@ -1,0 +1,324 @@
+[
+  {
+    "key": "Monk ~ AC Bonus",
+    "class": "Monk",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 174
+    }
+  },
+  {
+    "key": "Monk ~ Abundant Step",
+    "class": "Monk",
+    "level": 12,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 187
+    }
+  },
+  {
+    "key": "Monk ~ Diamond Body",
+    "class": "Monk",
+    "level": 11,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 186
+    }
+  },
+  {
+    "key": "Monk ~ Diamond Soul",
+    "class": "Monk",
+    "level": 13,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 188
+    }
+  },
+  {
+    "key": "Monk ~ Empty Body",
+    "class": "Monk",
+    "level": 19,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 192
+    }
+  },
+  {
+    "key": "Monk ~ Evasion",
+    "class": "Monk",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 176
+    }
+  },
+  {
+    "key": "Monk ~ Fast Movement",
+    "class": "Monk",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 177
+    }
+  },
+  {
+    "key": "Monk ~ Flurry of Blows",
+    "class": "Monk",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 172
+    }
+  },
+  {
+    "key": "Monk ~ High Jump",
+    "class": "Monk",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 182
+    }
+  },
+  {
+    "key": "Monk ~ Improved Evasion",
+    "class": "Monk",
+    "level": 9,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 185
+    }
+  },
+  {
+    "key": "Monk ~ Ki Pool",
+    "class": "Monk",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 180
+    }
+  },
+  {
+    "key": "Monk ~ Maneuver Training",
+    "class": "Monk",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 178
+    }
+  },
+  {
+    "key": "Monk ~ Monk Bonus Feat",
+    "class": "Monk",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 173
+    }
+  },
+  {
+    "key": "Monk ~ Perfect Self",
+    "class": "Monk",
+    "level": 20,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 193
+    }
+  },
+  {
+    "key": "Monk ~ Purity of Body",
+    "class": "Monk",
+    "level": 5,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 183
+    }
+  },
+  {
+    "key": "Monk ~ Quivering Palm",
+    "class": "Monk",
+    "level": 15,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 189
+    }
+  },
+  {
+    "key": "Monk ~ Slow Fall",
+    "class": "Monk",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 181
+    }
+  },
+  {
+    "key": "Monk ~ Still Mind",
+    "class": "Monk",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 179
+    }
+  },
+  {
+    "key": "Monk ~ Stunning Fist",
+    "class": "Monk",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 175
+    }
+  },
+  {
+    "key": "Monk ~ Timeless Body",
+    "class": "Monk",
+    "level": 17,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 191
+    }
+  },
+  {
+    "key": "Monk ~ Tongue of the Sun and Moon",
+    "class": "Monk",
+    "level": 17,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 190
+    }
+  },
+  {
+    "key": "Monk ~ Unarmed Strike",
+    "class": "Monk",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 171
+    }
+  },
+  {
+    "key": "Monk ~ Wholeness of Body",
+    "class": "Monk",
+    "level": 7,
+    "level_explicit": true,
+    "gate": "mod_row_gated",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "line": 184
+    }
+  }
+]

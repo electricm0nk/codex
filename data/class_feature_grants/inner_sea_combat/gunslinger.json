@@ -1,0 +1,170 @@
+[
+  {
+    "key": "Gun Scavenger ~ Arbitrary Aim",
+    "class": "Gunslinger",
+    "level": 2,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 21
+    }
+  },
+  {
+    "key": "Gun Scavenger ~ Change Out",
+    "class": "Gunslinger",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 21
+    }
+  },
+  {
+    "key": "Gun Scavenger ~ Deeds",
+    "class": "Gunslinger",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 21
+    }
+  },
+  {
+    "key": "Gun Scavenger ~ Go By Feel",
+    "class": "Gunslinger",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 21
+    }
+  },
+  {
+    "key": "Gun Scavenger ~ Gunsmith",
+    "class": "Gunslinger",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 21
+    }
+  },
+  {
+    "key": "Gun Scavenger ~ Jury-Rig",
+    "class": "Gunslinger",
+    "level": 7,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 21
+    }
+  },
+  {
+    "key": "Siege Gunner ~ Bonus Feats",
+    "class": "Gunslinger",
+    "level": 4,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 34
+    }
+  },
+  {
+    "key": "Siege Gunner ~ Deeds",
+    "class": "Gunslinger",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 34
+    }
+  },
+  {
+    "key": "Siege Gunner ~ Engineer Training",
+    "class": "Gunslinger",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 34
+    }
+  },
+  {
+    "key": "Siege Gunner ~ Grit",
+    "class": "Gunslinger",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 34
+    }
+  },
+  {
+    "key": "Siege Gunner ~ Scattershot",
+    "class": "Gunslinger",
+    "level": 3,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 34
+    }
+  },
+  {
+    "key": "Siege Gunner ~ Targeted Blast",
+    "class": "Gunslinger",
+    "level": 1,
+    "level_explicit": true,
+    "gate": "preclass",
+    "corpus_record_exists": true,
+    "source": {
+      "kind": "class_feature_grant",
+      "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_class.lst",
+      "sha256": "c4afe5d97d69cdfbe5b516e6fc837eda1d809eff8077e5a8c7cd17ad3d32947d",
+      "line": 34
+    }
+  }
+]
