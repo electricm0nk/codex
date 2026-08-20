@@ -4543,8 +4543,22 @@ fn modelled_race_of_race_trait<'a>(
 ) -> Option<&'a String> {
     let segments: Vec<&str> = key.split(" ~ ").collect();
     segments[..segments.len().saturating_sub(1)].iter().find_map(|segment| {
-        let segment = segment.trim().to_lowercase();
+        // Wave 22: hyphen/space are normalized to the SAME separator on
+        // both sides before comparison. `race_names`'s two compound race
+        // names (`half-elf`, `half-orc`) are always hyphenated, but the
+        // corpus is not consistently hyphenated -- `acg_abilities_race.lst`
+        // states `Half Elf ~ Arcanist ~ Caster Level` (space, no hyphen)
+        // for a real Half-Elf row. Normalizing both sides to a space is a
+        // pure spelling-variant fix, not a widening of what counts as a
+        // match: the word-boundary check below (`rest.is_empty() ||
+        // rest.starts_with(' ')`) still requires the race name to be the
+        // segment's own leading word(s), so a glued run of letters that
+        // merely CONTAINS the un-hyphenated race name ("Half Elfin") still
+        // grounds nothing, exactly as it did before this fix for the
+        // hyphenated spelling ("Elfin Grace").
+        let segment = segment.trim().to_lowercase().replace('-', " ");
         race_names.iter().find(|race| {
+            let race = race.replace('-', " ");
             segment
                 .strip_prefix(race.as_str())
                 .is_some_and(|rest| rest.is_empty() || rest.starts_with(' '))
@@ -10087,6 +10101,46 @@ mod race_trait_grounding_tests {
         let races = modelled_races();
         assert_eq!(modelled_race_of_race_trait("Elfin Grace ~ Something", &races), None);
         assert_eq!(modelled_race_of_race_trait("Dwarfism ~ Something", &races), None);
+    }
+
+    /// Wave 22 (`race_trait` lane, SD-31): the two-name races (`Half-Elf`,
+    /// `Half-Orc`) are hyphenated in `race_names`, but PCGen's own corpus
+    /// data does not consistently hyphenate them -- `acg_abilities_race.lst`
+    /// states the compound-segment key `Half Elf ~ Arcanist ~ Caster Level`
+    /// (space, no hyphen) for a real, non-empty `advanced_class_guide`
+    /// `SpecialQuality` row (`half_elf_arcanist_caster_level`). Before this
+    /// fix `"half elf".strip_prefix("half-elf")` fails outright at the
+    /// hyphen/space byte, so the segment never matches -- an un-hyphenated
+    /// spelling of a modelled race's own name reported `race_trait_race_not_
+    /// modelled` for a record that genuinely names Half-Elf. Corpus-wide
+    /// re-derive (`docs/work-inventory.json`, `race_trait_race_not_modelled`
+    /// evidence, hyphen/space-normalized prefix match): exactly 1 unit
+    /// corpus-wide carries this shape. Reclassifies to `race_trait_absent_
+    /// from_race_traits` (the race is now found, but `advanced_class_guide`
+    /// carries no `race_traits()` table entry for it) -- zero board
+    /// movement, a pure evidence-accuracy fix, same shape as wave 20's own
+    /// matcher fix.
+    #[test]
+    fn a_race_name_spelled_with_a_space_instead_of_its_own_hyphen_is_still_found() {
+        let races = modelled_races();
+        assert_eq!(
+            modelled_race_of_race_trait("Half Elf ~ Arcanist ~ Caster Level", &races)
+                .map(String::as_str),
+            Some("half-elf"),
+            "an un-hyphenated spelling of Half-Elf's own name must still be found"
+        );
+        assert_eq!(
+            modelled_race_of_race_trait("Half Orc ~ Something ~ Trait", &races)
+                .map(String::as_str),
+            Some("half-orc"),
+            "an un-hyphenated spelling of Half-Orc's own name must still be found"
+        );
+        // The word-boundary guard must survive normalization too: a glued
+        // run of letters that merely CONTAINS the un-hyphenated race name
+        // must still ground nothing (mirrors
+        // `a_race_name_glued_to_more_letters_with_no_word_break_is_not_a_compound_match`
+        // on the normalized side of the comparison).
+        assert_eq!(modelled_race_of_race_trait("Half Elfin ~ Something", &races), None);
     }
 
     /// The trailing segment is the trait name, never the race. Without this

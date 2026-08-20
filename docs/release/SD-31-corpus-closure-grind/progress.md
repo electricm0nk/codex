@@ -31951,3 +31951,183 @@ precedent for its rejected `roster-engine` branch.
 force-deleted. `sd31/racetrait4-SD31-E6-F4-005` -- untouched, not gated, not merged, per standing
 instruction (confirmed by `git branch -a | grep racetrait4` before and after this cycle: unchanged,
 still pointing at `d65e168a5`).
+
+## Cycle `SD31-W22-RACETRAIT-001` (`RETRO_ACTOR=sd31-w22-racetrait`) — 2026-08-20, wave 22 `race_trait` lane: exhausted the matcher/fixture surface, zero board lever remains in scope
+
+**Lane:** `race_trait` — 2,984 not-done of 3,504 (14.8402% done, unmoved for four consecutive waves
+18-21). **File scope:** `race_trait` tables/fixtures and `modelled_race_of_race_trait` specifically;
+no race chassis attribution, no `wiring_class.rs`, no `class_feature`, no `pilot_compute`, no other
+kinds' data. **Branch:** `worktree-wf_247631fc-31a-4`, base `353293b3c` (tranche/11 tip). **Oracle
+pin:** `7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/verify.sh --only preflight-oracle` PASS).
+
+### 0. Dispatch-brief correction (`retro.py correction`, `1787226795814-sd31-w22-racetrait-4207f7`)
+
+The dispatch brief's named lever — "wave 19 found a concrete matcher defect no lane has yet fixed
+corpus-wide" (the exact-segment-equality bug in `modelled_race_of_race_trait`) — was **already
+fixed**, one wave before this one: `dab19ed26` (wave 20), merged at `c22ba124f` with reviewer
+verdict SOUND and an empirically-proven **0 board movement** (`git merge-base --is-ancestor
+dab19ed26 HEAD` on this wave's own base is true). Re-verified rather than re-implemented; no time
+spent rebuilding an already-shipped fix.
+
+### 1. What was actually investigated this wave
+
+With the wave-20 matcher fix already landed and wave-21 confirming the `race_traits()` table
+completion path is blocked without touching `pilot_compute` (`OPEN-ISSUES.md` row 337 item 4),
+this wave re-derived the full not-done population fresh from `docs/work-inventory.json` and traced
+every evidence bucket to its actual blocker, rather than assuming either prior wave's
+characterization:
+
+| evidence | count | blocker |
+|---|---:|---|
+| `race_trait_race_not_modelled` | 2,488 | record names a race outside `RaceId::ALL` (7 CRB core races) — closing requires **race chassis attribution** (out of scope) |
+| `race_trait_absent_from_race_traits` | 230 | race is one of the 7 CRB races, but `crb::race_tables::race_traits()` (49 rows, exactly the dimensions `pilot_compute` already grounds per its own test `race_traits().len()==49`) has no entry for this specific trait — closing requires **`pilot_compute`** (out of scope) |
+| `race_trait_record_loaded_but_never_applies` | 2 | loaded by the real `RaceCorpus` resolver but `role == TraitRole::Unclassified` — closing requires the resolver's own classification (chassis-adjacent, out of scope; named `Oversized Goblin` has a standing `OPEN_FINDINGS` entry) |
+| `ingested-magnitude` (`computed`+`display`, no verified consumer) | 264 | real record, no wired consumer — closing requires **`pilot_compute`** (out of scope) |
+
+`architecture/status.md`'s own wave-21 figure agrees independently: **3,065 of 3,504** `race_trait`
+units are "chassis-blocked residue that no race-trait ingest can ever ground" (3,504 − 439 matched
+ceiling rows). The remaining ~439 workable-by-chassis units are bounded by the same two blockers one
+level down (confirmed by direct inspection, not assumed).
+
+Went one level deeper than either prior wave on the ONE lever inside file scope
+(`modelled_race_of_race_trait`'s own matching logic) to check for residual defects the wave-20 fix
+did not close. Built a normalized (hyphen/space-insensitive) re-derivation of the real matcher
+against the full 2,488-unit `race_trait_race_not_modelled` population and found exactly **one**:
+`advanced_class_guide:race_trait:half_elf_arcanist_caster_level` (`corpus_key`
+`"Half Elf ~ Arcanist ~ Caster Level"`, un-hyphenated) — `race_names` states the two compound races
+hyphenated (`half-elf`/`half-orc`), and the un-hyphenated corpus spelling failed the byte-level
+prefix match. Checked every other apparent near-miss by hand (6 more from a naive substring scan)
+and confirmed all 6 are correct refusals under the real word-boundary rule (`"Mostly Human ~ Suli ~
+Languages"`, `"Enhanced Gnome Magic ~ ..."` ×5 — none leads with the race name as its own prefix).
+
+Also checked the 263-unit no-`~`-separator subset of the same bucket by hand (`"Skald Spell Level
+0"`, `"Elf Barbarian Counter"`, etc.) — these are PCGen internal class-spellcasting/tracking rows
+misfiled as `Kind::RaceTrait` by file-location classification (`type_facet: null` on every sample
+checked), not real race content; not a `modelled_race_of_race_trait` defect, and reclassifying their
+`Kind` is out of this lane's file territory (touches `classify()` broadly).
+
+Also checked the 13-unit `display`+`ingested-magnitude` bucket (records the primary probe DOES
+observe but that do not reach `text-complete`): 6 are the Decision-7-REFINED universal size traits
+(deliberately demoted, correctly held pending real compute — out of scope), 7 are Tiefling heritage
+subrace traits (`Daemon-Spawn`/`Devil-Spawn`/etc.) correctly flagged `carries_prose_magnitude`
+(they grant level-scaled spell-like abilities, a real magnitude, not flavor text) — both populations
+are correctly classified, not a defect.
+
+### 2. Fix applied (TDD, mutation-proved)
+
+`modelled_race_of_race_trait` (`src/bin/v06_work_inventory.rs`): normalizes `-`→` ` on both the
+corpus segment and the race name before the prefix/word-boundary comparison, so an un-hyphenated
+corpus spelling of a two-word race name is still found. The word-boundary guard is unchanged and
+re-verified to survive normalization (a glued run of letters that merely *contains* the
+un-hyphenated race name, e.g. `"Half Elfin"`, still grounds nothing).
+
+New test `a_race_name_spelled_with_a_space_instead_of_its_own_hyphen_is_still_found`
+(`race_trait_grounding_tests`): RED confirmed before the fix (`left: None, right: Some("half-elf")`
+at the real `Half Elf ~ Arcanist ~ Caster Level` key); GREEN after. Mutation-proved: reverted the
+`.replace('-', " ")` normalization on both sides, confirmed the test fails for the identical reason,
+reverted the mutation, confirmed GREEN again. All 26 pre-existing tests in
+`race_trait_grounding_tests` still pass, none touched.
+
+### 3. Board impact — reclassification, not a gain, reported separately per instruction
+
+Guarded regen, isolated `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/w22-race_trait` (deleted after
+use), `CODEX_REPO_ROOT` pinned to this worktree:
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out $S/sweep2.json
+# corpus-literal-sweep: 26368 records examined of 26802 read, 254626 tokens compared, 0 findings, CLEAN
+# (byte-identical to base — no corpus JSON touched this wave)
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out $S/fixture2.json
+# derived-evaluator-fixture-check: 1821 unit(s) cleared over 2561 fixture row(s); 0 failed
+# (unchanged from base)
+CORPUS_LITERAL_SWEEP_REPORT=$S/sweep2.json DERIVED_FIXTURE_CHECK_REPORT=$S/fixture2.json \
+  cargo run --locked --bin v06_work_inventory
+```
+
+Diffed `docs/work-inventory.json` against the committed base: **exactly one unit line changed**
+(plus `generated_at`). `advanced_class_guide:race_trait:half_elf_arcanist_caster_level`'s `evidence`
+moves `race_trait_race_not_modelled` → `race_trait_absent_from_race_traits`; `status` stays
+`not-ingested` (`doneness_verdict`: `not-started`, unchanged), `wiring_class` stays `derived`.
+
+Re-derived `race_trait`'s full cross-tab independently (not diffed-and-trusted): total **3,504**
+(unchanged), `by_status` **{not-ingested: 2,720, grounded: 326, ingested-magnitude: 264,
+text-complete: 181, literal-verified: 13}** — byte-identical to the pre-cycle baseline — `done`
+(replayed via `doneness_verdict`, same predicate the shipped dashboard uses: `computed`+`grounded`
+→ done, `display`+`text-complete` → done, `static`+`literal-verified` → done) = **520 (14.8402%)**,
+unchanged. Denominator confirmed unchanged: `len(units) − len(beginner_box units)` = 38,391 − 19 =
+**38,372**, matching the frozen figure exactly. **Zero board movement — a pure evidence-accuracy
+fix, the same shape as wave 20's own matcher fix.**
+
+Swept for stale hardcoded assertions before committing: `grep -rn
+"race_trait_race_not_modelled\|race_trait_absent_from_race_traits"` across `tests/` returns no hits
+in `tests/v06_work_inventory.rs` — no count of either evidence string is pinned anywhere outside the
+generator itself, so no other file needs updating for this one-unit reclassification.
+
+### 4. Full verification
+
+`cargo build --locked -j 8`: clean, only the same 2 pre-existing dead-code warnings prior waves
+carried (`probe_reachable_race_traits`, `probe_equipment_key_universe`; `EMPOWER_SPELL_METAMAGIC_SELECTION`
+warning is `lib`-side and also pre-existing).
+
+`cargo test --locked -j 8` (first pass, fail-fast): one failure,
+`sd17_b5_equipment::parse_runs_in_linear_time_on_a_synthetic_large_file` ("took 3.13s" against a
+"well under 2s" loose wall-clock bound) — unrelated to any file this cycle touched (equipment
+`.lst` parsing performance). Box load average was 23.5 on 24 cores at the time (confirmed via
+`uptime` and `ps aux`: at least two other wave-22 sibling agents' own `cargo test`/`corpus_literal_sweep`/
+real-PCGen-oracle-via-Gradle processes were running concurrently in their own worktrees/
+`CARGO_TARGET_DIR`s). Re-ran the single test in isolation (`-j 1 --test-threads=1`) once load
+dropped: **passes in 1.75s**. Confirmed a resource-contention flake, not a regression, per AGENTS.md's
+"attribute every FAILED line back to its Running line" discipline — not waved off on assumption.
+
+Re-ran the full suite with `--no-fail-fast` for complete coverage (the first pass's fail-fast stop
+meant not every binary had run): **576 test binaries, all `test result: ok`; 7,264 individual tests
+passed, 0 failed, 56 ignored** (summed from every `test result: N passed; N failed; N ignored` line
+in the full log, including `sd17_b5_equipment` itself, which now passes clean at 25/25), covering
+every test binary, including the real-PCGen-oracle parity tests. Desktop crate (`apps/desktop/src-tauri`) not re-tested: `grep -rn
+"v06_work_inventory\|modelled_race_of_race_trait" apps/desktop/src-tauri/src/` returns only doc-comment
+cross-references (the desktop crate reproduces the relevant helpers locally rather than importing
+this bin — confirmed by reading the cited files' own doc comments), so nothing in that crate depends
+on the changed code.
+
+### 5. Site/dashboard refresh (loop-instruction override 10)
+
+This cycle touched `docs/work-inventory.json` (the one-unit reclassification), so
+`./scripts/publish-site-dashboard.sh` was run for real (not `--check`) and its output committed
+alongside the corpus regen. Refreshed `site/dashboard/PF1e-dashboard.json`,
+`site/dashboard/PF1e-dashboard.json.last-good`, `site/dashboard/units/index.json` and
+`site/status-data.json` (30 books, overall 39.1%, `generated_at` only — the one status-unchanged
+unit produces no content diff in the PI-screened, status-only public projection; no individual
+`site/status-data/*.json` book-detail file changed). All four required gates PASS:
+`./scripts/verify.sh --only site-dashboard-check --only site-dashboard-pi-gate --only
+site-public-status-check --only site-public-status-pi-gate` → `site-dashboard-check` (current),
+`site-dashboard-pi-gate` (13 files scanned against 1,612 declared-PI names, zero leaked),
+`site-public-status-check` (current), `site-public-status-pi-gate` (31 files scanned against 1,612
+declared-PI names, zero leaked).
+
+### 6. What was not done, and why
+
+- **Did not** touch `crb::race_tables::race_traits()`, `apps/desktop/src-tauri/src/race_catalog.rs`'s
+  `RACE_CORPUS_BOOKS`, `pilot_compute.rs`, `wiring_class.rs`, or any race chassis file — every one of
+  the four evidence buckets above genuinely requires one of those, all explicitly out of this lane's
+  granted scope.
+- **Did not** propose a Structural Exclusion Register entry — nothing in this population is
+  structurally unreachable by content; it is unreachable only by this lane's own file-scope boundary,
+  which is a scoping fact, not a corpus fact, and Decision 3 reserves the register for the latter.
+- **Did not** re-attribute any race or move any unit out of the denominator, per standing constraint.
+
+### 7. For the operator / next wave
+
+`race_trait`'s remaining 2,984-unit population has now had its file-scope-legal levers (matcher
+correctness, prose done-bar coverage) fully exhausted across waves 19-22: every remaining unit
+requires either race chassis modelling (2,481 of the 2,488 `race_not_modelled` units, after this
+wave's 1-unit reclassification) or a `pilot_compute` consumer (the 230-unit `absent_from_race_traits`
+bucket + the 264-unit `ingested-magnitude` bucket + the 2-unit `loaded_but_never_applies` bucket).
+**A fifth `race_trait`-labeled wave dispatched with this same file scope (tables/fixtures +
+`modelled_race_of_race_trait` only, no chassis, no `pilot_compute`) cannot move the board further —
+not because the work doesn't exist, but because every remaining unit's fix lives in a file this
+lane is explicitly forbidden to touch.** Closing meaningful `race_trait` volume needs either (a) a
+combined lane with `pilot_compute` write scope (closes the 230+264+2=496-unit population bounded by
+CRB's 7 races), or (b) a race-chassis-widening lane (closes some fraction of the 2,481-unit
+not-modelled population, bounded by how many of the ~34 ingest-modelled races' traits the real
+`RaceCorpus` resolver can be taught to apply) — both out of scope for a `race_trait`-tables-only
+lane by construction, not by this wave's choice.
