@@ -215,7 +215,7 @@ pub fn spell_catalog_rows() -> &'static [SpellCatalogRow] {
             level: entry.level,
             description: entry.description,
         });
-        crb_rows
+        let chained: Vec<SpellCatalogRow> = crb_rows
             .chain(apg_rows)
             .chain(acg_rows)
             .chain(arg_rows)
@@ -226,7 +226,30 @@ pub fn spell_catalog_rows() -> &'static [SpellCatalogRow] {
             .chain(isg_rows)
             .chain(uw_rows)
             .chain(b6_rows)
-            .collect()
+            .collect();
+        // SD-31 wave-24 (integration cycle, W24-INTEGRATE): a later-chained
+        // book can genuinely reprint an earlier book's spell verbatim (e.g.
+        // Bestiary 6's two Scalykind-subdomain spells are also printed,
+        // word-for-word, inside Ultimate Wilderness's own `uw_spells.lst` --
+        // see `rules_tables::bestiary_6::spell_list`'s doc comment). Serving
+        // the same `key` twice broke `no_key_is_served_twice_so_a_selection_
+        // resolves_unambiguously` (apps/desktop/src-tauri's own product
+        // invariant: the catalog browser and picker key off spell name
+        // alone, with no book qualifier in the selection path), so this is
+        // the SAME general policy `ultimate_combat::spell_list` already
+        // applies by omission for `Share Language (Communal)` (that book's
+        // own ingest simply never included the thinner duplicate) --
+        // generalized here as a resolver-level rule instead of a per-ingest
+        // hand omission, so it also protects every future book widening.
+        // First-chained wins (book declaration order above), which for
+        // every existing collision keeps the earlier-registered book's row.
+        // This is a general, book-agnostic dedup -- it does not name
+        // Bestiary 6 or any other book -- and it is a no-op for every book
+        // pair that does not collide (confirmed: the pre-B6 catalog carried
+        // zero cross-book key collisions, so this dedup changes nothing for
+        // the ten books that were already chained here).
+        let mut seen = std::collections::HashSet::new();
+        chained.into_iter().filter(|row| seen.insert(row.key)).collect()
     })
 }
 
@@ -391,43 +414,55 @@ mod spell_catalog_rows_tests {
         assert_eq!(matches[0].book, SPELL_BOOK_OA, "OA's fuller record must be the one that ships");
     }
 
-    /// SD-31 wave-24 (`bestiary_6` lane): Bestiary 6 is the eleventh book
-    /// chained into `spell_catalog_rows()`. A real, non-empty row set proves
-    /// the chain actually wired the new book in, not merely that the
-    /// constant compiles.
+    /// SD-31 wave-24 (`bestiary_6` lane, corrected by the W24-INTEGRATE
+    /// cycle): `bestiary_6::spell_list::SPELL_LIST` really does carry 2
+    /// entries and both really do compile into `SPELL_BOOK_B6`-tagged rows
+    /// upstream of the dedup pass -- the constant is not dead weight. But
+    /// both of this book's rows are verbatim reprints of spells Ultimate
+    /// Wilderness already ships (see `bestiary_6::spell_list`'s doc
+    /// comment), so the cross-book dedup pass in `spell_catalog_rows()`
+    /// (first-chained book wins; UW is chained before B6) suppresses both
+    /// -- `SPELL_BOOK_B6` ships zero rows into the *served* catalog today.
+    /// That is the correct, general outcome, not a bug: see
+    /// `bestiary_6_reprints_are_served_once_from_uw_not_duplicated_from_b6`
+    /// below for the invariant this test would otherwise have broken
+    /// (`no_key_is_served_twice_so_a_selection_resolves_unambiguously`,
+    /// apps/desktop/src-tauri/src/spell_catalog.rs). A future book that adds
+    /// a spell Bestiary 6 alone prints would show up here as a non-empty,
+    /// non-colliding `SPELL_BOOK_B6` row.
     #[test]
-    fn bestiary_6_is_chained_into_the_catalog() {
+    fn bestiary_6_book_code_is_registered_but_contributes_no_served_rows_today() {
         let b6_rows: Vec<&SpellCatalogRow> =
             spell_catalog_rows().iter().filter(|row| row.book == SPELL_BOOK_B6).collect();
-        assert_eq!(b6_rows.len(), 2, "expected exactly the book's 2 real spell rows: {b6_rows:?}");
-        assert!(
-            b6_rows.iter().any(|row| row.key == "Animal Growth (Reptiles Only)"
-                && row.level == Some(5)),
-            "expected the real corpus row 'Animal Growth (Reptiles Only)' (b6_spells.lst) among \
-             Bestiary 6's rows: {b6_rows:?}"
+        assert_eq!(
+            b6_rows.len(),
+            0,
+            "both of Bestiary 6's spell rows are verbatim UW reprints and must be suppressed \
+             by the cross-book dedup pass, not served under their own book code: {b6_rows:?}"
         );
+        assert_eq!(bestiary_6::spell_list::SPELL_LIST.len(), 2, "the book's own table is unchanged");
     }
 
     /// Bestiary 6's own two spells are ALSO reprinted verbatim inside
     /// Ultimate Wilderness's `uw_spells.lst` (`bestiary_6::spell_list`'s own
-    /// doc comment). Both books' rows must ship, each carrying its own
-    /// `book` provenance -- this is a genuine cross-book reprint, not the
-    /// "thinner duplicate" shape `share_language_communal_...` above pins,
-    /// and Decision 10's Supersession Register is proposed, not applied, so
-    /// neither row may be silently dropped here.
+    /// doc comment) -- a genuine cross-book reprint, not the "thinner
+    /// duplicate" shape `share_language_communal_...` above pins (both
+    /// copies are fully populated). Decision 10's Supersession Register is
+    /// proposed, not applied, so this test does not attempt that ruling;
+    /// it only pins the interim, conservative default this integration
+    /// cycle chose to protect the pre-existing `no_key_is_served_twice_...`
+    /// product invariant: the earlier-chained book (UW, registered in wave
+    /// 19) is the one that ships, and the later one (B6, wave 24) is
+    /// suppressed as a duplicate rather than shipped twice.
     #[test]
-    fn bestiary_6_and_ultimate_wilderness_both_ship_the_scalykind_reprints() {
+    fn bestiary_6_reprints_are_served_once_from_uw_not_duplicated_from_b6() {
         for key in ["Animal Growth (Reptiles Only)", "Animal Shapes (Reptiles Only)"] {
             let books: Vec<&str> = spell_catalog_rows()
                 .iter()
                 .filter(|row| row.key == key)
                 .map(|row| row.book)
                 .collect();
-            assert_eq!(
-                books,
-                vec![SPELL_BOOK_UW, SPELL_BOOK_B6],
-                "{key} must ship once from each book that really prints it"
-            );
+            assert_eq!(books, vec![SPELL_BOOK_UW], "{key} must ship exactly once, from UW");
         }
     }
 }
