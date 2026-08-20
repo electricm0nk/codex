@@ -32663,3 +32663,221 @@ Both captured via `run-desktop`'s `driver.sh` under `RUN_DESKTOP_AGENT=w23poolme
 All four `CARGO_TARGET_DIR`s used this cycle deleted at close (listed at the top of this receipt).
 `run-desktop` app stopped (`driver.sh stop`). `sd31/racetrait4-SD31-E6-F4-005` — untouched, not
 read, not gated.
+## Cycle `SD31-W23-MONSTER-001` (`RETRO_ACTOR=sd31-w23-monster`) -- 2026-08-20, wave 23 `monster_ability`/`monster`/`spell` lane
+
+**Branch:** `worktree-wf_861de0ba-35d-6` (this worktree), base `3229f9e2b` (tranche/11 tip -- the
+dispatch base did not match at cycle start; `git log --oneline -1` showed a site-publish merge
+commit with no `docs/`/`data/`/`scripts/`/`schemas/` tree, tree was clean, so `git reset --hard
+3229f9e2b` per the dispatch's own instruction; confirmed after reset). **Oracle pin:**
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/verify.sh --only
+preflight-oracle` PASS via the full gate run, `scripts/fetch-pcgen-oracle.sh --check` also
+independently OK). **Own `CARGO_TARGET_DIR`s, all deleted at cycle close:**
+`/home/ubuntu/cargo-targets/w23-monster`, `/home/ubuntu/cargo-targets/w23-monster-regen`,
+`/home/ubuntu/cargo-targets/w23-monster-fulltest`, `/home/ubuntu/cargo-targets/w23-desktop`
+(an early misdirected run, deleted unused).
+
+**Built the cross-table-owner remedy `decisions.md §58.3` named and `SD31-W22-MONSTER-001`
+(wave 22) scoped but deliberately did not build -- 45 units newly `done`, 0 regressions, board
+13,253/38,372 (34.5382%) -> 13,298/38,372 (34.6554%).**
+
+### 1. The lever: 55 `monster_ability` rows whose real owner ships from the OTHER Bestiary 1 table
+
+Read `decisions.md §58.3` (SD-29) and wave 22's own investigation receipt first, per the dispatch's
+"extend rather than starting fresh" instruction. Both already named the exact mechanism:
+`rules_tables::bestiary` (the 234-monster COMPLEMENT chassis) sits ALONGSIDE `rules_tables::beastiary1`
+(SD-22's 46 hand-modelled monsters), by ruling, to avoid two stat blocks for one creature under one
+wire code. `scripts/transcribe_monster_tables.py`'s own cross-table-owner screen already computed the
+55 ability rows this split strands (54 in `b1_abilities_race.lst`, 1 in `ce_abilities_race.lst`) and
+printed them in the generated file's own doc comment -- then discarded them, because their owner (e.g.
+`Ankheg`) has no `MonsterStatBlock` in the `bestiary` table to attach a forward `ability_keys` link to.
+
+**The fix does not need that forward link.** `chassis_monster_ability_keys` (`v06_work_inventory.rs`)
+and `MonsterAbilityRecord`'s own `monster_ability_resolve` both index the ability table directly by
+`key`, never through a monster's `ability_keys`. So the 55 rows can ship in `bestiary::monster_
+abilities_static()` exactly as transcribed -- with their REAL owner name (`Ankheg`) preserved in
+`owners` -- and resolve for doneness purposes with zero changes to `v06_work_inventory.rs` itself.
+
+### 2. What changed
+
+- **`scripts/transcribe_monster_tables.py`**: the cross-table-owner screen no longer drops the 55
+  stranded ability rows from `abilities` after computing them for the doc-comment citation; it now
+  preserves each one's ORIGINAL owner name (`before`, not the emptied `after`) instead of clearing
+  `owners` to `[]`. Doc-comment generation updated to say these rows ARE transcribed, and each cited
+  ability line now also states its real owner. Re-ran `python3 scripts/transcribe_monster_tables.py
+  bestiary` against the pinned oracle: **467 -> 522 `MonsterAbilityRecord`s (+55)**, 0 change to the
+  234-monster count. Spot-checked byte-faithful against the pinned oracle directly: `Ankheg ~ Spit
+  Acid`/`Ankheg ~ Acid Bite` (`b1_abilities_race.lst:90-91`) reproduce the row's `DESC:` text verbatim,
+  confirmed by direct `sed`/diff against `$PCGEN_CORPUS_ROOT`.
+- **`src/rules_core/rules_tables/monster_chassis.rs`**: `MonsterBook` gains a new field,
+  `cross_table_owner_names: &'static [&'static str]` -- the monster NAMES a book's shipped abilities may
+  cite as owner even though this table holds no stat block for them, because that stat block ships from
+  a DIFFERENT compiled table. `&[]` for all 12 other registered books, `super::bestiary::cross_table_
+  owner_names()` for `beastiary`. Added `MonsterBook::abilities_owned_by_name(&self, name: &str)` --
+  resolves an ability list by owner NAME (backward from `owners`), the sibling of the pre-existing
+  `abilities_of(&self, monster: &MonsterStatBlock)` (forward from `ability_keys`), for exactly the case
+  the forward link cannot reach.
+- **`src/rules_core/rules_tables/bestiary/mod.rs`**: added `cross_table_owner_names()` -- a hand-kept
+  `const fn` literal list of the 46 legacy Bestiary 1 monster names (cannot be derived from
+  `beastiary1::MonsterId::ALL` at this call site, which returns owned `String`s, not `const`-callable).
+  Guarded against drift by a NEW test, `cross_table_owner_names_matches_the_real_beastiary1_roster_
+  exactly`, which re-derives the true 46 from `beastiary1::MonsterId::ALL` independently and asserts
+  set-equality.
+- **`apps/desktop/src-tauri/src/monster_catalog.rs`**: `map_monster` (the Bestiary-1/legacy half, which
+  previously hardcoded `abilities: Vec::new()` unconditionally) now populates `abilities` via
+  `monster_chassis::monster_book("beastiary").abilities_owned_by_name(&block.name)`, mapped through the
+  SAME `map_chassis_ability`/`serve_ability_description` render path every other book's abilities
+  already use (including the existing `%N`-placeholder-drop and leak-panic safety net). Doc comments on
+  `MonsterCatalogEntryDto::abilities` and in `map_monster` updated to state the real, narrower truth (a
+  legacy monster now carries its CROSS-TABLE-OWNED abilities, not a blanket "not ingested" empty list).
+
+### 3. Three PRE-EXISTING invariant tests correctly went RED, and were fixed by widening the invariant, not by weakening it
+
+Running the full test suite surfaced three tests this lane's own change legitimately broke, each of
+which was checking a premise ("every ability owner is a monster THIS table ships") the whole point of
+this cycle changes:
+
+| test | file | before | after |
+|---|---|---|---|
+| `every_owner_named_by_a_shipped_ability_is_a_shipped_monster` | `bestiary/mod.rs` | owner must be in `monsters()` | owner must be in `monsters()` OR `cross_table_owner_names()` |
+| `the_shipped_total_is_the_books_real_measured_count` | `bestiary/mod.rs` | pinned `747` | pinned `802` (280 + 522) |
+| `the_chassis_link_resolves_in_both_directions_for_every_book` | `monster_chassis.rs` (corpus-wide, every book) | `monster_resolve(owner)` must be `Some` | `Some`, or `None` when `owner` is in `book.cross_table_owner_names` |
+
+**Mutation-proved, not merely re-passed.** Corrupted `Ankheg ~ Acid Bite`'s `owners` to a nonsense name
+(`Ankhegzzz_mutation_probe`) and confirmed BOTH the book-specific test and the corpus-wide generic test
+fail with the exact expected message before reverting:
+```
+Ankheg ~ Acid Bite names owner Ankhegzzz_mutation_probe, which is not a shipped monster of this table
+  and not in cross_table_owner_names either
+beastiary: owner "Ankhegzzz_mutation_probe" is not a monster in this book and not in
+  cross_table_owner_names either
+```
+Reverted (`git diff` confirmed clean before re-testing). This is the standing anti-gaming instruction
+("mutate what your gate guards and prove it goes RED") applied to the NEW widening itself, not only to
+the underlying data.
+
+### 4. `data/corpus/beastiary/monster_ability/*.json` regenerated -- and a stale 68-record backlog closed as a side effect
+
+`cargo run --bin gen_book_cache -- beastiary`: **399 -> 522 on-disk JSON records (+123)**. Only 55 are
+this cycle's own new rows; the other 68 are wave 21's own `+399->467` Rust-table delta, which this
+cycle discovered had never actually been cache-generated to JSON (`data/corpus/beastiary/monster_
+ability/` was still at 399 files going into this cycle) -- an existing gap this cycle closed as a side
+effect of running the generator, not a new defect it introduced. Spot-checked `ankheg_acid_bite.json`
+against the pinned oracle: byte-faithful `description`, correct `source.line`/`sha256` citation.
+
+**One minor, non-blocking finding, logged rather than fixed (out of this lane's file scope):**
+`gen_book_cache.rs`'s `owners` JSON field construction (`format!("{book_id}:monster:{}",
+slugify(o))`, unconditional) writes a wire-key namespaced to THIS book for a cross-table-owned ability's
+owner too -- e.g. `ankheg_acid_bite.json`'s `data.owners` reads `["beastiary:monster:ankheg"]`, a key
+that resolves to nothing (the real record is `beastiary1:monster:ankheg`, a different table). Confirmed
+by direct grep that NO consumer (`corpus_loader.rs`, `reach_gate.rs`, `corpus_literal_sweep`) reads this
+JSON field at all, so it is inert metadata, not a functional defect -- but it is misleading to a future
+reader and the right fix belongs in `gen_book_cache.rs`'s owner-key construction, which this lane's file
+scope (monster/monster_ability tables, not the shared cache generator) did not extend to.
+
+### 5. Guarded regen and board movement
+
+```
+cargo run --locked -j 8 --bin corpus_literal_sweep -- --json-out $S/sweep.json
+# corpus-literal-sweep: 26368 records examined of 26925 read (was 26802 pre-cycle, +123 = the new
+# JSON files), 254626 tokens compared, 0 findings, CLEAN
+cargo run --locked -j 8 --bin derived_evaluator_fixture_check -- --json-out $S/fixture.json
+# derived-evaluator-fixture-check: 1821 unit(s) cleared over 2561 fixture row(s); 0 failed
+CORPUS_LITERAL_SWEEP_REPORT=$S/sweep.json DERIVED_FIXTURE_CHECK_REPORT=$S/fixture.json \
+  cargo run --locked -j 8 --bin v06_work_inventory
+```
+
+`doneness_verdict()` replayed by id (`scripts/observer/pf1e_dashboard_producer.py`'s own function,
+EXCLUDED_BOOKS={beginner_box}), before vs. after, independently in Python rather than trusted from the
+tool's own stdout:
+
+```
+denominator: 38,372 -> 38,372 (unchanged, frozen)
+done: 13,253 -> 13,298  (+45)
+newly done: 45   regressed: 0
+by kind: monster_ability 1,737 -> 1,782 (+45); every other kind unchanged
+```
+
+**Board: 13,253/38,372 (34.5382%) -> 13,298/38,372 (34.6554%).** Of the 45, **29 are `text-complete`**
+(zero-magnitude, e.g. `Acid Bite`, `Camouflage`) and **16 are the pre-existing `computed`+`grounded`
+`done` rung** (e.g. `Spit Acid`, magnitude-bearing but the DESC text itself -- with its `%1` DC
+placeholder correctly DROPPED, not fabricated -- now reaches the screen through the real render path).
+That rung is pre-existing, program-wide infrastructure (`OPEN-ISSUES.md` row 335, still RULING-NEEDED,
+already used by 359+ baseline `monster_ability` units before this cycle) -- this cycle's data flows
+through it identically to every prior wave's, introducing no new doctrine.
+
+### 6. DoD-8, on-screen verification
+
+`apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh --family monster --record Ankheg --expect
+"Acid Bite" --expect "additional 1d4 acid damage"` against the REAL running desktop app (Xvfb + `npx
+tauri dev`, `RUN_DESKTOP_AGENT=w23-monster`): **PASS**. Both `Spit Acid` (magnitude-bearing, `%1` DC
+placeholder correctly absent from the rendered text) and `Acid Bite` (zero-magnitude) render on
+Ankheg's real Monster Catalog card, screenshot + select-all/copy/clipboard-extraction confirms the exact
+rendered lines. Artifacts: `docs/release/SD-31-corpus-closure-grind/artifacts/SD31-W23-MONSTER-001/item8/monster-ankheg.png`
+and `.verify.md`. (`npm ci` had to be run first in `apps/desktop` -- node_modules was absent in this
+freshly-cut worktree, confirmed by the first launch attempt failing with `vite: not found`.)
+
+### 7. Full test suites
+
+- `cargo test --locked --lib -j8` (root, isolated dir): **2,196 passed, 0 failed, 13 ignored**
+  (`BASELINE_ROOT_LIB_TESTS=2195` +1, this cycle's own `cross_table_owner_names_matches_...` test).
+- `cargo test --locked -j8 --no-fail-fast` (root, full workspace, isolated dir): **577 test binaries,
+  7,299 passed, 0 failed, 66 ignored** (`BASELINE_ROOT_FULL_TESTS=7298` +1, `BASELINE_ROOT_TEST_
+  BINARIES=577` unchanged).
+- `cargo test --locked -j8` (`apps/desktop/src-tauri`, own isolated dir): **494 passed, 0 failed**
+  (`BASELINE_DESKTOP_TESTS=493` +1, this cycle's own `a_bestiary_1_legacy_monster_carries_its_cross_
+  table_owned_abilities`).
+- `npm run typecheck` (`apps/desktop`): clean, 0 errors.
+- `npm run test` (`apps/desktop`): **100/100 test files passed** (`BASELINE_FRONTEND_TEST_FILES=100`).
+- `cargo clippy --locked --tests -j8`: root **50/50** (ceiling), desktop **7/7** (ceiling) -- both
+  exactly at the recorded ceiling, 0 new lint debt.
+
+Three pre-existing tests DID regress before the fix described in §3 above; they are GREEN now, and the
+mutation proof in §3 confirms the widened invariant still catches the real defect class.
+
+### 8. Full gate: `./scripts/verify.sh -j 8`
+
+Run 1: **FAILED at `site-dashboard-check`** (33/34) -- `site-dashboard-check`/`site-public-status-
+check` ran early in the gate (before this cycle's own `publish-site-dashboard.sh` real-publish call,
+issued once the STALE verdict was seen in the running log; the log-checking pattern instruction 2
+itself names as the expected merge-only break every wave since 15 hits). Every OTHER stage passed on
+run 1, including `root-lib` (2,196 passed), `root-full` (7,299 passed across 577 suites, all 538
+`tests/*.rs` suites executed), `desktop` (494 passed), `reach` (30 passed), `corpus-sweep` (26,368
+examined of 26,925 read, 0 findings), `clippy` (root 50/50, desktop 7/7, exactly at ceiling), `class-
+dump` (31/31 computing), and both PI gates.
+
+Run 2 (`--only site-dashboard-check --only site-public-status-check`, after the real publish already
+landed): **PASS, both stages** -- `site/dashboard/PF1e-dashboard.json is current`,
+`site/status-data.json and site/status-data/*.json are current`.
+
+**34/34 stages pass across the two runs; nothing failed for a reason other than the expected
+merge-only staleness window.** `BASELINE_ROOT_LIB_TESTS`/`BASELINE_ROOT_FULL_TESTS`/
+`BASELINE_DESKTOP_TESTS` were flagged stale (informational, not failures) by the recorded floors
+being 1 below this cycle's own measured counts -- left for the wave 23 integration cycle to update
+`scripts/verify-baselines.env`, consistent with every prior lane cycle's own convention (only
+`SD31-W*-INTEGRATE-001` receipts have touched that file).
+
+### 9. What this cycle could NOT do / left for a future cycle
+
+- **`gen_book_cache.rs`'s cross-table-owner wire-key construction** (§4) -- inert today (no consumer
+  reads it), a real but low-priority correctness debt for a future cache-generator cycle.
+- **The remaining ~69 magnitude-bearing units among the 55** (the ones NOT already `computed`+
+  `grounded`, if any remain `held`/`grounded` rather than `done`) were not individually re-derived
+  beyond what `doneness_verdict()` itself already computed -- no compute wiring was attempted or
+  claimed; `pilot_compute.rs` was not touched, per the dispatch's explicit file restriction.
+- **`spell`**: read `derive_spell_range_fixtures.py`/`derive_spell_caster_level_duration_fixtures.py`
+  looking for the next instrument-level defect in the shape of wave 15's lexicographic tie-break or
+  wave 19's silently-null books. Found neither: the tie-break bug is already fixed (wave 15, confirmed
+  by reading the generator's own docstring), the book list is already widened to 10 (wave 20), and the
+  `KNOWN_KEYWORDS`/`skipped_not_known_keyword` (617) reflects a documented, deliberate refusal shape
+  (`Personal`/`Touch`/literal distances), not a gap. No spell lever found this cycle; not grinding rows
+  per the dispatch's own guidance. A future spell cycle should look at `derive_spell_caster_level_
+  duration_fixtures.py`'s own `skipped_complex` count with the same scrutiny, not yet done here.
+- **`monster`** (non-ability): the twice-refused 11-unit flat-literal bucket (`OPEN-ISSUES.md` rows
+  310/313) was not reopened -- no new evidence found, per the dispatch's own standing instruction.
+
+### 10. Cleanup
+
+`/home/ubuntu/cargo-targets/w23-monster`, `w23-monster-regen`, `w23-monster-fulltest`, `w23-desktop`
+deleted at cycle close. `apps/desktop/.claude/skills/run-desktop/driver.sh stop` run (Xvfb :89 torn
+down). `sd31/racetrait4-SD31-E6-F4-005` -- untouched, not read, not gated.
+

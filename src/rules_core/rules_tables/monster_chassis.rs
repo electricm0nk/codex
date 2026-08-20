@@ -325,6 +325,18 @@ pub struct MonsterBook {
     pub corpus_book: &'static str,
     pub monsters: &'static [MonsterStatBlock],
     pub monster_abilities: &'static [MonsterAbilityRecord],
+    /// Monster NAMES a shipped [`MonsterAbilityRecord::owners`] entry in this
+    /// book may cite even though `monsters` above holds no
+    /// [`MonsterStatBlock`] for them -- their stat block ships from a
+    /// DIFFERENT compiled table entirely (`decisions.md §58.3`'s
+    /// CROSS-TABLE-OWNER class, `SD31-W23-MONSTER-001`). Empty for every
+    /// book except `beastiary`, whose 46 legacy Bestiary 1 monsters ship
+    /// from `rules_tables::beastiary1` instead of from here -- see that
+    /// book's own `cross_table_owner_names()` for the derivation. An owner
+    /// naming a monster in neither `monsters` nor this list is still a real
+    /// defect `the_chassis_link_resolves_in_both_directions_for_every_book`
+    /// catches; this only widens what counts as a KNOWN, cited owner.
+    pub cross_table_owner_names: &'static [&'static str],
 }
 
 impl MonsterBook {
@@ -346,6 +358,31 @@ impl MonsterBook {
             .filter_map(|key| self.monster_ability_resolve(key))
             .collect()
     }
+
+    /// The abilities this book's own `MonsterAbilityRecord::owners` names a
+    /// given monster NAME as granting, independent of whether this table
+    /// holds that monster's own [`MonsterStatBlock`].
+    ///
+    /// [`Self::abilities_of`] walks a `MonsterStatBlock`'s own `ability_keys`
+    /// field forward from the monster; this walks `owners` backward from the
+    /// ability instead, so it also resolves a CROSS-TABLE OWNER row -- one
+    /// whose owning stat block ships from a *different* compiled table
+    /// (`rules_tables::beastiary1`'s 46 legacy Bestiary 1 monsters, here) and
+    /// so has no `ability_keys` list in THIS table to walk
+    /// (`scripts/transcribe_monster_tables.py`'s own cross-table-owner
+    /// screen doc comment on the generated `bestiary` table names the exact
+    /// 55 rows this exists for). A monster this table itself defines could
+    /// call this too, but should not: it would silently skip any ability
+    /// this book's OWN generator dropped from that monster's `ability_keys`
+    /// (an unscreenable `DESC:` shape, e.g.) while `owners` still names it,
+    /// serving a record `abilities_of` correctly refuses. Reserved for a
+    /// monster with no `ability_keys` list of its own to begin with.
+    pub fn abilities_owned_by_name(&self, name: &str) -> Vec<&'static MonsterAbilityRecord> {
+        self.monster_abilities
+            .iter()
+            .filter(|a| a.owners.contains(&name))
+            .collect()
+    }
 }
 
 /// Every book whose `monster` / `monster_ability` rows this repo has ingested.
@@ -358,26 +395,31 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
         corpus_book: "bonus_bestiary",
         monsters: super::bonus_bestiary::monsters_static(),
         monster_abilities: super::bonus_bestiary::monster_abilities_static(),
+        cross_table_owner_names: &[],
     },
     MonsterBook {
         corpus_book: "monster_codex",
         monsters: super::monster_codex::monsters_static(),
         monster_abilities: super::monster_codex::monster_abilities_static(),
+        cross_table_owner_names: &[],
     },
     MonsterBook {
         corpus_book: "book_of_the_damned_volume_1",
         monsters: super::book_of_the_damned_volume_1::monsters_static(),
         monster_abilities: super::book_of_the_damned_volume_1::monster_abilities_static(),
+        cross_table_owner_names: &[],
     },
     MonsterBook {
         corpus_book: "book_of_the_damned_volume_2",
         monsters: super::book_of_the_damned_volume_2::monsters_static(),
         monster_abilities: super::book_of_the_damned_volume_2::monster_abilities_static(),
+        cross_table_owner_names: &[],
     },
     MonsterBook {
         corpus_book: "inner_sea_world_guide",
         monsters: super::inner_sea_world_guide::monsters_static(),
         monster_abilities: super::inner_sea_world_guide::monster_abilities_static(),
+        cross_table_owner_names: &[],
     },
     // SD-29 Epic 5 extend, round 4. Bestiary 2 -- 316 monsters and 402 owned
     // abilities, four times every book above it put together. The registry
@@ -388,6 +430,7 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
         corpus_book: "bestiary_2",
         monsters: super::bestiary_2::monsters_static(),
         monster_abilities: super::bestiary_2::monster_abilities_static(),
+        cross_table_owner_names: &[],
     },
     // SD-29 Epic 5 extend, round 5. Bestiary 3 -- 261 monsters and 27 owned
     // abilities, and the first book in the registry to lose no monster row at
@@ -397,6 +440,7 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
         corpus_book: "bestiary_3",
         monsters: super::bestiary_3::monsters_static(),
         monster_abilities: super::bestiary_3::monster_abilities_static(),
+        cross_table_owner_names: &[],
     },
     // SD-29 Epic 5 extend, round 6. Bestiary 4 -- 206 monsters and 543 owned
     // abilities, the largest reachable book left in the lane. It is the first
@@ -409,6 +453,7 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
         corpus_book: "bestiary_4",
         monsters: super::bestiary_4::monsters_static(),
         monster_abilities: super::bestiary_4::monster_abilities_static(),
+        cross_table_owner_names: &[],
     },
     // SD-29 Epic 5 extend, round 7. Inner Sea Bestiary -- 38 monsters and 152
     // owned abilities. The first book in the registry to lose monster rows to
@@ -422,6 +467,7 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
         corpus_book: "inner_sea_bestiary",
         monsters: super::inner_sea_bestiary::monsters_static(),
         monster_abilities: super::inner_sea_bestiary::monster_abilities_static(),
+        cross_table_owner_names: &[],
     },
     // SD-29 Epic 5 extend, round 9. Inner Sea Gods -- 39 monsters and 77 owned
     // abilities. The first book in this registry whose corpus rows do not all
@@ -436,6 +482,7 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
         corpus_book: "inner_sea_gods",
         monsters: super::inner_sea_gods::monsters_static(),
         monster_abilities: super::inner_sea_gods::monster_abilities_static(),
+        cross_table_owner_names: &[],
     },
     // SD-29 Epic 5 extend, round 8. Bestiary 1 -- 284 monsters and 323 owned
     // abilities, the largest single row in this registry and the only book
@@ -455,6 +502,7 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
         corpus_book: "beastiary",
         monsters: super::bestiary::monsters_static(),
         monster_abilities: super::bestiary::monster_abilities_static(),
+        cross_table_owner_names: super::bestiary::cross_table_owner_names(),
     },
     // SD-29 Epic 5 extend, round 10. Ultimate Psionics (Dreamscarred Press) --
     // 21 monsters and 13 owned abilities, and the first NON-PAIZO book in this
@@ -472,6 +520,7 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
         corpus_book: "ultimate_psionics",
         monsters: super::ultimate_psionics::monsters_static(),
         monster_abilities: super::ultimate_psionics::monster_abilities_static(),
+        cross_table_owner_names: &[],
     },
     // SD-29 Epic 5 extend, FINAL round. Horror Adventures -- 3 monsters and 6
     // owned abilities, the smallest row in this registry and the last book in
@@ -492,6 +541,7 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
         corpus_book: "horror_adventures",
         monsters: super::horror_adventures::monsters_static(),
         monster_abilities: super::horror_adventures::monster_abilities_static(),
+        cross_table_owner_names: &[],
     },
 ];
 
@@ -546,7 +596,12 @@ mod tests {
     /// ability a monster names is defined here, an ability listed as external is
     /// not, and every defined ability has at least one owner. An orphan means
     /// the link was transcribed wrong in one direction and the catalog would
-    /// serve a record no monster row reaches.
+    /// serve a record no monster row reaches. A CROSS-TABLE-OWNER ability
+    /// (`SD31-W23-MONSTER-001`, `decisions.md §58.3`) is the one owner shape
+    /// that legitimately has no `ability_keys` back-reference in THIS book --
+    /// its `MonsterStatBlock` ships from a different one -- and the book's own
+    /// `cross_table_owner_names` is what tells this test apart a real
+    /// dangling owner from that known, cited exception.
     #[test]
     fn the_chassis_link_resolves_in_both_directions_for_every_book() {
         for book in MONSTER_BOOKS {
@@ -577,15 +632,29 @@ mod tests {
                     ability.key
                 );
                 for owner in ability.owners {
-                    let monster = book
-                        .monster_resolve(owner)
-                        .unwrap_or_else(|| panic!("{}: owner {owner:?} is not a monster in this book", book.corpus_book));
-                    assert!(
-                        monster.ability_keys.contains(&ability.key),
-                        "{}: {} claims owner {owner:?}, which does not name it back",
-                        book.corpus_book,
-                        ability.key
-                    );
+                    match book.monster_resolve(owner) {
+                        Some(monster) => assert!(
+                            monster.ability_keys.contains(&ability.key),
+                            "{}: {} claims owner {owner:?}, which does not name it back",
+                            book.corpus_book,
+                            ability.key
+                        ),
+                        // No `MonsterStatBlock` for this owner in THIS book --
+                        // fine only when the book's own registry row names it
+                        // as a known cross-table owner (`SD31-W23-MONSTER-001`,
+                        // `decisions.md §58.3`): its stat block ships from a
+                        // DIFFERENT compiled table, so it has no `ability_keys`
+                        // list here to name the ability back with, by
+                        // construction, not by omission. Anything NOT in that
+                        // named list is still the real dangling-owner defect
+                        // this test exists to catch.
+                        None => assert!(
+                            book.cross_table_owner_names.contains(owner),
+                            "{}: owner {owner:?} is not a monster in this book and not in \
+                             cross_table_owner_names either",
+                            book.corpus_book
+                        ),
+                    }
                 }
             }
         }

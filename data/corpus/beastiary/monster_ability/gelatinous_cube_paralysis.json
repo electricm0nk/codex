@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "data": {
+    "corpus_key": "Gelatinous Cube ~ Paralysis",
+    "delivery": "Extraordinary",
+    "description": "A gelatinous cube secretes an anesthetizing slime. A target hit by a cube's melee or engulf attack must succeed on a DC 20 Fortitude save or be paralyzed for 3d6 rounds. The cube can automatically engulf a paralyzed opponent.",
+    "description_variables": [
+      "GelatinousParalysisDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:gelatinous_cube_paralysis",
+    "name": "Paralysis",
+    "owners": [
+      "beastiary:monster:gelatinous_cube"
+    ],
+    "source_page": "p.138",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 634,
+    "record_key": "Gelatinous Cube ~ Paralysis"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

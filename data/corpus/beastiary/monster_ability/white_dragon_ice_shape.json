@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "data": {
+    "corpus_key": "White Dragon ~ Ice Shape",
+    "delivery": "Supernatural",
+    "description": "A young white dragon can shape ice and snow at will. This ability functions as stone shape, but only targeting ice and snow, not stone. A white dragon's caster level for this effect is %1.",
+    "description_variables": [
+      "TL"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:white_dragon_ice_shape",
+    "name": "Ice Shape",
+    "owners": [
+      "beastiary:monster:dragon_white"
+    ],
+    "source_page": "p.100",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 448,
+    "record_key": "White Dragon ~ Ice Shape"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

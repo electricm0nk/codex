@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "data": {
+    "corpus_key": "Red Dragon ~ Incinerate",
+    "delivery": "Supernatural",
+    "description": "A great wyrm red dragon can incinerate creatures in its fiery breath. A creature reduced to fewer than 0 hit points by its breath weapon must make a Fortitude save (DC %1). Failure indicates that the creature is reduced to ash. Creatures destroyed in this way can only be restored to life through true resurrection or similar magic.",
+    "description_variables": [
+      "BreathWeaponDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:red_dragon_incinerate",
+    "name": "Incinerate",
+    "owners": [
+      "beastiary:monster:dragon_red"
+    ],
+    "source_page": "p.98",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 437,
+    "record_key": "Red Dragon ~ Incinerate"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

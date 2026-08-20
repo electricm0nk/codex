@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "data": {
+    "corpus_key": "Assassin Vine ~ Entangle",
+    "delivery": "Supernatural",
+    "description": "An assassin vine can, as a free action, cause plants within 30 feet of it to animate and grasp at foes. This ability is otherwise similar to entangle %1.",
+    "description_variables": [
+      "EntangleDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:assassin_vine_entangle",
+    "name": "Entangle",
+    "owners": [
+      "beastiary:monster:assassin_vine"
+    ],
+    "source_page": "p.22",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 125,
+    "record_key": "Assassin Vine ~ Entangle"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

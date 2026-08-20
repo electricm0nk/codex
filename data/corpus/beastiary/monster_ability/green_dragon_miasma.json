@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "data": {
+    "corpus_key": "Green Dragon ~ Miasma",
+    "delivery": "Supernatural",
+    "description": "An ancient or older green dragon can use its breath weapon to create a cloud of acid as a standard action that deals damage to any creature inside it. The cloud moves with the dragon and has a radius of 20 feet. When it's created, anyone inside this area takes an amount of damage equal to half the dragon's breath weapon, with a Reflex save for half damage. The number of damage dice rolled is halved each round until the result would be less than 1d6. Any creature that starts its turn inside the cloud takes damage, but can make a Reflex save for half. A strong wind, such as that created by a gust of wind, disperses the cloud in 1 round.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:green_dragon_miasma",
+    "name": "Miasma",
+    "owners": [
+      "beastiary:monster:dragon_green"
+    ],
+    "source_page": "p.97",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 427,
+    "record_key": "Green Dragon ~ Miasma"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

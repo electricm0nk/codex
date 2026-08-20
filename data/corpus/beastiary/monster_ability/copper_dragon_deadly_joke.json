@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "data": {
+    "corpus_key": "Copper Dragon ~ Deadly Joke",
+    "delivery": "SpellLike",
+    "description": "Once per day, as a standard action, a great wyrm copper dragon can tell a joke that kills. This affects one target, and functions as power word kill. This is a language-dependent sonic effect.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:copper_dragon_deadly_joke",
+    "name": "Deadly Joke",
+    "owners": [
+      "beastiary:monster:dragon_copper"
+    ],
+    "source_page": "p.106",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 478,
+    "record_key": "Copper Dragon ~ Deadly Joke"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

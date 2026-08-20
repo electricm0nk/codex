@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "data": {
+    "corpus_key": "Bronze Dragon ~ Repulsion Breath",
+    "delivery": "Supernatural",
+    "description": "Instead of a line of electricity, a bronze dragon can breathe a cone of repulsion gas. Targets must make a Will save or be compelled to do nothing but move away from the dragon for 1d6 rounds plus 1 round per age category. This is a mind-affecting compulsion effect.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:bronze_dragon_repulsion_breath",
+    "name": "Repulsion Breath",
+    "owners": [
+      "beastiary:monster:dragon_bronze"
+    ],
+    "source_page": "p.104",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 468,
+    "record_key": "Bronze Dragon ~ Repulsion Breath"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

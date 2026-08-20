@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "data": {
+    "corpus_key": "Red Dragon ~ Fire Aura",
+    "delivery": "Supernatural",
+    "description": "An adult red dragon is surrounded by an aura of intense heat. All creatures within %1 feet take %2d6 points of fire damage at the beginning of the dragon's turn.",
+    "description_variables": [
+      "FireAuraRange",
+      "FireAuraDice"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:red_dragon_fire_aura",
+    "name": "Fire Aura",
+    "owners": [
+      "beastiary:monster:dragon_red"
+    ],
+    "source_page": "p.98",
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 436,
+    "record_key": "Red Dragon ~ Fire Aura"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

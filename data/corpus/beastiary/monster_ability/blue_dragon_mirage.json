@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "data": {
+    "corpus_key": "Blue Dragon ~ Mirage",
+    "delivery": "Supernatural",
+    "description": "An old or older blue dragon can make itself appear to be in two places at once as a free action for %1 rounds per day. This ability functions as project image but the dragon can use its breath weapon through the mirage.",
+    "description_variables": [
+      "TL"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:blue_dragon_mirage",
+    "name": "Mirage",
+    "owners": [
+      "beastiary:monster:dragon_blue"
+    ],
+    "source_page": "p.94",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 417,
+    "record_key": "Blue Dragon ~ Mirage"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "data": {
+    "corpus_key": "Sahuagin ~ Speak with Sharks",
+    "delivery": "Supernatural",
+    "description": "A sahuagin can communicate telepathically with sharks to a distance of 150 feet. This communication is limited to simple concepts, such as \"come here\", \"defend me\", or \"attack this target\".",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:sahuagin_speak_with_sharks",
+    "name": "Speak with Sharks",
+    "owners": [
+      "beastiary:monster:sahuagin"
+    ],
+    "source_page": "p.239",
+    "traits": [
+      "Communicate"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1079,
+    "record_key": "Sahuagin ~ Speak with Sharks"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

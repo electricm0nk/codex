@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "data": {
+    "corpus_key": "Shocker Lizard ~ Shock",
+    "delivery": "Supernatural",
+    "description": "Shocker lizards can deliver an electrical shock to a single opponent within 5 feet. This attack deals 1d8 points of nonlethal electricity damage to living opponents (Reflex DC %1 half ). Additionally, if two or more shocker lizards are within 20 feet of each other, they can work together to create a lethal shock once every 1d4 rounds. This effect has a radius of 20 feet, centered on any one contributing lizard. All creatures within that radius take 2d8 points of lethal electricity damage for each lizard contributing to the shock, to a maximum of 12d8. A Reflex save (DC 10 + the number of lizards contributing) halves the damage.",
+    "description_variables": [
+      "ShockSaveDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:shocker_lizard_shock",
+    "name": "Shock",
+    "owners": [
+      "beastiary:monster:shocker_lizard"
+    ],
+    "source_page": "p.248",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1119,
+    "record_key": "Shocker Lizard ~ Shock"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

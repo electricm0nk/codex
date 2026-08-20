@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "data": {
+    "corpus_key": "Gold Dragon ~ Divine Aid",
+    "delivery": "SpellLike",
+    "description": "Once a week, a great wyrm gold dragon can call upon celestial powers for aid. This functions as a miracle.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:gold_dragon_divine_aid",
+    "name": "Divine Aid",
+    "owners": [
+      "beastiary:monster:dragon_gold"
+    ],
+    "source_page": "p.108",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 489,
+    "record_key": "Gold Dragon ~ Divine Aid"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

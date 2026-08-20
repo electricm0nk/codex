@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "data": {
+    "corpus_key": "Silver Dragon ~ Graceful Flight",
+    "delivery": "Extraordinary",
+    "description": "A young or older silver dragon's aerial maneuverability is one step better than normal.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:silver_dragon_graceful_flight",
+    "name": "Graceful Flight",
+    "owners": [
+      "beastiary:monster:dragon_silver"
+    ],
+    "source_page": "p.110",
+    "traits": [
+      "ModifyMovement"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 501,
+    "record_key": "Silver Dragon ~ Graceful Flight"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

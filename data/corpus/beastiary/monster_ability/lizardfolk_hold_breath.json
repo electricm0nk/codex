@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "data": {
+    "corpus_key": "Lizardfolk ~ Hold Breath",
+    "delivery": "Extraordinary",
+    "description": "A lizardfolk can hold its breath for %1 rounds before it risks drowning.",
+    "description_variables": [
+      "CONSCORE*4"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:lizardfolk_hold_breath",
+    "name": "Hold Breath",
+    "owners": [
+      "beastiary:monster:lizardfolk"
+    ],
+    "source_page": "p.195",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 867,
+    "record_key": "Lizardfolk ~ Hold Breath"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

@@ -9,8 +9,8 @@
 //!
 //! Sources, with the line each record was read from carried per row:
 //!   * `b1_races.lst` -- 280 monster rows
-//!   * `b1_abilities_race.lst` -- 384 monster-ability rows
-//!   * `ce_abilities_race.lst` -- 83 monster-ability rows
+//!   * `b1_abilities_race.lst` -- 438 monster-ability rows
+//!   * `ce_abilities_race.lst` -- 84 monster-ability rows
 //!
 //! 4 monster row(s) of this book are `<Record>.MOD` OVERLAY
 //! rows and are NOT transcribed, for the reason above: an overlay states a delta
@@ -26,10 +26,15 @@
 //! ANOTHER compiled table of this repo and are deliberately NOT transcribed here
 //! (`decisions.md §58.3`: this chassis sits ALONGSIDE that table and takes the
 //! book's complement -- emitting them too would put two records for one creature
-//! under one wire code). 55 further ability row(s) are
-//! CROSS-TABLE OWNER rows: well-formed and owned, unreachable from here only
-//! because every monster that names them is one of those rows. They are NOT
-//! orphans and their remedy is not the orphans' remedy. Cited by corpus line:
+//! under one wire code). 55 further ability row(s) ARE
+//! transcribed below despite this (`SD31-W23-MONSTER-001`, `§58.3`'s own deferred
+//! 'different remedy'): CROSS-TABLE OWNER rows are well-formed and owned, only by
+//! a monster whose STAT BLOCK lives in the other table. An ability record needs no
+//! stat block of its own to resolve by key, so these ship with their real owner
+//! name intact and are read by `MonsterBook::abilities_owned_by_name`, never by
+//! `abilities_of()` (which walks a `MonsterStatBlock.ability_keys` this table has
+//! none of for these owners) -- so they never double-serve under a `bestiary`
+//! block. Cited by corpus line:
 //!   * `b1_races.lst:18` (monster row)
 //!   * `b1_races.lst:29` (monster row)
 //!   * `b1_races.lst:41` (monster row)
@@ -76,61 +81,61 @@
 //!   * `b1_races.lst:416` (monster row)
 //!   * `b1_races.lst:418` (monster row)
 //!   * `b1_races.lst:430` (monster row)
-//!   * `b1_abilities_race.lst:90` (ability row)
-//!   * `b1_abilities_race.lst:91` (ability row)
-//!   * `b1_abilities_race.lst:124` (ability row)
-//!   * `b1_abilities_race.lst:125` (ability row)
-//!   * `b1_abilities_race.lst:155` (ability row)
-//!   * `b1_abilities_race.lst:180` (ability row)
-//!   * `b1_abilities_race.lst:181` (ability row)
-//!   * `b1_abilities_race.lst:182` (ability row)
-//!   * `b1_abilities_race.lst:183` (ability row)
-//!   * `b1_abilities_race.lst:187` (ability row)
-//!   * `b1_abilities_race.lst:200` (ability row)
-//!   * `b1_abilities_race.lst:201` (ability row)
-//!   * `b1_abilities_race.lst:205` (ability row)
-//!   * `b1_abilities_race.lst:214` (ability row)
-//!   * `b1_abilities_race.lst:215` (ability row)
-//!   * `b1_abilities_race.lst:216` (ability row)
-//!   * `b1_abilities_race.lst:230` (ability row)
-//!   * `b1_abilities_race.lst:260` (ability row)
-//!   * `b1_abilities_race.lst:261` (ability row)
-//!   * `b1_abilities_race.lst:266` (ability row)
-//!   * `b1_abilities_race.lst:325` (ability row)
-//!   * `b1_abilities_race.lst:326` (ability row)
-//!   * `b1_abilities_race.lst:327` (ability row)
-//!   * `b1_abilities_race.lst:393` (ability row)
-//!   * `b1_abilities_race.lst:394` (ability row)
-//!   * `b1_abilities_race.lst:395` (ability row)
-//!   * `b1_abilities_race.lst:571` (ability row)
-//!   * `b1_abilities_race.lst:572` (ability row)
-//!   * `b1_abilities_race.lst:573` (ability row)
-//!   * `b1_abilities_race.lst:600` (ability row)
-//!   * `b1_abilities_race.lst:601` (ability row)
-//!   * `b1_abilities_race.lst:602` (ability row)
-//!   * `b1_abilities_race.lst:632` (ability row)
-//!   * `b1_abilities_race.lst:633` (ability row)
-//!   * `b1_abilities_race.lst:634` (ability row)
-//!   * `b1_abilities_race.lst:635` (ability row)
-//!   * `b1_abilities_race.lst:798` (ability row)
-//!   * `b1_abilities_race.lst:799` (ability row)
-//!   * `b1_abilities_race.lst:867` (ability row)
-//!   * `b1_abilities_race.lst:943` (ability row)
-//!   * `b1_abilities_race.lst:944` (ability row)
-//!   * `b1_abilities_race.lst:946` (ability row)
-//!   * `b1_abilities_race.lst:1022` (ability row)
-//!   * `b1_abilities_race.lst:1072` (ability row)
-//!   * `b1_abilities_race.lst:1078` (ability row)
-//!   * `b1_abilities_race.lst:1079` (ability row)
-//!   * `b1_abilities_race.lst:1118` (ability row)
-//!   * `b1_abilities_race.lst:1119` (ability row)
-//!   * `b1_abilities_race.lst:1160` (ability row)
-//!   * `b1_abilities_race.lst:1224` (ability row)
-//!   * `b1_abilities_race.lst:1225` (ability row)
-//!   * `b1_abilities_race.lst:1226` (ability row)
-//!   * `b1_abilities_race.lst:1278` (ability row)
-//!   * `b1_abilities_race.lst:1279` (ability row)
-//!   * `ce_abilities_race.lst:1751` (ability row)
+//!   * `b1_abilities_race.lst:90` (ability row, owner: Ankheg)
+//!   * `b1_abilities_race.lst:91` (ability row, owner: Ankheg)
+//!   * `b1_abilities_race.lst:124` (ability row, owner: Assassin Vine)
+//!   * `b1_abilities_race.lst:125` (ability row, owner: Assassin Vine)
+//!   * `b1_abilities_race.lst:155` (ability row, owner: Bat Swarm)
+//!   * `b1_abilities_race.lst:180` (ability row, owner: Boggard)
+//!   * `b1_abilities_race.lst:181` (ability row, owner: Boggard)
+//!   * `b1_abilities_race.lst:182` (ability row, owner: Boggard)
+//!   * `b1_abilities_race.lst:183` (ability row, owner: Boggard)
+//!   * `b1_abilities_race.lst:187` (ability row, owner: Bugbear)
+//!   * `b1_abilities_race.lst:200` (ability row, owner: Cave Fisher)
+//!   * `b1_abilities_race.lst:201` (ability row, owner: Cave Fisher)
+//!   * `b1_abilities_race.lst:205` (ability row, owner: Centaur)
+//!   * `b1_abilities_race.lst:214` (ability row, owner: Choker)
+//!   * `b1_abilities_race.lst:215` (ability row, owner: Choker)
+//!   * `b1_abilities_race.lst:216` (ability row, owner: Choker)
+//!   * `b1_abilities_race.lst:230` (ability row, owner: Cockatrice)
+//!   * `b1_abilities_race.lst:260` (ability row, owner: Dark Creeper)
+//!   * `b1_abilities_race.lst:261` (ability row, owner: Dark Creeper)
+//!   * `b1_abilities_race.lst:266` (ability row, owner: Darkmantle)
+//!   * `b1_abilities_race.lst:325` (ability row, owner: Derro)
+//!   * `b1_abilities_race.lst:326` (ability row, owner: Derro)
+//!   * `b1_abilities_race.lst:327` (ability row, owner: Derro)
+//!   * `b1_abilities_race.lst:393` (ability row, owner: Doppelganger)
+//!   * `b1_abilities_race.lst:394` (ability row, owner: Doppelganger)
+//!   * `b1_abilities_race.lst:395` (ability row, owner: Doppelganger)
+//!   * `b1_abilities_race.lst:571` (ability row, owner: Dryad)
+//!   * `b1_abilities_race.lst:572` (ability row, owner: Dryad)
+//!   * `b1_abilities_race.lst:573` (ability row, owner: Dryad)
+//!   * `b1_abilities_race.lst:600` (ability row, owner: Ettercap)
+//!   * `b1_abilities_race.lst:601` (ability row, owner: Ettercap)
+//!   * `b1_abilities_race.lst:602` (ability row, owner: Ettercap)
+//!   * `b1_abilities_race.lst:632` (ability row, owner: Gelatinous Cube)
+//!   * `b1_abilities_race.lst:633` (ability row, owner: Gelatinous Cube)
+//!   * `b1_abilities_race.lst:634` (ability row, owner: Gelatinous Cube)
+//!   * `b1_abilities_race.lst:635` (ability row, owner: Gelatinous Cube)
+//!   * `b1_abilities_race.lst:798` (ability row, owner: Iron Cobra)
+//!   * `b1_abilities_race.lst:799` (ability row, owner: Iron Cobra)
+//!   * `b1_abilities_race.lst:867` (ability row, owner: Lizardfolk)
+//!   * `b1_abilities_race.lst:943` (ability row, owner: Morlock)
+//!   * `b1_abilities_race.lst:944` (ability row, owner: Morlock)
+//!   * `b1_abilities_race.lst:946` (ability row, owner: Morlock)
+//!   * `b1_abilities_race.lst:1022` (ability row, owner: Pegasus)
+//!   * `b1_abilities_race.lst:1072` (ability row, owner: Rust Monster)
+//!   * `b1_abilities_race.lst:1078` (ability row, owner: Sahuagin)
+//!   * `b1_abilities_race.lst:1079` (ability row, owner: Sahuagin)
+//!   * `b1_abilities_race.lst:1118` (ability row, owner: Shocker Lizard)
+//!   * `b1_abilities_race.lst:1119` (ability row, owner: Shocker Lizard)
+//!   * `b1_abilities_race.lst:1160` (ability row, owner: Spider Swarm)
+//!   * `b1_abilities_race.lst:1224` (ability row, owner: Vargouille)
+//!   * `b1_abilities_race.lst:1225` (ability row, owner: Vargouille)
+//!   * `b1_abilities_race.lst:1226` (ability row, owner: Vargouille)
+//!   * `b1_abilities_race.lst:1278` (ability row, owner: Yellow Musk Creeper)
+//!   * `b1_abilities_race.lst:1279` (ability row, owner: Yellow Musk Creeper)
+//!   * `ce_abilities_race.lst:1751` (ability row, owner: Yellow Musk Creeper)
 //!
 //! 197 further ability row(s) in this book are ORPHANS -- no monster
 //! row here claims them, so they are deliberately NOT transcribed (a record
@@ -5952,7 +5957,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
     },
 ];
 
-/// Every bestiary monster-ability record (467 rows).
+/// Every bestiary monster-ability record (522 rows).
 pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "Aboleth ~ Mucus Cloud",
@@ -6070,6 +6075,32 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Animated Object (Tiny)", "Animated Object (Small)", "Animated Object (Medium)", "Animated Object (Large)", "Animated Object (Huge)", "Animated Object (Gargantuan)", "Animated Object (Colossal)"],
         source_file: "b1_abilities_race.lst",
         source_line: 69,
+    },
+    MonsterAbilityRecord {
+        key: "Ankheg ~ Spit Acid",
+        name: "Spit Acid",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("Once every 6 hours, an ankheg can spit a 30-foot line of acid. Creatures struck by this acid take 4d4 points of acid damage (Reflex DC %1 halves). Once an ankheg uses this attack, it must wait 6 hours before using it again. Additionally, during this time period, its bite attack does not inflict any additional acid damage. As a result, an ankheg does not use this ability unless it is desperate or frustrated, most often spitting acid when reduced to fewer than half its full normal hit points or when it cannot not successfully grab an opponent."),
+        description_variables: &["SpitAcidDC"],
+        source_page: Some("p.15"),
+        owners: &["Ankheg"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 90,
+    },
+    MonsterAbilityRecord {
+        key: "Ankheg ~ Acid Bite",
+        name: "Acid Bite",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("An Ankheg's bite does an additional 1d4 acid damage unless it has recently used it's spit acid ability."),
+        description_variables: &[],
+        source_page: Some("p.15"),
+        owners: &["Ankheg"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 91,
     },
     MonsterAbilityRecord {
         key: "Giant Ant ~ Poison",
@@ -6215,6 +6246,32 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         source_line: 120,
     },
     MonsterAbilityRecord {
+        key: "Assassin Vine ~ Camouflage",
+        name: "Camouflage",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &["Defensive"],
+        description: Some("Since an assassin vine looks like a normal plant when at rest, a DC 20 Perception check is required to notice it before it attacks for the first time. Anyone with ranks in Survival or Knowledge (nature) can use either of those skills instead of Perception to notice the plant."),
+        description_variables: &[],
+        source_page: Some("p.22"),
+        owners: &["Assassin Vine"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 124,
+    },
+    MonsterAbilityRecord {
+        key: "Assassin Vine ~ Entangle",
+        name: "Entangle",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("An assassin vine can, as a free action, cause plants within 30 feet of it to animate and grasp at foes. This ability is otherwise similar to entangle %1."),
+        description_variables: &["EntangleDC"],
+        source_page: Some("p.22"),
+        owners: &["Assassin Vine"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 125,
+    },
+    MonsterAbilityRecord {
         key: "Bralani ~ Whirlwind Blast",
         name: "Whirlwind Blast",
         facet: MonsterAbilityFacet::SpecialAttack,
@@ -6358,6 +6415,19 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         source_line: 151,
     },
     MonsterAbilityRecord {
+        key: "Bat Swarm ~ Wounding",
+        name: "Wounding",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("Any living creature damaged by a bat swarm continues to bleed, losing 1 hit point per round thereafter. Multiple wounds do not result in cumulative bleeding loss. The bleeding can be stopped by a DC 10 Heal check or the application of a cure spell or some other healing magic."),
+        description_variables: &[],
+        source_page: Some("p.11"),
+        owners: &["Bat Swarm"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 155,
+    },
+    MonsterAbilityRecord {
         key: "Bebilith ~ Dismantle Armor",
         name: "Dismantle Armor",
         facet: MonsterAbilityFacet::SpecialAttack,
@@ -6475,6 +6545,71 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         source_line: 176,
     },
     MonsterAbilityRecord {
+        key: "Boggard ~ Hold Breath",
+        name: "Hold Breath",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("A boggard can hold its breath for a number of rounds equal to four times its Constitution score before it risks drowning or suffocating."),
+        description_variables: &[],
+        source_page: Some("p.37"),
+        owners: &["Boggard"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 180,
+    },
+    MonsterAbilityRecord {
+        key: "Boggard ~ Sticky Tongue",
+        name: "Sticky Tongue",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("A creature hit by a boggard's tongue attack cannot move more than 10 feet away from the boggard and takes a -2 penalty to AC as long as the tongue is attached (this penalty does not stack if multiple tongues are attached). The tongue can be removed by making an opposed Strength check as a standard action or by dealing 2 points of slashing damage to the tongue (AC 11, damage does not deplete the boggard's actual hit points). The boggard cannot move more than 10 feet away from the target, but the boggard can release its tongue as a free action. Unlike a giant frog, a boggard cannot pull targets toward it with its tongue."),
+        description_variables: &[],
+        source_page: Some("p.37"),
+        owners: &["Boggard"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 181,
+    },
+    MonsterAbilityRecord {
+        key: "Boggard ~ Swamp Stride",
+        name: "Swamp Stride",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &["ModifyMovement"],
+        description: Some("A boggard can move through any sort of natural difficult terrain at its normal speed while within a swamp. Magically altered terrain affects a boggard normally."),
+        description_variables: &[],
+        source_page: Some("p.37"),
+        owners: &["Boggard"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 182,
+    },
+    MonsterAbilityRecord {
+        key: "Boggard ~ Terrifying Croak",
+        name: "Terrifying Croak",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("Once per hour, a boggard can, as a standard action, emit a loud and horrifying croak. Any nonboggard creature within 30 feet of the boggard must make a DC %1 Will save or become shaken for 1d4 rounds. Creatures that succeed at this save cannot be affected again by the same boggard's croak for 24 hours. Creatures that are already shaken become frightened for 1d4 rounds instead."),
+        description_variables: &["TerrifyingCroakDC"],
+        source_page: Some("p.37"),
+        owners: &["Boggard"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 183,
+    },
+    MonsterAbilityRecord {
+        key: "Bugbear ~ Stalker",
+        name: "Stalker",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("Perception and Stealth are always class skills for bugbears."),
+        description_variables: &[],
+        source_page: Some("p.38"),
+        owners: &["Bugbear"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 187,
+    },
+    MonsterAbilityRecord {
         key: "Bulette ~ Leap",
         name: "Leap",
         facet: MonsterAbilityFacet::SpecialAttack,
@@ -6514,6 +6649,45 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         source_line: 196,
     },
     MonsterAbilityRecord {
+        key: "Cave Fisher ~ Filament",
+        name: "Filament",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("A cave fisher can fire a thin filament of sticky silk as a standard action. This touch attack has a range of 60 feet and no range increment. A creature struck by a cave fisher's filament becomes attached to the sticky thread. As a standard action, a creature can rip the filament free with a DC 20 Strength check. A caught creature can also attempt to escape a filament by making a DC 25 Escape Artist check. A filament is AC 14 (touch 12), has 5 hit points, and has DR 15/slashing. An application of liquid with high alcohol content (or a dose of universal solvent) dissolves the adhesive and releases the creature caught by the filament. A cave fisher can have only one filament active at a time."),
+        description_variables: &[],
+        source_page: Some("p.41"),
+        owners: &["Cave Fisher"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 200,
+    },
+    MonsterAbilityRecord {
+        key: "Cave Fisher ~ Pull",
+        name: "Pull",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("A cave fisher has a +4 racial bonus on CMB checks made using its pull special attack."),
+        description_variables: &[],
+        source_page: Some("p.41"),
+        owners: &["Cave Fisher"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 201,
+    },
+    MonsterAbilityRecord {
+        key: "Centaur ~ Undersized Weapons",
+        name: "Undersized Weapons",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("Although a centaur is Large, its upper torso is the same size as that of a Medium humanoid. As a result, they wield weapons as if they were one size category smaller than their actual size (Medium for most centaurs)."),
+        description_variables: &[],
+        source_page: Some("p.42"),
+        owners: &["Centaur"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 205,
+    },
+    MonsterAbilityRecord {
         key: "Giant Centipede ~ Poison",
         name: "Poison",
         facet: MonsterAbilityFacet::SpecialAttack,
@@ -6538,6 +6712,45 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Centipede Swarm"],
         source_file: "b1_abilities_race.lst",
         source_line: 210,
+    },
+    MonsterAbilityRecord {
+        key: "Choker ~ Grab",
+        name: "Grab",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &["AttackOption"],
+        description: Some("If a choker hits with the indicated attack, it deals normal damage and can attempt to start a grapple as a free action without provoking an attack of opportunity. A choker can use its grab attack against a foe of up to Large size. A choker has the option to conduct the grapple normally, or simply use the part of its body it used in the grab to hold the opponent. If it chooses to do the latter, it takes a -20 penalty on its CMB check to make and maintain the grapple, but does not gain the grappled condition itself. A successful hold does not deal any extra damage. Each successful grapple check you make during successive rounds automatically deals the damage indicated for the attack that established the hold. A choker receives a +4 bonus on combat maneuver checks made to start and maintain a grapple."),
+        description_variables: &[],
+        source_page: Some("p.301"),
+        owners: &["Choker"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 214,
+    },
+    MonsterAbilityRecord {
+        key: "Choker ~ Strangle",
+        name: "Strangle",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("Chokers have an unerring talent for seizing their victims by the neck. A creature that is grappled by a choker cannot speak or cast spells with verbal components."),
+        description_variables: &[],
+        source_page: Some("p.45"),
+        owners: &["Choker"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 215,
+    },
+    MonsterAbilityRecord {
+        key: "Choker ~ Quickness",
+        name: "Quickness",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("A choker is supernaturally quick. It can take an extra move action during its turn each round."),
+        description_variables: &[],
+        source_page: Some("p.45"),
+        owners: &["Choker"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 216,
     },
     MonsterAbilityRecord {
         key: "Chuul ~ Paralytic Tentacles",
@@ -6590,6 +6803,19 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Cloaker"],
         source_file: "b1_abilities_race.lst",
         source_line: 226,
+    },
+    MonsterAbilityRecord {
+        key: "Cockatrice ~ Petrification",
+        name: "Petrification",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("A cockatrice's bite causes flesh to calcify and harden--multiple bites can cause a living creature to fossilize into stone. Each time a creature is damaged by a cockatrice's bite attack, it must succeed on a DC 12 Fortitude save or take 1d4 points of Dexterity damage as its flesh and bones stiffen and harden. (This slow petrification does not alter a bitten creature's natural armor.) A creature that is reduced to 0 Dexterity by a cockatrice's bites immediately turns completely to stone, as if petrified by a flesh to stone spell. Every day, a creature petrified by a cockatrice in this manner can attempt a new DC 12 Fortitude save to recover from the petrification, at which point the victim returns to flesh with 1 Dexterity (and thereafter can be restored to full Dexterity by natural healing or magic as normal)--but after a petrified creature fails three of these Fortitude saves in a row, the petrified state becomes permanent. A creature restored to flesh via magic has its Dexterity damage caused by cockatrice bites removed, but not any existing Dexterity damage from other sources. A cockatrice is immune to the petrification ability of itself and of other cockatrices, but other petrification attacks affect them normally."),
+        description_variables: &[],
+        source_page: Some("p.48"),
+        owners: &["Cockatrice"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 230,
     },
     MonsterAbilityRecord {
         key: "Couatl ~ Poison",
@@ -6657,6 +6883,32 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         source_line: 259,
     },
     MonsterAbilityRecord {
+        key: "Dark Creeper ~ Rag Armor",
+        name: "Rag Armor",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("A dark creeper's multiple layers of filthy rags function as leather armor when worn by one of their kind."),
+        description_variables: &[],
+        source_page: Some("p.53"),
+        owners: &["Dark Creeper"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 260,
+    },
+    MonsterAbilityRecord {
+        key: "Dark Creeper ~ Death Throes",
+        name: "Death Throes",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("When a dark creeper is slain, its body combusts in a flash of bright white light, leaving its gear in a heap on the ground. All creatures within a 10-foot burst must make a DC 13 Fortitude save or be blinded for 1d6 rounds. Other dark creepers within 10 feet are automatically blinded for at least 1 round, due to their light blindness."),
+        description_variables: &["DeathThroesDC"],
+        source_page: Some("p.53"),
+        owners: &["Dark Creeper"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 261,
+    },
+    MonsterAbilityRecord {
         key: "Dark Stalker ~ Death Throes",
         name: "Death Throes",
         facet: MonsterAbilityFacet::SpecialAttack,
@@ -6668,6 +6920,19 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Dark Stalker"],
         source_file: "b1_abilities_race.lst",
         source_line: 262,
+    },
+    MonsterAbilityRecord {
+        key: "Darkmantle ~ Grab",
+        name: "Grab",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &["AttackOption"],
+        description: Some("A darkmantle can use its grab attack against a foe of any size. If the Darkmantle hits with its slam attack, it deals normal damage and can attempt to start a grapple as a free action without provoking an attack of opportunity. Grab works only against opponents at least one size category smaller than you. You have the option to conduct the grapple normally, or simply use the part of your body you used in the grab to hold the opponent. If you choose to do the latter, you takes a -20 penalty on your CMB check to make and maintain the grapple, but do not gain the grappled condition itself. A successful hold does not deal any extra damage unless you also have the constrict special attack. If you do not constrict, each successful grapple check you make during successive rounds automatically deals the damage indicated for the attack that established the hold. Otherwise, you deal constriction damage as well. You receive a +4 bonus on combat maneuver checks made to start and maintain a grapple."),
+        description_variables: &[],
+        source_page: Some("p.301"),
+        owners: &["Darkmantle"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 266,
     },
     MonsterAbilityRecord {
         key: "Babau ~ Protective Slime",
@@ -6969,6 +7234,45 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         source_line: 321,
     },
     MonsterAbilityRecord {
+        key: "Derro ~ Madness",
+        name: "Madness",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("Derros use their Charisma modifier on Will saves instead of their Wisdom modifier, and are immune to insanity and confusion effects. Only a miracle or wish can remove a derro's madness. If this occurs, the derro gains 6 points of Wisdom and loses 6 points of Charisma."),
+        description_variables: &[],
+        source_page: Some("p.70"),
+        owners: &["Derro"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 325,
+    },
+    MonsterAbilityRecord {
+        key: "Derro ~ Poison Use",
+        name: "Poison Use",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &["Poison Use"],
+        description: Some("Derros are not at risk of poisoning themselves when handling poison. They use Medium spider venom to poison their crossbow bolts, and generally carry 10 prepoisoned bolts at all times."),
+        description_variables: &[],
+        source_page: Some("p.70"),
+        owners: &["Derro"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 326,
+    },
+    MonsterAbilityRecord {
+        key: "Derro ~ Vulnerability to Sunlight",
+        name: "Vulnerability to Sunlight",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &["Weakness"],
+        description: Some("A derro takes 1 point of Con damage after every hour it is exposed to sunlight."),
+        description_variables: &[],
+        source_page: Some("p.70"),
+        owners: &["Derro"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 327,
+    },
+    MonsterAbilityRecord {
         key: "Barbed Devil ~ Barbed Defense",
         name: "Barbed Defense",
         facet: MonsterAbilityFacet::SpecialQuality,
@@ -7201,6 +7505,45 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Devourer"],
         source_file: "b1_abilities_race.lst",
         source_line: 374,
+    },
+    MonsterAbilityRecord {
+        key: "Doppelganger ~ Mimicry",
+        name: "Mimicry",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("A doppelganger is proficient in all weapons, armor, and shields. In addition, a doppelganger can use any spell trigger or spell completion item as if the spells were on its spell list. Its caster level is %1."),
+        description_variables: &[],
+        source_page: Some("p.89"),
+        owners: &["Doppelganger"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 393,
+    },
+    MonsterAbilityRecord {
+        key: "Doppelganger ~ Perfect Copy",
+        name: "Perfect Copy",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("When a doppelganger uses change shape, it can assume the appearance of specific individuals."),
+        description_variables: &[],
+        source_page: Some("p.89"),
+        owners: &["Doppelganger"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 394,
+    },
+    MonsterAbilityRecord {
+        key: "Doppelganger ~ Change Shape",
+        name: "Change Shape",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("You have the ability to assume the appearance of a specific creature or type of creature, but retains most of your own physical qualities. You cannot change shape to a form more than one size category smaller or larger than your original form. This ability functions as a polymorph spell, but you do not adjust your ability scores (although you gain any other abilities of the creature you mimic)."),
+        description_variables: &[],
+        source_page: Some("p.89"),
+        owners: &["Doppelganger"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 395,
     },
     MonsterAbilityRecord {
         key: "Black Dragon ~ Acid Pool",
@@ -8048,6 +8391,45 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         source_line: 514,
     },
     MonsterAbilityRecord {
+        key: "Dryad ~ Tree Meld",
+        name: "Tree Meld",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("A dryad can meld with any tree, similar to how the spell meld into stone functions. She can remain melded with a tree as long as she wishes."),
+        description_variables: &[],
+        source_page: Some("p.116"),
+        owners: &["Dryad"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 571,
+    },
+    MonsterAbilityRecord {
+        key: "Dryad ~ Tree Dependent",
+        name: "Tree Dependent",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &["Weakness"],
+        description: Some("A dryad is mystically bonded to a single, enormous tree and must never stray more than 300 yards from it. Most dryad trees are oak trees, but other trees function as well (often having subtle influences on a specific dryad's personality and appearance). A dryad who moves 300 yards beyond her bonded tree immediately becomes sickened. Every hour thereafter, she must make a DC 15 Fortitude save to resist becoming nauseated for an hour. A dryad that is out of range of her bonded tree for 24 hours takes 1d6 points of Constitution damage, and another 1d6 points of Constitution damage every day that follows-- eventually, this separation kills the dryad. A dryad can forge a new bond with a new tree by performing a 24-hour ritual and making a successful DC 20 Will save."),
+        description_variables: &[],
+        source_page: Some("p.116"),
+        owners: &["Dryad"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 572,
+    },
+    MonsterAbilityRecord {
+        key: "Dryad ~ Woodcraft",
+        name: "Woodcraft",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("A dryad has a +6 racial bonus to Craft checks involving wood, and is always treated as if she had masterwork artisan's woodworking tools when making such checks."),
+        description_variables: &[],
+        source_page: Some("p.116"),
+        owners: &["Dryad"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 573,
+    },
+    MonsterAbilityRecord {
         key: "Air Elemental ~ Air Mastery",
         name: "Air Mastery",
         facet: MonsterAbilityFacet::SpecialQuality,
@@ -8124,6 +8506,45 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Elemental (Water/Medium)", "Elemental (Water/Large)", "Elemental (Water/Huge)", "Elemental (Water/Greater)", "Elemental (Water/Elder)"],
         source_file: "b1_abilities_race.lst",
         source_line: 596,
+    },
+    MonsterAbilityRecord {
+        key: "Ettercap ~ Poison",
+        name: "Poison",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("Bite--injury; save Fort DC %1; frequency 1/round for 10 rounds; effect 1d2 Dex; cure 2 consecutive saves."),
+        description_variables: &["PoisonSaveDC"],
+        source_page: Some("p.129"),
+        owners: &["Ettercap"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 600,
+    },
+    MonsterAbilityRecord {
+        key: "Ettercap ~ Spider Empathy",
+        name: "Spider Empathy",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &["Communicate"],
+        description: Some("This ability functions as the druid's wild empathy, save that an ettercap can only use this ability on spiders. An ettercap gains a +4 racial bonus on this check. Spiders are mindless, but this empathic communication imparts on them a modicum of implanted intelligence, allowing ettercaps to train giant spiders and use them as guardians."),
+        description_variables: &[],
+        source_page: Some("p.129"),
+        owners: &["Ettercap"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 601,
+    },
+    MonsterAbilityRecord {
+        key: "Ettercap ~ Traps",
+        name: "Traps",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("The ettercap is particularly skilled at crafting cunning traps with its webs. Deadfalls, nooses, and spear traps are the most common traps ettercaps build with their webs. An ettercap doesn't require gold to build its traps, merely time. Rules for crafting traps can be found in Chapter 13 of the Pathfinder RPG Core Rulebook. Ettercap Deadfall; CR 3; Type mechanical; Perception DC 20; Disable Device DC 20; Trigger location; Reset repair; Effect +10 melee (4d6), multiple targets (all targets in a 10-ft. square). Ettercap Noose; CR 1; Type mechanical; Perception DC 20; Disable Device DC 20; Trigger location; Reset repair; This hideous purple creature walks upright like a man, but its face is that of a spider, and its hands are sickle-shaped claws. Effect +15 CMB check (grapple). Ettercap Spear Trap; CR 2; Type mechanical; Perception DC 20; Disable Device DC 20; Trigger location; Reset repair; Effect +15 melee (1d6+6)."),
+        description_variables: &[],
+        source_page: Some("p.129"),
+        owners: &["Ettercap"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 602,
     },
     MonsterAbilityRecord {
         key: "Ettin ~ Superior Two-Weapon Fighting",
@@ -8215,6 +8636,58 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Gargoyle", "Gargoyle (Kapoacinth)"],
         source_file: "b1_abilities_race.lst",
         source_line: 628,
+    },
+    MonsterAbilityRecord {
+        key: "Gelatinous Cube ~ Acid",
+        name: "Acid",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("A gelatinous cube's acid does not harm metal or stone."),
+        description_variables: &[],
+        source_page: Some("p.138"),
+        owners: &["Gelatinous Cube"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 632,
+    },
+    MonsterAbilityRecord {
+        key: "Gelatinous Cube ~ Engulf",
+        name: "Engulf",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &["AttackOption"],
+        description: Some("Although it moves slowly, a gelatinous cube can simply engulf Large or smaller creatures in its path as a standard action. It cannot make a slam attack during a round in which it engulfs. The gelatinous cube merely has to move over the opponents, affecting as many as it can cover. Opponents can make attacks of opportunity against the cube, but if they do so they are not entitled to a saving throw. Those who do not attempt attacks of opportunity can attempt a DC %1 Reflex save to avoid being engulfed--on a success, they are pushed back or aside (opponent's choice) as the cube moves forward. Engulfed creatures are subject to the cube's paralysis and acid, gain the pinned condition, are in danger of suffocating, and are trapped within its body until they are no longer pinned."),
+        description_variables: &["EngulfDC"],
+        source_page: Some("p.138"),
+        owners: &["Gelatinous Cube"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 633,
+    },
+    MonsterAbilityRecord {
+        key: "Gelatinous Cube ~ Paralysis",
+        name: "Paralysis",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("A gelatinous cube secretes an anesthetizing slime. A target hit by a cube's melee or engulf attack must succeed on a DC 20 Fortitude save or be paralyzed for 3d6 rounds. The cube can automatically engulf a paralyzed opponent."),
+        description_variables: &["GelatinousParalysisDC"],
+        source_page: Some("p.138"),
+        owners: &["Gelatinous Cube"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 634,
+    },
+    MonsterAbilityRecord {
+        key: "Gelatinous Cube ~ Transparent",
+        name: "Transparent",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("Due to its lack of coloration, a gelatinous cube is difficult to discern. A DC 15 Perception check is required to notice a motionless gelatinous cube. Any creature that fails to notice a gelatinous cube and walks into it is automatically engulfed."),
+        description_variables: &[],
+        source_page: Some("p.138"),
+        owners: &["Gelatinous Cube"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 635,
     },
     MonsterAbilityRecord {
         key: "Djinni ~ Air Mastery",
@@ -9049,6 +9522,32 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         source_line: 794,
     },
     MonsterAbilityRecord {
+        key: "Iron Cobra ~ Find Target",
+        name: "Find Target",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("Once per day, an iron cobra's creator can order it to find and kill a specific creature within 1 mile, which it does as if guided by discern location. The creator must have seen or be holding an item from the specified creature for this order to function."),
+        description_variables: &[],
+        source_page: Some("p.182"),
+        owners: &["Iron Cobra"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 798,
+    },
+    MonsterAbilityRecord {
+        key: "Iron Cobra ~ Poison",
+        name: "Poison",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("An iron cobra's bite injects poison from a hidden reservoir within its body. Because it is a construct, the cobra does not naturally produce this poison, and its creator must refill this reservoir manually. The reservoir holds enough poison for 3 successful bite attacks, after which the creature merely deals bite damage. Refilling the reservoir takes 5 rounds and provokes attacks of opportunity. The creator can fill the reservoir with any injury poison (typically black adder venom), though acid, alchemical substances, and even stranger liquids have been used. Black Adder Venom: Bite--injury; save Fort DC 11; frequency 1/round for 6 rounds; effect 1d2 Con damage; cure 1 save."),
+        description_variables: &[],
+        source_page: Some("p.182"),
+        owners: &["Iron Cobra"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 799,
+    },
+    MonsterAbilityRecord {
         key: "Kraken ~ Ink Cloud",
         name: "Ink Cloud",
         facet: MonsterAbilityFacet::SpecialAttack,
@@ -9374,6 +9873,19 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         source_line: 863,
     },
     MonsterAbilityRecord {
+        key: "Lizardfolk ~ Hold Breath",
+        name: "Hold Breath",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("A lizardfolk can hold its breath for %1 rounds before it risks drowning."),
+        description_variables: &["CONSCORE*4"],
+        source_page: Some("p.195"),
+        owners: &["Lizardfolk"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 867,
+    },
+    MonsterAbilityRecord {
         key: "Manticore ~ Spikes",
         name: "Spikes",
         facet: MonsterAbilityFacet::SpecialAttack,
@@ -9541,6 +10053,45 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Mohrg"],
         source_file: "b1_abilities_race.lst",
         source_line: 939,
+    },
+    MonsterAbilityRecord {
+        key: "Morlock ~ Expert Climber",
+        name: "Expert Climber",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("A morlock can cling to cave walls and even ceilings as long as the surface has hand and footholds. You are treated as constantly being under a nonmagical version of the spell spider climb, save that you cannot cling to smooth surfaces. This ability doubles the normal +8 racial bonus to Climb checks normally afforded creatures with a climb speed to a +16 racial bonus."),
+        description_variables: &[],
+        source_page: Some("p.209"),
+        owners: &["Morlock"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 943,
+    },
+    MonsterAbilityRecord {
+        key: "Morlock ~ Leap Attack",
+        name: "Leap Attack",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("As a standard action, a morlock may make a single attack during a jump. You can make this attack at any point along the course of the leap; the start, the end, or while in mid-air. While jumping, you do not provoke attacks of opportunity for leaving a threatened square."),
+        description_variables: &[],
+        source_page: Some("p.209"),
+        owners: &["Morlock"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 944,
+    },
+    MonsterAbilityRecord {
+        key: "Morlock ~ Swarming",
+        name: "Swarming",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("Morlocks dwell and fight in cramped quarters every day of your life, and as such are quite adept at swarming foes. Up to two morlocks can share the same square at the same time. If two morlocks in the same square attack the same foe, they are considered to be flanking that foe as if they were in two opposite squares."),
+        description_variables: &[],
+        source_page: Some("p.209"),
+        owners: &["Morlock"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 946,
     },
     MonsterAbilityRecord {
         key: "Mummy ~ Despair",
@@ -9933,6 +10484,19 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         source_line: 1018,
     },
     MonsterAbilityRecord {
+        key: "Pegasus ~ Resistance to Poison",
+        name: "Resistance to Poison",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: None,
+        traits: &[],
+        description: Some("You receive a +4 racial bonus on saving throws against poison."),
+        description_variables: &[],
+        source_page: Some("p.225"),
+        owners: &["Pegasus"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 1022,
+    },
+    MonsterAbilityRecord {
         key: "Phase Spider ~ Ethereal Ambush",
         name: "Ethereal Ambush",
         facet: MonsterAbilityFacet::SpecialAttack,
@@ -10167,6 +10731,45 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         source_line: 1068,
     },
     MonsterAbilityRecord {
+        key: "Rust Monster ~ Rust",
+        name: "Rust",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("A rust monster's antennae are a primary touch attack that causes any metal object they touch to swiftly rust and corrode. The object touched takes half its maximum hp in damage and gains the broken condition; a second hit destroys the item. A rust monster never provokes attacks of opportunity by attempting to strike a weapon with its antennae. Against creatures made of metal, a rust monster's antennae deal 3d6+5 points of damage. An attended object, any magic object, or a metal creature can attempt a DC %1 Reflex save to negate this effect."),
+        description_variables: &["RustMagicSaveDC"],
+        source_page: Some("p.238"),
+        owners: &["Rust Monster"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 1072,
+    },
+    MonsterAbilityRecord {
+        key: "Sahuagin ~ Blood Frenzy",
+        name: "Blood Frenzy",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("Once per day, a sahuagin that takes damage in combat can fly into a frenzy in the following round. It gains +2 Constitution and +2 Strength, but takes a -2 penalty to its AC. The frenzy lasts as long as the battle or 1 minute, whichever is shorter."),
+        description_variables: &[],
+        source_page: Some("p.239"),
+        owners: &["Sahuagin"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 1078,
+    },
+    MonsterAbilityRecord {
+        key: "Sahuagin ~ Speak with Sharks",
+        name: "Speak with Sharks",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &["Communicate"],
+        description: Some("A sahuagin can communicate telepathically with sharks to a distance of 150 feet. This communication is limited to simple concepts, such as \"come here\", \"defend me\", or \"attack this target\"."),
+        description_variables: &[],
+        source_page: Some("p.239"),
+        owners: &["Sahuagin"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 1079,
+    },
+    MonsterAbilityRecord {
         key: "Salamander ~ Heat",
         name: "Heat",
         facet: MonsterAbilityFacet::SpecialAttack,
@@ -10310,6 +10913,32 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         source_line: 1114,
     },
     MonsterAbilityRecord {
+        key: "Shocker Lizard ~ Electricity Sense",
+        name: "Electricity Sense",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &["Sense"],
+        description: Some("Shocker lizards automatically detect any electrical discharges within 100 feet."),
+        description_variables: &[],
+        source_page: Some("p.248"),
+        owners: &["Shocker Lizard"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 1118,
+    },
+    MonsterAbilityRecord {
+        key: "Shocker Lizard ~ Shock",
+        name: "Shock",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("Shocker lizards can deliver an electrical shock to a single opponent within 5 feet. This attack deals 1d8 points of nonlethal electricity damage to living opponents (Reflex DC %1 half ). Additionally, if two or more shocker lizards are within 20 feet of each other, they can work together to create a lethal shock once every 1d4 rounds. This effect has a radius of 20 feet, centered on any one contributing lizard. All creatures within that radius take 2d8 points of lethal electricity damage for each lizard contributing to the shock, to a maximum of 12d8. A Reflex save (DC 10 + the number of lizards contributing) halves the damage."),
+        description_variables: &["ShockSaveDC"],
+        source_page: Some("p.248"),
+        owners: &["Shocker Lizard"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 1119,
+    },
+    MonsterAbilityRecord {
         key: "Shoggoth ~ Maddening Cacophony",
         name: "Maddening Cacophony",
         facet: MonsterAbilityFacet::SpecialAttack,
@@ -10438,6 +11067,19 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Spider (Scarlet)", "Spider (Giant Crab)", "Spider (Giant)", "Spider (Black Widow)", "Spider (Giant Tarantula)", "Spider (Goliath)"],
         source_file: "b1_abilities_race.lst",
         source_line: 1154,
+    },
+    MonsterAbilityRecord {
+        key: "Spider Swarm ~ Poison",
+        name: "Poison",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("Swarm-injury; save Fort DC %1; frequency 1/round for 2 rounds; effect 1d2 Str; cure 1 save."),
+        description_variables: &["PoisonSaveDC"],
+        source_page: Some("p.258"),
+        owners: &["Spider Swarm"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 1160,
     },
     MonsterAbilityRecord {
         key: "Tarrasque ~ Carapace",
@@ -10633,6 +11275,45 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Vampire Spawn"],
         source_file: "b1_abilities_race.lst",
         source_line: 1220,
+    },
+    MonsterAbilityRecord {
+        key: "Vargouille ~ Kiss",
+        name: "Kiss",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("A vargouille can kiss a helpless target by making a successful melee touch attack (this provokes attacks of opportunity). A kissed opponent must succeed on a DC 16 Fortitude save or begin a terrible transformation that changes the creature into a vargouille within 24 hours (and often much sooner; roll 1d6 separately for each phase of the transformation). First, over a period of 1d6 hours, all the victim's hair falls out. Within another 1d6 hours thereafter, the ears grow into leathery wings, tentacles sprout on the chin and scalp, and the teeth become long, pointed fangs. During the next 1d6 hours, the victim takes Intelligence drain and Charisma drain equal to 1 point per hour (to a minimum of 3). The transformation is complete 1d6 hours thereafter, when the victim's head breaks free of the body (which promptly dies) and becomes a vargouille. This transformation's progress is paused by sunlight or any light spell of 3rd level or higher, but stopping the transformation requires remove disease or a similar effect. The transformation is a disease effect."),
+        description_variables: &["KissDC"],
+        source_page: Some("p.272"),
+        owners: &["Vargouille"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 1224,
+    },
+    MonsterAbilityRecord {
+        key: "Vargouille ~ Poison",
+        name: "Poison",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("Bite--injury; save Fort DC %1; frequency once; effect damage caused by bite can only be healed with magic if the spellcaster succeeds on a DC 20 caster level check; cure 1 save."),
+        description_variables: &["PoisonSaveDC"],
+        source_page: Some("p.272"),
+        owners: &["Vargouille"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 1225,
+    },
+    MonsterAbilityRecord {
+        key: "Vargouille ~ Shriek",
+        name: "Shriek",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("Instead of biting, a vargouille can open its distended mouth to shriek. Those within 60 feet (except other vargouilles) who hear the shriek and can clearly see the creature must succeed on a DC %1 Fortitude save or be paralyzed for 2d4 rounds or until the monster attacks them, goes out of range, or leaves their sight. A creature that successfully saves cannot be affected again by the same vargouille's shriek for 24 hours."),
+        description_variables: &["ShriekDC"],
+        source_page: Some("p.272"),
+        owners: &["Vargouille"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 1226,
     },
     MonsterAbilityRecord {
         key: "Violet Fungus ~ Rot",
@@ -10893,6 +11574,32 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Xorn"],
         source_file: "b1_abilities_race.lst",
         source_line: 1274,
+    },
+    MonsterAbilityRecord {
+        key: "Create Yellow Musk Zombie",
+        name: "Create Yellow Musk Zombie",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("As a full-round action, a yellow musk creeper can bore dozens of tendrils into the brain of a helpless creature within reach, such as a creature entranced by its pollen. This attack inflicts 1d4 points of Intelligence damage per round. When a creature is reduced to 0 Intelligence, it dies, and the tendrils break off inside its brain. One hour later, the creature animates as a yellow musk zombie."),
+        description_variables: &[],
+        source_page: Some("p.285"),
+        owners: &["Yellow Musk Creeper"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 1278,
+    },
+    MonsterAbilityRecord {
+        key: "Yellow Musk Zombie ~ Pollen Spray",
+        name: "Pollen Spray",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("As a standard action, a yellow musk creeper can spray a cloud of pollen at a single creature within 30 feet. It must make a +4 ranged touch attack to strike the target, who must then succeed on a DC %1 Will save or be entranced for 1d6 rounds. An entranced creature can take no action other than to move at its normal speed into a space within the yellow musk creeper's reach, at which point an entranced creature remains motionless and allows the creeper to insert tendrils into its brain."),
+        description_variables: &["PollenSprayDC"],
+        source_page: Some("p.285"),
+        owners: &["Yellow Musk Creeper"],
+        source_file: "b1_abilities_race.lst",
+        source_line: 1279,
     },
     MonsterAbilityRecord {
         key: "Yeth Hound ~ Bay",
@@ -11998,6 +12705,19 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         owners: &["Shoggoth"],
         source_file: "ce_abilities_race.lst",
         source_line: 1749,
+    },
+    MonsterAbilityRecord {
+        key: "Plant Traits Output",
+        name: "Plant Traits Output",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("Plants are immune to all mind-affecting effects (charms, compulsions, morale effects, patterns, and phantasms), paralysis, poison, polymorph, sleep, and stun."),
+        description_variables: &[],
+        source_page: Some("p.301"),
+        owners: &["Yellow Musk Creeper"],
+        source_file: "ce_abilities_race.lst",
+        source_line: 1751,
     },
     MonsterAbilityRecord {
         key: "Vermin Traits Output",

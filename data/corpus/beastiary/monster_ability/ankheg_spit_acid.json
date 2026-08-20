@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "data": {
+    "corpus_key": "Ankheg ~ Spit Acid",
+    "delivery": "Extraordinary",
+    "description": "Once every 6 hours, an ankheg can spit a 30-foot line of acid. Creatures struck by this acid take 4d4 points of acid damage (Reflex DC %1 halves). Once an ankheg uses this attack, it must wait 6 hours before using it again. Additionally, during this time period, its bite attack does not inflict any additional acid damage. As a result, an ankheg does not use this ability unless it is desperate or frustrated, most often spitting acid when reduced to fewer than half its full normal hit points or when it cannot not successfully grab an opponent.",
+    "description_variables": [
+      "SpitAcidDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:ankheg_spit_acid",
+    "name": "Spit Acid",
+    "owners": [
+      "beastiary:monster:ankheg"
+    ],
+    "source_page": "p.15",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 90,
+    "record_key": "Ankheg ~ Spit Acid"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

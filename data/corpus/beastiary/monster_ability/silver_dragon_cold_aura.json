@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "data": {
+    "corpus_key": "Silver Dragon ~ Cold Aura",
+    "delivery": "Supernatural",
+    "description": "An old or older silver dragon is surrounded by an aura of cold. All creatures within %1 feet of the dragon take %2d6 points of cold damage at the beginning of the dragon's turn. A silver dragon can suppress or activate this aura at will as a free action.",
+    "description_variables": [
+      "ColdAuraRange",
+      "ColdAuraDice"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:silver_dragon_cold_aura",
+    "name": "Cold Aura",
+    "owners": [
+      "beastiary:monster:dragon_silver"
+    ],
+    "source_page": "p.110",
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 499,
+    "record_key": "Silver Dragon ~ Cold Aura"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "data": {
+    "corpus_key": "Ettercap ~ Traps",
+    "delivery": "Extraordinary",
+    "description": "The ettercap is particularly skilled at crafting cunning traps with its webs. Deadfalls, nooses, and spear traps are the most common traps ettercaps build with their webs. An ettercap doesn't require gold to build its traps, merely time. Rules for crafting traps can be found in Chapter 13 of the Pathfinder RPG Core Rulebook. Ettercap Deadfall; CR 3; Type mechanical; Perception DC 20; Disable Device DC 20; Trigger location; Reset repair; Effect +10 melee (4d6), multiple targets (all targets in a 10-ft. square). Ettercap Noose; CR 1; Type mechanical; Perception DC 20; Disable Device DC 20; Trigger location; Reset repair; This hideous purple creature walks upright like a man, but its face is that of a spider, and its hands are sickle-shaped claws. Effect +15 CMB check (grapple). Ettercap Spear Trap; CR 2; Type mechanical; Perception DC 20; Disable Device DC 20; Trigger location; Reset repair; Effect +15 melee (1d6+6).",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:ettercap_traps",
+    "name": "Traps",
+    "owners": [
+      "beastiary:monster:ettercap"
+    ],
+    "source_page": "p.129",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 602,
+    "record_key": "Ettercap ~ Traps"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

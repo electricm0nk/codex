@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "data": {
+    "corpus_key": "Boggard ~ Terrifying Croak",
+    "delivery": "Supernatural",
+    "description": "Once per hour, a boggard can, as a standard action, emit a loud and horrifying croak. Any nonboggard creature within 30 feet of the boggard must make a DC %1 Will save or become shaken for 1d4 rounds. Creatures that succeed at this save cannot be affected again by the same boggard's croak for 24 hours. Creatures that are already shaken become frightened for 1d4 rounds instead.",
+    "description_variables": [
+      "TerrifyingCroakDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:boggard_terrifying_croak",
+    "name": "Terrifying Croak",
+    "owners": [
+      "beastiary:monster:boggard"
+    ],
+    "source_page": "p.37",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 183,
+    "record_key": "Boggard ~ Terrifying Croak"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}
