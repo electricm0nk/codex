@@ -75,16 +75,15 @@
 //!    suite against successive drafts** (this module's own exclusion list
 //!    originally held only the three named classes): both
 //!    `sd13_cleric_level1_spell_baseline.rs::
-//!    cleric_level1_fabricates_no_spell_math` (tripped by
-//!    `class_feature.cleric.corpus_record.diminished_spellcasting` at level
-//!    1) and `sd13_sorcerer_level1_spell_baseline.rs::
+//!    cleric_level1_fabricates_no_spell_math` (tripped at level 1 by
+//!    `class_feature.cleric.corpus_record.diminished_spellcasting`) and
+//!    `sd13_sorcerer_level1_spell_baseline.rs::
 //!    sorcerer_level1_fabricates_no_spell_math` failed the instant this
-//!    module emitted a `"spell"`-substring id for that class -- the
-//!    identical exhaustive-scan shape `sd13_wizard_level1_prepared_spell_
-//!    baseline` uses, just never named in `OPEN-ISSUES.md` because nothing
-//!    had ever emitted a Cleric- or Sorcerer-namespaced generic id before
-//!    this lane. See the wave-23 progress receipt for the full reproduction
-//!    of both.
+//!    module emitted a `"spell"`-substring id for that class, the identical
+//!    exhaustive-scan shape `sd13_wizard_level1_prepared_spell_baseline`
+//!    uses, just never named in `OPEN-ISSUES.md` because nothing had ever
+//!    emitted a Cleric- or Sorcerer-namespaced generic id before this lane.
+//!    See the wave-23 progress receipt for the full reproduction of both.
 //!
 //!    **Druid and Monk are excluded for a SEPARATE, THIRD reason, also
 //!    named by row 330 but not yet triggered until this lane emitted for

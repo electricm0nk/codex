@@ -758,7 +758,7 @@ mod tests {
         let book_dir = tmp.join("adventurers_guide");
         write_grant_file(&book_dir, "magus", &[("Sigilus ~ Inscribe Rune", "Magus")]);
         let map = true_class_by_key(&tmp, "adventurers_guide");
-        assert!(map.get("Some Other Key ~ Feature").is_none());
+        assert!(!map.contains_key("Some Other Key ~ Feature"));
         std::fs::remove_dir_all(&tmp).ok();
     }
 
@@ -786,7 +786,7 @@ mod tests {
         write_grant_file(&book_dir, "fighter", &[("Shared ~ Feature", "Fighter")]);
         write_grant_file(&book_dir, "paladin", &[("Shared ~ Feature", "Paladin")]);
         let map = true_class_by_key(&tmp, "core_rulebook");
-        assert!(map.get("Shared ~ Feature").is_none(), "an ambiguous key must not resolve to either class");
+        assert!(!map.contains_key("Shared ~ Feature"), "an ambiguous key must not resolve to either class");
         std::fs::remove_dir_all(&tmp).ok();
     }
 

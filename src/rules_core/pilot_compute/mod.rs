@@ -8222,14 +8222,14 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     // pushed. Pathfinder Unchained classes already push their own hand-
     // curated roster from inside `compute_pu_class_chassis` (a DIFFERENT id
     // namespace, `class_feature.pu.*`); this call is a no-op for them.
-    if chassis_supported {
-        if let [class_level] = input.chosen.class_levels.as_slice() {
-            class_feature_grant_consumer::push_generic_class_feature_grant_records(
-                &class_level.class_id,
-                class_level.level,
-                &mut explanations,
-            );
-        }
+    if chassis_supported
+        && let [class_level] = input.chosen.class_levels.as_slice()
+    {
+        class_feature_grant_consumer::push_generic_class_feature_grant_records(
+            &class_level.class_id,
+            class_level.level,
+            &mut explanations,
+        );
     }
 
     PilotBaseChassisComputation {
