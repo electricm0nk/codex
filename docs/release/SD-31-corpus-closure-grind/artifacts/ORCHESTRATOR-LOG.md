@@ -1158,3 +1158,108 @@ accounting: `progress.md` `SD31-W20-INTEGRATE-001` §9, `OPEN-ISSUES.md` row 330
   `corpus-sweep` (26,368 examined, 0 findings), both PI gates (13/31 files, 0 leaked vs. 1,612
   declared-PI names), clippy (root:50 desktop:7, unchanged ceiling), `class-dump` (31/31). Full
   detail: `progress.md` `SD31-W20-INTEGRATE-001` §8.
+
+## Board after wave 21 (`SD31-W21-INTEGRATE-001`, 2026-08-20)
+
+**Wave 21's own central question, answered first because it is the most important thing this
+receipt reports: for how many of the 15,305 not-done `class_feature` records can a grant fact now
+be resolved from ingested data, and how many did the roster ground? Zero on both counts, that this
+integration cycle will bank.** The lane dispatched to fix the DATA gap keeping `class_feature`
+stuck (per-record grant level lives only in a never-ingested `.MOD` line) built a real, generic
+parser — but it is GAMED and NOT merged: independently re-confirmed against the pinned oracle
+(instruction 3), it discards the true granting class and the `PRECLASS:` gate variant, fabricating
+a level-1 grant for 73.4% of what it shipped. The sibling roster lane correctly declined to build
+on it and banked 0. `class_feature`: **134 done of 15,439 (0.8679%), unchanged for the fourth
+consecutive wave.**
+
+Re-derived live with the producer's own `doneness_verdict()` over the committed
+`docs/work-inventory.json` — the same command as every prior wave's table, never transcribed from a
+lane's own receipt. Oracle pin `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`.
+**Denominator UNCHANGED — 38,372 = 38,372 — as required this wave (no operator-signed Structural
+Exclusion Register entry was needed or written).**
+
+| kind | total (wave 20) | total (wave 21) | done (wave 20) | done (wave 21) | delta |
+|---|---:|---:|---:|---:|---:|
+| class | 185 | 185 | 28 (15.1351%) | 28 (15.1351%) | +0 |
+| class_feature | 15,439 | 15,439 | 134 (0.8679%) | 134 (0.8679%) | +0 |
+| companion | 1,696 | 1,696 | 871 (51.3561%) | 871 (51.3561%) | +0 |
+| equipment | 6,208 | 6,208 | 5,312 (85.5670%) | **5,313 (85.5831%)** | **+1** |
+| equipment_modifier | 1,580 | 1,580 | 508 (32.1519%) | **516 (32.6582%)** | **+8** |
+| feat | 2,610 | 2,610 | 1,459 (55.9004%) | 1,459 (55.9004%) | +0 |
+| monster | 1,270 | 1,270 | 989 (77.8583%) | 989 (77.8740%)* | +0 |
+| monster_ability | 2,942 | 2,942 | 1,594 (54.1808%) | **1,737 (59.0415%)** | **+143** |
+| race | 95 | 95 | 34 (35.7895%) | 34 (35.7895%) | +0 |
+| race_trait | 3,504 | 3,504 | 520 (14.8402%) | 520 (14.8402%) | +0 |
+| spell | 2,843 | 2,843 | 1,553 (54.6247%) | **1,573 (55.3289%)** | **+20** |
+| **TOTAL** | **38,372** | **38,372** | **13,002 (33.8841%)** | **13,174 (34.3323%)** | **+172** |
+
+*`monster`'s percentage shifts by rounding only (989/1,270 both waves); this wave's fix targeted
+`monster_ability` ownership, not `monster` itself.
+
+`+172` — every unit traced to two lanes: `monster`/`monster_ability`'s `CATEGORY:Internal`
+bundle-row ownership hop (+143 `monster_ability`), and `equipment_modifier`/`feat`'s armor-slot
+Spell Resistance evaluator widening (+8 `equipment_modifier`, +1 `equipment` spillover) plus
+`spell`/`feat`'s APG/ACG per-school table widening (+20 `spell`). `race_trait`'s roster-drift fix
+and `roster-v2`'s deferral both independently proved zero board movement. Full per-lane accounting:
+`progress.md` `SD31-W21-INTEGRATE-001` §§2-7.
+
+**`class_feature-grant-data-ingest`'s rejected data tree is not in this table, anywhere, at any
+stage; nothing was ever wired to consume it.**
+
+**Wave-21 thesis verdict: REFUTED at the correctness level, not merely the acceptance-gate level
+wave 20 was refuted at.** Wave 20's rejected lane produced real, correct grounding that merely
+regressed an acceptance gate; wave 21's rejected lane produces DATA that is itself wrong in the
+majority of its non-trivial cases (2,098 of 6,252 facts, 33.6%, carry a fabricated level where the
+record's own segment names a real, higher gate; 96.5% of records come from a row shape whose
+granting class the parser never reads). Had it merged, a future roster lane building against it
+in good faith would have grounded thousands of units at fabricated levels — a worse failure mode
+than wave 20's, because it would not have tripped any pre-existing anti-fabrication test the way
+wave 20's id-collision did; nothing currently in this repository's test suite checks a
+`class_feature` grant's LEVEL against the oracle. **Grounded: 0 of 15,305 either wave has now
+attempted to unstick.** The honest near-term ceiling remains wave 20's own independently-derived
+**~2,396 units** (chassis-supported class, automatically granted, non-pool progression records) —
+not the 7,505 wave 20 hoped for, and not the wider 4,856-unit ceiling this wave's rejected lane
+proposed, which does not survive its own data. A corrected re-attempt at the grant-ingest mechanism
+is salvageable (both missing facts sit inside strings the parser already reads) and is owed to a
+future wave, with a reproduction proof that samples the real 96.5% non-`CATEGORY=Class` shape, not
+just Pathfinder Unchained's own narrow 1% shape. Full accounting: `progress.md`
+`SD31-W21-INTEGRATE-001` §9, `OPEN-ISSUES.md` row 334.
+
+### What wave 21's integration cycle changed in the architecture, not just in the counts
+
+* **A live data-fabrication risk was caught and rejected before any consumer was ever wired to
+  it.** `class_feature_grants.rs` was a real, generic, mutation-tested-looking ingest that would
+  have been a ready-made data source for the very roster mechanism this program has wanted since
+  wave 19 — independently re-confirmed wrong in the majority of its non-trivial cases before
+  merge, not accepted on a reviewer's word (instruction 3).
+* **`pf1e_dashboard_producer.py`'s `CODEX_REPO_ROOT` defect (`OPEN-ISSUES.md` row 325) recurred
+  one wave later and is now fixed at the source**, not merely worked around again — a two-line
+  change (`WORK_INVENTORY_FULL_DOC` falls back to `CODEX_REPO_ROOT`-relative before the hardcoded
+  shared-checkout default) that should prevent this exact contamination shape from recurring a
+  third time.
+* **A 394-unit arithmetic error was caught and corrected in `docs/architecture/status.md` itself
+  before it could stand as current-state truth** — the wave-21 `race_trait` lane's own commit
+  subtracted `core_essentials` ceiling rows (a book with zero board units, Decision 9) from the
+  `race_trait` total as though they were board members. Corrected chassis-blocked residue from
+  2,671 to the real 3,065.
+* **A monster_ability classifier-consistency question, real and long-standing (round 4/5 of
+  `doneness_verdict()`'s own design history), was surfaced rather than either silently ridden or
+  unilaterally half-fixed.** 46 of this wave's 143 new `monster_ability` `done` units clear the
+  board's `computed`+`grounded` bar on table-membership evidence alone, identical to 359
+  pre-existing baseline units and 62 correctly-`held` siblings in the same batch — logged for an
+  explicit ruling (`OPEN-ISSUES.md` row 335) with the honest 97/46 split stated plainly rather than
+  either demoted (inconsistent with 359 untouched baseline units) or silently absorbed into a
+  single "143 done" headline.
+* **A merge-only break, again exactly the shape this wave's own dispatch warned every wave since
+  15 has hit.** Gate run 1 FAILED at `site-dashboard-check` alone (this cycle had not yet run the
+  real site publish at that point); `root-lib`/`root-full`/`desktop`/both `clippy` runs had already
+  been independently confirmed clean via direct invocations before gate run 1 even started, so run
+  1 was killed early rather than left to burn time re-confirming already-verified stages. Run 2:
+  `PASS`, 34/34, 1,077 seconds, `/tmp/codex-verify-wQgKBZ` — `desktop` (490, tested explicitly as
+  its own crate), `reach` (30), `corpus-sweep` (26,368 examined, 0 findings), both PI gates (13/31
+  files, 0 leaked vs. 1,612 declared-PI names), clippy (root:50 desktop:7, unchanged ceiling),
+  `class-dump` (31/31). A separate, unrelated hazard was hit and resolved during this cycle's own
+  pre-gate verification: a pre-existing wedged Gradle daemon (alive since before this cycle began)
+  hung the real-oracle test for 13+ minutes; killed and a fresh daemon completed the same test in
+  under a minute, repeatably, for the rest of this cycle. Full detail: `progress.md`
+  `SD31-W21-INTEGRATE-001` §8.
