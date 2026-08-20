@@ -269,8 +269,12 @@ mod tests {
     /// Every transcribed ability row names at least one owner -- a monster row
     /// this table holds, or (since `SD31-W23-MONSTER-001`) one of the 55
     /// cross-table-owner rows whose real owner ships from `beastiary1`
-    /// instead. The book has 146 genuinely unowned rows this test's job is
-    /// still to keep out; the point of this test is that none got in.
+    /// instead. **Corrected `SD31-W23-INTEGRATE-001`**: the book has 197
+    /// genuinely unowned rows this test's job is still to keep out (re-derived
+    /// directly against `scripts/transcribe_monster_tables.py bestiary`'s own
+    /// live stdout -- the prior "146" here was already stale before this
+    /// cycle, unrelated to the +55 cross-table fix); the point of this test
+    /// is that none got in.
     #[test]
     fn no_shipped_ability_is_an_orphan() {
         for ability in monster_abilities() {
