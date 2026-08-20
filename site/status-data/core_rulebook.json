@@ -2573,7 +2573,7 @@
         },
         {
           "name": "Finesse Rogue",
-          "doneness": "done",
+          "doneness": "not-started",
           "type_facet": "RogueClassFeatures.SpecialQuality.Extraordinary.RogueTalent",
           "standing": "unclassified",
           "display_name": "Finesse Rogue"
@@ -3210,7 +3210,7 @@
         },
         {
           "name": "Improved Evasion",
-          "doneness": "done",
+          "doneness": "not-started",
           "type_facet": "RogueClassFeatures.SpecialQuality.Extraordinary.RogueAdvancedTalent",
           "standing": "unclassified",
           "display_name": "Improved Evasion (RogueClassFeatures.SpecialQuality.Extraordinary.RogueAdvancedTalent)"
@@ -4883,7 +4883,7 @@
         },
         {
           "name": "Skill Mastery",
-          "doneness": "done",
+          "doneness": "not-started",
           "type_facet": "RogueClassFeatures.SpecialQuality.RogueAdvancedTalent",
           "standing": "unclassified",
           "display_name": "Skill Mastery"

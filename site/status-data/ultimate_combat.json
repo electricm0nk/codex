@@ -5,11 +5,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 9,
+      "done": 8,
       "partial": 0,
-      "not_started": 850,
+      "not_started": 851,
       "denominator": 859,
-      "pct": 1.0,
+      "pct": 0.9,
       "excluded_from_percentage": 553,
       "standing_breakdown": {
         "origin": 859,
@@ -3154,7 +3154,7 @@
         },
         {
           "name": "Firearm Training",
-          "doneness": "done",
+          "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent",
           "standing": "unclassified",
           "display_name": "Firearm Training"
@@ -3336,7 +3336,7 @@
         },
         {
           "name": "Getaway Artist",
-          "doneness": "done",
+          "doneness": "not-started",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent",
           "standing": "origin",
           "display_name": "Getaway Artist"

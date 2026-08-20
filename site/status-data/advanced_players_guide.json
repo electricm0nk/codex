@@ -5,11 +5,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 10,
+      "done": 9,
       "partial": 2,
-      "not_started": 1228,
+      "not_started": 1229,
       "denominator": 1240,
-      "pct": 0.8,
+      "pct": 0.7,
       "excluded_from_percentage": 805,
       "standing_breakdown": {
         "unclassified": 805,
@@ -2713,7 +2713,7 @@
         },
         {
           "name": "Combat Swipe",
-          "doneness": "done",
+          "doneness": "not-started",
           "type_facet": "RogueTalent.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Combat Swipe"
@@ -11827,7 +11827,7 @@
         },
         {
           "name": "Strong Impression",
-          "doneness": "done",
+          "doneness": "not-started",
           "type_facet": "RogueTalent.SpecialQuality",
           "standing": "origin",
           "display_name": "Strong Impression"
@@ -12037,7 +12037,7 @@
         },
         {
           "name": "Survivalist",
-          "doneness": "done",
+          "doneness": "not-started",
           "type_facet": "RogueTalent.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Survivalist (RogueTalent.SpecialQuality)"

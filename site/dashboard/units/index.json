@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-08-20T11:49:00Z",
+  "generated_at": "2026-08-20T13:35:29Z",
   "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 38372,
-  "proven_units": 6072,
+  "proven_units": 6151,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 420,
   "category_labels_redacted": 3,
@@ -90,36 +90,36 @@
     },
     "class_feature": {
       "units": 15439,
-      "proven": 146,
+      "proven": 225,
       "by_status": {
         "unknown": 3058,
-        "not-ingested": 11237,
+        "not-ingested": 11158,
         "deferred-with-reason": 41,
         "grounded": 91,
-        "text-complete": 55,
+        "text-complete": 134,
         "fixture-verified": 12,
         "literal-verified": 17,
         "not-started": 928
       },
       "shard": "PF1e-units-class_feature.json",
-      "bytes": 2339574,
+      "bytes": 2339653,
       "doneness_unmapped": {},
       "categories": {
         "specialquality": {
           "label": "Special Qualities",
-          "done": 6,
+          "done": 23,
           "held": 0,
           "in-progress": 0,
-          "not-started": 1408,
+          "not-started": 1391,
           "unmeasurable": 514,
           "deferred": 0
         },
         "classfeatures": {
           "label": "Class Features",
-          "done": 10,
+          "done": 14,
           "held": 1,
           "in-progress": 0,
-          "not-started": 1236,
+          "not-started": 1232,
           "unmeasurable": 74,
           "deferred": 1
         },
@@ -215,10 +215,10 @@
         },
         "rogueclassfeatures": {
           "label": "Rogue Class Features",
-          "done": 2,
+          "done": 24,
           "held": 4,
           "in-progress": 0,
-          "not-started": 187,
+          "not-started": 165,
           "unmeasurable": 17,
           "deferred": 0
         },
@@ -836,10 +836,10 @@
         },
         "roguetalent": {
           "label": "Rogue Talent",
-          "done": 0,
+          "done": 25,
           "held": 0,
           "in-progress": 0,
-          "not-started": 33,
+          "not-started": 8,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -1376,10 +1376,10 @@
         },
         "rogueadvancedtalent": {
           "label": "Rogue Advanced Talent",
-          "done": 0,
+          "done": 11,
           "held": 0,
           "in-progress": 0,
-          "not-started": 14,
+          "not-started": 3,
           "unmeasurable": 0,
           "deferred": 0
         },
