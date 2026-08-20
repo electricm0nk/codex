@@ -314,6 +314,29 @@ const IN_SCOPE_RACES: &[RaceSpec] = &[
     // `NAMEISPI:` grep across every file in both directories: zero hits.
     RaceSpec { dir: "changeling", book: "advanced_race_guide" },
     RaceSpec { dir: "samsaran", book: "advanced_race_guide" },
+    // Rougarou, SD-31 wave-24 integration cycle (2026-08-20). Confirmed by
+    // direct read of the pinned oracle, not assumed from an earlier
+    // OPEN-ISSUES parenthetical (which wrongly grouped it with Dhampir's
+    // real heritage/subrace shape): `core_essentials/races/rougarou/` has
+    // NO `*_subrace.lst` file of any kind. Its own
+    // `rougarou_abilities_globalvar.lst` DEFINEs all 8
+    // `Rougarou_Replace*` flags to `0`, and `grep -rn Rougarou_Replace`
+    // across the WHOLE pinned oracle returns hits only inside that same
+    // file -- nothing anywhere ever sets one to `True`. The `CHOOSE:
+    // ABILITYSELECTION "Adopted Race ~ Rougarou"` row some earlier notes
+    // read as a subrace picker is APG's generic "Adopted" social trait
+    // (`TYPE:AdoptiveRace`), whose only `TYPE:Rougarou Race Trait` target
+    // is the literal placeholder `No Race Trait Available.MOD` -- it
+    // offers nothing and gates nothing. Rougarou is therefore the
+    // identical flat, single-tier shape as every Bestiary 2/5/ARG race
+    // above (`rougarou_races.lst` + `rougarou_abilities_race.lst` +
+    // `rougarou_abilities_globalvar.lst`, 8 unconditional default traits),
+    // filed under `bestiary_6` (`data/corpus/bestiary_6/` is a real,
+    // registered corpus book directory, same precondition Decision 9 /
+    // the Bestiary-2 batch above used). PI-blacklist scan
+    // (`PI_BLACKLIST_TERMS`) and a `DESCISPI:`/`NAMEISPI:` grep across the
+    // whole directory: zero hits.
+    RaceSpec { dir: "rougarou", book: "bestiary_6" },
 ];
 
 /// `TYPE:` markers that lead with `RacialTraits` (so
@@ -1223,7 +1246,7 @@ fn main() {
     // the `trait_dir` clear right before it is written into) -- surgical
     // enough to catch a stale trait removed from THIS batch's races without
     // touching a race slug this binary has never written.
-    for book in ["core_rulebook", "beastiary", "bestiary_2", "bestiary_5"] {
+    for book in ["core_rulebook", "beastiary", "bestiary_2", "bestiary_5", "bestiary_6"] {
         for kind in ["race", "race_trait"] {
             let dir = out_root.join(book).join(kind);
             if dir.exists() {
@@ -2113,13 +2136,15 @@ mod tests {
         // F4-002's Advanced Race Guide batch of 6 (Catfolk 9, Kitsune 10,
         // Ratfolk 9, Strix 11, Suli 9, Wayang 10 = 58), SD31-E6-F4-004's
         // 4-race ARG follow-on (Gillman 9, Nagaji 9, Vanara 8, Vishkanya
-        // 12 = 38), plus SD31-E6-F4-007's 2-race ARG follow-on that closes
+        // 12 = 38), SD31-E6-F4-007's 2-race ARG follow-on that closes
         // `arg_races.lst`'s full 37-row playable-race roster (Changeling 9,
-        // Samsaran 9 = 18) -- 37 races / 355 standard racial trait
-        // records, re-measured 2026-08-17 by running this binary against
-        // the real corpus, not invented.
-        assert_eq!(races, 37, "37 in-scope race chassis records");
-        assert_eq!(traits, 355, "355 standard racial trait records");
+        // Samsaran 9 = 18), plus SD-31 wave-24's Rougarou (Bestiary 6, 8
+        // standard-tier traits: Ability Scores/Type/Size/Speed/Vision/
+        // Change Shape/Natural Weapon/Languages) -- 38 races / 363
+        // standard racial trait records, re-measured 2026-08-20 by running
+        // this binary against the real corpus, not invented.
+        assert_eq!(races, 38, "38 in-scope race chassis records");
+        assert_eq!(traits, 363, "363 standard racial trait records");
     }
 
     // -----------------------------------------------------------------

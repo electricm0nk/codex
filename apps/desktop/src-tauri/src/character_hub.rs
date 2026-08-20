@@ -4128,6 +4128,10 @@ mod tests {
                 "race:undine",
                 // Bestiary 5's 1, the Skinwalker follow-on batch (2026-08-15).
                 "race:skinwalker",
+                // Bestiary 6's 1, SD-31 wave-24 integration cycle
+                // (2026-08-20): Rougarou, same flat chassis+standard-trait
+                // shape as Bestiary 2/5 above.
+                "race:rougarou",
                 // Advanced Race Guide's 6, SD-31-E6-F4-002 (2026-08-16),
                 // plus SD31-E6-F4-004's 4-race follow-on (2026-08-17:
                 // Gillman, Nagaji, Vanara, Vishkanya) plus SD31-E6-F4-007's

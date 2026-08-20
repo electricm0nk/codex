@@ -98,6 +98,13 @@ pub(crate) const RACE_CORPUS_BOOKS: &[&str] = &[
     // loads the chassis + default-tier trait set only, same shape as the
     // other flat, non-heritage race books above.
     "bestiary_5",
+    // Bestiary 6, SD-31 wave-24 integration cycle (2026-08-20): Rougarou's
+    // chassis + 8 standard-tier traits (`ingest_races::IN_SCOPE_RACES`).
+    // Confirmed a flat, non-heritage shape (no `*_subrace.lst` file, no
+    // `Rougarou_Replace*` flag ever set to `True` anywhere in the pinned
+    // oracle) -- same shape as Bestiary 2/5 above, not the Dhampir-style
+    // heritage gap an earlier note wrongly grouped it with.
+    "bestiary_6",
 ];
 
 /// Which ingested book a catalog entry came from. Short codes are the wire
@@ -135,6 +142,11 @@ const BOOK_B2: &str = "B2";
 /// standard-tier traits here, so it DOES contribute catalog rows (see
 /// `RACE_CATALOG_BOOKS` below).
 const BOOK_B5: &str = "B5";
+/// Bestiary 6. SD-31 wave-24 integration cycle (2026-08-20): Rougarou's
+/// chassis + 8 standard traits. Loaded like `bestiary_2`/`bestiary_5` --
+/// `ingest_races` files Rougarou's chassis and standard-tier traits here,
+/// so it DOES contribute catalog rows (see `RACE_CATALOG_BOOKS` below).
+const BOOK_B6: &str = "B6";
 
 /// Every book code this catalog can emit. As of SD-31-E6-F4-002
 /// (2026-08-16) ARG DOES contribute catalog rows: `ingest_races` filed 6
@@ -142,7 +154,7 @@ const BOOK_B5: &str = "B5";
 /// standard traits under `advanced_race_guide`, the first race-catalog
 /// content this book has ever declared. See `BOOK_ARG`'s call site below
 /// and this module's doc comment for why ARG previously contributed none.
-pub const RACE_CATALOG_BOOKS: &[&str] = &[BOOK_CRB, BOOK_B1, BOOK_B2, BOOK_B5, BOOK_ARG];
+pub const RACE_CATALOG_BOOKS: &[&str] = &[BOOK_CRB, BOOK_B1, BOOK_B2, BOOK_B5, BOOK_B6, BOOK_ARG];
 
 /// Maps a corpus book directory name to its wire code. An unrecognized book
 /// id passes through verbatim rather than being silently relabelled, so a
@@ -164,6 +176,7 @@ pub(crate) fn book_code(book_id: &str) -> String {
         "horror_adventures" => BOOK_HA.to_string(),
         "bestiary_2" => BOOK_B2.to_string(),
         "bestiary_5" => BOOK_B5.to_string(),
+        "bestiary_6" => BOOK_B6.to_string(),
         other => other.to_string(),
     }
 }
@@ -557,13 +570,20 @@ mod tests {
         assert_eq!(count_for(&response, "Changeling"), 9);
         assert_eq!(count_for(&response, "Samsaran"), 9);
 
+        // SD-31 wave-24 integration cycle (2026-08-20): Rougarou (Bestiary
+        // 6), the same flat chassis+standard-trait shape, all 8 of its
+        // default-trait rows carrying `is_racial_default: true` (re-derived:
+        // `find data/corpus/bestiary_6/race_trait/rougarou -name '*.json' |
+        // wc -l`).
+        assert_eq!(count_for(&response, "Rougarou"), 8);
+
         // Pinned as a total as well as per race so a race silently dropping
         // out cannot be masked by another race growing.
-        // 173 + 57 + 9 + 96 (58 + 9+9+8+12) + 18 (9+9) = 353.
-        assert_eq!(response.entries.len(), 353);
+        // 173 + 57 + 9 + 96 (58 + 9+9+8+12) + 18 (9+9) + 8 = 361.
+        assert_eq!(response.entries.len(), 361);
 
         let races: BTreeSet<&str> = response.entries.iter().map(|e| e.race_id.as_str()).collect();
-        assert_eq!(races.len(), 37, "37 in-scope races: {races:?}");
+        assert_eq!(races.len(), 38, "38 in-scope races: {races:?}");
     }
 
     /// The regression guard for the identity change: `reach_gate::races_reach`
@@ -619,7 +639,8 @@ mod tests {
 
         // Derived, not assumed: 67 CRB rows + 106 Bestiary 1 rows + 57
         // Bestiary 2 rows (SD-31 Epic 1-F2, 2026-08-15) + 9 Bestiary 5 rows
-        // (Skinwalker follow-on batch, 2026-08-15) + ARG's 12-race total
+        // (Skinwalker follow-on batch, 2026-08-15) + 8 Bestiary 6 rows
+        // (Rougarou, SD-31 wave-24, 2026-08-20) + ARG's 12-race total
         // (58 from SD-31-E6-F4-002's Catfolk/Kitsune/Ratfolk/Strix/Suli/
         // Wayang batch, 2026-08-16, + 38 from SD31-E6-F4-004's Gillman/
         // Nagaji/Vanara/Vishkanya batch, 2026-08-17, + 18 from
@@ -629,13 +650,15 @@ mod tests {
         let b1 = response.entries.iter().filter(|e| e.book == BOOK_B1).count();
         let b2 = response.entries.iter().filter(|e| e.book == BOOK_B2).count();
         let b5 = response.entries.iter().filter(|e| e.book == BOOK_B5).count();
+        let b6 = response.entries.iter().filter(|e| e.book == BOOK_B6).count();
         let arg = response.entries.iter().filter(|e| e.book == BOOK_ARG).count();
         assert_eq!(crb, 67);
         assert_eq!(b1, 106);
         assert_eq!(b2, 57);
         assert_eq!(b5, 9);
+        assert_eq!(b6, 8);
         assert_eq!(arg, 114);
-        assert_eq!(crb + b1 + b2 + b5 + arg, response.entries.len());
+        assert_eq!(crb + b1 + b2 + b5 + b6 + arg, response.entries.len());
     }
 
     /// APG, Monster Codex, ISR and HA declare zero races and zero racial

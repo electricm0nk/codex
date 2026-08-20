@@ -225,6 +225,8 @@ fn diagnostic_book_id(race_catalog_book_code: &str) -> String {
         "B2" => "bestiary_2".to_string(),
         // Skinwalker follow-on batch (2026-08-15), same mismatch class.
         "B5" => "bestiary_5".to_string(),
+        // SD-31 wave-24 integration cycle (2026-08-20), same mismatch class.
+        "B6" => "bestiary_6".to_string(),
         other => other.to_string(),
     }
 }
@@ -1333,13 +1335,14 @@ mod tests {
             "the panel's per-book race counts must sum to exactly the races the catalog serves"
         );
         assert_eq!(
-            panel_total, 37,
-            "37 in-scope races today: CRB's 7 plus Bestiary 1's 11 plus Bestiary 2's 6 \
+            panel_total, 38,
+            "38 in-scope races today: CRB's 7 plus Bestiary 1's 11 plus Bestiary 2's 6 \
              (SD-31 Epic 1-F2, 2026-08-15) plus Bestiary 5's 1 (Skinwalker follow-on batch, \
              2026-08-15) plus Advanced Race Guide's 12 (SD-31-E6-F4-002, 2026-08-16: Catfolk, \
              Kitsune, Ratfolk, Strix, Suli, Wayang; SD31-E6-F4-004, 2026-08-17: Gillman, \
              Nagaji, Vanara, Vishkanya; SD31-E6-F4-007, 2026-08-17: Changeling, Samsaran -- \
-             closing `arg_races.lst`'s full 37-row playable-race roster)"
+             closing `arg_races.lst`'s full 37-row playable-race roster) plus Bestiary 6's 1 \
+             (Rougarou, SD-31 wave-24, 2026-08-20)"
         );
     }
 

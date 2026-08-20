@@ -944,6 +944,8 @@ const RACE_SIZES: &[(&str, SizeCategory)] = &[
     // closing `arg_races.lst`'s full 37-row playable-race roster.
     ("Changeling", SizeCategory::Medium),  // TEMPLATE:SIZE_M
     ("Samsaran", SizeCategory::Medium),    // TEMPLATE:SIZE_M
+    // Bestiary 6's 1, SD-31 wave-24 integration cycle (2026-08-20).
+    ("Rougarou", SizeCategory::Medium),    // chassis FACT:BaseSize|M, DESC "Rougarous are Medium creatures"
 ];
 
 /// Creature size for a loose race identifier — a `race:<slug>` character-input
@@ -1842,13 +1844,14 @@ mod tests {
         let corpus = all_books();
         assert_eq!(
             corpus.race_keys().len(),
-            37,
-            "37 in-scope races: CRB 7 + Bestiary 1's 11 + Bestiary 2's 6 + Bestiary 5's 1 \
+            38,
+            "38 in-scope races: CRB 7 + Bestiary 1's 11 + Bestiary 2's 6 + Bestiary 5's 1 \
              (Skinwalker, chassis + standard tier only) + Advanced Race Guide's 12 \
              (SD-31-E6-F4-002, 2026-08-16: Catfolk, Kitsune, Ratfolk, Strix, Suli, Wayang; \
              SD31-E6-F4-004, 2026-08-17: Gillman, Nagaji, Vanara, Vishkanya; SD31-E6-F4-007, \
              2026-08-17: Changeling, Samsaran -- the full `arg_races.lst` 37-row playable-race \
-             roster, closed)"
+             roster, closed) + Bestiary 6's 1 (Rougarou, SD-31 wave-24, 2026-08-20, chassis + \
+             standard tier only)"
         );
         assert_eq!(corpus.chassis("Dwarf").expect("Dwarf").book_id, "core_rulebook");
         assert_eq!(corpus.chassis("Tengu").expect("Tengu").book_id, "beastiary");
@@ -2175,7 +2178,9 @@ mod tests {
         // Changeling's 3 hag-mother heritage-choice sub-traits are
         // deliberately excluded (`ingest_races.rs`'s
         // `is_heritage_choice_subtrait`), not silently absorbed here.
-        assert_eq!(count(TraitRole::Default), 353);
+        // 353 -> 361 by SD-31 wave-24 (2026-08-20): Rougarou (Bestiary 6)
+        // adds 8 new standard rows, same flat shape, no heritage content.
+        assert_eq!(count(TraitRole::Default), 361);
         // 153 ARG + Monster Codex's 4 + the Advanced Player's Guide's 1
         // (`Half-Orc ~ Plagueborn`) + Inner Sea Races' 67 + Horror
         // Adventures' 41, all landed by SD-29's race-trait lane, + SD-31
@@ -2249,7 +2254,7 @@ mod tests {
         assert_eq!(count(TraitRole::Unclassified), 2);
         assert_eq!(
             corpus.traits.values().flatten().count(),
-            786,
+            794,
             "175 standard + 156 ARG + 5 Monster Codex + 1 APG + 71 Inner Sea Races \
              + 43 Horror Adventures + 64 Core Essentials heritage records (16 heritages \
              + the 48 replacement rows they grant) + SD-31 Epic 1-F2's 113 (57 standard \
@@ -2266,7 +2271,8 @@ mod tests {
              Advanced Race Guide follow-on batch of 18 standard-tier rows (2026-08-17: \
              Changeling 9, Samsaran 9; 768 -> 786), closing `arg_races.lst`'s full 37-row \
              playable-race roster -- no new alternate-trait batch, neither race has any ARG \
-             alternate content"
+             alternate content + SD-31 wave-24's Rougarou (Bestiary 6, 2026-08-20): 8 new \
+             standard-tier rows, no heritage/alternate content (786 -> 794)"
         );
     }
 
@@ -2659,12 +2665,13 @@ mod tests {
         let corpus = all_books();
         assert_eq!(
             RACE_SIZES.len(),
-            37,
+            38,
             "18 original + SD-31 Epic 1-F2's Bestiary 2 batch of 6 + the Skinwalker follow-on \
              batch + SD-31-E6-F4-002's Advanced Race Guide batch of 6 (2026-08-16) + \
              SD31-E6-F4-004's Advanced Race Guide follow-on batch of 4 (2026-08-17) + \
              SD31-E6-F4-007's Advanced Race Guide follow-on batch of 2 (2026-08-17: \
-             Changeling, Samsaran), closing `arg_races.lst`'s full 37-row roster"
+             Changeling, Samsaran), closing `arg_races.lst`'s full 37-row roster + SD-31 \
+             wave-24's Rougarou (Bestiary 6, 2026-08-20)"
         );
         for key in corpus.race_keys() {
             let resolved = corpus.resolve(key, &[]).expect("resolves");

@@ -982,14 +982,16 @@ mod tests {
         let menu = menu();
         assert_eq!(
             menu.races.len(),
-            37,
-            "37 in-scope races: decisions.md §25.3's original 18 + SD-31 Epic 1-F2's \
+            38,
+            "38 in-scope races: decisions.md §25.3's original 18 + SD-31 Epic 1-F2's \
              Bestiary 2 batch of 6 (2026-08-15) + the Skinwalker follow-on batch's 1 + \
              SD-31-E6-F4-002's Advanced Race Guide batch of 6 (2026-08-16: Catfolk, Kitsune, \
              Ratfolk, Strix, Suli, Wayang) + SD31-E6-F4-004's Advanced Race Guide follow-on \
              batch of 4 (2026-08-17: Gillman, Nagaji, Vanara, Vishkanya) + SD31-E6-F4-007's \
              Advanced Race Guide follow-on batch of 2 (2026-08-17: Changeling, Samsaran -- \
-             closing `arg_races.lst`'s full 37-row playable-race roster)"
+             closing `arg_races.lst`'s full 37-row playable-race roster) + SD-31 wave-24's \
+             Rougarou (Bestiary 6, 2026-08-20, chassis + 8 standard-tier traits, no ARG \
+             alternate-trait content)"
         );
         let total: usize = menu.races.iter().map(|race| race.alternates.len()).sum();
         assert_eq!(
@@ -1880,9 +1882,15 @@ mod tests {
         // race has any ARG alternate-trait content to ingest (re-derived:
         // `grep -c '^Changeling ~\|^Samsaran ~'
         // advanced_race_guide/arg_abilities_race.lst` -> 0).
-        assert_eq!((standard, alternates), (353, 357));
+        // SD-31 wave-24 (2026-08-20) adds Rougarou (Bestiary 6): 1 more
+        // `race`/ chassis and 8 more standard rows (353 -> 361).
+        // `alternates` is unchanged (357) -- Rougarou has no
+        // heritage/alternate-trait content in the pinned oracle at all
+        // (confirmed: no `*_subrace.lst` file, no `Rougarou_Replace*` flag
+        // ever set to `True` anywhere in the corpus).
+        assert_eq!((standard, alternates), (361, 357));
         assert_eq!(checked, standard + alternates);
-        assert_eq!(checked, 710);
+        assert_eq!(checked, 718);
 
         // What rendering changed for a player *with no character*, measured
         // against the stored `data.description` this module used to transcribe.
