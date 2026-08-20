@@ -50,6 +50,14 @@ WORK_INVENTORY_BOOK_TO_SHORT = {
     "ultimate_magic": "UM",
     "occult_adventures": "OA",
     "ultimate_combat": "UC",
+    # SD-31 wave 20: widened 8 -> 10, same defect and same fix as the sibling
+    # RANGE generator's own identically-named dict
+    # (`derive_spell_range_fixtures.py`) -- see that file's comment for the
+    # full derivation. Both books already carry a real `data/corpus/<book>/
+    # spell/` cache; this dict was the only thing still gatekeeping them out
+    # of DURATION fixture candidacy.
+    "inner_sea_gods": "ISG",
+    "ultimate_wilderness": "UW",
 }
 
 # The exact shape this fixture family commits to: `(CASTERLEVEL)` or
@@ -107,12 +115,48 @@ def duration_field_from_raw_line(line: str) -> str | None:
     return None
 
 
+def is_candidate(unit: dict) -> bool:
+    """Whether `unit` is eligible for a `spell_entries` fixture row.
+
+    Extracted to a top-level function (SD-31 wave 20) so the book-coverage
+    gate has something to unit-test directly, mirroring the sibling RANGE
+    generator's own `is_candidate` -- this family never filtered on
+    `wiring_class_reason` (see module docstring: the DURATION/RANGE
+    divergence that made SD31-W15's tie-break bug visible in the first
+    place), so unlike that sibling this predicate has no reason-based
+    exclusion to guard against; it gates on the same facts
+    `v06_work_inventory::apply_done_rung_stamps` gates a stamp on, plus
+    `book` membership in the (fixture-generation-side) corpus-directory map.
+    """
+    return (
+        unit.get("kind") == "spell"
+        and unit.get("wiring_class") == "derived"
+        and unit.get("status") in STAMPABLE_STATUSES
+        and unit.get("book") in WORK_INVENTORY_BOOK_TO_SHORT
+    )
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument(
         "--work-inventory",
         default=os.path.join(REPO_ROOT, "docs", "work-inventory.json"),
+    )
+    ap.add_argument(
+        "--write",
+        action="store_true",
+        help=(
+            "merge the derived entries into tests/fixtures/rules_core/"
+            "derived-evaluator-fixtures.json's `spell_entries` in place, "
+            "instead of printing them for a caller to paste. Added SD-31 "
+            "wave 20, mirroring the sibling RANGE generator's own `--write` "
+            "(`derive_spell_range_fixtures.py`) -- this family previously had "
+            "no guarded merge path of its own, only stdout for a caller to "
+            "hand-paste, which is how a generated fixture stops being "
+            "re-derivable (SD-30 loop-instruction.md, \"generated, never "
+            "hand-maintained\")."
+        ),
     )
     args = ap.parse_args()
 
@@ -155,14 +199,7 @@ def main() -> int:
         duration_key_index_cache[book] = found
         return found
 
-    candidates = [
-        u
-        for u in inv["units"]
-        if u.get("kind") == "spell"
-        and u.get("wiring_class") == "derived"
-        and u.get("status") in STAMPABLE_STATUSES
-        and u.get("book") in WORK_INVENTORY_BOOK_TO_SHORT
-    ]
+    candidates = [u for u in inv["units"] if is_candidate(u)]
 
     entries = []
     sha_cache: dict[str, str] = {}
@@ -233,7 +270,31 @@ def main() -> int:
             break
 
     entries.sort(key=lambda e: e["unit_id"])
-    print(json.dumps(entries, indent=2), file=sys.stdout)
+    if args.write:
+        fixture_path = os.path.join(
+            REPO_ROOT, "tests", "fixtures", "rules_core", "derived-evaluator-fixtures.json"
+        )
+        with open(fixture_path) as f:
+            doc = json.load(f)
+        previous = {e["unit_id"] for e in doc.get("spell_entries", [])}
+        dropped = sorted(previous - {e["unit_id"] for e in entries})
+        if dropped:
+            # A generated artifact may GROW freely; it may never silently
+            # shrink. Same posture as `v06_work_inventory`'s stamp-loss guard
+            # and the sibling RANGE generator's own `--write` -- refuse and
+            # name the losses rather than write them away.
+            print(
+                f"# FATAL: this run would drop {len(dropped)} already-covered "
+                f"unit(s) from spell_entries, first 5: {dropped[:5]}",
+                file=sys.stderr,
+            )
+            return 1
+        doc["spell_entries"] = entries
+        with open(fixture_path, "w") as f:
+            f.write(json.dumps(doc, indent=2) + "\n")
+        print(f"# wrote {len(entries)} spell_entries to {fixture_path}", file=sys.stderr)
+    else:
+        print(json.dumps(entries, indent=2), file=sys.stdout)
     print(
         f"# {len(entries)} entries; candidates={len(candidates)}; "
         f"skipped_no_lst={skipped_no_lst} skipped_no_duration_field={skipped_no_duration_field} "

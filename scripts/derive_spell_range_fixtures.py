@@ -45,6 +45,19 @@ WORK_INVENTORY_BOOK_TO_SHORT = {
     "ultimate_magic": "UM",
     "occult_adventures": "OA",
     "ultimate_combat": "UC",
+    # SD-31 wave 20: widened 8 -> 10. Both books already carry a real
+    # `data/corpus/<book>/spell/` cache (ISG since `SD31-E6-F10-001`; UW
+    # since SD-31 wave-19's `ultimate_wilderness` lane +
+    # `SD31-W19-INTEGRATE-001`'s row-324 follow-up, which fixed the
+    # identical gap on the Rust read side -- `SPELL_CORPUS_BOOK_DIRS` /
+    # `spell_book_corpus_dir_for_short_code` in
+    # `derived_evaluator_fixture_check.rs`) but this generator's own book
+    # dict was never widened to match, so no `derived`+held unit in either
+    # book could ever become a fixture candidate regardless of data
+    # completeness. See `scripts/tests/test_derive_spell_range_fixtures.py`'s
+    # `test_inner_sea_gods_and_ultimate_wilderness_are_candidates`.
+    "inner_sea_gods": "ISG",
+    "ultimate_wilderness": "UW",
 }
 
 # The three keywords the ruleset states a caster-level-linear SPELLRANGE
