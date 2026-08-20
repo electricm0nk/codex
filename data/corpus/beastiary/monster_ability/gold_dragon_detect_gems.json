@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "data": {
+    "corpus_key": "Gold Dragon ~ Detect Gems",
+    "delivery": "SpellLike",
+    "description": "A young or older gold dragon can detect gems three times per day. This functions as locate object, but can only be used to locate gemstones.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:gold_dragon_detect_gems",
+    "name": "Detect Gems",
+    "owners": [
+      "beastiary:monster:dragon_gold"
+    ],
+    "source_page": "p.108",
+    "traits": [
+      "Sense"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 488,
+    "record_key": "Gold Dragon ~ Detect Gems"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

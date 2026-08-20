@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "data": {
+    "corpus_key": "Bronze Dragon ~ Electricity Aura",
+    "delivery": "Supernatural",
+    "description": "An old or older bronze dragon has an aura of electricity. All creatures within %1 feet take %2d6 points of electricity damage at the start of the dragon's turn.",
+    "description_variables": [
+      "ElectricityAuraRange",
+      "ElectricityAuraDice"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:bronze_dragon_electricity_aura",
+    "name": "Electricity Aura",
+    "owners": [
+      "beastiary:monster:dragon_bronze"
+    ],
+    "source_page": "p.104",
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 467,
+    "record_key": "Bronze Dragon ~ Electricity Aura"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

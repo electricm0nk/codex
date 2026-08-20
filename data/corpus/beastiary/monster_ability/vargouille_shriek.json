@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "data": {
+    "corpus_key": "Vargouille ~ Shriek",
+    "delivery": "Supernatural",
+    "description": "Instead of biting, a vargouille can open its distended mouth to shriek. Those within 60 feet (except other vargouilles) who hear the shriek and can clearly see the creature must succeed on a DC %1 Fortitude save or be paralyzed for 2d4 rounds or until the monster attacks them, goes out of range, or leaves their sight. A creature that successfully saves cannot be affected again by the same vargouille's shriek for 24 hours.",
+    "description_variables": [
+      "ShriekDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:vargouille_shriek",
+    "name": "Shriek",
+    "owners": [
+      "beastiary:monster:vargouille"
+    ],
+    "source_page": "p.272",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1226,
+    "record_key": "Vargouille ~ Shriek"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

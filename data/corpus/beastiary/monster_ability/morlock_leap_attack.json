@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "data": {
+    "corpus_key": "Morlock ~ Leap Attack",
+    "delivery": "Extraordinary",
+    "description": "As a standard action, a morlock may make a single attack during a jump. You can make this attack at any point along the course of the leap; the start, the end, or while in mid-air. While jumping, you do not provoke attacks of opportunity for leaving a threatened square.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:morlock_leap_attack",
+    "name": "Leap Attack",
+    "owners": [
+      "beastiary:monster:morlock"
+    ],
+    "source_page": "p.209",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 944,
+    "record_key": "Morlock ~ Leap Attack"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

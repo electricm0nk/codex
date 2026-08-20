@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "data": {
+    "corpus_key": "Gold Dragon ~ Luck",
+    "delivery": "SpellLike",
+    "description": "Once per day an adult or older gold dragon can touch a gem, usually one embedded in the dragon's hide, and enspell it to bring good luck. As long as the dragon carries the gem, it and every good creature within a given radius of it (%1 ft.) receives a +1 luck bonus on all saving throws. If the dragon gives an enspelled gem to another creature, only that bearer gets the bonus. The effect lasts 1d3+%2 hours. This ability is the equivalent of a 2nd-level spell.",
+    "description_variables": [
+      "DragonAgeCategory*10",
+      "DragonAgeCategory"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:gold_dragon_luck",
+    "name": "Luck",
+    "owners": [
+      "beastiary:monster:dragon_gold"
+    ],
+    "source_page": "p.108",
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 492,
+    "record_key": "Gold Dragon ~ Luck"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_formula_segment",
+    "display:no_magnitude_token"
+  ]
+}

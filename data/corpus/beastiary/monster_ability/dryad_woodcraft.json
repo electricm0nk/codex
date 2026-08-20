@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "data": {
+    "corpus_key": "Dryad ~ Woodcraft",
+    "delivery": "Extraordinary",
+    "description": "A dryad has a +6 racial bonus to Craft checks involving wood, and is always treated as if she had masterwork artisan's woodworking tools when making such checks.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:dryad_woodcraft",
+    "name": "Woodcraft",
+    "owners": [
+      "beastiary:monster:dryad"
+    ],
+    "source_page": "p.116",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 573,
+    "record_key": "Dryad ~ Woodcraft"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

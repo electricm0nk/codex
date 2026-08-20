@@ -391,9 +391,13 @@ pub struct MonsterCatalogEntryDto {
     /// not capture it.
     pub monster_class: Option<String>,
     /// The `monster_ability` records this book defines for this monster, in row
-    /// order. Empty for every Bestiary 1 row: that book's abilities are not
-    /// ingested, and an empty list says so rather than implying the creature
-    /// has none.
+    /// order. For a Bestiary 1 (SD-22-half) row this is the CROSS-TABLE-OWNED
+    /// subset only (`SD31-W23-MONSTER-001`, `decisions.md §58.3`) -- the
+    /// legacy monster's own ability rows, resolved by owner NAME out of the
+    /// `bestiary` chassis table because that monster's `MonsterStatBlock`
+    /// ships from a different table than its abilities do. Still empty for a
+    /// legacy monster whose row names none, honestly, not as a blanket "not
+    /// ingested" default.
     pub abilities: Vec<MonsterAbilityDto>,
     /// Ability names the row cites that the book does not define (universal
     /// monster rules such as `Grab` or `Scent`). Kept so the screen can say the
@@ -554,6 +558,26 @@ fn map_monster(monster_id: MonsterId) -> MonsterCatalogEntryDto {
         .map(|attack| map_natural_attack(&key, attack))
         .collect();
 
+    // `SD31-W23-MONSTER-001`: the cross-table-owner remedy `decisions.md
+    // §58.3` named and left unbuilt. This half of the ingest still captures
+    // no `monster_ability` records of its OWN, but 55 real, owned ability
+    // rows across this book's 46 legacy monsters ship from the `bestiary`
+    // chassis table (`scripts/transcribe_monster_tables.py bestiary`'s own
+    // cross-table-owner screen), keyed to their real owner's NAME rather than
+    // to any `MonsterStatBlock` in that table -- `abilities_owned_by_name`
+    // reads exactly that, so this monster's OWN ability rows (when it has
+    // any) now reach the screen through the SAME render path
+    // (`map_chassis_ability` / `serve_ability_description`) every other
+    // book's abilities already use. A monster with none of its 55 stays
+    // correctly empty -- this is a real lookup, not a blanket fill.
+    let bestiary_table = monster_chassis::monster_book("beastiary")
+        .expect("the `bestiary` chassis (this book's OTHER table) is registered in MONSTER_BOOKS");
+    let abilities: Vec<MonsterAbilityDto> = bestiary_table
+        .abilities_owned_by_name(&block.name)
+        .into_iter()
+        .map(|ability| map_chassis_ability(bestiary_table.corpus_book, ability))
+        .collect();
+
     MonsterCatalogEntryDto {
         key,
         book: BOOK_B1.to_owned(),
@@ -571,13 +595,15 @@ fn map_monster(monster_id: MonsterId) -> MonsterCatalogEntryDto {
             Vec::new()
         },
         monster_class: None,
-        abilities: Vec::new(),
+        abilities,
         external_ability_refs: Vec::new(),
-        // Bestiary 1's SD-22 half does not ingest `monster_ability` records at
-        // all (`abilities` is always empty above), so this catalog cannot tell
-        // a monster with no spell-like abilities from one whose abilities were
-        // simply never captured. `None` is the honest answer to a question
-        // this half of the ingest cannot answer, not a claim that none exist.
+        // Bestiary 1's SD-22 half still captures no `SPELLS:`/spell-like-
+        // ability tokens of its own (only the CROSS-TABLE `abilities` above,
+        // resolved from the OTHER table, are populated), so this catalog
+        // still cannot tell a monster with no spell-like abilities from one
+        // whose abilities were simply never captured. `None` is the honest
+        // answer to a question this half of the ingest cannot answer, not a
+        // claim that none exist.
         spell_like_ability_caster_level: None,
         // Same reason: Bestiary 1's SD-22 half captures no `SPELLS:` tokens,
         // so an empty list is the honest answer rather than a claim the
@@ -1307,6 +1333,61 @@ mod tests {
         assert_eq!(ankheg.natural_attacks.len(), 1);
         assert_eq!(ankheg.natural_attacks[0].name, "Bite");
         assert_eq!(ankheg.natural_attacks[0].damage_dice.as_deref(), Some("2d6"));
+    }
+
+    /// `SD31-W23-MONSTER-001`: the cross-table-owner remedy `decisions.md
+    /// §58.3` scoped and `SD31-W22-MONSTER-001` bounded but did not build.
+    /// Ankheg's two ability rows (`b1_abilities_race.lst:90`/`91`) are
+    /// well-formed and owned, but their owner's `MonsterStatBlock` ships from
+    /// `rules_tables::beastiary1`, not from the `bestiary` chassis that holds
+    /// the `MonsterAbilityRecord`s themselves -- exactly the split this test
+    /// exercises end to end, through the real `map_monster` production path,
+    /// not a chassis-layer-only unit test that a desktop rendering gap could
+    /// still hide behind (`SD31-W22-MONSTER-001`'s own finding about
+    /// `map_beastiary1_monster` hardcoding `Vec::new()`).
+    #[test]
+    fn a_bestiary_1_legacy_monster_carries_its_cross_table_owned_abilities() {
+        let entries = build_monster_catalog().entries;
+        let ankheg = entries
+            .iter()
+            .find(|entry| entry.key == "beastiary1:monster:ankheg")
+            .expect("Ankheg is a real Bestiary 1 record");
+
+        assert_eq!(
+            ankheg.abilities.len(),
+            2,
+            "Ankheg's row names exactly two abilities in `b1_abilities_race.lst`, got {:?}",
+            ankheg.abilities.iter().map(|a| &a.name).collect::<Vec<_>>()
+        );
+        let bite = ankheg
+            .abilities
+            .iter()
+            .find(|a| a.name == "Acid Bite")
+            .expect("Acid Bite reaches the catalog");
+        assert_eq!(
+            bite.description.as_deref(),
+            Some(
+                "An Ankheg's bite does an additional 1d4 acid damage unless it has recently \
+                 used it's spit acid ability."
+            )
+        );
+        let spit = ankheg
+            .abilities
+            .iter()
+            .find(|a| a.name == "Spit Acid")
+            .expect("Spit Acid reaches the catalog");
+        // The row's own DC is a runtime formula (`10+(HD/2)+CON`), which this
+        // ingest does not compute -- `render_pcgen_desc` drops the `%1`
+        // placeholder rather than fabricate a number, so the rendered text
+        // must not carry it. Guards against a regression `serve_ability_
+        // description`'s own leak-panic would otherwise catch loudly, but a
+        // silent value would not.
+        assert!(
+            !spit.description.as_deref().unwrap_or_default().contains('%'),
+            "Spit Acid's rendered description leaks an unresolved placeholder: {:?}",
+            spit.description
+        );
+        assert!(spit.description.as_deref().unwrap_or_default().contains("30-foot line of acid"));
     }
 
     /// The first production caller of

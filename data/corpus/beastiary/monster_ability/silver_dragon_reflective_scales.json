@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "data": {
+    "corpus_key": "Silver Dragon ~ Reflective Scales",
+    "delivery": "Supernatural",
+    "description": "Any spell that targets an ancient or older silver dragon but fails to penetrate the silver dragon's spell resistance might be reflected. If the caster level check to penetrate the dragon's spell resistance is failed by 5 or more, the spell is reflected. If the check fails by 4 or less, the spell is merely wasted. This otherwise functions as spell turning.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:silver_dragon_reflective_scales",
+    "name": "Reflective Scales",
+    "owners": [
+      "beastiary:monster:dragon_silver"
+    ],
+    "source_page": "p.110",
+    "traits": [
+      "Defensive"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 502,
+    "record_key": "Silver Dragon ~ Reflective Scales"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

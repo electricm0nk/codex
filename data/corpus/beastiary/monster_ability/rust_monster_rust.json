@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "data": {
+    "corpus_key": "Rust Monster ~ Rust",
+    "delivery": "Supernatural",
+    "description": "A rust monster's antennae are a primary touch attack that causes any metal object they touch to swiftly rust and corrode. The object touched takes half its maximum hp in damage and gains the broken condition; a second hit destroys the item. A rust monster never provokes attacks of opportunity by attempting to strike a weapon with its antennae. Against creatures made of metal, a rust monster's antennae deal 3d6+5 points of damage. An attended object, any magic object, or a metal creature can attempt a DC %1 Reflex save to negate this effect.",
+    "description_variables": [
+      "RustMagicSaveDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:rust_monster_rust",
+    "name": "Rust",
+    "owners": [
+      "beastiary:monster:rust_monster"
+    ],
+    "source_page": "p.238",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1072,
+    "record_key": "Rust Monster ~ Rust"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

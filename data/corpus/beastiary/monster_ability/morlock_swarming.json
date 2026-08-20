@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "data": {
+    "corpus_key": "Morlock ~ Swarming",
+    "delivery": "Extraordinary",
+    "description": "Morlocks dwell and fight in cramped quarters every day of your life, and as such are quite adept at swarming foes. Up to two morlocks can share the same square at the same time. If two morlocks in the same square attack the same foe, they are considered to be flanking that foe as if they were in two opposite squares.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:morlock_swarming",
+    "name": "Swarming",
+    "owners": [
+      "beastiary:monster:morlock"
+    ],
+    "source_page": "p.209",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 946,
+    "record_key": "Morlock ~ Swarming"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

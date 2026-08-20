@@ -1245,7 +1245,14 @@ mod tests {
         // `CATEGORY:Internal` bundle-row ownership hop
         // (`transcribe_monster_tables.py::find_internal_bundle_ability_refs`)
         // resolved 68 previously-orphaned ability rows.
-        assert_eq!(bestiary.content_kind_counts["monster_abilities"], 467);
+        // SD31-W23-MONSTER-001 (wave 23): 467 -> 522 (+55), the cross-table-
+        // owner remedy `decisions.md §58.3` named and left unbuilt --
+        // `transcribe_monster_tables.py`'s cross-table-owner screen now
+        // transcribes ability rows whose owner's OWN stat block ships from
+        // `rules_tables::beastiary1` (46 legacy monsters) rather than
+        // dropping them, keyed to that real owner's name
+        // (`MonsterBook::abilities_owned_by_name`).
+        assert_eq!(bestiary.content_kind_counts["monster_abilities"], 522);
     }
 
     #[test]

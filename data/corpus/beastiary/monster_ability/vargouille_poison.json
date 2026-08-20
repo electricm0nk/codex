@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "data": {
+    "corpus_key": "Vargouille ~ Poison",
+    "delivery": "Supernatural",
+    "description": "Bite--injury; save Fort DC %1; frequency once; effect damage caused by bite can only be healed with magic if the spellcaster succeeds on a DC 20 caster level check; cure 1 save.",
+    "description_variables": [
+      "PoisonSaveDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:vargouille_poison",
+    "name": "Poison",
+    "owners": [
+      "beastiary:monster:vargouille"
+    ],
+    "source_page": "p.272",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1225,
+    "record_key": "Vargouille ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1495,11 +1495,11 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 214,
-      "partial": 38,
-      "not_started": 143,
+      "done": 237,
+      "partial": 41,
+      "not_started": 117,
       "denominator": 395,
-      "pct": 54.2,
+      "pct": 60.0,
       "excluded_from_percentage": 329,
       "standing_breakdown": {
         "origin": 395,
@@ -1606,7 +1606,7 @@
         },
         {
           "name": "Acid",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Acid (SpecialAttack.Extraordinary)"
@@ -1627,7 +1627,7 @@
         },
         {
           "name": "Acid Bite",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Acid Bite"
@@ -1858,7 +1858,7 @@
         },
         {
           "name": "Blood Frenzy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Blood Frenzy"
@@ -2138,7 +2138,7 @@
         },
         {
           "name": "Camouflage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Defensive",
           "standing": "unclassified",
           "display_name": "Camouflage (SpecialQuality.Extraordinary.Defensive)"
@@ -2537,7 +2537,7 @@
         },
         {
           "name": "Create Yellow Musk Zombie",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Create Yellow Musk Zombie"
@@ -2628,7 +2628,7 @@
         },
         {
           "name": "Death Throes",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Death Throes (SpecialAttack.Supernatural) #2"
@@ -2915,7 +2915,7 @@
         },
         {
           "name": "Electricity Sense",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Sense",
           "standing": "origin",
           "display_name": "Electricity Sense"
@@ -2971,7 +2971,7 @@
         },
         {
           "name": "Engulf",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Engulf (SpecialAttack.Extraordinary.AttackOption)"
@@ -2999,7 +2999,7 @@
         },
         {
           "name": "Entangle",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Entangle (SpecialAttack.Supernatural)"
@@ -3041,7 +3041,7 @@
         },
         {
           "name": "Expert Climber",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Expert Climber"
@@ -3258,14 +3258,14 @@
         },
         {
           "name": "Filament",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Filament"
         },
         {
           "name": "Find Target",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Find Target"
@@ -3580,14 +3580,14 @@
         },
         {
           "name": "Hold Breath",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Hold Breath (SpecialQuality.Extraordinary)"
         },
         {
           "name": "Hold Breath",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Hold Breath (SpecialQuality.Extraordinary) #2"
@@ -4161,7 +4161,7 @@
         },
         {
           "name": "Kiss",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Kiss"
@@ -4175,7 +4175,7 @@
         },
         {
           "name": "Leap Attack",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Leap Attack"
@@ -4273,7 +4273,7 @@
         },
         {
           "name": "Madness",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Madness"
@@ -4392,7 +4392,7 @@
         },
         {
           "name": "Mimicry",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Mimicry (SpecialQuality.Extraordinary)"
@@ -4525,7 +4525,7 @@
         },
         {
           "name": "Paralysis",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Paralysis (SpecialAttack.Extraordinary)"
@@ -4609,7 +4609,7 @@
         },
         {
           "name": "Perfect Copy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Perfect Copy"
@@ -4707,7 +4707,7 @@
         },
         {
           "name": "Petrification",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Petrification"
@@ -4735,7 +4735,7 @@
         },
         {
           "name": "Plant Traits Output",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Plant Traits Output"
@@ -4784,7 +4784,7 @@
         },
         {
           "name": "Poison",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary) #7"
@@ -4847,7 +4847,7 @@
         },
         {
           "name": "Poison",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary) #16"
@@ -4917,7 +4917,7 @@
         },
         {
           "name": "Poison",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary) #26"
@@ -4952,7 +4952,7 @@
         },
         {
           "name": "Poison",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Supernatural) #31"
@@ -4987,14 +4987,14 @@
         },
         {
           "name": "Poison Use",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Poison Use",
           "standing": "unclassified",
           "display_name": "Poison Use (SpecialQuality.Extraordinary.Poison Use) #2"
         },
         {
           "name": "Pollen Spray",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Pollen Spray"
@@ -5092,14 +5092,14 @@
         },
         {
           "name": "Quickness",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Quickness"
         },
         {
           "name": "Rag Armor",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Rag Armor"
@@ -5316,7 +5316,7 @@
         },
         {
           "name": "Resistance to Poison",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Resistance to Poison"
@@ -5386,7 +5386,7 @@
         },
         {
           "name": "Rust",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Rust"
@@ -5463,14 +5463,14 @@
         },
         {
           "name": "Shock",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Shock"
         },
         {
           "name": "Shriek",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Shriek"
@@ -5610,7 +5610,7 @@
         },
         {
           "name": "Speak with Sharks",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Communicate",
           "standing": "unclassified",
           "display_name": "Speak with Sharks"
@@ -5673,7 +5673,7 @@
         },
         {
           "name": "Spider Empathy",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary.Communicate",
           "standing": "origin",
           "display_name": "Spider Empathy"
@@ -5701,7 +5701,7 @@
         },
         {
           "name": "Spit Acid",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Spit Acid (SpecialAttack.Extraordinary)"
@@ -5778,7 +5778,7 @@
         },
         {
           "name": "Stalker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Stalker"
@@ -5813,7 +5813,7 @@
         },
         {
           "name": "Sticky Tongue",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Sticky Tongue"
@@ -5855,7 +5855,7 @@
         },
         {
           "name": "Strangle",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Strangle"
@@ -5995,7 +5995,7 @@
         },
         {
           "name": "Swamp Stride",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyMovement",
           "standing": "origin",
           "display_name": "Swamp Stride (SpecialQuality.Extraordinary.ModifyMovement) #2"
@@ -6009,7 +6009,7 @@
         },
         {
           "name": "Swarming",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Swarming"
@@ -6093,7 +6093,7 @@
         },
         {
           "name": "Terrifying Croak",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Terrifying Croak"
@@ -6142,7 +6142,7 @@
         },
         {
           "name": "Transparent",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Transparent (SpecialQuality.Extraordinary)"
@@ -6163,21 +6163,21 @@
         },
         {
           "name": "Traps",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Traps"
         },
         {
           "name": "Tree Dependent",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Weakness",
           "standing": "origin",
           "display_name": "Tree Dependent"
         },
         {
           "name": "Tree Meld",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Tree Meld"
@@ -6247,7 +6247,7 @@
         },
         {
           "name": "Undersized Weapons",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Undersized Weapons (SpecialQuality.Extraordinary)"
@@ -6394,7 +6394,7 @@
         },
         {
           "name": "Vulnerability to Sunlight",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Weakness",
           "standing": "origin",
           "display_name": "Vulnerability to Sunlight (SpecialQuality.Extraordinary.Weakness)"
@@ -6555,7 +6555,7 @@
         },
         {
           "name": "Woodcraft",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Woodcraft"
@@ -6569,7 +6569,7 @@
         },
         {
           "name": "Wounding",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Wounding"

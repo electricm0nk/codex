@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "data": {
+    "corpus_key": "Green Dragon ~ Camouflage",
+    "delivery": "Extraordinary",
+    "description": "An old or older green dragon can use Stealth to hide in any sort of natural terrain, even if the terrain does not grant cover or concealment.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:green_dragon_camouflage",
+    "name": "Camouflage",
+    "owners": [
+      "beastiary:monster:dragon_green"
+    ],
+    "source_page": "p.97",
+    "traits": [
+      "Defensive"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 426,
+    "record_key": "Green Dragon ~ Camouflage"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

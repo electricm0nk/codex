@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "data": {
+    "corpus_key": "Green Dragon ~ Awaken Treants",
+    "delivery": "Supernatural",
+    "description": "A great wyrm dragon can call on the forest itself to aid it, animating a number of trees to serve as treants to protect it. These treants can be called from any Huge or larger living tree. A green dragon can create a single treant as a standard action, up to a total of 4 treants per day. These treants remain animated for up to 1 hour, at which time they revert to being ordinary trees.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:green_dragon_awaken_treants",
+    "name": "Awaken Treants",
+    "owners": [
+      "beastiary:monster:dragon_green"
+    ],
+    "source_page": "p.97",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 425,
+    "record_key": "Green Dragon ~ Awaken Treants"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

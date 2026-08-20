@@ -1368,19 +1368,33 @@ def transcribe(book: str) -> str:
     # ---- cross-table-owner screen, between the `.COPY=` screen and the orphan
     # pass ----
     #
-    # `decisions.md §58.3`'s ruling, executed. A monster row this repo ALREADY
-    # ships out of a different compiled table is not this chassis's to emit: two
-    # records for one creature, under one wire code, in one catalog, is a
-    # duplicate the player sees. So the row is dropped here -- and the drop
-    # cascades exactly as the Product Identity and `.COPY=` drops above it do,
-    # except that the abilities it strands are NOT orphans and must not be
-    # reported as such.
+    # `decisions.md §58.3`'s ruling, executed for the MONSTER half. A monster
+    # row this repo ALREADY ships out of a different compiled table is not this
+    # chassis's to emit: two records for one creature, under one wire code, in
+    # one catalog, is a duplicate the player sees. So the monster row is
+    # dropped here.
+    #
+    # The ABILITY half is different, and `§58.3`'s own text says so: "the 54
+    # become a new named exclusion class: cross-table owner -- well-formed,
+    # owned, and unreachable only because the owner lives in a different
+    # table... a different remedy (widen the other table, or migrate it)."
+    # `SD31-W22-MONSTER-001` scoped that remedy and left it unbuilt for a
+    # dedicated cycle; this is that cycle. A `MonsterAbilityRecord` needs no
+    # `MonsterStatBlock` in THIS table to resolve by key -- `monster_ability_
+    # resolve` and `chassis_monster_ability_keys` (`v06_work_inventory.rs`)
+    # both index `monster_abilities` directly, never through a monster's own
+    # `ability_keys` list. So the row transcribes here, keyed to its REAL
+    # owner (the legacy monster's name, exactly as `MonsterBook::abilities_
+    # owned_by_name` below reads it) rather than to any block in this table's
+    # own `monsters_static()` -- which is also why `abilities_of()` (the
+    # `ability_keys`-driven path used for this table's OWN 234 monsters) never
+    # picks these up and never double-serves them under a `bestiary` block.
     #
     # An orphan is a row nothing in the book owns. A CROSS-TABLE OWNER row is
-    # well-formed and owned; it is unreachable from here only because its owner
-    # lives in the other table, which has no ability family at all. That is a
-    # different remedy (widen the other table, or migrate it), so it is a
-    # different class, counted and cited separately in the header below.
+    # well-formed and owned; only its OWNER's stat block lives in the other
+    # table. Counted and cited separately in the header below, and NOT folded
+    # into the plain "row-named"/"prefix" counts, so a reader can tell a
+    # normal reach from this one.
     cross_table_monsters: list[dict] = []
     cross_table_abilities: list[dict] = []
     other_table_dir = CROSS_TABLE_MONSTER_RECORDS.get(book)
@@ -1393,18 +1407,27 @@ def transcribe(book: str) -> str:
             monster_ability_keys.pop(key, None)
             external.pop(key, None)
         stranded: set[str] = set()
-        for ability_key in owners:
+        for ability_key in list(owners):
             before = owners[ability_key]
             after = [o for o in before if o not in cross_keys]
             if before and not after:
+                # This row's ONLY owner(s) are cross-table monsters. Keep the
+                # REAL owner name(s) (`before`, not the emptied `after`) --
+                # transcribed below with `owners` intact, not dropped, so the
+                # emitted record still says who grants it.
                 stranded.add(ability_key)
+                continue
             owners[ability_key] = after
         cross_table_abilities = [u for u in abilities if u["corpus_key"] in stranded]
-        abilities = [u for u in abilities if u["corpus_key"] not in stranded]
+        # NOT removed from `abilities`: these rows are real, owned, and
+        # transcribed below like every other owned row, through the same
+        # orphan/unscreenable screens that follow. Only their doc-comment
+        # citation (header, below) calls them out as a distinct class.
         print(
-            f"{book}: cross-table screen withheld {len(cross_table_monsters)} monster row(s) "
-            f"already served by `data/corpus/{other_table_dir}/monster` and "
-            f"{len(cross_table_abilities)} ability row(s) owned only by them",
+            f"{book}: cross-table screen found {len(cross_table_monsters)} monster row(s) "
+            f"already served by `data/corpus/{other_table_dir}/monster`; their "
+            f"{len(cross_table_abilities)} ability row(s) transcribe here anyway, keyed to "
+            "that real owner",
             file=sys.stderr,
         )
 
@@ -1632,21 +1655,37 @@ def transcribe(book: str) -> str:
             "//! book's complement -- emitting them too would put two records for one creature"
         )
         out.append(
-            f"//! under one wire code). {len(cross_table_abilities)} further ability row(s) are"
+            f"//! under one wire code). {len(cross_table_abilities)} further ability row(s) ARE"
         )
         out.append(
-            "//! CROSS-TABLE OWNER rows: well-formed and owned, unreachable from here only"
+            "//! transcribed below despite this (`SD31-W23-MONSTER-001`, `§58.3`'s own deferred"
         )
         out.append(
-            "//! because every monster that names them is one of those rows. They are NOT"
+            "//! 'different remedy'): CROSS-TABLE OWNER rows are well-formed and owned, only by"
         )
         out.append(
-            "//! orphans and their remedy is not the orphans' remedy. Cited by corpus line:"
+            "//! a monster whose STAT BLOCK lives in the other table. An ability record needs no"
         )
+        out.append(
+            "//! stat block of its own to resolve by key, so these ship with their real owner"
+        )
+        out.append(
+            "//! name intact and are read by `MonsterBook::abilities_owned_by_name`, never by"
+        )
+        out.append(
+            "//! `abilities_of()` (which walks a `MonsterStatBlock.ability_keys` this table has"
+        )
+        out.append(
+            "//! none of for these owners) -- so they never double-serve under a `bestiary`"
+        )
+        out.append("//! block. Cited by corpus line:")
         for unit in cross_table_monsters:
             out.append(f"//!   * `{unit['source_file']}:{unit['source_line']}` (monster row)")
         for unit in cross_table_abilities:
-            out.append(f"//!   * `{unit['source_file']}:{unit['source_line']}` (ability row)")
+            out.append(
+                f"//!   * `{unit['source_file']}:{unit['source_line']}` (ability row, "
+                f"owner: {', '.join(owners[unit['corpus_key']])})"
+            )
     if orphans:
         out.append("//!")
         out.append(

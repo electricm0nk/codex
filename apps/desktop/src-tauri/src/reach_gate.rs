@@ -4682,13 +4682,17 @@ mod tests {
         // since round 8. Same shape as every other chassis book's claim.
         // SD31-E6-F9-005 (transcription lane, wave 12): 323 -> 399 (+76 new
         // monster_ability records transcribed for this book).
+        // SD31-W23-MONSTER-001: 399 -> 522 (+123 on disk this cycle's `gen_
+        // book_cache` run wrote -- 68 of those were wave 21's own +399->467
+        // Rust-table delta, never previously cache-generated to JSON, plus
+        // this cycle's own +55 cross-table-owner rows, `decisions.md §58.3`).
         let abilities = corpus_record_keys("beastiary", "monster_ability");
-        assert_eq!(abilities.len(), 399, "the chassis's owned ability records on disk");
+        assert_eq!(abilities.len(), 522, "the chassis's owned ability records on disk");
         match reach_of(&Family::new("beastiary1", "monster_abilities"))
             .expect("a claim is declared")
         {
-            Reach::Surfaced { records, .. } => assert_eq!(records, 399),
-            other => panic!("expected all 399 abilities to reach, got {other:?}"),
+            Reach::Surfaced { records, .. } => assert_eq!(records, 522),
+            other => panic!("expected all 522 abilities to reach, got {other:?}"),
         }
     }
 

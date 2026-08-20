@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-20T15:15:41Z",
+  "data": {
+    "corpus_key": "Black Dragon ~ Corrupt Water",
+    "delivery": "SpellLike",
+    "description": "Once per day an adult or older black dragon can stagnate 10 cubic feet of still water, making it foul and unable to support water-breathing life. The ability spoils liquids containing water. Liquid-based magic items (such as potions) and items in a creature's possession must succeed on a Will save (DC %1) or become ruined. This ability is the equivalent of a 1st-level spell. Its range is %2 ft.",
+    "description_variables": [
+      "FrightfulPresenceDC",
+      "FrightfulPresenceRange"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:black_dragon_corrupt_water",
+    "name": "Corrupt Water",
+    "owners": [
+      "beastiary:monster:dragon_black"
+    ],
+    "source_page": "p.92",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 406,
+    "record_key": "Black Dragon ~ Corrupt Water"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}
