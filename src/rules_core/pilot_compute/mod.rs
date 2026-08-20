@@ -10917,6 +10917,33 @@ pub(crate) fn has_supported_class_chassis(input: &CharacterInput) -> bool {
         // -- see `is_supported_pu_single_class` for why this one gate is
         // broad where the sixteen APG/ACG gates above are per-class.
         || is_supported_pu_single_class(input)
+        // SD-31 wave 20 (chassis-coverage lane): Ultimate Combat's three
+        // classes (Gunslinger, Ninja, Samurai) have dispatched through
+        // `compute_class_chassis` to `compute_uc_class_chassis` since
+        // `SD31-E4-F1-002`/`-005`, but this gate -- which several OTHER
+        // downstream pillars (`compute_total_saves`, `compute_combat_baseline`,
+        // `compute_selected_skill_modifiers`) check independently of
+        // `compute_class_chassis` itself -- never grew a matching arm. The
+        // chassis numbers were real and correct; the receipt still never
+        // reached `Computed` because those siblings' own
+        // `claim_blocking: true` "unsupported" diagnostics fired anyway. See
+        // `ultimate_combat_chassis_gate_tests` below `supported_class_chassis_description`.
+        || is_supported_uc_single_class(input)
+}
+
+/// A single-class Ultimate Combat character (Gunslinger, Ninja, or
+/// Samurai) at a level `rules_tables::ultimate_combat::class_chassis_resolve`
+/// carries a row for. Named and shaped like `is_supported_pu_single_class`
+/// rather than folded inline, so a future widening (a fourth UC class) has
+/// one obvious place to grow.
+fn is_supported_uc_single_class(input: &CharacterInput) -> bool {
+    let [class_level] = input.chosen.class_levels.as_slice() else {
+        return false;
+    };
+    let Some(class_id) = UcClassId::from_class_id_str(&class_level.class_id) else {
+        return false;
+    };
+    uc::class_chassis_resolve(class_id, class_level.level, RuleSetId::Uc).is_some()
 }
 
 /// Prose listing of every chassis `has_supported_class_chassis` accepts,
@@ -10942,7 +10969,8 @@ pub(crate) fn supported_class_chassis_description() -> String {
          Cavalier, Alchemist, Inquisitor, Oracle, Arcanist, Warpriest, Slayer, Swashbuckler, \
          Investigator, Witch, Shaman, or Summoner chassis, or a supported \
          single-class Unchained Barbarian, Unchained Monk, Unchained Rogue, or \
-         Unchained Summoner chassis (Pathfinder Unchained)"
+         Unchained Summoner chassis (Pathfinder Unchained), or a supported \
+         single-class Gunslinger, Ninja, or Samurai chassis (Ultimate Combat)"
     )
 }
 
@@ -67070,6 +67098,134 @@ mod monk_and_summoner_chassis_recognition_tests {
                 );
             }
         }
+    }
+}
+
+/// SD-31 wave 20 (chassis-coverage lane): `compute_class_chassis` has
+/// dispatched Ultimate Combat's three classes (Gunslinger, Ninja, Samurai)
+/// to `compute_uc_class_chassis` since `SD31-E4-F1-002`/`-005` --
+/// `class_ultimate_combat.rs`'s own tests prove the resulting
+/// `class_chassis.*` explanations carry the right numbers. But
+/// `has_supported_class_chassis` (the SEPARATE gate `compute_total_saves`,
+/// `compute_combat_baseline` and `compute_selected_skill_modifiers` each
+/// check independently) was never widened to recognize `UcClassId` --
+/// unlike the Monk/Summoner fix above, no OR-chain arm here ever tests
+/// `UcClassId::from_class_id_str`. The result: every one of these three
+/// classes emits `class_chassis.base_attack_bonus` etc. correctly and
+/// STILL never reaches `HeadlessReceiptStatus::Computed`, because
+/// `defense.total_save.unsupported` (and its two siblings) fire a
+/// `claim_blocking: true` diagnostic anyway. This is exactly the
+/// consumer-delta probe's `NoSnapshotDeltaVsClasslessBaseline`/
+/// `NeverReachesComputed` outcome shape, and it is why `docs/work-inventory.json`
+/// still shows Gunslinger/Ninja/Samurai as `class` kind `not-ingested`
+/// despite a real, tested, corpus-verified chassis table existing for all
+/// three.
+#[cfg(test)]
+mod ultimate_combat_chassis_gate_tests {
+    use super::{
+        build_pilot_headless_receipt, has_supported_class_chassis, CharacterClassLevel,
+        CharacterInput,
+    };
+    use crate::rules_core::character_input::load_character_input_fixture;
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+    const GUNSLINGER_CLASS_ID: &str = "class:gunslinger";
+    const NINJA_CLASS_ID: &str = "class:ninja";
+    const SAMURAI_CLASS_ID: &str = "class:samurai";
+
+    fn single_class(class_id: &str, level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty(), "fixture should load cleanly");
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: class_id.to_owned(), level }];
+        input
+    }
+
+    /// The gate every downstream chassis-dependent pillar keys off must
+    /// recognize all three UC classes at every real level, the same bar
+    /// `both_classes_pass_the_chassis_gate_at_every_level_one_through_twenty`
+    /// already holds Monk/Summoner to.
+    #[test]
+    fn all_three_uc_classes_pass_the_chassis_gate_at_every_level_one_through_twenty() {
+        for class_id in [GUNSLINGER_CLASS_ID, NINJA_CLASS_ID, SAMURAI_CLASS_ID] {
+            for level in 1..=20u8 {
+                assert!(
+                    has_supported_class_chassis(&single_class(class_id, level)),
+                    "{class_id} level {level} must be a supported chassis"
+                );
+            }
+        }
+    }
+
+    /// The real deliverable, proven with the actual driver the class probe
+    /// (`v06_work_inventory.rs::probe_class_name`) uses: the four
+    /// `class_chassis.unsupported` / `combat.baseline_unsupported` /
+    /// `defense.total_save.unsupported` / `skill.selected_modifier.unsupported`
+    /// blockers this gate used to cause are GONE for all three classes.
+    ///
+    /// This does NOT claim every one of the three now reaches `Computed`.
+    /// Ninja and Samurai do not, at level 5: the shared fixture this test
+    /// (and the sibling `class_ultimate_combat.rs` tests) borrows is built
+    /// as a Fighter and carries Fighter's own weapon proficiencies, so
+    /// re-pointing its `class_levels` at a class this engine's
+    /// `CLASS_WEAPON_PROFICIENCIES` table does not cover leaves a genuine,
+    /// SEPARATE `combat.baseline_weapon_proficiency_unknown` gap -- a
+    /// fixture/proficiency-model concern, not a chassis-recognition one, and
+    /// deliberately not closed for Ninja/Samurai by this same cycle (see
+    /// `weapon_tables.rs`'s own doc comment on why). Gunslinger's own
+    /// proficiency gap WAS closed the same cycle (its corpus record is
+    /// unambiguous: Simple+Martial tiers, no Ninja/Samurai-shaped Simple-tier
+    /// or TYPE-selector ambiguity), so it alone is asserted to reach
+    /// `Computed` here.
+    #[test]
+    fn the_four_chassis_integration_blockers_are_gone_for_all_three_uc_classes() {
+        for class_id in [GUNSLINGER_CLASS_ID, NINJA_CLASS_ID, SAMURAI_CLASS_ID] {
+            let receipt = build_pilot_headless_receipt(&single_class(class_id, 5));
+            let blocking: Vec<String> = receipt
+                .computation
+                .diagnostics
+                .iter()
+                .filter(|d| d.claim_blocking)
+                .map(|d| d.id.clone())
+                .collect();
+            for gone in [
+                "class_chassis.unsupported",
+                "combat.baseline_unsupported",
+                "defense.total_save.unsupported",
+                "skill.selected_modifier.unsupported",
+            ] {
+                assert!(
+                    !blocking.contains(&gone.to_owned()),
+                    "{class_id} must no longer emit {gone}: {blocking:?}"
+                );
+            }
+        }
+    }
+
+    /// Gunslinger specifically reaches `Computed` at level 5: its weapon
+    /// proficiency IS resolved (`weapon_tables.rs`'s `class:gunslinger`
+    /// entry), unlike Ninja/Samurai, which still carry the
+    /// `combat.baseline_weapon_proficiency_unknown` claim-blocker this
+    /// cycle deliberately left open.
+    #[test]
+    fn gunslinger_alone_reaches_computed_status() {
+        use super::HeadlessReceiptStatus;
+        let receipt = build_pilot_headless_receipt(&single_class(GUNSLINGER_CLASS_ID, 5));
+        let blocking: Vec<String> = receipt
+            .computation
+            .diagnostics
+            .iter()
+            .filter(|d| d.claim_blocking)
+            .map(|d| d.id.clone())
+            .collect();
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "gunslinger level 5 must reach Computed, blockers: {blocking:?}"
+        );
     }
 }
 
