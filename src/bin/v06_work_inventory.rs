@@ -4523,6 +4523,19 @@ fn crb_class_name(class_id: ClassId) -> &'static str {
 /// The TRAILING segment is the trait name, never the race, and is excluded
 /// from the search — otherwise a trait whose name happens to equal a race name
 /// would nominate itself. A key with no `~` separator names no race.
+///
+/// Wave 20 (`race_trait` lane, SD-31) widened the per-segment test from
+/// exact equality to a word-boundary-anchored PREFIX match: a segment
+/// exactly equal to a race name still matches (`"Dwarf" == "dwarf"`), and so
+/// now does a segment that LEADS with the race name followed by more
+/// descriptive words (`"Elf Shaman Hex Range Choice"` -> `elf`,
+/// `"Dwarf Racial Subtype"` -> `dwarf`) — several `_abilities_race.lst`
+/// block-header families (ACG's Favored Class Bonus choice suboptions, ARG's
+/// `Racial Subtype` alternates, CRB's `Human Ethnicity` placeholders) name
+/// their race exactly this way. The match stays anchored to a real word
+/// break — a segment that merely CONTAINS a race name mid-word ("Aquatic
+/// Elf", "Elfin Grace") still matches nothing, the exact name-coincidence
+/// hazard this function's own doc comment above was written to close.
 fn modelled_race_of_race_trait<'a>(
     key: &str,
     race_names: &'a BTreeSet<String>,
@@ -4530,7 +4543,11 @@ fn modelled_race_of_race_trait<'a>(
     let segments: Vec<&str> = key.split(" ~ ").collect();
     segments[..segments.len().saturating_sub(1)].iter().find_map(|segment| {
         let segment = segment.trim().to_lowercase();
-        race_names.iter().find(|race| **race == segment)
+        race_names.iter().find(|race| {
+            segment
+                .strip_prefix(race.as_str())
+                .is_some_and(|rest| rest.is_empty() || rest.starts_with(' '))
+        })
     })
 }
 
@@ -10005,6 +10022,57 @@ mod race_trait_grounding_tests {
             modelled_race_of_race_trait("Saltbeard ~ Dwarf ~ Greed", &races).map(String::as_str),
             Some("dwarf")
         );
+    }
+
+    /// Wave 20 (`race_trait` lane, SD-31): the matcher required a
+    /// non-trailing segment to EXACTLY equal a bare race name, so a compound
+    /// segment that genuinely leads with the race but carries extra
+    /// descriptive words after it -- ACG's own `_abilities_race.lst` block
+    /// headers, e.g. "Elf Shaman Hex Range Choice ~ Chant" -- reported no
+    /// race at all even though the race is the segment's own leading word.
+    /// Re-derived corpus-wide: 167 not-done `race_trait` units across 4
+    /// families (`Racial Subtype`, `Critical Confirmation Choice`, `FCB`
+    /// choice suboptions, `Human Ethnicity`) carry exactly this shape.
+    /// Prefix-only, word-boundary-anchored: the race must be the segment's
+    /// OWN leading word(s), never a substring inside another word.
+    #[test]
+    fn a_modelled_race_leading_a_compound_segment_with_trailing_descriptive_words_is_found() {
+        let races = modelled_races();
+        for (key, race) in [
+            ("Elf Shaman Hex Range Choice ~ Chant", "elf"),
+            ("Elf Hunter Critical Confirmation Choice ~ Longbow", "elf"),
+            ("Elf Sorcerer FCB ~ Something", "elf"),
+            ("Dwarf Racial Subtype ~ Deep Delver", "dwarf"),
+            ("Dwarf Paladin FCB ~ Something", "dwarf"),
+            ("Half-Elf Racial Subtype ~ Drow-Descended", "half-elf"),
+            ("Half-Orc Racial Subtype ~ Feral", "half-orc"),
+            ("Halfling Racial Subtype ~ Avenging", "halfling"),
+            ("Halfling Skald Critical Confirmation Choice ~ Dagger", "halfling"),
+            ("Human Racial Subtype ~ Cosmopolitan", "human"),
+            ("Human Ethnicity ~ None", "human"),
+            ("Gnome Racial Subtype ~ Dread Gnome", "gnome"),
+        ] {
+            assert_eq!(
+                modelled_race_of_race_trait(key, &races).map(String::as_str),
+                Some(race),
+                "{key} leads with the modelled race {race} and must be found"
+            );
+        }
+    }
+
+    /// The prefix widening must stay word-boundary-anchored: a segment that
+    /// merely CONTAINS a race name as a run of letters, without the race
+    /// being the segment's own leading word, must still ground nothing --
+    /// the exact regression `a_race_the_engine_does_not_model_grounds_no_trait_however_its_name_collides`
+    /// already covers ("Aquatic Elf" is not "Elf"). This adds the mirror
+    /// case on the OTHER side: a race name immediately followed by more
+    /// letters with no word break (no real compound key ever does this, but
+    /// the matcher must not be fooled by one that tried).
+    #[test]
+    fn a_race_name_glued_to_more_letters_with_no_word_break_is_not_a_compound_match() {
+        let races = modelled_races();
+        assert_eq!(modelled_race_of_race_trait("Elfin Grace ~ Something", &races), None);
+        assert_eq!(modelled_race_of_race_trait("Dwarfism ~ Something", &races), None);
     }
 
     /// The trailing segment is the trait name, never the race. Without this
