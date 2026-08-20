@@ -1872,10 +1872,10 @@ function ClassFeaturePoolReferenceSection(props: { heldClasses: HeldClass[] }) {
         Available Rogue Talents (reference)
       </p>
       <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 0.6rem' }}>
-        Every real Rogue Talent the corpus declares, whether or not this build has selected one.
+        Every Rogue Talent this catalog can render without a missing value, whether or not this build has selected one. A talent whose only magnitude depends on a value this catalog cannot compute (e.g. sneak attack dice) is not listed here.
       </p>
       {rogueTalents.map((option) => (
-        <div key={option.key} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.4rem 0' }}>
+        <div key={`${option.book}:${option.key}`} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.4rem 0' }}>
           <span style={{ color: 'var(--color-text)', fontSize: '0.82rem', fontWeight: 700 }}>{option.name}</span>
           <p
             style={{
