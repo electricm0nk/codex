@@ -106,6 +106,12 @@ pub struct ResolvedEquipmentEffect {
     /// for every other category, and for an `equipmods` record that
     /// carries no matching `BONUS:WEAPON|...|TYPE=Enhancement` token.
     pub weapon_enhancement_bonus: Option<WeaponEnhancementBonus>,
+    /// The armor-slot "Spell Resistance" special ability family's flat
+    /// `SR:<n>` contribution (see `equipmods::resolve_spell_resistance_
+    /// bonus`'s own doc comment). `None` for every other category, and
+    /// for an `equipmods` record that carries no literal-integer `SR:`
+    /// token.
+    pub spell_resistance_bonus: Option<i16>,
     /// v0.6 alpha swarm items 1+27 sub-task 2: the real, per-weapon
     /// TOHIT-affecting bonus resolved from *this specific* selection's own
     /// `applied_modifiers` (see `character_input::EquipmentSelection`'s doc
@@ -176,6 +182,12 @@ pub struct EquipmentEffects {
     pub spell_failure_chance: Option<f32>,
     pub armor_check_penalty_total: i16,
     pub attack_bonus_delta: Option<i16>,
+    /// The HIGHEST `per_item[].spell_resistance_bonus` among everything
+    /// equipped -- PF1's real rule ("if a creature has multiple sources
+    /// of spell resistance, only the highest value applies"), unlike
+    /// `armor_class_delta`'s additive stacking. `None` when nothing
+    /// equipped grants Spell Resistance.
+    pub spell_resistance_total: Option<i16>,
 }
 
 /// The equipment-effect engine seam (`technical-design.md` §2.4, adapted
@@ -194,6 +206,7 @@ pub fn compute_equipment_effects(
     let mut armor_check_penalty_total: i16 = 0;
     let mut weapon_count: u32 = 0;
     let mut single_weapon_to_hit_bonus: i16 = 0;
+    let mut spell_resistance_total: Option<i16> = None;
 
     for selection in equipped {
         let Some((record, table_cell)) =
@@ -227,6 +240,7 @@ pub fn compute_equipment_effects(
         let skill_bonus = general::compute_general_effect(record);
         let ability_bonus = magic_items::compute_magic_items_effect(record);
         let weapon_enhancement_bonus = equipmods::compute_equipmods_effect(record);
+        let spell_resistance_bonus = equipmods::resolve_spell_resistance_bonus(record);
         let has_arms_armor_effect = effect.armor_class_bonus.is_some()
             || effect.max_dex.is_some()
             || effect.spell_failure.is_some()
@@ -237,7 +251,7 @@ pub fn compute_equipment_effects(
             EquipmentCategory::General
         } else if ability_bonus.is_some() {
             EquipmentCategory::MagicItems
-        } else if weapon_enhancement_bonus.is_some() {
+        } else if weapon_enhancement_bonus.is_some() || spell_resistance_bonus.is_some() {
             EquipmentCategory::Equipmods
         } else {
             // No category-defining token matched at all (e.g. a plain
@@ -267,6 +281,12 @@ pub fn compute_equipment_effects(
         if let Some(penalty) = effect.armor_check_penalty {
             armor_check_penalty_total += penalty;
         }
+        if let Some(sr) = spell_resistance_bonus {
+            // PF1's real rule: multiple SR sources do not stack, only the
+            // highest applies (see `EquipmentEffects::spell_resistance_
+            // total`'s own doc comment) -- `max`, never `+=`.
+            spell_resistance_total = Some(spell_resistance_total.map_or(sr, |current| current.max(sr)));
+        }
 
         per_item.push(ResolvedEquipmentEffect {
             item_id: selection.item_id.clone(),
@@ -279,6 +299,7 @@ pub fn compute_equipment_effects(
             skill_bonus,
             ability_bonus,
             weapon_enhancement_bonus,
+            spell_resistance_bonus,
             to_hit_bonus,
             intelligent_item: intelligent_item_contribution,
             table_cell,
@@ -299,6 +320,7 @@ pub fn compute_equipment_effects(
         spell_failure_chance,
         armor_check_penalty_total,
         attack_bonus_delta,
+        spell_resistance_total,
     }
 }
 
@@ -980,5 +1002,95 @@ Unarmed Strike\tKEY:Unarmed Strike\tTYPE:Weapon.Resizable.Melee.Special.Unarmed.
 
         assert_eq!(unarmed.to_hit_bonus, Some(1), "a natural-attack-only bonus must apply to a real natural attack");
         assert_eq!(effects.attack_bonus_delta, Some(1));
+    }
+}
+
+/// `SD31-W21-EQUIPMOD-001`: the armor-slot "Spell Resistance" special
+/// ability family (`equipmods::resolve_spell_resistance_bonus`) end to
+/// end through `compute_equipment_effects` -- the same `equipment_key_is_
+/// wired` shape `v06_work_inventory.rs` probes to ground an
+/// `equipment_modifier` unit.
+#[cfg(test)]
+mod spell_resistance_tests {
+    use super::*;
+    use crate::pcgen_import::ir_converter::convert_equipment_record;
+    use crate::pcgen_import::lst_parser::equipment::parse_equipment_entries;
+    use crate::rules_core::character_input::ActiveState;
+    use crate::rules_core::source_content::SourceRef;
+
+    // Real verbatim tokens copied from `core_rulebook/cr_equipmods.lst`
+    // lines 343 (`/ 13 ~ Armor`) and 346 (`/ 19 ~ Armor`), plus a plain
+    // Longsword with no SR-shaped token anywhere, for the negative
+    // control.
+    const FIXTURE_TEXT: &str = "\
+Longsword\tKEY:Longsword (Base)\tTYPE:Weapon.Melee.Martial\tCOST:15\tWT:4\tCRITMULT:x2\tCRITRANGE:2\tDAMAGE:1d8
+Spell Resistance 13\tFORMATCAT:FRONT\tNAMEOPT:NORMAL\tKEY:Special Ability ~ Spell Resistance / 13 ~ Armor\tTYPE:Armor.Bracer.ArmorLike\tPLUS:2\tVISIBLE:QUALIFY\tPREMULT:2,[PRETYPE:1,ArmorEnhancement],[PRETYPE:1,Armor,Bracer]\tSR:13\tSPROP:grants spell resistance 13
+Spell Resistance 19\tFORMATCAT:FRONT\tNAMEOPT:NORMAL\tKEY:Special Ability ~ Spell Resistance / 19 ~ Armor\tTYPE:Armor.Bracer.ArmorLike\tPLUS:8\tVISIBLE:QUALIFY\tPREMULT:2,[PRETYPE:1,ArmorEnhancement],[PRETYPE:1,Armor,Bracer]\tSR:19\tSPROP:grants spell resistance 19
+";
+
+    fn corpus_with_fixture() -> SourcePackageContent<'static> {
+        let result = parse_equipment_entries("cr_equipmods.lst", FIXTURE_TEXT);
+        assert!(result.diagnostics.is_empty(), "fixture text must parse cleanly: {:?}", result.diagnostics);
+        let source_ref = SourceRef { lst_file: "cr_equipmods.lst".to_string(), line: 1 };
+        let mut corpus = SourcePackageContent::empty("core_rulebook", source_ref);
+        for record in result.entries {
+            let record: &'static EquipmentRecord = Box::leak(Box::new(record));
+            corpus.push(convert_equipment_record(record));
+        }
+        corpus
+    }
+
+    fn equipped(item_id: &str) -> EquipmentSelection {
+        EquipmentSelection {
+            item_id: item_id.to_string(),
+            equipped_or_active: true,
+            active_state: ActiveState::EquippedActive,
+            applied_modifiers: Vec::new(),
+        }
+    }
+
+    #[test]
+    fn spell_resistance_13_armor_yields_a_real_per_item_and_aggregate_bonus() {
+        let corpus = corpus_with_fixture();
+        let equipped_items = vec![equipped("Special Ability ~ Spell Resistance / 13 ~ Armor")];
+
+        let effects = compute_equipment_effects(&equipped_items, &corpus);
+
+        assert_eq!(effects.per_item[0].spell_resistance_bonus, Some(13));
+        assert_eq!(effects.spell_resistance_total, Some(13));
+    }
+
+    /// PF1's real rule: "If a creature has multiple sources of spell
+    /// resistance, only the highest value applies" -- unlike
+    /// `armor_class_delta` (armor and shield AC bonuses genuinely stack),
+    /// two simultaneous SR sources must yield the HIGHEST single value,
+    /// never their sum. Equipping both the 13 and 19 tiers together must
+    /// read `Some(19)`, not `Some(32)`.
+    #[test]
+    fn two_spell_resistance_sources_yield_the_highest_not_the_sum() {
+        let corpus = corpus_with_fixture();
+        let equipped_items = vec![
+            equipped("Special Ability ~ Spell Resistance / 13 ~ Armor"),
+            equipped("Special Ability ~ Spell Resistance / 19 ~ Armor"),
+        ];
+
+        let effects = compute_equipment_effects(&equipped_items, &corpus);
+
+        assert_eq!(
+            effects.spell_resistance_total,
+            Some(19),
+            "PF1: multiple SR sources take the highest value, they do not stack"
+        );
+    }
+
+    #[test]
+    fn an_ordinary_weapon_has_no_spell_resistance_bonus() {
+        let corpus = corpus_with_fixture();
+        let equipped_items = vec![equipped("Longsword (Base)")];
+
+        let effects = compute_equipment_effects(&equipped_items, &corpus);
+
+        assert_eq!(effects.per_item[0].spell_resistance_bonus, None);
+        assert_eq!(effects.spell_resistance_total, None);
     }
 }

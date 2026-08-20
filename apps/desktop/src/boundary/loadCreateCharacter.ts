@@ -230,6 +230,8 @@ export interface ResolvedEquipmentEffectDto {
   maxDex?: number;
   spellFailure?: number;
   armorCheckPenalty?: number;
+  /** This item's own armor-slot "Spell Resistance" special-ability contribution. */
+  spellResistanceBonus?: number;
 }
 
 export interface EquipmentEffectsDto {
@@ -239,6 +241,12 @@ export interface EquipmentEffectsDto {
   armorCheckPenaltyTotal: number;
   maxDexCap?: number;
   spellFailureChance?: number;
+  /**
+   * The highest `perItem[].spellResistanceBonus` among everything equipped
+   * -- PF1's real rule: multiple SR sources take the highest value, they
+   * do not stack.
+   */
+  spellResistanceTotal?: number;
   attackBonusDelta?: number;
 }
 

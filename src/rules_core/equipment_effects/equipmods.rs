@@ -140,6 +140,31 @@ pub fn compute_equipmods_effect(record: &EquipmentRecord) -> Option<WeaponEnhanc
     })
 }
 
+/// Resolve one `equipmods` corpus record's flat Spell Resistance
+/// contribution.
+///
+/// Reads the record's own `SR:<n>` token, when present and a literal
+/// integer -- the armor-slot "Spell Resistance" special ability family
+/// (`KEY:Special Ability ~ Spell Resistance / 13 ~ Armor` through `/ 19 ~
+/// Armor`, `core_rulebook/cr_equipmods.lst:343-346`). Decision 7 REFINED
+/// (`SD31-D7-PROSE-004`) names this exact shape as the paradigm UNIVERSAL
+/// case: it applies unconditionally whenever the wearer's Spell
+/// Resistance is checked, so text alone ("grants spell resistance 13")
+/// does not satisfy the done-bar -- it must be COMPUTED.
+///
+/// Deliberately does NOT match `BNS_SPL_RST` ("Bonus Spell Resistance",
+/// `KEY:Special Ability ~ Bonus Spell Resistance`), whose own `SR:%CHOICE`
+/// token carries a PCGen chooser placeholder rather than a literal
+/// integer -- `str::parse` fails on `"%CHOICE"` and correctly yields
+/// `None`, the same "no fabricated number" discipline every other
+/// resolver in this module follows. That record is a genuine player
+/// CHOICE (`CHOOSE:NUMBER|MIN=13|MAX=32`), not a flat grant, and stays out
+/// of this function's scope until a chosen-value resolution mechanism
+/// exists.
+pub fn resolve_spell_resistance_bonus(record: &EquipmentRecord) -> Option<i16> {
+    record.tokens.iter().find(|token| token.key == "SR").and_then(|token| token.value.parse().ok())
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -306,5 +331,61 @@ mod tests {
 
         let effect = compute_equipmods_effect(record);
         assert_eq!(effect, None);
+    }
+
+    /// `SD31-W21-EQUIPMOD-001`: real verbatim tokens copied from
+    /// `KEY:Special Ability ~ Spell Resistance / 13 ~ Armor`
+    /// (`core_rulebook/cr_equipmods.lst:343`) -- a flat, unconditional
+    /// `SR:13` token, the paradigm UNIVERSAL magnitude Decision 7 REFINED
+    /// names (`SD31-D7-PROSE-004`: "a modifier to a value the character
+    /// sheet computes, that applies UNCONDITIONALLY... Must be COMPUTED").
+    #[test]
+    fn spell_resistance_13_armor_yields_a_real_spell_resistance_bonus() {
+        let text = "Spell Resistance 13\tFORMATCAT:FRONT\tNAMEOPT:NORMAL\tKEY:Special Ability ~ Spell Resistance / 13 ~ Armor\tTYPE:Armor.Bracer.ArmorLike\tPLUS:2\tVISIBLE:QUALIFY\tPREMULT:2,[PRETYPE:1,ArmorEnhancement],[PRETYPE:1,Armor,Bracer]\tSR:13\tSPROP:grants spell resistance 13\n";
+        let result = parse_equipment_entries("cr_equipmods.lst", text);
+        assert!(result.entries.len() == 1, "expected exactly one parsed record");
+        let record = &result.entries[0];
+
+        assert_eq!(resolve_spell_resistance_bonus(record), Some(13));
+    }
+
+    /// The same family's `/ 19 ~ Armor` tier, proving the value is read
+    /// from the token rather than hardcoded to `13`. Real verbatim tokens
+    /// copied from `cr_equipmods.lst:346`.
+    #[test]
+    fn spell_resistance_19_armor_yields_a_real_spell_resistance_bonus() {
+        let text = "Spell Resistance 19\tFORMATCAT:FRONT\tNAMEOPT:NORMAL\tKEY:Special Ability ~ Spell Resistance / 19 ~ Armor\tTYPE:Armor.Bracer.ArmorLike\tPLUS:8\tVISIBLE:QUALIFY\tPREMULT:2,[PRETYPE:1,ArmorEnhancement],[PRETYPE:1,Armor,Bracer]\tSR:19\tSPROP:grants spell resistance 19\n";
+        let result = parse_equipment_entries("cr_equipmods.lst", text);
+        let record = &result.entries[0];
+
+        assert_eq!(resolve_spell_resistance_bonus(record), Some(19));
+    }
+
+    /// `KEY:Special Ability ~ Bonus Spell Resistance` (`BNS_SPL_RST`,
+    /// `cr_equipmods.lst:617`) carries `SR:%CHOICE`, not a literal
+    /// integer -- a real player CHOICE (`CHOOSE:NUMBER|MIN=13|MAX=32`),
+    /// not a flat grant. `str::parse` fails on `"%CHOICE"` and this
+    /// resolver must yield `None`, never a fabricated number, the same
+    /// "no invented value" discipline every other resolver in this module
+    /// follows for a chain it does not recognize.
+    #[test]
+    fn bonus_spell_resistance_choice_token_has_no_flat_spell_resistance_bonus() {
+        let text = "BNS_SPL_RST\tVISIBLE:NO\tKEY:Special Ability ~ Bonus Spell Resistance\tTYPE:Weapon.Belt.Body\tCOST:10000*(%CHOICE-12)\tSR:%CHOICE\tSPROP:base spell resistance of %CHOICE\tCHOOSE:NUMBER|MIN=13|MAX=32|NOSIGN|TITLE=Spell Resistance\n";
+        let result = parse_equipment_entries("cr_equipmods.lst", text);
+        let record = &result.entries[0];
+
+        assert_eq!(resolve_spell_resistance_bonus(record), None);
+    }
+
+    /// A record with no `SR:` token anywhere (the canonical `+1`
+    /// weapon-enhancement record already used above) yields `None`, not a
+    /// fabricated zero.
+    #[test]
+    fn weapon_enhancement_record_has_no_spell_resistance_bonus() {
+        let text = "+1 (Enhancement to Weapon)\tKEY:Special Ability ~ +1 ~ Weapon\tTYPE:Weapon\tPLUS:1\tCOST:0\tBONUS:WEAPON|DAMAGE,TOHIT|1|TYPE=Enhancement\n";
+        let result = parse_equipment_entries("cr_equipmods.lst", text);
+        let record = &result.entries[0];
+
+        assert_eq!(resolve_spell_resistance_bonus(record), None);
     }
 }

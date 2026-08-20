@@ -24428,11 +24428,11 @@
     {
       "kind": "equipment_modifier",
       "label": "Equipment Modifiers",
-      "done": 193,
-      "partial": 265,
+      "done": 201,
+      "partial": 257,
       "not_started": 212,
       "denominator": 670,
-      "pct": 28.8,
+      "pct": 30.0,
       "excluded_from_percentage": 6,
       "standing_breakdown": {
         "origin": 670,
@@ -28242,28 +28242,28 @@
         },
         {
           "name": "SPELL_RES_13",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "SPELL_RES_13"
         },
         {
           "name": "SPELL_RES_15",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "SPELL_RES_15"
         },
         {
           "name": "SPELL_RES_17",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "SPELL_RES_17"
         },
         {
           "name": "SPELL_RES_19",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "SPELL_RES_19"
@@ -28543,28 +28543,28 @@
         },
         {
           "name": "Spell Resistance 13",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Armor.Bracer.ArmorLike",
           "standing": "origin",
           "display_name": "Spell Resistance 13"
         },
         {
           "name": "Spell Resistance 15",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Armor.Bracer.ArmorLike",
           "standing": "origin",
           "display_name": "Spell Resistance 15"
         },
         {
           "name": "Spell Resistance 17",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Armor.Bracer.ArmorLike",
           "standing": "origin",
           "display_name": "Spell Resistance 17"
         },
         {
           "name": "Spell Resistance 19",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Armor.Bracer.ArmorLike",
           "standing": "origin",
           "display_name": "Spell Resistance 19"
