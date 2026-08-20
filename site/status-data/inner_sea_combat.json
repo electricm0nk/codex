@@ -5,11 +5,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 0,
+      "done": 9,
       "partial": 0,
-      "not_started": 148,
+      "not_started": 139,
       "denominator": 148,
-      "pct": 0.0,
+      "pct": 6.1,
       "excluded_from_percentage": 166,
       "standing_breakdown": {
         "origin": 148,
@@ -39,7 +39,7 @@
         },
         {
           "name": "Acrobatic Stunt",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Rogue Class Feature.SpecialQuality.RogueTalent.Extraordinary",
           "standing": "origin",
           "display_name": "Acrobatic Stunt"
@@ -375,7 +375,7 @@
         },
         {
           "name": "Climbing Stunt",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Rogue Class Feature.SpecialQuality.RogueTalent.Extraordinary",
           "standing": "origin",
           "display_name": "Climbing Stunt"
@@ -592,7 +592,7 @@
         },
         {
           "name": "Disabling Stunt",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Rogue Class Feature.SpecialQuality.RogueTalent.Extraordinary",
           "standing": "origin",
           "display_name": "Disabling Stunt"
@@ -732,7 +732,7 @@
         },
         {
           "name": "Escaping Stunt",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Rogue Class Feature.SpecialQuality.RogueTalent.Extraordinary",
           "standing": "origin",
           "display_name": "Escaping Stunt"
@@ -816,7 +816,7 @@
         },
         {
           "name": "Flying Stunt",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Rogue Class Feature.SpecialQuality.RogueTalent.Extraordinary",
           "standing": "origin",
           "display_name": "Flying Stunt"
@@ -1607,7 +1607,7 @@
         },
         {
           "name": "Riding Stunt",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Rogue Class Feature.SpecialQuality.RogueTalent.Extraordinary",
           "standing": "origin",
           "display_name": "Riding Stunt"
@@ -1775,7 +1775,7 @@
         },
         {
           "name": "Sleight of Hand Stunt",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Rogue Class Feature.SpecialQuality.RogueTalent.Extraordinary",
           "standing": "origin",
           "display_name": "Sleight of Hand Stunt"
@@ -1831,7 +1831,7 @@
         },
         {
           "name": "Stealth Stunt",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Rogue Class Feature.SpecialQuality.RogueTalent.Extraordinary",
           "standing": "origin",
           "display_name": "Stealth Stunt"
@@ -1894,7 +1894,7 @@
         },
         {
           "name": "Swimming Stunt",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Rogue Class Feature.SpecialQuality.RogueTalent.Extraordinary",
           "standing": "origin",
           "display_name": "Swimming Stunt"

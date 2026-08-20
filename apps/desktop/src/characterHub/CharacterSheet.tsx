@@ -14,6 +14,10 @@ import {
   type ClassFeatureDescriptionDto,
 } from '../boundary/loadClassFeatureDescriptions';
 import {
+  loadClassFeaturePoolOptions,
+  type ClassFeaturePoolOptionDto,
+} from '../boundary/loadClassFeaturePoolOptions';
+import {
   buildRacialTraitsSurface,
   type RacialTraitRow,
   type RacialTraitsSurface,
@@ -1821,6 +1825,73 @@ function RacialTraitsSection(props: { surface: RacialTraitsSurface; raceLabel: s
   );
 }
 
+/**
+ * Browsable option-pool reference — every real Rogue Talent the corpus
+ * declares, described, shown regardless of whether this character has
+ * selected it (SD31-W22-POOLMEMBER-001).
+ *
+ * Modelled on `RacialTraitsSection`'s own ARG-alternate-trait precedent:
+ * `list_class_feature_pool_options` serves a menu, not a per-character
+ * computation, so this section renders whenever the character holds a
+ * Rogue level, independent of `props.explanations` — a pool member is never
+ * named by an `ExplanationDto.id` until it is actually chosen, which is
+ * exactly the gap `class_feature_pool_picker.rs`'s own doc comment names.
+ */
+function ClassFeaturePoolReferenceSection(props: { heldClasses: HeldClass[] }) {
+  const [options, setOptions] = useState<ClassFeaturePoolOptionDto[]>([]);
+  useEffect(() => {
+    let cancelled = false;
+    loadClassFeaturePoolOptions()
+      .then((loaded) => {
+        if (!cancelled) {
+          setOptions(loaded);
+        }
+      })
+      .catch(() => {
+        // A reference list is a player-visible enhancement, not a
+        // load-bearing dependency of the sheet — swallowed rather than
+        // surfaced as an error banner, matching this file's sibling loaders.
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const holdsRogue = props.heldClasses.some(
+    (held) => held.classId.split(':').pop() === 'rogue'
+  );
+  const rogueTalents = options.filter((option) => option.poolGroup === 'Rogue Talent');
+
+  if (!holdsRogue || rogueTalents.length === 0) {
+    return null;
+  }
+
+  return (
+    <div style={{ marginTop: '1.25rem' }}>
+      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.04em', margin: '0 0 0.4rem', textTransform: 'uppercase' }}>
+        Available Rogue Talents (reference)
+      </p>
+      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 0.6rem' }}>
+        Every real Rogue Talent the corpus declares, whether or not this build has selected one.
+      </p>
+      {rogueTalents.map((option) => (
+        <div key={option.key} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.4rem 0' }}>
+          <span style={{ color: 'var(--color-text)', fontSize: '0.82rem', fontWeight: 700 }}>{option.name}</span>
+          <p
+            style={{
+              color: 'var(--color-text-secondary)',
+              fontSize: '0.72rem',
+              margin: '0.15rem 0 0',
+            }}
+          >
+            {option.description}
+          </p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function ActionsTab(props: {
   levelEntries: LevelEntry[];
   explanations: readonly ExplanationDto[];
@@ -1863,13 +1934,17 @@ function ActionsTab(props: {
   const generalBenefits = props.levelEntries.flatMap((entry) =>
     entry.features.map((feature) => ({ characterLevel: entry.characterLevel, feature }))
   );
+  const holdsRogue = props.heldClasses.some(
+    (held) => held.classId.split(':').pop() === 'rogue'
+  );
 
   if (
     surface.features.length === 0 &&
     surface.notComputed.length === 0 &&
     generalBenefits.length === 0 &&
     props.racialTraits.rows.length === 0 &&
-    props.racialTraits.unavailableReason === null
+    props.racialTraits.unavailableReason === null &&
+    !holdsRogue
   ) {
     return (
       <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>
@@ -2009,6 +2084,8 @@ function ActionsTab(props: {
           ))}
         </div>
       ) : null}
+
+      <ClassFeaturePoolReferenceSection heldClasses={props.heldClasses} />
     </div>
   );
 }

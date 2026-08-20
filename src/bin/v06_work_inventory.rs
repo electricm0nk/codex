@@ -49,6 +49,7 @@ use codex::rules_core::character_input::{
     AcquisitionMode, ActiveState, CharacterClassLevel, CharacterInput, EquipmentSelection,
     SelectedChoice, SpellSelection, load_character_input_fixture,
 };
+use codex::rules_core::class_feature_pool_catalog;
 use codex::rules_core::corpus_loader::{BookCorpusRoot, load_equipment_corpus, load_spell_corpus};
 use codex::rules_core::race_creation::race_creation_chassis;
 use codex::rules_core::race_resolver::{TraitRole, load_race_corpus};
@@ -2681,6 +2682,19 @@ struct EngineFacts {
     /// `acg_equipmods.lst:41` is both `Flying` and `Special Ability ~ Flying
     /// ~ Melee`). Populated by [`load_corpus_json_descriptions`].
     corpus_json_descriptions: BTreeMap<(String, usize, String), String>,
+    /// SD31-W22-POOLMEMBER-001: `(source_book, corpus_key) -> rendered
+    /// description` for every option-pool `class_feature` record
+    /// [`class_feature_pool_catalog::load_pool_catalog`] proves renders with
+    /// nothing missing. This is the "real holds-check" `Kind::ClassFeature`'s
+    /// own doc comment (near `class_feature_owner_matched_by_name_but_
+    /// record_not_held_by_engine`) names as the missing precondition for a
+    /// pool-member `text-complete` promotion: a record present here has a
+    /// genuine browsable render path, not merely a name-substring match on
+    /// its group prefix. Keyed by `source_book` (the physical directory
+    /// walked), not `book` (the reporting attribution) -- the catalog reads
+    /// `data/corpus/<source_book>/class_feature/`, so a re-attributed unit's
+    /// lookup must use the same coordinate its row actually lives under.
+    class_feature_pool_catalog: BTreeMap<(String, String), String>,
 }
 
 impl EngineFacts {
@@ -2894,6 +2908,15 @@ impl EngineFacts {
             .get(book)
             .map(|s| s.contains(&key.to_lowercase()) || s.contains(&name.to_lowercase()))
             .unwrap_or(false)
+    }
+
+    /// SD31-W22-POOLMEMBER-001: whether an option-pool `class_feature`
+    /// record has a real, clean-rendering browsable description --
+    /// `Kind::ClassFeature`'s missing "generic class_feature catalog"
+    /// precondition, now real for the one registered pool
+    /// ([`class_feature_pool_catalog::REGISTERED_POOL_GROUPS`]).
+    fn class_feature_pool_catalog_holds(&self, source_book: &str, key: &str) -> bool {
+        self.class_feature_pool_catalog.contains_key(&(source_book.to_string(), key.to_string()))
     }
 
     /// Whether `book`/`key`/`name` names a `feat` whose SERVED description
@@ -4797,6 +4820,9 @@ fn gather_engine_facts(
         diagnostics,
         corpus_class_names,
         corpus_json_descriptions: load_corpus_json_descriptions(repo_root),
+        class_feature_pool_catalog: class_feature_pool_catalog::pool_catalog_index(
+            &class_feature_pool_catalog::load_pool_catalog(repo_root),
+        ),
     }
 }
 
@@ -6752,6 +6778,35 @@ fn classify(
             // exists anywhere in this engine, unlike feat/spell/equipment),
             // this branch can no longer manufacture `text-complete` either.
             if text_only {
+                // SD31-W22-POOLMEMBER-001: the real holds-check the comment
+                // above says was missing, now built for one registered pool
+                // (`class_feature_pool_catalog::REGISTERED_POOL_GROUPS`).
+                // `facts.class_feature_pool_catalog_holds` is `true` only for
+                // a record `class_feature_pool_catalog::load_pool_catalog`
+                // proved renders with nothing missing (no dropped `%N`
+                // argument, no leaked PCGen syntax) -- the SAME render path
+                // `list_class_feature_pool_options` (`apps/desktop`) serves
+                // onto the Character Sheet's Class Features section. Gated on
+                // the SAME three guards every sibling `text-complete` rung in
+                // this function already requires (`has_real_description`,
+                // `is_display_wiring_class_for_promotion`,
+                // `!universal_sheet_modifier`), so a computed/derived/static
+                // pool-bookkeeping record (e.g. `Rogue Talent ~ Advanced
+                // Talent`, `wc_class: "computed"`) or a genuinely
+                // universal-sheet-modifier record can never ride this rung.
+                if has_real_description
+                    && is_display_wiring_class_for_promotion(wc_class)
+                    && !universal_sheet_modifier
+                    && facts.class_feature_pool_catalog_holds(&unit.source_book, &unit.key)
+                {
+                    return Verdict {
+                        status: "text-complete",
+                        evidence: "class_feature_pool_catalog_serves_a_rendered_description"
+                            .to_string(),
+                        reason: None,
+                        engine_book: engine_book_field,
+                    };
+                }
                 return not_ingested("class_feature_owner_matched_by_name_but_record_not_held_by_engine");
             }
             not_ingested("no_explanation_id_and_no_diagnostic_names_this_feature")
@@ -11323,6 +11378,79 @@ mod class_feature_text_complete_rung_tests {
             verdict.evidence,
             "class_feature_owner_matched_by_name_but_record_not_held_by_engine"
         );
+    }
+
+    /// PROVE THE RUNG CAN SUCCEED (SD31-W22-POOLMEMBER-001): a text_only,
+    /// described option-pool `class_feature` whose `(source_book, key)` the
+    /// new [`class_feature_pool_catalog`] proves reaches `text-complete` --
+    /// the real holds-check the case-3 test above proves is otherwise
+    /// missing.
+    #[test]
+    fn a_pool_member_the_catalog_renders_reaches_text_complete() {
+        let mut facts = EngineFacts::default();
+        facts.class_books.insert("rogue".to_string(), "core_rulebook");
+        facts.class_feature_pool_catalog.insert(
+            ("core_rulebook".to_string(), "Rogue Talent ~ Ledge Walker".to_string()),
+            "This ability allows you to move along narrow surfaces at full speed.".to_string(),
+        );
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            1662,
+            "Rogue Talent ~ Ledge Walker",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(verdict.status, "text-complete");
+        assert_eq!(verdict.evidence, "class_feature_pool_catalog_serves_a_rendered_description");
+    }
+
+    /// PROVE THE RUNG CAN FAIL, case 3b: the SAME pool-member shape, but the
+    /// catalog does NOT hold this exact `(source_book, key)` -- the owner
+    /// name match alone must never manufacture `text-complete` on its own.
+    /// Regression guard for the SD28-E24/`decisions.md §42` defect this rung
+    /// must never resurrect.
+    #[test]
+    fn a_pool_member_the_catalog_does_not_hold_stays_not_ingested() {
+        let mut facts = EngineFacts::default();
+        facts.class_books.insert("rogue".to_string(), "core_rulebook");
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            1699,
+            "Rogue Talent ~ Uncatalogued Talent",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(verdict.status, "not-ingested");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_owner_matched_by_name_but_record_not_held_by_engine"
+        );
+    }
+
+    /// PROVE THE RUNG CAN FAIL, case 3c: a catalog-held pool member whose
+    /// closure states a UNIVERSAL sheet modifier is refused `text-complete`
+    /// exactly like every other rung in this function -- the pool catalog's
+    /// clean render is not, on its own, licence to skip Decision 7's
+    /// universal-vs-conditional axis.
+    #[test]
+    fn a_universal_pool_member_the_catalog_renders_is_still_refused_text_complete() {
+        let mut facts = EngineFacts::default();
+        facts.class_books.insert("rogue".to_string(), "core_rulebook");
+        facts.class_feature_pool_catalog.insert(
+            ("core_rulebook".to_string(), "Rogue Talent ~ Size Bonus Talent".to_string()),
+            "You gain a +1 size bonus to AC.".to_string(),
+        );
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            1700,
+            "Rogue Talent ~ Size Bonus Talent",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", true);
+        assert_ne!(verdict.status, "text-complete");
     }
 
     /// PROVE THE RUNG CAN FAIL, case 4 (SD31-D7-PROSE-004, Decision 7

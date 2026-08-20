@@ -1488,7 +1488,7 @@
         },
         {
           "name": "Crippling Strike",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.SpecialAttack.Extraordinary.RogueAdvancedTalent.AttackOption",
           "standing": "unclassified",
           "display_name": "Crippling Strike"
@@ -1635,7 +1635,7 @@
         },
         {
           "name": "Defensive Roll",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.SpecialQuality.Extraordinary.RogueAdvancedTalent",
           "standing": "unclassified",
           "display_name": "Defensive Roll (RogueClassFeatures.SpecialQuality.Extraordinary.RogueAdvancedTalent)"
@@ -2335,7 +2335,7 @@
         },
         {
           "name": "Fast Stealth",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.SpecialQuality.Extraordinary.RogueTalent",
           "standing": "unclassified",
           "display_name": "Fast Stealth"
@@ -2573,7 +2573,7 @@
         },
         {
           "name": "Finesse Rogue",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.SpecialQuality.Extraordinary.RogueTalent",
           "standing": "unclassified",
           "display_name": "Finesse Rogue"
@@ -3210,7 +3210,7 @@
         },
         {
           "name": "Improved Evasion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.SpecialQuality.Extraordinary.RogueAdvancedTalent",
           "standing": "unclassified",
           "display_name": "Improved Evasion (RogueClassFeatures.SpecialQuality.Extraordinary.RogueAdvancedTalent)"
@@ -3532,7 +3532,7 @@
         },
         {
           "name": "Ledge Walker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.SpecialQuality.Extraordinary.RogueTalent",
           "standing": "unclassified",
           "display_name": "Ledge Walker"
@@ -4015,7 +4015,7 @@
         },
         {
           "name": "Opportunist",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.SpecialAttack.Extraordinary.RogueAdvancedTalent",
           "standing": "unclassified",
           "display_name": "Opportunist"
@@ -4435,7 +4435,7 @@
         },
         {
           "name": "Quick Disable",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.SpecialQuality.Extraordinary.RogueTalent",
           "standing": "unclassified",
           "display_name": "Quick Disable"
@@ -4659,7 +4659,7 @@
         },
         {
           "name": "Rogue Crawl",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.SpecialQuality.Extraordinary.RogueTalent",
           "standing": "unclassified",
           "display_name": "Rogue Crawl"
@@ -4883,7 +4883,7 @@
         },
         {
           "name": "Skill Mastery",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.SpecialQuality.RogueAdvancedTalent",
           "standing": "unclassified",
           "display_name": "Skill Mastery"
@@ -4918,7 +4918,7 @@
         },
         {
           "name": "Slow Reactions",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.SpecialQuality.Extraordinary.RogueTalent",
           "standing": "unclassified",
           "display_name": "Slow Reactions"
@@ -5121,7 +5121,7 @@
         },
         {
           "name": "Stand Up",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.SpecialQuality.Extraordinary.RogueTalent",
           "standing": "unclassified",
           "display_name": "Stand Up"
@@ -5303,7 +5303,7 @@
         },
         {
           "name": "Surprise Attack",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.SpecialQuality.Extraordinary.RogueTalent",
           "standing": "unclassified",
           "display_name": "Surprise Attack"

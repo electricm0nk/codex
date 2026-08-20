@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-08-20T10:49:33Z",
+  "generated_at": "2026-08-20T12:11:45Z",
   "doneness_values": [
     "done",
     "partial",
     "not-started"
   ],
   "overall": {
-    "done": 11542,
+    "done": 11576,
     "partial": 2059,
-    "not_started": 15909,
+    "not_started": 15875,
     "denominator": 29510,
-    "pct": 39.1,
+    "pct": 39.2,
     "excluded_from_percentage": 8862,
     "standing_breakdown": {
       "origin": 29510,
@@ -35,11 +35,11 @@
     {
       "id": "advanced_players_guide",
       "title": "Advanced Player's Guide",
-      "done": 687,
+      "done": 696,
       "partial": 111,
-      "not_started": 1524,
+      "not_started": 1515,
       "denominator": 2322,
-      "pct": 29.6,
+      "pct": 30.0,
       "excluded_from_percentage": 910,
       "standing_breakdown": {
         "origin": 2322,
@@ -119,11 +119,11 @@
     {
       "id": "ultimate_combat",
       "title": "Ultimate Combat",
-      "done": 425,
+      "done": 431,
       "partial": 29,
-      "not_started": 905,
+      "not_started": 899,
       "denominator": 1359,
-      "pct": 31.3,
+      "pct": 31.7,
       "excluded_from_percentage": 697,
       "standing_breakdown": {
         "origin": 1359,
@@ -147,11 +147,11 @@
     {
       "id": "advanced_race_guide",
       "title": "Advanced Race Guide",
-      "done": 419,
+      "done": 426,
       "partial": 205,
-      "not_started": 597,
+      "not_started": 590,
       "denominator": 1221,
-      "pct": 34.3,
+      "pct": 34.9,
       "excluded_from_percentage": 355,
       "standing_breakdown": {
         "origin": 1221,
@@ -217,11 +217,11 @@
     {
       "id": "ultimate_intrigue",
       "title": "Ultimate Intrigue",
-      "done": 276,
+      "done": 278,
       "partial": 15,
-      "not_started": 603,
+      "not_started": 601,
       "denominator": 894,
-      "pct": 30.9,
+      "pct": 31.1,
       "excluded_from_percentage": 208,
       "standing_breakdown": {
         "origin": 894,
@@ -301,11 +301,11 @@
     {
       "id": "inner_sea_combat",
       "title": "Inner Sea Combat",
-      "done": 39,
+      "done": 48,
       "partial": 1,
-      "not_started": 184,
+      "not_started": 175,
       "denominator": 224,
-      "pct": 17.4,
+      "pct": 21.4,
       "excluded_from_percentage": 174,
       "standing_breakdown": {
         "origin": 224,
@@ -315,11 +315,11 @@
     {
       "id": "inner_sea_intrigue",
       "title": "Inner Sea Intrigue",
-      "done": 44,
+      "done": 45,
       "partial": 2,
-      "not_started": 144,
+      "not_started": 143,
       "denominator": 190,
-      "pct": 23.2,
+      "pct": 23.7,
       "excluded_from_percentage": 66,
       "standing_breakdown": {
         "origin": 190,

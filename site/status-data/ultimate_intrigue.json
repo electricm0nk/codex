@@ -5,11 +5,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 0,
+      "done": 2,
       "partial": 0,
-      "not_started": 577,
+      "not_started": 575,
       "denominator": 577,
-      "pct": 0.0,
+      "pct": 0.3,
       "excluded_from_percentage": 200,
       "standing_breakdown": {
         "origin": 577,
@@ -1887,7 +1887,7 @@
         },
         {
           "name": "Follow Along",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.SpecialQuality.Extraordinary.RogueTalent.Unchained Rogue Talent",
           "standing": "origin",
           "display_name": "Follow Along"
@@ -2209,7 +2209,7 @@
         },
         {
           "name": "Hidden Mind",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.SpecialQuality.Extraordinary.RogueAdvancedTalent.Unchained Rogue Advanced Talent",
           "standing": "unclassified",
           "display_name": "Hidden Mind"
@@ -3952,7 +3952,7 @@
         },
         {
           "name": "Shades of Gray",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.SpecialQuality.Extraordinary.RogueTalent.Unchained Rogue Talent",
           "standing": "origin",
           "display_name": "Shades of Gray"

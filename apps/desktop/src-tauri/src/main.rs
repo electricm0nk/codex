@@ -7,6 +7,7 @@ mod character_hub;
 mod characterHub;
 mod class_catalog;
 mod class_feature_descriptions;
+mod class_feature_pool_picker;
 mod class_spell_levels;
 mod corpus_fixtures;
 mod corpus_full;
@@ -54,6 +55,7 @@ use characterHub::recomputeCharacter::recompute_character;
 use characterHub::reSaveCharacter::re_save_character;
 use class_catalog::list_class_catalog;
 use class_feature_descriptions::list_class_feature_descriptions;
+use class_feature_pool_picker::list_class_feature_pool_options;
 use class_spell_levels::list_class_spell_levels;
 use corpus_ingest_diagnostic::corpus_ingest_diagnostic;
 use equipment_catalog::{list_equipment, list_equipment_catalog};
@@ -212,6 +214,11 @@ fn main() {
             // derivation, never the rulebook prose, so this is a second,
             // additive field, not a replacement.
             list_class_feature_descriptions,
+            // SD31-W22-POOLMEMBER-001: the browsable option-pool reference
+            // catalog (Rogue Talents today) -- a menu of every real record,
+            // regardless of selection, modelled on
+            // `list_alternate_racial_traits`'s own precedent.
+            list_class_feature_pool_options,
             list_equipment,
             list_spells,
             list_feats,

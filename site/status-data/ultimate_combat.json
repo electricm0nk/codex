@@ -5,11 +5,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 3,
+      "done": 9,
       "partial": 0,
-      "not_started": 856,
+      "not_started": 850,
       "denominator": 859,
-      "pct": 0.3,
+      "pct": 1.0,
       "excluded_from_percentage": 553,
       "standing_breakdown": {
         "origin": 859,
@@ -795,7 +795,7 @@
         },
         {
           "name": "Black Market Connections",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent",
           "standing": "unclassified",
           "display_name": "Black Market Connections"
@@ -1558,7 +1558,7 @@
         },
         {
           "name": "Confounding Blades*",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent.RogueAdvancedTalent",
           "standing": "origin",
           "display_name": "Confounding Blades*"
@@ -1628,7 +1628,7 @@
         },
         {
           "name": "Convincing Lie",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent",
           "standing": "unclassified",
           "display_name": "Convincing Lie"
@@ -2041,7 +2041,7 @@
         },
         {
           "name": "Deft Palm",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent",
           "standing": "unclassified",
           "display_name": "Deft Palm"
@@ -2937,7 +2937,7 @@
         },
         {
           "name": "Esoteric Scholar",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent",
           "standing": "unclassified",
           "display_name": "Esoteric Scholar"
@@ -3154,7 +3154,7 @@
         },
         {
           "name": "Firearm Training",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent",
           "standing": "unclassified",
           "display_name": "Firearm Training"
@@ -3336,14 +3336,14 @@
         },
         {
           "name": "Getaway Artist",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent",
           "standing": "origin",
           "display_name": "Getaway Artist"
         },
         {
           "name": "Getaway Master",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent.RogueAdvancedTalent",
           "standing": "origin",
           "display_name": "Getaway Master"
@@ -3798,7 +3798,7 @@
         },
         {
           "name": "Hard Minded",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent.RogueAdvancedTalent",
           "standing": "origin",
           "display_name": "Hard Minded"
@@ -3875,7 +3875,7 @@
         },
         {
           "name": "Hide in Plain Sight",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent.RogueAdvancedTalent",
           "standing": "unclassified",
           "display_name": "Hide in Plain Sight"
@@ -3910,7 +3910,7 @@
         },
         {
           "name": "Hold Breath",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent",
           "standing": "unclassified",
           "display_name": "Hold Breath"
@@ -4393,7 +4393,7 @@
         },
         {
           "name": "Iron Guts",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent",
           "standing": "unclassified",
           "display_name": "Iron Guts"
@@ -4547,7 +4547,7 @@
         },
         {
           "name": "Ki Pool",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent",
           "standing": "unclassified",
           "display_name": "Ki Pool (SpecialQuality.Extraordinary.RogueTalent)"
@@ -6626,14 +6626,14 @@
         },
         {
           "name": "Rope Master",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent",
           "standing": "unclassified",
           "display_name": "Rope Master"
         },
         {
           "name": "Rumormonger",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent.RogueAdvancedTalent",
           "standing": "origin",
           "display_name": "Rumormonger"
@@ -8117,7 +8117,7 @@
         },
         {
           "name": "Strong Stroke",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent",
           "standing": "unclassified",
           "display_name": "Strong Stroke"
@@ -9174,7 +9174,7 @@
         },
         {
           "name": "Unwitting Ally",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent.RogueAdvancedTalent",
           "standing": "unclassified",
           "display_name": "Unwitting Ally"
@@ -9335,7 +9335,7 @@
         },
         {
           "name": "Wall Scramble",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent",
           "standing": "unclassified",
           "display_name": "Wall Scramble"
@@ -9461,7 +9461,7 @@
         },
         {
           "name": "Weapon Snatcher",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.RogueTalent.RogueAdvancedTalent",
           "standing": "origin",
           "display_name": "Weapon Snatcher"
