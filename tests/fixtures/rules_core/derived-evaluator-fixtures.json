@@ -14489,6 +14489,513 @@
         "per_level": 1,
         "unit": "hours"
       }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:alpha_instinct",
+      "book": "ultimate_wilderness",
+      "record_key": "Alpha Instinct",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 10,
+      "corpus_field": "DURATION:(CASTERLEVEL) hours [D]",
+      "expected": {
+        "per_level": 1,
+        "unit": "hours [D]"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:animal_growth_reptiles_only",
+      "book": "ultimate_wilderness",
+      "record_key": "Animal Growth (Reptiles Only)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 137,
+      "corpus_field": "DURATION:(CASTERLEVEL) minutes",
+      "expected": {
+        "per_level": 1,
+        "unit": "minutes"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:animal_shapes_reptiles_only",
+      "book": "ultimate_wilderness",
+      "record_key": "Animal Shapes (Reptiles Only)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 138,
+      "corpus_field": "DURATION:(CASTERLEVEL) hours [D]",
+      "expected": {
+        "per_level": 1,
+        "unit": "hours [D]"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:aquatic_cavalry",
+      "book": "ultimate_wilderness",
+      "record_key": "Aquatic Cavalry",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 11,
+      "corpus_field": "DURATION:(CASTERLEVEL) hours [D]",
+      "expected": {
+        "per_level": 1,
+        "unit": "hours [D]"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:callback",
+      "book": "ultimate_wilderness",
+      "record_key": "Callback",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 13,
+      "corpus_field": "DURATION:(CASTERLEVEL*10) minutes or until expended; see text",
+      "expected": {
+        "per_level": 10,
+        "unit": "minutes or until expended; see text"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:callback_greater",
+      "book": "ultimate_wilderness",
+      "record_key": "Callback (Greater)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 14,
+      "corpus_field": "DURATION:(CASTERLEVEL) hours or until expended; see text",
+      "expected": {
+        "per_level": 1,
+        "unit": "hours or until expended; see text"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:cave_fangs",
+      "book": "ultimate_wilderness",
+      "record_key": "Cave Fangs",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 15,
+      "corpus_field": "DURATION:(CASTERLEVEL) days or until triggered [D]",
+      "expected": {
+        "per_level": 1,
+        "unit": "days or until triggered [D]"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:echo",
+      "book": "ultimate_wilderness",
+      "record_key": "Echo",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 18,
+      "corpus_field": "DURATION:(CASTERLEVEL) rounds [D]",
+      "expected": {
+        "per_level": 1,
+        "unit": "rounds [D]"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:fey_form_i",
+      "book": "ultimate_wilderness",
+      "record_key": "Fey Form I",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 20,
+      "corpus_field": "DURATION:(CASTERLEVEL) minutes [D]",
+      "expected": {
+        "per_level": 1,
+        "unit": "minutes [D]"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:fey_form_ii",
+      "book": "ultimate_wilderness",
+      "record_key": "Fey Form II",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 21,
+      "corpus_field": "DURATION:(CASTERLEVEL) minutes [D]",
+      "expected": {
+        "per_level": 1,
+        "unit": "minutes [D]"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:fey_form_iii",
+      "book": "ultimate_wilderness",
+      "record_key": "Fey Form III",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 22,
+      "corpus_field": "DURATION:(CASTERLEVEL) minutes [D]",
+      "expected": {
+        "per_level": 1,
+        "unit": "minutes [D]"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:fey_form_iv",
+      "book": "ultimate_wilderness",
+      "record_key": "Fey Form IV",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 23,
+      "corpus_field": "DURATION:(CASTERLEVEL) minutes [D]",
+      "expected": {
+        "per_level": 1,
+        "unit": "minutes [D]"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:fey_gate",
+      "book": "ultimate_wilderness",
+      "record_key": "Fey Gate",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 24,
+      "corpus_field": "DURATION:(CASTERLEVEL) rounds; see text",
+      "expected": {
+        "per_level": 1,
+        "unit": "rounds; see text"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:flashfire",
+      "book": "ultimate_wilderness",
+      "record_key": "Flashfire",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 25,
+      "corpus_field": "DURATION:(CASTERLEVEL) rounds",
+      "expected": {
+        "per_level": 1,
+        "unit": "rounds"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:forest_s_sense",
+      "book": "ultimate_wilderness",
+      "record_key": "Forest's Sense",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 26,
+      "corpus_field": "DURATION:(CASTERLEVEL) minutes [D]; see text",
+      "expected": {
+        "per_level": 1,
+        "unit": "minutes [D]; see text"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:greensight",
+      "book": "ultimate_wilderness",
+      "record_key": "Greensight",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 27,
+      "corpus_field": "DURATION:(CASTERLEVEL*10) minutes",
+      "expected": {
+        "per_level": 10,
+        "unit": "minutes"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:hidden_spring",
+      "book": "ultimate_wilderness",
+      "record_key": "Hidden Spring",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 28,
+      "corpus_field": "DURATION:(CASTERLEVEL) hours",
+      "expected": {
+        "per_level": 1,
+        "unit": "hours"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:magical_beast_shape",
+      "book": "ultimate_wilderness",
+      "record_key": "Magical Beast Shape",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 30,
+      "corpus_field": "DURATION:(CASTERLEVEL) minutes [D]",
+      "expected": {
+        "per_level": 1,
+        "unit": "minutes [D]"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:merge_with_familiar",
+      "book": "ultimate_wilderness",
+      "record_key": "Merge with Familiar",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 31,
+      "corpus_field": "DURATION:(CASTERLEVEL) hours [D]",
+      "expected": {
+        "per_level": 1,
+        "unit": "hours [D]"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:mirage",
+      "book": "ultimate_wilderness",
+      "record_key": "Mirage",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 32,
+      "corpus_field": "DURATION:(CASTERLEVEL*2) hours [D]",
+      "expected": {
+        "per_level": 2,
+        "unit": "hours [D]"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:ooze_form_i",
+      "book": "ultimate_wilderness",
+      "record_key": "Ooze Form I",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 33,
+      "corpus_field": "DURATION:(CASTERLEVEL) minutes [D]",
+      "expected": {
+        "per_level": 1,
+        "unit": "minutes [D]"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:ooze_form_ii",
+      "book": "ultimate_wilderness",
+      "record_key": "Ooze Form II",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 34,
+      "corpus_field": "DURATION:(CASTERLEVEL) minutes [D]",
+      "expected": {
+        "per_level": 1,
+        "unit": "minutes [D]"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:ooze_form_iii",
+      "book": "ultimate_wilderness",
+      "record_key": "Ooze Form III",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 35,
+      "corpus_field": "DURATION:(CASTERLEVEL) minutes [D]",
+      "expected": {
+        "per_level": 1,
+        "unit": "minutes [D]"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:pouncing_fury",
+      "book": "ultimate_wilderness",
+      "record_key": "Pouncing Fury",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 36,
+      "corpus_field": "DURATION:(CASTERLEVEL) rounds",
+      "expected": {
+        "per_level": 1,
+        "unit": "rounds"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:ropeweave",
+      "book": "ultimate_wilderness",
+      "record_key": "Ropeweave",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 38,
+      "corpus_field": "DURATION:(CASTERLEVEL) hours [D]",
+      "expected": {
+        "per_level": 1,
+        "unit": "hours [D]"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:sea_stallion",
+      "book": "ultimate_wilderness",
+      "record_key": "Sea Stallion",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 41,
+      "corpus_field": "DURATION:(CASTERLEVEL*10) minutes [D]",
+      "expected": {
+        "per_level": 10,
+        "unit": "minutes [D]"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:sea_steed",
+      "book": "ultimate_wilderness",
+      "record_key": "Sea Steed",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 42,
+      "corpus_field": "DURATION:(CASTERLEVEL*10) minutes [D]",
+      "expected": {
+        "per_level": 10,
+        "unit": "minutes [D]"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:shapechanger_s_gift",
+      "book": "ultimate_wilderness",
+      "record_key": "Shapechanger's Gift",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 43,
+      "corpus_field": "DURATION:(CASTERLEVEL*10) minutes",
+      "expected": {
+        "per_level": 10,
+        "unit": "minutes"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:shapechanger_s_gift_greater",
+      "book": "ultimate_wilderness",
+      "record_key": "Shapechanger's Gift (Greater)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 44,
+      "corpus_field": "DURATION:(CASTERLEVEL) hours",
+      "expected": {
+        "per_level": 1,
+        "unit": "hours"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:sky_steed",
+      "book": "ultimate_wilderness",
+      "record_key": "Sky Steed",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 46,
+      "corpus_field": "DURATION:(CASTERLEVEL) minutes [D]",
+      "expected": {
+        "per_level": 1,
+        "unit": "minutes [D]"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:soothing_mud",
+      "book": "ultimate_wilderness",
+      "record_key": "Soothing Mud",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 48,
+      "corpus_field": "DURATION:(CASTERLEVEL) rounds [D]",
+      "expected": {
+        "per_level": 1,
+        "unit": "rounds [D]"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:sturdy_tree_fort",
+      "book": "ultimate_wilderness",
+      "record_key": "Sturdy Tree Fort",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 49,
+      "corpus_field": "DURATION:(CASTERLEVEL) hours [D]",
+      "expected": {
+        "per_level": 1,
+        "unit": "hours [D]"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:tail_current",
+      "book": "ultimate_wilderness",
+      "record_key": "Tail Current",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 50,
+      "corpus_field": "DURATION:(CASTERLEVEL) hours",
+      "expected": {
+        "per_level": 1,
+        "unit": "hours"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:tailwind",
+      "book": "ultimate_wilderness",
+      "record_key": "Tailwind",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 51,
+      "corpus_field": "DURATION:(CASTERLEVEL) hours",
+      "expected": {
+        "per_level": 1,
+        "unit": "hours"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:tamer_s_lash",
+      "book": "ultimate_wilderness",
+      "record_key": "Tamer's Lash",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 52,
+      "corpus_field": "DURATION:(CASTERLEVEL) rounds [D]",
+      "expected": {
+        "per_level": 1,
+        "unit": "rounds [D]"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:verminous_transformation",
+      "book": "ultimate_wilderness",
+      "record_key": "Verminous Transformation",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 63,
+      "corpus_field": "DURATION:(CASTERLEVEL) rounds [D]",
+      "expected": {
+        "per_level": 1,
+        "unit": "rounds [D]"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:vine_strike",
+      "book": "ultimate_wilderness",
+      "record_key": "Vine Strike",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 55,
+      "corpus_field": "DURATION:(CASTERLEVEL) minute [D]",
+      "expected": {
+        "per_level": 1,
+        "unit": "minute [D]"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:winter_grasp",
+      "book": "ultimate_wilderness",
+      "record_key": "Winter Grasp",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 57,
+      "corpus_field": "DURATION:(CASTERLEVEL) rounds",
+      "expected": {
+        "per_level": 1,
+        "unit": "rounds"
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:with_the_wind",
+      "book": "ultimate_wilderness",
+      "record_key": "With the Wind",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 58,
+      "corpus_field": "DURATION:(CASTERLEVEL) minutes",
+      "expected": {
+        "per_level": 1,
+        "unit": "minutes"
+      }
     }
   ],
   "spell_range_token_family": "RANGE (caster-level-linear, PF1 SPELLRANGE ruleset formula)",
@@ -25128,6 +25635,230 @@
       "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
       "upstream_lst_sha256": "277484651533d6e3f350fd62db33c91294a4768ab5519886d6ad77c2516f83fa",
       "upstream_line": 251,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:animal_growth_reptiles_only",
+      "book": "ultimate_wilderness",
+      "record_key": "Animal Growth (Reptiles Only)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 137,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:animal_shapes_reptiles_only",
+      "book": "ultimate_wilderness",
+      "record_key": "Animal Shapes (Reptiles Only)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 138,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:aquatic_cavalry",
+      "book": "ultimate_wilderness",
+      "record_key": "Aquatic Cavalry",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 11,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:callback",
+      "book": "ultimate_wilderness",
+      "record_key": "Callback",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 13,
+      "corpus_field": "RANGE:Long",
+      "expected": {
+        "base_ft": 400,
+        "rate_ft": 40,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:cave_fangs",
+      "book": "ultimate_wilderness",
+      "record_key": "Cave Fangs",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 15,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:companion_transposition",
+      "book": "ultimate_wilderness",
+      "record_key": "Companion Transposition",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 16,
+      "corpus_field": "RANGE:Long",
+      "expected": {
+        "base_ft": 400,
+        "rate_ft": 40,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:explosion_of_rot",
+      "book": "ultimate_wilderness",
+      "record_key": "Explosion of Rot",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 19,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:fey_gate",
+      "book": "ultimate_wilderness",
+      "record_key": "Fey Gate",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 24,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:flashfire",
+      "book": "ultimate_wilderness",
+      "record_key": "Flashfire",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 25,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:iron_stake",
+      "book": "ultimate_wilderness",
+      "record_key": "Iron Stake",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 29,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:mirage",
+      "book": "ultimate_wilderness",
+      "record_key": "Mirage",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 32,
+      "corpus_field": "RANGE:Long",
+      "expected": {
+        "base_ft": 400,
+        "rate_ft": 40,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:scamper",
+      "book": "ultimate_wilderness",
+      "record_key": "Scamper",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 39,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:snowball",
+      "book": "ultimate_wilderness",
+      "record_key": "Snowball",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 47,
+      "corpus_field": "RANGE:Close",
+      "expected": {
+        "base_ft": 25,
+        "rate_ft": 5,
+        "per_levels": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:soothing_mud",
+      "book": "ultimate_wilderness",
+      "record_key": "Soothing Mud",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 48,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:winter_grasp",
+      "book": "ultimate_wilderness",
+      "record_key": "Winter Grasp",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 57,
+      "corpus_field": "RANGE:Medium",
+      "expected": {
+        "base_ft": 100,
+        "rate_ft": 10,
+        "per_levels": 1
+      }
+    },
+    {
+      "unit_id": "ultimate_wilderness:spell:with_the_wind",
+      "book": "ultimate_wilderness",
+      "record_key": "With the Wind",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
+      "upstream_lst_sha256": "0ebcaef0aa5ab9967a06e53a5179bcaca436c5a2bfeeb8926821eb38391978a4",
+      "upstream_line": 58,
       "corpus_field": "RANGE:Close",
       "expected": {
         "base_ft": 25,
