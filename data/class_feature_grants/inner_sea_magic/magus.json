@@ -5,6 +5,7 @@
     "level": 4,
     "level_explicit": true,
     "gate": "preclass",
+    "granted_via_archetype": true,
     "corpus_record_exists": true,
     "source": {
       "kind": "class_feature_grant",

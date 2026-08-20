@@ -361,6 +361,23 @@ fn load_raw_grant_facts() -> Vec<RawGrantFact> {
                 if !key_names_a_base_class_feature(key, class) {
                     continue;
                 }
+                // CRITICAL fabrication defect this module's own wave-23
+                // integration cycle found and fixed upstream (see
+                // `cache_gen::class_feature_grants::GrantFact::granted_via_
+                // archetype`'s doc comment): a key whose group text equals
+                // `class` (passing `key_names_a_base_class_feature` above)
+                // can STILL be an archetype-only replacement feature --
+                // `"Rogue ~ Careful Disarm"`/`"Rogue ~ Poison Use"`, both
+                // PRECLASS-gated on an archetype's OWN `CATEGORY:Archetype`
+                // definition row (`advanced_players_guide:2942`/`:2945`).
+                // `granted_via_archetype` is the authoritative, upstream-
+                // derived signal; missing/non-boolean is treated as
+                // archetype-sourced (refuse), never as safe by default --
+                // the conservative direction for a field this module
+                // cannot independently re-derive from text.
+                if row["granted_via_archetype"].as_bool().unwrap_or(true) {
+                    continue;
+                }
                 out.push(RawGrantFact { key: key.to_string(), class: class.to_string(), level });
             }
         }
@@ -498,6 +515,21 @@ fn corpus_records_with_real_description() -> &'static BTreeMap<String, String> {
                 }
                 let rendered = crate::rules_core::pcgen_desc::render_pcgen_desc(raw_desc);
                 if crate::rules_core::pcgen_desc::leaked_pcgen_syntax(&rendered.text).is_some() {
+                    continue;
+                }
+                // Gate-weakening review finding (SD-31 wave 23 integration
+                // cycle): `leaked_pcgen_syntax` alone does not catch an
+                // unresolved `%N` numeric-argument placeholder silently
+                // DROPPED (not leaked as literal syntax) by
+                // `render_pcgen_desc` -- e.g. Fighter ~ Bravery's real DESC
+                // reads "You gain a +%1 bonus to Will saves against fear
+                // effects.", which renders as "You gain a + bonus..." with
+                // no `%` character left to catch. `class_feature_pool_
+                // catalog.rs`'s sibling gate already refuses on this same
+                // signal (`!rendered.dropped_args.is_empty()`); mirrored
+                // here so this module never claims a record whose
+                // magnitude that render pass could not resolve.
+                if !rendered.dropped_args.is_empty() {
                     continue;
                 }
                 out.entry(key.to_string()).or_insert_with(|| name.to_string());
@@ -788,10 +820,27 @@ mod tests {
             assert!(explanation.value >= 1, "granted_at must be a real class level: {explanation:?}");
             assert!(
                 !explanation.detail.contains('%'),
-                "no unresolved PCGen %N placeholder may ship in an explanation's detail: {}",
+                "no unresolved PCGen %N numeric argument may ship in an explanation's detail: {}",
                 explanation.detail
             );
         }
+    }
+
+    /// The exact CRITICAL fabrication defect the wave-23 integration
+    /// review found live: a vanilla, no-archetype Rogue must never receive
+    /// `careful_disarm`/`poison_use` (Burglar/Poisoner/Trapsmith/Spy
+    /// archetype-only replacement features, both PRECLASS-gated under the
+    /// base `Rogue` class's own name). Mutating `granted_via_archetype`'s
+    /// refusal in `load_raw_grant_facts` to a no-op turns this red.
+    #[test]
+    fn a_vanilla_rogue_never_receives_an_archetype_only_replacement_feature() {
+        let mut explanations = Vec::new();
+        push_generic_class_feature_grant_records("class:rogue", 20, &mut explanations);
+        let ids: Vec<&str> = explanations.iter().map(|e| e.id.as_str()).collect();
+        assert!(
+            !ids.iter().any(|id| id.ends_with(".careful_disarm") || id.ends_with(".poison_use")),
+            "a vanilla Rogue must never be told it has an archetype-only replacement feature: {ids:?}"
+        );
     }
 
     #[test]
@@ -844,8 +893,57 @@ mod tests {
             20,
             &mut explanations,
         );
-        for explanation in &explanations {
-            assert!(!explanation.id.starts_with("class_feature.pu."));
+        // Gate-weakening review finding (SD-31 wave 23 integration cycle):
+        // a bare `for` loop over a vec this test never asserts is non-empty
+        // passes vacuously under any mutation. The real claim is stronger
+        // and directly checkable: this function must emit NOTHING at all
+        // for a PU class id, because no grant fact's `class` field is ever
+        // literally "unchained_barbarian" (PU's own data lives in
+        // `rules_tables::pathfinder_unchained`, never in
+        // `data/class_feature_grants`).
+        assert!(
+            explanations.is_empty(),
+            "no grant fact should ever resolve for a Pathfinder Unchained class id, so this              function must emit nothing when called with one (even though the real caller never              does): got {explanations:?}"
+        );
+    }
+
+    /// Gate-weakening review finding: the original smoke test
+    /// (`every_emitted_id_matches_the_owner_and_carries_a_real_positive_level`,
+    /// below) probed only Fighter and never asserted its own output was
+    /// non-empty, so it would pass unchanged even if the whole emission
+    /// path silently became a no-op. This iterates every class the live
+    /// merged data resolves at least one fact for and requires each to
+    /// emit something real.
+    #[test]
+    fn every_resolving_class_emits_at_least_one_real_explanation_at_level_20() {
+        let classes: std::collections::BTreeSet<String> =
+            unambiguous_grants().keys().map(|(class, _)| class.clone()).collect();
+        assert!(!classes.is_empty(), "expected the live merged data to resolve at least one class");
+        let mut any_emitted = false;
+        for class in &classes {
+            if ANTI_FABRICATION_GATE_EXCLUDED_CLASSES.contains(&class.as_str()) {
+                continue;
+            }
+            let mut explanations = Vec::new();
+            push_generic_class_feature_grant_records(&format!("class:{class}"), 20, &mut explanations);
+            for explanation in &explanations {
+                any_emitted = true;
+                assert!(
+                    explanation.id.starts_with(&format!("class_feature.{class}.corpus_record.")),
+                    "unexpected id shape for {class}: {}",
+                    explanation.id
+                );
+                assert!(explanation.value >= 1, "granted_at must be a real class level: {explanation:?}");
+                assert!(
+                    !explanation.detail.contains('%'),
+                    "no unresolved PCGen %N numeric argument may ship in an explanation's detail: {}",
+                    explanation.detail
+                );
+            }
         }
+        assert!(
+            any_emitted,
+            "expected at least one non-excluded class to emit at least one real explanation at              level 20 against the live merged data -- an empty result here would mean the whole              emission path silently became a no-op"
+        );
     }
 }

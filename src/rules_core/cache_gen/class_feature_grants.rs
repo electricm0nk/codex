@@ -256,6 +256,30 @@ pub struct GrantFact {
     pub source_line: u32,
     /// Which rule resolved this fact.
     pub gate: GateKind,
+    /// `true` when this grant's own `ABILITY:` token was resolved via a
+    /// bare `PRECLASS:` gate (never a `.MOD` row -- see [`GateKind::
+    /// ModRowGated`]/[`ModRowUngated`], which by construction can only
+    /// target a class's OWN `CATEGORY=Class|<Class>.MOD` definition and are
+    /// therefore never archetype-sourced) AND the token's OWN row carries
+    /// `CATEGORY:Archetype` -- SD-31 wave 23 integration-cycle finding
+    /// (`class_feature_grant_consumer.rs`'s critical fabrication defect):
+    /// `PRECLASS:1,<Class>=<N>` only asserts "the character must already
+    /// have this class at this level" -- it says nothing about whether the
+    /// row embedding the gate is the class's OWN progression or one
+    /// specific ARCHETYPE's replacement feature riding under the base
+    /// class's resolved name (`advanced_players_guide:2942`'s "Burglar"
+    /// archetype row embeds `ABILITY:Rogue Class Feature|AUTOMATIC|Rogue ~
+    /// Careful Disarm|PRECLASS:1,Rogue=4` -- `class` correctly resolves to
+    /// "Rogue", but NOT EVERY ROGUE HAS Careful Disarm, only a Burglar).
+    /// `true_class_by_key` (`cache_gen::class_feature.rs`) still WANTS this
+    /// fact (an archetype-owned record's real class name is exactly what it
+    /// corrects `data.class` to) -- this field is therefore purely
+    /// ADDITIVE, never a refusal, so a consumer that only cares about
+    /// "what class does this feature ultimately belong to" is unaffected,
+    /// while a consumer asserting "every member of this class automatically
+    /// has this" (`class_feature_grant_consumer.rs`) can and must refuse
+    /// when this is `true`.
+    pub granted_via_archetype: bool,
 }
 
 /// A grant-shaped `ABILITY:` token (or one of its sibling keys) this
@@ -380,9 +404,21 @@ fn parse_gate(gate_segments: &[&str]) -> Gate {
 /// its own gate, per the priority rules the module doc comment states.
 /// Every key shares the token's one resolution (or one refusal) -- never a
 /// mix, since they share the same gate by construction.
-fn resolve_token(field0: &str, token: &AbilityToken<'_>, source_line: u32) -> Vec<Result<GrantFact, UnresolvedGrant>> {
+fn resolve_token(
+    field0: &str,
+    row_category: Option<&str>,
+    token: &AbilityToken<'_>,
+    source_line: u32,
+) -> Vec<Result<GrantFact, UnresolvedGrant>> {
     let gate = parse_gate(&token.gate_segments);
     let mod_class = mod_row_class(field0);
+    // See `GrantFact::granted_via_archetype`'s doc comment. Only the bare-
+    // `PRECLASS:` resolution path (`mod_class.is_none()`, the `_ =>` arm
+    // below) can EVER be archetype-sourced -- a `.MOD` row's `field0` is
+    // always `CATEGORY=Class|<Class>...MOD`, which is a distinct row shape
+    // from an archetype's own `CATEGORY:Archetype` definition row and can
+    // never be both.
+    let row_is_archetype = row_category.is_some_and(|c| c.trim().eq_ignore_ascii_case("archetype"));
 
     // A resolving gate (PRECLASS's own clause, or a .MOD row's own
     // PREVARGTEQ) is trusted ONLY when no other, unaccounted-for gate
@@ -466,11 +502,24 @@ fn resolve_token(field0: &str, token: &AbilityToken<'_>, source_line: u32) -> Ve
     };
 
     match resolution {
-        Ok((class, level, level_explicit, gate_kind)) => token
-            .keys
-            .iter()
-            .map(|k| Ok(GrantFact { key: (*k).to_string(), class: class.clone(), level, level_explicit, source_line, gate: gate_kind }))
-            .collect(),
+        Ok((class, level, level_explicit, gate_kind)) => {
+            let granted_via_archetype = matches!(gate_kind, GateKind::Preclass) && row_is_archetype;
+            token
+                .keys
+                .iter()
+                .map(|k| {
+                    Ok(GrantFact {
+                        key: (*k).to_string(),
+                        class: class.clone(),
+                        level,
+                        level_explicit,
+                        source_line,
+                        gate: gate_kind,
+                        granted_via_archetype,
+                    })
+                })
+                .collect()
+        }
         Err(reason) => token
             .keys
             .iter()
@@ -491,12 +540,19 @@ pub fn parse_grant_facts(text: &str) -> (Vec<GrantFact>, Vec<UnresolvedGrant>) {
         let line = raw_line.trim_end_matches('\r');
         let fields: Vec<&str> = line.split('\t').collect();
         let Some(field0) = fields.first().copied() else { continue };
+        // The row's own definitional `CATEGORY:<value>` token (never the
+        // `.MOD`-row `CATEGORY=Class|<Class>.MOD` shape in `field0`, which
+        // uses `=` not `:`) -- an ordinary ability/archetype DEFINITION row
+        // carries exactly one, later in its tab-separated fields. `None`
+        // for a `.MOD` row (which has no such token) or a row this scan
+        // cannot find one on.
+        let row_category = fields.iter().find_map(|f| f.strip_prefix("CATEGORY:"));
         for field in fields.iter().skip(1) {
             if field.is_empty() {
                 continue;
             }
             let Some(token) = split_ability_token(field) else { continue };
-            for r in resolve_token(field0, &token, source_line) {
+            for r in resolve_token(field0, row_category, &token, source_line) {
                 match r {
                     Ok(f) => facts.push(f),
                     Err(u) => unresolved.push(u),
@@ -562,6 +618,11 @@ pub struct GrantRecord {
     pub level: u8,
     pub level_explicit: bool,
     pub gate: GateKind,
+    /// See [`GrantFact::granted_via_archetype`]. Carried through verbatim
+    /// so a downstream consumer (e.g. `class_feature_grant_consumer.rs`)
+    /// can refuse to treat this fact as "every member of `class`
+    /// automatically has this" without re-deriving it from raw oracle text.
+    pub granted_via_archetype: bool,
     /// Whether a real `class_feature` corpus record with this exact `key`
     /// exists anywhere under `data/corpus/*/class_feature/**` (checked
     /// against the ACTUAL corpus, not a same-file heuristic -- module doc
@@ -697,6 +758,7 @@ pub fn generate_for_book(
                 level: fact.level,
                 level_explicit: fact.level_explicit,
                 gate: fact.gate,
+                granted_via_archetype: fact.granted_via_archetype,
                 corpus_record_exists: exists,
                 source: GrantCitation {
                     kind: "class_feature_grant",
@@ -775,7 +837,7 @@ mod tests {
         let field0 = "CATEGORY=Class|Wizard.MOD";
         let field = "ABILITY:Wizard Class Feature|AUTOMATIC|Wizard ~ Spells|PREVAREQ:Wizard_CF_Spells,0|PREVARGTEQ:Wizard_CFP_Level,1";
         let token = split_ability_token(field).unwrap();
-        let results = resolve_token(field0, &token, 316);
+        let results = resolve_token(field0, None, &token, 316);
         assert_eq!(results.len(), 1);
         let fact = results[0].as_ref().unwrap();
         assert_eq!(fact.key, "Wizard ~ Spells");
@@ -791,7 +853,7 @@ mod tests {
         let field0 = "CATEGORY=Class|Barbarian ~ Standard Class Full.MOD";
         let field = "ABILITY:Barbarian Class Feature|AUTOMATIC|Barbarian ~ Rage|PREVAREQ:Barbarian_CF_Rage,0|PREVARGTEQ:Barbarian_CFP_Level,1";
         let token = split_ability_token(field).unwrap();
-        let fact = resolve_token(field0, &token, 149)[0].as_ref().unwrap().clone();
+        let fact = resolve_token(field0, None, &token, 149)[0].as_ref().unwrap().clone();
         assert_eq!(fact.class, "Barbarian");
         assert_eq!(fact.level, 1);
     }
@@ -807,7 +869,7 @@ mod tests {
         let field0 = "CATEGORY=Class|Barbarian ~ Standard Class Full.MOD";
         let field = "ABILITY:Barbarian Class Feature|AUTOMATIC|Barbarian ~ Uncanny Dodge Tracker";
         let token = split_ability_token(field).unwrap();
-        let fact = resolve_token(field0, &token, 148)[0].as_ref().unwrap().clone();
+        let fact = resolve_token(field0, None, &token, 148)[0].as_ref().unwrap().clone();
         assert_eq!(fact.class, "Barbarian");
         assert_eq!(fact.level, 1);
         assert!(!fact.level_explicit);
@@ -827,12 +889,70 @@ mod tests {
         let field0 = "Sigilus";
         let field = "ABILITY:Special Ability|AUTOMATIC|Sigilus ~ Inscribe Sihedron|PRECLASS:1,Magus=7";
         let token = split_ability_token(field).unwrap();
-        let fact = resolve_token(field0, &token, 882)[0].as_ref().unwrap().clone();
+        let fact = resolve_token(field0, None, &token, 882)[0].as_ref().unwrap().clone();
         assert_eq!(fact.key, "Sigilus ~ Inscribe Sihedron");
         assert_eq!(fact.class, "Magus", "must read PRECLASS's class, never key.split(' ~ ')[0] (\"Sigilus\")");
         assert_eq!(fact.level, 7, "must read PRECLASS's level, never default to 1");
         assert!(fact.level_explicit);
         assert_eq!(fact.gate, GateKind::Preclass);
+    }
+
+    // -----------------------------------------------------------------
+    // `granted_via_archetype` -- SD-31 wave 23 integration-cycle fix.
+    // `class_feature_grant_consumer.rs`'s critical fabrication defect:
+    // `PRECLASS:` alone cannot distinguish "every member of this class
+    // has this" from "this ONE archetype's replacement feature happens to
+    // be keyed/gated under the base class's own name".
+    // -----------------------------------------------------------------
+
+    /// The exact live defect: `advanced_players_guide:2942`'s "Burglar"
+    /// archetype row (`CATEGORY:Archetype`) embeds `ABILITY:Rogue Class
+    /// Feature|AUTOMATIC|Rogue ~ Careful Disarm|PRECLASS:1,Rogue=4` --
+    /// `class` correctly resolves to "Rogue" (PRECLASS says so), but this
+    /// is a Burglar-only replacement, not a base Rogue feature. Mutating
+    /// `granted_via_archetype`'s computation to always `false` (or
+    /// deleting the `row_is_archetype` check) turns this red.
+    #[test]
+    fn a_preclass_gate_whose_row_is_an_archetype_definition_is_flagged_archetype_sourced() {
+        let field0 = "Burglar";
+        let row_category = Some("Archetype");
+        let field = "ABILITY:Rogue Class Feature|AUTOMATIC|Rogue ~ Careful Disarm|PRECLASS:1,Rogue=4";
+        let token = split_ability_token(field).unwrap();
+        let fact = resolve_token(field0, row_category, &token, 2942)[0].as_ref().unwrap().clone();
+        assert_eq!(fact.class, "Rogue");
+        assert!(fact.granted_via_archetype, "a PRECLASS-gated ability token embedded on a CATEGORY:Archetype row must be flagged, even though its class resolves correctly");
+    }
+
+    /// The common, safe case: a `PRECLASS:`-gated token whose OWN row is
+    /// an ordinary class-feature definition (`CATEGORY:Special Ability`,
+    /// not `CATEGORY:Archetype`) must NOT be flagged -- this is the
+    /// overwhelming majority of `GateKind::Preclass` facts and this field
+    /// must not blanket-refuse them.
+    #[test]
+    fn a_preclass_gate_on_an_ordinary_class_feature_row_is_not_flagged_archetype_sourced() {
+        let field0 = "Bloodline Feat";
+        let row_category = Some("Special Ability");
+        let field = "ABILITY:Sorcerer Class Feature|AUTOMATIC|Sorcerer ~ Bloodline Feat|PRECLASS:1,Sorcerer=7";
+        let token = split_ability_token(field).unwrap();
+        let fact = resolve_token(field0, row_category, &token, 1).into_iter().next().unwrap().unwrap();
+        assert!(!fact.granted_via_archetype);
+    }
+
+    /// A `.MOD`-row-resolved fact (`GateKind::ModRowGated`/
+    /// `ModRowUngated`) can never be archetype-sourced by construction --
+    /// its `field0` IS the class's own `CATEGORY=Class|<Class>.MOD` target,
+    /// which cannot simultaneously be an archetype's `CATEGORY:Archetype`
+    /// definition row. Passing `Some("Archetype")` as `row_category`
+    /// anyway (a value that could never occur on a real `.MOD` row) proves
+    /// the `mod_class.is_some()` branch never even reads it.
+    #[test]
+    fn a_mod_row_resolution_is_never_flagged_archetype_sourced_regardless_of_row_category() {
+        let field0 = "CATEGORY=Class|Wizard.MOD";
+        let row_category = Some("Archetype");
+        let field = "ABILITY:Wizard Class Feature|AUTOMATIC|Wizard ~ Spells|PREVARGTEQ:Wizard_CFP_Level,1";
+        let token = split_ability_token(field).unwrap();
+        let fact = resolve_token(field0, row_category, &token, 1).into_iter().next().unwrap().unwrap();
+        assert!(!fact.granted_via_archetype);
     }
 
     #[test]
@@ -842,7 +962,7 @@ mod tests {
         let field0 = "Standard Choices ~ Cavalier Mount";
         let field = "ABILITY:Special Ability|AUTOMATIC|Mount ~ Ranger Variant|PRECLASS:2,Cavalier=1,Ranger=1";
         let token = split_ability_token(field).unwrap();
-        let result = &resolve_token(field0, &token, 3725)[0];
+        let result = &resolve_token(field0, None, &token, 3725)[0];
         assert!(result.is_err(), "a 2-class PRECLASS gate must not resolve to either class");
     }
 
@@ -851,7 +971,7 @@ mod tests {
         let field0 = "CATEGORY=Class|Wizard.MOD";
         let field = "ABILITY:Special Ability|AUTOMATIC|Something ~ Weird|PRECLASS:1,Sorcerer=3";
         let token = split_ability_token(field).unwrap();
-        let result = &resolve_token(field0, &token, 1)[0];
+        let result = &resolve_token(field0, None, &token, 1)[0];
         assert!(result.is_err(), "a PRECLASS class contradicting the row's own .MOD target must not be resolved by picking one");
     }
 
@@ -866,7 +986,7 @@ mod tests {
         let field0 = "CATEGORY=Class|Pathfinder Chronicler.MOD";
         let field = "ABILITY:Pathfinder Chronicler Class Feature|AUTOMATIC|Pathfinder Chronicler ~ Bardic Knowledge|Pathfinder Chronicler ~ Deep Pockets|Pathfinder Chronicler ~ Master Scribe|PREVARGTEQ:PathfinderChronicler_CFP_Level,1";
         let token = split_ability_token(field).unwrap();
-        let results = resolve_token(field0, &token, 384);
+        let results = resolve_token(field0, None, &token, 384);
         assert_eq!(results.len(), 3, "all three sibling keys must resolve, not just segment 2");
         let keys: Vec<&str> = results.iter().map(|r| r.as_ref().unwrap().key.as_str()).collect();
         assert!(keys.contains(&"Pathfinder Chronicler ~ Bardic Knowledge"));
@@ -913,7 +1033,7 @@ mod tests {
         let field0 = "CATEGORY=Special Ability|Dragon Disciple ~ Breath Weapon.MOD";
         let field = "ABILITY:Special Ability|AUTOMATIC|Draconic Bloodrager Bloodline ~ Breath Weapon|PREABILITY:1,CATEGORY=Blood of Dragons Bloodline,TYPE.BloodragerBloodlineChoice";
         let token = split_ability_token(field).unwrap();
-        assert!(resolve_token(field0, &token, 379)[0].is_err());
+        assert!(resolve_token(field0, None, &token, 379)[0].is_err());
     }
 
     #[test]
@@ -921,7 +1041,7 @@ mod tests {
         let field0 = "Air";
         let field = "ABILITY:Special Ability|AUTOMATIC|Domain Power ~ Lightning Arc|PREDOMAIN:1,Air|PREVARGTEQ:DomainAirAbilityTriggerLVL,-1";
         let token = split_ability_token(field).unwrap();
-        assert!(resolve_token(field0, &token, 1027)[0].is_err());
+        assert!(resolve_token(field0, None, &token, 1027)[0].is_err());
     }
 
     #[test]
@@ -931,7 +1051,7 @@ mod tests {
         let field0 = "Familiar";
         let field = "ABILITY:Special Ability|AUTOMATIC|Arcane Bond ~ Familiar";
         let token = split_ability_token(field).unwrap();
-        assert!(resolve_token(field0, &token, 106)[0].is_err());
+        assert!(resolve_token(field0, None, &token, 106)[0].is_err());
     }
 
     #[test]
@@ -939,7 +1059,7 @@ mod tests {
         let field0 = "Resistance";
         let field = "ABILITY:Special Ability|AUTOMATIC|Abjuration School ~ Resistance|!PRECLASS:1,Wizard=1";
         let token = split_ability_token(field).unwrap();
-        assert!(resolve_token(field0, &token, 250)[0].is_err());
+        assert!(resolve_token(field0, None, &token, 250)[0].is_err());
     }
 
     // -----------------------------------------------------------------
@@ -955,7 +1075,7 @@ mod tests {
         let field0 = "CATEGORY=Internal|Default";
         let field = "ABILITY:Internal|AUTOMATIC|Weapon Prof ~ Auto|PRECLASS:1,TYPE.PC=1";
         let token = split_ability_token(field).unwrap();
-        let result = &resolve_token(field0, &token, 2772)[0];
+        let result = &resolve_token(field0, None, &token, 2772)[0];
         assert!(result.is_err(), "a TYPE.<X> PRECLASS operand must not be shipped as a class");
     }
 
@@ -968,7 +1088,7 @@ mod tests {
         let field0 = "Foehammer";
         let field = "ABILITY:Special Ability|AUTOMATIC|Foehammer ~ Hammer to the Ground 1|PRECLASS:1,Fighter=7|!PRECLASS:1,Barbarian=1";
         let token = split_ability_token(field).unwrap();
-        let result = &resolve_token(field0, &token, 31)[0];
+        let result = &resolve_token(field0, None, &token, 31)[0];
         assert!(result.is_err(), "an unaccounted extra gate segment alongside a resolving PRECLASS must refuse, not resolve on partial information");
     }
 
@@ -981,7 +1101,7 @@ mod tests {
         let field0 = "CATEGORY=Class|Fighter.MOD";
         let field = "ABILITY:Fighter Class Feature|AUTOMATIC|Armor Prof ~ Heavy|!PREABILITY:1,CATEGORY=Something|PREVARGTEQ:Fighter_CFP_Level,1";
         let token = split_ability_token(field).unwrap();
-        let result = &resolve_token(field0, &token, 238)[0];
+        let result = &resolve_token(field0, None, &token, 238)[0];
         assert!(result.is_err(), "an unaccounted extra gate segment alongside a resolving ModRowGated gate must refuse");
     }
 
@@ -1026,6 +1146,7 @@ mod tests {
                 level_explicit: false,
                 source_line: 131,
                 gate: GateKind::ModRowUngated,
+                granted_via_archetype: false,
             },
             GrantFact {
                 key: "Barbarian ~ Weapon and Armor Proficiency".into(),
@@ -1034,6 +1155,7 @@ mod tests {
                 level_explicit: true,
                 source_line: 145,
                 gate: GateKind::ModRowGated,
+                granted_via_archetype: false,
             },
         ];
         let (resolved, _) = resolve_grants(facts, Vec::new());

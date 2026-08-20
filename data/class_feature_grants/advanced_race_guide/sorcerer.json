@@ -5,6 +5,7 @@
     "level": 3,
     "level_explicit": true,
     "gate": "preclass",
+    "granted_via_archetype": true,
     "corpus_record_exists": true,
     "source": {
       "kind": "class_feature_grant",
@@ -19,6 +20,7 @@
     "level": 7,
     "level_explicit": true,
     "gate": "preclass",
+    "granted_via_archetype": true,
     "corpus_record_exists": true,
     "source": {
       "kind": "class_feature_grant",
@@ -33,6 +35,7 @@
     "level": 19,
     "level_explicit": true,
     "gate": "preclass",
+    "granted_via_archetype": true,
     "corpus_record_exists": true,
     "source": {
       "kind": "class_feature_grant",
@@ -47,6 +50,7 @@
     "level": 13,
     "level_explicit": true,
     "gate": "preclass",
+    "granted_via_archetype": true,
     "corpus_record_exists": true,
     "source": {
       "kind": "class_feature_grant",
@@ -61,6 +65,7 @@
     "level": 1,
     "level_explicit": true,
     "gate": "preclass",
+    "granted_via_archetype": true,
     "corpus_record_exists": true,
     "source": {
       "kind": "class_feature_grant",
