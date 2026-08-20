@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Detective ~ Arcane Investigation",
     "name": "Arcane Investigation",
-    "class": "Detective",
+    "class": "Bard",
     "description": "In addition, a detective's class spell list includes the following: 1st-detect chaos/evil/law/ good; 2nd-zone of truth; 3rd-arcane eye, speak with dead, speak with plants; 4th-discern lies; 5th-prying eyes, stone tell; 6th-discern location, find the path, greater prying eyes, moment of prescience. A detective may add one of these spells or any divination spell on the bard spell list to his list of spells known at 2nd level and every four levels thereafter. This ability replaces versatile performance.",
     "raw_tokens": [
       {

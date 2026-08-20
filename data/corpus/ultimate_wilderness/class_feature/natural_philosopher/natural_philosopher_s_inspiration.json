@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Natural Philosopher ~ Inspiration",
     "name": "Natural Philosopher's Inspiration",
-    "class": "Natural Philosopher",
+    "class": "Investigator",
     "description": "Natural philosophers employ a skill set suited to studying the natural world. A natural philosopher can use inspiration on Heal and Survival checks without expending a use of inspiration, provided he is trained in the skill, but cannot do so for Linguistics or Spellcraft checks. He can later trade an investigator talent for the ability to use inspiration on Linguistics and Spellcraft checks without expending a use of inspiration, provided he is trained in the skill. This alters inspiration.",
     "raw_tokens": [
       {

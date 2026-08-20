@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Oath against Fiends ~ Holy Vessel",
     "name": "Holy Vessel",
-    "class": "Oath against Fiends",
+    "class": "Paladin",
     "description": "If your divine bond is with a weapon, you can also use your divine bond to augment your armor or shield with enhancement bonuses, or add any of the following armor or shield properties: bashing, fortification, and spell resistance. Adding these properties consumes an amount of bonus equal to the property's cost (see Tables 15-4 and 15-5 in the Core Rulebook). You can divide your bonuses from the divine bond ability among your weapon, armor, and shield as you sees fit. This ability has no effect for a paladin whose divine bond is with a mount.",
     "raw_tokens": [
       {

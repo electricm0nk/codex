@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Lore Warden ~ Scholastic ~ AG",
     "name": "Scholastic",
-    "class": "Lore Warden",
+    "class": "Fighter",
     "description": "Lore wardens gain 2 additional skill ranks each level. These ranks must be spent on Intelligence-based skills. All Craft and Knowledge skills are class skills for lore wardens, as are Linguistics and Spellcraft. This ability replaces the lore warden's proficiency with medium armor, heavy armor, and shields.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Jungle Rager ~ Home Ground Supremacy",
     "name": "Home Ground Supremacy",
-    "class": "Jungle Rager",
+    "class": "Barbarian",
     "description": "At 5th level, a jungle rager becomes even more capable when navigating and fighting in her preferred terrain. She gains the woodland stride ranger ability, though this ability works only in the terrain she selected for the home ground advantage ability. In this terrain, she gains an additional +1 bonus to AC when benefiting from cover or improved cover (but not soft cover). This ability replaces improved uncanny dodge.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spell Specialist ~ Signature Spells",
     "name": "Signature Spells",
-    "class": "Spell Specialist",
+    "class": "Arcanist",
     "description": "At 1st level and each time a spell specialist gains a new spell level, she chooses a signature spell. The spell specialist can cast this spell without preparing it, in the same way a sorcerer casts spells spontaneously. Even though the spell specialist does not need to prepare this spell, it still counts against the number of spells she can prepare, reducing the number of spells of each level she can prepare each day by 1. A spell specialist can swap out a single signature spell for another spell of the same level when gaining a class level. The DC for signature spells increases by 1. The spell specialist gains a +2 bonus on concentration checks when casting signature spells; this bonus increases to +4 at 10th level. Additionally, a spell specialist can apply one of the following additional effects by spending 1 point from her arcane reservoir.",
     "raw_tokens": [
       {

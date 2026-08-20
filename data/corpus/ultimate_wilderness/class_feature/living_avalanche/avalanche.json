@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Living Avalanche ~ Avalanche",
     "name": "Avalanche",
-    "class": "Living Avalanche",
+    "class": "Brawler",
     "description": "A living avalanche can attempt to overrun multiple creatures as a full-round action. The living avalanche moves up to twice her speed in a straight line and attempts an overrun combat maneuver against each creature in her path, as long as that creature is no more than two size categories larger than herself. Each creature she succeeds against is knocked prone and takes damage as if the living avalanche hit it with a close weapon she is wielding or an unarmed strike. If she fails her combat maneuver check against a creature, she stops her movement in the space directly in front of the creature.",
     "raw_tokens": [
       {

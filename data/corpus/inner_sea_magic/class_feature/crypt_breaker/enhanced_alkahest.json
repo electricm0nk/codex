@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Crypt Breaker ~ Enhanced Alkahest",
     "name": "Enhanced Alkahest",
-    "class": "Crypt Breaker",
+    "class": "Alchemist",
     "description": "A crypt breaker's alkahest grows more potent. Against constructs and corporeal undead, the crypt breaker's alkahest bombs deal +1 points of damage per die, and the bomb threatens a critical hit on a 19-20. This does not stack with other effects that improve critical hit threat ranges.",
     "raw_tokens": [
       {

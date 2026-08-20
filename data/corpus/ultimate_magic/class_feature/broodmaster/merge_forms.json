@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Broodmaster ~ Merge Forms",
     "name": "Merge Forms",
-    "class": "Broodmaster",
+    "class": "Summoner",
     "description": "You can only merge with one eidolon in the brood at a time.",
     "raw_tokens": [
       {

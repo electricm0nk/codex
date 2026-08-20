@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Martial Artist ~ Defensive Roll",
     "name": "Defensive Roll",
-    "class": "Martial Artist",
+    "class": "Monk",
     "description": "At 13th level, a martial artist may use the defensive roll advanced rogue talent (Core Rulebook 69) once per day, plus once per three levels beyond 13th (to a maximum of 3 times a day at 19th level). This ability replaces diamond soul.",
     "raw_tokens": [
       {

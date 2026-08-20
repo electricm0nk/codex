@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Unarmed Fighter ~ Weapon Mastery",
     "name": "Weapon Mastery",
-    "class": "Unarmed Fighter",
+    "class": "Fighter",
     "description": "Any attacks made a unarmed strikes automatically confirm all critical threats and have their damage multiplier increased by 1.",
     "raw_tokens": [
       {

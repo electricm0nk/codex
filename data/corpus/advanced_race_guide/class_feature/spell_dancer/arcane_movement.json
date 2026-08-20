@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spell Dancer ~ Arcane Movement",
     "name": "Arcane Movement",
-    "class": "Spell Dancer",
+    "class": "Magus",
     "description": "Whenever a spell dancer casts a magus spell, he gains a competence bonus on Acrobatics, Climb, Escape Artist, and Stealth checks equal to the spell's level until the beginning of his next turn.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Nature-Bonded Magus ~ Familiar Symbiosis",
     "name": "Familiar Symbiosis",
-    "class": "Nature-Bonded Magus",
+    "class": "Magus",
     "description": "When a nature-bonded magus is adjacent to his familiar, he can merge with his familiar as a standard action; both the nature-bonded magus and the familiar provoke attacks of opportunity with this action. Doing so causes the plant familiar to bond with a part of the nature-bonded magus's body as though it were growing on him. While merged, the nature-bonded magus's familiar can take no actions (but can still attempt Perception checks and communicate with the nature-bonded magus), and it can't be targeted or harmed by effects. As long as his familiar is merged, the nature-bonded magus gains half his plant familiar's natural armor adjustment to AC. The nature-bonded magus can separate from his plant familiar as a standard action that provokes attacks of opportunity for both of them. Once they have separated, the familiar appears in an adjacent square of the nature-bonded magus' choosing.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Phrenologist ~ Phrenological Savant",
     "name": "Phrenological Savant",
-    "class": "Phrenologist",
+    "class": "Bard",
     "description": "At 10th level, a phrenologist gains either Psychic Maestro* or Psychic Virtuoso* as a bonus feat. If he chooses Psychic Maestro, he must select phrenology as one of his two skill unlocks to use an additional time. This ability replaces jack-of-all-trades.",
     "raw_tokens": [
       {

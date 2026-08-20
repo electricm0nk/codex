@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Feral Child ~ Native Call 2",
     "name": "Native Call",
-    "class": "Feral Child",
+    "class": "Druid",
     "description": "When the feral child uses summon nature's ally spells to summon such animals, those animals gain a +2 bonus to both their Strength and Constitution ability scores. This stacks with the effects of the Augmented Summoning feat.",
     "raw_tokens": [
       {

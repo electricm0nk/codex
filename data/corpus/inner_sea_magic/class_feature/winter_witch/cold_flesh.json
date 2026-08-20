@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Winter Witch ~ Cold Flesh",
     "name": "Cold Flesh",
-    "class": "Winter Witch",
+    "class": "Witch",
     "description": "At 1st level, a winter witch gains endure elements as a constant spell-like ability, but only against cold temperatures. At 4th level, she gains cold resistance 5, making her comfortable in near-freezing temperatures. At 9th-level, this increases to cold resistance 10, and at 14th level, it becomes immunity to cold. This replaces the witch's 4th-level hex.",
     "raw_tokens": [
       {

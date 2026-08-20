@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Student of Stone ~ Hard as Stone",
     "name": "Hard as Stone",
-    "class": "Student of Stone",
+    "class": "Monk",
     "description": "Whenever an opponent rolls to confirm a critical hit against a student of stone, treat the student of stone's AC as +4 higher than normal. This ability replaces evasion.",
     "raw_tokens": [
       {

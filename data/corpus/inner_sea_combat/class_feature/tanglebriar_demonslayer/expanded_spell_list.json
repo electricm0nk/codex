@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tanglebriar Demonslayer ~ Expanded Spell List",
     "name": "Expanded Spell List",
-    "class": "Tanglebriar Demonslayer",
+    "class": "Ranger",
     "description": "A Tanglebriar demonslayer adds the following spells to his spell list: 1st-protection .from evil; 2nd-align weapon, magic circle against evil; 4th dimensional anchor, dismissal.",
     "raw_tokens": [
       {

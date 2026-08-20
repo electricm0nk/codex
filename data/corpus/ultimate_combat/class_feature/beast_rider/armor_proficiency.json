@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Beast Rider ~ Armor Proficiency",
     "name": "Armor Proficiency",
-    "class": "Beast Rider",
+    "class": "Cavalier",
     "description": "A beast rider is proficient with light and medium armor, and with shields (with the exception of tower shields).",
     "raw_tokens": [
       {

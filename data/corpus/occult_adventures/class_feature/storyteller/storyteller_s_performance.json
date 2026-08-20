@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Storyteller ~ Storyteller's Performance",
     "name": "Storyteller's Performance",
-    "class": "Storyteller",
+    "class": "Medium",
     "description": "A storyteller gains the ability to recall snippets of tales that are relevant to the current situation. This ability is similar in all respects to bardic performance as used by a bard of the storyteller's medium level (including interactions with feats, spells, and other abilities), and uses Perform (act), Perform (comedy), or Perform (oratory) as the storyteller's performance skill. However, a storyteller gains only the following types of bardic performance: inspire courage (2nd level), inspire competence (3rd level), inspire greatness (9th level), and inspire heroics (15th level).",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Inspired Blade ~ Rapier Weapon Mastery",
     "name": "Rapier Weapon Mastery",
-    "class": "Inspired Blade",
+    "class": "Swashbuckler",
     "description": "When an inspired blade threatens a critical hit with a rapier, that critical hit is automatically confirmed. Furthermore, the critical threat range increases by 1 (this increase to the critical threat range stacks with the increase from rapier training, to a total threat range of 14-20), and the critical modifier of the weapon increases by 1 (x2 becomes x3, for example). This ability replaces swashbuckler weapon mastery.",
     "raw_tokens": [
       {

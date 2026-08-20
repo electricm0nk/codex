@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Stonelord ~ Phase Strike",
     "name": "Phase Strike",
-    "class": "Stonelord",
+    "class": "Paladin",
     "description": "A stonelord's stonestrike may pass through stone and metal as if they weren't there. By spending 2 uses of her stonestrike ability, she may ignore any cover less than total cover provided by stone or metal, and she ignores any AC bonus from stone or metal armor or shields as if wielding a brilliant energy weapon. A phase strike cannot damage constructs, objects, or creatures with the earth subtype, but unlike a brilliant energy weapon, it can harm undead.",
     "raw_tokens": [
       {

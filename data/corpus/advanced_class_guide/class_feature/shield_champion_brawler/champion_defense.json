@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Shield Champion Brawler ~ Champion Defense",
     "name": "Champion Defense",
-    "class": "Shield Champion Brawler",
+    "class": "Brawler",
     "description": "%1 times per day when she would be reduced to 0 or fewer hit points by damage in combat from a weapon, unarmed, or natural attack, the shield champion can attempt to absorb all the damage with her shield. To use this ability, the shield champion must attempt a Fortitude saving throw, with the DC equal to the damage dealt. If it succeeds, she takes only half damage from the blow; otherwise, she takes full damage. She must be aware of the attack and able to react to it in order to use this ability-if she is denied her Dexterity bonus to AC, she can't use this ability.|ChampionDefenseTimes",
     "raw_tokens": [
       {

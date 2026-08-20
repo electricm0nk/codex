@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Gulch Gunner ~ Grit",
     "name": "Grit",
-    "class": "Gulch Gunner",
+    "class": "Gunslinger",
     "description": "At 1st level, a gulch gunner gains grit as a standard gunslinger. However, the close-combat focus of the gulch gunner results in a slightly different set of circumstances for regaining grit.",
     "raw_tokens": [
       {

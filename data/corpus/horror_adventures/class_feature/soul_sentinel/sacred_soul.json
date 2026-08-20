@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Soul Sentinel ~ Sacred Soul",
     "name": "Sacred Soul",
-    "class": "Soul Sentinel",
+    "class": "Paladin",
     "description": "A sacred soul is immune to hexes and curse spells or abilities. Each ally within 10 feet of her gains a +4 morale bonus on saving throws against hexes or curses. This ability functions only while the paladin is conscious, not if she is unconscious or dead.",
     "raw_tokens": [
       {

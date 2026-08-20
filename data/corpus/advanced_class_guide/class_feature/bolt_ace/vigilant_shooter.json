@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bolt Ace ~ Vigilant Shooter",
     "name": "Vigilant Shooter",
-    "class": "Bolt Ace",
+    "class": "Gunslinger",
     "description": "As long as a bolt ace spends 1 grit point when she does so, she does not provoke attacks of opportunity when firing a crossbow.",
     "raw_tokens": [
       {

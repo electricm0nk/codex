@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Free Hand Fighter ~ Timely Tip",
     "name": "Timely Tip",
-    "class": "Free Hand Fighter",
+    "class": "Fighter",
     "description": "At 9th level, a free hand fighter can make a disarm combat maneuver against a target he threatens as a move action to push aside the target's shield. If successful, the target loses its shield bonus to AC against the free hand fighter's next attack. This ability replaces weapon training 2.",
     "raw_tokens": [
       {

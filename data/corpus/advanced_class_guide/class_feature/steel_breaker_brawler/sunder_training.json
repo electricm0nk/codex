@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Steel-Breaker Brawler ~ Sunder Training",
     "name": "Sunder Training",
-    "class": "Steel-Breaker Brawler",
+    "class": "Brawler",
     "description": "A steel-breaker receives additional training in sunder combat maneuvers. She gains a +%1 bonus when attempting a sunder combat maneuver checks and a +%1 bonus to her CMD when defending against this maneuver.|SunderTrainingSunderBonus",
     "raw_tokens": [
       {

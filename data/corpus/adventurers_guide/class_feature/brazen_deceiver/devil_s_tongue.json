@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Brazen Deceiver ~ Devil's Tongue",
     "name": "Devil's Tongue",
-    "class": "Brazen Deceiver",
+    "class": "Bard",
     "description": "A brazen deceiver beguiles others with astonishing skill. This functions as the lore master ability, but its effects apply to Bluff checks instead of Knowledge skill checks. You can take 10 on Bluff checks or choose not to take 10 and can instead roll normally. %1 times per day, you can take 20 on a Bluff check as a standard action.|min((BardLVL+1)/6,3)",
     "raw_tokens": [
       {

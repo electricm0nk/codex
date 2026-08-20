@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Blighted Myrmidon ~ Aura of Decay",
     "name": "Aura of Decay",
-    "class": "Blighted Myrmidon",
+    "class": "Antipaladin",
     "description": "As a free action, a blighted myrmidon can expend two uses of her smite nature ability to generate an aura of decay with a range of 10 feet for 1 minute. Living foes of the blighted myrmidon within the aura take 3d6 points of damage unless they succeed at a Fortitude save (DC %1) for half damage. If an elemental, a fey, or a creature with levels in druid, hunter, ranger, or shifter takes damage from aura of decay, the blighted myrmidon regains a number of hit points equal to half the amount of damage the creature takes; this doesn't stack if multiple such creatures are in the aura.|AntipaladinLVL/2+CHA",
     "raw_tokens": [
       {

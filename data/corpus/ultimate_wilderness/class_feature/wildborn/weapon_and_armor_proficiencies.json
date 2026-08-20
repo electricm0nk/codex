@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wildborn ~ Weapon and Armor Proficiencies",
     "name": "Weapon and Armor Proficiencies",
-    "class": "Wildborn",
+    "class": "Barbarian",
     "description": "A wildborn is proficient with leather and hide armors (but not shields) and all simple weapons that can be crafted from bone, stone, or wood. In addition, a wildborn gains Improved Unarmed Strike and Catch Off Guard as bonus feats at 1st level. If she uses any other kind of weapon or armor, she loses her abilities from this archetype (except illiteracy) for the next 24 hours. This alters the barbarian's normal weapon and armor proficiencies.",
     "raw_tokens": [
       {

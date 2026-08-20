@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sandman ~ Dramatic Subtext",
     "name": "Dramatic Subtext",
-    "class": "Sandman",
+    "class": "Bard",
     "description": "At 9th level, a sandman can use bardic performance to cast spells without obvious visual or audible components while retaining the spell's normal effects. Observers must succeed at a Perception check opposed by a sandman's Sleight of Hand check to notice that the sandman is the source of the spellcasting (though spellcasting still provokes attacks of opportunity). The bard must use this performance for at least 2 rounds before casting a spell; otherwise he is automatically detected and the performance ends. This ability replaces inspire greatness.",
     "raw_tokens": [
       {

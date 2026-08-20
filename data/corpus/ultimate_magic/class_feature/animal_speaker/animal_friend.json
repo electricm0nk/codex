@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Animal Speaker ~ Animal Friend",
     "name": "Animal Friend",
-    "class": "Animal Speaker",
+    "class": "Bard",
     "description": null,
     "raw_tokens": [
       {

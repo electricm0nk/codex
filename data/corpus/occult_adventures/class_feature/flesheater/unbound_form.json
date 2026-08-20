@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Flesheater ~ Unbound Form",
     "name": "Unbound Form",
-    "class": "Flesheater",
+    "class": "Barbarian",
     "description": "At 20th level, a flesheater can use her one flesh ability to assume the shape of a valid consumed creature. This ability functions as alter self, beast shape IV, form of the dragon III, or giant form II, as appropriate. This is a polymorph effect. This ability replaces mighty rage.",
     "raw_tokens": [
       {

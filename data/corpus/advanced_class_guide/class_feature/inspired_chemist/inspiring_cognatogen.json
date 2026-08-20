@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Inspired Chemist ~ Inspiring Cognatogen",
     "name": "Inspiring Cognatogen",
-    "class": "Inspired Chemist",
+    "class": "Alchemist",
     "description": "At 1st level, an inspired chemist learns how to create an inspiring cognatogen, as the inspiring cognatogen discovery. This ability replaces the mutagen class ability. (This means that an inspired chemist cannot create mutagens unless he selects the mutagen discovery).",
     "raw_tokens": [
       {

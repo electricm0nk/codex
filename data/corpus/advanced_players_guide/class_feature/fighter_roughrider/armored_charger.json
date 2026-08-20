@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fighter Roughrider ~ Armored Charger",
     "name": "Armored Charger",
-    "class": "Fighter Roughrider",
+    "class": "Fighter",
     "description": "At 3rd level, a roughrider no longer suffers armor check penalties on Ride skill checks. His mount's speed is not reduced when carrying a medium load or wearing medium barding. This ability replaces armor training 1.",
     "raw_tokens": [
       {

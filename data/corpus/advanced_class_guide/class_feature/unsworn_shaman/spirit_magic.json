@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Unsworn Shaman ~ Spirit Magic",
     "name": "Spirit Magic",
-    "class": "Unsworn Shaman",
+    "class": "Shaman",
     "description": "The unsworn shaman gains this ability at 2nd level rather than at 1st. This ability alters spirit magic.",
     "raw_tokens": [
       {

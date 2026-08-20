@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Saurian Champion ~ Dinosaur Mount",
     "name": "Dinosaur Mount",
-    "class": "Saurian Champion",
+    "class": "Cavalier",
     "description": "A saurian champion bonds with a dinosaur companion that willingly serves as his mount. This mount functions as a cavalier's normal mount with the following adjustments: The saurian champion's mount must be a dinosaur (see the various Pathfinder RPG Bestiary volumes). The saurian champion can ride mounts of his size category and larger, rather than only those of a larger size. Increase the mount's Strength score by 8 for the purpose of determining its carrying capacity. Whenever an ability or feat allows the saurian champion's mount to make a hoof attack, the mount can make a claw or bite attack instead. This alters the cavalier's mount.",
     "raw_tokens": [
       {

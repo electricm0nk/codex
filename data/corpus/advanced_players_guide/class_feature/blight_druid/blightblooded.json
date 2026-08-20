@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Blight Druid ~ Blightblooded",
     "name": "Blightblooded",
-    "class": "Blight Druid",
+    "class": "Druid",
     "description": "At 9th level, a blight druid gains immunity to all diseases, including natural and supernatural diseases. She also becomes immune to effects that would cause her to become sickened or nauseated.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bushwhacker ~ Shifty Shot",
     "name": "Shifty Shot",
-    "class": "Bushwhacker",
+    "class": "Gunslinger",
     "description": "A bushwhacker with at least 1 grit point deals 1d6 points of extra damage when using her firearm to attack opponents denied their Dexterity bonus to AC (whether the target actually has a Dexterity bonus or not). Except for the requirement that she must use a firearm and must have at least 1 grit point to use it, this deed otherwise works identically to a rogue's sneak attack class feature (including the requirement that she must be within 30 feet of her target to deal this extra damage), and stacks with the sneak shot ability (see below) and sneak attack.",
     "raw_tokens": [
       {

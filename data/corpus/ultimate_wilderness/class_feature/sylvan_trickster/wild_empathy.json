@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sylvan Trickster ~ Wild Empathy",
     "name": "Wild Empathy",
-    "class": "Sylvan Trickster",
+    "class": "Rogue",
     "description": "A sylvan trickster can improve an animal's attitude. This ability functions as the druid ability of the same name, using the sylvan trickster's rogue level as her effective druid level.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Geminate Invoker ~ Haunt Channeler",
     "name": "Haunt Channeler",
-    "class": "Geminate Invoker",
+    "class": "Barbarian",
     "description": "A geminate invoker gains the power to sense and absorb lingering spiritual energy. This functions identically to the medium class ability of the same name (Occult Adventures p31), except the geminate invoker deals %1d6 points of damage to haunts.|BarbarianLVL/3",
     "raw_tokens": [
       {

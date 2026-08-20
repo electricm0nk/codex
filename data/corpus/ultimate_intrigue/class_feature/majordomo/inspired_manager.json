@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Majordomo ~ Inspired Manager",
     "name": "Inspired Manager",
-    "class": "Majordomo",
+    "class": "Investigator",
     "description": "A majordomo knows how to make just about any work task more efficient, from cleaning a great hall after a big party to crafting a magic item. Whenever an ally begins a workday task such as Craft, Profession, magic item creation, spell research, managing a kingdom, using the downtime rules, or other similar tasks, the majordomo can spend one use of inspiration and 1 minute of planning to create a plan for that ally. If the ally chooses to follow the majordomo's plan and attempts the task on the same day, if the task would normally take at least 4 hours, it instead takes 30 minutes less time, and if the task would normally take at least 8 hours, it instead takes 1 hour less time. If using the kingdom-building rules from Pathfinder RPG Ultimate Campaign, at 3rd level, the majordomo counts her Intelligence score as %1 higher when determining the bonus she provides in a kingdom leadership role.|(InvestigatorLVL/3)*2",
     "raw_tokens": [
       {

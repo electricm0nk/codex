@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Demagogue ~ Incite Violence",
     "name": "Incite Violence",
-    "class": "Demagogue",
+    "class": "Bard",
     "description": "You can use your performance to fan the fury of a crowd of people you has fascinated. Using this ability does not disrupt the fascinate effect, but does require a standard action to activate (in addition to the free action to continue the fascinate effect). You select %1 targets equal to your level, who must make Will saves (DC %2) or be affected by rage for %3 rounds. You indicate who is the intended target of violence (either after using this ability or as part of the performance leading to it) and the enraged members of the crowd immediately attack the target if possible. The target does not need to be present (\"kill the king\" is a suitable choice) and can be an object instead of a person (\"destroy the prison!\" is likewise appropriate). Other members of the crowd may follow suit, though they do not gain the benefits of rage . This is a sound-based effect and is affected by countersong. If two or more bards are attempting to direct the crowd against different targets, they must make opposed Charisma checks, with the crowd following the directions of the winner.|InciteViolenceTargets|InciteViolenceDC|InciteViolenceDuration",
     "raw_tokens": [
       {

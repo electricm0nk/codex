@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Swordmaster ~ Advanced Talents",
     "name": "Advanced Talents",
-    "class": "Swordmaster",
+    "class": "Rogue",
     "description": "The following advanced rogue talents complement the swordmaster archetype: crippling strike, defensive roll (Core Rulebook); hunter's surprise, redirect attack (Advanced Player's Guide); confounding blade (Ultimate Combat).",
     "raw_tokens": [
       {

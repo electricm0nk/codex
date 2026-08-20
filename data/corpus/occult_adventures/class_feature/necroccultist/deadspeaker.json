@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Necroccultist ~ Deadspeaker",
     "name": "Deadspeaker",
-    "class": "Necroccultist",
+    "class": "Occultist",
     "description": "At 2nd level, as a full-round action that provokes attacks of opportunity, a necroccultist can learn the answers to a specific set of questions concerning a dead or undead creature. The necroccultist must consume at least one drop of the creature's blood, a small portion of its flesh, or a fragment of one of its bones as a part of this action. This ability otherwise functions as blood biography (Advanced Player's Guide 206), using the necroccultist's occultist level as his caster level. The necroccultist can use this ability once per day at 2nd level, plus one additional time per day for every 2 occultist levels thereafter. This ability replaces object reading.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sunrider ~ Concerted Effort",
     "name": "Concerted Effort",
-    "class": "Sunrider",
+    "class": "Druid",
     "description": "A sunrider can extend the bond she shares with her horse to other nearby mounted companions, forming them into a fighting force that seems to share a single mind. Allied mounts within %1 feet of the sunrider gain evasion as per the animal companion special ability.|SunriderConcertedEffortRange",
     "raw_tokens": [
       {

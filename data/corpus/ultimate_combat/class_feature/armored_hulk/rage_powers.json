@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Armored Hulk ~ Rage Powers",
     "name": "Rage Powers",
-    "class": "Armored Hulk",
+    "class": "Barbarian",
     "description": "The following rage powers complement the armored hulk archetype - boasting taunt**, greater guarded life*, guarded life**, guarded stance, increased damage reduction, no escape, overbearing advance**, overbearing onslaught**, reflexive dodge*, rolling dodge, and unexpected strike.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dreamweaver ~ Patron",
     "name": "Patron",
-    "class": "Dreamweaver",
+    "class": "Witch",
     "description": "A dreamweaver's patron is normally portents or stars (Pathfinder RPG Ultimate Magic 83).",
     "raw_tokens": [
       {

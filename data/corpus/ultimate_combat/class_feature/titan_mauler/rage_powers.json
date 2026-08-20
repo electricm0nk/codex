@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Titan Mauler ~ Rage Powers",
     "name": "Rage Powers",
-    "class": "Titan Mauler",
+    "class": "Barbarian",
     "description": "The following rage powers complement the titan mauler archetype - body bludgeon*, greater ground breaker*, ground breaker**, knockback, mighty swing, powerful blow, smasher**, and strength surge.",
     "raw_tokens": [
       {

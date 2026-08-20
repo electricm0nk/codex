@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tranquil Guardian ~ Waves of Peace",
     "name": "Waves of Peace",
-    "class": "Tranquil Guardian",
+    "class": "Paladin",
     "description": "The tranquil guardian may expend 2 uses of her Touch of Serenity to affect each opponent within 5 feet of her with that effect. She does not need to touch the creature for the effect to take hold.",
     "raw_tokens": [
       {

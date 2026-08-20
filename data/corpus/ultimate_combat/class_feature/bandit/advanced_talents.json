@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bandit ~ Advanced Talents",
     "name": "Advanced Talents",
-    "class": "Bandit",
+    "class": "Rogue",
     "description": "The following advanced rogue talents complement the bandit archetype - hide in plain sight*, knock-out blow**, and opportunist.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bolt Ace ~ Grit",
     "name": "Grit",
-    "class": "Bolt Ace",
+    "class": "Gunslinger",
     "description": "A bolt ace regains grit when she scores a critical hit or deals a killing blow with any kind of crossbow. This ability modifies the grit Class Feature.",
     "raw_tokens": [
       {

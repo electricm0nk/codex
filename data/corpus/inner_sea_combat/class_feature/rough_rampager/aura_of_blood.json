@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Rough Rampager ~ Aura of Blood",
     "name": "Aura of Blood",
-    "class": "Rough Rampager",
+    "class": "Antipaladin",
     "description": "At 3rd level, a rough rampager radiates a palpably daunting aura that causes all enemies within 10 feet to take a -4 penalty on Constitution or Heal checks to stop bleed damage and checks to stabilize while dying. This ability functions only while the antipaladin is conscious. This ability replaces aura of cowardice.",
     "raw_tokens": [
       {

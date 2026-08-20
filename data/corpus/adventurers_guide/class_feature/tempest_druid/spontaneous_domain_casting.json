@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tempest Druid ~ Spontaneous Domain Casting",
     "name": "Spontaneous Domain Casting",
-    "class": "Tempest Druid",
+    "class": "Druid",
     "description": "A tempest druid can channel stored spell energy into domain spells that he has not prepared ahead of time. He can \"lose\" a prepared spell to cast any domain spell of the same level or lower. This replaces the druid's normal ability to spontaneously cast summon spells.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Conspirator ~ Underhanded",
     "name": "Underhanded",
-    "class": "Conspirator",
+    "class": "Investigator",
     "description": "Conspirators find their skill sets firmly aligned with the goals of the criminal underworld. A conspirator can use inspiration on any Bluff, Disable Device, Disguise, Intimidate, and Sleight of Hand check without expending a use of inspiration, provided he is trained in the skill, instead of on any Knowledge, Linguistics, and Spellcraft check. He can later choose to trade an investigator talent for the ability to use inspiration on any Knowledge, Linguistics, and Spellcraft check without expending a use of inspirtation, provided he is trained in the skill. A conspirator adds +%1 on Bluff checks to appear innocent and on Disguise checks. This ability alters inspiration.|ConspiratorUnderhandedBonus",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Elemental Knight ~ Elemental Matrix",
     "name": "Elemental Matrix",
-    "class": "Elemental Knight",
+    "class": "Magus",
     "description": "An elemental knight gains Incremental Elemental Assault as a bonus feat. In addition, at 4th level, as a swift action, an elemental knight may expend rounds of duration from her elemental assault ability. For every 4 rounds expended, he gains 1 arcane pool point.",
     "raw_tokens": [
       {

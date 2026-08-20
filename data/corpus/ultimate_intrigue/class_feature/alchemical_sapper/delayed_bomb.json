@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Alchemical Sapper ~ Delayed Bomb",
     "name": "Delayed Bomb",
-    "class": "Alchemical Sapper",
+    "class": "Alchemist",
     "description": "An alchemical sapper gains the delayed bomb discovery. He does not qualify for the mutagen or cognatogen discoveries until 8th level. [THIS LAST PART NOT IMPLEMENTED]",
     "raw_tokens": [
       {

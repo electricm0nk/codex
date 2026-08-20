@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spellscar Drifter ~ Bonus Feats",
     "name": "Bonus Feats",
-    "class": "Spellscar Drifter",
+    "class": "Cavalier",
     "description": "At 6th level, and at every 6 levels thereafter, a Spellscar drifter gains a bonus feat in addition to those gained from normal advancement. These bonus feats must be either combat or grit feats, and the Spellscar drifter must meet the prerequisites as normal. This replaces the cavalier's normal bonus feats.",
     "raw_tokens": [
       {

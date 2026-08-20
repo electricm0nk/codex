@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Viking ~ Fearsome",
     "name": "Fearsome",
-    "class": "Viking",
+    "class": "Fighter",
     "description": "A viking can attempt an Intimidate check to demoralize an opponent as a",
     "raw_tokens": [
       {

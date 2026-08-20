@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Menhir Guardian ~ Rebuking Strike",
     "name": "Rebuking Strike",
-    "class": "Menhir Guardian",
+    "class": "Monk",
     "description": "A menhir guardian can channel his ki into a devastating strike that repels his enemies. A menhir guardian must declare that he is using rebuking strike before making a natural attack with his claws. On a hit, a foe damaged by the menhir guardian's claws must succeed at a Fortitude saving throw (DC %1) or be pushed back %2 feet directly away from the menhir guardian. If this movement would be blocked by a solid object, the target of rebuking strike takes 1d6 points of damage per 10 feet moved and falls prone at the end of the movement.|10+MonkLVL/2+WIS|5*((MonkLVL+3)/4)",
     "raw_tokens": [
       {

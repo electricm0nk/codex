@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Exorcist ~ Closed Mind",
     "name": "Closed Mind",
-    "class": "Exorcist",
+    "class": "Inquisitor",
     "description": "You are immune to compulsion effects and possession attempts (including magic jar).",
     "raw_tokens": [
       {

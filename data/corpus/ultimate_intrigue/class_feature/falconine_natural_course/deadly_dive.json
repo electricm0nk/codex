@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Falconine Natural Course ~ Deadly Dive",
     "name": "Deadly Dive",
-    "class": "Falconine Natural Course",
+    "class": "Vigilante",
     "description": "A falconine wildsoul has learned how to mimic the swooping and diving of birds of prey. As a full-round action while he is flying at least 30 feet above the ground, a falconine wildsoul can dive onto a creature by moving up to twice his fly speed and make a single melee attack. The movement provokes attacks of opportunity as normal, and the attack provokes an attack of opportunity from the attack's target. If the attack is successful, the falconine wildsoul deals the attack's damage plus 2d6 points of damage for every 10 feet he dove (to a maximum of 20d6 damage if he dove 100 feet or more). Even if the attack misses, the target still takes the extra damage for the distance of the dive, but it receives a Reflex save to halve the damage (DC %1). A falconine vigilante can dive in this way %2 times per day.|10+VigilanteLVL/2+max(DEX,STR)|max(DEX,STR)",
     "raw_tokens": [
       {

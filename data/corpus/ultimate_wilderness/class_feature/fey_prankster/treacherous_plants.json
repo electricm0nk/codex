@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fey Prankster ~ Treacherous Plants",
     "name": "Treacherous Plants",
-    "class": "Fey Prankster",
+    "class": "Rogue",
     "description": "The fey prankster can cause plants to distract nearby creatures. To use this ability, the fey prankster attempts a Bluff check to create a distraction to hide as a swift action or to feint against an adjacent opponent as a move action, so long as the target is adjacent to plants. He gains a +%1 bonus on this check.|max(1,RogueLVL/2)",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wildborn ~ Bonus Feats",
     "name": "Bonus Feats",
-    "class": "Wildborn",
+    "class": "Barbarian",
     "description": "At 4th level, 10th level and 16th level, a wildborn can choose a bonus feat from the following rather than select a rage power: Alertness, Animal Affinity, Athletic, Great Fortitude, Improvised Weapon Mastery, Iron Will, Lightning Reflexes, Self-Sufficient, Stealthy, or Throw Anything. This alters rage powers.",
     "raw_tokens": [
       {

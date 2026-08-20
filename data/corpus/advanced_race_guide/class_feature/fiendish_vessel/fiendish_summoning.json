@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fiendish Vessel ~ Fiendish Summoning",
     "name": "Fiendish Summoning",
-    "class": "Fiendish Vessel",
+    "class": "Cleric",
     "description": "When casting summon monster spells, a fiendish vessel is limited to summoning fiendish creatures and evil outsiders of the same alignment as her patron.",
     "raw_tokens": [
       {

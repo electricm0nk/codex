@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spirit Dancer ~ Spirit Troika",
     "name": "Spirit Troika",
-    "class": "Spirit Dancer",
+    "class": "Medium",
     "description": "A spirit dancer learns to dance with two partners. When using spirit dance, he can choose to spend 3 rounds of spirit dance each round to gain access to the abilities of any two of the six spirits he prepared during his seance for 1 round.",
     "raw_tokens": [
       {

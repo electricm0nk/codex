@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Arrow Champion ~ Retaliation",
     "name": "Retaliation",
-    "class": "Arrow Champion",
+    "class": "Swashbuckler",
     "description": "When a foe hits the arrow champion with an attack, she can spend 1 panache point to make a retaliatory attack of opportunity against that foe. If the triggering attack is a melee attack, she can retaliate with a melee attack using a light or one-handed piercing melee weapon, provided the creature is within her reach. If the triggering attack is a ranged attack, she can retaliate with a ranged attack using a bow, provided that the creature is within 30 feet of her. This deed's cost cannot be reduced by any ability or effect that reduces the number of panache points a deed costs.",
     "raw_tokens": [
       {

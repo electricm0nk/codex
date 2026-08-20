@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Saurian Shaman ~ Wild Shape",
     "name": "Wild Shape",
-    "class": "Saurian Shaman",
+    "class": "Druid",
     "description": "Your wild shape ability functions at your druid level - 2. If you take on the form of a reptile or dinosaur, you instead use your druid level +2.",
     "raw_tokens": [
       {

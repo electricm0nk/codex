@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Titan Mauler ~ Evade Reach",
     "name": "Evade Reach",
-    "class": "Titan Mauler",
+    "class": "Barbarian",
     "description": "At 5th level, as a swift action, a titan mauler may choose one creature within her line of sight. Until the end of her turn, that target's reach is treated as if it were 5 feet shorter with respect to reaching the titan mauler, and this reduction increases by 5 feet for every five levels beyond 5th (currently %1 feet). This ability replaces improved uncanny dodge.|MaulerEvadeReach",
     "raw_tokens": [
       {

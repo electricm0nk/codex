@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Elemental Ascetic ~ Elemental Wisdom",
     "name": "Elemental Wisdom",
-    "class": "Elemental Ascetic",
+    "class": "Kineticist",
     "description": "An elemental ascetic can use his Wisdom modifier instead of his Constitution modifier to determine the DCs of Constitution-based wild talents, the duration of wild talents with a Constitution-based duration, and his bonus on concentration checks for wild talents. This ability alters the key ability scores of wild talents.",
     "raw_tokens": [
       {

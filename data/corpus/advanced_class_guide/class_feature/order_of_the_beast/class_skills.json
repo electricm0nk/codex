@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Order of the Beast ~ Class Skills",
     "name": "Class Skills",
-    "class": "Order of the Beast",
+    "class": "Cavalier",
     "description": "An order of the beast cavalier adds Knowledge (nature) and Survival to his list of class skills. When the cavalier uses Survival to follow tracks, he gains a bonus on the check of +%1.|max(floor(CavalierLVL/2))",
     "raw_tokens": [
       {

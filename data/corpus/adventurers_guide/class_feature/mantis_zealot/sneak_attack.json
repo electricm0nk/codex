@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mantis Zealot ~ Sneak Attack",
     "name": "Sneak Attack",
-    "class": "Mantis Zealot",
+    "class": "Warpriest",
     "description": "A mantis zealot can make a sneak attack. This ability functions as the rogue ability of the same name. If the zealot gets a sneak attack bonus from another source, the bonuses on damage stack.",
     "raw_tokens": [
       {

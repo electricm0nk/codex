@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bloody Jake ~ Sadistic Snare",
     "name": "Sadistic Snare",
-    "class": "Bloody Jake",
+    "class": "Slayer",
     "description": "A bloody jake gains Learn Ranger Trap as a bonus feat, benefiting from it as if he were a ranger. He can expend two uses of his traps ability to add his sneak attack damage to the trap's damage; any slayer talents or rogue talents he has that modify sneak attack damage, such as bleeding attack, also apply to sneak attack damage dealt by his ranger traps.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Exemplar Brawler ~ Field Instruction",
     "name": "Field Instruction",
-    "class": "Exemplar Brawler",
+    "class": "Brawler",
     "description": "%1 times per day, as a standard action, an exemplar can grant a teamwork feat to all allies within 30 feet who can see and hear her. This teamwork feat must be one the exemplar knows or has gained with the martial flexibility ability. Allies retain the use of this teamwork feat for %2 rounds. If the granted teamwork feat is one gained from martial flexibility, this duration ends immediately if the exemplar loses access to that feat. Allies don't need to meet the prerequisites of this teamwork feat. This ability otherwise counts as the cavalier's tactician class feature; feats and other effects which affect tactician (such as Practiced Tactician) apply to it.|FieldTrainingTimes|FieldTrainingDuration",
     "raw_tokens": [
       {

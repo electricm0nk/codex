@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Picaroon ~ Melee Shooter",
     "name": "Melee Shooter",
-    "class": "Picaroon",
+    "class": "Swashbuckler",
     "description": "As a swift action when wielding both a light or one-handed piercing melee weapon and a one-handed firearm, the picaroon can spend 1 panache point to avoid provoking attacks of opportunity with the first ranged attack made by the one-handed firearm during her turn. This deed replaces opportune parry and riposte.",
     "raw_tokens": [
       {

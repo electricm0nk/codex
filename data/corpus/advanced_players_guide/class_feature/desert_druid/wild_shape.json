@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Desert Druid ~ Wild Shape",
     "name": "Wild Shape",
-    "class": "Desert Druid",
+    "class": "Druid",
     "description": "A desert druid gains this ability at 6th level, except that her effective druid level for the ability is equal to her druid level - 2. A desert druid cannot use wild shape to adopt a plant form. At 10th level she can assume the form of a Small or Medium vermin, at 12th level a Tiny or Large vermin, and at 14th level a Diminutive or Huge vermin. This effect functions as beast shape IV (treating the vermin as an animal to determine its ability and natural armor modifiers).",
     "raw_tokens": [
       {

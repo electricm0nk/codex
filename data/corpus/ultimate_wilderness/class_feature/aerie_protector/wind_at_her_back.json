@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Aerie Protector ~ Wind at Her Back",
     "name": "Wind at Her Back",
-    "class": "Aerie Protector",
+    "class": "Druid",
     "description": "An aerie protector gains a +4 bonus to CMD and on saving throws against the effects of high altitude and effects that rely on air pressure or strong wind to move her or impede her flight. This bonus also applies on Reflex saves against effects that deal electricity damage.",
     "raw_tokens": [
       {

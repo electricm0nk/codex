@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wanderer ~ Inscrutable",
     "name": "Inscrutable",
-    "class": "Wanderer",
+    "class": "Monk",
     "description": "The wanderer gains a supernatural air of mystery. The DC to gain information or insight into the wanderer with Diplomacy, Knowledge skills, or Sense Motive increases by 5. In addition, by spending 1 point from his ki pool, the wanderer gains nondetection for 24 hours with a caster level equal to his monk level.",
     "raw_tokens": [
       {

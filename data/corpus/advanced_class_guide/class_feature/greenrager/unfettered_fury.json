@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Greenrager ~ Unfettered Fury",
     "name": "Unfettered Fury",
-    "class": "Greenrager",
+    "class": "Bloodrager",
     "description": "A greenrager's fury allows him to move through undergrowth with frightening speed and grace. This functions as the druid's woodland stride class feature, but only while the greenrager is bloodraging.",
     "raw_tokens": [
       {

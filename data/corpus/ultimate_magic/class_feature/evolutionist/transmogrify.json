@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Evolutionist ~ Transmogrify",
     "name": "Transmogrify",
-    "class": "Evolutionist",
+    "class": "Summoner",
     "description": "You can cast transmogrify as a spell-like ability once per day without the need for a material component. This ability has a casting time of 1 minute.",
     "raw_tokens": [
       {

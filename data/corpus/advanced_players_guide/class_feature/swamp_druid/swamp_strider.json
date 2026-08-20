@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Swamp Druid ~ Swamp Strider",
     "name": "Swamp Strider",
-    "class": "Swamp Druid",
+    "class": "Druid",
     "description": "At 3rd level, a swamp druid suffers no penalty to speed or on Acrobatics or Stealth checks in bogs and undergrowth. This ability replaces trackless step.",
     "raw_tokens": [
       {

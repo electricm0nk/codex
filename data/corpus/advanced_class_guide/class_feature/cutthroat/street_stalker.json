@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cutthroat ~ Street Stalker",
     "name": "Street Stalker",
-    "class": "Cutthroat",
+    "class": "Slayer",
     "description": "A cutthroat selects the Acrobatics, Climb, or Knowledge (local) skill. Once selected, this cannot be changed. When in urban environments, the cutthroat adds %1 to checks attempted with this skill.|max(1,floor(SlayerLVL/2))",
     "raw_tokens": [
       {

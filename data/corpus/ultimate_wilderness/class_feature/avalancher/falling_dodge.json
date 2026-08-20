@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Avalancher ~ Falling Dodge",
     "name": "Falling Dodge",
-    "class": "Avalancher",
+    "class": "Slayer",
     "description": "An avalancher gains his bonus to AC from the falling strike ability when a jump or fall carries him through threatened squares. This bonus applies only when he's jumping, not when he's using Acrobatics to try to avoid attacks of opportunity from moving through threatened squares.",
     "raw_tokens": [
       {

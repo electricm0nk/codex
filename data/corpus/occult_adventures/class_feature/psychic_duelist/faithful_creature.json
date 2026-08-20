@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Duelist ~ Faithful Creature",
     "name": "Faithful Creature",
-    "class": "Psychic Duelist",
+    "class": "Psychic",
     "description": "When she manifests a thoughtform creature, the psychic duelist can spend 1 point from her phrenic pool to give that creature the ability to persist even if it doesn't attack. She can concentrate to maintain the creature as a swift action instead of as a full-round action, but the creature can attack only if the psychic duelist concentrates as a full-round action. In addition, the psychic backlash damage from that thought-form creature is halved. This amplification can be linked only to thoughtform creature manifestations.",
     "raw_tokens": [
       {

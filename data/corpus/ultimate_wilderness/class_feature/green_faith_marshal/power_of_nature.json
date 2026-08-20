@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Green Faith Marshal ~ Power of Nature",
     "name": "Power of Nature",
-    "class": "Green Faith Marshal",
+    "class": "Inquisitor",
     "description": "The Green Faith marshal gains one domain selected from the animal and terrain domains. The 1st- though 6th- level bonus spells from this domain are added to the Green Faith marshal's spell list [This last NOT IMPLEMENTED].",
     "raw_tokens": [
       {

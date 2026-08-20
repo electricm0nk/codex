@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bardic Performance ~ Cutting Remark",
     "name": "Cutting Remark",
-    "class": "Bardic Performance",
+    "class": "Bard",
     "description": "A wit can wound with his words. The wit can spend 1 round of bardic performance as a standard action to deal 1d4+%1 points of nonlethal damage to a creature within 30 feet. Damage reduction applies to this damage.|BardLVL",
     "raw_tokens": [
       {

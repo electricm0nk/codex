@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Urban Ranger ~ Class Skills",
     "name": "Urban Ranger",
-    "class": "Urban Ranger",
+    "class": "Ranger",
     "description": "At 1st level, an urban ranger adds Disable Device and Knowledge (local) to his list of class skills and removes Handle Animal and Knowledge (nature) from his list of class skills.",
     "raw_tokens": [
       {

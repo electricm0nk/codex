@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spellscar Drifter ~ Daring Deeds",
     "name": "Daring Deeds",
-    "class": "Spellscar Drifter",
+    "class": "Cavalier",
     "description": "At 3rd level, a Spellscar drifter gains Rapid Reload as a bonus feat. The Spellscar drifter must choose a firearm to associate with this feat. Additionally, the Spellscar drifter can select one additional ist-level gunslinger deed which he can use with his Amateur Gunslinger feat. This ability replaces cavalier's charge.",
     "raw_tokens": [
       {

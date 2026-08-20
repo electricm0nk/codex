@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cave Dweller ~ Sun Walker",
     "name": "Sun Walker",
-    "class": "Cave Dweller",
+    "class": "Barbarian",
     "description": "A cave dweller gains a +%1 dodge bonus to AC and on saving throws against effects with the light descriptor or that produce bright or sudden light. Any penalties on attack rolls, saving throws, or skill checks because of bright light are reduced by %1.|CaveDwellerSunWalkerBonus",
     "raw_tokens": [
       {

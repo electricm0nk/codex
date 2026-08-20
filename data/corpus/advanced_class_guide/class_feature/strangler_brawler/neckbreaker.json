@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Strangler Brawler ~ Neckbreaker",
     "name": "Neckbreaker",
-    "class": "Strangler Brawler",
+    "class": "Brawler",
     "description": "A strangler can attempt to instantly kill a pinned opponent. This works like the sleeper hold ability, but imposes a -5 penalty on her grapple combat maneuver check. If the opponent succeeds at its Fortitude save, the strangler deals damage as if she had attempted the grapple check to damage her opponent; if the opponent fails its Fortitude save, it dies. Creatures that are immune to critical hits are immune to this ability.",
     "raw_tokens": [
       {

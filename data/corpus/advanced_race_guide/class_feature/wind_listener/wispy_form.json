@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wind Listener ~ Wispy Form",
     "name": "Wispy Form",
-    "class": "Wind Listener",
+    "class": "Wizard",
     "description": "The wind listener gains the ability to become airy and translucent as a standard action, gaining DR 10/magic and the effects of greater invisibility for %1 rounds per day. These rounds need not be consecutive. Like the natural invisibility universal monster ability (Bestiary 2 299), this ability is not subject to invisibility purge.|WizardLVL",
     "raw_tokens": [
       {

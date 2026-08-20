@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Lantern Lighter ~ Darkvision",
     "name": "Darkvision",
-    "class": "Lantern Lighter",
+    "class": "Ranger",
     "description": "A lantern lighter's senses fully attune to the darkness, granting him darkvision to a distance of 60 feet. If the lantern lighter already has darkvision, its range increases by 30 feet.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Arctic Druid ~ Arctic Endurance",
     "name": "Arctic Endurance",
-    "class": "Arctic Druid",
+    "class": "Druid",
     "description": "At 4th level, an arctic druid ignores the effects of a cold climate as if using endure elements. She is also immune to being dazzled. This ability replaces resist nature's lure.",
     "raw_tokens": [
       {

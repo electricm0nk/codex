@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Armor Master ~ Deflective Shield",
     "name": "Deflective Shield",
-    "class": "Armor Master",
+    "class": "Fighter",
     "description": "An armor master specializes in using his shield to deflect attacks. He gains a +%1 bonus to his touch AC; however, this bonus cannot exceed the sum of the armor and enhancement bonus to AC provided by the shield that the armor master is currently carrying. This ability replaces bravery.|DeflectiveShieldBonus",
     "raw_tokens": [
       {

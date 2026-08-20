@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Falconine Natural Course ~ Take to the Air",
     "name": "Take to the Air",
-    "class": "Falconine Natural Course",
+    "class": "Vigilante",
     "description": "A falconine wildsoul can harness the flight inherent in his blood. While in his vigilante identity, he has feathery wings that grant him a fly speed of 40 feet (with good maneuverability).",
     "raw_tokens": [
       {

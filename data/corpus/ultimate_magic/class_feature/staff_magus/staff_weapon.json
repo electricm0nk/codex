@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Staff Magus ~ Staff Weapon",
     "name": "Staff Weapon",
-    "class": "Staff Magus",
+    "class": "Magus",
     "description": "You treat any magical staff you are wielding as a magical quarterstaff with an enhancement bonus to attack and damage equal to the staff's caster level divided by 4 (minimum +1). The staff must have at least 1 charge for you to use this ability. You can restore 1 charge to a staff by expending a number of points from your arcane pool equal to the level of the highest-level spell cast in the staff, as long as at least one spell in the staff is on the magus spell list. You cannot restore charges to more than one staff per day.",
     "raw_tokens": [
       {

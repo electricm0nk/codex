@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wilderness Warden ~ Favored Terrain",
     "name": "Favored Terrain",
-    "class": "Wilderness Warden",
+    "class": "Paladin",
     "description": "A wilderness warden selects a favored terrain, as per the ranger class feature. Every 6 levels after 3rd, she selects an additional favored terrain; each time she does so, the bonuses she gains in her previous favored terrain or terrains increase by 2.[This is set up to be done manually as PCGen cannot do this automatically]",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Escapologist ~ Elusive",
     "name": "Elusive",
-    "class": "Escapologist",
+    "class": "Rogue",
     "description": "An escapologist adds 1/2 her rogue level (minimum +1) as a bonus on all Disable Device and Escape Artist checks. An escapologist can use Disable Device to disarm magical traps. This ability replaces trapfinding, but counts as trapfinding for the purposes of prerequisites and abilities that require trapfinding.",
     "raw_tokens": [
       {

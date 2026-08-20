@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Shark Shaman ~ Totem Transformation",
     "name": "Totem Transformation",
-    "class": "Shark Shaman",
+    "class": "Druid",
     "description": "You may adopt an aspect of the shark while retaining your normal form. You gain one of the following bonuses: movement (can breathe water, swim speed 30 feet), senses (scent 30 feet, scent 90 feet in water), natural weapons (bite [1d6 for a Medium shaman), or shark skin (+2 natural armor, creatures grappling the shaman take 1 point of slashing damage per round of grapple). While using totem transformation, you may speak normally and can cast speak with animals (fish only) at will. Using this ability is a standard action at 2nd level, a move action at 7th level, and a swift action at 12th level. You can use this ability for %1 minutes per day. These minutes do not need to be consecutive, but they must be used in 1-minute increments. This is a polymorph effect and cannot be used while you are using another polymorph effect, such as wild shape.|TotemTransformationDuration",
     "raw_tokens": [
       {

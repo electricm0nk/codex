@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Swordmaster ~ Class Skills",
     "name": "Class Skills",
-    "class": "Swordmaster",
+    "class": "Rogue",
     "description": "The swordmaster adds Knowledge (nature) and Survival to her list of class skills and removes Disguise and Knowledge (dungeoneering) from her list of class skills.",
     "raw_tokens": [
       {

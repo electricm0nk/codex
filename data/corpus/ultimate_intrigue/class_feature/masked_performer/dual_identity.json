@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Masked Performer ~ Dual Identity",
     "name": "Dual Identity",
-    "class": "Masked Performer",
+    "class": "Bard",
     "description": "This ability acts as the vigilante ability of the same name, except as follows. The masked performer's identities are referred to as social and masked, rather than social and vigilante. Unlike a vigilante, most people who know of the masked performer actually know that the masked performer's identities are one and the same. Nonetheless, the dual identity ability is valuable to the masked performer due to offering her two perspectives on any problem and two different alignments.",
     "raw_tokens": [
       {

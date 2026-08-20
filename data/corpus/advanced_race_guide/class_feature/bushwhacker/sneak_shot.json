@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bushwhacker ~ Sneak Shot",
     "name": "Sneak Shot",
-    "class": "Bushwhacker",
+    "class": "Gunslinger",
     "description": "A bushwhacker deals 1d6 points of extra damage when using a firearm to attack opponents who are unable to properly defend themselves. Unlike with the shifty shot ability, she deals this extra damage regardless of whether or not she has any grit points when making the attack. Except for the requirement that she makes a firearm attack, this works identically to a rogue's sneak attack class feature. This extra damage stacks with sneak attack and the damage from shifty shot.",
     "raw_tokens": [
       {

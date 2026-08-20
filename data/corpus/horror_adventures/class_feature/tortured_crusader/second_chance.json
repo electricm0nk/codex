@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tortured Crusader ~ Second Chance",
     "name": "Second Chance",
-    "class": "Tortured Crusader",
+    "class": "Paladin",
     "description": "Once per day, a tortured crusader can spend two uses of lay on hands and choose an unambiguous trigger such as \"when I am paralyzed\" or \"when I am about to fall unconscious from hit point damage,\" as well as a mercy she knows starting at 3rd level. When the named trigger occurs, the tortured crusader gains the benefits of a lay on hands with the chosen mercy without spending an action. This healing can prevent her from falling unconscious or dying. If the effect doesn't trigger, it expires the next time the tortured crusader recovers uses of lay on hands. This ability alters lay on hands and mercy.",
     "raw_tokens": [
       {

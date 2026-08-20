@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bardic Performance ~ Stage Combat",
     "name": "Stage Combat",
-    "class": "Bardic Performance",
+    "class": "Bard",
     "description": "A masked performer gains the benefit of a combat feat she doesn't have as long as she maintains this performance. The masked performer chooses the feat when she starts this performance. The masked performer must meet all the feat's prerequisites. As usual when temporarily gaining a feat, if the feat she chooses has any limitations on uses, such as Stunning Fist's daily uses, all uses of that combat feat while maintaining stage combat count toward that feat's limit. In the case of Stunning Fist, if the masked performer gained that feat again later the same day, the expended uses would remain expended. Stage combat relies on visual components.",
     "raw_tokens": [
       {

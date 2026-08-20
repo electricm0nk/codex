@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spirit Walker ~ Command Undead",
     "name": "Command Undead",
-    "class": "Spirit Walker",
+    "class": "Mesmerist",
     "description": "A spirit walker gains Command Undead as a bonus feat. A spirit walker can use Command Undead %1 times per day, using his mesmerist level as his cleric level.|SWCommandUndeadUses",
     "raw_tokens": [
       {

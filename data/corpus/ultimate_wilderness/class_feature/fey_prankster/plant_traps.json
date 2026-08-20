@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fey Prankster ~ Plant Traps",
     "name": "Plant Traps",
-    "class": "Fey Prankster",
+    "class": "Rogue",
     "description": "The fey trickster can modify a plant (but not plant creatures) into a trap as a full-round action up to three times per day. The Perception and Disable Device DCs for the trap are each %1. A Tiny or larger plant can be used to perform a trip or dirty trick combat maneuver using the fey trickster's CMB and the plant's size. A Large or larger plant can be used to create a snare as per the spell. The save DC is %2. The fey trickster can trigger any plant trap he created as a standard action as long as he is within 60 feet of it.|15+RogueLVL|12+INT",
     "raw_tokens": [
       {

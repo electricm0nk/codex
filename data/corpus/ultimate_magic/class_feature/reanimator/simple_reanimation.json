@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Reanimator ~ Simple Reanimation",
     "name": "Simple Reanimation",
-    "class": "Reanimator",
+    "class": "Alchemist",
     "description": "You add Lesser Animate Dead to your formula book as a 3rd-level extract.  When you use this extract, rather than drinking it, you inject it into the corpse you intend to animate, which rises as an undead creature under your control 1 hour later.  This extract can only create zombies (including variant zombies).",
     "raw_tokens": [
       {

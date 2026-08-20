@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Vigilant Defender ~ Bolster the Wounded",
     "name": "Bolster the Wounded",
-    "class": "Vigilant Defender",
+    "class": "Inquisitor",
     "description": "A vigilant defender can preternaturally sense when her allies are in grave peril and can form a mystical conduit to protect them from the full effects of grievous wounds. As an immediate action whenever an enemy confirms a critical hit against an ally within 30 feet, the vigilant defender can choose to accept half the damage. If she does so, similar to the shield other spell, any of her damage reduction, resistances, or immunities do not apply to the damage she takes.",
     "raw_tokens": [
       {

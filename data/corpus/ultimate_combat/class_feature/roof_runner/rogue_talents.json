@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Roof Runner ~ Rogue Talents",
     "name": "Rogue Talents",
-    "class": "Roof Runner",
+    "class": "Rogue",
     "description": "The following rogue talents complement the roof runner archetype - expert leaper**, ledge walker, nimble climber**, stand up, and terrain mastery*.",
     "raw_tokens": [
       {

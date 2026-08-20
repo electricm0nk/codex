@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dragon Yapper ~ Frightful Song",
     "name": "Frightful Song",
-    "class": "Dragon Yapper",
+    "class": "Bard",
     "description": "A dragon yapper of 8th level or higher can amplify his voice to sound like an actual dragon. Enemies within 30 feet become shaken unless they succeed at a Will save (DC %1). A successful save renders targets immune to this ability for 24 hours. Frightful song is a mind-affecting ability, and a fear effect that uses audible components.|10+BardLVL/2+CHA",
     "raw_tokens": [
       {

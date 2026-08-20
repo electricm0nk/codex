@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Evangelist ~ Spontaneous Casting",
     "name": "Spontaneous Casting",
-    "class": "Evangelist",
+    "class": "Cleric",
     "description": "An evangelist does not gain the ability to spontaneously cast cure or inflict spells by sacrificing prepared spells. However, an evangelist can spontaneously cast command (1st), enthrall (2nd), tongues (3rd), suggestion (4th), greater command (5th), geas/quest (6th), mass suggestion (7th), sympathy (8th) and demand (9th) as a spell of listed level by sacrificing a prepared spell of the same level or higher.",
     "raw_tokens": [
       {

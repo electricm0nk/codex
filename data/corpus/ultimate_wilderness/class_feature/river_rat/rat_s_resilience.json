@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "River Rat ~ Rat's Resilience",
     "name": "Rat's Resilience",
-    "class": "River Rat",
+    "class": "Rogue",
     "description": "A river rat is inured to dangers presented by disease-carrying parasites, poisonous fish, and other toxic river denizens. A river rat gains a +%1 bonus on saving throws against disease and poison effects.|min(6,RogueLVL/3)",
     "raw_tokens": [
       {

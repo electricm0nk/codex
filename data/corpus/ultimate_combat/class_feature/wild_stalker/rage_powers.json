@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wild Stalker ~ Rage Powers",
     "name": "Rage Powers",
-    "class": "Wild Stalker",
+    "class": "Ranger",
     "description": "At 5th level, a wild stalker ranger gains a single rage power, as the barbarian class feature. He gains another rage power each five levels after 5th (to a maximum of four rage powers at 20th level). This ability replaces the ranger's second, third, fourth, and fifth favored enemy abilities.",
     "raw_tokens": [
       {

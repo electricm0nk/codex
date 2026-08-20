@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Shield Champion Brawler ~ Returning Shield",
     "name": "Returning Shield",
-    "class": "Shield Champion Brawler",
+    "class": "Brawler",
     "description": "A shield champion can throw a shield so it ricochets off her target (and possibly other solid objects) to return to her at the end of her turn. This ability functions whether or not the shield champion hits her opponent or moves on her turn. The shield deals no damage to targets it bounces off other than the original target of the shield champion's attack. Other circumstances can prevent the shield from returning to the shield champion, such as an opponent using a readied action to catch the shield, or the shield sticking to a mimic's adhesive. The shield champion can opt to not have a thrown shield return to her, in which case it falls to the ground as it normally would. If the shield has the returning weapon special ability, she can use either that or this ability. If a shield champion has additional attacks from a high base attack bonus, these additional attacks can be ricochets off an earlier target. The distance to each additional target adds to the total range of the shield, and range penalties apply, but there are no additional penalties for attacking in this manner. Because ricocheting attacks are treated as separate attacks, effects and modifiers that only apply to one attack roll (such as true strike) only apply to the first attack and not to the others. A shield champion can throw a shield as part of a brawler's flurry.",
     "raw_tokens": [
       {

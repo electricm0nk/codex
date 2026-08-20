@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Strangler Brawler ~ Practiced Strangler",
     "name": "Practiced Strangler",
-    "class": "Strangler Brawler",
+    "class": "Brawler",
     "description": "When a strangler has the grappled condition, she does not take a -4 penalty to Dexterity and does not lose her Dexterity bonus to AC.",
     "raw_tokens": [
       {

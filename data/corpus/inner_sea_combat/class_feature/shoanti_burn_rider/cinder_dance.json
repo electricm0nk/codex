@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Shoanti Burn Rider ~ Cinder Dance",
     "name": "Cinder Dance",
-    "class": "Shoanti Burn Rider",
+    "class": "Barbarian",
     "description": "At 3rd level, when a bum rider succeeds at a Reflex save to avoid fire damage, she can spend an immediate action to move up to half her speed. If the bum rider ends this movement outside the area of effect, she takes no damage from the effect. After this sudden movement, the burn rider is staggered until the end of her next turn. If the burn rider is mounted, her mount makes the movement instead, and both the mount and the bum rider are staggered until the end of the bum rider's next tum. This ability replaces trap sense.",
     "raw_tokens": [
       {

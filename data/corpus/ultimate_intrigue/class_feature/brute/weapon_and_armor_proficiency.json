@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Brute ~ Weapon and Armor Proficiency",
     "name": "Weapon and Armor Proficiency",
-    "class": "Brute",
+    "class": "Vigilante",
     "description": "A brute isn't proficient with medium armor or martial weapons. However, he gains Improved Unarmed Strike as a bonus feat. This alters the vigilante's armor and weapon proficiencies.",
     "raw_tokens": [
       {

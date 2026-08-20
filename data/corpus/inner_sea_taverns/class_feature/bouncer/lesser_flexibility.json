@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bouncer ~ Lesser Flexibility",
     "name": "Lesser Flexibility",
-    "class": "Bouncer",
+    "class": "Brawler",
     "description": "A bouncer can use her martial flexibility only a number of times per day equal to 2 + half her brawler level (minimum 3 times per day). This alters martial flexibility.",
     "raw_tokens": [
       {

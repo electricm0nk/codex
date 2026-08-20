@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Hooded Champion ~ Hooded Champion's Initiative",
     "name": "Hooded Champion's Initiative",
-    "class": "Hooded Champion",
+    "class": "Ranger",
     "description": "While the hooded champion has at least 1 panache point, he gains a +2 bonus on initiative checks. In addition, if he has the Quick Draw feat, his hands are free and unrestrained, and his weapon isn't hidden, he can draw a single bow as part of the initiative check.",
     "raw_tokens": [
       {

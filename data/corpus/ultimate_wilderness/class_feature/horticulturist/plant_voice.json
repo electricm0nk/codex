@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Horticulturist ~ Plant Voice",
     "name": "Plant Voice",
-    "class": "Horticulturist",
+    "class": "Alchemist",
     "description": "A horticulturist gains further knowledge about plants, and he eventually learns to speak with them. He gains a +2 bonus on Knowledge (nature) and Survival checks.",
     "raw_tokens": [
       {

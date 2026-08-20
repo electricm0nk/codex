@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Urban Ranger ~ Invisibility Trick",
     "name": "Invisibility Trick",
-    "class": "Urban Ranger",
+    "class": "Ranger",
     "description": "At 17th level, the urban ranger can cast improved invisibility on himself as a wizard of his ranger level as a swift action. He can use this spell-like ability a number of times per day equal to his Wisdom modifier (minimum 1). This ability replaces hide in plain sight.",
     "raw_tokens": [
       {

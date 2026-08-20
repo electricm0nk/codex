@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ringleader ~ Cunning Plan",
     "name": "Cunning Plan",
-    "class": "Ringleader",
+    "class": "Bard",
     "description": "By spending 1 minute laying out a plan, a ringleader can impart inspiring instructions to %1 allies. Upon concluding the plan, the ringleader chooses one of her bardic performances and expends up to %2 rounds of bardic performance. Thereafter, as a move action, the ringleader or any of the instructed allies can trigger the implanted instructions, causing that creature to immediately gain the benefits of the ringleader's implanted bardic performance (each creature can trigger the instructions for itself separately). This effect lasts for a number of rounds equal to the rounds of bardic performance the ringleader expended while creating the plan, though the effect also ends if the ringleader dismisses it as a free action or activates a different plan or bardic performance. For the purpose of this ability, the ringleader attempts any skill checks associated with the bardic performance once a creature triggers the plan. A ringleader's cunning plans all expire each time she regains her daily spell slots or after 24 hours (whichever comes first).|BardLVL+CHA|BardLVL*2",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Elder Mythos Scholar ~ Arcane Bond",
     "name": "Arcane Bond",
-    "class": "Elder Mythos Scholar",
+    "class": "Wizard",
     "description": "An Elder Mythos scholar must choose to bond with an object, inscribing that object with eldritch runes. This alters arcane bond.",
     "raw_tokens": [
       {

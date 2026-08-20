@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Martial Artist ~ Martial Arts Master",
     "name": "Martial Arts Master",
-    "class": "Martial Artist",
+    "class": "Monk",
     "description": "At 4th level, a martial artist may use his monk level to qualify for feats with a fighter level prerequisite when those feats are applied to unarmed strikes or weapons with the monk special quality. This ability replaces slow fall.",
     "raw_tokens": [
       {

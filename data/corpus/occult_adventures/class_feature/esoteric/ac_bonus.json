@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Esoteric ~ AC Bonus",
     "name": "AC Bonus",
-    "class": "Esoteric",
+    "class": "Magus",
     "description": "[not implemented]At 7th level when an esoteric wears light or no armor, he gains a +1 dodge bonus to AC and CMD. This bonus increases by 1 at 13th level. He loses these bonuses while immobilized or helpless, or while wearing medium or heavy armor, using a shield, or carrying a medium or heavy load. This ability replaces medium armor and heavy armor.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Shigenjo ~ Final Revelation",
     "name": "Final Revelation",
-    "class": "Shigenjo",
+    "class": "Oracle",
     "description": "Upon reaching 20th level, you achieve true enlightenment and becomes one with the celestial spirits. You gain the ability to speak with any creature that uses a language. For %1 days, you can ignore the negative effects of extreme weather, starvation, thirst, and exhaustion. If you die, your powerful connection to the celestial realm allows you to be reborn 3 days later (as reincarnate). This replaces the final revelation of the shigenjo's mystery.|WISSCORE",
     "raw_tokens": [
       {

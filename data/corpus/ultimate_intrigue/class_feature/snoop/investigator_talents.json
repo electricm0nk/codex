@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Snoop ~ Investigator Talents",
     "name": "Investigator Talents",
-    "class": "Snoop",
+    "class": "Rogue",
     "description": "Beginning at 2nd level, and each time she selects a new rogue talent, a snoop can instead select one of the following investigator talents: eidetic recollection, empathy, hidden agendas, inspired alertness, inspired intimidator, item lore, or underworld inspiration. Her effective investigator level for the purpose of these talents is equal to her rogue level. She still can't use inspiration on attack rolls or saving throws (so, for instance, she can't use the second part of hidden agendas).",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sacred Fist ~ Bonus Style Feat",
     "name": "Bonus Style Feat",
-    "class": "Sacred Fist",
+    "class": "Warpriest",
     "description": "The sacred fist gains a style feat as a bonus feat. The sacred fist must meet the style feat's prerequisites. He uses his warpriest levels as monk levels for the purposes of meeting the feat's prerequisites. At 12th and 18th levels, a sacred fist gains either another style feat or a feat that requires a style feat as a prerequisite.",
     "raw_tokens": [
       {

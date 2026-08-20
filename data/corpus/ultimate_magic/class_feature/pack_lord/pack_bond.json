@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Pack Lord ~ Pack Bond",
     "name": "Pack Bond",
-    "class": "Pack Lord",
+    "class": "Druid",
     "description": "You may not select a domain and must choose an animal companion. You gain a +2 bonus on wild empathy and Handle Animal checks made regarding your animal companion. You may have more than one animal companion, but you must divide up your effective druid level between your companions to determine the abilities of each companion. Each time your druid level increases, you must decide how to allocate the increase among your animal companions (including the option of adding a new 1st-level companion). Once a druid level is allocated to a particular companion, it cannot be redistributed while that companion is in your service (you must release the companion or wait until the companion dies to allocate its levels to another companion, which you can do the next time you prepare spells). The share spells animal companion ability only applies to one animal companion at a time - you cannot use it to cast a one-target spell and have it affect all of your animal companions.",
     "raw_tokens": [
       {

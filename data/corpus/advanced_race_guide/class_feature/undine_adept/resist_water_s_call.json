@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Undine Adept ~ Resist Water's Call",
     "name": "Resist Water's Call",
-    "class": "Undine Adept",
+    "class": "Druid",
     "description": "An undine adept gains a +4 bonus on saving throws against the spell-like and supernatural abilities of outsiders with the aquatic or water subtype, fey with the aquatic or water subtype, and spells and effects with the water descriptor.",
     "raw_tokens": [
       {

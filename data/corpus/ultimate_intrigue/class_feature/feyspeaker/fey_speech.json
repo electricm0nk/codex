@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Feyspeaker ~ Fey Speech",
     "name": "Fey Speech",
-    "class": "Feyspeaker",
+    "class": "Druid",
     "description": "A feyspeaker's words carry a tiny fragment of the otherworldly power of the fey's voices. She gains Bluff, Diplomacy, Disguise, and Sense Motive as class skills. A feyspeaker also learns Sylvan as a bonus language. In addition, the feyspeaker gains a number of skill ranks at each level equal to 6 + her Intelligence modifier, instead of 4 + her Intelligence modifier. The feyspeaker's base attack bonus from her druid levels is equal to half her druid level (much like a sorcerer's base attack bonus is calculated), rather than the usual druid base attack bonus.",
     "raw_tokens": [
       {

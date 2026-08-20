@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Relic Channeler ~ Powerful Bond",
     "name": "Powerful Bond",
-    "class": "Relic Channeler",
+    "class": "Medium",
     "description": "Because of habitually channeling the same spirits and possessing physical links to the spirits' former lives and legends, a relic channeler possesses a strong bond with her spirits. She receives the benefit of the Alertness feat whenever she is suffering a spirit's influence penalty. She chooses two spells of each level with the archmage arcana and divine surge spirit powers instead of one, two exotic weapon proficiencies with champion's prowess instead of one, three combat feats with legendary champion instead of two, and three skills with trickster's edge instead of two. This ability alters spirit.",
     "raw_tokens": [
       {

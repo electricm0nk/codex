@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Profiler ~ Pack Psychology",
     "name": "Pack Psychology",
-    "class": "Profiler",
+    "class": "Investigator",
     "description": "A profiler can understand the way that groups act together, allowing him to exploit the vulnerabilities in their attacks. A profiler can't be flanked by creatures with an Intelligence score and he gains a +1 bonus to his AC against such creatures when they would otherwise flank him, as he plays their movements against each other.",
     "raw_tokens": [
       {

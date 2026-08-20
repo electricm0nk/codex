@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Shigenjo ~ Ki Curse",
     "name": "Ki Curse",
-    "class": "Shigenjo",
+    "class": "Oracle",
     "description": "Spend 1 Ki Point to treat your oracle level as 5 higher for the purpose of determining the effects of your curse for the next round.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Magician ~ Dweomercraft",
     "name": "Dweomercraft",
-    "class": "Magician",
+    "class": "Bard",
     "description": "A magician can use performance to manipulate magical energies. Allies of the magician gain a +%1 bonus on caster level checks, concentration checks, and attack rolls with spells and spell-like abilities. This bonus increases by +1 at 5th level and every six levels thereafter. This ability relies on visual and audible components. It replaces inspire courage.|(BardLVL/5)+1",
     "raw_tokens": [
       {

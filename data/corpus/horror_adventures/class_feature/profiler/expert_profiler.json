@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Profiler ~ Expert Profiler",
     "name": "Expert Profiler",
-    "class": "Profiler",
+    "class": "Investigator",
     "description": "A profiler gains a +%1 bonus on Sense Motive checks.|max(1,InvestigatorLVL/2)",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tranquil Guardian ~ Apostle of Peace",
     "name": "Apostle of Peace",
-    "class": "Tranquil Guardian",
+    "class": "Paladin",
     "description": "The tranquil guardian's DR increases to 10/evil, and whenever she channels positive energy or uses lay on hands to heal, she heals the maximum possible amount. In addition, any creature struck by her Touch of Serenity, even if it saves, must make an additional Will save at DC of %1 the next time it tries to attack. If it fails this save, the attack (including spells or special abilities) automatically fails.|10+PaladinLVL/2+CHA",
     "raw_tokens": [
       {

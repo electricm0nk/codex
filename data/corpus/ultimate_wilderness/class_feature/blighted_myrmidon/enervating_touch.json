@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Blighted Myrmidon ~ Enervating Touch",
     "name": "Enervating Touch",
-    "class": "Blighted Myrmidon",
+    "class": "Antipaladin",
     "description": "When she damages a creature with her touch of corruption, a blighted myrmidon can suppress the vital force of her target for %1 rounds. While affected, when the target regains hit points, it regains only half the number of hit points it would otherwise receive, and it can't gain temporary hit points. The target can attempt a Fortitude save (DC %1) to negate this effect.|AntipaladinLVL|AntipaladinLVL/2+CHA",
     "raw_tokens": [
       {

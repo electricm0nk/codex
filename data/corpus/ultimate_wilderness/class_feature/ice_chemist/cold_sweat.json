@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ice Chemist ~ Cold Sweat",
     "name": "Cold Sweat",
-    "class": "Ice Chemist",
+    "class": "Alchemist",
     "description": "An ice chemist channels her affinity for cold energy into her personal space, keeping herself and her gear cool. She gains cold resistance equal to her alchemist level and can survive comfortably in temperatures as low as -50º Fahrenheit.",
     "raw_tokens": [
       {

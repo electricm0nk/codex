@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Elementalist Shifter ~ Elemental Strike",
     "name": "Elemental Strike",
-    "class": "Elementalist Shifter",
+    "class": "Shifter",
     "description": "As a swift action, an elementalist shifter can charge her melee attacks with elemental energy. The elementalist shifter can charge her attacks only with an element she has chosen with elemental aspect. Once charged, each melee attack the elementalist shifter makes until the start of her next turn deals an additional %1d6 points of energy damage based on the element she chooses when taking this action. An elementalist shifter can't use elemental strike while under a polymorph effect.|1+(min(5,ShifterLVL/4))",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cult Hunter ~ Sense Madness",
     "name": "Sense Madness",
-    "class": "Cult Hunter",
+    "class": "Investigator",
     "description": "A cult hunter adds a +%1 bonus on Sense Motive checks, or double that bonus to determine whether a creature suffers from natural or magical insanity.|max(1,InvestigatorLVL/2)",
     "raw_tokens": [
       {

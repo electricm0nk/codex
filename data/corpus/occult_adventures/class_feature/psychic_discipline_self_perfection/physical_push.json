@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Discipline Self-Perfection ~ Physical Push",
     "name": "Physical Push",
-    "class": "Psychic Discipline Self-Perfection",
+    "class": "Psychic",
     "description": "By channeling your psychic energy, you can make your body capable of greater physical feats. When you attempt a Strength-, Dexterity-, or Constitution based ability check or skill check, you can gain a bonus on the check equal to your Wisdom bonus. You can use this ability a number of times per day equal to your Wisdom modifier. Using this ability is part of the action used to attempt the skill check (if any). If you succeed at the check, you regain 1 point in your phrenic pool.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Archaeologist ~ Uncanny Dodge",
     "name": "Uncanny Dodge",
-    "class": "Archaeologist",
+    "class": "Bard",
     "description": "At 2nd level, an Archaeologist gains uncanny dodge, as the rogue class feature of the same name. This ability replaces well-versed.",
     "raw_tokens": [
       {

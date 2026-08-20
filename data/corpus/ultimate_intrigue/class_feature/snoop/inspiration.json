@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Snoop ~ Inspiration",
     "name": "Inspiration",
-    "class": "Snoop",
+    "class": "Rogue",
     "description": "A snoop gains an ability similar to the investigator's inspiration class ability (Advanced Class Guide p31). The snoop has an inspiration pool %1. An investigator's inspiration pool refreshes each day, typically after she gets a restful night's sleep. Unlike an investigator, a snoop can only use inspiration add 1d6 to the result skill checks, not on attack rolls or saving throws. This ability is otherwise identical to the investigator class ability of the same name (A free action, and can be used even when she takes 10 or 20).",
     "raw_tokens": [
       {

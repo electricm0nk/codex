@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Unbreakable ~ Miraculous Recovery",
     "name": "Miraculous Recovery",
-    "class": "Unbreakable",
+    "class": "Fighter",
     "description": "At 17th level, when an unbreakable makes a saving throw to recover from an ongoing effect, he may roll twice and choose the better roll. This ability replaces weapon training 4.",
     "raw_tokens": [
       {

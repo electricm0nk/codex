@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Searcher ~ Inspiration",
     "name": "Inspiration",
-    "class": "Psychic Searcher",
+    "class": "Oracle",
     "description": "A psychic searcher gains an inspiration pool, as the investigator class ability. A psychic searcher uses her oracle level as her investigator level to determine the effects of this ability. A psychic searcher has the ability to augment skill checks and ability checks through her brilliant inspiration.  The psychic searcher has an inspiration pool equal to %1.  A psychic searcher's inspiration pool refreshes each day,  usually when she refreshes her spells. As a free action, she can expend one use of inspiration from her pool to add %2d%3 to the result of that check, including any on which she takes 10 or 20. This choice is made after the check is rolled and before the results are revealed. A psychic searcher can only use inspiration once per check or roll.  She gains free uses of inspiration on Diplomacy, Knowledge (arcana, history, local, nobility, planes, religion), and Sense Motive skill checks without spending a use of inspiration, provided she's trained in that skill. A psychic searcher's inspiration pool is based on her Charisma modifier, not Intelligence modifier.|PsychicSearcherInspirationPoolBonus|PsychicSearcherInspirationDice|PsychicSearcherInspirationDieSize",
     "raw_tokens": [
       {

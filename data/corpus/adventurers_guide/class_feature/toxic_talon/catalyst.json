@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Toxic Talon ~ Catalyst",
     "name": "Catalyst",
-    "class": "Toxic Talon",
+    "class": "Rogue",
     "description": "A toxic talon can use secret alchemical techniques to enhance a poison as he applies it to a weapon, increasing the save DC of the poison by %1. This increase to the save DC lasts for 1 minute or until the poison is used up, whichever comes first. A toxic talon can use catalyst once per hour.|ToxicTalonCatalystBonus",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sword of Valor ~ Worthy Enemy",
     "name": "Worthy Enemy",
-    "class": "Sword of Valor",
+    "class": "Paladin",
     "description": "When a sword of valor critically hits an enemy with a smite, the target must make a Will saving throw (DC %1) or be compelled to surrender to the paladin, as if affected by a suggestion spell (CL %2) to lay down arms and give up the fight. An enemy that succumbs to this ability remains docile until it is injured by the paladin or one of his obvious allies, at which point the compulsion to surrender immediately ends and the enemy is free to make his own choices again. If the enemy makes the save, it is not subject to this ability for 24 hours. Worthy enemy is a mind-affecting effect.|10+PaladinLVL/2+CHA|PaladinLVL",
     "raw_tokens": [
       {

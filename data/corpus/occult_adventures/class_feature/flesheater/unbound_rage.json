@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Flesheater ~ Unbound Rage",
     "name": "Unbound Rage",
-    "class": "Flesheater",
+    "class": "Barbarian",
     "description": "At 11th level, a flesheater can draw in mass from the Ethereal Plane to enlarge herself when she enters a rage, as long as the creature whose flesh she last consumed was at least one size category larger than her base size. Unbound rage affects her as enlarge person, except she receives a +4 size bonus to Strength and an additional -2 penalty to Intelligence. This ability replaces greater rage.",
     "raw_tokens": [
       {

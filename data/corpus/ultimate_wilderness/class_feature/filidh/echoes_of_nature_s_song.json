@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Filidh ~ Echoes of Nature's Song",
     "name": "Echoes of Nature's Song",
-    "class": "Filidh",
+    "class": "Bard",
     "description": "A filidh can use his bardic performance to imbue his allies with subconscious knowledge of their own futures, improving their reflexes and ability to avoid danger. An affected ally receives a +%1 insight bonus on Reflex saving throws and to AC. This performance is a mind-affecting ability and relies on audible components. |min(4,(BardLVL+1)/6)",
     "raw_tokens": [
       {

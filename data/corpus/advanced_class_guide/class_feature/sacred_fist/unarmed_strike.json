@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sacred Fist ~ Unarmed Strike",
     "name": "Unarmed Strike",
-    "class": "Sacred Fist",
+    "class": "Warpriest",
     "description": "A sacred fist gains Improved Unarmed Strike as a bonus feat. He uses his warpriest levels as monk levels for determining the amount of damage dealt with an unarmed strike.",
     "raw_tokens": [
       {

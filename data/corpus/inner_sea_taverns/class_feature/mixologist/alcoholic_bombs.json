@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mixologist ~ Alcoholic Bombs",
     "name": "Alcoholic Bombs",
-    "class": "Mixologist",
+    "class": "Alchemist",
     "description": "When the mixologist creates a bomb, he can cause the detonation to produce intoxicating fumes. A creature that takes a direct hit from an alcoholic bomb becomes tipsy (see page 54) if it fails a Fortitude saving throw (DC %1). If the creature is already tipsy, it becomes drunk instead. If the creature is already drunk, it becomes soused instead. A soused creature that fails its Fortitude saving throw passes out for 1d3 hours and wakes up with a hangover. This ability counts as a discovery that modifies bombs, so it doesn't stack with other discoveries that modify bombs.|AlchemistDiscoveryDC",
     "raw_tokens": [
       {

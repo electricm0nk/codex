@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Court Bard ~ Mockery",
     "name": "Mockery",
-    "class": "Court Bard",
+    "class": "Bard",
     "description": "A court bard of 3rd level or higher can subtly ridicule and defame a specific individual. The bard selects one target who can hear his performance. That individual takes a -2 penalty on Charisma checks and Charisma-related skill checks as long as the bard continues performing. This penalty increases by -1 every four levels after 3rd. Mockery is a language-dependent, mind-affecting ability that relies on audible components. This performance replaces inspire competence.|((BardLVL+1)/4)+2",
     "raw_tokens": [
       {

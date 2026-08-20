@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Evangelist ~ Public Speaker",
     "name": "Public Speaker",
-    "class": "Evangelist",
+    "class": "Cleric",
     "description": "An evangelist gains Perform as a class skill. In addition, she is trained to project her voice with great skill and effect; the DC to hear her speak in difficult conditions is reduced by %1.|MAX(classlevel(\"Cleric\") + CHA,0)",
     "raw_tokens": [
       {

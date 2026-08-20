@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fell Rider ~ Deadly Rampage",
     "name": "Deadly Rampage",
-    "class": "Fell Rider",
+    "class": "Cavalier",
     "description": "A mounted fell rider no longer provokes attacks of opportunity when he attempts to overrun a creature. He can make a single melee attack against the creature as a free action if the overrun attempt succeeds.",
     "raw_tokens": [
       {

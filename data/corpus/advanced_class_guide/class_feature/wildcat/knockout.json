@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wildcat ~ Knockout",
     "name": "Knockout",
-    "class": "Wildcat",
+    "class": "Monk",
     "description": "A wildcat can unleash a devastating attack that can instantly knock a target unconscious. He must announce this intent before making his attack roll. If the wildcat's strike is successful and the target takes damage from the blow, the target must succeed at a Fortitude saving throw (DC %1) or fall unconscious for 1d6 rounds. Each round on its turn, the unconscious target can attempt a new saving throw to end the effect; this is a fullround action that does not provoke attacks of opportunity. Creatures immune to critical hits or nonlethal damage are immune to this ability.|10+floor(MonkLVL/2)+max(STR,DEX)",
     "raw_tokens": [
       {

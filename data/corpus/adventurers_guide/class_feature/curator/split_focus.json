@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Curator ~ Split Focus",
     "name": "Split Focus",
-    "class": "Curator",
+    "class": "Occultist",
     "description": "A curator has a number of points of mental focus equal to only his occultist level. This ability alters mental focus.",
     "raw_tokens": [
       {

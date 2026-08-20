@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Silver Balladeer ~ Mass Break Curse",
     "name": "Mass Break Curse",
-    "class": "Silver Balladeer",
+    "class": "Bard",
     "description": "At 18th level, a silver balladeer can suppress all curses among any number of allies within 30 feet when using break curse. Every 4 consecutive rounds of using this performance, the silver balladeer can attempt a caster level check to remove a single curse on a single ally affected by this performance, as if she had cast remove curse. This ability replaces mass suggestion.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Winged Marauder ~ Flying Beast Tamer",
     "name": "Flying Beast Tamer",
-    "class": "Winged Marauder",
+    "class": "Alchemist",
     "description": "A winged marauder acquires a flying mount as an animal companion. This works as the druid animal companion class feature, except the marauder must select a dire bat (Bestiary p.30) or giant vulture (Bestiary 3 p.312). The marauder's effective druid level is equal to his alchemist level. A marauder and his companion don't gain the share spells ability.",
     "raw_tokens": [
       {

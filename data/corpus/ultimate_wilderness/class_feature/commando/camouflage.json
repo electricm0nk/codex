@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Commando ~ Camouflage",
     "name": "Camouflage",
-    "class": "Commando",
+    "class": "Gunslinger",
     "description": "As long as the commando has 1 point of grit, she gains the camouflage ranger class feature.",
     "raw_tokens": [
       {

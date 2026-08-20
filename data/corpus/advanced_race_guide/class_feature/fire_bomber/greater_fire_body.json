@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fire Bomber ~ Greater Fire Body",
     "name": "Greater Fire Body",
-    "class": "Fire Bomber",
+    "class": "Alchemist",
     "description": "Fire bombers add elemental body IV to their spell list. Elemental body extracts prepared using this ability are limited to fire elementals only.",
     "raw_tokens": [
       {

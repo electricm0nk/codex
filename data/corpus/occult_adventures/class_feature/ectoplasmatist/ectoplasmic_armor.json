@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ectoplasmatist ~ Ectoplasmic Armor",
     "name": "Ectoplasmic Armor",
-    "class": "Ectoplasmatist",
+    "class": "Spiritualist",
     "description": "[not implemented as temp bonus]At 4th level when an ectoplasmatist manifests her spiritual lash ability, tendrils of ectoplasmic material envelop her body, granting her a +4 armor bonus to AC. At 12th level, the ectoplasmatist's armor bonus to AC increases to +6 and is treated as ghost touch armor. This ability replaces spiritual interference and greater spiritual interference.",
     "raw_tokens": [
       {

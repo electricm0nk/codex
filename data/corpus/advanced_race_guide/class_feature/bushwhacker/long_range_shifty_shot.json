@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bushwhacker ~ Long Range Shifty Shot",
     "name": "Long Range Shifty Shot",
-    "class": "Bushwhacker",
+    "class": "Gunslinger",
     "description": "A bushwhacker can double the range at which she deals extra damage from a sneak attack or shifty shot (from 30 feet to 60 feet) with a firearm by spending 1 grit point. When she spends this grit point, she must still have at least 1 grit point left to deal extra damage from shifty shot if she is using this deed.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fighter Two-Handed Fighter ~ Devastating Blow",
     "name": "Devastating Blow",
-    "class": "Fighter Two-Handed Fighter",
+    "class": "Fighter",
     "description": "At 19th level, as a standard action, a two-handed fighter may make a single melee attack with a two-handed weapon at a -5 penalty. If the attack hits, it is treated as a critical threat. Special weapon abilities that activate only on a critical hit do not activate if this critical hit is confirmed. This ability replaces armor mastery.",
     "raw_tokens": [
       {

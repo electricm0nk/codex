@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Shadow Puppeteer ~ Bardic Performance",
     "name": "Bardic Performance",
-    "class": "Shadow Puppeteer",
+    "class": "Bard",
     "description": "A shadow puppeteer gains the following types of bardic performance. The character must be able to perform shadow puppetry in order to activate any of these abilities. Shadow puppetry uses Perform (act), and requires a light source. These abilities replace all levels of inspire courage and inspire competence.",
     "raw_tokens": [
       {

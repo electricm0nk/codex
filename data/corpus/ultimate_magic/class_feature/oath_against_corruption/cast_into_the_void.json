@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Oath against Corruption ~ Cast into the Void",
     "name": "Cast into the Void",
-    "class": "Oath against Corruption",
+    "class": "Paladin",
     "description": "You become a conduit for the power of your god. Your DR increases to 10/evil. Whenever you use smite evil and successfully strike an aberration, the creature must make a Will save (DC %1) or be banished to oblivion. This ability does not kill the creature, but it is sent to a remote place, such as deep underground or far into space (if it is a creature native to space), and cannot return under its own power for at least 100 years. Whenever the paladin channels positive energy or uses lay on hands to heal a creature, she heals the maximum possible amount.|CastIntoTheVoidDC",
     "raw_tokens": [
       {

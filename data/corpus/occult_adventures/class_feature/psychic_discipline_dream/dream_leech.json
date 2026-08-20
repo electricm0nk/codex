@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Discipline Dream ~ Dream Leech",
     "name": "Dream Leech",
-    "class": "Psychic Discipline Dream",
+    "class": "Psychic",
     "description": "While adjacent to a sleeping or unconscious creature, you can take a swift action to siphon that creature's dreams, thereby learning new things about your own mind. The creature can attempt a Will save to negate this effect; such creatures are never considered willing. Creatures that don't dream are immune to this effect. If the subject fails the save, you gain a +4 bonus on your next Bluff, Diplomacy, or Intimidate check against the subject within the next 24 hours, and you regain 1 point in your phrenic pool. You can use this ability a number of times per day equal to your Charisma modifier, but no more than once per hour and no more than once per creature per day.",
     "raw_tokens": [
       {

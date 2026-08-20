@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cult Leader ~ Sneak Attack",
     "name": "Sneak Attack",
-    "class": "Cult Leader",
+    "class": "Warpriest",
     "description": "A cult leader gains the sneak attack ability, as the rogue class feature. If he already has sneak attack from another class, the extra damage from the classes that grant sneak attack stack for the purpose of determining the sneak attack's extra damage dice. This extra damage is %1d6.|SneakAttackDice",
     "raw_tokens": [
       {

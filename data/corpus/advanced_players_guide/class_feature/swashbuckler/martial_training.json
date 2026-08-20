@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Swashbuckler ~ Martial Training",
     "name": "Martial Training",
-    "class": "Swashbuckler",
+    "class": "Rogue",
     "description": "You may select one martial weapon to add to your list of weapon proficiencies. In addition, you may take the combat trick rogue talent up to two times.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Warrior of the Holy Light ~ Shining Light",
     "name": "Shining Light",
-    "class": "Warrior of the Holy Light",
+    "class": "Paladin",
     "description": "At 14th level, a warrior of the holy light can unleash a 30-foot burst of pure, white light as a standard action. Evil creatures within this burst take %1d6 points of damage for every two paladin levels and are blinded for 1 round. Evil dragons, evil outsiders, and evil undead are blinded for 1d4 rounds on a failed save. A Reflex save DC %2 halves this damage and negates the blindness. The DC of this save is equal to 10 + 1/2 the warrior of the holy light's level + the warrior of the holy light's Charisma modifier. Good creatures within this burst are healed %1d6 points of damage per two paladin levels and receive a +2 sacred bonus on ability checks, attack rolls, saving throws, and skill checks for 1 round. A warrior of the holy light can use this ability %3/day [once per day at 14th level plus one additional time per day at 17th and 20th levels. This ability replaces aura of faith.|ShiningLightDamage|ShiningLightDC|ShiningLightTimes",
     "raw_tokens": [
       {

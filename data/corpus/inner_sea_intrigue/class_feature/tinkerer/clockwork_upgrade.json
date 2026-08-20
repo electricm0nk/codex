@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tinkerer ~ Clockwork Upgrade",
     "name": "Clockwork Upgrade",
-    "class": "Tinkerer",
+    "class": "Alchemist",
     "description": "A tinkerer has learned how to change the type of magic item her clockwork familiar can carry. This requires 1 hour of uninterrupted work. A tinkerer can change the type of item her clockwork familiar carries only once every 24 hours. Additionally, a tinkerer can remove a spent item and install a new one as a move action.",
     "raw_tokens": [
       {

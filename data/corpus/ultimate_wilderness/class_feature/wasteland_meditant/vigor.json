@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wasteland Meditant ~ Vigor",
     "name": "Vigor",
-    "class": "Wasteland Meditant",
+    "class": "Monk",
     "description": "When a wasteland meditant succeeds at a Fortitude save against an effect with a partial effect on a successful save, he instead suffers no effect.",
     "raw_tokens": [
       {

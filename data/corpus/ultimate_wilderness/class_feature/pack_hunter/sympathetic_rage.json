@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Pack Hunter ~ Sympathetic Rage",
     "name": "Sympathetic Rage",
-    "class": "Pack Hunter",
+    "class": "Barbarian",
     "description": "If an ally within 30 feet is bloodraging or raging, a pack hunter counts as raging even if knocked unconscious. She has to have been raging when incapacitated to maintain her rage, and she ceases raging normally if she depletes her maximum number of rounds of rage in a day.",
     "raw_tokens": [
       {

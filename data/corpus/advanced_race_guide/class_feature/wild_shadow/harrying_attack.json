@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wild Shadow ~ Harrying Attack",
     "name": "Harrying Attack",
-    "class": "Wild Shadow",
+    "class": "Ranger",
     "description": "A wild shadow can use his knowledge of terrain to make shrewd attacks in combat. Such attacks can make foes fumble or cause them to become entangled within areas of the wild shadow's favored terrain. As a standard action, the wild shadow denotes one target within line of sight and within one of his favored terrains as his harried prey. Once the foe is so designated, every time the wild shadow hits this harried prey with a melee or ranged weapon attack (either manufactured or natural), that creature is entangled for 1 round. A wild shadow can have no more than one harried prey at a time and that creature must correspond to one of his favored enemy types. He can dismiss this effect at any time as a free action, be he cannot select a new harried prey for 24 hours. If the wild shadow sees proof that his harried prey is dead, he can select a new harried prey after waiting 1 hour.",
     "raw_tokens": [
       {

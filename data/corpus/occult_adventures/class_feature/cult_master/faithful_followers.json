@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cult Master ~ Faithful Followers",
     "name": "Faithful Followers",
-    "class": "Cult Master",
+    "class": "Mesmerist",
     "description": "A cult master begins to attract followers to his espoused beliefs, thanks to his magnetic personality. The cult master gains Leadership as a bonus feat.",
     "raw_tokens": [
       {

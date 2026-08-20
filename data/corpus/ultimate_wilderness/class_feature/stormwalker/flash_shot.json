@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Stormwalker ~ Flash Shot",
     "name": "Flash Shot",
-    "class": "Stormwalker",
+    "class": "Ranger",
     "description": "When a stormwalker uses flash step, he can make a ranged attack both before and after his movement. Both of these attacks are made at his highest base attack bonus.",
     "raw_tokens": [
       {

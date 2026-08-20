@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Soul Sentinel ~ Greater Reprieve",
     "name": "Greater Reprieve",
-    "class": "Soul Sentinel",
+    "class": "Paladin",
     "description": "The soul sentinel suppresses the stain of corruption on the spirits of those she heals. Whenever she uses her lay on hands ability to heal a living creature (other than herself) or damage an undead creature, in place of applying one of her other mercies, she can suppress the stain from a corrupted creature's most recent manifestation for 1 minute (for more information about corruption and manifestations, see page 14). Any gift from that manifestation is unaffected and remains available, unless the manifestation has a special note requiring the gift and stain be taken together, in which case greater reprieve also suppresses the gift.",
     "raw_tokens": [
       {

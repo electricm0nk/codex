@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Court Bard ~ Satire",
     "name": "Satire",
-    "class": "Court Bard",
+    "class": "Bard",
     "description": "A court bard can use performance to undermine the confidence of enemies who hear it, causing them to take a -%1 penalty on attack and damage rolls (minimum 1) and a -%1 penalty on saves against fear and charm effects as long as the bard continues performing. This penalty increases by -1 at 5th level and every six levels thereafter. Satire is a language-dependent, mind-affecting ability that uses audible components. This performance replaces inspire courage.|(BardLVL+1)/6",
     "raw_tokens": [
       {

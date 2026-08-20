@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Leshy Warden ~ Leshy Tender",
     "name": "Leshy Tender",
-    "class": "Leshy Warden",
+    "class": "Druid",
     "description": "At 4th level, a leshy warden chooses either to grant her leaf leshy a +2 increase to Strength and Dexterity or to transform it into a gourd leshy.",
     "raw_tokens": [
       {

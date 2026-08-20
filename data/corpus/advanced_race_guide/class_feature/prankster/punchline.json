@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Prankster ~ Punchline",
     "name": "Punchline",
-    "class": "Prankster",
+    "class": "Bard",
     "description": "The prankster can use his performance to tell a punchline to amuse a creature he has already mocked, goading it into hideous laughter (as the spell). Using this ability does not disrupt the mock effect, but it does require a standard action to activate (in addition to the free action to continue the mock effect). A prankster can use this ability more than once against an individual creature during an individual performance. Telling a punchline does not count against a prankster's daily use of bardic performance. A Will saving throw (DC %1) negates the effect. This ability affects only a single creature. Punchline is an enchantment (compulsion), mind affecting, language dependent ability and relies on audible components.|10+BardLVL/2+CHA",
     "raw_tokens": [
       {

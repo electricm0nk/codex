@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fighter Weapon Master ~ Critical Specialist",
     "name": "Critical Specialist",
-    "class": "Fighter Weapon Master",
+    "class": "Fighter",
     "description": "The save DCs of any effects caused by a critical hit with your chosen weapon increase by +4. This ability replaces weapon training 4.",
     "raw_tokens": [
       {

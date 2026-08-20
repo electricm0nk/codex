@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cat Burglar ~ Rogue Talents",
     "name": "Rogue Talents",
-    "class": "Cat Burglar",
+    "class": "Rogue",
     "description": "The following rogue talents complement the cat burglar archetype: fast stealth, quick disable, convincing fakes, dodge trap, fast picks, terrain mastery.",
     "raw_tokens": [
       {

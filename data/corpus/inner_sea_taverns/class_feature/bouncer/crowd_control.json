@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bouncer ~ Crowd Control",
     "name": "Crowd Control",
-    "class": "Bouncer",
+    "class": "Brawler",
     "description": "When in a bar fight, a bouncer has her tenacity (see page 56) reduced by the crowd at the end of a round by the minimum possible amount. In addition, when she takes the mix it up action, she reduces the tenacity of the crowd by an additional amount equal to her brawler level.",
     "raw_tokens": [
       {

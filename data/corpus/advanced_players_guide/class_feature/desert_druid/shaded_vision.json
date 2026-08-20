@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Desert Druid ~ Shaded Vision",
     "name": "Shaded Vision",
-    "class": "Desert Druid",
+    "class": "Druid",
     "description": "At 9th level, a desert druid becomes immune to blinding and dazzling effects and gains a +2 bonus on saving throws against gaze attacks and illusions of the figment and pattern subschools. This ability replaces venom immunity.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Untouchable Rager ~ Resistance Control",
     "name": "Resistance Control",
-    "class": "Untouchable Rager",
+    "class": "Bloodrager",
     "description": "[Not implemented] At 14th level, an untouchable rager gains the spell resistance from raging resistance even while not in a bloodrage. Additionally, as long as the untouchable rager isn't bloodraging, he can turn off this spell resistance.",
     "raw_tokens": [
       {

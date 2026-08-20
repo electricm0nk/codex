@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Involutionist ~ Spirit Manifestation",
     "name": "Spirit Manifestation",
-    "class": "Involutionist",
+    "class": "Spiritualist",
     "description": "When an involutionist uses her bonded manifestation ability, she can instead manifest her spirit phantom's spirit animal special ability and use her spirit phantom's hexes as if they were her own. Hexes used during this manifestation count toward any limited number of uses per day. This ability alters bonded manifestation.",
     "raw_tokens": [
       {

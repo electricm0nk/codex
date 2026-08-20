@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Scarab Stalker ~ Sacred Animal Focus",
     "name": "Sacred Animal Focus",
-    "class": "Scarab Stalker",
+    "class": "Hunter",
     "description": "A scarab stalker can select from the bee, bull, cat, cow, crocodile, falcon, ibis, jackal, kite, leopard, lion, ram, scarab beetle, scorpion, sha, snake, and uraeus animal foci, rather than the foci normally available to a hunter.",
     "raw_tokens": [
       {

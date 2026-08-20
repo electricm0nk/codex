@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Trapper ~ Trap",
     "name": "Trap",
-    "class": "Trapper",
+    "class": "Ranger",
     "description": "You can use ranger traps %1/day, DC %2 for Perception (to notice), Disable Device (to disable), and saving throws (to avoid).|TrapTimes|TrapDC",
     "raw_tokens": [
       {

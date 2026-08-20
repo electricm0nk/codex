@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Gunmaster ~ Gunmaster",
     "name": "Gunmaster",
-    "class": "Gunmaster",
+    "class": "Vigilante",
     "description": "A gunmaster gains the gunslinger's gunsmith ability (Ultimate Combat 9). Additionally, the Gunsmithing bonus feat allows the gunmaster to repair and restore his initial battered firearm as if he were a gunslinger.",
     "raw_tokens": [
       {

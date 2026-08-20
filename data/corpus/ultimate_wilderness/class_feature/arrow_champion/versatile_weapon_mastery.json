@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Arrow Champion ~ Versatile Weapon Mastery",
     "name": "Versatile Weapon Mastery",
-    "class": "Arrow Champion",
+    "class": "Swashbuckler",
     "description": "An arrow champion gains the benefits of swashbuckler weapon mastery when using a light or one-handed piercing melee weapon or a bow. This alters swashbuckler weapon mastery.",
     "raw_tokens": [
       {

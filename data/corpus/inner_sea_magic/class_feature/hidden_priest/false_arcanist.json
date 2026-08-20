@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Hidden Priest ~ False Arcanist",
     "name": "False Arcanist",
-    "class": "Hidden Priest",
+    "class": "Cleric",
     "description": "A hidden priest is able to disguise his cleric spellcasting, presenting it as arcane magic of some kind. A hidden priest adds half his class level (minimum +1) on all Bluff skill checks to send secret messages about religious matters, and on all Sense Motive checks to recognize similar messages. He also adds this bonus on Perception and Sense Motive checks relating to agents of the laws against his religion (including city guards in lands where these laws are in effect). This ability replaces one of the cleric's two 1st-level domain powers (her choice).",
     "raw_tokens": [
       {

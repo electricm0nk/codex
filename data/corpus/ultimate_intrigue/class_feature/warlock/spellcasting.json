@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Warlock ~ Spellcasting",
     "name": "Spellcasting",
-    "class": "Warlock",
+    "class": "Vigilante",
     "description": "A warlock casts arcane spells and cantrips as a magus. She prepares spells using a spellbook, choosing them from the 6th-level and lower spells from the sorcerer/wizard spell list; higher-level sorcerer/wizard spells are not on the warlock's spell list.",
     "raw_tokens": [
       {

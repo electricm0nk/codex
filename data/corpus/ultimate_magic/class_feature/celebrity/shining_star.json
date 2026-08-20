@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Celebrity ~ Shining Star",
     "name": "Shining Star",
-    "class": "Celebrity",
+    "class": "Bard",
     "description": "You have learned how to focus attention on yourself so thoroughly that even the presence of danger does not distract your adoring crowd. When using fascinate, a target making a save to break the effect because of a potential threat takes a -4 penalty on that save, and even obvious threats require a save rather than automatically breaking the effect. Creatures affected by the bard's fascinate ability ignore the shaken condition.",
     "raw_tokens": [
       {

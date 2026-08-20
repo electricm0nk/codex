@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Oheno Liberator ~ Catch Off-Guard",
     "name": "Catch Off-Guard",
-    "class": "Oheno Liberator",
+    "class": "Rogue",
     "description": "At 4th level, the Okeno liberator is adept at improvising weapons. She gains Catch Off-Guard as a bonus feat. This ability replaces uncanny dodge.",
     "raw_tokens": [
       {

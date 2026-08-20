@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Raging Cannibal ~ Intimidating Gouge",
     "name": "Intimidating Gouge",
-    "class": "Raging Cannibal",
+    "class": "Barbarian",
     "description": "When a raging cannibal confirms a critical hit against a creature of the same creature type as herself with her bite attack while raging, she gains a +%1 bonus on Intimidate checks for the duration of the rage.|BarbarianLVL/2",
     "raw_tokens": [
       {

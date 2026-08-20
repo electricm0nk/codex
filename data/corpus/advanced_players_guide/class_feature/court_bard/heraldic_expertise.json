@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Court Bard ~ Heraldic Expertise",
     "name": "Heraldic Expertise",
-    "class": "Court Bard",
+    "class": "Bard",
     "description": "A court bard gains a bonus equal to half his bard level on Diplomacy, Knowledge (history), Knowledge (local), and Knowledge (nobility) checks [Bonus is %1] (minimum +1).%2/day, the court bard can also reroll a check against one of these skills, though he must take the result of the second roll even if it is worse. He can reroll one additional time per day at 5th level and every five levels thereafter. This ability replaces bardic knowledge.|BardLVL/2|(BardLVL/5)+1",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sage Counselor ~ Cunning Fist",
     "name": "Cunning Fist",
-    "class": "Sage Counselor",
+    "class": "Monk",
     "description": "A sage counselor gains Combat Expertise as a bonus feat, even if he doesn't meet the prerequisites, and he can ignore the Intelligence prerequisite on feats that have Combat Expertise as a prerequisite.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dirty Fighter ~ Double Tricks",
     "name": "Double Tricks",
-    "class": "Dirty Fighter",
+    "class": "Fighter",
     "description": "When performing a combat maneuver, the dirty fighter may apply %1 different conditions to his target instead of one. Each penalty condition requires a separate action to remove. This ability replaces weapon training 3 and 4.|DirtyFighterDirtyTricksCount",
     "raw_tokens": [
       {

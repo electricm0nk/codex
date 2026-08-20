@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Brawler ~ Weapon Mastery",
     "name": "Weapon Mastery",
-    "class": "Brawler",
+    "class": "Fighter",
     "description": "A brawler must select a close weapon for this ability.",
     "raw_tokens": [
       {

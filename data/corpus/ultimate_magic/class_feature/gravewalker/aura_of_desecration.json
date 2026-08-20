@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Gravewalker ~ Aura of Desecration",
     "name": "Aura of Desecration",
-    "class": "Gravewalker",
+    "class": "Witch",
     "description": "You can create a %1-foot-radius aura of evil power. This aura increases the DC of channeled negative energy by +1 and the turn resistance of undead by +1.|AuraOfDesecrationRadius",
     "raw_tokens": [
       {

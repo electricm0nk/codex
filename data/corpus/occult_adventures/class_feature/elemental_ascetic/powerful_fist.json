@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Elemental Ascetic ~ Powerful Fist",
     "name": "Powerful Fist",
-    "class": "Elemental Ascetic",
+    "class": "Kineticist",
     "description": "At 5th level, an elemental ascetic can accept 2 additional points of burn when using kinetic fist to increase that infusion's damage dice from d6s to d8s. At 9th level, he can instead accept 3 additional points of burn to increase the damage dice from d6s to d10s. At 13th level, he can instead accept 4 additional points of burn to increase the damage dice from d6s to d12s. All of these options count as burn from a form infusion and can thus be reduced by infusion specialization. This ability replaces the 5th-, 9th-, and 13th-level infusions.",
     "raw_tokens": [
       {

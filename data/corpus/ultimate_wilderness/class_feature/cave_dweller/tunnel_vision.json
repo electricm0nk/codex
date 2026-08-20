@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cave Dweller ~ Tunnel Vision",
     "name": "Tunnel Vision",
-    "class": "Cave Dweller",
+    "class": "Barbarian",
     "description": "A cave dweller's senses become sharp in the dark. She gains darkvision to a range of 60 feet and a +%1 bonus on Perception checks to detect ambushes, movement, and sound while in darkness.|CaveDwellerPerceptionBonus",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Rageshaper ~ Unrestrained Stride",
     "name": "Unrestrained Stride",
-    "class": "Rageshaper",
+    "class": "Shifter",
     "description": "Whenever the rageshaper is in devastating form, he ignores movement penalties from difficult terrain and is immune to the entangled condition.",
     "raw_tokens": [
       {

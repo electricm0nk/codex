@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wild Hunter ~ Animal Focus",
     "name": "Animal Focus",
-    "class": "Wild Hunter",
+    "class": "Ranger",
     "description": "As a swift action, a wild hunter can take on the aspect of an animal, gaining a bonus or special ability based on the type of animal emulated. This functions as the hunter's animal focus class feature (see page 27), though this only applies to the wild hunter and not an animal companion. The wild hunter can use this ability for %1 minutes per day. This duration does not need to be consecutive, but it must be spent in 1-minute increments. He can only emulate one animal at a time.|HunterAnimalFocusMinutes",
     "raw_tokens": [
       {

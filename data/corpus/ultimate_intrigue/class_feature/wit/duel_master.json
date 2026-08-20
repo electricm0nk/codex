@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wit ~ Duel Master",
     "name": "Duel Master",
-    "class": "Wit",
+    "class": "Bard",
     "description": "The wit does not lose any edges for being at an extreme disadvantage in a verbal duel (see Ultimate Intrigue pages 176-181) and can either ask about one additional bias when successfully using Sense Motive to determine an audience's biases or automatically seed one of the biases that he discovered. Once during a verbal duel, he can reassign an appropriate skill from one tactic to another tactic in which he didn't assign any skills. The original tactic is treated as being unprepared for the rest of the duel.",
     "raw_tokens": [
       {

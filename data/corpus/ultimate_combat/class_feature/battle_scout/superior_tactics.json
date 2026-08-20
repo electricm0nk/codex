@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Battle Scout ~ Superior Tactics",
     "name": "Superior Tactics",
-    "class": "Battle Scout",
+    "class": "Ranger",
     "description": "At 15th level, once per day, after a battle scout and his allies roll initiative, the battle scout can arrange his and his allies' initiative rolls any way he wishes. If he has already taken 3 rounds to scout out the terrain with his advantageous terrain ability and both he and his allies are within the effect area, they gain a +2 bonus to initiative checks. Using this ability is not an action. This ability replaces the ranger's fourth favored enemy.",
     "raw_tokens": [
       {

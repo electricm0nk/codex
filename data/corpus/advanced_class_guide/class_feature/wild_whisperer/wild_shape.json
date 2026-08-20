@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wild Whisperer ~ Wild Shape",
     "name": "Wild Shape",
-    "class": "Wild Whisperer",
+    "class": "Druid",
     "description": "A wild whisperer gains the wild shape ability, but she never gains access to any forms beyond Small and Medium animal forms, as beast shape I.",
     "raw_tokens": [
       {

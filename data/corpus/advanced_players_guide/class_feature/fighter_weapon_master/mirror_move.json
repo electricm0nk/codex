@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fighter Weapon Master ~ Mirror Move",
     "name": "Mirror Move",
-    "class": "Fighter Weapon Master",
+    "class": "Fighter",
     "description": "You gain a +%1 insight bonus to AC when attacked by your chosen weapon. This ability replaces weapon training 2.|WeaponTrainingBase",
     "raw_tokens": [
       {

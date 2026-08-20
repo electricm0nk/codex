@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cult Master ~ Fanatical Stare",
     "name": "Fanatical Stare",
-    "class": "Cult Master",
+    "class": "Mesmerist",
     "description": "A cult master can turn his gaze on a creature to fill it with fervent belief in the cult master. The target of the gaze gains a +%1 competence bonus on attack rolls and weapon damage rolls. Instead of taking the hypnotic stare's penalty on Will saves, the target gains a bonus of an equal amount on Will saves. The bonuses don't apply to attacks against the cult master or on saves against the cult master's spells or abilities. The cult master can also suppress any penalties inflicted by his stare for the target.|CMFanaticalBonus",
     "raw_tokens": [
       {

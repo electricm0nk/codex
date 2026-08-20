@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Blood Kineticist ~ Blood Blast",
     "name": "Blood Blast",
-    "class": "Blood Kineticist",
+    "class": "Kineticist",
     "description": "The first time a blood kineticist selects water with expanded element, she doesn't gain the cold simple blast or the ice composite blast; instead, she gains the blood composite blast, which costs 2 points of burn. A blood blast is a physical blast that deals bludgeoning damage. It is associated with the same infusions as the water blast. If the blood kineticist selects water with expanded element a second time, she gains the cold simple blast and ice composite blast as normal. This ability alters expanded element.",
     "raw_tokens": [
       {

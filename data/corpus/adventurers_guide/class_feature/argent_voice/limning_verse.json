@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Argent Voice ~ Limning Verse",
     "name": "Limning Verse",
-    "class": "Argent Voice",
+    "class": "Bard",
     "description": "The argent voice can sing a song that causes fiends to glow with an aura of silvery light. Outsiders with the evil subtype within %1 feet of the argent voice are affected as per faerie fire. Any defense that prevents the detection of alignment or evil also prevents limning verse from outlining a creature. The argent voice must use Perform (sing) with this performance.|LimningVerseRange",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Impervious Messenger ~ Cryptic Whisper",
     "name": "Cryptic Whisper",
-    "class": "Impervious Messenger",
+    "class": "Bard",
     "description": "The impervious messenger internalizes his understanding of language and ciphers, and filters them through his bardic abilities. He adds half his bard level to all Linguistics checks and Bluff checks to deliver secret messages, and he gains a +4 bonus on saving throws against glyph spells, symbol spells, and language-dependent effects.",
     "raw_tokens": [
       {

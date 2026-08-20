@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Unbreakable ~ Quick Recovery",
     "name": "Quick Recovery",
-    "class": "Unbreakable",
+    "class": "Fighter",
     "description": "At 11th level, an unbreakable needs only 15 minutes of rest or to be subject to a healing spell or effect to recover from the fatigued condition. This ability replaces armor training 3.",
     "raw_tokens": [
       {

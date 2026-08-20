@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Consigliere ~ Field Boss",
     "name": "Field Boss",
-    "class": "Consigliere",
+    "class": "Rogue",
     "description": "As a standard action, a consigliere can grant a teamwork feat to all allies within 30 feet who can see and hear her. This teamwork feat must be one the consigliere knows. Allies retain the use of this feat for %1 rounds. Allies do not need to meet the prerequisites of this teamwork feat. The consigliere can use this ability %2/day.|3+RogueLVL/2|(RogueLVL-6)/4",
     "raw_tokens": [
       {

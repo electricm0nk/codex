@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Involutionist ~ Involuate",
     "name": "Involuate",
-    "class": "Involutionist",
+    "class": "Spiritualist",
     "description": "An involutionist gains the ability to awaken the latent spiritual energy in inanimate objects. She gains the ability to cast animate objects as a spell-like ability once per day. At 15th and 19th levels, she can use this ability one additional time per day. This ability replaces the additional uses of calm spirit available at 11th, 15th, and 17th levels.",
     "raw_tokens": [
       {

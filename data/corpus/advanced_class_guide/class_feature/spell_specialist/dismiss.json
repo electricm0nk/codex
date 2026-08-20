@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spell Specialist ~ Dismiss",
     "name": "Dismiss",
-    "class": "Spell Specialist",
+    "class": "Arcanist",
     "description": "A spell specialist can dismiss a signature spell as a swift action instead of a standard action. Alternatively, the spell specialist can dismiss a signature spell that has a duration but isn't normally dismissible.",
     "raw_tokens": [
       {

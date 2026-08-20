@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Strangler Brawler ~ Strangle",
     "name": "Strangle",
-    "class": "Strangler Brawler",
+    "class": "Brawler",
     "description": "A strangler deals +%1d6 sneak attack damage whenever she succeeds at a grapple check to damage or pin an opponent. The strangler is always considered flanking her target for the purpose of using this ability.|SneakAttackDice",
     "raw_tokens": [
       {

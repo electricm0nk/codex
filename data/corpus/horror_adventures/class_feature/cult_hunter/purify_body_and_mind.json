@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cult Hunter ~ Purify Body and Mind",
     "name": "Purify Body and Mind",
-    "class": "Cult Hunter",
+    "class": "Investigator",
     "description": "A cult hunter gains a +%1 bonus on saving throws against compulsions and poisons.|CultHunterPurifyBonus",
     "raw_tokens": [
       {

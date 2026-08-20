@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dirty Fighter ~ Sidestep",
     "name": "Sidestep",
-    "class": "Dirty Fighter",
+    "class": "Fighter",
     "description": "The dirty fighter learns how to evade his enemies when they react to his combat maneuvers. He gains a +%1 dodge bonus to his AC against attacks of opportunity provoked by him while attempting a combat maneuver.|1+(FighterLVL-2)/4",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wasteland Meditant ~ Dehydrating Strike",
     "name": "Dehydrating Strike",
-    "class": "Wasteland Meditant",
+    "class": "Monk",
     "description": "As a free action as part of a melee attack, a wasteland meditant can draw the moisture out of a living creature damaged by his unarmed strike. Unless the creature succeeds at a Will save (DC %1), the creature is|10+MonkLVL/2+WIS",
     "raw_tokens": [
       {

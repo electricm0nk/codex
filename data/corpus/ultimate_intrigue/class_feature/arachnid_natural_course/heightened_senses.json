@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Arachnid Natural Course ~ Heightened Senses",
     "name": "Heightened Senses",
-    "class": "Arachnid Natural Course",
+    "class": "Vigilante",
     "description": "An arachnid wildsoul can anticipate physical danger and react astonishingly quickly. He gains the stalker sense vigilante talent, even if he is not a stalker.",
     "raw_tokens": [
       {

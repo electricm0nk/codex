@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Steel Hound ~ Talented Shot",
     "name": "Talented Shot",
-    "class": "Steel Hound",
+    "class": "Investigator",
     "description": "At 11th level, a steel hound can select a gunslinger deed in place of an investigator talent. He can select from any deed available to a gunslinger of his investigator level - 4.",
     "raw_tokens": [
       {

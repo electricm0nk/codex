@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Clone Master ~ Clone",
     "name": "Clone",
-    "class": "Clone Master",
+    "class": "Alchemist",
     "description": "You add Clone to your formula book as a 6th-level extract.",
     "raw_tokens": [
       {

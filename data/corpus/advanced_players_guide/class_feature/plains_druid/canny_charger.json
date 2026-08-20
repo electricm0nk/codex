@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Plains Druid ~ Canny Charger",
     "name": "Canny Charger",
-    "class": "Plains Druid",
+    "class": "Druid",
     "description": "At 9th level, a plains druid can charge through allies' squares without difficulty (whether mounted or afoot) and can turn up to 90 degrees once during a charge, provided the last 10 feet toward the target are in a straight line. She also gains a +4 dodge bonus to AC against enemy charge attacks and a +4 bonus to damage with a readied action against a charging foe. This ability replaces venom immunity.",
     "raw_tokens": [
       {

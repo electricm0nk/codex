@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Argent Voice ~ Shattering Crescendo",
     "name": "Shattering Crescendo",
-    "class": "Argent Voice",
+    "class": "Bard",
     "description": "The argent voice learns to sing at frequencies capable of shattering magical effects. As a full-round action, an argent voice can use 2 rounds of bardic performance to attempt to dispel a single evil spell or enchantment spell cast by an evil creature. This functions as per dispel magic, using the bard's level as his caster level.",
     "raw_tokens": [
       {

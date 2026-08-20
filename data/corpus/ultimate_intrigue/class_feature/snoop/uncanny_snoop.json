@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Snoop ~ Uncanny Snoop",
     "name": "Uncanny Snoop",
-    "class": "Snoop",
+    "class": "Rogue",
     "description": "A snoop gains a +%1 bonus on Intimidate checks when trying to force an opponent to give her information (or Bluff and Diplomacy checks for the same purpose if she has the coax information rogue talent). She also gains a +%1 bonus on Sense Motive checks to tell if someone's information is false.|UncannySnoopBonus",
     "raw_tokens": [
       {

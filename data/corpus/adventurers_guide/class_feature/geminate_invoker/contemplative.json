@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Geminate Invoker ~ Contemplative",
     "name": "Contemplative",
-    "class": "Geminate Invoker",
+    "class": "Barbarian",
     "description": "Unlike most barbarians, a geminate invoker can be lawful, but must maintain a neutral element to his alignment. A geminate invoker who ceases to be neutral-aligned cannot activate his trance ability.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mysterious Avenger ~ Avenger's Target",
     "name": "Avenger's Target",
-    "class": "Mysterious Avenger",
+    "class": "Swashbuckler",
     "description": "A mysterious avenger gains a +%1 bonus on attack and damage rolls with light or one-handed piercing melee weapons and whips. Furthermore, a mysterious avenger can study an opponent she can see as a move action. The mysterious avenger then gains a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks against that opponent, a +%1 bonus on weapon attack and damage rolls against it, and a +%1 bonus to DCs of any deeds used against that opponent. A mysterious avenger can maintain these bonuses against %1 opponents at a time; these bonuses remain in effect until either the opponent is dead or the mysterious avenger studies a new target. A mysterious avenger can discard this connection to a studied target as a free action, allowing her to study another target in its place. At 10th level, a mysterious avenger can study an opponent as a move or swift action.|AvengerTargetBonus",
     "raw_tokens": [
       {

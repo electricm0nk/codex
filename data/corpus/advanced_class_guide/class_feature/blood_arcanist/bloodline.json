@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Blood Arcanist ~ Bloodline",
     "name": "Bloodline",
-    "class": "Blood Arcanist",
+    "class": "Arcanist",
     "description": "A blood arcanist selects one bloodline from those available through the sorcerer bloodline Class Feature.Arcanist Class Feature. The blood arcanist gains the bloodline arcana and bloodline powers of that bloodline, treating her arcanist level as her sorcerer level. The blood arcanist does not gain the class skill, bonus feats, or bonus spells from her bloodline. If the blood arcanist takes levels in another class that grants a bloodline, the bloodlines must be the same type, even if that means that the bloodline of one of her classes must change. Subject to GM discretion, the blood arcanist can change her former bloodline to make them conform. This ability replaces the arcanist exploits gained at 1st, 3rd, 9th, and 15th levels, as well as magical supremacy. A blood arcanist cannot select the bloodline development arcanist exploit.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Hurler ~ Skilled Thrower",
     "name": "Skilled Thrower",
-    "class": "Hurler",
+    "class": "Barbarian",
     "description": "The hurler is skilled at throwing objects in combat. Increase the range increment of any thrown weapon or object by 10 feet. This ability replaces fast movement.",
     "raw_tokens": [
       {

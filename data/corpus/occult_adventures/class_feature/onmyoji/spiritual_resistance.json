@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Onmyoji ~ Spiritual Resistance",
     "name": "Spiritual Resistance",
-    "class": "Onmyoji",
+    "class": "Spiritualist",
     "description": "An onmyoji's phantom provides her with protection from supernatural forces. While the phantom is confined within the onmyoji's consciousness (not stranded on the Ethereal Plane or fully manifested), it grants her a +2 bonus on saving throws against the spell-like and supernatural abilities of fey, outsiders, and incorporeal undead. At 6th level and every 6 levels thereafter, this bonus increases by 1 (to a maximum of +5 at 18th level). This ability replaces shared consciousness and fused consciousness.",
     "raw_tokens": [
       {

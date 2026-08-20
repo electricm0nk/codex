@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Exorcist ~ Verdict of Anathema",
     "name": "Verdict of Anathema",
-    "class": "Exorcist",
+    "class": "Inquisitor",
     "description": "While using judgment, you can unleash the verdict of anathema on your enemies. When you do, your judgment ends, and all enemy creatures within 10 feet are affected by your verdict of exorcism.",
     "raw_tokens": [
       {

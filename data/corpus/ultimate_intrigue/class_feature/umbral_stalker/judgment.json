@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Umbral Stalker ~ Judgment",
     "name": "Judgment",
-    "class": "Umbral Stalker",
+    "class": "Inquisitor",
     "description": "Umbral stalkers are most effective when they get the drop on an opponent. An umbral stalker gains access to the stalking judgment.",
     "raw_tokens": [
       {

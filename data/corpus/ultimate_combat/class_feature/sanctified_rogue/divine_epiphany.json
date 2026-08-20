@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sanctified Rogue ~ Divine Epiphany",
     "name": "Divine Epiphany",
-    "class": "Sanctified Rogue",
+    "class": "Rogue",
     "description": "At 8th level, once per day, a sanctified rogue can peer into the immediate future and predict the results of a specific action as if she had cast an augury spell. The caster level of this spell is equal to the sanctified rogue's rogue class level. This ability replaces improved uncanny dodge.",
     "raw_tokens": [
       {

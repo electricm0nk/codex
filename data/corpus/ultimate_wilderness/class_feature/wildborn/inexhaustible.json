@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wildborn ~ Inexhaustible",
     "name": "Inexhaustible",
-    "class": "Wildborn",
+    "class": "Barbarian",
     "description": "Wildborn live ruggedly and sleep lightly. A wildborn recovers nonlethal damage for each minute of rest as if an hour had passed. She applies twice her damage reduction gained from barbarian levels against nonlethal damage. This alters damage reduction.",
     "raw_tokens": [
       {

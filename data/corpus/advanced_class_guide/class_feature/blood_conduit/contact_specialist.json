@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Blood Conduit ~ Contact Specialist",
     "name": "Contact Specialist",
-    "class": "Blood Conduit",
+    "class": "Bloodrager",
     "description": "At 1st level, a blood conduit selects a bonus feat from the following: Improved Bull Rush, Improved Grapple, Improved Reposition, Improved Trip, and Improved Unarmed Strike. He does not need to meet the prerequisites to take this feat. He also adds those feats to his list of bloodline feats. This ability replaces fast movement and alters bloodline feats.",
     "raw_tokens": [
       {

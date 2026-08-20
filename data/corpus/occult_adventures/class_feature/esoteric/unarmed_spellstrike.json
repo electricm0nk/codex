@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Esoteric ~ Unarmed Spellstrike",
     "name": "Unarmed Spellstrike",
-    "class": "Esoteric",
+    "class": "Magus",
     "description": "At 1st level, an esoteric gains the magus spellstrike class feature. However, an esoteric can deliver spells with spellstrike only with his unarmed strikes. This ability alters spellstrike.",
     "raw_tokens": [
       {

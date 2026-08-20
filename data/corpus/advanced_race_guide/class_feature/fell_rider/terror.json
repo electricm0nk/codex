@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fell Rider ~ Terror",
     "name": "Terror",
-    "class": "Fell Rider",
+    "class": "Cavalier",
     "description": "At 14th level, a fell rider can rear up his mount as a standard action, spreading terror among his enemies. Enemies within 60 feet who can see the fell rider must succeed at a DC %1 Will save or be shaken for %2 rounds Creatures with half or fewer Hit Dice than the fell rider become frightened instead. An opponent that succeeds at the saving throw is immune to that fell rider's terror ability for 24 hours. This ability is a mind-affecting fear effect.|FellRiderTerrorSave|FellRiderTerrorDuration",
     "raw_tokens": [
       {

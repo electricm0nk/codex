@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Airborne Ambusher ~ Plummeting Charge",
     "name": "Plummeting Charge",
-    "class": "Airborne Ambusher",
+    "class": "Fighter",
     "description": "If an airborne ambusher flies at least half its fly speed as part of a charge, it gains a +%1 racial bonus on the attack roll (in addition to the normal charge bonus) and a +%2 bonus on its critical confirmation roll.|2+if(FighterLVL>=17,2,0)|4+if(FighterLVL>=17,2,0)",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Martial Artist ~ Alignment",
     "name": "Alignment",
-    "class": "Martial Artist",
+    "class": "Monk",
     "description": "A martial artist may be of any alignment.",
     "raw_tokens": [
       {

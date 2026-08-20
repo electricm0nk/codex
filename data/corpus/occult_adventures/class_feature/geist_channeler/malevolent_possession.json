@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Geist Channeler ~ Malevolent Possession",
     "name": "Malevolent Possession",
-    "class": "Geist Channeler",
+    "class": "Spiritualist",
     "description": "At 17th level, a geist channeler's phantom can invade the bodies of other creatures. This functions as possession (see page 181). To use this ability, the phantom must be adjacent to the target. The target can resist the effect with a successful Will save (DC = 10 + 1/2 the phantom's Hit Dice + the phantom's Charisma modifier). The phantom can use this ability once per day. This ability modifies the phantom and replaces the phantom's emotional focus.",
     "raw_tokens": [
       {

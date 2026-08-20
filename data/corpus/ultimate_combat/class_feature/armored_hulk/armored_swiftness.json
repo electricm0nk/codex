@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Armored Hulk ~ Armored Swiftness",
     "name": "Armored Swiftness",
-    "class": "Armored Hulk",
+    "class": "Barbarian",
     "description": "At 2nd level, an armored hulk moves faster in medium and heavy armor. When wearing medium or heavy armor, an armored hulk can move 5 feet faster than normal, to a maximum of her speed. This ability replaces uncanny dodge.",
     "raw_tokens": [
       {

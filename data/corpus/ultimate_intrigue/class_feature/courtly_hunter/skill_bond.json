@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Courtly Hunter ~ Skill Bond",
     "name": "Skill Bond",
-    "class": "Courtly Hunter",
+    "class": "Hunter",
     "description": "A courtly hunter's animal companion gains the courtly hunter's class skills as class skills. Her animal companion can use the courtly hunter's skill ranks in a skill in place of its own, but only to a maximum of the courtly hunter's hunter level (for instance, if a character had 3 levels in courtly hunter and 5 ranks in Diplomacy, her animal companion could either share 3 ranks with skill bond or use its own ranks, whichever would result in a higher total skill bonus).",
     "raw_tokens": [
       {

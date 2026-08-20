@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Zen Archer ~ Way of the Bow",
     "name": "Way of the Bow",
-    "class": "Zen Archer",
+    "class": "Monk",
     "description": "At 2nd level, a zen archer gains Weapon Focus as a bonus feat with one type of bow. At 6th level, the monk gains Weapon Specialization with the same weapon as a bonus feat, even if he does not meet the prerequisites. This ability replaces evasion.",
     "raw_tokens": [
       {

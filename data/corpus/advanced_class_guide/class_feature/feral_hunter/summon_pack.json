@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Feral Hunter ~ Summon Pack",
     "name": "Summon Pack",
-    "class": "Feral Hunter",
+    "class": "Hunter",
     "description": "Whenever a feral hunter casts a summon nature's ally spell to summon one or more animals, she summons one additional animal of the same type. The summoned creature or creatures must be animals and must be of the same type as the hunter's current aspect or of a similar type (bears for bear aspect, dogs or wolves for wolf aspect, great cats for the tiger aspect, and so on). The additional creature immediately vanishes if the hunter chooses a different aspect or ends his feral focus ability. She can increase the duration of any one summon nature's ally spell afected by this ability to 1 minute per level. She can have only one spell with a duration increased by this ability active at a time.",
     "raw_tokens": [
       {

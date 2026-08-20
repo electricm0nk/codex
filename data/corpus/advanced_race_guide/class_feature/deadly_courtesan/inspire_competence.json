@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Deadly Courtesan ~ Inspire Competence",
     "name": "Inspire Competence",
-    "class": "Deadly Courtesan",
+    "class": "Rogue",
     "description": "A deadly courtesan can use her bardic performance to inspire competence with a +%1 bonus.|2+(RogueLVL-3)/6",
     "raw_tokens": [
       {

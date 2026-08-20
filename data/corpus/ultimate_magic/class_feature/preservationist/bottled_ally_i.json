@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Preservationist ~ Bottled Ally I",
     "name": "Bottled Ally I",
-    "class": "Preservationist",
+    "class": "Alchemist",
     "description": "You add Handle Animal to your list of class skills. You add Summon Nature's Ally I to your formula book as a 1st-level extract. When you prepare that extract, you actually prepare a tiny, preserved specimen in a bottle (as with a caster casting the spell, you don't have to choose the creature until you use the extract). When you open the bottle, the specimen animates and grows to normal size, serving you as per the spell and otherwise being treated as a summoned creature. When the duration expires, the preserved creature decays into powder. If you have the infusion discovery, another character can use the infused specimen. The Augment Summoning feat can be applied to these specimens.",
     "raw_tokens": [
       {

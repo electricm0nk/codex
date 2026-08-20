@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Horse Lord ~ Strong Bond",
     "name": "Strong Bond",
-    "class": "Horse Lord",
+    "class": "Ranger",
     "description": "At 12th level, the horse lord strengthens his bond with his mount. The ranger's effective druid level for his mount is now equal to his ranger level. This ability replaces camouflage.",
     "raw_tokens": [
       {

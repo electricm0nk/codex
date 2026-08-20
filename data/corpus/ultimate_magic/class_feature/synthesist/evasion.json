@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Synthesist ~ Evasion",
     "name": "Evasion",
-    "class": "Synthesist",
+    "class": "Summoner",
     "description": "You can avoid damage from many area-effect attacks. If you make a successful Reflex saving throw against an attack that normally deals half damage on a successful save, you instead take no damage.",
     "raw_tokens": [
       {

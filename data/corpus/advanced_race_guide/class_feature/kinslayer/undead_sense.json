@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Kinslayer ~ Undead Sense",
     "name": "Undead Sense",
-    "class": "Kinslayer",
+    "class": "Inquisitor",
     "description": "The kinslayer gains the ability to use detect undead as a spell-like ability (caster level %1) at will. If she detects the presence of undead, she can use her monster lore ability to attempt to determine the type of undead detected as well as to reveal any strengths or weaknesses the undead might have. If any of the detected undead are vampires, she gains a bonus of %2 on the check to immediately identify them as such.|KinslayerUndeadSenseLVL|KinslayerUndeadSenseBonus",
     "raw_tokens": [
       {

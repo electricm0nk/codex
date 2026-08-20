@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dirge Bard ~ Dance of the Dead",
     "name": "Dance of the Dead",
-    "class": "Dirge Bard",
+    "class": "Bard",
     "description": "You can use your bardic performance to cause dead bones or bodies to rise up and move or fight at your command. This ability functions like animate dead, but the created skeletons or zombies remain fully animate only as long as you continue the performance. Once it stops, any created undead collapse into carrion. Bodies or bones cannot be animated more than once using this ability. Unlike animate dead, dance of the dead requires no components and does not have the evil descriptor.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Unsworn Shaman ~ Wandering Spirit",
     "name": "Wandering Spirit",
-    "class": "Unsworn Shaman",
+    "class": "Shaman",
     "description": "The unsworn shaman gains access to the wandering spirit Class Feature.Shaman Class Feature. At 10th level, she gains the abilities listed in the greater version of her wandering spirit. At 18th level, she gains the abilities listed in the true version of her wandering spirit. Additionally, at 6th level, she also gains a second wandering spirit, gaining the abilities listed in the greater version of that spirit at 14th level, and the abilities listed in the true version at 20th level. This ability alters wandering spirit and replaces wandering hex.",
     "raw_tokens": [
       {

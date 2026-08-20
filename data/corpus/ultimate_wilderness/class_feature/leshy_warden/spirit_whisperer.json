@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Leshy Warden ~ Spirit Whisperer",
     "name": "Spirit Whisperer",
-    "class": "Leshy Warden",
+    "class": "Druid",
     "description": "A leshy warden's connection to the spirits of nature becomes strong enough that she can always hear them whispering. She is treated as constantly under the effects of speak with plants. Once per day, she can spend 10 minutes in communion with the spirits to learn the answers to her questions, as commune with nature.",
     "raw_tokens": [
       {

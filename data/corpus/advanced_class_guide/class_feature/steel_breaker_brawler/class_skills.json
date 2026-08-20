@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Steel-Breaker Brawler ~ Class Skills",
     "name": "Class Skills",
-    "class": "Steel-Breaker Brawler",
+    "class": "Brawler",
     "description": "The steel-breaker gains Knowledge (engineering) as a class skill, and does not gain Knowledge (dungeoneering) as a class skill.",
     "raw_tokens": [
       {

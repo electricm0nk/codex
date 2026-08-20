@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tree Soul ~ Transform Wood",
     "name": "Transform Wood",
-    "class": "Tree Soul",
+    "class": "Oracle",
     "description": "As a standard action you can temporarily transform %1 5-foot cubes of wood each day. The wood takes on the quality of|1+CHA",
     "raw_tokens": [
       {

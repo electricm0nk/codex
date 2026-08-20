@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Elementalist Shifter ~ Elemental Speech",
     "name": "Elemental Speech",
-    "class": "Elementalist Shifter",
+    "class": "Shifter",
     "description": "When in her elemental aspect, an elementalist shifter gains the benefit of tongues with creatures of the elemental subtype that matches her elemental aspect.",
     "raw_tokens": [
       {

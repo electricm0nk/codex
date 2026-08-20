@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fighter Polearm Master ~ Pole Fighting",
     "name": "Pole Fighting",
-    "class": "Fighter Polearm Master",
+    "class": "Fighter",
     "description": "At 2nd level, as an immediate action, a polearm master can shorten the grip on his spear or polearm with reach and use it against adjacent targets. This action results in a -4 penalty on attack rolls with that weapon until he spends another immediate action to return to the normal grip. The penalty is reduced by -1 for every four levels beyond 2nd. This ability replaces bravery.",
     "raw_tokens": [
       {

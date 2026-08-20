@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Gun Scavenger ~ Deeds",
     "name": "Deeds",
-    "class": "Gun Scavenger",
+    "class": "Gunslinger",
     "description": "A gun scavenger gains the following deeds at the listed level.",
     "raw_tokens": [
       {

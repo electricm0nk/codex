@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Foehammer ~ Ground Breaker",
     "name": "Ground Breaker",
-    "class": "Foehammer",
+    "class": "Fighter",
     "description": "As a full-round action, a foehammer may strike the ground with his hammer. If the attack deals more damage than the floor's hardness, the space he occupies and all adjacent squares become difficult terrain. Creatures in those squares, except for the foehammer, are knocked prone (DC 15 Reflex negates).",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Road Keeper ~ Trodden Path",
     "name": "Trodden Path",
-    "class": "Road Keeper",
+    "class": "Druid",
     "description": "A road keeper gains a +4 bonus on Survival checks to follow or identify tracks. She also gains this bonus on saving throws against severe weather effects.",
     "raw_tokens": [
       {

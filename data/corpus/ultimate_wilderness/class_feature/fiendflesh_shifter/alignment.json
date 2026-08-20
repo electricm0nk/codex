@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fiendflesh Shifter ~ Alignment",
     "name": "Alignment",
-    "class": "Fiendflesh Shifter",
+    "class": "Shifter",
     "description": "A fiendflesh shifter must be evil in alignment. If the fiendflesh shifter becomes nonevil, she loses all powers granted by this archetype. This alters the shifter's alignment.",
     "raw_tokens": [
       {

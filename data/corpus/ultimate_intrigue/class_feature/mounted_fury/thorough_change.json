@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mounted Fury ~ Thorough Change",
     "name": "Thorough Change",
-    "class": "Mounted Fury",
+    "class": "Vigilante",
     "description": "A mounted fury must take care when changing from one identity to another, including making any changes necessary to ensure that his mount is not associated with his social identity and vice versa (although if anyone suspects him of being anything other than what he appears to be while in his social identity, he need not make a separate Disguise check for his mount). The mounted fury always requires 1 minute to change identities, regardless of other effects that reduce the time required, and he cannot choose the immediate change or quick change social talents. This alters dual identity.",
     "raw_tokens": [
       {

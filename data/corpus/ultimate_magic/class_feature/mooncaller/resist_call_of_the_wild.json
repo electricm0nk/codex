@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mooncaller ~ Resist Call of the Wild",
     "name": "Resist Call of the Wild",
-    "class": "Mooncaller",
+    "class": "Druid",
     "description": "You gain a +4 bonus on saving throws to avoid confusion, daze, feeblemind, and insanity effects. You also gain a +4 bonus against the exceptional, spell-like, and supernatural abilities of creatures with the shapechanger subtype.",
     "raw_tokens": [
       {

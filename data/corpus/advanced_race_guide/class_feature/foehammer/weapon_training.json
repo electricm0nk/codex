@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Foehammer ~ Weapon Training",
     "name": "Weapon Training",
-    "class": "Foehammer",
+    "class": "Fighter",
     "description": "A foehammer must select hammers and does not gain weapon training with other groups, though his weapon training bonus improves by +1 every four levels after 5th.",
     "raw_tokens": [
       {

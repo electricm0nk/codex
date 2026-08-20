@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Saurian Champion ~ Nimble Rider",
     "name": "Nimble Rider",
-    "class": "Saurian Champion",
+    "class": "Cavalier",
     "description": "A saurian champion gains a +%1 dodge bonus to AC when mounted. Anything that causes the saurian champion to lose his Dexterity bonus to AC also causes him to lose this dodge bonus.|min(4,(CavalierLVL+4)/6)",
     "raw_tokens": [
       {

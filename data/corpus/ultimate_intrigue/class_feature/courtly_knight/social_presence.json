@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Courtly Knight ~ Social Presence",
     "name": "Social Presence",
-    "class": "Courtly Knight",
+    "class": "Cavalier",
     "description": "A courtly knight gains a +%1 bonus on all Bluff, Diplomacy, Intimidate, and Sense Motive checks.  A courtly knight starts any verbal duel (see Ultimate Intrigue page 176) with an extra edge she can use for only the presence tactic unless she is at a significant or extreme disadvantage in the duel.|CourtlyKnightSocialPresence",
     "raw_tokens": [
       {

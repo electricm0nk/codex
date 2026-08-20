@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sin Eater ~ Eat Sin",
     "name": "Eat Sin",
-    "class": "Sin Eater",
+    "class": "Inquisitor",
     "description": "As a free action, when you kill an enemy, you may eat the sins of that enemy by spending 1 minute adjacent to its corpse. This provokes attacks of opportunity. You can rush this ritual, performing it as a full-round action that provokes attacks of opportunity, but you only gain half the normal benefit (see below). Eating the enemy's sins heals you %1d8+%2 hit points of damage. The enemy must have been killed by you within the last hour, and it must have had at least %3 Hit Dice. You can use this ability once for each enemy you kill. This ability has no effect on mindless creatures or those with Intelligence 2 or less.  In some faiths, this \"eating\" is a purely symbolic act, while in others, the inquisitor must eat a small amount of food and water as part of the ritual. A few extreme faiths actually require the inquisitor to eat some of the body of the slain enemy.|EatSinDice|EatSinBonus|EatSinMinHD",
     "raw_tokens": [
       {

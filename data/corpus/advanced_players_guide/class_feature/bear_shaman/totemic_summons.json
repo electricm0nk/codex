@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bear Shaman ~ Totemic Summons",
     "name": "Totemic Summons",
-    "class": "Bear Shaman",
+    "class": "Druid",
     "description": "At 5th level, a bear shaman may cast summon nature's ally as a standard action when summoning bears, and summoned bears gain temporary hit points equal to her druid level. She can apply the young template to any bear to reduce the level of the summoning spell required by one. She can also increase the level of summoning required by one in order to apply either the advanced or the giant template, or increase it by two to apply both the advanced and giant templates.",
     "raw_tokens": [
       {

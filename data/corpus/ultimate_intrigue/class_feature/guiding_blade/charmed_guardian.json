@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Guiding Blade ~ Charmed Guardian",
     "name": "Charmed Guardian",
-    "class": "Guiding Blade",
+    "class": "Swashbuckler",
     "description": "The fortunate nature of a guiding blade's charmed life extends to protect her allies as well. She can use her charmed life ability on a saving throw attempted by any ally within 30 feet, including herself. This ability alters charmed life.",
     "raw_tokens": [
       {

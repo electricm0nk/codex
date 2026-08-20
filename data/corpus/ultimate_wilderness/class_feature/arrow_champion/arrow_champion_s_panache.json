@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Arrow Champion ~ Arrow Champion's Panache",
     "name": "Arrow Champion's Panache",
-    "class": "Arrow Champion",
+    "class": "Swashbuckler",
     "description": "An arrow champion regains panache when she makes a killing blow with a light or one-handed piercing melee weapon or a bow (a longbow, shortbow, composite longbow, or composite shortbow). This alters panache.",
     "raw_tokens": [
       {

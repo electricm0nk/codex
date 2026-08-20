@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Oath of Loyalty ~ Loyal Guardian",
     "name": "Loyal Guardian",
-    "class": "Oath of Loyalty",
+    "class": "Paladin",
     "description": "Whenever the target of your loyal oath is hit with a melee or ranged attack, if you are adjacent to the target, you can spend an immediate action to have the attack automatically hit you instead of the intended target. This ends the loyal oath.",
     "raw_tokens": [
       {

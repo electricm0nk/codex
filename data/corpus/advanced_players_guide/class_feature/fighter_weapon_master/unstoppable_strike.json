@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fighter Weapon Master ~ Unstoppable Strike",
     "name": "Unstoppable Strike",
-    "class": "Fighter Weapon Master",
+    "class": "Fighter",
     "description": "You can take a standard action to make one attack with your chosen weapon as a touch attack that ignores damage reduction (or hardness, if attacking an object). This ability replaces armor mastery.",
     "raw_tokens": [
       {

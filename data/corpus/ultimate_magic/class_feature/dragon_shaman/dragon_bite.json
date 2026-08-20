@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dragon Shaman ~ Dragon Bite",
     "name": "Dragon Bite",
-    "class": "Dragon Shaman",
+    "class": "Druid",
     "description": "Your bite attack (whether using totem transformation or wild shape to take the form of a lizard) deals +1d6 points of energy damage (acid, cold, electricity, or fire). You choose what kind of energy damage that you deal each time you bite.",
     "raw_tokens": [
       {

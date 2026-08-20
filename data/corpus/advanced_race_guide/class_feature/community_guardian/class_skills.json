@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Community Guardian ~ Class Skills",
     "name": "Class Skills",
-    "class": "Community Guardian",
+    "class": "Oracle",
     "description": "A community guardian adds Knowledge (local), Linguistics, Perception, and Survival to her list of class skills. These replace the additional class skills from her mystery.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spellscar Drifter ~ Old Reliable",
     "name": "Old Reliable",
-    "class": "Spellscar Drifter",
+    "class": "Cavalier",
     "description": "At 11th level, whenever a Spellscar drifter declares a challenge, the threat range of the Spellscar drifter's firearm is doubled against the target of his challenge. This increase only affects one weapon and does not stack with other effects that increase the threat range of the weapon. In addition, if the Spellscar drifter rolls a misfire during his challenge, the Spellscar drifter can spend 1 grit point to reroll the attack roll. The Spellscar drifter must accept the results of the second roll, even if it is worse. This ability replaces mighty charge.",
     "raw_tokens": [
       {

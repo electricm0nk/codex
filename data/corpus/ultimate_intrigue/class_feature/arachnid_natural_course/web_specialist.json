@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Arachnid Natural Course ~ Web Specialist",
     "name": "Web Specialist",
-    "class": "Arachnid Natural Course",
+    "class": "Vigilante",
     "description": "An arachnid wildsoul can coat his hands and feet in super-sticky webbing, even over equipment such as gloves and boots. This gives him a climb speed of 30 feet. Additionally, as a move action that provokes attacks of opportunity, an arachnid wildsoul can use his webbing to create the equivalent of a 50-foot length of silk rope (hp 4, break DC 24) and can shoot it at any flat, unoccupied surface that is at least one 5-foot square in size. If the arachnid wildsoul succeeds at a ranged attack against AC 10, the rope sticks fast to the surface, can only be removed if it is destroyed, and can support the weight of the arachnid wildsoul plus one additional Medium or smaller creature. If more creatures attempt to use the webbing rope, it is destroyed. This costs a daily use of shoot webs.",
     "raw_tokens": [
       {

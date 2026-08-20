@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Discipline Rivethun ~ Greater Channeling",
     "name": "Greater Spirit Channeling",
-    "class": "Psychic Discipline Rivethun",
+    "class": "Psychic",
     "description": "When you open your body to a wandering spirit, you also gain that wandering spirit's greater spirit ability as long as you are in a metamorphosed form.",
     "raw_tokens": [
       {

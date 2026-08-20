@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Picaroon ~ Quick Clear",
     "name": "Quick Clear",
-    "class": "Picaroon",
+    "class": "Swashbuckler",
     "description": "As a standard action the picaroon can spend 1 panache point to remove the broken condition from a single one-handed firearm she is currently wielding, as long as the firearm gained that condition through a misfire. This deed replaces kip-up.",
     "raw_tokens": [
       {

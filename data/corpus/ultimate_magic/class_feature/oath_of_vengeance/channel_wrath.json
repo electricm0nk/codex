@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Oath of Vengeance ~ Channel Wrath",
     "name": "Channel Wrath",
-    "class": "Oath of Vengeance",
+    "class": "Paladin",
     "description": "You can spend two uses of your lay on hands ability to gain an extra use of smite evil that day. This ability has no effect for a paladin who does not have the smite evil ability.",
     "raw_tokens": [
       {

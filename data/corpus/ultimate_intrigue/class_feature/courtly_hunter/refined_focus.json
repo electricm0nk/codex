@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Courtly Hunter ~ Refined Focus",
     "name": "Refined Focus",
-    "class": "Courtly Hunter",
+    "class": "Hunter",
     "description": "A courtly hunter has access to a different set of animal aspects with her animal focus. She does not gain access to the bear, bull, frog, monkey, snake, stag, tiger, or wolf aspects. Instead, she gains access to the other aspects. This ability alters animal focus.",
     "raw_tokens": [
       {

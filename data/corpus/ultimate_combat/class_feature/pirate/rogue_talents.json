@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Pirate ~ Rogue Talents",
     "name": "Rogue Talents",
-    "class": "Pirate",
+    "class": "Rogue",
     "description": "The following rogue talents complement the pirate archetype - black market connections*, combat trick, finesse rogue, firearm training*, hold breath*, rope master*, and strong stroke*.",
     "raw_tokens": [
       {

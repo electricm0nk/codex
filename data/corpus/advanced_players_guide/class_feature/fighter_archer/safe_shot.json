@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fighter Archer ~ Safe Shot",
     "name": "Safe Shot",
-    "class": "Fighter Archer",
+    "class": "Fighter",
     "description": "At 9th level, an archer does not provoke attacks of opportunity when making ranged attacks with a bow. This ability replaces weapon training 2.",
     "raw_tokens": [
       {

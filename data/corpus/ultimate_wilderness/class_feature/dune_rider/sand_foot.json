@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dune Rider ~ Sand Foot",
     "name": "Sand Foot",
-    "class": "Dune Rider",
+    "class": "Slayer",
     "description": "The dune rider adds half his level as a bonus on Ride checks in warm deserts, hills, and mountains.",
     "raw_tokens": [
       {

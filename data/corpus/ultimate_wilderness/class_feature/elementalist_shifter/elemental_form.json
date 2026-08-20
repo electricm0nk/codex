@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Elementalist Shifter ~ Elemental Form",
     "name": "Elemental Form",
-    "class": "Elementalist Shifter",
+    "class": "Shifter",
     "description": "When an elementalist shifter uses wild shape, she is instead affected as if by elemental body I, but she gains only the benefits listed in her elemental aspect. While in an elemental form, the elementalist shifter can speak only the elemental language associated with that form, and she can do so only if she knows it. This alters wild shape.",
     "raw_tokens": [
       {

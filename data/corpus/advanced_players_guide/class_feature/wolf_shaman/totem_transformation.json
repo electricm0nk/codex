@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wolf Shaman ~ Totem Transformation",
     "name": "Totem Transformation",
-    "class": "Wolf Shaman",
+    "class": "Druid",
     "description": "At 2nd level, a wolf shaman may adopt an aspect of the wolf while retaining her normal form. This ability functions as the bear shaman ability, but the druid may select from the following bonuses: movement (+20 enhancement bonus to land speed), senses (low-light vision, scent, +4 racial bonus to Survival when tracking by scent), or natural weapons (bite [1d4 plus trip] for a Medium druid, +2 CMB to trip). While using totem transformation, the wolf shaman may speak normally and can cast speak with animals (canines only) at will.",
     "raw_tokens": [
       {

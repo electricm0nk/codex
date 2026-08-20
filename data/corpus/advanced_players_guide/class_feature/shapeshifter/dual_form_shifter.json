@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Shapeshifter ~ Dual Form Shifter",
     "name": "Dual Form Shifter",
-    "class": "Shapeshifter",
+    "class": "Ranger",
     "description": "At 12th level, when the shapeshifter takes on a shifter's blessing form, he can take on a hybrid of two of his forms. He gains the bonuses for both forms. This ability replaces camouflage.",
     "raw_tokens": [
       {

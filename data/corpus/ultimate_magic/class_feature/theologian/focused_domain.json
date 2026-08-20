@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Theologian ~ Focused Domain",
     "name": "Focused Domain",
-    "class": "Theologian",
+    "class": "Cleric",
     "description": "You choose only one domain from your deity's portfolio rather than the normal two domains. All level-dependent effects of the granted powers from your domain function as if you were two cleric levels higher than your actual cleric level. This does not allow you to gain domain-granted powers earlier than normal. You can prepare domain spells using your non-domain slots. You cannot use her spontaneous casting ability on domain spells, even if they are prepared in non-domain slots. In all other respects, this works like and replaces the standard cleric domain ability.",
     "raw_tokens": [
       {

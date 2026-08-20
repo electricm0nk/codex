@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Esoteric ~ Improved Tattooed Spell",
     "name": "Improved Tattooed Spell",
-    "class": "Esoteric",
+    "class": "Magus",
     "description": "At 11th level, an esoteric can use each of his spell-like abilities from tattooed spell one additional time per day. This ability replaces improved spell recall.",
     "raw_tokens": [
       {

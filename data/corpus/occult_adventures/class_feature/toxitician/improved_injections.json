@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Toxitician ~ Improved Injections",
     "name": "Improved Injections",
-    "class": "Toxitician",
+    "class": "Mesmerist",
     "description": "The toxitician can add two different improvements to an injection. The injection still requires only one save.",
     "raw_tokens": [
       {

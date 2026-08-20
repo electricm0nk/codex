@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Filcher ~ Superior Filching",
     "name": "Superior Filching",
-    "class": "Filcher",
+    "class": "Rogue",
     "description": "A filcher becomes a master at separating owners from their property. She gains Greater Steal as a bonus feat, and opponents do not gain a +5 bonus to their CMD when she tries to remove items fastened to them.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Feral Gnasher ~ Improved Lockjaw",
     "name": "Improved Lockjaw",
-    "class": "Feral Gnasher",
+    "class": "Barbarian",
     "description": "As long as a feral gnasher is controlling the grapple with her lockjaw attack, she does not gain the grappled condition, but is unable to move or use her mouth for anything other than grappling.",
     "raw_tokens": [
       {

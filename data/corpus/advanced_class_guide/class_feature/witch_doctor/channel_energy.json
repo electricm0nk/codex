@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Witch Doctor ~ Channel Energy",
     "name": "Channel Energy",
-    "class": "Witch Doctor",
+    "class": "Shaman",
     "description": "The witch doctor can draw transcendental energies to her location, flooding it with positive energy as the cleric class feature. The witch doctor uses her shaman level - 3 as her effective cleric level, and can channel energy %1 times per day. This is a separate pool of channel energy that does not stack with the life spirit's channel spirit ability.|3+CHA",
     "raw_tokens": [
       {

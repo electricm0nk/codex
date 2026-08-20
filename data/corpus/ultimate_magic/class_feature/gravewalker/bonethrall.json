@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Gravewalker ~ Bonethrall",
     "name": "Bonethrall",
-    "class": "Gravewalker",
+    "class": "Witch",
     "description": "You can take control of an undead creature within your aura of desecration by forcing your will upon it (Will negates, using your hex DC). If it fails the save, the creature falls under your control as if you had used command undead (once control is established, the undead remain controlled even if outside the witch's aura). Intelligent undead receive a new saving throw each day to resist your command. The witch can control up to %1 HD of undead creatures. If an undead creature is under the control of another creature, you must make an opposed Charisma check whenever your orders conflict with that creature's.|BonethrallHD",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Chirurgeon ~ Power Over Death",
     "name": "Power Over Death",
-    "class": "Chirurgeon",
+    "class": "Alchemist",
     "description": "You add Breath of Life to your formula book as a 4th-level extract. Your infused curative ability applies to this extract.",
     "raw_tokens": [
       {

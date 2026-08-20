@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sentinel ~ Mugshot",
     "name": "Mugshot",
-    "class": "Sentinel",
+    "class": "Ranger",
     "description": "A sentinel can spend 1 minute studying the appearance of a target or a likeness of the target in the form of a picture, carving, or visual illusion and memorize it with perfect recall. From that point on, the sentinel gains a +4 bonus on Perception checks to notice the target in disguise or pick him out of a crowd. The sentinel is automatically allowed a Perception check against the target's Disguise check whenever she sees the target, even if the individual isn't doing anything to draw attention to himself. A sentinel can memorize the appearance of %1 targets at any given time. Once a sentinel has reached her maximum number of memorized appearances, she must forget one of the memorized faces before gaining a new one.|max(1,WIS)",
     "raw_tokens": [
       {

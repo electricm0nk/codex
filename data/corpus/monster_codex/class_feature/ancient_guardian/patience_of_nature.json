@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ancient Guardian ~ Patience of Nature",
     "name": "Patience of Nature",
-    "class": "Ancient Guardian",
+    "class": "Druid",
     "description": "An ancient guardian adds Diplomacy, Perform (oratory), and Sense Motive to her list of class skills and gains an insight bonus equal to half her druid level on such checks.",
     "raw_tokens": [
       {

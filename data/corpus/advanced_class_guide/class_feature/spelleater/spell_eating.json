@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spelleater ~ Spell Eating",
     "name": "Spell Eating",
-    "class": "Spelleater",
+    "class": "Bloodrager",
     "description": "A spelleater can consume spell slots for an extra dose of healing. As a swift action, the spelleater can consume one unused bloodrager spell slot to heal 1d8 damage for each level of the spell slot consumed.",
     "raw_tokens": [
       {

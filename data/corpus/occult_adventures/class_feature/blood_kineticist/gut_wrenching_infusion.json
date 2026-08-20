@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Blood Kineticist ~ Gut-Wrenching Infusion",
     "name": "Gut-Wrenching Infusion",
-    "class": "Blood Kineticist",
+    "class": "Kineticist",
     "description": "At 9th level, a blood kineticist can infuse her blasts with the ability to manipulate her opponent's insides to the point of impairing their function. On a failed Fortitude save, the target is sickened for 1 minute. A target that fails its saving throw against the wrack form infusion does not receive a saving throw to avoid the sickened condition from gutwrenching infusion on the same blast. This is a 4th-level substance infusion that costs 3 points of burn and can be used with water and blood blasts. This ability replaces the 9th-level infusion.",
     "raw_tokens": [
       {

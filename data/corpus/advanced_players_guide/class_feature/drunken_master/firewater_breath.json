@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Drunken Master ~ Firewater Breath",
     "name": "Firewater Breath",
-    "class": "Drunken Master",
+    "class": "Monk",
     "description": "At 19th level, a drunken master can take a drink and expel a gout of alcohol-fueled fire in a 30-foot cone. Creatures within the cone take 20d6 points of fire damage. A successful Reflex saving throw DC %1 (DC 10 + 1/2 the monk's level + the monk's Wis modifier) halves the damage. Using this ability is a standard action that consumes 4 ki points from the monk's ki pool. The monk must have at least 1 drunken ki point to use this ability. This ability replaces empty body.|10+CHA+(MonkLVL/2)",
     "raw_tokens": [
       {

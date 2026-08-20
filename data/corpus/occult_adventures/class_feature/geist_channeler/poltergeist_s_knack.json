@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Geist Channeler ~ Poltergeist's Knack",
     "name": "Poltergeist's Knack",
-    "class": "Geist Channeler",
+    "class": "Spiritualist",
     "description": "At 7th level, a geist channeler's phantom can use telekinesis as a spell-like ability. It can use only the sustained force and violent thrust versions of this spell. The phantom can use this ability three times per day, plus one additional time at 10th level and every 3 levels thereafter (maximum seven times per day at 19th level). Its caster level for this spell-like ability is equal to the phantom's Hit Dice.",
     "raw_tokens": [
       {

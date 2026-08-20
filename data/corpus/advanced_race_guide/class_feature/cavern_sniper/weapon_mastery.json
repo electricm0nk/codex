@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cavern Sniper ~ Weapon Mastery",
     "name": "Weapon Mastery",
-    "class": "Cavern Sniper",
+    "class": "Fighter",
     "description": "Any attacks made by a bow or crossbow automatically confirm all critical threats and have their damage multiplier increased by 1. In addition, you cannot be disarmed while wielding a weapon of this type.",
     "raw_tokens": [
       {

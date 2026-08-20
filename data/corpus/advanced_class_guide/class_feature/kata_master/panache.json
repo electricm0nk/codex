@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Kata Master ~ Panache",
     "name": "Panache",
-    "class": "Kata Master",
+    "class": "Monk",
     "description": "A kata master gains the swashbuckler's panache class ability. At the start of each day, a kata master gains %1 panache points. Her panache goes up or down throughout the day, but usually cannot go higher than %1. A kata master gains the swashbuckler's derring-do and dodging panache deeds. A kata master can use an unarmed strike or monk special weapon in place of a light or one-handed piercing melee weapon for granted swashbuckler class features and deeds.|max(1,CHA)",
     "raw_tokens": [
       {

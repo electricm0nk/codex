@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fearmonger ~ Feed on Fear",
     "name": "Feed on Fear",
-    "class": "Fearmonger",
+    "class": "Antipaladin",
     "description": "The first time in a round a creature fails a saving throw against a fear effect created by a fearmonger's spell, spell-like ability, or supernatural ability (including any ability that causes a creature to be shaken, frightened, or panicked), the fearmonger is healed of %1 points of damage. If the fearmonger is at full hit points when this ability is activated, he instead gains an equal number of temporary hit points. These temporary hit points last for 1 minute. Temporary hit points gained through multiple successful uses of this ability do not stack; the duration increases instead. The antipaladin can use this ability %2 times per day.|AntipaladinLVL/2|CHA+AntipaladinLVL/2",
     "raw_tokens": [
       {

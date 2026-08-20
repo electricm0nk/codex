@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Woodland Sniper ~ Ranged Sneak Attack",
     "name": "Ranged Sneak Attack",
-    "class": "Woodland Sniper",
+    "class": "Slayer",
     "description": "Whenever a woodland sniper makes a ranged attack against a creature within %1 feet that is denied its Dexterity bonus to AC (whether the target actually has a Dexterity bonus or not), he deals an additional %2d6 points of damage. Should the woodland sniper score a critical hit with his ranged attack, this additional damage is not multiplied. A woodland sniper cannot use sneak attack with a melee attack. This alters sneak attack.|WoodlandSniperSARange|SlayerSneakAttackLVL/3",
     "raw_tokens": [
       {

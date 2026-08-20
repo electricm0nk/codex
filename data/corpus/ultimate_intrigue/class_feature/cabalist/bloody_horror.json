@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cabalist ~ Bloody Horror",
     "name": "Bloody Horror",
-    "class": "Cabalist",
+    "class": "Vigilante",
     "description": "When a cabalist casts a spell and one of the targets (or one creature in the area for an area spell) is taking bleed damage, the cabalist can, as a free action, make an Intimidate check to demoralize all targets of the spell (or all creatures in the area for an area spell). The cabalist rolls only one Intimidate check and applies the result to all the targets. Once a creature has been the target of this ability (regardless of whether or not it was successful), it is immune to that cabalist's bloody horror for 24 hours. This is a mind-affecting fear effect.",
     "raw_tokens": [
       {

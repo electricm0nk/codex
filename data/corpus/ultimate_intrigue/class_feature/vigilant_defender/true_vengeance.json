@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Vigilant Defender ~ True Vengeance",
     "name": "True Vengeance",
-    "class": "Vigilant Defender",
+    "class": "Inquisitor",
     "description": "When a vigilant defender calls true judgment down upon a foe, if the foe has killed one of the vigilant defender's allies (permanent sentient allies, such as fellow party members or cohorts, not summoned monsters, animal companions, pets, or the like), the DC of the target's Fortitude save to avoid death is 2 higher. If the foe has not damaged any of the vigilant defender's allies, the DC to avoid death is instead 2 lower. This ability alters true judgment.",
     "raw_tokens": [
       {

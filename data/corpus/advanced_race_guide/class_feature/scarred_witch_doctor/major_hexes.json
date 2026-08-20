@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Scarred Witch Doctor ~ Major Hexes",
     "name": "Major Hexes",
-    "class": "Scarred Witch Doctor",
+    "class": "Witch",
     "description": "The following major hexes complement the scarred witch doctor archetype: agony, nightmare, cook people, infected wounds.",
     "raw_tokens": [
       {

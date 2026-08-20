@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Saurian Champion ~ Primeval Devotion",
     "name": "Primeval Devotion",
-    "class": "Saurian Champion",
+    "class": "Cavalier",
     "description": "The bonus on saving throws provided by the mount's devotion ability increases by 2. In addition, the mount adds half this bonus to other saving throws.",
     "raw_tokens": [
       {

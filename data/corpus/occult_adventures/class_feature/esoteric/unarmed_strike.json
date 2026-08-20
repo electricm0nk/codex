@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Esoteric ~ Unarmed Strike",
     "name": "Unarmed Strike",
-    "class": "Esoteric",
+    "class": "Magus",
     "description": "At 1st level, an esoteric gains Improved Unarmed Strike as a bonus feat. He also treats his magus levels as monk levels when determining the amount of damage he deals with his unarmed strikes.",
     "raw_tokens": [
       {

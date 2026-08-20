@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sandman ~ Mass Slumber Song",
     "name": "Mass Slumber Song",
-    "class": "Sandman",
+    "class": "Bard",
     "description": "At 18th level, a sandman can use slumber song to affect any number of fascinated creatures within 30 feet. Otherwise, this ability functions like mass suggestion. This performance replaces mass suggestion.",
     "raw_tokens": [
       {

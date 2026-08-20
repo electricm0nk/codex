@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Feral Gnasher ~ Wicked Improvisation",
     "name": "Wicked Improvisation",
-    "class": "Feral Gnasher",
+    "class": "Barbarian",
     "description": "The feral gnasher becomes more capable with improvised weapons and natural attacks. The feral gnasher gains a +%1 competence bonus on damage rolls when using natural attacks or improvised weapons while raging.  This increase is not precision damage and is thus multiplied on a critical hit.|FeralGnasherWickedImprovisationBonus",
     "raw_tokens": [
       {

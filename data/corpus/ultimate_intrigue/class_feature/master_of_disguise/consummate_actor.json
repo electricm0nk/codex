@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Master of Disguise ~ Consummate Actor",
     "name": "Consummate Actor",
-    "class": "Master of Disguise",
+    "class": "Rogue",
     "description": "A master of disguise adds half her rogue level (minimum 1) on all Disguise checks and on Bluff checks to stay in character while using Disguise.",
     "raw_tokens": [
       {

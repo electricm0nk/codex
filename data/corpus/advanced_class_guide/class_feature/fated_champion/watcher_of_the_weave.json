@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fated Champion ~ Watcher of the Weave",
     "name": "Watcher of the Weave",
-    "class": "Fated Champion",
+    "class": "Skald",
     "description": "A fated champion learns to see the tapestry of events moments before it is woven. He gains a +%1 insight bonus on initiative checks.|floor(SkaldLVL/2)",
     "raw_tokens": [
       {

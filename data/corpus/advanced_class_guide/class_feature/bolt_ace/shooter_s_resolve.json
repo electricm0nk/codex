@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bolt Ace ~ Shooter's Resolve",
     "name": "Shooter's Resolve",
-    "class": "Bolt Ace",
+    "class": "Gunslinger",
     "description": "A bolt ace can spend 1 grit point when making a crossbow attack as a standard action and ignore the effects of concealment (though not total concealment) and cover (other than total cover) against that shot.",
     "raw_tokens": [
       {

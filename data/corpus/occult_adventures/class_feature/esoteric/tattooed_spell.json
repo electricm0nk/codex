@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Esoteric ~ Tattooed Spell",
     "name": "Tattooed Spell",
-    "class": "Esoteric",
+    "class": "Magus",
     "description": "At 5th level and every 6 levels thereafter, an esoteric can permanently tattoo one spell from his magus spellbook onto his body; the first tattooed spell must be of 2nd level or lower, the second must be of 4th level or lower, and the last can be of any level. The spell that is tattooed must not have an expensive material component or a focus. The esoteric can prepare any tattooed spell without needing his spellbook. Additionally, he can cast each of his tattooed spells as a spell-like ability once per day. When the esoteric uses these spell-like abilities, the tattoo associated with the spell-like ability glows as light for a number of rounds equal to the spell's level. This ability replaces bonus feats.",
     "raw_tokens": [
       {

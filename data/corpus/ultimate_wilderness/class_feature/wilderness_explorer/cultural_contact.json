@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wilderness Explorer ~ Cultural Contact",
     "name": "Cultural Contact",
-    "class": "Wilderness Explorer",
+    "class": "Ranger",
     "description": "A wilderness explorer gains the ability to communicate with creatures with which he doesn't share a common language. Only basic concepts can be conveyed or understood, such as \"I need help,\" \"I come in peace,\" \"Come over here,\" \"Go over there,\" and the like. This allows the wilderness explorer to ignore the common language requirement of social interaction and language-dependent spells and effects, but he can do so only when the information being shared is relatively simple. The creature with which the wilderness explorer communicates must understand at least one language for this ability to function. Additionally, a wilderness explorer can peacefully influence the initial attitude of humanoids that have Intelligence scores of 2 or lower. This ability functions just like wild empathy, but it works on humanoids instead of on animals. The wilderness explorer can also use this ability to influence a monstrous humanoid with 2 or lower Intelligence, but the wilderness explorer takes a -4 penalty on the check.",
     "raw_tokens": [
       {

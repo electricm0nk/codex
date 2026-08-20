@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dreamweaver ~ Dream Possession",
     "name": "Dream Possession",
-    "class": "Dreamweaver",
+    "class": "Witch",
     "description": "A dreamweaver can take control of any creature that is sleeping because of her slumber hex or a spell she cast. This effect functions as magic jar, using the witch's familiar acting as the soul receptacle. A Will save negates either effect (DC equal to that of the witch's hex). Whether or not the save is successful, a creature cannot be the target of this hex again for 1 day.",
     "raw_tokens": [
       {

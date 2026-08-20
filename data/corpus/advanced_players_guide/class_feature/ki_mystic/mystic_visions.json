@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ki Mystic ~ Mystic Visions",
     "name": "Mystic Visions",
-    "class": "Ki Mystic",
+    "class": "Monk",
     "description": "At 11th level, a ki mystic may receive mystic visions when he rests. These visions can come as a dream, an epiphany, or even as the voice of an old friend whispering in the monk's mind. The effect is similar to a divination spell with a caster level equal to the monk's level. The divination has no casting time; it is just part of the normal dreams or visions that occur every night. Using this ability costs 2 ki points that are removed from the next day's total. This ability replaces diamond body.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Toxitician ~ Injection Improvement",
     "name": "Injection Improvement",
-    "class": "Toxitician",
+    "class": "Mesmerist",
     "description": "The toxitician can select %1 improvement(s) to add to his injections. The toxitician can't choose the same improvement more than once. The toxitician doesn't have to select the improvements when he prepares his injections at the start of the day; the choice is made as part of the swift action to activate the injection. The target can attempt a Fortitude saving throw to resist an injection with an improvement added to it. The DC is %2. On a successful save, the target still takes the penalty on its Will saving throws, but not the effects of the improvement. A toxitician can, as a free action, sacrifice one use of his injections to increase the DC of another injection by 2.|TImprovementsKnown",
     "raw_tokens": [
       {

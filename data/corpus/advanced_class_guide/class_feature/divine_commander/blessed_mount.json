@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Divine Commander ~ Blessed Mount",
     "name": "Blessed Mount",
-    "class": "Divine Commander",
+    "class": "Warpriest",
     "description": "A divine commander's mount becomes a creature blessed by his deity. ainst two types of energy damage of the divine commander's choice. If a divine commander's mount dies and the divine commander finds another mount, the new mount becomes a blessed mount the next time the divine commander gains a level.",
     "raw_tokens": [
       {

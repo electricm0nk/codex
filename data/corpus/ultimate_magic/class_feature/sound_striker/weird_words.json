@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sound Striker ~ Weird Words",
     "name": "Weird Words",
-    "class": "Sound Striker",
+    "class": "Bard",
     "description": "You can start a performance as a standard action, lashing out with %1 potent sounds, each sound affecting one target within 30 feet. These are ranged touch attacks. Each weird word deals 1d8+%2 points of damage (Fortitude DC %3 half), and the bard chooses whether it deals bludgeoning, piercing, or slashing damage for each word.|WeirdWordsAMount|WeirdWordsBonusDamage|WeirdWordsDC",
     "raw_tokens": [
       {

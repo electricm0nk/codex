@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Gun Tank ~ Armor Proficiency",
     "name": "Armor Proficiency",
-    "class": "Gun Tank",
+    "class": "Gunslinger",
     "description": "A gun tank is proficient with all armors and shields, including tower shields.",
     "raw_tokens": [
       {

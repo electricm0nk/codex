@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Life Channeler ~ Rampant Growth",
     "name": "Rampant Growth",
-    "class": "Life Channeler",
+    "class": "Druid",
     "description": "A life channeler can enrich the land more than usual with her sacrifices. When ritually killing a creature with a coup de grace for the plant growth enrichment effect or casting plant growth for the enrichment effect from one of her talismans, the effect has a range of 1 mile instead of a range of half a mile.",
     "raw_tokens": [
       {

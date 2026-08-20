@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Interrogator ~ Serums",
     "name": "Serums",
-    "class": "Interrogator",
+    "class": "Alchemist",
     "description": "An interrogator augments his ability to influence others through supplemental serums. An interrogator prepares his serums at the same time as his injections and he can apply them to any injection as a swift action before he makes the attack roll for the injection. An interrogator knows one serum at 1st level and can learn another serum in place of a discovery. The save DCs of serums are %1. A creature can be under the effect of only a single serum at a time-with the exception of memory modification serum-with any further serums on the same creature replacing the old serum. Unless otherwise noted, a creature that succeeds on its saving throw against a serum is immune to that serum's effects for 24 hours. An interrogator can never gain any sort of mutagen or cognatogen, even from a discovery or another class. [THIS LAST PART NOT IMPLEMENTED]|10+AlchemistLVL/2+INT",
     "raw_tokens": [
       {

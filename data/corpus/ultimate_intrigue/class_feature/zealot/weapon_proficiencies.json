@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Zealot ~ Weapon Proficiencies",
     "name": "Weapon Proficiencies",
-    "class": "Zealot",
+    "class": "Vigilante",
     "description": "A zealot is also proficient in his deity's favored weapon, even if it is an exotic weapon, and if the deity's favored weapon is unarmed strike, he gains Improved Unarmed Strike as a bonus feat.",
     "raw_tokens": [
       {

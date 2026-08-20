@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Buccaneer ~ Seadog's Gait",
     "name": "Seadog's Gait",
-    "class": "Buccaneer",
+    "class": "Gunslinger",
     "description": "The buccaneer gains Sea Legs as a bonus feat. If she spends 1 grit point, she can ignore difficult terrain until the end of her turn.",
     "raw_tokens": [
       {

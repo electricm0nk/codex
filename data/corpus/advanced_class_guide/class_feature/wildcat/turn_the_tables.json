@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wildcat ~ Turn the Tables",
     "name": "Turn the Tables",
-    "class": "Wildcat",
+    "class": "Monk",
     "description": "Opponents provoke an attack of opportunity from the wildcat whenever they fail at a combat maneuver against the wildcat.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Promethean Alchemist ~ Craft Construct",
     "name": "Craft Construct",
-    "class": "Promethean Alchemist",
+    "class": "Alchemist",
     "description": "At 1st level, a promethean alchemist gains the promethean disciple discovery (see above). This ability replaces Brew Potion and Throw Anything.",
     "raw_tokens": [
       {

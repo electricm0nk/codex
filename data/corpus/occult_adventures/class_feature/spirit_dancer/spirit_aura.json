@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spirit Dancer ~ Spirit Aura",
     "name": "Spirit Aura",
-    "class": "Spirit Dancer",
+    "class": "Medium",
     "description": "A spirit dancer's weaving forms create an aura that grants his current seance boon to all allies within 30 feet. When he grants a seance boon that requires a decision, each ally makes the appropriate decision the first time that ally receives that spirit's aura each day. That decision remains in effect if the ally is affected by that spirit's aura again later that day.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fiend Flayer ~ Magus Arcana",
     "name": "Magus Arcana",
-    "class": "Fiend Flayer",
+    "class": "Magus",
     "description": "A fiend flayer gains access to the following magus arcana. He cannot select any arcana more than once.",
     "raw_tokens": [
       {

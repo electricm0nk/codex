@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Primalist ~ Primal Surge",
     "name": "Primal Surge",
-    "class": "Primalist",
+    "class": "Wizard",
     "description": "Whenever a primalist triggers a primal magic event, she rolls the percentile dice twice to determine to event that occurs and chooses which one of the two possible events occurs. She becomes resistant to the effects of primal magic events. Anytime an event would affect her, the GM rolls 1d20 + the event's CR against DC %1. If this roll fails, the event does not affect her, similar to a creature with spell resistance ignoring magical effects with an SR check. If the primal magic event is duplicating the effects of a spell that does not allow spell resistance (such as create pit), this resistance does not apply.|11+WizardLVL",
     "raw_tokens": [
       {

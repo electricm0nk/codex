@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Formless Adept ~ Gaseous Body",
     "name": "Gaseous Body",
-    "class": "Formless Adept",
+    "class": "Psychic",
     "description": "At 5th level, a formless adept can become gaseous as gaseous form. At 13th level, the formless adept can use this ability for a number of minutes per day instead of rounds per day. These minutes don't have to be used consecutively, but must be used in 1-minute increments.",
     "raw_tokens": [
       {

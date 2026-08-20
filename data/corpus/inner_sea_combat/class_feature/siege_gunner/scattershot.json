@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Siege Gunner ~ Scattershot",
     "name": "Scattershot",
-    "class": "Siege Gunner",
+    "class": "Gunslinger",
     "description": "At 3rd level, if the siege gunner has at least I grit point, she can increase the effectiveness of scattering shots from hand-held firearms and blast shots from siege engines. The cone radius of scattering shots or blast shots increases by 5 feet for every three levels the siege gunner possesses (to a maximum of 30 feet at i8th level). This ability replaces gunslinger initiative.",
     "raw_tokens": [
       {

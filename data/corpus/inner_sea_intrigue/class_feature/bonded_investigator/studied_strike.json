@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bonded Investigator ~ Studied Strike",
     "name": "Studied Strike",
-    "class": "Bonded Investigator",
+    "class": "Investigator",
     "description": "A bonded investigator gains studied strike +1d6. At 10th level and every 4 investigator levels thereafter, this damage increases by +1d6. This ability alters studied strike.",
     "raw_tokens": [
       {

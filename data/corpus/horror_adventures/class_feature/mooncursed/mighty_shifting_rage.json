@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mooncursed ~ Mighty Shifting Rage",
     "name": "Mighty Shifting Rage",
-    "class": "Mooncursed",
+    "class": "Barbarian",
     "description": "A mooncursed can assume even larger alternate and hybrid forms. This functions like beast shape III, and it allows the mooncursed to take on a Medium, Large, or Huge version of her animal's form.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Crossblooded Rager ~ Bloodline Spells",
     "name": "Bloodline Spells",
-    "class": "Crossblooded Rager",
+    "class": "Bloodrager",
     "description": "A crossblooded rager can select his bloodline spells from either of his bloodlines. He can also learn a lower-level bloodline spell he did not choose in place of a higher-level bloodline spell he would normally gain. Lower-level bloodline spells learned in this manner are always the spell level that they would be if the crossblooded rager had learned them with the appropriate bloodline spell.",
     "raw_tokens": [
       {

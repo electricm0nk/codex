@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wildborn ~ Live Off the Land",
     "name": "Live Off the Land",
-    "class": "Wildborn",
+    "class": "Barbarian",
     "description": "A wildborn  can survive capably in the wilderness without any sort of manufactured equipment or gear. She adds half her barbarian level as a bonus on Survival checks to hunt or gather food and gains a +%1 bonus on Fortitude saves to resist the effects of extreme temperatures or other environmental effects.|BarbarianLVL/3",
     "raw_tokens": [
       {

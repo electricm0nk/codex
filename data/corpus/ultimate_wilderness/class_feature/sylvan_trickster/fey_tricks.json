@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sylvan Trickster ~ Fey Tricks",
     "name": "Fey Tricks",
-    "class": "Sylvan Trickster",
+    "class": "Rogue",
     "description": "A sylvan trickster can select a witch hex in place of a rogue talent. At 10th level, the sylvan trickster can select a hex or major hex in place of a rogue talent. At 18th level, a sylvan trickster can select a hex, major hex, or grand hex in place of a rogue talent. She cannot select any hex more than once. This alters rogue talents.",
     "raw_tokens": [
       {

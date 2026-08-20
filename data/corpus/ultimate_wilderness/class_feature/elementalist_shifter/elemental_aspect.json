@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Elementalist Shifter ~ Elemental Aspect",
     "name": "Elemental Aspect",
-    "class": "Elementalist Shifter",
+    "class": "Shifter",
     "description": "At 1st level, an elementalist shifter chooses one elemental aspect rather than a shifter aspect. This ability otherwise functions as shifter aspect. As the elementalist shifter gains levels, she gains more elemental aspects: a second aspect at 5th level, a third at 10th, and a fourth at 15th. This alters shifter aspect.",
     "raw_tokens": [
       {

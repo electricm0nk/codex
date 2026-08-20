@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Maverick ~ Stacked Deck",
     "name": "Stacked Deck",
-    "class": "Maverick",
+    "class": "Gunslinger",
     "description": "The maverick can spend 1 grit point when she attempts a Bluff, Profession (gambler), or Sleight of Hand check to roll 1d6 and add the result to the check. She can do this after she rolls the check but before the result is revealed. If the result of the d6 roll is a natural 6, she rolls another 1d6 and adds it to the check. She can continue to do this as long as she rolls natural 6s, up to %1 times.|max(1,WIS)",
     "raw_tokens": [
       {

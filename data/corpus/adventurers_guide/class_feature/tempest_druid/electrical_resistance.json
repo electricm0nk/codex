@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tempest Druid ~ Electrical Resistance",
     "name": "Electrical Resistance",
-    "class": "Tempest Druid",
+    "class": "Druid",
     "description": "A tempest druid gains electricity resistance 5. As a standard action, he can transfer this resistance to another creature for 1 hour, after which time it reverts to him.",
     "raw_tokens": [
       {

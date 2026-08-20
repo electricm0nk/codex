@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dandy ~ Dandy Spells",
     "name": "Dandy Spells",
-    "class": "Dandy",
+    "class": "Ranger",
     "description": "[NOT IMPLEMENTED] The dandy gains a different sort of spellcasting than most rangers. A dandy uses his Charisma instead of his Wisdom to determine spells per day, DCs, and other factors related to spellcasting. He casts spells spontaneously from the bard spell list (rather than the ranger spell list) with the same number of spells known and spells per day as a medium (Pathfinder RPG Occult Adventures 30) of his ranger level. This ability alters the ranger's spellcasting.",
     "raw_tokens": [
       {

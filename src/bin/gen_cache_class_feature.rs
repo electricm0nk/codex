@@ -41,9 +41,10 @@ fn main() {
         .unwrap_or_else(|e| panic!("could not parse {inventory_path}: {e}"));
 
     let out_dir = PathBuf::from(manifest_dir).join("data/corpus");
+    let grants_root = PathBuf::from(manifest_dir).join("data/class_feature_grants");
     let ingested_at = real_now_iso8601();
 
-    match class_feature::generate(&corpus_root, &out_dir, &ingested_at, &units) {
+    match class_feature::generate(&corpus_root, &grants_root, &out_dir, &ingested_at, &units) {
         Ok(report) => {
             println!(
                 "class_feature cache generated: {} records across {} books; {} skipped (NAMEISPI:YES); ingested_at={ingested_at}",

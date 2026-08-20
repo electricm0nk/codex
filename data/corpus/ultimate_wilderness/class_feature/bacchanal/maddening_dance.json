@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bacchanal ~ Maddening Dance",
     "name": "Maddening Dance",
-    "class": "Bacchanal",
+    "class": "Skald",
     "description": "The bacchanal's raging song can compel a creature within 30 feet to perform an ecstatic dance. Unless it succeeds at its Will save, the victim becomes confused, takes a -2 penalty to its AC and on Reflex saving throws, and loses the benefit of any shield it holds. The effect ends when the target can no longer hear the bacchanal from within 30 feet. As an immediate action, an ally of the bacchanal within 30 feet can dance along as a full-round action (taking all penalties except the confused condition for that round) to allow the bacchanal to target an additional creature. A creature that succeeds at the Will saving throw against this raging song is immune to this effect for 24 hours. This is a compulsion, emotion, enchantment, and mind-affecting effect.",
     "raw_tokens": [
       {

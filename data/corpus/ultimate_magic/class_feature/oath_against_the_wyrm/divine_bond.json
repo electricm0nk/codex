@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Oath against the Wyrm ~ Divine Bond",
     "name": "Divine Bond",
-    "class": "Oath against the Wyrm",
+    "class": "Paladin",
     "description": "This works like the paladin's normal divine bond ability, except as follows. If your bond is with a weapon, you cannot use that ability to add the brilliant energy, disruption, or merciful weapon properties, but you can add the bane weapon property (but only against dragons). If your bond is with your steed, the steed gains the paladin's aura-based immunities and your aura does not affect allies.",
     "raw_tokens": [
       {

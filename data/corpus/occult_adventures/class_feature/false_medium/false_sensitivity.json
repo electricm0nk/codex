@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "False Medium ~ False Sensitivity",
     "name": "False Sensitivity",
-    "class": "False Medium",
+    "class": "Rogue",
     "description": "At 2nd level, a charlatan can convincingly fake the ability to use occult skill unlocks such as automatic writing and dowsing. An untrained onlooker can't tell the difference between the false medium's scams and a true use of occult skill unlocks. An onlooker capable of using the particular occult skill unlock that the false medium is faking can attempt the appropriate skill check for that unlock, opposed by the false medium's Bluff check, to detect the fraud. In any case, any results of the false medium's charades are fabricated (for instance, the false medium might ask leading questions to elicit false memories while pretending to use hypnotism). This ability replaces the 2nd-level rogue talent.",
     "raw_tokens": [
       {

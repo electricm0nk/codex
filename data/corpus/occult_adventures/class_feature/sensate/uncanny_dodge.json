@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sensate ~ Uncanny Dodge",
     "name": "Uncanny Dodge",
-    "class": "Sensate",
+    "class": "Fighter",
     "description": "At 3rd level, a sensate gains uncanny dodge as the barbarian ability of the same name, except supernatural in nature. This ability replaces armor training 1.",
     "raw_tokens": [
       {

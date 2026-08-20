@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Martial Master ~ Martial Flexibility",
     "name": "Martial Flexibility",
-    "class": "Martial Master",
+    "class": "Fighter",
     "description": "The martial master can use a move action to gain the benefit of a combat feat he doesn't possess. The martial master must otherwise meet all the feat's prerequisites. |PREVARLT:FighterLVL,9",
     "raw_tokens": [
       {

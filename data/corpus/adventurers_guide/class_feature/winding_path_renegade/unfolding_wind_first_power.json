@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Winding Path Renegade ~ Unfolding Wind First Power",
     "name": "Unfolding Wind First Power",
-    "class": "Winding Path Renegade",
+    "class": "Brawler",
     "description": "The winding path renegade adds 10 to the range increment of ranged weapons she wields and gains Deflect Arrows as a bonus feat.",
     "raw_tokens": [
       {

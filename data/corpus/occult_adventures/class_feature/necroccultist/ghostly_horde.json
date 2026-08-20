@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Necroccultist ~ Ghostly Horde",
     "name": "Ghostly Horde",
-    "class": "Necroccultist",
+    "class": "Occultist",
     "description": "At 5th level, a necroccultist can spend 1 point of mental focus from a necromancy implement to summon a mob of ghostly spirits to harass his enemies. Summoning the ghostly horde is a standard action that doesn't provoke attacks of opportunity. The ghostly horde appears within 60 feet of the necroccultist, fills an area 20 feet in diameter, and always hovers a few inches off the ground (thus ignoring any difficult terrain). The necroccultist can command the ghostly horde to move up to 30 feet each round as a move action, though the farthest edge of the ghostly horde can never be more than 60 feet from the necroccultist. Any creature caught inside the ghostly horde takes 1d6 points of damage per 2 occultist levels at the start of its turn (up to a maximum of 10d6 points of damage at 20th level). A successful Fortitude save (DC = 10 + 1/2 the necroccultist's occultist level + the necroccultist's Intelligence modifier) halves this damage. This damage is not negative energy-it manifests in the form of physical wounds and aches as if from supernatural aging. Nonliving creatures and creatures immune to magical aging are immune to this damage, but otherwise the damage bypasses all forms of damage reduction. The ghostly horde remains for 1 round, though at the beginning of his turn, the necroccultist can expend 1 point of mental focus as a swift action to extend the duration for 1 additional round. The necroccultist can use this ability once per day at 5th level, plus one additional time per day for every 5 occultist levels thereafter. This ability replaces aura sight.",
     "raw_tokens": [
       {

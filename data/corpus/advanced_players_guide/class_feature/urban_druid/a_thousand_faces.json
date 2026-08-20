@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Urban Druid ~ A Thousand Faces",
     "name": "A Thousand Faces",
-    "class": "Urban Druid",
+    "class": "Druid",
     "description": "An urban druid gains this ability at 6th level.",
     "raw_tokens": [
       {

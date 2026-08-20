@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Skirmisher ~ Mobile Mastery",
     "name": "Mobile Mastery",
-    "class": "Skirmisher",
+    "class": "Fighter",
     "description": "A skirmisher learns to position his body and conceal his body proportions with clothes so well that it is difficult to hit him. He gains a 20%% miss chance on attacks against him. Mobile mastery functions even when the skirmisher is flat-footed, but not when he is immobilized or helpless, when he wears medium or heavy armor, or when he carries a medium or heavy load.",
     "raw_tokens": [
       {

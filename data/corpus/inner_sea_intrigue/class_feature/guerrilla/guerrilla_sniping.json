@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Guerrilla ~ Guerrilla Sniping",
     "name": "Guerrilla Sniping",
-    "class": "Guerrilla",
+    "class": "Rogue",
     "description": "When a guerrilla is in an area of dim light or darkness, she takes only a -10 penalty on her Stealth check to maintain her obscured location while sniping.",
     "raw_tokens": [
       {

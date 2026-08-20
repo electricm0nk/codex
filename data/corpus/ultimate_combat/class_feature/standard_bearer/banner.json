@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Standard Bearer ~ Banner",
     "name": "Banner",
-    "class": "Standard Bearer",
+    "class": "Cavalier",
     "description": "At 1st level, a standard bearer gains the banner ability. This ability is identical to the standard cavalier's banner ability, except that the morale bonuses on saving throws against fear effects and on attack rolls made as part of a charge increase at 5th level, and every five levels thereafter. This ability replaces the standard cavalier's mount ability.",
     "raw_tokens": [
       {

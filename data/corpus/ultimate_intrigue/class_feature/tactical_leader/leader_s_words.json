@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tactical Leader ~ Leader's Words",
     "name": "Leader's Words",
-    "class": "Tactical Leader",
+    "class": "Inquisitor",
     "description": "Tactical leaders are skilled at speaking soothing words that keep the peace and bolster allies' resolve. A tactical leader receives a morale bonus on all Diplomacy checks equal to half his inquisitor level (minimum +1).",
     "raw_tokens": [
       {

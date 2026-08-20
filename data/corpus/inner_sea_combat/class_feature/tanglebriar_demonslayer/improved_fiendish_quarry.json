@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tanglebriar Demonslayer ~ Improved Fiendish Quarry",
     "name": "Improved Fiendish Quarry",
-    "class": "Tanglebriar Demonslayer",
+    "class": "Ranger",
     "description": "At 19th level, when a Tanglebriar demonslayer chooses an evil outsider as his quarry, he can forgo the normal +4 attack bonus and instead treat his weapon as if it had the holy weapon special ability while attacking his quarry. This ability is otherwise identical to improved quarry and replaces that ability.",
     "raw_tokens": [
       {

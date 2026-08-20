@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Flying Blade ~ Flying Blade Training",
     "name": "Flying Blade Training",
-    "class": "Flying Blade",
+    "class": "Swashbuckler",
     "description": "A flying blade gains a +%1 bonus on attack and damage rolls when using daggers or starknives in combat. When a flying blade wields a dagger or starknife, she gains the benefit of the Improved Critical feat with those weapons. Additionally, a flying blade increases the range increment of a thrown dagger or starknife by %2 feet. The increase of range increment stacks with that of precise throw.|FlyingBladeTrainingBonus|FlyingBladeRangeBonus",
     "raw_tokens": [
       {

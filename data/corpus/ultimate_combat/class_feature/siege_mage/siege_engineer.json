@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Siege Mage ~ Siege Engineer",
     "name": "Siege Engineer",
-    "class": "Siege Mage",
+    "class": "Wizard",
     "description": "At 1st level, the siege mage gains Siege Engineer (see page 118) as a bonus feat, even though he does not meet the prerequisites for that feat. This ability replaces scribe scroll.",
     "raw_tokens": [
       {

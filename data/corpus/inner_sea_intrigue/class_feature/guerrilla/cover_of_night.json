@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Guerrilla ~ Cover of Night",
     "name": "Cover of Night",
-    "class": "Guerrilla",
+    "class": "Rogue",
     "description": "A guerrilla learns to use darkness to her advantage. She gains a +5 bonus on Disguise, Sleight of Hand, and Stealth checks while she is in areas of dim light or darkness, and can create mundane disguises in dim light or darkness with a full-round action (instead of the normal 1d3 x 10 minutes). Additionally, while in dim light or darkness, if a guerrilla would have concealment, she instead has total concealment.",
     "raw_tokens": [
       {

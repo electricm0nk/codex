@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Plant Speaker ~ Mystical Allegory",
     "name": "Mystical Allegory",
-    "class": "Plant Speaker",
+    "class": "Bard",
     "description": "The plant speaker can tell a story that matches some of the themes of the current situation in order to gain insight, gaining the effects of augury by performing for 1 minute and spending 4 rounds of bardic performance.",
     "raw_tokens": [
       {

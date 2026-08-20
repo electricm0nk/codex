@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Forensic Physician ~ Disease Lore",
     "name": "Disease Lore",
-    "class": "Forensic Physician",
+    "class": "Investigator",
     "description": "A forensic physician can use Heal to identify a disease after only 1 minute of examining the symptoms (DC = the disease's saving throw DC), and he can spend 1 minute and attempt a Heal check at the same DC to disinfect an infected object or corpse. He receives a +%1 bonus on saving throws against diseases.|2*(InvestigatorLVL/3)",
     "raw_tokens": [
       {

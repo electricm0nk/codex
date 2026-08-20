@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Stormwalker ~ Combat Style Feat",
     "name": "Combat Style Feat",
-    "class": "Stormwalker",
+    "class": "Ranger",
     "description": "A stormwalker must choose archery style. This alters the ranger's combat style.",
     "raw_tokens": [
       {

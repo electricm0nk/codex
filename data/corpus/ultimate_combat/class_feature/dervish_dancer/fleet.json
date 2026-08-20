@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dervish Dancer ~ Fleet",
     "name": "Fleet",
-    "class": "Dervish Dancer",
+    "class": "Bard",
     "description": "While performing a battle dance, a dervish dancer gains a +10 enhancement bonus to his land speed. This bonus increases by 5 feet for every four bard levels gained after 1st level, to a maximum of +30 feet at 19th level. This ability replaces bardic knowledge and lore master.",
     "raw_tokens": [
       {

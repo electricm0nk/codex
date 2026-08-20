@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Musket Master ~ Fast Musket",
     "name": "Fast Musket",
-    "class": "Musket Master",
+    "class": "Gunslinger",
     "description": "At 3rd level, as long as the musket master has 1 grit point, she can reload any two-handed firearm as if it were a one-handed firearm. This deed replaces the utility shot deed.",
     "raw_tokens": [
       {

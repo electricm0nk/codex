@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Studious Librarian ~ Critical Research Focus",
     "name": "Critical Research Focus",
-    "class": "Studious Librarian",
+    "class": "Bard",
     "description": "The studious librarian threatens a critical hit on a Research check (Ultimate Intrigue 148) with a roll of 18, 19, or 20. He gains a +4 bonus on Research checks to confirm a critical hit.",
     "raw_tokens": [
       {

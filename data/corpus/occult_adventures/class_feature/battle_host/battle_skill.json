@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Battle Host ~ Battle Skill",
     "name": "Battle Skill",
-    "class": "Battle Host",
+    "class": "Occultist",
     "description": "At 2nd level, a battle host's magic item skill ability applies only on checks with weapons, armor, and shields. This ability alters magic item skill.",
     "raw_tokens": [
       {

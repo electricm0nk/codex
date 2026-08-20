@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mouser ~ Cat's Charge",
     "name": "Cat's Charge",
-    "class": "Mouser",
+    "class": "Swashbuckler",
     "description": "As long as a mouser has at least 1 panache point, when she charges a foe whose size is larger than her own, the mouser can end her charge in any space she can reach, not just the closest space. All other requirements of the charge must still be satisfied. This deed replaces bleeding wound.",
     "raw_tokens": [
       {

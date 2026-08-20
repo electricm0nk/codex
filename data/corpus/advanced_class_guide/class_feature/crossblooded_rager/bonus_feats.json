@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Crossblooded Rager ~ Bonus Feats",
     "name": "Bonus Feats",
-    "class": "Crossblooded Rager",
+    "class": "Bloodrager",
     "description": "A crossblooded rager combines the bonus feat lists from both of his bloodlines and can select his bloodline bonus feats from this combined list.",
     "raw_tokens": [
       {

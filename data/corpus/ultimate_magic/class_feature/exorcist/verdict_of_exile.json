@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Exorcist ~ Verdict of Exile",
     "name": "Verdict of Exile",
-    "class": "Exorcist",
+    "class": "Inquisitor",
     "description": "While using judgment, you can unleash the verdict of exile on a creature. When you do, your judgment ends, but the creature subject to that judgment is dazed for 1 round (Will DC %1 negates); if the creature is possessed or an outsider, the possessing entity or outsider is affected by dismissal (Will negates).|VerdictOfExileDC",
     "raw_tokens": [
       {

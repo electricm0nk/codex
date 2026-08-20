@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ectochymist ~ Cool-Headed",
     "name": "Cool-Headed",
-    "class": "Ectochymist",
+    "class": "Alchemist",
     "description": "At 2nd level, an ectochymist gains a +2 bonus on saves against death, fear, and negative energy effects. This bonus increases to +4 at 5th level, and to +6 at 8th level. This ability replaces poison resistance.",
     "raw_tokens": [
       {

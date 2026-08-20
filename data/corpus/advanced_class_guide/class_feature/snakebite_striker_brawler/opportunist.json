@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Snakebite Striker Brawler ~ Opportunist",
     "name": "Opportunist",
-    "class": "Snakebite Striker Brawler",
+    "class": "Brawler",
     "description": "%1 times per round the snakebite striker can make an attack of opportunity against an opponent who has just been struck for damage in melee by another character. This attack counts as an attack of opportunity for that round. She cannot use this ability more than %1 times per round, even if she has the Combat Reflexes feat or a similar ability.|SnakebiteStrikerOpportunistTimes",
     "raw_tokens": [
       {

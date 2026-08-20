@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wilderness Explorer ~ Hazard Sense",
     "name": "Hazard Sense",
-    "class": "Wilderness Explorer",
+    "class": "Ranger",
     "description": "A wilderness explorer gains an intuitive understanding of natural hazards and traps fashioned from a natural environment. He gains a +%1 bonus on Reflex saves against natural hazards and wilderness traps and a +%1 dodge bonus to AC against attacks from wilderness traps.|RangerLVL/4",
     "raw_tokens": [
       {

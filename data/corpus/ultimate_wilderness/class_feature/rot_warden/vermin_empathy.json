@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Rot Warden ~ Vermin Empathy",
     "name": "Vermin Empathy",
-    "class": "Rot Warden",
+    "class": "Druid",
     "description": "A rot warden can improve the attitude of vermin as a normal druid can with animals. Vermin have a starting attitude of unfriendly. The rot warden can also improve the attitude of vermin swarms, but he takes a -4 penalty on the check unless the swarm consists of the same kind of vermin as his vermin companion or his current wild shape.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Archaeologist ~ Advanced Talent",
     "name": "Advanced Talent",
-    "class": "Archaeologist",
+    "class": "Bard",
     "description": "At 12th level, and every four levels thereafter, an Archaeologist can choose an advanced rogue talent in place of a rogue talent.",
     "raw_tokens": [
       {

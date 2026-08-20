@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ringleader ~ Countless Contingencies",
     "name": "Countless Contingencies",
-    "class": "Ringleader",
+    "class": "Bard",
     "description": "Whenever a ringleader creates a plan using her cunning plan ability, she can choose two different bardic performances. When she triggers the plan, she chooses which of the two performances takes effect.",
     "raw_tokens": [
       {

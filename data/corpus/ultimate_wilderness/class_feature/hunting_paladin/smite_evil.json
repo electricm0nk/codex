@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Hunting Paladin ~ Smite Evil",
     "name": "Smite Evil",
-    "class": "Hunting Paladin",
+    "class": "Paladin",
     "description": "A hunting paladin gains this ability at 4th level, and it functions at her paladin level - 3. She can expend a daily use of smite evil to gain an additional daily use of hunt evil. She can use smite evil and hunt evil against the same target. This alters smite evil.",
     "raw_tokens": [
       {

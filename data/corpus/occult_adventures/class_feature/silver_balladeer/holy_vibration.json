@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Silver Balladeer ~ Holy Vibration",
     "name": "Holy Vibration",
-    "class": "Silver Balladeer",
+    "class": "Bard",
     "description": "At 9th level, a silver balladeer can spend a round of bardic performance to make a single door or a window within 30 feet resonate with a holy vibration. Undead and creatures with the evil subtype are unable to open a door or window affected in this way (as arcane lock) for 10 minutes per bard level. If such a creature has the incorporeal subtype, it is unable to move through the affected door or window, or through any walls, floors, or ceilings within 20 feet of it. Incorporeal creatures can attempt Charisma checks to break through areas warded by holy vibration, using the same break DC as for the object the creature is trying to move through. This ability replaces inspire greatness.",
     "raw_tokens": [
       {

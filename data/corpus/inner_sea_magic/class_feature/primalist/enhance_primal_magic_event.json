@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Primalist ~ Enhance Primal Magic Event",
     "name": "Enhance Primal Magic Event",
-    "class": "Primalist",
+    "class": "Wizard",
     "description": "When a primalist triggers a primal magic event, as a swift action she can increase or decrease its CR by 1. If she makes a concentration check (DC 15 + the primal magic event's CR), she can instead increase or decrease the CR by 2. If she reduces a primal magic event's CR to less than 1, the event is negated. She can choose to use this ability after she determines what primal magic event she triggers, but before she resolves the effects of that event.",
     "raw_tokens": [
       {

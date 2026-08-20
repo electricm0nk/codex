@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Blood God Disciple ~ Rage Power",
     "name": "Rage Power",
-    "class": "Blood God Disciple",
+    "class": "Summoner",
     "description": "A blood god disciple selects a barbarian rage power, which he may use when raging (whether from the avatar gambit ability or actual barbarian rage).",
     "raw_tokens": [
       {

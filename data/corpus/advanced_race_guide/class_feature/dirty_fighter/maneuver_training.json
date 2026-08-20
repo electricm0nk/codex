@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dirty Fighter ~ Maneuver Training",
     "name": "Maneuver Training",
-    "class": "Dirty Fighter",
+    "class": "Fighter",
     "description": "The dirty fighter becomes a master of dirty tricks. He gains a +2 bonus on dirty trick combat maneuver checks and +2 to his CMD when he is the target of a dirty trick combat maneuver.",
     "raw_tokens": [
       {

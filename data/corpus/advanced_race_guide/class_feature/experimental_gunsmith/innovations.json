@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Experimental Gunsmith ~ Innovations",
     "name": "Innovations",
-    "class": "Experimental Gunsmith",
+    "class": "Gunslinger",
     "description": "An Experimental Gunsmith starts play with one innovation she can make to her experimental firearms, selected from the list below. This innovation is a radical change to the typical design of a firearm, and comes with both additional benefits and noteworthy drawbacks. The Experimental Gunsmith can maintain only one experimental firearm modified with one or more innovations, as it requires constant adjustments and much of her time is spent maintaining the weapon. If the Experimental Gunsmith takes the Gunsmithing feat, she can create other firearms using a single innovation she knows (or add one innovation to an existing firearm), though such weapons become unreliable over time. The misfire value of such weapons increases by 1 for each week after its creation, although the Experimental Gunsmith can return the misfire rate to normal by spending 1 day maintaining the weapon and spending 50 gp in raw materials. For the purposes of crafting such firearms, each innovation is treated as the masterwork weapon quality (with a value of 300 gp).",
     "raw_tokens": [
       {

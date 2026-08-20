@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Treesinger ~ Plant Bond",
     "name": "Plant Bond",
-    "class": "Treesinger",
+    "class": "Druid",
     "description": "A treesinger forms a mystic bond with plant life.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Swamp Druid ~ Wild Shape",
     "name": "Wild Shape",
-    "class": "Swamp Druid",
+    "class": "Druid",
     "description": "A swamp druid gains this ability at 6th level, except that her effective druid level for the ability is equal to her druid level - 2.",
     "raw_tokens": [
       {

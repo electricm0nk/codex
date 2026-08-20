@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Winding Path Renegade ~ Unblinking Flame Second Power",
     "name": "Unblinking Flame Second Power",
-    "class": "Winding Path Renegade",
+    "class": "Brawler",
     "description": "If the winding path renegade begins the round with the grappled condition, she can deal 2d6 points of fire damage to all other creatures in the grapple as a free action.",
     "raw_tokens": [
       {

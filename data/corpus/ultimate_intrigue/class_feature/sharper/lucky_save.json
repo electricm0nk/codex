@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sharper ~ Lucky Save",
     "name": "Lucky Save",
-    "class": "Sharper",
+    "class": "Rogue",
     "description": "When a sharper's wits aren't enough to pull her out of a bad situation, her luck still just might save her. She gains a +%1 luck bonus on all saving throws.|SharperLuckySaveBonus",
     "raw_tokens": [
       {

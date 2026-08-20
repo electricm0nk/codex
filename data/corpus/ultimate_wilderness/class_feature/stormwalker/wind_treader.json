@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Stormwalker ~ Wind Treader",
     "name": "Wind Treader",
-    "class": "Stormwalker",
+    "class": "Ranger",
     "description": "A stormwalker becomes immune to the effects of strong wind. He can move without hindrance in windy conditions, and his ranged attacks take no penalties from nonmagical wind.",
     "raw_tokens": [
       {

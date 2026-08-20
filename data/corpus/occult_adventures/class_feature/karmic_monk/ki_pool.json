@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Karmic Monk ~ Ki Pool",
     "name": "Ki Pool",
-    "class": "Karmic Monk",
+    "class": "Monk",
     "description": "At 7th level, when a karmic monk makes unarmed strikes, they're treated as chaotic, evil, good, and lawful. This ability replaces the 7th- and 10th-level ki pool abilities.",
     "raw_tokens": [
       {

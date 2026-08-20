@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Hexenhammer ~ Hexcrafter",
     "name": "Hexcrafter",
-    "class": "Hexenhammer",
+    "class": "Inquisitor",
     "description": "A hexenhammer learns to turn some powers of witches to her own advantage. She learns either the blight, the misfortune, or the slumber hex from the witch's hex list, and can use that hex once per day as a standard action, using her inquisitor level in place of a witch level. If the hex allows a saving throw, the save DC to resist the hex is %1. At 6th level, 12th, and 15th levels, the hexenhammer learns an additional hex from her available hexes. At 9th level and 18th level, the hexenhammer can use any one of her hexes one additional time per day. At 12th level, the hexenhammer adds the agony, nightmares, and retribution major hexes to her list of learnable hexes.|10+InquisitorLVL/2+WIS",
     "raw_tokens": [
       {

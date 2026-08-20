@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fell Rider ~ Rampage",
     "name": "Rampage",
-    "class": "Fell Rider",
+    "class": "Cavalier",
     "description": "The fell rider gains Trample as a bonus feat. The fell rider receives a +2 bonus on overrun attempts made while mounted. In addition, his mount gains a +2 bonus on damage rolls when making hoof attacks or using the trample monster ability, even when not overrunning.",
     "raw_tokens": [
       {

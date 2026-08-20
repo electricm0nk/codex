@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Formless Adept ~ Phrenic Charisma",
     "name": "Phrenic Charisma",
-    "class": "Formless Adept",
+    "class": "Psychic",
     "description": "[not implemented]A formless adept uses his Charisma modifier to determine the number of points in his phrenic pool. This ability alters phrenic pool.",
     "raw_tokens": [
       {

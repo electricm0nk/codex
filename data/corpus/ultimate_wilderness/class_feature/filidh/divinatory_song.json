@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Filidh ~ Divinatory Song",
     "name": "Divinatory Song",
-    "class": "Filidh",
+    "class": "Bard",
     "description": "A filidh can use his performance to create an effect equivalent to divination, using the filidh's level as the caster level. The filidh and all allies who can hear his performance receive the information provided by the divination as flashes of inspiration and knowledge. Divinatory song takes 10 minutes and uses 6 rounds of bardic performance. Divinatory song relies on audible components.",
     "raw_tokens": [
       {

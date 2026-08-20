@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Menhir Guardian ~ Weapon Proficiency",
     "name": "Weapon and Armor Proficiency",
-    "class": "Menhir Guardian",
+    "class": "Monk",
     "description": "A menhir guardian is proficient with the club, dagger, dart, quarterstaff, sickle, shortspear, sling, and spear. A menhir guardian can use these weapons in conjunction with his wild flurry ability.",
     "raw_tokens": [
       {

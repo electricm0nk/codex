@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Shaitan Binder ~ Shaitan Magic",
     "name": "Shaitan Magic",
-    "class": "Shaitan Binder",
+    "class": "Summoner",
     "description": "The shaitan binder's eidolon gains the basic magic evolution (Ultimate Magic) as a free evolution. At 6th level, it gains the minor magic evolution (Ultimate Magic). At 8th level, it gains the major magic evolution (Ultimate Magic) as a free evolution, and adds the following to the list of available spells for that evolution: glitterdust and soften earth and stone. At 12th level, it gains the ultimate magic evolution (Ultimate Magic) as a free evolution, and adds the following to the list of available spells for that evolution: meld into stone and stone shape. Although the shaitan binder gains the standard versions of these evolutions for free, he must pay the normal cost to upgrade them to the improved versions. This ability replaces shield ally and greater shield ally.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wave Warden ~ Favored Terrain",
     "name": "Favored Terrain",
-    "class": "Wave Warden",
+    "class": "Ranger",
     "description": "A wave warden gains water as a favored terrain. His bonus in aquatic terrain is +%1. He does not gain additional favored terrains.|(1+(RangerLVL-3)/5)*2",
     "raw_tokens": [
       {

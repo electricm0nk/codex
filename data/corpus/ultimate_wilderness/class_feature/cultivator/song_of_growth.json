@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cultivator ~ Song of Growth",
     "name": "Song of Growth",
-    "class": "Cultivator",
+    "class": "Bard",
     "description": "A cultivator can spontaneously promote massive plant growth with his bardic performance. While he maintains his song of growth, the cultivator can spend a standard action to select one side of a square within 30 feet of himself and instantly create an opaque barrier of plant matter to block that face, providing total cover. He can create one barrier as part of starting his bardic performance if he starts the performance as a standard action. The side the cultivator selects must be supported by the ground, and the growth itself cannot support more than 5 pounds of weight. The conjured barrier has hardness 0, AC 5, and %1 hit points. A cultivator can maintain %2 plant growths. These barriers immediately crumble to dust when the cultivator ends his performance.|BardLVL*2|CHA+BardLVL/2",
     "raw_tokens": [
       {

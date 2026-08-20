@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Infiltrator ~ Voice Mimicry",
     "name": "Voice Mimicry",
-    "class": "Infiltrator",
+    "class": "Investigator",
     "description": "At 2nd level, an infiltrator learns to mimic voices and sounds around him. Using this ability requires a special Disguise check, and creatures hearing the voice can make a Perception check to discover the ruse. An infiltrator can attempt to emulate any creature or other sound he's heard clearly for at least 1 minute. The bonuses or penalties to this special Disguise check are modified in the following ways, all of which are cumulative. +5 bonus for a non-specific voice, -2 each for different gender, race, or age category, and -5 for different size category. Also, the creature making the Perception check gains a bonus based on its familiarity with specific voices, just as if it were confronted with a normal disguise (Core Rulebook 95). This ability is a language-dependent effect, meaning that if a creature cannot hear or understand what the infiltrator is saying, the ruse fails. Magic items, feats, and traits that affect typical disguises do not affect this disguise check. At 8th level, the infiltrator gains the effects of its master of disguise class feature on this special use of the Disguise skill (no penalty for a voice of a different gender, race, or age category, and only a -3 penalty for a different size category). This ability replaces poison lore.",
     "raw_tokens": [
       {

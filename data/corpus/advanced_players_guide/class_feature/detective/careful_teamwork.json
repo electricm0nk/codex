@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Detective ~ Careful Teamwork",
     "name": "Careful Teamwork",
-    "class": "Detective",
+    "class": "Bard",
     "description": "A detective uses performance to keep allies coordinated, alert, and ready for action. All allies within 30 feet gain a +%1 bonus on Initiative checks, Perception, and Disable Device checks for 1 hour. They also gain a +%1 insight bonus on Reflex saves and to AC against traps and when they are flat-footed. These bonuses increase by +1 at 5th level and every six levels thereafter. Using this ability requires 3 rounds of continuous performance, and the targets must be able to see and hear the bard throughout the performance. This ability is language-dependent and requires visual and audible components. This performance replaces inspire courage.|(BardLVL+1)/6",
     "raw_tokens": [
       {

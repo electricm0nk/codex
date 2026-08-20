@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Exorcist ~ Verdict of Exorcism",
     "name": "Verdict of Exorcism",
-    "class": "Exorcist",
+    "class": "Inquisitor",
     "description": "While using judgment, you can unleash the verdict of exorcism on a creature. When you do, your judgment ends, but the creature is dazed for 1 round (Will DC %1 negates); if the creature is possessed, the possessing entity must succeed at a Will saving throw (DC %1), or be exorcised and never again allowed in that same body.|VerdictOfExorcismDC",
     "raw_tokens": [
       {

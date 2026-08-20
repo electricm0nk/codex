@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Brutal Pugilist ~ Improved Savage Grapple",
     "name": "Improved Savage Grapple",
-    "class": "Brutal Pugilist",
+    "class": "Barbarian",
     "description": "At 5th level, the brutal pugilist takes no penalties to Dexterity, attack rolls, and combat maneuver checks when she has the grappled condition. She also is treated as one size larger than her actual size when determining whether she can grapple or be grappled by another creature. This ability replaces improved uncanny dodge.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Aerie Protector ~ In the Wind",
     "name": "In the Wind",
-    "class": "Aerie Protector",
+    "class": "Druid",
     "description": "The climb and fly speeds of forms the aerie protector assumes with her wild shape ability (if any) increase by 10 feet. The maneuverability of her flying forms improves by one category.",
     "raw_tokens": [
       {

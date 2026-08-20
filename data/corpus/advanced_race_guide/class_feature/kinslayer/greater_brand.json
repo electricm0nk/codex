@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Kinslayer ~ Greater Brand",
     "name": "Greater Brand",
-    "class": "Kinslayer",
+    "class": "Inquisitor",
     "description": "A kinslayer learns to modify her slayer's brand judgment as she gains levels. Whenever she gains the ability to learn a teamwork feat, she can instead opt to learn one of the modifications to her slayer's brand judgment.",
     "raw_tokens": [
       {

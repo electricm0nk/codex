@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Perfect Scholar ~ Eye of the Sun and Moon",
     "name": "Eye of the Sun and Moon",
-    "class": "Perfect Scholar",
+    "class": "Monk",
     "description": "A perfect scholar can read all languages and write all languages he has read or heard.",
     "raw_tokens": [
       {

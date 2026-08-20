@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Hooded Champion ~ Deeds",
     "name": "Deeds",
-    "class": "Hooded Champion",
+    "class": "Ranger",
     "description": "The hooded champion gains the swashbuckler's derring-do and dodging panache deeds, as well as the following deeds. For all deeds, treat the hooded champion's ranger level as his swashbuckler level.",
     "raw_tokens": [
       {

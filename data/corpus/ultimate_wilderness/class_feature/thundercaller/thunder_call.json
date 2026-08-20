@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Thundercaller ~ Thunder Call",
     "name": "Thunder Call",
-    "class": "Thundercaller",
+    "class": "Bard",
     "description": "The thundercaller can start a performance to unleash a deafening peal of thunder. This allows the thundercaller to spend a round of performance to create an effect similar to the spell sound burst (%1d8 damage and stunned for 1 round, close range, 10-ft. area spread, DC %2 Fortitude for half damage, not stunned). A creature that succeeds at its saving throw against thunder call is immune to the stunning effect but still takes sonic damage. Beginning this performance is always a standard action.|ThundercallerThunderDamageDice|12+CHA",
     "raw_tokens": [
       {

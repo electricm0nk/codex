@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Maneuver Master ~ Reliable Maneuver",
     "name": "Reliable Maneuver",
-    "class": "Maneuver Master",
+    "class": "Monk",
     "description": "At 4th level, as a swift action, a maneuver master may spend 1 point from his ki pool before attempting a combat maneuver. He can roll his combat maneuver check for that maneuver twice and use the better result. This ability replaces slow fall.",
     "raw_tokens": [
       {

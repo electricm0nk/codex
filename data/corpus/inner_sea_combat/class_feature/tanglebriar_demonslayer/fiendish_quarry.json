@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tanglebriar Demonslayer ~ Fiendish Quarry",
     "name": "Fiendish Quarry",
-    "class": "Tanglebriar Demonslayer",
+    "class": "Ranger",
     "description": "At 11th level, when a Tanglebriar demonslayer chooses an evil outsider as his quarry, he can tlie forgo the normal +2 attack bonus and instead treat his weapon as if it were good-aligned versus his quarry. This ability is otherwise identical to quarry and replaces that ability.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cavern Sniper ~ Greater Imbued Shot",
     "name": "Greater Imbued Shot",
-    "class": "Cavern Sniper",
+    "class": "Fighter",
     "description": "The cavern sniper gains two extra uses of both his faerie fire and darkness spell-like abilities, but can only use these extra uses to imbue arrows and bolts with the imbued shot class feature.",
     "raw_tokens": [
       {

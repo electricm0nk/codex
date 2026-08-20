@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dirty Fighter ~ Speedy Tricks",
     "name": "Speedy Tricks",
-    "class": "Dirty Fighter",
+    "class": "Fighter",
     "description": "The dirty fighter has perfected how to quickly perform dirty tricks. He can make a dirty trick combat maneuver as an attack instead of a standard action.",
     "raw_tokens": [
       {

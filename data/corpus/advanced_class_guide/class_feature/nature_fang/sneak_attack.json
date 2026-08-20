@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Nature Fang ~ Sneak Attack",
     "name": "Sneak Attack",
-    "class": "Nature Fang",
+    "class": "Druid",
     "description": "A nature fang gains sneak attack +1d6. This functions as the rogue sneak attack ability. If the nature fang gets a sneak attack bonus from another source, the bonuses on damage stack.",
     "raw_tokens": [
       {

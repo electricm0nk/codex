@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Beast-Bonded ~ Familiar Form",
     "name": "Familiar Form",
-    "class": "Beast-Bonded",
+    "class": "Witch",
     "description": "You may take the shape of your familiar (or a giant version of your familiar or a similar kind of animal) as if using beast shape II. For example, a witch with a rat familiar can turn into a Tiny rat, Small dire rat, or a larger rodent; one with a cat familiar can turn into a Tiny cat or a Large feline such as a tiger or lion; one with a monkey familiar can turn into a Tiny monkey or a Large gorilla, and so on. You can remain in animal form for %1 minutes per day.|FamiliarFormDuration",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Transporter ~ Trailbreaker",
     "name": "Trailbreaker",
-    "class": "Transporter",
+    "class": "Ranger",
     "description": "A transporter constantly works to obscure his trail. He increases the Survival DC to track him, or a group of which he is a part, by %1. This does not stack with similar abilities, such as a traceless operative's trackless ability (see page 30).|max(1,RangerLVL/2",
     "raw_tokens": [
       {

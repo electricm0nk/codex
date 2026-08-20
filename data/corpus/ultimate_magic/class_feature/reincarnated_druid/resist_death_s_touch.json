@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Reincarnated Druid ~ Resist Death's Touch",
     "name": "Resist Death's Touch",
-    "class": "Reincarnated Druid",
+    "class": "Druid",
     "description": "You gain a +4 bonus on saving throws against death effects, energy drain, and necromancy effects, and on stabilization checks when dying.",
     "raw_tokens": [
       {

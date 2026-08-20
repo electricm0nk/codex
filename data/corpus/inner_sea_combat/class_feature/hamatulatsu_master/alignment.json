@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Hamatulatsu Master ~ Alignment",
     "name": "Alignment",
-    "class": "Hamatulatsu Master",
+    "class": "Monk",
     "description": "A hamatulatsu master must be lawful neutral or lawful evil.",
     "raw_tokens": [
       {

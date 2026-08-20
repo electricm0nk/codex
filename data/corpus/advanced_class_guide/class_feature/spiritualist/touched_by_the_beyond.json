@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spiritualist ~ Touched by the Beyond",
     "name": "Touched by the Beyond",
-    "class": "Spiritualist",
+    "class": "Investigator",
     "description": "The spiritualist's ability to touch the beyond grants him further protection against the dangers of death and negative energy. The spiritualist becomes immune to death effects, and he takes half damage from negative energy.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Rough Rampager ~ Aura of Quietus",
     "name": "Aura of Quietus",
-    "class": "Rough Rampager",
+    "class": "Antipaladin",
     "description": "At 14th level, a rough rampager radiates an aura that causes the failure of healing spells, spell-like abilities, and supernatural abilities used to restore enemies within 10 feet of him. This is not an antimagic field, however, and ongoing or passive effects are not affected. Casters can overcome this ability with a successful caster level check versus the rough rampager's class level + 11. This ability replaces aura of sin.",
     "raw_tokens": [
       {

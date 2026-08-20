@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Eldritch Raider ~ Skill Ranks per Level",
     "name": "Skill Ranks per Level",
-    "class": "Eldritch Raider",
+    "class": "Rogue",
     "description": "6 + Int modifier.",
     "raw_tokens": [
       {

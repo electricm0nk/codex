@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Honor Guard ~ Intercept",
     "name": "Intercept",
-    "class": "Honor Guard",
+    "class": "Cavalier",
     "description": "At 3rd level, an honor guard learns to better disrupt the attacks of his enemies. He gains Bodyguard (Advanced Player's Guide 151) as a bonus feat, even if he does not meet the prerequisite. In addition, whenever the honor guard uses the aid another action to increase an ally's Armor Class, the bonus to Armor Class granted by the aid another action increases by +1. This ability replaces cavalier's charge.",
     "raw_tokens": [
       {

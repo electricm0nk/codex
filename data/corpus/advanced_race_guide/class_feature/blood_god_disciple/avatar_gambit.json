@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Blood God Disciple ~ Avatar Gambit",
     "name": "Avatar Gambit",
-    "class": "Blood God Disciple",
+    "class": "Summoner",
     "description": "When a blood god disciple dismisses his eidolon, he rages like a barbarian for a number of rounds equal to half his summoner level (he may end this rage early just like a barbarian, but if he does so, any remaining rounds of rage from this ability are lost).",
     "raw_tokens": [
       {

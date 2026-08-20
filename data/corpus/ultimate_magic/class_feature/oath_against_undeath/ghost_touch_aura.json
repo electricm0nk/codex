@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Oath against Undeath ~ Ghost Touch Aura",
     "name": "Ghost Touch Aura",
-    "class": "Oath against Undeath",
+    "class": "Paladin",
     "description": "Your armor is treated as if it had the ghost touch armor property. This does not affect the cost or effect of any other abilities of the armor.|!PRECLASS:1,Paladin=9",
     "raw_tokens": [
       {

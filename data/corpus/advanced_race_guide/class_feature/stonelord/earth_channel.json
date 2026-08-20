@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Stonelord ~ Earth Channel",
     "name": "Earth Channel",
-    "class": "Stonelord",
+    "class": "Paladin",
     "description": "A stonelord gains Elemental Channel (earth) as a bonus feat, which she may activate by spending two uses of her lay on hands ability, using her paladin level as her effective cleric level.",
     "raw_tokens": [
       {

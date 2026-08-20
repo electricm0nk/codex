@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Aquatic Druid ~ Deep Diver",
     "name": "Deep Diver",
-    "class": "Aquatic Druid",
+    "class": "Druid",
     "description": "At 13th level, an aquatic druid gains DR/slashing or piercing equal to 1/2 her level. This damage reduction also applies against spells and spell-like abilities that inflict damage by grappling or crushing (e.g., black tentacles, crushing hand). She never takes pressure damage from deep water. This ability replaces a thousand faces.",
     "raw_tokens": [
       {

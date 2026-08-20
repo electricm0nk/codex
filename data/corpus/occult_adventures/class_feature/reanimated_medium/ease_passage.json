@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Reanimated Medium ~ Ease Passage",
     "name": "Ease Passage",
-    "class": "Reanimated Medium",
+    "class": "Medium",
     "description": "As long as a reanimated medium's body is intact, it's easy for him to return to it. He takes only 1 negative level instead of 2 from raise dead.",
     "raw_tokens": [
       {

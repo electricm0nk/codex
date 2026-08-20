@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Packmaster ~ Second Pack Focus",
     "name": "Second Pack Focus",
-    "class": "Packmaster",
+    "class": "Hunter",
     "description": "[NOT IMPLEMENTED] At 8th level, the hunter gains an ability that functions like the second animal focus, but the hunter can either assign each companion one aspect each or assign both aspects to the same companion. The foci on the companions don't need to be the same, nor do they need to be the same as the one assigned to the packmaster. This ability replaces second animal focus.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fearsome Defender ~ Intractable",
     "name": "Intractable",
-    "class": "Fearsome Defender",
+    "class": "Barbarian",
     "description": "A combination of brainwashing and loyalty helps a fearsome defender resist pain and torture, enduring grueling combat or questioning without betraying her dark lord. A fearsome defender gains a +%1 bonus on saving throws against pain effects, and the DCs of checks to coerce her or demoralize her with Diplomacy or Intimidate increase by %1.|FearsomeDefenderIntractableBonus",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wild Shadow ~ Woodland Stride",
     "name": "Woodland Stride",
-    "class": "Wild Shadow",
+    "class": "Ranger",
     "description": "This ability functions as the 7th level ranger class feature of the same name, but the wild shadow gains it at 4th level instead.",
     "raw_tokens": [
       {

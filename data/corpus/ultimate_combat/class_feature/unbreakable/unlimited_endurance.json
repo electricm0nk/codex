@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Unbreakable ~ Unlimited Endurance",
     "name": "Unlimited Endurance",
-    "class": "Unbreakable",
+    "class": "Fighter",
     "description": "At 15th level, when an unbreakable is exhausted, he only suffers the effects of the fatigued condition instead, but does require 1 hour of rest to reduce this condition to the actual fatigued condition. This ability replaces armor training 4.",
     "raw_tokens": [
       {

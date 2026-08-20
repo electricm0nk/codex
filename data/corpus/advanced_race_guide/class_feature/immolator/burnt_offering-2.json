@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Immolator ~ Burnt Offering 2",
     "name": "Burnt Offering",
-    "class": "Immolator",
+    "class": "Inquisitor",
     "description": "As a swift action, an immolator can imbue one of her weapons with the flaming burst weapon special ability. Any creature slain by this weapon burns with magical flame; its body turns to ash, though its equipment is not harmed. This special ability only functions while the immolator wields the weapon. This ability lasts for %1 rounds per day. These rounds do not need to be consecutive.|InquisitorLVL",
     "raw_tokens": [
       {

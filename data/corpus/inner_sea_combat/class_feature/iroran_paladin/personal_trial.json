@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Iroran Paladin ~ Personal Trial",
     "name": "Personal Trial",
-    "class": "Iroran Paladin",
+    "class": "Paladin",
     "description": "%1 times per day, as a swift action, you can declare one target within line of sight your personal trial.  You gain a +%2 insight bonus on attack rolls and damage rolls against that creature, to your AC against attacks made by the target, and on saving throws against the target's spells and special abilities; this lasts until the target is dead, or you rest and regain uses of your personal trial.|PersonalTrialDailyUses|PersonalTrialInsightBonus",
     "raw_tokens": [
       {

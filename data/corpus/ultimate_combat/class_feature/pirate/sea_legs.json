@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Pirate ~ Sea Legs",
     "name": "Sea Legs",
-    "class": "Pirate",
+    "class": "Rogue",
     "description": "At 1st level, a pirate becomes adept at moving on ships, boats, and similar vessels. She gains the Sea Legs feat (page 117) as a bonus feat, even if she does not meet the prerequisites. This ability replaces trapfinding.",
     "raw_tokens": [
       {

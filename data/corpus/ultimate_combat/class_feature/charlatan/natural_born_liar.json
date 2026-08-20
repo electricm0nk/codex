@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Charlatan ~ Natural Born Liar",
     "name": "Natural Born Liar",
-    "class": "Charlatan",
+    "class": "Rogue",
     "description": "At 1st level, when a charlatan successfully deceives a creature with a Bluff, that creature takes a - 2 penalty on the charlatan's Bluff checks for the next 24 hours. This ability does not stack with itself. This ability replaces trapfinding.",
     "raw_tokens": [
       {

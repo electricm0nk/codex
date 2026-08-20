@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Order Of The Shroud ~ Edicts",
     "name": "Edicts",
-    "class": "Order Of The Shroud",
+    "class": "Cavalier",
     "description": "The cavalier must protect the common folk from the scourge of the undead. He must seek out and destroy the restless dead and give aid to those haunted by them. He must protect those who cannot defend themselves, and root out sources that birth the corruption of life and death.",
     "raw_tokens": [
       {

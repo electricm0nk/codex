@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Hussar ~ Sudden Swerve",
     "name": "Sudden Swerve",
-    "class": "Hussar",
+    "class": "Cavalier",
     "description": "A hussar's control over his mount is advanced enough to allow the mount to turn on the spot, even when charging forward at full speed. Whenever the hussar makes the charge or run action while mounted, he can make a single turn of up to 90 degrees at any one point during this movement.",
     "raw_tokens": [
       {

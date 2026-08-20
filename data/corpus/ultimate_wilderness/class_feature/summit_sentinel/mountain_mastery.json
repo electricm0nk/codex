@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Summit Sentinel ~ Mountain Mastery",
     "name": "Mountain Mastery",
-    "class": "Summit Sentinel",
+    "class": "Ranger",
     "description": "A summit sentinel must select mountains as her favored terrain, and she does not gain additional favored terrains at higher levels. Every 5 levels beyond 5th, the bonus from this favored terrain increases by 2.",
     "raw_tokens": [
       {

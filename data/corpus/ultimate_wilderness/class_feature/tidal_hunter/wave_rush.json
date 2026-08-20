@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tidal Hunter ~ Wave Rush",
     "name": "Wave Rush",
-    "class": "Tidal Hunter",
+    "class": "Ranger",
     "description": "A tidal hunter gains a swim speed equal to his base speed. If he already has a swim speed, it increases by 10 feet.",
     "raw_tokens": [
       {

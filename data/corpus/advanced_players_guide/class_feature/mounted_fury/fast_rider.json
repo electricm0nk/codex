@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mounted Fury ~ Fast Rider",
     "name": "Fast Rider",
-    "class": "Mounted Fury",
+    "class": "Barbarian",
     "description": "The speed of any mount the barbarian rides is increased by 10 feet. This ability replaces fast movement.",
     "raw_tokens": [
       {

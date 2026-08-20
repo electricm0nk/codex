@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Saurian Champion ~ Quick Rider",
     "name": "Quick Rider",
-    "class": "Saurian Champion",
+    "class": "Cavalier",
     "description": "A saurian champion can attempt Ride checks to fast mount or fast dismount his mount even if it's more than one size category larger than himself.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Savage Barbarian ~ Natural Toughness",
     "name": "Natural Toughness",
-    "class": "Savage Barbarian",
+    "class": "Barbarian",
     "description": "At 7th level, the savage barbarian gains a +%1 natural armor bonus to AC when wearing no armor (shields are allowed). This bonus increases by +1 for every three levels beyond 7th. This ability replaces damage reduction.|NaturalToughness",
     "raw_tokens": [
       {

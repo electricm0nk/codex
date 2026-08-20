@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Stonelord ~ Mobile Defense",
     "name": "Mobile Defense",
-    "class": "Stonelord",
+    "class": "Paladin",
     "description": "A stonelord can make one 5-foot step per round while maintaining her defensive stance.",
     "raw_tokens": [
       {

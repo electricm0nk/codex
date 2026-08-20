@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Monk of the Healing Hand ~ Ancient Healing Hand",
     "name": "Ancient Healing Hand",
-    "class": "Monk of the Healing Hand",
+    "class": "Monk",
     "description": "At 7th level, a monk of the healing hand can heal another creature's wounds with a touch. As a full-round action, the monk can spend 2 ki points to heal a number of hit points equal to the monk's level. He needs at least one hand free to use this ability, and cannot heal himself. If the action is interrupted, the subject heals no hit points, and the ki points are lost. This ability replaces wholeness of body.",
     "raw_tokens": [
       {

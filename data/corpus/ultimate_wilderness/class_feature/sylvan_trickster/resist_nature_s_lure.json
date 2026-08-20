@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sylvan Trickster ~ Resist Nature's Lure",
     "name": "Resist Nature's Lure",
-    "class": "Sylvan Trickster",
+    "class": "Rogue",
     "description": "A sylvan trickster gains resist nature's lure as the druid ability of the same name.",
     "raw_tokens": [
       {

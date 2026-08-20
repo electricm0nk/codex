@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tortured Crusader ~ Last Stand",
     "name": "Last Stand",
-    "class": "Tortured Crusader",
+    "class": "Paladin",
     "description": "A tortured crusader can spend an additional use of smite evil when declaring a smite to make it a last stand. The duration of last stand's benefits is only 1 minute (rather than 24 hours). However, the bonus damage from smite evil is doubled on every attack (this doesn't stack with the doubling if the smite's target is an evil outsider, undead, or evil dragon). This ability replaces aura of justice.",
     "raw_tokens": [
       {

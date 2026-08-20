@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Trophy Hunter ~ Firearm Style",
     "name": "Firearm Style",
-    "class": "Trophy Hunter",
+    "class": "Ranger",
     "description": "At 2nd level, a trophy hunter gains the Amateur Gunslinger feat and Exotic Weapon Proficiency (Firearms), and can use any 1st-level gunslinger deed (page 10). At every four levels thereafter, the trophy hunter can take a grit feat or select a gunslinger deed of his level or lower, ranger's choice. This ability replaces all combat style feats. [Not fully Implemented]",
     "raw_tokens": [
       {

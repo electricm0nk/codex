@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Eldritch Scion ~ Spell Combat",
     "name": "Spell Combat",
-    "class": "Eldritch Scion",
+    "class": "Magus",
     "description": "An eldritch scion can only use spell combat while in a state of mystic focus (see eldritch pool, above). At 8th level, an eldritch scion can use spell combat at any time. This ability alters spell combat.",
     "raw_tokens": [
       {

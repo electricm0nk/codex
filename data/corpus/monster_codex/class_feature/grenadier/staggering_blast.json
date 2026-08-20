@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Grenadier ~ Staggering Blast",
     "name": "Staggering Blast",
-    "class": "Grenadier",
+    "class": "Alchemist",
     "description": "A grenadier's bombs become particularly overwhelming when they explode. Whenever a grenadier confirms a critical hit with a bomb, the creature directly struck by that bomb is staggered for 1d4+1 rounds. A successful Fortitude saving throw (DC equals the bomb's Reflex save DC to avoid splash damage) reduces the duration to 1 round. The effects of this ability stack with a frost bomb's staggering effect, but not with the effects of the Staggering Critical feat. Additional critical hits with bombs add to any duration remaining from previous ones.",
     "raw_tokens": [
       {

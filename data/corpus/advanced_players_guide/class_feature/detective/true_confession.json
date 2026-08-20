@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Detective ~ True Confession",
     "name": "True Confession",
-    "class": "Detective",
+    "class": "Bard",
     "description": "At 9th level, a detective can use performance to trick a creature into revealing its secrets. Using this ability requires a successful Sense Motive check to see through a Bluff or notice mental compulsion. After 3 continuous rounds of performance, the target must make a Will save DC %1 (DC 10 + 1/2 the bard's level + the bard's Cha modifier). Success renders the target immune to this power for 24 hours. On a failed save, a liar inadvertently reveals the lie and the truth behind it. A creature under a charm or compulsion reveals the nature of its enchantment and who placed it (if the creature knows) and gains a new saving throw to break free from the enchantment. This ability is language-dependent and requires audible components. Using this power requires only 2 rounds of performance at 15th level, and 1 round of performance at 20th level. This performance replaces inspire greatness.|10+CHA+(BardLVL/2)",
     "raw_tokens": [
       {

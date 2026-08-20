@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Separatist ~ Forbidden Rites",
     "name": "Forbidden Rites",
-    "class": "Separatist",
+    "class": "Cleric",
     "description": "You select one domain from your deity's domain list, and a second domain that is not on your deity's domain list. This second domain cannot be an alignment domain that doesn't match your or your deity's alignment. For example, a lawful good separatist cleric of a neutral good deity cannot choose the Chaos or Evil domain with this ability, but can select the Lawful domain even though her deity isn't lawful. Granted powers from your second domain function as if your level, Wisdom, and Charisma were 2 lower than normal (minimum level 1) in terms of effect, DC, and uses per day. This also means you don't gain the domain's higher-level ability until 2 levels later than normal. If the second domain grants additional class skills, you gain these as normal.",
     "raw_tokens": [
       {

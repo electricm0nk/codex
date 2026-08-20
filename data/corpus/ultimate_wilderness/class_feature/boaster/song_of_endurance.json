@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Boaster ~ Song of Endurance",
     "name": "Song of Endurance",
-    "class": "Boaster",
+    "class": "Skald",
     "description": "The boaster's raging song can inspire his allies to great feats of endurance. This raging song functions as song of marching except affected allies also gain the benefits of the Endurance feat in addition to the benefits of any of the following feats the boaster has (even if they don't meet the prerequisites): Deathless Initiate (UC), Deathless Master (UC), Deathless Zealot (UC), Diehard, Fast Healer (APG), Heroic Defiance (APG), and Heroic Recovery (APG). This raging song alters song of marching.",
     "raw_tokens": [
       {

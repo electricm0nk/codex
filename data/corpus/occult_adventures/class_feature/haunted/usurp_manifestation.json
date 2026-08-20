@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Haunted ~ Usurp Manifestation",
     "name": "Usurp Manifestation",
-    "class": "Haunted",
+    "class": "Spiritualist",
     "description": "At 3rd level, the haunted's phantom begins to subtly subvert the relationship with its master, gaining rather than granting power from the connection. When fully manifested in ectoplasmic form, the phantom can use its usurp manifestation ability to draw upon the haunted's body to strengthen its ectoplasmic might, temporarily weakening the spiritualist in order to increase its own power. The phantom must activate this ability as an immediate action at the start of the spiritualist's turn, and it can use this ability a number of rounds per day equal to 3 + the haunted's spiritualist level. The rounds don't need to be consecutive, and the phantom can dismiss the effects of a usurped manifestation as a free action on its turn. While this ability is in effect, the haunted's features become sunken and withdrawn, and she gains the nauseated condition until the effect ends. Conversely, the phantom surges in size and power, becoming one size category larger (as if affected by an enlarge person spell) and increasing its natural armor bonus to AC by 2 for the effect's duration. If the spiritualist prevents or mitigates the nauseated condition, the phantom is unable to siphon energy and doesn't gain the benefits of usurp manifestation. At 8th level and every 5 levels thereafter (13th and 18th levels), the phantom gains new abilities while using usurp manifestation.",
     "raw_tokens": [
       {

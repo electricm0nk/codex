@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Possessed Oracle ~ Two Minds",
     "name": "Two Minds",
-    "class": "Possessed Oracle",
+    "class": "Oracle",
     "description": "You gain a +2 bonus on Will saves against enchantment spells or effects.",
     "raw_tokens": [
       {

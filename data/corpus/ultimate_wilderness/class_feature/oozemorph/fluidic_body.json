@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Oozemorph ~ Fluidic Body",
     "name": "Fluidic Body",
-    "class": "Oozemorph",
+    "class": "Shifter",
     "description": "An oozemorph's base form is not that of her race but rather that of a protoplasmic blob that has the same volume and weight. An oozemorph treats her creature type as both ooze and her base creature type from her race for the purposes of effects targeting creatures by type (such as bane weapons and a ranger's favored enemy). In this form, the oozemorph is immune to critical hits and precision damage and can't be flanked. However, she has no magic item slots and she cannot benefit from armor; cast spells; hold objects; speak; or use any magic item that requires activation, is held, or is worn on the body. An oozemorph reverts to this formless state whenever she is unconscious or in an area of antimagic. This is treated as a polymorph effect. %1 times per day, an oozemorph can assume a humanoid form as a move action. This transformation is identical to alter self, except the oozemorph can maintain the form for %2 hours. Each hour after this duration, the oozemorph must succeed at a DC 15 Fortitude save or revert back to her fluidic body until she rests for at least 8 hours. This save DC increases by 1 for each additional hour spent maintaining the form.|max(1,ShifterLVL/2)|ShifterLVL",
     "raw_tokens": [
       {

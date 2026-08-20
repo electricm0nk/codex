@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ouat ~ Awaken Divinity",
     "name": "Awaken Divinity",
-    "class": "Ouat",
+    "class": "Monk",
     "description": "At 1st level, as a standard action, an Ouat can touch a creature to grant it a temporary ki point until the beginning of the Ouat's next turn. In addition to any other ways in which the target can use ki, it can expend the ki point as a swift action in order to either gain a +2 dodge bonus to AC for 1 round or increase its base speed by 20 feet for 1 round. The Ouat can target himself with this ability as a swift action, but doing so costs 2 uses of the ability.",
     "raw_tokens": [
       {

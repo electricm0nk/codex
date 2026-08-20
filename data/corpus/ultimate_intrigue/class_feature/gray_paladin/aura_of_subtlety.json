@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Gray Paladin ~ Aura of Subtlety",
     "name": "Aura of Subtlety",
-    "class": "Gray Paladin",
+    "class": "Paladin",
     "description": "A gray paladin learns how to protect herself from detection. She and her allies within 10 feet gain a +4 morale bonus on saving throws against divination effects. Furthermore, casters of divinations that target the gray paladin or her nearby allies must succeed at a caster level check as though the gray paladin and her nearby allies were under the effect of a nondetection spell cast by the gray paladin, with a caster level equal to the gray paladin's paladin level. This ability functions while the gray paladin is conscious and while she is sleeping, but not if she is unconscious for any other reason, or dead.",
     "raw_tokens": [
       {

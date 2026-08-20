@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Alchemical Sapper ~ Diminished Alchemy",
     "name": "Diminished Alchemy",
-    "class": "Alchemical Sapper",
+    "class": "Alchemist",
     "description": "An alchemical sapper can prepare one fewer extract of each level than normal. If this reduces the number to 0, he can prepare extracts of that level only if his Intelligence allows bonus extracts of that level.",
     "raw_tokens": [
       {

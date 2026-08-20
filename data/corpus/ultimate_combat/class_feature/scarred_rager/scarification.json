@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Scarred Rager ~ Scarification",
     "name": "Scarification",
-    "class": "Scarred Rager",
+    "class": "Barbarian",
     "description": "At 3rd level, a scarred rager can ignore 1 point of bleed damage per round (currently %1 points). This amount increases by 1 every three levels beyond 3rd. At 15th level, a scarred rager can ignore 1 bleed effect each round. This ability replaces trap sense.|ScarredScarBleedIgnore",
     "raw_tokens": [
       {

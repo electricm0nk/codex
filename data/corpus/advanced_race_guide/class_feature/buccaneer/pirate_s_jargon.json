@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Buccaneer ~ Pirate's Jargon",
     "name": "Pirate's Jargon",
-    "class": "Buccaneer",
+    "class": "Gunslinger",
     "description": "The buccaneer's baffling palaver of nautical jargon and piratical cant provides a +2 bonus on Bluff and Intimidate checks. Furthermore, she can spend a swift action and 1 grit point to cause a single living creature within 30 feet to make a Will saving throw (DC = %1) or become confused for 1 round. This is a mind-affecting language dependent effect.|10+Gunslinger/2+CHA",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Monk of the Sacred Mountain ~ Iron Monk",
     "name": "Iron Monk",
-    "class": "Monk of the Sacred Mountain",
+    "class": "Monk",
     "description": "At 2nd level, a monk of the sacred mountain gains Toughness as a bonus feat. In addition, the monk gains a +1 natural armor bonus. This ability replaces evasion.",
     "raw_tokens": [
       {

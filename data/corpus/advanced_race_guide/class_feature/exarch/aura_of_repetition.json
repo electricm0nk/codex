@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Exarch ~ Aura of Repetition",
     "name": "Aura of Repetition",
-    "class": "Exarch",
+    "class": "Inquisitor",
     "description": "Once per day while using her judgment, an exarch can project an aura of repetition, as the Toil subdomain power (Advanced Player's Guide 97). If the exarch takes Artifice (Toil) as her domain, the save DC of her aura increases by 2 but its duration does not increase.",
     "raw_tokens": [
       {

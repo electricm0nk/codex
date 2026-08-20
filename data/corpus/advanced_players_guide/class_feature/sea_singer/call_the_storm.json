@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sea Singer ~ Call the Storm",
     "name": "Call the Storm",
-    "class": "Sea Singer",
+    "class": "Bard",
     "description": "At 18th level, a sea singer can use performance to duplicate control water, control weather, control winds, or storm of vengeance, using his bard level as the caster level. Using this ability requires 1 round of continuous performance per level of the spell (as if he were a druid). These effects continue for as long as the bard continues performing (the effects of control weather happen immediately), but not longer than the spell's normal duration. This performance replaces mass suggestion.",
     "raw_tokens": [
       {

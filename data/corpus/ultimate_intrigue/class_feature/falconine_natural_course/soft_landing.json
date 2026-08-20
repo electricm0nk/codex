@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Falconine Natural Course ~ Soft Landing",
     "name": "Soft Landing",
-    "class": "Falconine Natural Course",
+    "class": "Vigilante",
     "description": "A falconine wildsoul can grow feathery wing-flaps under his arms that allow him to fall slowly. He gains the perfect fall vigilante talent.",
     "raw_tokens": [
       {

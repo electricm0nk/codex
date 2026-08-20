@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Blood Kineticist ~ Blood Mastery",
     "name": "Blood Mastery",
-    "class": "Blood Kineticist",
+    "class": "Kineticist",
     "description": "[Not Implemented] At 20th level, a blood kineticist no longer ages and can't be magically aged. She doesn't take penalties to her ability scores for aging and removes any such penalties she already possesses. She still accrues age bonuses as normal, but she doesn't die of old age when her time would be up. Because of her utter control over her own blood, she is immune to bleed, injected poisons, injury diseases, and the sickened and nauseated conditions unless she chooses to be affected. This ability replaces omnikinesis.",
     "raw_tokens": [
       {

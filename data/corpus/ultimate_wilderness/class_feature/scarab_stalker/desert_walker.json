@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Scarab Stalker ~ Desert Walker",
     "name": "Desert Walker",
-    "class": "Scarab Stalker",
+    "class": "Hunter",
     "description": "A scarab stalker and her animal companion can move through desert terrain at normal speed without taking damage or suffering any other impairments unless that terrain has been enchanted or magically manipulated.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Filcher ~ Filch",
     "name": "Filch",
-    "class": "Filcher",
+    "class": "Rogue",
     "description": "A filcher learns how pluck items off her opponents even in combat. She gains Improved Steal (Advanced Player's Guide 163) as a bonus feat and can use her Sleight of Hand bonus instead of her CMB when performing a steal combat maneuver (Advanced Player's Guide 322). If the filcher gains bonuses on combat maneuver checks from any feats, spells, magic items, or similar effects, they are added to the Sleight of Hand bonus when using the steal maneuver.",
     "raw_tokens": [
       {

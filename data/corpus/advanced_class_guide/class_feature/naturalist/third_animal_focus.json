@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Naturalist ~ Third Animal Focus",
     "name": "Third Animal Focus",
-    "class": "Naturalist",
+    "class": "Summoner",
     "description": "Whenever a naturalist uses his animal focus ability, he can apply three different animal aspects to his eidolon (one of which lasts until he decides to change it).",
     "raw_tokens": [
       {

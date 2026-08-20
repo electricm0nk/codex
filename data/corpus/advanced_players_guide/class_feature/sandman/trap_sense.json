@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sandman ~ Trap Sense",
     "name": "Trap Sense",
-    "class": "Sandman",
+    "class": "Bard",
     "description": "At 3rd level, a sandman gains a +%1 bonus on Reflex saves against traps and a +%1 dodge bonus to AC against traps. These bonuses increase by +1 every three levels after 3rd. This ability replaces inspire competence.|BardLVL/3",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Gunmaster ~ Weapon and Armor Proficiencies",
     "name": "Weapon and Armor Proficiencies",
-    "class": "Gunmaster",
+    "class": "Vigilante",
     "description": "A gunmaster is proficient with all firearms but not with martial weapons or medium armor. This alters the vigilante's weapon and armor proficiencies.",
     "raw_tokens": [
       {

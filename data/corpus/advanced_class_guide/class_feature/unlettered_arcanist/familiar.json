@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Unlettered Arcanist ~ Familiar",
     "name": "Familiar",
-    "class": "Unlettered Arcanist",
+    "class": "Arcanist",
     "description": "An unlettered arcanist does not keep a spellbook. Instead, she gains a familiar in which she stores her spells as a witch does, though she does not gain a witch's patron. Treat her arcanist level as her witch level for determining the abilities and benefits granted by the familiar. Anything that would allow an unlettered arcanist to add spells to her spellbook allows her to add spells to her familiar instead. This ability replaces spellbooks.",
     "raw_tokens": [
       {

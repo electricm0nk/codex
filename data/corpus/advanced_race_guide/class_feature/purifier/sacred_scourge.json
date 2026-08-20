@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Purifier ~ Sacred Scourge",
     "name": "Sacred Scourge",
-    "class": "Purifier",
+    "class": "Oracle",
     "description": "The purifier may channel holy power to harm evil outsiders as a cleric of her level using the Alignment Channel feat. She may use this ability %1 times per day.|1+CHA",
     "raw_tokens": [
       {

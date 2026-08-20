@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ouat ~ Know the Unseen Disciples",
     "name": "Know the Unseen Disciples",
-    "class": "Ouat",
+    "class": "Monk",
     "description": "At 7th level, an Ouat can spot hidden creatures, as if using the spell see invisibility. Using this ability is a standard action that consumes 2 points from his ki pool. His caster level for this effect is equal to his class level. This ability replaces wholeness of body.",
     "raw_tokens": [
       {

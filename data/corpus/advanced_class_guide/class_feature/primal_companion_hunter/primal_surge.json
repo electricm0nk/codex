@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Primal Companion Hunter ~ Primal Surge",
     "name": "Primal Surge",
-    "class": "Primal Companion Hunter",
+    "class": "Hunter",
     "description": "(NOT IMPLEMENTED) At 8th level, once per day as a swift action, a primal companion hunter can touch her animal companion and grant it one evolution that costs up to 4 evolution points. The companion must meet the prerequisites of the selected evolution. Unlike the evolutions from primal transformation, this evolution is not set; it can be changed each time the hunter uses this ability. Using primal surge activates the primal transformation ability on the companion if it isn't already active. This effect lasts until the hunter ends the primal transformation. This does not allow a companion to exceed its maximum number of natural attacks. This ability can grant only one evolution at a time, even if the chosen evolution could be selected multiple times. This ability can grant an evolution that allows additional evolution points to be spent to upgrade that evolution (such as damage reduction or flight), and any points left over can be spent on such upgrades. This ability cannot be used to grant an upgrade to an evolution that the companion already possesses. This ability replaces second animal focus.",
     "raw_tokens": [
       {

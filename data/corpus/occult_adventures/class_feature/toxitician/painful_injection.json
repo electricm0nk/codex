@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Toxitician ~ Painful Injection",
     "name": "Painful Injection",
-    "class": "Toxitician",
+    "class": "Mesmerist",
     "description": "The toxitician's injection causes intense pain. This increases the damage the subject takes in the same way as the mesmerist's painful stare class feature. This extra damage is dealt automatically, without being triggered by the toxitician, but doesn't increase when the toxitician damages the target and can still be dealt only once per round.",
     "raw_tokens": [
       {

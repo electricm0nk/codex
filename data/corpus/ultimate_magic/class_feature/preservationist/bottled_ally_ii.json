@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Preservationist ~ Bottled Ally II",
     "name": "Bottled Ally II",
-    "class": "Preservationist",
+    "class": "Alchemist",
     "description": "You add Summon Nature's Ally II to your formula book as a 2nd-level extract.",
     "raw_tokens": [
       {

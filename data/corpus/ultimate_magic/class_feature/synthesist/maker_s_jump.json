@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Synthesist ~ Maker's Jump",
     "name": "Maker's Jump",
-    "class": "Synthesist",
+    "class": "Summoner",
     "description": "Whenever the synthesist is fused with his eidolon, the synthesist can cast dimension door as a spell-like ability using his caster level. This ability only affects the fused synthesist and eidolon. The synthesist can use this ability %1/day.|MakersJumpTimes",
     "raw_tokens": [
       {

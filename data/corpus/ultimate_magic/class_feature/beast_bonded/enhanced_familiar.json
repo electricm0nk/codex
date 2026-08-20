@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Beast-Bonded ~ Enhanced Familiar",
     "name": "Enhanced Familiar",
-    "class": "Beast-Bonded",
+    "class": "Witch",
     "description": "Your connection with your familiar strengthens. For the purposes of determining your familiar's powers and abilities, you treat your familiar as if you were one level higher than your actual witch level.",
     "raw_tokens": [
       {

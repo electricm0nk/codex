@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Undine Adept ~ Amphibious",
     "name": "Amphibious",
-    "class": "Undine Adept",
+    "class": "Druid",
     "description": "The undine adept gains the aquatic subtype and the amphibious universal monster ability, allowing her to breathe water or air.",
     "raw_tokens": [
       {

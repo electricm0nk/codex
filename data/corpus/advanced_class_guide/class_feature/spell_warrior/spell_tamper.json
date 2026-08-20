@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spell Warrior ~ Spell Tamper",
     "name": "Spell Tamper",
-    "class": "Spell Warrior",
+    "class": "Skald",
     "description": "When a spell warrior successfully counterspells an opponent's spell, the opponent suffers a backlash of magical energy and takes 1d6 points of damage per spell level of the countered spell. If the opponent succeeds at a Will saving throw (DC %1), the damage is reduced by half. This damage is magical and is not subject to damage reduction or energy resistance.|10+floor(SkaldLVL/2)+CHA",
     "raw_tokens": [
       {

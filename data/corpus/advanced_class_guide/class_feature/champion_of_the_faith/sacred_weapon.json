@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Champion of the Faith ~ Sacred Weapon",
     "name": "Sacred Weapon",
-    "class": "Champion of the Faith",
+    "class": "Warpriest",
     "description": "Sacred weapons (including his deities favored weapon and all weapons with Weapon Focus) can do base %1d%2 damage instead of the weapons normal base damage.|WarpriestSacredWeaponBaseDice|WarpriestSacredWeaponBaseDiceSize",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sharptooth ~ Ocean Breath",
     "name": "Ocean Breath",
-    "class": "Sharptooth",
+    "class": "Barbarian",
     "description": "A sharptooth counts her Constitution score as %1 higher for the purposes of holding her breath. She also gains a +%1 bonus on Constitution checks to continue holding her breath.|min(6,BarbarianLVL/3)",
     "raw_tokens": [
       {

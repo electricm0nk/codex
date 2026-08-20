@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Blood Kineticist ~ Blood Focus",
     "name": "Blood Focus",
-    "class": "Blood Kineticist",
+    "class": "Kineticist",
     "description": "A blood kineticist must choose water as her primary element and must choose water blast as her first simple blast. All of her infusions granted by this archetype work only on targets with blood and automatically fail if the target is immune to bleed damage.",
     "raw_tokens": [
       {

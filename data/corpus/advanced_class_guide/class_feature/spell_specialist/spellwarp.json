@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spell Specialist ~ Spellwarp",
     "name": "Spellwarp",
-    "class": "Spell Specialist",
+    "class": "Arcanist",
     "description": "A spell specialist can reduce the radius of a spread or burst effect or shorten the length of a cone. All changes must occur in 5-foot increments, to a minimum of 5 feet. Alternatively, the spell specialist can change the area of effect of a cone spell to a line with a length equal to the spell's range. This ability replaces the arcanist exploits gained at 1st, 7th, 13th, and 19th levels.",
     "raw_tokens": [
       {

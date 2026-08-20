@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Warsighted ~ Martial Flexibility",
     "name": "Martial Flexibility",
-    "class": "Warsighted",
+    "class": "Oracle",
     "description": "The warsighted can use a move action to gain the benefit of a combat feat he doesn't possess. The warsighted must otherwise meet all the feat's prerequisites. |PREVARLT:OracleLVL,7",
     "raw_tokens": [
       {

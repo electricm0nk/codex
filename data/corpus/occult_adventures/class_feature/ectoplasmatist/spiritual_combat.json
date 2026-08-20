@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ectoplasmatist ~ Spiritual Combat",
     "name": "Spiritual Combat",
-    "class": "Ectoplasmatist",
+    "class": "Spiritualist",
     "description": "[not implemented]At 3rd level, as a full-round action, an ectoplasmatist can make all of her attacks with a single light or one-handed ectoplasmic lash wielded in one hand, and also cast a single spiritualist spell with a casting time of one standard action as a free action either before or after making the ectoplasmic lash attacks. The ectoplasmatist takes a -2 penalty on her attack rolls when using spiritual combat. If she decides to cast the spell defensively, she can choose to take an additional penalty on her attack rolls up to her Wisdom bonus, and add the same amount as a circumstance bonus on her concentration check. If the concentration check fails, the spell is wasted, but the attacks still take the penalty. Also, when the ectoplasmatist casts a spiritualist spell with a range of touch, she can deliver the spell through one of her ectoplasmic lashes. Instead of making the free melee touch attack she would normally use to deliver the spell, the ectoplasmatist can choose to make a free ectoplasmic lash attack at her highest base attack bonus. A successful lash attack deals damage normally and imparts the spell's effects. The ectoplasmatist can't hold the charge if her lash attack misses. This ability replaces bonded manifestation, phantom recall, and dual bond.",
     "raw_tokens": [
       {

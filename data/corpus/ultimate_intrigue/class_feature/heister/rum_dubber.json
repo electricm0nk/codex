@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Heister ~ Rum Dubber",
     "name": "Rum Dubber",
-    "class": "Heister",
+    "class": "Rogue",
     "description": "Whenever a heister attempts to open a lock without a set of thieves' tools, the DC increases by 2, instead of 10.",
     "raw_tokens": [
       {

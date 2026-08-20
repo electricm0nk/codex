@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Gray Disciple ~ Earth Glide",
     "name": "Earth Glide",
-    "class": "Gray Disciple",
+    "class": "Monk",
     "description": "As a swift action, the gray disciple can spend a ki point to walk through solid stone for 1 round. This functions as the earth glide universal monster ability. The gray disciple may continue earth gliding as long as he spends 1 ki point every round as a swift action. If he ceases earth gliding within a solid object, he is violently ejected and takes 5d6 points of damage. The gray disciple is not harmed by damage caused to material he is earth gliding through, but a stone to flesh spell cast upon it causes violent ejection as described above.",
     "raw_tokens": [
       {

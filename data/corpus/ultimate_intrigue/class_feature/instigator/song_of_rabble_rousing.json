@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Instigator ~ Song of Rabble-Rousing",
     "name": "Song of Rabble-Rousing",
-    "class": "Instigator",
+    "class": "Skald",
     "description": "The instigator can perform for 1 full round and spend 4 rounds of raging song. This affects those who hear the song for up to 1 hour as per enthrall.",
     "raw_tokens": [
       {

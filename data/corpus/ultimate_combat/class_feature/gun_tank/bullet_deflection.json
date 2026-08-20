@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Gun Tank ~ Bullet Deflection",
     "name": "Bullet Deflection",
-    "class": "Gun Tank",
+    "class": "Gunslinger",
     "description": "A gun tank is adept at modifying and using her armor to stop firearm attacks. Starting at 2nd level, a gun tank wearing medium or heavy armor gains half the armor's bonus plus the armor's enhancement bonus (if any) as a deflection bonus against any non-siege firearm or splash weapon attack (including the alchemist's bomb class ability; Advanced Player's Guide 28). This ability has no affect on spells, spell-like abilities, or supernatural abilities that make a touch attack. This ability replaces nimble.",
     "raw_tokens": [
       {

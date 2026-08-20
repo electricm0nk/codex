@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Seal-Breaker ~ Aura of Death",
     "name": "Aura of Death",
-    "class": "Seal-Breaker",
+    "class": "Antipaladin",
     "description": "At 8th level, a seal-breaker radiates an aura that causes undead creatures within 10 feet to gain a +2 profane bonus on all saving throws. This ability replaces aura of despair.",
     "raw_tokens": [
       {

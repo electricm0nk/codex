@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spirit Summoner ~ Spirit",
     "name": "Spirit",
-    "class": "Spirit Summoner",
+    "class": "Summoner",
     "description": "A spirit summoner forms a mystical bond with one spirit from the shaman class (see page 37). He gains the spirit ability of that spirit and uses his summoner level as his shaman level for determining its effects. The spirit summoner can select spells granted by that spirit as summoner spells known, using the shaman level of the spell as the summoner spell level. The summoner cannot select spirit spells that are above 6th level. At 9th level, the summoner gains the abilities listed in the greater version of his selected spirit. At 17th level, the summoner gains the abilities listed for the true version of his selected spirit.",
     "raw_tokens": [
       {

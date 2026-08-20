@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Discipline Tranquility ~ Purge Disquiet",
     "name": "Purge Disquiet",
-    "class": "Psychic Discipline Tranquility",
+    "class": "Psychic",
     "description": "At 13th level, you can banish mental distress. You become immune to fear spells and effects and to the confused condition. As a standard action, you can choose a willing creature that is either within 30 feet or in telepathic contact with you. For 1 round per psychic level you possess, you suppress any fear effect or confused, cowering, frightened, panicked, or shaken condition affecting that creature. You can suppress only one effect at a time with this ability, and choosing a new target ends the suppression for the character you previously chose.",
     "raw_tokens": [
       {

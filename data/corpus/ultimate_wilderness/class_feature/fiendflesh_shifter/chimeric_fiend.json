@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fiendflesh Shifter ~ Chimeric Fiend",
     "name": "Chimeric Fiend",
-    "class": "Fiendflesh Shifter",
+    "class": "Shifter",
     "description": "When a fiendflesh shifter uses her fiendish aspect ability, she can gain an additional ability from the list below. The fiendflesh shifter can change which ability she gains each time she uses fiendish aspect. [Daemon] Acid resistance 10 and a +4 profane bonus on saves against disease. [Demon] The shifter's electricity resistance doubles. [Devil] The shifter's fire resistance doubles.",
     "raw_tokens": [
       {

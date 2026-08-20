@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Eldritch Raider ~ Eldritch Intuition",
     "name": "Eldritch Intuition",
-    "class": "Eldritch Raider",
+    "class": "Rogue",
     "description": "An eldritch raider gains an intuitive sense that allows her to more easily activate sorcerer and wizard spell completion and spell trigger items. She gains a +%1 bonus on Use Magic Device checks for this purpose.|RogueLVL/3",
     "raw_tokens": [
       {

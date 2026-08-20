@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Flesheater ~ Feast",
     "name": "Feast",
-    "class": "Flesheater",
+    "class": "Barbarian",
     "description": "At 14th level, a flesheater can use her one flesh and unbound rage abilities to emulate any one valid consumed creature of her choice, rather than only the one she consumed most recently. This ability replaces the 14th-level rage power.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mixologist ~ Mixologist Master",
     "name": "Mixologist Master",
-    "class": "Mixologist",
+    "class": "Alchemist",
     "description": "A mixologist can have up to two alcoholic extracts for each level of extracts he can prepare as long as he can prepare at least two extracts of that level.",
     "raw_tokens": [
       {

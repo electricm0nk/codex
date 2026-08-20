@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Woodland Sniper ~ Tree Climber",
     "name": "Tree Climber",
-    "class": "Woodland Sniper",
+    "class": "Slayer",
     "description": "A woodland sniper adds half his level to Acrobatics and Climb checks to move between, through, or up trees. With a successful DC 15 Acrobatics check, he can make ranged attacks with bows while balancing on branches.",
     "raw_tokens": [
       {

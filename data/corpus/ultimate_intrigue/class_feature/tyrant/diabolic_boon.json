@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tyrant ~ Diabolic Boon",
     "name": "Diabolic Boon",
-    "class": "Tyrant",
+    "class": "Antipaladin",
     "description": "If a tyrant chooses to gain the services of a fiendish servant with his fiendish boon ability, he must choose a fiendish animal or a creature with the lawful and evil subtypes. If a tyrant chooses to be able to enhance their weapon with his fiendish boon ability, he can grant it the axiomatic, rather than anarchic, weapon quality. This ability alters fiendish boon.",
     "raw_tokens": [
       {

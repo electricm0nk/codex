@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fighter Weapon Master ~ Deadly Critical",
     "name": "Deadly Critical",
-    "class": "Fighter Weapon Master",
+    "class": "Fighter",
     "description": "When you confirm a critical hit with your chosen weapon, you can increase the weapon's damage multiplier by +1 as an immediate action.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Arcane Duelist ~ Bladethirst",
     "name": "Bladethirst",
-    "class": "Arcane Duelist",
+    "class": "Bard",
     "description": "An arcane duelist of 6th level or higher may use performance to grant one weapon, one natural weapon, one end of a double weapon, or 50 items of ammunition of the same type within 30 feet a +%1 enhancement bonus. This enhancement bonus increases by +1 for every three levels after 6th (maximum +5 at 18th level). These bonuses stack with existing bonuses and may be used to increase the item's enhancement bonus up to +5 or to add any of the following weapon properties: defending, distance, ghost touch, keen, mighty cleaving, returning, shock, shocking burst, seeking, speed, or wounding (Pathfinder RPG Core Rulebook page 469). If the weapon is not magical, at least a +1 enhancement bonus must be added before adding special abilities. This performance replaces suggestion.|((classlevel(\"Bard\")-3)/3)",
     "raw_tokens": [
       {

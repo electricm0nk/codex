@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Boaster ~ Greater Endurance",
     "name": "Greater Endurance",
-    "class": "Boaster",
+    "class": "Skald",
     "description": "The boaster gains a bonus feat that he qualifies for. The feat must have Endurance as a prerequisite (such as Diehard or Fast Healer (APG)).",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Undead Master ~ Necropolitan",
     "name": "Necropolitan",
-    "class": "Undead Master",
+    "class": "Wizard",
     "description": "An undead master gains a +%1 bonus on Diplomacy and Knowledge checks regarding undead creatures. Because of his obsessive focus on the undead, he takes a -2 penalty when attempting such checks regarding living creatures.|max(1,WizardLVL/2)",
     "raw_tokens": [
       {

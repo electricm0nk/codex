@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ringleader ~ Sinister Mien",
     "name": "Sinister Mien",
-    "class": "Ringleader",
+    "class": "Bard",
     "description": "A ringleader can use her Intimidate bonus in place of her Perform bonus when using her bardic performance class ability. When the ringleader uses Intimidate to improve a creature's attitude, the creature's attitude remains friendly for 10 additional minutes per point by which the ringleader exceeded the check's DC.",
     "raw_tokens": [
       {

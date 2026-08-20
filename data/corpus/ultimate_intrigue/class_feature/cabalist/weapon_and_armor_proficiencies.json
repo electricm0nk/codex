@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cabalist ~ Weapon and Armor Proficiencies",
     "name": "Weapon and Armor Proficiencies",
-    "class": "Cabalist",
+    "class": "Vigilante",
     "description": "A cabalist is not proficient with medium armor. Like a magus, he can cast cabalist spells while wearing light armor without incurring the normal arcane spell failure chance. This alters the vigilante's armor and weapon proficiencies.",
     "raw_tokens": [
       {

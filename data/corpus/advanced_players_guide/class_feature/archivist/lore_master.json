@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Archivist ~ Lore Master",
     "name": "Lore Master",
-    "class": "Archivist",
+    "class": "Bard",
     "description": "At 2nd level, an archivist may take 20 on Knowledge checks %1/day, plus once per six levels beyond 2nd. This ability replaces versatile performance.|((BardLVL-2)/6)+1",
     "raw_tokens": [
       {

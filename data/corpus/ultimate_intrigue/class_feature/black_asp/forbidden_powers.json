@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Black Asp ~ Forbidden Powers",
     "name": "Forbidden Powers",
-    "class": "Black Asp",
+    "class": "Monk",
     "description": "A black asp can select a forbidden ki power in place of any of the following monk class abilities: slow fall (4th), high jump (5th), wholeness of body (7th), diamond body (11th), abundant step (12th), diamond soul (13th), quivering palm (15th), tongue of the sun and moon (17th), and empty body (19th). If he chooses to do so, he replaces the monk class ability the black asp gives up for the chosen forbidden ki power.",
     "raw_tokens": [
       {

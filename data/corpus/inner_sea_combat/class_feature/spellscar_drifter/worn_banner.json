@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spellscar Drifter ~ Worn Banner",
     "name": "Worn Banner",
-    "class": "Spellscar Drifter",
+    "class": "Cavalier",
     "description": "At 5th level, a Spellscar drifter can choose to use his hat as his banner. If the drifter does not wear a hat, another iconic accessory-such as an eyemask, bandana, or distinguishing coat-can instead serve as his banner. In all other ways, this ability functions as and replaces the banner cavalier ability.",
     "raw_tokens": [
       {

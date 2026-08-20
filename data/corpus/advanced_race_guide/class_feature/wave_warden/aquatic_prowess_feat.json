@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wave Warden ~ Aquatic Prowess Feat",
     "name": "Aquatic Prowess Feat",
-    "class": "Wave Warden",
+    "class": "Ranger",
     "description": "At 2nd level and every four levels thereafter, a wave warden selects a bonus feat that improves his prowess in aquatic environments. He can choose these feats even if he does not meet the prerequisites. Initially, he may choose from the following feats: Dodge, Mobility, Net Adept (Ultimate Combat), Net and Trident (Ultimate Combat), Net Maneuvering (Ultimate Combat), Precise Shot, Rapid Reload, Sea Hunter, and Two-Weapon Fighting. At 6th level, he adds Improved Two-Weapon Fighting, Net Trickery (Ultimate Combat), and Spring Attack to the list. At 10th level, he adds Greater Two-Weapon Fighting and Improved Precise Shot to the list. This ability otherwise functions like and replaces the standard ranger's combat style bonus feats, including the limitations on armor worn.",
     "raw_tokens": [
       {

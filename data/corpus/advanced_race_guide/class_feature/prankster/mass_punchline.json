@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Prankster ~ Mass Punchline",
     "name": "Mass Punchline",
-    "class": "Prankster",
+    "class": "Bard",
     "description": "This ability functions just like punchline, but allows a prankster of 18th level or higher to use hideous laughter simultaneously against any number of creatures that he has mocked. This ability replaces the mass suggestion ability.",
     "raw_tokens": [
       {

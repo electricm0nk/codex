@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Curator ~ Adaptable Powers",
     "name": "Adaptable Powers",
-    "class": "Curator",
+    "class": "Occultist",
     "description": "[NOT IMPLEMENTED] A curator learns one focus power from each of the schools associated with his extensive collection. Whenever he activates his collection, he can use those focus powers associated with his selected school of magic while the relic remains empowered. Whenever the curator would learn another focus power for an implement, he can instead select two new focus powers from different schools associated with his extensive relic collection.",
     "raw_tokens": [
       {

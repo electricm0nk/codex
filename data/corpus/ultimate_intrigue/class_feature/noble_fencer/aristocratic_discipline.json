@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Noble Fencer ~ Aristocratic Discipline",
     "name": "Aristocratic Discipline",
-    "class": "Noble Fencer",
+    "class": "Swashbuckler",
     "description": "A noble fencer relies on his extremely honed training and discipline to protect his mind, rather than luck. The noble fencer gains a +%1 bonus on Will saves against mind-affecting effects.|(SwashbucklerLVL+2)/4",
     "raw_tokens": [
       {

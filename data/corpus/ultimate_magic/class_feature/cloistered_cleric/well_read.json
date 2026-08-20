@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cloistered Cleric ~ Well-Read",
     "name": "Well-Read",
-    "class": "Cloistered Cleric",
+    "class": "Cleric",
     "description": "You gain a +2 bonus on skill checks, caster level checks, and saving throws if such rolls pertain to mundane or magical glyphs, runes, scrolls, symbols, and other writings.",
     "raw_tokens": [
       {

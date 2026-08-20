@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Discipline Rapport ~ Share Memory",
     "name": "Share Memory",
-    "class": "Psychic Discipline Rapport",
+    "class": "Psychic",
     "description": "At 5th level, you can use share memoryUM at will, but only with a willing target.",
     "raw_tokens": [
       {

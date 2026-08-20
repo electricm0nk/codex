@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Storyteller ~ Learn the Story",
     "name": "Learn the Story",
-    "class": "Storyteller",
+    "class": "Medium",
     "description": "A storyteller becomes a master at learning a place's tales. He can perform for a full minute, spending 10 rounds of storyteller's performance, to gain the effects of retrocognition.",
     "raw_tokens": [
       {

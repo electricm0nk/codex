@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Gray Disciple ~ Earthen Thrall",
     "name": "Earthen Thrall",
-    "class": "Gray Disciple",
+    "class": "Monk",
     "description": "A gray disciple can attempt to control a creature with the earth subtype once per day. This ability is treated as dominate monster (DC %1), but is only effective against creatures with the earth subtype, and the gray disciple can keep only a single creature enthralled. If he attempts to control a second creature with this ability, the first creature is automatically released from domination whether or not the second attempt succeeds.|10+MonkLVL/2+WIS",
     "raw_tokens": [
       {

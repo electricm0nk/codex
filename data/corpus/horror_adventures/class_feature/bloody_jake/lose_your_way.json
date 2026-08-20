@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bloody Jake ~ Lose Your Way",
     "name": "Lose Your Way",
-    "class": "Bloody Jake",
+    "class": "Slayer",
     "description": "As a standard action, a bloody jake can spend one use of cruel tricks to cause a creature that is within 30 feet and within the bloody jake's favored terrain to become disoriented, taking a -%1 penalty on Survival checks and a -2 penalty on saving throws against fear and illusions. This effect lasts for %1 hours of the bloody jake or for as long as the affected creature remains within the bloody jake's favored terrain, whichever is shorter.|SlayerLVL",
     "raw_tokens": [
       {

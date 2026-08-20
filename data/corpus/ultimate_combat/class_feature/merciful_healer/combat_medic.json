@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Merciful Healer ~ Combat Medic",
     "name": "Combat Medic",
-    "class": "Merciful Healer",
+    "class": "Cleric",
     "description": "A merciful healer does not provoke attacks of opportunity when using the Heal skill to stabilize another creature or casting healing spells.",
     "raw_tokens": [
       {

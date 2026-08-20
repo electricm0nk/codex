@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Undead Master ~ Corpse Bond",
     "name": "Corpse Bond",
-    "class": "Undead Master",
+    "class": "Wizard",
     "description": "An undead master can forge an arcane bond with an object, but that object must be made at least partially of bone. Alternatively, he can animate a corpse companion, as per the undead lord cleric archetype (Pathfinder RPG Ultimate Magic 32). He can't gain a familiar. This ability alters arcane bond.",
     "raw_tokens": [
       {

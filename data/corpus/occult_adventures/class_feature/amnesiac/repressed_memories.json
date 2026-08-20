@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Amnesiac ~ Repressed Memories",
     "name": "Repressed Memories",
-    "class": "Amnesiac",
+    "class": "Psychic",
     "description": "All the amnesiac's older memories have been deeply hidden, as though she had been affected by multiple repress memory* spells. She isn't prevented from remembering things that happen over the course of a game, but might be forgetful. If the amnesiac's memories are ever restored, she loses this archetype and reverts to a standard psychic.",
     "raw_tokens": [
       {

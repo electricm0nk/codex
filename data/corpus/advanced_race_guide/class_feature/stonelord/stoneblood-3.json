@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Stonelord ~ Stoneblood 3",
     "name": "Stoneblood",
-    "class": "Stonelord",
+    "class": "Paladin",
     "description": "A stonelord's vitals begin to calcify and her blood transforms into liquid stone. She adds her paladin level on checks to stabilize at negative hit points and gains a 75%% chance to ignore a critical hit or precision damage, she becomes immune to petrification and to bleed and blood drain effects.  This does not stack with fortification armor or similar effects.",
     "raw_tokens": [
       {

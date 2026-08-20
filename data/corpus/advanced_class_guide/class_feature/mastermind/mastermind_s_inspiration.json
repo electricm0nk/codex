@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mastermind ~ Mastermind's Inspiration",
     "name": "Mastermind's Inspiration",
-    "class": "Mastermind",
+    "class": "Investigator",
     "description": "A mastermind can use inspiration on any Diplomacy and Intimidate checks without spending a use of inspiration, but can't do so for Linquistics or Spellcraft checks. This ability alters inspiration.",
     "raw_tokens": [
       {

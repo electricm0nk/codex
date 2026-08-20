@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Shark Shaman ~ Totemic Summons",
     "name": "Totemic Summons",
-    "class": "Shark Shaman",
+    "class": "Druid",
     "description": "You may use summon nature's ally I to summon a stingray (Bestiary 2) and summon nature's ally II to summon a manta ray (Bestiary 2).  You may cast summon nature's ally as a standard action when summoning rays and sharks, and summoned rays and sharks gain %1 temporary hit points. This ability otherwise functions as the dragon shaman's totemic summons ability.|TotemicSummonsTempHP",
     "raw_tokens": [
       {

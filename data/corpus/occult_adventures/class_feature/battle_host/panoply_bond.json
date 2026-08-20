@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Battle Host ~ Panoply Bond",
     "name": "Panoply Bond",
-    "class": "Battle Host",
+    "class": "Occultist",
     "description": "At 1st level, a battle host forms a supernatural bond with a specif ic weapon, suit of armor, or shield. This selection is permanent and can never be changed. The bonded item is masterwork quality and the battle host begins play with it at no cost. The bonded item is immune to the broken condition for as long as the battle host lives. If a battle host dies and is restored to life, the bonded item is also restored if it was destroyed. Any magic powers associated with a battle host's bonded item function only for the battle host; in the hands of anyone else it is only a masterwork item. The bonded item starts as an implement for any single school of magic at 1st level, and gains access to additional schools of magic at 2nd, 10th, 14th, and 18th levels, granting the battle host access to base focus powers and resonant powers accordingly. The battle host's bonded item serves as his implement component to cast occultist spells of all the schools that he knows. However, he must split his mental focus among the schools he knows for the purpose of determining resonant powers and using focus powers, even though he possesses only one physical item as an implement. This ability alters implements, mental focus, spellcasting, and implement mastery.",
     "raw_tokens": [
       {

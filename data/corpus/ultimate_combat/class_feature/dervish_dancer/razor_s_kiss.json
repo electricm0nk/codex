@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dervish Dancer ~ Razor's Kiss",
     "name": "Razor's Kiss",
-    "class": "Dervish Dancer",
+    "class": "Bard",
     "description": "At 8th level, a dervish dancer can use his battle dance to improve his weapons' critical range. All attacks he makes with manufactured weapons are treated as though he had the Improved Critical feat. Natural weapons and spells are not affected. This ability replaces dirge of doom.",
     "raw_tokens": [
       {

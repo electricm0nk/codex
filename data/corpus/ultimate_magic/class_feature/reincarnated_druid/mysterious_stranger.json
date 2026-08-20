@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Reincarnated Druid ~ Mysterious Stranger",
     "name": "Mysterious Stranger",
-    "class": "Reincarnated Druid",
+    "class": "Druid",
     "description": "You add %1 to the DC of Sense Motive, Diplomacy, and Knowledge checks to learn about you.|MysteriousStrangerBonus",
     "raw_tokens": [
       {

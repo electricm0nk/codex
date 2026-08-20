@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Buccaneer ~ Gun Training",
     "name": "Gun Training",
-    "class": "Buccaneer",
+    "class": "Gunslinger",
     "description": "A buccaneer gains this ability only at 13th level with a single type of firearm.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Shoanti Burn Rider ~ Give Me Fire",
     "name": "Give Me Fire",
-    "class": "Shoanti Burn Rider",
+    "class": "Barbarian",
     "description": "At 5th level, if a Shoanti burn rider takes fire damage while raging, she regains I round of rage. The burn rider regains the round of rage only if the fire damage bypasses or exceeds any energy resistance or other protections in effect. The burn rider can only regain 1 round of rage per round. This ability replaces improved uncanny dodge.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Alchemical Sapper ~ Camouflage Bomb",
     "name": "Camouflage Bomb",
-    "class": "Alchemical Sapper",
+    "class": "Alchemist",
     "description": "An alchemical sapper becomes skilled at hiding his bombs. When deploying a delayed bomb or trip mine, the alchemical sapper can camouflage the bomb by taking an additional full-round action. Creatures searching for traps must succeed at a Perception check (DC %1) to notice a camouflaged bomb.|10+AlchemistLVL+INT",
     "raw_tokens": [
       {

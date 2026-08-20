@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tome Eater ~ Bonded Tome",
     "name": "Bonded Tome",
-    "class": "Tome Eater",
+    "class": "Occultist",
     "description": "[not implemented]At 1st level, a tome eater forms a supernatural bond with a specific book. She can replace her bonded tome with another book at any time, though the tome eater must perform a 24-hour binding ritual to attune herself to the new book. The bonded tome starts as an implement for any two schools of magic at 1st level, and it gains access to additional schools of magic at 2nd, 10th, 14th, and 18th levels, granting the tome eater access to base focus powers and resonant powers accordingly. The tome eater's bonded tome serves as her implement component to cast occultist spells of all schools she knows. However, she must split her mental focus among the schools she knows for the purpose of determining resonant powers and using focus powers, even though she possesses only one physical item as an implement. Once per day as part of casting an occultist spell, a tome eater can expend 1 point of mental focus tied to the appropriate school to increase the spell's caster level by 1 or increase the spell's DC by 1. A tome eater can enhance a spell in this manner one additional time per day at 6th level, and another time per day for every 5 occultist levels she possesses beyond 6th. This ability alters implements, mental focus, spellcasting, and implement mastery.",
     "raw_tokens": [
       {

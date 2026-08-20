@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Primalist ~ Primal Choices",
     "name": "Primal Choices",
-    "class": "Primalist",
+    "class": "Bloodrager",
     "description": "At 4th level and every 4 levels thereafter, a primalist can choose to take either his bloodline power or two barbarian rage powers. If the primalist chooses rage powers, those rage powers can be used in conjunction with his bloodrage, and his bloodrager level acts as his barbarian level when determining the effect of those bloodrage powers and any prerequisites. Any other prerequisites for a rage power must be met before a primalist can choose it. This ability does not count as the rage power class feature for determining feat prerequisites and other requirements. This ability alters the bloodline Class Feature.",
     "raw_tokens": [
       {

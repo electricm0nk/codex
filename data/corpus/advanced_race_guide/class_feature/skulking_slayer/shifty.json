@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Skulking Slayer ~ Shifty",
     "name": "Shifty",
-    "class": "Skulking Slayer",
+    "class": "Rogue",
     "description": "A skulking slayer gains a bonus on Bluff checks to feint equal to half her level.",
     "raw_tokens": [
       {

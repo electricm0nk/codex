@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Raging Cannibal ~ Animal Fury",
     "name": "Animal Fury",
-    "class": "Raging Cannibal",
+    "class": "Barbarian",
     "description": "At 2nd level, a raging cannibal must select animal fury as her first rage power. This alters the barbarian's 2nd-level rage power.",
     "raw_tokens": [
       {

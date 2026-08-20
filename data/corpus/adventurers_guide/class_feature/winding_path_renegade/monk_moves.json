@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Winding Path Renegade ~ Monk Moves",
     "name": "Monk Moves",
-    "class": "Winding Path Renegade",
+    "class": "Brawler",
     "description": "A winding path renegade can use her martial flexibility ability to gain the benefits of certain monk abilities as well as combat feats. Each ability counts as one combat feat for this purpose, and the winding path renegade is treated as a monk of a level equal to her brawler level for determining the effects of these abilities. The winding path renegade gains access to these abilities at the levels listed. She does not gain a ki pool, and can't use powers that require ki. The winding path renegade must be wearing light or no armor to benefit from this ability. Monk Ability [Level Available]; Evasion [4th]; Fast Movement [4th]; Slow Fall [4th]; High Jump [5th]; Improved Evasion [9th]",
     "raw_tokens": [
       {

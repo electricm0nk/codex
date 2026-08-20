@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Verdant Grappler ~ Phytological Anatomy",
     "name": "Phytological Anatomy",
-    "class": "Verdant Grappler",
+    "class": "Brawler",
     "description": "The verdant grappler transforms partially into a plant. She gains a +2 bonus on saving throws against mind-affecting, paralysis, poison, polymorph, sleep, and stunning effects.",
     "raw_tokens": [
       {

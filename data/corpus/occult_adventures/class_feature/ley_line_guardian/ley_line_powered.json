@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ley Line Guardian ~ Ley Line Powered",
     "name": "Ley Line Powered",
-    "class": "Ley Line Guardian",
+    "class": "Witch",
     "description": "Instead of preparing her spells, a ley line guardian draws the power casting spells directly from ley lines. A ley line guardian is a spontaneous spellcaster. She knows the same number of spells and receives the same number of spell slots per day as a sorcerer of her witch level. Bonus spells granted by a ley line guardian's patron are added to the ley line guardian's total spells known at the appropriate levels. This ability alters the witch's spellcasting.",
     "raw_tokens": [
       {

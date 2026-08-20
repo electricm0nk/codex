@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dreadnought ~ Instant Dispassion",
     "name": "Instant Dispassion",
-    "class": "Dreadnought",
+    "class": "Barbarian",
     "description": "A dreadnought can quickly turn her compassion on and off. She can enter a rage as soon as she wants after ending a previous rage.",
     "raw_tokens": [
       {

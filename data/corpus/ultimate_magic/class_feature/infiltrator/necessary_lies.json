@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Infiltrator ~ Necessary Lies",
     "name": "Necessary Lies",
-    "class": "Infiltrator",
+    "class": "Inquisitor",
     "description": "You add +%1 on saving throws against abilities that detect lies or reveal or force the truth, such as detect lies and zone of truth.|NecessaryLiesBonus",
     "raw_tokens": [
       {

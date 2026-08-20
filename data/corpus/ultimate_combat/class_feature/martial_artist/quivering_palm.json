@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Martial Artist ~ Quivering Palm",
     "name": "Quivering Palm",
-    "class": "Martial Artist",
+    "class": "Monk",
     "description": "A martial artist may use this ability one additional time per day per level above 15th, but may not have more than one in effect at a time.",
     "raw_tokens": [
       {

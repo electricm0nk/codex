@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Blossoming Light ~ Promise of Purity",
     "name": "Promise of Purity",
-    "class": "Blossoming Light",
+    "class": "Cleric",
     "description": "A blossoming light must be truly pure of heart. She must be good-aligned and worship a nonevil deity. If the blossoming light willfully commits an evil act, she loses all class features (including spellcasting) until she atones. This alters the cleric's alignment.",
     "raw_tokens": [
       {

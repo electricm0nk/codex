@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Horticulturist ~ Fury of Nature",
     "name": "Fury of Nature",
-    "class": "Horticulturist",
+    "class": "Alchemist",
     "description": "A horticulturist's connection with nature allows him to bring down nature's fury on his opponents. He can cast one of the following spells, chosen at the time of casting, once per day as a spell-like ability: call lightning storm, eagle aerie, or liveoak.",
     "raw_tokens": [
       {

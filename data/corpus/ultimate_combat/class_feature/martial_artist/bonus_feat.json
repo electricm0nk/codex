@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Martial Artist ~ Bonus Feat",
     "name": "Bonus Feat",
-    "class": "Martial Artist",
+    "class": "Monk",
     "description": "At 12th level, a martial artist gains an additional bonus feat, selected from those available in the monk class feature. This ability replaces abundant step.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Frozen Shadow ~ Swift Tracker",
     "name": "Swift Tracker",
-    "class": "Frozen Shadow",
+    "class": "Ninja",
     "description": "A frozen shadow can move at his normal speed while using Survival to follow tracks without taking the normal -5 penalty. He takes only a -10 penalty (instead of the normal -20) when moving up to twice his normal speed while tracking. Additionally, his bonus on Will saving throws to disbelieve illusions affecting a creature or creatures increases to +4.",
     "raw_tokens": [
       {

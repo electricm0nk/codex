@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mounted Fury ~ Mighty Charge",
     "name": "Mighty Charge",
-    "class": "Mounted Fury",
+    "class": "Vigilante",
     "description": "A mounted fury learns to make devastating charge attacks while mounted. He doubles the critical threat range of any weapons he wields during a charge while mounted, as well as the critical threat range of the mount's attacks. This increase does not stack with other effects that increase the threat range of weapons. In addition, the mounted fury can make a free bull rush, disarm, sunder, or trip combat maneuver if his charge attack is successful. This free combat maneuver does not provoke an attack of opportunity.",
     "raw_tokens": [
       {

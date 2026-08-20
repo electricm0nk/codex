@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Code Runner ~ Resist Interrogation",
     "name": "Resist Interrogation",
-    "class": "Code Runner",
+    "class": "Ranger",
     "description": "A code runner gains a +%1 bonus on saving throws against divination effects.|RangerLVL/2",
     "raw_tokens": [
       {

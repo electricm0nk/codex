@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mutation Mind ~ Improved Bodily Mutations",
     "name": "Improved Bodily Mutations",
-    "class": "Mutation Mind",
+    "class": "Psychic",
     "description": "[not implemented]At 11th level, a mutation mind can select one of the following improved bodily mutations instead of a phrenic amplification.",
     "raw_tokens": [
       {

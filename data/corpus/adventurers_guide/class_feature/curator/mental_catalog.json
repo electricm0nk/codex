@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Curator ~ Mental Catalog",
     "name": "Mental Catalog",
-    "class": "Curator",
+    "class": "Occultist",
     "description": "The points of mental focus invested in the curator's relic collection increase by 2. This total increases by 1 additional point at 12th level and 16th level.",
     "raw_tokens": [
       {

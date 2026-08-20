@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Buccaneer ~ Sword and Pistol",
     "name": "Sword and Pistol",
-    "class": "Buccaneer",
+    "class": "Gunslinger",
     "description": "A buccaneer gains Sword and Pistol as a bonus feat even if she does not meet the prerequisites.",
     "raw_tokens": [
       {

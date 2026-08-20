@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Profiler ~ Divination Analysis",
     "name": "Divination Analysis",
-    "class": "Profiler",
+    "class": "Investigator",
     "description": "A profiler has analyzed the workings of the mind. His caster level to determine the duration of his divination extracts increases by %1, and he gains a +%1 bonus on saving throws against divinations.|ProfilerDivinationSaveBonus",
     "raw_tokens": [
       {

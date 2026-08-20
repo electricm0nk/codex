@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Rageshaper ~ Terrible Leap",
     "name": "Terrible Leap",
-    "class": "Rageshaper",
+    "class": "Shifter",
     "description": "When a rageshaper is in his devastating form, he can perform a terrible leap as a move action without attempting an Acrobatics check, jumping any distance up to his move speed (upward movement counts as double, as when flying). He can leap in this way %1 times per day.|ShifterLVL",
     "raw_tokens": [
       {

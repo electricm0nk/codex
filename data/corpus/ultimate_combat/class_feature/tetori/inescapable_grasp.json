@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tetori ~ Inescapable Grasp",
     "name": "Inescapable Grasp",
-    "class": "Tetori",
+    "class": "Monk",
     "description": "At 9th level, a tetori can spend 1 point from his ki pool to suppress his opponents' freedom of movement and magical bonuses to Escape Artist or on checks to escape a grapple. At 13th level, this ability also duplicates the effect of dimensional anchor. At 17th level, the tetori's unarmed strike gains the ghost touch special ability, and an incorporeal creature that he strikes gains the grappled condition (Reflex negates, DC 10 + 1/2 the wrestler's level + his Wisdom modifier). Inescapable grasp is a swift action and lasts until the beginning of the wrestler's next turn. This ability replaces abundant step, improved evasion, timeless body, and tongue of sun and moon.",
     "raw_tokens": [
       {

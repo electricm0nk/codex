@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wild Shadow ~ Wild Stalker",
     "name": "Wild Stalker",
-    "class": "Wild Shadow",
+    "class": "Ranger",
     "description": "A wild shadow learns to better use natural surroundings to obscure his position in combat. Whenever a wild shadow is within one of his favored terrains and a feature of that terrain grants him cover, the bonuses to AC and Reflex saves for that cover improve by %1. Additionally, while he is within one of his favored terrains, if he gains concealment or total concealment, the miss chance of either type of concealment improves by %10%%.|1+(RangerLVL-10)/3",
     "raw_tokens": [
       {

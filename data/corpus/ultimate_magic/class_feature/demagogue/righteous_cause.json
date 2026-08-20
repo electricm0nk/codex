@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Demagogue ~ Righteous Cause",
     "name": "Righteous Cause",
-    "class": "Demagogue",
+    "class": "Bard",
     "description": "You can lift a crowd's emotions and turn them toward a common purpose. First, you must fascinate the crowd, and then use incite violence without designating a target, at which point you can use righteous cause. Instead of driving the crowd with anger, you fill them with purpose. Fascinated creatures must make Will saves (DC %1) to resist. Those who fail are affected by mass suggestion of a plausible idea that lingers with them for one day. Typical uses of this ability are to spark rebellion, overthrow a king, build a beneficial structure such as an orphanage, or donate money to a cause.|RighteousCauseDC",
     "raw_tokens": [
       {

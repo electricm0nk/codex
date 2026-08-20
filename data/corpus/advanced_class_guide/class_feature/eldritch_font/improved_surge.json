@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Eldritch Font ~ Improved Surge",
     "name": "Improved Surge",
-    "class": "Eldritch Font",
+    "class": "Arcanist",
     "description": "An eldritch font can use her eldritch surge ability to reroll an attack roll associated with a spell or arcanist exploit, or to reroll all of the damage dice associated with a spell or arcanist exploit. In the case of attack rolls, this ability must be used after the die is rolled but before the results are revealed. The eldritch font must take the results of the reroll, even if they are lower.",
     "raw_tokens": [
       {

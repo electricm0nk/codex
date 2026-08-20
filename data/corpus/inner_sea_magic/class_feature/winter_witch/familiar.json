@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Winter Witch ~ Familiar",
     "name": "Familiar",
-    "class": "Winter Witch",
+    "class": "Witch",
     "description": "Winter witches must choose a familiar that is native to the frozen north, even when they themselves operate in other regions. Traditionally, this limits winter witch familiar choices to bat, cat, fox, hawk, owl, rat, raven, or weasel. A winter witch who gains the Improved Familiar feat can select any familiar she desires, save for familiars with the fire subtype.",
     "raw_tokens": [
       {

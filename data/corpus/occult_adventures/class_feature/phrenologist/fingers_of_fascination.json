@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Phrenologist ~ Fingers of Fascination",
     "name": "Fingers of Fascination",
-    "class": "Phrenologist",
+    "class": "Bard",
     "description": "When a phrenologist uses the fascinate bardic performance, he can send forth psychic fingers along with his performance, allowing him to study one of the fascinated creatures with his phrenology skill unlock without touching its head physically and without it being helpless, willing, or paralyzed. This does not spend his daily use of the phrenology skill unlock. This ability alters fascinate.",
     "raw_tokens": [
       {

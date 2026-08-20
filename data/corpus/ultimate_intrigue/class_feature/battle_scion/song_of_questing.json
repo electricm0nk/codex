@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Battle Scion ~ Song of Questing",
     "name": "Song of Questing",
-    "class": "Battle Scion",
+    "class": "Skald",
     "description": "The battle scion can spend 4 rounds of raging song to draw upon a target's honor, ambition, and sense of self in order to bind the target to an agreed-upon task, often a noble quest. This works like geas/quest, except it applies only if the target is truly willing (not magically compelled or tricked), and the target automatically understands the full terms of the agreement before deciding whether he is willing. The battle scion can offer a reward for the completion of the noble quest, but if she does so and fails to live up to her agreement, she becomes an ex-battle scion and loses all benefits gained from the archetype (she does not gain the abilities they replaced, either).",
     "raw_tokens": [
       {

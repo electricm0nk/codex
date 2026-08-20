@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Chameleon Adept ~ Terrain Chameleon",
     "name": "Terrain Chameleon",
-    "class": "Chameleon Adept",
+    "class": "Hunter",
     "description": "Choose one type of terrain from the ranger's list of favored terrains. When in the specified type of terrain, a chameleon adept gains a +%1 bonus on Stealth checks.|HunterLVL/2",
     "raw_tokens": [
       {

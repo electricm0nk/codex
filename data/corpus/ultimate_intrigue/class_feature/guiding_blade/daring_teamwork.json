@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Guiding Blade ~ Daring Teamwork",
     "name": "Daring Teamwork",
-    "class": "Guiding Blade",
+    "class": "Swashbuckler",
     "description": "A guiding blade uses her panache to inspire her allies to heights of teamwork they could never reach alone. At 1st level, a guiding blade gains a bonus teamwork feat. She gains an additional teamwork feat at 4th level and every 4 swashbuckler levels thereafter.",
     "raw_tokens": [
       {

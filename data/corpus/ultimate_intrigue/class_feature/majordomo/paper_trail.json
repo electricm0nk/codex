@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Majordomo ~ Paper Trail",
     "name": "Paper Trail",
-    "class": "Majordomo",
+    "class": "Investigator",
     "description": "A majordomo is trained to uncover forgeries and trace down discrepancies in paperwork in order to ferret out intrigue. She adds +1 to Linguistics and Profession checks to spot a forgery, deal with paperwork, and notice discrepancies in paperwork. A majordomo who analyzes the handwriting of a document and succeeds at a Linguistics check against a DC equal to 20 + the writer's Bluff bonus gets a hunch about whether the document's writer was lying or otherwise nervous. This ability doesn't work if the document was dictated to someone who thought the contents were legitimate.|max(1,InvestigatorLVL/2)",
     "raw_tokens": [
       {

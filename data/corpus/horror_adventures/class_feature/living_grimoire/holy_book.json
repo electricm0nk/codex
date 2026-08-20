@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Living Grimoire ~ Holy Book",
     "name": "Holy Book",
-    "class": "Living Grimoire",
+    "class": "Inquisitor",
     "description": "A living grimoire forms a supernatural bond with a large ironbound tome containing the holy text of his deity and learns to use it as a weapon. When wielding the holy book as a weapon, he deals base damage as if it were a cold iron light mace (but see Sacred Word below), is considered proficient with the book, takes no improvised weapon penalty, and gains a +1 bonus on attack rolls with the book. The tome serves as his holy symbol and divine focus, and can be enchanted as a magic weapon. He can replace his bonded tome with another book at any time, though he must perform a 24-hour binding ritual to attune himself to the new book.",
     "raw_tokens": [
       {

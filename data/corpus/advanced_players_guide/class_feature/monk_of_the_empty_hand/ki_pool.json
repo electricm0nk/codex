@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Monk of the Empty Hand ~ Ki Pool",
     "name": "Ki Pool",
-    "class": "Monk of the Empty Hand",
+    "class": "Monk",
     "description": "At 4th level, in addition to the normal abilities of his ki pool, a monk of the empty hand may spend 1 point from his ki pool to increase the range increment for an improvised thrown weapon or shuriken by 20 feet for 1 round.",
     "raw_tokens": [
       {

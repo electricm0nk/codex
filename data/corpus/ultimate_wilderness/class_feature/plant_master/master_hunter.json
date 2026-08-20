@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Plant Master ~ Master Hunter",
     "name": "Master Hunter",
-    "class": "Plant Master",
+    "class": "Hunter",
     "description": "When a plant master prepares spells for the day, he chooses one plant focus to be active for the entire day. This alters master hunter.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Green Knight ~ Take Their Heads",
     "name": "Take Their Heads",
-    "class": "Green Knight",
+    "class": "Cavalier",
     "description": "A green knight's blade is blessed by mighty fey powers and unerringly seeks out foes' necks. Any slashing weapon a green knight wields gains the vorpal weapon special ability.",
     "raw_tokens": [
       {

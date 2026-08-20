@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Storyteller ~ Knowledge of Tales",
     "name": "Knowledge of Tales",
-    "class": "Storyteller",
+    "class": "Medium",
     "description": "A storyteller gains a +1 bonus on all Knowledge skill checks with Knowledge skills in which he's trained.",
     "raw_tokens": [
       {

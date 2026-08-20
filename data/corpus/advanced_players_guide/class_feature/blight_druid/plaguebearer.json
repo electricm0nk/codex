@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Blight Druid ~ Plaguebearer",
     "name": "Plaguebearer",
-    "class": "Blight Druid",
+    "class": "Druid",
     "description": "Starting at 13th level, any creature that strikes a blight druid with a touch attack, unarmed strike, or natural weapon must succeed at a Fortitude save with a DC of 10 + 1/2 the druid's level + the druid's Wisdom modifier or contract a disease, as the contagion spell. If the creature makes its save, it is immune to this effect for 24 hours.",
     "raw_tokens": [
       {

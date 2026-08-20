@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Rageshaper ~ Furious Transformation",
     "name": "Furious Transformation",
-    "class": "Rageshaper",
+    "class": "Bloodrager",
     "description": "A rageshaper can attempt to bolster any transmutation spell from the bloodrager spell list with the polymorph subschool while bloodraging. The rageshaper must succeed at a concentration check as if casting defensively to modify the spell; otherwise, the spell is wasted. If he succeeds, the spell is treated as if the rageshaper had the Extend Spell metamagic feat. The rageshaper must be the spell's intended target or cast a spell with a range of personal to gain this effect. If the rageshaper casts a spell that is linked to the rageshaper's own bloodline, such as a rageshaper with the elemental bloodline who casts elemental body I, the spell is automatically extended without forcing the concentration check, so long as the rageshaper casts it while in a bloodrage.",
     "raw_tokens": [
       {

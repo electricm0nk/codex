@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Elementalist Shifter ~ Languages",
     "name": "Languages",
-    "class": "Elementalist Shifter",
+    "class": "Shifter",
     "description": "An elementalist shifter adds Aquan, Auran, Ignan, and Terran to her list of available bonus languages. This alters the shifter's languages.",
     "raw_tokens": [
       {

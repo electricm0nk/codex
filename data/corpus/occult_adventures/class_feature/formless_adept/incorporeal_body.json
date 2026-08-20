@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Formless Adept ~ Incorporeal Body",
     "name": "Incorporeal Body",
-    "class": "Formless Adept",
+    "class": "Psychic",
     "description": "At 13th level, a formless adept can become incorporeal (Pathfinder RPG Bestiary 301). This ability replaces the psychic discipline and discipline powers class features.",
     "raw_tokens": [
       {

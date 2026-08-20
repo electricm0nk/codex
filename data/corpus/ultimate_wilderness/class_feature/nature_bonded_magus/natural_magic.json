@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Nature-Bonded Magus ~ Natural Magic",
     "name": "Natural Magic",
-    "class": "Nature-Bonded Magus",
+    "class": "Magus",
     "description": "[NOT IMPLEMENTED] A nature-bonded magus adds one 0-level and one 1st-level spell from the druid spell list to the magus spell list and his spellbook. Each time a nature-bonded magus gains the ability to cast a new level of spells, he can add one spell of that level from the druid spell list to both the magus spell list and his spellbook.",
     "raw_tokens": [
       {

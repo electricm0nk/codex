@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cabalist ~ Spill Blood",
     "name": "Spill Blood",
-    "class": "Cabalist",
+    "class": "Vigilante",
     "description": "A cabalist can cause bleeding when he deals piercing or slashing damage with a melee attack (or a ranged attack within 30 feet) against a living foe who is unaware of his presence, who considers him an ally, or who is denied its Dexterity bonus to AC. The amount of bleed damage is %1. A cabalist can't deal this bleed damage to a creature with total concealment.|VigilanteLVL",
     "raw_tokens": [
       {

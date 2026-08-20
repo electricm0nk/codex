@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cavern Sniper ~ Silent Shooter",
     "name": "Silent Shooter",
-    "class": "Cavern Sniper",
+    "class": "Fighter",
     "description": "The cavern sniper gains a bonus on Stealth checks made when loading a bow or crossbow, poisoning ammunition, and making sniping attempts.",
     "raw_tokens": [
       {

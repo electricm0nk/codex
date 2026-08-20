@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Forester ~ Improved Evasion",
     "name": "Improved Evasion",
-    "class": "Forester",
+    "class": "Hunter",
     "description": "A forester's evasion improves. Improved evasion works like evasion, except while the forester still takes no damage on a successful Reflex saving throw against attacks, she takes only half damage on a failed save. A helpless forester does not gain the benefit of improved evasion.",
     "raw_tokens": [
       {

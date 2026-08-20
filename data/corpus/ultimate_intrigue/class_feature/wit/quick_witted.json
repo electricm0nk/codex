@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wit ~ Quick Witted",
     "name": "Quick Witted",
-    "class": "Wit",
+    "class": "Bard",
     "description": "A wit can always act in a surprise round (though he remains flat-footed until he acts). In addition, the wit adds half his bard level on initiative checks.",
     "raw_tokens": [
       {

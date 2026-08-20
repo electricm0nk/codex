@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Toxic Herbalist ~ Grim Harvest",
     "name": "Grim Harvest",
-    "class": "Toxic Herbalist",
+    "class": "Ranger",
     "description": "A toxic herbalist can spend 1 hour foraging for poisonous substances to create a dose of the following poisons:",
     "raw_tokens": [
       {

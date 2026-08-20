@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "River Druid ~ Countercurrent",
     "name": "Countercurrent",
-    "class": "River Druid",
+    "class": "Druid",
     "description": "A river druid takes no penalty to speed or on Acrobatics or Stealth checks in shallow water up to 2 feet deep (1 foot deep for Small characters) such as shallow bogs, shorelines, streams, and partially flooded areas. A river druid (and any vehicle she pilots) isn't moved by flowing water unless she allows it. Water that has been magically manipulated to impede or boost motion still affects her.",
     "raw_tokens": [
       {

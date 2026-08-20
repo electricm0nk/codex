@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Forgepriest ~ Heat of the Forge",
     "name": "Heat of the Forge",
-    "class": "Forgepriest",
+    "class": "Warpriest",
     "description": "A forgepriest gains fire resistance %1.|ForgepriestFireResistance",
     "raw_tokens": [
       {

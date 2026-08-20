@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Skinshaper ~ Skinshaping",
     "name": "Skinshaping",
-    "class": "Skinshaper",
+    "class": "Druid",
     "description": "A skinshaper gains the ability to turn herself into any Small or Medium humanoid and back again. This ability functions as per alter self, except as noted here. The effect lasts for %1 hours, or until the skinshaper changes back. Changing form is a standard action and doesn't provoke an attack of opportunity. The skinshaper must be familiar with the form she has chosen.|DruidLVL",
     "raw_tokens": [
       {

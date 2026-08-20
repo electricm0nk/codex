@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "True Primitive ~ Illiteracy",
     "name": "Illiteracy",
-    "class": "True Primitive",
+    "class": "Barbarian",
     "description": "A true primitive cannot read or write, and her superstition about such things leads her to refuse to ever learn to read or write, even if she multiclasses into other classes.",
     "raw_tokens": [
       {

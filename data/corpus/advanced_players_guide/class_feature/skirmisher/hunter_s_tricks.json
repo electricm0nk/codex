@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Skirmisher ~ Hunter's Tricks",
     "name": "Hunter's Tricks",
-    "class": "Skirmisher",
+    "class": "Ranger",
     "description": "A skirmisher ranger learns the use of %1 hunter's tricks, which typically grant a boon or bonus to the ranger or a nearby ally. A ranger can use these tricks %2 times per day. Tricks are usually swift actions, but sometimes move or free actions that modify a standard action, usually an attack action. Once a trick is chosen, it can't be retrained. A ranger cannot select an individual trick more than once. This ability replaces the ranger's spells class feature. Skirmishers do not gain any spells or spellcasting ability, do not have a caster level, and cannot use spell trigger and spell completion magic items.|SkirmisherTricks|SkirmisherTrickTimes",
     "raw_tokens": [
       {

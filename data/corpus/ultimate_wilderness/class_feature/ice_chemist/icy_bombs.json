@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ice Chemist ~ Icy Bombs",
     "name": "Icy Bombs",
-    "class": "Ice Chemist",
+    "class": "Alchemist",
     "description": "An ice chemist's bombs deal cold damage instead of fire damage. In place of an alchemist discovery, she can learn to create bombs that deal fire damage like normal alchemist bombs do, though she can't apply discoveries that modify bombs to such fire bombs that she creates. An ice alchemist's icy bombs can still be poisonous or create thick vapors similar to smoke, but she cannot apply the explosive or inferno bomb discoveries to them. This alters the bomb class feature.",
     "raw_tokens": [
       {

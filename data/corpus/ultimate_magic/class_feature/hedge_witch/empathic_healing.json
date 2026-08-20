@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Hedge Witch ~ Empathic Healing",
     "name": "Empathic Healing",
-    "class": "Hedge Witch",
+    "class": "Witch",
     "description": "You can minister to a diseased or poisoned target, redirecting the affliction into yourself. For a poisoned target, you must tend to him as a standard action; he makes his next saving throw against the poison as normal, but you suffer the effects of the failed save instead of the poisoned creature. For a diseased target, you must tend to the sick person for an hour; he makes his next saving throw against the disease as normal, but you suffer the effects of the failed save instead of the diseased creature. You do not actually become poisoned or diseased (and are not contagious and do not need to be cured), but suffer the effects of the affliction as if you had been. You normally use this ability to extend the life of someone near death, giving him time to recover. This ability has no effect if you are immune to disease or poison.",
     "raw_tokens": [
       {

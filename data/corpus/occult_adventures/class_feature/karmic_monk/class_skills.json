@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Karmic Monk ~ Class Skills",
     "name": "Class Skills",
-    "class": "Karmic Monk",
+    "class": "Monk",
     "description": "The karmic monk gains Diplomacy (Cha) as a class skill instead of Intimidate. This alters the monk's class skills.",
     "raw_tokens": [
       {

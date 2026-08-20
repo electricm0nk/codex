@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Verminous Hunter ~ Vermin Empathy",
     "name": "Vermin Empathy",
-    "class": "Verminous Hunter",
+    "class": "Hunter",
     "description": "A verminous hunter gains the wild empathy ability, but can use it only to influence vermin (not animals or magical beasts).",
     "raw_tokens": [
       {

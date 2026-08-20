@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Divine Commander ~ Greater Battle Tactician",
     "name": "Greater Battle Tactician",
-    "class": "Divine Commander",
+    "class": "Warpriest",
     "description": "The divine commander gains an additional teamwork feat as a bonus feat. She must meet the prerequisites for this feat. The divine commander can grant this feat to her allies using the battle tactician ability. Additionally, using the battle tactician ability is now a swift action.",
     "raw_tokens": [
       {

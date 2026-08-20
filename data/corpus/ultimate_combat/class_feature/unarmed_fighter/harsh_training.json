@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Unarmed Fighter ~ Harsh Training",
     "name": "Harsh Training",
-    "class": "Unarmed Fighter",
+    "class": "Fighter",
     "description": "You gain a +%1 bonus on saving throws against effects that cause the exhausted, fatigued, or staggered conditions or temporary penalties to ability scores.|UnarmedFighterHarshTrainingBonus",
     "raw_tokens": [
       {

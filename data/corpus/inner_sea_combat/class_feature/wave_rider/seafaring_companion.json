@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wave Rider ~ Seafaring Companion",
     "name": "Seafaring Companion",
-    "class": "Wave Rider",
+    "class": "Cavalier",
     "description": "At 1st level, a wave rider gains Monstrous Mount (see page 14) as a bonus feat. The wave rider can use this feat only to select a hippocampus mount (see page i4). Otherwise, this ability functions identically to and replaces the cavalier's mount ability.",
     "raw_tokens": [
       {

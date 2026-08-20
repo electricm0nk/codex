@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Winding Path Renegade ~ Unblinking Flame Third Power",
     "name": "Unblinking Flame Third Power",
-    "class": "Winding Path Renegade",
+    "class": "Brawler",
     "description": "The winding path renegade becomes as difficult to contain as a flame. Once per day as a full-round action, she can transform into liquid flame, instantly escaping all bonds as if under the effect of freedom of movement and moving up to her speed. When moving as part of this ability, she can move through creatures' squares freely and doesn't provoke attacks of opportunity. She deals 10d6 points of fire damage to any creature whose square she enters during this movement. A successful Reflex saving throw (DC %1) halves this damage.|10+BrawlerLVL/2+DEX",
     "raw_tokens": [
       {

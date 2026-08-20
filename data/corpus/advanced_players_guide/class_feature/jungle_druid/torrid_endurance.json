@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Jungle Druid ~ Torrid Endurance",
     "name": "Torrid Endurance",
-    "class": "Jungle Druid",
+    "class": "Druid",
     "description": "At 4th level, a jungle druid ignores the effects of a hot climate as if under the effects of endure elements. She also gains a +4 bonus on saves against disease and the exceptional abilities of animals and magical beasts. This ability replaces resist nature's lure.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Keen Senses ~ Darkvision",
     "name": "Darkvision",
-    "class": "Keen Senses",
+    "class": "Barbarian",
     "description": "she gains darkvision 60 feet (or adds 60 feet to the range of any darkvision already possessed).",
     "raw_tokens": [
       {

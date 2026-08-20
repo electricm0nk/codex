@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Filidh ~ Song of the Cycle",
     "name": "Song of the Cycle",
-    "class": "Filidh",
+    "class": "Bard",
     "description": "A filidh can grant awe-inspiring glimpses into the future with his magic. All allies who can see and hear the filidh are affected as though by the personal version of foresight for the duration of the performance.",
     "raw_tokens": [
       {

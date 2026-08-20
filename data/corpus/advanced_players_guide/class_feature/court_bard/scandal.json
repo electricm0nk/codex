@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Court Bard ~ Scandal",
     "name": "Scandal",
-    "class": "Court Bard",
+    "class": "Bard",
     "description": "A court bard of 14th level or higher can combine salacious gossip and biting calumny to incite a riot. Each enemy within 30 feet is affected as if by a song of discord for as long as it can hear the performance. A successful Will save DC %1 (DC 10 + 1/2 the bard's level + the bard's Cha modifier) negates the effect, and that creature is immune to this ability for 24 hours. Scandal is a language-dependent, mind-affecting ability that uses audible components. This performance replaces frightening tune.|10+CHA+(BardLVL/2)",
     "raw_tokens": [
       {

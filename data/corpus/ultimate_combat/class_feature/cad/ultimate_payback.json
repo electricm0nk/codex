@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cad ~ Ultimate Payback",
     "name": "Ultimate Payback",
-    "class": "Cad",
+    "class": "Fighter",
     "description": "At 20th level, any critical threats a cad makes against an opponent that has attacked him since the beginning of his last turn are automatically confirmed. This ability replaces weapon mastery.",
     "raw_tokens": [
       {

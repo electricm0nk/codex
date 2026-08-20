@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Pack Lord ~ Improved Empathic Link",
     "name": "Improved Empathic Link",
-    "class": "Pack Lord",
+    "class": "Druid",
     "description": "You gain an empathic link with all of your animal companions. This functions like an empathic link with a familiar. In addition, as a swift action you can shift your perception to one of your companions, allowing you to experience what it sees, hears, and so on. You can maintain this connection as long as you like (as long as the companion is within 1 mile) and end it as a free action. You can only use this ability on one companion at a time, and cannot see, hear, or smell with your own body while maintaining this connection.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Naga Aspirant ~ Aspirant's Bond",
     "name": "Aspirant's Bond",
-    "class": "Naga Aspirant",
+    "class": "Druid",
     "description": "A naga aspirant gains a spiritual connection to the serpentine deities worshiped by the nagas. At 1st level, and each time she gains a druid level, she may add one of the following spells to her druid spell list. 0-acid splash, bleed, daze, mage hand, open/close, ray of frost; 1st-charm person, divine favor, expeditious retreat, mage armor, magic missile, ray of enfeeblement, shield, shield of faith, silent image, true strike; 2nd-acid arrow, detect thoughts, invisibility, mirror image, scorching ray, see invisibility; 3rd- dispel magic, displacement, fireball, lightning bolt, suggestion; 4th-divine power, greater invisibility.",
     "raw_tokens": [
       {

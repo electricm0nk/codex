@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bardic Performance ~ Unbroken Stride",
     "name": "Unbroken Stride",
-    "class": "Bardic Performance",
+    "class": "Bard",
     "description": "An impervious messenger draws upon his bardic abilities to imbue himself with grace and speed. While using this bardic performance, an impervious messenger gains a +%1 insight bonus on all Acrobatics, Climb, Fly, and Ride checks. In addition, while maintaining this performance, he gains the benefits of the ranger's woodland stride ability and a +10-foot enhancement bonus to his base land speed.|BardLVL/2|UnbrokenStrideBonus",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Raven Master ~ Raven Companion",
     "name": "Raven Companion",
-    "class": "Raven Master",
+    "class": "Ranger",
     "description": "A raven master earns the trust and companionship of a particularly large, powerful, and intelligent raven. This ability functions like the druid animal companion ability, except that the raven master's effective druid level is equal to her ranger level - 3. The raven master must select a bird as her animal companion. The raven companion starts with an Intelligence score of 3 and can speak one language known by the raven master. In addition to the normal abilities an animal companion gains as the raven master increases in level, the raven companion gains the following abilities. This ability alters hunter's bond.",
     "raw_tokens": [
       {

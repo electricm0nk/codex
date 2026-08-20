@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Elementalist Oracle ~ Elemental Linguist",
     "name": "Elemental Linguist",
-    "class": "Elementalist Oracle",
+    "class": "Oracle",
     "description": "At 1st level, you gain a bonus language of your choice from the following list: Aquan, Auran, Ignan, or Terran. At 5th, 10th, and 15th levels, you gain another language chosen from this list.",
     "raw_tokens": [
       {

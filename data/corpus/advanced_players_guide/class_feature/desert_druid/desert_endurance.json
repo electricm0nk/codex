@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Desert Druid ~ Desert Endurance",
     "name": "Desert Endurance",
-    "class": "Desert Druid",
+    "class": "Druid",
     "description": "At 4th level, a desert druid ignores the effects of a hot climate as if using endure elements. She also has a reduced need to eat and drink, as if wearing a ring of sustenance (though normal sleep is still required). This ability replaces resist nature's lure.",
     "raw_tokens": [
       {

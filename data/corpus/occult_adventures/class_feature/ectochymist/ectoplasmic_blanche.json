@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ectochymist ~ Ectoplasmic Blanche",
     "name": "Ectoplasmic Blanche",
-    "class": "Ectochymist",
+    "class": "Alchemist",
     "description": "An ectochymist can alchemically treat a melee weapon so that it deals full damage to incorporeal creatures. The process requires a full-round action and lasts until the next time that weapon is used to make an attack. An ectochymist can use this ability a number of times per day equal to his alchemist level + his Intelligence modifier. This ability replaces bombs.",
     "raw_tokens": [
       {

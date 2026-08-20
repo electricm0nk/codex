@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Martyr ~ See No Evil Hear No Evil",
     "name": "See No Evil, Hear No Evil",
-    "class": "Martyr",
+    "class": "Paladin",
     "description": "The martyr and all allies within 20 feet of him gain a +4 morale bonus on saving throws against bardic performance, sonic effects, language-dependent effects, and gaze attacks. This ability functions only when the martyr is conscious.",
     "raw_tokens": [
       {

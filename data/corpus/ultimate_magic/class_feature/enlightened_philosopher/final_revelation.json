@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Enlightened Philosopher ~ Final Revelation",
     "name": "Final Revelation",
-    "class": "Enlightened Philosopher",
+    "class": "Oracle",
     "description": "You achieve true enlightenment and become one with the universe. You receive a +%1 bonus on all saving throws. You become immune to confusion, exhaustion, fatigue, nausea, and sickened effects. You can take 20 on all Knowledge skill checks. Should you die, you are reborn 3 days later as a living example of the summoning of your chosen philosophy (treat as the reincarnate spell).|EnlightenedPhilosopherFinalRevelationBonus",
     "raw_tokens": [
       {

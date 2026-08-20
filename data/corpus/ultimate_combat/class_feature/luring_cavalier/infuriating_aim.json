@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Luring Cavalier ~ Infuriating Aim",
     "name": "Infuriating Aim",
-    "class": "Luring Cavalier",
+    "class": "Cavalier",
     "description": "At 11th level, when a luring cavalier confirms a critical hit with a ranged attack made at his highest base attack bonus against the target of a far challenge, the target becomes infuriated for 1 round. While infuriated, the target must spend its turn moving closer to the cavalier, making move, run, or charge actions only (challenged creature's choice). This is a mind-affecting effect. This ability replaces mighty charge.",
     "raw_tokens": [
       {

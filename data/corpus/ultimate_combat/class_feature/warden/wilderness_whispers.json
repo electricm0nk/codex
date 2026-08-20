@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Warden ~ Wilderness Whispers",
     "name": "Wilderness Whispers",
-    "class": "Warden",
+    "class": "Ranger",
     "description": "At 20th level, a warden cannot be surprised and always acts as if he had rolled a natural 20 on any initiative check while within any of his favored terrains. A warden can always move at full speed while using Survival to follow tracks without penalty. This ability replaces the ranger's fifth favorite enemy and master hunter.",
     "raw_tokens": [
       {

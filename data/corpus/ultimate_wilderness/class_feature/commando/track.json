@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Commando ~ Track",
     "name": "Track",
-    "class": "Commando",
+    "class": "Gunslinger",
     "description": "A commando adds half her level on Survival checks to follow tracks.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Forensic Physician ~ Medical Expertise",
     "name": "Medical Expertise",
-    "class": "Forensic Physician",
+    "class": "Investigator",
     "description": "A forensic physician can use inspiration on any Heal checks without expending a use, if he is trained in the skill, but not on any Linguistics check. If he later takes the expanded inspiration investigator talent, he can use inspiration on Linguistic checks without expending a use, if he is trained in the skill. A forensic physician adds +%1 on Heal checks. This bonus doubles on Heal checks to notice tampering with medical evidence, such as those used to defeat dress corpse.|ForensicPhysicianHealBonus",
     "raw_tokens": [
       {

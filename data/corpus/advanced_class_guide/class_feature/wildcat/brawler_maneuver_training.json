@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wildcat ~ Brawler Maneuver Training",
     "name": "Brawler Maneuver Training",
-    "class": "Wildcat",
+    "class": "Monk",
     "description": "A wildcat gains additional training with the dirty trick combat maneuver (APG p.320) and other combat maneuvers as he gains levels.",
     "raw_tokens": [
       {

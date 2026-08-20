@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Masked Performer ~ Masked Talents",
     "name": "Masked Talents",
-    "class": "Masked Performer",
+    "class": "Bard",
     "description": "The masked performer gains a rogue talent from the following list: expert leaper, fast stealth, ledge walker, rogue crawl, rope master, stand up, and wall scramble.",
     "raw_tokens": [
       {

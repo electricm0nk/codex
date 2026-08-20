@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Judgment ~ Escape",
     "name": "Judgment / Escape",
-    "class": "Judgment",
+    "class": "Inquisitor",
     "description": "Each time you hit an opponent with a melee or ranged attack while using this judgment, you can use a move action attempt to create a diversion to hide (see the Stealth skill).",
     "raw_tokens": [
       {

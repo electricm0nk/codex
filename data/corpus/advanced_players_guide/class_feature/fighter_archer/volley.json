@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fighter Archer ~ Volley",
     "name": "Volley",
-    "class": "Fighter Archer",
+    "class": "Fighter",
     "description": "At 17th level, as a full-round action, an archer can make a single bow attack at his highest base attack bonus against any number of creatures in a 15-foot radius burst, making separate attack and damage rolls for each creature. This ability replaces weapon training 4.",
     "raw_tokens": [
       {

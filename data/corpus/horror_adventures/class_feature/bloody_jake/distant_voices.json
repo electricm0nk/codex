@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bloody Jake ~ Distant Voices",
     "name": "Distant Voices",
-    "class": "Bloody Jake",
+    "class": "Slayer",
     "description": "A bloody jake can cause his voice to seem to emanate from somewhere else, as per ventriloquism. This ability doesn't take any other action to activate and can be used as part of speaking (as a free action); it costs one use of cruel tricks to affect his speech for 1 round.",
     "raw_tokens": [
       {

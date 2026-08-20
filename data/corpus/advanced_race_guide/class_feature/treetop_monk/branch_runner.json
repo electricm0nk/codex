@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Treetop Monk ~ Branch Runner",
     "name": "Branch Runner",
-    "class": "Treetop Monk",
+    "class": "Monk",
     "description": "A treetop monk adds half the base speed bonus from his fast movement ability to his racial climb speed.",
     "raw_tokens": [
       {

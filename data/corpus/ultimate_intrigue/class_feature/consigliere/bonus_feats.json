@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Consigliere ~ Bonus Feats",
     "name": "Bonus Feats",
-    "class": "Consigliere",
+    "class": "Rogue",
     "description": "A consigliere can choose to gain a single teamwork feat instead of a single rogue talent.|!PRECLASS:1,Rogue=12",
     "raw_tokens": [
       {

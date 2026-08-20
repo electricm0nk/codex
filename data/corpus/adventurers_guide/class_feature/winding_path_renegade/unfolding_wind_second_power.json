@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Winding Path Renegade ~ Unfolding Wind Second Power",
     "name": "Unfolding Wind Second Power",
-    "class": "Winding Path Renegade",
+    "class": "Brawler",
     "description": "She can harness the power of the wind to make enormous leaps. As a move action, she can leap without attempting an Acrobatics check, jumping any distance up to her move speed (upward movement counts as double, as when flying). She can leap in this way %1 times per day.|BrawlerLVL",
     "raw_tokens": [
       {

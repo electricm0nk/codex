@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Herbalist ~ Seedpods",
     "name": "Seedpods",
-    "class": "Herbalist",
+    "class": "Alchemist",
     "description": "An herbalist can produce and throw seedpods as ranged touch attacks, similar to the ranged attacks of other leshys. He can create %1 seedpods each day and can throw them as a standard action with a range increment of 20 feet. A seedpod deals 1d6 points of bludgeoning damage, plus an additional %2d6 points of damage (this additional damage isn't multiplied on a critical hit or from effects like Vital Strike). Seedpods are considered weapons and can be selected for feats like Weapon Focus, and the herbalist can take the Extra Bombs feat to gain additional daily uses of his seedpods. His seedpods also gain one of the following additional effects unless the target succeeds at a Fortitude save (DC=%3). At 1st level, his seedpods can deafen their target for 1 round like a leaf leshy. At 2nd level, they can reduce the target's vision to 10 feet for 1 minute (unless the target spends a full-round action to wash the spores from its eyes early) like the spores of a fungus leshy. At 5th level, they can entangle their target for 2d4 rounds (unless the target succeeds at a Strength check or Escape Artist check at the save DC to break the vine early) like the seeds of a gourd leshy. At 8th level, they can sicken their target for 1d4 rounds like the spittle of a flytrap leshy. At 10th level, they can blind their target until the end of their next turn like the water jets of a seaweed leshy.|AlchemistLVL+WIS|(AlchemistLVL-1)/2|10+AlchemistLVL/2+WIS",
     "raw_tokens": [
       {

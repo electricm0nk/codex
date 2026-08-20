@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Menhir Guardian ~ Wild Flurry",
     "name": "Wild Flurry",
-    "class": "Menhir Guardian",
+    "class": "Monk",
     "description": "A menhir guardian gains flurry of blows. He can use this ability with the natural attacks provided by his shifter claws ability or the weapons specified under weapon and armor proficiency. This alters furry of blows.",
     "raw_tokens": [
       {

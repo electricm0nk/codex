@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Monk of the Seven Forms ~ Endurance",
     "name": "Endurance",
-    "class": "Monk of the Seven Forms",
+    "class": "Monk",
     "description": "At 3rd level, a monk of the seven forms gains Endurance as a bonus feat. This ability replaces maneuver training.",
     "raw_tokens": [
       {

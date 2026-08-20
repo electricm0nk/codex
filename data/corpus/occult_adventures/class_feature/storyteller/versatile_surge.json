@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Storyteller ~ Versatile Surge",
     "name": "Versatile Surge",
-    "class": "Storyteller",
+    "class": "Medium",
     "description": "A storyteller's spirit surge can be used after the storyteller fails any ability check, skill check, or saving throw.",
     "raw_tokens": [
       {

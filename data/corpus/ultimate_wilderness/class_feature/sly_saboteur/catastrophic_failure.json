@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sly Saboteur ~ Catastrophic Failure",
     "name": "Catastrophic Failure",
-    "class": "Sly Saboteur",
+    "class": "Rogue",
     "description": "When a sly saboteur uses Disable Device to rig a device to fail, she can increase the DC of the check by 5. If she does so and succeeds at the check, when the device fails, users take damage equal to the sly saboteur's sneak attack, or they take half that amount with a successful Reflex save (DC %1). The type of damage depends on the nature of the device but is typically bludgeoning, fire, piercing, or slashing.|10+RogueLVL/2+DEX",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Steel Hound ~ Investigator Talents",
     "name": "Investigator Talents",
-    "class": "Steel Hound",
+    "class": "Investigator",
     "description": "The steel hound can select the Extra Grit or Rapid Reload feats in place of an investigator talent.",
     "raw_tokens": [
       {

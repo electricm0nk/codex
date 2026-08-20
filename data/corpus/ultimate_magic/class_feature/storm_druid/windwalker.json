@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Storm Druid ~ Windwalker",
     "name": "Windwalker",
-    "class": "Storm Druid",
+    "class": "Druid",
     "description": "The penalties from natural or magical wind effects (see page 439 of the Core Rulebook) are treated as one step less severe for you.",
     "raw_tokens": [
       {

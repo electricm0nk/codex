@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Filidh ~ Voices of Life",
     "name": "Voices of Life",
-    "class": "Filidh",
+    "class": "Bard",
     "description": "A filidh can grant himself and all allies who can hear his performance the ability to speak with animals and plants as if affected by speak with animals and speak with plants so long as he maintains this performance.",
     "raw_tokens": [
       {

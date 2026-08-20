@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Traceless Operative ~ Trackless",
     "name": "Trackless",
-    "class": "Traceless Operative",
+    "class": "Inquisitor",
     "description": "A traceless operative's deity helps obscure her path from others. The DC to track the traceless operative (or a group including her) increases by half her inquisitor level. This does not stack with similar abilities, such as a transporter's trailbreaker ability.",
     "raw_tokens": [
       {

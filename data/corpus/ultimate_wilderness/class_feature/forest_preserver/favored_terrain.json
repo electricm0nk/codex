@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Forest Preserver ~ Favored Terrain",
     "name": "Favored Terrain",
-    "class": "Forest Preserver",
+    "class": "Paladin",
     "description": "A forest preserver gains the ranger's favored terrain ability but must select either forest or jungle as her favored terrain. The bonuses granted by this ability increase by 2 for every 5 levels after 3rd, but she does not gain additional favored terrains.",
     "raw_tokens": [
       {

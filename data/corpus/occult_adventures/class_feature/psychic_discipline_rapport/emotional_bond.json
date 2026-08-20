@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Discipline Rapport ~ Emotional Bond",
     "name": "Emotional Bond",
-    "class": "Psychic Discipline Rapport",
+    "class": "Psychic",
     "description": "You can create an empathic link between yourself and your allies, allowing you to monitor their emotional states. Setting up the link requires 10 minutes of uninterrupted concentration from you and all subjects, who must remain within 10 feet of you. You can link with a number of allies equal to your Charisma modifier. This bond lasts until the next time you regain your spells, or until you go unconscious or voluntarily end the bond as a free action. If the bond ends, you can establish a new bond at will with another 10 minutes of mutual concentration. This link allows you to monitor emotions, detecting when allies become angry, surprised, confused, fearful, or the like, but doesn't allow them to communicate specific details. You can also easily tell whether a subject is unconscious. If a subject dies or moves to a different plane than you, your bond with that creature is severed. The distance between you and the subjects doesn't affect the bond as long as you're on the same plane of existence. At 4th level, the bond also gives you the benefits of the status spell with all subjects of the emotional bond.",
     "raw_tokens": [
       {

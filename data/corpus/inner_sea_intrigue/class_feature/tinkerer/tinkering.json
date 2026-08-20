@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tinkerer ~ Tinkering",
     "name": "Tinkering",
-    "class": "Tinkerer",
+    "class": "Alchemist",
     "description": "A tinkerer can spend 1 hour working on her clockwork spy familiar to enhance it with one of the options from the list on page 47. At 5th level, the tinkerer can choose a second option from the list. The same option cannot be chosen twice. A tinkerer can change the enhancements applied to her familiar, but doing so takes 1 hour of work per enhancement she wishes to change.",
     "raw_tokens": [
       {

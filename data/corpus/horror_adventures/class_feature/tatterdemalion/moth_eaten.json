@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tatterdemalion ~ Moth-Eaten",
     "name": "Moth-Eaten",
-    "class": "Tatterdemalion",
+    "class": "Witch",
     "description": "A tatterdemalion can make a touch attack that damages leather, rope, or cloth like rusting grasp damages metal, %1 times per day.|WitchLVL",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Discipline Psychedelia ~ Hallucinogenic Aura",
     "name": "Hallucinogenic Aura",
-    "class": "Psychic Discipline Psychedelia",
+    "class": "Psychic",
     "description": "At 13th level, a mental field emanates from you, touching the minds of those nearby. Any creature within 30 feet of you must succeed at a Will save or be confused for 1d4 rounds. A creature that succeeds at its saving throw is immune to your hallucinogenic aura for 24 hours. A creature that fails its save doesn't need to continue making saves while it's confused by this aura, and becomes immune for 24 hours once its confusion ends. This is a mind-affecting effect. You're immune to your own hallucinogenic aura, as well as that of any other psychic. You can brew an antidote that protects the imbiber from your aura. Brewing 1 dose requires 1 hour and a successful DC 15 Craft (alchemy) check. One dose's effects last for 1 month.",
     "raw_tokens": [
       {

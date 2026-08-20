@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wildsoul ~ Natural Course",
     "name": "Natural Course",
-    "class": "Wildsoul",
+    "class": "Vigilante",
     "description": "At first level, when a wildsoul chooses a vigilante specialization, he must also choose a natural course: arachnid, falconine, or ursine. This represents the type of creature that influences his body, granting him his remarkable abilities. Once this choice is made, it can't be changed. At 2nd, 6th, 12th, and 18th levels, a wildsoul gains a specific ability tied to his natural course. These abilities count as vigilante talents, as onlookers who see the wildsoul in his social identity use them overtly might suspect him of being something more than he appears; the more obvious animalistic abilities (like bear form and shoot webs) impart a -10 penalty on the wildsoul's Disguise check to appear as his social identity.",
     "raw_tokens": [
       {

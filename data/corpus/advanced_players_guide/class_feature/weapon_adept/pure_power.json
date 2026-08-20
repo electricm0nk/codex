@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Weapon Adept ~ Pure Power",
     "name": "Pure Power",
-    "class": "Weapon Adept",
+    "class": "Monk",
     "description": "At 20th level, a weapon adept forsakes the ideals of the perfect self to become a bastion of the physical and mental virtues monks hold dear. The monk gains a +2 bonus to Strength, Dexterity, and Wisdom. This ability replaces perfect self.",
     "raw_tokens": [
       {

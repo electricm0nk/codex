@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Animist ~ Dominate Spirit",
     "name": "Dominate Spirit",
-    "class": "Animist",
+    "class": "Shaman",
     "description": "The animist can attempt to possess creatures or objects as magic jar or possess object. When the animist is attempting to possess the creature, his familiar acts as the jar and must be within 10 feet when the animist attempts to possess a creature. The animist's soul can perceive his surroundings through the familiar's senses, clearly evaluate potential targets for possession, and communicate with his familiar telepathically. The familiar retains its autonomy while acting as the jar, and is not harmed by being used as a vessel for the animist's soul. The animist can use this ability %1 times per day.|floor((ShamanLVL-6)/4)",
     "raw_tokens": [
       {

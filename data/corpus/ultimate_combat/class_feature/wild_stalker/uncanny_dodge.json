@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wild Stalker ~ Uncanny Dodge",
     "name": "Uncanny Dodge",
-    "class": "Wild Stalker",
+    "class": "Ranger",
     "description": "At 2nd level, a wild stalker gains uncanny dodge as the barbarian's class feature. This ability replaces the ranger's 2nd-level combat style feat.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cult Hunter ~ Cultic Study",
     "name": "Cultic Study",
-    "class": "Cult Hunter",
+    "class": "Investigator",
     "description": "A cult hunter can spend 8 hours studying a specific deity or religion to gain a +%1 bonus on Bluff, Intimidate, Knowledge, Perception, and Sense Motive checks against followers of that deity or religion and against extraplanar creatures. If he studies a new deity or religion, the bonuses replace the former bonuses.|InvestigatorLVL/4",
     "raw_tokens": [
       {

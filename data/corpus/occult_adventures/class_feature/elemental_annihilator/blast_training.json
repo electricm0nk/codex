@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Elemental Annihilator ~ Blast Training",
     "name": "Blast Training",
-    "class": "Elemental Annihilator",
+    "class": "Kineticist",
     "description": "At 5th level, an elemental annihilator gains a +1 bonus on attack rolls and damage rolls with her devastating infusion form infusion. This bonus increases by 1 at 9th level and every 4 levels thereafter. This ability replaces the 5th-level infusion.",
     "raw_tokens": [
       {

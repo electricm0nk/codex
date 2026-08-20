@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Flamewarden ~ Phoenix Rising",
     "name": "Phoenix Rising",
-    "class": "Flamewarden",
+    "class": "Ranger",
     "description": "If a flamewarden dies, his body explodes in a conflagration in a 20-foot spread. Each hostile creature in the area takes 10d6 points of fire damage unless it succeeds at a Reflex save (DC %1) for half damage. The flames don't harm the flamewarden's allies, who instead are healed 5d6 points of damage, and any poisons they are currently suffering are neutralized as per neutralize poison. The flamewarden's body is reduced to ashes by the explosion.",
     "raw_tokens": [
       {

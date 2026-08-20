@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dune Rider ~ Dust Vision",
     "name": "Dust Vision",
-    "class": "Dune Rider",
+    "class": "Slayer",
     "description": "The dune rider is at home in the desert. He exists comfortably in hot conditions up to 140º Fahrenheit without having to attempt Fortitude saves. His equipment is likewise protected. He takes no penalties on Perception checks from blowing sand, dust, or heat shimmers, nor do these effects grant concealment to the dune rider's enemies within 30 feet. Effects that would grant total concealment work normally.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Scarred Witch Doctor ~ Fierce Intelligence",
     "name": "Fierce Intelligence",
-    "class": "Scarred Witch Doctor",
+    "class": "Witch",
     "description": "A scarred witch doctor treats her Intelligence score as 2 points higher when determining the highest level of spells she can cast, the number of spells she can cast per day, her spell save DCs, her number of spells known at 1st level, and any effects of her hexes determined by her Intelligence.",
     "raw_tokens": [
       {

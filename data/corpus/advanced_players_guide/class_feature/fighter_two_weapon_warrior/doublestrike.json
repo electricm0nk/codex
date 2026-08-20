@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fighter Two-Weapon Warrior ~ Doublestrike",
     "name": "Doublestrike",
-    "class": "Fighter Two-Weapon Warrior",
+    "class": "Fighter",
     "description": "At 9th level, a two-weapon warrior may, as a standard action, make one attack with both his primary and secondary weapons. The penalties for attacking with two weapons apply normally. This ability replaces weapon training 2.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cult Master ~ False Healing",
     "name": "False Healing",
-    "class": "Cult Master",
+    "class": "Mesmerist",
     "description": "A cult master can provide temporary healing by using his psychic powers to trick the mind %1 times per day. Using the ability is a standard action (or a swift action if the cult master uses it on himself), and the cult master must be able to touch his target. The cult master |CMFalseHealingUses",
     "raw_tokens": [
       {

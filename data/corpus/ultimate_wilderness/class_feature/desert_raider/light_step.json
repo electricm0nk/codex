@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Desert Raider ~ Light Step",
     "name": "Light Step",
-    "class": "Desert Raider",
+    "class": "Rogue",
     "description": "The DC of Survival checks to track the desert raider increase by %1. In addition, she gains a +%2 bonus on Perception checks to avoid being surprised by a foe.|DesertRaiderLightStepBonus+2|DesertRaiderLightStepBonus",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Martyr ~ Aura Mastery",
     "name": "Aura Mastery",
-    "class": "Martyr",
+    "class": "Paladin",
     "description": "The martyr's aura of courage, aura of resolve, and aura of righteousness have a radius of 20 feet instead of 10 feet, but the martyr does not gain immunity to fear, charms, or compulsions from those abilities. This ability alters aura of courage, aura of resolve, and aura of righteousness.",
     "raw_tokens": [
       {

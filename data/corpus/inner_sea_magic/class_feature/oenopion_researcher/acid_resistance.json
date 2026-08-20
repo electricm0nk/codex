@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Oenopion Researcher ~ Acid Resistance",
     "name": "Acid Resistance",
-    "class": "Oenopion Researcher",
+    "class": "Alchemist",
     "description": "An Oenopion researcher gains acid resistance 5.",
     "raw_tokens": [
       {

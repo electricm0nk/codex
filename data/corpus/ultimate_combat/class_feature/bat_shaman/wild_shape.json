@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bat Shaman ~ Wild Shape",
     "name": "Wild Shape",
-    "class": "Bat Shaman",
+    "class": "Druid",
     "description": "At 6th level, a bat shaman's wild shape ability functions at her druid level -2. If she takes on the form of a bat, she instead uses her druid level + 2.",
     "raw_tokens": [
       {

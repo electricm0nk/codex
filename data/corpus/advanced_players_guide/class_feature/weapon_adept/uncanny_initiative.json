@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Weapon Adept ~ Uncanny Initiative",
     "name": "Uncanny Initiative",
-    "class": "Weapon Adept",
+    "class": "Monk",
     "description": "At 17th level, a weapon adept does not need to roll for initiative. He always treats his initiative roll as if it resulted in any number of his choosing (from 1 to 20). This ability replaces timeless body.",
     "raw_tokens": [
       {

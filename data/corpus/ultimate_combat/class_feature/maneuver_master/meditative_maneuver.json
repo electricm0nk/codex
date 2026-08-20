@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Maneuver Master ~ Meditative Maneuver",
     "name": "Meditative Maneuver",
-    "class": "Maneuver Master",
+    "class": "Monk",
     "description": "At 5th level, as a swift action, a maneuver master can add his Wisdom modifier on any combat maneuver check he makes before the beginning of his next turn. He must choose which combat maneuver check to grant the bonus to before making the combat maneuver check. This ability replaces purity of body.",
     "raw_tokens": [
       {

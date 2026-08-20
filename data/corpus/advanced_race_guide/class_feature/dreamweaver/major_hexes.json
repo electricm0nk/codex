@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Dreamweaver ~ Major Hexes",
     "name": "Major Hexes",
-    "class": "Dreamweaver",
+    "class": "Witch",
     "description": "The following major hexes complement the dreamweaver archetype: nightmare, vision (Advanced Player's Guide).",
     "raw_tokens": [
       {

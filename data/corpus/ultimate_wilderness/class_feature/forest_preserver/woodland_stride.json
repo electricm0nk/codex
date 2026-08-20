@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Forest Preserver ~ Woodland Stride",
     "name": "Woodland Stride",
-    "class": "Forest Preserver",
+    "class": "Paladin",
     "description": "A forest preserver (as well as her divine bond creature, if she has one) gains woodland stride, as per the druid class feature.",
     "raw_tokens": [
       {

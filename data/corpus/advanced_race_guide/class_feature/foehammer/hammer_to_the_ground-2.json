@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Foehammer ~ Hammer to the Ground 2",
     "name": "Hammer to the Ground",
-    "class": "Foehammer",
+    "class": "Fighter",
     "description": "Any creature a foehammer successfully bull rushes is automatically knocked prone at the end of the bull rush.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Chameleon Adept ~ Improved Shifting Companion",
     "name": "Improved Shifting Companion",
-    "class": "Chameleon Adept",
+    "class": "Hunter",
     "description": "A chameleon adept's animal companion improves its ability to change shape. It can use wild shape, as a druid of half the hunter's level, to gain the effects of beast shape I. Unlike a druid's wild shape, this ability does not improve to encompass larger or smaller animals or elementals.",
     "raw_tokens": [
       {

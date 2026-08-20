@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Hexcrafter ~ Hex Magus",
     "name": "Hex Magus",
-    "class": "Hexcrafter",
+    "class": "Magus",
     "description": "You gain access to a small number of witch's hexes (see the Advanced Player's Guide). The hexcrafter magus picks one hex from the witch's hex class feature. He gains the benefit of or uses that hex as if he were a witch of a level equal to his magus level.",
     "raw_tokens": [
       {

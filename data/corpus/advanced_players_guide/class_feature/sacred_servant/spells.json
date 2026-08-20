@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sacred Servant ~ Spells",
     "name": "Spells",
-    "class": "Sacred Servant",
+    "class": "Paladin",
     "description": "At 4th level, when a sacred servant gains the ability to cast spells, she also chooses one domain associated with her deity. Her effective cleric level for this domain is equal to her paladin level -3. In addition, she also gains one domain spell slot for each level of paladin spells she can cast. Every day she must prepare the domain spell from her chosen domain in that spell slot.",
     "raw_tokens": [
       {

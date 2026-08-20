@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Eldritch Raider ~ Advanced Talents",
     "name": "Advanced Talents",
-    "class": "Eldritch Raider",
+    "class": "Rogue",
     "description": "The following advanced rogue talents complement the eldritch raider archetype: dispelling attack, improved evasion, slippery mind (Core Rulebook); major eldritch magic, minor eldritch magic (Advanced Race Guide); thoughtful reexamination (Advanced Player's Guide); familiar, hard to fool (Ultimate Combat).",
     "raw_tokens": [
       {

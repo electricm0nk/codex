@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fey Courtier ~ Stone Dance",
     "name": "Stone Dance",
-    "class": "Fey Courtier",
+    "class": "Bard",
     "description": "The bard's performance can move even the features of the natural world. This performance functions as animate plants (DC %1) except it can also animate unworked stone and water from natural bodies of water (with statistics equivalent to an appropriate plant).|10+BardLVL/2+CHA",
     "raw_tokens": [
       {

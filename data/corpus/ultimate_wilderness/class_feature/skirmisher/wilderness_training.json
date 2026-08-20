@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Skirmisher ~ Wilderness Training",
     "name": "Wilderness Training",
-    "class": "Skirmisher",
+    "class": "Fighter",
     "description": "A skirmisher relies on his skills and the element of surprise rather than the heaviest shields and armor. He gains Acrobatics and Stealth as class skills. In addition, the skirmisher gains a number of skill ranks at each level equal to 4 + his Intelligence modifier, instead of 2 + his Intelligence modifier. This alters the fighter's class skills and skill ranks per level.",
     "raw_tokens": [
       {

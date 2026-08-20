@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Reincarnated Oracle ~ Bonus Spells",
     "name": "Bonus Spells",
-    "class": "Reincarnated Oracle",
+    "class": "Oracle",
     "description": "see alignment (Ultimate Combat, 2nd), detect thoughts (4th), contact other plane (10th), moment of prescience (16th), overwhelming presence (Ultimate Magic, 18th). These spells replace the oracle's mystery bonus spells at these levels.",
     "raw_tokens": [
       {

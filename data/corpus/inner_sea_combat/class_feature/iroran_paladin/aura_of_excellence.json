@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Iroran Paladin ~ Aura of Excellence",
     "name": "Aura of Excellence",
-    "class": "Iroran Paladin",
+    "class": "Paladin",
     "description": "You are immune to any effect that would force you to reroll a die against your will or roll twice and take the lower result.  Whenever an ally within 10 feet of you would reroll a die against their will, they can roll twice and take the higher result.  Whenever an ally within 10 feet would be forced to roll twice and take the lower result, she can instead roll three times and take the second-lowest result.  This ability functions only while you are conscious.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Iconoclast ~ Shake Effects",
     "name": "Shake Effects",
-    "class": "Iconoclast",
+    "class": "Inquisitor",
     "description": "At 1st level, an iconoclast gains a +2 bonus on all saving throws against effects that come from a magic item. This ability replaces monster lore.",
     "raw_tokens": [
       {

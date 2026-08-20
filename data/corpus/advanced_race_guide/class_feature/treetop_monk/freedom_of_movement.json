@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Treetop Monk ~ Freedom of Movement",
     "name": "Freedom of Movement",
-    "class": "Treetop Monk",
+    "class": "Monk",
     "description": "A treetop monk may expend 1 point from his ki pool as a swift action to gain the effects of freedom of movement for 1 round.",
     "raw_tokens": [
       {

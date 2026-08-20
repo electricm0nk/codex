@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Eldritch Raider ~ Rogue Talents",
     "name": "Rogue Talents",
-    "class": "Eldritch Raider",
+    "class": "Rogue",
     "description": "The following rogue talents complement the eldritch raider archetype: major magic, minor magic, quick disable, trap spotter (Core Rulebook); fast picks (Advanced Player's Guide); black market connections, esoteric scholar, ninja trick (slow metabolism, wall climber) (Ultimate Combat).",
     "raw_tokens": [
       {

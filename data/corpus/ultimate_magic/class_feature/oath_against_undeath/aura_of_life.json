@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Oath against Undeath ~ Aura of Life",
     "name": "Aura of Life",
-    "class": "Oath against Undeath",
+    "class": "Paladin",
     "description": "You gain a +4 morale bonus on saves against attacks that grant negative levels and saves to overcome negative levels. Each ally within 10 feet of you gains a +2 morale bonus on these saves. This ability functions only while you are conscious, not if you are unconscious or dead.",
     "raw_tokens": [
       {

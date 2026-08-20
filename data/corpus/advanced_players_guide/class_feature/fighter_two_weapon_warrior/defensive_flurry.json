@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fighter Two-Weapon Warrior ~ Defensive Flurry",
     "name": "Defensive Flurry",
-    "class": "Fighter Two-Weapon Warrior",
+    "class": "Fighter",
     "description": "At 3rd level, when a two-weapon warrior makes a full attack with both weapons, he gains a +1 dodge bonus to AC against melee attacks until the beginning of his next turn. This bonus increases by +1 every four levels after 3rd. This ability replaces armor training 1 and 2.",
     "raw_tokens": [
       {

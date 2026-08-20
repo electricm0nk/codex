@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Royal Accuser ~ Final Sway",
     "name": "Final Sway",
-    "class": "Royal Accuser",
+    "class": "Inquisitor",
     "description": "A royal accuser's word and intuition are greatly trusted and valued. Once per day, when using the influence system (Ultimate Intrigue 102) and interacting with an individual or organization with whom he has at least minor sway or is respected (rank 2), the royal accuser can treat his influence as two steps higher for the purposes of making a single request of that individual or organization. Alternatively, he can treat an individual's attitude toward him as up to two steps higher for the purpose of such a request.",
     "raw_tokens": [
       {

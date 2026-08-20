@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Blighted Myrmidon ~ Unnatural Champion",
     "name": "Unnatural Champion",
-    "class": "Blighted Myrmidon",
+    "class": "Antipaladin",
     "description": "When a blighted myrmidon uses smite nature and strikes an elemental or fey creature with the extraplanar subtype, the target is also subject to the effects of a banishment spell, using her blighted myrmidon level as her caster level, and her weapon and unholy symbol automatically count as objects that the subject hates. This ability otherwise functions as unholy champion. This alters unholy champion.",
     "raw_tokens": [
       {

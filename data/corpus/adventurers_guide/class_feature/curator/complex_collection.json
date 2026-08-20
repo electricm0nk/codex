@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Curator ~ Complex Collection",
     "name": "Complex Collection",
-    "class": "Curator",
+    "class": "Occultist",
     "description": "A curator can empower two relics that are in his collection simultaneously, and he gains the benefits of both. When he does so, he must allocate his relic collection's mental focus between the two relics.",
     "raw_tokens": [
       {

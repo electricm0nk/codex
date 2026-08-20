@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cruoromancer ~ Sickening Infusion",
     "name": "Sickening Infusion",
-    "class": "Cruoromancer",
+    "class": "Wizard",
     "description": "When the cruoromancer uses this infusion, any creature damaged by the infused necromancy spell becomes sickened for 1 round.",
     "raw_tokens": [
       {

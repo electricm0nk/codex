@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Boar Shaman ~ Nature Bond",
     "name": "Nature Bond",
-    "class": "Boar Shaman",
+    "class": "Druid",
     "description": "A boar shaman who chooses an animal companion must select a boar. If choosing a domain, the boar shaman must choose from the Animal, Destruction (Rage), Protection, and Strength domains.",
     "raw_tokens": [
       {

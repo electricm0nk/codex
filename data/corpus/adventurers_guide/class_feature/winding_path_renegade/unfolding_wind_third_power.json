@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Winding Path Renegade ~ Unfolding Wind Third Power",
     "name": "Unfolding Wind Third Power",
-    "class": "Winding Path Renegade",
+    "class": "Brawler",
     "description": "When using the Deflect Arrows feat, the winding path renegade can send one projectile back at her attacker, with the same attack and damage roll the attacker rolled against her. Even if the deflected attack had more than one projectile (as with Manyshot), the winding path renegade sends only one projectile back at the attacker. The others are deflected as normal.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Hateful Rager ~ Feed the Rage",
     "name": "Feed the Rage",
-    "class": "Hateful Rager",
+    "class": "Barbarian",
     "description": "A hateful rager gains 1 additional round of rage for each favored enemy she knocks unconscious or kills in combat. These current rounds of rage can only be used to add to the duration of her rage, and disappear when the rage ends.",
     "raw_tokens": [
       {

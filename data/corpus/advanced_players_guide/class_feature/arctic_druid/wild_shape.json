@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Arctic Druid ~ Wild Shape",
     "name": "Wild Shape",
-    "class": "Arctic Druid",
+    "class": "Druid",
     "description": "An arctic druid gains this ability at 6th level, except that her effective druid level for this ability is equal to her druid level - 2.",
     "raw_tokens": [
       {

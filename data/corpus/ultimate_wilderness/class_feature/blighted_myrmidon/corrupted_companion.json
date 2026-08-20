@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Blighted Myrmidon ~ Corrupted Companion",
     "name": "Corrupted Companion",
-    "class": "Blighted Myrmidon",
+    "class": "Antipaladin",
     "description": "A blighted myrmidon can call upon a corrupted servant of nature. When the blighted myrmidon chooses the second fiendish boon option, it functions as a summon nature's ally spell of the appropriate level. This ability otherwise functions as the standard fiendish boon antipaladin class feature. This alters fiendish boon.",
     "raw_tokens": [
       {

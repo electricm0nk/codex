@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fey Courtier ~ Scorn of the Wilds",
     "name": "Scorn of the Wilds",
-    "class": "Fey Courtier",
+    "class": "Bard",
     "description": "The fey courtier can use bardic performance to permanently mark a creature with nature's displeasure by spending 2 rounds performing while the target remains within 30 feet. The performance includes a litany of the target's misdeeds against fey and nature. Unless the target succeeds at a Will saving throw (DC %1), it is cursed as per|10+BardLVL/2+CHA",
     "raw_tokens": [
       {

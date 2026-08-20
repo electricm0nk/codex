@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Street Performer ~ Harmless Performer",
     "name": "Harmless Performer",
-    "class": "Street Performer",
+    "class": "Bard",
     "description": "At 3rd level, a street performer can use performance to appear meek and unworthy of being attacked. While using this performance, whenever an enemy targets the street performer, the enemy must succeed at a Will save DC %1 (DC 10 + 1/2 the bard's level + the bard's Cha bonus) or be unable to attack the bard this round, as per sanctuary. The enemy loses the attack that targeted the bard, but may spend additional attacks targeting other creatures. If the opponent was targeting the street performer with a spell, it must succeed at a concentration check at the same DC or lose the spell. If this check succeeds, it may target another creature with the spell instead. This mind-affecting ability requires audible or visual components. This performance replaces inspire competence.|10+CHA+(BardLVL/2)",
     "raw_tokens": [
       {

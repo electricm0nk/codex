@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sky Druid ~ Skymaster",
     "name": "Skymaster",
-    "class": "Sky Druid",
+    "class": "Druid",
     "description": "A sky druid can use the fly spell (self only) for %1 minutes per day. These minutes do not need to be consecutive.|DruidLVL",
     "raw_tokens": [
       {

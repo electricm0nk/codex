@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Zealot ~ Aura",
     "name": "Aura",
-    "class": "Zealot",
+    "class": "Vigilante",
     "description": "A zealot of a chaotic, evil, good, or lawful deity has a particularly powerful aura corresponding to the deity's alignment (see detect evil spell for details), but only when in his vigilante identity.",
     "raw_tokens": [
       {

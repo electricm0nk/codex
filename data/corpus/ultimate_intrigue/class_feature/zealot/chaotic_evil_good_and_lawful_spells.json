@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Zealot ~ Aligned Spells",
     "name": "Chaotic, Evil, Good, and Lawful Spells",
-    "class": "Zealot",
+    "class": "Vigilante",
     "description": "Zealots can't cast spells of an alignment opposed to his vigilante identity's alignment or that of his deity. Spells associated with particular alignments are indicated by the chaotic, evil, good, and lawful descriptors in their spell descriptions.",
     "raw_tokens": [
       {

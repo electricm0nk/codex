@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Blossoming Light ~ Promise of Faith",
     "name": "Promise of Faith",
-    "class": "Blossoming Light",
+    "class": "Cleric",
     "description": "A blossoming light vows to trust in her deity's protection over arms and armor. She is not proficient with any armor or shields. The blossoming light cannot use or benefit from any of her class features (including spellcasting) while wearing armor or using a shield, or for 1 minute thereafter. This ability alters the cleric's armor proficiencies.",
     "raw_tokens": [
       {

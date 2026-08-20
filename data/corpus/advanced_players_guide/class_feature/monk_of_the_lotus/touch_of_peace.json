@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Monk of the Lotus ~ Touch of Peace",
     "name": "Touch of Peace",
-    "class": "Monk of the Lotus",
+    "class": "Monk",
     "description": "At 15th level, a monk of the lotus can set up vibrations within the body of another creature to win over the creature's mind. The monk can use touch of peace once per day, and must announce his intent before making his attack roll. On a successful hit, the attack deals no damage, but the target is charmed as if the monk had cast charm monster with a caster level equal to the monk's level. The target does not get a saving throw against this effect. The creature is charmed for 1 day per level. If the monk or his allies attack the charmed creature, or if the monk asks or commands the charmed creature to take hostile actions, the effect ends. This is a mind-affecting charm effect. This ability replaces quivering palm.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sohei ~ Unarmed Strike",
     "name": "Unarmed Strike",
-    "class": "Sohei",
+    "class": "Monk",
     "description": "A sohei's unarmed strike damage does not increase at 4th level and above.",
     "raw_tokens": [
       {

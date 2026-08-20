@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Beastmorph ~ Improved Beastform Mutagen",
     "name": "Improved Beastform Mutagen",
-    "class": "Beastmorph",
+    "class": "Alchemist",
     "description": "At 6th level, a beastmorph's mutagen grants him additional abilities and options. The alchemist gains his choice of two of the abilities listed in the beast shape I spell, which persist as long as the mutagen. He may select two different abilities each time he creates a mutagen. This ability replaces swift poisoning.",
     "raw_tokens": [
       {

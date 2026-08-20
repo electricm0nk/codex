@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Magic Warrior ~ Nameless Anonymity",
     "name": "Nameless Anonymity",
-    "class": "Magic Warrior",
+    "class": "Magus",
     "description": "A magic warrior's nameless masked identity protects her from divinations. Once per day, as long as she is in her masked identity, she can cast nondetection using her magus level as her caster level.",
     "raw_tokens": [
       {

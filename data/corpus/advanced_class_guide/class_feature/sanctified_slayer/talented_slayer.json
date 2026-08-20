@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sanctified Slayer ~ Talented Slayer",
     "name": "Talented Slayer",
-    "class": "Sanctified Slayer",
+    "class": "Inquisitor",
     "description": "At 8th, 16th, 17th, and 20th levels, a sanctified slayer can gain a single slayer talent, including those from the list of rogue talents that a slayer can take, but not an advanced slayer talent.",
     "raw_tokens": [
       {

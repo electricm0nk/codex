@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Flamewarden ~ Stoking the Embers",
     "name": "Stoking the Embers",
-    "class": "Flamewarden",
+    "class": "Ranger",
     "description": "A flamewarden can fan the last spark of a recently slain creature's life force back into a full flame. Once per day as a standard action, a flamewarden can touch the corpse of a creature that has died within 1 round to grant it the effects of breath of life.",
     "raw_tokens": [
       {

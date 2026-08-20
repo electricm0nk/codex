@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Silver Balladeer ~ Bardic Performance",
     "name": "Bardic Performance",
-    "class": "Silver Balladeer",
+    "class": "Bard",
     "description": "A silver balladeer gains the bardic performances listed below. These bardic performances all require the use of a silver or silver-stringed instrument, which costs twice as much as a normal masterwork instrument.",
     "raw_tokens": [
       {

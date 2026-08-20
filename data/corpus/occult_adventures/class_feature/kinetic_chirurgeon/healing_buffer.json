@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Kinetic Chirurgeon ~ Healing Buffer",
     "name": "Healing Buffer",
-    "class": "Kinetic Chirurgeon",
+    "class": "Kineticist",
     "description": "At 6th level, a kinetic chirurgeon's internal buffer has double the usual maximum size, and she can use it only when she would accept points of burn for the kinetic healer wild talent. This ability alters internal buffer.",
     "raw_tokens": [
       {

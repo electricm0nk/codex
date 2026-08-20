@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Forester ~ Animal Focus",
     "name": "Animal Focus",
-    "class": "Forester",
+    "class": "Hunter",
     "description": "As a forester has no animal companion, the aspects granted by this ability always apply to the forester herself, just as if a normal hunter's companion were dead. This alters animal focus.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Aquatic Druid ~ Resist Oceans Fury",
     "name": "Resist Ocean's Fury",
-    "class": "Aquatic Druid",
+    "class": "Druid",
     "description": "At 4th level, an aquatic druid gains a +4 bonus on saving throws against spells of the water type or the exceptional or supernatural abilities of creatures with the aquatic or water subtype. This ability replaces resist nature's lure.",
     "raw_tokens": [
       {

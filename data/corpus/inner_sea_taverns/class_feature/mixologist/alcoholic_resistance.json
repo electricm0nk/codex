@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mixologist ~ Alcoholic Resistance",
     "name": "Alcoholic Resistance",
-    "class": "Mixologist",
+    "class": "Alchemist",
     "description": "A mixologist's bonus on saving throws against poison also applies on saving throws to become less drunk and to avoid passing out. This doesn't allow a mixologist to become immune to alcohol. This alters poison resistance.",
     "raw_tokens": [
       {

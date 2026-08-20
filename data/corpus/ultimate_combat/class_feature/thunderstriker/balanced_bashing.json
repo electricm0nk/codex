@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Thunderstriker ~ Balanced Bashing",
     "name": "Balanced Bashing",
-    "class": "Thunderstriker",
+    "class": "Fighter",
     "description": "At 17th level, a thunderstriker no longer suffers two-weapon fighting penalties when using a buckler as his off-hand weapon. This ability replaces weapon training 4.",
     "raw_tokens": [
       {

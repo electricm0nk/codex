@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Onmyoji ~ Divine Spellcasting",
     "name": "Divine Spellcasting",
-    "class": "Onmyoji",
+    "class": "Spiritualist",
     "description": "An onmyoji's spellcasting ability comes from divine rather than psychic power. As a divine caster, the onmyoji's spells use verbal components instead of thought components, and somatic components instead of emotional components, and she uses an ofuda as a divine focus. Ofudas are scrolls with holy writings written on parchment, cloth, or wood (having the same cost as a wooden holy symbol) or metal (having the same cost as a silver holy symbol). This ability alters spellcasting.",
     "raw_tokens": [
       {

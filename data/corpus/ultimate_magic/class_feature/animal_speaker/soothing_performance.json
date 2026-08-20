@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Animal Speaker ~ Soothing Performance",
     "name": "Soothing Performance",
-    "class": "Animal Speaker",
+    "class": "Bard",
     "description": "You can use bardic performance to influence animals. This works like the druid ability wild empathy, except you expend 1 round of bardic performance and make a Perform check. If you already have wild empathy from another class, you add the class levels that provide wild empathy to the result of your Perform check to influence an animal.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ringleader ~ Inspired Plan",
     "name": "Inspired Plan",
-    "class": "Ringleader",
+    "class": "Bard",
     "description": "A ringleader can alter his performance so it affects a single ally at a later time. The ringleader must explain his plan to that ally for a number of minutes equal to the number of bardic performance rounds he expends on the effect, and use audible and/or visual components according to the performance altered. This costs the ringleader the chosen number of rounds of bardic performance. At any time before the ringleader recovers bardic performance rounds for the day, the inspired character can activate the performance as a standard action wherever she is. When activated, the altered performance affects only the inspired ally and has no audible or visible components. If the performance could normally affect any number of allies, its effects last 2 rounds for each round the ringleader spent on the performance. Otherwise, the effects last 1 round for each round the ringleader spent on the performance. A ringleader can alter only the countersong, distraction, inspire courage, inspire competence, inspire greatness, and inspire heroics performances in this way. The ringleader makes any necessary choices when establishing the performance, though in the case of countersong and distraction, the ringleader attempts Perform checks once his ally triggers the plan, ignoring any temporary bonuses or penalties, no matter whether they applied when he explained the plan or when the ally triggers it. A character can be subject to only one inspired plan at a time and cannot be subject to a ringleader's inspired plan and any of the ringleader's normal performances at the same time, but she can benefit from other bardic performances in the interim. The ringleader cannot use inspired plan on himself, but he can have dormant plans ready to trigger on as many different allies as he can afford to affect at once.",
     "raw_tokens": [
       {

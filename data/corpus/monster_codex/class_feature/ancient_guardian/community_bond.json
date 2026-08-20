@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Ancient Guardian ~ Community Bond",
     "name": "Community Bond",
-    "class": "Ancient Guardian",
+    "class": "Druid",
     "description": "An ancient guardian must choose the domain nature bond ability and select from the following domains: Community, Healing, Knowledge, Protection, or Repose. This ability alters nature bond.",
     "raw_tokens": [
       {

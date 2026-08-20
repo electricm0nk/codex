@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Primal Companion Hunter ~ Primal Transformation",
     "name": "Primal Transformation",
-    "class": "Primal Companion Hunter",
+    "class": "Hunter",
     "description": "(NOT IMPLEMENTED) At first level, a primal companion hunter can awaken a primal creature from within his animal companion as a swift action. The animal companion gains a pool of 2 evolution points (Advanced Player's Guide 60) that can be used to temporarily give the companion evolutions as if it were an eidolon. A primal companion hunter uses her hunter level to determine her effective summoner level for the purpose of qualifying for evolutions and determining their effect. At 8th level, the number of evolution points in her pool increases to 4, and at 15th level, it increases to 6. Activating these evolutions on the animal companion is a swift action. A primal companion hunter can use this ability for 1 minute per day per hunter level. This duration need not to be consecutive, but it must be spent in 1-minute increments. An animal companion transformed in this way cannot exceed the maximum number of attacks available to the eidolon of a summoner whose class level equals that of the hunter. While transformed in this way, the animal companion's type changes to magical beast, though the primal companion hunter still treats it as an animal for the purpose of the Handle Animal skill. If a primal companion hunter's animal companion is dead, she can apply these evolutions to herself instead of to her animal companion. Uses of this ability count toward the hunter's maximum daily duration of evolution use. This ability replaces animal focus.",
     "raw_tokens": [
       {

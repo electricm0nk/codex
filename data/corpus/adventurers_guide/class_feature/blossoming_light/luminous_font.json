@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Blossoming Light ~ Luminous Font",
     "name": "Luminous Font",
-    "class": "Blossoming Light",
+    "class": "Cleric",
     "description": "A blossoming light forsakes her deity's deeper mysteries to focus on benevolence, healing, and bringing light to darkness. A blossoming light still selects domains and retains access to domain powers, but does not gain domain spell slots [NOT CURRENTLY IMPLEMENTED]. Blossoming lights are beacons of goodness, guiding others to follow their own best natures. A blossoming light adds half her level on Diplomacy checks against good creatures or to convince an evil creature to take an action against its evil nature. A blossoming light's channel energy is usable %1 times per day.|ClericChannelEnergyTimes",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Warlock ~ Spellbook",
     "name": "Spellbook",
-    "class": "Warlock",
+    "class": "Vigilante",
     "description": "A warlock has a spellbook that functions in the same way as a magus's spellbook but uses the 6th-level and lower spells from the sorcerer/wizard spell list.",
     "raw_tokens": [
       {

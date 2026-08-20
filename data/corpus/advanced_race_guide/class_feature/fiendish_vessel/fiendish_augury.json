@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fiendish Vessel ~ Fiendish Augury",
     "name": "Fiendish Augury",
-    "class": "Fiendish Vessel",
+    "class": "Cleric",
     "description": "The fiendish vessel can ask the familiar whether a particular course of action will bring good or bad results for her in the immediate future. This ability acts like the augury spell, with a caster level equal to the fiendish vessel's level, with the familiar acting as the mouthpiece for the spell. This ability can be used once per day.",
     "raw_tokens": [
       {

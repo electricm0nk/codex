@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Filidh ~ Unity of Life",
     "name": "Unity of Life",
-    "class": "Filidh",
+    "class": "Bard",
     "description": "A filidh can use his performance to interlink the life force of two allies who can hear his performance as though they were affected by shield other, using the filidh's bard level as his caster level. The filidh designates which ally is the warded target and which ally receives half the warded creature's damage. The filidh can switch the targets of this ability (and the effect of the performance the targets receive) as a free action once per round at the start of each turn that he maintains the performance.",
     "raw_tokens": [
       {

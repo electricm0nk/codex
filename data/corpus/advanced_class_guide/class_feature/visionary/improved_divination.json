@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Visionary ~ Improved Divination",
     "name": "Improved Divination",
-    "class": "Visionary",
+    "class": "Shaman",
     "description": "The visionary becomes more adept at divination magic. When she casts the augury spell, her chance for an accurate answer is automatically the maximum of 90%%. Likewise, when she casts divination, she has the maximum 90%% chance of an accurate answer. Finally, the visionary can prepare scrying as a 4th-level spell, and it requires only 1 minute to cast. The visionary also has a 10%% chance per caster level to cast the spells listed in the scrying spell description, instead of 5%% per caster level (to a maximum of 100%%). The visionary must still prepare these spells to receive these benefits.",
     "raw_tokens": [
       {

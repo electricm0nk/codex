@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bloodrider ~ Feral Mount",
     "name": "Feral Mount",
-    "class": "Bloodrider",
+    "class": "Bloodrager",
     "description": "At 5th level, the bloodrider gains the service of a feral mount. This ability functions as the druid's animal companion, using the bloodrager's level - 4 as his effective druid level. This companion must be one he is capable of riding and suitable as a mount. A Medium bloodrider can select a camel or a horse. A Small bloodrider can select a pony or wolf, but can also select a boar or riding dog if he is at least 8th level. Whenever a bloodrider is bloodraging, this feral mount gains a +2 morale bonus to its Strength.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Witch Hex ~ Bouda's Eye",
     "name": "Bouda's Eye",
-    "class": "Witch Hex",
+    "class": "Witch",
     "description": "A bouda's gaze can bestow ill fortune on her enemies. This hex can affect a creature within 30 feet that the bouda can see. The target takes a -%1 penalty on one of the following (bouda's choice): AC, ability checks, attack rolls, saving throws, or skill checks. The hex lasts for %2 rounds. A successful Will saving throw reduces the duration of the hex to 1 round. Once per day when the bouda uses this hex, she can impose two different penalties on the target instead of just one. If the bouda takes the evil eye hex, it increases the number of different penalties she can impose on the hex's target by 1. This is a mind-affecting effect.|BoudasEyePenalty|3+INT",
     "raw_tokens": [
       {

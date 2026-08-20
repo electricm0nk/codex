@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sacred Huntsmaster ~ Animal Companion",
     "name": "Animal Companion",
-    "class": "Sacred Huntsmaster",
+    "class": "Inquisitor",
     "description": "A hunter forms a bond with an animal companion. A hunter may begin play with any of the animals on the druid list. This animal is a loyal companion that accompanies the hunter on her adventures. The hunter's effective druid level is equal to her hunter level. If a character receives an animal companion from more than one source, her effective druid levels stack for the purposes of determining the statistics and abilities of the companion. If a hunter releases her companion from service or her animal companion perishes, she may gain a new one by performing a ceremony requiring 24 uninterrupted hours of prayer in the environment where the sought companion typically lives.",
     "raw_tokens": [
       {

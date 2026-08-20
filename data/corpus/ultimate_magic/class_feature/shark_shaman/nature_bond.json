@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Shark Shaman ~ Nature Bond",
     "name": "Nature Bond",
-    "class": "Shark Shaman",
+    "class": "Druid",
     "description": "If you choose an animal companion, you must select a shark. If you choose a domain, you must choose from the Animal, Death, War, and Water domains.",
     "raw_tokens": [
       {

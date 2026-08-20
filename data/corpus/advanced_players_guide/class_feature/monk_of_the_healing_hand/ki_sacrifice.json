@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Monk of the Healing Hand ~ Ki Sacrifice",
     "name": "Ki Sacrifice",
-    "class": "Monk of the Healing Hand",
+    "class": "Monk",
     "description": "At 11th level, a monk of the healing hand can use his entire ki pool to bring a person back to life. It takes 1 hour to perform this ritual. At the end of the ritual, the monk sacrifices all of his ki in order to cast raise dead (as the spell) with a caster level equal to his monk level. The ritual uses all of the ki in the monk's ki pool; the monk must have at least 6 points of ki in his ki pool to use this ability. At 15th level, the monk may sacrifice his ki to cast resurrection. The monk must have at least 8 points of ki in his ki pool to use this ability. These rituals do not require material components. When this ability is used, the monk's ki pool is not replenished until 24 hours have passed. This ability replaces both diamond body and quivering palm.",
     "raw_tokens": [
       {

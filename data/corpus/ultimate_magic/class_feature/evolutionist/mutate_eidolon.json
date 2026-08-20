@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Evolutionist ~ Mutate Eidolon",
     "name": "Mutate Eidolon",
-    "class": "Evolutionist",
+    "class": "Summoner",
     "description": "You can change your eidolon's evolutions as if you had gained a level. To mutate your eidolon, you must perform an arcane ritual that requires 24 hours of uninterrupted concentration and costs %1 gp in material components.|classlevel(\"Summoner\")*200",
     "raw_tokens": [
       {

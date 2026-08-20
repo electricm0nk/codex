@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Shigenjo ~ Bonus Spells",
     "name": "Bonus Spells",
-    "class": "Shigenjo",
+    "class": "Oracle",
     "description": "true strike (2nd), alter self (4th), divine power (8th), magic jar (12th), ki shout (14th, Ultimate Magic), moment of prescience (16th). These bonus spells replace the shigenjo's mystery bonus spells at these levels.",
     "raw_tokens": [
       {

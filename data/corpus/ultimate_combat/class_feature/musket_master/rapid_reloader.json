@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Musket Master ~ Rapid Reloader",
     "name": "Rapid Reloader",
-    "class": "Musket Master",
+    "class": "Gunslinger",
     "description": "At 1st level, a musket master gains Rapid Reload (musket) as a bonus feat. Use the updated version of this feat on page 115.",
     "raw_tokens": [
       {

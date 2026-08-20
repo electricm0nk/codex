@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Master of Disguise ~ Grandmaster of Disguise",
     "name": "Grandmaster of Disguise",
-    "class": "Master of Disguise",
+    "class": "Rogue",
     "description": "A master of disguise gains the master of disguise APG advanced rogue talent and can use it an unlimited number of times per day. Because she must still don a physical disguise to gain this bonus, it doesn't stack with the bonuses from spells like alter self and disguise self, but since it is completely nonmagical, it is more reliable when scrutinized under magical detection.",
     "raw_tokens": [
       {

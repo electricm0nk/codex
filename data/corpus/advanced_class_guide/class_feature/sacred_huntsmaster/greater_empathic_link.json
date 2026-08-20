@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sacred Huntsmaster ~ Greater Empathic Link",
     "name": "Greater Empathic Link",
-    "class": "Sacred Huntsmaster",
+    "class": "Inquisitor",
     "description": "The range of a sacred huntsmaster's empathic link with her animal companion increases to 10 miles. If the animal companion is within 1 mile, it and the sacred huntsmaster can communicate telepathically.",
     "raw_tokens": [
       {

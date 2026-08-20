@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Aquatic Druid ~ Wild Shape",
     "name": "Wild Shape",
-    "class": "Aquatic Druid",
+    "class": "Druid",
     "description": "An aquatic druid gains this ability at 6th level, except that her effective druid level for the ability is equal to her druid level - 2.",
     "raw_tokens": [
       {

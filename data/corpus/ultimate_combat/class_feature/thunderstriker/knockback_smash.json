@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Thunderstriker ~ Knockback Smash",
     "name": "Knockback Smash",
-    "class": "Thunderstriker",
+    "class": "Fighter",
     "description": "At 11th level, when a thunderstriker uses his buckler to attack, he gains a bonus equal to the enhancement bonus of the buckler on both attack and damage rolls. This ability replaces armor training 3.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Purifier ~ Bonus Spells",
     "name": "Bonus Spells",
-    "class": "Purifier",
+    "class": "Oracle",
     "description": "A Purifier automatically gains bonus spells.",
     "raw_tokens": [
       {

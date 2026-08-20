@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spirit Dancer ~ Dance of Infinite Forms",
     "name": "Dance of Infinite Forms",
-    "class": "Spirit Dancer",
+    "class": "Medium",
     "description": "A spirit dancer has perfected his dance. He can now use each of his supreme spirit powers' once-per-day abilities one time each day, instead of just one ability. He can use his spirit troika by spending 2 rounds of spirit dance instead of 3. Finally, he can enter a spirit dance with all six of his prepared spirits at once by spending 4 rounds of spirit dance each round.",
     "raw_tokens": [
       {

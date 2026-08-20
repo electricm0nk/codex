@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Nature Fang ~ Swift Studied Target",
     "name": "Swift Studied Target",
-    "class": "Nature Fang",
+    "class": "Druid",
     "description": "A nature fang can study an opponent as a move or swift action.",
     "raw_tokens": [
       {

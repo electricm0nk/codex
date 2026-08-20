@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Leafshifter ~ Shifter's Slam",
     "name": "Shifter's Slam",
-    "class": "Leafshifter",
+    "class": "Shifter",
     "description": "This ability functions as the shifter claws class feature, except the leafshifter gains two slam attacks instead of two claw attacks. These slam attacks are made with her arms, which are covered in jagged bark and thorns, so these attacks deal bludgeoning and piercing damage. This alters shifter claws.",
     "raw_tokens": [
       {

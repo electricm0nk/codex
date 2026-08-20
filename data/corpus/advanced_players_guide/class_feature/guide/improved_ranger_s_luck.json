@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Guide ~ Improved Ranger's Luck",
     "name": "Improved Ranger's Luck",
-    "class": "Guide",
+    "class": "Ranger",
     "description": "Upon reaching 16th level, the ranger's luck increases. He gains a +4 bonus on his rerolls made with the ranger's luck ability, or if he forces an enemy to reroll an attack, that enemy takes a -4 penalty on the roll. This bonus or penalty is also applied on any roll to confirm critical hits. This ability replaces improved evasion.",
     "raw_tokens": [
       {

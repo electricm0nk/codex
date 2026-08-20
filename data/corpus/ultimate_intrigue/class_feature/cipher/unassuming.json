@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cipher ~ Unassuming",
     "name": "Unassuming",
-    "class": "Cipher",
+    "class": "Investigator",
     "description": "A cipher relies on subtlety, rather than skills that would draw attention to him. A cipher removes Bluff, Diplomacy, Intimidate, and Perform from his list of class skills, and he can never use them with inspiration, regardless of any talents or other abilities he might have. A cipher can use his inspiration on any Disguise, Escape Artist, Knowledge (local), Sleight of Hand, and Stealth check without expending a use of inspiration, provided he is trained in the skill, instead of the normal investigator ability to use inspiration on any Knowledge, Linguistics, or Spellcraft check without expending a use of inspiration. This alters the investigator's class skills and inspiration.",
     "raw_tokens": [
       {

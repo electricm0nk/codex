@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Commando ~ Favored Terrain",
     "name": "Favored Terrain",
-    "class": "Commando",
+    "class": "Gunslinger",
     "description": "A commando gains the favored terrain ranger class feature. At 6th level and every 4 levels thereafter, the commando can pick an additional favored terrain.",
     "raw_tokens": [
       {

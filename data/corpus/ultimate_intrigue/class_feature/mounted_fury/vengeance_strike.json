@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Mounted Fury ~ Vengeance Strike",
     "name": "Vengeance Strike",
-    "class": "Mounted Fury",
+    "class": "Vigilante",
     "description": "A mounted fury need not be mounted while he studies a target against whom he plans a vengeance strike, but he must be mounted when he makes the strike's attack. This ability alters vengeance strike.",
     "raw_tokens": [
       {

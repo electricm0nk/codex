@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spell Dancer ~ Greater Dance of Avoidance",
     "name": "Greater Dance of Avoidance",
-    "class": "Spell Dancer",
+    "class": "Magus",
     "description": "While wearing light armor or no armor, a spell dancer's insight bonus to Armor Class increases to +4.",
     "raw_tokens": [
       {

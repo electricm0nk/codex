@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Divine Strategist ~ Tactical Expertise",
     "name": "Tactical Expertise",
-    "class": "Divine Strategist",
+    "class": "Cleric",
     "description": "A divine strategist knows how to take best advantage of tactical opportunities. Whenever she is flanking or makes an attack of opportunity, she may add her Intelligence bonus (if any) as a bonus on the attack roll. In addition, %1 times per day as a swift action she may add her Intelligence modifier as a bonus on any single d20 roll made as part of a readied action.|1+(MAX(0,classlevel(\"Cleric\")-8)/2)",
     "raw_tokens": [
       {

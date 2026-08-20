@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Daring General ~ Aides-de-Camp",
     "name": "Aides-de-Camp",
-    "class": "Daring General",
+    "class": "Cavalier",
     "description": "A daring general gains a modified version of the Leadership feat at 6th level, even if he doesn't meet the prerequisites. All followers that the daring general gains as a result of this version of the Leadership feat can only have levels in the warrior class. All cohorts that the daring general gains from this ability must have levels only in classes that grant a full base attack bonus (such as barbarian, fighter, paladin, or ranger), and must be at least 4 levels lower than the daring general himself. However, at 12th level and 18th level, the daring general gains an additional cohort (up to a maximum of three cohorts at 18th level) and a number of additional followers equal to the number of followers he gained from the Leadership feat (up to a maximum of triple his normal number of followers at 18th level). When determining the kinds of cohorts the daring general can attract, he treats his Leadership score as 3 lower for each subsequent cohort (effectively taking a -3 penalty for the second cohort and a -6 penalty for the third cohort). Additionally, the daring general can grant special roles to his cohorts. Unless otherwise stated, only one cohort can fill any given role at any given time. Designating a cohort as filling a special role requires a 24-hour ceremonial ritual.",
     "raw_tokens": [
       {

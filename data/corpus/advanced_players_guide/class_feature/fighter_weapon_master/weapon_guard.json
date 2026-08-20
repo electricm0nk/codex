@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fighter Weapon Master ~ Weapon Guard",
     "name": "Weapon Guard",
-    "class": "Fighter Weapon Master",
+    "class": "Fighter",
     "description": "You gain a +%1 bonus to CMD against disarm and sunder attempts while wielding your chosen weapon. This bonus also applies on saves against any effect that targets your chosen weapon (for example, grease, heat metal, shatter, warp wood). This ability replaces bravery.|(FighterLVL+2)/4",
     "raw_tokens": [
       {

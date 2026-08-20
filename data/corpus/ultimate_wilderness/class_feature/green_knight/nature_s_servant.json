@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Green Knight ~ Nature's Servant",
     "name": "Nature's Servant",
-    "class": "Green Knight",
+    "class": "Cavalier",
     "description": "A green knight must select the order of the Green. This alters order.",
     "raw_tokens": [
       {

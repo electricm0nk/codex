@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Animal Speaker ~ Nature's Speaker",
     "name": "Nature's Speaker",
-    "class": "Animal Speaker",
+    "class": "Bard",
     "description": "You can use Speak with Animals at will on %1 selected kinds of animals.|NaturesSpeakerNumber",
     "raw_tokens": [
       {

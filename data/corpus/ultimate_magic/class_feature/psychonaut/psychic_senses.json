@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychonaut ~ Psychic Senses",
     "name": "Psychic Senses",
-    "class": "Psychonaut",
+    "class": "Alchemist",
     "description": "You add Clairaudience/Clairvoyance, Detect Scrying, Scrying, and Speak With Dead to your formula book as 3rd-level extracts (a Scrying extract does not require a focus or divine focus component).",
     "raw_tokens": [
       {

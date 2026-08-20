@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Unarmed Fighter ~ Sucker Punch",
     "name": "Sucker Punch",
-    "class": "Unarmed Fighter",
+    "class": "Fighter",
     "description": "When you strike a creature that is denied its Dexterity bonus to AC, or that you have successfully pinned with a grapple check, you can attempt a dirty trick or trip combat maneuver against that target as a swift action.",
     "raw_tokens": [
       {

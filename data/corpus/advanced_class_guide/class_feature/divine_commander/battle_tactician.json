@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Divine Commander ~ Battle Tactician",
     "name": "Battle Tactician",
-    "class": "Divine Commander",
+    "class": "Warpriest",
     "description": "A divine commander gains a teamwork feat as a bonus feat. She must meet the prerequisites for this feat. As a standard action, the divine commander can grant this feat to all allies within 30 feet who can see and hear her. Allies retain the use of this bonus feat for %1 rounds. Allies do not need to meet the prerequisites of this bonus feat. The divine commander can use this ability|3+floor((WarpriestLVL-1)/2)",
     "raw_tokens": [
       {

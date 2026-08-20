@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Vigilant Defender ~ Protect the Faithful",
     "name": "Protect the Faithful",
-    "class": "Vigilant Defender",
+    "class": "Inquisitor",
     "description": "A vigilant defender can spend 1 minute coaching and teaching a group of allies how best to avoid scrutiny from those who wish them harm. The vigilant defender and her allies cannot be in combat or threatened during this coaching, and allies must be able to see and hear the vigilant defender to benefit from this ability. This ability provides no benefits against enemies that have heard or seen the coaching. Affected allies receive a +%1 morale bonus on all Bluff, Disguise, Perception, and Stealth checks outside of combat made to avoid, deceive, or notice other creatures. This bonus lasts for 10 minutes, and the vigilant defender can affect herself and %2 allies. She can coach allies in this way %3/day.|max(1,InquisitorLVL/4)|max(1,WIS)|1+InquisitorLVL/4",
     "raw_tokens": [
       {

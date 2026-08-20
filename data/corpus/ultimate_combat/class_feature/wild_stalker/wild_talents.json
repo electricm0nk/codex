@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wild Stalker ~ Wild Talents",
     "name": "Wild Talents",
-    "class": "Wild Stalker",
+    "class": "Ranger",
     "description": "At 6th level, a wild stalker can either take a rage power, or gains a +2 insight bonus into any one of the following skills - Acrobatics, Climb, Perception, Stealth, Survival, or Swim. The wild stalker can gain one of these two benefits again every five levels after 6th (to a maximum of 4 times at 20th level). This ability replaces the ranger's 6nd-, 10th-, 14th, and 18th-level combat style feats.",
     "raw_tokens": [
       {

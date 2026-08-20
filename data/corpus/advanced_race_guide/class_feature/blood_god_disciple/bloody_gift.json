@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Blood God Disciple ~ Bloody Gift",
     "name": "Bloody Gift",
-    "class": "Blood God Disciple",
+    "class": "Summoner",
     "description": "When a blood god disciple uses blood feast to manifest an evolution, he may touch %1 allies and grant that evolution as well. Each affected ally counts as one use per day of the blood feast ability. If the blood god disciple can manifest multiple evolutions per use of blood feast, his selected allies manifest these multiple evolutions as well.|1+(SummonerLVL-3)/4",
     "raw_tokens": [
       {

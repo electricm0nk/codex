@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bloody Jake ~ Cruel Tricks",
     "name": "Cruel Tricks",
-    "class": "Bloody Jake",
+    "class": "Slayer",
     "description": "Bloody jakes use backwoods folk magic to confuse, terrify, and weaken their prey. A bloody jake can use this ability %1 times per day. He gains the cruel tricks below at the indicated slayer levels.|SlayerLVL+CHA",
     "raw_tokens": [
       {

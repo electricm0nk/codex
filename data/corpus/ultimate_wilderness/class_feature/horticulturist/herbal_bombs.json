@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Horticulturist ~ Herbal Bombs",
     "name": "Herbal Bombs",
-    "class": "Horticulturist",
+    "class": "Alchemist",
     "description": "A horticulturist's bombs lack the power of a traditional alchemist's but can be fine-tuned in ways normal alchemist explosives cannot. The horticulturist's bombs deal 1d4 points of damage (instead of 1d6), plus 1d4 points of damage for every 2 alchemist levels beyond 1st. When the horticulturist creates a bomb, he can formulate it to affect plants and other creatures normally, affect only plant creatures, or affect only creatures not of the plant type. This alters the bomb class feature.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Vigilant Defender ~ Shared Judgments",
     "name": "Shared Judgments",
-    "class": "Vigilant Defender",
+    "class": "Inquisitor",
     "description": "As a swift action whenever a vigilant defender has pronounced judgment on her foes, she can grant all of her allies within 60 feet the bonus or special ability that the judgment bestows. If she has multiple active judgments, they all affect her allies. When she does this, the judgments no longer affect her, and their effects only last for 1 round, after which that daily use of judgment ends immediately, even if the combat is not over. The vigilant defender cannot change any of these judgments to another type during this round. This ability modifies judgment.",
     "raw_tokens": [
       {

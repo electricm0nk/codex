@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bounty Hunter ~ Incapacitate",
     "name": "Incapacitate",
-    "class": "Bounty Hunter",
+    "class": "Slayer",
     "description": "A bounty hunter can incapacitate a studied target. This functions like the assassinate slayer talent, except instead of killing the target, the bounty hunter's successful attack knocks the target unconscious for 1d6 rounds unless it succeeds at its saving throw. If the target does succeed at its saving throw, it still takes the sneak attack damage as normal, but the damage is nonlethal, and the target is immune to that slayer's incapacitate ability for 24 hours.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cloaked Wolf ~ Lure Prey",
     "name": "Lure Prey",
-    "class": "Cloaked Wolf",
+    "class": "Inquisitor",
     "description": "Cloaked wolves are skilled at maintaining a harmless guise even while they silently prepare to strike against their enemies. A cloaked wolf receives a +%1 morale bonus on all Disguise and Sleight of Hand checks. When a cloaked wolf uses Sleight of Hand to draw a hidden weapon, this bonus doubles.|CloakedWolfSkillBonus",
     "raw_tokens": [
       {

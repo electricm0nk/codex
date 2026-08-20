@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fighter Roughrider ~ Leap from the Saddle",
     "name": "Leap from the Saddle",
-    "class": "Fighter Roughrider",
+    "class": "Fighter",
     "description": "At 7th level, after a roughrider's mount takes a single move, he may attempt a fast dismount (DC 20 Ride check). If he succeeds, he can take a full attack action. This ability replaces armor training 2.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Temple Champion ~ Blessing",
     "name": "Blessing",
-    "class": "Temple Champion",
+    "class": "Paladin",
     "description": "At 5th level, a temple champion gains the minor blessing (as the warpriest class feature) of the domain she selected at 4st level. She uses her paladin level as her warpriest level for determining the effects of that blessing. Any Wisdom-based aspects of that blessing instead use the temple champion's Charisma. At 11th level, she gains the major blessing of her chosen domain. This ability replaces divine bond and aura of justice.",
     "raw_tokens": [
       {

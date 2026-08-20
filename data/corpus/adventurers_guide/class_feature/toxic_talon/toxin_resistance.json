@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Toxic Talon ~ Toxin Resistance",
     "name": "Toxin Resistance",
-    "class": "Toxic Talon",
+    "class": "Rogue",
     "description": "A toxic talon's constant exposure to varied poisons grants him increasing resistance to them. A toxic talon gains a +%1 bonus on saving throws against diseases and poisons, and he gains a +1 bonus on Heal checks to treat diseases and poisons. He also gains a +%1 bonus on caster level checks (including when he activates a magic item) to treat or remove poisons and diseases, such as when using remove disease or neutralize poison. Finally, he gains a +%1 bonus on Perception checks to identify traps that utilize diseases or poisons.|RogueLVL/3",
     "raw_tokens": [
       {

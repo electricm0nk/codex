@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Disenchanter ~ Mystic Interference",
     "name": "Mystic Interference",
-    "class": "Disenchanter",
+    "class": "Warpriest",
     "description": "A disenchanter can channel a burst of pure abjuration magic to grant protection to himself and all allies with 30 feet. Affected creatures receive a +%1 bonus on saving throws against spells and spell-like abilities for %2 rounds. This is a sacred bonus if the warpriest is good-aligned or able to spontaneously cast cure spells, and a profane bonus if the warpriest is evil-aligned or able to spontaneously cast inflict spells. Using this ability consumes two uses of his fervor ability.|min(5,floor(WarpriestLVL/4))|WarpriestLVL",
     "raw_tokens": [
       {

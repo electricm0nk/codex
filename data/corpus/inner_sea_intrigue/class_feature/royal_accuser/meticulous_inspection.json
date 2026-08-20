@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Royal Accuser ~ Meticulous Inspection",
     "name": "Meticulous Inspection",
-    "class": "Royal Accuser",
+    "class": "Inquisitor",
     "description": "A royal accuser gains a +%1 morale bonus on all Perception checks.|max(1,InquisitorLVL/2)",
     "raw_tokens": [
       {

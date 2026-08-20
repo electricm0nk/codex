@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bardic Performance ~ Chant of Perfect Recall",
     "name": "Chant of Perfect Recall",
-    "class": "Bardic Performance",
+    "class": "Bard",
     "description": "An impervious messenger can spend 1 round of his bardic performance to commit something to memory. This ability functions exactly as per memorize page, but the impervious messenger is the only recipient and he requires only 1 round to commit a single page to memory. An impervious messenger can commit additional pages worth of material to memory by using additional rounds of his bardic performance, but he can never memorize more than %1 pages.|max(1,BardLVL/2)",
     "raw_tokens": [
       {

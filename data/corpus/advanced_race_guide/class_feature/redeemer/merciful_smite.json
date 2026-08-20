@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Redeemer ~ Merciful Smite",
     "name": "Merciful Smite",
-    "class": "Redeemer",
+    "class": "Paladin",
     "description": "When a redeemer chooses to smite a creature, she can have all of her attacks against the target deal nonlethal damage. She does not take the normal -4 attack roll penalty for using a lethal weapon to deal nonlethal damage. She cannot use this ability to deal nonlethal damage to outsiders with the evil subtype, evil-aligned dragons, or undead creatures (these creatures take lethal damage from her smite).",
     "raw_tokens": [
       {

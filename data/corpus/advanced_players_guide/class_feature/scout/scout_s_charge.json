@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Scout ~ Scout's Charge",
     "name": "Scout's Charge",
-    "class": "Scout",
+    "class": "Rogue",
     "description": "Whenever you make a charge, your attack deals sneak attack damage as if the target were flat-footed. Foes with uncanny dodge are immune to this ability.",
     "raw_tokens": [
       {

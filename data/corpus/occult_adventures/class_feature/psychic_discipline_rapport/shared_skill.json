@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Psychic Discipline Rapport ~ Shared Skill",
     "name": "Shared Skill",
-    "class": "Psychic Discipline Rapport",
+    "class": "Psychic",
     "description": "At 13th level, each time you set up an emotional bond, you can choose one Intelligence- or Charisma-based skill from the list of psychic's class skills. Any subject of your bond can use your bonus instead of his own when attempting checks with that skill as long as the bond lasts.",
     "raw_tokens": [
       {

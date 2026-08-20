@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Demagogue ~ Famous",
     "name": "Famous",
-    "class": "Demagogue",
+    "class": "Bard",
     "description": "You may choose a region where you are famous, and within that region, the locals are more likely to react favorably toward you. You gain a +%1 bonus on Bluff and Intimidate checks in that area and to influence people from that area|FamousModifier",
     "raw_tokens": [
       {

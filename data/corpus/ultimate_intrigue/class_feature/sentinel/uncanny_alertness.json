@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sentinel ~ Uncanny Alertness",
     "name": "Uncanny Alertness",
-    "class": "Sentinel",
+    "class": "Ranger",
     "description": "A sentinel is always ready to defend against incoming attacks. A sentinel is never flat-footed before acting in combat, even if she is surprised (she can still become flat-footed by any other effect or situation that would render her flat-footed).",
     "raw_tokens": [
       {

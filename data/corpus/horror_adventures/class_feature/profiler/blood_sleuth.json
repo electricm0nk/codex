@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Profiler ~ Blood Sleuth",
     "name": "Blood Sleuth",
-    "class": "Profiler",
+    "class": "Investigator",
     "description": "A profiler can expend one use of his inspiration to use discern next of kin as a spell-like ability. Alternatively, he can expend two uses of inspiration to use blood biography as a spell-like ability.",
     "raw_tokens": [
       {

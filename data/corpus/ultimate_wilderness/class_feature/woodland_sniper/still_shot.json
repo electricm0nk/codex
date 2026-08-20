@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Woodland Sniper ~ Still Shot",
     "name": "Still Shot",
-    "class": "Woodland Sniper",
+    "class": "Slayer",
     "description": "When he has cover provided by one or more trees, the woodland sniper reduces the penalty on Stealth checks to remain hidden while sniping by %1.|SlayerLVL/2",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Brute ~ Chaotic Vigilante",
     "name": "Chaotic Vigilante",
-    "class": "Brute",
+    "class": "Vigilante",
     "description": "A brute's vigilante alignment must be chaotic, and his vigilante identity and his social identity must be within one step of each other on the alignment axis. This ability alters dual identity.",
     "raw_tokens": [
       {

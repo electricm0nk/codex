@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Airborne Ambusher ~ Combat Flyer",
     "name": "Combat Flyer",
-    "class": "Airborne Ambusher",
+    "class": "Fighter",
     "description": "An airborne ambusher may use his fighter bonus feats to select Flyby Attack and Hover.",
     "raw_tokens": [
       {

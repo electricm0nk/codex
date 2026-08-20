@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Martial Artist ~ Pain Points",
     "name": "Pain Points",
-    "class": "Martial Artist",
+    "class": "Monk",
     "description": "At 3rd level, a martial artist's advanced knowledge of humanoid anatomy grants a +1 bonus on critical hit confirmation rolls and increases the DC of his stunning fist and quivering palm by 1. This ability replaces still mind.",
     "raw_tokens": [
       {

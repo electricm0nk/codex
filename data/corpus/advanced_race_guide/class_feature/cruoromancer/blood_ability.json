@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Cruoromancer ~ Blood Ability",
     "name": "Blood Ability",
-    "class": "Cruoromancer",
+    "class": "Wizard",
     "description": "The cruoromancer can choose to scry through a single undead creature he created with a spell modified by a commanding infusion. The undead creature is treated as if imbued with an arcane eye spell (caster level %1).|CruoromancerBloodAbilityCastLVL",
     "raw_tokens": [
       {

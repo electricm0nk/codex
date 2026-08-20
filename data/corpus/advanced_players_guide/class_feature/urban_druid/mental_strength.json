@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Urban Druid ~ Mental Strength",
     "name": "Mental Strength",
-    "class": "Urban Druid",
+    "class": "Druid",
     "description": "At 9th level, an urban druid gains immunity to charm and compulsion effects. This ability replaces venom immunity.",
     "raw_tokens": [
       {

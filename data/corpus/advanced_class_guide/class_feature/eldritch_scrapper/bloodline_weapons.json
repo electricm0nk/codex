@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Eldritch Scrapper ~ Bloodline Weapons",
     "name": "Bloodline Weapons",
-    "class": "Eldritch Scrapper",
+    "class": "Sorcerer",
     "description": "[NOT IMPLEMENTED] If an eldritch scrapper's 1st-level bloodline power would normally grant her natural attacks (such as bite or claws), at 3rd level she can select that 1st-level bloodline power in place of her 3rd-level bloodline power.",
     "raw_tokens": [
       {

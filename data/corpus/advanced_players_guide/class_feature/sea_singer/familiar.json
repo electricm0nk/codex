@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sea Singer ~ Familiar",
     "name": "Familiar",
-    "class": "Sea Singer",
+    "class": "Bard",
     "description": "At 2nd level, a sea singer acquires an exotic pet, a monkey or parrot (treat as raven), that gains abilities as a wizard's familiar, using the sea singer's bard level as his wizard level. This ability replaces versatile performance.",
     "raw_tokens": [
       {

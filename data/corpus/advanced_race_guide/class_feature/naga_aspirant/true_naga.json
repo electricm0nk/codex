@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Naga Aspirant ~ True Naga",
     "name": "True Naga",
-    "class": "Naga Aspirant",
+    "class": "Druid",
     "description": "The naga aspirant metamorphoses into a unique naga. Her wild shape form becomes her natural form, though she can transform into her original nagaji shape at will. Her creature type permanently changes to aberration. This ability replaces wildshape (at will).",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Sandman ~ Slumber Song",
     "name": "Slumber Song",
-    "class": "Sandman",
+    "class": "Bard",
     "description": "At 6th level, a sandman can use his performance to cause a creature he has already fascinated to fall asleep (as deep slumber, but with no HD limit). Otherwise, this ability functions like suggestion. This performance replaces suggestion.",
     "raw_tokens": [
       {

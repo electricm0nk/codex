@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spell Dancer ~ Spell Dance",
     "name": "Spell Dance",
-    "class": "Spell Dancer",
+    "class": "Magus",
     "description": "The spell dancer gains the ability to expend 1 point from his arcane pool as a swift action to gain a +%1 enhancement bonus to his movement rate and a +%2 dodge bonus to Armor Class against attacks of opportunity provoked by moving through threatened spaces for 1 minute.|(1+(MagusLVL-1)/4)*10|(1+(MagusLVL-1)/4)*2",
     "raw_tokens": [
       {

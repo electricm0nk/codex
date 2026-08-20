@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bonded Investigator ~ Inspired Familiar",
     "name": "Inspired Familiar",
-    "class": "Bonded Investigator",
+    "class": "Investigator",
     "description": "A bonded investigator's familiar becomes a cunning assistant to the investigator. The familiar can access the investigator's inspiration pool to augment its own actions; the use of inspiration is deducted from the investigator's number of daily uses as normal. The familiar can use the inspiration ability (and gains the increased benefits of investigator talents that affect the bonus dice used in this ability) but cannot expend uses of inspiration for other purposes.",
     "raw_tokens": [
       {

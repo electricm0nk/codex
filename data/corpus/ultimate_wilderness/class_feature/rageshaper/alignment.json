@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Rageshaper ~ Alignment",
     "name": "Alignment",
-    "class": "Rageshaper",
+    "class": "Shifter",
     "description": "A rageshaper can be any nonlawful alignment. A rageshaper who becomes lawful cannot take any further levels in rageshaper, but he does not lose access to any rageshaper abilities he has already gained. This alters the shifter's alignment.",
     "raw_tokens": [
       {

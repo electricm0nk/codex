@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Monk of the Empty Hand ~ Bonus Feat",
     "name": "Bonus Feat",
-    "class": "Monk of the Empty Hand",
+    "class": "Monk",
     "description": "A monk of the empty hand adds the following feats to his list of bonus feats at 6th level: Improved Dirty Trick*, Improved Steal*, and Improvised Weapon Mastery.",
     "raw_tokens": [
       {

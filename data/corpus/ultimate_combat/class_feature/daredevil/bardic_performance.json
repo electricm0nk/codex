@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Daredevil ~ Bardic Performance",
     "name": "Bardic Performance",
-    "class": "Daredevil",
+    "class": "Bard",
     "description": "A daredevil gains the following type of bardic performance.",
     "raw_tokens": [
       {

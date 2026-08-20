@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Fighter Phalanx Soldier ~ Deft Shield",
     "name": "Deft Shield",
-    "class": "Fighter Phalanx Soldier",
+    "class": "Fighter",
     "description": "At 7th level, the armor check penalty from a shield and the attack roll penalty are reduced by -1 for a phalanx soldier using a tower shield. At 11th level, these penalties are reduced by -2. This ability replaces armor training 2 and 3.",
     "raw_tokens": [
       {

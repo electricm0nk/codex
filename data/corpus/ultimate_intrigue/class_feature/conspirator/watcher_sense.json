@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Conspirator ~ Watcher Sense",
     "name": "Watcher Sense",
-    "class": "Conspirator",
+    "class": "Investigator",
     "description": "A conspirator is able to sense when someone else is watching him. He gains a +%1 bonus on Perception checks to notice scrying sensors, prying eyes, and other magical effects used to watch him, as well as on Perception checks to act on the surprise round.|InvestigatorLVL/3",
     "raw_tokens": [
       {

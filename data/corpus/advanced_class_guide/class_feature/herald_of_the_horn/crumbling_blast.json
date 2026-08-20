@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Herald of the Horn ~ Crumbling Blast",
     "name": "Crumbling Blast",
-    "class": "Herald of the Horn",
+    "class": "Skald",
     "description": "A herald of the horn can use his horn to create a devastating shock wave of energy. Once per day, he can sound a note on the horn that functions like a horn of blasting|PREVARLT:SkaldLVL,17",
     "raw_tokens": [
       {

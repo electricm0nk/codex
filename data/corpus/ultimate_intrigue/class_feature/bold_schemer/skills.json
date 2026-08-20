@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bold Schemer ~ Skills",
     "name": "Skills",
-    "class": "Bold Schemer",
+    "class": "Skald",
     "description": "A bold schemer gains Disable Device, Sleight of Hand, and Stealth as class skills, instead of Knowledge (arcana), Knowledge (dungeoneering), and Knowledge (planes). Her bardic knowledge does not apply to those skills. This ability alters the skald's class skills and bardic knowledge.",
     "raw_tokens": [
       {

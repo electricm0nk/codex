@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Emissary ~ Bonus Feats",
     "name": "Bonus Feats",
-    "class": "Emissary",
+    "class": "Cavalier",
     "description": "An emissary can select Endurance, Fleet, or Run in addition to the list of combat feats whenever he gains a bonus feat.",
     "raw_tokens": [
       {

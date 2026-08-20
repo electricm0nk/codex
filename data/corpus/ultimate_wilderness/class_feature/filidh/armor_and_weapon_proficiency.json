@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Filidh ~ Armor and Weapon Proficiency",
     "name": "Armor and Weapon Proficiency",
-    "class": "Filidh",
+    "class": "Bard",
     "description": "A filidh is proficient with light armor and is prohibited from wearing metal armor. A filidh can wear wooden armor that has been altered by the ironwood spell. Filidhs are proficient with shields (except tower shields) but can use only those made of wood. A filidh who wears prohibited armor or uses a prohibited shield is unable to cast bard spells or use any of his supernatural or spell-like class abilities while doing so and for 24 hours thereafter. This alters a bard's normal armor and weapon proficiencies.",
     "raw_tokens": [
       {

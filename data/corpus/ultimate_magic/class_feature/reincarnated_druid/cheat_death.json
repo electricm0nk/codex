@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Reincarnated Druid ~ Cheat Death",
     "name": "Cheat Death",
-    "class": "Reincarnated Druid",
+    "class": "Druid",
     "description": "Once per day you may reroll a save against a death effect, energy drain, or necromancy effect before the result of the roll is revealed, or reroll a failed stabilization check while dying.  You must taket the result of the second roll, even if it is worse than the original roll.",
     "raw_tokens": [
       {

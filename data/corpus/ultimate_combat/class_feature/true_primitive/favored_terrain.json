@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "True Primitive ~ Favored Terrain",
     "name": "Favored Terrain",
-    "class": "True Primitive",
+    "class": "Barbarian",
     "description": "A true primitive has a favored terrain representing her native homeland. This ability functions as the ranger class feature, and the true primitive's bonuses in that terrain improve by +2 at 5th level and every five levels thereafter. However, she does not gain any additional favored terrains. This ability replaces fast movement.",
     "raw_tokens": [
       {

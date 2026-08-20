@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Bolt Ace ~ Death's Shot",
     "name": "Death's Shot",
-    "class": "Bolt Ace",
+    "class": "Gunslinger",
     "description": "When the bolt ace scores a critical hit, she can spend 1 grit point to deal normal damage, and the target must succeed at a Fortitude saving throw with a DC equal to 10 + 1/2 the bolt ace's level + the bolt ace's Dexterity modifier. On a failed saving throw, the target dies. This is a death attack. Performing this deed does not allow the bolt ace to regain grit from confirming a critical hit or making a killing blow.",
     "raw_tokens": [
       {

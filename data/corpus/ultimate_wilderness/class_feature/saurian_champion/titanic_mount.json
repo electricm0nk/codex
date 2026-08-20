@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Saurian Champion ~ Titanic Mount",
     "name": "Titanic Mount",
-    "class": "Saurian Champion",
+    "class": "Cavalier",
     "description": "A saurian champion's mount increases in size by one category (even if the base creature normally does not reach that size). The creature receives the appropriate size penalty on attack rolls and to AC (-1 if growing to Large or -2 if growing to Huge) and a -2 penalty to Dexterity (to a minimum Dexterity score of 1), its base damage increases by one size category, and its reach increases to 10 feet (if it wasn't already). It also gains a +2 size bonus to its Strength and Constitution score. At 12th, 14th, 16th, and 18th levels, the bonus to Strength increases by 2 and the mount's natural armor increases by 1. At 14th and 18th levels, the bonus to Constitution increases by 2. At 15th level, the mount's reach increases to 15 feet.",
     "raw_tokens": [
       {

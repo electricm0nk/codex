@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Broodmaster ~ Eidolon Brood",
     "name": "Eidolon Brood",
-    "class": "Broodmaster",
+    "class": "Summoner",
     "description": "You summon two Small eidolons to your side, each less powerful than the single eidolon of a standard summoner.",
     "raw_tokens": [
       {

@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Spiritualist ~ Sixth Sense",
     "name": "Sixth Sense",
-    "class": "Spiritualist",
+    "class": "Investigator",
     "description": "A spiritualist can spend one of his uses of the commune with spirits ability to reroll a single saving throw that he has failed. He must take the results of the reroll, even if it is lower.",
     "raw_tokens": [
       {

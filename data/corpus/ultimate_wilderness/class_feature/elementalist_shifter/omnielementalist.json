@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Elementalist Shifter ~ Omnielementalist",
     "name": "Omnielementalist",
-    "class": "Elementalist Shifter",
+    "class": "Shifter",
     "description": "An elementalist shifter can fuse two elemental forms together, gaining combined powers of the different aspects and manifesting them in ways that bring to mind powerful natural weather phenomena. When the elementalist shifter takes on one minor form each from two of her elemental aspects, she gains an additional ability as long as she maintains the form. The effects of the abilities depend on the elemental combination, as detailed below.",
     "raw_tokens": [
       {

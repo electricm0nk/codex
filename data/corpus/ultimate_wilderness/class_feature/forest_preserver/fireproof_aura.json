@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Forest Preserver ~ Fireproof Aura",
     "name": "Fireproof Aura",
-    "class": "Forest Preserver",
+    "class": "Paladin",
     "description": "A forest preserver and creatures within 10 feet of her gain a +2 bonus on saving throws against fire effects and gain fire resistance 5; these are doubled for plant allies, which also gain evasion against fire effects only. Whenever a fire spell would affect a creature within the fireproof aura, the forest preserver can expend three uses of her lay on hands ability as an immediate action to attempt to counter the effect, as if she had readied a dispel magic spell (caster level = her paladin level) to counterspell. This ability functions only if the forest preserver is conscious.",
     "raw_tokens": [
       {

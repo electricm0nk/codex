@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Boaster ~ Frightful Boast",
     "name": "Frightful Boast",
-    "class": "Boaster",
+    "class": "Skald",
     "description": "The boaster's raging song can frighten foes, as per the frightening tune bardic performance.",
     "raw_tokens": [
       {

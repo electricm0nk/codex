@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Wild Child Brawler ~ Hunter's Tricks",
     "name": "Hunter's Tricks",
-    "class": "Wild Child Brawler",
+    "class": "Brawler",
     "description": "A wild child can expend a use of martial flexibility to use a trick from the ranger skirmisher archetype. Each time he activates this ability, the wild child can use a different hunter trick. He cannot choose any tricks that rely on ranged attacks. Activating this ability is not an action, but using the trick might require the wild child to use an action of a different type.",
     "raw_tokens": [
       {

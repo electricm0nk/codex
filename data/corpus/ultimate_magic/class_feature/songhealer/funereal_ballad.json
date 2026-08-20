@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Songhealer ~ Funereal Ballad",
     "name": "Funereal Ballad",
-    "class": "Songhealer",
+    "class": "Bard",
     "description": "You can use your performance to create an effect equivalent to resurrection on a dead creature, using your level as the caster level. Using this ability requires 20 rounds of continuous performance, and the target must be within 10 feet of you for the entire performance. Funereal ballad relies on audible and visual components.",
     "raw_tokens": [
       {

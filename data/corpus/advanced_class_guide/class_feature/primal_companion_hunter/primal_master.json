@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Primal Companion Hunter ~ Primal Master",
     "name": "Primal Master",
-    "class": "Primal Companion Hunter",
+    "class": "Hunter",
     "description": "(NOT IMPLEMENTED) At 20th level, a primal companion hunter becomes in tune with his primal nature. He can activate his companion's primal aspect as a free action. When using primal surge, he can grant his companion two evolutions instead of one (each costing up to 4 evolution points). This ability replaces master hunter.",
     "raw_tokens": [
       {

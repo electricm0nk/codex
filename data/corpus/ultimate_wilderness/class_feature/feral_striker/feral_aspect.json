@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Feral Striker ~ Feral Aspect",
     "name": "Feral Aspect",
-    "class": "Feral Striker",
+    "class": "Brawler",
     "description": "This functions as the shifter aspect class feature of the shifter, except the feral striker can choose only from the bear, bull, falcon, snake, stag, tiger, and wolf aspects. She has access to only the minor versions all these aspects.",
     "raw_tokens": [
       {

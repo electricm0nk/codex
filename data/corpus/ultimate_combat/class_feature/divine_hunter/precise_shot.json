@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Divine Hunter ~ Precise Shot",
     "name": "Precise Shot",
-    "class": "Divine Hunter",
+    "class": "Paladin",
     "description": "A divine hunter gains Precise Shot as a bonus feat at 1st level, even if she doesn't meet the prerequisites. This ability replaces her Heavy Armor Proficiency.",
     "raw_tokens": [
       {

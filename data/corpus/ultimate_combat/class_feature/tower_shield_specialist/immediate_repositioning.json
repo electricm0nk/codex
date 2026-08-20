@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Tower Shield Specialist ~ Immediate Repositioning",
     "name": "Immediate Repositioning",
-    "class": "Tower Shield Specialist",
+    "class": "Fighter",
     "description": "At 13th level, as an immediate action, a tower shield specialist can reposition his tower shield to another facing, but he cannot use this ability to interrupt an attack. This ability replaces weapon training 3.",
     "raw_tokens": [
       {

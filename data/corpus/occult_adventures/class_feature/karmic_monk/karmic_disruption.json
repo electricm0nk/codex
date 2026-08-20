@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-16T03:12:38Z",
+  "ingested_at": "2026-08-20T14:49:05Z",
   "data": {
     "key": "Karmic Monk ~ Karmic Disruption",
     "name": "Karmic Disruption",
-    "class": "Karmic Monk",
+    "class": "Monk",
     "description": "At 16th level, a karmic monk can spend 1 point from his ki pool as a swift action to add 1d6 points of damage to his unarmed strikes against creatures of either chaotic, evil, good, or lawful alignment for 1 round. This stacks with other abilities that deal damage based on alignment. He cannot alter his alignment choice until the next time he uses this ability. Creatures that are of the appropriate alignment and are struck by this attack must succeed at a Will save (DC = 10 + 1/2 the karmic monk's class level + the karmic monk's Wisdom modifier) or lose any damage reduction based on alignment for a number of rounds equal to the karmic monk's Wisdom modifier (minimum 1 round). A creature that succeeds at this save is immune to having its damage reduction disrupted by that karmic monk for 24 hours. This attack disrupts only alignment components of damage reduction, not any other components; for example, DR/cold iron and good becomes DR/cold iron. This ability replaces slow fall 80 feet, and alters slow fall at 19th level to become slow fall 80 feet.",
     "raw_tokens": [
       {
