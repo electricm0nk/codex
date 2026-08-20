@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-17T12:26:27Z",
   "data": {
     "corpus_key": "Grab ~ Colossal",
     "delivery": "Extraordinary",
@@ -13,19 +11,51 @@
     "owners": [
       "bestiary_2:monster:slithering_tracker"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Grab"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(Colossal)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "The creature can grab others of up to size Colossal."
+      },
+      {
+        "key": "KEY",
+        "value": "Grab ~ Colossal"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.297"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.297",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
-    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
-    "line": 1881,
-    "record_key": "Grab ~ Colossal"
-  },
+  "ingested_at": "2026-08-17T12:26:27Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1881,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Grab ~ Colossal",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-17T12:26:27Z",
   "data": {
     "corpus_key": "Heat",
     "delivery": "Supernatural",
@@ -13,19 +11,55 @@
     "owners": [
       "bestiary_2:monster:azer"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1d%2 fire)|HeatDamageDice|HeatDamageDieSize"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|HeatDamageDice|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HeatDamageDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "HeatDamageDieSize|0"
+      },
+      {
+        "key": "DESC",
+        "value": "The creature generates so much heat that its mere touch deals additional fire damage.  The creature's metallic melee weapons also conduct this heat."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.298"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.298",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
-    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
-    "line": 1886,
-    "record_key": "Heat"
-  },
+  "ingested_at": "2026-08-17T12:26:27Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1886,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Heat",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

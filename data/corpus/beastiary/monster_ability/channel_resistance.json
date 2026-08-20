@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-17T12:26:26Z",
   "data": {
     "corpus_key": "Channel Resistance",
     "delivery": "Extraordinary",
@@ -20,21 +18,53 @@
       "beastiary:monster:vampire_spawn",
       "beastiary:monster:wraith"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|+%1|ChannelResistance"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Resistance|Channel"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ChannelResistance|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are less easily affected by clerics or paladins. You add +%1 to saves made to resist the effects of channel energy, including effects that rely on the use of channel energy.|ChannelResistance"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.298"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Defensive"
+      }
+    ],
     "source_page": "p.298",
     "traits": [
       "Defensive"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
-    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
-    "line": 1336,
-    "record_key": "Channel Resistance"
-  },
+  "ingested_at": "2026-08-17T12:26:26Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1336,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Channel Resistance",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

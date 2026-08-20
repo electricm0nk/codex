@@ -204,11 +204,11 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 232,
-      "partial": 62,
+      "done": 233,
+      "partial": 61,
       "not_started": 63,
       "denominator": 357,
-      "pct": 65.0,
+      "pct": 65.3,
       "excluded_from_percentage": 241,
       "standing_breakdown": {
         "unclassified": 241,
@@ -518,7 +518,7 @@
         },
         {
           "name": "Blood Drain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Blood Drain (SpecialAttack.Extraordinary)"
@@ -1001,7 +1001,7 @@
         },
         {
           "name": "Cold",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Cold (SpecialAttack.Supernatural) #8"
@@ -1603,7 +1603,7 @@
         },
         {
           "name": "Electricity",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack",
           "standing": "origin",
           "display_name": "Electricity (SpecialAttack)"
@@ -1988,35 +1988,35 @@
         },
         {
           "name": "Grab",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Grab (SpecialAttack.Extraordinary.AttackOption)"
         },
         {
           "name": "Grab",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Grab (SpecialAttack.Extraordinary.AttackOption) #5"
         },
         {
           "name": "Grab",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Grab (SpecialAttack.Extraordinary.AttackOption) #6"
         },
         {
           "name": "Grab",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Grab (SpecialAttack.Extraordinary.AttackOption) #7"
         },
         {
           "name": "Grab",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Grab (SpecialAttack.Extraordinary.AttackOption) #8"
@@ -2030,49 +2030,49 @@
         },
         {
           "name": "Grab",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Grab (SpecialAttack.Extraordinary.AttackOption) #10"
         },
         {
           "name": "Grab",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Grab (SpecialAttack.Extraordinary.AttackOption) #11"
         },
         {
           "name": "Grab",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Grab (SpecialAttack.Extraordinary.AttackOption) #12"
         },
         {
           "name": "Grab",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Grab (SpecialAttack.Extraordinary.AttackOption) #13"
         },
         {
           "name": "Grab",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Grab (SpecialAttack.Extraordinary.AttackOption) #14"
         },
         {
           "name": "Grab",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Grab (SpecialAttack.Extraordinary.AttackOption) #15"
         },
         {
           "name": "Grab",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Grab (SpecialAttack.Extraordinary.AttackOption) #16"
@@ -2100,7 +2100,7 @@
         },
         {
           "name": "Heat",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Heat"
@@ -3164,14 +3164,14 @@
         },
         {
           "name": "Regeneration",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP)"
         },
         {
           "name": "Regeneration",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP) #2"
@@ -3185,14 +3185,14 @@
         },
         {
           "name": "Regeneration",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP) #4"
         },
         {
           "name": "Regeneration",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP) #5"
@@ -4158,7 +4158,7 @@
         },
         {
           "name": "Undersized Weapons",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Undersized Weapons"

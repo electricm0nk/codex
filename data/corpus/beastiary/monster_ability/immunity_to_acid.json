@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-17T12:26:26Z",
   "data": {
     "corpus_key": "Immunity to Acid",
     "delivery": "Extraordinary",
@@ -17,21 +15,45 @@
       "beastiary:monster:slug_giant",
       "beastiary:monster:tarrasque"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Immunity|Acid"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "You never take acid damage."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.301"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Immunity"
+      }
+    ],
     "source_page": "p.301",
     "traits": [
       "Immunity"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
-    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
-    "line": 1389,
-    "record_key": "Immunity to Acid"
-  },
+  "ingested_at": "2026-08-17T12:26:26Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1389,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Immunity to Acid",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

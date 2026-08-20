@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-08-20T02:07:22Z",
+  "generated_at": "2026-08-20T04:48:37Z",
   "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 38372,
-  "proven_units": 5862,
+  "proven_units": 5808,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 420,
   "category_labels_redacted": 3,
@@ -7203,21 +7203,21 @@
     },
     "monster": {
       "units": 1270,
-      "proven": 276,
+      "proven": 260,
       "by_status": {
         "fixture-verified": 140,
-        "grounded": 276,
-        "literal-verified": 826,
+        "grounded": 260,
+        "literal-verified": 842,
         "not-ingested": 28
       },
       "shard": "PF1e-units-monster.json",
-      "bytes": 109508,
+      "bytes": 109636,
       "doneness_unmapped": {},
       "categories": {
         "none": {
           "label": "Uncategorised",
-          "done": 529,
-          "held": 220,
+          "done": 530,
+          "held": 219,
           "in-progress": 0,
           "not-started": 13,
           "unmeasurable": 0,
@@ -7261,8 +7261,8 @@
         },
         "construct": {
           "label": "Construct",
-          "done": 33,
-          "held": 9,
+          "done": 38,
+          "held": 4,
           "in-progress": 0,
           "not-started": 0,
           "unmeasurable": 0,
@@ -7306,8 +7306,8 @@
         },
         "humanoid": {
           "label": "Humanoid",
-          "done": 17,
-          "held": 10,
+          "done": 27,
+          "held": 0,
           "in-progress": 0,
           "not-started": 0,
           "unmeasurable": 0,
@@ -7354,22 +7354,22 @@
     },
     "monster_ability": {
       "units": 2942,
-      "proven": 1605,
+      "proven": 1567,
       "by_status": {
         "not-ingested": 1135,
-        "text-complete": 1006,
-        "grounded": 599,
-        "literal-verified": 102,
+        "text-complete": 1005,
+        "grounded": 562,
+        "literal-verified": 140,
         "fixture-verified": 100
       },
       "shard": "PF1e-units-monster_ability.json",
-      "bytes": 355312,
+      "bytes": 355611,
       "doneness_unmapped": {},
       "categories": {
         "specialquality": {
           "label": "Special Qualities",
-          "done": 708,
-          "held": 123,
+          "done": 725,
+          "held": 106,
           "in-progress": 0,
           "not-started": 790,
           "unmeasurable": 0,
@@ -7377,8 +7377,8 @@
         },
         "specialattack": {
           "label": "Special Attacks",
-          "done": 847,
-          "held": 128,
+          "done": 868,
+          "held": 107,
           "in-progress": 0,
           "not-started": 318,
           "unmeasurable": 0,

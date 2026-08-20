@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-17T12:26:27Z",
   "data": {
     "corpus_key": "Lightning Elemental ~ Electricity",
     "delivery": null,
@@ -21,19 +19,59 @@
       "bestiary_2:monster:elemental_lightning_greater",
       "bestiary_2:monster:elemental_lightning_elder"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(Slam,%1d%2)|ElectricityDamageDice|ElectricityDamageDieSize"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricityDamageDice|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ElectricityDamageDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ElectricityDamageDieSize|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A lightning elemental's slam does an additional %1d%2 electricity damage.|ElectricityDamageDice|ElectricityDamageDieSize"
+      },
+      {
+        "key": "KEY",
+        "value": "Lightning Elemental ~ Electricity"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.116"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack"
+      }
+    ],
     "source_page": "p.116",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
-    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
-    "line": 2129,
-    "record_key": "Lightning Elemental ~ Electricity"
-  },
+  "ingested_at": "2026-08-17T12:26:27Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2129,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Lightning Elemental ~ Electricity",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

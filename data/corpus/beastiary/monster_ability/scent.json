@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-17T12:26:26Z",
   "data": {
     "corpus_key": "Scent",
     "delivery": "Extraordinary",
@@ -82,21 +80,41 @@
       "beastiary:monster:yeth_hound",
       "beastiary:monster:yeti"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "You can detect approaching enemies, sniff out hidden foes, and track by sense of smell. You can identify familiar odors just as humans do familiar sights. You can detect opponents within 30 feet by sense of smell. If the opponent is upwind, the range increases to 60 feet; if downwind, it drops to 15 feet. Strong scents, such as smoke or rotting garbage, can be detected at twice the ranges noted above. Overpowering scents, such as skunk musk or troglodyte stench, can be detected at triple normal range. When you detect a scent, the exact location of the source is not revealed--only its presence somewhere within range. You can take a move action to note the direction of the scent. When you are within 5 feet of the source, you pinpoint the source's location. You can follow tracks by smell, making a Wisdom (or Survival) check to find or follow a track. The typical DC for a fresh trail is 10 (no matter what kind of surface holds the scent). This DC increases or decreases depending on how strong the quarry's odor is, the number of creatures, and the age of the trail. For each hour that the trail is cold, the DC increases by 2. The ability otherwise follows the rules for the Survival skill. When tracking by scent you ignore the effects of surface conditions and poor visibility."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.304"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Sense"
+      }
+    ],
     "source_page": "p.304",
     "traits": [
       "Sense"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
-    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
-    "line": 1514,
-    "record_key": "Scent"
-  },
+  "ingested_at": "2026-08-17T12:26:26Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1514,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Scent",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

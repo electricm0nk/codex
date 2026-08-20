@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-17T12:26:26Z",
   "data": {
     "corpus_key": "Rock Throwing",
     "delivery": "Extraordinary",
@@ -18,21 +16,61 @@
       "beastiary:monster:giant_stone",
       "beastiary:monster:treant"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 ft.)|RockThrowingRange"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Rock"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Rock|DAMAGE|STR/2"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=Rock|TOHIT|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RockThrowingRange|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are an accomplished rock thrower and have a +1 racial bonus on attack rolls with thrown rocks. A creature can hurl rocks up to two categories smaller than its size. A \"rock\" is any large, bulky, and relatively regularly shaped object made of any material with a hardness of at least 5. The creature can hurl the rock up to five range increments. Damage from a thrown rock is generally twice your base slam damage plus 1-1/2 your Strength bonus."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.303"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.AttackOption"
+      }
+    ],
     "source_page": "p.303",
     "traits": [
       "AttackOption"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
-    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
-    "line": 1511,
-    "record_key": "Rock Throwing"
-  },
+  "ingested_at": "2026-08-17T12:26:26Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1511,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Rock Throwing",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "ambiguous:prose_ability_scaling",

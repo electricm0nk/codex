@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-17T12:26:27Z",
   "data": {
     "corpus_key": "No Breath",
     "delivery": "Extraordinary",
@@ -16,19 +14,39 @@
       "bestiary_2:monster:shantak",
       "bestiary_2:monster:wendigo"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A creature with this ability does not breathe, and is immune to effects that require breathing (such as inhaled poison). This does not give immunity to cloud or gas attacks that do not require breathing."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.299"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": "p.299",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
-    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
-    "line": 1930,
-    "record_key": "No Breath"
-  },
+  "ingested_at": "2026-08-17T12:26:27Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1930,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "No Breath",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

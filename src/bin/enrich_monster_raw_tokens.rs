@@ -108,12 +108,28 @@ fn find_monster_json_files(book_dir: &Path) -> Vec<PathBuf> {
 /// of the library) rather than reinvented, so this tool and the verifier
 /// that checks its output always agree about which book a citation
 /// belongs to.
+///
+/// `dreamscarred_press` (`ultimate_psionics`, `path_of_war`,
+/// `psionics_expanded`, `psionics_unleashed`) ships with no `<line>` tier —
+/// its oracle layout is `<system>/<publisher>/<book>/<file>`, three
+/// directory segments, not four. `corpus_literal_sweep`'s own `book_dir_of`
+/// (`src/bin/corpus_literal_sweep.rs`) already special-cases this; this
+/// copy had drifted out of sync with it and silently treated every
+/// `dreamscarred_press` monster citation as a `CitationMiss` instead —
+/// confirmed live: all 21 `ultimate_psionics` `monster` records (and, in
+/// `enrich_monster_ability_raw_tokens.rs`'s own copy, all 13
+/// `ultimate_psionics` `monster_ability` records) sat at `held` for want of
+/// this one branch, corpus-wide `0` false negatives elsewhere (SD-31 wave
+/// 20).
 fn book_dir_of(source_path: &str) -> Option<String> {
     let segments: Vec<&str> = source_path.split('/').filter(|s| !s.is_empty()).collect();
-    if segments.len() < 5 {
-        return None;
+    if segments.len() >= 5 {
+        return Some(segments[..4].join("/"));
     }
-    Some(segments[..4].join("/"))
+    if segments.len() == 4 && segments[1] == "dreamscarred_press" {
+        return Some(segments[..3].join("/"));
+    }
+    None
 }
 
 /// One book's `.MOD` rows, keyed by the record name they target — the same
@@ -377,6 +393,36 @@ mod tests {
         fn drop(&mut self) {
             let _ = fs::remove_dir_all(self.data_root.parent().unwrap());
         }
+    }
+
+    // ----- book_dir_of -----
+
+    #[test]
+    fn book_dir_of_resolves_a_standard_five_segment_publisher_path() {
+        assert_eq!(
+            book_dir_of("pathfinder/paizo/roleplaying_game/core_essentials/ce_races.lst"),
+            Some("pathfinder/paizo/roleplaying_game/core_essentials".to_string())
+        );
+    }
+
+    /// `dreamscarred_press` ships with no `<line>` tier in the oracle
+    /// checkout -- `pathfinder/dreamscarred_press/ultimate_psionics/
+    /// up_races.lst` is a real, live citation on 21 shipped `monster`
+    /// records (`data/corpus/ultimate_psionics/monster/*.json`), every one
+    /// of which this function's pre-fix `segments.len() < 5 -> None` rule
+    /// silently refused to enrich, corpus-wide (SD-31 wave 20). Matches
+    /// `corpus_literal_sweep`'s own `book_dir_of` special case exactly.
+    #[test]
+    fn book_dir_of_resolves_the_four_segment_dreamscarred_press_shape() {
+        assert_eq!(
+            book_dir_of("pathfinder/dreamscarred_press/ultimate_psionics/up_races.lst"),
+            Some("pathfinder/dreamscarred_press/ultimate_psionics".to_string())
+        );
+    }
+
+    #[test]
+    fn book_dir_of_refuses_a_four_segment_path_from_a_non_dreamscarred_publisher() {
+        assert_eq!(book_dir_of("pathfinder/paizo/roleplaying_game/x_races.lst"), None);
     }
 
     // ----- split_token_field -----

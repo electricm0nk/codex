@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-17T12:26:26Z",
   "data": {
     "corpus_key": "Rake",
     "delivery": "Extraordinary",
@@ -19,21 +17,81 @@
       "beastiary:monster:tiger_dire",
       "beastiary:monster:wyvern"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Rake 2 (Colossal)|PREVAREQ:RakeSize,9|PREVAREQ:ClawAttacks,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Rake 2 (Diminutive)|PREVAREQ:RakeSize,2|PREVAREQ:ClawAttacks,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Rake 2 (Gargantuan)|PREVAREQ:RakeSize,8|PREVAREQ:ClawAttacks,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Rake 2 (Huge)|PREVAREQ:RakeSize,7|PREVAREQ:ClawAttacks,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Rake 2 (Large)|PREVAREQ:RakeSize,6|PREVAREQ:ClawAttacks,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Rake 2 (Medium)|PREVAREQ:RakeSize,5|PREVAREQ:ClawAttacks,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Rake 2 (Small)|PREVAREQ:RakeSize,4|PREVAREQ:ClawAttacks,2"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Rake 2 (Tiny)|PREVAREQ:RakeSize,3|PREVAREQ:ClawAttacks,2"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|RakeSize|NaturalAttackSize"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RakeSize|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You gain extra natural attacks under certain conditions, typically when you grapple foes. In addition to the options available to all grapplers, a monster with the rake ability gains two additional claw attacks that it can use only against a grappled foe. A monster with the rake ability must begin its turn already grappling to use its rake--it can't begin a grapple and rake in the same turn."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.303"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.AttackOption"
+      }
+    ],
     "source_page": "p.303",
     "traits": [
       "AttackOption"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
-    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
-    "line": 1469,
-    "record_key": "Rake"
-  },
+  "ingested_at": "2026-08-17T12:26:26Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1469,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Rake",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-17T12:26:26Z",
   "data": {
     "corpus_key": "Powerful Charge",
     "delivery": "Extraordinary",
@@ -17,21 +15,57 @@
       "beastiary:monster:rhinoceros_woolly",
       "beastiary:monster:unicorn"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1d%2+%3)|PowerfulChargeDamageDice|PowerfulChargeDamageDieSize|PowerfulChargeBonusDamage"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PowerfulChargeBonusDamage|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PowerfulChargeDamageDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "PowerfulChargeDamageDieSize|0"
+      },
+      {
+        "key": "DESC",
+        "value": "When you make a charge, your attack deals extra damage in addition to the normal benefits and hazards of a charge."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.303"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary.AttackOption"
+      }
+    ],
     "source_page": "p.303",
     "traits": [
       "AttackOption"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
-    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9",
-    "line": 1460,
-    "record_key": "Powerful Charge"
-  },
+  "ingested_at": "2026-08-17T12:26:26Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1460,
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst",
+    "record_key": "Powerful Charge",
+    "sha256": "1a6d0cbd443d7da7599cbe48c0e0d0c88f8eea4b0bf99f34dad2855f02560ef9"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"
