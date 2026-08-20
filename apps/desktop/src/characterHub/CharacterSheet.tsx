@@ -1850,7 +1850,7 @@ const POOL_REFERENCE_SECTIONS: ReadonlyArray<{
     poolGroup: 'Rage Power',
     classSlug: 'barbarian',
     heading: 'Available Rage Powers (reference)',
-    note: 'Every Rage Power this catalog can render without a missing value, whether or not this build has selected one. A rage power whose only magnitude depends on a value this catalog cannot compute (e.g. a save DC or a bonus token) is not listed here.',
+    note: "Every Rage Power this catalog can render without a missing value, whether or not this build has selected one. A rage power whose only magnitude depends on a value this catalog cannot compute (e.g. an unresolved bonus token) is not listed here, nor is one whose magnitude scales on this character's own class level and applies to a value this sheet already tracks (e.g. damage reduction, energy resistance) -- wave-23 integration review finding, pending an operator ruling. A rage power whose scaled value is inflicted on an opponent (e.g. a save DC) is still shown.",
   },
 ];
 

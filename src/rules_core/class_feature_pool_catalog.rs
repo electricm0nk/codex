@@ -230,6 +230,54 @@ fn is_real_description_value(value: &str) -> bool {
     !matches!(lower.as_str(), ".clear" | ".clearall" | "[redacted pi]")
 }
 
+/// Hand-verified exclusion: a [`REGISTERED_POOL_GROUPS`] record whose real
+/// rulebook description carries a magnitude that scales on the
+/// CHARACTER'S OWN class level (`"1/2 her barbarian level"`, `"per four
+/// barbarian levels"`, ...) and applies to a value THIS ENGINE ALREADY
+/// COMPUTES for that character (an activation state such as `active_
+/// barbarian_rage_bonus` -- `pilot_compute/mod.rs` -- proves "while
+/// raging" is not merely narrative flavor here) -- SD-31 wave 23
+/// integration-cycle review finding (`corrected_units`): `wiring_class.rs`'s
+/// `prose_scaling_phrases` list recognises `"your class level"`/`"your
+/// character level"` but not a class-specific phrasing
+/// (`"barbarian level"`, `"character's level"`), so these 16 records
+/// cleared the `!carries_prose_magnitude` check that decides `text_only`
+/// by an accident of that phrase list, not because Decision 7's
+/// conditions were actually satisfied. Every entry was hand-read against
+/// its shipped `data/corpus` description before listing here (see the
+/// review's own `evidence` field); the Linnorm Death Curse variants this
+/// SAME review deliberately left OFF this list (their scaled save DC
+/// applies to an ATTACKER, never a value on this character's own sheet)
+/// remain served, pending the operator ruling the review's own
+/// `needs_ruling` records.
+///
+/// This is a targeted, hand-kept list rather than a broadened automatic
+/// phrase scan -- widening `wiring_class.rs`'s shared phrase list would
+/// ripple to every OTHER kind that list gates (feat, spell, monster_
+/// ability, ...), a blast radius this integration cycle has no budget to
+/// re-verify; a class_feature_pool_catalog-local denylist is exactly the
+/// same "narrow, disjoint-file-touch correction" precedent this module's
+/// other hand-kept guards (`raw_tokens_carry_more_than_one_desc_segment`,
+/// the render-and-refuse gate) already establish.
+const CLASS_LEVEL_SCALED_SHEET_VALUE_EXCLUDED_KEYS: [&str; 16] = [
+    "Rage Power ~ Chaos Totem (Greater)",
+    "Rage Power ~ Energy Resistance",
+    "Rage Power ~ Guarded Life",
+    "Rage Power ~ Guarded Life (Greater)",
+    "Rage Power ~ Primal Scent",
+    "Rage Power ~ Regenerative Vigor",
+    "Rage Power ~ Renewed Life",
+    "Rage Power ~ Renewed Vitality",
+    "Rage Power ~ Hive Totem",
+    "Rage Power ~ Hive Totem Resilience",
+    "Rage Power ~ Liquid Courage",
+    "Rage Power ~ Roaring Drunk",
+    "Rage Power ~ Staggering Drunk",
+    "Rage Power ~ Crippling Blow",
+    "Rage Power ~ Eater of Magic",
+    "Rage Power ~ Spell Sunder",
+];
+
 fn walk_json_files(dir: &Path, out: &mut Vec<PathBuf>) {
     let Ok(entries) = std::fs::read_dir(dir) else { return };
     let mut entries: Vec<_> = entries.flatten().collect();
@@ -280,6 +328,9 @@ pub fn load_pool_catalog(repo_root: &Path) -> Vec<PoolCatalogEntry> {
                 continue;
             };
             if !REGISTERED_POOL_GROUPS.contains(&class) {
+                continue;
+            }
+            if CLASS_LEVEL_SCALED_SHEET_VALUE_EXCLUDED_KEYS.contains(&key) {
                 continue;
             }
             let Some(raw_desc) = data["description"].as_str() else { continue };
@@ -468,6 +519,60 @@ mod tests {
         assert!(
             !entries.iter().any(|e| e.key == "Rage Power ~ Terrifying Howl"),
             "Terrifying Howl carries a real BONUS:VAR engine-effect token and must not reach the catalog"
+        );
+    }
+
+    /// SD-31 wave 23 integration-cycle review finding: all 16 hand-verified
+    /// `CLASS_LEVEL_SCALED_SHEET_VALUE_EXCLUDED_KEYS` entries must be
+    /// refused, non-vacuously (each key really is present in the raw,
+    /// unfiltered corpus, so this proves the exclusion is doing real work,
+    /// not testing an already-absent key).
+    #[test]
+    fn every_class_level_scaled_sheet_value_key_is_excluded_from_the_catalog() {
+        let entries = load_pool_catalog(&repo_root());
+        for key in CLASS_LEVEL_SCALED_SHEET_VALUE_EXCLUDED_KEYS {
+            assert!(
+                !entries.iter().any(|e| e.key == key),
+                "{key} carries a class-level-scaled sheet-computed magnitude and must not reach the catalog"
+            );
+            // Non-vacuous: the record really exists in the raw corpus under
+            // `rage_power/`, so an unrelated typo in the denylist (or a
+            // future corpus-key rename that silently orphans an entry)
+            // cannot masquerade as "already excluded".
+            let mut slug: String = key
+                .rsplit(" ~ ")
+                .next()
+                .unwrap()
+                .to_ascii_lowercase()
+                .chars()
+                .map(|c| if c.is_ascii_alphanumeric() { c } else { '_' })
+                .collect();
+            while slug.contains("__") {
+                slug = slug.replace("__", "_");
+            }
+            let slug = slug.trim_matches('_');
+            let found = std::fs::read_dir(repo_root().join("data/corpus"))
+                .unwrap()
+                .flatten()
+                .any(|book| {
+                    let candidate = book.path().join("class_feature/rage_power").join(format!("{slug}.json"));
+                    candidate.is_file()
+                });
+            assert!(found, "{key} (slug {slug:?}) must exist in the raw corpus for this test to be meaningful");
+        }
+    }
+
+    /// The counterpart negative case, restated from the review's own
+    /// distinction: a Linnorm Death Curse variant's scaled save DC applies
+    /// to an ATTACKER, never a value this character's own sheet computes,
+    /// so the review deliberately left it OFF the denylist pending an
+    /// operator ruling -- it must still be served today.
+    #[test]
+    fn a_linnorm_death_curse_variant_is_not_excluded_pending_the_operator_ruling() {
+        let entries = load_pool_catalog(&repo_root());
+        assert!(
+            entries.iter().any(|e| e.key.starts_with("Rage Power ~ Linnorm")),
+            "Linnorm Death Curse variants must remain served until the operator rules on              whether an opponent-facing save DC counts as a sheet-computed magnitude"
         );
     }
 
