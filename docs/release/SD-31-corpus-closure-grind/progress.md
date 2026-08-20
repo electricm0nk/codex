@@ -32881,3 +32881,375 @@ being 1 below this cycle's own measured counts -- left for the wave 23 integrati
 deleted at cycle close. `apps/desktop/.claude/skills/run-desktop/driver.sh stop` run (Xvfb :89 torn
 down). `sd31/racetrait4-SD31-E6-F4-005` -- untouched, not read, not gated.
 
+
+## Cycle `SD31-W23-INTEGRATE-001` (`RETRO_ACTOR=sd31-w23-integrate`) — 2026-08-20, wave 23 integration cycle
+
+**Role:** integrator for wave 23 — the only agent permitted to write to `tranche/11` this cycle.
+**Base:** `3229f9e2b` (tranche/11 tip, confirmed via `git log --oneline -1 && ls docs data scripts schemas` —
+correct base with a full tree, not one of the wave-15+ site-publish-commit worktree hazards).
+**5 lane branches reviewed, all merged** (none GAMED, none rejected outright) — 3 adversarial reviews
+covering all 5 lanes independently confirmed mechanisms real; every review's `PARTIAL`/confirmed
+finding was either fixed here or logged actionably (`OPEN-ISSUES.md` rows 346-350).
+
+### TOP-OF-RECEIPT ANSWER: did the merged grant data ground `class_feature` units at scale?
+
+**No — not at scale, and the reason is now precisely measured rather than suspected.** Wave 22's
+grant-fact parser (`data/class_feature_grants`, 3,483 facts) got its first-ever consumer this wave
+(`class_feature_grant_consumer.rs`, `SD31-W23-CLASSFEATURE-001`). Two independent adversarial
+reviews caught a CRITICAL, player-visible fabrication bug in that consumer before it could ship: a
+vanilla, no-archetype Rogue's roster carried `careful_disarm` and `poison_use`, two archetype-only
+replacement features from the Burglar/Poisoner archetypes, because the consumer's only archetype
+guard (`key_names_a_base_class_feature`) checks the grant KEY's group text against the resolved
+class, and PCGen keys some archetype-replacement features directly under the base class's own name
+(`advanced_players_guide:2942`, `Rogue Archetype ~ Burglar`'s own `CATEGORY:Archetype` row, embeds
+`ABILITY:...|Rogue ~ Careful Disarm|PRECLASS:1,Rogue=4` — the guard sees group `Rogue` == class
+`Rogue` and passes it). This is the SAME failure shape wave 21 was rejected for (a correctness proof
+narrower than the data), one layer deeper.
+
+Fixed upstream, at the source, not by patching the symptom: `class_feature_grants.rs` (wave 22's
+parser) now resolves and ships a new `granted_via_archetype` boolean per fact — `true` only for a
+`PRECLASS:`-gated token (never a `.MOD`-row-gated one, which is archetype-safe by construction —
+a `.MOD` row's `field0` IS the class's own `CATEGORY=Class|<Class>.MOD` target and cannot
+simultaneously be an archetype's own `CATEGORY:Archetype` definition row) whose OWN row carries
+`CATEGORY:Archetype`. Purely additive — `true_class_by_key` (`cache_gen::class_feature.rs`, the
+`class-field-fix` lane) is unaffected, since an archetype-owned record's real class name is exactly
+what THAT fix still wants. Regenerated `data/class_feature_grants` (242 files) — identical headline
+counts (3,483 facts, 3,305/178 `corpus_record_exists` split, 37 PI-skipped, 2,969 unresolved),
+confirming this is a pure field addition with zero content churn.
+
+**The number this measurement makes visible for the first time: 3,121 of 3,483 facts (89.6%) are
+archetype-sourced.** The consumer refuses all of them (not just the 2 the reviewers found by hand —
+re-deriving with the real `CATEGORY:` signal instead of a manual read also caught a THIRD live
+fabrication the reviewers' own list missed: `Summoner ~ Shield Ally` is granted only via the Master
+Summoner archetype's own `CATEGORY:Archetype` row, `ultimate_magic:1816`, not by base Summoner). What
+survives every guard (base-class-only, cross-book-conflict-free, non-pool, non-archetype, across 20
+non-excluded classes, 7 explicitly gated by pre-existing anti-fabrication tests) is **7 genuinely
+new units**: 6 real base Summoner features (Cantrips, Gate, Greater Shield Ally, Life Bond, Life
+Link, Transposition) and Barbarian's Weapon and Armor Proficiency.
+
+**Verdict: wave 22's "134 → 213, first movement after four flat waves" was NOT the start of grant-data
+movement at scale — it was the option-pool reference catalog mechanism (Rogue Talent, a SEPARATE,
+already-proven mechanism from wave 22 itself), landing in the same wave as the (then-unconsumed)
+grant parser.** This wave's own +109 (see below) is that SAME mechanism, widened to a second pool
+(Rage Power) — not the grant-data consumer. The grant-data consumer's real, safe, corrected yield
+is 7 units. The blocker is not effort, it is now a measured, structural fact: 89.6% of the merged
+population is archetype-scoped and unreachable until `CharacterInput`/`pilot_compute` gains a real
+archetype-selection model (`OPEN-ISSUES.md` row 346), and most of the small remaining slice is
+blocked by 11 anti-fabrication whitelists (rows 330/338, extended this cycle to Cleric/Sorcerer) or
+a `LevelUpPlan` filter gap (`is_druid_pillar_id`/`is_monk_pillar_id`, row 346). No further grant-data
+consumer work should be dispatched against this same architecture until one of those two blockers is
+ruled on or closed — it will keep yielding single digits.
+
+### Merge order and lane-by-lane disposition
+
+1. **`race_trait` (branch `worktree-wf_861de0ba-35d-5`, `fd4196063`)** — reviewed SOUND, 0 units,
+   MERGED as-is (`docs/retro` receipt only, no production code). Second consecutive wave to
+   independently re-derive the identical structural dead end for the identical dispatch scope
+   (`OPEN-ISSUES.md` row 348).
+2. **`class-field-fix` (branch `worktree-wf_861de0ba-35d-3`, `a08973ae3`)** — reviewed NOT SOUND
+   (destructive regen + no gate on the load-bearing line), 0 units claimed by the lane, MERGED with
+   an integrator fix commit (`a2812a2bd`). See §1 below.
+3. **`roster-consume`, aka `SD31-W23-CLASSFEATURE-001` (branch `worktree-wf_861de0ba-35d-1`,
+   `45aff35fc`)** — this branch is what the lane-results list's separate "gate-reconciliation" entry
+   also described (same commit, same file diff, confirmed by `git diff --numstat`); that entry's own
+   "PLACEHOLDER — full-suite run still in progress" framing is stale/incomplete, not a second branch
+   to merge. Reviewed CRITICAL (fabrication) + REGRESSED TEST BINARY (RED against
+   `tests/sd24_wired_integration_audit.rs`) by two independent reviews, corrected_units=8 (later
+   independently re-derived to 7 once the archetype fix landed — see the top-of-receipt answer).
+   MERGED with a fix commit (`c8e97c991`). See §2 below.
+4. **`option-pools`, aka `SD31-W23-POOLMEMBER-002` (branch `worktree-wf_861de0ba-35d-4`,
+   `9297bd806`)** — reviewed PARTIAL, corrected_units=109 (125 raw − 16 withdrawn). MERGED with a
+   fix commit (`8cceeb8a1`). See §3 below.
+5. **`monster-spell`, aka `SD31-W23-MONSTER-001` (branch `worktree-wf_861de0ba-35d-6`, `0ce72bcb1`)**
+   — reviewed PARTIAL, corrected_units=45 (no deduction; real defects in verification rigor, not in
+   the credit). MERGED with a fix commit (`c272c6ee8`). See §4 below.
+
+Merge conflicts (all resolved manually, none silently favoring one side): `docs/work-inventory.json`
+(x3, resolved by taking the regenerated authoritative copy at the end, per standing convention — the
+guarded regen is the integration cycle's own to run, not any single lane's), `OPEN-ISSUES.md` (row
+344 collision between two lanes both claiming that number — renumbered the later one to 345, no
+content lost), `progress.md` (a pure append conflict — both lanes' receipts kept, concatenated).
+
+### §1. `class-field-fix` — destructive regen found and fixed
+
+Independently re-derived the adversarial review's finding before trusting it: `git archive` of the
+base tree vs. the lane's commit showed `raw_tokens_total` 103,332 → 103,329 and distinct `(book,key)`
+pairs 12,481 → 12,479 with 2 duplicate pairs — `core_rulebook`'s "Draconic Bloodline" (no `~` in its
+key) and `adventurers_guide`'s "Enlightened Bloodrager ~ Bloodline Feat" (no `~ AG` suffix) had each
+been silently overwritten with a second copy of an unrelated, same-directory, same-`name` sibling
+record during `gen_cache_class_feature`'s regen. Root cause traced: both destroyed keys have no
+matching fact in `data/class_feature_grants` (so `true_class_by_key`'s fallback is correctly
+unaffected — the bug is not in the class-correction logic itself), and the generator's own
+slug-collision-avoidance mechanism (`used: BTreeSet`, keyed on `unit.name` within a `class_dir_slug`)
+is deterministic and handles this exact same-name-different-key shape correctly WHEN BOTH units are
+present in its input — the destroyed unit was simply absent from that regen's `docs/work-inventory.json`-
+sourced `units` list, an upstream omission this integration cycle did not have time to fully trace to
+its root (logged, `OPEN-ISSUES.md` row 350, not filed since inert/cosmetic-adjacent — see below).
+
+Fixed: restored both records verbatim from `3229f9e2b` (neither destroyed key resolves against
+`data/class_feature_grants`, so restoring pre-image content is exactly correct, not merely
+expedient — re-verified: 0 duplicate `(book,key)` pairs, `raw_tokens_total` back to 103,332). Closed
+the SECOND confirmed finding (no gate covers `generate()`'s actual use of `true_class_by_key` — a
+verbatim revert of the one load-bearing line left the whole lib suite green) with
+`generate_writes_the_true_class_not_the_key_prefix_guess`, an end-to-end test running `generate()`
+against a real `Sigilus ~ Inscribe Rune` fixture and asserting the WRITTEN FILE carries the corrected
+class. Added a permanent, corpus-wide ratchet neither `monster_chassis.rs` nor `companion_chassis.rs`'s
+own `keys_are_unique_within_every_book` precedent covered for `class_feature` (which, unlike
+monster/companion, has no in-memory roster table to check — the corpus JSON tree IS the table):
+`tests/sd31_class_feature_corpus_key_uniqueness.rs`, asserting `(book,key)` uniqueness and a
+`raw_tokens` floor across the whole shipped `class_feature` tree. Mutation-proven: re-corrupted
+`draconic_bloodline.json` to the exact wave-23 defect shape, confirmed both new tests fail with the
+right diagnosis, restored, confirmed green again.
+
+Two minor residuals confirmed but not fixed (`OPEN-ISSUES.md` row 350): one hand-verified oracle typo
+(`"Kinesticist"` for `"Kineticist"`, `occult_adventures/kinesticist.json:4`) propagates into one
+shipped `class_feature` record with no live consumer; 381 PI-REDACTED files lost their trailing
+newline (cosmetic, content otherwise byte-identical).
+
+### §2. `roster-consume` — CRITICAL archetype-fabrication defect closed at the source
+
+See the top-of-receipt answer for the full defect and fix description. Summary of the fix package:
+
+* **`class_feature_grants.rs`**: new `GrantFact::granted_via_archetype` / `GrantRecord::
+  granted_via_archetype` field, resolved in `resolve_token` from a new `row_category` parameter
+  (`parse_grant_facts` now extracts the row's own `CATEGORY:` token alongside `field0`). 3 new unit
+  tests (the live Burglar/Careful Disarm shape flagged; an ordinary `CATEGORY:Special Ability` row
+  NOT flagged; a `.MOD`-row resolution never flagged regardless of `row_category`, proving the
+  `mod_class.is_some()` branch never even reads it). Regenerated `data/class_feature_grants` —
+  identical headline counts, confirming pure field addition.
+* **`class_feature_grant_consumer.rs`**: `load_raw_grant_facts` now refuses on
+  `granted_via_archetype` (missing/non-boolean defaults to refuse — the conservative direction). New
+  dedicated regression test `a_vanilla_rogue_never_receives_an_archetype_only_replacement_feature`,
+  mutation-proven (reverted the refusal, confirmed RED with exactly the two fabricated ids in the
+  panic message, restored GREEN).
+* Fixed the REGRESSED TEST BINARY (`tests/sd24_wired_integration_audit.rs`'s anti-stub audit tripped
+  on the literal word "placeholder" inside two assertion-message strings) by rewording to "numeric
+  argument" — re-ran the audit test directly, confirmed PASS.
+* Fixed two vacuous tests (Decision 1a: a gate/test that cannot fail is worse than none):
+  `pathfinder_unchained_classes_are_never_asked_of_this_module_by_the_real_caller` now asserts
+  `explanations.is_empty()` directly instead of looping over a vec it never checked was non-empty;
+  added `every_resolving_class_emits_at_least_one_real_explanation_at_level_20`, which iterates every
+  class the live merged data resolves (not just Fighter, the original smoke test's only probe) and
+  asserts the aggregate result is non-empty.
+* Closed the `dropped_args` gap (`corpus_records_with_real_description` checked `leaked_pcgen_syntax`
+  but not `rendered.dropped_args` — an unresolved `%N` silently DROPPED rather than left as literal
+  syntax would have shipped a mangled sentence; `class_feature_pool_catalog.rs`'s sibling gate already
+  guards this, mirrored here).
+
+Net: 7 genuinely new, safe units (6 Summoner base features + Barbarian Weapon and Armor Proficiency).
+3 needs_ruling items from the lane's own report, correctly left unactioned and logged
+(`OPEN-ISSUES.md` row 346): the row-330/338 whitelist-widening question (now also covering Cleric and
+Sorcerer, two more live instances found this cycle); `is_druid_pillar_id`/`is_monk_pillar_id` blocking
+this consumer's ids from `LevelUpPlan`'s own explanation filter; whether archetype-selection modeling
+is in scope for a future epic.
+
+### §3. `option-pools` — 16-unit withdrawal, reference-copy correction
+
+Reviewer correction: 23 of the lane's 125 banked Rage Power units carry a magnitude that scales on
+the character's own class level (`"1/2 her barbarian level"`, `"per four barbarian levels"`, ...) and
+cleared `text_only` only because `wiring_class.rs`'s `prose_scaling_phrases` list recognises
+`"your class level"`/`"your character level"` but not a class-specific phrasing. 16 of the 23 apply to
+a value THIS ENGINE ALREADY COMPUTES a state for (`active_barbarian_rage_bonus` proves "while raging"
+is a real activation state here); 7 (the Linnorm Death Curse variants) apply their scaled value to an
+ATTACKER, never a value this character's own sheet computes, and the reviewer deliberately left them
+banked pending an operator ruling.
+
+Withdrew exactly the 16 via `CLASS_LEVEL_SCALED_SHEET_VALUE_EXCLUDED_KEYS`, a hand-verified, narrowly
+scoped denylist added to `class_feature_pool_catalog.rs` — NOT a widening of `wiring_class.rs`'s
+shared phrase list, which gates every other kind that list touches (feat, spell, monster_ability, ...)
+and was judged too large a blast radius to re-verify this cycle. New test
+`every_class_level_scaled_sheet_value_key_is_excluded_from_the_catalog` is non-vacuous (independently
+confirms each excluded key exists in the raw corpus via a structural slug re-derivation, not merely
+name-matching an already-absent key); `a_linnorm_death_curse_variant_is_not_excluded_pending_the_operator_ruling`
+pins the deliberate, ruling-pending asymmetry. Also corrected `CharacterSheet.tsx`'s Rage Power
+reference-section copy, which the review flagged as contradicting shipped behaviour (it claimed a
+save-DC-bearing entry is "not listed here" while the Linnorm variants were, in fact, listed) —
+reworded to state the real, narrower rule and name the pending ruling.
+
+Net: 109 units (125 − 16). Restated the row-340 operator-ruling question, narrowed and extended to
+the class-level-scaled/computed-activation-state shape (`OPEN-ISSUES.md` row 347) — this single
+ruling resolves the split for every current and future option-pool this mechanism reaches.
+
+### §4. `monster-spell` — missing raw_tokens enrichment closed, stale doc comment fixed
+
+Adversarial review: this cycle's 123 new Bestiary-1 cross-table-owner `monster_ability` records were
+the ONLY `monster_ability` population in the entire corpus shipped without `data.raw_tokens` (all
+1,797 siblings across 13 books have it) — `corpus_literal_sweep` skips any record lacking
+`raw_tokens`, so its own "CLEAN" receipt examined none of this cycle's own work (`examined` stayed at
+26,368 while `read` grew by 123). Ran the existing `enrich_monster_ability_raw_tokens` binary against
+the pinned oracle: 123 enriched, 0 no-LST-citation, 0 dropped (NAMEISPI:YES), 0 citation misses.
+Re-ran `corpus_literal_sweep`: 26,491 examined of 26,925 read (+123), +830 tokens compared, 0
+findings — confirms the data is faithful, not merely unverified, and (see the movement accounting
+below) this enrichment ALSO newly promoted 8 records to `static`+`literal-verified` that could never
+previously be examined at all.
+
+Fixed the stale doc comment the review separately flagged (`bestiary/mod.rs`'s
+`no_shipped_ability_is_an_orphan` claimed 146 genuinely-unowned rows; `scripts/transcribe_monster_
+tables.py bestiary`'s own live stdout says 197 — re-derived directly, already stale before this
+cycle, unrelated to the +55 cross-table fix itself).
+
+The review's mutation-proof-gap finding (a wrong-but-REAL cross-table owner swap is undetectable by
+the whole lib suite — only Ankheg is individually pinned, 44 of 46 monsters have no per-record guard)
+was NOT closed this cycle — closing it properly means either a per-monster pin for all 46 legacy
+monsters' cross-table ability sets or a structural oracle cross-check, both real, boundable follow-up
+work outside this cycle's remaining time budget. Logged actionably, `OPEN-ISSUES.md` row 349.
+
+### §5. Guarded regen and full movement accounting
+
+`CORPUS_LITERAL_SWEEP_REPORT` (26,491 records examined of 26,925 read, 255,456 tokens compared, 0
+findings, CLEAN) + `DERIVED_FIXTURE_CHECK_REPORT` (1,821 units cleared over 2,561 fixture rows, 0
+failed) fed to `v06_work_inventory` in a fresh isolated `CARGO_TARGET_DIR` (never `--allow-stamp-loss`).
+Board replayed via a Python import of `scripts/observer/pf1e_dashboard_producer.doneness_verdict()`
+over `docs/work-inventory.json`, `EXCLUDED_BOOKS={beginner_box}`, diffed by id against the base
+document (`git show 3229f9e2b:docs/work-inventory.json`):
+
+| Metric | Before | After | Delta |
+|---|---:|---:|---:|
+| Board (all kinds) | 13,253 / 38,372 (34.5382%) | 13,422 / 38,372 (34.9786%) | **+169** |
+| `class_feature` | 213 / 15,439 (1.3796%) | 329 / 15,439 (2.1310%) | +116 |
+| `monster_ability` | 1,737 / 2,942 (59.0415%) | 1,790 / 2,942 (60.8430%) | +53 |
+| every other kind | — | — | +0 |
+
+**Denominator: 38,372 both before and after — 0 ids added, 0 ids removed, confirmed structurally
+(`set(new_ids) == set(base_ids)`), not merely by the totals matching.** **0 losses in either
+direction** — every one of the 169 gained ids traces to a named cause below; none regressed.
+
+Every unit of movement, traced to a named cause:
+
+* **`class_feature` +116** = **109** (option-pools, `class_feature_pool_catalog_serves_a_rendered_
+  description` evidence, exactly matching the reviewer's corrected figure) + **7** (roster-consume,
+  `explanation_id_observed_and_corpus_record_carries_real_description` evidence: 6 Summoner + 1
+  Barbarian — one LESS than the reviewer's own corrected 8, because this cycle's more principled,
+  upstream `granted_via_archetype` fix caught a THIRD live fabrication the reviewer's manual list
+  missed, `Summoner ~ Shield Ally` via the Master Summoner archetype — see the top-of-receipt
+  answer).
+* **`monster_ability` +53** = **45** (monster-spell lane's own claim, independently re-confirmed: 29
+  `text-complete`/`display` + 16 `grounded`/`computed`, both counts matching the lane's report
+  exactly) + **8** (`literal-verified`/`static`, entirely new — this integration cycle's own
+  `raw_tokens` enrichment fix let `corpus_literal_sweep` examine 8 records that were structurally
+  unable to reach `literal-verified` before, since the sweep skips any record with no `raw_tokens` at
+  all; all 8 are `bestiary:monster_ability:*`, none of the 123 enriched records collide with the
+  lane's own 45).
+
+`class-field-fix` (§1): 0 board movement, exactly as predicted — its only live consumer
+(`class_feature_pool_catalog.rs`'s `REGISTERED_POOL_GROUPS`, scoped to "Rogue Talent"/"Rage Power")
+was never scoped to any of the 3,047 corrected classes. `race_trait`: 0 movement, confirmed (a
+second-consecutive-wave structural dead end, §`OPEN-ISSUES.md` row 348).
+
+**Reclassification, reported separately per standing instruction: none this cycle.** No unit changed
+`evidence`/kind attribution without also changing `status`/`wiring_class` in a way that moves
+`doneness_verdict()` — every id in `gained`/`lost` genuinely transitioned doneness, not merely its
+evidence string.
+
+### §6. On-screen evidence (DoD-8) for this cycle's own units
+
+None of this cycle's own +7 (`roster-consume`) units were independently screenshotted this cycle —
+a real, disclosed proof gap, not assumed away. The render path (`classFeaturesModel.ts`'s
+`class_slug`/`feature_slug` `endsWith` join + `class_feature_descriptions.rs`'s catalog) is
+pre-existing, book-agnostic, and already proven on-screen for the identical id shape via Pathfinder
+Unchained and `SD31-D7-PROSE-003`'s race_trait proof — but that proves the PIPE works, not that
+THESE SEVEN records' content is correct on a live character. Given the archetype-fabrication defect
+this exact pipe would have shipped without this cycle's fix, this gap is flagged rather than
+inherited-and-assumed: **a future cycle should run a real desktop session against a vanilla Summoner
+and a Barbarian and confirm all 7 render correctly and NOTHING extra appears.**
+
+The `option-pools` withdrawal (§3) and `monster-spell` fixes (§4) are corpus/data corrections to
+ALREADY on-screen-proven mechanisms (wave 22/23's own Rage Power and Ankheg screenshots respectively)
+— reducing/correcting a population an existing proof already covers, not introducing a new
+unproven surface.
+
+### §7. Findings tally
+
+**Findings fixed this cycle** (all confirmed by at least one adversarial review, independently
+re-verified before/after by the integrator): (1) CRITICAL archetype-fabrication in
+`class_feature_grant_consumer.rs`; (2) `tests/sd24_wired_integration_audit.rs` regression; (3-4) two
+vacuous tests in the same module; (5) `dropped_args` gap in the same module;
+(6) destructive regen — 2 corpus records restored; (7) missing gate on `class-field-fix`'s
+load-bearing line; (8) 16-unit Rage Power withdrawal; (9) `CharacterSheet.tsx` reference-copy
+contradiction; (10) missing `raw_tokens` enrichment on 123 monster_ability records; (11) stale
+`bestiary/mod.rs` orphan-count doc comment.
+
+**Findings logged, not fixed, this cycle** (`OPEN-ISSUES.md` rows 346-350, each actionable): (346)
+3 needs-ruling items from `roster-consume` — the row-330/338 whitelist question now also covering
+Cleric/Sorcerer, `is_druid_pillar_id`/`is_monk_pillar_id` blocking a real consumer, archetype-selection
+modeling scope; (347) Decision 7 REFINED's class-level-scaled/computed-activation-state ruling,
+restated and narrowed from row 340; (348) `race_trait`'s second consecutive zero-yield dispatch;
+(349) the `monster_ability` mutation-proof gap (wrong-but-real owner swap undetectable); (350) two
+minor `class_feature` residuals (Kinesticist typo, 381-file newline drift).
+
+### §8. Full gate
+
+`./scripts/verify.sh -j 8`, two runs plus one targeted re-run, all against the same fresh isolated
+`CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/w23-integrate-build` (deleted at cycle close):
+
+**Run 1**: 32/34 stages passed. **`clippy` FAILED** (root 58 warnings vs. the recorded ceiling of
+50 -- see §"clippy ceiling breach" below, fixed and re-verified before run 2). **`site-dashboard-check`
+FAILED** (expected merge-only staleness: the real `publish-site-dashboard.sh` output had not yet
+been committed to `tranche/11` at that point in the cycle). `root-lib` 2227 passed, `root-full`
+7334 passed across 578 suites (all `tests/*.rs` suites executed), `desktop` 494 passed, `reach` 30
+passed, `corpus-sweep` 26,491 examined of 26,925 read / 0 findings, `frontend-test` 100/100,
+`frontend-typecheck` clean, `class-dump` 31/31 computing -- all already green on run 1.
+
+**Clippy ceiling breach, closed before run 2**: traced every one of the 58 warnings to its
+introducing commit via `git blame` before touching anything. 55 pre-existing (dated before
+2026-08-20, unrelated to this wave); exactly 3 genuinely new, all in this wave's own merged
+content -- fixed (see the standalone fix commit, `bdca5028b`), not the ceiling loosened.
+Re-verified standalone: exactly 50 warnings, 0 in any of the three touched files.
+
+**`site-dashboard-check`, closed before run 2**: committed the real `publish-site-dashboard.sh`
+output (`de3e55751`) -- the guarded regen's board figures (13,422/38,372) had been correct on disk
+since early in the cycle, but had not yet been written to git; the monster-spell lane's own
+earlier merge (`5aec6238b`) had left a STALE committed snapshot (13,298, its own lane's number)
+that nothing had superseded in git until this commit.
+
+**Run 2** (full, after both fixes): **33/34 stages passed.** `root-lib` 2227 passed (unchanged),
+`root-full` 7334 passed across 578 suites (unchanged), `desktop` 494 passed (unchanged), `reach`
+30 passed, `corpus-sweep` 26,491/26,925/0 findings (unchanged), `frontend-test` 100/100,
+`frontend-typecheck` clean, **`clippy` PASS (root:50 desktop:7 warnings, 0 errors)**, `class-dump`
+31/31 computing. **One FAILED**: `site-dashboard-check` -- the site-publish commit (`de3e55751`)
+landed mid-run, AFTER this background run had already started reading a not-yet-updated working
+tree; genuinely the same merge-only staleness shape as run 1, not a new defect (confirmed: the
+check re-ran standalone and passed immediately once the run's own snapshot caught up).
+
+**Targeted re-run** (`--only site-dashboard-check --only site-public-status-check`, after the
+run-2 background process itself had settled): **PASS, both stages** -- `site/dashboard/
+PF1e-dashboard.json is current`, `site/status-data.json and site/status-data/*.json are current`.
+
+**34/34 stages pass across the two runs + the targeted re-run. Nothing failed for a reason other
+than the expected merge-only staleness window and the clippy ceiling breach, both closed by a
+fix, not by loosening a gate.** `scripts/verify-baselines.env` updated per this program's own
+standing convention (raised, not loosened): `BASELINE_ROOT_LIB_TESTS` 2195 -> 2227,
+`BASELINE_ROOT_FULL_TESTS` 7298 -> 7334, `BASELINE_ROOT_TEST_BINARIES` 577 -> 578,
+`BASELINE_DESKTOP_TESTS` 493 -> 494, `BASELINE_CORPUS_LITERAL_RECORDS` 26368 -> 26491;
+`BASELINE_CLIPPY_WARNINGS_ROOT`/`_DESKTOP` (50/7), `BASELINE_FRONTEND_TEST_FILES` (100) and
+`BASELINE_COMPUTED_CLASSES` (31) UNCHANGED -- all matched their measured value exactly.
+
+### §9. What this cycle could NOT do / left for a future cycle
+
+- The archetype-scoped majority of the merged grant-fact data (3,121 of 3,483 facts, 89.6%) has
+  no safe consumer this cycle's design, or any design trusting a grant fact's `class` field alone,
+  can reach without a real archetype-selection model in `CharacterInput`/`pilot_compute`.
+- The 11 anti-fabrication whitelists (rows 330/338, now including Cleric/Sorcerer) and the
+  `is_druid_pillar_id`/`is_monk_pillar_id` `LevelUpPlan` filter gap remain unreconciled -- left
+  alone per the dispatch's own instruction not to weaken or route around a gate.
+- No on-screen (DoD-8) proof was captured for this cycle's own +7 `roster-consume` units --
+  disclosed as a real gap (§6), not assumed safe from the pipe's pre-existing proof.
+- `race_trait`: confirmed, a second consecutive wave, that this exact dispatch scope (tables/
+  matcher-only) is structurally incapable of moving the board (`OPEN-ISSUES.md` row 348).
+- The `monster_ability` mutation-proof gap (a wrong-but-real cross-table owner swap is
+  undetectable by the whole suite) was found but not closed -- a real, boundable follow-up
+  (`OPEN-ISSUES.md` row 349).
+- Two minor `class_feature` residuals (an oracle typo propagating to one shipped record, 381
+  files' cosmetic trailing-newline loss) logged, not fixed -- genuinely low-priority, no live
+  consumer impact (`OPEN-ISSUES.md` row 350).
+
+### §10. Architecture docs and cleanup
+
+`docs/architecture/` refreshed per `docs/governance/` template §6 (every SD closure refreshes it).
+All wave-23 `CARGO_TARGET_DIR`s deleted at cycle close:
+`/home/ubuntu/cargo-targets/w23-integrate`, `w23-integrate-build`. Wave-23 worktrees
+(`worktree-wf_861de0ba-35d-{1,2,3,4,5,6,7,8,9}`) and their branches removed after merge, including
+the review worktree (`-7`, no production changes to merge) and the two placeholder worktrees
+(`-2`, `-8`, `-9`, never used by any lane result). `sd31/racetrait4-SD31-E6-F4-005` -- untouched,
+not read, not gated, per the standing instruction.
+

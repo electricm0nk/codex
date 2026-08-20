@@ -1338,3 +1338,58 @@ consumer-wiring lane — not a fourth from-scratch rebuild. Full accounting: `pr
   that point); root-lib/root-full/desktop/frontend had already been independently confirmed clean
   via direct invocations before gate run 1 even started, so run 1 was killed early. Full detail:
   `progress.md` `SD31-W22-INTEGRATE-001` §7.
+
+## Board after wave 23 (`SD31-W23-INTEGRATE-001`, 2026-08-20)
+
+| Kind | Denominator before | Denominator after | Done before | Done after | Delta |
+|---|---:|---:|---:|---:|---:|
+| class | 185 | 185 | 28 (15.1351%) | 28 (15.1351%) | +0 |
+| class_feature | 15,439 | 15,439 | 213 (1.3796%) | **329 (2.1310%)** | **+116** |
+| companion | 1,696 | 1,696 | 871 (51.3561%) | 871 (51.3561%) | +0 |
+| equipment | 6,208 | 6,208 | 5,313 (85.5831%) | 5,313 (85.5831%) | +0 |
+| equipment_modifier | 1,580 | 1,580 | 516 (32.6582%) | 516 (32.6582%) | +0 |
+| feat | 2,610 | 2,610 | 1,459 (55.9004%) | 1,459 (55.9004%) | +0 |
+| monster | 1,270 | 1,270 | 989 (77.8740%) | 989 (77.8740%) | +0 |
+| monster_ability | 2,942 | 2,942 | 1,737 (59.0415%) | **1,790 (60.8430%)** | **+53** |
+| race | 95 | 95 | 34 (35.7895%) | 34 (35.7895%) | +0 |
+| race_trait | 3,504 | 3,504 | 520 (14.8402%) | 520 (14.8402%) | +0 |
+| spell | 2,843 | 2,843 | 1,573 (55.3289%) | 1,573 (55.3289%) | +0 |
+| **TOTAL** | **38,372** | **38,372** | **13,253 (34.5382%)** | **13,422 (34.9786%)** | **+169** |
+
+`+169` — two kinds, four causes, all traced by id, 0 losses. `class_feature +116` = 109 (option-pool
+Rage Power reference catalog, corrected from the lane's overclaimed +125) + 7 (the grant-fact
+consumer's FIRST-EVER real credit, after a critical archetype-fabrication defect was caught by two
+independent adversarial reviews and fixed upstream in the parser itself, not patched around).
+`monster_ability +53` = 45 (Bestiary-1 cross-table-owner remedy) + 8 (the integration cycle's own fix
+for a missing `raw_tokens` enrichment gap that had left 123 records structurally unable to reach
+`literal-verified`). Full per-lane and per-cause accounting: `progress.md`
+`SD31-W23-INTEGRATE-001` §§1-7.
+
+**Wave-23 grant-data verdict: the payoff did NOT arrive at scale, and the reason is now measured, not
+suspected — 3,121 of the merged 3,483 grant facts (89.6%) are archetype-scoped and structurally
+unreachable without an archetype-selection model this engine does not have.** Full reasoning:
+`progress.md` `SD31-W23-INTEGRATE-001`'s top-of-receipt answer.
+
+**Two lane branches (`gate-reconciliation` and `roster-consume` from the lane-results list) are the
+SAME physical branch (`worktree-wf_861de0ba-35d-1`, confirmed by `git diff --numstat`) — one merge,
+not two, and no branch from this wave was rejected or left unmerged.**
+
+### What wave 23's integration cycle changed in the architecture, not just in the counts
+
+* **A trustworthy-but-incomplete anti-fabrication guard was made trustworthy at its actual source.**
+  `key_names_a_base_class_feature` (the guard wave 22's own grant-fact consumer relied on) checks
+  text, not structure — PCGen can and does key an archetype's own replacement feature under the base
+  class's literal name. The fix moved the signal one layer upstream, into the parser that already
+  reads the real oracle row, rather than trying to out-guess the shape from the consumer side (which
+  is exactly the "proof narrower than the data" failure mode that sank wave 21).
+* **A destructive corpus regen was caught before its second-order effect could compound.** Two
+  records silently overwritten by a same-directory, same-name sibling — content loss with no
+  raised error, no failing test, and (per the lane's own report) an incorrect "not data loss"
+  characterization. Nothing in the shipped test suite would have caught it without independent
+  re-derivation; a permanent corpus-wide ratchet now exists for the failure class, not just the two
+  instances found.
+* **A live-branch test regression reached this integration cycle without ever being reported as
+  one.** The `roster-consume`/`gate-reconciliation` branch shipped RED against a pre-existing,
+  base-green acceptance gate (`sd24_wired_integration_audit.rs`) — caught only by an adversarial
+  review re-running the full suite the lane's own submission described as "pending."
+

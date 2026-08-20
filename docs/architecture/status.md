@@ -886,6 +886,90 @@ board.
   the trusted regen ran; a reminder that "the branch is merged" and "the fix is in the branch" are
   two different facts that both need checking.
 
+## Corpus coverage, corpus-wide — re-derived 2026-08-20 (SD-31 wave 23, integration cycle)
+
+**These supersede the wave-22 snapshot above.** Re-derived at this wave's integration tip on
+`tranche/11` after merging five lane branches (`class-field-fix`, `roster-consume` — the same
+physical branch the lane-results list's separate "gate-reconciliation" entry also describes,
+confirmed by `git diff --numstat` — `option-pools`, `monster-spell`, `race_trait`), fixing every
+confirmed adversarial-review finding reachable within this cycle's scope, and re-running the
+guarded regen pipeline in a fresh isolated `CARGO_TARGET_DIR`. Oracle pin
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`.
+
+**This wave's own central question, answered first: did wave 22's grant-fact parser
+(`data/class_feature_grants`, 3,483 facts, `NO CONSUMER` at wave 22's close) actually ground
+`class_feature` units at scale once wave 23 built its first consumer?** NO — and the reason is
+now measured, not suspected. The consumer (`class_feature_grant_consumer.rs`) shipped with a
+CRITICAL, player-visible fabrication defect two independent adversarial reviews caught before
+merge: a vanilla, no-archetype Rogue's roster carried two archetype-only replacement features
+(`careful_disarm`, `poison_use`), because the consumer's only archetype guard checked the grant
+KEY's text against the resolved class, and PCGen keys some archetype-replacement features
+directly under the base class's own name. Fixed upstream, in the PARSER itself: `class_feature_
+grants.rs` now resolves and ships a new `granted_via_archetype` boolean per fact (`true` only for
+a `PRECLASS:`-gated token whose own row carries `CATEGORY:Archetype` — a `.MOD`-row-gated fact can
+never be archetype-sourced by construction). Measuring with the real signal instead of a manual
+read found **3,121 of 3,483 facts (89.6%) are archetype-scoped** — structurally unreachable by any
+consumer trusting a grant fact's `class` field alone until `CharacterInput`/`pilot_compute` gains a
+real archetype-selection model. What survives every guard (base-class-only, cross-book-conflict-
+free, non-pool, non-archetype, across 20 non-excluded classes) is **7 genuinely new units**.
+Wave 22's own "134 → 213, first movement after four flat waves" was NOT the grant parser paying
+off — it was the option-pool reference-catalog mechanism (a SEPARATE, already-proven mechanism),
+landing in the same wave as the (then-unconsumed) parser. This wave's own larger gain (below) is
+that SAME reference-catalog mechanism, widened to a second pool — not the grant-fact consumer.
+
+| quantity | value | how |
+|---|---:|---|
+| board units (in scope, `beginner_box` excluded) | **38,372** (unchanged — required this wave) | `docs/work-inventory.json`, replayed through `pf1e_dashboard_producer.doneness_verdict()` |
+| board `done` | **13,422 (34.9786 %)** | same replay; was 13,253 / 34.5382 % before this wave |
+| corpus literal sweep | 26,491 records examined, **0 findings** | `cargo run --locked --bin corpus_literal_sweep`; +123 examined over wave 22's 26,368 — this wave's own `raw_tokens` enrichment fix on the 123 new Bestiary-1 `monster_ability` records that could not previously be examined at all |
+| `derived` fixture coverage | **1,821 units cleared over 2,561 fixture rows**, 0 failed, 0 not ingested | `cargo run --locked --bin derived_evaluator_fixture_check`; unchanged |
+| `core_essentials` | **0 units**, confirmed absent | direct `python3` count over `docs/work-inventory.json` |
+
+All +169 traces to two kinds, four causes, 0 losses. **`class_feature` +116** (213 → 329) = 109
+(the `option-pools` lane's Rage Power reference catalog — a second pool on the SAME "browsable
+menu of every real option, shown whether or not selected" mechanism wave 22's Rogue Talent
+catalog already proved, corrected from the lane's overclaimed +125 after a reviewer found 16 of
+the 125 carry a class-level-scaled magnitude modifying a value this engine already computes a
+state for) + 7 (the grant-fact consumer's first-ever real credit, corrected DOWN from the
+reviewer's own +8 once this cycle's more principled fix caught a THIRD live fabrication the
+reviewer's manual list missed — `Summoner ~ Shield Ally` is Master-Summoner-archetype-only).
+**`monster_ability` +53** (1,737 → 1,790) = 45 (the `monster-spell` lane's Bestiary-1 cross-table-
+owner remedy, `decisions.md §58.3`, giving 55 cross-table ability rows their real owner for the
+first time) + 8 (this integration cycle's own `raw_tokens` enrichment fix newly reaching
+`literal-verified`). `class-field-fix`: 0 board movement, exactly as predicted — its only live
+consumer (`class_feature_pool_catalog.rs`) was never scoped to any of the 3,047 records it
+corrected. `race_trait`: 0 movement, a SECOND consecutive wave confirming this exact dispatch
+scope (tables/matcher-only) is structurally incapable of moving the board.
+
+**No reclassification this cycle** (reported separately from doneness movement per standing
+instruction) — every gained id genuinely transitioned doneness, not merely its evidence string.
+
+### What wave 23's integration cycle changed in the architecture, not just in the counts
+
+* **A trustworthy-but-incomplete anti-fabrication guard was made trustworthy at its actual
+  source, not patched around at the consumer.** `key_names_a_base_class_feature` (the guard the
+  merged consumer relied on) checks TEXT, not STRUCTURE — PCGen can and does key an archetype's
+  own replacement feature under the base class's literal name. The fix moved the signal one layer
+  upstream, into the parser that already reads the real oracle row (`granted_via_archetype`),
+  rather than trying to out-guess the shape from the consumer side — the "proof narrower than the
+  data" failure mode that sank wave 21, caught one layer deeper this time by two independent
+  adversarial reviews before merge, not after.
+* **A destructive corpus regen was caught before its second-order effect could compound.** The
+  `class-field-fix` lane's `true_class_by_key` regen silently overwrote two `class_feature` corpus
+  records with a duplicate of an unrelated, same-directory, same-`name` sibling — real content
+  loss with no raised error and no failing test. Restored both records, added a permanent
+  corpus-wide `(book,key)` uniqueness + `raw_tokens`-floor ratchet
+  (`tests/sd31_class_feature_corpus_key_uniqueness.rs`) neither `monster_chassis.rs` nor
+  `companion_chassis.rs`'s own precedent covered for `class_feature`, and closed the sibling
+  finding that NO test covered `generate()`'s actual use of the corrected class-resolution logic
+  (a verbatim revert of the one load-bearing line had left the whole lib suite green).
+* **A live-branch test regression reached this integration cycle without ever being reported as
+  one.** The merged `roster-consume` branch shipped RED against a pre-existing, base-green
+  acceptance gate (`tests/sd24_wired_integration_audit.rs`, the anti-stub-prose audit, tripped on
+  the literal word "placeholder" inside an assertion-message string) — caught only by an
+  adversarial review re-running the full suite the lane's own submission had described as
+  "pending."
+
 ### Desktop app: character sheet and update actions
 
 | Item | Status | Where (re-verified) |
