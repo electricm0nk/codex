@@ -555,6 +555,115 @@ separate path) — it only stopped two previously-null player-facing fields from
   but any future regen of this generator would have re-shipped the leak. Fixed and mutation-proved
   (`OPEN-ISSUES.md` row 323).
 
+## Corpus coverage, corpus-wide — re-derived 2026-08-20 (SD-31 wave 20, integration cycle)
+
+**These supersede the wave-19 snapshot above.** Re-derived at this wave's integration tip on
+`tranche/11` after merging four sound-or-partial lane branches (`progression`, `race_trait`,
+`monster`/`monster_ability`, `spell`/`feat`) plus one investigation-only lane
+(`class_feature` empty-description/no-corpus-record), rejecting one (`roster-engine`, GAMED —
+see below), building the merged tree, fixing every confirmed adversarial-review finding reachable
+within this cycle's scope, and re-running the guarded regen pipeline in a fresh isolated
+`CARGO_TARGET_DIR` — never transcribed from a lane receipt. Oracle pin
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`.
+
+| quantity | value | how |
+|---|---:|---|
+| board units (in scope, `beginner_box` excluded) | **38,372** (unchanged — required this wave) | `docs/work-inventory.json`, replayed through `pf1e_dashboard_producer.doneness_verdict()` |
+| board `done` | **13,002 (33.88 %)** | same replay; was 12,903 / 33.63 % before this wave |
+| corpus literal sweep | 26,368 records examined, **0 findings** | `cargo run --locked --bin corpus_literal_sweep`; was 26,166 (+202, monster/monster_ability raw_tokens enrichment) |
+| `derived` fixture coverage | **1,821 units cleared over 2,561 fixture rows**, 0 failed, 0 not ingested | `cargo run --locked --bin derived_evaluator_fixture_check`; was 1,777/2,506 (+44 cleared) |
+| reachable ceiling | **98.94 %** | `python3 scripts/reachability_audit.py`; unchanged (denominator did not move) |
+
+By doneness bucket: `done` 13,002 · `held` 1,126 · `in-progress` 1,282 · `not-started` 18,649 ·
+`unmeasurable` 4,270 · `deferred` 43 (was `done` 12,903 · `held` 1,224 · `in-progress` 1,282 ·
+`not-started` 18,650 · `unmeasurable` 4,270 · `deferred` 43). `-98 held + -1 not-started + 99
+done = 0` — every unit of movement accounted for, no residue.
+
+**All +99 traces to four named causes, all in the four merged code lanes:**
+
+| kind | done (wave 19) | done (wave 20) | delta | cause |
+|---|---:|---:|---:|---|
+| `class` | 27 | 28 | **+1** | `progression` lane: `ultimate_combat:class:gunslinger` — `has_supported_class_chassis` never grew a matching arm for UC's three classes despite `compute_uc_class_chassis` shipping real, corpus-verified BAB/save tables since `SD31-E4-F1-002`/`-005`; fixed, plus Gunslinger's own weapon-proficiency table entry. Ninja/Samurai deliberately left unclosed (genuinely ambiguous proficiency corpus shape). |
+| `monster` | 973 | 989 | **+16** | `monster`/`monster_ability` lane: `enrich_monster_raw_tokens.rs`'s own copy of `book_dir_of` had drifted from `corpus_literal_sweep`'s (missing the 4-segment Dreamscarred Press branch), silently `CitationMiss`-ing all `ultimate_psionics` records. |
+| `monster_ability` | 1,556 | 1,594 | **+38** | Same lane, same root cause plus running the (pre-existing) enrichment tool for the first time over books it had never touched — 168 of the 202 newly-`raw_tokens`-enriched records were a first-run gap, not the `book_dir_of` bug. |
+| `spell` | 1,509 | 1,553 | **+44** | `spell`/`feat` lane: the RANGE/DURATION fixture generators' own `WORK_INVENTORY_BOOK_TO_SHORT` dicts were never widened to match wave 19's Rust-side `inner_sea_gods`/`ultimate_wilderness` registration — all 44 are `ultimate_wilderness`; `inner_sea_gods` gained candidacy but contributed 0 (none of its `derived`+`ingested-magnitude` spells carry a matching RANGE keyword or simple CASTERLEVEL-linear DURATION shape today, a real corpus fact). |
+| all others | — | — | +0 | `race_trait`, `class_feature`, `equipment`, `equipment_modifier`, `feat`, `companion`, `race` unchanged. |
+
+`core_essentials` re-confirmed absent — **0 units** in `docs/work-inventory.json`, absent from
+`site/status-data.json`'s book list, both checked directly this wave.
+
+### The wave's own thesis, answered plainly — a refuted thesis is the most important thing this receipt reports
+
+**Wave 20 was dispatched to generalize `push_pu_class_feature_records` (Pathfinder Unchained's
+per-class explanation-emission roster) beyond PU, against a measured pool of 7,505 `class_feature`
+units carrying real corpus prose with no `%N` variable.** The `roster-engine` lane built exactly
+that generalization, wired it to 19 Core Rulebook base-class records, and its grounding is real —
+independently spot-checked by this integration cycle against the pinned oracle, not merely
+reviewed on trust: `class_feature.wizard.corpus_record.spells` genuinely cites Wizard's
+`PREVARGTEQ:Wizard_CFP_Level,1` progression row, carries real non-empty non-`%N` prose, and reaches
+the real `build_pilot_headless_receipt` driver.
+
+**It is GAMED anyway, and NOT merged.** The commit makes the repository assert two contradictory
+things about the same explanation ids in the same test run: `tests/sd13_wizard_level1_prepared_
+spell_baseline.rs`'s pre-existing, unmodified `wizard_level1_fabricates_no_spell_math` forbids any
+explanation id containing `"spell"` outside a narrow whitelist, and the roster lane's own new
+explanation id (`class_feature.wizard.corpus_record.spells`) violates it directly. The same shape
+regresses `sd13_paladin_level8_progression.rs` and five `sd13_bard_level4..8_progression.rs`
+binaries. This integration cycle independently re-confirmed the regression by running the FULL
+test suite (not just `--lib`, which is all the lane's own "2143 passed, 0 failed" verification
+ever ran) on the lane's own branch: **9 failing integration-test binaries**, against **zero** on
+base `5adedce63`. A second, independent confirmation: `sd25_monk_level_up_explanation_filter_
+audit`/`..._druid_...` (also pre-existing, unmodified) show 3 of the 19 credited units are
+silently dropped from every real `LevelUpPlan`, refuting the lane's own `prose_reaches_player`
+claim on a screen it never checked. **0 of the 19 units are banked. The commit is not merged.**
+Full reasoning: `OPEN-ISSUES.md` row 330.
+
+**The true ceiling, as the `progression` lane found it (independently verified by this
+integration cycle, not merely transcribed):** the emission LOOP `push_pu_class_feature_records`
+runs is genuinely class-agnostic — proven by the (rejected) roster lane's own extraction, which
+ran unchanged for both PU and CRB. But the DATA it needs (each record's real grant level) is
+**not free**: PU's own four `*_features.rs` tables are each a hand-transcribed oracle progression
+table, and no other book's `class_feature` corpus record carries a level-grant field at all — that
+fact lives only in a separate, never-ingested `.MOD` ability-grant line in the raw `.lst`. Reaching
+a new class costs the same oracle-transcription work PU's four classes already paid, not a free
+unlock of the 7,505-unit pool. Of that pool, **this wave banked 0** (the only lane that attempted
+it was rejected); the `progression` lane separately sized the honest near-term ceiling on the
+*adjacent* `class`-kind chassis problem the roster mechanism depends on: of 15,305 not-done
+`class_feature` units, 2,194 sit on classes with no chassis at all (a hard floor), 6,503 are
+option/choice-pool records no progression table can close (need a "catalog of choices" mechanism),
+928 are in a book with no compiled rule set — leaving **~2,396 units** on already-chassis-supported
+classes as the genuine near-term target for a future, correctly-reconciled attempt at this same
+mechanism. **A future attempt must reconcile the nine anti-fabrication gates deliberately** (get
+an explicit ruling on whether a level-1-granted, level-N-still-present class_feature explanation
+is definitionally not "fabricated spell math," and widen `is_monk_pillar_id`/the Druid `LevelUpPlan`
+filter's id-prefix allowlist) **before** banking any unit, not after.
+
+### What wave 20's integration cycle changed in the architecture, not just in the counts
+
+* **A stale generator doc comment was corrected before it could cost a future cycle real
+  engineering time.** `cache_gen::class_feature.rs`'s module doc comment claimed
+  `ultimate_psionics` (1,422 units, the single largest sub-bucket of the 2,991-unit
+  no-corpus-record population) was blocked because `corpus_literal_sweep::book_dir_of` "hard-
+  requires a 5-segment `source.path`" and is shared infrastructure this generator's card may not
+  edit. `book_dir_of` has carried an explicit 4-segment Dreamscarred Press branch since a prior,
+  unrelated wave-19 fix; 473 `ultimate_psionics` records already ship today under exactly that
+  shape with the sweep reporting CLEAN over them. The real, in-scope, low-risk blocker is simply
+  that `ultimate_psionics` is absent from the generator's own `BOOK_PRIMARY_FILES` list — not a
+  shared cross-kind edit at all. Corrected in `OPEN-ISSUES.md` row 328 rather than left to mislead
+  a future cycle into either avoiding a safe fix or (worse) editing shared infrastructure it never
+  needed to touch.
+* **Two anti-gaming test gaps were closed in the one lane this wave banked credit from
+  (`progression`).** `is_supported_uc_single_class`'s level-ceiling check could be mutated to
+  accept any level with the full lib suite staying green (a gate that cannot fail, Decision 1(a));
+  a new test mirroring the APG/ACG sibling ceiling tests closes it.
+  `gunslinger_alone_reaches_computed_status`'s "alone" was unguarded (it never asserted Ninja/
+  Samurai do NOT reach `Computed`); the same test now does.
+* **The public status feed's per-book unit shards turned out to already be correct for three of
+  the four merged code lanes**, because each lane's own committed `site/dashboard/units/*.json`
+  auto-merged cleanly (no other lane touched the same book's shard) and already matched what this
+  cycle's fresh regen independently reproduced. Only the `class` shard, the cross-book `index.json`,
+  and the two aggregate dashboard documents needed this integration cycle's own write.
+
 Grouped by the plane each item lives in. Every row was re-verified directly
 against the cited source, not carried over from a sibling doc unchecked.
 

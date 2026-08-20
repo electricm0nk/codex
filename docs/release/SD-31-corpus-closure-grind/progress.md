@@ -31231,3 +31231,357 @@ in their own receipts). All ten wave-19 worktrees (`worktree-wf_d247aa87-dae-{1.
 `git branch -d` (merge-ancestor-only) for the two merged (`worktree-wf_d247aa87-dae-5`, `-6`),
 `git branch -D` for the eight that carried no commit or were never merged.
 `sd31/racetrait4-SD31-E6-F4-005` untouched, not gated, not merged, per standing instruction.
+
+## `SD31-W20-INTEGRATE-001` — wave 20 integration cycle (2026-08-20)
+
+**Branch:** `tranche/11`, base `5adedce63` (confirmed: `git log --oneline -1` matched the dispatched
+tip; `ls docs data scripts schemas` all present, tree clean — no `git reset --hard` needed). **Oracle
+pin:** `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`. **Own `CARGO_TARGET_DIR`s:**
+`/home/ubuntu/cargo-targets/w20-integrate-regen` (build+regen+full test suite),
+`/home/ubuntu/cargo-targets/w20-review-roster` (throwaway, roster-lane independent re-verification
+only) — both deleted at cycle close, never shared with any lane worktree. **Six lane branches
+carried a commit. Two adversarial-review passes returning six lane verdicts: two SOUND, three
+PARTIAL, one GAMED.**
+
+**HEADLINE, stated first because it is the wave's own thesis: the `roster-engine` lane — the whole
+reason this wave was dispatched — is GAMED and is NOT merged. 0 of its 19 claimed units are banked.**
+See §1 and §9.
+
+### 1. Merge decision, and why
+
+| lane | branch | reviewer verdict | action |
+|---|---|---|---|
+| `roster-engine` | `worktree-wf_13156488-c9b-1` (`35a2bf5ad`) | **GAMED**, corrected_units 0 | **NOT MERGED** — see §9 |
+| `progression` | `worktree-wf_13156488-c9b-2` (`3e83820f5`) | SOUND, corrected_units 1 | **MERGED** |
+| `class_feature` empty-desc/no-corpus-record | `worktree-wf_13156488-c9b-3` (`1d0da10f0`) | PARTIAL, `units_claimed=0` | **MERGED** (docs-only), corrected at merge time — see §3 |
+| `race_trait` | `worktree-wf_13156488-c9b-4` (`dab19ed26`) | SOUND, corrected_units 0 | **MERGED** (real fix, 0 board movement) |
+| `monster`/`monster_ability` | `worktree-wf_13156488-c9b-5` (`e66d271de`) | SOUND, corrected_units 54 | **MERGED** |
+| `spell`/`feat` | `worktree-wf_13156488-c9b-6` (`8af4a13e9`) | PARTIAL, corrected_units 44 | **MERGED**, contamination fixed at merge time — see §4 |
+
+Merge order: `progression` → `race_trait` → `monster`/`monster_ability` → `spell`/`feat` →
+`class_feature` empty-desc (last, since it only touches `OPEN-ISSUES.md` and a retro-event file).
+`docs/work-inventory.json`/`site/dashboard/*`/`site/status-data*` conflicts (three of the five
+merges touched at least one of these generated files) were resolved by keeping whichever side was
+already staged (`git checkout --ours`) at each step — never hand-edited — because every one of
+these files is fully regenerated once, for real, from the completely merged tree in §5/§6, which
+is the only copy this receipt trusts.
+
+**Independently spot-checked the roster lane's grounding myself before excluding it (instruction
+3), not on the reviewer's word alone.** Read `crb_class_feature_roster.rs`'s Wizard-Spells entry
+and confirmed its cited `PREVARGTEQ:Wizard_CFP_Level,1` guard against `cr_abilities_class.lst`
+directly. Then read `tests/sd13_wizard_level1_prepared_spell_baseline.rs` directly: its
+`wizard_level1_fabricates_no_spell_math` forbids any explanation id containing `"spell"` outside a
+four-item whitelist, unconditionally — `class_feature.wizard.corpus_record.spells` is not on that
+whitelist. Then ran the lane's OWN full test suite (not `--lib`) in a fresh, dedicated
+`CARGO_TARGET_DIR` never touched by the lane or by any other reviewer: **9 failing integration test
+binaries**, exactly the set the reviewer named (`sd13_bard_level4..8_progression`,
+`sd13_paladin_level8_progression`, `sd13_wizard_level1_prepared_spell_baseline`,
+`sd25_druid_level_up_explanation_filter_audit`, `sd25_monk_level_up_explanation_filter_audit`), on
+a tree where base `5adedce63` has zero. This is a direct, load-bearing contradiction the lane's own
+"2143 passed, 0 failed" claim never surfaced because it never ran these binaries. GAMED confirmed
+independently, not accepted on trust — see §9.
+
+### 2. `progression` — merged clean, two reviewer findings fixed at merge time
+
+Merged with zero conflicts (touches only `src/rules_core/pilot_compute/mod.rs` and
+`src/rules_core/rules_tables/crb/weapon_tables.rs`, disjoint from every other lane). Banks 1 unit:
+`ultimate_combat:class:gunslinger`, `not-ingested` → `grounded`, via the real consumer-delta class
+probe (`build_pilot_headless_receipt` reaching `Computed`, a `PilotSnapshot` delta attributable to
+Gunslinger alone) — `compute_class_chassis` had dispatched Ultimate Combat's three classes to a
+real, corpus-verified chassis table since `SD31-E4-F1-002`/`-005`, but the SEPARATE
+`has_supported_class_chassis` gate three other pillars check independently never grew a matching
+arm, so correct numbers were computed and the receipt still never reached `Computed`. Fixed;
+Gunslinger's own weapon-proficiency table entry (unambiguous corpus shape: Simple+Martial tiers)
+added alongside. Ninja/Samurai deliberately left chassis-gate-fixed but proficiency-blocked — both
+carry a genuinely ambiguous corpus weapon-proficiency shape (Ninja's DESC prose claims "all simple
+weapons" but the ingested `AUTO:WEAPONPROF` token carries no matching grant; Samurai's is a
+weapon-TYPE selector this table has no representation for) — adding either would have been exactly
+the guess Decision 1(a) forbids.
+
+Two reviewer findings, both fixed directly in the merged tree (not deferred — both cheap, in-scope,
+closing real if currently-latent anti-gaming gaps in the one lane this wave banks credit from):
+
+1. **The level-ceiling half of the gate could not fail.** `is_supported_uc_single_class`'s
+   `uc::class_chassis_resolve(...).is_some()` check had no test proving it refuses a level beyond
+   Gunslinger's real `MAXLEVEL:20` ceiling; mutating it to `.is_some() || true` left the full
+   2,140-test lib suite green. **Fixed:** added `a_level_beyond_the_real_maxlevel_ceiling_stays_
+   blocked` (mirrors the pre-existing APG-alchemist/ACG-arcanist sibling tests), asserting level 21
+   stays `Blocked` and that `has_supported_class_chassis` itself refuses it. Confirmed the pre-fix
+   mutation now turns this new test RED; reverted, GREEN.
+2. **`gunslinger_alone_reaches_computed_status`'s "alone" was unguarded** — it asserted only
+   Gunslinger's own status, never that Ninja/Samurai do NOT reach `Computed`. **Fixed:** the same
+   test now also asserts both stay off `Computed`.
+
+`cargo test --locked --lib ultimate_combat_chassis_gate_tests` (this integration cycle's own
+isolated `CARGO_TARGET_DIR`): 4 tests before this cycle's fixes, 6 after (2 new), 6/6 passed.
+
+### 3. `class_feature` empty-description/no-corpus-record — merged (docs-only), diagnosis corrected
+
+Investigation-only lane, `units_claimed=0`, made no code change and hand-edited no corpus JSON
+(correctly — no safe in-scope fix existed for either population it studied). Root-caused all 2,396
+empty-description units (2,395 have no `DESC:` token anywhere in the pinned oracle; 1 exception is
+`wiring_class:computed`, out of this lane's charter) and all 2,991 no-corpus-record units (1,935
+whole-book exclusions, 919 nested-support-file citations, 137 permanently PI-blocked) with zero
+residual — all reproduced by this integration cycle.
+
+**One diagnosis was wrong and is corrected at merge time, not carried forward.** The lane's
+RULING-NEEDED request for the largest no-corpus-record sub-bucket (1,422 `ultimate_psionics`
+units) rested on `cache_gen::class_feature.rs`'s own module doc comment, which claims
+`corpus_literal_sweep::book_dir_of` "hard-requires a 5-segment `source.path`" and is shared
+infrastructure this card may not edit. **That doc comment is stale.** `book_dir_of` has carried an
+explicit 4-segment Dreamscarred Press branch since an unrelated wave-19 fix (`OPEN-ISSUES.md` row
+48/49); 473 `ultimate_psionics` records already ship today under exactly that shape, and this
+cycle's own guarded regen reports the sweep CLEAN over them. The real, in-scope, low-risk blocker
+is that `ultimate_psionics` is simply absent from the generator's own `BOOK_PRIMARY_FILES` list —
+not a shared cross-kind edit, and not the largest-lever-in-the-program framing the lane's row
+claimed. **Not fixed this cycle anyway** — adding it would write raw-token-transcription-only
+corpus JSON with zero doneness-board effect on its own (no `class_feature` grounding consumer
+exists outside Pathfinder Unchained to read a new book's records — the wave's own thesis, see §9),
+so it is real, low-risk, but zero-yield work in isolation, better bundled with whichever future
+cycle finally builds a generic class_feature grounding roster than done alone. Corrected diagnosis,
+relocated to the correct table, renumbered (`OPEN-ISSUES.md` row 328, was the lane's own row 326).
+
+Also relocated/renumbered two more misplaced rows found by adversarial review (both a `spell`/`feat`
+lane row and an empty-desc lane row had landed inside the `## Resolved` table's 6-column shape with
+7-column NOTE/RULING-NEEDED content — an operator scanning that table for open rulings would not
+have found them) and corrected one false claim (see §4). Full detail: `OPEN-ISSUES.md` rows
+326-329.
+
+### 4. `monster`/`monster_ability` and `spell`/`feat` — both merged, contamination in the latter
+fixed at merge time
+
+`monster`/`monster_ability` (+54, reviewer-corrected figure unchanged from the lane's own claim):
+`enrich_monster_raw_tokens.rs`/`enrich_monster_ability_raw_tokens.rs` each carry their own copy of
+`book_dir_of`, documented as byte-identical to `corpus_literal_sweep`'s own — both had drifted,
+missing the same 4-segment Dreamscarred Press branch, silently `CitationMiss`-ing all 21
+`ultimate_psionics` monster and 13 `monster_ability` records. Fixed (TDD, mutation-proved); ran
+both tools for real over the whole corpus, enriching 202 records' `raw_tokens` for the first time
+(168 from books the tools had simply never been run against before, unrelated to the bug; 34 from
+the fix itself). Merged clean.
+
+`spell`/`feat` (+44, reviewer-corrected figure unchanged): both RANGE/DURATION fixture generators
+carried their own hardcoded 8-book dict, never widened when wave 19 registered
+`inner_sea_gods`/`ultimate_wilderness` on the Rust read side. Fixed (TDD, mutation-proved); all 44
+promoted units are `ultimate_wilderness:spell:*`. **Reviewer found this lane's own committed public
+dashboard feed carried a DIFFERENT, concurrently-running lane's board** (root cause:
+`pf1e_dashboard_producer.py`'s `WORK_INVENTORY_FULL_DOC` default points at the shared checkout
+rather than honouring the invoking tree unless `PF1E_WORK_INVENTORY_DOC` is set — `scripts/
+publish-site-dashboard.sh` itself already pins this correctly via `BASH_SOURCE`-relative `REPO_ROOT`,
+so the contamination happened at a raw-producer invocation, not through the sanctioned publish
+path) — and that its own `site-dashboard-check` claim was consequently false (RED on its own
+commit, not the reported 4/4 PASS). **Not re-investigated further this cycle** (root cause is
+shared, cross-kind infrastructure the lane's own scope did not include, and the contamination
+self-corrects the moment a real integration-cycle regen+publish runs from a clean tree, which §5/§6
+below is exactly that) — corrected the false claim in place (`OPEN-ISSUES.md` row 325) rather than
+silently letting it stand, and flagged the shared-checkout hazard for whoever next owns
+`pf1e_dashboard_producer.py`.
+
+Both lanes' generated-file conflicts with each other and with `race_trait`
+(`docs/work-inventory.json`, `site/dashboard/*`) were resolved by taking the currently-staged side
+at merge time and are entirely superseded by §5/§6's fresh regen — no generated-file content from
+any individual merge step is trusted past this receipt.
+
+### 5. Guarded regen, run for real, fresh isolated `CARGO_TARGET_DIR`, on the fully-merged tree
+
+Per instruction 2 ("build the merged tree before gating — every wave since 15 has had gate run 1
+fail on a merge-only break"): built `cargo build --locked --bins -j 8` clean first (1 pre-existing
+dead-code warning, `EMPOWER_SPELL_METAMAGIC_SELECTION`, unrelated to this wave), THEN ran the
+guarded regen:
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out $S/sweep.json
+# corpus-literal-sweep: 26368 records examined, 0 findings, CLEAN (was 26166, +202 monster/
+# monster_ability raw_tokens enrichment)
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out $S/fixture.json
+# derived-evaluator-fixture-check: 1821 unit(s) cleared over 2561 fixture row(s); 0 failed
+# (was 1777/2506, +44)
+CORPUS_LITERAL_SWEEP_REPORT=... DERIVED_FIXTURE_CHECK_REPORT=... CODEX_REPO_ROOT=<this checkout> \
+  cargo run --locked --bin v06_work_inventory
+```
+
+Never `--allow-stamp-loss` — not needed, no stamp-loss warning printed. Full corpus-wide unit-id
+diff against the committed baseline (`5adedce63`): 38,372 units both sides (in-scope), 0 ids
+added/removed, **exactly 99 units changed doneness verdict** — 1 `class`, 16 `monster`, 38
+`monster_ability`, 44 `spell` — zero movement in any other kind, one-for-one with the four merged
+code lanes' own claims (§2/§4), no unintended coupling from anything else this integration cycle
+touched (the `race_trait` matcher fix and the `class_feature` empty-desc investigation both
+independently confirmed 0 board movement, reproduced here).
+
+`cargo test --locked --lib -j 8` on the merged tree: **2,141 passed, 0 failed, 3 ignored** (was
+2,136 at wave-19 close; +5 = progression's own new-lane tests plus this cycle's own 2 ceiling/
+"alone" fixes, net of overlap).
+
+### 6. Board reconciliation (instruction 8) — every unit of movement traced to a named cause
+
+| kind | total | done (wave 19) | done (wave 20) | delta | cause |
+|---|---:|---:|---:|---:|---|
+| class | 185 | 27 (14.5946%) | 28 (15.1351%) | **+1** | `progression`: Gunslinger chassis-gate fix (§2) |
+| class_feature | 15,439 | 134 (0.8679%) | 134 (0.8679%) | +0 | `race_trait`/empty-desc lanes: 0 board movement, both proven not just claimed |
+| companion | 1,696 | 871 (51.3561%) | 871 (51.3561%) | +0 | — |
+| equipment | 6,208 | 5,312 (85.5670%) | 5,312 (85.5670%) | +0 | — |
+| equipment_modifier | 1,580 | 508 (32.1519%) | 508 (32.1519%) | +0 | — |
+| feat | 2,610 | 1,459 (55.9004%) | 1,459 (55.9004%) | +0 | — |
+| monster | 1,270 | 973 (76.6142%) | 989 (77.8583%) | **+16** | `monster`/`monster_ability`: `book_dir_of` drift fix (§4) |
+| monster_ability | 2,942 | 1,556 (52.8892%) | 1,594 (54.1808%) | **+38** | same lane, same cause + first-run enrichment (§4) |
+| race | 95 | 34 (35.7895%) | 34 (35.7895%) | +0 | — |
+| race_trait | 3,504 | 520 (14.8402%) | 520 (14.8402%) | +0 | `race_trait` lane's matcher fix is real but feeds a doubly-gated fallback rule no ACG/ARG trait name collides with (§ lane's own report) |
+| spell | 2,843 | 1,509 (53.0777%) | 1,553 (54.6247%) | **+44** | `spell`/`feat`: fixture-generator book-dict widening (§4) |
+| **TOTAL** | **38,372** | **12,903 (33.6261%)** | **13,002 (33.8841%)** | **+99** | |
+
+By doneness bucket, corpus-wide: `done` 12,903→13,002 (+99), `held` 1,224→1,126 (-98),
+`in-progress` 1,282→1,282 (+0), `not-started` 18,650→18,649 (-1), `unmeasurable` 4,270→4,270 (+0),
+`deferred` 43→43 (+0). `-98 held -1 not-started +99 done = 0` — every unit of movement accounted
+for, no residue. **Denominator UNCHANGED — 38,372 = 38,372 — required this wave** (no Structural
+Exclusion Register entry was needed or written).
+
+**`roster-engine`'s rejected +19 is NOT in this table anywhere** — it is not banked, not partially
+banked, not counted toward any kind's total. The table above is the tree that ships.
+
+### 7. Site publish, `core_essentials` re-confirmed absent
+
+`./scripts/publish-site-dashboard.sh` (real run, from this fully-merged tree — the only invocation
+this receipt trusts, per §4's contamination finding): wrote `site/dashboard/PF1e-dashboard.json`
+and 30 `site/status-data/*.json` book-detail files (36,008 items, overall 38.7% reachability-
+weighted metric — the doneness board figure is §6's 33.88%). `--check` confirms both current.
+`core_essentials`: **0 units** in `docs/work-inventory.json` (direct `python3` count) and absent
+from `site/status-data.json`'s book list (direct check), both re-confirmed this wave.
+
+Most per-book unit shards under `site/dashboard/units/` needed no write from this cycle at all —
+each merged lane's own committed shard for the book(s) it touched had auto-merged cleanly (no other
+lane touched the same shard) and already matched what this cycle's fresh regen independently
+reproduced. Only the `class` shard (nobody but `progression` touches `class`-kind, and that lane
+never wrote a site file), the cross-book `index.json`, and the two aggregate dashboard documents
+needed this integration cycle's own write.
+
+**Correction, found by gate run 1 (§8): the publish above had gone stale by the time this cycle
+reached its own gate.** `site-dashboard-check` failed on the FIRST full-gate run with `site/
+dashboard/PF1e-dashboard.json is STALE`. Root cause: the committed dashboard's `work_inventory.
+by_status` cross-tab (itself sourced from a live `cargo run --bin v06_work_inventory --summary`
+inside the producer, not a copy of `docs/work-inventory.json`) still read `not-ingested: 17255`
+against the committed corpus JSON's own `not-ingested: 17254` — one unit stale, left over from an
+earlier point in this same integration cycle before its final state settled. **Also self-inflicted,
+caught and reverted before it could ship:** re-running `publish-site-dashboard.sh` to diagnose this
+was, for one invocation, run with `CARGO_TARGET_DIR` still pointed at the SAME isolated dir gate
+run 1 was actively using — exactly the shared-target-dir hazard this wave's own dispatch names
+(wave 18's rejected lane). That run produced a visibly racy diff and was reverted with `git checkout
+-- site/` unstaged, uncommitted, never inspected further. Re-ran clean, serially, after gate run 1
+fully exited: `publish-site-dashboard.sh` (real run) then `--check` twice in a row, both `is
+current` — confirmed deterministic and stable before trusting it. This IS the copy this receipt
+trusts; the "real run" sentence at the top of this section is now literally true rather than
+aspirational.
+
+### 8. Full gate
+
+**Run 1: 33/34, FAIL.** `./scripts/verify.sh -j 8`, `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/
+w20-integrate-regen` (isolated, never shared with any lane worktree), logs `/tmp/codex-verify-6MqnBI`.
+Every stage passed except `site-dashboard-check` — `site/dashboard/PF1e-dashboard.json is STALE`.
+Root-caused and fixed per §7's correction: the committed dashboard's `work_inventory` cross-tab was
+one unit behind the committed `docs/work-inventory.json` (`not-ingested: 17255` vs the corpus JSON's
+own `17254`), left over from mid-cycle. Re-published for real, serially, confirmed `is current` on
+two consecutive `--check` runs before re-gating — not accepted after a single lucky pass. `root-lib`
+(2,141 passed) and `root-full` (7,237 passed across 575 suites, all 537 `tests/*.rs` binaries
+executed — the 9 binaries `roster-engine` regressed are NOT among them, confirming its exclusion
+from the merged tree) both PASSED on run 1 already, and stayed unchanged on run 2.
+
+**Run 2: 34/34, PASS.** Same isolated `CARGO_TARGET_DIR`, logs `/tmp/codex-verify-PQUgcn`. Every
+stage green, including `site-dashboard-check`, `site-dashboard-pi-gate`, `site-public-status-check`,
+`site-public-status-pi-gate` (all four re-confirmed a second time standalone via `--only`, after the
+fix, before trusting them), `desktop` (490 passed — apps/desktop/src-tauri tested explicitly, per
+instruction 7), `reach` (30 passed), `corpus-sweep` (26,368 examined, 0 findings), `clippy` (root:50
+desktop:7 warnings, 0 errors — unchanged ceiling, no new warning at any line this wave touches),
+`class-dump` (31/31 computing). Two non-failing baseline notes on `verify-baselines.env`
+(`BASELINE_ROOT_LIB_TESTS`/`BASELINE_ROOT_FULL_TESTS` stale) — updated to 2141/7237, plus
+`BASELINE_CORPUS_LITERAL_RECORDS` 26166→26368, per that file's own wave-20 entry for the itemized
+delta.
+
+**One self-inflicted near-miss during diagnosis, caught and reverted before it shipped:** while
+root-causing run 1's failure, one manual `publish-site-dashboard.sh` invocation was run with
+`CARGO_TARGET_DIR` still pointed at the same isolated dir gate run 1 was actively using at that
+moment — precisely the shared-build-dir hazard this wave's own dispatch names as wave 18's failure
+mode. The resulting diff was visibly racy (a work-inventory cross-tab count differed from the
+stable, twice-reproduced value) and was reverted with `git checkout -- site/`, unstaged and
+uncommitted, before being inspected further or acted on. Logged as a process note, not a new
+`OPEN-ISSUES.md` row — no artifact shipped from the contaminated run.
+
+### 9. ANSWERING THE WAVE'S OWN THESIS (instruction 9) — stated plainly, because a refuted thesis
+is the most important thing this receipt reports
+
+**The dispatch measured 7,505 `class_feature` units carrying a real corpus record with real prose
+and no `%N` variable — "this wave's target," "the prize."** Of those 7,505:
+
+- **Grounded and banked: 0.** The only lane that attempted this pool (`roster-engine`) is GAMED and
+  not merged (§1). No other lane touched this mechanism.
+- **Attempted and refused (rejected at merge time, not by the lane itself): 19.** The 19 CRB
+  records `roster-engine` grounded are real — independently spot-checked by this integration cycle
+  against the pinned oracle (§1) — but banking them regresses 9 pre-existing anti-fabrication
+  acceptance-test binaries from green to red, an internal contradiction the lane never surfaced
+  (its own verification ran `--lib` only). Rejected on that basis, not on any doubt about the
+  grounding itself.
+- **Why:** the emission LOOP `push_pu_class_feature_records`/`push_class_feature_roster_records`
+  runs is genuinely class-agnostic (the roster lane's own extraction proved this, running unchanged
+  for both PU and CRB). The DATA it needs — each record's real grant level — is NOT free: PU's own
+  four `*_features.rs` tables are each a hand-transcribed oracle progression table, and no other
+  book's `class_feature` corpus record carries a level-grant field at all; that fact lives only in
+  a separate, never-ingested `.MOD` ability-grant line in the raw `.lst`. Reaching a new class costs
+  the same oracle-transcription work PU's four classes already paid — this wave's dispatch briefing
+  undersized that cost.
+
+**The true ceiling, as the `progression` lane sized it (independently re-derived by this
+integration cycle, not transcribed):** of the 15,305 not-done `class_feature` units, 2,194 sit on
+classes with no chassis at all (a hard floor — no progression table can close them without a new
+chassis first); 6,503 are option/choice-pool records (rage powers, discoveries, bloodlines,
+domains, favored terrain/enemy — player-chosen, not automatic level-grants) that need a
+"catalog of choices" mechanism no progression table can supply; 928 sit in a book with no compiled
+rule set at all. **The genuine near-term target for a future, correctly-reconciled attempt at this
+same mechanism is ~2,396 units** — records on an already-chassis-supported class, automatically
+granted rather than chosen, missing only the PU-pattern generic roster or a hand-authored grounding
+function. That is the honest number this wave leaves for whoever plans the next attempt — not
+7,505, and not the 19 this wave's own lane got partway to before being rejected.
+
+**A future attempt must reconcile the nine anti-fabrication gates deliberately before banking any
+unit, not by omission after the fact.** Two concrete paths, neither taken unilaterally by this
+integration cycle: (a) get an explicit ruling on whether a level-1-granted, level-N-still-present
+`class_feature` explanation is definitionally NOT the "fabricated spell math" `sd13_*` was written
+to catch, and update the nine tests' whitelists accordingly; or (b) re-justify each of the nine
+individually against the specific new explanation shape. Either path also requires widening
+`is_monk_pillar_id`/the Druid `LevelUpPlan` filter's id-prefix allowlist to admit
+`class_feature.<class>.corpus_record.*` before any unit whose class has a LevelUp pillar filter can
+be banked — 3 of the 19 this wave's lane claimed were silently dropped from that surface, refuting
+its own `prose_reaches_player` claim on a real screen it never checked. Full reasoning and the
+GAMED verdict's own path-back note: `OPEN-ISSUES.md` row 330.
+
+### 10. Architecture docs refreshed
+
+`docs/architecture/status.md` — new "wave 20" corpus-coverage section (board table, per-kind
+attribution, the thesis answer from §9, what changed architecturally). `docs/release/SD-31-corpus-
+closure-grind/artifacts/OPEN-ISSUES.md` — rows 326-331: relocated/renumbered two misplaced rows
+(feat characterization, empty-description investigation), corrected the no-corpus-record diagnosis
+(row 328), corrected a false gate-pass claim (row 325, in place), bundled three low-severity
+monster/spell corrections (row 329), logged the roster-engine GAMED rejection (row 330), logged the
+progression lane's two findings as fixed at merge time (row 331).
+
+### 11. Cleanup
+
+`CARGO_TARGET_DIR`s deleted: `/home/ubuntu/cargo-targets/w20-integrate-regen` (34G, this cycle's own
+build+regen+full-gate dir), `/home/ubuntu/cargo-targets/w20-integrate` (617M, an earlier partial-run
+leftover from this same integration cycle) and a stray `w20-build.log` file — `/home/ubuntu/
+cargo-targets/` is empty afterward. No lane's own scratch dir (`w20-class-feature-roster`,
+`w20-progression`, `w20-cf-empty-missing`, `w20-race_trait`, `w20-monster`, `w20-spell-feat`) or any
+reviewer's (`w20-review-adv`, `w20-review-roster`, `w20-review-monster`) was still present by the
+time this cycle reached cleanup — each lane/reviewer's own receipt already recorded deleting its own.
+
+Worktrees removed (`git worktree remove --force`, then `git worktree prune`): all nine of this
+wave's, `.claude/worktrees/wf_13156488-c9b-{1..9}`. `git worktree list` afterward shows only the
+main checkout.
+
+Branches deleted (`git branch -d`, merge-ancestor-only, none forced): `worktree-wf_13156488-c9b-2`
+(`progression`), `-3` (`class_feature` empty-desc), `-4` (`race_trait`), `-5` (`monster`/
+`monster_ability`), `-6` (`spell`/`feat`), `-7`/`-8`/`-9` (never diverged from base `5adedce63`, no
+lane work). **`worktree-wf_13156488-c9b-1` (`roster-engine`, `35a2bf5ad`) deliberately KEPT, not
+deleted** — it is NOT a merged branch (instruction 11 says remove "merged branches"; this one is
+explicitly the opposite), it is this wave's GAMED verdict and its own `OPEN-ISSUES.md` row 330 names
+it by branch/commit as the reconciliation target for a future attempt at the same mechanism; deleting
+it would strand that pointer.
+
+`sd31/racetrait4-SD31-E6-F4-005` — untouched, not gated, not merged, per standing instruction
+(confirmed by `git branch -a | grep racetrait4` before and after this cycle: unchanged).

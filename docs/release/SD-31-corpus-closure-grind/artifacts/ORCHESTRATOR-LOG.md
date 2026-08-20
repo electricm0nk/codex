@@ -1062,3 +1062,99 @@ per-lane accounting: `progress.md` `SD31-W19-INTEGRATE-001` §5.
   the moment this integration cycle wrote 61 new corpus JSON files under a directory the lane's own
   ingest binary deliberately had NOT touched — `sd27_book_license_record_counts`'s own test failed
   red, named the exact book and the exact stale/real counts, and was fixed before the gate re-ran.
+
+## Board after wave 20 (`SD31-W20-INTEGRATE-001`, 2026-08-20)
+
+**Wave 20's own thesis is REFUTED. The lane it was dispatched to prove out — generalizing
+`push_pu_class_feature_records` beyond Pathfinder Unchained, targeting the 7,505-unit
+"real-prose-no-`%N`" pool — is GAMED and NOT merged. 0 of its 19 claimed units are banked.** Stated
+first because a refuted thesis is the most important thing this receipt reports; see below for why
+and for the honest ceiling a future attempt should plan against.
+
+Re-derived live with the producer's own `doneness_verdict()` over the committed
+`docs/work-inventory.json` — the same command as every prior wave's table, never transcribed from a
+lane's own receipt. Oracle pin `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`.
+**Denominator UNCHANGED — 38,372 = 38,372 — as required this wave (no operator-signed Structural
+Exclusion Register entry was needed or written).**
+
+| kind | total (wave 19) | total (wave 20) | done (wave 19) | done (wave 20) | delta |
+|---|---:|---:|---:|---:|---:|
+| class | 185 | 185 | 27 (14.5946%) | **28 (15.1351%)** | **+1** |
+| class_feature | 15,439 | 15,439 | 134 (0.8679%) | 134 (0.8679%) | +0 |
+| companion | 1,696 | 1,696 | 871 (51.3561%) | 871 (51.3561%) | +0 |
+| equipment | 6,208 | 6,208 | 5,312 (85.5670%) | 5,312 (85.5670%) | +0 |
+| equipment_modifier | 1,580 | 1,580 | 508 (32.1519%) | 508 (32.1519%) | +0 |
+| feat | 2,610 | 2,610 | 1,459 (55.9004%) | 1,459 (55.9004%) | +0 |
+| monster | 1,270 | 1,270 | 973 (76.6142%) | **989 (77.8583%)** | **+16** |
+| monster_ability | 2,942 | 2,942 | 1,556 (52.8892%) | **1,594 (54.1808%)** | **+38** |
+| race | 95 | 95 | 34 (35.7895%) | 34 (35.7895%) | +0 |
+| race_trait | 3,504 | 3,504 | 520 (14.8402%) | 520 (14.8402%) | +0 |
+| spell | 2,843 | 2,843 | 1,509 (53.0777%) | **1,553 (54.6247%)** | **+44** |
+| **TOTAL** | **38,372** | **38,372** | **12,903 (33.6261%)** | **13,002 (33.8841%)** | **+99** |
+
+`+99` — every unit traced to one of four SOUND/PARTIAL-and-corrected lanes: `progression`'s
+Ultimate Combat Gunslinger chassis-gate fix (+1 `class`), `monster`/`monster_ability`'s
+`book_dir_of` drift fix plus first-run raw-token enrichment (+16/+38), `spell`/`feat`'s fixture-
+generator book-dict widening (+44 `ultimate_wilderness` spells). `race_trait`'s matcher fix and the
+`class_feature` empty-description/no-corpus-record investigation both independently proved (not
+merely claimed) zero board movement. Full per-lane accounting: `progress.md`
+`SD31-W20-INTEGRATE-001` §§2-6.
+
+**`roster-engine`'s rejected +19 is not in this table, anywhere, at any stage.**
+
+**Wave-20 thesis verdict: REFUTED at the acceptance-gate level, not at the grounding level.** The
+dispatch measured 7,505 `class_feature` units with real corpus prose and no `%N` variable and asked
+how much of that pool the generalized roster could ground. The lane built the generalization, wired
+19 Core Rulebook records, and every one of those 19 records' grounding is real — this integration
+cycle independently re-verified the citations against the pinned oracle rather than trusting the
+lane's own report or its reviewer's verdict alone (instruction 3). But the commit makes the
+repository assert two contradictory things about the same explanation ids in the same test run: 9
+pre-existing, unmodified anti-fabrication acceptance-test binaries — which name the exact credited
+units by id (`class_feature.wizard.corpus_record.spells`, `.paladin.corpus_record.aura_of_resolve`,
+`.bard.corpus_record.armored_casting`/`.cantrips`) — go from green on base `5adedce63` to red on
+this lane's commit, and the lane's own "2143 passed, 0 failed" verification never caught it because
+it only ever ran `cargo test --lib`. This integration cycle ran the lane's FULL test suite in a
+fresh, dedicated `CARGO_TARGET_DIR` and independently reproduced exactly the 9 failing binaries
+before excluding the lane — not on the reviewer's word alone. **Grounded: 0 of 7,505. Attempted and
+rejected: 19.** The true near-term ceiling, as the `progression` lane sized it and this cycle
+independently re-derived: of 15,305 not-done `class_feature` units, 2,194 have no chassis at all
+(hard floor), 6,503 are option/choice-pool records needing a "catalog of choices" mechanism no
+progression table can supply, 928 sit in a book with no compiled rule set — leaving **~2,396
+units** on already-chassis-supported classes as the genuine target for a future, correctly-
+reconciled attempt. That attempt must resolve the nine anti-fabrication gates DELIBERATELY (an
+explicit ruling on whether a level-1-granted, level-N-still-present explanation is definitionally
+not "fabricated spell math," plus widening `is_monk_pillar_id`/the Druid `LevelUpPlan` filter to
+admit the new id shape) before banking any unit — not by omission, as this wave's lane did. Full
+accounting: `progress.md` `SD31-W20-INTEGRATE-001` §9, `OPEN-ISSUES.md` row 330.
+
+### What wave 20's integration cycle changed in the architecture, not just in the counts
+
+* **A stale generator doc comment that was on its way to costing a future cycle a real (and
+  unnecessary) shared-infrastructure edit was caught and corrected.** `cache_gen::class_feature.rs`
+  claimed `ultimate_psionics` (the largest no-corpus-record sub-bucket, 1,422 units) was blocked by
+  a `corpus_literal_sweep::book_dir_of` 5-segment-path requirement that shared infrastructure this
+  card may not touch — that requirement was already fixed by an unrelated wave-19 commit; the real
+  blocker is a one-line omission in the generator's own file. `OPEN-ISSUES.md` row 328.
+* **Two anti-gaming test gaps were closed in the one lane this wave's board movement most directly
+  depends on.** A level-ceiling check that could be mutated to accept any level with the full lib
+  suite staying green, and a test whose name promised something its assertions didn't check — both
+  fixed at merge time in `progression`'s own module, both mutation-proved.
+* **An independent, from-scratch re-verification of a GAMED verdict, not a rubber stamp.** This
+  integration cycle read the conflicting test files itself, then reproduced the reviewer's 9-binary
+  failure count on a fresh build the reviewer never touched, before excluding `roster-engine` —
+  matching the standard wave 18's integrator set (`OPEN-ISSUES.md` row 315) of re-deriving a
+  reviewer's finding rather than taking it on faith.
+* **A merge-only break, again exactly the shape this wave's own dispatch warned every wave since 15
+  has hit.** Gate run 1 FAILED (33/34) on `site-dashboard-check` alone — the committed dashboard's
+  `work_inventory` cross-tab was one unit stale against the committed `docs/work-inventory.json`
+  (`not-ingested: 17255` vs. `17254`), left over from mid-cycle before the tree's final state
+  settled; `root-lib` (2,141) and `root-full` (7,237/575 suites, `roster-engine`'s 9 regressed
+  binaries confirmed absent) were already green on run 1. Fixed by republishing for real, serially,
+  from a `CARGO_TARGET_DIR` no longer shared with the still-running gate process — one manual
+  diagnostic invocation WAS briefly run against that shared dir mid-diagnosis and produced a visibly
+  racy result, caught and reverted (`git checkout -- site/`) before it was trusted or acted on.
+  Confirmed stable across two independent `--check` runs before re-gating. Run 2: `PASS`, 34/34,
+  `/tmp/codex-verify-PQUgcn` — `desktop` (490, tested explicitly as its own crate), `reach` (30),
+  `corpus-sweep` (26,368 examined, 0 findings), both PI gates (13/31 files, 0 leaked vs. 1,612
+  declared-PI names), clippy (root:50 desktop:7, unchanged ceiling), `class-dump` (31/31). Full
+  detail: `progress.md` `SD31-W20-INTEGRATE-001` §8.
