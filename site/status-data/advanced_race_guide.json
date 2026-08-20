@@ -5,11 +5,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 0,
+      "done": 7,
       "partial": 0,
-      "not_started": 440,
+      "not_started": 433,
       "denominator": 440,
-      "pct": 0.0,
+      "pct": 1.6,
       "excluded_from_percentage": 203,
       "standing_breakdown": {
         "origin": 440,
@@ -963,7 +963,7 @@
         },
         {
           "name": "Deadly Scratch",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.SpecialQuality.Extraordinary.RogueTalent",
           "standing": "origin",
           "display_name": "Deadly Scratch"
@@ -1152,7 +1152,7 @@
         },
         {
           "name": "Disarming Luck",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.SpecialQuality.Extraordinary.RogueTalent",
           "standing": "origin",
           "display_name": "Disarming Luck"
@@ -1558,7 +1558,7 @@
         },
         {
           "name": "False Friend",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueTalent.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "False Friend"
@@ -1873,7 +1873,7 @@
         },
         {
           "name": "Graceful Faller",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.SpecialQuality.Extraordinary.RogueTalent",
           "standing": "origin",
           "display_name": "Graceful Faller"
@@ -2776,7 +2776,7 @@
         },
         {
           "name": "Obfuscate Story",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueTalent.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Obfuscate Story"
@@ -3546,7 +3546,7 @@
         },
         {
           "name": "Single-Minded Appraiser",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.SpecialQuality.Extraordinary.RogueTalent",
           "standing": "origin",
           "display_name": "Single-Minded Appraiser"
@@ -3791,7 +3791,7 @@
         },
         {
           "name": "Steal the Story",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueTalent.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Steal the Story"

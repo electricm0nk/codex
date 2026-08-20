@@ -5,11 +5,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 0,
+      "done": 1,
       "partial": 0,
-      "not_started": 118,
+      "not_started": 117,
       "denominator": 118,
-      "pct": 0.0,
+      "pct": 0.8,
       "excluded_from_percentage": 51,
       "standing_breakdown": {
         "unclassified": 51,
@@ -1033,7 +1033,7 @@
         },
         {
           "name": "Thrill of the Chase",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.SpecialQuality.Extraordinary.RogueTalent.Unchained Rogue Talent",
           "standing": "origin",
           "display_name": "Thrill of the Chase"
